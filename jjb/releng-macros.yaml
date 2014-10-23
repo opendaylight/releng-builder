@@ -1,0 +1,49 @@
+# OLD Releng macros
+
+- parameter:
+    name: gerrit-parameter
+    parameters:
+        - string:
+            name: GERRIT_BRANCH
+            default: '{branch}'
+            description: "JJB configured GERRIT_BRANCH parameter"
+
+- scm:
+    name: gerrit-scm
+    scm:
+        - git:
+            credentials-id: '0f7cf3cd-6872-41c5-8dfe-e4348f2a445e'
+            url: '{scm-url}'
+            refspec: '{refspec}'
+            branches:
+                - 'origin/$GERRIT_BRANCH'
+            skip-tag: true
+            choosing-strategy: gerrit
+
+- trigger:
+    name: gerrit-trigger
+    triggers:
+        - gerrit:
+            trigger-on-patchset-uploaded-event: true
+            trigger-on-draft-published-event: true
+            projects:
+              - project-compare-type: 'ANT'
+                project-pattern: '{name}'
+                branches:
+                  - branch-compare-type: 'ANT'
+                    branch-pattern: '**/{branch}'
+
+- publisher:
+    name: email-notification
+    publishers:
+        - email-ext:
+            recipients: '$DEFAULT_RECIPIENTS'
+            reply-to: '$DEFAULT_REPLYTO'
+            content-type: default
+            subject: '$DEFAULT_SUBJECT'
+            body: '$DEFAULT_CONTENT'
+            unstable: true
+            fixed: true
+            send-to:
+                - developers
+                - recipients
