@@ -1,0 +1,160 @@
+# ODL Releng build templates
+
+- job-template:
+    name: '{name}-verify-{stream}'
+
+    # Job template for ODL verify jobs
+    #
+    # The purpose of this job template is to setup a ODL verify job
+    #
+    # Required Variables:
+    #     name:      project name (eg. controller)
+    #     stream:    branch with - in place of / (eg. stable/helium)
+    #     branch:    branch (eg. stable/helium)
+    #     mvn-goals: Maven Goals parameter to pass to the builder (eg. clean install)
+    #     mvn-opts:  MAVEN_OPTS paramter to pass to the builder (eg. -Xmx1024m)
+    #
+    # Optional Variables:
+    #     build-days-to-keep:           Number of days to keep builds
+    #     build-num-to-keep:            Number of builds to keep
+    #     build-artifact-days-to-keep:  Number of artifacts from builds to keep
+    #     build-artifact-num-to-keep:   Number of builds to keep with artifacts
+
+    project-type: maven
+
+    logrotate:
+        daysToKeep: '{build-days-to-keep}'
+        numToKeep: '{build-num-to-keep}'
+        artifactDaysToKeep: '{build-artifact-days-to-keep}'
+        artifactNumToKeep: '{build-artifact-num-to-keep}'
+
+    parameters:
+        - gerrit-parameter:
+            branch: '{branch}'
+
+    scm:
+        - gerrit-scm:
+            scm-url: '{scm-url}'
+            refspec: 'origin/$GERRIT_REFSPEC'
+
+    wrappers:
+        - ssh-agent-credentials:
+            user: '0f7cf3cd-6872-41c5-8dfe-e4348f2a445e'
+
+    triggers:
+        - gerrit-trigger:
+            name: '{name}'
+            branch: '{branch}'
+
+    maven:
+        maven-name: Maven 3.0.4
+        root-pom: pom.xml
+        goals: '{mvn-goals}'
+        maven-opts: '{mvn-opts}'
+
+    publishers:
+        - email-notification
+
+- job-template:
+    name: '{name}-merge-{stream}'
+
+    # Job template for ODL merge jobs
+    #
+    # The purpose of this job template is to setup a ODL merge job
+    #
+    # Required Variables:
+    #     name:      project name (eg. controller)
+    #     stream:    branch with - in place of / (eg. stable/helium)
+    #     branch:    branch (eg. stable/helium)
+    #     mvn-goals: Maven Goals parameter to pass to the builder (eg. clean install)
+    #     mvn-opts:  MAVEN_OPTS paramter to pass to the builder (eg. -Xmx1024m)
+    #
+    # Optional Variables:
+    #     build-days-to-keep:           Number of days to keep builds
+    #     build-num-to-keep:            Number of builds to keep
+    #     build-artifact-days-to-keep:  Number of artifacts from builds to keep
+    #     build-artifact-num-to-keep:   Number of builds to keep with artifacts
+
+    project-type: maven
+
+    logrotate:
+        daysToKeep: '{build-days-to-keep}'
+        numToKeep: '{build-num-to-keep}'
+        artifactDaysToKeep: '{build-artifact-days-to-keep}'
+        artifactNumToKeep: '{build-artifact-num-to-keep}'
+
+    scm:
+        - gerrit-scm:
+            scm-url: '{scm-url}'
+            refspec: ''
+
+    triggers:
+        - gerrit-trigger:
+            name: '{name}'
+            branch: '{branch}'
+
+    maven:
+        maven-name: Maven 3.0.4
+        root-pom: pom.xml
+        goals: '{mvn-goals}'
+        maven-opts: '{mvn-opts}'
+
+    publishers:
+        - email-notification
+        - maven-deploy:
+            id:
+            url:
+            unique-version: true
+            deploy-unstable: false
+
+- job-template:
+    name: '{name}-daily-{stream}'
+
+    # Job template for daily builders
+    #
+    # The purpose of this job template is to setup a daily/nightly builder and pushes to Sonar analysis.
+    #
+    # Required Variables:
+    #     name:      project name (eg. controller)
+    #     stream:    branch with - in place of / (eg. stable/helium)
+    #     branch:    branch (eg. stable/helium)
+    #     mvn-goals: Maven Goals parameter to pass to the builder (eg. clean install)
+    #     mvn-opts:  MAVEN_OPTS paramter to pass to the builder (eg. -Xmx1024m)
+    #
+    # Optional Variables:
+    #     build-days-to-keep:           Number of days to keep builds
+    #     build-num-to-keep:            Number of builds to keep
+    #     build-artifact-days-to-keep:  Number of artifacts from builds to keep
+    #     build-artifact-num-to-keep:   Number of builds to keep with artifacts
+
+    project-type: maven
+
+    logrotate:
+        daysToKeep: '{build-days-to-keep}'
+        numToKeep: '{build-num-to-keep}'
+        artifactDaysToKeep: '{build-artifact-days-to-keep}'
+        artifactNumToKeep: '{build-artifact-num-to-keep}'
+
+    scm:
+        - gerrit-scm:
+            scm-url: '{scm-url}'
+            refspec: ''
+
+    triggers:
+        - timed: 'H H * * *'
+        - gerrit-trigger:
+            name: '{name}'
+            branch: '{branch}'
+
+    maven:
+        maven-name: Maven 3.0.4
+        root-pom: pom.xml
+        goals: '{mvn-goals}'
+        maven-opts: '{mvn-opts}'
+
+    publishers:
+        - email-notification
+        - sonar:
+            branch: 'origin/{branch}'
+            language: 'java'
+            maven-opts: '{mvn-opts}'
