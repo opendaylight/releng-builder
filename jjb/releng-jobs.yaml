@@ -1,0 +1,31 @@
+- job:
+    name: 'builder-verify'
+
+    project-type: freestyle
+
+    logrotate:
+        daysToKeep: '{build-days-to-keep}'
+        numToKeep: '{build-num-to-keep}'
+        artifactDaysToKeep: '{build-artifact-days-to-keep}'
+        artifactNumToKeep: '{build-artifact-num-to-keep}'
+
+    parameters:
+        - gerrit-parameter:
+            branch: 'master'
+
+    scm:
+        - gerrit-scm:
+            scm-url: 'ssh://jenkins-releng@git.opendaylight.org:29418/releng/builder'
+            refspec: 'origin/$GERRIT_REFSPEC'
+
+    wrappers:
+        - ssh-agent-credentials:
+            user: '0f7cf3cd-6872-41c5-8dfe-e4348f2a445e'
+
+    triggers:
+        - gerrit-trigger:
+            name: 'releng/builder'
+            branch: 'master'
+
+    builders:
+        - shell: "jenkins-jobs test ."
