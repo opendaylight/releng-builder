@@ -1,0 +1,91 @@
+- job:
+    name: 'builder-verify'
+
+    project-type: freestyle
+
+    logrotate:
+        daysToKeep: 30
+        numToKeep: 10
+        artifactDaysToKeep: -1
+        artifactNumToKeep: -1
+
+    parameters:
+        - gerrit-parameter:
+            branch: 'master'
+
+    scm:
+        - gerrit-trigger-scm:
+            credentials-id: '{ssh-credentials}'
+            scm-url: 'ssh://jenkins-releng@git.opendaylight.org:29418/releng/builder'
+            refspec: 'origin/$GERRIT_REFSPEC'
+
+    wrappers:
+        - ssh-agent-credentials:
+            user: '{ssh-credentials}'
+
+    triggers:
+        - gerrit:
+            trigger-on-patchset-uploaded-event: true
+            trigger-on-draft-published-event: true
+            projects:
+              - project-compare-type: 'ANT'
+                project-pattern: 'builder/releng'
+                branches:
+                  - branch-compare-type: 'ANT'
+                    branch-pattern: '**/master'
+                file-paths:
+                    - compare-type: ANT
+                      pattern: jjb/**
+
+
+    builders:
+        - shell: |
+            source /opt/virtualenv/jenkins-job-builder/bin/activate
+            jenkins-jobs test jjb/
+
+- job:
+    name: 'builder-merge'
+
+    # builder-merge job to run JJB update
+    #
+    # This job's purpose is to update all the JJB
+
+    project-type: freestyle
+
+    logrotate:
+        daysToKeep: 30
+        numToKeep: 40
+        artifactDaysToKeep: -1
+        artifactNumToKeep: 5
+
+    parameters:
+        - gerrit-parameter:
+            branch: 'master'
+
+    scm:
+        - gerrit-trigger-scm:
+            credentials-id: '{ssh-credentials}'
+            scm-url: 'ssh://jenkins-releng@git.opendaylight.org:29418/releng/builder'
+            refspec: 'origin/$GERRIT_REFSPEC'
+
+    wrappers:
+        - ssh-agent-credentials:
+            user: '{ssh-credentials}'
+
+    triggers:
+        - gerrit:
+            trigger-on-change-merged-event: true
+            projects:
+              - project-compare-type: 'ANT'
+                project-pattern: 'builder/releng'
+                branches:
+                    - branch-compare-type: 'ANT'
+                      branch-pattern: '**/master'
+                file-paths:
+                    - compare-type: ANT
+                      pattern: jjb/**'
+
+    builders:
+        - shell: |
+            source /opt/virtualenv/jenkins-job-builder/bin/activate
+            jenkins-jobs test jjb/
