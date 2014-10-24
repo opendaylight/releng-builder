@@ -1,0 +1,26 @@
+- project:
+    name: controller
+    jobs:
+      - '{name}-verify-{stream}'
+      - '{name}-merge-{stream}'
+    stream:
+      - master:
+          branch: master
+      - stable-helium:
+          branch: stable/helium
+    mvn-goals: clean install
+    mvn-opts: -Xmx4G
+
+    scm-url: ssh://jenkins-controller@git.opendaylight.org:29418/controller.git
+
+- project:
+    name: controller-daily
+    jobs:
+        - '{name}-daily-{stream}'
+    scm-url: https://git.opendaylight.org/gerrit/controller
+    stream:
+        - master:
+            branch: master
+    cron: '0 1 * * *'
+    mvn-goals: '-Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo clean javadoc:jar source:jar install -Pintegrationtests,docs -Dhudson.maven.debug'
+    mvn-opts: '-Xmx4G -XX:MaxPermSize=512m'

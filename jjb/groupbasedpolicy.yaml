@@ -1,0 +1,14 @@
+- project:
+    name: groupbasedpolicy
+    jobs:
+        - '{name}-verify-{stream}'
+        - '{name}-merge-{stream}'
+    stream:
+        - master:
+            branch: master
+        - stable-helium:
+            branch: stable-helium
+    mvn-goals: clean install
+    mvn-opts: -Xmx4G
+
+    scm-url: ssh://jenkins-controller@git.opendaylight.org:29418/groupbasedpolicy.git
