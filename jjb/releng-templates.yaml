@@ -34,12 +34,13 @@
 
     scm:
         - gerrit-trigger-scm:
+            credentials-id: '{ssh-credentials}'
             scm-url: '{scm-url}'
             refspec: 'origin/$GERRIT_REFSPEC'
 
     wrappers:
         - ssh-agent-credentials:
-            user: '0f7cf3cd-6872-41c5-8dfe-e4348f2a445e'
+            user: '{ssh-credentials}'
 
     triggers:
         - gerrit-trigger-patch-submitted:
@@ -85,8 +86,13 @@
 
     scm:
         - gerrit-trigger-scm:
+            credentials-id: '{ssh-credentials}'
             scm-url: '{scm-url}'
             refspec: ''
+
+    wrappers:
+        - ssh-agent-credentials:
+            user: '{ssh-credentials}'
 
     triggers:
         - gerrit-trigger-patch-merged:
@@ -137,9 +143,14 @@
 
     scm:
         - git-scm:
+            credentials-id: '{ssh-credentials}'
             scm-url: '{scm-url}'
             refspec: ''
             branch: '{branch}'
+
+    wrappers:
+        - ssh-agent-credentials:
+            user: '{ssh-credentials}'
 
     triggers:
         - timed: 'H H * * *'
