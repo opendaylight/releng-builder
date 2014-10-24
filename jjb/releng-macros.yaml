@@ -9,7 +9,18 @@
             description: "JJB configured GERRIT_BRANCH parameter"
 
 - scm:
-    name: gerrit-scm
+    name: git-scm
+    scm:
+        - git:
+            credentials-id: '0f7cf3cd-6872-41c5-8dfe-e4348f2a445e'
+            url: '{scm-url}'
+            refspec: ''
+            branches:
+                - 'origin/{branch}'
+            skip-tag: true
+
+- scm:
+    name: gerrit-trigger-scm
     scm:
         - git:
             credentials-id: '0f7cf3cd-6872-41c5-8dfe-e4348f2a445e'
@@ -21,11 +32,23 @@
             choosing-strategy: gerrit
 
 - trigger:
-    name: gerrit-trigger
+    name: gerrit-trigger-patch-submitted
     triggers:
         - gerrit:
             trigger-on-patchset-uploaded-event: true
             trigger-on-draft-published-event: true
+            projects:
+              - project-compare-type: 'ANT'
+                project-pattern: '{name}'
+                branches:
+                  - branch-compare-type: 'ANT'
+                    branch-pattern: '**/{branch}'
+
+- trigger:
+    name: gerrit-trigger-patch-merged
+    triggers:
+        - gerrit:
+            trigger-on-change-merged-event: true
             projects:
               - project-compare-type: 'ANT'
                 project-pattern: '{name}'

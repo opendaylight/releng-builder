@@ -33,7 +33,7 @@
             branch: '{branch}'
 
     scm:
-        - gerrit-scm:
+        - gerrit-trigger-scm:
             scm-url: '{scm-url}'
             refspec: 'origin/$GERRIT_REFSPEC'
 
@@ -42,7 +42,7 @@
             user: '0f7cf3cd-6872-41c5-8dfe-e4348f2a445e'
 
     triggers:
-        - gerrit-trigger:
+        - gerrit-trigger-patch-submitted:
             name: '{name}'
             branch: '{branch}'
 
@@ -84,12 +84,12 @@
         artifactNumToKeep: '{build-artifact-num-to-keep}'
 
     scm:
-        - gerrit-scm:
+        - gerrit-trigger-scm:
             scm-url: '{scm-url}'
             refspec: ''
 
     triggers:
-        - gerrit-trigger:
+        - gerrit-trigger-patch-merged:
             name: '{name}'
             branch: '{branch}'
 
@@ -136,15 +136,13 @@
         artifactNumToKeep: '{build-artifact-num-to-keep}'
 
     scm:
-        - gerrit-scm:
+        - git-scm:
             scm-url: '{scm-url}'
             refspec: ''
+            branch: '{branch}'
 
     triggers:
         - timed: 'H H * * *'
-        - gerrit-trigger:
-            name: '{name}'
-            branch: '{branch}'
 
     maven:
         maven-name: Maven 3.0.4
