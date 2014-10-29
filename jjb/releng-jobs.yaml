@@ -23,7 +23,7 @@
         - gerrit-trigger-scm:
             credentials-id: '{ssh-credentials}'
             scm-url: 'ssh://jenkins-releng@git.opendaylight.org:29418/releng/builder'
-            refspec: 'origin/$GERRIT_REFSPEC'
+            refspec: '$GERRIT_REFSPEC'
 
     wrappers:
         - ssh-agent-credentials:
