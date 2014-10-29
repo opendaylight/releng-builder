@@ -60,11 +60,14 @@
     name: email-notification
     publishers:
         - email-ext:
-            recipients: '$DEFAULT_RECIPIENTS'
-            reply-to: '$DEFAULT_REPLYTO'
+            recipients: '{email-recipients}'
+            reply-to:
             content-type: default
-            subject: '$DEFAULT_SUBJECT'
-            body: '$DEFAULT_CONTENT'
+            subject: '{email-prefix} $PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!'
+            body: |
+                $PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:
+
+                Check console output at $BUILD_URL to view the results.
             unstable: true
             fixed: true
             send-to:
