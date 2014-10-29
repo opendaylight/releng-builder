@@ -36,7 +36,7 @@
         - gerrit-trigger-scm:
             credentials-id: '{ssh-credentials}'
             scm-url: '{scm-url}'
-            refspec: 'origin/$GERRIT_REFSPEC'
+            refspec: '$GERRIT_REFSPEC'
 
     wrappers:
         - ssh-agent-credentials:
@@ -54,7 +54,8 @@
         maven-opts: '{mvn-opts}'
 
     publishers:
-        - email-notification
+        - email-notification:
+            email-prefix: '{email-prefix}'
 
 - job-template:
     name: '{name}-merge-{stream}'
@@ -106,7 +107,8 @@
         maven-opts: '{mvn-opts}'
 
     publishers:
-        - email-notification
+        - email-notification:
+            email-prefix: '{email-prefix}'
         - maven-deploy:
             id:
             url:
@@ -162,7 +164,8 @@
         maven-opts: '{mvn-opts}'
 
     publishers:
-        - email-notification
+        - email-notification:
+            email-prefix: '{email-prefix}'
         - sonar:
             branch: 'origin/{branch}'
             language: 'java'
