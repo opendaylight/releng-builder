@@ -49,6 +49,11 @@
             source /opt/virtualenv/jenkins-job-builder/bin/activate
             jenkins-jobs test jjb/
 
+    publishers:
+        - email-notification:
+            email-recipients: 'jenkins@lists.opendaylight.org'
+            email-prefix: '[releng]'
+
 - job-template:
     name: 'builder-merge'
 
@@ -95,3 +100,8 @@
         - shell: |
             source /opt/virtualenv/jenkins-job-builder/bin/activate
             jenkins-jobs update jjb/
+
+    publishers:
+        - email-notification:
+            email-recipients: 'jenkins@lists.opendaylight.org'
+            email-prefix: '[releng]'
