@@ -16,7 +16,7 @@
             url: '{scm-url}'
             refspec: ''
             branches:
-                - '**/{branch}'
+                - 'origin/{branch}'
             skip-tag: true
 
 - scm:
@@ -27,7 +27,7 @@
             url: '{scm-url}'
             refspec: '{refspec}'
             branches:
-                - '**/$GERRIT_BRANCH'
+                - 'origin/$GERRIT_BRANCH'
             skip-tag: true
             choosing-strategy: gerrit
 
