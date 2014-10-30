@@ -98,7 +98,7 @@ Sample data:
         - '{name}-daily-{stream}'
 
     # SCM
-    scm-url: ssh://jenkins-controller@git.opendaylight.org:29418/aaa.git
+    scm-url: ssh://jenkins-releng@git.opendaylight.org:29418/aaa.git
     stream:
         - master:
             branch: master
