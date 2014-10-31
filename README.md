@@ -17,6 +17,11 @@
 The ODL Releng project provides 3 job templates which can be used to
 define basic jobs.
 
+Note: The templates below depend on a modified JJB version to add
+      support for Config File Provider module in the Maven Project
+      module for JJB. This custom version of JJB can be found at:
+      https://github.com/zxiiro/jenkins-job-builder/tree/support-config-file-provider
+
 == Verify Job Template
 
 The Verify job template creates a Gerrit Trigger job that will trigger
@@ -36,80 +41,22 @@ Daily basis and also Submits Sonar reports.
 
 == Basic Job Configuration
 
-To create a jobs based on the above templates you can use the following
-example which will create 6 jobs (verify, merge, and daily jobs for both
-master and stable/helium branch).
+To create a jobs based on the above templates you can use the example
+template which will create 6 jobs (verify, merge, and daily jobs for both
+master and stable/helium branch). Begin by using job.yaml.template as a
+starting point. You can also look at job.yaml.example to see an example
+of a job configuration that is filled out.
 
 Before starting create a sub-directory under jjb/ for your project
 configuration files.
 
-    1. mkdir jjb/PROJECT                # For example controller
-    2. touch jjb/PROJECT/PROJECT.yaml
-    3. Add your job configuration to jjb/PROJECT/PROJECT.yaml
+    1. mkdir jjb/PROJECT                # For example aaa
+    2. cp jjb/job.yaml.template jjb/PROJECT/PROJECT.yaml
+    3. Modify jjb/PROJECT/PROJECT.yaml and replace the following keywords
+        - PROJECT: With your project name (eg. aaa)
+        - MAVEN_GOALS: With your job's Maven Goals necessary to build
+        - MAVEN_OPTS: With your job's Maven Options necessary to build
 
 If all your project requires is the basic verify, merge, and
-daily jobs then the following template should be all you need to
-configure for your job.
-
-Replace:
-
-PROJECT:           Project Name
-PROJECT_SCM_URL:   URL to Gerrit repo
-PROJECT_MVN_GOALS: Maven Goals
-PROJECT_MVN_OPTS:  Maven Options
-
-########### EXAMPLE ###########
-
-- project:
-    name: PROJECT
-    jobs:
-        - '{name}-verify-{stream}'
-        - '{name}-merge-{stream}'
-        - '{name}-daily-{stream}'
-
-    # SCM
-    scm-url: PROJECT_SCM_URL
-    stream:
-        - master:
-            branch: master
-        - stable-helium:
-            branch: stable/helium
-
-    # Maven
-    mvn-goals: 'PROJECT_MVN_GOALS'
-    mvn-opts: 'PROJECT_MVN_OPTS'
-
-    # Email Publisher
-    email-prefix: '[PROJECT]'
-
-########### END EXAMPLE ###########
-
-
-
-Sample data:
-
-########### SAMPLE ###########
-
-- project:
-    name: aaa
-    jobs:
-        - '{name}-verify-{stream}'
-        - '{name}-merge-{stream}'
-        - '{name}-daily-{stream}'
-
-    # SCM
-    scm-url: ssh://jenkins-releng@git.opendaylight.org:29418/aaa.git
-    stream:
-        - master:
-            branch: master
-        - stable-helium:
-            branch: stable/helium
-
-    # Maven
-    mvn-goals: '-Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo clean install'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-
-    # Email Publisher
-    email-prefix: '[aaa]'
-
-########### END SAMPLE ###########
+daily jobs then using the job.template should be all you need to
+configure for your jobs.
