@@ -43,19 +43,24 @@ Daily basis and also Submits Sonar reports.
 
 To create a jobs based on the above templates you can use the example
 template which will create 6 jobs (verify, merge, and daily jobs for both
-master and stable/helium branch). Begin by using job.yaml.template as a
-starting point. You can also look at job.yaml.example to see an example
-of a job configuration that is filled out.
+master and stable/helium branch).
 
-Before starting create a sub-directory under jjb/ for your project
-configuration files.
+Run the following steps from the repo root to create initial job config.
 
-    1. mkdir jjb/PROJECT                # For example aaa
-    2. cp jjb/job.yaml.template jjb/PROJECT/PROJECT.yaml
-    3. Modify jjb/PROJECT/PROJECT.yaml and replace the following keywords
-        - PROJECT: With your project name (eg. aaa)
-        - MAVEN_GOALS: With your job's Maven Goals necessary to build
-        - MAVEN_OPTS: With your job's Maven Options necessary to build
+    python scripts/jjb-init-project.py <project-name>
+
+    # Example
+    python scripts/jjb-init-project.py aaa
+
+    # Optionally pass the following options:
+    #
+    # -g / --mvn-goals : With your job's Maven Goals necessary to build
+    #                    (defaults to "clean install")
+    #          Example : -g "clean install"
+    #
+    # -o / --mvn-opts  : With your job's Maven Options necessary to build
+    #                    (defaults to empty)
+    #          Example : -o "-Xmx1024m"
 
 If all your project requires is the basic verify, merge, and
 daily jobs then using the job.template should be all you need to
