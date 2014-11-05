@@ -1,0 +1,54 @@
+type: seq
+sequence:
+    - type: map
+      mapping:
+        "job":
+            type: map
+            mapping:
+                "name":
+                    type: str
+                    required: yes
+
+        "job-template":
+            type: map
+            mapping:
+                "name":
+                    type: str
+                    required: yes
+
+        "project":
+            type: map
+            mapping:
+                "name":
+                    type: str
+                    required: yes
+                "jobs":
+                    type: seq
+                    sequence:
+                        - type: str
+
+        "job-group":
+            type: map
+            mapping:
+                "name":
+                    type: str
+                    required: yes
+                "jobs":
+                    type: seq
+                    sequence:
+                        - type: str
+
+        "defaults":
+            type: map
+            mapping:
+                "name":
+                    type: str
+                    required: yes
+
+        # Macros
+        "builder":
+            type: map
+            mapping:
+                "name":
+                    type: str
+                    required: yes
