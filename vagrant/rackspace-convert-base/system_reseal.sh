@@ -1,5 +1,16 @@
 #!/bin/bash
 
+# vim: sw=2 ts=2 sts=2 et :
+
+if [ -f /.autorelabel ]; then
+  echo "**********************************************"
+  echo "* SYSTEM REQUIRES RELABELING SKIPPING RESEAL *"
+  echo "*     PLEASE RESTART SYSTEM AND RERUN        *"
+  echo "*           PROVISIONING SCRIPTS             *"
+  echo "**********************************************"
+  exit 1;
+fi
+
 # clean-up from any prior cloud-init networking
 rm -rf /etc/sysconfig/network-scripts/{ifcfg,route}-eth*
 
