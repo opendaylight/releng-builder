@@ -49,12 +49,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
-  # disable the default requiretty for sudo that Fedora and CentOS have
-  config.vm.provision 'shell', path: 'remove_requiretty.sh'
-
   # Do a full system update and force enforcing on (it's in permissive
   # by default in the rackspace base images)
   config.vm.provision 'shell', path: 'bootstrap.sh'
+
+  # disable the default requiretty for sudo that Fedora and CentOS have
+  config.vm.provision 'shell', path: 'remove_requiretty.sh'
 
   # Execute a system clean-up in prep for imaging so that this base
   # image can be used for other Rackspace Vagrant configurations
