@@ -4,6 +4,12 @@
 
 # Handle the occurance where SELINUX is actually disabled
 if [ `grep SELINUX=permissive /etc/selinux/config` ]; then
+    # make sure that the filesystem is properly labelled.
+    # it could be not fully labeled correctly if it was just switched
+    # from disabled, the autorelabel misses some things
+    # skip relabelling on /dev as it will generally throw errors
+    restorecon -R -e /dev /
+
     # enable enforcing mode from the very start
     setenforce enforcing
 
