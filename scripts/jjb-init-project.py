@@ -20,7 +20,10 @@ mvn_opts = args.mvn_opts    # Defaults to blank if not passed
 template_file = os.path.join("jjb", "job.yaml.template")
 
 if not mvn_goals:
-    mvn_goals = "clean install"
+    mvn_goals = "-Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo clean install"
+
+if not mvn_opts:
+    mvn_opts = "-Xmx1024m -XX:MaxPermSize=256m"
 
 # Create project directory if it doesn't exist
 if not os.path.exists(project_dir):
@@ -36,4 +39,8 @@ with open(template_file, "r") as infile, open(project_file, "w") as outfile:
     for line in infile:
         if not re.match("\s*#", line):
             line = re.sub("PROJECT", project, line)
+        if not re.match("\s*#", line):
+            line = re.sub("MAVEN_GOALS", mvn_goals, line)
+        if not re.match("\s*#", line):
+            line = re.sub("MAVEN_OPTS", mvn_opts, line)
         outfile.write(line)
