@@ -1,14 +1,10 @@
-# REMOVE THIS LINE IF YOU WANT TO CUSTOMIZE ANYTHING BELOW
-# Otherwise this file will be automatically overwritten by the template
-# autobuilder.
-
 # ODL Releng build templates
 - project:
-    name: PROJECT
+    name: controller
     jobs:
-        - 'PROJECT-verify-{stream}'
-        - 'PROJECT-merge-{stream}'
-        - 'PROJECT-daily-{stream}'
+        - 'controller-verify-{stream}'
+        - 'controller-merge-{stream}'
+        - 'controller-daily-{stream}'
 
     # stream:    branch with - in place of / (eg. stable-helium)
     # branch:    branch (eg. stable/helium)
@@ -25,7 +21,7 @@
 # MAVEN_OPTS with your maven options to build
 
 - job-template:
-    name: 'PROJECT-verify-{stream}'
+    name: 'controller-verify-{stream}'
 
     # Job template for ODL verify jobs
     #
@@ -51,7 +47,7 @@
     scm:
         - gerrit-trigger-scm:
             credentials-id: '{ssh-credentials}'
-            scm-url: 'ssh://jenkins-releng@git.opendaylight.org:29418/PROJECT.git'
+            scm-url: 'ssh://jenkins-releng@git.opendaylight.org:29418/controller.git'
             refspec: '$GERRIT_REFSPEC'
 
     wrappers:
@@ -60,23 +56,23 @@
 
     triggers:
         - gerrit-trigger-patch-submitted:
-            name: 'PROJECT'
+            name: 'controller'
             branch: '{branch}'
 
     maven:
-        maven-name: '{mvn30}'
+        maven-name: '{mvn32}'
         root-pom: 'pom.xml'
-        goals: 'MAVEN_GOALS'
-        maven-opts: 'MAVEN_OPTS'
-        settings: '{PROJECT-settings}'
+        goals: '-Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo clean install'
+        maven-opts: '-Xmx2048m -XX:MaxPermSize=512m'
+        settings: '{controller-settings}'
         global-settings: '{odl-global-settings}'
 
     publishers:
         - email-notification:
-            email-prefix: '[PROJECT]'
+            email-prefix: '[controller]'
 
 - job-template:
-    name: 'PROJECT-merge-{stream}'
+    name: 'controller-merge-{stream}'
 
     # Job template for ODL merge jobs
     #
@@ -99,7 +95,7 @@
     scm:
         - gerrit-trigger-scm:
             credentials-id: '{ssh-credentials}'
-            scm-url: 'ssh://jenkins-releng@git.opendaylight.org:29418/PROJECT.git'
+            scm-url: 'ssh://jenkins-releng@git.opendaylight.org:29418/controller.git'
             refspec: ''
 
     wrappers:
@@ -108,20 +104,20 @@
 
     triggers:
         - gerrit-trigger-patch-merged:
-            name: 'PROJECT'
+            name: 'controller'
             branch: '{branch}'
 
     maven:
-        maven-name: '{mvn30}'
+        maven-name: '{mvn32}'
         root-pom: 'pom.xml'
-        goals: 'MAVEN_GOALS'
-        maven-opts: 'MAVEN_OPTS'
-        settings: '{PROJECT-settings}'
+        goals: '-Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo clean install'
+        maven-opts: '-Xmx2048m -XX:MaxPermSize=512m'
+        settings: '{controller-settings}'
         global-settings: '{odl-global-settings}'
 
     publishers:
         - email-notification:
-            email-prefix: '[PROJECT]'
+            email-prefix: '[controller]'
         - maven-deploy:
             id: ''
             url: ''
@@ -129,7 +125,7 @@
             deploy-unstable: false
 
 - job-template:
-    name: 'PROJECT-daily-{stream}'
+    name: 'controller-daily-{stream}'
 
     # Job template for daily builders
     #
@@ -152,7 +148,7 @@
     scm:
         - git-scm:
             credentials-id: '{ssh-credentials}'
-            scm-url: 'ssh://jenkins-releng@git.opendaylight.org:29418/PROJECT.git'
+            scm-url: 'ssh://jenkins-releng@git.opendaylight.org:29418/controller.git'
             refspec: ''
             branch: '{branch}'
 
@@ -164,17 +160,17 @@
         - timed: 'H H * * *'
 
     maven:
-        maven-name: '{mvn30}'
+        maven-name: '{mvn32}'
         root-pom: 'pom.xml'
-        goals: 'MAVEN_GOALS'
-        maven-opts: 'MAVEN_OPTS'
-        settings: '{PROJECT-settings}'
+        goals: '-Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo clean install'
+        maven-opts: '-Xmx2048m -XX:MaxPermSize=512m'
+        settings: '{controller-settings}'
         global-settings: '{odl-global-settings}'
 
     publishers:
         - email-notification:
-            email-prefix: '[PROJECT]'
+            email-prefix: '[controller]'
         - sonar:
             branch: '{stream}'
             language: 'java'
-            maven-opts: 'MAVEN_OPTS'
+            maven-opts: '-Xmx1024m'

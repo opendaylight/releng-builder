@@ -100,6 +100,11 @@
             source /opt/virtualenv/jenkins-job-builder/bin/activate
             jenkins-jobs update jjb/
 
+            # Submit patches for any jobs that can be auto updated
+            python scripts/jjb-autoupdate-project.py
+            git commit -am "Update automated project templates"
+            git push origin HEAD:refs/for/master
+
     publishers:
         - email-notification:
             email-prefix: '[releng]'
