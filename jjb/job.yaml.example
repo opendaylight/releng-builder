@@ -1,3 +1,7 @@
+# REMOVE THIS LINE IF YOU WANT TO CUSTOMIZE ANYTHING BELOW
+# Otherwise this file will be automatically overwritten by the template
+# autobuilder.
+
 # ODL Releng build templates
 - project:
     name: aaa
@@ -62,8 +66,8 @@
     maven:
         maven-name: '{mvn30}'
         root-pom: 'pom.xml'
-        goals: 'clean verify'
-        maven-opts: '-Xmx1024m'
+        goals: '-Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo clean install'
+        maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{aaa-settings}'
         global-settings: '{odl-global-settings}'
 
@@ -110,8 +114,8 @@
     maven:
         maven-name: '{mvn30}'
         root-pom: 'pom.xml'
-        goals: 'clean verify'
-        maven-opts: '-Xmx1024m'
+        goals: '-Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo clean install'
+        maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{aaa-settings}'
         global-settings: '{odl-global-settings}'
 
@@ -162,8 +166,8 @@
     maven:
         maven-name: '{mvn30}'
         root-pom: 'pom.xml'
-        goals: 'clean verify'
-        maven-opts: '-Xmx1024m'
+        goals: '-Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo clean install'
+        maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{aaa-settings}'
         global-settings: '{odl-global-settings}'
 
