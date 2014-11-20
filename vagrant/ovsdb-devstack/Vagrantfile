@@ -39,7 +39,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     if ENV['RSIMAGE']
       rs.image = ENV['RSIMAGE']
     else
-      rs.image = 'Fedora 20 (Heisenbug) - Vagrant ready'
+      rs.image = 'Fedora 20 - Vagrant ready'
     end
   end
 
