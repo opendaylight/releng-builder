@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9a91bd0f_99eeeb21",
+        "filename": "README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2014-11-20T02:27:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a91bd0f_c88ca382",
+      "revId": "f0e82437b935f6192eb196b93727f1a97f212fbd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a91bd0f_08936ba4",
         "filename": "jjb/job.yaml.example",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2014-11-18T20:50:10Z",
       "side": 1,
       "message": "Do we want to have this on-by-default in the example? Does it make sense to have two examples? For example: job.yaml.example and custom-job.yaml.example where the second doesn\u0027t have this line and will thus be left untouched?",
+      "revId": "f0e82437b935f6192eb196b93727f1a97f212fbd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a91bd0f_59f863e5",
+        "filename": "jjb/job.yaml.example",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2014-11-20T02:27:26Z",
+      "side": 1,
+      "message": "Sure I\u0027ll add a 2nd example with a modified default.",
+      "parentUuid": "9a91bd0f_08936ba4",
       "revId": "f0e82437b935f6192eb196b93727f1a97f212fbd",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "9a91bd0f_79d0c753",
+        "filename": "scripts/jjb-autoupdate-project.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2014-11-20T02:27:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a91bd0f_88ee9b21",
+      "range": {
+        "startLine": 18,
+        "startChar": 21,
+        "endLine": 18,
+        "endChar": 29
+      },
+      "revId": "f0e82437b935f6192eb196b93727f1a97f212fbd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a91bd0f_08da8b78",
         "filename": "scripts/jjb-autoupdate-project.py",
         "patchSetId": 2
@@ -70,6 +130,30 @@
       "writtenOn": "2014-11-18T20:50:10Z",
       "side": 1,
       "message": "Does it make sense to have an args.txt file or something in the project\u0027s directory which we read in so that you can have arguments other than just the project\u0027s repo name?\n\nFor example some projects use develop instead of master as their primary branch and we may want to specify cross-project dependencies. My guess is that this can be an enhancement though.",
+      "range": {
+        "startLine": 20,
+        "startChar": 54,
+        "endLine": 20,
+        "endChar": 56
+      },
+      "revId": "f0e82437b935f6192eb196b93727f1a97f212fbd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a91bd0f_f9c37788",
+        "filename": "scripts/jjb-autoupdate-project.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2014-11-20T02:27:26Z",
+      "side": 1,
+      "message": "Sounds like a good enhancement. I\u0027d say we do that in another patch so that we can get this one moving forward. I opened a bug to track this discussion / enhancement.\n\nhttps://bugs.opendaylight.org/show_bug.cgi?id\u003d2411",
+      "parentUuid": "9a91bd0f_08da8b78",
       "range": {
         "startLine": 20,
         "startChar": 54,
