@@ -20,6 +20,31 @@ endaylight/integration/distribution-karaf/0.2.0-Helium/distribution-karaf-0.2.0-
                 should be installed. This list will be passed to the
                 "featuresBoot=" parameter in the config file.
 
+- parameter:
+    name: integration-controller-memory
+    parameters:
+        - string:
+            name: CONTROLLER_MEMORY
+            default: '{controller-memory}'
+            description: 'setting the JAVA_MAX_MEM'
+
+- parameter:
+    name: integration-controller-allfeatures
+    parameters:
+        - bool:
+            name: CONTROLLER_FEATURES
+            default: '{controller-all}'
+            description:  'load up up the odl-integration-compatible-with-all feature'
+
+- parameter:
+    name: integration-test-suite
+    parameters:
+        - string:
+            name: TEST_SUITE
+            default: '{test-suite}'
+            description:  'which test suite we should run'
+
+
 - wrapper:
     name: integration-jclouds-controller-mininet
     wrappers:

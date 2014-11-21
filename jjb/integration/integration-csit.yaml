@@ -1,7 +1,7 @@
 - project:
     name: integration-csit-tests
     jobs:
-        - 'integration-{stream}-csit-compatible-min'
+        - 'integration-{stream}-csit-{feature}-{all}'
 
     # stream:    branch with - in place of / (eg. stable-helium)
     # branch:    branch (eg. stable/helium)
@@ -10,10 +10,32 @@
             branch: 'master'
         - stable-helium:
             branch: 'stable/helium'
+    # feature:              which feature set we have enabled (eg. compatible, l2switch)
+    # controller-feature    feature we need to install
+    # test-suite            suite that we need to run. 
+    feature:
+        - compatible:
+            controller-features: 'config,standard,region,package,kar,ssh,management,odl-openflowplugin-flow-services-ui,odl-nsf-all,odl-adsal-compatibility,odl-netconf-connector-ssh'
+            test-suite: 'karaf-compatible'
+        - L2switch:
+            controller-features: 'odl-l2switch-switch-ui'
+            test-suite: 'karaf-l2layer'
+        - VTN:
+            controller-features: 'config,standard,region,package,kar,ssh,management,odl-vtn-manager-all,odl-adsal-compatibility-all,odl-openflowplugin-flow-services'
+            test-suite: 'karaf-vtn'
 
+    # all:                  If we should load up feature and all other compatible features
+    # controller-memory     When loading all feature to incease java max memory
+    all:
+        - all:
+            controller-all: true
+            controller-memory: '2048m'
+        - only:
+            controller-all: false
+            controller-memory: '3072m'
 
 - job-template:
-    name: 'integration-{stream}-csit-compatible-min'
+    name: 'integration-{stream}-csit-{feature}-{all}'
 
     project-type: freestyle
     node: dynamic_robot
@@ -34,7 +56,14 @@
     parameters:
         - integration-bundleurl
         - integration-controller-features:
-            controller-features: 'config,standard,region,package,kar,ssh,management,odl-openflowplugin-flow-services-ui,odl-nsf-all,odl-adsal-compatibility,odl-netconf-connector-ssh'
+            controller-features: '{controller-features}'
+        - integration-controller-memory:
+            controller-memory: '{controller-memory}'
+        - integration-controller-allfeatures:
+            controller-all: '{controller-all}'
+        - integration-test-suite:
+            test-suite: '{test-suite}'
+
 
     wrappers:
         - integration-jclouds-controller-mininet

@@ -19,14 +19,25 @@ unzip -q /tmp/\${BUNDLE}
 
 # Configure the controller
 cd \${BUNDLEFOLDER}/etc
+
 # Configure the startup features
 export CFG=org.apache.karaf.features.cfg
 cp \${CFG} \${CFG}.bak
 cat \${CFG}.bak | sed 's/^featuresBoot=.*/featuresBoot=${CONTROLLER_FEATURES}/' > \${CFG}
+
 # Configure the log
 export LOG=org.ops4j.pax.logging.cfg
 cp \${LOG} \${LOG}.bak
 cat \${LOG}.bak | sed 's/log4j.appender.out.maxFileSize=1MB/log4j.appender.out.maxFileSize=20MB/' > \${LOG}
+
+# Configure Max memory
+if [ '${CONTROLLER_MEM != "2048m" ']; then
+    cd ../bin
+    cp setenv setenv.bak
+    cat setenv.bak | sed 's/JAVA_MAX_MEM="2048m"/JAVA_MAX_MEM="${CONTROLLER_MEM}"/' > setenv
+fi
+
+
 
 # run the controller but trick jenkins into not killing it
 cd ../bin
@@ -34,6 +45,11 @@ BUILD_ID=dontKillMe ./start
 
 # sleep for 300 seconds may need to be longer
 sleep 150
+
+# Loading up all compatible features if CONTROLLER_ALL is true
+if [ '${CONTROLLER_ALL}' ]; then
+    ./client 'feature:install odl-integration-compatible-with-all' 
+fi
 
 # Check OSGi bundles
 ./client 'bundle:list'
