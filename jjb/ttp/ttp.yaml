@@ -65,7 +65,7 @@
             branch: '{branch}'
 
     maven:
-        maven-name: '{mvn30}'
+        maven-name: '{mvn32}'
         root-pom: 'pom.xml'
         goals: '-Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo clean install'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
@@ -114,7 +114,7 @@
             branch: '{branch}'
 
     maven:
-        maven-name: '{mvn30}'
+        maven-name: '{mvn32}'
         root-pom: 'pom.xml'
         goals: '-Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo clean install'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
@@ -166,7 +166,7 @@
         - timed: 'H H * * *'
 
     maven:
-        maven-name: '{mvn30}'
+        maven-name: '{mvn32}'
         root-pom: 'pom.xml'
         goals: '-Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo clean install'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
