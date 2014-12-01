@@ -53,6 +53,7 @@
             credentials-id: '{ssh-credentials}'
             scm-url: 'ssh://jenkins-releng@git.opendaylight.org:29418/PROJECT.git'
             refspec: '$GERRIT_REFSPEC'
+            choosing-strategy: 'gerrit'
 
     wrappers:
         - ssh-agent-credentials:
@@ -101,6 +102,7 @@
             credentials-id: '{ssh-credentials}'
             scm-url: 'ssh://jenkins-releng@git.opendaylight.org:29418/PROJECT.git'
             refspec: ''
+            choosing-strategy: 'default'
 
     wrappers:
         - ssh-agent-credentials:
