@@ -30,7 +30,7 @@
             branches:
                 - 'origin/$GERRIT_BRANCH'
             skip-tag: true
-            choosing-strategy: gerrit
+            choosing-strategy: '{choosing-strategy}'
 
 - trigger:
     name: gerrit-trigger-patch-submitted
