@@ -6,7 +6,7 @@ def get_autoupdate_projects(jjb_dir, projects):
     """Get list of projects that should be autoupdated"""
     project_list = []
     for project in projects:
-        template = os.path.join(jjb_dir, project, "{}.yaml".format(project))
+        template = os.path.join(jjb_dir, project, "%s.yaml" % project)
         if os.path.isfile(template):
             with open(template, 'r') as f:
                 first_line = f.readline()
@@ -17,7 +17,7 @@ def get_autoupdate_projects(jjb_dir, projects):
 
 def update_templates(projects):
     for project in projects:
-        os.system("python scripts/jjb-init-project.py {}".format(project))
+        os.system("python scripts/jjb-init-project.py %s" % project)
 
 ##############
 # Code Start #

@@ -13,7 +13,7 @@ args = parser.parse_args()
 
 project = args.project
 project_dir = os.path.join("jjb", project)
-project_file = os.path.join(project_dir, "{}.yaml".format(project))
+project_file = os.path.join(project_dir, "%s.yaml" % project)
 mvn_goals = args.mvn_goals  # Defaults to "clean install" if not passsed
 mvn_opts = args.mvn_opts    # Defaults to blank if not passed
 
@@ -29,18 +29,18 @@ if not mvn_opts:
 if not os.path.exists(project_dir):
     os.makedirs(project_dir)
 
-print("project: {}\ngoals: {}\noptions: {}".format(
-    project,
-    mvn_goals,
-    mvn_opts))
+print("project: %s\ngoals: %s\noptions: %s" % (project,
+                                               mvn_goals,
+                                               mvn_opts))
 
 # Create initial project YAML file
-with open(template_file, "r") as infile, open(project_file, "w") as outfile:
-    for line in infile:
-        if not re.match("\s*#", line):
-            line = re.sub("PROJECT", project, line)
-        if not re.match("\s*#", line):
-            line = re.sub("MAVEN_GOALS", mvn_goals, line)
-        if not re.match("\s*#", line):
-            line = re.sub("MAVEN_OPTS", mvn_opts, line)
-        outfile.write(line)
+with open(template_file, "r") as infile:
+    with open(project_file, "w") as outfile:
+        for line in infile:
+            if not re.match("\s*#", line):
+                line = re.sub("PROJECT", project, line)
+            if not re.match("\s*#", line):
+                line = re.sub("MAVEN_GOALS", mvn_goals, line)
+            if not re.match("\s*#", line):
+                line = re.sub("MAVEN_OPTS", mvn_opts, line)
+            outfile.write(line)
