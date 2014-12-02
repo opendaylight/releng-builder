@@ -1,5 +1,5 @@
 source /opt/virtualenv/jenkins-job-builder/bin/activate
-jenkins-jobs update jjb/
+jenkins-jobs update --delete-old jjb/
 
 # Submit patches for any jobs that can be auto updated
 function submitJJB {
