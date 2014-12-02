@@ -2,8 +2,9 @@
 
 import os
 
+
 def get_autoupdate_projects(jjb_dir, projects):
-    """Get list of projects that should be autoupdated"""
+    """Get list of projects that should be auto-updated."""
     project_list = []
     for project in projects:
         template = os.path.join(jjb_dir, project, "%s.yaml" % project)
@@ -15,6 +16,7 @@ def get_autoupdate_projects(jjb_dir, projects):
 
     return project_list
 
+
 def update_templates(projects):
     for project in projects:
         os.system("python scripts/jjb-init-project.py %s" % project)
@@ -24,7 +26,7 @@ def update_templates(projects):
 ##############
 
 jjb_dir = "jjb"
-all_projects = [ d for d in os.listdir(jjb_dir)
-                    if os.path.isdir(os.path.join(jjb_dir, d)) ]
+all_projects = [d for d in os.listdir(jjb_dir)
+                if os.path.isdir(os.path.join(jjb_dir, d))]
 auto_update_projects = get_autoupdate_projects(jjb_dir, all_projects)
 update_templates(auto_update_projects)
