@@ -3,7 +3,6 @@
 import argparse
 import os
 import re
-import sys
 
 parser = argparse.ArgumentParser()
 parser.add_argument("project", help="project")
@@ -20,7 +19,9 @@ mvn_opts = args.mvn_opts    # Defaults to blank if not passed
 template_file = os.path.join("jjb", "job.yaml.template")
 
 if not mvn_goals:
-    mvn_goals = "-Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo clean install"
+    mvn_goals = ("-Dmaven.repo.local=$WORKSPACE/.m2repo "
+                 "-Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo "
+                 "clean install")
 
 if not mvn_opts:
     mvn_opts = "-Xmx1024m -XX:MaxPermSize=256m"
