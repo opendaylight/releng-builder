@@ -1,11 +1,12 @@
 - project:
     name: builder-jobs
     jobs:
-        - 'builder-verify'
+        - 'builder-verify-jjb'
+        - 'builder-verify-python'
         - 'builder-merge'
 
 - job-template:
-    name: builder-verify
+    name: builder-verify-jjb
 
     project-type: freestyle
 
@@ -49,6 +50,56 @@
         - shell: |
             source /opt/virtualenv/jenkins-job-builder/bin/activate
             jenkins-jobs test jjb/
+
+    publishers:
+        - email-notification:
+            email-prefix: '[releng]'
+
+- job-template:
+    name: builder-verify-python
+
+    project-type: freestyle
+
+    logrotate:
+        daysToKeep: 30
+        numToKeep: 10
+        artifactDaysToKeep: -1
+        artifactNumToKeep: -1
+
+    parameters:
+        - gerrit-parameter:
+            branch: 'master'
+
+    scm:
+        - gerrit-trigger-scm:
+            credentials-id: '{ssh-credentials}'
+            scm-url: 'ssh://jenkins-releng@git.opendaylight.org:29418/releng/builder'
+            refspec: '$GERRIT_REFSPEC'
+            choosing-strategy: 'gerrit'
+
+    wrappers:
+        - ssh-agent-credentials:
+            user: '{ssh-credentials}'
+
+    triggers:
+        - gerrit:
+            trigger-on-patchset-uploaded-event: true
+            trigger-on-draft-published-event: true
+            projects:
+              - project-compare-type: 'ANT'
+                project-pattern: 'releng/builder'
+                branches:
+                  - branch-compare-type: 'ANT'
+                    branch-pattern: '**/master'
+                file-paths:
+                    - compare-type: ANT
+                      pattern: scripts/**
+
+
+    builders:
+        - shell: |
+            source /opt/virtualenv/jenkins-job-builder/bin/activate
+            flake8 scripts/
 
     publishers:
         - email-notification:
