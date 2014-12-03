@@ -1,3 +1,4 @@
+# REMOVE THIS LINE IF YOU WANT TO CUSTOMIZE ANYTHING BELOW
 # Otherwise this file will be automatically overwritten by the template
 # autobuilder.
 
@@ -66,7 +67,7 @@
     maven:
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
-        goals: '-Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo clean install'
+        goals: '-Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo clean -DrepoBuild install javadoc:aggregate'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{bgpcep-settings}'
         global-settings: '{odl-global-settings}'
