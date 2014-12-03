@@ -92,6 +92,21 @@ However if your project needs more control over your jobs or if you have
 any additional configuration outside of the standard configuration
 provided by the template then this line should be removed.
 
+#### Tuning templates
+
+Additionally the auto-updater does allow some small tweaks to the template
+so that you can take advantage of the template while at the same time
+tuning small aspects of your jobs. To take advantage of this simply create
+a file in your project's jjb directory called **project.cfg** with the
+following contents and tune as necessary. If there is a parameter you do
+NOT want to tune simply remove the parameter or comment out the line with a
+"#"" sign.
+
+    MVN_GOALS: -Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo clean -DrepoBuild install javadoc:aggregate
+    MVN_OPTS: -Xmx1024m -XX:MaxPermSize=256m
+
+#### Advanced
+
 It is also possible to take advantage of both the auto updater and creating
 your own jobs. To do this, create a YAML file in your project's sub-directory
 with any name other than <project>.yaml. The auto-update script will only
