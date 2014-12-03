@@ -2,6 +2,8 @@
 
 import os
 
+import yaml
+
 
 def get_autoupdate_projects(jjb_dir, projects):
     """Get list of projects that should be auto-updated."""
@@ -19,7 +21,25 @@ def get_autoupdate_projects(jjb_dir, projects):
 
 def update_templates(projects):
     for project in projects:
-        os.system("python scripts/jjb-init-project.py %s" % project)
+
+        # If project has customized variables
+        cfg_file = "jjb/%s/%s.cfg" % (project, project)
+        parameters = ["python scripts/jjb-init-project.py"]
+        if os.path.isfile(cfg_file):
+            stream = open(cfg_file, "r")
+            cfg = yaml.load(stream)
+            for k, v in cfg.items():
+                if k == "MVN_GOALS" and v is not None:
+                    parameters.append("-g '%s'" % v)
+                elif k == "MVN_OPTS" and v is not None:
+                    parameters.append("-o '%s'" % v)
+
+            parameters.append(project)
+            cmd = " ".join(parameters)
+            os.system(cmd)
+
+        else:
+            os.system("python scripts/jjb-init-project.py %s" % project)
 
 ##############
 # Code Start #
