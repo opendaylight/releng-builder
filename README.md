@@ -27,11 +27,16 @@ Note: The templates below depend on a modified JJB version to add
 The Verify job template creates a Gerrit Trigger job that will trigger
 when a new patch is submitted to Gerrit.
 
+Verify jobs can be retriggered in Gerrit by leaving a comment that says
+**recheck**.
+
 ## Merge Job Template
 
 The Merge job template is similar to the Verify Job Template except it
-will trigger once a Gerrit patch is merged into
-the repo.
+will trigger once a Gerrit patch is merged into the repo.
+
+Merge jobs can be retriggered in Gerrit by leavning a comment that says
+**remerge**.
 
 ## Daily Job Template
 
