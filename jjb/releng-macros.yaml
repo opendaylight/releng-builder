@@ -36,8 +36,11 @@
     name: gerrit-trigger-patch-submitted
     triggers:
         - gerrit:
-            trigger-on-patchset-uploaded-event: true
-            trigger-on-draft-published-event: true
+            trigger-on:
+                - patchset-created-event
+                - draft-published-event
+                - comment-added-contains-event:
+                    comment-contains-value: 'recheck'
             projects:
               - project-compare-type: 'ANT'
                 project-pattern: '{name}'
@@ -49,7 +52,10 @@
     name: gerrit-trigger-patch-merged
     triggers:
         - gerrit:
-            trigger-on-change-merged-event: true
+            trigger-on:
+                - change-merged-event
+                - comment-added-contains-event:
+                    comment-contains-value: 'remerge'
             projects:
               - project-compare-type: 'ANT'
                 project-pattern: '{name}'
