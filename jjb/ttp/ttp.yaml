@@ -71,6 +71,7 @@
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{ttp-settings}'
         global-settings: '{odl-global-settings}'
+        ignore-upstream-changes: false
 
     publishers:
         - email-notification:
