@@ -5,6 +5,8 @@
         - 'builder-verify-python'
         - 'builder-merge'
 
+    project: 'releng/builder'
+
 - job-template:
     name: builder-verify-jjb
 
@@ -17,13 +19,14 @@
         artifactNumToKeep: -1
 
     parameters:
+        - project-parameter:
+            project: '{project}'
         - gerrit-parameter:
             branch: 'master'
 
     scm:
         - gerrit-trigger-scm:
             credentials-id: '{ssh-credentials}'
-            scm-url: 'ssh://jenkins-releng@git.opendaylight.org:29418/releng/builder'
             refspec: '$GERRIT_REFSPEC'
             choosing-strategy: 'gerrit'
 
@@ -73,13 +76,14 @@
         artifactNumToKeep: -1
 
     parameters:
+        - project-parameter:
+            project: '{project}'
         - gerrit-parameter:
             branch: 'master'
 
     scm:
         - gerrit-trigger-scm:
             credentials-id: '{ssh-credentials}'
-            scm-url: 'ssh://jenkins-releng@git.opendaylight.org:29418/releng/builder'
             refspec: '$GERRIT_REFSPEC'
             choosing-strategy: 'gerrit'
 
@@ -132,13 +136,14 @@
         artifactNumToKeep: 5
 
     parameters:
+        - project-parameter:
+            project: '{project}'
         - gerrit-parameter:
             branch: 'master'
 
     scm:
         - gerrit-trigger-scm:
             credentials-id: '{ssh-credentials}'
-            scm-url: 'ssh://jenkins-releng@git.opendaylight.org:29418/releng/builder'
             refspec: ''
             choosing-strategy: 'default'
 
