@@ -1,0 +1,76 @@
+- project:
+    name: yangtools-verify-master
+    jobs:
+        - 'yangtools-verify-{stream}-{maven}'
+
+    maven:
+        - mvn31:
+            mvnver: "Maven 3.1.1"
+        - mvn32:
+            mvnver: "Maven 3.2.3"
+
+    stream:
+        - master:
+            branch: master
+
+- project:
+    name: yangtools-verify-helium
+    jobs:
+        - 'yangtools-verify-{stream}-{maven}'
+
+    maven:
+        - mvn30:
+            mvnver: "Maven 3.0.5"
+        - mvn31:
+            mvnver: "Maven 3.1.1"
+        - mvn32:
+            mvnver: "Maven 3.2.3"
+
+    stream:
+        - stable-helium:
+            branch: stable/helium
+
+- job-template:
+    name: 'yangtools-verify-{stream}-{maven}'
+
+    project-type: maven
+    node: dynamic_verify
+
+    logrotate:
+        daysToKeep: '{build-days-to-keep}'
+        numToKeep: '{build-num-to-keep}'
+        artifactDaysToKeep: '{build-artifact-days-to-keep}'
+        artifactNumToKeep: '{build-artifact-num-to-keep}'
+
+    parameters:
+        - gerrit-parameter:
+            branch: '{branch}'
+
+    scm:
+        - gerrit-trigger-scm:
+            credentials-id: '{ssh-credentials}'
+            scm-url: 'ssh://jenkins-releng@git.opendaylight.org:29418/yangtools.git'
+            refspec: '$GERRIT_REFSPEC'
+            choosing-strategy: 'gerrit'
+
+    wrappers:
+        - ssh-agent-credentials:
+            user: '{ssh-credentials}'
+
+    triggers:
+        - gerrit-trigger-patch-submitted:
+            name: 'yangtools'
+            branch: '{branch}'
+
+    maven:
+        maven-name: '{mvnver}'
+        root-pom: 'pom.xml'
+        goals: '-Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo clean install'
+        maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+        settings: '{yangtools-settings}'
+        global-settings: '{odl-global-settings}'
+        ignore-upstream-changes: false
+
+    publishers:
+        - email-notification:
+            email-prefix: '[yangtools]'
