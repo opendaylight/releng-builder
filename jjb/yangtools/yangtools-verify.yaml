@@ -1,8 +1,11 @@
 - project:
     name: yangtools-verify-master
     jobs:
-        - 'yangtools-verify-{stream}-{maven}'
+        - 'yangtools-verify-{stream}-{maven}-{jdk}'
 
+    jdk:
+        - jdk7
+        - jdk8
     maven:
         - mvn31:
             mvnver: "Maven 3.1.1"
@@ -18,8 +21,10 @@
 - project:
     name: yangtools-verify-helium
     jobs:
-        - 'yangtools-verify-{stream}-{maven}'
+        - 'yangtools-verify-{stream}-{maven}-{jdk}'
 
+    jdk:
+        - jdk7
     maven:
         - mvn30:
             mvnver: "Maven 3.0.5"
@@ -35,10 +40,11 @@
     project: 'yangtools'
 
 - job-template:
-    name: 'yangtools-verify-{stream}-{maven}'
+    name: 'yangtools-verify-{stream}-{maven}-{jdk}'
 
     project-type: maven
     node: dynamic_verify
+    jdk: '{jdk}'
 
     logrotate:
         daysToKeep: '{build-days-to-keep}'
