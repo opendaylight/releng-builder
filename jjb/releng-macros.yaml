@@ -1,6 +1,14 @@
 # OLD Releng macros
 
 - parameter:
+    name: project-parameter
+    parameters:
+        - string:
+            name: PROJECT
+            default: '{project}'
+            description: "JJB configured PROJECT parameter to identify an ODL Gerrit project"
+
+- parameter:
     name: gerrit-parameter
     parameters:
         - string:
@@ -13,7 +21,7 @@
     scm:
         - git:
             credentials-id: '{credentials-id}'
-            url: '{scm-url}'
+            url: '$GIT_BASE'
             refspec: ''
             branches:
                 - 'origin/{branch}'
@@ -25,7 +33,7 @@
     scm:
         - git:
             credentials-id: '{credentials-id}'
-            url: '{scm-url}'
+            url: '$GIT_BASE'
             refspec: '{refspec}'
             branches:
                 - 'origin/$GERRIT_BRANCH'
