@@ -58,6 +58,7 @@
     builders:
         - shell: |
             source /opt/virtualenv/jenkins-job-builder/bin/activate
+            python scripts/jjb-autoupdate-project.py
             jenkins-jobs test jjb/
 
     publishers:
