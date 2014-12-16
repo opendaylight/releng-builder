@@ -18,6 +18,7 @@
         - stable-helium:
             branch: 'stable/helium'
 
+    project: 'openflowjava'
 
 # For the Job templates below replace instances of:
 # PROJECT with your project name (eg. controller)
@@ -45,13 +46,14 @@
         artifactNumToKeep: '{build-artifact-num-to-keep}'
 
     parameters:
+        - project-parameter:
+            project: '{project}'
         - gerrit-parameter:
             branch: '{branch}'
 
     scm:
         - gerrit-trigger-scm:
             credentials-id: '{ssh-credentials}'
-            scm-url: 'ssh://jenkins-releng@git.opendaylight.org:29418/openflowjava.git'
             refspec: '$GERRIT_REFSPEC'
             choosing-strategy: 'gerrit'
 
@@ -98,10 +100,13 @@
         artifactDaysToKeep: '{build-artifact-days-to-keep}'
         artifactNumToKeep: '{build-artifact-num-to-keep}'
 
+    parameters:
+        - project-parameter:
+            project: '{project}'
+
     scm:
         - gerrit-trigger-scm:
             credentials-id: '{ssh-credentials}'
-            scm-url: 'ssh://jenkins-releng@git.opendaylight.org:29418/openflowjava.git'
             refspec: ''
             choosing-strategy: 'default'
 
@@ -151,10 +156,13 @@
         artifactDaysToKeep: '{build-artifact-days-to-keep}'
         artifactNumToKeep: '{build-artifact-num-to-keep}'
 
+    parameters:
+        - project-parameter:
+            project: '{project}'
+
     scm:
         - git-scm:
             credentials-id: '{ssh-credentials}'
-            scm-url: 'ssh://jenkins-releng@git.opendaylight.org:29418/openflowjava.git'
             refspec: ''
             branch: '{branch}'
 
