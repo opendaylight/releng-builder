@@ -32,9 +32,10 @@ mvn_opts = args.mvn_opts    # Defaults to blank if not passed
 template_file = os.path.join("jjb", "job.yaml.template")
 
 if not mvn_goals:
-    mvn_goals = ("-Dmaven.repo.local=$WORKSPACE/.m2repo "
-                 "-Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo "
-                 "clean install")
+    mvn_goals = ("clean install "
+                 "-V "  # Show Maven / Java version before building
+                 "-Dmaven.repo.local=$WORKSPACE/.m2repo "
+                 "-Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo ")
 
 if not mvn_opts:
     mvn_opts = "-Xmx1024m -XX:MaxPermSize=256m"
