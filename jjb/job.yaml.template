@@ -19,6 +19,7 @@
             branch: 'stable/helium'
 
     project: 'PROJECT'
+    jdk: 'openjdk7'
 
 # For the Job templates below replace instances of:
 # PROJECT with your project name (eg. controller)
@@ -38,6 +39,7 @@
 
     project-type: maven
     node: dynamic_verify
+    jdk: '{jdk}'
 
     logrotate:
         daysToKeep: '{build-days-to-keep}'
@@ -93,6 +95,7 @@
 
     project-type: maven
     node: dynamic_merge
+    jdk: '{jdk}'
 
     logrotate:
         daysToKeep: '{build-days-to-keep}'
@@ -149,6 +152,7 @@
 
     project-type: maven
     node: dynamic_verify
+    jdk: '{jdk}'
 
     logrotate:
         daysToKeep: '{build-days-to-keep}'

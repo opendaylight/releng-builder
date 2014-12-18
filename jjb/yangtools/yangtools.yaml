@@ -14,6 +14,7 @@
             branch: 'stable/helium'
 
     project: 'yangtools'
+    jdk: 'openjdk7'
 
 
 # For the Job templates below replace instances of:
@@ -35,6 +36,7 @@
 
     project-type: maven
     node: dynamic_merge
+    jdk: '{jdk}'
 
     logrotate:
         daysToKeep: '{build-days-to-keep}'
@@ -91,6 +93,7 @@
 
     project-type: maven
     node: dynamic_verify
+    jdk: '{jdk}'
 
     logrotate:
         daysToKeep: '{build-days-to-keep}'
