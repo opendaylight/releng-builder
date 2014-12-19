@@ -72,7 +72,7 @@
     maven:
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
-        goals: '-Dmaven.repo.local=/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=/.m2repo clean install -Pintegrationtests,docs'
+        goals: '-Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo clean install -Pintegrationtests,docs'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
         settings: '{controller-settings}'
         global-settings: '{odl-global-settings}'
@@ -126,7 +126,7 @@
     maven:
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
-        goals: '-Dmaven.repo.local=/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=/.m2repo clean install -Pintegrationtests,docs'
+        goals: '-Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo clean install -Pintegrationtests,docs'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
         settings: '{controller-settings}'
         global-settings: '{odl-global-settings}'
@@ -181,7 +181,7 @@
     maven:
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
-        goals: '-Dmaven.repo.local=/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=/.m2repo clean install -Pintegrationtests,docs'
+        goals: '-Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo clean install -Pintegrationtests,docs'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
         settings: '{controller-settings}'
         global-settings: '{odl-global-settings}'
@@ -239,7 +239,7 @@
     maven:
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
-        goals: '-Dmaven.repo.local=/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=/.m2repo clean install -Pintegrationtests,docs'
+        goals: '-Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo clean install -Pintegrationtests,docs'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
         settings: '{controller-settings}'
         global-settings: '{odl-global-settings}'
