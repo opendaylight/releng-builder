@@ -67,13 +67,20 @@ containing your project's base template.
     #
     # Optionally pass the following options:
     #
-    # -g / --mvn-goals : With your job's Maven Goals necessary to build
-    #                    (defaults to "clean install")
-    #          Example : -g "clean install"
+    # -g / --mvn-goals      : With your job's Maven Goals necessary to build
+    #                         (defaults to "clean install")
+    #          Example      : -g "clean install"
     #
-    # -o / --mvn-opts  : With your job's Maven Options necessary to build
-    #                    (defaults to empty)
-    #          Example : -o "-Xmx1024m"
+    # -o / --mvn-opts       : With your job's Maven Options necessary to build
+    #                         (defaults to empty)
+    #          Example      : -o "-Xmx1024m"
+    #
+    # -d / --dependencies   : A comma-seperated (no spaces) list of projects
+    #                         your project depends on.
+    #                         This is used to create an integration job that
+    #                         will trigger when a dependent project-merge job
+    #                         is built successfully.
+    #          Example      : aaa,controller,yangtools
 
 If all your project requires is the basic verify, merge, and
 daily jobs then using the job.template should be all you need to
