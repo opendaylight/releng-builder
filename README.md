@@ -102,8 +102,9 @@ following contents and tune as necessary. If there is a parameter you do
 NOT want to tune simply remove the parameter or comment out the line with a
 "#"" sign.
 
-    MVN_GOALS: -Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo clean -DrepoBuild install javadoc:aggregate
+    MVN_GOALS: clean install javadoc:aggregate -DrepoBuild -Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo
     MVN_OPTS: -Xmx1024m -XX:MaxPermSize=256m
+    DEPENDENCIES: aaa,controller,yangtools
 
 #### Advanced
 
