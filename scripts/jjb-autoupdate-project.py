@@ -46,6 +46,8 @@ def update_templates(projects):
                     parameters.append("-g '%s'" % v)
                 elif k == "MVN_OPTS" and v is not None:
                     parameters.append("-o '%s'" % v)
+                elif k == "DEPENDENCIES" and v is not None:
+                    parameters.append("-d '%s'" % v)
 
             parameters.append(project)
             cmd = " ".join(parameters)
