@@ -57,7 +57,7 @@ if dependencies:
     email_prefix = (email_prefix + " " +
                     " ".join(['[%s]' % d for d in dependencies.split(",")]))
     dependent_jobs = ",".join(
-        ['%s-merge' % d for d in dependencies.split(",")])
+        ['%s-merge-{stream}' % d for d in dependencies.split(",")])
 
 # Create project directory if it doesn't exist
 if not os.path.exists(project_dir):
