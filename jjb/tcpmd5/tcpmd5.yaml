@@ -61,6 +61,7 @@
             choosing-strategy: 'gerrit'
 
     wrappers:
+        - build-timeout
         - ssh-agent-credentials:
             user: '{ssh-credentials}'
 
@@ -115,6 +116,7 @@
             choosing-strategy: 'default'
 
     wrappers:
+        - build-timeout
         - ssh-agent-credentials:
             user: '{ssh-credentials}'
 
@@ -172,6 +174,7 @@
             branch: '{branch}'
 
     wrappers:
+        - build-timeout
         - ssh-agent-credentials:
             user: '{ssh-credentials}'
 
@@ -222,12 +225,13 @@
             project: '{project}'
 
     scm:
-        - gerrit-trigger-scm:
+        - git-scm:
             credentials-id: '{ssh-credentials}'
             refspec: ''
-            choosing-strategy: 'default'
+            branch: '{branch}'
 
     wrappers:
+        - build-timeout
         - ssh-agent-credentials:
             user: '{ssh-credentials}'
 
