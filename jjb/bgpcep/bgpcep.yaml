@@ -222,10 +222,10 @@
             project: '{project}'
 
     scm:
-        - gerrit-trigger-scm:
+        - git-scm:
             credentials-id: '{ssh-credentials}'
             refspec: ''
-            choosing-strategy: 'default'
+            branch: '{branch}'
 
     wrappers:
         - ssh-agent-credentials:

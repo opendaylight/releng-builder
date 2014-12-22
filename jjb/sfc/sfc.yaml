@@ -222,10 +222,10 @@
             project: '{project}'
 
     scm:
-        - gerrit-trigger-scm:
+        - git-scm:
             credentials-id: '{ssh-credentials}'
             refspec: ''
-            choosing-strategy: 'default'
+            branch: '{branch}'
 
     wrappers:
         - ssh-agent-credentials:
@@ -233,7 +233,7 @@
 
     triggers:
         - reverse:
-            jobs: 'yangtools-merge,controller-merge'
+            jobs: 'yangtools-merge-{stream},controller-merge-{stream}'
             result: 'success'
 
     maven:
