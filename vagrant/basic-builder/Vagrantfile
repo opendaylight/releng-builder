@@ -34,12 +34,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # create these base builds always on the smallest system possible
     rs.flavor = 'general1-1'
 
-    # Default the CentOS 7 - Vagrant ready image unless overriden by a RSIMAGE
+    # Default the CentOS 6.5 - Vagrant ready image unless overriden by a RSIMAGE
     # environment variable
     if ENV['RSIMAGE']
       rs.image = ENV['RSIMAGE']
     else
-      rs.image = 'CentOS 7 - Vagrant ready'
+      rs.image = 'CentOS 6.5 - Vagrant ready'
     end
   end
 
