@@ -40,5 +40,5 @@ yum install -q -y @development perl-{Digest-SHA,ExtUtils-MakeMaker} \
 # an EL6 system some of these packages are not availalble (or at the
 # wrong version) in publically available repositories as such this
 # should only really be done on an EL7 (or F18+) system
-yum install -q -y {jansson,libevent,libnl,libuuid}-devel \
+yum install -q -y {jansson,libevent,libevent2,libnl,libuuid}-devel \
     python-{devel,virtualenv,setuptools}
