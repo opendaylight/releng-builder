@@ -29,6 +29,8 @@ parser.add_argument("-d", "--dependencies",
                           "Example: aaa,controller,yangtools"))
 parser.add_argument("-g", "--mvn-goals", help="Maven Goals")
 parser.add_argument("-o", "--mvn-opts", help="Maven Options")
+parser.add_argument("-z", "--no-cfg", action="store_true",
+                    help=("Disable initializing the project.cfg file."))
 args = parser.parse_args()
 
 project = args.project
@@ -43,21 +45,42 @@ email_prefix = "[%s]" % project
 
 template_file = os.path.join("jjb", "job.yaml.template")
 
+# The below 2 variables are used to determine if we should generate a CFG file
+# for a project automatically.
+#
+# no_cfg - is a commandline parameter that can be used by scripts such as the
+#          jjb-autoupdate-project script to explicitly disable generating CFG
+#          files.
+# make_cfg - is a internal variable used to decide if we should try to
+#            auto generate the CFG file for a project based on optional
+#            variables passed by the user on the commandline.
+no_cfg = args.no_cfg
+make_cfg = False  # Set to true if we need to generate initial CFG file
+cfg_string = []
+
 if not mvn_goals:
     mvn_goals = ("clean install "
                  "-V "  # Show Maven / Java version before building
                  "-Dmaven.repo.local=$WORKSPACE/.m2repo "
                  "-Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo ")
+else:  # User explicitly set MAVEN_OPTS so create CFG
+    make_cfg = True
+    cfg_string.append("MAVEN_GOALS: %s" % mvn_goals)
 
 if not mvn_opts:
     mvn_opts = "-Xmx1024m -XX:MaxPermSize=256m"
+else:  # User explicitly set MAVEN_OPTS so create CFG
+    make_cfg = True
+    cfg_string.append("MAVEN_OPTS: %s" % mvn_opts)
 
 if dependencies:
+    make_cfg = True
     disabled = "false"
     email_prefix = (email_prefix + " " +
                     " ".join(['[%s]' % d for d in dependencies.split(",")]))
     dependent_jobs = ",".join(
         ['%s-merge-{stream}' % d for d in dependencies.split(",")])
+    cfg_string.append("DEPENDENCIES: %s" % dependencies)
 
 # Create project directory if it doesn't exist
 if not os.path.exists(project_dir):
@@ -71,6 +94,14 @@ print("project: %s\n"
        mvn_goals,
        mvn_opts,
        dependencies))
+
+# Create initial project CFG file
+if not no_cfg and make_cfg:
+    print("Creating %s.cfg file" % project)
+    cfg_file = os.path.join(project_dir, "%s.cfg" % project)
+    with open(cfg_file, "w") as outstream:
+        cfg = "\n".join(cfg_string)
+        outstream.write(cfg)
 
 # Create initial project YAML file
 with open(template_file, "r") as infile:

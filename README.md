@@ -81,6 +81,13 @@ containing your project's base template.
     #                         will trigger when a dependent project-merge job
     #                         is built successfully.
     #          Example      : aaa,controller,yangtools
+    #
+    # -z / --no-cfg         : Do not auto-generate a project.cfg file if
+    #                         -g, -o, -d parameters are passed. Usually
+    #                         when these parameters are passed we will
+    #                         assume customizations are made and create
+    #                         the project file. (Useful in scripts like
+    #                         the jjb-autoupdate-project.py script)
 
 If all your project requires is the basic verify, merge, and
 daily jobs then using the job.template should be all you need to
