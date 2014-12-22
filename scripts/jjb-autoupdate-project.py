@@ -38,6 +38,7 @@ def update_templates(projects):
         # If project has customized variables
         cfg_file = "jjb/%s/%s.cfg" % (project, project)
         parameters = ["python scripts/jjb-init-project.py"]
+        parameters.append("-z")  # Disable CFG auto-generation
         if os.path.isfile(cfg_file):
             stream = open(cfg_file, "r")
             cfg = yaml.load(stream)
@@ -54,7 +55,7 @@ def update_templates(projects):
             os.system(cmd)
 
         else:
-            os.system("python scripts/jjb-init-project.py %s" % project)
+            os.system("python scripts/jjb-init-project.py -z %s" % project)
 
 ##############
 # Code Start #
