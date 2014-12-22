@@ -40,6 +40,15 @@
             skip-tag: true
             choosing-strategy: '{choosing-strategy}'
 
+- wrapper:
+    name: build-timeout
+    wrappers:
+        - timeout:
+            type: elastic
+            elastic-percentage: 200
+            elastic-default-timeout: 180
+            fail: true
+
 - trigger:
     name: gerrit-trigger-patch-submitted
     triggers:
