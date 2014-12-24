@@ -1,0 +1,9 @@
+# Macros for the AutoRelease project
+- wrapper:
+    name: autorelease-build-timeout
+    wrappers:
+        - timeout:
+            type: elastic
+            elastic-percentage: 200
+            elastic-default-timeout: 300
+            fail: true
