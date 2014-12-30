@@ -9,4 +9,4 @@ function submitJJB {
 
 gitdir=$(git rev-parse --git-dir); scp -p -P 29418 jenkins-releng@git.opendaylight.org:hooks/commit-msg ${gitdir}/hooks/
 python scripts/jjb-autoupdate-project.py
-git diff --quiet --exit-code || submitJJB
+git diff --exit-code || submitJJB
