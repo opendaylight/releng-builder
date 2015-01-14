@@ -70,7 +70,7 @@
     maven:
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
-        goals: 'clean install -V -Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo '
+        goals: 'clean install javadoc:aggregate -DrepoBuild -Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{lispflowmapping-settings}'
         global-settings: '{odl-global-settings}'
@@ -125,7 +125,7 @@
     maven:
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
-        goals: 'clean install -V -Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo '
+        goals: 'clean install javadoc:aggregate -DrepoBuild -Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{lispflowmapping-settings}'
         global-settings: '{odl-global-settings}'
@@ -181,7 +181,7 @@
     maven:
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
-        goals: 'clean install -V -Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo '
+        goals: 'clean install javadoc:aggregate -DrepoBuild -Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{lispflowmapping-settings}'
         global-settings: '{odl-global-settings}'
@@ -196,7 +196,7 @@
 
 - job-template:
     name: 'lispflowmapping-integration-{stream}'
-    disabled: true
+    disabled: false
 
     # Job template for ODL merge jobs
     #
@@ -234,17 +234,17 @@
 
     triggers:
         - reverse:
-            jobs: ''
+            jobs: 'controller-merge-{stream},odlparent-merge-{stream},yangtools-merge-{stream}'
             result: 'success'
 
     maven:
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
-        goals: 'clean install -V -Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo '
+        goals: 'clean install javadoc:aggregate -DrepoBuild -Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{lispflowmapping-settings}'
         global-settings: '{odl-global-settings}'
 
     publishers:
         - email-notification:
-            email-prefix: '[lispflowmapping]'
+            email-prefix: '[lispflowmapping] [controller] [odlparent] [yangtools]'
