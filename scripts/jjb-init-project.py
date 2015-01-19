@@ -27,6 +27,7 @@ parser.add_argument("-d", "--dependencies",
                           "will trigger when a dependent project-merge job "
                           "is built successfully.\n\n"
                           "Example: aaa,controller,yangtools"))
+parser.add_argument("-b", "--branches", help="Git Branches to build")
 parser.add_argument("-g", "--mvn-goals", help="Maven Goals")
 parser.add_argument("-o", "--mvn-opts", help="Maven Options")
 parser.add_argument("-z", "--no-cfg", action="store_true",
@@ -36,6 +37,7 @@ args = parser.parse_args()
 project = args.project
 project_dir = os.path.join("jjb", project)
 project_file = os.path.join(project_dir, "%s.yaml" % project)
+branches = args.branches    # Defaults to "master,stable/helium" if not passed
 mvn_goals = args.mvn_goals  # Defaults to "clean install" if not passsed
 mvn_opts = args.mvn_opts    # Defaults to blank if not passed
 dependencies = args.dependencies
@@ -57,6 +59,19 @@ template_file = os.path.join("jjb", "job.yaml.template")
 no_cfg = args.no_cfg
 make_cfg = False  # Set to true if we need to generate initial CFG file
 cfg_string = []
+
+if not branches:
+    branches = "master,stable/helium"
+else:
+    make_cfg = True
+    cfg_string.append("BRANCHES: %s" % branches)
+# Create YAML to list branches to create jobs for
+streams = "stream:\n"
+for branch in branches.split(","):
+    streams = streams + ("        - %s:\n"
+                         "            branch: '%s'\n" %
+                         (branch.replace('/', '-'),
+                          branch))
 
 if not mvn_goals:
     mvn_goals = ("clean install "
@@ -87,10 +102,12 @@ if not os.path.exists(project_dir):
     os.makedirs(project_dir)
 
 print("project: %s\n"
+      "branches: %s\n"
       "goals: %s\n"
       "options: %s\n"
       "dependencies: %s" %
       (project,
+       branches,
        mvn_goals,
        mvn_opts,
        dependencies))
@@ -110,6 +127,7 @@ with open(template_file, "r") as infile:
             if not re.match("\s*#", line):
                 line = re.sub("PROJECT", project, line)
                 line = re.sub("DISABLED", disabled, line)
+                line = re.sub("STREAMS", streams, line)
                 line = re.sub("MAVEN_GOALS", mvn_goals, line)
                 line = re.sub("MAVEN_OPTS", mvn_opts, line)
                 line = re.sub("DEPENDENCIES", dependent_jobs, line)

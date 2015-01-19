@@ -43,7 +43,9 @@ def update_templates(projects):
             stream = open(cfg_file, "r")
             cfg = yaml.load(stream)
             for k, v in cfg.items():
-                if k == "MVN_GOALS" and v is not None:
+                if k == "BRANCHES" and v is not None:
+                    parameters.append("-b '%s'" % v)
+                elif k == "MVN_GOALS" and v is not None:
                     parameters.append("-g '%s'" % v)
                 elif k == "MVN_OPTS" and v is not None:
                     parameters.append("-o '%s'" % v)
