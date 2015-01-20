@@ -84,8 +84,8 @@ for branch in branches.split(","):
 if not mvn_goals:
     mvn_goals = ("clean install "
                  "-V "  # Show Maven / Java version before building
-                 "-Dmaven.repo.local=$WORKSPACE/.m2repo "
-                 "-Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo ")
+                 "-Dmaven.repo.local=/tmp/r "
+                 "-Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r ")
 else:  # User explicitly set MAVEN_OPTS so create CFG
     make_cfg = True
     cfg_string.append("MAVEN_GOALS: %s" % mvn_goals)
