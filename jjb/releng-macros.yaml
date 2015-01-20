@@ -115,3 +115,8 @@
                   - method:
                       healthy: 50
                       unhealthy: 40
+
+- builder:
+    name: wipe-org-opendaylight-repo
+    builders:
+        - shell: 'if [ -d /tmp/r/org/opendaylight ]; then rm -rf /tmp/r/org/opendaylight; fi'
