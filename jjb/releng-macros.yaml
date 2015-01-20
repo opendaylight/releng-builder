@@ -100,3 +100,8 @@
             send-to:
                 - developers
                 - recipients
+
+- prebuilder:
+    name: wipe-org-opendaylight-repo
+    prebuilders:
+        - shell: 'if [ -d /tmp/r/org/opendaylight ]; then rm -rf /tmp/r/org/opendaylight; fi'
