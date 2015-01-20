@@ -66,6 +66,9 @@
             name: 'PROJECT'
             branch: '{branch}'
 
+    prebuilders:
+        - wipe-org-opendaylight-repo
+
     maven:
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
@@ -120,6 +123,9 @@
         - gerrit-trigger-patch-merged:
             name: 'PROJECT'
             branch: '{branch}'
+
+    prebuilders:
+        - wipe-org-opendaylight-repo
 
     maven:
         maven-name: '{mvn32}'
@@ -176,6 +182,9 @@
 
     triggers:
         - timed: 'H H * * *'
+
+    prebuilders:
+        - wipe-org-opendaylight-repo
 
     maven:
         maven-name: '{mvn32}'
@@ -235,6 +244,9 @@
         - reverse:
             jobs: 'DEPENDENCIES'
             result: 'success'
+
+    prebuilders:
+        - wipe-org-opendaylight-repo
 
     maven:
         maven-name: '{mvn32}'
