@@ -36,6 +36,12 @@ yum install -q -y @development perl-{Digest-SHA,ExtUtils-MakeMaker} \
     ant {boost,gtest,json-c,libcurl,libxml2,libvirt,openssl}-devel \
     {readline,unixODBC}-devel
 
+# tcpmd5 is wanting to do 32bit ARM cross-compilation and is specifically
+# requesting the following be installed (note the kernel headers are
+# going to be the x86_64 package as there aren't separate 32bit and
+# x86_64 packages for them
+yum install -q -y glibc-devel.i686 kernel-headers
+
 # The following is needed by opendove, if this is to be perfomed against
 # an EL6 system some of these packages are not availalble (or at the
 # wrong version) in publically available repositories as such this
