@@ -10,6 +10,7 @@
         - 'packetcable-merge-{stream}'
         - 'packetcable-daily-{stream}'
         - 'packetcable-integration-{stream}'
+        - 'packetcable-sonar'
 
     # stream:    branch with - in place of / (eg. stable-helium)
     # branch:    branch (eg. stable/helium)
@@ -193,10 +194,6 @@
     publishers:
         - email-notification:
             email-prefix: '[packetcable]'
-        - sonar:
-            branch: '{stream}'
-            language: 'java'
-            maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
 
 - job-template:
     name: 'packetcable-integration-{stream}'
@@ -252,3 +249,49 @@
     publishers:
         - email-notification:
             email-prefix: '[packetcable] [controller] [yangtools]'
+
+- job-template:
+    name: 'packetcable-sonar'
+
+    project-type: maven
+    node: dynamic_verify
+    jdk: '{jdk}'
+
+    logrotate:
+        daysToKeep: '7'
+        numToKeep: '10'
+        artifactDaysToKeep: '1'
+        artifactNumToKeep: '1'
+
+    parameters:
+        - project-parameter:
+            project: '{project}'
+
+    scm:
+        - git-scm:
+            credentials-id: '{ssh-credentials}'
+            refspec: ''
+            branch: 'master'
+
+    wrappers:
+        - build-timeout
+        - ssh-agent-credentials:
+            user: '{ssh-credentials}'
+
+    triggers:
+        - timed: 'H H * * *'
+
+    maven:
+        maven-name: '{mvn32}'
+        root-pom: 'pom.xml'
+        goals: 'validate'
+        maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+        settings: '{packetcable-settings}'
+        global-settings: '{odl-global-settings}'
+
+    publishers:
+        - sonar:
+            language: 'java'
+            maven-opts: '-Xmx6144m -XX:MaxPermSize=1024m'
+        - email-notification:
+            email-prefix: '[packetcable]'

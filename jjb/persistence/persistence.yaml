@@ -10,6 +10,7 @@
         - 'persistence-merge-{stream}'
         - 'persistence-daily-{stream}'
         - 'persistence-integration-{stream}'
+        - 'persistence-sonar'
 
     # stream:    branch with - in place of / (eg. stable-helium)
     # branch:    branch (eg. stable/helium)
@@ -191,10 +192,6 @@
     publishers:
         - email-notification:
             email-prefix: '[persistence]'
-        - sonar:
-            branch: '{stream}'
-            language: 'java'
-            maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
 
 - job-template:
     name: 'persistence-integration-{stream}'
@@ -248,5 +245,51 @@
         global-settings: '{odl-global-settings}'
 
     publishers:
+        - email-notification:
+            email-prefix: '[persistence]'
+
+- job-template:
+    name: 'persistence-sonar'
+
+    project-type: maven
+    node: dynamic_verify
+    jdk: '{jdk}'
+
+    logrotate:
+        daysToKeep: '7'
+        numToKeep: '10'
+        artifactDaysToKeep: '1'
+        artifactNumToKeep: '1'
+
+    parameters:
+        - project-parameter:
+            project: '{project}'
+
+    scm:
+        - git-scm:
+            credentials-id: '{ssh-credentials}'
+            refspec: ''
+            branch: 'master'
+
+    wrappers:
+        - build-timeout
+        - ssh-agent-credentials:
+            user: '{ssh-credentials}'
+
+    triggers:
+        - timed: 'H H * * *'
+
+    maven:
+        maven-name: '{mvn32}'
+        root-pom: 'pom.xml'
+        goals: 'validate'
+        maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+        settings: '{persistence-settings}'
+        global-settings: '{odl-global-settings}'
+
+    publishers:
+        - sonar:
+            language: 'java'
+            maven-opts: '-Xmx6144m -XX:MaxPermSize=1024m'
         - email-notification:
             email-prefix: '[persistence]'
