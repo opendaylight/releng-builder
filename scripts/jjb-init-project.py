@@ -62,9 +62,12 @@ cfg_string = []
 
 if not branches:
     branches = "master,stable/helium"
+    sonar_branch = "master"
 else:
     make_cfg = True
     cfg_string.append("BRANCHES: %s" % branches)
+    # For projects who use a different development branch than master
+    sonar_branch = branches.split(",")[0]
 # Create YAML to list branches to create jobs for
 streams = "stream:\n"
 for branch in branches.split(","):
@@ -132,4 +135,7 @@ with open(template_file, "r") as infile:
                 line = re.sub("MAVEN_OPTS", mvn_opts, line)
                 line = re.sub("DEPENDENCIES", dependent_jobs, line)
                 line = re.sub("EMAIL_PREFIX", email_prefix, line)
+                line = re.sub("SONAR_BRANCH", sonar_branch, line)
             outfile.write(line)
+
+print sonar_branch
