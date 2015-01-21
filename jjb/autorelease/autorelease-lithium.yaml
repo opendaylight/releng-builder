@@ -3,7 +3,7 @@
 - project:
     name: autorelease
     jobs:
-        - 'autorelease-lithium-daily'
+        - 'autorelease-daily-lithium'
 
     # stream:    branch with - in place of / (eg. stable-helium)
     # branch:    branch (eg. stable/helium)
@@ -15,7 +15,7 @@
     jdk: 'openjdk7'
 
 - job-template:
-    name: 'autorelease-lithium-daily'
+    name: 'autorelease-daily-lithium'
 
     project-type: maven
     node: dynamic_verify
