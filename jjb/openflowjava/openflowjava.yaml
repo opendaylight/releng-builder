@@ -197,7 +197,7 @@
 
 - job-template:
     name: 'openflowjava-integration-{stream}'
-    disabled: true
+    disabled: false
 
     # Job template for ODL merge jobs
     #
@@ -235,7 +235,7 @@
 
     triggers:
         - reverse:
-            jobs: ''
+            jobs: 'yangtools-merge-{stream},controller-merge-{stream}'
             result: 'success'
 
     maven:
@@ -298,4 +298,4 @@
             language: 'java'
             maven-opts: '-Xmx6144m -XX:MaxPermSize=1024m'
         - email-notification:
-            email-prefix: '[openflowjava]'
+            email-prefix: '[openflowjava] [yangtools] [controller]'
