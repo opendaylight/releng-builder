@@ -247,6 +247,10 @@
     publishers:
         - email-notification:
             email-prefix: '[snmp]'
+        - maven-deploy:
+            id: ''
+            unique-version: true
+            deploy-unstable: false
 
 - job-template:
     name: 'snmp-sonar'

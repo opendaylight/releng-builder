@@ -249,6 +249,10 @@
     publishers:
         - email-notification:
             email-prefix: '[aaa]'
+        - maven-deploy:
+            id: ''
+            unique-version: true
+            deploy-unstable: false
 
 - job-template:
     name: 'aaa-sonar'

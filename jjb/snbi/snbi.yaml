@@ -249,6 +249,10 @@
     publishers:
         - email-notification:
             email-prefix: '[snbi]'
+        - maven-deploy:
+            id: ''
+            unique-version: true
+            deploy-unstable: false
 
 - job-template:
     name: 'snbi-sonar'

@@ -247,6 +247,10 @@
     publishers:
         - email-notification:
             email-prefix: '[tsdr]'
+        - maven-deploy:
+            id: ''
+            unique-version: true
+            deploy-unstable: false
 
 - job-template:
     name: 'tsdr-sonar'

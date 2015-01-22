@@ -249,6 +249,10 @@
     publishers:
         - email-notification:
             email-prefix: '[tcpmd5]'
+        - maven-deploy:
+            id: ''
+            unique-version: true
+            deploy-unstable: false
 
 - job-template:
     name: 'tcpmd5-sonar'
