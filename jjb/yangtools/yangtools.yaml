@@ -4,6 +4,7 @@
     jobs:
         - 'yangtools-merge-{stream}'
         - 'yangtools-daily-{stream}'
+        - 'yangtools-integration-{stream}'
         - 'yangtools-sonar'
 
     # stream:    branch with - in place of / (eg. stable-helium)
@@ -16,7 +17,6 @@
 
     project: 'yangtools'
     jdk: 'openjdk7'
-
 
 # For the Job templates below replace instances of:
 # PROJECT with your project name (eg. controller)
@@ -56,6 +56,7 @@
             choosing-strategy: 'default'
 
     wrappers:
+        - build-timeout
         - ssh-agent-credentials:
             user: '{ssh-credentials}'
 
@@ -67,7 +68,7 @@
     maven:
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
-        goals: '-Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo clean install'
+        goals: 'clean install -V -Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo '
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{yangtools-settings}'
         global-settings: '{odl-global-settings}'
@@ -113,6 +114,7 @@
             branch: '{branch}'
 
     wrappers:
+        - build-timeout
         - ssh-agent-credentials:
             user: '{ssh-credentials}'
 
@@ -122,7 +124,7 @@
     maven:
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
-        goals: '-Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo clean install'
+        goals: 'clean install -V -Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo '
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{yangtools-settings}'
         global-settings: '{odl-global-settings}'
@@ -131,6 +133,64 @@
         - email-notification:
             email-prefix: '[yangtools]'
 
+- job-template:
+    name: 'yangtools-integration-{stream}'
+    disabled: true
+
+    # Job template for ODL merge jobs
+    #
+    # The purpose of this job template is to setup a ODL merge job
+    # and deploy artifacts to Nexus.
+    #
+    # Required Variables:
+    #     stream:    branch with - in place of / (eg. stable-helium)
+    #     branch:    branch (eg. stable/helium)
+
+    project-type: maven
+    node: dynamic_merge
+    jdk: '{jdk}'
+
+    logrotate:
+        daysToKeep: '{build-days-to-keep}'
+        numToKeep: '{build-num-to-keep}'
+        artifactDaysToKeep: '{build-artifact-days-to-keep}'
+        artifactNumToKeep: '{build-artifact-num-to-keep}'
+
+    parameters:
+        - project-parameter:
+            project: '{project}'
+
+    scm:
+        - git-scm:
+            credentials-id: '{ssh-credentials}'
+            refspec: ''
+            branch: '{branch}'
+
+    wrappers:
+        - build-timeout
+        - ssh-agent-credentials:
+            user: '{ssh-credentials}'
+
+    triggers:
+        - reverse:
+            jobs: ''
+            result: 'success'
+
+    maven:
+        maven-name: '{mvn32}'
+        root-pom: 'pom.xml'
+        goals: 'clean install -V -Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo '
+        maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+        settings: '{yangtools-settings}'
+        global-settings: '{odl-global-settings}'
+
+    publishers:
+        - email-notification:
+            email-prefix: '[yangtools]'
+        - maven-deploy:
+            id: ''
+            unique-version: true
+            deploy-unstable: false
 
 - job-template:
     name: 'yangtools-sonar'
