@@ -15,8 +15,8 @@
     # stream:    branch with - in place of / (eg. stable-helium)
     # branch:    branch (eg. stable/helium)
     stream:
-        - develop:
-            branch: 'develop'
+        - master:
+            branch: 'master'
         - stable-helium:
             branch: 'stable/helium'
 
@@ -275,7 +275,7 @@
         - git-scm:
             credentials-id: '{ssh-credentials}'
             refspec: ''
-            branch: 'develop'
+            branch: 'master'
 
     wrappers:
         - build-timeout
