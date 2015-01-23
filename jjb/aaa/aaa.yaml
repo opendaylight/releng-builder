@@ -288,7 +288,7 @@
     maven:
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
-        goals: 'validate'
+        goals: 'clean install -V -Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo '
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{aaa-settings}'
         global-settings: '{odl-global-settings}'

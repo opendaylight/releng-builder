@@ -248,7 +248,7 @@
 
     publishers:
         - email-notification:
-            email-prefix: '[openflowjava]'
+            email-prefix: '[openflowjava] [yangtools] [controller]'
         - maven-deploy:
             id: ''
             unique-version: true
@@ -288,7 +288,7 @@
     maven:
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
-        goals: 'validate'
+        goals: 'clean install -V -Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo '
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{openflowjava-settings}'
         global-settings: '{odl-global-settings}'
@@ -298,4 +298,4 @@
             language: 'java'
             maven-opts: '-Xmx6144m -XX:MaxPermSize=1024m'
         - email-notification:
-            email-prefix: '[openflowjava] [yangtools] [controller]'
+            email-prefix: '[openflowjava]'
