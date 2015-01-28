@@ -197,7 +197,7 @@
 
 - job-template:
     name: 'aaa-integration-{stream}'
-    disabled: true
+    disabled: false
 
     # Job template for ODL merge jobs
     #
@@ -235,7 +235,7 @@
 
     triggers:
         - reverse:
-            jobs: ''
+            jobs: 'yangtools-merge-{stream},controller-merge-{stream}'
             result: 'success'
 
     maven:
@@ -248,7 +248,7 @@
 
     publishers:
         - email-notification:
-            email-prefix: '[aaa]'
+            email-prefix: '[aaa] [yangtools] [controller]'
         - maven-deploy:
             id: ''
             unique-version: true
