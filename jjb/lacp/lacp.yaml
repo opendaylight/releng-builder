@@ -17,8 +17,6 @@
     stream:
         - master:
             branch: 'master'
-        - stable-helium:
-            branch: 'stable/helium'
 
     project: 'lacp'
     jdk: 'openjdk7'
@@ -75,7 +73,7 @@
     maven:
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
-        goals: 'clean install -V -Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo '
+        goals: 'clean install javadoc:aggregate -DrepoBuild -Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{lacp-settings}'
         global-settings: '{odl-global-settings}'
@@ -130,7 +128,7 @@
     maven:
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
-        goals: 'clean install -V -Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo '
+        goals: 'clean install javadoc:aggregate -DrepoBuild -Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{lacp-settings}'
         global-settings: '{odl-global-settings}'
@@ -186,7 +184,7 @@
     maven:
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
-        goals: 'clean install -V -Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo '
+        goals: 'clean install javadoc:aggregate -DrepoBuild -Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{lacp-settings}'
         global-settings: '{odl-global-settings}'
@@ -194,10 +192,11 @@
     publishers:
         - email-notification:
             email-prefix: '[lacp]'
+        - jacoco-report
 
 - job-template:
     name: 'lacp-integration-{stream}'
-    disabled: true
+    disabled: false
 
     # Job template for ODL merge jobs
     #
@@ -235,20 +234,20 @@
 
     triggers:
         - reverse:
-            jobs: ''
+            jobs: 'yangtools-merge-{stream},controller-merge-{stream},openflowjava-merge-{stream},openflowplugin-merge-{stream},odlparent-merge-{stream}'
             result: 'success'
 
     maven:
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
-        goals: 'clean install -V -Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo '
+        goals: 'clean install javadoc:aggregate -DrepoBuild -Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{lacp-settings}'
         global-settings: '{odl-global-settings}'
 
     publishers:
         - email-notification:
-            email-prefix: '[lacp]'
+            email-prefix: '[lacp] [yangtools] [controller] [openflowjava] [openflowplugin] [odlparent]'
         - maven-deploy:
             id: ''
             unique-version: true
@@ -288,7 +287,7 @@
     maven:
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
-        goals: 'clean install -V -Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo '
+        goals: 'clean install javadoc:aggregate -DrepoBuild -Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{lacp-settings}'
         global-settings: '{odl-global-settings}'
