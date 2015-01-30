@@ -10,6 +10,7 @@
         - 'groupbasedpolicy-merge-{stream}'
         - 'groupbasedpolicy-daily-{stream}'
         - 'groupbasedpolicy-integration-{stream}'
+        - 'groupbasedpolicy-sonar'
 
     # stream:    branch with - in place of / (eg. stable-helium)
     # branch:    branch (eg. stable/helium)
@@ -193,10 +194,7 @@
     publishers:
         - email-notification:
             email-prefix: '[groupbasedpolicy]'
-        - sonar:
-            branch: '{stream}'
-            language: 'java'
-            maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+        - jacoco-report
 
 - job-template:
     name: 'groupbasedpolicy-integration-{stream}'
@@ -238,7 +236,7 @@
 
     triggers:
         - reverse:
-            jobs: 'yangtools-merge-{stream},controller-merge-{stream},openflowjava-merge-{stream},openflowplugin-merge-{stream}'
+            jobs: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream},openflowjava-merge-{stream},openflowplugin-merge-{stream}'
             result: 'success'
 
     maven:
@@ -251,4 +249,54 @@
 
     publishers:
         - email-notification:
-            email-prefix: '[groupbasedpolicy] [yangtools] [controller] [openflowjava] [openflowplugin]'
+            email-prefix: '[groupbasedpolicy] [odlparent] [yangtools] [controller] [openflowjava] [openflowplugin]'
+        - maven-deploy:
+            id: ''
+            unique-version: true
+            deploy-unstable: false
+
+- job-template:
+    name: 'groupbasedpolicy-sonar'
+
+    project-type: maven
+    node: dynamic_verify
+    jdk: '{jdk}'
+
+    logrotate:
+        daysToKeep: '7'
+        numToKeep: '10'
+        artifactDaysToKeep: '1'
+        artifactNumToKeep: '1'
+
+    parameters:
+        - project-parameter:
+            project: '{project}'
+
+    scm:
+        - git-scm:
+            credentials-id: '{ssh-credentials}'
+            refspec: ''
+            branch: 'master'
+
+    wrappers:
+        - build-timeout
+        - ssh-agent-credentials:
+            user: '{ssh-credentials}'
+
+    triggers:
+        - timed: 'H H * * *'
+
+    maven:
+        maven-name: '{mvn32}'
+        root-pom: 'pom.xml'
+        goals: '-U clean install findbugs:findbugs'
+        maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+        settings: '{groupbasedpolicy-settings}'
+        global-settings: '{odl-global-settings}'
+
+    publishers:
+        - sonar:
+            language: 'java'
+            maven-opts: '-Xmx6144m -XX:MaxPermSize=1024m'
+        - email-notification:
+            email-prefix: '[groupbasedpolicy]'
