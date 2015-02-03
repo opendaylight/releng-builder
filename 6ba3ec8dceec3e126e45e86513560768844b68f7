@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a96c907_a850cd5e",
+        "filename": "jjb/vtn/vtn.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-02-03T20:53:30Z",
+      "side": 1,
+      "message": "We need to add openflowplugin to the DEPENDENCIES.",
+      "range": {
+        "startLine": 1,
+        "startChar": 14,
+        "endLine": 1,
+        "endChar": 44
+      },
+      "revId": "6ba3ec8dceec3e126e45e86513560768844b68f7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a96c907_28ccbd34",
+        "filename": "jjb/vtn/vtn.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-02-03T20:53:30Z",
+      "side": 1,
+      "message": "The options and goals and options of the verify job of VTN Project should be \"-V -Dmaven.repo.local\u003d$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository\u003d$WORKSPACE/.m2repo -Pintegrationtests -Pstrictcheck -Dvtn.build.jobs\u003d2 clean install\".",
+      "range": {
+        "startLine": 78,
+        "startChar": 8,
+        "endLine": 79,
+        "endChar": 52
+      },
+      "revId": "6ba3ec8dceec3e126e45e86513560768844b68f7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a96c907_e8d575b9",
+        "filename": "jjb/vtn/vtn.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-02-03T20:53:30Z",
+      "side": 1,
+      "message": "The options and goals of the merge job should be \"-V -Dmaven.repo.local\u003d$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository\u003d$WORKSPACE/.m2repo -Pintegrationtests -Dvtn.build.jobs\u003d2 clean javadoc:jar install\".",
+      "range": {
+        "startLine": 133,
+        "startChar": 0,
+        "endLine": 134,
+        "endChar": 52
+      },
+      "revId": "6ba3ec8dceec3e126e45e86513560768844b68f7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a96c907_88dcf1e5",
+        "filename": "jjb/vtn/vtn.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-02-03T20:53:30Z",
+      "side": 1,
+      "message": "The options and goals of the sonar job of VTN Project should be \"-V -Dmaven.repo.local\u003d$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository\u003d$WORKSPACE/.m2repo -Dvtn.build.jobs\u003d2 -Dvtn.build.sonar -Dvtn.doc.skip clean install\"",
+      "range": {
+        "startLine": 292,
+        "startChar": 0,
+        "endLine": 293,
+        "endChar": 52
+      },
+      "revId": "6ba3ec8dceec3e126e45e86513560768844b68f7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
