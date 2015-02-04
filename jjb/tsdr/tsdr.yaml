@@ -82,6 +82,7 @@
     publishers:
         - email-notification:
             email-prefix: '[tsdr]'
+        - jacoco-report
 
 - job-template:
     name: 'tsdr-merge-{stream}'
@@ -140,6 +141,7 @@
             id: ''
             unique-version: true
             deploy-unstable: false
+        - jacoco-report
 
 - job-template:
     name: 'tsdr-daily-{stream}'
@@ -252,6 +254,7 @@
             id: ''
             unique-version: true
             deploy-unstable: false
+        - jacoco-report
 
 - job-template:
     name: 'tsdr-sonar'
@@ -298,3 +301,4 @@
             maven-opts: '-Xmx6144m -XX:MaxPermSize=1024m'
         - email-notification:
             email-prefix: '[tsdr]'
+        - jacoco-report

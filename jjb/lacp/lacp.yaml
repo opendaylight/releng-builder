@@ -82,6 +82,7 @@
     publishers:
         - email-notification:
             email-prefix: '[lacp]'
+        - jacoco-report
 
 - job-template:
     name: 'lacp-merge-{stream}'
@@ -140,6 +141,7 @@
             id: ''
             unique-version: true
             deploy-unstable: false
+        - jacoco-report
 
 - job-template:
     name: 'lacp-daily-{stream}'
@@ -252,6 +254,7 @@
             id: ''
             unique-version: true
             deploy-unstable: false
+        - jacoco-report
 
 - job-template:
     name: 'lacp-sonar'
@@ -298,3 +301,4 @@
             maven-opts: '-Xmx6144m -XX:MaxPermSize=1024m'
         - email-notification:
             email-prefix: '[lacp]'
+        - jacoco-report

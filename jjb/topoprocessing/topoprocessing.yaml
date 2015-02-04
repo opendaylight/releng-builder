@@ -82,6 +82,7 @@
     publishers:
         - email-notification:
             email-prefix: '[topoprocessing]'
+        - jacoco-report
 
 - job-template:
     name: 'topoprocessing-merge-{stream}'
@@ -140,6 +141,7 @@
             id: ''
             unique-version: true
             deploy-unstable: false
+        - jacoco-report
 
 - job-template:
     name: 'topoprocessing-daily-{stream}'
@@ -252,6 +254,7 @@
             id: ''
             unique-version: true
             deploy-unstable: false
+        - jacoco-report
 
 - job-template:
     name: 'topoprocessing-sonar'
@@ -298,3 +301,4 @@
             maven-opts: '-Xmx6144m -XX:MaxPermSize=1024m'
         - email-notification:
             email-prefix: '[topoprocessing]'
+        - jacoco-report

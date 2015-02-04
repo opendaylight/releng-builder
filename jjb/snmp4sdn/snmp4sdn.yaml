@@ -84,6 +84,7 @@
     publishers:
         - email-notification:
             email-prefix: '[snmp4sdn]'
+        - jacoco-report
 
 - job-template:
     name: 'snmp4sdn-merge-{stream}'
@@ -142,6 +143,7 @@
             id: ''
             unique-version: true
             deploy-unstable: false
+        - jacoco-report
 
 - job-template:
     name: 'snmp4sdn-daily-{stream}'
@@ -254,6 +256,7 @@
             id: ''
             unique-version: true
             deploy-unstable: false
+        - jacoco-report
 
 - job-template:
     name: 'snmp4sdn-sonar'
@@ -300,3 +303,4 @@
             maven-opts: '-Xmx6144m -XX:MaxPermSize=1024m'
         - email-notification:
             email-prefix: '[snmp4sdn]'
+        - jacoco-report
