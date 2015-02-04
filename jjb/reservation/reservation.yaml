@@ -130,7 +130,7 @@
     maven:
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
-        goals: 'clean install -V -Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo '
+        goals: 'clean install -V -Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo  source:jar javadoc:jar'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{reservation-settings}'
         global-settings: '{odl-global-settings}'
@@ -236,7 +236,7 @@
 
     triggers:
         - reverse:
-            jobs: 'odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream}'
+            jobs: 'odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream},groupbasedpolicy-merge-{stream}'
             result: 'success'
 
     maven:
@@ -249,7 +249,7 @@
 
     publishers:
         - email-notification:
-            email-prefix: '[reservation] [odlparent] [controller] [yangtools]'
+            email-prefix: '[reservation] [odlparent] [controller] [yangtools] [groupbasedpolicy]'
         - maven-deploy:
             id: ''
             unique-version: true
