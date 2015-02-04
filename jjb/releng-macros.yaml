@@ -44,9 +44,8 @@
     name: build-timeout
     wrappers:
         - timeout:
-            type: elastic
-            elastic-percentage: 200
-            elastic-default-timeout: 180
+            type: absolute
+            timeout: 360
             fail: true
 
 - trigger:
