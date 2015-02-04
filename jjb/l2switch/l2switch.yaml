@@ -72,6 +72,9 @@
             name: 'l2switch'
             branch: '{branch}'
 
+    prebuilders:
+        - wipe-org-opendaylight-repo
+
     maven:
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
@@ -127,6 +130,9 @@
         - gerrit-trigger-patch-merged:
             name: 'l2switch'
             branch: '{branch}'
+
+    prebuilders:
+        - wipe-org-opendaylight-repo
 
     maven:
         maven-name: '{mvn32}'
@@ -185,6 +191,9 @@
     triggers:
         - timed: 'H H * * *'
 
+    prebuilders:
+        - wipe-org-opendaylight-repo
+
     maven:
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
@@ -240,6 +249,9 @@
         - reverse:
             jobs: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream},openflowjava-merge-{stream},openflowplugin-merge-{stream}'
             result: 'success'
+
+    prebuilders:
+        - wipe-org-opendaylight-repo
 
     maven:
         maven-name: '{mvn32}'

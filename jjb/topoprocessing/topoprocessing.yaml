@@ -70,6 +70,9 @@
             name: 'topoprocessing'
             branch: '{branch}'
 
+    prebuilders:
+        - wipe-org-opendaylight-repo
+
     maven:
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
@@ -125,6 +128,9 @@
         - gerrit-trigger-patch-merged:
             name: 'topoprocessing'
             branch: '{branch}'
+
+    prebuilders:
+        - wipe-org-opendaylight-repo
 
     maven:
         maven-name: '{mvn32}'
@@ -183,6 +189,9 @@
     triggers:
         - timed: 'H H * * *'
 
+    prebuilders:
+        - wipe-org-opendaylight-repo
+
     maven:
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
@@ -238,6 +247,9 @@
         - reverse:
             jobs: 'odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream}'
             result: 'success'
+
+    prebuilders:
+        - wipe-org-opendaylight-repo
 
     maven:
         maven-name: '{mvn32}'
