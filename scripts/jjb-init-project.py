@@ -91,7 +91,11 @@ else:  # User explicitly set MAVEN_OPTS so create CFG
     make_cfg = True
     cfg_string.append("MAVEN_OPTS: %s" % mvn_opts)
 
+if not dependencies:
+    dependencies = "odlparent"  # All projects depend on odlparent
 if dependencies:
+    if dependencies.find("odlparent") < 0:  # If odlparent is not listed add it
+        dependencies = "odlparent," + dependencies
     make_cfg = True
     disabled = "false"
     email_prefix = (email_prefix + " " +
