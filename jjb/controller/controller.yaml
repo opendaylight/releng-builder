@@ -238,7 +238,7 @@
 
     triggers:
         - reverse:
-            jobs: 'yangtools-merge-{stream},aaa-merge-{stream}'
+            jobs: 'odlparent-merge-{stream},yangtools-merge-{stream},aaa-merge-{stream}'
             result: 'success'
 
     maven:
@@ -251,7 +251,7 @@
 
     publishers:
         - email-notification:
-            email-prefix: '[controller] [yangtools] [aaa]'
+            email-prefix: '[controller] [odlparent] [yangtools] [aaa]'
         - maven-deploy:
             id: ''
             unique-version: true

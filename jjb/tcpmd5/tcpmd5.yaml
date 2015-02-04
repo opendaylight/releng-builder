@@ -200,7 +200,7 @@
 
 - job-template:
     name: 'tcpmd5-integration-{stream}'
-    disabled: true
+    disabled: false
 
     # Job template for ODL merge jobs
     #
@@ -238,7 +238,7 @@
 
     triggers:
         - reverse:
-            jobs: ''
+            jobs: 'odlparent-merge-{stream}'
             result: 'success'
 
     maven:
@@ -251,7 +251,7 @@
 
     publishers:
         - email-notification:
-            email-prefix: '[tcpmd5]'
+            email-prefix: '[tcpmd5] [odlparent]'
         - maven-deploy:
             id: ''
             unique-version: true

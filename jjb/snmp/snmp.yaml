@@ -198,7 +198,7 @@
 
 - job-template:
     name: 'snmp-integration-{stream}'
-    disabled: true
+    disabled: false
 
     # Job template for ODL merge jobs
     #
@@ -236,7 +236,7 @@
 
     triggers:
         - reverse:
-            jobs: ''
+            jobs: 'odlparent-merge-{stream}'
             result: 'success'
 
     maven:
@@ -249,7 +249,7 @@
 
     publishers:
         - email-notification:
-            email-prefix: '[snmp]'
+            email-prefix: '[snmp] [odlparent]'
         - maven-deploy:
             id: ''
             unique-version: true

@@ -238,7 +238,7 @@
 
     triggers:
         - reverse:
-            jobs: 'yangtools-merge-{stream},controller-merge-{stream},openflowjava-merge-{stream}'
+            jobs: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream},openflowjava-merge-{stream}'
             result: 'success'
 
     maven:
@@ -251,7 +251,7 @@
 
     publishers:
         - email-notification:
-            email-prefix: '[openflowplugin] [yangtools] [controller] [openflowjava]'
+            email-prefix: '[openflowplugin] [odlparent] [yangtools] [controller] [openflowjava]'
         - maven-deploy:
             id: ''
             unique-version: true
