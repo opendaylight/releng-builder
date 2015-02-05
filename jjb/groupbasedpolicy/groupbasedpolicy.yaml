@@ -197,7 +197,7 @@
     maven:
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
-        goals: '-U clean install findbugs:findbugs'
+        goals: '-U clean install findbugs:findbugs source:jar javadoc:jar'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{groupbasedpolicy-settings}'
         global-settings: '{odl-global-settings}'
