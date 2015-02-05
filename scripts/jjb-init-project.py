@@ -30,6 +30,10 @@ parser.add_argument("-d", "--dependencies",
 parser.add_argument("-b", "--branches", help="Git Branches to build")
 parser.add_argument("-g", "--mvn-goals", help="Maven Goals")
 parser.add_argument("-o", "--mvn-opts", help="Maven Options")
+parser.add_argument("-a", "--archive-artifacts",
+                    help="Comma-seperated list of patterns of artifacts to "
+                         "archive on build completion. "
+                         "See: http://ant.apache.org/manual/Types/fileset.html")  # noqa
 parser.add_argument("-z", "--no-cfg", action="store_true",
                     help=("Disable initializing the project.cfg file."))
 args = parser.parse_args()
@@ -44,6 +48,7 @@ dependencies = args.dependencies
 dependent_jobs = ""
 disabled = "true"   # Always disabled unless project has dependencies
 email_prefix = "[%s]" % project
+archive_artifacts = args.archive_artifacts
 
 template_file = os.path.join("jjb", "job.yaml.template")
 
@@ -104,6 +109,17 @@ if dependencies:
         ['%s-merge-{stream}' % d for d in dependencies.split(",")])
     cfg_string.append("DEPENDENCIES: %s" % dependencies)
 
+if not archive_artifacts:
+    archive_artifacts = ""
+else:
+    cfg_string.append("ARCHIVE: %s" % archive_artifacts)
+    archive_artifacts = ("- archive-artifacts:\n"
+                         "            artifacts: '%s'" % archive_artifacts)
+
+##############################
+# Create configuration start #
+##############################
+
 # Create project directory if it doesn't exist
 if not os.path.exists(project_dir):
     os.makedirs(project_dir)
@@ -112,12 +128,14 @@ print("project: %s\n"
       "branches: %s\n"
       "goals: %s\n"
       "options: %s\n"
-      "dependencies: %s" %
+      "dependencies: %s\n"
+      "artifacts: %s" %
       (project,
        branches,
        mvn_goals,
        mvn_opts,
-       dependencies))
+       dependencies,
+       archive_artifacts,))
 
 # Create initial project CFG file
 if not no_cfg and make_cfg:
@@ -140,4 +158,5 @@ with open(template_file, "r") as infile:
                 line = re.sub("DEPENDENCIES", dependent_jobs, line)
                 line = re.sub("EMAIL_PREFIX", email_prefix, line)
                 line = re.sub("SONAR_BRANCH", sonar_branch, line)
+                line = re.sub("ARCHIVE_ARTIFACTS", archive_artifacts, line)
             outfile.write(line)
