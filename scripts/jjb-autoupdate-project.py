@@ -51,6 +51,8 @@ def update_templates(projects):
                     parameters.append("-o '%s'" % v)
                 elif k == "DEPENDENCIES" and v is not None:
                     parameters.append("-d '%s'" % v)
+                elif k == "ARCHIVE_ARTIFACTS" and v is not None:
+                    parameters.append("-a '%s'" % v)
 
             parameters.append(project)
             cmd = " ".join(parameters)
