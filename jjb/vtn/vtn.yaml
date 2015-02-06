@@ -143,6 +143,8 @@
         global-settings: '{odl-global-settings}'
 
     publishers:
+        - archive-artifacts:
+            artifacts: 'manager/dist/*/target/*.zip, coordinator/dist/target/*.bz2, manager/northbound/target/site/wsdocs/**, manager/api/target/*-javadoc.jar, manager/api/target/apidocs/**'
         - email-notification:
             email-prefix: '[vtn]'
         - maven-deploy:
@@ -203,8 +205,6 @@
         global-settings: '{odl-global-settings}'
 
     publishers:
-        - archive-artifacts:
-            artifacts: 'manager/dist/*/target/*.zip, coordinator/dist/target/*.bz2, manager/northbound/target/site/wsdocs/**, manager/api/target/*-javadoc.jar, manager/api/target/apidocs/**'
         - email-notification:
             email-prefix: '[vtn]'
         - jacoco-report
