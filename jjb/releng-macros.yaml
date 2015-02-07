@@ -130,3 +130,8 @@
     name: wipe-org-opendaylight-repo
     builders:
         - shell: 'if [ -d /tmp/r/org/opendaylight ]; then rm -rf /tmp/r/org/opendaylight; fi'
+
+- builder:
+    name: jacoco-nojava-workaround
+    builders:
+        - shell: 'mkdir -p $WORKSPACE/target/classes'
