@@ -1,22 +1,16 @@
-# REMOVE THIS LINE IF YOU WANT TO CUSTOMIZE ANYTHING BELOW
-# Otherwise this file will be automatically overwritten by the template
-# autobuilder.
-
 # ODL Releng build templates
 - project:
-    name: odlparent
+    name: odlparent-helium
     jobs:
-        - 'odlparent-verify-{stream}'
-        - 'odlparent-merge-{stream}'
-        - 'odlparent-daily-{stream}'
-        - 'odlparent-integration-{stream}'
-        - 'odlparent-sonar'
+        - 'odlparent-verify-stable-helium'
+        - 'odlparent-merge--stable-helium'
+        - 'odlparent-daily-stable-helium'
 
     # stream:    branch with - in place of / (eg. stable-helium)
     # branch:    branch (eg. stable/helium)
     stream:
-        - master:
-            branch: 'master'
+        - stable-helium:
+            branch: 'stable/helium'
 
     project: 'odlparent'
     jdk: 'openjdk7'
@@ -27,7 +21,7 @@
 # MAVEN_OPTS with your maven options to build
 
 - job-template:
-    name: 'odlparent-verify-{stream}'
+    name: 'odlparent-verify-stable-helium'
 
     # Job template for ODL verify jobs
     #
@@ -85,10 +79,9 @@
     publishers:
         - email-notification:
             email-prefix: '[odlparent]'
-        - jacoco-report
 
 - job-template:
-    name: 'odlparent-merge-{stream}'
+    name: 'odlparent-merge-stable-helium'
 
     # Job template for ODL merge jobs
     #
@@ -148,10 +141,9 @@
             id: ''
             unique-version: true
             deploy-unstable: false
-        - jacoco-report
 
 - job-template:
-    name: 'odlparent-daily-{stream}'
+    name: 'odlparent-daily-stable-helium'
 
     # Job template for daily builders
     #
@@ -204,114 +196,4 @@
     publishers:
         - email-notification:
             email-prefix: '[odlparent]'
-        - jacoco-report
 
-- job-template:
-    name: 'odlparent-integration-{stream}'
-    disabled: false
-
-    # Job template for ODL merge jobs
-    #
-    # The purpose of this job template is to setup a ODL merge job
-    # and deploy artifacts to Nexus.
-    #
-    # Required Variables:
-    #     stream:    branch with - in place of / (eg. stable-helium)
-    #     branch:    branch (eg. stable/helium)
-
-    project-type: maven
-    node: dynamic_merge
-    jdk: '{jdk}'
-
-    logrotate:
-        daysToKeep: '{build-days-to-keep}'
-        numToKeep: '{build-num-to-keep}'
-        artifactDaysToKeep: '{build-artifact-days-to-keep}'
-        artifactNumToKeep: '{build-artifact-num-to-keep}'
-
-    parameters:
-        - project-parameter:
-            project: '{project}'
-
-    scm:
-        - git-scm:
-            credentials-id: '{ssh-credentials}'
-            refspec: ''
-            branch: '{branch}'
-
-    wrappers:
-        - build-timeout
-        - ssh-agent-credentials:
-            user: '{ssh-credentials}'
-
-    triggers:
-        - reverse:
-            jobs: 'odlparent-merge-{stream}'
-            result: 'success'
-
-    prebuilders:
-        - wipe-org-opendaylight-repo
-
-    maven:
-        maven-name: '{mvn32}'
-        root-pom: 'pom.xml'
-        goals: 'clean install -V -Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo  source:jar javadoc:jar'
-        maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-        settings: '{odlparent-settings}'
-        global-settings: '{odl-global-settings}'
-
-    publishers:
-        - email-notification:
-            email-prefix: '[odlparent] [odlparent]'
-        - maven-deploy:
-            id: ''
-            unique-version: true
-            deploy-unstable: false
-        - jacoco-report
-
-- job-template:
-    name: 'odlparent-sonar'
-
-    project-type: maven
-    node: dynamic_verify
-    jdk: '{jdk}'
-
-    logrotate:
-        daysToKeep: '7'
-        numToKeep: '10'
-        artifactDaysToKeep: '1'
-        artifactNumToKeep: '1'
-
-    parameters:
-        - project-parameter:
-            project: '{project}'
-
-    scm:
-        - git-scm:
-            credentials-id: '{ssh-credentials}'
-            refspec: ''
-            branch: 'master'
-
-    wrappers:
-        - build-timeout
-        - ssh-agent-credentials:
-            user: '{ssh-credentials}'
-
-    triggers:
-        - timed: 'H H * * *'
-
-    maven:
-        maven-name: '{mvn32}'
-        root-pom: 'pom.xml'
-        goals: 'clean install -V -Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo  -Dsonar'
-        maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-        settings: '{odlparent-settings}'
-        global-settings: '{odl-global-settings}'
-
-    publishers:
-        - sonar:
-            language: 'java'
-            maven-opts: '-Xmx6144m -XX:MaxPermSize=1024m'
-        - email-notification:
-            email-prefix: '[odlparent]'
-        - jacoco-report
