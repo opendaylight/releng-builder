@@ -4,7 +4,7 @@
 
 # ODL Releng build templates
 - project:
-    name: odlparent
+    name: odlparent-helium
     jobs:
         - 'odlparent-verify-{stream}'
         - 'odlparent-merge-{stream}'
@@ -15,8 +15,8 @@
     # stream:    branch with - in place of / (eg. stable-helium)
     # branch:    branch (eg. stable/helium)
     stream:
-        - master:
-            branch: 'master'
+        - stable-helium:
+            branch: 'stable/helium'
 
     project: 'odlparent'
     jdk: 'openjdk7'
@@ -85,7 +85,6 @@
     publishers:
         - email-notification:
             email-prefix: '[odlparent]'
-        - jacoco-report
 
 - job-template:
     name: 'odlparent-merge-{stream}'
@@ -148,7 +147,6 @@
             id: ''
             unique-version: true
             deploy-unstable: false
-        - jacoco-report
 
 - job-template:
     name: 'odlparent-daily-{stream}'
@@ -204,7 +202,6 @@
     publishers:
         - email-notification:
             email-prefix: '[odlparent]'
-        - jacoco-report
 
 - job-template:
     name: 'odlparent-integration-{stream}'
@@ -267,7 +264,6 @@
             id: ''
             unique-version: true
             deploy-unstable: false
-        - jacoco-report
 
 - job-template:
     name: 'odlparent-sonar'
@@ -314,4 +310,3 @@
             maven-opts: '-Xmx6144m -XX:MaxPermSize=1024m'
         - email-notification:
             email-prefix: '[odlparent]'
-        - jacoco-report
