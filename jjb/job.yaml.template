@@ -79,6 +79,9 @@
         global-settings: '{odl-global-settings}'
         ignore-upstream-changes: true
 
+    postbuilders:
+        - jacoco-nojava-workaround
+
     publishers:
         - email-notification:
             email-prefix: '[PROJECT]'
@@ -136,6 +139,9 @@
         maven-opts: 'MAVEN_OPTS'
         settings: '{PROJECT-settings}'
         global-settings: '{odl-global-settings}'
+
+    postbuilders:
+        - jacoco-nojava-workaround
 
     publishers:
         ARCHIVE_ARTIFACTS
@@ -198,6 +204,9 @@
         settings: '{PROJECT-settings}'
         global-settings: '{odl-global-settings}'
 
+    postbuilders:
+        - jacoco-nojava-workaround
+
     publishers:
         - email-notification:
             email-prefix: '[PROJECT]'
@@ -257,6 +266,9 @@
         settings: '{PROJECT-settings}'
         global-settings: '{odl-global-settings}'
 
+    postbuilders:
+        - jacoco-nojava-workaround
+
     publishers:
         - email-notification:
             email-prefix: 'EMAIL_PREFIX'
@@ -304,6 +316,9 @@
         maven-opts: 'MAVEN_OPTS'
         settings: '{PROJECT-settings}'
         global-settings: '{odl-global-settings}'
+
+    postbuilders:
+        - jacoco-nojava-workaround
 
     publishers:
         - sonar:
