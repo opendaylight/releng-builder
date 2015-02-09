@@ -78,7 +78,7 @@
     maven:
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
-        goals: '-U clean install findbugs:findbugs'
+        goals: '-U clean install findbugs:findbugs -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{groupbasedpolicy-settings}'
         global-settings: '{odl-global-settings}'
@@ -137,7 +137,7 @@
     maven:
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
-        goals: '-U clean install findbugs:findbugs source:jar javadoc:jar'
+        goals: '-U clean install findbugs:findbugs -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r source:jar javadoc:jar'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{groupbasedpolicy-settings}'
         global-settings: '{odl-global-settings}'
@@ -198,7 +198,7 @@
     maven:
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
-        goals: '-U clean install findbugs:findbugs source:jar javadoc:jar'
+        goals: '-U clean install findbugs:findbugs -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r source:jar javadoc:jar'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{groupbasedpolicy-settings}'
         global-settings: '{odl-global-settings}'
@@ -257,7 +257,7 @@
     maven:
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
-        goals: '-U clean install findbugs:findbugs source:jar javadoc:jar'
+        goals: '-U clean install findbugs:findbugs -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r source:jar javadoc:jar'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{groupbasedpolicy-settings}'
         global-settings: '{odl-global-settings}'
@@ -305,7 +305,7 @@
     maven:
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
-        goals: '-U clean install findbugs:findbugs -Dsonar'
+        goals: '-U clean install findbugs:findbugs -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -Dsonar'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{groupbasedpolicy-settings}'
         global-settings: '{odl-global-settings}'
