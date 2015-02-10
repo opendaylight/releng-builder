@@ -84,6 +84,9 @@
         global-settings: '{odl-global-settings}'
         ignore-upstream-changes: true
 
+    postbuilders:
+        - jacoco-nojava-workaround
+
     publishers:
         - email-notification:
             email-prefix: '[vtn]'
@@ -141,6 +144,9 @@
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{vtn-settings}'
         global-settings: '{odl-global-settings}'
+
+    postbuilders:
+        - jacoco-nojava-workaround
 
     publishers:
         - archive-artifacts:
@@ -204,6 +210,9 @@
         settings: '{vtn-settings}'
         global-settings: '{odl-global-settings}'
 
+    postbuilders:
+        - jacoco-nojava-workaround
+
     publishers:
         - email-notification:
             email-prefix: '[vtn]'
@@ -263,6 +272,9 @@
         settings: '{vtn-settings}'
         global-settings: '{odl-global-settings}'
 
+    postbuilders:
+        - jacoco-nojava-workaround
+
     publishers:
         - email-notification:
             email-prefix: '[vtn] [odlparent] [controller] [yangtools] [openflowplugin]'
@@ -310,6 +322,9 @@
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{vtn-settings}'
         global-settings: '{odl-global-settings}'
+
+    postbuilders:
+        - jacoco-nojava-workaround
 
     publishers:
         - sonar:

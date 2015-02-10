@@ -84,6 +84,9 @@
         global-settings: '{odl-global-settings}'
         ignore-upstream-changes: true
 
+    postbuilders:
+        - jacoco-nojava-workaround
+
     publishers:
         - email-notification:
             email-prefix: '[tcpmd5]'
@@ -141,6 +144,9 @@
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{tcpmd5-settings}'
         global-settings: '{odl-global-settings}'
+
+    postbuilders:
+        - jacoco-nojava-workaround
 
     publishers:
         
@@ -203,6 +209,9 @@
         settings: '{tcpmd5-settings}'
         global-settings: '{odl-global-settings}'
 
+    postbuilders:
+        - jacoco-nojava-workaround
+
     publishers:
         - email-notification:
             email-prefix: '[tcpmd5]'
@@ -262,6 +271,9 @@
         settings: '{tcpmd5-settings}'
         global-settings: '{odl-global-settings}'
 
+    postbuilders:
+        - jacoco-nojava-workaround
+
     publishers:
         - email-notification:
             email-prefix: '[tcpmd5] [odlparent]'
@@ -309,6 +321,9 @@
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{tcpmd5-settings}'
         global-settings: '{odl-global-settings}'
+
+    postbuilders:
+        - jacoco-nojava-workaround
 
     publishers:
         - sonar:

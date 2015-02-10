@@ -82,6 +82,9 @@
         global-settings: '{odl-global-settings}'
         ignore-upstream-changes: true
 
+    postbuilders:
+        - jacoco-nojava-workaround
+
     publishers:
         - email-notification:
             email-prefix: '[nic]'
@@ -139,6 +142,9 @@
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{nic-settings}'
         global-settings: '{odl-global-settings}'
+
+    postbuilders:
+        - jacoco-nojava-workaround
 
     publishers:
         
@@ -201,6 +207,9 @@
         settings: '{nic-settings}'
         global-settings: '{odl-global-settings}'
 
+    postbuilders:
+        - jacoco-nojava-workaround
+
     publishers:
         - email-notification:
             email-prefix: '[nic]'
@@ -260,6 +269,9 @@
         settings: '{nic-settings}'
         global-settings: '{odl-global-settings}'
 
+    postbuilders:
+        - jacoco-nojava-workaround
+
     publishers:
         - email-notification:
             email-prefix: '[nic] [odlparent]'
@@ -307,6 +319,9 @@
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{nic-settings}'
         global-settings: '{odl-global-settings}'
+
+    postbuilders:
+        - jacoco-nojava-workaround
 
     publishers:
         - sonar:

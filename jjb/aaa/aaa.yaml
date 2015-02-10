@@ -84,6 +84,9 @@
         global-settings: '{odl-global-settings}'
         ignore-upstream-changes: true
 
+    postbuilders:
+        - jacoco-nojava-workaround
+
     publishers:
         - email-notification:
             email-prefix: '[aaa]'
@@ -141,6 +144,9 @@
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{aaa-settings}'
         global-settings: '{odl-global-settings}'
+
+    postbuilders:
+        - jacoco-nojava-workaround
 
     publishers:
         
@@ -203,6 +209,9 @@
         settings: '{aaa-settings}'
         global-settings: '{odl-global-settings}'
 
+    postbuilders:
+        - jacoco-nojava-workaround
+
     publishers:
         - email-notification:
             email-prefix: '[aaa]'
@@ -262,6 +271,9 @@
         settings: '{aaa-settings}'
         global-settings: '{odl-global-settings}'
 
+    postbuilders:
+        - jacoco-nojava-workaround
+
     publishers:
         - email-notification:
             email-prefix: '[aaa] [odlparent] [yangtools] [controller]'
@@ -309,6 +321,9 @@
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{aaa-settings}'
         global-settings: '{odl-global-settings}'
+
+    postbuilders:
+        - jacoco-nojava-workaround
 
     publishers:
         - sonar:

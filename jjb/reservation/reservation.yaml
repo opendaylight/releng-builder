@@ -82,6 +82,9 @@
         global-settings: '{odl-global-settings}'
         ignore-upstream-changes: true
 
+    postbuilders:
+        - jacoco-nojava-workaround
+
     publishers:
         - email-notification:
             email-prefix: '[reservation]'
@@ -139,6 +142,9 @@
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{reservation-settings}'
         global-settings: '{odl-global-settings}'
+
+    postbuilders:
+        - jacoco-nojava-workaround
 
     publishers:
         
@@ -201,6 +207,9 @@
         settings: '{reservation-settings}'
         global-settings: '{odl-global-settings}'
 
+    postbuilders:
+        - jacoco-nojava-workaround
+
     publishers:
         - email-notification:
             email-prefix: '[reservation]'
@@ -260,6 +269,9 @@
         settings: '{reservation-settings}'
         global-settings: '{odl-global-settings}'
 
+    postbuilders:
+        - jacoco-nojava-workaround
+
     publishers:
         - email-notification:
             email-prefix: '[reservation] [odlparent] [controller] [yangtools] [groupbasedpolicy]'
@@ -307,6 +319,9 @@
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{reservation-settings}'
         global-settings: '{odl-global-settings}'
+
+    postbuilders:
+        - jacoco-nojava-workaround
 
     publishers:
         - sonar:

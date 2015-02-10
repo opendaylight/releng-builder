@@ -84,6 +84,9 @@
         global-settings: '{odl-global-settings}'
         ignore-upstream-changes: true
 
+    postbuilders:
+        - jacoco-nojava-workaround
+
     publishers:
         - email-notification:
             email-prefix: '[l2switch]'
@@ -141,6 +144,9 @@
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
         settings: '{l2switch-settings}'
         global-settings: '{odl-global-settings}'
+
+    postbuilders:
+        - jacoco-nojava-workaround
 
     publishers:
         
@@ -203,6 +209,9 @@
         settings: '{l2switch-settings}'
         global-settings: '{odl-global-settings}'
 
+    postbuilders:
+        - jacoco-nojava-workaround
+
     publishers:
         - email-notification:
             email-prefix: '[l2switch]'
@@ -262,6 +271,9 @@
         settings: '{l2switch-settings}'
         global-settings: '{odl-global-settings}'
 
+    postbuilders:
+        - jacoco-nojava-workaround
+
     publishers:
         - email-notification:
             email-prefix: '[l2switch] [odlparent] [yangtools] [controller] [openflowjava] [openflowplugin]'
@@ -309,6 +321,9 @@
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
         settings: '{l2switch-settings}'
         global-settings: '{odl-global-settings}'
+
+    postbuilders:
+        - jacoco-nojava-workaround
 
     publishers:
         - sonar:
