@@ -30,9 +30,9 @@ cat $DEVSTACKDIR/firewall.sh
 $DEVSTACKDIR/firewall.sh
 
 # FIXME: update version of pip being used here
-curl -O https://pypi.python.org/packages/source/p/pip/pip-1.4.1.tar.gz
-tar xvfz pip-1.4.1.tar.gz
-cd pip-1.4.1
+curl -O https://pypi.python.org/packages/source/p/pip/pip-6.0.8.tar.gz
+tar xvfz pip-6.0.8.tar.gz
+cd pip-6.0.8
 sudo -E python setup.py install
 sudo pip install testtools
 
