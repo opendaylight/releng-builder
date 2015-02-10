@@ -4,6 +4,7 @@
         - 'builder-verify-jjb'
         - 'builder-verify-python'
         - 'builder-merge'
+        - 'builder-check-poms'
 
     project: 'releng/builder'
 
@@ -171,6 +172,32 @@
     builders:
         - shell:
             !include-raw-escape include-raw-jjb-update.sh
+
+    publishers:
+        - email-notification:
+            email-prefix: '[releng]'
+
+- job-template:
+    name: builder-check-poms
+
+    project-type: freestyle
+
+    logrotate:
+        daysToKeep: 1
+        numToKeep: 1
+        artifactDaysToKeep: -1
+        artifactNumToKeep: -1
+
+    wrappers:
+        - ssh-agent-credentials:
+            user: '{ssh-credentials}'
+
+    triggers:
+        - timed: 'H H * * 1'
+
+    builders:
+        - shell:
+            !include-raw-escape include-raw-check-poms.sh
 
     publishers:
         - email-notification:
