@@ -30,8 +30,9 @@ alternatives --set java_sdk_openjdk /usr/lib/jvm/java-1.7.0-openjdk.x86_64
 # ups
 echo 'PS1="[\u@\h \W]> "' >> /etc/skel/.bashrc
 
-# add in mininet and netopeer
-yum install -q -y netopeer-server-sl CPqD-ofsoftswitch13 mininet telnet
+# add in mininet, openvswitch, and netopeer
+yum install -q -y netopeer-server-sl CPqD-ofsoftswitch13 mininet \
+    telnet openvswitch
 
 # we need semanage installed for some of the next bit
 yum install -q -y policycoreutils-python
