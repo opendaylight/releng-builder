@@ -176,7 +176,11 @@ if [[ -n ${BUILD_ID} ]]; then
     echo "Running tempest tests:" > /tmp/${log_for_review}
     echo "" >> /tmp/${log_for_review}
     testr init > /dev/null 2>&1 || true
-    cmd="testr run  tempest.api.network.test_networks"
+    cmd_api="tempest.api.network.test_networks \
+             tempest.api.network.test_networks_negative \
+             tempest.api.network.test_ports tempest.api.network.test_routers"
+    cmd_net_basic="tempest.scenario.test_network_basic_ops"
+    cmd="testr run $cmd_api $cmd_net_basic"
     echo "opendaylight-test:$ "${cmd}  >> /tmp/${log_for_review}
     ${cmd} >> /tmp/${log_for_review}
     echo "" >> /tmp/${log_for_review}
