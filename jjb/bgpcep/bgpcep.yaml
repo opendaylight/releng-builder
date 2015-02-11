@@ -257,7 +257,7 @@
 
     triggers:
         - reverse:
-            jobs: 'odlparent-merge-{stream}'
+            jobs: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream},tcpmd5-merge-{stream}'
             result: 'success'
 
     prebuilders:
@@ -276,7 +276,7 @@
 
     publishers:
         - email-notification:
-            email-prefix: '[bgpcep] [odlparent]'
+            email-prefix: '[bgpcep] [odlparent] [yangtools] [controller] [tcpmd5]'
         - maven-deploy:
             id: ''
             unique-version: true

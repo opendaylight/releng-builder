@@ -78,7 +78,7 @@
     maven:
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
-        goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r '
+        goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r clean -DrepoBuild install javadoc:aggregate'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{tcpmd5-settings}'
         global-settings: '{odl-global-settings}'
@@ -140,7 +140,7 @@
     maven:
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
-        goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  source:jar javadoc:jar'
+        goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r clean -DrepoBuild install javadoc:aggregate source:jar javadoc:jar'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{tcpmd5-settings}'
         global-settings: '{odl-global-settings}'
@@ -204,7 +204,7 @@
     maven:
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
-        goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  source:jar javadoc:jar'
+        goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r clean -DrepoBuild install javadoc:aggregate source:jar javadoc:jar'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{tcpmd5-settings}'
         global-settings: '{odl-global-settings}'
@@ -257,7 +257,7 @@
 
     triggers:
         - reverse:
-            jobs: 'odlparent-merge-{stream}'
+            jobs: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
             result: 'success'
 
     prebuilders:
@@ -266,7 +266,7 @@
     maven:
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
-        goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  source:jar javadoc:jar'
+        goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r clean -DrepoBuild install javadoc:aggregate source:jar javadoc:jar'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{tcpmd5-settings}'
         global-settings: '{odl-global-settings}'
@@ -276,7 +276,7 @@
 
     publishers:
         - email-notification:
-            email-prefix: '[tcpmd5] [odlparent]'
+            email-prefix: '[tcpmd5] [odlparent] [yangtools] [controller]'
         - maven-deploy:
             id: ''
             unique-version: true
@@ -317,7 +317,7 @@
     maven:
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
-        goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  -Dsonar'
+        goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r clean -DrepoBuild install javadoc:aggregate -Dsonar'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{tcpmd5-settings}'
         global-settings: '{odl-global-settings}'
