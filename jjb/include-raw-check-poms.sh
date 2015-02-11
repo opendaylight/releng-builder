@@ -26,7 +26,7 @@ done
 # Check pom.xml for <repositories> and <pluginRepositories>
 FILE=repos.txt
 
-find . -name pom.xml | xargs grep -i '<repository>\|<pluginRepository>' > $FILE
+find . -name pom.xml | xargs grep -i '<repositories>\|<pluginRepositories>' > $FILE
 [[ $(tr -d "\r\n" < $FILE|wc -c) -eq 0 ]] && rm $FILE
 
 if [ -a $FILE ]
