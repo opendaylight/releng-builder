@@ -48,6 +48,9 @@ sudo rm -rf /usr/lib/python2.7/site-packages/oslo*
 # Workaround for "keystone not found" issues
 sudo rm -rf /usr/lib/python2.7/site-packages/*client*
 
+# Make sure keystonemiddleware is up to date
+sudo pip install --upgrade keystonemiddleware
+
 # Workaround: Pull neutron first
 cd /opt/stack
 git clone -q git://git.openstack.org/openstack/neutron.git
