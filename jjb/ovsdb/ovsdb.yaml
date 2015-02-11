@@ -1,7 +1,3 @@
-# REMOVE THIS LINE IF YOU WANT TO CUSTOMIZE ANYTHING BELOW
-# Otherwise this file will be automatically overwritten by the template
-# autobuilder.
-
 # ODL Releng build templates
 - project:
     name: ovsdb
@@ -10,7 +6,6 @@
         - 'ovsdb-merge-{stream}'
         - 'ovsdb-daily-{stream}'
         - 'ovsdb-integration-{stream}'
-        - 'ovsdb-sonar'
 
     # stream:    branch with - in place of / (eg. stable-helium)
     # branch:    branch (eg. stable/helium)
@@ -283,52 +278,3 @@
             deploy-unstable: false
         - jacoco-report
 
-- job-template:
-    name: 'ovsdb-sonar'
-
-    project-type: maven
-    node: dynamic_verify
-    jdk: '{jdk}'
-
-    logrotate:
-        daysToKeep: '7'
-        numToKeep: '10'
-        artifactDaysToKeep: '1'
-        artifactNumToKeep: '1'
-
-    parameters:
-        - project-parameter:
-            project: '{project}'
-
-    scm:
-        - git-scm:
-            credentials-id: '{ssh-credentials}'
-            refspec: ''
-            branch: 'master'
-
-    wrappers:
-        - build-timeout
-        - ssh-agent-credentials:
-            user: '{ssh-credentials}'
-
-    triggers:
-        - timed: 'H H * * *'
-
-    maven:
-        maven-name: '{mvn32}'
-        root-pom: 'pom.xml'
-        goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  -Dsonar'
-        maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-        settings: '{ovsdb-settings}'
-        global-settings: '{odl-global-settings}'
-
-    postbuilders:
-        - jacoco-nojava-workaround
-
-    publishers:
-        - sonar:
-            language: 'java'
-            maven-opts: '-Xmx6144m -XX:MaxPermSize=1024m'
-        - email-notification:
-            email-prefix: '[ovsdb]'
-        - jacoco-report
