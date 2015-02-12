@@ -1,7 +1,9 @@
 - project:
-    name: integration-csit-tests
+    name: integration-csit-l2switch
     jobs:
-        - 'integration-{stream}-csit-compatible-min'
+        - 'integration-{stream}-csit-l2switch-{install}'
+
+    project: 'integration'
 
     # stream:    branch with - in place of / (eg. stable-helium)
     # branch:    branch (eg. stable/helium)
@@ -11,9 +13,14 @@
         - stable-helium:
             branch: 'stable/helium'
 
+    install:
+        - only:
+            scope: 'only'
+        - all:
+            scope: 'all'
 
 - job-template:
-    name: 'integration-{stream}-csit-compatible-min'
+    name: 'integration-{stream}-csit-l2switch-{install}'
 
     project-type: freestyle
     node: dynamic_robot
@@ -32,9 +39,17 @@
             branch: '{branch}'
 
     parameters:
-        - integration-bundleurl
+        - project-parameter:
+            project: '{project}'
+        - integration-bundleurl:
+        - integration-controller-scope:
+            controller-scope: '{scope}'
         - integration-controller-features:
-            controller-features: 'config,standard,region,package,kar,ssh,management,odl-openflowplugin-flow-services-ui,odl-nsf-all,odl-adsal-compatibility,odl-netconf-connector-ssh'
+            controller-features: 'odl-l2switch-switch-ui'
+        - integration-test-options:
+            test-options: '-v TOPO_TREE_DEPTH:5 -v PORT:8181' 
+        - integration-test-suite:
+            test-suite:    'l2switch'
 
     wrappers:
         - integration-jclouds-controller-mininet
@@ -45,12 +60,11 @@
         - integration-get-slave-addresses
         - inject:
             properties-file: 'slave_addresses.txt'
-        - intergration-deploy-controller-compatible-min
-        - integration-helium-csit-compatible-min
+        - integration-deploy-controller-run-test
 
     publishers:
         - integration-robot
         - archive:
-            artifacts: 'karaf.log'
+            artifacts: 'karaf.log,log.html'
         - email-notification:
             email-prefix: '[integration]'
