@@ -27,6 +27,7 @@ parser.add_argument("-d", "--dependencies",
                           "will trigger when a dependent project-merge job "
                           "is built successfully.\n\n"
                           "Example: aaa,controller,yangtools"))
+parser.add_argument("-t", "--templates", help="Job templates to use")
 parser.add_argument("-b", "--branches", help="Git Branches to build")
 parser.add_argument("-g", "--mvn-goals", help="Maven Goals")
 parser.add_argument("-o", "--mvn-opts", help="Maven Options")
@@ -41,6 +42,7 @@ args = parser.parse_args()
 project = args.project
 project_dir = os.path.join("jjb", project)
 project_file = os.path.join(project_dir, "%s.yaml" % project)
+templates = args.templates  # Defaults to all templates
 branches = args.branches    # Defaults to "master,stable/helium" if not passed
 mvn_goals = args.mvn_goals  # Defaults to "clean install" if not passsed
 mvn_opts = args.mvn_opts    # Defaults to blank if not passed
@@ -49,8 +51,6 @@ dependent_jobs = ""
 disabled = "true"   # Always disabled unless project has dependencies
 email_prefix = "[%s]" % project
 archive_artifacts = args.archive_artifacts
-
-template_file = os.path.join("jjb", "job.yaml.template")
 
 # The below 2 variables are used to determine if we should generate a CFG file
 # for a project automatically.
@@ -64,6 +64,12 @@ template_file = os.path.join("jjb", "job.yaml.template")
 no_cfg = args.no_cfg
 make_cfg = False  # Set to true if we need to generate initial CFG file
 cfg_string = []
+
+if not templates:
+    templates = "verify,merge,daily,integration,sonar"
+else:
+    make_cfg = True
+    cfg_string.append("JOB_TEMPLATES: %s" % templates)
 
 if not branches:
     branches = "master,stable/helium"
@@ -146,17 +152,33 @@ if not no_cfg and make_cfg:
         outstream.write(cfg)
 
 # Create initial project YAML file
-with open(template_file, "r") as infile:
-    with open(project_file, "w") as outfile:
-        for line in infile:
-            if not re.match("\s*#", line):
-                line = re.sub("PROJECT", project, line)
-                line = re.sub("DISABLED", disabled, line)
-                line = re.sub("STREAMS", streams, line)
-                line = re.sub("MAVEN_GOALS", mvn_goals, line)
-                line = re.sub("MAVEN_OPTS", mvn_opts, line)
-                line = re.sub("DEPENDENCIES", dependent_jobs, line)
-                line = re.sub("EMAIL_PREFIX", email_prefix, line)
-                line = re.sub("SONAR_BRANCH", sonar_branch, line)
-                line = re.sub("ARCHIVE_ARTIFACTS", archive_artifacts, line)
-            outfile.write(line)
+use_templates = templates.split(",")
+use_templates.insert(0, "project")
+job_templates_yaml = ""
+for t in use_templates:
+    if t == "project":  # This is not a job type but is used for templating
+        pass
+    elif t == "sonar":
+        job_templates_yaml = job_templates_yaml + \
+            "        - '%s-%s'\n" % (project, t)
+    else:
+        job_templates_yaml = job_templates_yaml + \
+            "        - '%s-%s-{stream}'\n" % (project, t)
+with open(project_file, "w") as outfile:
+    for t in use_templates:
+        template_file = "jjb-templates/%s.yaml" % t
+        with open(template_file, "r") as infile:
+            for line in infile:
+                if not re.match("\s*#", line):
+                    line = re.sub("JOB_TEMPLATES", job_templates_yaml, line)
+                    line = re.sub("PROJECT", project, line)
+                    line = re.sub("DISABLED", disabled, line)
+                    line = re.sub("STREAMS", streams, line)
+                    line = re.sub("MAVEN_GOALS", mvn_goals, line)
+                    line = re.sub("MAVEN_OPTS", mvn_opts, line)
+                    line = re.sub("DEPENDENCIES", dependent_jobs, line)
+                    line = re.sub("EMAIL_PREFIX", email_prefix, line)
+                    line = re.sub("SONAR_BRANCH", sonar_branch, line)
+                    line = re.sub("ARCHIVE_ARTIFACTS", archive_artifacts, line)
+                outfile.write(line)
+        outfile.write("\n")
