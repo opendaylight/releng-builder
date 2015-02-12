@@ -1,3 +1,7 @@
+# REMOVE THIS LINE IF YOU WANT TO CUSTOMIZE ANYTHING BELOW
+# Otherwise this file will be automatically overwritten by the template
+# autobuilder.
+
 # ODL Releng build templates
 - project:
     name: yangtools
@@ -6,6 +10,7 @@
         - 'yangtools-daily-{stream}'
         - 'yangtools-integration-{stream}'
         - 'yangtools-sonar'
+
 
     # stream:    branch with - in place of / (eg. stable-helium)
     # branch:    branch (eg. stable/helium)
@@ -65,21 +70,29 @@
             name: 'yangtools'
             branch: '{branch}'
 
+    prebuilders:
+        - wipe-org-opendaylight-repo
+
     maven:
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
-        goals: 'clean install -V -Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo '
+        goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  source:jar javadoc:jar'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{yangtools-settings}'
         global-settings: '{odl-global-settings}'
 
+    postbuilders:
+        - jacoco-nojava-workaround
+
     publishers:
+        
         - email-notification:
             email-prefix: '[yangtools]'
         - maven-deploy:
             id: ''
             unique-version: true
             deploy-unstable: false
+        - jacoco-report
 
 - job-template:
     name: 'yangtools-daily-{stream}'
@@ -121,21 +134,28 @@
     triggers:
         - timed: 'H H * * *'
 
+    prebuilders:
+        - wipe-org-opendaylight-repo
+
     maven:
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
-        goals: 'clean install -V -Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo '
+        goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  source:jar javadoc:jar'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{yangtools-settings}'
         global-settings: '{odl-global-settings}'
 
+    postbuilders:
+        - jacoco-nojava-workaround
+
     publishers:
         - email-notification:
             email-prefix: '[yangtools]'
+        - jacoco-report
 
 - job-template:
     name: 'yangtools-integration-{stream}'
-    disabled: true
+    disabled: false
 
     # Job template for ODL merge jobs
     #
@@ -173,24 +193,31 @@
 
     triggers:
         - reverse:
-            jobs: ''
+            jobs: 'odlparent-merge-{stream}'
             result: 'success'
+
+    prebuilders:
+        - wipe-org-opendaylight-repo
 
     maven:
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
-        goals: 'clean install -V -Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo '
+        goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  source:jar javadoc:jar'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{yangtools-settings}'
         global-settings: '{odl-global-settings}'
 
+    postbuilders:
+        - jacoco-nojava-workaround
+
     publishers:
         - email-notification:
-            email-prefix: '[yangtools]'
+            email-prefix: '[yangtools] [odlparent]'
         - maven-deploy:
             id: ''
             unique-version: true
             deploy-unstable: false
+        - jacoco-report
 
 - job-template:
     name: 'yangtools-sonar'
@@ -226,10 +253,13 @@
     maven:
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
-        goals: 'validate'
+        goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  -Dsonar'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{yangtools-settings}'
         global-settings: '{odl-global-settings}'
+
+    postbuilders:
+        - jacoco-nojava-workaround
 
     publishers:
         - sonar:
@@ -237,3 +267,5 @@
             maven-opts: '-Xmx6144m -XX:MaxPermSize=1024m'
         - email-notification:
             email-prefix: '[yangtools]'
+        - jacoco-report
+
