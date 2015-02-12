@@ -10,7 +10,7 @@
     name: integration-controller-features
     parameters:
         - string:
-            name: CONTROLLER_FEATURES
+            name: CONTROLLERFEATURES
             default: '{controller-features}'
             description: |
                 Features to install in the controller
@@ -18,6 +18,30 @@
                 This is a comma seperated list of karaf features that
                 should be installed. This list will be passed to the
                 "featuresBoot=" parameter in the config file.
+
+- parameter:
+    name: integration-controller-memory
+    parameters:
+        - string:
+            name: CONTROLLER_MEMORY
+            default: '{controller-memory}'
+            description: 'setting the JAVA_MAX_MEM'
+
+- parameter:
+    name: integration-controller-allfeatures
+    parameters:
+        - bool:
+            name: ALL_FEATURES
+            default: '{controller-all}'
+            description:  'load up up the odl-integration-compatible-with-all feature'
+
+- parameter:
+    name: integration-test-suite
+    parameters:
+        - string:
+            name: TEST_SUITE
+            default: '{test-suite}'
+            description:  'which test suite we should run'
 
 - wrapper:
     name: integration-jclouds-controller-mininet
@@ -44,16 +68,16 @@
             !include-raw include-raw-integration-get-slave-addresses.sh
 
 - builder:
-    name: intergration-deploy-controller-compatible-min
+    name: integration-deploy-controller-compatible-min
     builders:
         - shell:
             !include-raw include-raw-integration-deploy-controller-min.sh
 
 - builder:
-    name: integration-helium-csit-compatible-min
+    name: run-robot
     builders:
         - shell:
-            !include-raw include-raw-integration-helium-csit-compatible-min.sh
+            !include-raw robot.sh
 
 ##############
 # Publishers #

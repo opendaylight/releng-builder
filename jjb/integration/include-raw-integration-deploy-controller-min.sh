@@ -9,7 +9,7 @@ mkdir -p \${TMP}
 
 # download the artifact
 cd /tmp
-wget --no-verbose ${BUNDLEURL}
+wget --no-verbose  ${BUNDLEURL}
 
 # extract the new controller
 cd \${TMP}
@@ -22,15 +22,23 @@ cd \${BUNDLEFOLDER}/etc
 # Configure the startup features
 export CFG=org.apache.karaf.features.cfg
 cp \${CFG} \${CFG}.bak
-cat \${CFG}.bak | sed 's/^featuresBoot=.*/featuresBoot=${CONTROLLER_FEATURES}/' > \${CFG}
+cat \${CFG}.bak | sed "s/^featuresBoot=.*/featuresBoot=${CONTROLLERFEATURES}/" > \${CFG}
 # Configure the log
 export LOG=org.ops4j.pax.logging.cfg
 cp \${LOG} \${LOG}.bak
 cat \${LOG}.bak | sed 's/log4j.appender.out.maxFileSize=1MB/log4j.appender.out.maxFileSize=20MB/' > \${LOG}
 
+cat \${CFG}
+cat \${LOG}
+
 # run the controller but trick jenkins into not killing it
 cd ../bin
-BUILD_ID=dontKillMe ./start
+
+#BUILD_ID=dontKillMe ./start
+./start & 
+
+
+ps -ef | grep java
 
 # sleep for 300 seconds may need to be longer
 sleep 150

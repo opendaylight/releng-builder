@@ -1,7 +1,9 @@
 - project:
-    name: integration-csit-tests
+    name: integration-csit-l2switch
     jobs:
-        - 'integration-{stream}-csit-compatible-min'
+        - 'integration-{stream}-csit-l2switch-{all}'
+
+    project: 'integration'
 
     # stream:    branch with - in place of / (eg. stable-helium)
     # branch:    branch (eg. stable/helium)
@@ -11,9 +13,17 @@
         - stable-helium:
             branch: 'stable/helium'
 
+    all:
+        - all:
+            controller-all: true
+            controller-memory: '3072m'
+        - only:
+            controller-all: false
+            controller-memory: '2048m'
+
 
 - job-template:
-    name: 'integration-{stream}-csit-compatible-min'
+    name: 'integration-{stream}-csit-l2switch-{all}'
 
     project-type: freestyle
     node: dynamic_robot
@@ -32,7 +42,15 @@
             branch: '{branch}'
 
     parameters:
-        - integration-bundleurl
+        - project-parameter:
+            project: '{project}'
+        - integration-controller-memory:
+            controller-memory: '{controller-memory}'
+        - integration-controller-allfeatures:
+            controller-all: '{controller-all}'
+        - integration-test-suite:
+            test-suite:    'l2switch/'
+        - integration-bundleurl: 
         - integration-controller-features:
             controller-features: 'config,standard,region,package,kar,ssh,management,odl-openflowplugin-flow-services-ui,odl-nsf-all,odl-adsal-compatibility,odl-netconf-connector-ssh'
 
@@ -45,8 +63,8 @@
         - integration-get-slave-addresses
         - inject:
             properties-file: 'slave_addresses.txt'
-        - intergration-deploy-controller-compatible-min
-        - integration-helium-csit-compatible-min
+        - integration-deploy-controller-compatible-min
+        - run-robot
 
     publishers:
         - integration-robot
