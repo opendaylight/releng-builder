@@ -44,12 +44,21 @@
     maven:
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
-        goals: 'clean install -Pintegrationtest,coverage,jenkins -Dovsdbserver.ipaddress=127.0.0.1 -Dovsdbserver.port=6641 -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  -Dsonar'
+        goals: 'clean install -Pjenkins -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  -Dsonar'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{ovsdb-settings}'
         global-settings: '{odl-global-settings}'
 
     postbuilders:
+        - maven-target:
+            maven-version: '{mvn32}'
+            pom: 'pom.xml'
+            goals: 'verify -Pintegrationtest,coverage,jenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  -Dsonar'
+            properties:
+                - 'ovsdbserver.ipaddress=127.0.0.1'
+                - 'ovsdbserver.port=6641'
+            settings: '{ovsdb-settings}'
+            global-settings: '{odl-global-settings}'
         - inject:
             properties-file: env.properties
         - shell:
