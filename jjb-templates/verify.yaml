@@ -9,10 +9,20 @@
     #     stream:    branch with - in place of / (eg. stable-helium)
     #     branch:    branch (eg. stable/helium)
 
-    project-type: maven
-    node: dynamic_verify
+    project-type: matrix
+    node: matrix_master
     concurrent: true
-    jdk: '{jdk}'
+
+    axes:
+        - axis:
+            type: slave
+            name: nodes
+            values:
+                - dynamic_verify
+        - axis:
+            type: jdk
+            values:
+                - openjdk7
 
     logrotate:
         daysToKeep: '{build-days-to-keep}'
@@ -42,19 +52,16 @@
             name: 'PROJECT'
             branch: '{branch}'
 
-    prebuilders:
+    builders:
         - wipe-org-opendaylight-repo
-
-    maven:
-        maven-name: '{mvn32}'
-        root-pom: 'pom.xml'
-        goals: 'MAVEN_GOALS'
-        maven-opts: 'MAVEN_OPTS'
-        settings: '{PROJECT-settings}'
-        global-settings: '{odl-global-settings}'
-        ignore-upstream-changes: true
-
-    postbuilders:
+        - maven-target:
+            maven-version: '{mvn32}'
+            pom: 'pom.xml'
+            goals: 'MAVEN_GOALS'
+            java-opts:
+                - 'MAVEN_OPTS'
+            settings: '{PROJECT-settings}'
+            global-settings: '{odl-global-settings}'
         - jacoco-nojava-workaround
 
     publishers:
