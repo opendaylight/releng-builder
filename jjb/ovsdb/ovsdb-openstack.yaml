@@ -1,0 +1,95 @@
+- project:
+    name: ovsdb-dev
+    jobs:
+        - 'ovsdb-openstack-gerrit'
+
+    project: 'ovsdb'
+
+- job-template:
+    name: 'ovsdb-openstack-gerrit'
+
+    project-type: freestyle
+    node: dynamic_devstack
+    description: 'Jenkins job to run Tempest tests for the OpenDaylight ML2 MechanismDriver. '
+    concurrent: true
+
+    logrotate:
+        daysToKeep: '198'
+
+    parameters:
+        - project-parameter:
+            project: '{project}'
+
+    wrappers:
+        - build-timeout
+        - timeout:
+            fail: true
+            elastic-percentage: 250
+            elastic-default-timeout: 60
+            type: elastic
+        - ssh-agent-credentials:
+            user: '{openstack-gerrit-credentials}'
+        - jclouds:
+            single-use: true
+
+    triggers:
+        - gerrit:
+            trigger-on:
+                - patchset-created-event:
+                    exclude-drafts: 'false'
+                    exclude-trivial-rebase: 'false'
+                    exclude-no-code-change: 'false'
+                - comment-added-contains-event:
+                    comment-contains-value: 'recheck-opendaylight'
+            projects:
+              - project-compare-type: 'ANT'
+                project-pattern: 'openstack/neutron'
+                branches:
+                  - branch-compare-type: 'ANT'
+                    branch-pattern: 'master'
+                file-paths:
+                  - compare-type: 'ANT'
+                    pattern: 'neutron/plugins/ml2/**'
+                  - compare-type: 'ANT'
+                    pattern: 'neutron/wsgi.py'
+                  - compare-type: 'ANT'
+                    pattern: 'neutron/tests/unit/ml2/**'
+                  - compare-type: 'ANT'
+                    pattern: 'neutron/db/**'
+              - project-compare-type: 'ANT'
+                project-pattern: 'openstack/devstack'
+                branches:
+                  - branch-compare-type: 'ANT'
+                    branch-pattern: 'master'
+                file-paths:
+                  - compare-type: 'ANT'
+                    pattern: '**/*opendaylight*'
+                  - compare-type: 'ANT'
+                    pattern: 'lib/opendaylight'
+              - project-compare-type: 'PLAIN'
+                project-pattern: 'stackforge/networking-odl'
+                branches:
+                  - branch-compare-type: 'ANT'
+                    branch-pattern: 'master'
+            skip-vote:
+                successful: false
+                failed: false
+                unstable: false
+                notbuilt: false
+            silent: false
+            escape-quotes: true
+            server-name: 'OpenStack'
+
+    builders:
+        - shell:
+            !include-raw-escape include-raw-openstack-ci.sh
+
+    publishers:
+        - archive:
+            artifacts: 'opendaylight-full-logs.tgz,odl_tempest_test_list.txt'
+            fingerprint: false
+        - email-ext:
+            attach-build-log: false
+            failure: true
+            unstable: true
+            fixed: true
