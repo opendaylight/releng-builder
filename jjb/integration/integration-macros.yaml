@@ -3,21 +3,40 @@
     parameters:
         - string:
             name: BUNDLEURL
-            default: 'http://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/integration/distribution-karaf/0.2.0-Helium/distribution-karaf-0.2.0-Helium.zip'
-            description: 'URL to karaf-distribution zip'
+            default: '{bundleurl}'
+            description: 'URL to karaf distribution zip'
+
+- parameter:
+    name: integration-controller-scope
+    parameters:
+        - string:
+            name: CONTROLLERSCOPE
+            default: '{controller-scope}'
+            description: 'Feature Only or Feature All test'
 
 - parameter:
     name: integration-controller-features
     parameters:
         - string:
-            name: CONTROLLER_FEATURES
+            name: CONTROLLERFEATURES
             default: '{controller-features}'
-            description: |
-                Features to install in the controller
+            description: 'Features to install in the controller separated by comma'
 
-                This is a comma seperated list of karaf features that
-                should be installed. This list will be passed to the
-                "featuresBoot=" parameter in the config file.
+- parameter:
+    name: integration-test-plan
+    parameters:
+        - string:
+            name: TESTPLAN
+            default: '{test-plan}'
+            description:  'Test plan we will run e.g: l2switch.txt'
+
+- parameter:
+    name: integration-test-options
+    parameters:
+        - string:
+            name: TESTOPTIONS
+            default: '{test-options}'
+            description:  'Robot Test Options e.g: -v PORT:8181'
 
 - wrapper:
     name: integration-jclouds-controller-mininet
@@ -26,11 +45,11 @@
           instances:
             - rk-c-el6-java:
                 cloud-name: 'Rackspace DFW - Integration'
-                count: 1
+                count: '{controller-vms}'
                 stop-on-terminate: False
             - rk-c-el6-mininet:
                 cloud-name: 'Rackspace DFW - Integration'
-                count: 1
+                count: '{mininet-vms}'
                 stop-on-terminate: False
 
 #################
@@ -44,16 +63,10 @@
             !include-raw include-raw-integration-get-slave-addresses.sh
 
 - builder:
-    name: intergration-deploy-controller-compatible-min
+    name: integration-deploy-controller-run-test
     builders:
         - shell:
-            !include-raw include-raw-integration-deploy-controller-min.sh
-
-- builder:
-    name: integration-helium-csit-compatible-min
-    builders:
-        - shell:
-            !include-raw include-raw-integration-helium-csit-compatible-min.sh
+            !include-raw include-raw-integration-deploy-controller-run-test.sh
 
 ##############
 # Publishers #
@@ -65,6 +78,6 @@
         - robot:
             output-path: ''
             other-files: ''
-            unstable-threshold: 97.0
-            pass-threshold: 100.0
+            unstable-threshold: '{unstable-if}'
+            pass-threshold: '{pass-if}'
             only-critical: false
