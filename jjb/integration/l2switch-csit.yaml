@@ -1,0 +1,84 @@
+# Fill project name and list job templates
+# Job template: <project>-csit-<feature>-{install}-{stream}
+- project:
+    name: l2switch-csit
+    jobs:
+        - 'l2switch-csit-switch-{install}-{stream}'
+
+    # Add your branches here
+    stream:
+        - master:
+            branch: 'master'
+        - stable-helium:
+            branch: 'stable/helium'
+
+    install:
+        - only:
+            scope: 'only'
+        - all:
+            scope: 'all'
+
+    project: 'l2switch'
+
+# Create a job template per feature
+# Job template: <project>-csit-<feature>-{install}-{stream}
+- job-template:
+    name: 'l2switch-csit-switch-{install}-{stream}'
+
+    project-type: freestyle
+    node: dynamic_robot
+
+    logrotate:
+        daysToKeep: '{build-days-to-keep}'
+        numToKeep: '{build-num-to-keep}'
+        artifactDaysToKeep: '{build-artifact-days-to-keep}'
+        artifactNumToKeep: '{build-artifact-num-to-keep}'
+
+    parameters:
+        - project-parameter:
+            project: 'integration'
+        - integration-bundleurl:
+            bundleurl: 'last'
+        - integration-controller-scope:
+            controller-scope: '{scope}'
+        - integration-controller-features:
+            # Features to be installed in controller
+            controller-features: 'odl-l2switch-switch-ui'
+        - integration-test-options:
+            # Robot test custom options
+            test-options: '-v TOPO_TREE_DEPTH:5 -v PORT:8181' 
+        - integration-test-plan:
+            # Robot test plan
+            test-plan: 'l2switch-switch.txt'
+
+    scm:
+        - git-scm:
+            credentials-id: '{ssh-credentials}'
+            refspec: ''
+            branch: '{branch}'
+
+    wrappers:
+        - build-timeout
+        - integration-jclouds-controller-mininet
+        - ssh-agent-credentials:
+            user: '{ssh-credentials}'
+
+    triggers:
+        - reverse:
+            jobs: '{project}-distribution-{stream}'
+            result: 'success'
+
+    builders:
+        - integration-get-slave-addresses
+        - inject:
+            properties-file: 'slave_addresses.txt'
+        - integration-deploy-controller-run-test
+
+    publishers:
+        - integration-robot:
+            unstable-if: 97.0
+            pass-if: 100.0
+        - archive:
+            artifacts: 'karaf.log,log.html'
+        - email-notification:
+            email-prefix: '[{project}]'
