@@ -258,7 +258,7 @@
 
     triggers:
         - reverse:
-            jobs: 'controller-merge-{stream},odlparent-merge-{stream},yangtools-merge-{stream}'
+            jobs: 'controller-merge-{stream},odlparent-merge-{stream},yangtools-merge-{stream},neutron-merge-{stream}'
             result: 'success'
 
     prebuilders:
@@ -277,7 +277,7 @@
 
     publishers:
         - email-notification:
-            email-prefix: '[lispflowmapping] [controller] [odlparent] [yangtools]'
+            email-prefix: '[lispflowmapping] [controller] [odlparent] [yangtools] [neutron]'
         - maven-deploy:
             id: ''
             unique-version: true
