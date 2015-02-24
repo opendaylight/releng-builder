@@ -82,11 +82,11 @@
 
     builders:
         - shell:
-            !include-raw-escape include-raw-openstack-ci.sh
+            !include-raw-escape include-raw-openstack-dg.sh
 
     publishers:
         - archive:
-            artifacts: 'opendaylight-full-logs.tgz,odl_tempest_test_list.txt'
+            artifacts: 'logs/**'
             fingerprint: false
         - email-ext:
             subject: '[ovsdb] $DEFAULT_SUBJECT'
