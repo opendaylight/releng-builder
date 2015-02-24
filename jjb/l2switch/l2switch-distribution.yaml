@@ -1,0 +1,17 @@
+- project:
+    name: l2switch-distribution
+    jobs:
+        - '{project}-distribution-{stream}'
+
+    # The project name
+    project: 'l2switch'
+
+    # The project branches
+    stream:
+        - master:
+            branch: 'master'
+        - stable-helium:
+            branch: 'stable/helium'
+
+    jdk: 'openjdk7'
+
