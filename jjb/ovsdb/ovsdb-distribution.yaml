@@ -1,0 +1,17 @@
+- project:
+    name: ovsdb-distribution
+    jobs:
+        - '{project}-distribution-{stream}'
+
+    # The project name
+    project: 'ovsdb'
+
+    # The project branches
+    stream:
+        - master:
+            branch: 'master'
+        - stable-helium:
+            branch: 'stable/helium'
+
+    jdk: 'openjdk7'
+
