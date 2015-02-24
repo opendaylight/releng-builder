@@ -86,7 +86,7 @@
 
     publishers:
         - archive:
-            artifacts: 'opendaylight-full-logs.tgz,odl_tempest_test_list.txt'
+            artifacts: 'logs/**'
             fingerprint: false
         - email-ext:
             subject: '[ovsdb] $DEFAULT_SUBJECT'
