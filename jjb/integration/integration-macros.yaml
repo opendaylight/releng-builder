@@ -1,4 +1,12 @@
 - parameter:
+    name: integration-branch
+    parameters:
+        - string:
+            name: BRANCH
+            default: '{branch}'
+            description: 'GIT branch'
+
+- parameter:
     name: integration-bundleurl
     parameters:
         - string:

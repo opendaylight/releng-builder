@@ -13,6 +13,8 @@
     parameters:
         - project-parameter:
             project: 'integration'
+        - integration-branch:
+            branch: '{branch}'
         - integration-bundleurl:
             bundleurl: 'last'
         - integration-controller-scope:
@@ -57,3 +59,66 @@
             artifacts: 'karaf.log'
         - email-notification:
             email-prefix: '[{project}]'
+
+- job-template:
+    name: '{project}-csit-{functionality}-{install}-1node-dsc-{stream}'
+
+    project-type: freestyle
+    node: dynamic_robot
+
+    logrotate:
+        daysToKeep: '{build-days-to-keep}'
+        numToKeep: '{build-num-to-keep}'
+        artifactDaysToKeep: '{build-artifact-days-to-keep}'
+        artifactNumToKeep: '{build-artifact-num-to-keep}'
+
+    parameters:
+        - project-parameter:
+            project: 'integration'
+        - integration-branch:
+            branch: '{branch}'
+        - integration-bundleurl:
+            bundleurl: 'last'
+        - integration-controller-scope:
+            controller-scope: '{scope}'
+        - integration-controller-features:
+            controller-features: 'odl-mdsal-clustering,{install-features}'
+        - integration-test-options:
+            test-options: '{robot-options}'
+        - integration-test-plan:
+            test-plan: '{project}-{functionality}.txt'
+
+    scm:
+        - git-scm:
+            credentials-id: '{ssh-credentials}'
+            refspec: ''
+            branch: '{branch}'
+
+    wrappers:
+        - build-timeout
+        - integration-jclouds-controller-mininet:
+            controller-vms: 1
+            mininet-vms: 1
+        - ssh-agent-credentials:
+            user: '{ssh-credentials}'
+
+    triggers:
+        - reverse:
+            jobs: '{trigger-jobs}'
+            result: 'success'
+
+    builders:
+        - integration-get-slave-addresses
+        - inject:
+            properties-file: 'slave_addresses.txt'
+        - integration-deploy-controller-run-test
+
+    publishers:
+        - integration-robot:
+            unstable-if: 97.0
+            pass-if: 100.0
+        - archive:
+            artifacts: 'karaf.log'
+        - email-notification:
+            email-prefix: '[{project}]'
+
