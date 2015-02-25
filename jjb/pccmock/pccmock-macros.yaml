@@ -1,0 +1,206 @@
+# OLD Releng macros
+
+- parameter:
+    name: project-parameter
+    parameters:
+        - string:
+            name: PROJECT
+            default: '{project}'
+            description: "JJB configured PROJECT parameter to identify an ODL Gerrit project"
+
+#- parameter:
+#    name: gerrit-parameter
+#    parameters:
+#        - string:
+#            name: GERRIT_BRANCH
+#            default: '{branch}'
+#            description: "JJB configured GERRIT_BRANCH parameter"
+
+- scm:
+    name: git-scm
+    scm:
+        - git:
+            credentials-id: '{credentials-id}'
+            url: '$GIT_BASE'
+            refspec: ''
+            branches:
+                - 'origin/{branch}'
+            skip-tag: true
+            wipe-workspace: true
+
+#- scm:
+#    name: gerrit-trigger-scm
+#    scm:
+#        - git:
+#            credentials-id: '{credentials-id}'
+#            url: '$GIT_BASE'
+#            refspec: '{refspec}'
+#            branches:
+#                - 'origin/$GERRIT_BRANCH'
+#            skip-tag: true
+#            choosing-strategy: '{choosing-strategy}'
+
+- wrapper:
+    name: build-timeout
+    wrappers:
+        - timeout:
+            type: absolute
+            timeout: 360
+            fail: true
+
+#- trigger:
+#    name: gerrit-trigger-patch-submitted
+#    triggers:
+#        - gerrit:
+#            trigger-on:
+#                - patchset-created-event:
+#                    exclude-drafts: 'false'
+#                    exclude-trivial-rebase: 'false'
+#                    exclude-no-code-change: 'false'
+#                - draft-published-event
+#                - comment-added-contains-event:
+#                    comment-contains-value: 'recheck'
+#            projects:
+#              - project-compare-type: 'ANT'
+#                project-pattern: '{name}'
+#                branches:
+#                  - branch-compare-type: 'ANT'
+#                    branch-pattern: '**/{branch}'
+#
+#- trigger:
+#    name: gerrit-trigger-patch-merged
+#    triggers:
+#        - gerrit:
+#            trigger-on:
+#                - change-merged-event
+#                - comment-added-contains-event:
+#                    comment-contains-value: 'remerge'
+#            projects:
+#              - project-compare-type: 'ANT'
+#                project-pattern: '{name}'
+#                branches:
+#                  - branch-compare-type: 'ANT'
+#                    branch-pattern: '**/{branch}'
+#
+#- publisher:
+#    name: archive-artifacts
+#    publishers:
+#        - archive:
+#            artifacts: '{artifacts}'
+#            allow-empty: true
+#            fingerprint: true
+#            latest-only: true
+
+- publisher:
+    name: email-notification
+    publishers:
+        - email-ext:
+            recipients: 'jenkins@lists.opendaylight.org'
+            reply-to:
+            content-type: default
+            subject: '{email-prefix} $PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!'
+            body: |
+                $PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:
+
+                Check console output at $BUILD_URL to view the results.
+            unstable: true
+            fixed: true
+            send-to:
+                - developers
+                - recipients
+
+#- publisher:
+#        name: jacoco-report
+#        publishers:
+#            - jacoco:
+#                exec-pattern: "**/**.exec"
+#                class-pattern: "**/classes"
+#                source-pattern: "**/src/main/java"
+#                exclusion-pattern: "**/gen/**,**/generated-sources/**,**/yang-gen**"
+#                status-update: true
+#                targets:
+#                  - branch:
+#                      healthy: 10
+#                      unhealthy: 20
+#                  - method:
+#                      healthy: 50
+#                      unhealthy: 40
+#
+#- builder:
+#    name: wipe-org-opendaylight-repo
+#    builders:
+#        - shell: 'if [ -d /tmp/r/org/opendaylight ]; then rm -rf /tmp/r/org/opendaylight; fi'
+#
+#- builder:
+#    name: jacoco-nojava-workaround
+#    builders:
+#        - shell: 'mkdir -p $WORKSPACE/target/classes'
+
+- parameter:
+    name: integration-bundleurl
+    parameters:
+        - string:
+            name: BUNDLEURL
+            default: 'last'
+            description: 'URL to karaf-distribution zip'
+
+- parameter:
+    name: integration-controller-features
+    parameters:
+        - string:
+            name: CONTROLLERFEATURES
+            default: '{controller-features}'
+            description: 'Features to install in the controller separated by comma'
+
+- wrapper:
+    name: integration-jclouds-controller-mininet
+    wrappers:
+      - jclouds:
+          instances:
+            - rk-c-el6-java:
+                cloud-name: 'Rackspace DFW - Integration'
+                count: 1
+                stop-on-terminate: False
+            - rk-c-el6-mininet:
+                cloud-name: 'Rackspace DFW - Integration'
+                count: 1
+                stop-on-terminate: False
+
+- builder:
+    name: show-jjb-templates
+    builders:
+        - shell:
+            !include-raw show_jjb_templates.sh
+
+- builder:
+    name: unpack-files
+    builders:
+        - shell:
+            !include-raw unpack_files.sh
+
+- builder:
+    name: integration-get-slave-addresses
+    builders:
+        - shell:
+            !include-raw include-raw-integration-get-slave-addresses.sh
+
+- builder:
+    name: intergration-deploy-controller
+    builders:
+        - shell:
+            !include-raw include-raw-integration-deploy-controller-min.sh
+
+- builder:
+    name: run-pccmock-robot
+    builders:
+        - shell: 'pybot -N pccmock -c critical -v CONTROLLER:${CONTROLLER0} -v MININET:${MININET0} -v MININET_USER:${USER} -v USER_HOME:${HOME} pccmock.robot || true'
+
+- publisher:
+    name: integration-robot
+    publishers:
+        - robot:
+            output-path: ''
+            other-files: ''
+            unstable-threshold: '{unstable-if}'
+            pass-threshold: '{pass-if}'
+            only-critical: false
