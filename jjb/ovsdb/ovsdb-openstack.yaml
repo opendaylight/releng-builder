@@ -55,16 +55,6 @@
                     pattern: 'neutron/tests/unit/ml2/**'
                   - compare-type: 'ANT'
                     pattern: 'neutron/db/**'
-              - project-compare-type: 'ANT'
-                project-pattern: 'openstack/devstack'
-                branches:
-                  - branch-compare-type: 'ANT'
-                    branch-pattern: 'master'
-                file-paths:
-                  - compare-type: 'ANT'
-                    pattern: '**/*opendaylight*'
-                  - compare-type: 'ANT'
-                    pattern: 'lib/opendaylight'
               - project-compare-type: 'PLAIN'
                 project-pattern: 'stackforge/networking-odl'
                 branches:
