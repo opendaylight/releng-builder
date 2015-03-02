@@ -151,6 +151,7 @@ if [ "$?" != "0" ]; then
     cp -r /opt/stack/opendaylight/*/logs $WORKSPACE/logs/opendaylight
     cp -r /opt/stack/opendaylight/*/data/log $WORKSPACE/logs/opendaylight
     cp -r /opt/stack/opendaylight/*/etc $WORKSPACE/logs/opendaylight
+    if [ -d /opt/stack/logs/q-odl-karaf ]; then cp -r /opt/stack/logs/q-odl-karaf $WORKSPACE/logs/opendaylight ; fi
     tar cvzf $WORKSPACE/opendaylight-full-logs.tgz $WORKSPACE/logs
     exit 1
 else
@@ -199,6 +200,7 @@ cp -r /opt/stack/data/log/* $WORKSPACE/logs/devstack
 cp -r /opt/stack/opendaylight/*/logs $WORKSPACE/logs/opendaylight
 cp -r /opt/stack/opendaylight/*/data/log $WORKSPACE/logs/opendaylight
 cp -r /opt/stack/opendaylight/*/etc $WORKSPACE/logs/opendaylight
+if [ -d /opt/stack/logs/q-odl-karaf ]; then cp -r /opt/stack/logs/q-odl-karaf $WORKSPACE/logs/opendaylight ; fi
 cp -r /tmp/${log_for_review} $WORKSPACE/logs
 cp -r /tmp/${log_for_review} $WORKSPACE
 cp -r $DEVSTACKDIR/devstack/stack.sh.log* $WORKSPACE/logs
