@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7a96c907_e71d5bbf",
+        "filename": "jjb/ovsdb/include-raw-openstack-ci.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1450
+      },
+      "writtenOn": "2015-03-02T16:56:41Z",
+      "side": 0,
+      "message": "oops! that was not intentional.",
+      "parentUuid": "7a96c907_87b337e8",
+      "revId": "e394276da0295f49a167a9d92bc375b7c56c7195",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a96c907_27cca369",
         "filename": "jjb/ovsdb/include-raw-openstack-ci.sh",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2015-03-02T15:52:33Z",
       "side": 0,
       "message": "We don\u0027t need this for CentOS? Just clarifying as their removal seemed somewhat necessary on F20.",
+      "revId": "e394276da0295f49a167a9d92bc375b7c56c7195",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a96c907_47252f07",
+        "filename": "jjb/ovsdb/include-raw-openstack-ci.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1450
+      },
+      "writtenOn": "2015-03-02T16:56:41Z",
+      "side": 0,
+      "message": "Right, I removed this and tried it out w/out seeing any issues.\n\nIn fact, we can use rabbit on Centos 7. Will test that to make sure it works and change that as well in the next patchset.",
+      "parentUuid": "7a96c907_27cca369",
       "revId": "e394276da0295f49a167a9d92bc375b7c56c7195",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
