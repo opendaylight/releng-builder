@@ -146,6 +146,7 @@ if [ "$?" != "0" ]; then
     mkdir -p $WORKSPACE/logs/devstack
     mkdir -p $WORKSPACE/logs/opendaylight
     cp -r /opt/stack/data/log/* $WORKSPACE/logs/devstack
+    cp -r /opt/stack/logs $WORKSPACE/logs/devstack
     cp -r $DEVSTACKDIR/devstack/stack.sh.log* $WORKSPACE/logs
     cp -r $DEVSTACKDIR/devstack/local.conf $WORKSPACE/logs
     cp -r /opt/stack/opendaylight/*/logs $WORKSPACE/logs/opendaylight
@@ -196,6 +197,7 @@ mkdir -p $WORKSPACE/logs/tempest
 mkdir -p $WORKSPACE/logs/opendaylight
 cp -r /opt/stack/tempest/tempest.log* $WORKSPACE/logs/tempest
 cp -r /opt/stack/data/log/* $WORKSPACE/logs/devstack
+cp -r /opt/stack/logs $WORKSPACE/logs/devstack
 cp -r /opt/stack/opendaylight/*/logs $WORKSPACE/logs/opendaylight
 cp -r /opt/stack/opendaylight/*/data/log $WORKSPACE/logs/opendaylight
 cp -r /opt/stack/opendaylight/*/etc $WORKSPACE/logs/opendaylight
