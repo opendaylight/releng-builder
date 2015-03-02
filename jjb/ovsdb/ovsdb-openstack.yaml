@@ -24,9 +24,9 @@
         - build-timeout
         - timeout:
             fail: true
-            elastic-percentage: 250
-            elastic-default-timeout: 60
-            type: elastic
+            timeout: 90
+            timeout-var: 'BUILD_TIMEOUT'
+            type: absolute
         - ssh-agent-credentials:
             user: '{openstack-gerrit-credentials}'
         - jclouds:

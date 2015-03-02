@@ -2,15 +2,8 @@
 
 export PATH=$PATH:/bin:/sbin:/usr/sbin
 export DEVSTACKDIR=$WORKSPACE/$BUILD_TAG
-mkdir $DEVSTACKDIR
+mkdir -p $DEVSTACKDIR
 cd $DEVSTACKDIR
-
-# FIXME RE-ENABLE TESTS IN THE NEAR FUTURE
-touch $WORKSPACE/opendaylight-full-logs.tgz
-touch $WORKSPACE/odl_tempest_test_list.txt
-exit 0
-# FIXME RE-ENABLE TESTS IN THE NEAR FUTURE
-
 
 cat <<EOL > firewall.sh
 sudo iptables -I INPUT -p tcp --dport 5672 -j ACCEPT
@@ -48,22 +41,6 @@ sudo chown $(whoami) /opt/stack
 sudo chmod 755 /opt/stack
 cd /opt/stack
 
-# Workaround for bug:
-# https://bugs.launchpad.net/devstack/+bug/1276297
-sudo rm -rf /usr/lib/python2.7/site-packages/oslo*
-
-# Workaround for "keystone not found" issues
-sudo rm -rf /usr/lib/python2.7/site-packages/*client*
-
-# Make sure keystonemiddleware is up to date
-sudo pip install --upgrade keystonemiddleware
-
-# Workaround: Pull neutron first
-cd /opt/stack
-git clone -q git://git.openstack.org/openstack/neutron.git
-cd neutron
-sudo python ./setup.py -q install
-
 cd $DEVSTACKDIR
 
 sudo yum -y install qemu libvirt-daemon
@@ -94,10 +71,11 @@ RECLONE=yes
 GIT_TIMEOUT=0
 GIT_BASE=https://git.openstack.org
 
-# Only uncomment the below two lines if you are running on Fedora
+# The below is needed on Fedora/CentOS6
+#disable_service rabbit
+#enable_service qpid
+
 disable_service swift
-disable_service rabbit
-enable_service qpid
 enable_service n-cpu
 enable_service n-cond
 disable_service n-net
@@ -135,7 +113,7 @@ KEYSTONE_SERVICE_HOST=$(hostname)
 
 MYSQL_PASSWORD=mysql
 RABBIT_PASSWORD=rabbit
-QPID_PASSWORD=rabbit
+#QPID_PASSWORD=rabbit
 SERVICE_TOKEN=service
 SERVICE_PASSWORD=admin
 ADMIN_PASSWORD=admin
@@ -149,6 +127,7 @@ NEUTRON_BRANCH=$GERRIT_REFSPEC
 EOLLC
 fi
 
+echo 'cat local.conf'
 cat local.conf
 
 ####
@@ -174,6 +153,8 @@ if [ "$?" != "0" ]; then
     cp -r /opt/stack/opendaylight/*/etc $WORKSPACE/logs/opendaylight
     tar cvzf $WORKSPACE/opendaylight-full-logs.tgz $WORKSPACE/logs
     exit 1
+else
+    echo "stack.sh completed successfully"
 fi
 
 # running tempest
