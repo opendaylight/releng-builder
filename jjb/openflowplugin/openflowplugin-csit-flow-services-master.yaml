@@ -1,0 +1,32 @@
+- project:
+    name: openflowplugin-csit-flow-services-master
+    jobs:
+        - '{project}-csit-1node-imds-{functionality}-{install}-{stream}'
+        - '{project}-csit-1node-cds-{functionality}-{install}-{stream}'
+
+    # The project name
+    project: 'openflowplugin'
+
+    # The functionality under test
+    functionality: 'flow-services'
+
+    # Project branches
+    stream:
+        - master:
+            branch: 'master'
+
+    install:
+        - only:
+            scope: 'only'
+        - all:
+            scope: 'all'
+
+    # Features to install
+    install-features: 'odl-openflowplugin-flow-services-ui,odl-openflowplugin-adsal-compatibility,odl-nsf-all'
+
+    # Robot custom options
+    robot-options: '-v TOPO_TREE_DEPTH:5'
+
+    # Trigger jobs (upstream dependencies)
+    trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream},openflowjava-distribution-{stream},openflowplugin-distribution-{stream}'
+
