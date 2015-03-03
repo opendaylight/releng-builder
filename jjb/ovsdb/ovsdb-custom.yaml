@@ -57,6 +57,8 @@
             properties:
                 - 'ovsdbserver.ipaddress=127.0.0.1'
                 - 'ovsdbserver.port=6641'
+            settings: '{ovsdb-settings}'
+            global-settings: '{odl-global-settings}'
         - inject:
             properties-file: env.properties
         - shell:
