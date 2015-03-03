@@ -69,7 +69,7 @@ while true; do
         break
     elif (( "\$COUNT" > "600" )); then
         echo Timeout Controller DOWN
-        break
+        exit 1
     else
         COUNT=\$(( \${COUNT} + 5 ))
         sleep 5

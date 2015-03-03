@@ -1,5 +1,5 @@
 - job-template:
-    name: '{project}-csit-{functionality}-{install}-1node-imds-{stream}'
+    name: '{project}-csit-1node-imds-{functionality}-{install}-{stream}'
 
     project-type: freestyle
     node: dynamic_robot
@@ -61,7 +61,7 @@
             email-prefix: '[{project}]'
 
 - job-template:
-    name: '{project}-csit-{functionality}-{install}-1node-cds-{stream}'
+    name: '{project}-csit-1node-cds-{functionality}-{install}-{stream}'
 
     project-type: freestyle
     node: dynamic_robot
