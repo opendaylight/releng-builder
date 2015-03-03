@@ -3,7 +3,6 @@
     name: autorelease-build-timeout
     wrappers:
         - timeout:
-            type: elastic
-            elastic-percentage: 200
-            elastic-default-timeout: 300
+            type: absolute
+            timeout: 360
             fail: true
