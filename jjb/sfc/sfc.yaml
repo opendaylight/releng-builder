@@ -258,7 +258,7 @@
 
     triggers:
         - reverse:
-            jobs: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
+            jobs: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream},openflowplugin-merge-{stream},ovsdb-merge-{stream},lispflowmapping-merge-{stream}'
             result: 'success'
 
     prebuilders:
@@ -277,7 +277,7 @@
 
     publishers:
         - email-notification:
-            email-prefix: '[sfc] [odlparent] [yangtools] [controller]'
+            email-prefix: '[sfc] [odlparent] [yangtools] [controller] [openflowplugin] [ovsdb] [lispflowmapping]'
         - maven-deploy:
             id: ''
             unique-version: true
