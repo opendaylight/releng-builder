@@ -1,0 +1,31 @@
+- project:
+    name: vtn-csit-manager-stable-helium
+    jobs:
+        - '{project}-csit-1node-imds-{functionality}-{install}-{stream}'
+
+    # The project name
+    project: 'vtn'
+
+    # The functionality under test
+    functionality: 'manager'
+
+    # Project branches
+    stream:
+        - stable-helium:
+            branch: 'stable/helium'
+
+    install:
+        - only:
+            scope: 'only'
+        - all:
+            scope: 'all'
+
+    # Features to install
+    install-features: 'odl-openflowplugin-flow-services-ui,odl-adsal-compatibility,odl-vtn-manager-all'
+
+    # Robot custom options
+    robot-options: ''
+
+    # Trigger jobs (upstream dependencies)
+    trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream},openflowjava-distribution-{stream},openflowplugin-distribution-{stream},vtn-distribution-{stream}'
+
