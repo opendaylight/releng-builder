@@ -1,0 +1,32 @@
+- project:
+    name: aaa-csit-flow-authn-master
+    jobs:
+        - '{project}-csit-1node-imds-{functionality}-{install}-{stream}'
+        - '{project}-csit-1node-cds-{functionality}-{install}-{stream}'
+
+    # The project name
+    project: 'aaa'
+
+    # The functionality under test
+    functionality: 'authn'
+
+    # Project branches
+    stream:
+        - master:
+            branch: 'master'
+
+    install:
+        - only:
+            scope: 'only'
+        - all:
+            scope: 'all'
+
+    # Features to install
+    install-features: 'odl-openflowplugin-flow-services-ui,odl-aaa-api,odl-aaa-authn,odl-aaa-authz,odl-aaa-sssd-plugin,odl-netconf-plugin'
+
+    # Robot custom options
+    robot-options: ''
+
+    # Trigger jobs (upstream dependencies)
+    trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream},aaa-distribution-{stream}'
+
