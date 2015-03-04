@@ -150,7 +150,8 @@
         - jacoco-nojava-workaround
 
     publishers:
-        
+        - archive-artifacts:
+            artifacts: 'model/*/target/site/**'
         - email-notification:
             email-prefix: '[openflowplugin]'
         - maven-deploy:
