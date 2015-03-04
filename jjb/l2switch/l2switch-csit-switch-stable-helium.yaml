@@ -1,0 +1,31 @@
+- project:
+    name: l2switch-csit-switch-stable-helium
+    jobs:
+        - '{project}-csit-1node-imds-{functionality}-{install}-{stream}'
+
+    # The project name
+    project: 'l2switch'
+
+    # The functionality under test
+    functionality: 'switch'
+
+    # Project branches
+    stream:
+        - stable-helium:
+            branch: 'stable/helium'
+
+    install:
+        - only:
+            scope: 'only'
+        - all:
+            scope: 'all'
+
+    # Features to install
+    install-features: 'odl-l2switch-switch-ui'
+
+    # Robot custom options
+    robot-options: '-v TOPO_TREE_DEPTH:5'
+
+    # Trigger jobs (upstream dependencies)
+    trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream},openflowjava-distribution-{stream},openflowplugin-distribution-{stream},l2switch-distribution-{stream}'
+
