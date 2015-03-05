@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a93c517_a6570c26",
+        "filename": "jjb/l2switch/l2switch-csit-switch-master.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2015-03-05T14:45:18Z",
+      "side": 1,
+      "message": "Instead of creating 2 project files you can have a single l2switch-csit-switch.yaml that lists all the branches in this field. Should look something like:\n\n stream:\n     - master:\n         branch: \u0027master\u0027\n     - stable-helium:\n         branch: \u0027stable/helium\u0027\n\nThis will make these files more maintainable.",
+      "revId": "01ae72a849c03105404c481efc717e1c315abbdd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
