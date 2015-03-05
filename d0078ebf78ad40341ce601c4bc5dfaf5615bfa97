@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a93c517_6631040b",
+        "filename": "jjb/openflowplugin/openflowplugin-csit-flow-services-master.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2015-03-05T14:47:00Z",
+      "side": 1,
+      "message": "Instead of creating 2 project files you can have a single l2switch-csit-switch.yaml that lists all the branches in this field. Should look something like:\n stream:\n     - master:\n         branch: \u0027master\u0027\n     - stable-helium:\n         branch: \u0027stable/helium\u0027\nThis will make these files more maintainable.",
+      "revId": "d0078ebf78ad40341ce601c4bc5dfaf5615bfa97",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
