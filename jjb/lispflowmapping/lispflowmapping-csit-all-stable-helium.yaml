@@ -1,0 +1,31 @@
+- project:
+    name: lispflowmapping-csit-all-stable-helium
+    jobs:
+        - '{project}-csit-1node-imds-{functionality}-{install}-{stream}'
+
+    # The project name
+    project: 'lispflowmapping'
+
+    # The functionality under test
+    functionality: 'all'
+
+    # Project branches
+    stream:
+        - stable-helium:
+            branch: 'stable/helium'
+
+    install:
+        - only:
+            scope: 'only'
+        - all:
+            scope: 'all'
+
+    # Features to install
+    install-features: 'odl-lispflowmapping-all'
+
+    # Robot custom options
+    robot-options: ''
+
+    # Trigger jobs (upstream dependencies)
+    trigger-jobs: 'odlparent-distribution-{stream},yangtools-distribution-{stream},controller-distribution-{stream},neutron-distribution-{stream},lispflowmapping-distribution-{stream}'
+
