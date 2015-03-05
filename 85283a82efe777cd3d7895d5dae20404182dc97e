@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a93c517_c62b3893",
+        "filename": "jjb/aaa/aaa-csit-authn-master.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2015-03-05T14:49:11Z",
+      "side": 1,
+      "message": "Instead of creating 2 project files you can have a single l2switch-csit-switch.yaml that lists all the branches in this field. Should look something like:\n stream:\n     - master:\n         branch: \u0027master\u0027\n     - stable-helium:\n         branch: \u0027stable/helium\u0027\nThis will make these files more maintainable.",
+      "revId": "85283a82efe777cd3d7895d5dae20404182dc97e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
