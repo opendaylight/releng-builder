@@ -1,0 +1,17 @@
+- project:
+    name: lispflowmapping-distribution
+    jobs:
+        - '{project}-distribution-{stream}'
+
+    # The project name
+    project: 'lispflowmapping'
+
+    # The project branches
+    stream:
+        - master:
+            branch: 'master'
+        - stable-helium:
+            branch: 'stable/helium'
+
+    jdk: 'openjdk7'
+
