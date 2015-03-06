@@ -121,7 +121,7 @@
                     branch-pattern: '**/{branch}'
                 file-paths:
                   - compare-type: 'ANT'
-                    pattern: 'test/**'
+                    pattern: 'test/csit/{project}/**'
 
 - trigger:
     name: integration-test-gerrit-trigger-patch-merged
