@@ -1,0 +1,10 @@
+The scripts in this directory are used by the Jenkins spin-up component
+for dynamic slaves.
+
+The spinup script will be as follows (${system_type} will be replaced
+with the appropriate system_type script)
+
+git clone https://git.opendaylight.org/gerrit/p/releng/builder.git
+cd builder/jenkins-scripts
+./basic_settings.sh
+./${system_type}.sh
