@@ -1,0 +1,31 @@
+- project:
+    name: integration-csit-basic-master
+    jobs:
+        - '{project}-csit-1node-imds-{functionality}-{install}-{stream}'
+        - '{project}-csit-1node-cds-{functionality}-{install}-{stream}'
+        - '{project}-csit-verify-{functionality}-{stream}'
+
+    # The project name
+    project: 'integration'
+
+    # The functionality under test
+    functionality: 'basic'
+
+    # Project branches
+    stream:
+        - master:
+            branch: 'master'
+
+    install:
+        - all:
+            scope: 'all'
+
+    # Features to install
+    install-features: 'odl-restconf'
+
+    # Robot custom options
+    robot-options: ''
+
+    # Trigger jobs (upstream dependencies)
+    trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream},openflowjava-distribution-{stream},openflowplugin-distribution-{stream},aaa-distribution-{stream},l2switch-distribution-{stream},ovsdb-distribution-{stream},vtn-distribution-{stream},lispflowmapping-distribution-{stream},integration-distribution-merge-{stream}'
+
