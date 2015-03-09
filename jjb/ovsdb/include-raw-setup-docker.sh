@@ -2,7 +2,7 @@
 
 set -e
 
-export OVS_VERSION=2.1.2
+OVS_VERSION=${OVS_VERSION:-2.1.2}
 
 echo "---> Cleaning up existing Docker processes and images"
 for x in $(docker ps -a -q)
