@@ -1,0 +1,79 @@
+- project:
+    name: ovsdb-full-integration
+    jobs:
+        - 'ovsdb-full-integration-daily'
+
+    project: 'ovsdb'
+    jdk: 'openjdk7'
+
+- job-template:
+    name: 'ovsdb-full-integration-daily'
+
+    # project-type: maven
+    # node: dynamic_docker
+    # concurrent: false
+    # jdk: '{jdk}'
+    project-type: matrix
+    description: 'Integration tests for the OVSDB project against every known version of OVS. This job runs nightly. '
+    execution-strategy:
+        sequential: true
+    axes:
+        - axis:
+            type: user-defined
+            name: 'OVS_VERSION'
+            values:
+                - 1.4.6
+                - 2.3.0
+        - axis:
+            type: slave
+            name: label
+            values:
+                - dynamic_docker
+
+    logrotate:
+        daysToKeep: '{build-days-to-keep}'
+        numToKeep: '{build-num-to-keep}'
+        artifactDaysToKeep: '{build-artifact-days-to-keep}'
+        artifactNumToKeep: '{build-artifact-num-to-keep}'
+
+    parameters:
+        - project-parameter:
+            project: '{project}'
+
+    scm:
+        - git-scm:
+            credentials-id: '{ssh-credentials}'
+            refspec: ''
+            branch: 'master'
+
+    wrappers:
+        - build-timeout
+        - ssh-agent-credentials:
+            user: '{ssh-credentials}'
+
+    triggers:
+        - timed: '@midnight'
+
+    prebuilders:
+        - shell:
+            !include-raw-escape include-raw-setup-docker.sh
+
+    maven:
+        maven-name: '{mvn32}'
+        root-pom: 'pom.xml'
+        goals: '-Dovsdbserver.ipaddress=127.0.0.1 -Dovsdbserver.port=6641 -Pintegrationtest,jenkins clean install verify -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+        maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+        settings: '{ovsdb-settings}'
+        global-settings: '{odl-global-settings}'
+
+    postbuilders:
+        - inject:
+            properties-file: env.properties
+        - shell:
+            !include-raw-escape include-raw-cleanup-docker.sh
+        - jacoco-nojava-workaround
+
+    publishers:
+        - email-notification:
+            email-prefix: '[ovsdb]'
+        - jacoco-report
