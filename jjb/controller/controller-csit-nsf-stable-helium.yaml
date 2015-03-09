@@ -1,0 +1,31 @@
+- project:
+    name: controller-csit-nsf-stable-helium
+    jobs:
+        - '{project}-csit-1node-imds-{functionality}-{install}-{stream}'
+
+    # The project name
+    project: 'controller'
+
+    # The functionality under test
+    functionality: 'nsf'
+
+    # Project branches
+    stream:
+        - stable-helium:
+            branch: 'stable/helium'
+
+    install:
+        - only:
+            scope: 'only'
+        - all:
+            scope: 'all'
+
+    # Features to install
+    install-features: 'odl-openflowplugin-flow-services-ui,odl-nsf-all,odl-adsal-compatibility,odl-netconf-connector-ssh'
+
+    # Robot custom options
+    robot-options: '-v TOPO_TREE_DEPTH:5'
+
+    # Trigger jobs (upstream dependencies)
+    trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream}'
+
