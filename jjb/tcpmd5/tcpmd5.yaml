@@ -40,10 +40,20 @@
     #     stream:    branch with - in place of / (eg. stable-helium)
     #     branch:    branch (eg. stable/helium)
 
-    project-type: maven
-    node: dynamic_verify
+    project-type: matrix
+    node: matrix_master
     concurrent: true
-    jdk: '{jdk}'
+
+    axes:
+        - axis:
+            type: slave
+            name: nodes
+            values:
+                - dynamic_verify
+        - axis:
+            type: jdk
+            values:
+                - openjdk7
 
     logrotate:
         daysToKeep: '{build-days-to-keep}'
@@ -73,19 +83,16 @@
             name: 'tcpmd5'
             branch: '{branch}'
 
-    prebuilders:
+    builders:
         - wipe-org-opendaylight-repo
-
-    maven:
-        maven-name: '{mvn32}'
-        root-pom: 'pom.xml'
-        goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r clean -DrepoBuild install javadoc:aggregate'
-        maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-        settings: '{tcpmd5-settings}'
-        global-settings: '{odl-global-settings}'
-        ignore-upstream-changes: true
-
-    postbuilders:
+        - maven-target:
+            maven-version: '{mvn32}'
+            pom: 'pom.xml'
+            goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r clean -DrepoBuild install javadoc:aggregate'
+            java-opts:
+                - '-Xmx1024m -XX:MaxPermSize=256m'
+            settings: '{tcpmd5-settings}'
+            global-settings: '{odl-global-settings}'
         - jacoco-nojava-workaround
 
     publishers:
