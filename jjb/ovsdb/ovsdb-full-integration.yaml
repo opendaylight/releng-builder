@@ -1,12 +1,12 @@
 - project:
     name: ovsdb-full-integration
     jobs:
-        - 'ovsdb-full-integration-daily'
+        - 'ovsdb-daily-full-integration'
 
     project: 'ovsdb'
 
 - job-template:
-    name: 'ovsdb-full-integration-daily'
+    name: 'ovsdb-daily-full-integration'
 
     project-type: matrix
     node: matrix_master
