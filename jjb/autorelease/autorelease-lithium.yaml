@@ -30,6 +30,8 @@
     parameters:
         - project-parameter:
             project: '{project}'
+        - autorelease-release-tag:
+            release-tag: 'Lithium'
 
     scm:
         - git:
@@ -48,6 +50,10 @@
 
     triggers:
         - timed: 'H 0 * * *'
+
+    prebuilders:
+        - shell:
+            !include-raw autorelease-release-versions.sh
 
     maven:
         maven-name: '{mvn32}'
