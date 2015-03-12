@@ -1,4 +1,12 @@
 # Macros for the AutoRelease project
+- parameter:
+    name: autorelease-release-tag
+    parameters:
+        - string:
+            name: RELEASE_TAG
+            default: '{release-tag}'
+            description: "The Release train tag to use eg. Helium-SR3"
+
 - wrapper:
     name: autorelease-build-timeout
     wrappers:
