@@ -64,3 +64,19 @@ chkconfig postgresql-9.3 off
 # that sticking it into the image may not be good as changing it would
 # either require updating the image or doing it during the dynamic
 # spin-up anyway.
+
+# cbench installation for running openflow performance tests
+
+OF_DIR=$HOME/openflow  # Directory that contains OpenFlow code
+OFLOPS_DIR=$HOME/oflops  # Directory that contains oflops repo
+
+yum install -q -y net-snmp-devel libpcap-devel autoconf make automake libtool libconfig-devel
+
+git clone git://gitosis.stanford.edu/openflow.git $OF_DIR &> /dev/null
+git clone https://github.com/andi-bigswitch/oflops.git $OFLOPS_DIR &> /dev/null
+
+cd $OFLOPS_DIR
+./boot.sh &> /dev/null
+./configure --with-openflow-src-dir=$OF_DIR &> /dev/null
+make &> /dev/null
+make install &> /dev/null
