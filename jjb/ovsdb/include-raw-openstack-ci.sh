@@ -96,6 +96,7 @@ export ODL_NETVIRT_DEBUG_LOGS=True
 export ODL_JAVA_MIN_MEM=512m
 export ODL_JAVA_MAX_MEM=784m
 export ODL_JAVA_MAX_PERM_MEM=784m
+export ODL_URL=http://nexus01.opendaylight.org:8081/nexus/content/repositories/public/org/opendaylight/integration/distribution-karaf/0.2.2-Helium-SR2/
 
 # Trim down the boot wait time
 export ODL_BOOT_WAIT=30
