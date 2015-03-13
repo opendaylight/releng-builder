@@ -12,6 +12,7 @@
         - 'sdninterfaceapp-integration-{stream}'
         - 'sdninterfaceapp-sonar'
 
+
     # stream:    branch with - in place of / (eg. stable-helium)
     # branch:    branch (eg. stable/helium)
     stream:
@@ -39,10 +40,20 @@
     #     stream:    branch with - in place of / (eg. stable-helium)
     #     branch:    branch (eg. stable/helium)
 
-    project-type: maven
-    node: dynamic_verify
+    project-type: matrix
+    node: matrix_master
     concurrent: true
-    jdk: '{jdk}'
+
+    axes:
+        - axis:
+            type: slave
+            name: nodes
+            values:
+                - dynamic_verify
+        - axis:
+            type: jdk
+            values:
+                - openjdk7
 
     logrotate:
         daysToKeep: '{build-days-to-keep}'
@@ -72,18 +83,22 @@
             name: 'sdninterfaceapp'
             branch: '{branch}'
 
-    maven:
-        maven-name: '{mvn32}'
-        root-pom: 'pom.xml'
-        goals: 'clean install -Dcheckstyle.skip=true -Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo'
-        maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-        settings: '{sdninterfaceapp-settings}'
-        global-settings: '{odl-global-settings}'
-        ignore-upstream-changes: true
+    builders:
+        - wipe-org-opendaylight-repo
+        - maven-target:
+            maven-version: '{mvn32}'
+            pom: 'pom.xml'
+            goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r '
+            java-opts:
+                - '-Xmx1024m -XX:MaxPermSize=256m'
+            settings: '{sdninterfaceapp-settings}'
+            global-settings: '{odl-global-settings}'
+        - jacoco-nojava-workaround
 
     publishers:
         - email-notification:
             email-prefix: '[sdninterfaceapp]'
+        - jacoco-report
 
 - job-template:
     name: 'sdninterfaceapp-merge-{stream}'
@@ -127,21 +142,29 @@
             name: 'sdninterfaceapp'
             branch: '{branch}'
 
+    prebuilders:
+        - wipe-org-opendaylight-repo
+
     maven:
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
-        goals: 'clean install -Dcheckstyle.skip=true -Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo'
+        goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  source:jar javadoc:jar'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{sdninterfaceapp-settings}'
         global-settings: '{odl-global-settings}'
 
+    postbuilders:
+        - jacoco-nojava-workaround
+
     publishers:
+        
         - email-notification:
             email-prefix: '[sdninterfaceapp]'
         - maven-deploy:
             id: ''
             unique-version: true
             deploy-unstable: false
+        - jacoco-report
 
 - job-template:
     name: 'sdninterfaceapp-daily-{stream}'
@@ -183,13 +206,19 @@
     triggers:
         - timed: 'H H * * *'
 
+    prebuilders:
+        - wipe-org-opendaylight-repo
+
     maven:
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
-        goals: 'clean install -Dcheckstyle.skip=true -Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo'
+        goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  source:jar javadoc:jar'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{sdninterfaceapp-settings}'
         global-settings: '{odl-global-settings}'
+
+    postbuilders:
+        - jacoco-nojava-workaround
 
     publishers:
         - email-notification:
@@ -239,21 +268,24 @@
             jobs: 'odlparent-merge-{stream},bgpcep-merge-{stream}'
             result: 'success'
 
+    prebuilders:
+        - wipe-org-opendaylight-repo
+
     maven:
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
-        goals: 'clean install -Dcheckstyle.skip=true -Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo'
+        goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  source:jar javadoc:jar'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{sdninterfaceapp-settings}'
         global-settings: '{odl-global-settings}'
 
+    postbuilders:
+        - jacoco-nojava-workaround
+
     publishers:
         - email-notification:
             email-prefix: '[sdninterfaceapp] [odlparent] [bgpcep]'
-        - maven-deploy:
-            id: ''
-            unique-version: true
-            deploy-unstable: false
+        - jacoco-report
 
 - job-template:
     name: 'sdninterfaceapp-sonar'
@@ -289,10 +321,13 @@
     maven:
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
-        goals: 'clean install -Dcheckstyle.skip=true -Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo'
+        goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  -Dsonar'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{sdninterfaceapp-settings}'
         global-settings: '{odl-global-settings}'
+
+    postbuilders:
+        - jacoco-nojava-workaround
 
     publishers:
         - sonar:
@@ -300,3 +335,5 @@
             maven-opts: '-Xmx6144m -XX:MaxPermSize=1024m'
         - email-notification:
             email-prefix: '[sdninterfaceapp]'
+        - jacoco-report
+
