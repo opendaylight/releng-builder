@@ -70,6 +70,7 @@ if not templates:
 else:
     make_cfg = True
     cfg_string.append("JOB_TEMPLATES: %s" % templates)
+templates += ",clm"  # ensure we always create a clm job for all projects
 
 if not branches:
     branches = "master,stable/helium"
@@ -158,7 +159,7 @@ job_templates_yaml = ""
 for t in use_templates:
     if t == "project":  # This is not a job type but is used for templating
         pass
-    elif t == "sonar":
+    elif t == "sonar" or t == "clm":
         job_templates_yaml = job_templates_yaml + \
             "        - '%s-%s'\n" % (project, t)
     else:

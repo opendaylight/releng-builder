@@ -139,3 +139,10 @@
     name: jacoco-nojava-workaround
     builders:
         - shell: 'mkdir -p $WORKSPACE/target/classes'
+
+- builder:
+    name: check-clm
+    builders:
+        - sonatype-clm:
+            application-name: '{application-name}'
+            scan-targets: '**/target/**'
