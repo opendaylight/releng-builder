@@ -29,6 +29,7 @@ parser.add_argument("-d", "--dependencies",
                           "Example: aaa,controller,yangtools"))
 parser.add_argument("-t", "--templates", help="Job templates to use")
 parser.add_argument("-b", "--branches", help="Git Branches to build")
+parser.add_argument("-j", "--jdks", help="JDKs to build against (for verify jobs)")  # noqa
 parser.add_argument("-g", "--mvn-goals", help="Maven Goals")
 parser.add_argument("-o", "--mvn-opts", help="Maven Options")
 parser.add_argument("-a", "--archive-artifacts",
@@ -44,6 +45,7 @@ project_dir = os.path.join("jjb", project)
 project_file = os.path.join(project_dir, "%s.yaml" % project)
 templates = args.templates  # Defaults to all templates
 branches = args.branches    # Defaults to "master,stable/helium" if not passed
+jdks = args.jdks            # Defaults to openjdk7
 mvn_goals = args.mvn_goals  # Defaults to "clean install" if not passsed
 mvn_opts = args.mvn_opts    # Defaults to blank if not passed
 dependencies = args.dependencies
@@ -86,6 +88,15 @@ for branch in branches.split(","):
                          "            branch: '%s'\n" %
                          (branch.replace('/', '-'),
                           branch))
+
+if not jdks:
+    jdks = "openjdk7"
+else:
+    make_cfg = True
+    cfg_string.append("JDKS: %s" % jdks)
+use_jdks = ""
+for jdk in jdks.split(","):
+    use_jdks += "                - %s\n" % jdk
 
 if not mvn_goals:
     mvn_goals = ("clean install "
@@ -164,6 +175,7 @@ for t in use_templates:
     else:
         job_templates_yaml = job_templates_yaml + \
             "        - '%s-%s-{stream}'\n" % (project, t)
+
 with open(project_file, "w") as outfile:
     for t in use_templates:
         template_file = "jjb-templates/%s.yaml" % t
@@ -174,6 +186,7 @@ with open(project_file, "w") as outfile:
                     line = re.sub("PROJECT", project, line)
                     line = re.sub("DISABLED", disabled, line)
                     line = re.sub("STREAMS", streams, line)
+                    line = re.sub("JDKS", use_jdks, line)
                     line = re.sub("MAVEN_GOALS", mvn_goals, line)
                     line = re.sub("MAVEN_OPTS", mvn_opts, line)
                     line = re.sub("DEPENDENCIES", dependent_jobs, line)
