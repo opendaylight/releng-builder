@@ -1,0 +1,49 @@
+- job-template:
+    name: 'PROJECT-clm'
+
+    project-type: maven
+    node: dynamic_verify
+    jdk: '{jdk}'
+
+    logrotate:
+        daysToKeep: '{build-days-to-keep}'
+        numToKeep: '{build-num-to-keep}'
+        artifactDaysToKeep: '{build-artifact-days-to-keep}'
+        artifactNumToKeep: '{build-artifact-num-to-keep}'
+
+    parameters:
+        - project-parameter:
+            project: '{project}'
+
+    scm:
+        - git-scm:
+            credentials-id: '{ssh-credentials}'
+            refspec: ''
+            branch: 'master'
+
+    wrappers:
+        - build-timeout
+        - ssh-agent-credentials:
+            user: '{ssh-credentials}'
+
+    triggers:
+        - timed: '@weekly'
+
+    prebuilders:
+        - wipe-org-opendaylight-repo
+
+    maven:
+        maven-name: '{mvn32}'
+        root-pom: 'pom.xml'
+        goals: 'com.sonatype.clm:clm-maven-plugin:index -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+        maven-opts: '-Xmx4096m -XX:MaxPermSize=512m'
+        settings: '{PROJECT-settings}'
+        global-settings: '{odl-global-settings}'
+
+    postbuilders:
+        - check-clm:
+            application-name: PROJECT
+
+    publishers:
+        - email-notification:
+            email-prefix: '[PROJECT]'
