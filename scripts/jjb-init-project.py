@@ -30,6 +30,8 @@ parser.add_argument("-d", "--dependencies",
 parser.add_argument("-t", "--templates", help="Job templates to use")
 parser.add_argument("-b", "--branches", help="Git Branches to build")
 parser.add_argument("-j", "--jdks", help="JDKs to build against (for verify jobs)")  # noqa
+parser.add_argument("-p", "--pom", help="Path to pom.xml to use in Maven build"
+                                        "(Default: pom.xml")
 parser.add_argument("-g", "--mvn-goals", help="Maven Goals")
 parser.add_argument("-o", "--mvn-opts", help="Maven Options")
 parser.add_argument("-a", "--archive-artifacts",
@@ -46,6 +48,7 @@ project_file = os.path.join(project_dir, "%s.yaml" % project)
 templates = args.templates  # Defaults to all templates
 branches = args.branches    # Defaults to "master,stable/helium" if not passed
 jdks = args.jdks            # Defaults to openjdk7
+pom = args.pom              # Defaults to pom.xml
 mvn_goals = args.mvn_goals  # Defaults to "clean install" if not passsed
 mvn_opts = args.mvn_opts    # Defaults to blank if not passed
 dependencies = args.dependencies
@@ -97,6 +100,12 @@ else:
 use_jdks = ""
 for jdk in jdks.split(","):
     use_jdks += "                - %s\n" % jdk
+
+if not pom:
+    pom = "pom.xml"
+else:
+    make_cfg = True
+    cfg_string.append("POM: %s" % pom)
 
 if not mvn_goals:
     mvn_goals = ("clean install "
@@ -187,6 +196,7 @@ with open(project_file, "w") as outfile:
                     line = re.sub("DISABLED", disabled, line)
                     line = re.sub("STREAMS", streams, line)
                     line = re.sub("JDKS", use_jdks, line)
+                    line = re.sub("POM", pom, line)
                     line = re.sub("MAVEN_GOALS", mvn_goals, line)
                     line = re.sub("MAVEN_OPTS", mvn_opts, line)
                     line = re.sub("DEPENDENCIES", dependent_jobs, line)

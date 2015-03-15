@@ -49,6 +49,8 @@ def update_templates(projects):
                     parameters.append("-b '%s'" % v)
                 elif k == "JDKS" and v is not None:
                     parameters.append("-j '%s'" % v)
+                elif k == "POM" and v is not None:
+                    parameters.append("-p '%s'" % v)
                 elif k == "MVN_GOALS" and v is not None:
                     parameters.append("-g '%s'" % v)
                 elif k == "MVN_OPTS" and v is not None:
