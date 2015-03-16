@@ -55,6 +55,14 @@ elif [ "$GERRIT_PROJECT" == "openstack-dev/devstack" ]; then
 fi
 
 echo "Setting environment variables"
+
+# Enable ODL debug logs and set memory parameters
+DEVSTACK_LOCAL_CONFIG=""
+DEVSTACK_LOCAL_CONFIG+="ODL_NETVIRT_DEBUG_LOGS=True;"
+DEVSTACK_LOCAL_CONFIG+="ODL_JAVA_MIN_MEM=512m;"
+DEVSTACK_LOCAL_CONFIG+="ODL_JAVA_MAX_MEM=784m;"
+DEVSTACK_LOCAL_CONFIG+="ODL_JAVA_MAX_PERM_MEM=784m;"
+
 # And this runs devstack-gate
 export PYTHONUNBUFFERED=true
 export DEVSTACK_GATE_TIMEOUT=120
@@ -72,9 +80,9 @@ export PROJECTS="stackforge/networking-odl $PROJECTS"
 # caches in nodepool, however make it a valid url for
 # documentation purposes.
 if [ "$GERRIT_PROJECT" == "stackforge/networking-odl" ]; then
-    export DEVSTACK_LOCAL_CONFIG="enable_plugin networking-odl https://$GERRIT_HOST/$GERRIT_PROJECT $GERRIT_REFSPEC"
+    export DEVSTACK_LOCAL_CONFIG+="enable_plugin networking-odl https://$GERRIT_HOST/$GERRIT_PROJECT $GERRIT_REFSPEC"
 else
-    export DEVSTACK_LOCAL_CONFIG="enable_plugin networking-odl https://git.openstack.org/stackforge/networking-odl"
+    export DEVSTACK_LOCAL_CONFIG+="enable_plugin networking-odl https://git.openstack.org/stackforge/networking-odl"
 fi
 
 
@@ -90,12 +98,6 @@ export DEVSTACK_GATE_TEMPEST_REGEX="tempest.api.network.test_networks \
 
 # Specifically set the services we want
 #OVERRIDE_ENABLED_SERVICES=q-svc,q-dhcp,q-l3,q-meta,quantum,key,g-api,g-reg,n-api,n-crt,n-obj,n-cpu,n-cond,n-sch,n-xvnc,n-cauth,h-eng,h-api,h-api-cfn,h-api-cw,rabbit,tempest,mysql
-
-# Enable ODL debug logs and set memory parameters
-export ODL_NETVIRT_DEBUG_LOGS=True
-export ODL_JAVA_MIN_MEM=512m
-export ODL_JAVA_MAX_MEM=784m
-export ODL_JAVA_MAX_PERM_MEM=784m
 
 # Trim down the boot wait time
 export ODL_BOOT_WAIT=30
