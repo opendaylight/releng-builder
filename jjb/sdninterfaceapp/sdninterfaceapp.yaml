@@ -89,7 +89,7 @@
         - maven-target:
             maven-version: '{mvn32}'
             pom: 'pom.xml'
-            goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r '
+            goals: 'clean install -Dcheckstyle.skip=true -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
             java-opts:
                 - '-Xmx1024m -XX:MaxPermSize=256m'
             settings: '{sdninterfaceapp-settings}'
@@ -149,7 +149,7 @@
     maven:
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
-        goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  source:jar javadoc:jar'
+        goals: 'clean install -Dcheckstyle.skip=true -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r source:jar javadoc:jar'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{sdninterfaceapp-settings}'
         global-settings: '{odl-global-settings}'
@@ -213,7 +213,7 @@
     maven:
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
-        goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  source:jar javadoc:jar'
+        goals: 'clean install -Dcheckstyle.skip=true -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r source:jar javadoc:jar'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{sdninterfaceapp-settings}'
         global-settings: '{odl-global-settings}'
@@ -275,7 +275,7 @@
     maven:
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
-        goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  source:jar javadoc:jar'
+        goals: 'clean install -Dcheckstyle.skip=true -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r source:jar javadoc:jar'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{sdninterfaceapp-settings}'
         global-settings: '{odl-global-settings}'
@@ -322,7 +322,7 @@
     maven:
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
-        goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  -Dsonar'
+        goals: 'clean install -Dcheckstyle.skip=true -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -Dsonar'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{sdninterfaceapp-settings}'
         global-settings: '{odl-global-settings}'
