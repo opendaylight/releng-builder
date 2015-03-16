@@ -1,0 +1,15 @@
+- project:
+    name: usc-distribution
+    jobs:
+        - '{project}-distribution-{stream}'
+
+    # The project name
+    project: 'usc'
+
+    # The project branches
+    stream:
+        - master:
+            branch: 'master'
+
+    jdk: 'openjdk7'
+
