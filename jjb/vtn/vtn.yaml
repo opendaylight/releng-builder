@@ -157,6 +157,9 @@
     postbuilders:
         - jacoco-nojava-workaround
 
+    reporters:
+        - findbugs
+
     publishers:
         - archive-artifacts:
             artifacts: 'manager/dist/*/target/*.zip, coordinator/dist/target/*.bz2, manager/northbound/target/site/wsdocs/**, manager/api/target/*-javadoc.jar, manager/api/target/apidocs/**'
@@ -222,6 +225,9 @@
     postbuilders:
         - jacoco-nojava-workaround
 
+    reporters:
+        - findbugs
+
     publishers:
         - email-notification:
             email-prefix: '[vtn]'
@@ -284,6 +290,9 @@
     postbuilders:
         - jacoco-nojava-workaround
 
+    reporters:
+        - findbugs
+
     publishers:
         - email-notification:
             email-prefix: '[vtn] [odlparent] [controller] [yangtools] [openflowplugin]'
@@ -330,6 +339,9 @@
 
     postbuilders:
         - jacoco-nojava-workaround
+
+    reporters:
+        - findbugs
 
     publishers:
         - sonar:
