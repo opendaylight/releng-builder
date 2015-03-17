@@ -40,6 +40,9 @@
     postbuilders:
         - jacoco-nojava-workaround
 
+    reporters:
+        - findbugs
+
     publishers:
         - sonar:
             language: 'java'
