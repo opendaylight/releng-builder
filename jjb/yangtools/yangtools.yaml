@@ -84,6 +84,9 @@
     postbuilders:
         - jacoco-nojava-workaround
 
+    reporters:
+        - findbugs
+
     publishers:
         
         - email-notification:
@@ -148,6 +151,9 @@
     postbuilders:
         - jacoco-nojava-workaround
 
+    reporters:
+        - findbugs
+
     publishers:
         - email-notification:
             email-prefix: '[yangtools]'
@@ -210,6 +216,9 @@
     postbuilders:
         - jacoco-nojava-workaround
 
+    reporters:
+        - findbugs
+
     publishers:
         - email-notification:
             email-prefix: '[yangtools] [odlparent]'
@@ -256,6 +265,9 @@
 
     postbuilders:
         - jacoco-nojava-workaround
+
+    reporters:
+        - findbugs
 
     publishers:
         - sonar:

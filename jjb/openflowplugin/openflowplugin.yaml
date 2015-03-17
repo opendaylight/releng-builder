@@ -157,6 +157,9 @@
     postbuilders:
         - jacoco-nojava-workaround
 
+    reporters:
+        - findbugs
+
     publishers:
         - archive-artifacts:
             artifacts: 'model/*/target/site/**'
@@ -222,6 +225,9 @@
     postbuilders:
         - jacoco-nojava-workaround
 
+    reporters:
+        - findbugs
+
     publishers:
         - email-notification:
             email-prefix: '[openflowplugin]'
@@ -284,6 +290,9 @@
     postbuilders:
         - jacoco-nojava-workaround
 
+    reporters:
+        - findbugs
+
     publishers:
         - email-notification:
             email-prefix: '[openflowplugin] [odlparent] [yangtools] [controller] [openflowjava]'
@@ -330,6 +339,9 @@
 
     postbuilders:
         - jacoco-nojava-workaround
+
+    reporters:
+        - findbugs
 
     publishers:
         - sonar:
