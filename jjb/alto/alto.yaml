@@ -155,6 +155,9 @@
     postbuilders:
         - jacoco-nojava-workaround
 
+    reporters:
+        - findbugs
+
     publishers:
         
         - email-notification:
@@ -219,6 +222,9 @@
     postbuilders:
         - jacoco-nojava-workaround
 
+    reporters:
+        - findbugs
+
     publishers:
         - email-notification:
             email-prefix: '[alto]'
@@ -281,6 +287,9 @@
     postbuilders:
         - jacoco-nojava-workaround
 
+    reporters:
+        - findbugs
+
     publishers:
         - email-notification:
             email-prefix: '[alto] [controller] [yangtools] [odlparent] [bpgcep]'
@@ -327,6 +336,9 @@
 
     postbuilders:
         - jacoco-nojava-workaround
+
+    reporters:
+        - findbugs
 
     publishers:
         - sonar:

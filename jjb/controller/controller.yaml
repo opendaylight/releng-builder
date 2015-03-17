@@ -157,6 +157,9 @@
     postbuilders:
         - jacoco-nojava-workaround
 
+    reporters:
+        - findbugs
+
     publishers:
         
         - email-notification:
@@ -221,6 +224,9 @@
     postbuilders:
         - jacoco-nojava-workaround
 
+    reporters:
+        - findbugs
+
     publishers:
         - email-notification:
             email-prefix: '[controller]'
@@ -283,6 +289,9 @@
     postbuilders:
         - jacoco-nojava-workaround
 
+    reporters:
+        - findbugs
+
     publishers:
         - email-notification:
             email-prefix: '[controller] [odlparent] [yangtools] [aaa]'
@@ -329,6 +338,9 @@
 
     postbuilders:
         - jacoco-nojava-workaround
+
+    reporters:
+        - findbugs
 
     publishers:
         - sonar:

@@ -156,6 +156,9 @@
     postbuilders:
         - jacoco-nojava-workaround
 
+    reporters:
+        - findbugs
+
     publishers:
         
         - email-notification:
@@ -220,6 +223,9 @@
     postbuilders:
         - jacoco-nojava-workaround
 
+    reporters:
+        - findbugs
+
     publishers:
         - email-notification:
             email-prefix: '[ovsdb]'
@@ -281,6 +287,9 @@
 
     postbuilders:
         - jacoco-nojava-workaround
+
+    reporters:
+        - findbugs
 
     publishers:
         - email-notification:
