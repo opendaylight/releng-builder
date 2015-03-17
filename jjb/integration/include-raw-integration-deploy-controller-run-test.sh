@@ -5,9 +5,6 @@ DISTRIBUTION="karaf"
 if [ ${CONTROLLERSCOPE} == 'all' ]; then
     CONTROLLERFEATURES="odl-integration-compatible-with-all,${CONTROLLERFEATURES}"
     CONTROLLERMEM="3072m"
-    if [ ${BRANCH} == 'master' ]; then
-        DISTRIBUTION="test"
-    fi
 fi
 
 if [ ${BUNDLEURL} == 'last' ]; then
@@ -40,7 +37,8 @@ echo "Configuring the startup features..."
 cd ${BUNDLEFOLDER}/etc
 CFG=org.apache.karaf.features.cfg
 cp \${CFG} \${CFG}.bak
-cat \${CFG}.bak | sed "s/^featuresBoot=.*/featuresBoot=config,standard,region,package,kar,ssh,management,${CONTROLLERFEATURES}/" > \${CFG}
+cat \${CFG}.bak | sed "s/^featuresBoot=.*/featuresBoot=config,standard,region,package,kar,ssh,management,${CONTROLLERFEATURES}/" > \${CFG}.1
+cat \${CFG}.1 | sed "s%mvn:org.opendaylight.integration/features-integration-index/${BUNDLEVERSION}/xml/features%mvn:org.opendaylight.integration/features-integration-index/${BUNDLEVERSION}/xml/features,mvn:org.opendaylight.integration/features-integration-test/${BUNDLEVERSION}/xml/features%" > \${CFG}
 cat \${CFG}
 
 echo "Configuring the log..."
@@ -69,6 +67,8 @@ while true; do
         break
     elif (( "\$COUNT" > "600" )); then
         echo Timeout Controller DOWN
+        echo "Fetching Karaf log"
+        scp ${CONTROLLER0}:/tmp/${BUNDLEFOLDER}/data/log/karaf.log .
         exit 1
     else
         COUNT=\$(( \${COUNT} + 5 ))
@@ -86,7 +86,7 @@ echo "Checking OSGi bundles..."
 EOF
 
 scp ${WORKSPACE}/controller-script.sh $CONTROLLER0:/tmp
-ssh $CONTROLLER0 'bash /tmp/controller-script.sh'
+ssh ${CONTROLLER0} 'bash /tmp/controller-script.sh'
 
 echo "Changing the testplan path..."
 cat ${WORKSPACE}/test/csit/testplans/${TESTPLAN} | sed "s:integration:${WORKSPACE}:" > testplan.txt
@@ -98,7 +98,7 @@ echo "Starting Robot test suites ${SUITES} ..."
 pybot -N ${TESTPLAN} -c critical -e exclude --loglevel TRACE -v BUNDLEFOLDER:${BUNDLEFOLDER} -v WORKSPACE:/tmp -v CONTROLLER:${CONTROLLER0} -v MININET:${MININET0} -v MININET_USER:${USER} -v USER_HOME:${HOME} ${TESTOPTIONS} ${SUITES}
 
 echo "Fetching Karaf log"
-scp $CONTROLLER0:/tmp/$BUNDLEFOLDER/data/log/karaf.log .
+scp ${CONTROLLER0}:/tmp/${BUNDLEFOLDER}/data/log/karaf.log .
 
 # vim: ts=4 sw=4 sts=4 et ft=sh :
 
