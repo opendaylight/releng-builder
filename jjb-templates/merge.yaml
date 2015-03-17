@@ -54,6 +54,9 @@
     postbuilders:
         - jacoco-nojava-workaround
 
+    reporters:
+        - findbugs
+
     publishers:
         ARCHIVE_ARTIFACTS
         - email-notification:

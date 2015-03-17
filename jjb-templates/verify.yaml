@@ -64,6 +64,9 @@ JDKS
             global-settings: '{odl-global-settings}'
         - jacoco-nojava-workaround
 
+    reporters:
+        - findbugs
+
     publishers:
         - email-notification:
             email-prefix: '[PROJECT]'
