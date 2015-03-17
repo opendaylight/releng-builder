@@ -171,6 +171,29 @@
     builders:
         - shell:
             !include-raw include-raw-integration-deploy-controller-run-test.sh
+- builder:
+    name: integration-deploy-controller
+    builders:
+        - shell:
+            !include-raw include-raw-integration-deploy-controller.sh
+
+- builder:
+    name: integration-configure-clustering-functions
+    builders:
+        - shell:
+            !include-raw include-raw-integration-configuration_functions.sh
+
+- builder:
+    name: integration-configure-clustering
+    builders:
+        - shell:
+            !include-raw include-raw-integration-configure-clustering.sh
+
+- builder:
+    name: integration-run-test
+    builders:
+        - shell:
+            !include-raw include-raw-integration-run-test.sh
 
 ##############
 # Publishers #
