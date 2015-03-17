@@ -55,6 +55,9 @@
     postbuilders:
         - jacoco-nojava-workaround
 
+    reporters:
+        - findbugs
+
     publishers:
         - email-notification:
             email-prefix: 'EMAIL_PREFIX'
