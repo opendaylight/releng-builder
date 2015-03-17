@@ -93,7 +93,10 @@ export KEEP_LOCALRC=1
 unset GIT_BASE
 
 # Only run certain tempest tests
-export DEVSTACK_GATE_TEMPEST_REGEX="tempest.api.network.test_networks \
+export DEVSTACK_GATE_TEMPEST_REGEX="tempest.api.network.test_networks.BulkNetworkOpsIpV6TestJSON \
+                                    tempest.api.network.test_networks.NetworksIpV6TestJSON \
+                                    tempest.api.network.test_networks.BulkNetworkOpsIpV6TestJSON \
+                                    tempest.api.network.test_networks.NetworksTestJSON \
                                     tempest.api.network.test_networks_negative"
 
 # Specifically set the services we want
