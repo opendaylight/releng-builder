@@ -1,0 +1,33 @@
+- project:
+    name: usc-csit-channel-master
+    jobs:
+        - '{project}-csit-1node-imds-{functionality}-{install}-{stream}'
+        - '{project}-csit-1node-cds-{functionality}-{install}-{stream}'
+        - '{project}-csit-verify-{functionality}-{stream}'
+
+    # The project name
+    project: 'usc'
+
+    # The functionality under test
+    functionality: 'channel'
+
+    # Project branches
+    stream:
+        - master:
+            branch: 'master'
+
+    install:
+        - only:
+            scope: 'only'
+        - all:
+            scope: 'all'
+
+    # Features to install
+    install-features: 'odl-restconf,odl-mdsal-apidocs,odl-usc-channel-ui'
+
+    # Robot custom options
+    robot-options: ''
+
+    # Trigger jobs (upstream dependencies)
+    trigger-jobs: 'odlparent-distribution-{stream},yangtools-distribution-{stream},controller-distribution-{stream},usc-distribution-{stream}'
+
