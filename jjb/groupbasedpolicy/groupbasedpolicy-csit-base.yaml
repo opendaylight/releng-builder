@@ -1,0 +1,33 @@
+- project:
+    name: groupbasedpolicy-csit-base-master
+    jobs:
+        - '{project}-csit-1node-imds-{functionality}-{install}-{stream}'
+        - '{project}-csit-1node-cds-{functionality}-{install}-{stream}'
+        - '{project}-csit-verify-{functionality}-{stream}'
+
+    # The project name
+    project: 'groupbasedpolicy'
+
+    # The functionality under test
+    functionality: 'base'
+
+    # Project branches
+    stream:
+        - master:
+            branch: 'master'
+
+    install:
+        - only:
+            scope: 'only'
+        - all:
+            scope: 'all'
+
+    # Features to install
+    install-features: 'odl-groupbasedpolicy-base,odl-restconf'
+
+    # Robot custom options
+    robot-options: '-v TOPO_TREE_DEPTH:5'
+
+    # Trigger jobs (upstream dependencies)
+    trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream},openflowjava-distribution-{stream},openflowplugin-distribution-{stream},groupbasedpolicy-distribution-{stream}'
+
