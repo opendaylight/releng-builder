@@ -63,6 +63,9 @@ DEVSTACK_LOCAL_CONFIG+="ODL_JAVA_MIN_MEM=512m;"
 DEVSTACK_LOCAL_CONFIG+="ODL_JAVA_MAX_MEM=784m;"
 DEVSTACK_LOCAL_CONFIG+="ODL_JAVA_MAX_PERM_MEM=784m;"
 
+## # Trim down the boot wait time
+## export ODL_BOOT_WAIT=30
+
 # And this runs devstack-gate
 export PYTHONUNBUFFERED=true
 export DEVSTACK_GATE_TIMEOUT=120
@@ -93,15 +96,10 @@ export KEEP_LOCALRC=1
 unset GIT_BASE
 
 # Only run certain tempest tests
-export DEVSTACK_GATE_TEMPEST_REGEX="tempest.api.network.test_networks.NetworksIpV6TestJSON \
-                                    tempest.api.network.test_networks.NetworksTestJSON \
-                                    tempest.api.network.test_networks_negative"
+export DEVSTACK_GATE_TEMPEST_REGEX="tempest.api.network.test_networks_negative tempest.api.network.test_networks.NetworksTestJSON"
 
 # Specifically set the services we want
 #OVERRIDE_ENABLED_SERVICES=q-svc,q-dhcp,q-l3,q-meta,quantum,key,g-api,g-reg,n-api,n-crt,n-obj,n-cpu,n-cond,n-sch,n-xvnc,n-cauth,h-eng,h-api,h-api-cfn,h-api-cw,rabbit,tempest,mysql
-
-# Trim down the boot wait time
-export ODL_BOOT_WAIT=30
 
 echo "Copying devstack-vm-gate-wrap.sh"
 cp devstack-gate/devstack-vm-gate-wrap.sh ./safe-devstack-vm-gate-wrap.sh
