@@ -1,0 +1,43 @@
+- project:
+    name: integration-release-stable-helium
+    jobs:
+        - 'integration-test-release-{stream}'
+
+    # stream:    branch with - in place of / (eg. stable-helium)
+    # branch:    branch (eg. stable/helium)
+    stream:
+        - stable-helium:
+            branch: 'stable/helium'
+
+- job-template:
+    name: 'integration-test-release-{stream}'
+
+    # Job template for ODL Integration Release Tests
+    #
+    # Required Variables:
+    #     stream:    branch with - in place of / (eg. stable-helium)
+    #     branch:    branch (eg. stable/helium)
+
+    project-type: freestyle
+    node: dynamic_controller
+
+    logrotate:
+        daysToKeep: '{build-days-to-keep}'
+        numToKeep: '{build-num-to-keep}'
+        artifactDaysToKeep: '{build-artifact-days-to-keep}'
+        artifactNumToKeep: '{build-artifact-num-to-keep}'
+
+    parameters:
+        - integration-bundleurl:
+            bundleurl: 'last'
+
+    builders:
+        - trigger-builds:
+            - project: 'controller-csit-1node-imds-nsf-only-{stream},controller-csit-1node-imds-nsf-all-{stream},aaa-csit-1node-imds-authn-only-{stream},aaa-csit-1node-imds-authn-all-{stream},openflowplugin-csit-1node-imds-flow-services-only-{stream},openflowplugin-csit-1node-imds-flow-services-all-{stream},l2switch-csit-1node-imds-switch-only-{stream},l2switch-csit-1node-imds-switch-all-{stream},vtn-csit-1node-imds-manager-only-{stream},vtn-csit-1node-imds-manager-all-{stream},lispflowmapping-csit-1node-imds-all-only-{stream},lispflowmapping-csit-1node-imds-all-all-{stream}'
+              block: true
+              predefined-parameters:
+                  BUNDLEURL=$BUNDLEURL
+
+    publishers:
+        - email-notification:
+            email-prefix: '[integration]'
