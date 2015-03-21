@@ -6,6 +6,7 @@
         - 'integration-distribution-verify-{stream}'
         - 'integration-distribution-merge-{stream}'
         - 'integration-csit-verify-{stream}'
+        - 'integration-distribution-offline-{stream}'
 
     # stream:    branch with - in place of / (eg. stable-helium)
     # branch:    branch (eg. stable/helium)
@@ -201,6 +202,49 @@
         - integration-robot:
             unstable-if: 97.0
             pass-if: 97.0
+        - archive:
+            artifacts: 'karaf.log'
+        - email-notification:
+            email-prefix: '[{project}]'
+
+- job-template:
+    name: 'integration-distribution-offline-{stream}'
+
+    project-type: freestyle
+    node: dynamic_controller
+
+    logrotate:
+        daysToKeep: '{build-days-to-keep}'
+        numToKeep: '{build-num-to-keep}'
+        artifactDaysToKeep: '{build-artifact-days-to-keep}'
+        artifactNumToKeep: '{build-artifact-num-to-keep}'
+
+    parameters:
+        - project-parameter:
+            project: 'integration'
+        - integration-branch:
+            branch: '{branch}'
+        - integration-bundleurl:
+            bundleurl: 'last'
+
+    scm:
+        - git-scm:
+            credentials-id: '{ssh-credentials}'
+            refspec: ''
+            branch: '{branch}'
+
+    wrappers:
+        - build-timeout
+        - ssh-agent-credentials:
+            user: '{ssh-credentials}'
+
+    triggers:
+        - timed: 'H H * * *'
+
+    builders:
+        - integration-deploy-controller-offline
+
+    publishers:
         - archive:
             artifacts: 'karaf.log'
         - email-notification:

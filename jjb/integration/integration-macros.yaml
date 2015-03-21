@@ -197,6 +197,12 @@
         - shell:
             !include-raw include-raw-integration-deploy-controller-run-test.sh
 
+- builder:
+    name: integration-deploy-controller-offline
+    builders:
+        - shell:
+            !include-raw include-raw-integration-deploy-controller-offline.sh
+
 ##############
 # Publishers #
 ##############
