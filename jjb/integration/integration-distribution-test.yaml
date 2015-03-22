@@ -1,16 +1,17 @@
 - project:
-    name: integration-release-stable-helium
+    name: integration-distribution-test
     jobs:
-        - 'integration-test-release-{stream}'
+        - 'integration-distribution-test-{stream}'
 
     # stream:    branch with - in place of / (eg. stable-helium)
     # branch:    branch (eg. stable/helium)
     stream:
         - stable-helium:
             branch: 'stable/helium'
+            csit-list: 'controller-csit-1node-imds-nsf-only-{stream},controller-csit-1node-imds-nsf-all-{stream},aaa-csit-1node-imds-authn-only-{stream},aaa-csit-1node-imds-authn-all-{stream},openflowplugin-csit-1node-imds-flow-services-only-{stream},openflowplugin-csit-1node-imds-flow-services-all-{stream},l2switch-csit-1node-imds-switch-only-{stream},l2switch-csit-1node-imds-switch-all-{stream},vtn-csit-1node-imds-manager-only-{stream},vtn-csit-1node-imds-manager-all-{stream},lispflowmapping-csit-1node-imds-all-only-{stream},lispflowmapping-csit-1node-imds-all-all-{stream}'
 
 - job-template:
-    name: 'integration-test-release-{stream}'
+    name: 'integration-distribution-test-{stream}'
 
     # Job template for ODL Integration Release Tests
     #
@@ -33,7 +34,7 @@
 
     builders:
         - trigger-builds:
-            - project: 'controller-csit-1node-imds-nsf-only-{stream},controller-csit-1node-imds-nsf-all-{stream},aaa-csit-1node-imds-authn-only-{stream},aaa-csit-1node-imds-authn-all-{stream},openflowplugin-csit-1node-imds-flow-services-only-{stream},openflowplugin-csit-1node-imds-flow-services-all-{stream},l2switch-csit-1node-imds-switch-only-{stream},l2switch-csit-1node-imds-switch-all-{stream},vtn-csit-1node-imds-manager-only-{stream},vtn-csit-1node-imds-manager-all-{stream},lispflowmapping-csit-1node-imds-all-only-{stream},lispflowmapping-csit-1node-imds-all-all-{stream}'
+            - project: '{csit-list}'
               block: true
               predefined-parameters:
                   BUNDLEURL=$BUNDLEURL
