@@ -15,11 +15,17 @@ if [ ${BUNDLEURL} == 'last' ]; then
     BUNDLEFOLDER="distribution-${DISTRIBUTION}-${BUNDLEVERSION}"
     BUNDLE="distribution-${DISTRIBUTION}-${TIMESTAMP}.zip"
     BUNDLEURL="${NEXUSPATH}/${BUNDLEVERSION}/${BUNDLE}"
-    echo "Distribution bundle URL is ${BUNDLEURL}"
 else
-    BUNDLE="$(echo "$BUNDLEURL" | awk -F '/' '{ print $(NF) }')"
-    BUNDLEFOLDER="${BUNDLE//.zip}"
+    BUNDLE="$(echo ${BUNDLEURL} | awk -F '/' '{ print $(NF) }')"
+    echo "Finding out Bundle folder..."
+    wget --no-verbose  ${BUNDLEURL}
+    BUNDLEFOLDER="$(unzip -qql ${BUNDLE} | head -n1 | tr -s ' ' | cut -d' ' -f5- | rev | cut -c 2- | rev)"
+    rm ${BUNDLE}
 fi
+
+echo "Distribution bundle URL is ${BUNDLEURL}"
+echo "Distribution bundle is ${BUNDLE}"
+echo "Distribution folder is ${BUNDLEFOLDER}"
 
 echo "Downloading the distribution from ${BUNDLEURL}"
 wget --no-verbose  ${BUNDLEURL}
