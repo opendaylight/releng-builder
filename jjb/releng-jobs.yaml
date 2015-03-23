@@ -4,6 +4,7 @@
         - 'builder-verify-jjb'
         - 'builder-verify-python'
         - 'builder-merge'
+        - 'builder-weekly'
         - 'builder-check-poms'
 
     project: 'releng/builder'
@@ -175,6 +176,47 @@
     builders:
         - shell:
             !include-raw-escape include-raw-jjb-update.sh
+
+    publishers:
+        - email-notification:
+            email-prefix: '[releng]'
+
+- job-template:
+    name: 'builder-weekly'
+
+    # builder-daily job to run JJB update weekly
+    #
+    # This job's purpose is to update all the JJB on a weekly
+    # basis with --flush-cache enabled to ensure jobs are okay
+
+    project-type: freestyle
+
+    logrotate:
+        daysToKeep: 30
+        numToKeep: 40
+        artifactDaysToKeep: -1
+        artifactNumToKeep: 5
+
+    parameters:
+        - project-parameter:
+            project: '{project}'
+        - gerrit-parameter:
+            branch: 'master'
+
+    scm:
+        - git-scm:
+            credentials-id: '{ssh-credentials}'
+            refspec: ''
+            choosing-strategy: 'default'
+
+    wrappers:
+        - ssh-agent-credentials:
+            user: '{ssh-credentials}'
+
+    builders:
+        - shell: |
+            source /opt/virtualenv/jenkins-job-builder/bin/activate
+            jenkins-jobs --flush-cache update jjb/
 
     publishers:
         - email-notification:
