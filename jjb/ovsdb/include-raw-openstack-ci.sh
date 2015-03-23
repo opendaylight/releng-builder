@@ -16,6 +16,14 @@ sudo mkdir -p /opt/stack/new
 sudo chown -R jenkins:jenkins /opt/stack/new
 sudo bash -c 'echo "stack ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers'
 
+# We need to install some scripts from openstack-infra/project-config
+cd ~
+echo "Setting up infra scripts"
+sudo mkdir -p /usr/local/jenkins/slave_scripts
+git clone https://git.openstack.org/openstack-infra/project-config
+cd project-config
+sudo cp jenkins/scripts/subunit2html.py /usr/local/jenkins/slave_scripts
+
 # Save existing WORKSPACE
 SAVED_WORKSPACE=$WORKSPACE
 export WORKSPACE=~/workspace
