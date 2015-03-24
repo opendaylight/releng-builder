@@ -79,6 +79,11 @@ fi
 ## # Trim down the boot wait time
 ## export ODL_BOOT_WAIT=30
 
+# Use Lithium build
+DEVSTACK_LOCAL_CONFIG+="ODL_NAME=distribution-karaf-0.3.0-SNAPSHOT;"
+DEVSTACK_LOCAL_CONFIG+="ODL_PKG=distribution-karaf-0.3.0-20150323.224826-778.zip;"
+DEVSTACK_LOCAL_CONFIG+="ODL_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/org/opendaylight/integration/distribution-karaf/0.3.0-SNAPSHOT;"
+
 # And this runs devstack-gate
 export PYTHONUNBUFFERED=true
 export DEVSTACK_GATE_TIMEOUT=120
