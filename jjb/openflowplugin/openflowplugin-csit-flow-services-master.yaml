@@ -26,7 +26,7 @@
     install-features: 'odl-openflowplugin-flow-services-ui,odl-openflowplugin-adsal-compatibility,odl-nsf-all'
 
     # Robot custom options
-    robot-options: '-v TOPO_TREE_DEPTH:5'
+    robot-options: '-v TOPO_TREE_DEPTH:5 -e adsal'
 
     # Trigger jobs (upstream dependencies)
     trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream},openflowjava-distribution-{stream},openflowplugin-distribution-{stream}'
