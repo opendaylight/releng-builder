@@ -11,19 +11,25 @@ if [ ${BUNDLEURL} == 'last' ]; then
     NEXUSPATH="https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/org/opendaylight/integration/distribution-${DISTRIBUTION}"
     # Extract the BUNDLEVERSION from the pom.xml
     BUNDLEVERSION=`xpath pom.xml '/project/version/text()' 2> /dev/null`
-    echo "Bundle version is $BUNDLEVERSION"
+    echo "Bundle version is ${BUNDLEVERSION}"
     # Acquire the timestamp information from maven-metadata.xml
     wget ${NEXUSPATH}/${BUNDLEVERSION}/maven-metadata.xml
     TIMESTAMP=`xpath maven-metadata.xml "//snapshotVersion[extension='zip'][1]/value/text()" 2>/dev/null`
-    echo "Nexus timestamp is $TIMESTAMP"
+    echo "Nexus timestamp is ${TIMESTAMP}"
     BUNDLEFOLDER="distribution-${DISTRIBUTION}-${BUNDLEVERSION}"
     BUNDLE="distribution-${DISTRIBUTION}-${TIMESTAMP}.zip"
     BUNDLEURL="${NEXUSPATH}/${BUNDLEVERSION}/${BUNDLE}"
-    echo "Distribution bundle URL is ${BUNDLEURL}"
 else
-    BUNDLE="$(echo "$BUNDLEURL" | awk -F '/' '{ print $(NF) }')"
-    BUNDLEFOLDER="${BUNDLE//.zip}"
+    BUNDLE="$(echo ${BUNDLEURL} | awk -F '/' '{ print $(NF) }')"
+    echo "Finding out Bundle folder..."
+    wget --no-verbose  ${BUNDLEURL}
+    BUNDLEFOLDER="$(unzip -qql ${BUNDLE} | head -n1 | tr -s ' ' | cut -d' ' -f5- | rev | cut -c 2- | rev)"
+    rm ${BUNDLE}
 fi
+
+echo "Distribution bundle URL is ${BUNDLEURL}"
+echo "Distribution bundle is ${BUNDLE}"
+echo "Distribution folder is ${BUNDLEFOLDER}"
 
 cat > ${WORKSPACE}/controller-script.sh <<EOF
 echo "Downloading the distribution from ${BUNDLEURL}"
@@ -67,8 +73,9 @@ while true; do
         break
     elif (( "\$COUNT" > "600" )); then
         echo Timeout Controller DOWN
-        echo "Fetching Karaf log"
-        scp ${CONTROLLER0}:/tmp/${BUNDLEFOLDER}/data/log/karaf.log .
+        echo "Dumping Karaf log..."
+        cd ../data/log
+        cat karaf.log
         exit 1
     else
         COUNT=\$(( \${COUNT} + 5 ))
@@ -85,7 +92,7 @@ echo "Checking OSGi bundles..."
 
 EOF
 
-scp ${WORKSPACE}/controller-script.sh $CONTROLLER0:/tmp
+scp ${WORKSPACE}/controller-script.sh ${CONTROLLER0}:/tmp
 ssh ${CONTROLLER0} 'bash /tmp/controller-script.sh'
 
 echo "Changing the testplan path..."
