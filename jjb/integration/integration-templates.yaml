@@ -288,7 +288,9 @@
         - integration-get-slave-addresses
         - inject:
             properties-file: 'slave_addresses.txt'
-        - integration-deploy-controller-run-test
+        - integration-deploy-controller
+        - integration-configure-clustering-functions
+        - integration-configure-clustering
 
     publishers:
         - integration-robot:
