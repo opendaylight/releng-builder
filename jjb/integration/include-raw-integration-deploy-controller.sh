@@ -32,7 +32,7 @@ else
     BUNDLEFOLDER="${BUNDLE//.zip}"
 fi
 
-cat > ${WORKSPACE}/controller-script.sh <<EOF
+cat > ${WORKSPACE}/deploy-controller-script.sh <<EOF
 echo "Downloading the distribution from ${BUNDLEURL}"
 cd /tmp
 wget --no-verbose  ${BUNDLEURL}
@@ -109,8 +109,8 @@ function runcontrollerscript
 {
   local CONTROLLERIP=$1
   echo "running controller $CONTROLLERIP" 
-  scp ${WORKSPACE}/controller-script.sh $CONTROLLERIP:/tmp
-  ssh $CONTROLLERIP 'bash /tmp/controller-script.sh'
+  scp ${WORKSPACE}/deploy-controller-script.sh $CONTROLLERIP:/tmp
+  ssh $CONTROLLERIP 'bash /tmp/deploy-controller-script.sh'
 }
 
 echo "##################################"
