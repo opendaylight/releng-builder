@@ -11,11 +11,12 @@ echo "###########################################"
 
 # Creates a script to run controller inside a dynamic jenkins slave
 
-cat > ${WORKSPACE}/run-test_controller-script.sh <<EOF
+cat > ${WORKSPACE}/run-test-controller-script.sh <<EOF
+
 
 cd /tmp
 echo "Checking status of controller..."
-cd./status &
+    cd./status &
 
 echo "Waiting for controller to come up..."
 COUNT="0"
@@ -24,10 +25,10 @@ while true; do
     echo \$RESP
     if [[ \$RESP == *"200"* ]]; then
         echo Controller is UP
-    NODERESP="\$( curl --user admin:admin -sL -w "%{http_code} %{url_effective}\\n"
+    SHARD="\$( curl --user admin:admin -sL -w "%{http_code} %{url_effective}\\n"\
 http://localhost:8181/jolokia/read/org.opendaylight.controller:Category=Shards,name=member-0-shard-inventory-config,type=DistributedConfigDatastore)"
-      echo $ NODERESP 
-      if [[ $ NODERESP  == *'"status":200'* ]]
+      echo \$SHARD
+      if [[ \$SHARD  == *'"status":200'* ]]
        then
         break
       fi  
@@ -56,8 +57,8 @@ for  i in "${!CONTROLLERIPS[@]}"
 do
    echo "IP address of node is: $i and index is   ${CONTROLLERIPS[$i]}"
    
-   scp ${WORKSPACE}/run-controller-script.sh ${CONTROLLER}$i:/tmp
-   ssh ${CONTROLLER}$i "bash /tmp/run-controller-script.sh $i"
+   scp ${WORKSPACE}/run-test-controller-script.sh ${CONTROLLER}$i:/tmp
+   ssh ${CONTROLLER}$i "bash /tmp/run-test-controller-script.sh $i"
    
 set +x   
 
