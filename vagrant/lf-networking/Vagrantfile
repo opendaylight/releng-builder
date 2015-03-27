@@ -1,0 +1,35 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby sw=2 ts=2 sts=2 et :
+
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.box = "dummy"
+
+  config.ssh.username = 'root'
+  config.ssh.pty = true
+
+  config.vm.provider :rackspace do |rs|
+    rs.flavor = 'general1-1'
+
+    if ENV['RSIMAGE']
+      rs.image = ENV['RSIMAGE']
+    else
+      rs.image = 'CentOS 6.5 - Vagrant ready'
+    end
+
+    # allow for switching to ORD but default to DFW
+    if (ENV['RSREGION'] == 'ord')
+      rs.rackspace_region = :ord
+    else
+      rs.rackspace_region = :dfw
+    end
+  end
+
+  # reconfigure the network setup to support our special private setup
+  config.vm.provision 'shell', path: 'configure_lf_infra.sh', args: ENV['RSSUBDOMAIN']
+
+  # reseal the system for imaging
+  config.vm.provision 'shell', path: 'system_reseal.sh'
+end
