@@ -32,7 +32,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #         in your base box
   config.vm.provider :rackspace do |rs|
     # create these base builds always on the smallest system possible
-    rs.flavor = 'performance1-1'
+    rs.flavor = 'general1-1'
+
+    # allow for switching to ORD cloud but default to DFW
+    if (ENV['RSREGION'] == 'ord')
+      rs.rackspace_region = :ord
+    else
+      rs.rackspace_region = :dfw
+    end
 
     # Default the Fedora 20 (Heisenbug) - Vagrant ready image unless overriden by a RSIMAGE
     # environment variable
