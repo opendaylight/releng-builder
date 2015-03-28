@@ -10,6 +10,9 @@ export PATH=$PATH:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/sbin
 # *SIGH*. This is required to get lsb_release
 sudo yum -y install redhat-lsb-core indent python-testrepository
 
+# Install xpath
+sudo yum -y install perl-XML-XPath
+
 echo "Making /opt/stack/new jenkins:jenkins"
 sudo /usr/sbin/groupadd jenkins
 sudo mkdir -p /opt/stack/new
@@ -72,12 +75,28 @@ DEVSTACK_LOCAL_CONFIG+="ODL_JAVA_MAX_MEM=784m;"
 DEVSTACK_LOCAL_CONFIG+="ODL_JAVA_MAX_PERM_MEM=784m;"
 
 # Set ODL_URL_PREFIX if "nexus proxy" is provided
+URL_PREFIX=${ODLNEXUSPROXY:-https://nexus.opendaylight.org}
 if [ -n "$ODLNEXUSPROXY" ] ; then
     DEVSTACK_LOCAL_CONFIG+="ODL_URL_PREFIX=$ODLNEXUSPROXY;"
 fi
 
 ## # Trim down the boot wait time
 ## export ODL_BOOT_WAIT=30
+
+# Use Lithium build, if asked to do so
+if [ "${ODL_VERSION}" == "lithium-latest" ] ; then
+    NEXUSPATH="${URL_PREFIX}/content/repositories/opendaylight.snapshot/org/opendaylight/integration/distribution-karaf"
+    BUNDLEVERSION='0.3.0-SNAPSHOT'
+
+    # Acquire the timestamp information from maven-metadata.xml
+    wget ${NEXUSPATH}/${BUNDLEVERSION}/maven-metadata.xml
+    BUNDLE_TIMESTAMP=`xpath maven-metadata.xml "//snapshotVersion[extension='zip'][1]/value/text()" 2>/dev/null`
+    echo "Nexus timestamp is ${BUNDLE_TIMESTAMP}"
+
+    DEVSTACK_LOCAL_CONFIG+="ODL_NAME=distribution-karaf-${BUNDLEVERSION};"
+    DEVSTACK_LOCAL_CONFIG+="ODL_PKG=distribution-karaf-${BUNDLE_TIMESTAMP}.zip;"
+    DEVSTACK_LOCAL_CONFIG+="ODL_URL=${NEXUSPATH}/${BUNDLEVERSION};"
+fi
 
 # And this runs devstack-gate
 export PYTHONUNBUFFERED=true
@@ -108,8 +127,8 @@ export KEEP_LOCALRC=1
 # Unset this because it's set by the underlying Jenkins node ...
 unset GIT_BASE
 
-# Only run certain tempest tests
-export DEVSTACK_GATE_TEMPEST_REGEX="tempest.api.network.test_networks_negative tempest.api.network.test_networks.NetworksTestJSON"
+# By default, only run certain tempest tests
+export DEVSTACK_GATE_TEMPEST_REGEX=${TEMPEST_REGEX:-"tempest.api.network.test_networks_negative tempest.api.network.test_networks.NetworksTestJSON"}
 
 # Specifically set the services we want
 #OVERRIDE_ENABLED_SERVICES=q-svc,q-dhcp,q-l3,q-meta,quantum,key,g-api,g-reg,n-api,n-crt,n-obj,n-cpu,n-cond,n-sch,n-xvnc,n-cauth,h-eng,h-api,h-api-cfn,h-api-cw,rabbit,tempest,mysql

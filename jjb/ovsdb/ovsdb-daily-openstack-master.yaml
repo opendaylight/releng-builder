@@ -1,0 +1,54 @@
+- project:
+    name: ovsdb-daily-openstack
+    jobs:
+        - 'ovsdb-daily-openstack-master'
+
+    project: 'ovsdb'
+
+- job-template:
+    name: 'ovsdb-daily-openstack-master'
+
+    project-type: freestyle
+    node: dynamic_devstack
+    description: 'Jenkins job to run Tempest tests for the OpenDaylight ML2 MechanismDriver on master ODL. '
+    concurrent: true
+
+    logrotate:
+        daysToKeep: '198'
+
+    parameters:
+        - project-parameter:
+            project: '{project}'
+
+    wrappers:
+        - timeout:
+            fail: true
+            timeout: 90
+            timeout-var: 'BUILD_TIMEOUT'
+            type: absolute
+        - ssh-agent-credentials:
+            user: '{openstack-gerrit-credentials}'
+        - jclouds:
+            single-use: true
+
+    triggers:
+        - timed: '@daily'
+
+    builders:
+        - inject:
+            properties-content: |
+              ODL_VERSION=lithium-latest
+              TEMPEST_REGEX=tempest.api.network
+        - shell:
+            !include-raw-escape include-raw-openstack-ci.sh
+
+    publishers:
+        - archive:
+            artifacts: 'logs/**'
+            fingerprint: false
+        - email-ext:
+            subject: '[ovsdb] $DEFAULT_SUBJECT'
+            attach-build-log: false
+            failure: false
+            unstable: false
+            fixed: false
