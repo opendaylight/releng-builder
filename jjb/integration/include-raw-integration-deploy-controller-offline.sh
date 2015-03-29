@@ -7,27 +7,25 @@ if [ ${BUNDLEURL} == 'last' ]; then
     NEXUSPATH="https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/org/opendaylight/integration/distribution-${DISTRIBUTION}"
     # Extract the BUNDLEVERSION from the pom.xml
     BUNDLEVERSION=`xpath pom.xml '/project/version/text()' 2> /dev/null`
-    echo "Bundle version is ${BUNDLEVERSION}"
+    echo "Bundle version is $BUNDLEVERSION"
     # Acquire the timestamp information from maven-metadata.xml
     wget ${NEXUSPATH}/${BUNDLEVERSION}/maven-metadata.xml
     TIMESTAMP=`xpath maven-metadata.xml "//snapshotVersion[extension='zip'][1]/value/text()" 2>/dev/null`
-    echo "Nexus timestamp is ${TIMESTAMP}"
+    echo "Nexus timestamp is $TIMESTAMP"
     BUNDLEFOLDER="distribution-${DISTRIBUTION}-${BUNDLEVERSION}"
     BUNDLE="distribution-${DISTRIBUTION}-${TIMESTAMP}.zip"
     BUNDLEURL="${NEXUSPATH}/${BUNDLEVERSION}/${BUNDLE}"
 else
-    BUNDLE="$(echo ${BUNDLEURL} | awk -F '/' '{ print $(NF) }')"
-    echo "Finding out Bundle folder..."
-    wget --no-verbose  ${BUNDLEURL}
-    BUNDLEFOLDER="$(unzip -qql ${BUNDLE} | head -n1 | tr -s ' ' | cut -d' ' -f5- | rev | cut -c 2- | rev)"
-    rm ${BUNDLE}
+    BUNDLE="${BUNDLEURL##*/}"
+    BUNDLEVERSION="$(basename $(dirname $BUNDLEURL))"
+    BUNDLEFOLDER="distribution-${DISTRIBUTION}-${BUNDLEVERSION}"
 fi
 
 echo "Distribution bundle URL is ${BUNDLEURL}"
 echo "Distribution bundle is ${BUNDLE}"
 echo "Distribution folder is ${BUNDLEFOLDER}"
 
-echo "Downloading the distribution from ${BUNDLEURL}"
+echo "Downloading the distribution..."
 wget --no-verbose  ${BUNDLEURL}
 
 echo "Extracting the new controller..."
