@@ -20,11 +20,9 @@ if [ ${BUNDLEURL} == 'last' ]; then
     BUNDLE="distribution-${DISTRIBUTION}-${TIMESTAMP}.zip"
     BUNDLEURL="${NEXUSPATH}/${BUNDLEVERSION}/${BUNDLE}"
 else
-    BUNDLE="$(echo ${BUNDLEURL} | awk -F '/' '{ print $(NF) }')"
-    echo "Finding out Bundle folder..."
-    wget --no-verbose  ${BUNDLEURL}
-    BUNDLEFOLDER="$(unzip -qql ${BUNDLE} | head -n1 | tr -s ' ' | cut -d' ' -f5- | rev | cut -c 2- | rev)"
-    rm ${BUNDLE}
+    BUNDLE="${BUNDLEURL##*/}"
+    BUNDLEVERSION="$(basename $(dirname $BUNDLEURL))"
+    BUNDLEFOLDER="distribution-${DISTRIBUTION}-${BUNDLEVERSION}"
 fi
 
 echo "Distribution bundle URL is ${BUNDLEURL}"
@@ -32,9 +30,9 @@ echo "Distribution bundle is ${BUNDLE}"
 echo "Distribution folder is ${BUNDLEFOLDER}"
 
 cat > ${WORKSPACE}/controller-script.sh <<EOF
-echo "Downloading the distribution from ${BUNDLEURL}"
+echo "Downloading the distribution..."
 cd /tmp
-wget --no-verbose  ${BUNDLEURL}
+wget --no-verbose '${BUNDLEURL}'
 
 echo "Extracting the new controller..."
 unzip -q ${BUNDLE}
