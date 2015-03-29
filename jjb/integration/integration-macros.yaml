@@ -46,6 +46,48 @@
             default: '{test-options}'
             description:  'Robot command options'
 
+- parameter:
+    name: integration-patch-git
+    parameters:
+        - string:
+            name: PATCHGIT
+            default: '{patch-git}'
+            description:  'Patch GIT repository'
+
+- parameter:
+    name: integration-patch-refspec
+    parameters:
+        - string:
+            name: PATCHREFSPEC
+            default: '{patch-refspec}'
+            description:  'Patch Refspec'
+
+- scm:
+    name: integration-gerrit-scm
+    scm:
+        - git:
+            credentials-id: '{credentials-id}'
+            url: 'ssh://jenkins-releng@git.opendaylight.org:29418/{git}'
+            basedir: '{git}'
+            refspec: '{refspec}'
+            branches:
+                - 'origin/{branch}'
+            skip-tag: true
+            choosing-strategy: 'gerrit'
+
+- scm:
+    name: integration-git-scm
+    scm:
+        - git:
+            credentials-id: '{credentials-id}'
+            basedir: 'integration'
+            url: '$GIT_BASE'
+            refspec: ''
+            branches:
+                - 'origin/{branch}'
+            skip-tag: true
+            wipe-workspace: true
+
 - trigger:
     name: integration-distribution-gerrit-trigger-patch-submitted
     triggers:
@@ -202,6 +244,12 @@
     builders:
         - shell:
             !include-raw include-raw-integration-deploy-controller-offline.sh
+
+- builder:
+    name: integration-get-bundle-url
+    builders:
+        - shell:
+            !include-raw include-raw-integration-get-bundle-url.sh
 
 ##############
 # Publishers #

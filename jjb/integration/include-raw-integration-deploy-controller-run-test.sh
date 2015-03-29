@@ -34,7 +34,7 @@ echo "Distribution folder is ${BUNDLEFOLDER}"
 cat > ${WORKSPACE}/controller-script.sh <<EOF
 echo "Downloading the distribution from ${BUNDLEURL}"
 cd /tmp
-wget --no-verbose  ${BUNDLEURL}
+wget --no-verbose ${BUNDLEURL}
 
 echo "Extracting the new controller..."
 unzip -q ${BUNDLE}
