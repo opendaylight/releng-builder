@@ -239,6 +239,11 @@
     builders:
         - shell:
             !include-raw include-raw-integration-get-slave-addresses.sh
+- builder:
+    name: integration-get-bundle-vars
+    builders:
+        - shell:
+            !include-raw include-raw-integration-get-bundle-vars.sh
 
 - builder:
     name: integration-deploy-controller-run-test
