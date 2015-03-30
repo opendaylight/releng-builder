@@ -288,10 +288,13 @@
         - integration-get-slave-addresses
         - inject:
             properties-file: 'slave_addresses.txt'
+        - integration-get-bundle-vars
+        - inject:
+            properties-file: 'bundle_vars.txt'
         - integration-deploy-controller
         - integration-configure-clustering-functions
         - integration-configure-clustering
-
+        - integration-run-test
     publishers:
         - integration-robot:
             unstable-if: 97.0
@@ -317,13 +320,14 @@
             branch: 'stable/helium'
 
     jdk: 'openjdk7'
+    functionality: 'basic'
         
     trigger-jobs: 'none'
-    functionality: 'FUNCTIONALITY'
-    install: 'INSTALL'
-    project: 'PROJECT'
+    functionality: 'basic'
+    install: 'all'
+    project: 'integration'
     scope: 'all'
-    install-features: ''
+    
 
    # Features to install
     install-features: 'odl-l2switch-switch-ui'
