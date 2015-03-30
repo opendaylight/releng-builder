@@ -2,40 +2,13 @@ echo "#################################################"
 echo "##   include-raw-integration-deploy-controller ##"
 echo "#################################################"
 
-# Create a script to run controller inside a dynamic jenkins slave
-CONTROLLERMEM="2048m"
-DISTRIBUTION="karaf"
+set -x
 
-if [ ${CONTROLLERSCOPE} == 'all' ]; then
-    CONTROLLERFEATURES="odl-integration-compatible-with-all,${CONTROLLERFEATURES}"
-    CONTROLLERMEM="3072m"
-    if [ ${BRANCH} == 'master' ]; then
-        DISTRIBUTION="test"
-    fi
-fi
-
-if [ ${BUNDLEURL} == 'last' ]; then
-    NEXUSPATH="https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/org/opendaylight/integration/distribution-${DISTRIBUTION}"
-    # Extract the BUNDLEVERSION from the pom.xml
-    BUNDLEVERSION=`xpath pom.xml '/project/version/text()' 2> /dev/null`
-    echo "Bundle version is $BUNDLEVERSION"
-    # Acquire the timestamp information from maven-metadata.xml
-    wget ${NEXUSPATH}/${BUNDLEVERSION}/maven-metadata.xml
-    TIMESTAMP=`xpath maven-metadata.xml "//snapshotVersion[extension='zip'][1]/value/text()" 2>/dev/null`
-    echo "Nexus timestamp is $TIMESTAMP"
-    BUNDLEFOLDER="distribution-${DISTRIBUTION}-${BUNDLEVERSION}"
-    BUNDLE="distribution-${DISTRIBUTION}-${TIMESTAMP}.zip"
-    BUNDLEURL="${NEXUSPATH}/${BUNDLEVERSION}/${BUNDLE}"
-    echo "Distribution bundle URL is ${BUNDLEURL}"
-else
-    BUNDLE="$(echo "$BUNDLEURL" | awk -F '/' '{ print $(NF) }')"
-    BUNDLEFOLDER="${BUNDLE//.zip}"
-fi
 
 cat > ${WORKSPACE}/deploy-controller-script.sh <<EOF
-echo "Downloading the distribution from ${BUNDLEURL}"
+echo "Downloading the distribution from ${ACTUALBUNDLEURL}"
 cd /tmp
-wget --no-verbose  ${BUNDLEURL}
+wget --no-verbose  ${ACTUALBUNDLEURL}
 
 echo "Extracting the new controller..."
 unzip -q ${BUNDLE}
@@ -96,7 +69,7 @@ echo "Checking OSGi bundles..."
 
 EOF
 
-
+set +x
 
 
 
