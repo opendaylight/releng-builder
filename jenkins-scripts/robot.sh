@@ -2,6 +2,7 @@
 
 yum clean all
 yum install -y unzip
+yum install -y python-netaddr
 
 # disable firewall rules
 service iptables stop
