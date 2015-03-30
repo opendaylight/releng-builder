@@ -5,6 +5,9 @@ wget http://copr.fedoraproject.org/coprs/tykeal/odl-updates/repo/epel-7/tykeal-o
 
 yum clean all
 
+# Install xpath
+yum install -y perl-XML-XPath
+
 yum update -y python-six
 
 # make sure we don't require tty for sudo operations
