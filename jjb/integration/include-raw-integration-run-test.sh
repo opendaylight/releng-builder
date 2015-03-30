@@ -16,8 +16,8 @@ cat > ${WORKSPACE}/run-test-controller-script.sh <<EOF
 
 cd /tmp
 echo "Checking status of controller..."
-    cd./status &
 
+    ./start &
 echo "Waiting for controller to come up..."
 COUNT="0"
 while true; do
@@ -44,7 +44,7 @@ http://localhost:8181/jolokia/read/org.opendaylight.controller:Category=Shards,n
     fi
 done
 
-echo "Cool down for 1 min :)..."
+echo "A moments reflection :)..."
 sleep 60
 
 echo "Checking OSGi bundles..."
@@ -55,7 +55,7 @@ EOF
 set -x
 for  i in "${!CONTROLLERIPS[@]}"
 do
-   echo "IP address of node is: $i and index is   ${CONTROLLERIPS[$i]}"
+   echo "Running tests on ${CONTROLLERIPS[$i]} which is node $i "
    
    scp ${WORKSPACE}/run-test-controller-script.sh ${CONTROLLER}$i:/tmp
    ssh ${CONTROLLER}$i "bash /tmp/run-test-controller-script.sh $i"
