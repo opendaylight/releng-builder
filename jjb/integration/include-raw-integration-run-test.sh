@@ -54,7 +54,7 @@ echo "A moments reflection :)..."
 sleep 60
 
 echo "Checking OSGi bundles..."
-./client 'bundle:list'
+    bash bin/client 'bundle:list'
 set +x
 EOF
 
