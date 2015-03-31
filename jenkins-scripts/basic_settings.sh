@@ -9,7 +9,18 @@ EOF
 cat <<EOSSH >> /etc/ssh/ssh_config
 
 # we don't want to do SSH host key checking on Rackspace spin-up systems
+# Dallas (ODL)
 Host 10.30.11.*
+  StrictHostKeyChecking no
+  UserKnownHostsFile /dev/null
+
+# Dallas (ODLForge)
+Host 10.30.12.*
+  StrictHostKeyChecking no
+  UserKnownHostsFile /dev/null
+
+# Chicago (ODL)
+Host 10.30.32.*
   StrictHostKeyChecking no
   UserKnownHostsFile /dev/null
 EOSSH
