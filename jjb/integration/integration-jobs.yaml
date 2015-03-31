@@ -1,149 +1,29 @@
-# ODL Releng build templates
 
 - project:
     name: integration
     jobs:
+        - 'integration-csit-verify-{stream}'
         - 'integration-distribution-verify-{stream}'
         - 'integration-distribution-merge-{stream}'
-        - 'integration-csit-verify-{stream}'
         - 'integration-distribution-offline-{stream}'
+        - 'integration-distribution-test-{stream}'
+        - 'integration-patch-test-{stream}'
 
-    # stream:    branch with - in place of / (eg. stable-helium)
-    # branch:    branch (eg. stable/helium)
     stream:
         - master:
             branch: 'master'
+            csit-list: 'aaa-csit-1node-imds-authn-only-{stream},aaa-csit-1node-imds-authn-all-{stream},openflowplugin-csit-1node-imds-flow-services-only-{stream},openflowplugin-csit-1node-imds-flow-services-all-{stream},l2switch-csit-1node-imds-switch-only-{stream},l2switch-csit-1node-imds-switch-all-{stream},vtn-csit-1node-imds-manager-only-{stream},vtn-csit-1node-imds-manager-all-{stream},lispflowmapping-csit-1node-imds-all-only-{stream},lispflowmapping-csit-1node-imds-all-all-{stream}'
+
         - stable-helium:
             branch: 'stable/helium'
+            csit-list: 'controller-csit-1node-imds-nsf-only-{stream},controller-csit-1node-imds-nsf-all-{stream},aaa-csit-1node-imds-authn-only-{stream},aaa-csit-1node-imds-authn-all-{stream},openflowplugin-csit-1node-imds-flow-services-only-{stream},openflowplugin-csit-1node-imds-flow-services-all-{stream},l2switch-csit-1node-imds-switch-only-{stream},l2switch-csit-1node-imds-switch-all-{stream},vtn-csit-1node-imds-manager-only-{stream},vtn-csit-1node-imds-manager-all-{stream},lispflowmapping-csit-1node-imds-all-only-{stream},lispflowmapping-csit-1node-imds-all-all-{stream}'
 
-    project: 'integration'
     jdk: 'openjdk7'
 
 # For the Job templates below replace instances of:
 # PROJECT with your project name (eg. controller)
 # MAVEN_GOALS with your maven goals to build
 # MAVEN_OPTS with your maven options to build
-
-- job-template:
-    name: 'integration-distribution-verify-{stream}'
-
-    # Job template for ODL verify jobs
-    #
-    # The purpose of this job template is to setup a ODL verify job
-    #
-    # Required Variables:
-    #     stream:    branch with - in place of / (eg. stable-helium)
-    #     branch:    branch (eg. stable/helium)
-
-    project-type: maven
-    node: dynamic_verify
-    concurrent: true
-    jdk: '{jdk}'
-
-    logrotate:
-        daysToKeep: '{build-days-to-keep}'
-        numToKeep: '{build-num-to-keep}'
-        artifactDaysToKeep: '{build-artifact-days-to-keep}'
-        artifactNumToKeep: '{build-artifact-num-to-keep}'
-
-    parameters:
-        - project-parameter:
-            project: '{project}'
-        - gerrit-parameter:
-            branch: '{branch}'
-
-    scm:
-        - gerrit-trigger-scm:
-            credentials-id: '{ssh-credentials}'
-            refspec: '$GERRIT_REFSPEC'
-            choosing-strategy: 'gerrit'
-
-    wrappers:
-        - build-timeout
-        - ssh-agent-credentials:
-            user: '{ssh-credentials}'
-
-    triggers:
-        - integration-distribution-gerrit-trigger-patch-submitted:
-            name: 'integration'
-            branch: '{branch}'
-
-    prebuilders:
-        - wipe-org-opendaylight-repo
-
-    maven:
-        maven-name: '{mvn32}'
-        root-pom: 'pom.xml'
-        goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r '
-        maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-        settings: '{integration-settings}'
-        global-settings: '{odl-global-settings}'
-        ignore-upstream-changes: true
-
-    publishers:
-        - email-notification:
-            email-prefix: '[integration]'
-
-- job-template:
-    name: 'integration-distribution-merge-{stream}'
-
-    # Job template for ODL merge jobs
-    #
-    # The purpose of this job template is to setup a ODL merge job
-    # and deploy artifacts to Nexus.
-    #
-    # Required Variables:
-    #     stream:    branch with - in place of / (eg. stable-helium)
-    #     branch:    branch (eg. stable/helium)
-
-    project-type: maven
-    node: dynamic_merge
-    jdk: '{jdk}'
-
-    logrotate:
-        daysToKeep: '{build-days-to-keep}'
-        numToKeep: '{build-num-to-keep}'
-        artifactDaysToKeep: '{build-artifact-days-to-keep}'
-        artifactNumToKeep: '{build-artifact-num-to-keep}'
-
-    parameters:
-        - project-parameter:
-            project: '{project}'
-
-    scm:
-        - gerrit-trigger-scm:
-            credentials-id: '{ssh-credentials}'
-            refspec: ''
-            choosing-strategy: 'default'
-
-    wrappers:
-        - build-timeout
-        - ssh-agent-credentials:
-            user: '{ssh-credentials}'
-
-    triggers:
-        - integration-distribution-gerrit-trigger-patch-merged:
-            name: 'integration'
-            branch: '{branch}'
-
-    prebuilders:
-        - wipe-org-opendaylight-repo
-
-    maven:
-        maven-name: '{mvn32}'
-        root-pom: 'pom.xml'
-        goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  source:jar javadoc:jar'
-        maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-        settings: '{integration-settings}'
-        global-settings: '{odl-global-settings}'
-
-    publishers:
-        - email-notification:
-            email-prefix: '[integration]'
-        - maven-deploy:
-            id: ''
-            unique-version: true
-            deploy-unstable: false
 
 - job-template:
     name: 'integration-csit-verify-{stream}'
@@ -205,7 +85,111 @@
         - archive:
             artifacts: 'karaf.log'
         - email-notification:
-            email-prefix: '[{project}]'
+            email-prefix: '[integration]'
+
+- job-template:
+    name: 'integration-distribution-verify-{stream}'
+
+    project-type: maven
+    node: dynamic_verify
+    concurrent: true
+    jdk: '{jdk}'
+
+    logrotate:
+        daysToKeep: '{build-days-to-keep}'
+        numToKeep: '{build-num-to-keep}'
+        artifactDaysToKeep: '{build-artifact-days-to-keep}'
+        artifactNumToKeep: '{build-artifact-num-to-keep}'
+
+    parameters:
+        - project-parameter:
+            project: 'integration'
+        - gerrit-parameter:
+            branch: '{branch}'
+
+    scm:
+        - gerrit-trigger-scm:
+            credentials-id: '{ssh-credentials}'
+            refspec: '$GERRIT_REFSPEC'
+            choosing-strategy: 'gerrit'
+
+    wrappers:
+        - build-timeout
+        - ssh-agent-credentials:
+            user: '{ssh-credentials}'
+
+    triggers:
+        - integration-distribution-gerrit-trigger-patch-submitted:
+            name: 'integration'
+            branch: '{branch}'
+
+    prebuilders:
+        - wipe-org-opendaylight-repo
+
+    maven:
+        maven-name: '{mvn32}'
+        root-pom: 'pom.xml'
+        goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r source:jar javadoc:jar'
+        maven-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
+        settings: '{integration-settings}'
+        global-settings: '{odl-global-settings}'
+        ignore-upstream-changes: true
+
+    publishers:
+        - email-notification:
+            email-prefix: '[integration]'
+
+- job-template:
+    name: 'integration-distribution-merge-{stream}'
+
+    project-type: maven
+    node: dynamic_merge
+    jdk: '{jdk}'
+
+    logrotate:
+        daysToKeep: '{build-days-to-keep}'
+        numToKeep: '{build-num-to-keep}'
+        artifactDaysToKeep: '{build-artifact-days-to-keep}'
+        artifactNumToKeep: '{build-artifact-num-to-keep}'
+
+    parameters:
+        - project-parameter:
+            project: 'integration'
+
+    scm:
+        - gerrit-trigger-scm:
+            credentials-id: '{ssh-credentials}'
+            refspec: ''
+            choosing-strategy: 'default'
+
+    wrappers:
+        - build-timeout
+        - ssh-agent-credentials:
+            user: '{ssh-credentials}'
+
+    triggers:
+        - integration-distribution-gerrit-trigger-patch-merged:
+            name: 'integration'
+            branch: '{branch}'
+
+    prebuilders:
+        - wipe-org-opendaylight-repo
+
+    maven:
+        maven-name: '{mvn32}'
+        root-pom: 'pom.xml'
+        goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  source:jar javadoc:jar'
+        maven-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
+        settings: '{integration-settings}'
+        global-settings: '{odl-global-settings}'
+
+    publishers:
+        - email-notification:
+            email-prefix: '[integration]'
+        - maven-deploy:
+            id: ''
+            unique-version: true
+            deploy-unstable: false
 
 - job-template:
     name: 'integration-distribution-offline-{stream}'
@@ -248,5 +232,102 @@
         - archive:
             artifacts: 'karaf.log'
         - email-notification:
-            email-prefix: '[{project}]'
+            email-prefix: '[integration]'
+
+- job-template:
+    name: 'integration-distribution-test-{stream}'
+
+    project-type: freestyle
+    node: dynamic_controller
+
+    logrotate:
+        daysToKeep: '{build-days-to-keep}'
+        numToKeep: '{build-num-to-keep}'
+        artifactDaysToKeep: '{build-artifact-days-to-keep}'
+        artifactNumToKeep: '{build-artifact-num-to-keep}'
+
+    parameters:
+        - integration-bundleurl:
+            bundleurl: 'last'
+
+    builders:
+        - trigger-builds:
+            - project: '{csit-list}'
+              block: true
+              predefined-parameters:
+                  BUNDLEURL=$BUNDLEURL
+
+    publishers:
+        - email-notification:
+            email-prefix: '[integration]'
+
+- job-template:
+    name: 'integration-patch-test-{stream}'
+
+    project-type: maven
+    node: dynamic_verify
+    jdk: '{jdk}'
+
+    logrotate:
+        daysToKeep: '{build-days-to-keep}'
+        numToKeep: '{build-num-to-keep}'
+        artifactDaysToKeep: '{build-artifact-days-to-keep}'
+        artifactNumToKeep: '{build-artifact-num-to-keep}'
+
+    parameters:
+        - project-parameter:
+            project: 'integration'
+        - integration-patch-git:
+            patch-git: ''
+        - integration-patch-refspec:
+            patch-refspec: ''
+        - integration-patch-git-url:
+            patch-git-url: 'ssh://jenkins-$SILO@git.opendaylight.org:29418/$PATCHGIT'
+
+    scm:
+        - integration-gerrit-scm:
+            credentials-id: '{ssh-credentials}'
+            branch: '{branch}'
+        - integration-git-scm:
+            credentials-id: '{ssh-credentials}'
+            branch: '{branch}'
+
+    wrappers:
+        - build-timeout
+        - ssh-agent-credentials:
+            user: '{ssh-credentials}'
+
+    prebuilders:
+        - integration-get-bundle-url
+        - inject:
+            properties-file: 'bundle.txt'
+        - wipe-org-opendaylight-repo
+        - maven-target:
+            maven-version: '{mvn32}'
+            pom: '$PATCHGIT/pom.xml'
+            goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r source:jar javadoc:jar'
+            java-opts:
+                - '-Xmx4096m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
+            settings: '{integration-settings}'
+            global-settings: '{odl-global-settings}'
+
+    maven:
+        maven-name: '{mvn32}'
+        root-pom: 'integration/pom.xml'
+        goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r source:jar javadoc:jar'
+        maven-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
+        settings: '{integration-settings}'
+        global-settings: '{odl-global-settings}'
+        ignore-upstream-changes: true
+
+    postbuilders:
+        - trigger-builds:
+            - project: 'integration-distribution-test-{stream}'
+              block: true
+              predefined-parameters:
+                  BUNDLEURL=$BUNDLEURL
+
+    publishers:
+        - email-notification:
+            email-prefix: '[integration]'
 
