@@ -7,8 +7,10 @@ if [ ${CONTROLLERSCOPE} == 'all' ]; then
     CONTROLLERMEM="3072m"
 fi
 
+NEXUSURL_PREFIX=${ODLNEXUSPROXY:-https://nexus.opendaylight.org}
+
 if [ ${BUNDLEURL} == 'last' ]; then
-    NEXUSPATH="https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/org/opendaylight/integration/distribution-${DISTRIBUTION}"
+    NEXUSPATH="${NEXUSURL_PREFIX}/content/repositories/opendaylight.snapshot/org/opendaylight/integration/distribution-${DISTRIBUTION}"
     # Extract the BUNDLEVERSION from the pom.xml
     BUNDLEVERSION=`xpath pom.xml '/project/version/text()' 2> /dev/null`
     echo "Bundle version is ${BUNDLEVERSION}"
