@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5a93c517_43f90d7f",
+        "filename": "jjb/integration/include-raw-integration-deploy-controller-offline.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 797
+      },
+      "writtenOn": "2015-03-31T14:46:24Z",
+      "side": 1,
+      "message": "Not really, there is a difference *-offline.sh and *-run-test.sh, the first is to be run in controller VM directly so I do not need to create a controller deploy script that later is moved and executed, instead I directly run the script and therefore \u0027${BUNDLEURL}\u0027 does not work in this case.",
+      "parentUuid": "5a93c517_a89d4e5b",
+      "range": {
+        "startLine": 29,
+        "startChar": 18,
+        "endLine": 29,
+        "endChar": 19
+      },
+      "revId": "3af7579fe30359682d4a8578b9d87ae35a44c67e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a93c517_c890da45",
         "filename": "jjb/integration/include-raw-integration-deploy-controller-run-test.sh",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2015-03-31T11:29:57Z",
       "side": 1,
       "message": "\"\nSingle quote would prevent ${BUNDLEURL} from expanding.",
+      "range": {
+        "startLine": 35,
+        "startChar": 18,
+        "endLine": 35,
+        "endChar": 19
+      },
+      "revId": "3af7579fe30359682d4a8578b9d87ae35a44c67e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_63c6894b",
+        "filename": "jjb/integration/include-raw-integration-deploy-controller-run-test.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 797
+      },
+      "writtenOn": "2015-03-31T14:46:24Z",
+      "side": 1,
+      "message": "So, this is actually working because we are parsing an external variable to the script (I tested in sandbox). This is needed to deal with not regular character like \u0027$\u0027 within the $BUNDLEURL.",
+      "parentUuid": "5a93c517_c890da45",
       "range": {
         "startLine": 35,
         "startChar": 18,
