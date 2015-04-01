@@ -102,7 +102,7 @@ cat testplan.txt
 SUITES=$( egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' testplan.txt | tr '\012' ' ' )
 
 echo "Starting Robot test suites ${SUITES} ..."
-pybot -N ${TESTPLAN} -c critical -e exclude --loglevel TRACE -v BUNDLEFOLDER:${BUNDLEFOLDER} -v WORKSPACE:/tmp -v CONTROLLER:${CONTROLLER0} -v MININET:${MININET0} -v MININET_USER:${USER} -v USER_HOME:${HOME} ${TESTOPTIONS} ${SUITES}
+pybot -N ${TESTPLAN} -c critical -e exclude --loglevel TRACE -v BUNDLEFOLDER:${BUNDLEFOLDER} -v WORKSPACE:/tmp -v CONTROLLER:${CONTROLLER0} -v MININET:${MININET0} -v MININET_USER:${USER} -v USER_HOME:${HOME} -v NEXUSURL_PREFIX:${NEXUSURL_PREFIX} ${TESTOPTIONS} ${SUITES}
 
 echo "Fetching Karaf log"
 scp ${CONTROLLER0}:/tmp/${BUNDLEFOLDER}/data/log/karaf.log .
