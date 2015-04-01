@@ -273,7 +273,7 @@
 
     triggers:
         - reverse:
-            jobs: 'odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream},openflowplugin-merge-{stream}'
+            jobs: 'odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream},openflowplugin-merge-{stream},ovsdb-merge-{stream},neutron-merge-{stream}'
             result: 'success'
 
     prebuilders:
@@ -295,7 +295,7 @@
 
     publishers:
         - email-notification:
-            email-prefix: '[vtn] [odlparent] [controller] [yangtools] [openflowplugin]'
+            email-prefix: '[vtn] [odlparent] [controller] [yangtools] [openflowplugin] [ovsdb] [neutron]'
         - jacoco-report
 
 - job-template:
