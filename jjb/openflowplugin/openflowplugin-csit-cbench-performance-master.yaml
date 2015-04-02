@@ -1,7 +1,7 @@
 - project:
     name: openflowplugin-csit-cbench-performance-master
     jobs:
-        - '{project}-csit-1node-imds-{functionality}-{install}-{stream}'
+        - '{project}-csit-1node-cds-{functionality}-{install}-{stream}'
 
     # The project name
     project: 'openflowplugin'
@@ -19,7 +19,7 @@
             scope: 'only'
 
     # Features to install
-    install-features: 'odl-openflowplugin-flow-services,odl-openflowplugin-flow-services-ui,odl-openflowplugin-flow-services-rest,odl-openflowplugin-drop-test'
+    install-features: 'odl-openflowplugin-flow-services-ui,odl-openflowplugin-drop-test'
 
     # Robot custom options
     robot-options: ''
