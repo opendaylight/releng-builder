@@ -65,6 +65,7 @@ JDKS
         - jacoco-nojava-workaround
 
     publishers:
+        - findbugs
         - email-notification:
             email-prefix: '[PROJECT]'
         - jacoco-report
