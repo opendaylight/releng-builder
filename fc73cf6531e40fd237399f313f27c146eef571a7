@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5a93c517_dc92cd9e",
+        "filename": "jenkins-scripts/robot.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-04-06T14:37:46Z",
+      "side": 1,
+      "message": "Hmm... good catch. The target system doesn\u0027t (presently) include @development (check the bootstrap.sh from vagrant/integration-robotframework) so we would need to probably add that as a yum install target before the here python build.",
+      "parentUuid": "5a93c517_99ee97b3",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 40
+      },
+      "revId": "fc73cf6531e40fd237399f313f27c146eef571a7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a93c517_79f38b9e",
         "filename": "jenkins-scripts/robot.sh",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2015-04-05T17:43:03Z",
       "side": 1,
       "message": "For most OSs (I think this runs on CentOS7?) `systemctl stop iptables` would be the \"correct\" way, but in this case it has the same result (plus a warning), so nbd.",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 21
+      },
+      "revId": "fc73cf6531e40fd237399f313f27c146eef571a7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_bc97c18f",
+        "filename": "jenkins-scripts/robot.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-04-06T14:37:46Z",
+      "side": 1,
+      "message": "Current systems are CentOS6. This line isn\u0027t something that JamO submitted, but has been in the spin-up script we\u0027ve been using the entire time.\n\nI\u0027ll be starting the process of updating to CentOS7 systems this week (now that 7.1 is out) and be putting version detection in the script to use the appropriate iptables/firewalld disablement so that the script will be a bit more useful for folks wanting to use it in their own environments.",
+      "parentUuid": "5a93c517_79f38b9e",
       "range": {
         "startLine": 22,
         "startChar": 0,
