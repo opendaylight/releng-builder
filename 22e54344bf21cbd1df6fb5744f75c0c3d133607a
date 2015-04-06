@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a93c517_fcff8965",
+        "filename": "jenkins-scripts/robot.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-04-06T16:59:20Z",
+      "side": 1,
+      "message": "python-devel is already installed on the system. See the base vagrant definition.",
+      "revId": "22e54344bf21cbd1df6fb5744f75c0c3d133607a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_1c035574",
+        "filename": "jenkins-scripts/robot.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-04-06T16:59:20Z",
+      "side": 1,
+      "message": "I would prefer that if we\u0027re going to have all these yum installs that they be merged into a single yum install this will speed up the script. Not by a lot, but some as we aren\u0027t invoking yum more than twice.\n\nSo:\n\nyum install -y python-netaddr unzip @development\n\nInstead of the separate yum installs and a call to groupinstall.",
+      "revId": "22e54344bf21cbd1df6fb5744f75c0c3d133607a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
