@@ -1,0 +1,28 @@
+- project:
+    name: openflowplugin-csit-cbench-performance-master
+    jobs:
+        - '{project}-csit-1node-imds-{functionality}-{install}-{stream}'
+
+    # The project name
+    project: 'openflowplugin'
+
+    # The functionality under test
+    functionality: 'cbench-performance'
+
+    # Project branches
+    stream:
+        - master:
+            branch: 'master'
+
+    install:
+        - only:
+            scope: 'only'
+
+    # Features to install
+    install-features: 'odl-openflowplugin-flow-services,odl-openflowplugin-flow-services-ui,odl-openflowplugin-flow-services-rest,odl-openflowplugin-drop-test'
+
+    # Robot custom options
+    robot-options: ''
+
+    # Trigger jobs (upstream dependencies)
+    trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream},openflowjava-distribution-{stream},openflowplugin-distribution-{stream}'
