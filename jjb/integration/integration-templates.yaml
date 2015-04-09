@@ -174,6 +174,19 @@
             artifacts: 'karaf.log'
         - email-notification:
             email-prefix: '[{project}]'
+        - plot:
+          - title: '{plot-title}'
+            yaxis: '{plot-yaxis}'
+            group: '{plot-group}'
+            num-builds: ''
+            style: line
+            use-description: false
+            series:
+              - file: '{plot-data-file}'
+                inclusion-flag: 'off'
+                display-table: true
+                format: csv
+
 
 - job-template:
     name: '{project}-csit-1node-cds-{functionality}-{install}-{stream}'
@@ -236,4 +249,16 @@
             artifacts: 'karaf.log'
         - email-notification:
             email-prefix: '[{project}]'
+        - plot:
+          - title: '{plot-title}'
+            yaxis: '{plot-yaxis}'
+            group: '{plot-group}'
+            num-builds: ''
+            style: line
+            use-description: false
+            series:
+              - file: '{plot-data-file}'
+                inclusion-flag: 'off'
+                display-table: true
+                format: csv
 
