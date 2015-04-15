@@ -1,0 +1,41 @@
+- project:
+    name: openflowplugin-csit-cbench-daily-master
+    jobs:
+        - '{project}-csit-1node-cds-{functionality}-{install}-{stream}'
+
+    # The project name
+    project: 'openflowplugin'
+
+    # The functionality under test
+    functionality: 'cbench-daily'
+
+    # Project branches
+    stream:
+        - master:
+            branch: 'master'
+
+    install:
+        - only:
+            scope: 'only'
+
+    # Features to install
+    install-features: 'odl-openflowplugin-flow-services-ui,odl-openflowplugin-drop-test'
+
+    # Robot custom options
+    robot-options: '-v duration_in_secs:180'
+
+    # Trigger jobs (daily)
+    triggers: 
+        - timed: '@daily'
+
+    trigger-jobs: ''
+
+    # Plot Info
+    01-plot-title: 'Throughput Mode'
+    01-plot-yaxis: 'flow_mods/sec'
+    01-plot-group: 'Cbench Performance'
+    01-plot-data-file: 'throughput.csv'
+    02-plot-title: 'Latency Mode'
+    02-plot-yaxis: 'flow_mods/sec'
+    02-plot-group: 'Cbench Performance'
+    02-plot-data-file: 'latency.csv'
