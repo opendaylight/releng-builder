@@ -227,12 +227,35 @@
     builders:
         - shell:
             !include-raw include-raw-integration-get-slave-addresses.sh
+- builder:
+    name: integration-get-bundle-vars
+    builders:
+        - shell:
+            !include-raw include-raw-integration-get-bundle-vars.sh
 
 - builder:
     name: integration-deploy-controller-run-test
     builders:
         - shell:
             !include-raw include-raw-integration-deploy-controller-run-test.sh
+- builder:
+    name: integration-deploy-controller
+    builders:
+        - shell:
+            !include-raw include-raw-integration-deploy-controller.sh
+
+
+- builder:
+    name: integration-configure-clustering
+    builders:
+        - shell:
+            !include-raw include-raw-integration-configure-clustering.sh
+
+- builder:
+    name: integration-start-cluster-run-test
+    builders:
+        - shell:
+            !include-raw include-raw-integration-start-cluster-run-test.sh
 
 - builder:
     name: integration-deploy-controller-offline
