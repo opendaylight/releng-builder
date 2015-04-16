@@ -277,12 +277,6 @@
     parameters:
         - project-parameter:
             project: 'integration'
-        - integration-patch-git:
-            patch-git: ''
-        - integration-patch-refspec:
-            patch-refspec: ''
-        - integration-patch-git-url:
-            patch-git-url: 'ssh://jenkins-$SILO@git.opendaylight.org:29418/$PATCHGIT'
 
     scm:
         - integration-gerrit-scm:
@@ -297,6 +291,24 @@
         - ssh-agent-credentials:
             user: '{ssh-credentials}'
 
+    triggers:
+        - gerrit:
+            server-name: 'OpenDaylight'
+            trigger-on:
+                - comment-added-contains-event:
+                    comment-contains-value: 'test-integration'
+            projects:
+              - project-compare-type: 'ANT'
+                project-pattern: '**'
+                branches:
+                  - branch-compare-type: 'ANT'
+                    branch-pattern: '**'
+            skip-vote:
+                successful: true
+                failed: true
+                unstable: true
+                notbuilt: true
+
     prebuilders:
         - integration-get-bundle-url
         - inject:
@@ -304,7 +316,7 @@
         - wipe-org-opendaylight-repo
         - maven-target:
             maven-version: '{mvn32}'
-            pom: '$PATCHGIT/pom.xml'
+            pom: '$GERRIT_PROJECT/pom.xml'
             goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r source:jar javadoc:jar'
             java-opts:
                 - '-Xmx4096m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
