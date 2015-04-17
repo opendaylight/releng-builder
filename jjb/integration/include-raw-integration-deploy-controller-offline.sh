@@ -67,7 +67,8 @@ echo "sleeping for 20 seconds..."
 sleep 20
 
 echo "Check OSGi bundles..."
-./client "feature:install ${CONTROLLERFEATURES}" || echo $? > ${WORKSPACE}/error.txt
+# Remove until we get sshpass in rackspace
+#./client "feature:install ${CONTROLLERFEATURES}" || echo $? > ${WORKSPACE}/error.txt
 
 echo "Fetching Karaf log"
 cd ${WORKSPACE}
