@@ -46,12 +46,20 @@
             default: '{test-options}'
             description:  'Robot command options'
 
+- parameter:
+    name: integration-patch-git-url
+    parameters:
+        - string:
+            name: PATCHGITURL
+            default: 'ssh://jenkins-$SILO@git.opendaylight.org:29418/$GERRIT_PROJECT'
+            description:  'Patch GIT URL (do not modify)'
+
 - scm:
     name: integration-gerrit-scm
     scm:
         - git:
             credentials-id: '{credentials-id}'
-            url: 'ssh://jenkins-$SILO@git.opendaylight.org:29418/$GERRIT_PROJECT'
+            url: '$PATCHGITURL'
             basedir: '$GERRIT_PROJECT'
             refspec: '$GERRIT_REFSPEC'
             branches:

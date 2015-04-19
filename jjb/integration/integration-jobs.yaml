@@ -277,6 +277,7 @@
     parameters:
         - project-parameter:
             project: 'integration'
+        - integration-patch-git-url
 
     scm:
         - integration-gerrit-scm:
@@ -302,7 +303,7 @@
                 project-pattern: '**'
                 branches:
                   - branch-compare-type: 'ANT'
-                    branch-pattern: '**'
+                    branch-pattern: '**/{branch}'
             skip-vote:
                 successful: true
                 failed: true
