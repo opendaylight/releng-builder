@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aa0d159_38d8e41c",
+        "filename": "jenkins-scripts/controller.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-04-20T22:02:05Z",
+      "side": 1,
+      "message": "You\u0027ll want to make sure that the !requiretty option is configured as well. Otherwise sudo will fail as Fedora and EL systems require a TTY by default for sudo and robot doesn\u0027t open SSH with a TTY\n\nTo get this add as an extra line\nDefaults:jenkins !requiretty",
+      "revId": "1476b6c0b4f3c608d00e4e16c23fb41b0c287935",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
