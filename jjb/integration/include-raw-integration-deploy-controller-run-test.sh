@@ -88,7 +88,8 @@ echo "Cool down for 1 min :)..."
 sleep 60
 
 echo "Checking OSGi bundles..."
-./client 'bundle:list'
+# Remove until we get sshpass in rackspace
+#./client 'bundle:list'
 
 EOF
 
