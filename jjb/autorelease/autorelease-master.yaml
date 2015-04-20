@@ -1,21 +1,21 @@
 # Lithium build jobs
 
 - project:
-    name: autorelease-lithium
+    name: autorelease-master
     jobs:
-        - 'autorelease-daily-lithium'
+        - 'autorelease-daily-master'
 
     # stream:    branch with - in place of / (eg. stable-helium)
     # branch:    branch (eg. stable/helium)
     stream:
-        - stable-lithium:
-            branch: 'stable/lithium'
+        - master:
+            branch: 'master'
 
     project: 'releng/autorelease'
     jdk: 'openjdk7'
 
 - job-template:
-    name: 'autorelease-daily-lithium'
+    name: 'autorelease-daily-master'
 
     project-type: maven
     node: dynamic_verify
