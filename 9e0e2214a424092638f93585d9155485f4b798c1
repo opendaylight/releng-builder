@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aa0d159_95ca21a0",
+        "filename": "jenkins-scripts/controller.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-04-20T17:15:40Z",
+      "side": 0,
+      "message": "This isn\u0027t what we actually want to do. Technically iptables is always running, what this command does is force it into fully open mode (accept any packet).\n\nWhat we need to do is make sure that a) jenkins has sudo rights and b) jobs that want to block certain ports need to insert (or delete) an deny rule for as needed.",
+      "revId": "9e0e2214a424092638f93585d9155485f4b798c1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
