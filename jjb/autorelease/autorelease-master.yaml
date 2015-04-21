@@ -5,12 +5,7 @@
     jobs:
         - 'autorelease-daily-master'
 
-    # stream:    branch with - in place of / (eg. stable-helium)
-    # branch:    branch (eg. stable/helium)
-    stream:
-        - master:
-            branch: 'master'
-
+    branch: 'master'
     project: 'releng/autorelease'
     jdk: 'openjdk7'
 
@@ -39,7 +34,7 @@
             url: '$GIT_BASE'
             refspec: ''
             branches:
-                - 'origin/master'
+                - 'origin/{branch}'
             skip-tag: true
             recursive-submodules: true
 
