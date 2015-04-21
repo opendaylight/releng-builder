@@ -14,6 +14,9 @@
 ./scripts/version.sh release $RELEASE_TAG
 git submodule foreach "git commit -am \"Release $RELEASE_TAG\" || true"
 git commit -am "Release $RELEASE_TAG"
-git submodule foreach "git format-patch --stdout origin/master > ../patches/${PWD##*/}.patch"
+
+mkdir patches
+git submodule foreach 'git format-patch --stdout origin/master > ../patches/$name.patch'
 
 ./scripts/fix-relativepaths.sh
+
