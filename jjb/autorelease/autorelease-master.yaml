@@ -27,6 +27,8 @@
             project: '{project}'
         - autorelease-release-tag:
             release-tag: 'Daily'
+        - autorelease-release-branch:
+            release-branch: '{branch}'
 
     scm:
         - git:
@@ -59,12 +61,8 @@
         global-settings: '{odl-global-settings}'
 
     postbuilders:
-        - maven-target:
+        - autorelease-maven-sources:
             maven-version: '{mvn32}'
-            pom: 'pom.xml'
-            goals: 'dependency:sources -l sources.log -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
-            java-opts:
-                - '-Xmx4096m -XX:MaxPermSize=1024m'
             settings: '{autorelease-settings}'
             global-settings: '{odl-global-settings}'
         - jacoco-nojava-workaround

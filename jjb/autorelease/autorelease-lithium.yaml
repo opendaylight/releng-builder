@@ -4,6 +4,7 @@
     name: autorelease-lithium
     jobs:
         - 'autorelease-daily-lithium'
+        - 'autorelease-release-lithium'
 
     branch: 'stable/lithium'
     project: 'releng/autorelease'
@@ -27,6 +28,8 @@
             project: '{project}'
         - autorelease-release-tag:
             release-tag: 'Daily'
+        - autorelease-release-branch:
+            release-branch: '{branch}'
 
     scm:
         - git:
@@ -59,12 +62,73 @@
         global-settings: '{odl-global-settings}'
 
     postbuilders:
-        - maven-target:
+        - autorelease-maven-sources:
             maven-version: '{mvn32}'
-            pom: 'pom.xml'
-            goals: 'dependency:sources -l sources.log -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
-            java-opts:
-                - '-Xmx4096m -XX:MaxPermSize=1024m'
+            settings: '{autorelease-settings}'
+            global-settings: '{odl-global-settings}'
+        - jacoco-nojava-workaround
+
+    publishers:
+        - archive-artifacts:
+            artifacts: 'sources.log,patches/*.patch'
+        - email-notification:
+            email-prefix: '[autorelease]'
+
+- job-template:
+    name: 'autorelease-release-lithium'
+
+    project-type: maven
+    node: dynamic_verify
+    jdk: '{jdk}'
+
+    logrotate:
+        daysToKeep: '{build-days-to-keep}'
+        numToKeep: '{build-num-to-keep}'
+        artifactDaysToKeep: '{build-artifact-days-to-keep}'
+        artifactNumToKeep: '{build-artifact-num-to-keep}'
+
+    parameters:
+        - project-parameter:
+            project: '{project}'
+        - autorelease-release-tag:
+            release-tag: 'Pre-Lithium'
+        - autorelease-release-branch:
+            release-branch: '{branch}'
+
+    scm:
+        - git:
+            credentials-id: '{ssh-credentials}'
+            url: '$GIT_BASE'
+            refspec: ''
+            branches:
+                - 'origin/{branch}'
+            skip-tag: true
+            recursive-submodules: true
+
+    wrappers:
+        - autorelease-build-timeout
+        - ssh-agent-credentials:
+            user: '{ssh-credentials}'
+
+    prebuilders:
+        - shell:
+            !include-raw include-raw-autorelease-release-versions.sh
+
+    maven:
+        maven-name: '{mvn32}'
+        root-pom: 'pom.xml'
+        goals: 'clean install source:jar javadoc:jar -Pintegrationtests,docs,repoBuild -fae -Dcheckstyle.skip=true -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+        maven-opts: '-Xmx4096m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
+        settings: '{autorelease-settings}'
+        global-settings: '{odl-global-settings}'
+
+    postbuilders:
+        - autorelease-cfp:
+            autorelease-settings: '{autorelease-settings}'
+            odl-global-settings: '{odl-global-settings}'
+        - autorelease-maven-deploy
+        - autorelease-maven-sources:
+            maven-version: '{mvn32}'
             settings: '{autorelease-settings}'
             global-settings: '{odl-global-settings}'
         - jacoco-nojava-workaround

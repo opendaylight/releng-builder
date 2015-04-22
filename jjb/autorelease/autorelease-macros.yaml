@@ -7,6 +7,14 @@
             default: '{release-tag}'
             description: "The Release train tag to use eg. Helium-SR3"
 
+- parameter:
+    name: autorelease-release-branch
+    parameters:
+        - string:
+            name: RELEASE_BRANCH
+            default: '{release-branch}'
+            description: "The Release train branch to base build off eg. stable/helium"
+
 - wrapper:
     name: autorelease-build-timeout
     wrappers:
@@ -14,3 +22,35 @@
             type: absolute
             timeout: 360
             fail: true
+
+- builder:
+    name: autorelease-cfp
+    builders:
+        - config-file-provider:
+            files:
+                - file-id: '{autorelease-settings}'
+                  variable: 'AUTORELEASE_SETTINGS'
+                - file-id: '{odl-global-settings}'
+                  variable: 'ODL_GLOBAL_SETTINGS'
+
+- builder:
+    name: autorelease-maven-deploy
+    builders:
+        - shell: |
+            mkdir -p hide/from/pom/files
+            cd hide/from/pom/files
+            mkdir -p m2repo/org/
+            mv /tmp/r/org/opendaylight m2repo/org/
+            mvn org.sonatype.plugins:nexus-staging-maven-plugin:1.6.2:deploy-staged-repository -DrepositoryDirectory="`pwd`/m2repo" -DnexusUrl=http://nexus.opendaylight.org/ -DstagingProfileId="21a27b7f3bbb8d" -DserverId="opendaylight.weekly" -s $AUTORELEASE_SETTINGS -gs $ODL_GLOBAL_SETTINGS
+
+- builder:
+    name: autorelease-maven-sources
+    builders:
+        - maven-target:
+            maven-version: '{maven-version}'
+            pom: 'pom.xml'
+            goals: 'dependency:sources -l sources.log -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+            java-opts:
+                - '-Xmx4096m -XX:MaxPermSize=1024m'
+            settings: '{settings}'
+            global-settings: '{global-settings}'
