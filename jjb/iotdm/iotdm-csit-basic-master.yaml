@@ -1,0 +1,31 @@
+- project:
+    name: iotdm-csit-basic-master
+    jobs:
+        - '{project}-csit-1node-cds-{functionality}-{install}-{stream}'
+        - '{project}-csit-verify-{functionality}-{stream}'
+
+    # The project name
+    project: 'iotdm'
+
+    # The functionality under test
+    functionality: 'basic'
+
+    # Project branches
+    stream:
+        - master:
+            branch: 'master'
+ 
+    install:
+        - only:
+            scope: 'only'
+        - all:
+            scope: 'all'
+
+    # Features to install
+    install-features: 'odl-iotdm-onem2m'
+
+    # Robot custom options
+    robot-options: ''
+
+    # Trigger jobs (upstream dependencies)
+    trigger-jobs: 'iotdm-distribution-{stream}'
