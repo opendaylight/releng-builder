@@ -10,13 +10,13 @@
 ##############################################################################
 
 # RELEASE_TAG=Helium-SR2  # Example
+# RELEASE_BRANCH=stable/helium  # Example
 
 ./scripts/version.sh release $RELEASE_TAG
 git submodule foreach "git commit -am \"Release $RELEASE_TAG\" || true"
 git commit -am "Release $RELEASE_TAG"
 
 mkdir patches
-git submodule foreach 'git format-patch --stdout origin/master > ../patches/$name.patch'
+git submodule foreach 'git format-patch --stdout origin/$RELEASE_BRANCH > ../patches/$name.patch'
 
 ./scripts/fix-relativepaths.sh
-
