@@ -95,6 +95,7 @@
         - jacoco-nojava-workaround
 
     publishers:
+        - findbugs
         - email-notification:
             email-prefix: '[neutron]'
         - jacoco-report

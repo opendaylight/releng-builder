@@ -98,6 +98,7 @@
         - jacoco-nojava-workaround
 
     publishers:
+        - findbugs
         - email-notification:
             email-prefix: '[controller]'
         - jacoco-report
