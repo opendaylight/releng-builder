@@ -24,7 +24,7 @@
     wrappers:
         - build-timeout
         - ssh-agent-credentials:
-            user: '{ssh-credentials}'
+            users: '{ssh-credentials}'
 
     triggers:
         - reverse:
@@ -90,7 +90,7 @@
             controller-vms: 1
             mininet-vms: 1
         - ssh-agent-credentials:
-            user: '{ssh-credentials}'
+            users: '{ssh-credentials}'
 
     triggers:
         - integration-test-gerrit-trigger-patch-submitted:
@@ -153,7 +153,7 @@
             controller-vms: 1
             mininet-vms: 1
         - ssh-agent-credentials:
-            user: '{ssh-credentials}'
+            users: '{ssh-credentials}'
 
     triggers:
         - reverse:
@@ -238,7 +238,7 @@
             controller-vms: 1
             mininet-vms: 1
         - ssh-agent-credentials:
-            user: '{ssh-credentials}'
+            users: '{ssh-credentials}'
 
     triggers:
         - reverse:

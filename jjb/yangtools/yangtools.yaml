@@ -63,7 +63,7 @@
     wrappers:
         - build-timeout
         - ssh-agent-credentials:
-            user: '{ssh-credentials}'
+            users: '{ssh-credentials}'
 
     triggers:
         - gerrit-trigger-patch-merged:
@@ -132,7 +132,7 @@
     wrappers:
         - build-timeout
         - ssh-agent-credentials:
-            user: '{ssh-credentials}'
+            users: '{ssh-credentials}'
 
     triggers:
         - timed: 'H H * * *'
@@ -195,7 +195,7 @@
     wrappers:
         - build-timeout
         - ssh-agent-credentials:
-            user: '{ssh-credentials}'
+            users: '{ssh-credentials}'
 
     triggers:
         - reverse:
@@ -250,7 +250,7 @@
     wrappers:
         - build-timeout
         - ssh-agent-credentials:
-            user: '{ssh-credentials}'
+            users: '{ssh-credentials}'
 
     triggers:
         - timed: 'H H * * *'

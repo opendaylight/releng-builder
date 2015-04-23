@@ -65,7 +65,7 @@
             controller-vms: 1
             mininet-vms: 1
         - ssh-agent-credentials:
-            user: '{ssh-credentials}'
+            users: '{ssh-credentials}'
 
     triggers:
         - integration-csit-gerrit-trigger-patch-submitted:
@@ -116,7 +116,7 @@
     wrappers:
         - build-timeout
         - ssh-agent-credentials:
-            user: '{ssh-credentials}'
+            users: '{ssh-credentials}'
 
     triggers:
         - integration-distribution-gerrit-trigger-patch-submitted:
@@ -165,7 +165,7 @@
     wrappers:
         - build-timeout
         - ssh-agent-credentials:
-            user: '{ssh-credentials}'
+            users: '{ssh-credentials}'
 
     triggers:
         - integration-distribution-gerrit-trigger-patch-merged:
@@ -220,7 +220,7 @@
     wrappers:
         - build-timeout
         - ssh-agent-credentials:
-            user: '{ssh-credentials}'
+            users: '{ssh-credentials}'
 
     triggers:
         - timed: 'H H * * *'
@@ -290,7 +290,7 @@
     wrappers:
         - build-timeout
         - ssh-agent-credentials:
-            user: '{ssh-credentials}'
+            users: '{ssh-credentials}'
 
     triggers:
         - gerrit:
