@@ -88,8 +88,7 @@ echo "Cool down for 1 min :)..."
 sleep 60
 
 echo "Checking OSGi bundles..."
-# Remove until we get sshpass in rackspace
-#./client 'bundle:list'
+sshpass -p karaf ./client -u karaf 'bundle:list'
 
 EOF
 
