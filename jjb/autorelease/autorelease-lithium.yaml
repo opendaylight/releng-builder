@@ -44,7 +44,8 @@
     wrappers:
         - autorelease-build-timeout
         - ssh-agent-credentials:
-            users: '{ssh-credentials}'
+            users:
+                - '{ssh-credentials}'
 
     triggers:
         - timed: 'H 0 * * *'
@@ -108,7 +109,8 @@
     wrappers:
         - autorelease-build-timeout
         - ssh-agent-credentials:
-            users: '{ssh-credentials}'
+            users:
+                - '{ssh-credentials}'
 
     prebuilders:
         - shell:
