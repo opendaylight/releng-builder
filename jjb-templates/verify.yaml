@@ -45,7 +45,8 @@ JDKS
     wrappers:
         - build-timeout
         - ssh-agent-credentials:
-            user: '{ssh-credentials}'
+            users:
+                - '{ssh-credentials}'
 
     triggers:
         - gerrit-trigger-patch-submitted:
