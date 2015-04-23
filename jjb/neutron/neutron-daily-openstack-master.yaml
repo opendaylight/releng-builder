@@ -27,7 +27,8 @@
             timeout-var: 'BUILD_TIMEOUT'
             type: absolute
         - ssh-agent-credentials:
-            user: '{openstack-gerrit-credentials}'
+            users:
+                - '{ssh-credentials}'
         - jclouds:
             single-use: true
 
