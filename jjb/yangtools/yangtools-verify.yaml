@@ -87,7 +87,8 @@
 
     wrappers:
         - ssh-agent-credentials:
-            user: '{ssh-credentials}'
+            users:
+                - '{ssh-credentials}'
 
     triggers:
         - gerrit-trigger-patch-submitted:
