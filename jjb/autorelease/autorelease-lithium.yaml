@@ -39,7 +39,8 @@
             branches:
                 - 'origin/{branch}'
             skip-tag: true
-            recursive-submodules: true
+            submodule:
+                recursive: true
 
     wrappers:
         - autorelease-build-timeout
@@ -104,7 +105,8 @@
             branches:
                 - 'origin/{branch}'
             skip-tag: true
-            recursive-submodules: true
+            submodule:
+                recursive: true
 
     wrappers:
         - autorelease-build-timeout
