@@ -19,6 +19,26 @@
     project: 'yangtools'
 
 - project:
+    name: yangtools-verify-lithium
+    jobs:
+        - 'yangtools-verify-{stream}-{maven}-{jdk}'
+
+    jdk:
+        - openjdk7
+        - openjdk8
+    maven:
+        - mvn31:
+            mvnver: "Maven 3.1.1"
+        - mvn32:
+            mvnver: "Maven 3.2.5"
+
+    stream:
+        - stable-lithium:
+            branch: stable/lithium
+
+    project: 'yangtools'
+
+- project:
     name: yangtools-verify-helium
     jobs:
         - 'yangtools-verify-{stream}-{maven}-{jdk}'
