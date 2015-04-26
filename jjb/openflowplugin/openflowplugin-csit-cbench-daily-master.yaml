@@ -1,7 +1,7 @@
 - project:
     name: openflowplugin-csit-cbench-daily-master
     jobs:
-        - '{project}-csit-1node-cds-{functionality}-{install}-{stream}'
+        - '{project}-csit-periodic-1node-cds-{functionality}-{install}-{stream}'
 
     # The project name
     project: 'openflowplugin'
@@ -25,10 +25,7 @@
     robot-options: '-v duration_in_secs:180'
 
     # Trigger jobs (daily)
-    triggers:
-        - timed: '@daily'
-
-    trigger-jobs: ''
+    schedule: 'H H * * *'
 
     # Plot Info
     01-plot-title: 'Throughput Mode'
