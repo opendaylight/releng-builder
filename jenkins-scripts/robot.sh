@@ -4,6 +4,13 @@ yum clean all
 yum install -y -q unzip python-netaddr @development
 yum remove -y robotframework-{sshlibrary,requests}
 
+## install Latest Robot Framewrok from source
+cd /tmp
+wget https://pypi.python.org/packages/source/r/robotframework/robotframework-2.9a1.tar.gz > /dev/null 2>&1
+tar -xvf robotframework-2.9a1.tar.gz > /dev/null 2>&1
+cd robotframework-2.9a1
+python setup.py install > /dev/null 2>&1
+
 ## install Latest Robot SSHLibrary from source
 cd /tmp
 wget http://pypi.python.org/packages/source/r/robotframework-sshlibrary/robotframework-sshlibrary-2.1.1.tar.gz > /dev/null 2>&1
