@@ -115,6 +115,7 @@
                 - '{ssh-credentials}'
 
     prebuilders:
+        - wipe-org-opendaylight-repo
         - shell:
             !include-raw include-raw-autorelease-release-versions.sh
 
