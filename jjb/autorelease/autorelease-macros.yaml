@@ -36,13 +36,7 @@
 - builder:
     name: autorelease-maven-deploy
     builders:
-        - shell: |
-            mkdir -p hide/from/pom/files
-            cd hide/from/pom/files
-            mkdir -p m2repo/org/
-            mv /tmp/r/org/opendaylight m2repo/org/
-            mvn org.sonatype.plugins:nexus-staging-maven-plugin:1.6.2:deploy-staged-repository -DrepositoryDirectory="`pwd`/m2repo" -DnexusUrl=http://nexus.opendaylight.org/ -DstagingProfileId="21a27b7f3bbb8d" -DserverId="opendaylight.weekly" -s $AUTORELEASE_SETTINGS -gs $ODL_GLOBAL_SETTINGS
-
+        - shell: !include-raw include-raw-autorelease-maven-deploy.sh
 - builder:
     name: autorelease-maven-sources
     builders:
