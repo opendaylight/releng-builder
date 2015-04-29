@@ -1,0 +1,15 @@
+- project:
+    name: iotdm-distribution
+    jobs:
+        - '{project}-distribution-{stream}'
+
+    # The project name
+    project: 'iotdm'
+
+    # The project branches
+    stream:
+        - master:
+            branch: 'master'
+
+    jdk: 'openjdk7'
+
