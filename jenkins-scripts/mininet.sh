@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# make sure we don't require tty for sudo operations
+cat <<EOF >/etc/sudoers.d/89-jenkins-user-defaults
+Defaults:jenkins !requiretty
+EOF
+
 # for whatever reason netopeer & CPqD aren't installed (they weren't in
 # one of the yum repos we were hooked up to when the base image was
 # built, they are now. Make sure they're install
