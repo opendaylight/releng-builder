@@ -8,7 +8,7 @@ yum clean all
 # Install xpath
 yum install -y perl-XML-XPath
 
-yum update -y python-six
+yum update -y python-{six,pip}
 
 # make sure we don't require tty for sudo operations
 cat <<EOF >/etc/sudoers.d/89-jenkins-user-defaults
