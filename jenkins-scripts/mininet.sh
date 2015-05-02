@@ -48,4 +48,7 @@ echo 'root' | passwd -f --stdin root
 # make sure the firewall is stopped
 service iptables stop
 
+# start netopeer
+ssh root@127.0.0.1 -p 830 -s netconf
+
 # vim: sw=2 ts=2 sts=2 et :
