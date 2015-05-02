@@ -1,0 +1,32 @@
+- project:
+    name: controller-csit-netconf-master
+    jobs:
+        - '{project}-csit-1node-cds-{functionality}-{install}-{stream}'
+        - '{project}-csit-verify-{functionality}-{stream}'
+
+    # The project name
+    project: 'controller'
+
+    # The functionality under test
+    functionality: 'netconf'
+
+    # Project branches
+    stream:
+        - master:
+            branch: 'master'
+
+    install:
+        - only:
+            scope: 'only'
+        - all:
+            scope: 'all'
+
+    # Features to install
+    install-features: 'odl-netconf-connector-all,odl-restconf-all'
+
+    # Robot custom options
+    robot-options: ''
+
+    # Trigger jobs (upstream dependencies)
+    trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream}'
+
