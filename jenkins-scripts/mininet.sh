@@ -21,6 +21,10 @@ Port 830
 Subsystem netconf /usr/bin/netopeer-server-sl
 EOSSH
 
+# Configuring sshd to accept root login with password
+cat /etc/ssh/sshd_config | sed 's/PasswordAuthentication no/PasswordAuthentication yes/' > /etc/ssh/sshd_config.1
+cat /etc/ssh/sshd_config.1 | sed 's/PermitRootLogin no/PermitRootLogin yes/' > /etc/ssh/sshd_config
+
 # sshd has to get a restart because of the above
 service sshd restart
 
