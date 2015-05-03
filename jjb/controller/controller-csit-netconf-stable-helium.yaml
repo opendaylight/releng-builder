@@ -25,7 +25,7 @@
     install-features: 'odl-netconf-connector-all,odl-restconf-all'
 
     # Robot custom options
-    robot-options: ''
+    robot-options: '-v NETOPEER_USER:root'
 
     # Trigger jobs (upstream dependencies)
     trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream}'
