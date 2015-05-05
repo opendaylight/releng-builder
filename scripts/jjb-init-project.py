@@ -13,34 +13,13 @@
 #   Thanh Ha (The Linux Foundation) - Initial implementation
 ##############################################################################
 
-import argparse
 import os
 import re
 
-parser = argparse.ArgumentParser()
-parser.add_argument("project", help="project")
-parser.add_argument("-d", "--dependencies",
-                    help=("Project dependencies\n\n"
-                          "A comma-seperated (no spaces) list of projects "
-                          "your project depends on. "
-                          "This is used to create an integration job that "
-                          "will trigger when a dependent project-merge job "
-                          "is built successfully.\n\n"
-                          "Example: aaa,controller,yangtools"))
-parser.add_argument("-t", "--templates", help="Job templates to use")
-parser.add_argument("-b", "--branches", help="Git Branches to build")
-parser.add_argument("-j", "--jdks", help="JDKs to build against (for verify jobs)")  # noqa
-parser.add_argument("-p", "--pom", help="Path to pom.xml to use in Maven build"
-                                        "(Default: pom.xml")
-parser.add_argument("-g", "--mvn-goals", help="Maven Goals")
-parser.add_argument("-o", "--mvn-opts", help="Maven Options")
-parser.add_argument("-a", "--archive-artifacts",
-                    help="Comma-seperated list of patterns of artifacts to "
-                         "archive on build completion. "
-                         "See: http://ant.apache.org/manual/Types/fileset.html")  # noqa
-parser.add_argument("-z", "--no-cfg", action="store_true",
-                    help=("Disable initializing the project.cfg file."))
-args = parser.parse_args()
+import jjblib
+
+
+args = jjblib.parse_jjb_args()
 
 project = args.project
 project_dir = os.path.join("jjb", project)
