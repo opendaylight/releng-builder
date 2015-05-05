@@ -15,6 +15,9 @@
 
 import os
 import re
+import sys
+
+import yaml
 
 import jjblib
 
@@ -24,103 +27,118 @@ args = jjblib.parse_jjb_args()
 project = args.project
 project_dir = os.path.join("jjb", project)
 project_file = os.path.join(project_dir, "%s.yaml" % project)
-templates = args.templates  # Defaults to all templates
-branches = args.branches    # Defaults to "master,stable/helium" if not passed
-jdks = args.jdks            # Defaults to openjdk7
-pom = args.pom              # Defaults to pom.xml
-mvn_goals = args.mvn_goals  # Defaults to "clean install" if not passsed
-mvn_opts = args.mvn_opts    # Defaults to blank if not passed
-dependencies = args.dependencies
 dependent_jobs = ""
 disabled = "true"   # Always disabled unless project has dependencies
 email_prefix = "[%s]" % project
 archive_artifacts = args.archive_artifacts
 
-# The below 2 variables are used to determine if we should generate a CFG file
-# for a project automatically.
-#
-# no_cfg - is a commandline parameter that can be used by scripts such as the
-#          jjb-autoupdate-project script to explicitly disable generating CFG
-#          files.
-# make_cfg - is a internal variable used to decide if we should try to
-#            auto generate the CFG file for a project based on optional
-#            variables passed by the user on the commandline.
-no_cfg = args.no_cfg
-make_cfg = False  # Set to true if we need to generate initial CFG file
-cfg_string = []
-
-if not templates:
-    templates = "verify,merge,daily,integration,sonar"
+if not args.conf:
+    jjblib.create_template_config(project_dir, args)
+    project_conf = os.path.join(project_dir, "%s.cfg" % args.project)
 else:
-    make_cfg = True
-    cfg_string.append("JOB_TEMPLATES: %s" % templates)
-templates += ",clm"  # ensure we always create a clm job for all projects
+    project_conf = args.conf
 
-if not branches:
-    branches = "master,stable/helium"
-    sonar_branch = "master"
+
+if os.path.isfile(project_conf):
+    stream = open(project_conf, "r")
+    cfg = yaml.load(stream)
+
+    ####################
+    # Handle Templates #
+    ####################
+    if cfg.get('JOB_TEMPLATES'):
+        templates = cfg.get('JOB_TEMPLATES')
+    else:
+        templates = "verify,merge,daily,integration,sonar"
+    templates += ",clm"  # ensure we always create a clm job for all projects
+
+    ###################
+    # Handle Branches #
+    ###################
+    if cfg.get('BRANCHES'):
+        branches = cfg.get('BRANCHES')
+        sonar_branch = branches.split(",")[0]
+    else:
+        branches = "master,stable/helium"
+        sonar_branch = 'master'
+    # Create YAML to list branches to create jobs for
+    streams = "stream:\n"
+    for branch in branches.split(","):
+        streams = streams + ("        - %s:\n"
+                             "            branch: '%s'\n" %
+                             (branch.replace('/', '-'),
+                              branch))
+
+    ###############
+    # Handle JDKS #
+    ###############
+    if cfg.get('JDKS'):
+        jdks = cfg.get('JDKS')
+    else:
+        jdks = "openjdk7"
+    use_jdks = ""
+    for jdk in jdks.split(","):
+        use_jdks += "                - %s\n" % jdk
+
+    ##############
+    # Handle POM #
+    ##############
+    if cfg.get('POM'):
+        pom = cfg.get('POM')
+    else:
+        pom = "pom.xml"
+
+    ####################
+    # Handle MVN_GOALS #
+    ####################
+    if cfg.get('MVN_GOALS'):
+        mvn_goals = cfg.get('MVN_GOALS')
+    else:
+        mvn_goals = ("clean install "
+                     "-V "  # Show Maven / Java version before building
+                     "-Dmaven.repo.local=/tmp/r "
+                     "-Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r ")
+
+    ###################
+    # Handle MVN_OPTS #
+    ###################
+    if cfg.get('MVN_OPTS'):
+        mvn_opts = cfg.get('MVN_OPTS')
+    else:
+        mvn_opts = "-Xmx1024m -XX:MaxPermSize=256m"
+
+    #######################
+    # Handle DEPENDENCIES #
+    #######################
+    if cfg.get('DEPENDENCIES'):
+        dependencies = cfg.get('DEPENDENCIES')
+        if dependencies.find("odlparent") < 0:  # If odlparent is not listed add it
+            dependencies = "odlparent," + dependencies
+        disabled = "false"
+        email_prefix = (email_prefix + " " +
+                        " ".join(['[%s]' % d for d in dependencies.split(",")]))
+        dependent_jobs = ",".join(
+            ['%s-merge-{stream}' % d for d in dependencies.split(",")])
+    else:
+        dependencies = "odlparent"  # All projects depend on odlparent
+        disabled = "false"
+
+    ############################
+    # Handle ARCHIVE_ARTIFACTS #
+    ############################
+    if cfg.get('ARCHIVE_ARTIFACTS'):
+        archive_artifacts = cfg.get('ARCHIVE_ARTIFACTS')
+        archive_artifacts = ("- archive-artifacts:\n"
+                             "            artifacts: '%s'" % archive_artifacts)
+    else:
+        archive_artifacts = ""
+
+    print("End for now: %s " % project)
+    sys.exit(0)
 else:
-    make_cfg = True
-    cfg_string.append("BRANCHES: %s" % branches)
-    # For projects who use a different development branch than master
-    sonar_branch = branches.split(",")[0]
-# Create YAML to list branches to create jobs for
-streams = "stream:\n"
-for branch in branches.split(","):
-    streams = streams + ("        - %s:\n"
-                         "            branch: '%s'\n" %
-                         (branch.replace('/', '-'),
-                          branch))
+    print("Error: unable to read configuration.")
+    sys.exit(1)
 
-if not jdks:
-    jdks = "openjdk7"
-else:
-    make_cfg = True
-    cfg_string.append("JDKS: %s" % jdks)
-use_jdks = ""
-for jdk in jdks.split(","):
-    use_jdks += "                - %s\n" % jdk
-
-if not pom:
-    pom = "pom.xml"
-else:
-    make_cfg = True
-    cfg_string.append("POM: %s" % pom)
-
-if not mvn_goals:
-    mvn_goals = ("clean install "
-                 "-V "  # Show Maven / Java version before building
-                 "-Dmaven.repo.local=/tmp/r "
-                 "-Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r ")
-else:  # User explicitly set MAVEN_OPTS so create CFG
-    make_cfg = True
-    cfg_string.append("MAVEN_GOALS: %s" % mvn_goals)
-
-if not mvn_opts:
-    mvn_opts = "-Xmx1024m -XX:MaxPermSize=256m"
-else:  # User explicitly set MAVEN_OPTS so create CFG
-    make_cfg = True
-    cfg_string.append("MAVEN_OPTS: %s" % mvn_opts)
-
-if not dependencies:
-    dependencies = "odlparent"  # All projects depend on odlparent
-if dependencies:
-    if dependencies.find("odlparent") < 0:  # If odlparent is not listed add it
-        dependencies = "odlparent," + dependencies
-    make_cfg = True
-    disabled = "false"
-    email_prefix = (email_prefix + " " +
-                    " ".join(['[%s]' % d for d in dependencies.split(",")]))
-    dependent_jobs = ",".join(
-        ['%s-merge-{stream}' % d for d in dependencies.split(",")])
-    cfg_string.append("DEPENDENCIES: %s" % dependencies)
-
-if not archive_artifacts:
-    archive_artifacts = ""
-else:
-    cfg_string.append("ARCHIVE: %s" % archive_artifacts)
-    archive_artifacts = ("- archive-artifacts:\n"
-                         "            artifacts: '%s'" % archive_artifacts)
 
 ##############################
 # Create configuration start #
@@ -142,14 +160,6 @@ print("project: %s\n"
        mvn_opts,
        dependencies,
        archive_artifacts,))
-
-# Create initial project CFG file
-if not no_cfg and make_cfg:
-    print("Creating %s.cfg file" % project)
-    cfg_file = os.path.join(project_dir, "%s.cfg" % project)
-    with open(cfg_file, "w") as outstream:
-        cfg = "\n".join(cfg_string)
-        outstream.write(cfg)
 
 # Create initial project YAML file
 use_templates = templates.split(",")

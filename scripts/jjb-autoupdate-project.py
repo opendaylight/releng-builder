@@ -34,38 +34,8 @@ def get_autoupdate_projects(jjb_dir, projects):
 
 def update_templates(projects):
     for project in projects:
-
-        # If project has customized variables
         cfg_file = "jjb/%s/%s.cfg" % (project, project)
-        parameters = ["python scripts/jjb-init-project.py"]
-        parameters.append("-z")  # Disable CFG auto-generation
-        if os.path.isfile(cfg_file):
-            stream = open(cfg_file, "r")
-            cfg = yaml.load(stream)
-            for k, v in cfg.items():
-                if k == "JOB_TEMPLATES" and v is not None:
-                    parameters.append("-t '%s'" % v)
-                elif k == "BRANCHES" and v is not None:
-                    parameters.append("-b '%s'" % v)
-                elif k == "JDKS" and v is not None:
-                    parameters.append("-j '%s'" % v)
-                elif k == "POM" and v is not None:
-                    parameters.append("-p '%s'" % v)
-                elif k == "MVN_GOALS" and v is not None:
-                    parameters.append("-g '%s'" % v)
-                elif k == "MVN_OPTS" and v is not None:
-                    parameters.append("-o '%s'" % v)
-                elif k == "DEPENDENCIES" and v is not None:
-                    parameters.append("-d '%s'" % v)
-                elif k == "ARCHIVE_ARTIFACTS" and v is not None:
-                    parameters.append("-a '%s'" % v)
-
-            parameters.append(project)
-            cmd = " ".join(parameters)
-            os.system(cmd)
-
-        else:
-            os.system("python scripts/jjb-init-project.py -z %s" % project)
+        os.system("python scripts/jjb-init-project.py %s -c %s" % (project, cfg_file))
 
 ##############
 # Code Start #
