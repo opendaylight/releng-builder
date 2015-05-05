@@ -27,8 +27,6 @@ def parse_jjb_args():
                         help="Comma-seperated list of patterns of artifacts "
                              "to archive on build completion. "
                              "See: http://ant.apache.org/manual/Types/fileset.html")  # noqa
-    parser.add_argument("-z", "--no-cfg", action="store_true",
-                        help=("Disable initializing the project.cfg file."))
     return parser.parse_args()
 
 
