@@ -35,6 +35,11 @@ service sshd restart
 # force a password onto the jenkins user
 echo 'jenkins' | passwd -f --stdin jenkins
 
+# netopeer doesn't work correctly for non-root users from what I'm
+# seeing (at least for the initial connection). Let's allow the tests to
+# get in as the root user since jenkins already has full sudo
+echo 'root' | passwd -f --stdin root
+
 # make sure the firewall is stopped
 service iptables stop
 
