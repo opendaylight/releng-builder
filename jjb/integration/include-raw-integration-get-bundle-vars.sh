@@ -11,6 +11,8 @@ DISTRIBUTION="karaf"
 if [ ${CONTROLLERSCOPE} == 'all' ]; then
     CONTROLLERFEAT="odl-integration-compatible-with-all,${CONTROLLERFEATURES}"
     CONTROLLERMEM="3072m"
+else
+    CONTROLLERFEAT="${CONTROLLERFEATURES}"
 fi
 
 NEXUSURL_PREFIX=${ODLNEXUSPROXY:-https://nexus.opendaylight.org}
