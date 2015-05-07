@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aa0d159_6c2c3903",
+        "filename": "jenkins-scripts/mininet.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2015-05-07T05:38:54Z",
+      "side": 1,
+      "message": "any reason not to just do it inline with sed:\n\nsed -ie \u0027s/PasswordAuthentication no/PasswordAuthentication yes/g\u0027 /etc/ssh/sshd_config\n\nthis looks like it would work though, so +1 from me.",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 99
+      },
+      "revId": "3bfcec6a9fd533a05682a630c67bd5e610f7ea7a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
