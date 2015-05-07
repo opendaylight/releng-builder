@@ -19,11 +19,16 @@
     stream:
         - master:
             branch: 'master'
+            jdk: openjdk7
+            jdks:
+                - openjdk7
         - stable-helium:
             branch: 'stable/helium'
+            jdk: openjdk7
+            jdks:
+                - openjdk7
 
     project: 'defense4all'
-    jdk: 'openjdk7'
 
 # For the Job templates below replace instances of:
 # PROJECT with your project name (eg. controller)
@@ -53,9 +58,7 @@
                 - dynamic_verify
         - axis:
             type: jdk
-            values:
-                - openjdk7
-
+            values: '{obj:jdks}'
 
     logrotate:
         daysToKeep: '{build-days-to-keep}'
@@ -308,7 +311,7 @@
 
     project-type: maven
     node: dynamic_verify
-    jdk: '{jdk}'
+    jdk: 'openjdk7'
 
     logrotate:
         daysToKeep: '7'
@@ -362,7 +365,7 @@
 
     project-type: maven
     node: dynamic_verify
-    jdk: '{jdk}'
+    jdk: 'openjdk7'
 
     logrotate:
         daysToKeep: '{build-days-to-keep}'

@@ -18,13 +18,23 @@
     stream:
         - master:
             branch: 'master'
+            jdk: openjdk7
+            jdks:
+                - openjdk7
+                - openjdk8
         - stable-helium:
             branch: 'stable/helium'
+            jdk: openjdk7
+            jdks:
+                - openjdk7
         - stable-lithium:
             branch: 'stable/lithium'
+            jdk: openjdk7
+            jdks:
+                - openjdk7
+                - openjdk8
 
     project: 'lispflowmapping'
-    jdk: 'openjdk7'
 
 # For the Job templates below replace instances of:
 # PROJECT with your project name (eg. controller)
@@ -235,7 +245,7 @@
 
     project-type: maven
     node: dynamic_verify
-    jdk: '{jdk}'
+    jdk: 'openjdk7'
 
     logrotate:
         daysToKeep: '7'
@@ -289,7 +299,7 @@
 
     project-type: maven
     node: dynamic_verify
-    jdk: '{jdk}'
+    jdk: 'openjdk7'
 
     logrotate:
         daysToKeep: '{build-days-to-keep}'
