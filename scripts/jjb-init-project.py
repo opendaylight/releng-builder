@@ -13,6 +13,7 @@
 #   Thanh Ha (The Linux Foundation) - Initial implementation
 ##############################################################################
 
+from collections import OrderedDict
 import os
 import re
 
@@ -53,19 +54,26 @@ templates += ",clm"  # ensure we always create a clm job for all projects
 ###################
 # Handle Branches #
 ###################
+branches = OrderedDict()
 if cfg.get('BRANCHES'):
-    branches = cfg.get('BRANCHES')
-    sonar_branch = branches.split(",")[0]
+    for branch in cfg.get('BRANCHES'):
+        for b in branch:
+            branches.update({b: branch[b]})
 else:
-    branches = "master,stable/helium"
-    sonar_branch = 'master'
+    branches.update({"master": {"jdks": "openjdk7"}})
+    branches.update({"stable/helium": {"jdks": "openjdk7"}})
+
+sonar_branch = list(branches.items())[0][0]
 # Create YAML to list branches to create jobs for
 streams = "stream:\n"
-for branch in branches.split(","):
+for branch, options in branches.items():
     streams = streams + ("        - %s:\n"
                          "            branch: '%s'\n" %
                          (branch.replace('/', '-'),
                           branch))
+    streams = streams + "            jdks:\n"
+    for jdk in options["jdks"].split(","):
+        streams = streams + "                - %s\n" % jdk.strip()
 
 ###############
 # Handle JDKS #
