@@ -80,19 +80,11 @@ fi
 ## # Trim down the boot wait time
 ## export ODL_BOOT_WAIT=30
 
-# Use Lithium build, if asked to do so
+# Use specific build, if asked to do so
 if [ "${ODL_VERSION}" == "lithium-latest" ] ; then
-    NEXUSPATH="${URL_PREFIX}/content/repositories/opendaylight.snapshot/org/opendaylight/integration/distribution-karaf"
-    BUNDLEVERSION='0.3.0-SNAPSHOT'
-
-    # Acquire the timestamp information from maven-metadata.xml
-    wget ${NEXUSPATH}/${BUNDLEVERSION}/maven-metadata.xml
-    BUNDLE_TIMESTAMP=`xpath maven-metadata.xml "//snapshotVersion[extension='zip'][1]/value/text()" 2>/dev/null`
-    echo "Nexus timestamp is ${BUNDLE_TIMESTAMP}"
-
-    DEVSTACK_LOCAL_CONFIG+="ODL_NAME=distribution-karaf-${BUNDLEVERSION};"
-    DEVSTACK_LOCAL_CONFIG+="ODL_PKG=distribution-karaf-${BUNDLE_TIMESTAMP}.zip;"
-    DEVSTACK_LOCAL_CONFIG+="ODL_URL=${NEXUSPATH}/${BUNDLEVERSION};"
+    DEVSTACK_LOCAL_CONFIG+="ODL_RELEASE=lithium-snapshot;"
+elif [ "${ODL_VERSION}" == "helium" ] ; then
+    DEVSTACK_LOCAL_CONFIG+="ODL_RELEASE=helium;"
 fi
 
 # And this runs devstack-gate
