@@ -13,6 +13,7 @@
 #   Thanh Ha (The Linux Foundation) - Initial implementation
 ##############################################################################
 
+from collections import OrderedDict
 import os
 import re
 
@@ -53,19 +54,27 @@ templates += ",clm"  # ensure we always create a clm job for all projects
 ###################
 # Handle Branches #
 ###################
+branches = OrderedDict()
 if cfg.get('BRANCHES'):
-    branches = cfg.get('BRANCHES')
-    sonar_branch = branches.split(",")[0]
+    for branch in cfg.get('BRANCHES'):
+        for b in branch:
+            branches.update({b: branch[b]})
 else:
-    branches = "master,stable/helium"
-    sonar_branch = 'master'
+    branches.update({"master": {"jdks": "openjdk7"}})
+    branches.update({"stable/helium": {"jdks": "openjdk7"}})
+
+sonar_branch = list(branches.items())[0][0]
 # Create YAML to list branches to create jobs for
 streams = "stream:\n"
-for branch in branches.split(","):
+for branch, options in branches.items():
     streams = streams + ("        - %s:\n"
                          "            branch: '%s'\n" %
                          (branch.replace('/', '-'),
                           branch))
+    streams = streams + "            jdk: %s\n" % options["jdks"].split(",")[0].strip()  # noqa
+    streams = streams + "            jdks:\n"
+    for jdk in options["jdks"].split(","):
+        streams = streams + "                - %s\n" % jdk.strip()
 
 ###############
 # Handle JDKS #
@@ -178,7 +187,6 @@ with open(project_file, "w") as outfile:
                     line = re.sub("PROJECT", project, line)
                     line = re.sub("DISABLED", disabled, line)
                     line = re.sub("STREAMS", streams, line)
-                    line = re.sub("JDKS", use_jdks, line)
                     line = re.sub("POM", pom, line)
                     line = re.sub("MAVEN_GOALS", mvn_goals, line)
                     line = re.sub("MAVEN_OPTS", mvn_opts, line)

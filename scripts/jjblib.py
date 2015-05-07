@@ -18,7 +18,6 @@ def parse_jjb_args():
                               "Example: aaa,controller,yangtools"))
     parser.add_argument("-t", "--templates", help="Job templates to use")
     parser.add_argument("-b", "--branches", help="Git Branches to build")
-    parser.add_argument("-j", "--jdks", help="JDKs to build against (for verify jobs)")  # noqa
     parser.add_argument("-p", "--pom", help="Path to pom.xml to use in Maven "
                                             "build (Default: pom.xml")
     parser.add_argument("-g", "--mvn-goals", help="Maven Goals")
@@ -35,18 +34,25 @@ def create_template_config(project_dir, args):
 
     if args.templates:
         cfg_data["JOB_TEMPLATES"] = args.templates
+
     if args.branches:
-        cfg_data["BRANCHES"] = args.branches
-    if args.jdks:
-        cfg_data["JDKS"] = args.jdks
+        branch_list = list()
+        for branch in args.branches.split(","):
+            branch_list.append({branch: {"jdks": "openjdk7"}})
+        cfg_data["BRANCHES"] = branch_list
+
     if args.pom:
         cfg_data["POM"] = args.pom
+
     if args.mvn_goals:
         cfg_data["MAVEN_GOALS"] = args.mvn_goals
+
     if args.mvn_opts:
         cfg_data["MAVEN_OPTS"] = args.mvn_opts
+
     if args.dependencies:
         cfg_data["DEPENDENCIES"] = args.dependencies
+
     if args.archive_artifacts:
         cfg_data["ARCHIVE"] = args.archive_artifacts
 
