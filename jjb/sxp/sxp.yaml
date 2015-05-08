@@ -244,10 +244,11 @@
     name: 'sxp-integration-{stream}'
     disabled: false
 
-    # Job template for ODL merge jobs
+    # Job template for ODL integration verify jobs
     #
-    # The purpose of this job template is to setup a ODL merge job
-    # and deploy artifacts to Nexus.
+    # This is similar to a normal verify job, but it runs
+    # when a project that's a dependency of your project
+    # is successfully built.
     #
     # Required Variables:
     #     stream:    branch with - in place of / (eg. stable-helium)
