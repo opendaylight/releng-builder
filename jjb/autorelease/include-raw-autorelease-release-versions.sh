@@ -17,6 +17,11 @@ git submodule foreach "git commit -am \"Release $RELEASE_TAG\" || true"
 git commit -am "Release $RELEASE_TAG"
 
 mkdir patches
-git submodule foreach 'git format-patch --stdout origin/$RELEASE_BRANCH > ../patches/$name.patch'
+modules=`xmlstarlet sel -N x=http://maven.apache.org/POM/4.0.0 -t -m '//x:modules' -v '//x:module' pom.xml`
+for module in $modules; do
+    cd $module
+    git format-patch --stdout origin/$RELEASE_BRANCH > ../patches/$module.patch
+    cd ..
+done
 
 ./scripts/fix-relativepaths.sh
