@@ -64,6 +64,7 @@
         global-settings: '{odl-global-settings}'
 
     postbuilders:
+        - shell: "./scripts/list-project-dependencies.sh"
         - autorelease-maven-sources:
             maven-version: '{mvn32}'
             settings: '{autorelease-settings}'
@@ -72,7 +73,7 @@
 
     publishers:
         - archive-artifacts:
-            artifacts: 'sources.log,patches/*.patch'
+            artifacts: 'dependencies.log,sources.log,patches/*.patch'
         - email-notification:
             email-prefix: '[autorelease]'
 
@@ -132,6 +133,7 @@
             autorelease-settings: '{autorelease-settings}'
             odl-global-settings: '{odl-global-settings}'
         - autorelease-maven-deploy
+        - shell: "./scripts/list-project-dependencies.sh"
         - autorelease-maven-sources:
             maven-version: '{mvn32}'
             settings: '{autorelease-settings}'
@@ -140,6 +142,6 @@
 
     publishers:
         - archive-artifacts:
-            artifacts: 'sources.log,patches/*.patch'
+            artifacts: 'dependencies.log,sources.log,patches/*.patch'
         - email-notification:
             email-prefix: '[autorelease]'
