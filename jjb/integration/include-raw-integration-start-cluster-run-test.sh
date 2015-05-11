@@ -112,7 +112,8 @@ echo "Starting Robot test suites ${SUITES} ..."
 
 pybot -N ${TESTPLAN} -c critical -e exclude -v BUNDLEFOLDER:${BUNDLEFOLDER} -v WORKSPACE:/tmp \
 -v NEXUSURL_PREFIX:${NEXUSURL_PREFIX} -v CONTROLLER:${CONTROLLER0} -v CONTROLLER1:${CONTROLLER1} -v CONTROLLER2:${CONTROLLER2} \
--v MININET:${MININET0} -v MININET_USER:${USER} -v USER_HOME:${HOME} ${TESTOPTIONS} ${SUITES}
+-v MININET:${MININET0} -v MININET_USER:${USER} -v USER_HOME:${HOME} ${TESTOPTIONS} ${SUITES} || true
+# the "|| true" is there to swallow a non-zero error code, as we do not want a failed critical test case to stop this script (run with -xe by Jenkins) from gathering karaf.log
 
 
 #

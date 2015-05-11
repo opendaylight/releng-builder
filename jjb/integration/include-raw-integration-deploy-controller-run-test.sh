@@ -102,7 +102,10 @@ cat testplan.txt
 SUITES=$( egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' testplan.txt | tr '\012' ' ' )
 
 echo "Starting Robot test suites ${SUITES} ..."
-pybot -N ${TESTPLAN} -c critical -e exclude -v BUNDLEFOLDER:${BUNDLEFOLDER} -v WORKSPACE:/tmp -v CONTROLLER:${CONTROLLER0} -v MININET:${MININET0} -v MININET_USER:${USER} -v USER_HOME:${HOME} -v NEXUSURL_PREFIX:${NEXUSURL_PREFIX} ${TESTOPTIONS} ${SUITES}
+pybot -N ${TESTPLAN} -c critical -e exclude -v BUNDLEFOLDER:${BUNDLEFOLDER} -v WORKSPACE:/tmp \
+-v NEXUSURL_PREFIX:${NEXUSURL_PREFIX} -v CONTROLLER:${CONTROLLER0} \
+-v MININET:${MININET0} -v MININET_USER:${USER} -v USER_HOME:${HOME} ${TESTOPTIONS} ${SUITES} || true
+# the "|| true" is there to swallow a non-zero error code, as we do not want a failed critical test case to stop this script (run with -xe by Jenkins) from gathering karaf.log
 
 echo "Fetching Karaf log"
 scp ${CONTROLLER0}:/tmp/${BUNDLEFOLDER}/data/log/karaf.log .
