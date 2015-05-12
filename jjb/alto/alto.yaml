@@ -282,7 +282,7 @@
 
     triggers:
         - reverse:
-            jobs: 'controller-merge-{stream},yangtools-merge-{stream},odlparent-merge-{stream},bpgcep-merge-{stream}'
+            jobs: 'controller-merge-{stream},yangtools-merge-{stream},odlparent-merge-{stream},l2switch-merge-{stream}'
             result: 'success'
 
     prebuilders:
@@ -304,7 +304,7 @@
 
     publishers:
         - email-notification:
-            email-prefix: '[alto] [controller] [yangtools] [odlparent] [bpgcep]'
+            email-prefix: '[alto] [controller] [yangtools] [odlparent] [l2switch]'
         - jacoco-report
 
 - job-template:
