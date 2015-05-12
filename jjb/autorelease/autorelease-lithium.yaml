@@ -69,11 +69,12 @@
             maven-version: '{mvn32}'
             settings: '{autorelease-settings}'
             global-settings: '{odl-global-settings}'
+        - autorelease-maven-sources-post-process
         - jacoco-nojava-workaround
 
     publishers:
         - archive-artifacts:
-            artifacts: 'dependencies.log,sources.log,patches/*.patch'
+            artifacts: '*.log,patches/*.patch'
         - email-notification:
             email-prefix: '[autorelease]'
 
@@ -138,10 +139,11 @@
             maven-version: '{mvn32}'
             settings: '{autorelease-settings}'
             global-settings: '{odl-global-settings}'
+        - autorelease-maven-sources-post-process
         - jacoco-nojava-workaround
 
     publishers:
         - archive-artifacts:
-            artifacts: 'dependencies.log,sources.log,patches/*.patch'
+            artifacts: '*.log,patches/*.patch'
         - email-notification:
             email-prefix: '[autorelease]'
