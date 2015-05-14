@@ -1,0 +1,15 @@
+- project:
+    name: lacp-distribution
+    jobs:
+        - '{project}-distribution-{stream}'
+
+    # The project name
+    project: 'lacp'
+
+    # The project branches
+    stream:
+        - master:
+            branch: 'master'
+
+    jdk: 'openjdk7'
+
