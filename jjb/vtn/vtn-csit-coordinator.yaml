@@ -1,0 +1,31 @@
+- project:
+    name: vtn-csit-vtn-coordinator
+    jobs:
+        - '{project}-csit-1node-cds-{functionality}-{install}-{stream}'
+        - '{project}-csit-verify-{functionality}-{stream}'
+
+    # The project name
+    project: 'vtn'
+
+    # The functionality under test
+    functionality: 'coordinator'
+
+    # Project branches
+    stream:
+        - master:
+            branch: 'master'
+        - stable-lithium:
+            branch: 'stable/lithium'
+
+    install:
+        - only:
+            scope: 'only'
+
+    # Features to install
+    install-features: 'odl-vtn-manager-rest'
+
+    # Robot custom options
+    robot-options: ''
+
+    # Trigger jobs (upstream dependencies)
+    trigger-jobs: 'controller-distribution-{stream},openflowjava-distribution-{stream},openflowplugin-distribution-{stream},vtn-distribution-{stream}'
