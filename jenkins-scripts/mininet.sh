@@ -16,6 +16,10 @@ yum install -q -y netopeer-server-sl CPqD-ofsoftswitch13
 # during CI tests
 yum install -q -y python-{ipaddr,iptools,netaddr}
 
+#For executing the CSIT test cases for VTN Coordinator
+yum install -q -y uuid libxslt libcurl unixODBC json-c
+
+
 # the vagrant configuration for netopeer doesn't configure SSH correctly
 # as it uses and here document via echo and not cat fix that
 cat << EOSSH >> /etc/ssh/sshd_config
