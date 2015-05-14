@@ -269,6 +269,13 @@
         - shell:
             !include-raw include-raw-integration-get-bundle-url.sh
 
+
+- builder:
+    name: integration-deploy-vtn-coordinator-run-test
+    builders:
+        - shell:
+            !include-raw include-raw-integration-deploy-vtn-coordinator-run-test.sh
+
 ##############
 # Publishers #
 ##############
