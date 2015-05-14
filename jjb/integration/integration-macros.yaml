@@ -269,6 +269,13 @@
         - shell:
             !include-raw include-raw-integration-get-bundle-url.sh
 
+
+- builder:
+    name: integration-deploy-vtnc-manager-run-test
+    builders:
+        - shell:
+            !include-raw include-raw-integration-deploy-vtnc-manager-run-test.sh
+
 ##############
 # Publishers #
 ##############
