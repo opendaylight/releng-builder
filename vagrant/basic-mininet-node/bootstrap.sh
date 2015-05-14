@@ -54,6 +54,7 @@ EOSSH
 # set the system up for VTN as well (note we are not adding all the bits
 # to allow VTN to operate in the Hydrogen design erra)
 mkdir /usr/local/vtn
+chown jenkins /usr/local/vtn
 
 yum install -q -y http://yum.postgresql.org/9.3/redhat/rhel-6-x86_64/pgdg-redhat93-9.3-1.noarch.rpm
 yum install -q -y postgresql93{,-{contrib,libs,server,odbc}}
