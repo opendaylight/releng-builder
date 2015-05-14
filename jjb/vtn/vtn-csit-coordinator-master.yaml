@@ -1,0 +1,30 @@
+- project:
+    name: vtn-csit-vtn-coordinator-master
+    jobs:
+        - '{project}-csit-1node-vtnc-{functionality}-{stream}'
+
+    # The project name
+    project: 'vtn'
+
+    # The functionality under test
+    functionality: 'coordinator'
+
+    # Project branches
+    stream:
+        - master:
+            branch: 'master'
+
+    install:
+        - only:
+            scope: 'only'
+        - all:
+            scope: 'all'
+
+    # Features to install
+    install-features: 'odl-vtn-manager-rest,odl-vtn-manager-neutron'
+
+    # Robot custom options
+    robot-options: '-e vtnc -v VTNC_VERSION:6.2.0.0-SNAPSHOT'
+
+    # Trigger jobs (upstream dependencies)
+    trigger-jobs: 'controller-distribution-{stream},openflowjava-distribution-{stream},openflowplugin-distribution-{stream},vtn-distribution-{stream}'
