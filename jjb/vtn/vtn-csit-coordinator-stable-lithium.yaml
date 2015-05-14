@@ -1,0 +1,30 @@
+- project:
+    name: vtn-csit-vtn-coordinator-stable-lithium
+    jobs:
+        - '{project}-csit-verify-{functionality}-{stream}'
+
+    # The project name
+    project: 'vtn'
+
+    # The functionality under test
+    functionality: 'coordinator'
+
+    # Project branches
+    stream:
+        - master:
+            branch: 'stable/lithium'
+
+    install:
+        - only:
+            scope: 'only'
+        - all:
+            scope: 'all'
+
+    # Features to install
+    install-features: 'odl-vtn-manager-rest'
+
+    # Robot custom options
+    robot-options: '-e vtnc -v VTNC_VERSION:6.2.0.0-SNAPSHOT'
+
+    # Trigger jobs (upstream dependencies)
+    trigger-jobs: 'controller-distribution-{stream},openflowjava-distribution-{stream},openflowplugin-distribution-{stream},vtn-distribution-{stream}'
