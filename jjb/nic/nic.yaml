@@ -277,7 +277,7 @@
 
     triggers:
         - reverse:
-            jobs: 'odlparent-merge-{stream}'
+            jobs: 'controller-merge-{stream},odlparent-merge-{stream},vtn-merge-{stream},yangtools-merge-{stream},groupbasedpolicy-merge-{stream}'
             result: 'success'
 
     prebuilders:
@@ -299,7 +299,7 @@
 
     publishers:
         - email-notification:
-            email-prefix: '[nic] [odlparent]'
+            email-prefix: '[nic] [controller] [odlparent] [vtn] [yangtools] [groupbasedpolicy]'
         - jacoco-report
 
 - job-template:
