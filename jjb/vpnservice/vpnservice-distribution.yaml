@@ -1,0 +1,15 @@
+- project:
+    name: vpnservice-distribution
+    jobs:
+        - '{project}-distribution-{stream}'
+
+    # The project name
+    project: 'vpnservice'
+
+    # The project branches
+    stream:
+        - master:
+            branch: 'master'
+
+    jdk: 'openjdk7'
+
