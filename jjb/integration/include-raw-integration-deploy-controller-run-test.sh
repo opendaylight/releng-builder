@@ -1,16 +1,15 @@
-# Create a script to run controller inside a dynamic jenkins slave
+NEXUSURL_PREFIX=${ODLNEXUSPROXY:-https://nexus.opendaylight.org}
 CONTROLLERMEM="2048m"
-DISTRIBUTION="karaf"
 
 if [ ${CONTROLLERSCOPE} == 'all' ]; then
-    CONTROLLERFEATURES="odl-integration-compatible-with-all,${CONTROLLERFEATURES}"
+    ACTUALFEATURES="odl-integration-compatible-with-all,${CONTROLLERFEATURES}"
     CONTROLLERMEM="3072m"
+else
+    ACTUALFEATURES="${CONTROLLERFEATURES}"
 fi
 
-NEXUSURL_PREFIX=${ODLNEXUSPROXY:-https://nexus.opendaylight.org}
-
 if [ ${BUNDLEURL} == 'last' ]; then
-    NEXUSPATH="${NEXUSURL_PREFIX}/content/repositories/opendaylight.snapshot/org/opendaylight/integration/distribution-${DISTRIBUTION}"
+    NEXUSPATH="${NEXUSURL_PREFIX}/content/repositories/opendaylight.snapshot/org/opendaylight/integration/distribution-karaf"
     # Extract the BUNDLEVERSION from the pom.xml
     BUNDLEVERSION=`xpath pom.xml '/project/version/text()' 2> /dev/null`
     echo "Bundle version is ${BUNDLEVERSION}"
@@ -18,50 +17,51 @@ if [ ${BUNDLEURL} == 'last' ]; then
     wget ${NEXUSPATH}/${BUNDLEVERSION}/maven-metadata.xml
     TIMESTAMP=`xpath maven-metadata.xml "//snapshotVersion[extension='zip'][1]/value/text()" 2>/dev/null`
     echo "Nexus timestamp is ${TIMESTAMP}"
-    BUNDLEFOLDER="distribution-${DISTRIBUTION}-${BUNDLEVERSION}"
-    BUNDLE="distribution-${DISTRIBUTION}-${TIMESTAMP}.zip"
-    BUNDLEURL="${NEXUSPATH}/${BUNDLEVERSION}/${BUNDLE}"
+    BUNDLEFOLDER="distribution-karaf-${BUNDLEVERSION}"
+    BUNDLE="distribution-karaf-${TIMESTAMP}.zip"
+    ACTUALBUNDLEURL="${NEXUSPATH}/${BUNDLEVERSION}/${BUNDLE}"
 else
+    ACTUALBUNDLEURL="${BUNDLEURL}"
     BUNDLE="${BUNDLEURL##*/}"
     BUNDLEVERSION="$(basename $(dirname $BUNDLEURL))"
-    BUNDLEFOLDER="distribution-${DISTRIBUTION}-${BUNDLEVERSION}"
+    BUNDLEFOLDER="distribution-karaf-${BUNDLEVERSION}"
 fi
 
-echo "Distribution bundle URL is ${BUNDLEURL}"
+echo "Distribution bundle URL is ${ACTUALBUNDLEURL}"
 echo "Distribution bundle is ${BUNDLE}"
+echo "Distribution bundle version is ${BUNDLEVERSION}"
 echo "Distribution folder is ${BUNDLEFOLDER}"
+echo "Nexus prefix is ${NEXUSURL_PREFIX}"
 
 cat > ${WORKSPACE}/controller-script.sh <<EOF
-echo "Downloading the distribution..."
+
+echo "Changing to /tmp"
 cd /tmp
-wget --no-verbose '${BUNDLEURL}'
+
+echo "Downloading the distribution..."
+wget --no-verbose '${ACTUALBUNDLEURL}'
 
 echo "Extracting the new controller..."
 unzip -q ${BUNDLE}
 
 echo "Configuring the startup features..."
-cd ${BUNDLEFOLDER}/etc
-CFG=org.apache.karaf.features.cfg
-cp \${CFG} \${CFG}.bak
-cat \${CFG}.bak | sed "s/^featuresBoot=.*/featuresBoot=config,standard,region,package,kar,ssh,management,${CONTROLLERFEATURES}/" > \${CFG}.1
-cat \${CFG}.1 | sed "s%mvn:org.opendaylight.integration/features-integration-index/${BUNDLEVERSION}/xml/features%mvn:org.opendaylight.integration/features-integration-index/${BUNDLEVERSION}/xml/features,mvn:org.opendaylight.integration/features-integration-test/${BUNDLEVERSION}/xml/features%" > \${CFG}
-cat \${CFG}
+FEATURESCONF=/tmp/${BUNDLEFOLDER}/etc/org.apache.karaf.features.cfg
+sed -ie "s/featuresBoot=.*/featuresBoot=config,standard,region,package,kar,ssh,management,${ACTUALFEATURES}/g" \${FEATURESCONF}
+sed -ie "s%mvn:org.opendaylight.integration/features-integration-index/${BUNDLEVERSION}/xml/features%mvn:org.opendaylight.integration/features-integration-index/${BUNDLEVERSION}/xml/features,mvn:org.opendaylight.integration/features-integration-test/${BUNDLEVERSION}/xml/features%g" \${FEATURESCONF}
+cat \${FEATURESCONF}
 
 echo "Configuring the log..."
-LOG=org.ops4j.pax.logging.cfg
-cp \${LOG} \${LOG}.bak
-cat \${LOG}.bak | sed 's/log4j.appender.out.maxFileSize=1MB/log4j.appender.out.maxFileSize=20MB/' > \${LOG}
-cat \${LOG}
+LOGCONF=/tmp/${BUNDLEFOLDER}/etc/org.ops4j.pax.logging.cfg
+sed -ie 's/log4j.appender.out.maxFileSize=1MB/log4j.appender.out.maxFileSize=20MB/g' \${LOGCONF}
+cat \${LOGCONF}
 
 echo "Configure max memory..."
-MEM=setenv
-cd ../bin
-cp \${MEM} \${MEM}.bak
-cat \${MEM}.bak | sed 's/JAVA_MAX_MEM="2048m"/JAVA_MAX_MEM="${CONTROLLERMEM}"/' > \${MEM}
-cat \${MEM}
+MEMCONF=/tmp/${BUNDLEFOLDER}/bin/setenv
+sed -ie 's/JAVA_MAX_MEM="2048m"/JAVA_MAX_MEM="${CONTROLLERMEM}"/g' \${MEMCONF}
+cat \${MEMCONF}
 
 echo "Starting controller..."
-./start &
+/tmp/${BUNDLEFOLDER}/bin/start
 
 echo "Waiting for controller to come up..."
 COUNT="0"
@@ -74,8 +74,7 @@ while true; do
     elif (( "\$COUNT" > "600" )); then
         echo Timeout Controller DOWN
         echo "Dumping Karaf log..."
-        cd ../data/log
-        cat karaf.log
+        cat /tmp/${BUNDLEFOLDER}/data/log/karaf.log
         exit 1
     else
         COUNT=\$(( \${COUNT} + 5 ))
@@ -88,7 +87,7 @@ echo "Cool down for 1 min :)..."
 sleep 60
 
 echo "Checking OSGi bundles..."
-sshpass -p karaf ./client -u karaf 'bundle:list'
+sshpass -p karaf /tmp/${BUNDLEFOLDER}/bin/client -u karaf 'bundle:list'
 
 EOF
 
@@ -105,7 +104,6 @@ echo "Starting Robot test suites ${SUITES} ..."
 pybot -N ${TESTPLAN} -c critical -e exclude -v BUNDLEFOLDER:${BUNDLEFOLDER} -v WORKSPACE:/tmp \
 -v NEXUSURL_PREFIX:${NEXUSURL_PREFIX} -v CONTROLLER:${CONTROLLER0} \
 -v MININET:${MININET0} -v MININET_USER:${USER} -v USER_HOME:${HOME} ${TESTOPTIONS} ${SUITES} || true
-# the "|| true" is there to swallow a non-zero error code, as we do not want a failed critical test case to stop this script (run with -xe by Jenkins) from gathering karaf.log
 
 echo "Fetching Karaf log"
 scp ${CONTROLLER0}:/tmp/${BUNDLEFOLDER}/data/log/karaf.log .
