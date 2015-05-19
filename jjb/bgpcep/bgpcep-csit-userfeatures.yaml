@@ -1,5 +1,5 @@
 - project:
-    name: bgpcep-csit-userfeatures-master
+    name: bgpcep-csit-userfeatures
     jobs:
         - '{project}-csit-1node-cds-{functionality}-{install}-{stream}'
 
@@ -13,6 +13,8 @@
     stream:
         - master:
             branch: 'master'
+        - stable-lithium:
+            branch: 'stable/lithium'
 
     install:
         - only:
