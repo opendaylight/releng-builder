@@ -9,7 +9,10 @@ yum install -y -q unzip xz
 # install some needed internal networking configurations
 yum install -y dnsmasq puppet
 
-puppet module install lex-dnsmasq
+# install specific versions of puppet modules
+puppet module install puppetlabs-stdlib -v 4.5.1
+puppet module install puppetlabs-concat -v 1.2.0
+puppet module install lex-dnsmasq -v 2.6.1
 
 # script requires information about subdomain
 if [ -z "$1" ]; then
@@ -33,30 +36,6 @@ chattr +i /etc/resolv.conf
 
 # don't let cloud-init do funny things to our routing
 chattr +i /etc/sysconfig/network-scripts/route-eth0
-
-# create a docker bridge that doesn't trample our networks
-# but only if docker is installed
-DOCKER=`rpm -q docker-io`
-if [ "$?" == "0" ]; then
-    echo "---> Docker installed, configuring docker bridge"
-    # fully overwrite the default, otherwise we end up with the options
-    # split over two lines which will fail
-    # Default: OPTIONS=--selinux-enabled
-    echo 'OPTIONS=--selinux-enabled --bip=10.250.0.254/24' > /etc/sysconfig/docker
-#    cat <<EOL > /etc/sysconfig/network-scripts/ifcfg-docker0
-#DEVICE="docker0"
-#TYPE="Bridge"
-#ONBOOT="yes"
-#NM_CONTROLLED="no"
-#IPADDR=10.250.0.254
-#NETMASK=255.255.255.0
-#EOL
-
-#    # don't let cloud-init do funny things to our docker bridge
-#    chattr +i /etc/sysconfig/network-scripts/ifcfg-docker0
-    cat /etc/sysconfig/docker
-fi
-
 
 # setup the needed routing
 cat <<EOL >> /etc/rc.d/post-cloud-init
