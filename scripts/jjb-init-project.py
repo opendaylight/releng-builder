@@ -194,5 +194,8 @@ with open(project_file, "w") as outfile:
                     line = re.sub("EMAIL_PREFIX", email_prefix, line)
                     line = re.sub("SONAR_BRANCH", sonar_branch, line)
                     line = re.sub("ARCHIVE_ARTIFACTS", archive_artifacts, line)
+                    # The previous command may have created superfluous line.
+                    line = re.sub("        \\\n", "", line)
+                    # TODO: Maybe a more general cleanup is desired instead?
                 outfile.write(line)
         outfile.write("\n")
