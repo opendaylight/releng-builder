@@ -15,6 +15,8 @@ wget --no-verbose https://archive.apache.org/dist/hbase/hbase-0.94.15/hbase-0.94
 
 echo "Installing the Hbase Server..."
 tar -xvf hbase*.tar.gz
+echo "Starting Hbase Server daemon..."
+/tmp/Hbase/hbase-0.94.15/bin/start-hbase.sh
 
 cat <<EOF >/etc/sudoers.d/89-jenkins-user-defaults
 Defaults:jenkins !requiretty
