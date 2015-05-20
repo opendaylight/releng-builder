@@ -1,0 +1,32 @@
+- project:
+    name: tsdr-csit-tsdr-h2
+    jobs:
+        - '{project}-csit-1node-cds-{functionality}-{install}-{stream}'
+        - '{project}-csit-verify-{functionality}-{stream}'
+
+    # The project name
+    project: 'tsdr'
+
+    # The functionality under test to verify
+    functionality: 'h2-datastore'
+
+    # Project branches
+    stream:
+        - master:
+            branch: 'master'
+
+    install:
+        - only:
+            scope: 'only'
+        - all:
+            scope: 'all'
+
+    # Features to install
+    install-features: 'odl-restconf,odl-tsdr-all'
+
+    # Robot custom options
+    robot-options: ' '
+
+    # Trigger jobs (upstream dependencies)
+    trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream},openflowjava-distribution-{stream},openflowplugin-distribution-{stream},tsdr-distribution-{stream}'
+
