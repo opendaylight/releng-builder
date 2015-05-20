@@ -254,6 +254,9 @@
         - integration-bundleurl:
             bundleurl: 'last'
 
+    triggers:
+        - timed: 'H H * * *'
+
     builders:
         - trigger-builds:
             - project: '{csit-list}'
