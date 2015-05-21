@@ -33,7 +33,9 @@ echo "Distribution bundle version is ${BUNDLEVERSION}"
 echo "Distribution folder is ${BUNDLEFOLDER}"
 echo "Nexus prefix is ${NEXUSURL_PREFIX}"
 
-cat > ${WORKSPACE}/controller-script.sh <<EOF
+action_tmpfile="${WORKSPACE}/action.sh"
+# The following script is special, it replaces 3 veariables.
+cat > "${action_tmpfile}" <<EOF
 
 echo "Changing to /tmp"
 cd /tmp
@@ -60,45 +62,42 @@ MEMCONF=/tmp/${BUNDLEFOLDER}/bin/setenv
 sed -ie 's/JAVA_MAX_MEM="2048m"/JAVA_MAX_MEM="${CONTROLLERMEM}"/g' \${MEMCONF}
 cat \${MEMCONF}
 
-echo "Starting controller..."
-/tmp/${BUNDLEFOLDER}/bin/start
-
-echo "Waiting for controller to come up..."
-COUNT="0"
-while true; do
-    RESP="\$( curl --user admin:admin -sL -w "%{http_code} %{url_effective}\\n" http://localhost:8181/restconf/modules -o /dev/null )"
-    echo \$RESP
-    if [[ \$RESP == *"200"* ]]; then
-        echo Controller is UP
-        break
-    elif (( "\$COUNT" > "600" )); then
-        echo Timeout Controller DOWN
-        echo "Dumping Karaf log..."
-        cat /tmp/${BUNDLEFOLDER}/data/log/karaf.log
-        exit 1
-    else
-        COUNT=\$(( \${COUNT} + 5 ))
-        sleep 5
-        echo waiting \$COUNT secs...
-    fi
-done
-
-echo "Cool down for 1 min :)..."
-sleep 60
-
-echo "Checking OSGi bundles..."
-sshpass -p karaf /tmp/${BUNDLEFOLDER}/bin/client -u karaf 'bundle:list'
-
 EOF
+# TODO: Maybe move to max-memory.template.sh and configure-log.template.sh?
+#       But that would mean we need more replacements to happen, making me think about using Python string.Template
 
-scp ${WORKSPACE}/controller-script.sh ${CONTROLLER0}:/tmp
-ssh ${CONTROLLER0} 'bash /tmp/controller-script.sh'
+scp "${action_tmpfile}" "${CONTROLLER0}:/tmp"
+ssh ${CONTROLLER0} 'bash /tmp/action.sh'
+
+# The following scripts replace only one variable.
+# BEWARE: The only other replacement is \$ -> $, so do not nest bash variables to string internally!
+actionlist="${ACTIONSBEFORE},start-controller,${ACTIONSAFTER}"
+IFS=','  # for the following for to know where to split
+for action in ${actionlist}  # Do not place the list to quotes, IFS would not work then.
+do
+    # Be defensive against path hacks.
+    action_basename="${action##*/}"
+    action_extensionless="${action_basename%%.*}"
+    # If we ended up with empty string, it is not a valid action name.
+    # This may happen if some ACTIONS list is empty.
+    if [ "${#action_extensionless}" == "0" ]; then
+        continue
+    fi
+    # This next part relies on current working directory being the one where this file is located.
+    action_path="actions/${action_extensionless}.template.sh"
+    # The two substitutions using pipelined sed commands. May fail the whole job if file fails to read.
+    cat "${action_path}" | sed -e "s/\${BUNDLEFOLDER}/${BUNDLEFOLDER}/g" | sed -e 's/\\\$/\$/g' > "${action_tmpfile}"
+    echo "Script template ${action_path} has lead to the following script:"
+    cat "${action_tmpfile}"
+    scp "${action_tmpfile}" "${CONTROLLER0}:/tmp"
+    ssh ${CONTROLLER0} 'bash -exu "/tmp/action.sh"'
+done
 
 echo "Changing the testplan path..."
 cat ${WORKSPACE}/test/csit/testplans/${TESTPLAN} | sed "s:integration:${WORKSPACE}:" > testplan.txt
 cat testplan.txt
 
-SUITES=$( egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' testplan.txt | tr '\012' ' ' )
+SUITES=`egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' testplan.txt | tr '\012' ' '`
 
 echo "Starting Robot test suites ${SUITES} ..."
 pybot -N ${TESTPLAN} -c critical -e exclude -v BUNDLEFOLDER:${BUNDLEFOLDER} -v WORKSPACE:/tmp \

@@ -25,6 +25,10 @@
             test-options: '{robot-options}'
         - integration-test-plan:
             test-plan: '{project}-{functionality}.txt'
+        - integration-actions-before:
+            actions-before: '{integration-actions-to-do-before-controller-starts}'
+        - integration-actions-after:
+            actions-after: '{integration-actions-to-do-after-controller-starts}'
 
     scm:
         - gerrit-trigger-scm:
@@ -89,6 +93,10 @@
             test-options: '{robot-options}'
         - integration-test-plan:
             test-plan: '{project}-{functionality}.txt'
+        - integration-actions-before:
+            actions-before: '{integration-actions-to-do-before-controller-starts}'
+        - integration-actions-after:
+            actions-after: '{integration-actions-to-do-after-controller-starts}'
 
     scm:
         - git-scm:
@@ -177,6 +185,10 @@
             test-options: '{robot-options}'
         - integration-test-plan:
             test-plan: '{project}-{functionality}.txt'
+        - integration-actions-before:
+            actions-before: '{integration-actions-to-do-before-controller-starts}'
+        - integration-actions-after:
+            actions-after: '{integration-actions-to-do-after-controller-starts}'
 
     scm:
         - git-scm:
@@ -266,6 +278,10 @@
             test-options: '{robot-options}'
         - integration-test-plan:
             test-plan: '{project}-{functionality}.txt'
+        - integration-actions-before:
+            actions-before: '{integration-actions-to-do-before-controller-starts}'
+        - integration-actions-after:
+            actions-after: '{integration-actions-to-do-after-controller-starts}'
 
     scm:
         - git-scm:
@@ -353,6 +369,10 @@
             test-options: '{robot-options}'
         - integration-test-plan:
             test-plan: '{project}-{functionality}.txt'
+        - integration-actions-before:
+            actions-before: '{integration-actions-to-do-before-controller-starts}'
+        - integration-actions-after:
+            actions-after: '{integration-actions-to-do-after-controller-starts}'
 
     scm:
         - git-scm:
@@ -417,4 +437,3 @@
                 inclusion-flag: 'off'
                 display-table: true
                 format: csv
-

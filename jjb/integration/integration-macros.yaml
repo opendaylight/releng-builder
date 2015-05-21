@@ -31,20 +31,36 @@
             description: 'Features to install in the controller separated by comma'
 
 - parameter:
-    name: integration-test-plan
-    parameters:
-        - string:
-            name: TESTPLAN
-            default: '{test-plan}'
-            description:  'Test plan we will run'
-
-- parameter:
     name: integration-test-options
     parameters:
         - string:
             name: TESTOPTIONS
             default: '{test-options}'
-            description:  'Robot command options'
+            description: 'Robot command options'
+
+- parameter:
+    name: integration-test-plan
+    parameters:
+        - string:
+            name: TESTPLAN
+            default: '{test-plan}'
+            description: 'Test plan we will run'
+
+- parameter:
+    name: integration-actions-before
+    parameters:
+        - string:
+            name: ACTIONSBEFORE
+            default: '{actions-before}'
+            description: 'Comma-separated list of actions to be run before controller is started'
+
+- parameter:
+    name: integration-actions-after
+    parameters:
+        - string:
+            name: ACTIONSAFTER
+            default: '{actions-after}'
+            description: 'Comma-separated list of actions to be run after controller is started'
 
 - parameter:
     name: integration-patch-git-url
