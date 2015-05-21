@@ -16,6 +16,29 @@
       "revId": "b1d334588271c8e573536f7663af80fcfe9fbd05",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9dcd25_651d630f",
+        "filename": "jenkins-scripts/controller.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2015-05-21T14:45:19Z",
+      "side": 1,
+      "message": "Which ports are used by this daemon?\n\nIn general, I do not like starting additional applications unconditionally for every csit job. Installing is fine, but starting another java process may confuse other suites, which may assume ODL is the only JVM running.\n\nRead my musings in a comment to https://git.opendaylight.org/gerrit/#/c/20371/4 to get an idea on what my preferred solution is.",
+      "range": {
+        "startLine": 20,
+        "startChar": 29,
+        "endLine": 20,
+        "endChar": 43
+      },
+      "revId": "b1d334588271c8e573536f7663af80fcfe9fbd05",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
