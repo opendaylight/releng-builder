@@ -27,78 +27,64 @@ else
     BUNDLEFOLDER="distribution-karaf-${BUNDLEVERSION}"
 fi
 
+# Helper finction to add variable definition lines to a script file.
+function add_variable_definition_to_file () {
+    variable_name="$1"
+    file_name="$2"
+    eval "variable_value=\$${variable_name}"
+    echo "${variable_name}=\"${variable_value}\"" >> "${file_name}"
+}
+
+# Reset script file to use.
+scriptname="actions.sh"
+action_tmpfile="${WORKSPACE}/${scriptname}"
+echo "#!/bin/bash" > "${action_tmpfile}"
+
+# Export variables, so that script running on controller machine knows them.
 echo "Distribution bundle URL is ${ACTUALBUNDLEURL}"
+add_variable_definition_to_file "ACTUALBUNDLEURL" "${action_tmpfile}"
+echo "Final list of features to install is ${ACTUALFEATURES}"
+add_variable_definition_to_file "ACTUALFEATURES" "${action_tmpfile}"
 echo "Distribution bundle is ${BUNDLE}"
-echo "Distribution bundle version is ${BUNDLEVERSION}"
+add_variable_definition_to_file "BUNDLE" "${action_tmpfile}"
 echo "Distribution folder is ${BUNDLEFOLDER}"
+add_variable_definition_to_file "BUNDLEFOLDER" "${action_tmpfile}"
+echo "Distribution bundle version is ${BUNDLEVERSION}"
+add_variable_definition_to_file "BUNDLEVERSION" "${action_tmpfile}"
+echo "Amount of Java heap to use is ${CONTROLLERMEM}"
+add_variable_definition_to_file "CONTROLLERMEM" "${action_tmpfile}"
 echo "Nexus prefix is ${NEXUSURL_PREFIX}"
+add_variable_definition_to_file "NEXUSURL_PREFIX" "${action_tmpfile}"
 
-cat > ${WORKSPACE}/controller-script.sh <<EOF
-
-echo "Changing to /tmp"
-cd /tmp
-
-echo "Downloading the distribution..."
-wget --no-verbose '${ACTUALBUNDLEURL}'
-
-echo "Extracting the new controller..."
-unzip -q ${BUNDLE}
-
-echo "Configuring the startup features..."
-FEATURESCONF=/tmp/${BUNDLEFOLDER}/etc/org.apache.karaf.features.cfg
-sed -ie "s/featuresBoot=.*/featuresBoot=config,standard,region,package,kar,ssh,management,${ACTUALFEATURES}/g" \${FEATURESCONF}
-sed -ie "s%mvn:org.opendaylight.integration/features-integration-index/${BUNDLEVERSION}/xml/features%mvn:org.opendaylight.integration/features-integration-index/${BUNDLEVERSION}/xml/features,mvn:org.opendaylight.integration/features-integration-test/${BUNDLEVERSION}/xml/features%g" \${FEATURESCONF}
-cat \${FEATURESCONF}
-
-echo "Configuring the log..."
-LOGCONF=/tmp/${BUNDLEFOLDER}/etc/org.ops4j.pax.logging.cfg
-sed -ie 's/log4j.appender.out.maxFileSize=1MB/log4j.appender.out.maxFileSize=20MB/g' \${LOGCONF}
-cat \${LOGCONF}
-
-echo "Configure max memory..."
-MEMCONF=/tmp/${BUNDLEFOLDER}/bin/setenv
-sed -ie 's/JAVA_MAX_MEM="2048m"/JAVA_MAX_MEM="${CONTROLLERMEM}"/g' \${MEMCONF}
-cat \${MEMCONF}
-
-echo "Starting controller..."
-/tmp/${BUNDLEFOLDER}/bin/start
-
-echo "Waiting for controller to come up..."
-COUNT="0"
-while true; do
-    RESP="\$( curl --user admin:admin -sL -w "%{http_code} %{url_effective}\\n" http://localhost:8181/restconf/modules -o /dev/null )"
-    echo \$RESP
-    if [[ \$RESP == *"200"* ]]; then
-        echo Controller is UP
-        break
-    elif (( "\$COUNT" > "600" )); then
-        echo Timeout Controller DOWN
-        echo "Dumping Karaf log..."
-        cat /tmp/${BUNDLEFOLDER}/data/log/karaf.log
-        exit 1
-    else
-        COUNT=\$(( \${COUNT} + 5 ))
-        sleep 5
-        echo waiting \$COUNT secs...
+# Paste actions to the script file in order specified.
+actionlist="download-and-install-controller,${ACTIONSBEFORE},start-controller,${ACTIONSAFTER}"
+IFS_backup="${IFS}"
+IFS=','  # for the following "for" to know where to split
+for action in ${actionlist}  # Do not place the list to quotes, IFS would not work then.
+do
+    # Be defensive against path hacks.
+    action_basename="${action##*/}"
+    action_extensionless="${action_basename%%.*}"
+    # If we ended up with empty string, it is not a valid action name.
+    # This may happen if some ACTIONS list is empty.
+    if [ "${#action_extensionless}" == "0" ]; then
+        continue
     fi
+    # This next part relies on current working directory being the one where this file is located.
+    action_path="actions/${action_extensionless}.sh"
+    # The paste operation. May fail the whole job if file fails to read.
+    cat "${action_path}" >> "${action_tmpfile}"
 done
-
-echo "Cool down for 1 min :)..."
-sleep 60
-
-echo "Checking OSGi bundles..."
-sshpass -p karaf /tmp/${BUNDLEFOLDER}/bin/client -u karaf 'bundle:list'
-
-EOF
-
-scp ${WORKSPACE}/controller-script.sh ${CONTROLLER0}:/tmp
-ssh ${CONTROLLER0} 'bash /tmp/controller-script.sh'
+IFS="${IFS_backup}"  # Otherwise pybot does not distinguish paths, for example.
+scp "${action_tmpfile}" "${CONTROLLER0}:/tmp"
+# No cat to log contents, we rely on -x flag of bash to make execution readable.
+ssh ${CONTROLLER0} bash -exu "/tmp/${scriptname}"
 
 echo "Changing the testplan path..."
-cat ${WORKSPACE}/test/csit/testplans/${TESTPLAN} | sed "s:integration:${WORKSPACE}:" > testplan.txt
+cat "${WORKSPACE}/test/csit/testplans/${TESTPLAN}" | sed "s:integration:${WORKSPACE}:" > testplan.txt
 cat testplan.txt
 
-SUITES=$( egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' testplan.txt | tr '\012' ' ' )
+SUITES=`egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' testplan.txt | tr '\012' ' '`
 
 echo "Starting Robot test suites ${SUITES} ..."
 pybot -N ${TESTPLAN} -c critical -e exclude -v BUNDLEFOLDER:${BUNDLEFOLDER} -v WORKSPACE:/tmp \
@@ -106,7 +92,6 @@ pybot -N ${TESTPLAN} -c critical -e exclude -v BUNDLEFOLDER:${BUNDLEFOLDER} -v W
 -v MININET:${MININET0} -v MININET_USER:${USER} -v USER_HOME:${HOME} ${TESTOPTIONS} ${SUITES} || true
 
 echo "Fetching Karaf log"
-scp ${CONTROLLER0}:/tmp/${BUNDLEFOLDER}/data/log/karaf.log .
+scp "${CONTROLLER0}:/tmp/${BUNDLEFOLDER}/data/log/karaf.log" .
 
 # vim: ts=4 sw=4 sts=4 et ft=sh :
-

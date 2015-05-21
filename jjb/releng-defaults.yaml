@@ -69,7 +69,7 @@
     vtn-settings: 'org.jenkinsci.plugins.configfiles.maven.MavenSettingsConfig1414701949484'
     yangtools-settings: 'org.jenkinsci.plugins.configfiles.maven.MavenSettingsConfig1414695171776'
 
-    #plot stuff
+    # plot stuff
     01-plot-title: ''
     01-plot-yaxis: ''
     01-plot-group: 'Default Plot Group'
@@ -78,3 +78,7 @@
     02-plot-yaxis: ''
     02-plot-group: 'Default Plot Group'
     02-plot-data-file: 'plot-data.csv'
+
+    # values related to controller startub configuration actions
+    actions-before-controller-starts: ''
+    actions-after-controller-starts: 'wait-for-restconf,cool-down,list-bundles'
