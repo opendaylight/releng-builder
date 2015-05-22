@@ -46,6 +46,30 @@
       "revId": "5d623cf3b317faaff082e9bda425979ef4691d43",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9dcd25_a5a04691",
+        "filename": "jjb/integration/integration-macros.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2015-05-22T18:12:57Z",
+      "side": 1,
+      "message": "No. I was talking about the order of macro definitions. Macros are executed when used. Usage follows lines in caller .yaml file, so order in this file is a stylistic choice.\n\nYou were probably talking about order of action executions. In that case, my answer is \"Hell NO!\". Execution order should be given by order in which actions are specified, as comma-separated list defined by user. Each user should be free to define own desired order.\n\nPersonally, I consider \"execute everything in a directory sorted by \u003cwhatever\u003e order\" to be an anti-pattern, just waiting to punish you for creating temporary copies during development/debugging. When I want something to be executed, I always require the said something to be defined as an explicit ordered set in a source (as opposed to in a filesystem).",
+      "parentUuid": "1a9dcd25_a56fe691",
+      "range": {
+        "startLine": 50,
+        "startChar": 10,
+        "endLine": 50,
+        "endChar": 36
+      },
+      "revId": "5d623cf3b317faaff082e9bda425979ef4691d43",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
