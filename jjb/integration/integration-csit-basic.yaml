@@ -1,5 +1,5 @@
 - project:
-    name: integration-csit-basic-master
+    name: integration-csit-basic
     jobs:
         - '{project}-csit-1node-cds-{functionality}-{install}-{stream}'
         - '{project}-csit-3node-cds-{functionality}-{install}-{stream}'
@@ -15,6 +15,8 @@
     stream:
         - master:
             branch: 'master'
+        - stable-lithium:
+            branch: 'stable-lithium'
 
     install:
         - only:
