@@ -1,14 +1,13 @@
 - project:
-    name: openflowplugin-csit-scalability-master
+    name: openflowplugin-csit-config-performance
     jobs:
         - '{project}-csit-1node-cds-{functionality}-{install}-{stream}'
-        - '{project}-csit-verify-{functionality}-{stream}'
 
     # The project name
     project: 'openflowplugin'
 
     # The functionality under test
-    functionality: 'scalability'
+    functionality: 'config-performance'
 
     # Project branches
     stream:
@@ -18,15 +17,20 @@
     install:
         - only:
             scope: 'only'
-        - all:
-            scope: 'all'
+        - stable-lithium:
+            branch: 'stable/lithium'
 
     # Features to install
     install-features: 'odl-openflowplugin-flow-services-ui'
 
     # Robot custom options
-    robot-options: '-v TOPO_TREE_DEPTH:7 -e adsal'
+    robot-options: ''
 
     # Trigger jobs (upstream dependencies)
     trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream},openflowjava-distribution-{stream},openflowplugin-distribution-{stream}'
 
+    # Plot Info
+    01-plot-title: 'Config Rest Api Rate'
+    01-plot-yaxis: 'http_req/sec'
+    01-plot-group: 'Config Performance'
+    01-plot-data-file: 'rates.csv'
