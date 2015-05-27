@@ -1,4 +1,4 @@
-NEXUSURL_PREFIX=${ODLNEXUSPROXY:-https://nexus.opendaylight.org}
+export NEXUSURL_PREFIX=${ODLNEXUSPROXY:-https://nexus.opendaylight.org}
 CONTROLLERMEM="2048m"
 
 if [ ${CONTROLLERSCOPE} == 'all' ]; then
@@ -11,20 +11,20 @@ fi
 if [ ${BUNDLEURL} == 'last' ]; then
     NEXUSPATH="${NEXUSURL_PREFIX}/content/repositories/opendaylight.snapshot/org/opendaylight/integration/distribution-karaf"
     # Extract the BUNDLEVERSION from the pom.xml
-    BUNDLEVERSION=`xpath pom.xml '/project/version/text()' 2> /dev/null`
+    export BUNDLEVERSION=`xpath pom.xml '/project/version/text()' 2> /dev/null`
     echo "Bundle version is ${BUNDLEVERSION}"
     # Acquire the timestamp information from maven-metadata.xml
     wget ${NEXUSPATH}/${BUNDLEVERSION}/maven-metadata.xml
     TIMESTAMP=`xpath maven-metadata.xml "//snapshotVersion[extension='zip'][1]/value/text()" 2>/dev/null`
     echo "Nexus timestamp is ${TIMESTAMP}"
-    BUNDLEFOLDER="distribution-karaf-${BUNDLEVERSION}"
-    BUNDLE="distribution-karaf-${TIMESTAMP}.zip"
-    ACTUALBUNDLEURL="${NEXUSPATH}/${BUNDLEVERSION}/${BUNDLE}"
+    export BUNDLEFOLDER="distribution-karaf-${BUNDLEVERSION}"
+    export BUNDLE="distribution-karaf-${TIMESTAMP}.zip"
+    export ACTUALBUNDLEURL="${NEXUSPATH}/${BUNDLEVERSION}/${BUNDLE}"
 else
-    ACTUALBUNDLEURL="${BUNDLEURL}"
-    BUNDLE="${BUNDLEURL##*/}"
-    BUNDLEVERSION="$(basename $(dirname $BUNDLEURL))"
-    BUNDLEFOLDER="distribution-karaf-${BUNDLEVERSION}"
+    export ACTUALBUNDLEURL="${BUNDLEURL}"
+    export BUNDLE="${BUNDLEURL##*/}"
+    export BUNDLEVERSION="$(basename $(dirname $BUNDLEURL))"
+    export BUNDLEFOLDER="distribution-karaf-${BUNDLEVERSION}"
 fi
 
 echo "Distribution bundle URL is ${ACTUALBUNDLEURL}"
@@ -32,6 +32,17 @@ echo "Distribution bundle is ${BUNDLE}"
 echo "Distribution bundle version is ${BUNDLEVERSION}"
 echo "Distribution folder is ${BUNDLEFOLDER}"
 echo "Nexus prefix is ${NEXUSURL_PREFIX}"
+
+if [ -f ${WORKSPACE}/test/csit/scriptplans/${TESTPLAN} ]; then
+    echo "scriptplan exists!!!"
+    echo "Changing the scriptplan path..."
+    cat ${WORKSPACE}/test/csit/scriptplans/${TESTPLAN} | sed "s:integration:${WORKSPACE}:" > scriptplan.txt
+    cat scriptplan.txt
+    for line in $( egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' scriptplan.txt ); do
+        echo "Executing ${line}..."
+        source ${line}
+    done
+fi
 
 cat > ${WORKSPACE}/controller-script.sh <<EOF
 
