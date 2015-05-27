@@ -1,6 +1,6 @@
 
 - project:
-    name: integration
+    name: integration-jobs
     jobs:
         - 'integration-csit-verify-{stream}'
         - 'integration-distribution-verify-{stream}'
@@ -12,6 +12,10 @@
     stream:
         - master:
             branch: 'master'
+            csit-list: 'controller-csit-1node-cds-netconf-only-{stream},controller-csit-1node-cds-netconf-all-{stream},aaa-csit-1node-cds-authn-only-{stream},aaa-csit-1node-cds-authn-all-{stream},openflowplugin-csit-1node-cds-flow-services-only-{stream},openflowplugin-csit-1node-cds-flow-services-all-{stream},openflowplugin-csit-1node-cds-scalability-only-{stream},openflowplugin-csit-1node-cds-scalability-all-{stream},openflowplugin-csit-1node-cds-cbench-performance-only-{stream},openflowplugin-csit-1node-cds-config-performance-only-{stream},l2switch-csit-1node-cds-switch-only-{stream},l2switch-csit-1node-cds-switch-all-{stream},l2switch-csit-1node-cds-scalability-only-{stream},l2switch-csit-1node-cds-scalability-all-{stream},vtn-csit-1node-cds-manager-only-{stream},vtn-csit-1node-cds-manager-all-{stream},lispflowmapping-csit-1node-cds-all-only-{stream},lispflowmapping-csit-1node-cds-all-all-{stream}'
+
+        - stable-lithium:
+            branch: 'stable/lithium'
             csit-list: 'controller-csit-1node-cds-netconf-only-{stream},controller-csit-1node-cds-netconf-all-{stream},aaa-csit-1node-cds-authn-only-{stream},aaa-csit-1node-cds-authn-all-{stream},openflowplugin-csit-1node-cds-flow-services-only-{stream},openflowplugin-csit-1node-cds-flow-services-all-{stream},openflowplugin-csit-1node-cds-scalability-only-{stream},openflowplugin-csit-1node-cds-scalability-all-{stream},openflowplugin-csit-1node-cds-cbench-performance-only-{stream},openflowplugin-csit-1node-cds-config-performance-only-{stream},l2switch-csit-1node-cds-switch-only-{stream},l2switch-csit-1node-cds-switch-all-{stream},l2switch-csit-1node-cds-scalability-only-{stream},l2switch-csit-1node-cds-scalability-all-{stream},vtn-csit-1node-cds-manager-only-{stream},vtn-csit-1node-cds-manager-all-{stream},lispflowmapping-csit-1node-cds-all-only-{stream},lispflowmapping-csit-1node-cds-all-all-{stream}'
 
         - stable-helium:
