@@ -1,5 +1,5 @@
 - project:
-    name: l2switch-csit-host-scalability-daily-master
+    name: l2switch-csit-host-scalability-daily
     jobs:
         - '{project}-csit-periodic-1node-cds-{functionality}-{install}-{stream}'
 
@@ -13,6 +13,8 @@
     stream:
         - master:
             branch: 'master'
+        - stable-lithium:
+            branch: 'stable/lithium'
 
     install:
         - only:
