@@ -14,7 +14,7 @@ yum install -q -y netopeer-server-sl CPqD-ofsoftswitch13
 # netaddr and ipaddress libraries can be useful on this system as
 # some tests are starting to push pyhon scripts/tools to this VM
 # during CI tests
-yum install -q -y python-{ipaddress,netaddr}
+yum install -q -y python-{ipaddr,iptools,netaddr}
 
 # the vagrant configuration for netopeer doesn't configure SSH correctly
 # as it uses and here document via echo and not cat fix that
