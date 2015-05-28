@@ -6,6 +6,12 @@
 yum clean all
 yum update -q -y
 
+# install openvswitch
+yum install -q -y openvswitch
+# make sure it's enabled on system start, no need to start it
+# during setup
+systemctl enable openvswitch
+
 # install mininet
 git clone git://github.com/mininet/mininet
 cd mininet
