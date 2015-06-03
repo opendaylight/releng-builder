@@ -52,8 +52,9 @@
         - timed: 'H 0 * * *'
 
     prebuilders:
-        - shell:
-            !include-raw-escape include-raw-autorelease-release-versions.sh
+        - wipe-org-opendaylight-repo
+        - autorelease-generate-taglist
+        - autorelease-generate-release-patches
 
     maven:
         maven-name: '{mvn32}'
@@ -119,8 +120,8 @@
 
     prebuilders:
         - wipe-org-opendaylight-repo
-        - shell:
-            !include-raw include-raw-autorelease-release-versions.sh
+        - autorelease-generate-taglist
+        - autorelease-generate-release-patches
 
     maven:
         maven-name: '{mvn32}'
