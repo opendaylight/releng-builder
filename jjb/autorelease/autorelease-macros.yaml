@@ -37,6 +37,7 @@
     name: autorelease-maven-deploy
     builders:
         - shell: !include-raw include-raw-autorelease-maven-deploy.sh
+
 - builder:
     name: autorelease-maven-sources
     builders:
@@ -48,8 +49,21 @@
                 - '-Xmx4096m -XX:MaxPermSize=1024m'
             settings: '{settings}'
             global-settings: '{global-settings}'
+
 - builder:
     name: autorelease-maven-sources-post-process
     builders:
         - shell: |
             awk '/The following files have NOT been resolved:/,/^$/' sources.log > missing-sources.log
+
+- builder:
+    name: autorelease-generate-taglist
+    builders:
+        - shell: |
+            git submodule foreach 'echo $path `git rev-parse --verify HEAD` ${RELEASE_TAG} >> ../taglist'
+
+- builder:
+    name: autorelease-generate-release-patches
+    builders:
+        - shell:
+            !include-raw-escape include-raw-autorelease-release-versions.sh
