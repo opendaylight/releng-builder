@@ -77,6 +77,10 @@
 
     builders:
         - shell: |
+            virtualenv $WORKSPACE/venv-tox
+            source $WORKSPACE/venv-tox/bin/activate
+            pip install tox argparse
+            tox --version
             cd sfc-py
             tox
 
