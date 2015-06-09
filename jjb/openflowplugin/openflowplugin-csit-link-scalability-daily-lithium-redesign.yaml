@@ -1,0 +1,36 @@
+- project:
+    name: openflowplugin-csit-link-scalability-daily-lithium-redesign
+    jobs:
+        - '{project}-csit-periodic-1node-cds-{functionality}-{install}-{stream}'
+
+    # The project name
+    project: 'openflowplugin'
+
+    # The functionality under test
+    functionality: 'link-scalability-daily-lithium-redesign'
+
+    # Project branches
+    stream:
+        - master:
+            branch: 'master'
+        - stable-lithium:
+            branch: 'stable/lithium'
+
+    install:
+        - only:
+            scope: 'only'
+
+    # Features to install
+    install-features: 'odl-openflowplugin-flow-services-ui-li'
+
+    # Robot custom options
+    robot-options: ''
+
+    # Trigger jobs (daily)
+    schedule: 'H H * * *'
+
+    # Plot Info
+    01-plot-title: 'Max number of switch links'
+    01-plot-yaxis: 'Links'
+    01-plot-group: 'Inventory Switch Link Scalability'
+    01-plot-data-file: 'links.csv'
