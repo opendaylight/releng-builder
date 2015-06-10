@@ -29,6 +29,8 @@
             release-tag: 'Daily'
         - autorelease-release-branch:
             release-branch: '{branch}'
+        - autorelease-release-datestamp:
+            datestamp: true
 
     scm:
         - git:
@@ -74,6 +76,11 @@
         - jacoco-nojava-workaround
 
     publishers:
+        - maven-deploy:
+            url: 'https://nexus.opendaylight.org/content/repositories/opendaylight.daily/'
+            id: 'opendaylight.daily'
+            unique-version: true
+            deploy-unstable: true
         - archive-artifacts:
             artifacts: '*.log,patches/*.patch'
         - email-notification:
