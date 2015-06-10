@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a6a9dd7_9ca48a58",
+        "filename": "jjb/autorelease/include-raw-autorelease-maven-deploy.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2015-06-10T17:43:19Z",
+      "side": 1,
+      "message": "Newbie question: Is mvn emitting only on stdout, or also on stderr?\n\nMy favourite way is to re-direct stderr to stdout an then pipe it to \"tee\" command, so that log file gets created while Jenkins console still keeps scrolling, and eager humans can start investigating even before build finishes. (Perhaps some switch needs to be added if mvn is one of those commands which do not use colors when writing to pipe.)",
+      "range": {
+        "startLine": 22,
+        "startChar": 280,
+        "endLine": 22,
+        "endChar": 283
+      },
+      "revId": "adb6470747ca4f89bbada8737324b3bdcd8aec14",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
