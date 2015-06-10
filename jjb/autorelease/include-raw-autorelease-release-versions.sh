@@ -9,9 +9,15 @@
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
 
+# DATESTAMP=true  # Example
 # RELEASE_TAG=Helium-SR2  # Example
 # RELEASE_BRANCH=stable/helium  # Example
 
+if [ "$DATESTAMP" == "true" ]; then
+   export RELEASE_TAG=$RELEASE_TAG-`date -u +v%Y%m%d%H%M`
+fi
+
+echo $RELEASE_TAG
 ./scripts/version.sh release $RELEASE_TAG
 git submodule foreach "git commit -am \"Release $RELEASE_TAG\" || true"
 git commit -am "Release $RELEASE_TAG"

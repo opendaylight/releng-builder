@@ -15,6 +15,14 @@
             default: '{release-branch}'
             description: "The Release train branch to base build off eg. stable/helium"
 
+- parameter:
+    name: autorelease-release-datestamp
+    parameters:
+        - bool:
+            name: DATESTAMP
+            default: '{datestamp}'
+            description: "Whether to include a datestamp or not"
+
 - wrapper:
     name: autorelease-build-timeout
     wrappers:
