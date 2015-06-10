@@ -1,0 +1,36 @@
+- project:
+    name: ovsdb-csit-scalability-daily
+    jobs:
+        - '{project}-csit-1node-periodic-{functionality}-{install}-{stream}'
+
+    # The project name
+    project: 'ovsdb'
+
+    # The functionality under test
+    functionality: 'scalability-daily'
+
+    # Project branches
+    stream:
+        - master:
+            branch: 'master'
+        - stable-lithium:
+            branch: 'stable/lithium'
+
+    install:
+        - only:
+            scope: 'only'
+
+    # Features to install
+    install-features: 'odl-ovsdb-openstack'
+
+    # Robot custom options
+    robot-options: '-v MIN_SWITCHES:100 -v MAX_SWITCHES:500 -v STEP_SWITCHES:100'
+
+    # Trigger jobs (daily)
+    schedule: 'H H * * *'
+
+    # Plot Info
+    01-plot-title: 'Max number of Switches'
+    01-plot-yaxis: 'OpenFlow Switches'
+    01-plot-group: 'Inventory Scalability'
+    01-plot-data-file: 'switches.csv'
