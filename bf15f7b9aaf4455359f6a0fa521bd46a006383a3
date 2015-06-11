@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a6a9dd7_f604c27f",
+        "filename": "jjb/autorelease/include-raw-autorelease-maven-deploy.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2015-06-11T09:32:12Z",
+      "side": 1,
+      "message": "This copies the standard output, but stderr is still only printed to console, not copied to file.\n\nQuestion are, what is sent to stderr and whether we want it to be saved. For example, SingleFeatureTest can be very chatty without real benefit.\n\nBut if we want to save also stderr, \"2\u003e\u00261\" should be added before the pipe.",
+      "revId": "bf15f7b9aaf4455359f6a0fa521bd46a006383a3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
