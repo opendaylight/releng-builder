@@ -19,4 +19,4 @@ for m in `xmlstarlet sel -N x=http://maven.apache.org/POM/4.0.0 -t -m '//x:modul
     cp -r "/tmp/r/org/opendaylight/$m" m2repo/org/opendaylight/
 done)
 
-mvn org.sonatype.plugins:nexus-staging-maven-plugin:1.6.2:deploy-staged-repository -DrepositoryDirectory="`pwd`/m2repo" -DnexusUrl=http://nexus.opendaylight.org/ -DstagingProfileId="21a27b7f3bbb8d" -DserverId="opendaylight.weekly" -s $AUTORELEASE_SETTINGS -gs $ODL_GLOBAL_SETTINGS > deploy-staged-repository.log
+mvn org.sonatype.plugins:nexus-staging-maven-plugin:1.6.2:deploy-staged-repository -DrepositoryDirectory="`pwd`/m2repo" -DnexusUrl=http://nexus.opendaylight.org/ -DstagingProfileId="21a27b7f3bbb8d" -DserverId="opendaylight.weekly" -s $AUTORELEASE_SETTINGS -gs $ODL_GLOBAL_SETTINGS | tee deploy-staged-repository.log
