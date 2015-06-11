@@ -16,6 +16,24 @@
       "revId": "bf15f7b9aaf4455359f6a0fa521bd46a006383a3",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_d911afad",
+        "filename": "jjb/autorelease/include-raw-autorelease-maven-deploy.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2015-06-11T13:10:56Z",
+      "side": 1,
+      "message": "This Maven command does not store any build information. It\u0027s just storing staging repo deploy commands so the logs should be pretty short. I\u0027m mostly interested in getting the Staging repo ID from this log which is printed to standard output.\n\nI think it wouldn\u0027t hurt printing stderr either considering how short the log I expect to be.",
+      "parentUuid": "9a6a9dd7_f604c27f",
+      "revId": "bf15f7b9aaf4455359f6a0fa521bd46a006383a3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
