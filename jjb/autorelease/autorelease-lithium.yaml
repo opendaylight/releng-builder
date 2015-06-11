@@ -65,7 +65,7 @@
         maven-opts: '-Xmx4096m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
         settings: '{autorelease-settings}'
         global-settings: '{odl-global-settings}'
-        automatic-archiving: false
+        automatic-archiving: true
 
     postbuilders:
         - shell: "./scripts/list-project-dependencies.sh"
@@ -139,7 +139,7 @@
         maven-opts: '-Xmx4096m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
         settings: '{autorelease-settings}'
         global-settings: '{odl-global-settings}'
-        automatic-archiving: false
+        automatic-archiving: true
 
     postbuilders:
         - autorelease-cfp:
