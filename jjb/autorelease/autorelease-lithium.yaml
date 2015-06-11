@@ -62,7 +62,7 @@
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
         goals: 'clean install source:jar javadoc:jar -Pintegrationtests,docs,repoBuild -Dcheckstyle.skip=true -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
-        maven-opts: '-Xmx6144m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true -DforkCount=1 -DreuseForks=false'
+        maven-opts: '-Xmx6144m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
         settings: '{autorelease-settings}'
         global-settings: '{odl-global-settings}'
         automatic-archiving: true
@@ -136,7 +136,7 @@
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
         goals: 'clean install source:jar javadoc:jar -Pintegrationtests,docs,repoBuild -Dcheckstyle.skip=true -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
-        maven-opts: '-Xmx6144m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true -DforkCount=1 -DreuseForks=false'
+        maven-opts: '-Xmx6144m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
         settings: '{autorelease-settings}'
         global-settings: '{odl-global-settings}'
         automatic-archiving: true
