@@ -218,6 +218,21 @@
                 count: '{mininet-vms}'
                 stop-on-terminate: False
 
+- wrapper:
+    name: integration-jclouds-controller-f21-mininet
+    wrappers:
+      - jclouds:
+          instances:
+            - rk-c-el6-java:
+                cloud-name: 'Rackspace DFW - Integration Dynamic Lab'
+                count: '{controller-vms}'
+                stop-on-terminate: False
+            - rk-f21-mininet:
+                cloud-name: 'Rackspace DFW - Integration Dynamic Lab'
+                count: '{mininet-vms}'
+                stop-on-terminate: False
+
+
 #################
 # Shell Scripts #
 #################
