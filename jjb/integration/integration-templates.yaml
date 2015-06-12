@@ -1,3 +1,23 @@
+# Job templates in this file (please update with every new template):
+#
+# Old (deprecating):
+# {project}-csit-verify-{functionality}-{stream}
+# {project}-csit-1node-imds-{functionality}-{install}-{stream}
+# {project}-csit-1node-cds-{functionality}-{install}-{stream}
+# {project}-csit-periodic-1node-cds-{functionality}-{install}-{stream}
+# {project}-csit-3node-cds-{functionality}-{install}-{stream}
+#
+# New (use these when possible):
+# {project}-csit-verify-1node-fedora-{functionality}-{stream}
+# {project}-csit-1node-fedora-{functionality}-{install}-{stream}
+# {project}-csit-1node-fedora-periodic-{functionality}-{install}-{stream}
+# {project}-csit-verify-3node-fedora-{functionality}-{stream}
+# {project}-csit-3node-fedora-{functionality}-{install}-{stream}
+# {project}-csit-3node-fedora-periodic-{functionality}-{install}-{stream}
+#
+
+# Old templates
+
 - job-template:
     name: '{project}-csit-verify-{functionality}-{stream}'
 
@@ -420,6 +440,498 @@
             use-description: false
             csv-file-name: '{project}-csit-3node-cds-{functionality}-{install}-{stream}-{02-plot-data-file}-history.csv'
             keep-records: true
+            series:
+              - file: '{02-plot-data-file}'
+                inclusion-flag: 'off'
+                display-table: true
+                format: csv
+
+# New templates
+
+- job-template:
+    name: '{project}-csit-verify-1node-fedora-{functionality}-{stream}'
+
+    project-type: freestyle
+    node: dynamic_robot
+
+    logrotate:
+        daysToKeep: '{build-days-to-keep}'
+        numToKeep: '{build-num-to-keep}'
+        artifactDaysToKeep: '{build-artifact-days-to-keep}'
+        artifactNumToKeep: '{build-artifact-num-to-keep}'
+
+    parameters:
+        - project-parameter:
+            project: 'integration'
+        - integration-branch:
+            branch: '{branch}'
+        - integration-bundleurl:
+            bundleurl: 'last'
+        - integration-controller-scope:
+            controller-scope: 'only'
+        - integration-controller-features:
+            controller-features: '{install-features}'
+        - integration-test-options:
+            test-options: '{robot-options}'
+        - integration-test-plan:
+            test-plan: '{project}-{functionality}.txt'
+
+    scm:
+        - gerrit-trigger-scm:
+            credentials-id: '{ssh-credentials}'
+            refspec: '$GERRIT_REFSPEC'
+            choosing-strategy: 'gerrit'
+
+    wrappers:
+        - build-timeout
+        - integration-jclouds-controller-fedora-mininet:
+            controller-vms: 1
+            mininet-vms: 1
+        - ssh-agent-credentials:
+            users:
+                - '{ssh-credentials}'
+
+    triggers:
+        - integration-test-gerrit-trigger-patch-submitted:
+            name: 'integration'
+            branch: '{branch}'
+            project: '{project}'
+
+    builders:
+        - integration-get-slave-addresses
+        - inject:
+            properties-file: 'slave_addresses.txt'
+        - integration-deploy-controller-run-test
+
+    publishers:
+        - integration-robot:
+            unstable-if: 0.0
+            pass-if: 0.0
+        - archive:
+            artifacts: 'karaf.log'
+        - email-notification:
+            email-prefix: '[{project}]'
+
+- job-template:
+    name: '{project}-csit-1node-fedora-{functionality}-{install}-{stream}'
+
+    project-type: freestyle
+    node: dynamic_robot
+
+    logrotate:
+        daysToKeep: '{build-days-to-keep}'
+        numToKeep: '{build-num-to-keep}'
+        artifactDaysToKeep: '{build-artifact-days-to-keep}'
+        artifactNumToKeep: '{build-artifact-num-to-keep}'
+
+    parameters:
+        - project-parameter:
+            project: 'integration'
+        - integration-branch:
+            branch: '{branch}'
+        - integration-bundleurl:
+            bundleurl: 'last'
+        - integration-controller-scope:
+            controller-scope: '{scope}'
+        - integration-controller-features:
+            controller-features: '{install-features}'
+        - integration-test-options:
+            test-options: '{robot-options}'
+        - integration-test-plan:
+            test-plan: '{project}-{functionality}.txt'
+
+    scm:
+        - git-scm:
+            credentials-id: '{ssh-credentials}'
+            refspec: ''
+            branch: '{branch}'
+
+    wrappers:
+        - build-timeout
+        - integration-jclouds-controller-fedora-mininet:
+            controller-vms: 1
+            mininet-vms: 1
+        - ssh-agent-credentials:
+            users:
+                - '{ssh-credentials}'
+
+    triggers:
+        - reverse:
+            jobs: '{trigger-jobs}'
+            result: 'success'
+
+    builders:
+        - integration-get-slave-addresses
+        - inject:
+            properties-file: 'slave_addresses.txt'
+        - integration-deploy-controller-run-test
+
+    publishers:
+        - integration-robot:
+            unstable-if: 0.0
+            pass-if: 100.0
+        - archive:
+            artifacts: 'karaf.log'
+        - email-notification:
+            email-prefix: '[{project}]'
+        - plot:
+          - title: '{01-plot-title}'
+            yaxis: '{01-plot-yaxis}'
+            group: '{01-plot-group}'
+            num-builds: '5400'
+            style: line
+            use-description: false
+            csv-file-name: '{project}-csit-1node-imds-{functionality}-{install}-{stream}-{01-plot-data-file}-history.csv'
+            series:
+              - file: '{01-plot-data-file}'
+                inclusion-flag: 'off'
+                display-table: true
+                format: csv
+          - title: '{02-plot-title}'
+            yaxis: '{02-plot-yaxis}'
+            group: '{02-plot-group}'
+            num-builds: '5400'
+            style: line
+            use-description: false
+            csv-file-name: '{project}-csit-1node-imds-{functionality}-{install}-{stream}-{02-plot-data-file}-history.csv'
+            series:
+              - file: '{02-plot-data-file}'
+                inclusion-flag: 'off'
+                display-table: true
+                format: csv
+
+- job-template:
+    name: '{project}-csit-1node-fedora-periodic-{functionality}-{install}-{stream}'
+
+    project-type: freestyle
+    node: dynamic_robot
+
+    logrotate:
+        daysToKeep: '{build-days-to-keep}'
+        numToKeep: '{build-num-to-keep}'
+        artifactDaysToKeep: '{build-artifact-days-to-keep}'
+        artifactNumToKeep: '{build-artifact-num-to-keep}'
+
+    parameters:
+        - project-parameter:
+            project: 'integration'
+        - integration-branch:
+            branch: '{branch}'
+        - integration-bundleurl:
+            bundleurl: 'last'
+        - integration-controller-scope:
+            controller-scope: '{scope}'
+        - integration-controller-features:
+            controller-features: '{install-features}'
+        - integration-test-options:
+            test-options: '{robot-options}'
+        - integration-test-plan:
+            test-plan: '{project}-{functionality}.txt'
+
+    scm:
+        - git-scm:
+            credentials-id: '{ssh-credentials}'
+            refspec: ''
+            branch: '{branch}'
+
+    wrappers:
+        - build-timeout
+        - integration-jclouds-controller-fedora-mininet:
+            controller-vms: 1
+            mininet-vms: 1
+        - ssh-agent-credentials:
+            users:
+                - '{ssh-credentials}'
+
+    triggers:
+        - timed: '{schedule}'
+
+    builders:
+        - integration-get-slave-addresses
+        - inject:
+            properties-file: 'slave_addresses.txt'
+        - integration-deploy-controller-run-test
+
+    publishers:
+        - integration-robot:
+            unstable-if: 0.0
+            pass-if: 100.0
+        - archive:
+            artifacts: 'karaf.log'
+        - email-notification:
+            email-prefix: '[{project}]'
+        - plot:
+          - title: '{01-plot-title}'
+            yaxis: '{01-plot-yaxis}'
+            group: '{01-plot-group}'
+            num-builds: '180'
+            style: line
+            use-description: false
+            csv-file-name: '{project}-csit-periodic-1node-cds-{functionality}-{install}-{stream}-{01-plot-data-file}-history.csv'
+            series:
+              - file: '{01-plot-data-file}'
+                inclusion-flag: 'off'
+                display-table: true
+                format: csv
+          - title: '{02-plot-title}'
+            yaxis: '{02-plot-yaxis}'
+            group: '{02-plot-group}'
+            num-builds: '180'
+            style: line
+            use-description: false
+            csv-file-name: '{project}-csit-periodic-1node-cds-{functionality}-{install}-{stream}-{02-plot-data-file}-history.csv'
+            series:
+              - file: '{02-plot-data-file}'
+                inclusion-flag: 'off'
+                display-table: true
+                format: csv
+
+- job-template:
+    name: '{project}-csit-verify-3node-fedora-{functionality}-{stream}'
+
+    project-type: freestyle
+    node: dynamic_robot
+
+    logrotate:
+        daysToKeep: '{build-days-to-keep}'
+        numToKeep: '{build-num-to-keep}'
+        artifactDaysToKeep: '{build-artifact-days-to-keep}'
+        artifactNumToKeep: '{build-artifact-num-to-keep}'
+
+    parameters:
+        - project-parameter:
+            project: 'integration'
+        - integration-branch:
+            branch: '{branch}'
+        - integration-bundleurl:
+            bundleurl: 'last'
+        - integration-controller-scope:
+            controller-scope: 'only'
+        - integration-controller-features:
+            controller-features: 'odl-mdsal-clustering,{install-features}'
+        - integration-test-options:
+            test-options: '{robot-options}'
+        - integration-test-plan:
+            test-plan: '{project}-{functionality}.txt'
+
+    scm:
+        - gerrit-trigger-scm:
+            credentials-id: '{ssh-credentials}'
+            refspec: '$GERRIT_REFSPEC'
+            choosing-strategy: 'gerrit'
+
+    wrappers:
+        - build-timeout
+        - integration-jclouds-controller-fedora-mininet:
+            controller-vms: 3
+            mininet-vms: 1
+        - ssh-agent-credentials:
+            users:
+                - '{ssh-credentials}'
+
+    triggers:
+        - integration-test-gerrit-trigger-patch-submitted:
+            name: 'integration'
+            branch: '{branch}'
+            project: '{project}'
+
+    builders:
+        - integration-get-slave-addresses
+        - inject:
+            properties-file: 'slave_addresses.txt'
+        - integration-get-bundle-vars
+        - inject:
+            properties-file: 'bundle_vars.txt'
+        - integration-deploy-controller
+        - integration-configure-clustering
+        - integration-start-cluster-run-test
+    publishers:
+        - integration-robot:
+            unstable-if: 0.0
+            pass-if: 0.0
+        - archive:
+            artifacts: '*karaf.log'
+        - email-notification:
+            email-prefix: '[{project}]'
+
+- job-template:
+    name: '{project}-csit-3node-fedora-{functionality}-{install}-{stream}'
+
+    project-type: freestyle
+    node: dynamic_robot
+
+    logrotate:
+        daysToKeep: '{build-days-to-keep}'
+        numToKeep: '{build-num-to-keep}'
+        artifactDaysToKeep: '{build-artifact-days-to-keep}'
+        artifactNumToKeep: '{build-artifact-num-to-keep}'
+
+    parameters:
+        - project-parameter:
+            project: 'integration'
+        - integration-branch:
+            branch: '{branch}'
+        - integration-bundleurl:
+            bundleurl: 'last'
+        - integration-controller-scope:
+            controller-scope: '{scope}'
+        - integration-controller-features:
+            controller-features: 'odl-mdsal-clustering,{install-features}'
+        - integration-test-options:
+            test-options: '{robot-options}'
+        - integration-test-plan:
+            test-plan: '{project}-{functionality}.txt'
+
+    scm:
+        - git-scm:
+            credentials-id: '{ssh-credentials}'
+            refspec: ''
+            branch: '{branch}'
+
+    wrappers:
+        - build-timeout
+        - integration-jclouds-controller-fedora-mininet:
+            controller-vms: 3
+            mininet-vms: 1
+        - ssh-agent-credentials:
+            users:
+                - '{ssh-credentials}'
+
+    triggers:
+        - reverse:
+            jobs: '{trigger-jobs}'
+            result: 'success'
+
+    builders:
+        - integration-get-slave-addresses
+        - inject:
+            properties-file: 'slave_addresses.txt'
+        - integration-get-bundle-vars
+        - inject:
+            properties-file: 'bundle_vars.txt'
+        - integration-deploy-controller
+        - integration-configure-clustering
+        - integration-start-cluster-run-test
+
+    publishers:
+        - integration-robot:
+            unstable-if: 0.0
+            pass-if: 100.0
+        - archive:
+            artifacts: '*karaf.log'
+        - email-notification:
+            email-prefix: '[{project}]'
+        - plot:
+          - title: '{01-plot-title}'
+            yaxis: '{01-plot-yaxis}'
+            group: '{01-plot-group}'
+            num-builds: '5400'
+            style: line
+            use-description: false
+            csv-file-name: '{project}-csit-3node-cds-{functionality}-{install}-{stream}-{01-plot-data-file}-history.csv'
+            series:
+              - file: '{01-plot-data-file}'
+                inclusion-flag: 'off'
+                display-table: true
+                format: csv
+          - title: '{02-plot-title}'
+            yaxis: '{02-plot-yaxis}'
+            group: '{02-plot-group}'
+            num-builds: '5400'
+            style: line
+            use-description: false
+            csv-file-name: '{project}-csit-3node-cds-{functionality}-{install}-{stream}-{02-plot-data-file}-history.csv'
+            series:
+              - file: '{02-plot-data-file}'
+                inclusion-flag: 'off'
+                display-table: true
+                format: csv
+
+- job-template:
+    name: '{project}-csit-3node-fedora-periodic-{functionality}-{install}-{stream}'
+
+    project-type: freestyle
+    node: dynamic_robot
+
+    logrotate:
+        daysToKeep: '{build-days-to-keep}'
+        numToKeep: '{build-num-to-keep}'
+        artifactDaysToKeep: '{build-artifact-days-to-keep}'
+        artifactNumToKeep: '{build-artifact-num-to-keep}'
+
+    parameters:
+        - project-parameter:
+            project: 'integration'
+        - integration-branch:
+            branch: '{branch}'
+        - integration-bundleurl:
+            bundleurl: 'last'
+        - integration-controller-scope:
+            controller-scope: '{scope}'
+        - integration-controller-features:
+            controller-features: 'odl-mdsal-clustering,{install-features}'
+        - integration-test-options:
+            test-options: '{robot-options}'
+        - integration-test-plan:
+            test-plan: '{project}-{functionality}.txt'
+
+    scm:
+        - git-scm:
+            credentials-id: '{ssh-credentials}'
+            refspec: ''
+            branch: '{branch}'
+
+    wrappers:
+        - build-timeout
+        - integration-jclouds-controller-fedora-mininet:
+            controller-vms: 3
+            mininet-vms: 1
+        - ssh-agent-credentials:
+            users:
+                - '{ssh-credentials}'
+
+    triggers:
+        - timed: '{schedule}'
+
+    builders:
+        - integration-get-slave-addresses
+        - inject:
+            properties-file: 'slave_addresses.txt'
+        - integration-get-bundle-vars
+        - inject:
+            properties-file: 'bundle_vars.txt'
+        - integration-deploy-controller
+        - integration-configure-clustering
+        - integration-start-cluster-run-test
+
+    publishers:
+        - integration-robot:
+            unstable-if: 0.0
+            pass-if: 100.0
+        - archive:
+            artifacts: '*karaf.log'
+        - email-notification:
+            email-prefix: '[{project}]'
+        - plot:
+          - title: '{01-plot-title}'
+            yaxis: '{01-plot-yaxis}'
+            group: '{01-plot-group}'
+            num-builds: '5400'
+            style: line
+            use-description: false
+            csv-file-name: '{project}-csit-3node-cds-{functionality}-{install}-{stream}-{01-plot-data-file}-history.csv'
+            series:
+              - file: '{01-plot-data-file}'
+                inclusion-flag: 'off'
+                display-table: true
+                format: csv
+          - title: '{02-plot-title}'
+            yaxis: '{02-plot-yaxis}'
+            group: '{02-plot-group}'
+            num-builds: '5400'
+            style: line
+            use-description: false
+            csv-file-name: '{project}-csit-3node-cds-{functionality}-{install}-{stream}-{02-plot-data-file}-history.csv'
             series:
               - file: '{02-plot-data-file}'
                 inclusion-flag: 'off'
