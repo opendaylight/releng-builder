@@ -1,19 +1,18 @@
 # Job templates in this file (please update with every new template):
 #
-# Old (deprecating):
 # {project}-csit-verify-{functionality}-{stream}
 # {project}-csit-1node-imds-{functionality}-{install}-{stream}
 # {project}-csit-1node-cds-{functionality}-{install}-{stream}
 # {project}-csit-periodic-1node-cds-{functionality}-{install}-{stream}
 # {project}-csit-3node-cds-{functionality}-{install}-{stream}
 #
-# New (use these when possible):
-# {project}-csit-verify-1node-fedora-{functionality}-{stream}
-# {project}-csit-1node-fedora-{functionality}-{install}-{stream}
-# {project}-csit-1node-fedora-periodic-{functionality}-{install}-{stream}
-# {project}-csit-verify-3node-fedora-{functionality}-{stream}
-# {project}-csit-3node-fedora-{functionality}-{install}-{stream}
-# {project}-csit-3node-fedora-periodic-{functionality}-{install}-{stream}
+# New (for Be release):
+# {project}-csit-verify-1node-{functionality}-{stream}
+# {project}-csit-1node-{functionality}-{install}-{stream}
+# {project}-csit-1node-periodic-{functionality}-{install}-{stream}
+# {project}-csit-verify-3node-{functionality}-{stream}
+# {project}-csit-3node-{functionality}-{install}-{stream}
+# {project}-csit-3node-periodic-{functionality}-{install}-{stream}
 #
 
 # Old templates
@@ -56,7 +55,8 @@
         - build-timeout
         - integration-jclouds-controller-mininet:
             controller-vms: 1
-            mininet-vms: 1
+            mininet-image: '{mininet-image}'
+            mininet-vms: '{mininet-vms}'
         - ssh-agent-credentials:
             users:
                 - '{ssh-credentials}'
@@ -120,7 +120,8 @@
         - build-timeout
         - integration-jclouds-controller-mininet:
             controller-vms: 1
-            mininet-vms: 1
+            mininet-image: '{mininet-image}'
+            mininet-vms: '{mininet-vms}'
         - ssh-agent-credentials:
             users:
                 - '{ssh-credentials}'
@@ -210,7 +211,8 @@
         - build-timeout
         - integration-jclouds-controller-mininet:
             controller-vms: 1
-            mininet-vms: 1
+            mininet-image: '{mininet-image}'
+            mininet-vms: '{mininet-vms}'
         - ssh-agent-credentials:
             users:
                 - '{ssh-credentials}'
@@ -301,7 +303,8 @@
         - build-timeout
         - integration-jclouds-controller-mininet:
             controller-vms: 1
-            mininet-vms: 1
+            mininet-image: '{mininet-image}'
+            mininet-vms: '{mininet-vms}'
         - ssh-agent-credentials:
             users:
                 - '{ssh-credentials}'
@@ -390,7 +393,8 @@
         - build-timeout
         - integration-jclouds-controller-mininet:
             controller-vms: 3
-            mininet-vms: 1
+            mininet-image: '{mininet-image}'
+            mininet-vms: '{mininet-vms}'
         - ssh-agent-credentials:
             users:
                 - '{ssh-credentials}'
@@ -449,7 +453,7 @@
 # New templates
 
 - job-template:
-    name: '{project}-csit-verify-1node-fedora-{functionality}-{stream}'
+    name: '{project}-csit-verify-1node-{functionality}-{stream}'
 
     project-type: freestyle
     node: dynamic_robot
@@ -484,9 +488,10 @@
 
     wrappers:
         - build-timeout
-        - integration-jclouds-controller-fedora-mininet:
+        - integration-jclouds-controller-mininet:
             controller-vms: 1
-            mininet-vms: 1
+            mininet-image: '{mininet-image}'
+            mininet-vms: '{mininet-vms}'
         - ssh-agent-credentials:
             users:
                 - '{ssh-credentials}'
@@ -513,7 +518,7 @@
             email-prefix: '[{project}]'
 
 - job-template:
-    name: '{project}-csit-1node-fedora-{functionality}-{install}-{stream}'
+    name: '{project}-csit-1node-{functionality}-{install}-{stream}'
 
     project-type: freestyle
     node: dynamic_robot
@@ -548,9 +553,10 @@
 
     wrappers:
         - build-timeout
-        - integration-jclouds-controller-fedora-mininet:
+        - integration-jclouds-controller-mininet:
             controller-vms: 1
-            mininet-vms: 1
+            mininet-image: '{mininet-image}'
+            mininet-vms: '{mininet-vms}'
         - ssh-agent-credentials:
             users:
                 - '{ssh-credentials}'
@@ -581,7 +587,7 @@
             num-builds: '5400'
             style: line
             use-description: false
-            csv-file-name: '{project}-csit-1node-imds-{functionality}-{install}-{stream}-{01-plot-data-file}-history.csv'
+            csv-file-name: '{project}-csit-1node-{functionality}-{install}-{stream}-{01-plot-data-file}-history.csv'
             series:
               - file: '{01-plot-data-file}'
                 inclusion-flag: 'off'
@@ -593,7 +599,7 @@
             num-builds: '5400'
             style: line
             use-description: false
-            csv-file-name: '{project}-csit-1node-imds-{functionality}-{install}-{stream}-{02-plot-data-file}-history.csv'
+            csv-file-name: '{project}-csit-1node-{functionality}-{install}-{stream}-{02-plot-data-file}-history.csv'
             series:
               - file: '{02-plot-data-file}'
                 inclusion-flag: 'off'
@@ -601,7 +607,7 @@
                 format: csv
 
 - job-template:
-    name: '{project}-csit-1node-fedora-periodic-{functionality}-{install}-{stream}'
+    name: '{project}-csit-1node-periodic-{functionality}-{install}-{stream}'
 
     project-type: freestyle
     node: dynamic_robot
@@ -636,9 +642,10 @@
 
     wrappers:
         - build-timeout
-        - integration-jclouds-controller-fedora-mininet:
+        - integration-jclouds-controller-mininet:
             controller-vms: 1
-            mininet-vms: 1
+            mininet-image: '{mininet-image}'
+            mininet-vms: '{mininet-vms}'
         - ssh-agent-credentials:
             users:
                 - '{ssh-credentials}'
@@ -667,7 +674,7 @@
             num-builds: '180'
             style: line
             use-description: false
-            csv-file-name: '{project}-csit-periodic-1node-cds-{functionality}-{install}-{stream}-{01-plot-data-file}-history.csv'
+            csv-file-name: '{project}-csit-periodic-1node-{functionality}-{install}-{stream}-{01-plot-data-file}-history.csv'
             series:
               - file: '{01-plot-data-file}'
                 inclusion-flag: 'off'
@@ -679,7 +686,7 @@
             num-builds: '180'
             style: line
             use-description: false
-            csv-file-name: '{project}-csit-periodic-1node-cds-{functionality}-{install}-{stream}-{02-plot-data-file}-history.csv'
+            csv-file-name: '{project}-csit-periodic-1node-{functionality}-{install}-{stream}-{02-plot-data-file}-history.csv'
             series:
               - file: '{02-plot-data-file}'
                 inclusion-flag: 'off'
@@ -687,7 +694,7 @@
                 format: csv
 
 - job-template:
-    name: '{project}-csit-verify-3node-fedora-{functionality}-{stream}'
+    name: '{project}-csit-verify-3node-{functionality}-{stream}'
 
     project-type: freestyle
     node: dynamic_robot
@@ -722,9 +729,10 @@
 
     wrappers:
         - build-timeout
-        - integration-jclouds-controller-fedora-mininet:
+        - integration-jclouds-controller-mininet:
             controller-vms: 3
-            mininet-vms: 1
+            mininet-image: '{mininet-image}'
+            mininet-vms: '{mininet-vms}'
         - ssh-agent-credentials:
             users:
                 - '{ssh-credentials}'
@@ -755,7 +763,7 @@
             email-prefix: '[{project}]'
 
 - job-template:
-    name: '{project}-csit-3node-fedora-{functionality}-{install}-{stream}'
+    name: '{project}-csit-3node-{functionality}-{install}-{stream}'
 
     project-type: freestyle
     node: dynamic_robot
@@ -790,9 +798,10 @@
 
     wrappers:
         - build-timeout
-        - integration-jclouds-controller-fedora-mininet:
+        - integration-jclouds-controller-mininet:
             controller-vms: 3
-            mininet-vms: 1
+            mininet-image: '{mininet-image}'
+            mininet-vms: '{mininet-vms}'
         - ssh-agent-credentials:
             users:
                 - '{ssh-credentials}'
@@ -828,7 +837,7 @@
             num-builds: '5400'
             style: line
             use-description: false
-            csv-file-name: '{project}-csit-3node-cds-{functionality}-{install}-{stream}-{01-plot-data-file}-history.csv'
+            csv-file-name: '{project}-csit-3node-{functionality}-{install}-{stream}-{01-plot-data-file}-history.csv'
             series:
               - file: '{01-plot-data-file}'
                 inclusion-flag: 'off'
@@ -840,7 +849,7 @@
             num-builds: '5400'
             style: line
             use-description: false
-            csv-file-name: '{project}-csit-3node-cds-{functionality}-{install}-{stream}-{02-plot-data-file}-history.csv'
+            csv-file-name: '{project}-csit-3node-{functionality}-{install}-{stream}-{02-plot-data-file}-history.csv'
             series:
               - file: '{02-plot-data-file}'
                 inclusion-flag: 'off'
@@ -848,7 +857,7 @@
                 format: csv
 
 - job-template:
-    name: '{project}-csit-3node-fedora-periodic-{functionality}-{install}-{stream}'
+    name: '{project}-csit-3node-periodic-{functionality}-{install}-{stream}'
 
     project-type: freestyle
     node: dynamic_robot
@@ -883,9 +892,10 @@
 
     wrappers:
         - build-timeout
-        - integration-jclouds-controller-fedora-mininet:
+        - integration-jclouds-controller-mininet:
             controller-vms: 3
-            mininet-vms: 1
+            mininet-image: '{mininet-image}'
+            mininet-vms: '{mininet-vms}'
         - ssh-agent-credentials:
             users:
                 - '{ssh-credentials}'
@@ -919,7 +929,7 @@
             num-builds: '5400'
             style: line
             use-description: false
-            csv-file-name: '{project}-csit-3node-cds-{functionality}-{install}-{stream}-{01-plot-data-file}-history.csv'
+            csv-file-name: '{project}-csit-3node-periodic-{functionality}-{install}-{stream}-{01-plot-data-file}-history.csv'
             series:
               - file: '{01-plot-data-file}'
                 inclusion-flag: 'off'
@@ -931,7 +941,7 @@
             num-builds: '5400'
             style: line
             use-description: false
-            csv-file-name: '{project}-csit-3node-cds-{functionality}-{install}-{stream}-{02-plot-data-file}-history.csv'
+            csv-file-name: '{project}-csit-3node-periodic-{functionality}-{install}-{stream}-{02-plot-data-file}-history.csv'
             series:
               - file: '{02-plot-data-file}'
                 inclusion-flag: 'off'
