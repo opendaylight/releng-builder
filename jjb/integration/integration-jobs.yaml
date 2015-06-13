@@ -67,7 +67,8 @@
         - build-timeout
         - integration-jclouds-controller-mininet:
             controller-vms: 1
-            mininet-vms: 1
+            mininet-image: '{mininet-image}'
+            mininet-vms: '{mininet-vms}'
         - ssh-agent-credentials:
             users:
                 - '{ssh-credentials}'
