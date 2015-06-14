@@ -16,6 +16,24 @@
       "revId": "ce2857dcc525e848c4ca213459d227004df136d0",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_52d1f1f9",
+        "filename": "jenkins-scripts/autorelease.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2015-06-14T02:58:33Z",
+      "side": 1,
+      "message": "I\u0027ve tested this on the sandbox and it runs after /opt/jenkins is already created. So I couldn\u0027t mount it to /opt/jenkins without having to do some trickery to backup /opt/jenkins/.* files so that the SSH keys are saved for Jenkins to be able to SSH in.\n\nI decided it was easier to just mount /opt/jenkins/workspace.",
+      "parentUuid": "9a6a9dd7_32c1dd2e",
+      "revId": "ce2857dcc525e848c4ca213459d227004df136d0",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
