@@ -83,6 +83,7 @@
             tox --version
             cd sfc-py
             tox
+            ./jenkins_build_package.sh
 
     publishers:
         - email-notification:
