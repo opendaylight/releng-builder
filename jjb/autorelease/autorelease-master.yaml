@@ -64,7 +64,7 @@
         maven-opts: '-Xmx8g -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
         settings: '{autorelease-settings}'
         global-settings: '{odl-global-settings}'
-        automatic-archiving: true
+        automatic-archiving: false
 
     postbuilders:
         - shell: "./scripts/list-project-dependencies.sh"
@@ -76,11 +76,6 @@
         - jacoco-nojava-workaround
 
     publishers:
-        - maven-deploy:
-            url: 'https://nexus.opendaylight.org/content/repositories/opendaylight.daily/'
-            id: 'opendaylight.daily'
-            unique-version: true
-            deploy-unstable: true
         - archive-artifacts:
             artifacts: '*.log,patches/*.patch'
         - email-notification:
