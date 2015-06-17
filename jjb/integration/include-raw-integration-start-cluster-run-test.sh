@@ -37,7 +37,7 @@ EOF
 CONTROLLERIPS=(${CONTROLLER0} ${CONTROLLER1} ${CONTROLLER2})
 for i in "${!CONTROLLERIPS[@]}"
 do
-    echo “Verifying member-$i with IP address ${CONTROLLERIPS[$i]} is UP”
+    echo "Verifying member-$i with IP address ${CONTROLLERIPS[$i]} is UP"
     scp ${WORKSPACE}/verify-cluster-is-up.sh ${CONTROLLERIPS[$i]}:/tmp
     ssh ${CONTROLLERIPS[$i]} "bash /tmp/verify-cluster-is-up.sh $i ${CONTROLLERIPS[$i]}"
 done
