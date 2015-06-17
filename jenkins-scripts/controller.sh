@@ -18,5 +18,5 @@ tar -xvf hbase*.tar.gz
 
 cat <<EOF >/etc/sudoers.d/89-jenkins-user-defaults
 Defaults:jenkins !requiretty
-jenkins     ALL = NOPASSWD: /sbin/iptables
+jenkins     ALL = NOPASSWD: ALL
 EOF
