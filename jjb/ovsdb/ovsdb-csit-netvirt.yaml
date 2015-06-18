@@ -1,0 +1,38 @@
+- project:
+    name: ovsdb-csit-netvirt
+    jobs:
+        - '{project}-csit-1node-cds-{functionality}-{install}-{stream}''
+        - '{project}-csit-verify-{functionality}-{stream}'
+
+    # The project name
+    project: 'ovsdb'
+
+    # The functionality under test
+    functionality: 'Network Virtualization'
+
+    # Project branches
+    stream:
+        - master:
+            branch: 'master'
+        - stable-lithium:
+            branch: 'stable/lithium'
+
+    install:
+        - only:
+            scope: 'only'
+        - all:
+            scope: 'all'
+
+    # Mininet configuration
+    mininet-image: 'rk-c-el6-mininet'
+    mininet-vms: 2
+
+    # Features to install
+    install-features: 'odl-ovsdb-openstack'
+
+    # Robot custom options
+    robot-options: '-v CONTROLLER:127.0.0.1 -v MININET:192.168.100.20 -v MININET1:192.168.100.30 -v USER_HOME:$HOME -v MININET_USER:$USER'
+
+    # Trigger jobs (upstream dependencies)
+    trigger-jobs: ''
+
