@@ -25,6 +25,9 @@ tar -xvf v0.3.8.tar.gz > /dev/null 2>&1
 cd robotframework-requests-0.3.8/
 python setup.py install > /dev/null 2>&1
 
+## install netcat
+yum install -y -q nc
+
 # disable firewall rules
 service iptables stop
 
