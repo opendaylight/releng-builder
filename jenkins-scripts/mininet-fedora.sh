@@ -9,4 +9,7 @@ EOF
 # make sure the firewall is stopped
 service iptables stop
 
+# stop firewall
+systemctl stop firewalld
+
 # vim: sw=2 ts=2 sts=2 et :
