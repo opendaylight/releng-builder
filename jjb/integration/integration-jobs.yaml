@@ -24,10 +24,8 @@
 
     jdk: 'openjdk7'
 
-# For the Job templates below replace instances of:
-# PROJECT with your project name (eg. controller)
-# MAVEN_GOALS with your maven goals to build
-# MAVEN_OPTS with your maven options to build
+    # Trigger jobs (upstream dependencies)
+    trigger-jobs: 'odlparent-distribution-{stream},yangtools-distribution-{stream},controller-distribution-{stream},aaa-distribution-{stream},integration-distribution-merge-{stream}'
 
 - job-template:
     name: 'integration-csit-verify-{stream}'
@@ -232,7 +230,9 @@
                 - '{ssh-credentials}'
 
     triggers:
-        - timed: 'H H * * *'
+        - reverse:
+            jobs: '{trigger-jobs}'
+            result: 'success'
 
     builders:
         - integration-deploy-controller-offline
