@@ -9,4 +9,9 @@ EOF
 # make sure the firewall is stopped
 service iptables stop
 
+# disable vm security
+sudo /usr/sbin/setenforce 0
+sudo systemctl disable firewalld
+sudo systemctl stop firewalld
+
 # vim: sw=2 ts=2 sts=2 et :
