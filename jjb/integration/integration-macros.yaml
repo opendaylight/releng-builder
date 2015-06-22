@@ -36,7 +36,7 @@
         - string:
             name: TESTPLAN
             default: '{test-plan}'
-            description:  'Test plan we will run'
+            description: 'Test plan we will run'
 
 - parameter:
     name: integration-test-options
@@ -44,7 +44,7 @@
         - string:
             name: TESTOPTIONS
             default: '{test-options}'
-            description:  'Robot command options'
+            description: 'Robot command options'
 
 - parameter:
     name: integration-patch-git-url
@@ -52,7 +52,15 @@
         - string:
             name: PATCHGITURL
             default: 'ssh://jenkins-$SILO@git.opendaylight.org:29418/$GERRIT_PROJECT'
-            description:  'Patch GIT URL (do not modify)'
+            description: 'Patch GIT URL (do not modify)'
+
+- parameter:
+    name: integration-patch-refspec
+    parameters:
+        - string:
+            name: PATCHREFSPEC
+            default: ''
+            description: 'Integration Patch Refspec'
 
 - scm:
     name: integration-gerrit-scm
@@ -78,6 +86,17 @@
             branches:
                 - 'origin/{branch}'
             skip-tag: true
+- scm:
+    name: integration-patch-scm
+    scm:
+        - git:
+            credentials-id: '{credentials-id}'
+            url: '$GIT_BASE'
+            refspec: '$PATCHREFSPEC'
+            branches:
+                - 'origin/{branch}'
+            skip-tag: true
+            choosing-strategy: 'gerrit'
 
 - trigger:
     name: integration-distribution-gerrit-trigger-patch-submitted
