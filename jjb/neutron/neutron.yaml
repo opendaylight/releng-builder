@@ -337,7 +337,7 @@
 
     triggers:
         - reverse:
-            jobs: 'odlparent-merge-{stream}'
+            jobs: 'odlparent-merge-{stream},aaa-merge-{stream}'
             result: 'success'
 
     prebuilders:
@@ -359,7 +359,7 @@
 
     publishers:
         - email-notification:
-            email-prefix: '[neutron] [odlparent]'
+            email-prefix: '[neutron] [odlparent] [aaa]'
         - jacoco-report
 
 - job-template:
