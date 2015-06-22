@@ -1,6 +1,6 @@
 NEXUSURL_PREFIX=${ODLNEXUSPROXY:-https://nexus.opendaylight.org}
 CONTROLLERMEM="3072m"
-ACTUALFEATURES="odl-integration-compatible-with-all"
+ACTUALFEATURES="odl-integration-all"
 
 if [ ${BUNDLEURL} == 'last' ]; then
     NEXUSPATH="${NEXUSURL_PREFIX}/content/repositories/opendaylight.snapshot/org/opendaylight/integration/distribution-karaf"
