@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a7fa997_3fdbf2ee",
+        "filename": "jenkins-scripts/mininet-fedora.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-06-22T13:45:18Z",
+      "side": 1,
+      "message": "I _will_ not allow you to issue a global disablement of selinux. If things are not working because of selinux we _must_ figure out a targeted solution and not a giant hammer. Not knowing why you\u0027re trying to stop selinux means that we\u0027ve got a failure to understand our system, given everything we\u0027ve been building / configuring there shouldn\u0027t be any selinux policies that are getting in the way, but if there are we need to know what they are and not ignore them.",
+      "revId": "be59b8342bd7c89547dd5a1c90df3fe28ab75527",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_ffe49aad",
+        "filename": "jenkins-scripts/mininet-fedora.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-06-22T13:45:18Z",
+      "side": 1,
+      "message": "Setting this disabled isn\u0027t needed since you don\u0027t ever reboot the instance, as such, it\u0027s rather futile.",
+      "revId": "be59b8342bd7c89547dd5a1c90df3fe28ab75527",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
