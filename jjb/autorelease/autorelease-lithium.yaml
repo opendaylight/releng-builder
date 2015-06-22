@@ -4,6 +4,7 @@
     name: autorelease-lithium
     jobs:
         - 'autorelease-daily-lithium'
+        - 'autorelease-daily-lithium-jdk8'
         - 'autorelease-release-lithium'
 
     branch: 'stable/lithium'
@@ -16,6 +17,78 @@
     project-type: maven
     node: dynamic_autorelease
     jdk: '{jdk}'
+
+    logrotate:
+        daysToKeep: '{build-days-to-keep}'
+        numToKeep: '{build-num-to-keep}'
+        artifactDaysToKeep: '{build-artifact-days-to-keep}'
+        artifactNumToKeep: '{build-artifact-num-to-keep}'
+
+    parameters:
+        - project-parameter:
+            project: '{project}'
+        - autorelease-release-tag:
+            release-tag: 'Daily'
+        - autorelease-release-branch:
+            release-branch: '{branch}'
+        - autorelease-release-datestamp:
+            datestamp: true
+
+    scm:
+        - git:
+            credentials-id: '{ssh-credentials}'
+            url: '$GIT_BASE'
+            refspec: ''
+            branches:
+                - 'origin/{branch}'
+            skip-tag: true
+            submodule:
+                recursive: true
+
+    wrappers:
+        - autorelease-build-timeout
+        - ssh-agent-credentials:
+            users:
+                - '{ssh-credentials}'
+
+    triggers:
+        - timed: 'H 0 * * *'
+
+    prebuilders:
+        - wipe-org-opendaylight-repo
+        - autorelease-generate-taglist
+        - autorelease-generate-release-patches
+
+    maven:
+        maven-name: '{mvn32}'
+        root-pom: 'pom.xml'
+        goals: 'clean install source:jar javadoc:jar -Pintegrationtests,docs,repoBuild -Dcheckstyle.skip=true -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+        maven-opts: '-Xmx8g -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
+        settings: '{autorelease-settings}'
+        global-settings: '{odl-global-settings}'
+        automatic-archiving: false
+
+    postbuilders:
+        - shell: "./scripts/list-project-dependencies.sh"
+        - autorelease-maven-sources:
+            maven-version: '{mvn32}'
+            settings: '{autorelease-settings}'
+            global-settings: '{odl-global-settings}'
+        - autorelease-maven-sources-post-process
+        - jacoco-nojava-workaround
+
+    publishers:
+        - archive-artifacts:
+            artifacts: '*.log,patches/*.patch'
+        - email-notification:
+            email-prefix: '[autorelease]'
+
+- job-template:
+    name: 'autorelease-daily-lithium-jdk8'
+
+    project-type: maven
+    node: dynamic_autorelease
+    jdk: 'openjdk8'
 
     logrotate:
         daysToKeep: '{build-days-to-keep}'
