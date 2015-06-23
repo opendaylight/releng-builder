@@ -146,3 +146,9 @@
         - sonatype-clm:
             application-name: '{application-name}'
             scan-targets: '**/target/**'
+
+- builder:
+    name: releng-check-unicode
+    builders:
+        - shell: |
+            $WORKSPACE/scripts/check-unicode.sh jjb/
