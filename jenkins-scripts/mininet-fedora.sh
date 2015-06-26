@@ -6,6 +6,9 @@ Defaults:jenkins !requiretty
 jenkins     ALL = NOPASSWD: ALL
 EOF
 
+# allow 6640 to be used with OVS if needed
+semanage port -a -t openvswitch_port_t -p 6640
+
 # make sure the firewall is stopped
 service iptables stop
 
