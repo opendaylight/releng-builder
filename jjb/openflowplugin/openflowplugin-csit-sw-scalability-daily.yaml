@@ -1,0 +1,36 @@
+- project:
+    name: openflowplugin-csit-sw-scalability-daily
+    jobs:
+        - '{project}-csit-periodic-1node-cds-{functionality}-{install}-{stream}'
+
+    # The project name
+    project: 'openflowplugin'
+
+    # The functionality under test
+    functionality: 'sw-scalability-daily'
+
+    # Project branches
+    stream:
+        - master:
+            branch: 'master'
+        - stable-lithium:
+            branch: 'stable/lithium'
+
+    install:
+        - only:
+            scope: 'only'
+
+    # Features to install
+    install-features: 'odl-openflowplugin-flow-services-ui'
+
+    # Robot custom options
+    robot-options: ''
+
+    # Trigger jobs (daily)
+    schedule: 'H H * * *'
+
+    # Plot Info
+    01-plot-title: 'Max number of Switches'
+    01-plot-yaxis: 'OpenFlow Switches'
+    01-plot-group: 'Inventory Scalability'
+    01-plot-data-file: 'max_found.csv'
