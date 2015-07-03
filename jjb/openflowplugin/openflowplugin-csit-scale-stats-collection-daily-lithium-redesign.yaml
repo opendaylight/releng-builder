@@ -30,7 +30,12 @@
     schedule: 'H H * * *'
 
     # Plot Info
-    01-plot-title: 'Flows Setup Time'
+    01-plot-title: 'Flows (100k) Setup Time'
     01-plot-yaxis: '[s]'
     01-plot-group: 'Config Performance'
     01-plot-data-file: 'flows_setup_time.csv'
+
+    02-plot-title: 'REST setup rate (for 100k flows)'
+    02-plot-yaxis: 'setup time[s], req[flows/s]'
+    02-plot-group: 'Performance Rate'
+    02-plot-data-file: 'flows_install_rate.csv'

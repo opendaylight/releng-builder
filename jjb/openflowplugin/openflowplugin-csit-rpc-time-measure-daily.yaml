@@ -1,5 +1,5 @@
 - project:
-    name: openflowplugin-csit-scale-stats-collection-daily
+    name: openflowplugin-csit-rpc-time-measure-daily
     jobs:
         - '{project}-csit-periodic-1node-cds-{functionality}-{install}-{stream}'
 
@@ -7,7 +7,7 @@
     project: 'openflowplugin'
 
     # The functionality under test
-    functionality: 'scale-stats-collection-daily'
+    functionality: 'rpc-time-measure-daily'
 
     # Project branches
     stream:
@@ -21,7 +21,7 @@
             scope: 'only'
 
     # Features to install
-    install-features: 'odl-openflowplugin-flow-services-ui'
+    install-features: 'odl-openflowplugin-flow-services-ui,odl-openflowplugin-app-bulk-o-matic'
 
     # Robot custom options
     robot-options: ''
@@ -30,12 +30,7 @@
     schedule: 'H H * * *'
 
     # Plot Info
-    01-plot-title: 'Flows (100k) Setup Time'
-    01-plot-yaxis: '[s]'
-    01-plot-group: 'Config Performance'
+    01-plot-title: 'REST setup rate (for 100k flows)'
+    01-plot-yaxis: 'setup time[s], req[flows/s]'
+    01-plot-group: 'Performance Rate'
     01-plot-data-file: 'flows_setup_time.csv'
-
-    02-plot-title: 'REST setup rate (for 100k flows)'
-    02-plot-yaxis: 'setup time[s], req[flows/s]'
-    02-plot-group: 'Performance Rate'
-    02-plot-data-file: 'flows_install_rate.csv'
