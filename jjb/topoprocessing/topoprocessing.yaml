@@ -12,7 +12,7 @@
         - 'topoprocessing-distribution-{stream}'
         - 'topoprocessing-integration-{stream}'
         - 'topoprocessing-sonar'
-        - 'topoprocessing-clm'
+        - 'topoprocessing-clm-{stream}'
 
 
     # stream:    branch with - in place of / (eg. stable-helium)
@@ -417,11 +417,11 @@
         - jacoco-report
 
 - job-template:
-    name: 'topoprocessing-clm'
+    name: 'topoprocessing-clm-{stream}'
 
     project-type: maven
     node: dynamic_verify
-    jdk: 'openjdk7'
+    jdk: '{jdk}'
 
     logrotate:
         daysToKeep: '{build-days-to-keep}'
@@ -437,7 +437,7 @@
         - git-scm:
             credentials-id: '{ssh-credentials}'
             refspec: ''
-            branch: 'master'
+            branch: '{branch}'
 
     wrappers:
         - build-timeout

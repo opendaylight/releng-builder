@@ -12,7 +12,7 @@
         - 'lispflowmapping-distribution-{stream}'
         - 'lispflowmapping-integration-{stream}'
         - 'lispflowmapping-sonar'
-        - 'lispflowmapping-clm'
+        - 'lispflowmapping-clm-{stream}'
 
 
     # stream:    branch with - in place of / (eg. stable-helium)
@@ -422,11 +422,11 @@
         - jacoco-report
 
 - job-template:
-    name: 'lispflowmapping-clm'
+    name: 'lispflowmapping-clm-{stream}'
 
     project-type: maven
     node: dynamic_verify
-    jdk: 'openjdk7'
+    jdk: '{jdk}'
 
     logrotate:
         daysToKeep: '{build-days-to-keep}'
@@ -442,7 +442,7 @@
         - git-scm:
             credentials-id: '{ssh-credentials}'
             refspec: ''
-            branch: 'master'
+            branch: '{branch}'
 
     wrappers:
         - build-timeout
