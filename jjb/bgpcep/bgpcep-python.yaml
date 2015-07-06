@@ -79,7 +79,11 @@
 
     builders:
         - shell: |
-            cd pcep/pcepy
+            virtualenv $WORKSPACE/venv-tox
+            source $WORKSPACE/venv-tox/bin/activate
+            pip install tox argparse
+            tox --version
+            cd $WORKSPACE/pcep/pcepy
             tox
 
     publishers:

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 yum clean all
-yum install -y python-{tox,virtualenv} xmlstarlet
+yum install -y python-virtualenv xmlstarlet
 
 # add in mono components for VTN
 yum install -y yum-utils
