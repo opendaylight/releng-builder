@@ -102,7 +102,7 @@
             pom: 'pom.xml'
             goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r '
             java-opts:
-                - '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
+                - '-Xmx2048m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
             settings: '{sfc-settings}'
             global-settings: '{odl-global-settings}'
         - jacoco-nojava-workaround
@@ -163,7 +163,7 @@
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
         goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  source:jar javadoc:jar -Dmerge'
-        maven-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
+        maven-opts: '-Xmx2048m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
         settings: '{sfc-settings}'
         global-settings: '{odl-global-settings}'
 
@@ -230,7 +230,7 @@
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
         goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  source:jar javadoc:jar'
-        maven-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
+        maven-opts: '-Xmx2048m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
         settings: '{sfc-settings}'
         global-settings: '{odl-global-settings}'
 
@@ -350,7 +350,7 @@
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
         goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  source:jar javadoc:jar'
-        maven-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
+        maven-opts: '-Xmx2048m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
         settings: '{sfc-settings}'
         global-settings: '{odl-global-settings}'
 
@@ -401,7 +401,7 @@
         maven-name: '{mvn32}'
         root-pom: 'pom.xml'
         goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  -Dsonar'
-        maven-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
+        maven-opts: '-Xmx2048m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
         settings: '{sfc-settings}'
         global-settings: '{odl-global-settings}'
 
