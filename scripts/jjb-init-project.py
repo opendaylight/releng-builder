@@ -170,7 +170,7 @@ job_templates_yaml = ""
 for t in use_templates:
     if t == "project":  # This is not a job type but is used for templating
         pass
-    elif t == "sonar" or t == "clm":
+    elif t == "sonar":
         job_templates_yaml = job_templates_yaml + \
             "        - '%s-%s'\n" % (project, t)
     else:

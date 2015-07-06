@@ -1,9 +1,9 @@
 - job-template:
-    name: 'PROJECT-clm'
+    name: 'PROJECT-clm-{stream}'
 
     project-type: maven
     node: dynamic_verify
-    jdk: 'openjdk7'
+    jdk: '{jdk}'
 
     logrotate:
         daysToKeep: '{build-days-to-keep}'
@@ -19,7 +19,7 @@
         - git-scm:
             credentials-id: '{ssh-credentials}'
             refspec: ''
-            branch: 'master'
+            branch: '{branch}'
 
     wrappers:
         - build-timeout
