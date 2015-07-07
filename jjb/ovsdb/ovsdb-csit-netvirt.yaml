@@ -1,8 +1,8 @@
 - project:
     name: ovsdb-csit-netvirt
     jobs:
-        - '{project}-csit-1node-cds-{functionality}-{install}-{stream}'
-        - '{project}-csit-verify-{functionality}-{stream}'
+        - '{project}-csit-1node-{functionality}-{install}-{stream}'
+        - '{project}-csit-verify-1node-{functionality}-{stream}'
 
     # The project name
     project: 'ovsdb'
@@ -12,7 +12,7 @@
 
     # Project branches
     stream:
-        - master:
+        - beryllium:
             branch: 'master'
         - stable-lithium:
             branch: 'stable/lithium'
