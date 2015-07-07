@@ -236,7 +236,7 @@
         - wipe-org-opendaylight-repo
 
     maven:
-        maven-name: '{mvn32}'
+        maven-name: '{mvn33}'
         root-pom: 'pom.xml'
         goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r source:jar javadoc:jar'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
@@ -286,7 +286,7 @@
         - wipe-org-opendaylight-repo
 
     maven:
-        maven-name: '{mvn32}'
+        maven-name: '{mvn33}'
         root-pom: 'pom.xml'
         goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  source:jar javadoc:jar'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
@@ -433,7 +433,7 @@
             properties-file: 'bundle.txt'
         - wipe-org-opendaylight-repo
         - maven-target:
-            maven-version: '{mvn32}'
+            maven-version: '{mvn33}'
             pom: '$GERRIT_PROJECT/pom.xml'
             goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r source:jar javadoc:jar'
             java-opts:
@@ -442,7 +442,7 @@
             global-settings: '{odl-global-settings}'
 
     maven:
-        maven-name: '{mvn32}'
+        maven-name: '{mvn33}'
         root-pom: 'integration/pom.xml'
         goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r source:jar javadoc:jar'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
