@@ -2,7 +2,7 @@
     name: l2switch-csit-switch-stable-helium
     jobs:
         - '{project}-csit-1node-imds-{functionality}-{install}-{stream}'
-        - '{project}-csit-verify-{functionality}-{stream}'
+        - '{project}-csit-verify-1node-{functionality}-{stream}'
 
     # The project name
     project: 'l2switch'
@@ -29,4 +29,3 @@
 
     # Trigger jobs (upstream dependencies)
     trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream},openflowjava-distribution-{stream},openflowplugin-distribution-{stream},l2switch-distribution-{stream}'
-

@@ -3,10 +3,10 @@
     jobs:
         - 'sfc-verify-python-{stream}'
 
-    # stream:    branch with - in place of / (eg. stable-helium)
-    # branch:    branch (eg. stable/helium)
+    # stream:    release stream (eg. stable-lithium or beryllium)
+    # branch:    git branch (eg. stable/lithium or master)
     stream:
-        - master:
+        - beryllium:
             branch: 'master'
 
     project: 'sfc'
@@ -20,8 +20,8 @@
     # The purpose of this job template is to setup a ODL verify job
     #
     # Required Variables:
-    #     stream:    branch with - in place of / (eg. stable-helium)
-    #     branch:    branch (eg. stable/helium)
+    #     stream:    release stream (eg. stable-lithium or beryllium)
+    #     branch:    git branch (eg. stable/lithium or master)
 
     project-type: freestyle
     node: dynamic_verify

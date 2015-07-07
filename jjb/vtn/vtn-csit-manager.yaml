@@ -1,8 +1,8 @@
 - project:
     name: vtn-csit-manager
     jobs:
-        - '{project}-csit-1node-cds-{functionality}-{install}-{stream}'
-        - '{project}-csit-verify-{functionality}-{stream}'
+        - '{project}-csit-1node-{functionality}-{install}-{stream}'
+        - '{project}-csit-verify-1node-{functionality}-{stream}'
 
     # The project name
     project: 'vtn'
@@ -12,7 +12,7 @@
 
     # Project branches
     stream:
-        - master:
+        - beryllium:
             branch: 'master'
         - stable-lithium:
             branch: 'stable/lithium'
@@ -31,4 +31,3 @@
 
     # Trigger jobs (upstream dependencies)
     trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream},openflowjava-distribution-{stream},openflowplugin-distribution-{stream},vtn-distribution-{stream}'
-

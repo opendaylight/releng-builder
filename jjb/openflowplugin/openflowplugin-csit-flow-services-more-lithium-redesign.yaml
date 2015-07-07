@@ -1,7 +1,7 @@
 - project:
     name: openflowplugin-csit-flow-services-more-lithium-redesign
     jobs:
-        - '{project}-csit-1node-cds-{functionality}-{install}-{stream}'
+        - '{project}-csit-1node-{functionality}-{install}-{stream}'
 
     # The project name
     project: 'openflowplugin'
@@ -11,7 +11,7 @@
 
     # Project branches
     stream:
-        - master:
+        - beryllium:
             branch: 'master'
         - stable-lithium:
             branch: 'stable/lithium'

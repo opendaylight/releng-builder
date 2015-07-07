@@ -2,7 +2,7 @@
 - project:
     name: integration-jobs
     jobs:
-        - 'integration-csit-verify-{stream}'
+        - 'integration-csit-verify-1node-{stream}'
         - 'integration-distribution-verify-{stream}'
         - 'integration-distribution-merge-{stream}'
         - 'integration-distribution-offline-{stream}'
@@ -10,99 +10,99 @@
         - 'integration-patch-test-{stream}'
 
     stream:
-        - master:
+        - beryllium:
             branch: 'master'
             csit-list: >
-                aaa-csit-1node-cds-authn-only-{stream},
-                aaa-csit-1node-cds-authn-all-{stream},
-                bgpcep-csit-1node-cds-userfeatures-only-{stream},
-                bgpcep-csit-1node-cds-userfeatures-all-{stream},
-                capwap-csit-1node-cds-ac-only-{stream},
-                capwap-csit-1node-cds-ac-all-{stream},
-                controller-csit-1node-cds-netconf-only-{stream},
-                controller-csit-1node-cds-netconf-all-{stream},
-                controller-csit-3node-cds-clustering-only-{stream},
-                controller-csit-3node-cds-clustering-all-{stream},
-                integration-csit-3node-cds-basic-only-{stream},
-                integration-csit-3node-cds-basic-all-{stream},
+                aaa-csit-1node-authn-only-{stream},
+                aaa-csit-1node-authn-all-{stream},
+                bgpcep-csit-1node-userfeatures-only-{stream},
+                bgpcep-csit-1node-userfeatures-all-{stream},
+                capwap-csit-1node-ac-only-{stream},
+                capwap-csit-1node-ac-all-{stream},
+                controller-csit-1node-netconf-only-{stream},
+                controller-csit-1node-netconf-all-{stream},
+                controller-csit-3node-clustering-only-{stream},
+                controller-csit-3node-clustering-all-{stream},
+                integration-csit-3node-basic-only-{stream},
+                integration-csit-3node-basic-all-{stream},
                 integration-distribution-offline-{stream},
-                l2switch-csit-1node-cds-switch-only-{stream},
-                l2switch-csit-1node-cds-switch-all-{stream},
-                l2switch-csit-1node-cds-scalability-only-{stream},
-                l2switch-csit-1node-cds-scalability-all-{stream},
-                lispflowmapping-csit-1node-cds-all-only-{stream},
-                lispflowmapping-csit-1node-cds-all-all-{stream},
-                nic-csit-1node-cds-basic-all-{stream},
-                nic-csit-1node-cds-basic-only-{stream},
-                openflowplugin-csit-1node-cds-flow-services-only-{stream},
-                openflowplugin-csit-1node-cds-flow-services-all-{stream},
-                openflowplugin-csit-1node-cds-flow-services-more-only-{stream},
-                openflowplugin-csit-1node-cds-flow-services-more-all-{stream},
-                openflowplugin-csit-1node-cds-scalability-only-{stream},
-                openflowplugin-csit-1node-cds-scalability-all-{stream},
-                openflowplugin-csit-1node-cds-cbench-performance-only-{stream},
-                openflowplugin-csit-1node-cds-config-performance-only-{stream},
-                ovsdb-csit-1node-cds-netvirt-only-{stream},
-                ovsdb-csit-1node-cds-netvirt-all-{stream},
-                ovsdb-csit-1node-cds-southbound-only-{stream},
-                ovsdb-csit-1node-cds-southbound-all-{stream},
-                snmp-csit-1node-cds-basic-only-{stream},
-                snmp-csit-1node-cds-basic-all-{stream},
-                tsdr-csit-1node-cds-h2-datastore-only-{stream},
-                tsdr-csit-1node-cds-h2-datastore-all-{stream},
-                tsdr-csit-1node-cds-hbase-datastore-only-{stream},
-                tsdr-csit-1node-cds-hbase-datastore-all-{stream},
-                usc-csit-1node-cds-channel-only-{stream},
-                usc-csit-1node-cds-channel-all-{stream},
-                vpnservice-csit-1node-cds-vpnservice-only-{stream},
-                vpnservice-csit-1node-cds-vpnservice-all-{stream},
-                vtn-csit-1node-cds-manager-only-{stream},
-                vtn-csit-1node-cds-manager-all-{stream}
+                l2switch-csit-1node-switch-only-{stream},
+                l2switch-csit-1node-switch-all-{stream},
+                l2switch-csit-1node-scalability-only-{stream},
+                l2switch-csit-1node-scalability-all-{stream},
+                lispflowmapping-csit-1node-all-only-{stream},
+                lispflowmapping-csit-1node-all-all-{stream},
+                nic-csit-1node-basic-all-{stream},
+                nic-csit-1node-basic-only-{stream},
+                openflowplugin-csit-1node-flow-services-only-{stream},
+                openflowplugin-csit-1node-flow-services-all-{stream},
+                openflowplugin-csit-1node-flow-services-more-only-{stream},
+                openflowplugin-csit-1node-flow-services-more-all-{stream},
+                openflowplugin-csit-1node-scalability-only-{stream},
+                openflowplugin-csit-1node-scalability-all-{stream},
+                openflowplugin-csit-1node-cbench-performance-only-{stream},
+                openflowplugin-csit-1node-config-performance-only-{stream},
+                ovsdb-csit-1node-netvirt-only-{stream},
+                ovsdb-csit-1node-netvirt-all-{stream},
+                ovsdb-csit-1node-southbound-only-{stream},
+                ovsdb-csit-1node-southbound-all-{stream},
+                snmp-csit-1node-basic-only-{stream},
+                snmp-csit-1node-basic-all-{stream},
+                tsdr-csit-1node-h2-datastore-only-{stream},
+                tsdr-csit-1node-h2-datastore-all-{stream},
+                tsdr-csit-1node-hbase-datastore-only-{stream},
+                tsdr-csit-1node-hbase-datastore-all-{stream},
+                usc-csit-1node-channel-only-{stream},
+                usc-csit-1node-channel-all-{stream},
+                vpnservice-csit-1node-vpnservice-only-{stream},
+                vpnservice-csit-1node-vpnservice-all-{stream},
+                vtn-csit-1node-manager-only-{stream},
+                vtn-csit-1node-manager-all-{stream}
 
         - stable-lithium:
             branch: 'stable/lithium'
             csit-list: >
-                aaa-csit-1node-cds-authn-only-{stream},
-                aaa-csit-1node-cds-authn-all-{stream},
-                bgpcep-csit-1node-cds-userfeatures-only-{stream},
-                bgpcep-csit-1node-cds-userfeatures-all-{stream},
-                capwap-csit-1node-cds-ac-only-{stream},
-                capwap-csit-1node-cds-ac-all-{stream},
-                controller-csit-1node-cds-netconf-only-{stream},
-                controller-csit-1node-cds-netconf-all-{stream},
-                controller-csit-3node-cds-clustering-only-{stream},
-                controller-csit-3node-cds-clustering-all-{stream},
-                integration-csit-3node-cds-basic-only-{stream},
-                integration-csit-3node-cds-basic-all-{stream},
+                aaa-csit-1node-authn-only-{stream},
+                aaa-csit-1node-authn-all-{stream},
+                bgpcep-csit-1node-userfeatures-only-{stream},
+                bgpcep-csit-1node-userfeatures-all-{stream},
+                capwap-csit-1node-ac-only-{stream},
+                capwap-csit-1node-ac-all-{stream},
+                controller-csit-1node-netconf-only-{stream},
+                controller-csit-1node-netconf-all-{stream},
+                controller-csit-3node-clustering-only-{stream},
+                controller-csit-3node-clustering-all-{stream},
+                integration-csit-3node-basic-only-{stream},
+                integration-csit-3node-basic-all-{stream},
                 integration-distribution-offline-{stream},
-                l2switch-csit-1node-cds-switch-only-{stream},
-                l2switch-csit-1node-cds-switch-all-{stream},
-                l2switch-csit-1node-cds-scalability-only-{stream},
-                l2switch-csit-1node-cds-scalability-all-{stream},
-                lispflowmapping-csit-1node-cds-all-only-{stream},
-                lispflowmapping-csit-1node-cds-all-all-{stream},
-                nic-csit-1node-cds-basic-all-{stream},
-                nic-csit-1node-cds-basic-only-{stream},
-                openflowplugin-csit-1node-cds-flow-services-only-{stream},
-                openflowplugin-csit-1node-cds-flow-services-all-{stream},
-                openflowplugin-csit-1node-cds-flow-services-more-only-{stream},
-                openflowplugin-csit-1node-cds-flow-services-more-all-{stream},
-                openflowplugin-csit-1node-cds-scalability-only-{stream},
-                openflowplugin-csit-1node-cds-scalability-all-{stream},
-                openflowplugin-csit-1node-cds-cbench-performance-only-{stream},
-                openflowplugin-csit-1node-cds-config-performance-only-{stream},
-                ovsdb-csit-1node-cds-netvirt-only-{stream},
-                ovsdb-csit-1node-cds-netvirt-all-{stream},
-                ovsdb-csit-1node-cds-southbound-only-{stream},
-                ovsdb-csit-1node-cds-southbound-all-{stream},
-                snmp-csit-1node-cds-basic-only-{stream},
-                snmp-csit-1node-cds-basic-all-{stream},
-                usc-csit-1node-cds-channel-only-{stream},
-                usc-csit-1node-cds-channel-all-{stream},
-                vpnservice-csit-1node-cds-vpnservice-only-{stream},
-                vpnservice-csit-1node-cds-vpnservice-all-{stream},
-                vtn-csit-1node-cds-manager-only-{stream},
-                vtn-csit-1node-cds-manager-all-{stream}
+                l2switch-csit-1node-switch-only-{stream},
+                l2switch-csit-1node-switch-all-{stream},
+                l2switch-csit-1node-scalability-only-{stream},
+                l2switch-csit-1node-scalability-all-{stream},
+                lispflowmapping-csit-1node-all-only-{stream},
+                lispflowmapping-csit-1node-all-all-{stream},
+                nic-csit-1node-basic-all-{stream},
+                nic-csit-1node-basic-only-{stream},
+                openflowplugin-csit-1node-flow-services-only-{stream},
+                openflowplugin-csit-1node-flow-services-all-{stream},
+                openflowplugin-csit-1node-flow-services-more-only-{stream},
+                openflowplugin-csit-1node-flow-services-more-all-{stream},
+                openflowplugin-csit-1node-scalability-only-{stream},
+                openflowplugin-csit-1node-scalability-all-{stream},
+                openflowplugin-csit-1node-cbench-performance-only-{stream},
+                openflowplugin-csit-1node-config-performance-only-{stream},
+                ovsdb-csit-1node-netvirt-only-{stream},
+                ovsdb-csit-1node-netvirt-all-{stream},
+                ovsdb-csit-1node-southbound-only-{stream},
+                ovsdb-csit-1node-southbound-all-{stream},
+                snmp-csit-1node-basic-only-{stream},
+                snmp-csit-1node-basic-all-{stream},
+                usc-csit-1node-channel-only-{stream},
+                usc-csit-1node-channel-all-{stream},
+                vpnservice-csit-1node-vpnservice-only-{stream},
+                vpnservice-csit-1node-vpnservice-all-{stream},
+                vtn-csit-1node-manager-only-{stream},
+                vtn-csit-1node-manager-all-{stream}
 
         - stable-helium:
             branch: 'stable/helium'
@@ -113,8 +113,8 @@
                 controller-csit-1node-imds-netconf-all-{stream},
                 controller-csit-1node-imds-nsf-only-{stream},
                 controller-csit-1node-imds-nsf-all-{stream},
-                integration-csit-3node-cds-basic-only-{stream},
-                integration-csit-3node-cds-basic-all-{stream},
+                integration-csit-3node-basic-only-{stream},
+                integration-csit-3node-basic-all-{stream},
                 l2switch-csit-1node-imds-switch-only-{stream},
                 l2switch-csit-1node-imds-switch-all-{stream},
                 lispflowmapping-csit-1node-imds-all-only-{stream},
@@ -135,7 +135,7 @@
         integration-distribution-merge-{stream}
 
 - job-template:
-    name: 'integration-csit-verify-{stream}'
+    name: 'integration-csit-verify-1node-{stream}'
 
     project-type: freestyle
     node: dynamic_robot
@@ -464,4 +464,3 @@
     publishers:
         - email-notification:
             email-prefix: '[integration]'
-

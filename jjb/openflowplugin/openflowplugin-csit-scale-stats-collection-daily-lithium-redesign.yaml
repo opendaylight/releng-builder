@@ -1,7 +1,7 @@
 - project:
     name: openflowplugin-csit-scale-stats-collection-daily-lithium-redesign
     jobs:
-        - '{project}-csit-periodic-1node-cds-{functionality}-{install}-{stream}'
+        - '{project}-csit-1node-periodic-{functionality}-{install}-{stream}'
 
     # The project name
     project: 'openflowplugin'
@@ -11,7 +11,7 @@
 
     # Project branches
     stream:
-        - master:
+        - beryllium:
             branch: 'master'
         - stable-lithium:
             branch: 'stable/lithium'
