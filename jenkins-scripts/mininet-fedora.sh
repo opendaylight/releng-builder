@@ -7,7 +7,10 @@ jenkins     ALL = NOPASSWD: ALL
 EOF
 
 # allow 6640 to be used with OVS if needed
-semanage port -a -t openvswitch_port_t -p 6640
+semanage port -a -t openvswitch_port_t -p tcp 6640
+
+# make OVS run in permissive SELinux mode so that it can network connect
+semanage permissive -a openvswitch_t
 
 # make sure the firewall is stopped
 service iptables stop
