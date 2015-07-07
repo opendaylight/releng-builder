@@ -1,4 +1,5 @@
 import argparse
+import collections
 import os
 
 import yaml
@@ -17,7 +18,8 @@ def parse_jjb_args():
                               "job is built successfully.\n\n"
                               "Example: aaa,controller,yangtools"))
     parser.add_argument("-t", "--templates", help="Job templates to use")
-    parser.add_argument("-b", "--branches", help="Git Branches to build")
+    parser.add_argument("-s", "--streams",
+                        help="Release streams to fill with default options")
     parser.add_argument("-p", "--pom", help="Path to pom.xml to use in Maven "
                                             "build (Default: pom.xml")
     parser.add_argument("-g", "--mvn-goals", help="Maven Goals")
@@ -29,17 +31,24 @@ def parse_jjb_args():
     return parser.parse_args()
 
 
+STREAM_DEFAULTS = collections.OrderedDict([
+    ("beryllium", {"branch": "master", "jdks": "openjdk7"}),
+    ("stable-lithium", {"branch": "stable/lithium", "jdks": "openjdk7"}),
+    ("stable-helium", {"branch": "stable/helium", "jdks": "openjdk7"}),
+])
+
+
 def create_template_config(project_dir, args):
     cfg_data = dict()
 
     if args.templates:
         cfg_data["JOB_TEMPLATES"] = args.templates
 
-    if args.branches:
-        branch_list = list()
-        for branch in args.branches.split(","):
-            branch_list.append({branch: {"jdks": "openjdk7"}})
-        cfg_data["BRANCHES"] = branch_list
+    if args.streams:
+        stream_list = list()
+        for stream in args.streams.split(","):
+            stream_list.append({stream: STREAM_DEFAULTS[stream]})
+        cfg_data["STREAMS"] = stream_list
 
     if args.pom:
         cfg_data["POM"] = args.pom

@@ -1,6 +1,10 @@
 - job-template:
     name: 'PROJECT-distribution-{stream}'
 
+    # Required variables:
+    #     stream:    release stream (eg. stable-lithium or beryllium)
+    #     branch:    git branch (eg. stable/lithium or master)
+
     project-type: maven
     node: dynamic_merge
     jdk: '{jdk}'

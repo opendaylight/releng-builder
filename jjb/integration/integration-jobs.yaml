@@ -10,7 +10,7 @@
         - 'integration-patch-test-{stream}'
 
     stream:
-        - master:
+        - beryllium:
             branch: 'master'
             csit-list: >
                 aaa-csit-1node-cds-authn-only-{stream},
@@ -464,4 +464,3 @@
     publishers:
         - email-notification:
             email-prefix: '[integration]'
-
