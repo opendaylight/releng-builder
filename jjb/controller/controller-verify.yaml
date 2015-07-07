@@ -5,10 +5,10 @@
         - 'controller-verify-stable-helium'
 
 
-    # stream:    branch with - in place of / (eg. stable-helium)
-    # branch:    branch (eg. stable/helium)
+    # stream:    release stream (eg. stable-lithium or beryllium)
+    # branch:    git branch (eg. stable/lithium or master)
     stream:
-        - master:
+        - beryllium:
             branch: 'master'
         - stable-lithium:
             branch: 'stable/lithium'
@@ -28,8 +28,8 @@
     # The purpose of this job template is to setup a ODL verify job
     #
     # Required Variables:
-    #     stream:    branch with - in place of / (eg. stable-lithium)
-    #     branch:    branch (eg. stable/lithium)
+    #     stream:    release stream (eg. lithium or beryllium)
+    #     branch:    git branch (eg. stable/lithium or master)
 
     project-type: matrix
     node: matrix_master

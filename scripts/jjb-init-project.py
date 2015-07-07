@@ -45,35 +45,34 @@ if os.path.isfile(project_conf):
 ####################
 # Handle Templates #
 ####################
-if cfg.get('JOB_TEMPLATES'):
-    templates = cfg.get('JOB_TEMPLATES')
+if cfg.get("JOB_TEMPLATES"):
+    templates = cfg.get("JOB_TEMPLATES")
 else:
     templates = "verify,merge,daily,distribution,integration,sonar"
 templates += ",clm"  # ensure we always create a clm job for all projects
 
-###################
-# Handle Branches #
-###################
-branches = OrderedDict()
-if cfg.get('BRANCHES'):
-    for branch in cfg.get('BRANCHES'):
-        for b in branch:
-            branches.update({b: branch[b]})
+##################
+# Handle Streams #
+##################
+streams = OrderedDict()
+if cfg.get("STREAMS"):  # this is a list of single-key dicts
+    for stream_dict in cfg.get("STREAMS"):
+        streams.update(stream_dict)
 else:
-    branches.update({"master": {"jdks": "openjdk7"}})
+    streams = jjblib.STREAM_DEFAULTS
 
-sonar_branch = list(branches.items())[0][0]
+first_stream = streams.iterkeys().next()  # Keep master branch at top.
+sonar_branch = streams[first_stream]["branch"]
 # Create YAML to list branches to create jobs for
-streams = "stream:\n"
-for branch, options in branches.items():
-    streams = streams + ("        - %s:\n"
-                         "            branch: '%s'\n" %
-                         (branch.replace('/', '-'),
-                          branch))
-    streams = streams + "            jdk: %s\n" % options["jdks"].split(",")[0].strip()  # noqa
-    streams = streams + "            jdks:\n"
+str_streams = "stream:\n"
+for stream, options in streams.items():
+    str_streams += ("        - %s:\n"
+                    "            branch: '%s'\n" %
+                    (stream, options["branch"]))
+    str_streams += "            jdk: %s\n" % options["jdks"].split(',')[0].strip()  # noqa
+    str_streams += "            jdks:\n"
     for jdk in options["jdks"].split(","):
-        streams = streams + "                - %s\n" % jdk.strip()
+        str_streams += "                - %s\n" % jdk.strip()
 
 ###############
 # Handle JDKS #
@@ -150,13 +149,13 @@ if not os.path.exists(project_dir):
     os.makedirs(project_dir)
 
 print("project: %s\n"
-      "branches: %s\n"
+      "streams: %s\n"
       "goals: %s\n"
       "options: %s\n"
       "dependencies: %s\n"
       "artifacts: %s" %
       (project,
-       branches,
+       str_streams,
        mvn_goals,
        mvn_opts,
        dependencies,
@@ -185,7 +184,7 @@ with open(project_file, "w") as outfile:
                     line = re.sub("JOB_TEMPLATES", job_templates_yaml, line)
                     line = re.sub("PROJECT", project, line)
                     line = re.sub("DISABLED", disabled, line)
-                    line = re.sub("STREAMS", streams, line)
+                    line = re.sub("STREAMS", str_streams, line)
                     line = re.sub("POM", pom, line)
                     line = re.sub("MAVEN_GOALS", mvn_goals, line)
                     line = re.sub("MAVEN_OPTS", mvn_opts, line)
