@@ -88,7 +88,7 @@
     builders:
         - wipe-org-opendaylight-repo
         - maven-target:
-            maven-version: '{mvn32}'
+            maven-version: '{mvn33}'
             pom: 'pom.xml'
             goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r '
             java-opts:
@@ -150,7 +150,7 @@
         - wipe-org-opendaylight-repo
 
     maven:
-        maven-name: '{mvn32}'
+        maven-name: '{mvn33}'
         root-pom: 'pom.xml'
         goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  source:jar javadoc:jar -Dmerge'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
@@ -217,7 +217,7 @@
         - wipe-org-opendaylight-repo
 
     maven:
-        maven-name: '{mvn32}'
+        maven-name: '{mvn33}'
         root-pom: 'pom.xml'
         goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  source:jar javadoc:jar'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
@@ -273,7 +273,7 @@
         - wipe-org-opendaylight-repo
 
     maven:
-        maven-name: '{mvn32}'
+        maven-name: '{mvn33}'
         root-pom: 'pom.xml'
         goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r clean install source:jar javadoc:jar'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
@@ -337,7 +337,7 @@
         - wipe-org-opendaylight-repo
 
     maven:
-        maven-name: '{mvn32}'
+        maven-name: '{mvn33}'
         root-pom: 'pom.xml'
         goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  source:jar javadoc:jar'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
@@ -388,7 +388,7 @@
         - timed: 'H H * * *'
 
     maven:
-        maven-name: '{mvn32}'
+        maven-name: '{mvn33}'
         root-pom: 'pom.xml'
         goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  -Dsonar'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
@@ -445,7 +445,7 @@
         - wipe-org-opendaylight-repo
 
     maven:
-        maven-name: '{mvn32}'
+        maven-name: '{mvn33}'
         root-pom: 'pom.xml'
         goals: 'com.sonatype.clm:clm-maven-plugin:index -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
         maven-opts: '-Xmx4096m -XX:MaxPermSize=512m'
