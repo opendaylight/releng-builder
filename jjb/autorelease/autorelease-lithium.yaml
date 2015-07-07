@@ -60,7 +60,7 @@
         - autorelease-generate-release-patches
 
     maven:
-        maven-name: '{mvn32}'
+        maven-name: '{mvn33}'
         root-pom: 'pom.xml'
         goals: 'clean install source:jar javadoc:jar -Pintegrationtests,docs,repoBuild -Dcheckstyle.skip=true -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
         maven-opts: '-Xmx8g -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
@@ -71,7 +71,7 @@
     postbuilders:
         - shell: "./scripts/list-project-dependencies.sh"
         - autorelease-maven-sources:
-            maven-version: '{mvn32}'
+            maven-version: '{mvn33}'
             settings: '{autorelease-settings}'
             global-settings: '{odl-global-settings}'
         - autorelease-maven-sources-post-process
@@ -132,7 +132,7 @@
         - autorelease-generate-release-patches
 
     maven:
-        maven-name: '{mvn32}'
+        maven-name: '{mvn33}'
         root-pom: 'pom.xml'
         goals: 'clean install source:jar javadoc:jar -Pintegrationtests,docs,repoBuild -Dcheckstyle.skip=true -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
         maven-opts: '-Xmx8g -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
@@ -143,7 +143,7 @@
     postbuilders:
         - shell: "./scripts/list-project-dependencies.sh"
         - autorelease-maven-sources:
-            maven-version: '{mvn32}'
+            maven-version: '{mvn33}'
             settings: '{autorelease-settings}'
             global-settings: '{odl-global-settings}'
         - autorelease-maven-sources-post-process
@@ -201,7 +201,7 @@
         - autorelease-generate-release-patches
 
     maven:
-        maven-name: '{mvn32}'
+        maven-name: '{mvn33}'
         root-pom: 'pom.xml'
         goals: 'clean install source:jar javadoc:jar -Pintegrationtests,docs,repoBuild -Dcheckstyle.skip=true -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
         maven-opts: '-Xmx8g -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
@@ -216,7 +216,7 @@
         - autorelease-maven-deploy
         - shell: "./scripts/list-project-dependencies.sh"
         - autorelease-maven-sources:
-            maven-version: '{mvn32}'
+            maven-version: '{mvn33}'
             settings: '{autorelease-settings}'
             global-settings: '{odl-global-settings}'
         - autorelease-maven-sources-post-process
