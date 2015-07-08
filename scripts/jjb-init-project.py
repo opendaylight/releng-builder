@@ -61,7 +61,6 @@ if cfg.get('BRANCHES'):
             branches.update({b: branch[b]})
 else:
     branches.update({"master": {"jdks": "openjdk7"}})
-    branches.update({"stable/helium": {"jdks": "openjdk7"}})
 
 sonar_branch = list(branches.items())[0][0]
 # Create YAML to list branches to create jobs for
