@@ -394,10 +394,16 @@
     triggers:
         - timed: 'H H * * *'
 
+    prebuilders:
+        - maven-builder:
+            maven-name: '{mvn32}'
+            root-pom: 'pom.xml'
+            goals: 'clean'
+
     maven:
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
-        goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  -Dsonar'
+        goals: 'install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  -Dsonar'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{neutron-settings}'
         global-settings: '{odl-global-settings}'
