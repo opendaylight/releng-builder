@@ -45,6 +45,7 @@
 
     prebuilders:
         - wipe-org-opendaylight-repo
+        - jacoco-nojava-workaround
 
     maven:
         maven-name: '{mvn33}'
@@ -53,9 +54,6 @@
         maven-opts: 'MAVEN_OPTS'
         settings: '{PROJECT-settings}'
         global-settings: '{odl-global-settings}'
-
-    postbuilders:
-        - jacoco-nojava-workaround
 
     reporters:
         - findbugs
