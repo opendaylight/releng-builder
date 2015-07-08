@@ -79,7 +79,7 @@
         - shell:
             !include-raw-escape include-raw-setup-docker.sh
         - maven-target:
-            maven-version: '{mvn32}'
+            maven-version: '{mvn33}'
             pom: 'pom.xml'
             goals: 'clean install verify -Pintegrationtest,jenkins -V'
             properties:
