@@ -91,7 +91,7 @@
     maven:
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
-        goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r clean install -Pintegrationtests,docs source:jar javadoc:jar -Dmerge'
+        goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r clean install -Pintegrationtests,docs -Dmerge'
         maven-opts: '-Xmx4096m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
         settings: '{controller-settings}'
         global-settings: '{odl-global-settings}'
@@ -158,7 +158,7 @@
     maven:
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
-        goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r clean install -Pintegrationtests,docs source:jar javadoc:jar'
+        goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r clean install -Pintegrationtests,docs'
         maven-opts: '-Xmx4096m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
         settings: '{controller-settings}'
         global-settings: '{odl-global-settings}'
@@ -214,7 +214,7 @@
     maven:
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
-        goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r clean install source:jar javadoc:jar'
+        goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r clean install'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
         settings: '{integration-settings}'
         global-settings: '{odl-global-settings}'
@@ -278,7 +278,7 @@
     maven:
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
-        goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r clean install -Pintegrationtests,docs source:jar javadoc:jar'
+        goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r clean install -Pintegrationtests,docs'
         maven-opts: '-Xmx4096m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
         settings: '{controller-settings}'
         global-settings: '{odl-global-settings}'

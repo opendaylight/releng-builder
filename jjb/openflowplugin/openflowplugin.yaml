@@ -164,7 +164,7 @@
     maven:
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
-        goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r clean install javadoc:aggregate source:jar javadoc:jar -Dmerge'
+        goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r clean install javadoc:aggregate -Dmerge'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{openflowplugin-settings}'
         global-settings: '{odl-global-settings}'
@@ -233,7 +233,7 @@
     maven:
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
-        goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r clean install javadoc:aggregate source:jar javadoc:jar'
+        goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r clean install javadoc:aggregate'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{openflowplugin-settings}'
         global-settings: '{odl-global-settings}'
@@ -289,7 +289,7 @@
     maven:
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
-        goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r clean install source:jar javadoc:jar'
+        goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r clean install'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
         settings: '{integration-settings}'
         global-settings: '{odl-global-settings}'
@@ -353,7 +353,7 @@
     maven:
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
-        goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r clean install javadoc:aggregate source:jar javadoc:jar'
+        goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r clean install javadoc:aggregate'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{openflowplugin-settings}'
         global-settings: '{odl-global-settings}'
