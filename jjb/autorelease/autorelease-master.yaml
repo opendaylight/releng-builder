@@ -54,6 +54,7 @@
 
     prebuilders:
         - wipe-org-opendaylight-repo
+        - jacoco-nojava-workaround
         - autorelease-generate-taglist
         - autorelease-generate-release-patches
 
@@ -65,6 +66,7 @@
         settings: '{autorelease-settings}'
         global-settings: '{odl-global-settings}'
         automatic-archiving: false
+        post-step-run-condition: UNSTABLE
 
     postbuilders:
         - shell: "./scripts/list-project-dependencies.sh"
@@ -73,7 +75,6 @@
             settings: '{autorelease-settings}'
             global-settings: '{odl-global-settings}'
         - autorelease-maven-sources-post-process
-        - jacoco-nojava-workaround
 
     publishers:
         - archive-artifacts:
