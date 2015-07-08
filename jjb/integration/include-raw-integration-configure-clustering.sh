@@ -3,6 +3,7 @@ echo "##         Configure Cluster and Start         ##"
 echo "#################################################"
 
 AKKACONF=/tmp/${BUNDLEFOLDER}/configuration/initial/akka.conf
+MODULESCONF=/tmp/${BUNDLEFOLDER}/configuration/initial/modules.conf
 MODULESHARDSCONF=/tmp/${BUNDLEFOLDER}/configuration/initial/module-shards.conf
 JOLOKIACONF=/tmp/${BUNDLEFOLDER}/deploy/jolokia.xml
 
@@ -24,13 +25,16 @@ echo "Define unique name in akka.conf"
 sed -ie "s/{{MEMBER_NAME}}/\$CONTROLLERID/g" ${AKKACONF}
 
 echo "Define replication type in module-shards.conf"
-sed -ie "s/{{{REPLICAS_1}}}/[\"member-0\",\n\t\t\t\"member-1\",\n\t\t\t\"member-2\"]/g" ${MODULESHARDSCONF}
-sed -ie "s/{{{REPLICAS_2}}}/[\"member-0\",\n\t\t\t\"member-1\",\n\t\t\t\"member-2\"]/g" ${MODULESHARDSCONF}
-sed -ie "s/{{{REPLICAS_3}}}/[\"member-0\",\n\t\t\t\"member-1\",\n\t\t\t\"member-2\"]/g" ${MODULESHARDSCONF}
-sed -ie "s/{{{REPLICAS_4}}}/[\"member-0\",\n\t\t\t\"member-1\",\n\t\t\t\"member-2\"]/g" ${MODULESHARDSCONF}
+sed -ie "s/{{{REPLICAS_1}}}/[\"member-1\",\n\t\t\t\"member-2\",\n\t\t\t\"member-3\"]/g" ${MODULESHARDSCONF}
+sed -ie "s/{{{REPLICAS_2}}}/[\"member-1\",\n\t\t\t\"member-2\",\n\t\t\t\"member-3\"]/g" ${MODULESHARDSCONF}
+sed -ie "s/{{{REPLICAS_3}}}/[\"member-1\",\n\t\t\t\"member-2\",\n\t\t\t\"member-3\"]/g" ${MODULESHARDSCONF}
+sed -ie "s/{{{REPLICAS_4}}}/[\"member-1\",\n\t\t\t\"member-2\",\n\t\t\t\"member-3\"]/g" ${MODULESHARDSCONF}
 
 echo "Dump akka.conf"
 cat ${AKKACONF}
+
+echo "Dump modules.conf"
+cat ${MODULESCONF}
 
 echo "Dump module-shards.conf"
 cat ${MODULESHARDSCONF}
@@ -43,13 +47,14 @@ EOF
 CONTROLLERIPS=(${CONTROLLER0} ${CONTROLLER1} ${CONTROLLER2})
 for i in "${!CONTROLLERIPS[@]}"
 do
-    echo "Configuring member-$i with IP address ${CONTROLLERIPS[$i]}"
+    echo "Configuring member-${i+1} with IP address ${CONTROLLERIPS[$i]}"
     ssh ${CONTROLLERIPS[$i]} "mkdir /tmp/${BUNDLEFOLDER}/configuration/initial"
     scp  ${WORKSPACE}/test/tools/clustering/cluster-deployer/templates/multi-node-test/akka.conf.template ${CONTROLLERIPS[$i]}:${AKKACONF}
+    scp  ${WORKSPACE}/test/tools/clustering/cluster-deployer/templates/multi-node-test/modules.conf.template ${CONTROLLERIPS[$i]}:${MODULESCONF}
     scp  ${WORKSPACE}/test/tools/clustering/cluster-deployer/templates/multi-node-test/module-shards.conf.template ${CONTROLLERIPS[$i]}:${MODULESHARDSCONF}
     scp  ${WORKSPACE}/test/tools/clustering/cluster-deployer/templates/multi-node-test/jolokia.xml.template ${CONTROLLERIPS[$i]}:${JOLOKIACONF}
     scp  ${WORKSPACE}/configuration-script.sh    ${CONTROLLERIPS[$i]}:/tmp/
-    ssh ${CONTROLLERIPS[$i]} "bash /tmp/configuration-script.sh $i ${CONTROLLERIPS[$i]}"
+    ssh ${CONTROLLERIPS[$i]} "bash /tmp/configuration-script.sh ${i+1} ${CONTROLLERIPS[$i]}"
 done
 
 # vim: ts=4 sw=4 sts=4 et ft=sh :

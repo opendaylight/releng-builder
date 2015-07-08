@@ -43,7 +43,7 @@ EOF
 CONTROLLERIPS=(${CONTROLLER0} ${CONTROLLER1} ${CONTROLLER2})
 for i in "${!CONTROLLERIPS[@]}"
 do
-    echo "Installing distribution in member-$i with IP address ${CONTROLLERIPS[$i]}"
+    echo "Installing distribution in member-${i+1} with IP address ${CONTROLLERIPS[$i]}"
     scp ${WORKSPACE}/deploy-controller-script.sh ${CONTROLLERIPS[$i]}:/tmp
     ssh ${CONTROLLERIPS[$i]} 'bash /tmp/deploy-controller-script.sh'
 done
