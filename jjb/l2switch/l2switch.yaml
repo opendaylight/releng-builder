@@ -390,6 +390,8 @@
 
     triggers:
         - timed: 'H H * * *'
+        - gerrit-trigger-patch-sonar:
+            name: 'l2switch'
 
     prebuilders:
         - wipe-org-opendaylight-repo

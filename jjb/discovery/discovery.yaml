@@ -380,6 +380,8 @@
 
     triggers:
         - timed: 'H H * * *'
+        - gerrit-trigger-patch-sonar:
+            name: 'discovery'
 
     prebuilders:
         - wipe-org-opendaylight-repo

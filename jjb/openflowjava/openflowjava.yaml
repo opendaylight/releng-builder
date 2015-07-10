@@ -392,6 +392,8 @@
 
     triggers:
         - timed: 'H H * * *'
+        - gerrit-trigger-patch-sonar:
+            name: 'openflowjava'
 
     prebuilders:
         - wipe-org-opendaylight-repo

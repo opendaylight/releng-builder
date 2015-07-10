@@ -319,6 +319,8 @@
 
     triggers:
         - timed: 'H H * * *'
+        - gerrit-trigger-patch-sonar:
+            name: 'controller'
 
     prebuilders:
         - wipe-org-opendaylight-repo

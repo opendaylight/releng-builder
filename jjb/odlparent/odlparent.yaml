@@ -390,6 +390,8 @@
 
     triggers:
         - timed: 'H H * * *'
+        - gerrit-trigger-patch-sonar:
+            name: 'odlparent'
 
     prebuilders:
         - wipe-org-opendaylight-repo

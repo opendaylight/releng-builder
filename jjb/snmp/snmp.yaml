@@ -385,6 +385,8 @@
 
     triggers:
         - timed: 'H H * * *'
+        - gerrit-trigger-patch-sonar:
+            name: 'snmp'
 
     prebuilders:
         - wipe-org-opendaylight-repo

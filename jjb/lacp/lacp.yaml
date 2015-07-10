@@ -385,6 +385,8 @@
 
     triggers:
         - timed: 'H H * * *'
+        - gerrit-trigger-patch-sonar:
+            name: 'lacp'
 
     prebuilders:
         - wipe-org-opendaylight-repo

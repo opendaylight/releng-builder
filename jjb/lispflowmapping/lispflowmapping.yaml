@@ -392,6 +392,8 @@
 
     triggers:
         - timed: 'H H * * *'
+        - gerrit-trigger-patch-sonar:
+            name: 'lispflowmapping'
 
     prebuilders:
         - wipe-org-opendaylight-repo

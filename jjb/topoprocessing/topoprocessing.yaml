@@ -387,6 +387,8 @@
 
     triggers:
         - timed: 'H H * * *'
+        - gerrit-trigger-patch-sonar:
+            name: 'topoprocessing'
 
     prebuilders:
         - wipe-org-opendaylight-repo

@@ -390,6 +390,8 @@
 
     triggers:
         - timed: 'H H * * *'
+        - gerrit-trigger-patch-sonar:
+            name: 'snbi'
 
     prebuilders:
         - wipe-org-opendaylight-repo

@@ -390,6 +390,8 @@
 
     triggers:
         - timed: 'H H * * *'
+        - gerrit-trigger-patch-sonar:
+            name: 'defense4all'
 
     prebuilders:
         - wipe-org-opendaylight-repo
