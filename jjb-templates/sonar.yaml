@@ -29,6 +29,8 @@
 
     triggers:
         - timed: 'H H * * *'
+        - gerrit-trigger-patch-sonar:
+            name: 'PROJECT'
 
     prebuilders:
         - wipe-org-opendaylight-repo
