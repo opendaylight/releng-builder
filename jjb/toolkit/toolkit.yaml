@@ -87,6 +87,7 @@
 
     builders:
         - wipe-org-opendaylight-repo
+        - jacoco-nojava-workaround
         - maven-target:
             maven-version: '{mvn33}'
             pom: 'pom.xml'
@@ -95,7 +96,6 @@
                 - '-Xmx1024m -XX:MaxPermSize=256m'
             settings: '{toolkit-settings}'
             global-settings: '{odl-global-settings}'
-        - jacoco-nojava-workaround
 
     publishers:
         - findbugs
@@ -148,6 +148,7 @@
 
     prebuilders:
         - wipe-org-opendaylight-repo
+        - jacoco-nojava-workaround
 
     maven:
         maven-name: '{mvn33}'
@@ -156,9 +157,6 @@
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{toolkit-settings}'
         global-settings: '{odl-global-settings}'
-
-    postbuilders:
-        - jacoco-nojava-workaround
 
     reporters:
         - findbugs
@@ -215,6 +213,7 @@
 
     prebuilders:
         - wipe-org-opendaylight-repo
+        - jacoco-nojava-workaround
 
     maven:
         maven-name: '{mvn33}'
@@ -223,9 +222,6 @@
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{toolkit-settings}'
         global-settings: '{odl-global-settings}'
-
-    postbuilders:
-        - jacoco-nojava-workaround
 
     reporters:
         - findbugs
@@ -335,6 +331,7 @@
 
     prebuilders:
         - wipe-org-opendaylight-repo
+        - jacoco-nojava-workaround
 
     maven:
         maven-name: '{mvn33}'
@@ -343,9 +340,6 @@
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{toolkit-settings}'
         global-settings: '{odl-global-settings}'
-
-    postbuilders:
-        - jacoco-nojava-workaround
 
     reporters:
         - findbugs
@@ -387,6 +381,10 @@
     triggers:
         - timed: 'H H * * *'
 
+    prebuilders:
+        - wipe-org-opendaylight-repo
+        - jacoco-nojava-workaround
+
     maven:
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
@@ -394,9 +392,6 @@
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{toolkit-settings}'
         global-settings: '{odl-global-settings}'
-
-    postbuilders:
-        - jacoco-nojava-workaround
 
     reporters:
         - findbugs

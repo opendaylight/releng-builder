@@ -87,6 +87,7 @@
 
     prebuilders:
         - wipe-org-opendaylight-repo
+        - jacoco-nojava-workaround
 
     maven:
         maven-name: '{mvn33}'
@@ -95,9 +96,6 @@
         maven-opts: '-Xmx4096m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
         settings: '{controller-settings}'
         global-settings: '{odl-global-settings}'
-
-    postbuilders:
-        - jacoco-nojava-workaround
 
     reporters:
         - findbugs
@@ -154,6 +152,7 @@
 
     prebuilders:
         - wipe-org-opendaylight-repo
+        - jacoco-nojava-workaround
 
     maven:
         maven-name: '{mvn33}'
@@ -162,9 +161,6 @@
         maven-opts: '-Xmx4096m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
         settings: '{controller-settings}'
         global-settings: '{odl-global-settings}'
-
-    postbuilders:
-        - jacoco-nojava-workaround
 
     reporters:
         - findbugs
@@ -274,6 +270,7 @@
 
     prebuilders:
         - wipe-org-opendaylight-repo
+        - jacoco-nojava-workaround
 
     maven:
         maven-name: '{mvn33}'
@@ -282,9 +279,6 @@
         maven-opts: '-Xmx4096m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
         settings: '{controller-settings}'
         global-settings: '{odl-global-settings}'
-
-    postbuilders:
-        - jacoco-nojava-workaround
 
     reporters:
         - findbugs
@@ -326,6 +320,10 @@
     triggers:
         - timed: 'H H * * *'
 
+    prebuilders:
+        - wipe-org-opendaylight-repo
+        - jacoco-nojava-workaround
+
     maven:
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
@@ -333,9 +331,6 @@
         maven-opts: '-Xmx4096m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
         settings: '{controller-settings}'
         global-settings: '{odl-global-settings}'
-
-    postbuilders:
-        - jacoco-nojava-workaround
 
     reporters:
         - findbugs
