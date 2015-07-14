@@ -25,6 +25,13 @@ tar -xvf v0.3.8.tar.gz > /dev/null 2>&1
 cd robotframework-requests-0.3.8/
 python setup.py install > /dev/null 2>&1
 
+## install Latest Robot Framework Selenium2Library from source
+cd /tmp
+wget https://pypi.python.org/packages/source/r/robotframework-selenium2library/robotframework-selenium2library-1.7.1.tar.gz > /dev/null 2>&1
+tar -xvf robotframework-selenium2library-1.7.1.tar.gz > /dev/null 2>&1
+cd robotframework-selenium2library-1.7.1
+python setup.py install > /dev/null 2>&1
+
 ## install netcat
 yum install -y -q nc
 
