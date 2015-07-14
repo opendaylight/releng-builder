@@ -16,6 +16,23 @@
       "revId": "39f67007cdc0f313452ad66077a19f02501f143b",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_09d24400",
+        "filename": "scripts/jjblib.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2015-07-14T15:22:35Z",
+      "side": 1,
+      "message": "I don\u0027t like the idea of having this list. It means we\u0027d have to keep this list updated which I think we shouldn\u0027t need to. I\u0027d prefer to have the Handle Streams code figure out automatically what the branch mapping is based on the name of the stream. Probably safe to assume that the first listed stream will be master and any stream listed after the first will have a branch with the same name.\n\nIn the case of streams that start with \"stable-\", for backwards compatibility we can have code to remove the \"stable-\" part and assume the remainder is the branch.\n\nThoughts?",
+      "revId": "39f67007cdc0f313452ad66077a19f02501f143b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
