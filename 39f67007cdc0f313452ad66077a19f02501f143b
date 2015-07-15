@@ -33,6 +33,24 @@
       "revId": "39f67007cdc0f313452ad66077a19f02501f143b",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_e2183d77",
+        "filename": "scripts/jjblib.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2015-07-15T17:27:40Z",
+      "side": 1,
+      "message": "This object is used for three things. Initializing new projects using -s is only one of them. Another one is running scripts without any STREAMS setting, which would happen only accidentally. And finally, for setting sonar_branch.\n\n\u003e Probably safe to assume that the first listed stream will be master\n\nThis will not be true between the two merges described in https://lists.opendaylight.org/pipermail/discuss/2015-July/005354.html\n\nBut all three things have rather small impact, so I do not have strong opinions about how should they be handled.",
+      "parentUuid": "7a7fa997_09d24400",
+      "revId": "39f67007cdc0f313452ad66077a19f02501f143b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
