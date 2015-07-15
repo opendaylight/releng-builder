@@ -51,6 +51,24 @@
       "revId": "39f67007cdc0f313452ad66077a19f02501f143b",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_822dc948",
+        "filename": "scripts/jjblib.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2015-07-15T19:01:26Z",
+      "side": 1,
+      "message": "Right, I\u0027m aware of running without STREAMS. In my opinion the only projects that should run without any STREAMS defined is a brand new project in ODL which at that point would have only master defined. If this is the case I think I\u0027d rather have a single variable that contains the current in-development release (beryllium).\n\nOnce a project branches I expect them to create a project.cfg file and add the STREAM configuration.\n\nAs for setting the sonar_branch I think it\u0027s safe to assume that the first listed item in the OrderedDict will always be the sonar branch. That is what is documented in our JJB scripts so does not change behaviour from what we have today.",
+      "parentUuid": "7a7fa997_e2183d77",
+      "revId": "39f67007cdc0f313452ad66077a19f02501f143b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
