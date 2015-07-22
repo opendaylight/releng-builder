@@ -9,8 +9,10 @@
         - 'nemo-verify-{stream}'
         - 'nemo-merge-{stream}'
         - 'nemo-daily-{stream}'
+        - 'nemo-distribution-{stream}'
         - 'nemo-integration-{stream}'
         - 'nemo-sonar'
+        - 'nemo-clm-{stream}'
 
 
     # stream:    branch with - in place of / (eg. stable-helium)
@@ -230,6 +232,58 @@
             email-prefix: '[nemo]'
         - jacoco-report
 
+- job-template:
+    name: 'nemo-distribution-{stream}'
+
+    project-type: maven
+    node: dynamic_merge
+    jdk: '{jdk}'
+
+    logrotate:
+        daysToKeep: '{build-days-to-keep}'
+        numToKeep: '{build-num-to-keep}'
+        artifactDaysToKeep: '{build-artifact-days-to-keep}'
+        artifactNumToKeep: '{build-artifact-num-to-keep}'
+
+    parameters:
+        - project-parameter:
+            project: 'integration'
+
+    scm:
+        - git-scm:
+            credentials-id: '{ssh-credentials}'
+            refspec: ''
+            branch: '{branch}'
+
+    wrappers:
+        - build-timeout
+        - ssh-agent-credentials:
+            users:
+                - '{ssh-credentials}'
+
+    triggers:
+        - reverse:
+            jobs: '{project}-merge-{stream}'
+            result: 'success'
+
+    prebuilders:
+        - wipe-org-opendaylight-repo
+
+    maven:
+        maven-name: '{mvn33}'
+        root-pom: 'pom.xml'
+        goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r clean install'
+        maven-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
+        settings: '{integration-settings}'
+        global-settings: '{odl-global-settings}'
+
+    publishers:
+        - email-notification:
+            email-prefix: '[{project}]'
+        - maven-deploy:
+            id: ''
+            unique-version: true
+            deploy-unstable: false
 
 - job-template:
     name: 'nemo-integration-{stream}'
@@ -353,4 +407,54 @@
             email-prefix: '[nemo]'
         - jacoco-report
 
+- job-template:
+    name: 'nemo-clm-{stream}'
+
+    project-type: maven
+    node: dynamic_verify
+    jdk: '{jdk}'
+
+    logrotate:
+        daysToKeep: '{build-days-to-keep}'
+        numToKeep: '{build-num-to-keep}'
+        artifactDaysToKeep: '{build-artifact-days-to-keep}'
+        artifactNumToKeep: '{build-artifact-num-to-keep}'
+
+    parameters:
+        - project-parameter:
+            project: '{project}'
+
+    scm:
+        - git-scm:
+            credentials-id: '{ssh-credentials}'
+            refspec: ''
+            branch: '{branch}'
+
+    wrappers:
+        - build-timeout
+        - ssh-agent-credentials:
+            users:
+                - '{ssh-credentials}'
+
+    triggers:
+        - timed: '@weekly'
+
+    prebuilders:
+        - wipe-org-opendaylight-repo
+
+    maven:
+        maven-name: '{mvn33}'
+        root-pom: 'pom.xml'
+        goals: 'com.sonatype.clm:clm-maven-plugin:index -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+        maven-opts: '-Xmx4096m -XX:MaxPermSize=512m'
+        settings: '{nemo-settings}'
+        global-settings: '{odl-global-settings}'
+
+    postbuilders:
+        - check-clm:
+            application-name: nemo
+
+    publishers:
+        - email-notification:
+            email-prefix: '[nemo]'
 
