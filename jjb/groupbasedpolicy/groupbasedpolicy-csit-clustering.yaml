@@ -1,0 +1,39 @@
+- project:
+    name: groupbasedpolicy-csit-clustering
+    jobs:
+        - '{project}-csit-1node-cds-{functionality}-{install}-{stream}'
+        - '{project}-csit-verify-{functionality}-{stream}'
+        - '{project}-csit-3node-cds-{functionality}-{install}-{stream}'
+
+
+    # The project name
+    project: 'groupbasedpolicy'
+
+    # The functionality under test
+    functionality: 'clustering'
+
+    # Project branches
+    stream:
+        - master:
+            branch: 'master'
+        - stable-lithium:
+            branch: 'stable/lithium'
+
+    install:
+        - only:
+            scope: 'only'
+        - all:
+            scope: 'all'
+
+    # Mininet configuration
+    mininet-image: 'rk-c-el6-mininet'
+    mininet-vms: 1
+
+    # Features to install
+    install-features: 'odl-mdsal-clustering,odl-restconf-all,odl-groupbasedpolicy-ofoverlay,odl-groupbasedpolicy-ui'
+
+    # Robot custom options
+    robot-options: ''
+
+    # Trigger jobs (upstream dependencies)
+    trigger-jobs: ''
