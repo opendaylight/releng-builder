@@ -1,0 +1,37 @@
+- project:
+    name: sfc-csit-clustering
+    jobs:
+        - '{project}-csit-3node-cds-{functionality}-{install}-{stream}'
+
+
+    # The project name
+    project: 'sfc'
+
+    # The functionality under test
+    functionality: 'clustering'
+
+    # Project branches
+    stream:
+        - master:
+            branch: 'master'
+        - stable-lithium:
+            branch: 'stable/lithium'
+ 
+    install:
+        - only:
+            scope: 'only'
+        - all:
+            scope: 'all'
+
+    # Mininet configuration
+    mininet-image: 'rk-c-el6-mininet'
+    mininet-vms: 1
+
+    # Features to install
+    install-features: 'odl-sfc-core,odl-mdsal-clustering,odl-restconf-all'
+
+    # Robot custom options
+    robot-options: ''
+
+    # Trigger jobs (upstream dependencies)
+    trigger-jobs: 'odlparent-distribution-{stream},lispflowmapping-distribution-{stream},ovsdb-distribution-{stream},controller-distribution-{stream},openflowplugin-distribution-{stream},yangtools-distribution-{stream}'
