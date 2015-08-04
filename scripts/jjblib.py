@@ -66,3 +66,17 @@ def create_template_config(project_dir, args):
 
         with open(cfg_file, "w") as outstream:
             outstream.write(yaml.dump(cfg_data, default_flow_style=False))
+
+
+class Project:
+    def __init__(self, project):
+        self.meta_project = None
+        self.project = project
+
+        if project.find('/') >= 0:
+            s = project.rsplit('/', 1)
+            self.meta_project = s[0]
+            self.project = s[1]
+
+    def __str__(self):
+        return self.project
