@@ -2,7 +2,7 @@
 
 # @License EPL-1.0 <http://spdx.org/licenses/EPL-1.0>
 ##############################################################################
-# Copyright (c) 2014 The Linux Foundation and others.
+# Copyright (c) 2014, 2015 The Linux Foundation and others.
 #
 # All rights reserved. This program and the accompanying materials
 # are made available under the terms of the Eclipse Public License v1.0
@@ -16,6 +16,7 @@
 from collections import OrderedDict
 import os
 import re
+import sys
 
 import yaml
 
@@ -24,8 +25,25 @@ import jjblib
 
 args = jjblib.parse_jjb_args()
 
-project = args.project
-project_dir = os.path.join("jjb", project)
+# Find meta projects
+i = args.project.find('/')
+if i == 0:  # Invalid state
+    print("Invalid, project name cannot start with a /")
+    sys.exit(1)
+elif i > 0:  # Meta project found
+    s = args.project.split('/')
+    meta_project = s[0]
+    project = s[1]
+    print("Found meta project: ", args.project)
+else:  # Regular project
+    meta_project = None
+    project = args.project
+
+if meta_project is not None:
+    project_dir = os.path.join("jjb", meta_project, project)
+else:
+    project_dir = os.path.join("jjb", project)
+
 project_file = os.path.join(project_dir, "%s.yaml" % project)
 dependent_jobs = ""
 disabled = "true"   # Always disabled unless project has dependencies
