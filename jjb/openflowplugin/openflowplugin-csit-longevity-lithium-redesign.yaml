@@ -1,0 +1,29 @@
+- project:
+    name: openflowplugin-csit-longevity-lithium-redesign
+    jobs:
+        - '{project}-csit-periodic-1node-cds-{functionality}-{install}-{stream}'
+
+    # The project name
+    project: 'openflowplugin'
+
+    # The functionality under test
+    functionality: 'longevity-lithium-redesign'
+
+    # Project branches
+    stream:
+        - master:
+            branch: 'master'
+
+    install:
+        - only:
+            scope: 'only'
+
+    # Features to install
+    install-features: 'odl-openflowplugin-flow-services-ui-li'
+
+    # Robot custom options
+    robot-options: '-v TEST_LENGTH:23@hours --escape space:@'
+
+    # Trigger jobs (weekly)
+    schedule: 'H H * * *'
+
