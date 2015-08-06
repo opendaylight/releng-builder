@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a7ca5a3_4de8947c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2015-08-06T01:50:45Z",
+      "side": 1,
+      "message": "The summary line is too long and does not describe what your patch does. Please improve the commit message with details of what this patch provides.\n\nSome tips on how to construct a good commit message can be found here:\n\n  https://wiki.openstack.org/wiki/GitCommitMessages",
+      "revId": "af3ffacb644f2aefb8c652b95a8d47baafc3c49a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_6ded508b",
+        "filename": "jjb/ovsdb/xmlformatter.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2015-08-06T01:50:45Z",
+      "side": 1,
+      "message": "This script does not pass pep8. Please run pep8 against this script and ensure it passes pep8 style guidelines. You can use the pep8 cli tool to scan your code for conformance:\n\n  https://pypi.python.org/pypi/pep8",
+      "revId": "af3ffacb644f2aefb8c652b95a8d47baafc3c49a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_0d029c3e",
+        "filename": "jjb/ovsdb/xmlformatter.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2015-08-06T01:50:45Z",
+      "side": 1,
+      "message": "Trailing whitespace",
+      "revId": "af3ffacb644f2aefb8c652b95a8d47baafc3c49a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_cdfb4446",
+        "filename": "jjb/ovsdb/xmlformatter.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2015-08-06T01:50:45Z",
+      "side": 1,
+      "message": "Imports in python should be imported in order of:\n\n- Python Libraries\n- 3rd party\n- local libraries\n\nI\u0027d recommend reordering the imports this way:\n\n import datetime\n import os\n \n from xml.etree import ElementTree as ET\n from xml.etree.ElementTree import Element\n from xml.etree.ElementTree import ElementTree",
+      "revId": "af3ffacb644f2aefb8c652b95a8d47baafc3c49a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_4d9f3404",
+        "filename": "jjb/ovsdb/xmlformatter.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2015-08-06T01:50:45Z",
+      "side": 1,
+      "message": "This infinite loop is very CPU intensive, you should implement a wait time so that it doesn\u0027t use up all the CPU on the system constantly checking the file.\n\nFrom what I understand of your code I think a better while loop would be:\n\n while not os.path.isfile(fname):\n   sleep(1000)\n   # blah blah waiting for code\n\n # run ET commands after while loop exists.\n\n\nAlthough I\u0027m concerned about the implementation though, what happens if the file is never created? Consider limiting the number of tries before the script gives up and quits otherwise it could potentially be stuck in an infinite loops.",
+      "revId": "af3ffacb644f2aefb8c652b95a8d47baafc3c49a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_8deeac8a",
+        "filename": "jjb/ovsdb/xmlformatter.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2015-08-06T01:50:45Z",
+      "side": 1,
+      "message": "Trailing whitespace",
+      "revId": "af3ffacb644f2aefb8c652b95a8d47baafc3c49a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_adf36872",
+        "filename": "jjb/ovsdb/xmlformatter.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2015-08-06T01:50:45Z",
+      "side": 1,
+      "message": "Trailing whitespace",
+      "revId": "af3ffacb644f2aefb8c652b95a8d47baafc3c49a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_8d954ce6",
+        "filename": "jjb/ovsdb/xmlformatter.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2015-08-06T01:50:45Z",
+      "side": 1,
+      "message": "As far as I can tell this break is unnecessary.",
+      "revId": "af3ffacb644f2aefb8c652b95a8d47baafc3c49a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_ad9a8812",
+        "filename": "jjb/ovsdb/xmlformatter.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2015-08-06T01:50:45Z",
+      "side": 1,
+      "message": "Do you really want to print this line to the screen on every loop? I\u0027m -1 on this as it\u0027s unnecessary printing and can easily overtake the logs.\n\nI\u0027d recommend using the print function print() so that this code also supports Python3.\n\n print(\"no such file \" + fname + \" exists. Waiting for file\")",
+      "revId": "af3ffacb644f2aefb8c652b95a8d47baafc3c49a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
