@@ -2,7 +2,7 @@
 
 # @License EPL-1.0 <http://spdx.org/licenses/EPL-1.0>
 ##############################################################################
-# Copyright (c) 2014 The Linux Foundation and others.
+# Copyright (c) 2014, 2015 The Linux Foundation and others.
 #
 # All rights reserved. This program and the accompanying materials
 # are made available under the terms of the Eclipse Public License v1.0
@@ -24,8 +24,13 @@ import jjblib
 
 args = jjblib.parse_jjb_args()
 
-project = args.project
-project_dir = os.path.join("jjb", project)
+
+project = jjblib.Project(args.project)
+if project.meta_project is not None:
+    project_dir = os.path.join("jjb", project.meta_project, project.project)
+else:
+    project_dir = os.path.join("jjb", project.project)
+
 project_file = os.path.join(project_dir, "%s.yaml" % project)
 dependent_jobs = ""
 disabled = "true"   # Always disabled unless project has dependencies
@@ -183,7 +188,7 @@ with open(project_file, "w") as outfile:
             for line in infile:
                 if not re.match("\s*#", line):
                     line = re.sub("JOB_TEMPLATES", job_templates_yaml, line)
-                    line = re.sub("PROJECT", project, line)
+                    line = re.sub("PROJECT", project.project, line)
                     line = re.sub("DISABLED", disabled, line)
                     line = re.sub("STREAMS", streams, line)
                     line = re.sub("POM", pom, line)
