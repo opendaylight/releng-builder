@@ -1,12 +1,12 @@
 - project:
     name: neutron-daily-openstack
     jobs:
-        - 'neutron-daily-openstack-master'
+        - 'neutron-daily-openstack-beryllium'
 
     project: 'neutron'
 
 - job-template:
-    name: 'neutron-daily-openstack-master'
+    name: 'neutron-daily-openstack-beryllium'
 
     project-type: freestyle
     node: dynamic_devstack

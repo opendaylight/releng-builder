@@ -1,12 +1,12 @@
 - project:
     name: ovsdb-daily-openstack
     jobs:
-        - 'ovsdb-daily-openstack-master'
+        - 'ovsdb-daily-openstack-beryllium'
 
     project: 'ovsdb'
 
 - job-template:
-    name: 'ovsdb-daily-openstack-master'
+    name: 'ovsdb-daily-openstack-beryllium'
 
     project-type: freestyle
     node: dynamic_devstack
