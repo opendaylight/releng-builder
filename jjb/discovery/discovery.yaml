@@ -15,10 +15,10 @@
         - 'discovery-clm-{stream}'
 
 
-    # stream:    branch with - in place of / (eg. stable-helium)
-    # branch:    branch (eg. stable/helium)
+    # stream:    release stream (eg. stable-lithium or beryllium)
+    # branch:    git branch (eg. stable/lithium or master)
     stream:
-        - master:
+        - beryllium:
             branch: 'master'
             jdk: openjdk7
             jdks:
@@ -39,8 +39,8 @@
     # The purpose of this job template is to setup a ODL verify job
     #
     # Required Variables:
-    #     stream:    branch with - in place of / (eg. stable-helium)
-    #     branch:    branch (eg. stable/helium)
+    #     stream:    release stream (eg. stable-lithium or beryllium)
+    #     branch:    git branch (eg. stable/lithium or master)
 
     project-type: matrix
     node: matrix_master
@@ -112,8 +112,8 @@
     # and deploy artifacts to Nexus.
     #
     # Required Variables:
-    #     stream:    branch with - in place of / (eg. stable-helium)
-    #     branch:    branch (eg. stable/helium)
+    #     stream:    release stream (eg. stable-lithium or beryllium)
+    #     branch:    git branch (eg. stable/lithium or master)
 
     project-type: maven
     node: dynamic_merge
@@ -179,8 +179,8 @@
     # builder and pushes to Sonar analysis.
     #
     # Required Variables:
-    #     stream:    branch with - in place of / (eg. stable-helium)
-    #     branch:    branch (eg. stable/helium)
+    #     stream:    release stream (eg. stable-lithium or beryllium)
+    #     branch:    git branch (eg. stable/lithium or master)
 
     project-type: maven
     node: dynamic_verify
@@ -233,6 +233,10 @@
 
 - job-template:
     name: 'discovery-distribution-{stream}'
+
+    # Required variables:
+    #     stream:    release stream (eg. stable-lithium or beryllium)
+    #     branch:    git branch (eg. stable/lithium or master)
 
     project-type: maven
     node: dynamic_merge
@@ -295,8 +299,8 @@
     # is successfully built.
     #
     # Required Variables:
-    #     stream:    branch with - in place of / (eg. stable-helium)
-    #     branch:    branch (eg. stable/helium)
+    #     stream:    release stream (eg. stable-lithium or beryllium)
+    #     branch:    git branch (eg. stable/lithium or master)
 
     project-type: maven
     node: dynamic_merge
