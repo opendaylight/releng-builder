@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2015 The Linux Foundation and others.  All rights reserved.
+
+  This program and the accompanying materials are made available under the
+  terms of the Eclipse Distribution License v1.0 which accompanies this distribution,
+  and is available at http://www.eclipse.org/org/documents/edl-v10.php
+-->
+<project
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+  xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>org.opendaylight.releng.builder</groupId>
+  <artifactId>builder-root</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <name>releng/builder</name> <!-- Used by Sonar to set project name -->
+  <description>
+    The Release Engineering - Builder project is targeted at hosting the
+    scripts and information needed for building up VM images and creating
+    jobs in Jenkins as well as build pipelines.
+  </description>
+  <inceptionYear>2014</inceptionYear>
+  <url>http://www.opendaylight.org/releng/builder</url>
+
+  <licenses>
+    <license>
+      <name>Eclipse Public License</name>
+      <url>http://www.eclipse.org/legal/epl-v10.html</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <organization>
+    <name>OpenDaylight</name>
+    <url>http://www.opendaylight.org/</url>
+  </organization>
+
+  <developers>
+    <developer>
+      <id>tykeal</id>
+      <name>Andrew Grimberg</name>
+      <email>agrimberg@linuxfoundation.org</email>
+      <organization>The Linux Foundation</organization>
+      <organizationUrl>https://www.linuxfoundation.org/</organizationUrl>
+      <roles>
+        <role>sysadmin</role>
+      </roles>
+      <timezone>America/Los_Angeles</timezone>
+    </developer>
+
+    <developer>
+      <id>zxiiro</id>
+      <name>Thanh Ha</name>
+      <email>thanh.ha@linuxfoundation.org</email>
+      <organization>The Linux Foundation</organization>
+      <organizationUrl>https://www.linuxfoundation.org/</organizationUrl>
+      <roles>
+        <role>releng</role>
+      </roles>
+      <timezone>America/New_York</timezone>
+      <properties>
+        <picUrl>https://www.opendaylight.org/sites/www.opendaylight.org/files/styles/thumbnail/public/members/logos/thahn-ha.png</picUrl>
+      </properties>
+    </developer>
+
+    <developer>
+      <id>LuisGomez</id>
+      <name>Luis Gomez</name>
+      <email>ecelgp@gmail.com</email>
+      <organization>Brocade</organization>
+      <organizationUrl>https://www.brocade.com/</organizationUrl>
+      <roles>
+        <role>integration</role>
+      </roles>
+      <timezone>America/Los_Angeles</timezone>
+    </developer>
+  </developers>
+
+  <contributors>
+    <contributor>
+      <name>Vratko Polák</name>
+      <email>vrpolak@cisco.com </email>
+      <organization>Cisco Systems</organization>
+      <organizationUrl>http://www.cisco.com/</organizationUrl>
+      <roles>
+        <role>integration</role>
+      </roles>
+      <timezone>America/Los_Angeles</timezone>
+    </contributor>
+  </contributors>
+
+  <issueManagement>
+    <system>Bugzilla</system>
+    <url>https//bugs.opendaylight.org/</url>
+  </issueManagement>
+
+  <ciManagement>
+    <system>Jenkins</system>
+    <url>https://jenkins.opendaylight.org/releng</url>
+  </ciManagement>
+
+  <mailingLists>
+    <mailingList>
+      <name>Dev Mailing List</name>
+      <subscribe>dev-subscribe@lists.opendaylight.org</subscribe>
+      <unsubscribe>dev-unsubscribe@lists.opendaylight.org</unsubscribe>
+      <post>dev@lists.opendaylight.org</post>
+      <archive>https://lists.opendaylight.org/pipermail/dev/</archive>
+    </mailingList>
+  </mailingLists>
+
+  <scm>
+    <connection>scm:git:https://git.opendaylight.org/gerrit/releng/builder</connection>
+    <developerConnection>scm:git:ssh://git.opendaylight.org:29418/releng/builder</developerConnection>
+    <url>https://git.opendaylight.org/gerrit/gitweb?p=releng%2Fbuilder.git;a=summary</url>
+  </scm>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-install-plugin</artifactId>
+        <version>2.5.2</version>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>2.8.2</version>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+        <version>3.3</version>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <profiles>
+    <profile>
+      <activation>
+        <property>
+          <name>stream</name>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-site-plugin</artifactId>
+            <version>3.4</version>
+            <dependencies>
+              <dependency>
+                   <groupId>org.apache.maven.wagon</groupId>
+                   <artifactId>wagon-webdav-jackrabbit</artifactId>
+                   <version>2.9</version>
+               </dependency>
+            </dependencies>
+            <configuration>
+              <skip>false</skip>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
+  <distributionManagement>
+    <site>
+      <id>opendaylight-site</id>
+      <name>OpenDaylight Site</name>
+      <url>dav:http://nexus.opendaylight.org/content/sites/site/${project.groupId}/${stream}/</url>
+    </site>
+  </distributionManagement>
+</project>
