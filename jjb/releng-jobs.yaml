@@ -186,6 +186,47 @@
             email-prefix: '[releng]'
 
 - job-template:
+    name: 'builder-publish-site'
+    node: dynamic_merge
+    concurrent: false
+
+    # This job's purpose is to publish maven site
+
+    project-type: freestyle
+
+    logrotate:
+        daysToKeep: 7
+        numToKeep: 10
+        artifactDaysToKeep: -1
+        artifactNumToKeep: -1
+
+    parameters:
+        - project-parameter:
+            project: '{project}'
+
+    scm:
+        - git-scm:
+            credentials-id: '{ssh-credentials}'
+            branch: 'master'
+
+    wrappers:
+        - ssh-agent-credentials:
+            users:
+                - '{ssh-credentials}'
+
+    maven:
+        maven-name: '{mvn33}'
+        root-pom: 'pom.xml'
+        goals: 'site:deploy -Dstream=master'
+        maven-opts: '-Xmx1024m'
+        settings: '{autorelease-settings}'
+        global-settings: '{odl-global-settings}'
+
+    publishers:
+        - email-notification:
+            email-prefix: '[releng]'
+
+- job-template:
     name: 'builder-weekly'
 
     # builder-weekly job to run JJB update weekly
