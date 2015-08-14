@@ -75,3 +75,10 @@
     builders:
         - shell:
             !include-raw-escape include-raw-autorelease-release-versions.sh
+
+- builder:
+    name: autorelease-sys-stats
+    builders:
+        - shell: |
+            uname -a
+            df -h
