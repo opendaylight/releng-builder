@@ -81,7 +81,17 @@
         - shell: |
             virtualenv $WORKSPACE/venv-tox
             source $WORKSPACE/venv-tox/bin/activate
-            pip install tox argparse
+            pip install tox argparse robotframework
+            # FIXME: Make sure no file name contains a space character!
+            files=`git diff --name-only HEAD^ | grep '\.robot$' | tr '\n' ' '`
+            truncate --size 0 change.diff
+            for f in $files
+            do
+                if [ -f "$f" ]; then
+                    python -m robot.tidy "$f" | ( diff -du "$f" - || true ) >> change.diff
+                fi
+            done
+            cat change.diff
             tox --version
             cd $WORKSPACE/test
             tox
