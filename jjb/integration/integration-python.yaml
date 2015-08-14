@@ -81,10 +81,7 @@
         - shell: |
             virtualenv $WORKSPACE/venv-tox
             source $WORKSPACE/venv-tox/bin/activate
-            pip install tox argparse
-            tox --version
-            cd $WORKSPACE/test
-            tox
+            source test/csit/scripts/integration_style_check.sh
 
     publishers:
         - email-notification:
