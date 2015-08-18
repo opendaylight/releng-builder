@@ -1,0 +1,62 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby sw=2 ts=2 sts=2 et :
+
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  # root off of the rackspace provider dummy box
+  config.vm.box = "dummy"
+
+  # rackspace systems, even with cloud-init
+  # don't seem to have the cloud int user ${osname} (or similar)
+  # getting the ssh key for some reason, root does for sure
+  # so use that
+  config.ssh.username = 'root'
+
+  # Fedora and EL systems default to requiring tty for sudo
+  # This should have been disabled with the Vagrant ready
+  # base box conversion (see rackspace-convert-base vagrant)
+  # but just to be safe
+  config.ssh.pty = true
+
+  # make sure to set the following in your
+  # ~/.vagrant.d/boxes/dummy/0/rackspace/Vagrantfile
+  # rs.username
+  # rs.api_key
+  # rs.rackspace_region
+  #
+  # If you are not using an SSH token / smartcard also set this
+  # rs.key_name
+  # config.ssh.private_key_path -- set this outside the rackspace block
+  #         in your base box
+  config.vm.provider :rackspace do |rs|
+    # create these base builds always on the smallest system possible
+    rs.flavor = 'general1-1'
+
+    # allow for switching to ORD cloud but default to DFW
+    if (ENV['RSREGION'] == 'ord')
+      rs.rackspace_region = :ord
+    else
+      rs.rackspace_region = :dfw
+    end
+
+    # Default the Fedora 20 (Heisenbug) - Vagrant ready image unless overriden by a RSIMAGE
+    # environment variable
+    if ENV['RSIMAGE']
+      rs.image = ENV['RSIMAGE']
+    else
+      rs.image = 'Fedora 20 (Heisenbug) - Vagrant ready'
+    end
+  end
+
+  # run our bootstrapping for the ovsdb-devstack system
+  config.vm.provision 'shell', path: 'bootstrap.sh'
+
+  # set RSRESEAL to... anything if you want to snap an image of this box
+  # not setting the environment variable will cause the system to come
+  # up fully and not be in a resealable state
+  if ENV['RSRESEAL']
+    config.vm.provision 'shell', path: 'system_reseal.sh'
+  end
+end
