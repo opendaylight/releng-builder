@@ -10,7 +10,7 @@ yum update -q -y
 yum install -q -y java-1.7.0-openjdk-devel git perl-XML-XPath
 
 # The following are known requirements for our robotframework environments
-yum install -q -y python-{devel,importlib,requests,setuptools,virtualenv} \
+yum install -q -y python-{devel,importlib,requests,setuptools,virtualenv,docker-py} \
     robotframework{,-{httplibrary,requests,sshlibrary}}
 
 # To handle the prompt style that is expected all over the environment
