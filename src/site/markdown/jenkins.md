@@ -508,3 +508,82 @@ with any name other than \<project\>.yaml. The auto-update script will only
 search for files with the name \<project\>.yaml. The normal \<project\>.yaml
 file can then be left in tact with the "# REMOVE THIS LINE IF..." comment so
 it will be automatically updated.
+
+## Jenkins Sandbox
+[https://jenkins.opendaylight.org/sandbox](https://jenkins.opendaylight.org/sandbox/)
+
+The Sandbox instance's purpose is to allow projects to test their JJB setups
+before merging their code over to the Releng Master silo. It is configured
+similarly to the Master instance above however it cannot publish or vote in
+Gerrit.
+
+If your project requires access to the Sandbox please open a Help Desk ticket
+and provide us with your ODL ID.
+
+#### Notes regarding the Sandbox
+
+* Jobs automatically deleted Saturday @ 08:00 UTC (12:00 AM PST / 01:00 AM PDT)
+* Committers can login and configure Jenkins jobs directly here (unlike on the
+master silo)
+* Configuration mirrors the master silo when possible
+* Can NOT upload artifacts to Nexus
+* Can NOT vote on Gerrit
+
+#### Using the Sandbox
+
+Before starting using the sandbox make sure you have Jenkins Job Builder
+properly installed in your setup. Refer Jenkins Job Builder Installation
+section of this guide.
+
+If you do not already have access, open a helpdesk ticket to request access to
+the sandbox instance (Integration committers will have access by default).
+
+1. Clone a copy of the releng/builder repo from https://git.opendaylight.org/gerrit/#/admin/projects/releng/builder
+2. cp jenkins.ini.example jenkins.ini
+3. Edit the jenkins.ini file at the root of the repo
+    * Set your ODL username and password (make sure to uncomment the lines)
+    * Set the URL to https://jenkins.opendaylight.org/sandbox
+
+It is good practice to test that your JJB files are valid before pushing using
+the test command. If you see no Exceptions or Failures after running the
+following command your templates should be good for pushing.
+
+The last parameter is the name of the job you want to push to Jenkins so if
+your job template name is **{project}-csit-3node-periodic-{functionality}-{install}-{stream}**
+you will need to expand manually the variables {project}, {functionality},
+{install}, and {stream} to the exact job you want created in the Sandbox for
+example **openflowplugin-csit-1node-periodic-longevity-only-beryllium**. Please
+do not push ALL jobs to the Sandbox and only jobs you actually intend to test.
+
+**Note:** the below command examples are being executed from the root of the
+builder repo, and assume the "jenkins.ini" file is located there.
+
+    jenkins-jobs --conf jenkins.ini test jjb/ <job-name>
+    jenkins-jobs --conf jenkins.ini test jjb/ openflowplugin-csit-periodic-1node-cds-longevity-only-master
+
+Expect to see an XML file describing the build job in </maven2-moduleset> tags
+on STOUT. If you dont see any XML check that you have assigned values to the
+parameters between {} in the YAML files. For example {project}
+
+Once this is complete you can push your JJB jobs to the sandbox with the
+command:
+
+    jenkins-jobs --conf jenkins.ini update jjb/ <job-name>
+    jenkins-jobs --conf jenkins.ini update jjb/ openflowplugin-csit-periodic-1node-cds-longevity-only-beryllium
+
+**Important Note:** When pushing with jenkins-jobs command it will print out a
+message similar to the one below to inform you how many jobs JJB is pushing
+online. If the number is greater than 1 (or the number of jobs you passed to
+the command to push) then you are pushing too many jobs and should **ctrl+c**
+to cancel the upload.
+
+    INFO:jenkins_jobs.builder:Number of jobs generated:  1
+
+If using Docker:
+
+    # To test
+    docker run --rm -v ${PWD}:/jjb zxiiro/jjb-docker
+
+    # To upload jobs to the sandbox
+    # Please ensure that you include a configured jenkins.ini in your volume mount
+    docker run --rm -v ${PWD}:/jjb zxiiro/jjb-docker jenkins-jobs --conf jenkins.ini update . openflowplugin-csit-periodic-1node-cds-longevity-only-master
