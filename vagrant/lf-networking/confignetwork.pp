@@ -62,6 +62,14 @@ options timeout:2
 }
 
 # set routing
-file { '/etc/sysconfig/network-scripts/route-eth0':
-  content => "default via ${router} dev eth0"
+case $::osfamily {
+  'RedHat': {
+    file { '/etc/sysconfig/network-scripts/route-eth0':
+      content => "default via ${router} dev eth0"
+  }
+  'Ubuntu': {
+    file { '/etc/network/if-up.d/0000routing':
+      content => "ip route default via ${router} dev eth0"
+    }
+  }
 }
