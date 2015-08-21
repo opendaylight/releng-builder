@@ -32,8 +32,8 @@ tar -xvf robotframework-selenium2library-1.7.1.tar.gz > /dev/null 2>&1
 cd robotframework-selenium2library-1.7.1
 python setup.py install > /dev/null 2>&1
 
-## install netcat
-yum install -y -q nc
+## Install netcat & docker-py
+yum install -y -q nc python-docker-py
 
 # disable firewall rules
 service iptables stop
