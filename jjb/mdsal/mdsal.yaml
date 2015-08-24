@@ -331,7 +331,7 @@
 
     triggers:
         - reverse:
-            jobs: 'aaa-merge-{stream},controller-merge-{stream},odlparent-merge-{stream},yangtools-merge-{stream}'
+            jobs: 'odlparent-merge-{stream},yangtools-merge-{stream}'
             result: 'success'
 
     prebuilders:
@@ -351,7 +351,7 @@
 
     publishers:
         - email-notification:
-            email-prefix: '[mdsal] [aaa] [controller] [odlparent] [yangtools]'
+            email-prefix: '[mdsal] [odlparent] [yangtools]'
         - jacoco-report
 
 - job-template:
