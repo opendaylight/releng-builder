@@ -1,5 +1,5 @@
 - project:
-    name: lispflowmapping-csit-all
+    name: lispflowmapping-csit-all-stable-lithium
     jobs:
         - '{project}-csit-1node-{functionality}-{install}-{stream}'
         - '{project}-csit-verify-1node-{functionality}-{stream}'
@@ -12,8 +12,8 @@
 
     # Project branches
     stream:
-        - beryllium:
-            branch: 'master'
+        - stable-lithium:
+            branch: 'stable/lithium'
 
     install:
         - only:
@@ -25,7 +25,7 @@
     install-features: 'odl-lispflowmapping-all,odl-restconf,odl-mdsal-apidocs'
 
     # Robot custom options
-    robot-options: ''
+    robot-options: '-v RPC_URL_PREFIX:/restconf/operations/lfm-mapping-database'
 
     # Trigger jobs (upstream dependencies)
     trigger-jobs: 'odlparent-distribution-{stream},yangtools-distribution-{stream},controller-distribution-{stream},neutron-distribution-{stream},lispflowmapping-distribution-{stream}'
