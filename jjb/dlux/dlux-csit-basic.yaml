@@ -1,0 +1,42 @@
+- project:
+    name: integration-csit-basic
+    jobs:
+        - '{project}-csit-1node-cds-{functionality}-{install}-{stream}'
+        - '{project}-csit-3node-cds-{functionality}-{install}-{stream}'
+        - '{project}-csit-verify-{functionality}-{stream}'
+
+    # The project name
+    project: 'dlux'
+
+    # The functionality under test
+    functionality: 'basic'
+
+    # Project branches
+    stream:
+        - master:
+            branch: 'master'
+        - stable-lithium:
+            branch: 'stable/lithium'
+
+    install:
+        - only:
+            scope: 'only'
+        - all:
+            scope: 'all'
+
+    # Mininet configuration
+    mininet-image: 'rk-c-el6-mininet'
+    mininet-vms: 1
+
+    # Features to install
+    install-features: 'odl-restconf,odl-dlux-all,odl-l2switch-ui'
+
+    # Robot custom options
+    robot-options: ''
+
+    # Trigger jobs (upstream dependencies)
+    trigger-jobs: >
+        odlparent-distribution-{stream},
+        yangtools-distribution-{stream},
+        controller-distribution-{stream},
+        aaa-distribution-{stream}
