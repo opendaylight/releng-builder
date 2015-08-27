@@ -15,7 +15,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.ssh.username = 'root'
   
   # Fedora and EL systems default to requiring a tty for sudo
-  config.ssh.pty = true
+  if (ENV['RSPTY'] == 'default')
+    config.ssh.pty = false
+  else
+    config.ssh.pty = true
+  end
 
   # The rackspace provider by default tries to rsync
   # the local folder / vagrant box to /vagrant

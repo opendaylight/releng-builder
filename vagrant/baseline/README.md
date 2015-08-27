@@ -1,7 +1,12 @@
-rackspace-convert-base can be used to convert a RackSpace native base
-image into a Vagrant compatible one. The default image to convert is the
-'Fedora 20 (Heisenbug) (PVHVM)' image but this can be overridden just by
-setting the RSIMAGE environment variable before calling the vagrant up.
+basline can be used to prepare systems in the Rackspace (or potentially
+other environments) for following vagrant layers.
+
+While the base image that is looked for is
+'Fedora 20 (Heisenbug) (PVHVM)' which is no longer even offered, the
+variable is being left in place so to prompt selection of a proper base
+image to spin up against.
+
+This is controlled by the RSIMAGE environment variable
 
 ex:
 
@@ -24,3 +29,7 @@ CentOS 7 - Vagrant ready
 NOTE: The reseal operation _destroys_ the SSH keys that were used to
 bring the Vagrant system up effectively making the system unable to
 perform SSH based logins again. This is intentional.
+
+If you are bringing up an Ubuntu system you _must_ also set
+RSPTY='default' or the bring up will hang indefinitely during the OS
+upgrade phase.
