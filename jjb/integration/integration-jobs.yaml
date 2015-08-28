@@ -148,7 +148,7 @@
 
     parameters:
         - project-parameter:
-            project: 'integration'
+            project: 'integration/test'
         - integration-branch:
             branch: '{branch}'
         - integration-bundleurl:
@@ -180,13 +180,14 @@
 
     triggers:
         - integration-csit-gerrit-trigger-patch-submitted:
-            name: 'integration'
-            branch: '{branch}'
 
     builders:
         - integration-get-slave-addresses
         - inject:
             properties-file: 'slave_addresses.txt'
+        - integration-test-bundle-vars
+        - inject:
+            properties-file: 'bundle_vars.txt'
         - integration-deploy-controller-run-test
 
     publishers:
@@ -196,7 +197,7 @@
         - archive:
             artifacts: 'karaf.log'
         - email-notification:
-            email-prefix: '[integration]'
+            email-prefix: '[test]'
 
 - job-template:
     name: 'integration-distribution-verify-{stream}'
@@ -214,7 +215,7 @@
 
     parameters:
         - project-parameter:
-            project: 'integration'
+            project: 'integration/distribution'
         - gerrit-parameter:
             branch: '{branch}'
 
@@ -232,7 +233,6 @@
 
     triggers:
         - integration-distribution-gerrit-trigger-patch-submitted:
-            name: 'integration'
             branch: '{branch}'
 
     prebuilders:
@@ -249,7 +249,7 @@
 
     publishers:
         - email-notification:
-            email-prefix: '[integration]'
+            email-prefix: '[distribution]'
 
 - job-template:
     name: 'integration-distribution-merge-{stream}'
@@ -266,7 +266,7 @@
 
     parameters:
         - project-parameter:
-            project: 'integration'
+            project: 'integration/distribution'
 
     scm:
         - gerrit-trigger-scm:
@@ -282,7 +282,6 @@
 
     triggers:
         - integration-distribution-gerrit-trigger-patch-merged:
-            name: 'integration'
             branch: '{branch}'
 
     prebuilders:
@@ -298,7 +297,7 @@
 
     publishers:
         - email-notification:
-            email-prefix: '[integration]'
+            email-prefix: '[distribution]'
         - maven-deploy:
             id: ''
             unique-version: true
@@ -318,17 +317,11 @@
 
     parameters:
         - project-parameter:
-            project: 'integration'
+            project: 'integration/test'
         - integration-branch:
             branch: '{branch}'
         - integration-bundleurl:
             bundleurl: 'last'
-
-    scm:
-        - git-scm:
-            credentials-id: '{ssh-credentials}'
-            refspec: ''
-            branch: '{branch}'
 
     wrappers:
         - build-timeout
@@ -342,13 +335,16 @@
             result: 'success'
 
     builders:
+        - integration-test-bundle-vars
+        - inject:
+            properties-file: 'bundle_vars.txt'
         - integration-deploy-controller-offline
 
     publishers:
         - archive:
             artifacts: 'karaf.log'
         - email-notification:
-            email-prefix: '[integration]'
+            email-prefix: '[distribution]'
 
 - job-template:
     name: 'integration-distribution-test-{stream}'
@@ -378,7 +374,7 @@
 
     publishers:
         - email-notification:
-            email-prefix: '[integration]'
+            email-prefix: '[test]'
 
 - job-template:
     name: 'integration-patch-test-{stream}'
@@ -395,14 +391,14 @@
 
     parameters:
         - project-parameter:
-            project: 'integration'
+            project: 'integration/distribution'
         - integration-patch-git-url
 
     scm:
         - integration-gerrit-scm:
             credentials-id: '{ssh-credentials}'
             branch: '{branch}'
-        - integration-git-scm:
+        - integration-distribution-git-scm:
             credentials-id: '{ssh-credentials}'
             branch: '{branch}'
 
@@ -431,7 +427,7 @@
                 notbuilt: true
 
     prebuilders:
-        - integration-get-bundle-url
+        - integration-distribution-bundle-url
         - inject:
             properties-file: 'bundle.txt'
         - wipe-org-opendaylight-repo
@@ -463,4 +459,4 @@
 
     publishers:
         - email-notification:
-            email-prefix: '[integration]'
+            email-prefix: '[test]'
