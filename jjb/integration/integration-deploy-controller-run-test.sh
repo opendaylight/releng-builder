@@ -37,7 +37,7 @@ cat \${FEATURESCONF}
 
 echo "Configuring the log..."
 LOGCONF=/tmp/${BUNDLEFOLDER}/etc/org.ops4j.pax.logging.cfg
-sed -ie 's/log4j.appender.out.maxFileSize=1MB/log4j.appender.out.maxFileSize=20MB/g' \${LOGCONF}
+sed -ie 's/log4j.appender.out.maxFileSize=1MB/log4j.appender.out.maxFileSize=10GB/g' \${LOGCONF}
 cat \${LOGCONF}
 
 echo "Configure max memory..."
