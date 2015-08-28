@@ -49,10 +49,10 @@ for i in "${!CONTROLLERIPS[@]}"
 do
     echo "Configuring member-$((i+1)) with IP address ${CONTROLLERIPS[$i]}"
     ssh ${CONTROLLERIPS[$i]} "mkdir /tmp/${BUNDLEFOLDER}/configuration/initial"
-    scp  ${WORKSPACE}/test/tools/clustering/cluster-deployer/templates/multi-node-test/akka.conf.template ${CONTROLLERIPS[$i]}:${AKKACONF}
-    scp  ${WORKSPACE}/test/tools/clustering/cluster-deployer/templates/multi-node-test/modules.conf.template ${CONTROLLERIPS[$i]}:${MODULESCONF}
-    scp  ${WORKSPACE}/test/tools/clustering/cluster-deployer/templates/multi-node-test/module-shards.conf.template ${CONTROLLERIPS[$i]}:${MODULESHARDSCONF}
-    scp  ${WORKSPACE}/test/tools/clustering/cluster-deployer/templates/multi-node-test/jolokia.xml.template ${CONTROLLERIPS[$i]}:${JOLOKIACONF}
+    scp  ${WORKSPACE}/tools/clustering/cluster-deployer/templates/multi-node-test/akka.conf.template ${CONTROLLERIPS[$i]}:${AKKACONF}
+    scp  ${WORKSPACE}/tools/clustering/cluster-deployer/templates/multi-node-test/modules.conf.template ${CONTROLLERIPS[$i]}:${MODULESCONF}
+    scp  ${WORKSPACE}/tools/clustering/cluster-deployer/templates/multi-node-test/module-shards.conf.template ${CONTROLLERIPS[$i]}:${MODULESHARDSCONF}
+    scp  ${WORKSPACE}/tools/clustering/cluster-deployer/templates/multi-node-test/jolokia.xml.template ${CONTROLLERIPS[$i]}:${JOLOKIACONF}
     scp  ${WORKSPACE}/configuration-script.sh    ${CONTROLLERIPS[$i]}:/tmp/
     ssh ${CONTROLLERIPS[$i]} "bash /tmp/configuration-script.sh $((i+1)) ${CONTROLLERIPS[$i]}"
 done
