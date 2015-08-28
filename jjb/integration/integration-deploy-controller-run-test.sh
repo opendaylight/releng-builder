@@ -1,4 +1,3 @@
-export NEXUSURL_PREFIX=${ODLNEXUSPROXY:-https://nexus.opendaylight.org}
 CONTROLLERMEM="2048m"
 
 if [ ${CONTROLLERSCOPE} == 'all' ]; then
@@ -8,37 +7,12 @@ else
     ACTUALFEATURES="${CONTROLLERFEATURES}"
 fi
 
-if [ ${BUNDLEURL} == 'last' ]; then
-    NEXUSPATH="${NEXUSURL_PREFIX}/content/repositories/opendaylight.snapshot/org/opendaylight/integration/distribution-karaf"
-    # Extract the BUNDLEVERSION from the pom.xml
-    export BUNDLEVERSION=`xpath pom.xml '/project/version/text()' 2> /dev/null`
-    echo "Bundle version is ${BUNDLEVERSION}"
-    # Acquire the timestamp information from maven-metadata.xml
-    wget ${NEXUSPATH}/${BUNDLEVERSION}/maven-metadata.xml
-    TIMESTAMP=`xpath maven-metadata.xml "//snapshotVersion[extension='zip'][1]/value/text()" 2>/dev/null`
-    echo "Nexus timestamp is ${TIMESTAMP}"
-    export BUNDLEFOLDER="distribution-karaf-${BUNDLEVERSION}"
-    export BUNDLE="distribution-karaf-${TIMESTAMP}.zip"
-    export ACTUALBUNDLEURL="${NEXUSPATH}/${BUNDLEVERSION}/${BUNDLE}"
-else
-    export ACTUALBUNDLEURL="${BUNDLEURL}"
-    export BUNDLE="${BUNDLEURL##*/}"
-    export BUNDLEVERSION="$(basename $(dirname $BUNDLEURL))"
-    export BUNDLEFOLDER="distribution-karaf-${BUNDLEVERSION}"
-fi
-
-echo "Distribution bundle URL is ${ACTUALBUNDLEURL}"
-echo "Distribution bundle is ${BUNDLE}"
-echo "Distribution bundle version is ${BUNDLEVERSION}"
-echo "Distribution folder is ${BUNDLEFOLDER}"
-echo "Nexus prefix is ${NEXUSURL_PREFIX}"
-
-if [ -f ${WORKSPACE}/test/csit/scriptplans/${TESTPLAN} ]; then
+if [ -f ${WORKSPACE}/csit/scriptplans/${TESTPLAN} ]; then
     echo "scriptplan exists!!!"
     echo "Changing the scriptplan path..."
-    cat ${WORKSPACE}/test/csit/scriptplans/${TESTPLAN} | sed "s:integration:${WORKSPACE}:" > scriptplan.txt
+    cat ${WORKSPACE}/csit/scriptplans/${TESTPLAN} | sed "s:integration:${WORKSPACE}:" > scriptplan.txt
     cat scriptplan.txt
-    for line in $( egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' scriptplan.txt ); do
+    for line in `egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' scriptplan.txt`; do
         echo "Executing ${line}..."
         source ${line}
     done
@@ -106,10 +80,10 @@ scp ${WORKSPACE}/controller-script.sh ${CONTROLLER0}:/tmp
 ssh ${CONTROLLER0} 'bash /tmp/controller-script.sh'
 
 echo "Changing the testplan path..."
-cat ${WORKSPACE}/test/csit/testplans/${TESTPLAN} | sed "s:integration:${WORKSPACE}:" > testplan.txt
+cat ${WORKSPACE}/csit/testplans/${TESTPLAN} | sed "s:integration:${WORKSPACE}:" > testplan.txt
 cat testplan.txt
 
-SUITES=$( egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' testplan.txt | tr '\012' ' ' )
+SUITES=`egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' testplan.txt | tr '\012' ' '`
 
 echo "Starting Robot test suites ${SUITES} ..."
 pybot -N ${TESTPLAN} -c critical -e exclude -v BUNDLEFOLDER:${BUNDLEFOLDER} -v WORKSPACE:/tmp \

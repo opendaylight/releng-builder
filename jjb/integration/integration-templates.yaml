@@ -31,7 +31,7 @@
 
     parameters:
         - project-parameter:
-            project: 'integration'
+            project: 'integration/test'
         - integration-branch:
             branch: '{branch}'
         - integration-bundleurl:
@@ -63,14 +63,15 @@
 
     triggers:
         - integration-test-gerrit-trigger-patch-submitted:
-            name: 'integration'
-            branch: '{branch}'
             project: '{project}'
 
     builders:
         - integration-get-slave-addresses
         - inject:
             properties-file: 'slave_addresses.txt'
+        - integration-test-bundle-vars
+        - inject:
+            properties-file: 'bundle_vars.txt'
         - integration-deploy-controller-run-test
 
     publishers:
@@ -96,7 +97,7 @@
 
     parameters:
         - project-parameter:
-            project: 'integration'
+            project: 'integration/test'
         - integration-branch:
             branch: '{branch}'
         - integration-bundleurl:
@@ -110,7 +111,7 @@
         - integration-test-plan:
             test-plan: '{project}-{functionality}.txt'
         - integration-patch-refspec:
-            branch: '{branch}'
+            branch: 'master'
 
     scm:
         - integration-patch-scm:
@@ -136,6 +137,9 @@
         - integration-get-slave-addresses
         - inject:
             properties-file: 'slave_addresses.txt'
+        - integration-test-bundle-vars
+        - inject:
+            properties-file: 'bundle_vars.txt'
         - integration-deploy-controller-run-test
 
     publishers:
@@ -188,7 +192,7 @@
 
     parameters:
         - project-parameter:
-            project: 'integration'
+            project: 'integration/test'
         - integration-branch:
             branch: '{branch}'
         - integration-bundleurl:
@@ -202,7 +206,7 @@
         - integration-test-plan:
             test-plan: '{project}-{functionality}.txt'
         - integration-patch-refspec:
-            branch: '{branch}'
+            branch: 'master'
 
     scm:
         - integration-patch-scm:
@@ -228,6 +232,9 @@
         - integration-get-slave-addresses
         - inject:
             properties-file: 'slave_addresses.txt'
+        - integration-test-bundle-vars
+        - inject:
+            properties-file: 'bundle_vars.txt'
         - integration-deploy-controller-run-test
 
     publishers:
@@ -281,7 +288,7 @@
 
     parameters:
         - project-parameter:
-            project: 'integration'
+            project: 'integration/test'
         - integration-branch:
             branch: '{branch}'
         - integration-bundleurl:
@@ -295,7 +302,7 @@
         - integration-test-plan:
             test-plan: '{project}-{functionality}.txt'
         - integration-patch-refspec:
-            branch: '{branch}'
+            branch: 'master'
 
     scm:
         - integration-patch-scm:
@@ -318,6 +325,9 @@
         - integration-get-slave-addresses
         - inject:
             properties-file: 'slave_addresses.txt'
+        - integration-test-bundle-vars
+        - inject:
+            properties-file: 'bundle_vars.txt'
         - integration-deploy-controller-run-test
 
     publishers:
@@ -385,7 +395,7 @@
         - integration-test-plan:
             test-plan: '{project}-{functionality}.txt'
         - integration-patch-refspec:
-            branch: '{branch}'
+            branch: 'master'
 
     scm:
         - integration-patch-scm:
@@ -411,7 +421,7 @@
         - integration-get-slave-addresses
         - inject:
             properties-file: 'slave_addresses.txt'
-        - integration-get-bundle-vars
+        - integration-test-bundle-vars
         - inject:
             properties-file: 'bundle_vars.txt'
         - integration-deploy-controller
@@ -469,7 +479,7 @@
 
     parameters:
         - project-parameter:
-            project: 'integration'
+            project: 'integration/test'
         - integration-branch:
             branch: '{branch}'
         - integration-bundleurl:
@@ -501,14 +511,15 @@
 
     triggers:
         - integration-test-gerrit-trigger-patch-submitted:
-            name: 'integration'
-            branch: '{branch}'
             project: '{project}'
 
     builders:
         - integration-get-slave-addresses
         - inject:
             properties-file: 'slave_addresses.txt'
+        - integration-test-bundle-vars
+        - inject:
+            properties-file: 'bundle_vars.txt'
         - integration-deploy-controller-run-test
 
     publishers:
@@ -534,7 +545,7 @@
 
     parameters:
         - project-parameter:
-            project: 'integration'
+            project: 'integration/test'
         - integration-branch:
             branch: '{branch}'
         - integration-bundleurl:
@@ -548,7 +559,7 @@
         - integration-test-plan:
             test-plan: '{project}-{functionality}.txt'
         - integration-patch-refspec:
-            branch: '{branch}'
+            branch: 'master'
 
     scm:
         - integration-patch-scm:
@@ -574,6 +585,9 @@
         - integration-get-slave-addresses
         - inject:
             properties-file: 'slave_addresses.txt'
+        - integration-test-bundle-vars
+        - inject:
+            properties-file: 'bundle_vars.txt'
         - integration-deploy-controller-run-test
 
     publishers:
@@ -624,7 +638,7 @@
 
     parameters:
         - project-parameter:
-            project: 'integration'
+            project: 'integration/test'
         - integration-branch:
             branch: '{branch}'
         - integration-bundleurl:
@@ -638,7 +652,7 @@
         - integration-test-plan:
             test-plan: '{project}-{functionality}.txt'
         - integration-patch-refspec:
-            branch: '{branch}'
+            branch: 'master'
 
     scm:
         - integration-patch-scm:
@@ -661,6 +675,9 @@
         - integration-get-slave-addresses
         - inject:
             properties-file: 'slave_addresses.txt'
+        - integration-test-bundle-vars
+        - inject:
+            properties-file: 'bundle_vars.txt'
         - integration-deploy-controller-run-test
 
     publishers:
@@ -711,7 +728,7 @@
 
     parameters:
         - project-parameter:
-            project: 'integration'
+            project: 'integration/test'
         - integration-branch:
             branch: '{branch}'
         - integration-bundleurl:
@@ -743,15 +760,13 @@
 
     triggers:
         - integration-test-gerrit-trigger-patch-submitted:
-            name: 'integration'
-            branch: '{branch}'
             project: '{project}'
 
     builders:
         - integration-get-slave-addresses
         - inject:
             properties-file: 'slave_addresses.txt'
-        - integration-get-bundle-vars
+        - integration-test-bundle-vars
         - inject:
             properties-file: 'bundle_vars.txt'
         - integration-deploy-controller
@@ -780,7 +795,7 @@
 
     parameters:
         - project-parameter:
-            project: 'integration'
+            project: 'integration/test'
         - integration-branch:
             branch: '{branch}'
         - integration-bundleurl:
@@ -794,7 +809,7 @@
         - integration-test-plan:
             test-plan: '{project}-{functionality}.txt'
         - integration-patch-refspec:
-            branch: '{branch}'
+            branch: 'master'
 
     scm:
         - integration-patch-scm:
@@ -820,7 +835,7 @@
         - integration-get-slave-addresses
         - inject:
             properties-file: 'slave_addresses.txt'
-        - integration-get-bundle-vars
+        - integration-test-bundle-vars
         - inject:
             properties-file: 'bundle_vars.txt'
         - integration-deploy-controller
@@ -875,7 +890,7 @@
 
     parameters:
         - project-parameter:
-            project: 'integration'
+            project: 'integration/test'
         - integration-branch:
             branch: '{branch}'
         - integration-bundleurl:
@@ -889,7 +904,7 @@
         - integration-test-plan:
             test-plan: '{project}-{functionality}.txt'
         - integration-patch-refspec:
-            branch: '{branch}'
+            branch: 'master'
 
     scm:
         - integration-patch-scm:
@@ -912,7 +927,7 @@
         - integration-get-slave-addresses
         - inject:
             properties-file: 'slave_addresses.txt'
-        - integration-get-bundle-vars
+        - integration-test-bundle-vars
         - inject:
             properties-file: 'bundle_vars.txt'
         - integration-deploy-controller
