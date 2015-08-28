@@ -4,7 +4,7 @@
         - string:
             name: BRANCH
             default: '{branch}'
-            description: 'GIT branch'
+            description: 'GIT branch of integration/distribution repository'
 
 - parameter:
     name: integration-bundleurl
@@ -60,7 +60,7 @@
         - string:
             name: PATCHREFSPEC
             default: '{branch}'
-            description: 'Integration Patch Refspec'
+            description: 'Patch Refspec to integration/test change under review'
 
 - scm:
     name: integration-gerrit-scm
@@ -74,18 +74,6 @@
                 - 'origin/{branch}'
             skip-tag: true
             choosing-strategy: 'gerrit'
-
-- scm:
-    name: integration-git-scm
-    scm:
-        - git:
-            credentials-id: '{credentials-id}'
-            basedir: 'integration'
-            url: '$GIT_BASE'
-            refspec: ''
-            branches:
-                - 'origin/{branch}'
-            skip-tag: true
 
 - scm:
     name: integration-patch-scm
@@ -116,19 +104,13 @@
                     comment-contains-value: 'reverify'
             projects:
               - project-compare-type: 'ANT'
-                project-pattern: '{name}'
+                project-pattern: 'integration/distribution'
                 branches:
                   - branch-compare-type: 'ANT'
                     branch-pattern: '**/{branch}'
                 file-paths:
                   - compare-type: 'ANT'
-                    pattern: 'pom.xml'
-                  - compare-type: 'ANT'
-                    pattern: 'distributions/**'
-                  - compare-type: 'ANT'
-                    pattern: 'features/**'
-                  - compare-type: 'ANT'
-                    pattern: 'feature-selector/**'
+                    pattern: '**'
 
 - trigger:
     name: integration-distribution-gerrit-trigger-patch-merged
@@ -141,19 +123,13 @@
                     comment-contains-value: 'remerge'
             projects:
               - project-compare-type: 'ANT'
-                project-pattern: '{name}'
+                project-pattern: 'integration/distribution'
                 branches:
                   - branch-compare-type: 'ANT'
                     branch-pattern: '**/{branch}'
                 file-paths:
                   - compare-type: 'ANT'
-                    pattern: 'pom.xml'
-                  - compare-type: 'ANT'
-                    pattern: 'distributions/**'
-                  - compare-type: 'ANT'
-                    pattern: 'features/**'
-                  - compare-type: 'ANT'
-                    pattern: 'feature-selector/**'
+                    pattern: '**'
 
 - trigger:
     name: integration-test-gerrit-trigger-patch-submitted
@@ -172,13 +148,13 @@
                     comment-contains-value: 'reverify'
             projects:
               - project-compare-type: 'ANT'
-                project-pattern: '{name}'
+                project-pattern: 'integration/test'
                 branches:
                   - branch-compare-type: 'ANT'
-                    branch-pattern: '**/{branch}'
+                    branch-pattern: '**/master'
                 file-paths:
                   - compare-type: 'ANT'
-                    pattern: 'test/csit/suites/{project}/**'
+                    pattern: 'csit/suites/{project}/**'
 
 - trigger:
     name: integration-csit-gerrit-trigger-patch-submitted
@@ -197,13 +173,13 @@
                     comment-contains-value: 'reverify'
             projects:
               - project-compare-type: 'ANT'
-                project-pattern: '{name}'
+                project-pattern: 'integration/test'
                 branches:
                   - branch-compare-type: 'ANT'
-                    branch-pattern: '**/{branch}'
+                    branch-pattern: '**/master'
                 file-paths:
                   - compare-type: 'ANT'
-                    pattern: 'test/csit/**'
+                    pattern: 'csit/**'
 
 - trigger:
     name: integration-csit-gerrit-trigger-patch-merged
@@ -216,13 +192,13 @@
                     comment-contains-value: 'remerge'
             projects:
               - project-compare-type: 'ANT'
-                project-pattern: '{name}'
+                project-pattern: 'integration/test'
                 branches:
                   - branch-compare-type: 'ANT'
-                    branch-pattern: '**/{branch}'
+                    branch-pattern: '**/master'
                 file-paths:
                   - compare-type: 'ANT'
-                    pattern: 'test/csit/**'
+                    pattern: 'csit/**'
 
 - wrapper:
     name: integration-jclouds-controller-mininet
@@ -248,7 +224,7 @@
         - shell:
             !include-raw integration-get-slave-addresses.sh
 - builder:
-    name: integration-get-bundle-vars
+    name: integration-test-bundle-vars
     builders:
         - shell:
             !include-raw integration-test-bundle-vars.sh
@@ -263,7 +239,6 @@
     builders:
         - shell:
             !include-raw integration-deploy-controller.sh
-
 
 - builder:
     name: integration-configure-clustering
@@ -284,7 +259,7 @@
             !include-raw integration-deploy-controller-offline.sh
 
 - builder:
-    name: integration-get-bundle-url
+    name: integration-distribution-bundle-url
     builders:
         - shell:
             !include-raw integration-distribution-bundle-url.sh

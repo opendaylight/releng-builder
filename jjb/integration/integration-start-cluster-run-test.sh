@@ -46,7 +46,7 @@ echo "Cool down for 1 min :)..."
 sleep 60
 
 echo "Changing the testplan path..."
-cat ${WORKSPACE}/test/csit/testplans/${TESTPLAN} | sed "s:integration:${WORKSPACE}:" > testplan.txt
+cat ${WORKSPACE}/csit/testplans/${TESTPLAN} | sed "s:integration:${WORKSPACE}:" > testplan.txt
 cat testplan.txt
 
 SUITES=$( egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' testplan.txt | tr '\012' ' ' )

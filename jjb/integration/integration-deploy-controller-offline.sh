@@ -1,31 +1,5 @@
-NEXUSURL_PREFIX=${ODLNEXUSPROXY:-https://nexus.opendaylight.org}
 CONTROLLERMEM="3072m"
 ACTUALFEATURES="odl-integration-all"
-
-if [ ${BUNDLEURL} == 'last' ]; then
-    NEXUSPATH="${NEXUSURL_PREFIX}/content/repositories/opendaylight.snapshot/org/opendaylight/integration/distribution-karaf"
-    # Extract the BUNDLEVERSION from the pom.xml
-    BUNDLEVERSION=`xpath pom.xml '/project/version/text()' 2> /dev/null`
-    echo "Bundle version is ${BUNDLEVERSION}"
-    # Acquire the timestamp information from maven-metadata.xml
-    wget ${NEXUSPATH}/${BUNDLEVERSION}/maven-metadata.xml
-    TIMESTAMP=`xpath maven-metadata.xml "//snapshotVersion[extension='zip'][1]/value/text()" 2>/dev/null`
-    echo "Nexus timestamp is ${TIMESTAMP}"
-    BUNDLEFOLDER="distribution-karaf-${BUNDLEVERSION}"
-    BUNDLE="distribution-karaf-${TIMESTAMP}.zip"
-    ACTUALBUNDLEURL="${NEXUSPATH}/${BUNDLEVERSION}/${BUNDLE}"
-else
-    ACTUALBUNDLEURL="${BUNDLEURL}"
-    BUNDLE="${BUNDLEURL##*/}"
-    BUNDLEVERSION="$(basename $(dirname $BUNDLEURL))"
-    BUNDLEFOLDER="distribution-karaf-${BUNDLEVERSION}"
-fi
-
-echo "Distribution bundle URL is ${ACTUALBUNDLEURL}"
-echo "Distribution bundle is ${BUNDLE}"
-echo "Distribution bundle version is ${BUNDLEVERSION}"
-echo "Distribution folder is ${BUNDLEFOLDER}"
-echo "Nexus prefix is ${NEXUSURL_PREFIX}"
 
 echo "Downloading the distribution..."
 wget --no-verbose  ${ACTUALBUNDLEURL}
