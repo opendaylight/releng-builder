@@ -194,8 +194,6 @@
         - integration-robot:
             unstable-if: 0.0
             pass-if: 0.0
-        - archive:
-            artifacts: 'karaf.log'
         - email-notification:
             email-prefix: '[test]'
 
@@ -341,8 +339,6 @@
         - integration-deploy-controller-offline
 
     publishers:
-        - archive:
-            artifacts: 'karaf.log'
         - email-notification:
             email-prefix: '[distribution]'
 
