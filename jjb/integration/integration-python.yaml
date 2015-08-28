@@ -11,7 +11,7 @@
         - stable-lithium:
             branch: 'stable/lithium'
 
-    project: 'integration'
+    project: 'integration/test'
     jdk: 'openjdk7'
 
 - job-template:
@@ -69,13 +69,13 @@
                     comment-contains-value: 'reverify'
             projects:
               - project-compare-type: 'ANT'
-                project-pattern: 'integration'
+                project-pattern: '{project}'
                 branches:
                   - branch-compare-type: 'ANT'
                     branch-pattern: '**/{branch}'
                 file-paths:
                     - compare-type: ANT
-                      pattern: test/**
+                      pattern: '**'
 
     builders:
         - shell: |
@@ -87,5 +87,5 @@
             tox
 
     publishers:
-        - email-notification:
-            email-prefix: '[integration]'
+        - integration-robot:
+            email-prefix: '[test]'
