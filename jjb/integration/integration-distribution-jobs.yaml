@@ -1,0 +1,126 @@
+
+- project:
+    name: integration-distribution-jobs
+    jobs:
+        - 'integration-distribution-verify-{stream}'
+        - 'integration-distribution-merge-{stream}'
+
+    stream:
+        - beryllium:
+            branch: 'master'
+
+        - stable-lithium:
+            branch: 'stable/lithium'
+
+        - stable-helium:
+            branch: 'stable/helium'
+
+    jdk: 'openjdk7'
+
+
+- job-template:
+    name: 'integration-distribution-verify-{stream}'
+
+    project-type: maven
+    node: dynamic_verify
+    concurrent: true
+    jdk: '{jdk}'
+
+    logrotate:
+        daysToKeep: '{build-days-to-keep}'
+        numToKeep: '{build-num-to-keep}'
+        artifactDaysToKeep: '{build-artifact-days-to-keep}'
+        artifactNumToKeep: '{build-artifact-num-to-keep}'
+
+    parameters:
+        - project-parameter:
+            project: 'integration'
+        - gerrit-parameter:
+            branch: '{branch}'
+
+    scm:
+        - gerrit-trigger-scm:
+            credentials-id: '{ssh-credentials}'
+            refspec: '$GERRIT_REFSPEC'
+            choosing-strategy: 'gerrit'
+
+    wrappers:
+        - build-timeout
+        - ssh-agent-credentials:
+            users:
+                - '{ssh-credentials}'
+
+    triggers:
+        - integration-distribution-gerrit-trigger-patch-submitted:
+            name: 'integration'
+            branch: '{branch}'
+
+    prebuilders:
+        - wipe-org-opendaylight-repo
+
+    maven:
+        maven-name: '{mvn33}'
+        root-pom: 'pom.xml'
+        goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r source:jar javadoc:jar'
+        maven-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
+        settings: '{integration-settings}'
+        global-settings: '{odl-global-settings}'
+        ignore-upstream-changes: true
+
+    publishers:
+        - email-notification:
+            email-prefix: '[integration]'
+
+- job-template:
+    name: 'integration-distribution-merge-{stream}'
+
+    project-type: maven
+    node: dynamic_merge
+    jdk: '{jdk}'
+
+    logrotate:
+        daysToKeep: '{build-days-to-keep}'
+        numToKeep: '{build-num-to-keep}'
+        artifactDaysToKeep: '{build-artifact-days-to-keep}'
+        artifactNumToKeep: '{build-artifact-num-to-keep}'
+
+    parameters:
+        - project-parameter:
+            project: 'integration'
+
+    scm:
+        - gerrit-trigger-scm:
+            credentials-id: '{ssh-credentials}'
+            refspec: ''
+            choosing-strategy: 'default'
+
+    wrappers:
+        - build-timeout
+        - ssh-agent-credentials:
+            users:
+                - '{ssh-credentials}'
+
+    triggers:
+        - integration-distribution-gerrit-trigger-patch-merged:
+            name: 'integration'
+            branch: '{branch}'
+
+    prebuilders:
+        - wipe-org-opendaylight-repo
+
+    maven:
+        maven-name: '{mvn33}'
+        root-pom: 'pom.xml'
+        goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  source:jar javadoc:jar'
+        maven-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
+        settings: '{integration-settings}'
+        global-settings: '{odl-global-settings}'
+
+    publishers:
+        - email-notification:
+            email-prefix: '[integration]'
+        - maven-deploy:
+            id: ''
+            unique-version: true
+            deploy-unstable: false
+
