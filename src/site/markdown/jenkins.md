@@ -561,7 +561,7 @@ builder repo, and assume the "jenkins.ini" file is located there.
     jenkins-jobs --conf jenkins.ini test jjb/ <job-name>
     jenkins-jobs --conf jenkins.ini test jjb/ openflowplugin-csit-periodic-1node-cds-longevity-only-master
 
-Expect to see an XML file describing the build job in </maven2-moduleset> tags
+Expect to see an XML file describing the build job in \</maven2-moduleset\> tags
 on STOUT. If you dont see any XML check that you have assigned values to the
 parameters between {} in the YAML files. For example {project}
 
