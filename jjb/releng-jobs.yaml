@@ -301,7 +301,7 @@
     maven:
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
-        goals: 'site:deploy -Dstream=master'
+        goals: 'site:site site:deploy -Dstream=master'
         maven-opts: '-Xmx1024m'
         settings: '{autorelease-settings}'
         global-settings: '{odl-global-settings}'
