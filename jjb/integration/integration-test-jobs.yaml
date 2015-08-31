@@ -132,6 +132,10 @@
         aaa-distribution-{stream},
         integration-distribution-merge-{stream}
 
+# Template: integration-csit-verify-1node-{stream}
+# Goal: Verify changes in csit folder not covered by projects suite verify jobs (e.g. library or variables)
+# Operation: This job template performs a base openflow test every time there is a change in the csit folder.
+
 - job-template:
     name: 'integration-csit-verify-1node-{stream}'
 
@@ -196,6 +200,10 @@
         - email-notification:
             email-prefix: '[integration]'
 
+# Template: integration-distribution-offline-{stream}
+# Goal: Verify distribution can start with no internet connection
+# Operation: This daily job template deployes the controller removing any external repository definition
+
 - job-template:
     name: 'integration-distribution-offline-{stream}'
 
@@ -242,6 +250,10 @@
         - email-notification:
             email-prefix: '[integration]'
 
+# Template: integration-distribution-test-{stream}
+# Goal: Verify a distribution through all system test available
+# Operation: This daily job template takes a distribution and passes all available system test
+
 - job-template:
     name: 'integration-distribution-test-{stream}'
 
@@ -272,6 +284,11 @@
         - email-notification:
             email-prefix: '[integration]'
 
+# Template: integration-patch-test-{stream}
+# Goal: Build a patch and run all available system test on a distribution containing the change
+# Operation: This job teamplate builds a patch, creates a distribution containing the patch, and
+# triggers the distribution test when test-integration is used in gerrit comments
+
 - job-template:
     name: 'integration-patch-test-{stream}'
 
@@ -287,14 +304,13 @@
 
     parameters:
         - project-parameter:
-            project: 'integration'
-        - integration-patch-git-url
+            project: '$GERRIT_PROJECT'
 
     scm:
         - integration-gerrit-scm:
             credentials-id: '{ssh-credentials}'
             branch: '{branch}'
-        - integration-git-scm:
+        - integration-distribution-scm:
             credentials-id: '{ssh-credentials}'
             branch: '{branch}'
 
@@ -338,7 +354,7 @@
 
     maven:
         maven-name: '{mvn33}'
-        root-pom: 'integration/pom.xml'
+        root-pom: 'distribution/pom.xml'
         goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r source:jar javadoc:jar'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
         settings: '{integration-settings}'
