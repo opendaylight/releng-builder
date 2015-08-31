@@ -18,6 +18,9 @@ rm -rf /etc/Pegasus/*.cnf /etc/Pegasus/*.crt /etc/Pegasus/*.csr /etc/Pegasus/*.p
 
 rm -rf ~/.viminfo /etc/ssh/ssh*key*
 
+# kill any cloud-init related bits
+rm -rf /var/lib/cloud/*
+
 echo "********************************************"
 echo "*   PLEASE SNAPSHOT IMAGE AT THIS TIME     *"
 echo "********************************************"
