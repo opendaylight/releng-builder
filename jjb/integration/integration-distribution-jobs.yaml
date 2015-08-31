@@ -34,7 +34,7 @@
 
     parameters:
         - project-parameter:
-            project: 'integration'
+            project: 'integration/distribution'
         - gerrit-parameter:
             branch: '{branch}'
 
@@ -51,8 +51,8 @@
                 - '{ssh-credentials}'
 
     triggers:
-        - integration-distribution-gerrit-trigger-patch-submitted:
-            name: 'integration'
+        - gerrit-trigger-patch-submitted:
+            name: 'integration/distribution'
             branch: '{branch}'
 
     prebuilders:
@@ -69,7 +69,7 @@
 
     publishers:
         - email-notification:
-            email-prefix: '[integration]'
+            email-prefix: '[distribution]'
 
 - job-template:
     name: 'integration-distribution-merge-{stream}'
@@ -86,7 +86,7 @@
 
     parameters:
         - project-parameter:
-            project: 'integration'
+            project: 'integration/distribution'
 
     scm:
         - gerrit-trigger-scm:
@@ -101,8 +101,8 @@
                 - '{ssh-credentials}'
 
     triggers:
-        - integration-distribution-gerrit-trigger-patch-merged:
-            name: 'integration'
+        - gerrit-trigger-patch-merged:
+            name: 'integration/distribution'
             branch: '{branch}'
 
     prebuilders:
@@ -118,7 +118,7 @@
 
     publishers:
         - email-notification:
-            email-prefix: '[integration]'
+            email-prefix: '[distribution]'
         - maven-deploy:
             id: ''
             unique-version: true
