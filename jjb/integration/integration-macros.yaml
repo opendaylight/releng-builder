@@ -47,12 +47,12 @@
             description: 'Robot command options'
 
 - parameter:
-    name: integration-patch-git-url
+    name: integration-distribution-git-url
     parameters:
         - string:
-            name: PATCHGITURL
-            default: 'ssh://jenkins-$SILO@git.opendaylight.org:29418/$GERRIT_PROJECT'
-            description: 'Patch GIT URL (do not modify)'
+            name: DISTROGITURL
+            default: 'ssh://jenkins-$SILO@git.opendaylight.org:29418/integration/distribution'
+            description: 'Distribution GIT URL (do not modify)'
 
 - parameter:
     name: integration-patch-refspec
@@ -62,12 +62,16 @@
             default: '{branch}'
             description: 'Integration Patch Refspec'
 
+# Macro: integration-gerrit-scm
+# Operation: this macro downloads a gerrit from any project and uses the project as basedir
+# Used by: integration-patch-test-{stream} job template
+
 - scm:
     name: integration-gerrit-scm
     scm:
         - git:
             credentials-id: '{credentials-id}'
-            url: '$PATCHGITURL'
+            url: '$GIT_BASE'
             basedir: '$GERRIT_PROJECT'
             refspec: '$GERRIT_REFSPEC'
             branches:
@@ -75,17 +79,25 @@
             skip-tag: true
             choosing-strategy: 'gerrit'
 
+# Macro: integration-distribution-scm
+# Operation: this macro downloads the integration/distribution repo and uses distribution as basedir
+# Used by: {project}-csit-* and integration-patch-test-{stream} job templates
+
 - scm:
-    name: integration-git-scm
+    name: integration-distribution-scm
     scm:
         - git:
             credentials-id: '{credentials-id}'
-            basedir: 'integration'
-            url: '$GIT_BASE'
+            basedir: 'distribution'
+            url: '$DISTROGITURL'
             refspec: ''
             branches:
                 - 'origin/{branch}'
             skip-tag: true
+
+# Macro: integration-patch-scm
+# Operation: this macro downloads a test patch that can be used to debug in the sandbox
+# Used by: {project}-csit-* job templates
 
 - scm:
     name: integration-patch-scm
@@ -98,6 +110,10 @@
                 - 'origin/{branch}'
             skip-tag: true
             choosing-strategy: 'gerrit'
+
+# Macro: integration-test-gerrit-trigger-patch-submitted
+# Operation: this macro sets a trigger for patch submit on test/csit/suites/{project}/**
+# Used by: {project}-verify-csit-* job templates
 
 - trigger:
     name: integration-test-gerrit-trigger-patch-submitted
@@ -124,6 +140,10 @@
                   - compare-type: 'ANT'
                     pattern: 'test/csit/suites/{project}/**'
 
+# Macro: integration-csit-gerrit-trigger-patch-submitted
+# Operation: this macro sets a trigger for patch submit on test/csit/**
+# Used by: integration-verify-csit-1node-{stream} job template
+
 - trigger:
     name: integration-csit-gerrit-trigger-patch-submitted
     triggers:
@@ -149,6 +169,10 @@
                   - compare-type: 'ANT'
                     pattern: 'test/csit/**'
 
+# Macro: integration-csit-gerrit-trigger-patch-merged
+# Operation: this macro sets a trigger for patch merged on test/csit/**
+# Used by: not used yet
+
 - trigger:
     name: integration-csit-gerrit-trigger-patch-merged
     triggers:
@@ -168,6 +192,10 @@
                   - compare-type: 'ANT'
                     pattern: 'test/csit/**'
 
+# Macro: integration-jclouds-controller-mininet
+# Operation: this macro will spin the controller and mininet vms
+# Used by: {project}-csit-* job templates
+
 - wrapper:
     name: integration-jclouds-controller-mininet
     wrappers:
@@ -186,28 +214,49 @@
 # Shell Scripts #
 #################
 
+# Macro: integration-get-slave-addresses
+# Operation: this macro gets the IP addresses of the dynamic vms
+# Used by: {project}-csit-* job templates
+
 - builder:
     name: integration-get-slave-addresses
     builders:
         - shell:
             !include-raw include-raw-integration-get-slave-addresses.sh
+
+# Macro: integration-get-bundle-vars
+# Operation: this macro gets all bundle related variables
+# Used by: {project}-csit-3node-* job templates
+
 - builder:
     name: integration-get-bundle-vars
     builders:
         - shell:
             !include-raw include-raw-integration-get-bundle-vars.sh
 
+# Macro: integration-deply-controller-run-test
+# Operation: this macro deployes single contoller and runs test
+# Used by: {project}-csit-1node-* job templates
+
 - builder:
     name: integration-deploy-controller-run-test
     builders:
         - shell:
             !include-raw include-raw-integration-deploy-controller-run-test.sh
+
+# Macro: integration-deploy-controller
+# Operation: this macro prepares 3-node cluster controller
+# Used by: {project}-csit-3node-* job templates
+
 - builder:
     name: integration-deploy-controller
     builders:
         - shell:
             !include-raw include-raw-integration-deploy-controller.sh
 
+# Macro: integration-configure-clustering
+# Operation: this macro configures the clustering
+# Used by: {project}-csit-3node-* job templates
 
 - builder:
     name: integration-configure-clustering
@@ -215,17 +264,29 @@
         - shell:
             !include-raw include-raw-integration-configure-clustering.sh
 
+# Macro: integration-start-cluster-run-test
+# Operation: this macro starts the 3-node cluster and runs test
+# Used by: {project}-csit-3node-* job templates
+
 - builder:
     name: integration-start-cluster-run-test
     builders:
         - shell:
             !include-raw include-raw-integration-start-cluster-run-test.sh
 
+# Macro: integration-deploy-controller-offline
+# Operation: this macro deployes the controller with no external repo configuration
+# Used by: integration-distrbution-offline-{stream} job template
+
 - builder:
     name: integration-deploy-controller-offline
     builders:
         - shell:
             !include-raw include-raw-integration-deploy-controller-offline.sh
+
+# Macro: integration-get-bundle-url
+# Operation: this macro gets the distribution bundle URL
+# Used by: integration-patch-test-{stream} job template
 
 - builder:
     name: integration-get-bundle-url
@@ -236,6 +297,10 @@
 ##############
 # Publishers #
 ##############
+
+# Macro: integration-robot
+# Operation: this macro publishes robot results
+# Used by: {project}-csit-* job templates
 
 - publisher:
     name: integration-robot
