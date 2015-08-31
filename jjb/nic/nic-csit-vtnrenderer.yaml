@@ -1,0 +1,35 @@
+- project:
+    name: nic-csit-vtnrenderer
+    jobs:
+        - '{project}-csit-1node-{functionality}-{install}-{stream}'
+        - '{project}-csit-verify-1node-{functionality}-{stream}'
+
+    # The project name
+    project: 'nic'
+
+    # The functionality under test
+    functionality: 'vtnrenderer'
+
+    # Project branches
+    stream:
+        - stable-lithium:
+            branch: 'stable/lithium'
+
+    install:
+        - only:
+            scope: 'only'
+        - all:
+            scope: 'all'
+
+    # Mininet configuration
+    mininet-image: 'rk-c-el6-mininet'
+    mininet-vms: 1
+
+    # Features to install
+    install-features: 'odl-nic-core,odl-nic-console,odl-nic-renderer-vtn'
+
+    # Robot custom options
+    robot-options: ''
+
+    # Trigger jobs (upstream dependencies)
+    trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream},nic-distribution-{stream},vtn-distribution-{stream}'
