@@ -63,7 +63,7 @@
             description: 'Integration Patch Refspec'
 
 # Macro: integration-gerrit-scm
-# Operation: this macro downloads a gerrit from any project and uses the project as basedir
+# Operation: this macro downloads a project gerrit and uses the project as basedir
 # Used by: integration-patch-test-{stream} job template
 
 - scm:
@@ -73,6 +73,23 @@
             credentials-id: '{credentials-id}'
             url: '$GIT_BASE'
             basedir: '$GERRIT_PROJECT'
+            refspec: '$GERRIT_REFSPEC'
+            branches:
+                - 'origin/{branch}'
+            skip-tag: true
+            choosing-strategy: 'gerrit'
+
+# Macro: integration-gerrit-test-scm
+# Operation: this macro downloads an integration/test gerrit and uses test as basedir
+# Used by: {project}-verify-csit-* job templates
+
+- scm:
+    name: integration-gerrit-test-scm
+    scm:
+        - git:
+            credentials-id: '{credentials-id}'
+            url: '$GIT_BASE'
+            basedir: 'test'
             refspec: '$GERRIT_REFSPEC'
             branches:
                 - 'origin/{branch}'
@@ -100,10 +117,11 @@
 # Used by: {project}-csit-* job templates
 
 - scm:
-    name: integration-patch-scm
+    name: integration-test-scm
     scm:
         - git:
             credentials-id: '{credentials-id}'
+            basedir: 'test'
             url: '$GIT_BASE'
             refspec: '$PATCHREFSPEC'
             branches:
@@ -138,7 +156,7 @@
                     branch-pattern: '**/{branch}'
                 file-paths:
                   - compare-type: 'ANT'
-                    pattern: 'test/csit/suites/{project}/**'
+                    pattern: 'csit/suites/{project}/**'
 
 # Macro: integration-csit-gerrit-trigger-patch-submitted
 # Operation: this macro sets a trigger for patch submit on test/csit/**
@@ -167,7 +185,7 @@
                     branch-pattern: '**/{branch}'
                 file-paths:
                   - compare-type: 'ANT'
-                    pattern: 'test/csit/**'
+                    pattern: 'csit/**'
 
 # Macro: integration-csit-gerrit-trigger-patch-merged
 # Operation: this macro sets a trigger for patch merged on test/csit/**
@@ -190,7 +208,7 @@
                     branch-pattern: '**/{branch}'
                 file-paths:
                   - compare-type: 'ANT'
-                    pattern: 'test/csit/**'
+                    pattern: 'csit/**'
 
 # Macro: integration-jclouds-controller-mininet
 # Operation: this macro will spin the controller and mininet vms

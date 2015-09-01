@@ -7,7 +7,7 @@ NEXUSURL_PREFIX=${ODLNEXUSPROXY:-https://nexus.opendaylight.org}
 if [ ${BUNDLEURL} == 'last' ]; then
     NEXUSPATH="${NEXUSURL_PREFIX}/content/repositories/opendaylight.snapshot/org/opendaylight/integration/distribution-karaf"
     # Extract the BUNDLEVERSION from the pom.xml
-    BUNDLEVERSION=`xpath pom.xml '/project/version/text()' 2> /dev/null`
+    BUNDLEVERSION=`xpath distribution/pom.xml '/project/version/text()' 2> /dev/null`
     echo "Bundle version is ${BUNDLEVERSION}"
     # Acquire the timestamp information from maven-metadata.xml
     wget ${NEXUSPATH}/${BUNDLEVERSION}/maven-metadata.xml
