@@ -85,6 +85,9 @@
         - integration-get-slave-addresses
         - inject:
             properties-file: 'slave_addresses.txt'
+        - integration-get-bundle-vars
+        - inject:
+            properties-file: 'bundle_vars.txt'
         - integration-deploy-controller-run-test
 
     publishers:
@@ -154,6 +157,9 @@
         - integration-get-slave-addresses
         - inject:
             properties-file: 'slave_addresses.txt'
+        - integration-get-bundle-vars
+        - inject:
+            properties-file: 'bundle_vars.txt'
         - integration-deploy-controller-run-test
 
     publishers:
@@ -251,6 +257,9 @@
         - integration-get-slave-addresses
         - inject:
             properties-file: 'slave_addresses.txt'
+        - integration-get-bundle-vars
+        - inject:
+            properties-file: 'bundle_vars.txt'
         - integration-deploy-controller-run-test
 
     publishers:
@@ -320,6 +329,9 @@
         - integration-get-slave-addresses
         - inject:
             properties-file: 'slave_addresses.txt'
+        - integration-get-bundle-vars
+        - inject:
+            properties-file: 'bundle_vars.txt'
         - integration-deploy-controller-run-test
 
     publishers:
@@ -411,6 +423,9 @@
         - integration-get-slave-addresses
         - inject:
             properties-file: 'slave_addresses.txt'
+        - integration-get-bundle-vars
+        - inject:
+            properties-file: 'bundle_vars.txt'
         - integration-deploy-controller-run-test
 
     publishers:

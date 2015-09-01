@@ -130,7 +130,7 @@
             choosing-strategy: 'gerrit'
 
 # Macro: integration-test-gerrit-trigger-patch-submitted
-# Operation: this macro sets a trigger for patch submit on test/csit/suites/{project}/**
+# Operation: this macro sets a trigger for patch submit on csit/suites/{project}/**
 # Used by: {project}-verify-csit-* job templates
 
 - trigger:
@@ -159,7 +159,7 @@
                     pattern: 'csit/suites/{project}/**'
 
 # Macro: integration-csit-gerrit-trigger-patch-submitted
-# Operation: this macro sets a trigger for patch submit on test/csit/**
+# Operation: this macro sets a trigger for patch submit on csit/libraries
 # Used by: integration-verify-csit-1node-{stream} job template
 
 - trigger:
@@ -185,10 +185,10 @@
                     branch-pattern: '**/{branch}'
                 file-paths:
                   - compare-type: 'ANT'
-                    pattern: 'csit/**'
+                    pattern: 'csit/libraries/*'
 
 # Macro: integration-csit-gerrit-trigger-patch-merged
-# Operation: this macro sets a trigger for patch merged on test/csit/**
+# Operation: this macro sets a trigger for patch merged on csit/**
 # Used by: not used yet
 
 - trigger:
