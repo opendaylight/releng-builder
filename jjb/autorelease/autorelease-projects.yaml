@@ -1,0 +1,15 @@
+- project:
+    name: autorelease-projects
+    jobs:
+        - 'autorelease-daily-{stream}'
+        - 'autorelease-release-{stream}'
+
+    stream:
+    - beryllium:
+        branch: 'master'
+        jdk: 'openjdk7'
+    - lithium:
+        branch: 'stable/lithium'
+        jdk: 'openjdk7'
+
+    project: 'releng/autorelease'
