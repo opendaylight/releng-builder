@@ -8,7 +8,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "dummy"
 
   config.ssh.username = 'root'
-  config.ssh.pty = true
 
   config.vm.provider :rackspace do |rs|
     rs.flavor = 'general1-1'

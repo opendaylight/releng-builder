@@ -1,51 +1,67 @@
 #!/bin/bash
 
-# for some reason not all systems have @base installed
-yum install -y -q @base
-
-# also make sure that a few other utilities are definitely installed
-yum install -y -q unzip xz
-
-# install some needed internal networking configurations
-yum install -y dnsmasq puppet
-
-# install specific versions of puppet modules
-puppet module install puppetlabs-stdlib -v 4.5.1
-puppet module install puppetlabs-concat -v 1.2.0
-puppet module install lex-dnsmasq -v 2.6.1
-
 # script requires information about subdomain
 if [ -z "$1" ]; then
     >&2 echo "Please provide the subdomain to Vagrant"
     exit 1
+else
+    SUBDOM=$1
 fi
 
-# write the subdomain information into a custom facter fact
-mkdir -p /etc/facter/facts.d/
-echo "subdomain=${1}" > /etc/facter/facts.d/subdomain.txt
 
-# remove current networking configurations
-rm -f /etc/sysconfig/network-scripts/{ifcfg,route}-{eth,docker}*
+all_systems() {
+    # install specific versions of puppet modules
+    puppet module install puppetlabs-stdlib -v 4.5.1
+    puppet module install puppetlabs-concat -v 1.2.0
+    puppet module install lex-dnsmasq -v 2.6.1
 
-# final bits
-puppet apply /vagrant/confignetwork.pp
+    # write the subdomain information into a custom facter fact
+    mkdir -p /etc/facter/facts.d/
+    echo "subdomain=${SUBDOM}" > /etc/facter/facts.d/subdomain.txt
 
-# so that cloud-init doesn't futz with our resolv config after we've
-# configured it
-chattr +i /etc/resolv.conf
+    # final bits
+    puppet apply /vagrant/confignetwork.pp
 
-# don't let cloud-init do funny things to our routing
-chattr +i /etc/sysconfig/network-scripts/route-eth0
+}
 
-# setup the needed routing
-cat <<EOL >> /etc/rc.d/post-cloud-init
+rh_systems_init() {
+    # for some reason not all systems have @base installed
+    yum install -y -q @base
+
+    # also make sure that a few other utilities are definitely installed
+    yum install -y -q unzip xz
+
+    # install some needed internal networking configurations
+    yum install -y dnsmasq puppet
+
+    # remove current networking configurations
+    rm -f /etc/sysconfig/network-scripts/{ifcfg,route}-{eth,docker}*
+}
+
+rh_systems_post() {
+    # don't let cloud-init do funny things to our routing
+    chattr +i /etc/sysconfig/network-scripts/route-eth0
+
+    # setup the needed routing
+    cat <<EOL >> /etc/rc.d/post-cloud-init
 #!/bin/bash
 
 # always force puppet to rerun
 /usr/bin/puppet apply /vagrant/confignetwork.pp
 EOL
 
-chmod +x /etc/rc.d/post-cloud-init
+    chmod +x /etc/rc.d/post-cloud-init
+
+    # so that the network stack doesn't futz with our resolv config
+    # after we've configured it
+    chattr +i /etc/resolv.conf
+}
+
+ubuntu_systems_post() {
+    # don't let cloud-init destroy our routing
+#    chattr +i /etc/network/if-up.d/0000routing
+    echo "---> do nothing for now"
+}
 
 systemd_init() {
     # create a post-cloud-init.service and enable it
@@ -162,18 +178,49 @@ EOL
     /sbin/chkconfig post-cloud-init on
 }
 
-echo "Checking distribution"
-if [ `/usr/bin/facter operatingsystem` = "Fedora" ]; then
-    echo "---> Fedora found"
-    systemd_init
-else
-    if [ `/usr/bin/facter operatingsystemrelease | /bin/cut -d '.' -f1` = "7" ]; then
-        echo "---> CentOS 7"
-        systemd_init
-    else
-        echo "---> CentOS 6"
-        sysv_init
-    fi
-fi
+# Execute setup that all systems need
+all_systems
+
+echo "---> Checking distribution"
+FACTER_OSFAMILY=`/usr/bin/facter osfamily`
+FACTER_OS=`/usr/bin/facter operatingsystem`
+case "$FACTER_OSFAMILY" in
+    RedHat)
+        rh_systems_init
+        case "$FACTER_OS" in
+            Fedora)
+                echo "---> Fedora found"
+                systemd_init
+            ;;
+            RedHat|CentOS)
+                if [ `/usr/bin/facter operatingsystemrelease | /bin/cut -d '.' -f1` = "7" ]; then
+                    echo "---> CentOS 7"
+                    systemd_init
+                else
+                    echo "---> CentOS 6"
+                    sysv_init
+                fi
+            ;;
+            *)
+                echo "---> Unknown RH Family OS: ${FACTER_OS}"
+            ;;
+        esac
+        rh_systems_post
+    ;;
+    Debian)
+        case "$FACTER_OS" in
+            Ubuntu)
+                echo "---> Ubuntu found"
+                ubuntu_systems_post
+            ;;
+            *)
+                "---> Nothing to do for ${FACTER_OS}"
+            ;;
+        esac
+    ;;
+    *)
+        echo "---> Unknown OS: ${FACTER_OSFAMILY}"
+    ;;
+esac
 
 # vim: sw=4 ts=4 sts=4 et :
