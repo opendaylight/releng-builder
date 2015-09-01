@@ -1,24 +1,35 @@
 # Job templates in this file (please update with every new template):
-#
-# {project}-csit-verify-{functionality}-{stream}
+# 
+# Old templates:
+# {project}-csit-verify-1node-{functionality}-{stream}
 # {project}-csit-1node-imds-{functionality}-{install}-{stream}
-# {project}-csit-1node-cds-{functionality}-{install}-{stream}
-# {project}-csit-periodic-1node-cds-{functionality}-{install}-{stream}
-# {project}-csit-3node-cds-{functionality}-{install}-{stream}
 #
 # New (for Be release):
-# {project}-csit-verify-1node-{functionality}-{stream}
+# {project}-csit-verify-1node-{functionality}
 # {project}-csit-1node-{functionality}-{install}-{stream}
 # {project}-csit-1node-periodic-{functionality}-{install}-{stream}
-# {project}-csit-verify-3node-{functionality}-{stream}
+# {project}-csit-verify-3node-{functionality}
 # {project}-csit-3node-{functionality}-{install}-{stream}
 # {project}-csit-3node-periodic-{functionality}-{install}-{stream}
 #
+# Parameters:
+#
+# project-parameter: main project integration/test ($PROJECT)
+# integration-distribution-git-url: distribution GIT ($DISTROGITURL)
+# integration-branch: distribution branch ($BRANCH)
+# integration-controller-bundleurl: distribution URL ($BUNDLEURL)
+# integration-controller-scope: only or all features ($CONTROLLERSCOPE)
+# integration-controller-features: features under test ($CONTROLLER FEATURES)
+# integration-test-options: robot options ($TESTOPTIONS)
+# integration-test-plan: robot test plan ($TESTPLAN)
+# integration-patch-refspec: test branch ($PATCHREFSPEC)
+
+
 
 # Old templates
 
 - job-template:
-    name: '{project}-csit-verify-{functionality}-{stream}'
+    name: '{project}-csit-verify-1node-{functionality}-{stream}'
 
     project-type: freestyle
     node: dynamic_robot
@@ -31,9 +42,10 @@
 
     parameters:
         - project-parameter:
-            project: 'integration'
+            project: 'integration/test'
+        - integration-distribution-git-url
         - integration-branch:
-            branch: '{branch}'
+            branch: 'master'
         - integration-bundleurl:
             bundleurl: 'last'
         - integration-controller-scope:
@@ -46,10 +58,12 @@
             test-plan: '{project}-{functionality}.txt'
 
     scm:
-        - gerrit-trigger-scm:
+        - integration-distribution-scm:
             credentials-id: '{ssh-credentials}'
-            refspec: '$GERRIT_REFSPEC'
-            choosing-strategy: 'gerrit'
+            branch: 'master'
+        - integration-gerrit-test-scm:
+            credentials-id: '{ssh-credentials}'
+            branch: 'master'
 
     wrappers:
         - build-timeout
@@ -63,8 +77,8 @@
 
     triggers:
         - integration-test-gerrit-trigger-patch-submitted:
-            name: 'integration'
-            branch: '{branch}'
+            name: 'integration/test'
+            branch: 'master'
             project: '{project}'
 
     builders:
@@ -96,7 +110,8 @@
 
     parameters:
         - project-parameter:
-            project: 'integration'
+            project: 'integration/test'
+        - integration-distribution-git-url
         - integration-branch:
             branch: '{branch}'
         - integration-bundleurl:
@@ -110,12 +125,15 @@
         - integration-test-plan:
             test-plan: '{project}-{functionality}.txt'
         - integration-patch-refspec:
-            branch: '{branch}'
+            branch: 'stable/helium'
 
     scm:
-        - integration-patch-scm:
+        - integration-distribution-scm:
             credentials-id: '{ssh-credentials}'
             branch: '{branch}'
+        - integration-test-scm:
+            credentials-id: '{ssh-credentials}'
+            branch: 'stable/helium'
 
     wrappers:
         - build-timeout
@@ -174,289 +192,10 @@
                 display-table: true
                 format: csv
 
-- job-template:
-    name: '{project}-csit-1node-cds-{functionality}-{install}-{stream}'
-
-    project-type: freestyle
-    node: dynamic_robot
-
-    logrotate:
-        daysToKeep: '{build-days-to-keep}'
-        numToKeep: '{build-num-to-keep}'
-        artifactDaysToKeep: '{build-artifact-days-to-keep}'
-        artifactNumToKeep: '{build-num-to-keep}'
-
-    parameters:
-        - project-parameter:
-            project: 'integration'
-        - integration-branch:
-            branch: '{branch}'
-        - integration-bundleurl:
-            bundleurl: 'last'
-        - integration-controller-scope:
-            controller-scope: '{scope}'
-        - integration-controller-features:
-            controller-features: '{install-features}'
-        - integration-test-options:
-            test-options: '{robot-options}'
-        - integration-test-plan:
-            test-plan: '{project}-{functionality}.txt'
-        - integration-patch-refspec:
-            branch: '{branch}'
-
-    scm:
-        - integration-patch-scm:
-            credentials-id: '{ssh-credentials}'
-            branch: '{branch}'
-
-    wrappers:
-        - build-timeout
-        - integration-jclouds-controller-mininet:
-            controller-vms: 1
-            mininet-image: '{mininet-image}'
-            mininet-vms: '{mininet-vms}'
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
-
-    triggers:
-        - reverse:
-            jobs: '{trigger-jobs}'
-            result: 'success'
-
-    builders:
-        - integration-get-slave-addresses
-        - inject:
-            properties-file: 'slave_addresses.txt'
-        - integration-deploy-controller-run-test
-
-    publishers:
-        - integration-robot:
-            unstable-if: 0.0
-            pass-if: 100.0
-        - archive:
-            artifacts: 'karaf.log'
-        - email-notification:
-            email-prefix: '[{project}]'
-        - plot:
-          - title: '{01-plot-title}'
-            yaxis: '{01-plot-yaxis}'
-            group: '{01-plot-group}'
-            num-builds: '5400'
-            style: line
-            use-description: false
-            csv-file-name: '{project}-csit-1node-cds-{functionality}-{install}-{stream}-{01-plot-data-file}-history.csv'
-            keep-records: true
-            series:
-              - file: '{01-plot-data-file}'
-                inclusion-flag: 'off'
-                display-table: true
-                format: csv
-          - title: '{02-plot-title}'
-            yaxis: '{02-plot-yaxis}'
-            group: '{02-plot-group}'
-            num-builds: '5400'
-            style: line
-            use-description: false
-            csv-file-name: '{project}-csit-1node-cds-{functionality}-{install}-{stream}-{02-plot-data-file}-history.csv'
-            keep-records: true
-            series:
-              - file: '{02-plot-data-file}'
-                inclusion-flag: 'off'
-                display-table: true
-                format: csv
-
-
-- job-template:
-    name: '{project}-csit-periodic-1node-cds-{functionality}-{install}-{stream}'
-
-    project-type: freestyle
-    node: dynamic_robot
-
-    logrotate:
-        daysToKeep: '{build-days-to-keep}'
-        numToKeep: '{build-num-to-keep}'
-        artifactDaysToKeep: '{build-artifact-days-to-keep}'
-        artifactNumToKeep: '{build-num-to-keep}'
-
-    parameters:
-        - project-parameter:
-            project: 'integration'
-        - integration-branch:
-            branch: '{branch}'
-        - integration-bundleurl:
-            bundleurl: 'last'
-        - integration-controller-scope:
-            controller-scope: '{scope}'
-        - integration-controller-features:
-            controller-features: '{install-features}'
-        - integration-test-options:
-            test-options: '{robot-options}'
-        - integration-test-plan:
-            test-plan: '{project}-{functionality}.txt'
-        - integration-patch-refspec:
-            branch: '{branch}'
-
-    scm:
-        - integration-patch-scm:
-            credentials-id: '{ssh-credentials}'
-            branch: '{branch}'
-
-    wrappers:
-        - integration-jclouds-controller-mininet:
-            controller-vms: 1
-            mininet-image: '{mininet-image}'
-            mininet-vms: '{mininet-vms}'
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
-
-    triggers:
-        - timed: '{schedule}'
-
-    builders:
-        - integration-get-slave-addresses
-        - inject:
-            properties-file: 'slave_addresses.txt'
-        - integration-deploy-controller-run-test
-
-    publishers:
-        - integration-robot:
-            unstable-if: 0.0
-            pass-if: 100.0
-        - archive:
-            artifacts: 'karaf.log'
-        - email-notification:
-            email-prefix: '[{project}]'
-        - plot:
-          - title: '{01-plot-title}'
-            yaxis: '{01-plot-yaxis}'
-            group: '{01-plot-group}'
-            num-builds: '180'
-            style: line
-            use-description: false
-            csv-file-name: '{project}-csit-periodic-1node-cds-{functionality}-{install}-{stream}-{01-plot-data-file}-history.csv'
-            keep-records: true
-            series:
-              - file: '{01-plot-data-file}'
-                inclusion-flag: 'off'
-                display-table: true
-                format: csv
-          - title: '{02-plot-title}'
-            yaxis: '{02-plot-yaxis}'
-            group: '{02-plot-group}'
-            num-builds: '180'
-            style: line
-            use-description: false
-            csv-file-name: '{project}-csit-periodic-1node-cds-{functionality}-{install}-{stream}-{02-plot-data-file}-history.csv'
-            keep-records: true
-            series:
-              - file: '{02-plot-data-file}'
-                inclusion-flag: 'off'
-                display-table: true
-                format: csv
-
-
-- job-template:
-    name: '{project}-csit-3node-cds-{functionality}-{install}-{stream}'
-
-    project-type: freestyle
-    node: dynamic_robot
-
-    logrotate:
-        daysToKeep: '{build-days-to-keep}'
-        numToKeep: '{build-num-to-keep}'
-        artifactDaysToKeep: '{build-artifact-days-to-keep}'
-        artifactNumToKeep: '{build-num-to-keep}'
-
-    parameters:
-        - project-parameter:
-            project: 'integration'
-        - integration-branch:
-            branch: '{branch}'
-        - integration-bundleurl:
-            bundleurl: 'last'
-        - integration-controller-scope:
-            controller-scope: '{scope}'
-        - integration-controller-features:
-            controller-features: 'odl-mdsal-clustering,{install-features}'
-        - integration-test-options:
-            test-options: '{robot-options}'
-        - integration-test-plan:
-            test-plan: '{project}-{functionality}.txt'
-        - integration-patch-refspec:
-            branch: '{branch}'
-
-    scm:
-        - integration-patch-scm:
-            credentials-id: '{ssh-credentials}'
-            branch: '{branch}'
-
-    wrappers:
-        - build-timeout
-        - integration-jclouds-controller-mininet:
-            controller-vms: 3
-            mininet-image: '{mininet-image}'
-            mininet-vms: '{mininet-vms}'
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
-
-    triggers:
-        - reverse:
-            jobs: '{trigger-jobs}'
-            result: 'success'
-
-    builders:
-        - integration-get-slave-addresses
-        - inject:
-            properties-file: 'slave_addresses.txt'
-        - integration-get-bundle-vars
-        - inject:
-            properties-file: 'bundle_vars.txt'
-        - integration-deploy-controller
-        - integration-configure-clustering
-        - integration-start-cluster-run-test
-    publishers:
-        - integration-robot:
-            unstable-if: 0.0
-            pass-if: 100.0
-        - archive:
-            artifacts: '*karaf.log'
-        - email-notification:
-            email-prefix: '[{project}]'
-        - plot:
-          - title: '{01-plot-title}'
-            yaxis: '{01-plot-yaxis}'
-            group: '{01-plot-group}'
-            num-builds: '5400'
-            style: line
-            use-description: false
-            csv-file-name: '{project}-csit-3node-cds-{functionality}-{install}-{stream}-{01-plot-data-file}-history.csv'
-            keep-records: true
-            series:
-              - file: '{01-plot-data-file}'
-                inclusion-flag: 'off'
-                display-table: true
-                format: csv
-          - title: '{02-plot-title}'
-            yaxis: '{02-plot-yaxis}'
-            group: '{02-plot-group}'
-            num-builds: '5400'
-            style: line
-            use-description: false
-            csv-file-name: '{project}-csit-3node-cds-{functionality}-{install}-{stream}-{02-plot-data-file}-history.csv'
-            keep-records: true
-            series:
-              - file: '{02-plot-data-file}'
-                inclusion-flag: 'off'
-                display-table: true
-                format: csv
-
 # New templates
 
 - job-template:
-    name: '{project}-csit-verify-1node-{functionality}-{stream}'
+    name: '{project}-csit-verify-1node-{functionality}'
 
     project-type: freestyle
     node: dynamic_robot
@@ -469,9 +208,10 @@
 
     parameters:
         - project-parameter:
-            project: 'integration'
+            project: 'integration/test'
+        - integration-distribution-git-url
         - integration-branch:
-            branch: '{branch}'
+            branch: 'master'
         - integration-bundleurl:
             bundleurl: 'last'
         - integration-controller-scope:
@@ -484,10 +224,12 @@
             test-plan: '{project}-{functionality}.txt'
 
     scm:
-        - gerrit-trigger-scm:
+        - integration-distribution-scm:
             credentials-id: '{ssh-credentials}'
-            refspec: '$GERRIT_REFSPEC'
-            choosing-strategy: 'gerrit'
+            branch: 'master'
+        - integration-gerrit-test-scm:
+            credentials-id: '{ssh-credentials}'
+            branch: 'master'
 
     wrappers:
         - build-timeout
@@ -501,8 +243,8 @@
 
     triggers:
         - integration-test-gerrit-trigger-patch-submitted:
-            name: 'integration'
-            branch: '{branch}'
+            name: 'integration/test'
+            branch: 'master'
             project: '{project}'
 
     builders:
@@ -534,7 +276,8 @@
 
     parameters:
         - project-parameter:
-            project: 'integration'
+            project: 'integration/test'
+        - integration-distribution-git-url
         - integration-branch:
             branch: '{branch}'
         - integration-bundleurl:
@@ -548,12 +291,15 @@
         - integration-test-plan:
             test-plan: '{project}-{functionality}.txt'
         - integration-patch-refspec:
-            branch: '{branch}'
+            branch: 'master'
 
     scm:
-        - integration-patch-scm:
+        - integration-distribution-scm:
             credentials-id: '{ssh-credentials}'
             branch: '{branch}'
+        - integration-test-scm:
+            credentials-id: '{ssh-credentials}'
+            branch: 'master'
 
     wrappers:
         - build-timeout
@@ -624,7 +370,8 @@
 
     parameters:
         - project-parameter:
-            project: 'integration'
+            project: 'integration/test'
+        - integration-distribution-git-url
         - integration-branch:
             branch: '{branch}'
         - integration-bundleurl:
@@ -638,12 +385,15 @@
         - integration-test-plan:
             test-plan: '{project}-{functionality}.txt'
         - integration-patch-refspec:
-            branch: '{branch}'
+            branch: 'master'
 
     scm:
-        - integration-patch-scm:
+        - integration-distribution-scm:
             credentials-id: '{ssh-credentials}'
             branch: '{branch}'
+        - integration-test-scm:
+            credentials-id: '{ssh-credentials}'
+            branch: 'master'
 
     wrappers:
         - integration-jclouds-controller-mininet:
@@ -698,7 +448,7 @@
                 format: csv
 
 - job-template:
-    name: '{project}-csit-verify-3node-{functionality}-{stream}'
+    name: '{project}-csit-verify-3node-{functionality}'
 
     project-type: freestyle
     node: dynamic_robot
@@ -711,9 +461,10 @@
 
     parameters:
         - project-parameter:
-            project: 'integration'
+            project: 'integration/test'
+        - integration-distribution-git-url
         - integration-branch:
-            branch: '{branch}'
+            branch: 'master'
         - integration-bundleurl:
             bundleurl: 'last'
         - integration-controller-scope:
@@ -726,10 +477,12 @@
             test-plan: '{project}-{functionality}.txt'
 
     scm:
-        - gerrit-trigger-scm:
+        - integration-distribution-scm:
             credentials-id: '{ssh-credentials}'
-            refspec: '$GERRIT_REFSPEC'
-            choosing-strategy: 'gerrit'
+            branch: 'master'
+        - integration-gerrit-test-scm:
+            credentials-id: '{ssh-credentials}'
+            branch: 'master'
 
     wrappers:
         - build-timeout
@@ -743,8 +496,8 @@
 
     triggers:
         - integration-test-gerrit-trigger-patch-submitted:
-            name: 'integration'
-            branch: '{branch}'
+            name: 'integration/test'
+            branch: 'master'
             project: '{project}'
 
     builders:
@@ -780,7 +533,8 @@
 
     parameters:
         - project-parameter:
-            project: 'integration'
+            project: 'integration/test'
+        - integration-distribution-git-url
         - integration-branch:
             branch: '{branch}'
         - integration-bundleurl:
@@ -794,12 +548,15 @@
         - integration-test-plan:
             test-plan: '{project}-{functionality}.txt'
         - integration-patch-refspec:
-            branch: '{branch}'
+            branch: 'master'
 
     scm:
-        - integration-patch-scm:
+        - integration-distribution-scm:
             credentials-id: '{ssh-credentials}'
             branch: '{branch}'
+        - integration-test-scm:
+            credentials-id: '{ssh-credentials}'
+            branch: 'master'
 
     wrappers:
         - build-timeout
@@ -875,7 +632,8 @@
 
     parameters:
         - project-parameter:
-            project: 'integration'
+            project: 'integration/test'
+        - integration-distribution-git-url
         - integration-branch:
             branch: '{branch}'
         - integration-bundleurl:
@@ -889,12 +647,15 @@
         - integration-test-plan:
             test-plan: '{project}-{functionality}.txt'
         - integration-patch-refspec:
-            branch: '{branch}'
+            branch: 'master'
 
     scm:
-        - integration-patch-scm:
+        - integration-distribution-scm:
             credentials-id: '{ssh-credentials}'
             branch: '{branch}'
+        - integration-test-scm:
+            credentials-id: '{ssh-credentials}'
+            branch: 'master'
 
     wrappers:
         - integration-jclouds-controller-mininet:

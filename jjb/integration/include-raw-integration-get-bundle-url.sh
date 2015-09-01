@@ -1,5 +1,5 @@
 # Extract the BUNDLEVERSION from the pom.xml
-BUNDLEVERSION=`xpath integration/pom.xml '/project/version/text()' 2> /dev/null`
+BUNDLEVERSION=`xpath distribution/pom.xml '/project/version/text()' 2> /dev/null`
 echo "Bundle version is ${BUNDLEVERSION}"
 
 BUNDLEURL=${BUILD_URL}org.opendaylight.integration\$distribution-karaf/artifact/org.opendaylight.integration/distribution-karaf/${BUNDLEVERSION}/distribution-karaf-${BUNDLEVERSION}.zip
