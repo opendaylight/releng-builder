@@ -282,11 +282,14 @@
     parameters:
         - project-parameter:
             project: '{project}'
+        - gerrit-parameter:
+            branch: 'master'
 
     scm:
-        - git-scm:
+        - gerrit-trigger-scm:
             credentials-id: '{ssh-credentials}'
-            branch: 'master'
+            refspec: ''
+            choosing-strategy: 'default'
 
     wrappers:
         - ssh-agent-credentials:
@@ -294,9 +297,23 @@
                 - '{ssh-credentials}'
 
     triggers:
-        - reverse:
-            jobs: 'builder-merge'
-            result: 'success'
+        - gerrit:
+            server-name: 'OpenDaylight'
+            trigger-on:
+                - change-merged-event
+                - comment-added-contains-event:
+                    comment-contains-value: 'republish'
+            projects:
+              - project-compare-type: 'ANT'
+                project-pattern: 'releng/builder'
+                branches:
+                    - branch-compare-type: 'ANT'
+                      branch-pattern: '**/master'
+                file-paths:
+                    - compare-type: ANT
+                      pattern: src/**
+                    - compare-type: ANT
+                      pattern: pom.xml
 
     maven:
         maven-name: '{mvn33}'
