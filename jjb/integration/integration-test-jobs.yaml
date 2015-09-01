@@ -2,7 +2,8 @@
 - project:
     name: integration-test-jobs
     jobs:
-        - 'integration-csit-verify-1node-{stream}'
+        - 'integration-verify-python'
+        - 'integration-csit-verify-1node-library'
         - 'integration-distribution-offline-{stream}'
         - 'integration-distribution-test-{stream}'
         - 'integration-patch-test-{stream}'
@@ -132,12 +133,64 @@
         aaa-distribution-{stream},
         integration-distribution-merge-{stream}
 
-# Template: integration-csit-verify-1node-{stream}
-# Goal: Verify changes in csit folder not covered by projects suite verify jobs (e.g. library or variables)
-# Operation: This job template performs a base openflow test every time there is a change in the csit folder.
+# Template: integration-verify-python
+# Goal: Verify python scripts correct syntax
+# Operation: This job template performs a python tox check on any integration/test patch
 
 - job-template:
-    name: 'integration-csit-verify-1node-{stream}'
+    name: 'integration-verify-python'
+
+    project-type: freestyle
+    node: dynamic_verify
+    concurrent: true
+
+    logrotate:
+        daysToKeep: '{build-days-to-keep}'
+        numToKeep: '{build-num-to-keep}'
+        artifactDaysToKeep: '{build-artifact-days-to-keep}'
+        artifactNumToKeep: '{build-artifact-num-to-keep}'
+
+    parameters:
+        - project-parameter:
+            project: 'integration/test'
+        - gerrit-parameter:
+            branch: 'master'
+
+    scm:
+        - gerrit-trigger-scm:
+            credentials-id: '{ssh-credentials}'
+            refspec: '$GERRIT_REFSPEC'
+            choosing-strategy: 'gerrit'
+
+    wrappers:
+        - build-timeout
+        - ssh-agent-credentials:
+            users:
+                - '{ssh-credentials}'
+
+    triggers:
+        - gerrit-trigger-patch-submitted:
+            name: 'integration/test'
+            branch: 'master'
+
+    builders:
+        - shell: |
+            virtualenv $WORKSPACE/venv-tox
+            source $WORKSPACE/venv-tox/bin/activate
+            pip install tox argparse
+            tox --version
+            tox
+
+    publishers:
+        - email-notification:
+            email-prefix: '[integration]'
+
+# Template: integration-csit-verify-1node-library
+# Goal: Verify changes in csit folder not covered by projects suite verify jobs (e.g. libraries or variables)
+# Operation: This job template performs a base openflow test when there is a change in the libraries folder
+
+- job-template:
+    name: 'integration-csit-verify-1node-library'
 
     project-type: freestyle
     node: dynamic_robot
@@ -150,9 +203,10 @@
 
     parameters:
         - project-parameter:
-            project: 'integration'
+            project: 'integration/test'
+        - integration-distribution-git-url
         - integration-branch:
-            branch: '{branch}'
+            branch: 'master'
         - integration-bundleurl:
             bundleurl: 'last'
         - integration-controller-scope:
@@ -165,10 +219,12 @@
             test-plan: 'openflowplugin-flow-services.txt'
 
     scm:
-        - gerrit-trigger-scm:
+        - integration-distribution-scm:
             credentials-id: '{ssh-credentials}'
-            refspec: '$GERRIT_REFSPEC'
-            choosing-strategy: 'gerrit'
+            branch: 'master'
+        - integration-gerrit-test-scm:
+            credentials-id: '{ssh-credentials}'
+            branch: 'master'
 
     wrappers:
         - build-timeout
@@ -182,13 +238,16 @@
 
     triggers:
         - integration-csit-gerrit-trigger-patch-submitted:
-            name: 'integration'
-            branch: '{branch}'
+            name: 'integration/test'
+            branch: 'master'
 
     builders:
         - integration-get-slave-addresses
         - inject:
             properties-file: 'slave_addresses.txt'
+        - integration-get-bundle-vars
+        - inject:
+            properties-file: 'bundle_vars.txt'
         - integration-deploy-controller-run-test
 
     publishers:
@@ -202,7 +261,8 @@
 
 # Template: integration-distribution-offline-{stream}
 # Goal: Verify distribution can start with no internet connection
-# Operation: This daily job template deployes the controller removing any external repository definition
+# Operation: This job deployes the controller removing any external repository definition
+# whenever there is a change in a kernel project (odlparent, controller, yangtools, etc...)
 
 - job-template:
     name: 'integration-distribution-offline-{stream}'
@@ -218,16 +278,16 @@
 
     parameters:
         - project-parameter:
-            project: 'integration'
+            project: 'integration/distribution'
+        - integration-distribution-git-url
         - integration-branch:
             branch: '{branch}'
         - integration-bundleurl:
             bundleurl: 'last'
 
     scm:
-        - git-scm:
+        - integration-distribution-scm:
             credentials-id: '{ssh-credentials}'
-            refspec: ''
             branch: '{branch}'
 
     wrappers:
@@ -242,6 +302,9 @@
             result: 'success'
 
     builders:
+        - integration-get-bundle-vars
+        - inject:
+            properties-file: 'bundle_vars.txt'
         - integration-deploy-controller-offline
 
     publishers:
