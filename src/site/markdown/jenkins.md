@@ -509,7 +509,22 @@ search for files with the name \<project\>.yaml. The normal \<project\>.yaml
 file can then be left in tact with the "# REMOVE THIS LINE IF..." comment so
 it will be automatically updated.
 
-## Jenkins Sandbox
+## Maven Properties
+
+We provide a properties which your job can take advantage of if you want to do
+something different depending on the job type that is run. If you create a
+profile that activates on a property listed blow. The JJB templated jobs will
+be able to activate the profile during the build to run any custom code you
+wish to run in your project.
+
+    -Dmerge   : This flag is passed in our Merge job and is equivalent to the
+                Maven property
+                <merge>true</merge>.
+    -Dsonar   : This flag is passed in our Sonar job and is equivalent to the
+                Maven property
+                <sonar>true</sonar>.
+
+# Jenkins Sandbox
 [https://jenkins.opendaylight.org/sandbox](https://jenkins.opendaylight.org/sandbox/)
 
 The Sandbox instance's purpose is to allow projects to test their JJB setups
@@ -520,7 +535,7 @@ Gerrit.
 If your project requires access to the Sandbox please open a Help Desk ticket
 and provide us with your ODL ID.
 
-#### Notes regarding the Sandbox
+## Notes regarding the Sandbox
 
 * Jobs automatically deleted Saturday @ 08:00 UTC (12:00 AM PST / 01:00 AM PDT)
 * Committers can login and configure Jenkins jobs directly here (unlike on the
@@ -529,7 +544,7 @@ master silo)
 * Can NOT upload artifacts to Nexus
 * Can NOT vote on Gerrit
 
-#### Using the Sandbox
+## Using the Sandbox
 
 Before starting using the sandbox make sure you have Jenkins Job Builder
 properly installed in your setup. Refer Jenkins Job Builder Installation
