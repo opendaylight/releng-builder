@@ -62,6 +62,16 @@ options timeout:2
 }
 
 # set routing
-file { '/etc/sysconfig/network-scripts/route-eth0':
-  content => "default via ${router} dev eth0"
+case $::operatingsystem {
+  'CentOS', 'Fedora', 'RedHat': {
+    file { '/etc/sysconfig/network-scripts/route-eth0':
+      content => "default via ${router} dev eth0"
+    }
+  }
+  'Ubuntu': {
+    file { '/etc/network/if-up.d/0000routing':
+      content => "#!/bin/sh\nip route add default via ${router} dev eth0"
+      mode => '0755'
+    }
+  }
 }
