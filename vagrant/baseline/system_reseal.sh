@@ -21,6 +21,21 @@ rm -rf ~/.viminfo /etc/ssh/ssh*key*
 # kill any cloud-init related bits
 rm -rf /var/lib/cloud/*
 
+if [ -e /usr/bin/facter ]
+then
+  if [ `/usr/bin/facter operatingsystem` = 'Ubuntu' ]
+  then
+    rm -rf /etc/hostname* /etc/hosts /etc/network/interfaces /etc/network/interfaces.*.bak~
+    cat <<EOINT >> /etc/network/interfaces
+# Used by ifup(8) and ifdown(8). See the interfaces(5) manpage or
+# /usr/share/doc/ifupdown/examples for more information.
+# The loopback network interface
+auto lo
+iface lo inet loopback
+EOINT
+  fi
+fi
+
 echo "********************************************"
 echo "*   PLEASE SNAPSHOT IMAGE AT THIS TIME     *"
 echo "********************************************"
