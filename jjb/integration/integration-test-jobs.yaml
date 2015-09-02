@@ -153,14 +153,11 @@
     parameters:
         - project-parameter:
             project: 'integration/test'
-        - gerrit-parameter:
-            branch: 'master'
 
     scm:
-        - gerrit-trigger-scm:
+        - integration-gerrit-test-scm:
             credentials-id: '{ssh-credentials}'
-            refspec: '$GERRIT_REFSPEC'
-            choosing-strategy: 'gerrit'
+            branch: 'master'
 
     wrappers:
         - build-timeout
@@ -179,6 +176,7 @@
             source $WORKSPACE/venv-tox/bin/activate
             pip install tox argparse
             tox --version
+            cd $WORKSPACE/test
             tox
 
     publishers:
