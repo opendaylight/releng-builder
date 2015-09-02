@@ -1,10 +1,15 @@
 # make system modifications to handle being on a private Rackspace network
 
+# lint:ignore:80chars
+notice ("Operating system detected is: '${::operatingsystem} ${::operatingsystemrelease}'")
+# lint:endignore
+notice ("Subdomain being used is: '${::subdomain}'")
+
 # configure nameservers for domains
 case $::subdomain {
   /^dfw\./: {
-    $NS1 = '72.3.128.241'
-    $NS2 = '72.3.128.240'
+    $ns1 = '72.3.128.241'
+    $ns2 = '72.3.128.240'
     case $::subdomain {
       /opendaylight/: {
         $router = '10.30.11.1'
@@ -18,8 +23,8 @@ case $::subdomain {
     }
   }
   /^ord\./: {
-    $NS1 = '173.203.4.9'
-    $NS2 = '173.203.4.8'
+    $ns1 = '173.203.4.9'
+    $ns2 = '173.203.4.8'
     $router = '10.30.32.1'
   }
   default: {
@@ -28,50 +33,63 @@ case $::subdomain {
 }
 
 # dnsmasq
-class { 'dnsmasq':
-  domain        => $::subdomain,
-  expand_hosts  => true,
-  domain_needed => true,
+class { 'dnsmasq': }
+
+# Setup dnsmasq special domain handlers
+dnsmasq::conf { 'LF-ns1':
+  ensure  => present,
+  content => 'server=/linux-foundation.org/172.17.192.30',
 }
 
-# can only have one NS per handled domain because of how
-# the puppet module is built
-dnsmasq::dnsserver { 'linux-foundation.org':
-  domain => 'linux-foundation.org',
-  ip     => '172.17.192.30',
+dnsmasq::conf { 'LF-ns2':
+  ensure  => present,
+  content => 'server=/linux-foundation.org/172.17.192.31',
 }
 
-dnsmasq::dnsserver { 'opendaylight.org':
-  domain => 'opendaylight.org',
-  ip     => '172.17.192.30',
+dnsmasq::conf { 'ODL-ns1':
+  ensure  => present,
+  content => 'server=/opendaylight.org/172.17.192.30',
 }
 
-dnsmasq::dnsserver { 'odlforge.org':
-  domain => 'odlforge.org',
-  ip     => '172.17.192.30',
+dnsmasq::conf { 'ODL-ns2':
+  ensure  => present,
+  content => 'server=/opendaylight.org/172.17.192.31',
+}
+
+dnsmasq::conf { 'ODLForge-ns1':
+  ensure  => present,
+  content => 'server=/odlforge.org/172.17.192.30',
+}
+
+dnsmasq::conf { 'ODLForge-ns2':
+  ensure  => present,
+  content => 'server=/odlforge.org/172.17.192.31',
 }
 
 # fix the resolver
 file { '/etc/resolv.conf':
   content => "search ${::subdomain}
 nameserver 127.0.0.1
-nameserver ${NS1}
-nameserver ${NS2}
+nameserver ${ns1}
+nameserver ${ns2}
 options timeout:2
-"
+",
 }
 
 # set routing
 case $::operatingsystem {
   'CentOS', 'Fedora', 'RedHat': {
     file { '/etc/sysconfig/network-scripts/route-eth0':
-      content => "default via ${router} dev eth0"
+      content => "default via ${router} dev eth0",
     }
   }
   'Ubuntu': {
     file { '/etc/network/if-up.d/0000routing':
-      content => "#!/bin/sh\nip route add default via ${router} dev eth0"
-      mode => '0755'
+      content => "#!/bin/sh\nip route add default via ${router} dev eth0",
+      mode    => '0755',
     }
+  }
+  default: {
+    notice ("${::operatingsystem} is not supported by this configuration")
   }
 }

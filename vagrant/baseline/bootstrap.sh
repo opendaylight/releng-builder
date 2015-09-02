@@ -31,7 +31,11 @@ rh_systems() {
 
     # add in components we need or want on systems
     echo "---> Installing base packages"
-    yum install -y -q @base unzip xz puppet git perl-XML-XPath
+    yum install -y -q @base
+    # separate group installs from package installs since a non-existing
+    # group with dnf based systems (F21+) will fail the install if such
+    # a group does not exist
+    yum install -y -q unzip xz puppet git perl-XML-XPath
 
     # All of our systems require Java (because of Jenkins)
     # Install all versions of the OpenJDK devel but force 1.7.0 to be the
@@ -39,8 +43,24 @@ rh_systems() {
 
     echo "---> Configuring OpenJDK"
     yum install -y -q 'java-*-openjdk-devel'
-    alternatives --set java /usr/lib/jvm/jre-1.7.0-openjdk.x86_64/bin/java
-    alternatives --set java_sdk_openjdk /usr/lib/jvm/java-1.7.0-openjdk.x86_64
+
+    FACTER_OS=`/usr/bin/facter operatingsystem`
+    FACTER_OSVER=`/usr/bin/facter operatingsystemrelease`
+    case "$FACTER_OS" in
+        Fedora)
+            if [ "$FACTER_OSVER" -ge "21" ]
+            then
+                echo "---> not modifying java alternatives as OpenJDK 1.7.0 does not exist"
+            else
+                alternatives --set java /usr/lib/jvm/jre-1.7.0-openjdk.x86_64/bin/java
+                alternatives --set java_sdk_openjdk /usr/lib/jvm/java-1.7.0-openjdk.x86_64
+            fi
+        ;;
+        *)
+            alternatives --set java /usr/lib/jvm/jre-1.7.0-openjdk.x86_64/bin/java
+            alternatives --set java_sdk_openjdk /usr/lib/jvm/java-1.7.0-openjdk.x86_64
+        ;;
+    esac
 }
 
 ubuntu_systems() {
