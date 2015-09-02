@@ -63,8 +63,8 @@
             description: 'Integration Patch Refspec'
 
 # Macro: integration-gerrit-scm
-# Operation: this macro downloads a project gerrit and using the project name as basedir
-# Used by: integration-patch-test-{stream} job template
+# Operation: this macro downloads a project gerrit
+# Used by: all csit jobs
 
 - scm:
     name: integration-gerrit-scm
@@ -72,25 +72,8 @@
         - git:
             credentials-id: '{credentials-id}'
             url: '$GIT_BASE'
-            basedir: '$GERRIT_PROJECT'
-            refspec: '$GERRIT_REFSPEC'
-            branches:
-                - 'origin/{branch}'
-            skip-tag: true
-            choosing-strategy: 'gerrit'
-
-# Macro: integration-gerrit-test-scm
-# Operation: this macro downloads an integration/test gerrit using test as basedir
-# Used by: {project}-verify-csit-* job templates
-
-- scm:
-    name: integration-gerrit-test-scm
-    scm:
-        - git:
-            credentials-id: '{credentials-id}'
-            url: '$GIT_BASE'
-            basedir: 'test'
-            refspec: '$GERRIT_REFSPEC'
+            basedir: '{basedir}'
+            refspec: '{refspec}'
             branches:
                 - 'origin/{branch}'
             skip-tag: true
@@ -98,7 +81,7 @@
 
 # Macro: integration-distribution-scm
 # Operation: this macro downloads the integration/distribution repo using distribution as basedir
-# Used by: {project}-csit-* and integration-patch-test-{stream} job templates
+# Used by: integration-patch-test-{stream} job template
 
 - scm:
     name: integration-distribution-scm
@@ -112,29 +95,12 @@
                 - 'origin/{branch}'
             skip-tag: true
 
-# Macro: integration-patch-scm
-# Operation: this macro downloads a test patch that can be used to debug in the sandbox
-# Used by: {project}-csit-* job templates
-
-- scm:
-    name: integration-test-scm
-    scm:
-        - git:
-            credentials-id: '{credentials-id}'
-            basedir: 'test'
-            url: '$GIT_BASE'
-            refspec: '$PATCHREFSPEC'
-            branches:
-                - 'origin/{branch}'
-            skip-tag: true
-            choosing-strategy: 'gerrit'
-
-# Macro: integration-test-gerrit-trigger-patch-submitted
-# Operation: this macro sets a trigger for patch submit on csit/suites/{project}/**
+# Macro: integration-trigger-patch-submitted
+# Operation: this macro sets a trigger for patch submitted on a path pattern
 # Used by: {project}-verify-csit-* job templates
 
 - trigger:
-    name: integration-test-gerrit-trigger-patch-submitted
+    name: integration-trigger-patch-submitted
     triggers:
         - gerrit:
             server-name: 'OpenDaylight'
@@ -156,43 +122,14 @@
                     branch-pattern: '**/{branch}'
                 file-paths:
                   - compare-type: 'ANT'
-                    pattern: 'csit/suites/{project}/**'
+                    pattern: '{pattern}'
 
-# Macro: integration-csit-gerrit-trigger-patch-submitted
-# Operation: this macro sets a trigger for patch submit on csit/libraries
-# Used by: integration-verify-csit-1node-{stream} job template
-
-- trigger:
-    name: integration-csit-gerrit-trigger-patch-submitted
-    triggers:
-        - gerrit:
-            server-name: 'OpenDaylight'
-            trigger-on:
-                - patchset-created-event:
-                    exclude-drafts: 'true'
-                    exclude-trivial-rebase: 'false'
-                    exclude-no-code-change: 'true'
-                - draft-published-event
-                - comment-added-contains-event:
-                    comment-contains-value: 'recheck'
-                - comment-added-contains-event:
-                    comment-contains-value: 'reverify'
-            projects:
-              - project-compare-type: 'ANT'
-                project-pattern: '{name}'
-                branches:
-                  - branch-compare-type: 'ANT'
-                    branch-pattern: '**/{branch}'
-                file-paths:
-                  - compare-type: 'ANT'
-                    pattern: 'csit/libraries/*'
-
-# Macro: integration-csit-gerrit-trigger-patch-merged
-# Operation: this macro sets a trigger for patch merged on csit/**
+# Macro: integration-trigger-patch-merged
+# Operation: this macro sets a trigger for patch merged on a path pattern
 # Used by: not used yet
 
 - trigger:
-    name: integration-csit-gerrit-trigger-patch-merged
+    name: integration-gerrit-patch-merged
     triggers:
         - gerrit:
             server-name: 'OpenDaylight'
@@ -208,7 +145,7 @@
                     branch-pattern: '**/{branch}'
                 file-paths:
                   - compare-type: 'ANT'
-                    pattern: 'csit/**'
+                    pattern: '{pattern}'
 
 # Macro: integration-jclouds-controller-mininet
 # Operation: this macro will spin the controller and mininet vms

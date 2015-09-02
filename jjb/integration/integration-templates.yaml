@@ -61,8 +61,10 @@
         - integration-distribution-scm:
             credentials-id: '{ssh-credentials}'
             branch: 'master'
-        - integration-gerrit-test-scm:
+        - integration-gerrit-scm:
             credentials-id: '{ssh-credentials}'
+            basedir: 'test'
+            refspec: '$GERRIT_REFSPEC'
             branch: 'master'
 
     wrappers:
@@ -76,10 +78,10 @@
                 - '{ssh-credentials}'
 
     triggers:
-        - integration-test-gerrit-trigger-patch-submitted:
+        - integration-trigger-patch-submitted:
             name: 'integration/test'
             branch: 'master'
-            project: '{project}'
+            pattern: 'csit/suites/{project}/**'
 
     builders:
         - integration-get-slave-addresses
@@ -134,9 +136,11 @@
         - integration-distribution-scm:
             credentials-id: '{ssh-credentials}'
             branch: '{branch}'
-        - integration-test-scm:
+        - integration-gerrit-scm:
             credentials-id: '{ssh-credentials}'
-            branch: 'stable/helium'
+            basedir: 'test'
+            refspec: '$PATCHREFSPEC'
+            branch: 'master'
 
     wrappers:
         - build-timeout
@@ -233,8 +237,10 @@
         - integration-distribution-scm:
             credentials-id: '{ssh-credentials}'
             branch: 'master'
-        - integration-gerrit-test-scm:
+        - integration-gerrit-scm:
             credentials-id: '{ssh-credentials}'
+            basedir: 'test'
+            refspec: '$GERRIT_REFSPEC'
             branch: 'master'
 
     wrappers:
@@ -248,10 +254,10 @@
                 - '{ssh-credentials}'
 
     triggers:
-        - integration-test-gerrit-trigger-patch-submitted:
+        - integration-trigger-patch-submitted:
             name: 'integration/test'
             branch: 'master'
-            project: '{project}'
+            pattern: 'csit/suites/{project}/**'
 
     builders:
         - integration-get-slave-addresses
@@ -306,8 +312,10 @@
         - integration-distribution-scm:
             credentials-id: '{ssh-credentials}'
             branch: '{branch}'
-        - integration-test-scm:
+        - integration-gerrit-scm:
             credentials-id: '{ssh-credentials}'
+            basedir: 'test'
+            refspec: '$PATCHREFSPEC'
             branch: 'master'
 
     wrappers:
@@ -403,8 +411,10 @@
         - integration-distribution-scm:
             credentials-id: '{ssh-credentials}'
             branch: '{branch}'
-        - integration-test-scm:
+        - integration-gerrit-scm:
             credentials-id: '{ssh-credentials}'
+            basedir: 'test'
+            refspec: '$PATCHREFSPEC'
             branch: 'master'
 
     wrappers:
@@ -495,8 +505,10 @@
         - integration-distribution-scm:
             credentials-id: '{ssh-credentials}'
             branch: 'master'
-        - integration-gerrit-test-scm:
+        - integration-gerrit-scm:
             credentials-id: '{ssh-credentials}'
+            basedir: 'test'
+            refspec: '$GERRIT_REFSPEC'
             branch: 'master'
 
     wrappers:
@@ -510,10 +522,10 @@
                 - '{ssh-credentials}'
 
     triggers:
-        - integration-test-gerrit-trigger-patch-submitted:
+        - integration-trigger-patch-submitted:
             name: 'integration/test'
             branch: 'master'
-            project: '{project}'
+            pattern: 'csit/suites/{project}/**'
 
     builders:
         - integration-get-slave-addresses
@@ -569,8 +581,10 @@
         - integration-distribution-scm:
             credentials-id: '{ssh-credentials}'
             branch: '{branch}'
-        - integration-test-scm:
+        - integration-gerrit-scm:
             credentials-id: '{ssh-credentials}'
+            basedir: 'test'
+            refspec: '$PATCHREFSPEC'
             branch: 'master'
 
     wrappers:
@@ -668,8 +682,10 @@
         - integration-distribution-scm:
             credentials-id: '{ssh-credentials}'
             branch: '{branch}'
-        - integration-test-scm:
+        - integration-gerrit-scm:
             credentials-id: '{ssh-credentials}'
+            basedir: 'test'
+            refspec: '$PATCHREFSPEC'
             branch: 'master'
 
     wrappers:
