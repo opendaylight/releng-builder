@@ -331,7 +331,7 @@
 
     triggers:
         - reverse:
-            jobs: 'controller-merge-{stream},yangtools-merge-{stream},odlparent-merge-{stream}'
+            jobs: 'controller-merge-{stream},yangtools-merge-{stream},odlparent-merge-{stream},netconf-merge-{stream}'
             result: 'success'
 
     prebuilders:
@@ -351,7 +351,7 @@
 
     publishers:
         - email-notification:
-            email-prefix: '[of-config] [controller] [yangtools] [odlparent]'
+            email-prefix: '[of-config] [controller] [yangtools] [odlparent] [netconf]'
         - jacoco-report
 
 - job-template:
