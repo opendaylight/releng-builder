@@ -155,8 +155,10 @@
             project: 'integration/test'
 
     scm:
-        - integration-gerrit-test-scm:
+        - integration-gerrit-scm:
             credentials-id: '{ssh-credentials}'
+            basedir: 'test'
+            refspec: '$GERRIT_REFSPEC'
             branch: 'master'
 
     wrappers:
@@ -220,8 +222,10 @@
         - integration-distribution-scm:
             credentials-id: '{ssh-credentials}'
             branch: 'master'
-        - integration-gerrit-test-scm:
+        - integration-gerrit-scm:
             credentials-id: '{ssh-credentials}'
+            basedir: 'test'
+            refspec: '$GERRIT_REFSPEC'
             branch: 'master'
 
     wrappers:
@@ -235,9 +239,10 @@
                 - '{ssh-credentials}'
 
     triggers:
-        - integration-csit-gerrit-trigger-patch-submitted:
+        - integration-trigger-patch-submitted:
             name: 'integration/test'
             branch: 'master'
+            pattern: 'csit/libraries/*'
 
     builders:
         - integration-get-slave-addresses
@@ -371,6 +376,8 @@
     scm:
         - integration-gerrit-scm:
             credentials-id: '{ssh-credentials}'
+            basedir: '$GERRIT_PROJECT'
+            refspec: '$GERRIT_REFSPEC'
             branch: '{branch}'
         - integration-distribution-scm:
             credentials-id: '{ssh-credentials}'
