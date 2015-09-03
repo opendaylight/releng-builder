@@ -16,6 +16,24 @@
       "revId": "5377c55037ea2d2768b90151936fe5236c3249cf",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_32d775ef",
+        "filename": "jjb/integration/integration-test-jobs.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2015-09-03T18:15:42Z",
+      "side": 1,
+      "message": "In csit-verify jobs, the same macro is used, and we filter for suites corresponding to triggering project. We re-use the same macro in this python-verify job, but here we want to be triggered by any change (as the triggering project is integration/test itself). I do not think integration-trigger-patch-submitted macro would work if pattern value is not specified.",
+      "parentUuid": "3a79b1b5_f2ba5dbf",
+      "revId": "5377c55037ea2d2768b90151936fe5236c3249cf",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
