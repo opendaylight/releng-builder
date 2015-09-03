@@ -168,9 +168,10 @@
                 - '{ssh-credentials}'
 
     triggers:
-        - gerrit-trigger-patch-submitted:
+        - integration-trigger-patch-submitted:
             name: 'integration/test'
             branch: 'master'
+            pattern: '**'
 
     builders:
         - shell: |
