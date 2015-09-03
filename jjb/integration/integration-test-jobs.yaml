@@ -204,7 +204,6 @@
     parameters:
         - project-parameter:
             project: 'integration/test'
-        - integration-distribution-git-url
         - integration-branch:
             branch: 'master'
         - integration-bundleurl:
@@ -219,9 +218,6 @@
             test-plan: 'openflowplugin-flow-services.txt'
 
     scm:
-        - integration-distribution-scm:
-            credentials-id: '{ssh-credentials}'
-            branch: 'master'
         - integration-gerrit-scm:
             credentials-id: '{ssh-credentials}'
             basedir: 'test'
@@ -282,16 +278,10 @@
     parameters:
         - project-parameter:
             project: 'integration/distribution'
-        - integration-distribution-git-url
         - integration-branch:
             branch: '{branch}'
         - integration-bundleurl:
             bundleurl: 'last'
-
-    scm:
-        - integration-distribution-scm:
-            credentials-id: '{ssh-credentials}'
-            branch: '{branch}'
 
     wrappers:
         - build-timeout

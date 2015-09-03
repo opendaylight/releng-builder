@@ -15,7 +15,6 @@
 # Parameters:
 #
 # project-parameter: main project integration/test ($PROJECT)
-# integration-distribution-git-url: distribution GIT ($DISTROGITURL)
 # integration-branch: distribution branch ($BRANCH)
 # integration-controller-bundleurl: distribution URL ($BUNDLEURL)
 # integration-controller-scope: only or all features ($CONTROLLERSCOPE)
@@ -43,7 +42,6 @@
     parameters:
         - project-parameter:
             project: 'integration/test'
-        - integration-distribution-git-url
         - integration-branch:
             branch: 'master'
         - integration-bundleurl:
@@ -58,9 +56,6 @@
             test-plan: '{project}-{functionality}.txt'
 
     scm:
-        - integration-distribution-scm:
-            credentials-id: '{ssh-credentials}'
-            branch: 'master'
         - integration-gerrit-scm:
             credentials-id: '{ssh-credentials}'
             basedir: 'test'
@@ -116,7 +111,6 @@
     parameters:
         - project-parameter:
             project: 'integration/test'
-        - integration-distribution-git-url
         - integration-branch:
             branch: '{branch}'
         - integration-bundleurl:
@@ -133,9 +127,6 @@
             branch: 'stable/helium'
 
     scm:
-        - integration-distribution-scm:
-            credentials-id: '{ssh-credentials}'
-            branch: '{branch}'
         - integration-gerrit-scm:
             credentials-id: '{ssh-credentials}'
             basedir: 'test'
@@ -219,7 +210,6 @@
     parameters:
         - project-parameter:
             project: 'integration/test'
-        - integration-distribution-git-url
         - integration-branch:
             branch: 'master'
         - integration-bundleurl:
@@ -234,9 +224,6 @@
             test-plan: '{project}-{functionality}.txt'
 
     scm:
-        - integration-distribution-scm:
-            credentials-id: '{ssh-credentials}'
-            branch: 'master'
         - integration-gerrit-scm:
             credentials-id: '{ssh-credentials}'
             basedir: 'test'
@@ -292,7 +279,6 @@
     parameters:
         - project-parameter:
             project: 'integration/test'
-        - integration-distribution-git-url
         - integration-branch:
             branch: '{branch}'
         - integration-bundleurl:
@@ -309,9 +295,6 @@
             branch: 'master'
 
     scm:
-        - integration-distribution-scm:
-            credentials-id: '{ssh-credentials}'
-            branch: '{branch}'
         - integration-gerrit-scm:
             credentials-id: '{ssh-credentials}'
             basedir: 'test'
@@ -391,7 +374,6 @@
     parameters:
         - project-parameter:
             project: 'integration/test'
-        - integration-distribution-git-url
         - integration-branch:
             branch: '{branch}'
         - integration-bundleurl:
@@ -408,9 +390,6 @@
             branch: 'master'
 
     scm:
-        - integration-distribution-scm:
-            credentials-id: '{ssh-credentials}'
-            branch: '{branch}'
         - integration-gerrit-scm:
             credentials-id: '{ssh-credentials}'
             basedir: 'test'
@@ -487,7 +466,6 @@
     parameters:
         - project-parameter:
             project: 'integration/test'
-        - integration-distribution-git-url
         - integration-branch:
             branch: 'master'
         - integration-bundleurl:
@@ -502,9 +480,6 @@
             test-plan: '{project}-{functionality}.txt'
 
     scm:
-        - integration-distribution-scm:
-            credentials-id: '{ssh-credentials}'
-            branch: 'master'
         - integration-gerrit-scm:
             credentials-id: '{ssh-credentials}'
             basedir: 'test'
@@ -561,7 +536,6 @@
     parameters:
         - project-parameter:
             project: 'integration/test'
-        - integration-distribution-git-url
         - integration-branch:
             branch: '{branch}'
         - integration-bundleurl:
@@ -578,9 +552,6 @@
             branch: 'master'
 
     scm:
-        - integration-distribution-scm:
-            credentials-id: '{ssh-credentials}'
-            branch: '{branch}'
         - integration-gerrit-scm:
             credentials-id: '{ssh-credentials}'
             basedir: 'test'
@@ -662,7 +633,6 @@
     parameters:
         - project-parameter:
             project: 'integration/test'
-        - integration-distribution-git-url
         - integration-branch:
             branch: '{branch}'
         - integration-bundleurl:
@@ -679,9 +649,6 @@
             branch: 'master'
 
     scm:
-        - integration-distribution-scm:
-            credentials-id: '{ssh-credentials}'
-            branch: '{branch}'
         - integration-gerrit-scm:
             credentials-id: '{ssh-credentials}'
             basedir: 'test'
