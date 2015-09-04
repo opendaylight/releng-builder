@@ -75,7 +75,7 @@
     triggers:
         - integration-trigger-patch-submitted:
             name: 'integration/test'
-            branch: 'master'
+            branch: '{branch}'
             pattern: 'csit/suites/{project}/**'
 
     builders:
