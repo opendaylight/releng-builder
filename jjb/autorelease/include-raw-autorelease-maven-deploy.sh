@@ -19,4 +19,8 @@ for m in `xmlstarlet sel -N x=http://maven.apache.org/POM/4.0.0 -t -m '//x:modul
     cp -r "/tmp/r/org/opendaylight/$m" m2repo/org/opendaylight/
 done)
 
+# Add exception for integration project since they release under the
+# integration top-level project.
+cp -r "/tmp/r/org/opendaylight/integration" m2repo/org/opendaylight/
+
 mvn org.sonatype.plugins:nexus-staging-maven-plugin:1.6.2:deploy-staged-repository -DrepositoryDirectory="`pwd`/m2repo" -DnexusUrl=http://nexus.opendaylight.org/ -DstagingProfileId="21a27b7f3bbb8d" -DserverId="opendaylight.weekly" -s $AUTORELEASE_SETTINGS -gs $ODL_GLOBAL_SETTINGS | tee $WORKSPACE/deploy-staged-repository.log

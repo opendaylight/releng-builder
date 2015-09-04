@@ -82,3 +82,8 @@
         - shell: |
             uname -a
             df -h
+
+- builder:
+    name: autorelease-get-integration-test-variables
+    builders:
+    - shell: !include-raw include-raw-autorelease-get-integration-test-variables.sh
