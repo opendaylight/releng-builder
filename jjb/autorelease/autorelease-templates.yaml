@@ -137,6 +137,7 @@
             odl-global-settings: '{odl-global-settings}'
         - autorelease-maven-deploy
         - shell: "./scripts/list-project-dependencies.sh"
+        - autorelease-get-integration-test-variables
         - autorelease-maven-sources:
             maven-version: '{mvn33}'
             settings: '{autorelease-settings}'
@@ -145,7 +146,12 @@
         - autorelease-sys-stats
 
     publishers:
-        - archive-artifacts:
-            artifacts: '*.log,patches/*.patch'
-        - email-notification:
-            email-prefix: '[autorelease]'
+    - archive-artifacts:
+        artifacts: '*.prop,*.log,patches/*.patch'
+    - email-notification:
+        email-prefix: '[autorelease]'
+    - trigger-parameterized-builds:
+        - project: 'integration-distribution-test-{stream}'
+          condition: UNSTABLE
+          property-file: variables.prop
+          fail-on-missing: true
