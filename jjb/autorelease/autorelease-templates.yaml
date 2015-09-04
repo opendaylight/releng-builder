@@ -137,6 +137,7 @@
             odl-global-settings: '{odl-global-settings}'
         - autorelease-maven-deploy
         - shell: "./scripts/list-project-dependencies.sh"
+        - autorelease-get-integration-test-variables
         - autorelease-maven-sources:
             maven-version: '{mvn33}'
             settings: '{autorelease-settings}'
