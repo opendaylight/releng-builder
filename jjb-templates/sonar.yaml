@@ -1,5 +1,5 @@
 - job-template:
-    name: 'PROJECT-sonar'
+    name: 'PROJECT_SHORTNAME-sonar'
 
     project-type: maven
     node: dynamic_verify
@@ -30,7 +30,7 @@
     triggers:
         - timed: 'H H * * *'
         - gerrit-trigger-patch-sonar:
-            name: 'PROJECT'
+            name: 'PROJECT_PATH'
 
     prebuilders:
         - wipe-org-opendaylight-repo
@@ -52,5 +52,5 @@
             language: 'java'
             maven-opts: '-Xmx6144m -XX:MaxPermSize=1024m'
         - email-notification:
-            email-prefix: '[PROJECT]'
+            email-prefix: '[PROJECT_SHORTNAME]'
         - jacoco-report

@@ -1,5 +1,5 @@
 - job-template:
-    name: 'PROJECT-merge-{stream}'
+    name: 'PROJECT_SHORTNAME-merge-{stream}'
 
     # Job template for ODL merge jobs
     #
@@ -38,7 +38,7 @@
 
     triggers:
         - gerrit-trigger-patch-merged:
-            name: 'PROJECT'
+            name: 'PROJECT_PATH'
             branch: '{branch}'
 
     prebuilders:
@@ -59,7 +59,7 @@
     publishers:
         ARCHIVE_ARTIFACTS
         - email-notification:
-            email-prefix: '[PROJECT]'
+            email-prefix: '[PROJECT_SHORTNAME]'
         - maven-deploy:
             id: ''
             unique-version: true
