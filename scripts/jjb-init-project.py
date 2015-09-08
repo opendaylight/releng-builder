@@ -191,7 +191,8 @@ with open(project_file, "w") as outfile:
             for line in infile:
                 if not re.match("\s*#", line):
                     line = re.sub("JOB_TEMPLATES", job_templates_yaml, line)
-                    line = re.sub("PROJECT", project.project, line)
+                    line = re.sub("PROJECT_SHORTNAME", project.project, line)
+                    line = re.sub("PROJECT_PATH", project.path, line)
                     line = re.sub("JENKINS_SETTINGS", jenkins_settings, line)
                     line = re.sub("DISABLED", disabled, line)
                     line = re.sub("STREAMS", str_streams, line)

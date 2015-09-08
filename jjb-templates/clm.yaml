@@ -1,5 +1,5 @@
 - job-template:
-    name: 'PROJECT-clm-{stream}'
+    name: 'PROJECT_SHORTNAME-clm-{stream}'
 
     project-type: maven
     node: dynamic_verify
@@ -43,8 +43,8 @@
 
     postbuilders:
         - check-clm:
-            application-name: PROJECT
+            application-name: PROJECT_SHORTNAME
 
     publishers:
         - email-notification:
-            email-prefix: '[PROJECT]'
+            email-prefix: '[PROJECT_SHORTNAME]'

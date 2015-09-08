@@ -4,16 +4,17 @@
 
 # ODL Releng build templates
 - project:
-    name: PROJECT
+    name: PROJECT_SHORTNAME
     jobs:
 JOB_TEMPLATES
 
     # stream:    release stream (eg. stable-lithium or beryllium)
     # branch:    git branch (eg. stable/lithium or master)
     STREAMS
-    project: 'PROJECT'
+    project: 'PROJECT_PATH'
 
 # For the Job templates below replace instances of:
-# PROJECT with your project name (eg. controller)
+# PROJECT_SHORTNAME with your project name (eg. circuitsw)
+# PROJECT_PATH with your project name (eg. ofextensions/circuitsw)
 # MAVEN_GOALS with your maven goals to build
 # MAVEN_OPTS with your maven options to build

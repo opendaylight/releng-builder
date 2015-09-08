@@ -78,7 +78,16 @@ def create_template_config(project_dir, args):
 
 
 class Project:
+    """Represents a Gerrit Project
+
+    Attributes:
+        path(str): The full Gerrit path to a project
+        meta_project(str): The top-level project name in Gerrit
+        project(str): The subproject name or project shortname
+    """
+
     def __init__(self, project):
+        self.path = project
         self.meta_project = None
         self.project = project
 

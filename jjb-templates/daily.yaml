@@ -1,5 +1,5 @@
 - job-template:
-    name: 'PROJECT-daily-{stream}'
+    name: 'PROJECT_SHORTNAME-daily-{stream}'
 
     # Job template for daily builders
     #
@@ -56,5 +56,5 @@
 
     publishers:
         - email-notification:
-            email-prefix: '[PROJECT]'
+            email-prefix: '[PROJECT_SHORTNAME]'
         - jacoco-report
