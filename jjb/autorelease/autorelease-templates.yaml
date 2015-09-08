@@ -152,6 +152,6 @@
         email-prefix: '[autorelease]'
     - trigger-parameterized-builds:
         - project: 'integration-distribution-test-{integration-test}'
-          condition: UNSTABLE
+          condition: UNSTABLE_OR_BETTER
           property-file: variables.prop
           fail-on-missing: true
