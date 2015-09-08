@@ -30,9 +30,12 @@ if project.meta_project is not None:
     project_dir = os.path.join("jjb", project.meta_project, project.project)
     jenkins_settings = "%s-%s-settings" % (project.meta_project,
                                            project.project)
+    project_path = "%s/%s" % (project.meta_project,
+                                   project.project)
 else:
     project_dir = os.path.join("jjb", project.project)
     jenkins_settings = "%s-settings" % project.project
+    project_path = "%s" % project.project
 
 project_file = os.path.join(project_dir, "%s.yaml" % project)
 dependent_jobs = ""
@@ -192,6 +195,7 @@ with open(project_file, "w") as outfile:
                 if not re.match("\s*#", line):
                     line = re.sub("JOB_TEMPLATES", job_templates_yaml, line)
                     line = re.sub("PROJECT", project.project, line)
+                    line = re.sub("PROJ_PATH", project_path, line)
                     line = re.sub("JENKINS_SETTINGS", jenkins_settings, line)
                     line = re.sub("DISABLED", disabled, line)
                     line = re.sub("STREAMS", str_streams, line)
