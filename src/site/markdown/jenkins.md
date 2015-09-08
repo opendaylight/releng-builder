@@ -5,7 +5,18 @@ server. The system utilizes
 [Jenkins Job Builder](http://ci.openstack.org/jenkins-job-builder/ "JJB")
 \(JJB\) for the creation and management of the Jenkins jobs.
 
-# Jenkins Master
+Sections:
+
+* [Jenkins Master](#jenkins_master)
+* [Build Slaves](#build_slaves)
+* [Creating Jenkins Jobs](#creating_jenkins_jobs)
+    * [Jenkins Job Builder Installation](#jjb_install)
+    * [Jenkins Job Templates](#jjb_templates)
+    * [Jenkins Job Basic Configuration](#jjb_basic_configuration)
+    * [Jenkins Job Maven Properties](#jjb_maven_properties)
+* [Jenkins Sandbox](#jenkins_sandbox)
+
+# <a name="jenkins_master">Jenkins Master</a>
 
 https://jenkins.opendaylight.org/releng/
 
@@ -15,7 +26,7 @@ RelEng repo ([https://git.opendaylight.org/gerrit/gitweb?p=releng%2Fbuilder.git;
 Project contributors can no longer edit the Jenkins jobs directly on the
 server.
 
-# Build Slaves
+# <a name="build_slaves">Build Slaves</a>
 
 The Jenkins jobs are run on build slaves (executors) which are created on an
 as-needed basis.  If no idle build slaves are available a new VM is brought
@@ -30,7 +41,7 @@ Slave Template Names are needed for jobs that take advantage of multiple
 slaves as they must be specifically called out by template name instead of
 label.
 
-# Adding new components to the slaves
+## Adding new components to the slaves
 
 If your project needs something added to one of the slaves used during build
 and test you can help us get things added in faster by doing one of the
@@ -250,7 +261,7 @@ slave and start handling jobs on it.
   </tr>
 </table>
 
-# Creating Jenkins Jobs
+# <a name="creating_jenkins_jobs">Creating Jenkins Jobs</a>
 
 Jenkins Job Builder takes simple descriptions of Jenkins jobs in YAML format, and uses them to configure Jenkins.
 
@@ -262,7 +273,7 @@ OpenDaylight releng/builder gerrit project
 * [releng/builder](https://git.opendaylight.org/gerrit/#/admin/projects/releng/builder)
   Git repo
 
-## Jenkins Job Builder Installation
+## <a name="jjb_install">Jenkins Job Builder Installation</a>
 
 ### Using Docker
 [Docker](https://www.docker.com/whatisdocker/) is an open platform used to
@@ -322,7 +333,7 @@ Update: Here is a link to e-mail with suggestions on how to install and
 upgrade JJB properly:
 https://lists.opendaylight.org/pipermail/integration-dev/2015-April/003016.html
 
-## Jenkins Job Templates
+## <a name="jjb_templates">Jenkins Job Templates</a>
 
 The ODL Releng project provides 4 job templates which can be used to
 define basic jobs.
@@ -408,7 +419,7 @@ Some considerations when using this job:
   times by a system test knowable person, the integration group can help with
   that
 
-## Basic Job Configuration
+## <a name="jjb_basic_configuration">Basic Job Configuration</a>
 
 To create jobs based on the above templates you can use the example
 template which will create 6 jobs (verify, merge, and daily jobs for both
@@ -509,7 +520,7 @@ search for files with the name \<project\>.yaml. The normal \<project\>.yaml
 file can then be left in tact with the "# REMOVE THIS LINE IF..." comment so
 it will be automatically updated.
 
-## Maven Properties
+## <a name="jjb_maven_properties">Maven Properties</a>
 
 We provide a properties which your job can take advantage of if you want to do
 something different depending on the job type that is run. If you create a
@@ -524,7 +535,8 @@ wish to run in your project.
                 Maven property
                 <sonar>true</sonar>.
 
-# Jenkins Sandbox
+# <a name="jenkins_sandbox">Jenkins Sandbox</a>
+
 [https://jenkins.opendaylight.org/sandbox](https://jenkins.opendaylight.org/sandbox/)
 
 The Sandbox instance's purpose is to allow projects to test their JJB setups
