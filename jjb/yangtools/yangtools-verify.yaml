@@ -95,6 +95,11 @@
             name: 'yangtools'
             branch: '{branch}'
 
+    prebuilders:
+        - provide-maven-settings:
+            global-settings-file: '{odl-global-settings}'
+            settings-file: '{yangtools-settings}'
+
     maven:
         maven-name: '{mvnver}'
         root-pom: 'pom.xml'
