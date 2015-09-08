@@ -27,7 +27,7 @@ all_systems() {
 
 rh_systems_init() {
     # remove current networking configurations
-    rm -f /etc/sysconfig/network-scripts/ifcfg-{eth,docker}*
+    rm -f /etc/sysconfig/network-scripts/ifcfg-eth*
 }
 
 rh_systems_post() {

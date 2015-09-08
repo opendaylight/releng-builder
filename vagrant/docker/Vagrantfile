@@ -14,12 +14,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # so use that
   config.ssh.username = 'root'
 
-  # Fedora and EL systems default to requiring tty for sudo
-  # This should have been disabled with the Vagrant ready
-  # base box conversion (see rackspace-convert-base vagrant)
-  # but just to be safe
-  config.ssh.pty = true
-
   # make sure to set the following in your
   # ~/.vagrant.d/boxes/dummy/0/rackspace/Vagrantfile
   # rs.username
