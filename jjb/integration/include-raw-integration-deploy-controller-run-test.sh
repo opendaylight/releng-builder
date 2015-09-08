@@ -71,9 +71,6 @@ done
 echo "Cool down for 1 min :)..."
 sleep 60
 
-echo "Checking OSGi bundles..."
-sshpass -p karaf /tmp/${BUNDLEFOLDER}/bin/client -u karaf 'bundle:list'
-
 EOF
 
 scp ${WORKSPACE}/controller-script.sh ${CONTROLLER0}:/tmp
