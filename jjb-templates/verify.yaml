@@ -1,5 +1,5 @@
 - job-template:
-    name: 'PROJECT-verify-{stream}'
+    name: 'PROJECT_SHORTNAME-verify-{stream}'
 
     # Job template for ODL verify jobs
     #
@@ -49,7 +49,7 @@
 
     triggers:
         - gerrit-trigger-patch-submitted:
-            name: 'PROJECT'
+            name: 'PROJECT_PATH'
             branch: '{branch}'
 
     builders:
@@ -67,5 +67,5 @@
     publishers:
         - findbugs
         - email-notification:
-            email-prefix: '[PROJECT]'
+            email-prefix: '[PROJECT_SHORTNAME]'
         - jacoco-report
