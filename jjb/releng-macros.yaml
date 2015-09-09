@@ -106,6 +106,22 @@
                 unstable: true
                 notbuilt: true
 
+- trigger:
+    name: gerrit-trigger-patch-site-merged
+    triggers:
+        - gerrit:
+            server-name: 'OpenDaylight'
+            trigger-on:
+                - change-merged-event
+                - comment-added-contains-event:
+                    comment-contains-value: 'republish'
+            projects:
+              - project-compare-type: 'ANT'
+                project-pattern: '{name}'
+                branches:
+                    - branch-compare-type: 'ANT'
+                      branch-pattern: '**/{branch}'
+
 - publisher:
     name: archive-artifacts
     publishers:
