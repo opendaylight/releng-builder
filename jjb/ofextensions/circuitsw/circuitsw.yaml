@@ -25,10 +25,11 @@
                 - openjdk7
                 - openjdk8
 
-    project: 'circuitsw'
+    project: 'ofextensions/circuitsw'
 
 # For the Job templates below replace instances of:
-# PROJECT with your project name (eg. controller)
+# PROJECT_SHORTNAME with your project name (eg. circuitsw)
+# PROJECT_PATH with your project name (eg. ofextensions/circuitsw)
 # MAVEN_GOALS with your maven goals to build
 # MAVEN_OPTS with your maven options to build
 
@@ -83,7 +84,7 @@
 
     triggers:
         - gerrit-trigger-patch-submitted:
-            name: 'circuitsw'
+            name: 'ofextensions/circuitsw'
             branch: '{branch}'
 
     builders:
@@ -144,7 +145,7 @@
 
     triggers:
         - gerrit-trigger-patch-merged:
-            name: 'circuitsw'
+            name: 'ofextensions/circuitsw'
             branch: '{branch}'
 
     prebuilders:
@@ -386,7 +387,7 @@
     triggers:
         - timed: 'H H * * *'
         - gerrit-trigger-patch-sonar:
-            name: 'circuitsw'
+            name: 'ofextensions/circuitsw'
 
     prebuilders:
         - wipe-org-opendaylight-repo
