@@ -2,15 +2,15 @@
 
 # vim: sw=4 ts=4 sts=4 et :
 
-fedora_changes() {
+rh_changes() {
     # make sure we're fully updated
     echo "---> Updating OS"
-    dnf clean all
-    dnf update -y -q
+    yum clean all
+    yum update -y -q
 
     # install docker and enable it
     echo "---> Installing docker"
-    dnf install -y docker supervisor bridge-utils
+    yum install -y docker supervisor bridge-utils
     systemctl enable docker
 
     # configure docker networking so that it does not conflict with LF
@@ -24,13 +24,6 @@ EOL
     groupadd docker
 }
 
-el_changes() {
-    # make sure we're fully updated
-    echo "---> Updating OS"
-    yum clean all
-    yum update -q -y
-}
-
 ubuntu_changes() {
     # make sure we're fully updated
     echo "---> Updating OS"
@@ -40,11 +33,8 @@ ubuntu_changes() {
 
 OS=`/usr/bin/facter operatingsystem`
 case "$OS" in
-    Fedora)
-        fedora_changes
-    ;;
-    Centos|RedHat)
-        el_changes
+    CentOS|Fedora|RedHat)
+        rh_changes
     ;;
     Ubuntu)
         ubuntu_changes
