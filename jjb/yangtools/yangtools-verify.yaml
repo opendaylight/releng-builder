@@ -6,11 +6,15 @@
     jdk:
         - openjdk7
         - openjdk8
+
+    # {mvn*} values are defined in releng/builder jjb/releng-defaults.yaml
     maven:
         - mvn31:
-            mvnver: "Maven 3.1.1"
+            mvnver: {mvn31}
         - mvn32:
-            mvnver: "Maven 3.2.5"
+            mvnver: {mvn32}
+        - mvn33:
+            mvnver: {mvn33}
 
     stream:
         - beryllium:
@@ -28,9 +32,11 @@
         - openjdk8
     maven:
         - mvn31:
-            mvnver: "Maven 3.1.1"
+            mvnver: {mvn31}
         - mvn32:
-            mvnver: "Maven 3.2.5"
+            mvnver: {mvn32}
+        - mvn33:
+            mvnver: {mvn33}
 
     stream:
         - stable-lithium:
@@ -49,9 +55,11 @@
         - mvn30:
             mvnver: "Maven 3.0.5"
         - mvn31:
-            mvnver: "Maven 3.1.1"
+            mvnver: {mvn31}
         - mvn32:
-            mvnver: "Maven 3.2.5"
+            mvnver: {mvn32}
+        - mvn33:
+            mvnver: {mvn33}
 
     stream:
         - stable-helium:
