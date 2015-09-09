@@ -39,7 +39,8 @@
     project: 'openflowplugin'
 
 # For the Job templates below replace instances of:
-# PROJECT with your project name (eg. controller)
+# PROJECT_SHORTNAME with your project name (eg. circuitsw)
+# PROJECT_PATH with your project name (eg. ofextensions/circuitsw)
 # MAVEN_GOALS with your maven goals to build
 # MAVEN_OPTS with your maven options to build
 
@@ -100,6 +101,9 @@
     builders:
         - wipe-org-opendaylight-repo
         - jacoco-nojava-workaround
+        - provide-maven-settings:
+            global-settings-file: '{odl-global-settings}'
+            settings-file: '{yangtools-settings}'
         - maven-target:
             maven-version: '{mvn33}'
             pom: 'pom.xml'
@@ -161,6 +165,9 @@
     prebuilders:
         - wipe-org-opendaylight-repo
         - jacoco-nojava-workaround
+        - provide-maven-settings:
+            global-settings-file: '{odl-global-settings}'
+            settings-file: '{yangtools-settings}'
 
     maven:
         maven-name: '{mvn33}'
@@ -228,6 +235,9 @@
     prebuilders:
         - wipe-org-opendaylight-repo
         - jacoco-nojava-workaround
+        - provide-maven-settings:
+            global-settings-file: '{odl-global-settings}'
+            settings-file: '{yangtools-settings}'
 
     maven:
         maven-name: '{mvn33}'
@@ -285,6 +295,9 @@
 
     prebuilders:
         - wipe-org-opendaylight-repo
+        - provide-maven-settings:
+            global-settings-file: '{odl-global-settings}'
+            settings-file: '{yangtools-settings}'
 
     maven:
         maven-name: '{mvn33}'
@@ -350,6 +363,9 @@
     prebuilders:
         - wipe-org-opendaylight-repo
         - jacoco-nojava-workaround
+        - provide-maven-settings:
+            global-settings-file: '{odl-global-settings}'
+            settings-file: '{yangtools-settings}'
 
     maven:
         maven-name: '{mvn33}'
@@ -404,6 +420,9 @@
     prebuilders:
         - wipe-org-opendaylight-repo
         - jacoco-nojava-workaround
+        - provide-maven-settings:
+            global-settings-file: '{odl-global-settings}'
+            settings-file: '{yangtools-settings}'
 
     maven:
         maven-name: '{mvn33}'
@@ -458,6 +477,9 @@
 
     prebuilders:
         - wipe-org-opendaylight-repo
+        - provide-maven-settings:
+            global-settings-file: '{odl-global-settings}'
+            settings-file: '{yangtools-settings}'
 
     maven:
         maven-name: '{mvn33}'
