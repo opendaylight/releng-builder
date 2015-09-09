@@ -155,3 +155,107 @@
           condition: UNSTABLE_OR_BETTER
           property-file: variables.prop
           fail-on-missing: true
+
+###
+### Maven Sites
+###
+
+- job-template:
+    name: 'autorelease-site-publish-{stream}'
+    node: dynamic_merge
+    concurrent: false
+    jdk: 'openjdk8'
+
+    # This job's purpose is to publish maven site
+
+    project-type: maven
+
+    logrotate:
+        daysToKeep: 7
+        numToKeep: 10
+        artifactDaysToKeep: -1
+        artifactNumToKeep: -1
+
+    parameters:
+    - project-parameter:
+        project: '{project}'
+    - gerrit-parameter:
+        branch: '{branch}'
+
+    scm:
+    - gerrit-trigger-scm:
+        credentials-id: '{ssh-credentials}'
+        refspec: ''
+        choosing-strategy: 'default'
+
+    wrappers:
+    - ssh-agent-credentials:
+        users:
+        - '{ssh-credentials}'
+
+    triggers:
+    - gerrit-trigger-patch-site-merged:
+        name: '{project}'
+        branch: '{branch}'
+
+    maven:
+        maven-name: '{mvn33}'
+        root-pom: 'pom.xml'
+        goals: 'site:site site:deploy -Dstream={stream}'
+        maven-opts: '-Xmx1024m'
+        settings: '{releng-builder-settings}'
+        global-settings: '{odl-global-settings}'
+
+    publishers:
+    - email-notification:
+        email-prefix: '[releng]'
+
+- job-template:
+    name: 'autorelease-site-verify-{stream}'
+    node: dynamic_verify
+    concurrent: true
+    jdk: 'openjdk8'
+
+    # This job's purpose is to verify maven site configuration
+
+    project-type: maven
+
+    logrotate:
+        daysToKeep: 7
+        numToKeep: 10
+        artifactDaysToKeep: -1
+        artifactNumToKeep: -1
+
+    parameters:
+    - project-parameter:
+        project: '{project}'
+    - gerrit-parameter:
+        branch: '{branch}'
+
+    scm:
+    - gerrit-trigger-scm:
+        credentials-id: '{ssh-credentials}'
+        refspec: '$GERRIT_REFSPEC'
+        choosing-strategy: 'gerrit'
+
+    wrappers:
+    - ssh-agent-credentials:
+        users:
+        - '{ssh-credentials}'
+
+    triggers:
+    - gerrit-trigger-patch-submitted:
+        name: '{project}'
+        branch: '{branch}'
+
+    maven:
+        maven-name: '{mvn33}'
+        root-pom: 'pom.xml'
+        goals: 'site:site -Dstream={stream}'
+        maven-opts: '-Xmx1024m'
+        settings: '{autorelease-settings}'
+        global-settings: '{odl-global-settings}'
+
+    publishers:
+        - email-notification:
+            email-prefix: '[releng]'
