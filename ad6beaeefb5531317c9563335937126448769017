@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a79b1b5_8464f922",
+        "filename": "jjb/yangtools/yangtools-verify.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2015-09-09T15:20:06Z",
+      "side": 1,
+      "message": "Just double checked. You cannot use variables unless it\u0027s inside of a quote. So this line should actually be:\n\n    mvnver: \u0027{mvn31}\u0027\n\nOtherwise it won\u0027t resolve.",
+      "revId": "ad6beaeefb5531317c9563335937126448769017",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
