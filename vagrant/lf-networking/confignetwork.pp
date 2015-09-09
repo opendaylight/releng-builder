@@ -76,11 +76,38 @@ options timeout:2
 ",
 }
 
-# set routing
+file { '/etc/cloud/cloud.cfg.d/00_lf_resolv.cfg':
+  content => "#cloud-config
+
+manage_resolv_conf: true
+
+resolv_conf:
+  nameservers: ['127.0.0.1', '${ns1}', '${ns2}']
+  searchdomains:
+    - ${::subdomain}
+  options:
+    timeout: 2
+",
+}
+
+file_line { 'add_resolver':
+  path  => '/etc/cloud/cloud.cfg.d/10_rackspace.cfg',
+  line  => ' - resolv_conf',
+  after => ' - update_etc_hosts',
+}
+
+# OS specific configuration
 case $::operatingsystem {
   'CentOS', 'Fedora', 'RedHat': {
     file { '/etc/sysconfig/network-scripts/route-eth0':
       content => "default via ${router} dev eth0",
+    }
+
+    # disable the DNS peerage so that our resolv.conf doesn't
+    # get destroyed
+    file_line { 'disable_peerdns':
+      path => '/etc/sysconfig/network',
+      line => 'PEERDNS=no',
     }
   }
   'Ubuntu': {
