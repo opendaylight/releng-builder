@@ -16,6 +16,14 @@
             default: '{branch}'
             description: "JJB configured GERRIT_BRANCH parameter"
 
+- parameter:
+    name: refspec-parameter
+    parameters:
+        - string:
+            name: GERRIT_REFSPEC
+            default: '{branch}'
+            description: "JJB configured GERRIT_REFSPEC parameter"
+
 - scm:
     name: git-scm
     scm:
