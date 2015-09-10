@@ -200,7 +200,7 @@
 
     maven:
         maven-name: '{mvn33}'
-        root-pom: 'pom.xml'
+        root-pom: 'site.xml'
         goals: 'site:site site:deploy -Dstream={stream}'
         maven-opts: '-Xmx1024m'
         settings: '{releng-builder-settings}'
@@ -250,7 +250,7 @@
 
     maven:
         maven-name: '{mvn33}'
-        root-pom: 'pom.xml'
+        root-pom: 'site.xml'
         goals: 'site:site -Dstream={stream}'
         maven-opts: '-Xmx1024m'
         settings: '{autorelease-settings}'
