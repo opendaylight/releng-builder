@@ -1,7 +1,7 @@
 # Get the Controller and Mininet slave addresses
 
 CONTROLLER=()
-MININET=()
+TEST_PARTNER=()
 
 IFS=',' read -ra ADDR <<< "${JCLOUDS_IPS}"
 
@@ -11,7 +11,7 @@ do
     if [ `echo ${REMHOST} | grep java` ]; then
         CONTROLLER=( "${CONTROLLER[@]}" "${i}" )
     else
-        MININET=( "${MININET[@]}" "${i}" )
+        TEST_PARTNER=( "${TEST_PARTNER[@]}" "${i}" )
     fi
 done
 
@@ -20,9 +20,9 @@ do
     echo "CONTROLLER${i}=${CONTROLLER[${i}]}" >> slave_addresses.txt
 done
 
-for i in `seq 0 $(( ${#MININET[@]} - 1 ))`
+for i in `seq 0 $(( ${#TEST_PARTNER[@]} - 1 ))`
 do
-    echo "MININET${i}=${MININET[${i}]}" >> slave_addresses.txt
+    echo "TEST_PARTNER${i}=${TEST_PARTNER[${i}]}" >> slave_addresses.txt
 done
 
 # vim: sw=4 ts=4 sts=4 et ft=sh :
