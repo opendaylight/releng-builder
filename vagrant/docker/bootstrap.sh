@@ -19,7 +19,11 @@ rh_changes() {
 # /etc/sysconfig/docker-network
 DOCKER_NETWORK_OPTIONS='--bip=10.250.0.254/24'
 EOL
-
+    # configure docker daemon to listen on port 5555 enabling remote 
+    # managment
+    cat <<EOL > /etc/sysconfig/docker
+OPTIONS='-H unix:///var/run/docker.sock -H tcp://0.0.0.0:5555'
+EOL
     # docker group doesn't get created by default for some reason
     groupadd docker
 }
