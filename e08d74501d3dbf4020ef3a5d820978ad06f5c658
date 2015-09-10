@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a79b1b5_067eaa6b",
+        "filename": "vagrant/docker/bootstrap.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-09-10T18:38:06Z",
+      "side": 1,
+      "message": "Fully rewriting /etc/sysconfig/docker is not an option as there are other options that need to be set. I props you change the cat \u003c\u003cEOL section with the following:\n\nsed -i -e \"s#\u003d\u0027--selinux-enabled\u0027#\u003d\u0027--selinux-enabled -H unix:///var/run/docker.sock -H tcp://0.0.0.0:5555\u0027#g\" /etc/sysconfig/docker\n\nYes the \u0027#\u0027 is intentional so we use a different regex separator",
+      "revId": "e08d74501d3dbf4020ef3a5d820978ad06f5c658",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
