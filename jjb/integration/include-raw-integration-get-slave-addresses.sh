@@ -1,7 +1,7 @@
-# Get the Controller and Mininet slave addresses
+# Get the Controller and Tools VM slave addresses
 
 CONTROLLER=()
-MININET=()
+TEST_PARTNER=()
 
 IFS=',' read -ra ADDR <<< "${JCLOUDS_IPS}"
 
@@ -11,18 +11,22 @@ do
     if [ `echo ${REMHOST} | grep java` ]; then
         CONTROLLER=( "${CONTROLLER[@]}" "${i}" )
     else
-        MININET=( "${MININET[@]}" "${i}" )
+        TOOLS_SYSTEM=( "${TOOLS_SYSTEM[@]}" "${i}" )
     fi
 done
 
+# Add alias for CONTROLLER_1 as CONTROLLER
+echo "CONTROLLER_IP=${CONTROLLER[${0}]}" >> slave_addresses.txt
 for i in `seq 0 $(( ${#CONTROLLER[@]} - 1 ))`
 do
-    echo "CONTROLLER${i}=${CONTROLLER[${i}]}" >> slave_addresses.txt
+    echo "CONTROLLER_${i+1}_IP=${CONTROLLER[${i}]}" >> slave_addresses.txt
 done
 
-for i in `seq 0 $(( ${#MININET[@]} - 1 ))`
+# Add alias for TOOLS_SYSTEM_1 as TOOLS_SYSTEM
+echo "TOOLS_SYSTEM_IP=${TOOLS_SYSTEM[${0}]}" >> slave_addresses.txt
+for i in `seq 0 $(( ${#TOOLS_SYSTEM[@]} - 1 ))`
 do
-    echo "MININET${i}=${MININET[${i}]}" >> slave_addresses.txt
+    echo "TOOLS_SYSTEM_${i+1}_IP=${TOOLS_SYSTEM[${i}]}" >> slave_addresses.txt
 done
 
 # vim: sw=4 ts=4 sts=4 et ft=sh :

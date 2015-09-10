@@ -76,8 +76,8 @@ sshpass -p karaf /tmp/${BUNDLEFOLDER}/bin/client -u karaf 'bundle:list'
 
 EOF
 
-scp ${WORKSPACE}/controller-script.sh ${CONTROLLER0}:/tmp
-ssh ${CONTROLLER0} 'bash /tmp/controller-script.sh'
+scp ${WORKSPACE}/controller-script.sh ${CONTROLLER_IP}:/tmp
+ssh ${CONTROLLER_IP} 'bash /tmp/controller-script.sh'
 
 echo "Changing the testplan path..."
 cat ${WORKSPACE}/test/csit/testplans/${TESTPLAN} | sed "s:integration:${WORKSPACE}:" > testplan.txt
@@ -87,12 +87,15 @@ SUITES=$( egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' testplan.txt | tr '\012' ' 
 
 echo "Starting Robot test suites ${SUITES} ..."
 pybot -N ${TESTPLAN} -c critical -e exclude -v BUNDLEFOLDER:${BUNDLEFOLDER} -v WORKSPACE:/tmp \
--v NEXUSURL_PREFIX:${NEXUSURL_PREFIX} -v CONTROLLER:${CONTROLLER0} -v CONTROLLER_USER:${USER} \
--v MININET:${MININET0} -v MININET1:${MININET1} -v MININET2:${MININET2} -v MININET_USER:${USER} \
+-v NEXUSURL_PREFIX:${NEXUSURL_PREFIX} \
+-v CONTROLLER:${CONTROLLER_IP} -v CONTROLLER_IP:${CONTROLLER_IP} -v CONTROLLER_USER:${USER} \
+-v TOOLS_SYSTEM_IP:${TOOLS_SYSTEM_IP} -v TOOLS_SYSTEM_2_IP:${TOOLS_SYSTEM_2_IP} -v TOOLS_SYSTEM_3_IP:${TOOLS_SYSTEM_3_IP} \
+-v TOOLS_SYSTEM_USER:${USER} \
+-v MININET:${TOOLS_SYSTEM_IP} -v MININET1:${TOOLS_SYSTEM_2_IP} -v MININET2:${TOOLS_SYSTEM_3_IP} -v MININET_USER:${USER} \
 -v USER_HOME:${HOME} ${TESTOPTIONS} ${SUITES} || true
 
 echo "Fetching Karaf log"
-scp ${CONTROLLER0}:/tmp/${BUNDLEFOLDER}/data/log/karaf.log .
+scp ${CONTROLLER_IP}:/tmp/${BUNDLEFOLDER}/data/log/karaf.log .
 
 # vim: ts=4 sw=4 sts=4 et ft=sh :
 

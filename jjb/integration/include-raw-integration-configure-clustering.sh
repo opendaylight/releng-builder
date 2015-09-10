@@ -16,10 +16,10 @@ echo "Configuring hostname in akka.conf"
 sed -ie "s:{{HOST}}:\${CONTROLLERIP}:" ${AKKACONF}
 
 echo "Configuring data seed nodes in akka.conf"
-sed -ie "s/{{{DS_SEED_NODES}}}/[\"akka.tcp:\/\/opendaylight-cluster-data@$CONTROLLER0:2550\",\"akka.tcp:\/\/opendaylight-cluster-data@$CONTROLLER1:2550\",\"akka.tcp:\/\/opendaylight-cluster-data@$CONTROLLER2:2550\"]/g" ${AKKACONF}
+sed -ie "s/{{{DS_SEED_NODES}}}/[\"akka.tcp:\/\/opendaylight-cluster-data@$CONTROLLER_IP:2550\",\"akka.tcp:\/\/opendaylight-cluster-data@$CONTROLLER_2_IP:2550\",\"akka.tcp:\/\/opendaylight-cluster-data@$CONTROLLER_3_IP:2550\"]/g" ${AKKACONF}
 
 echo "Configuring rpc seed nodes in akka.conf"
-sed -ie "s/{{{RPC_SEED_NODES}}}/[\"akka.tcp:\/\/odl-cluster-rpc@$CONTROLLER0:2551\",\"akka.tcp:\/\/odl-cluster-rpc@$CONTROLLER1:2551\",\"akka.tcp:\/\/odl-cluster-rpc@$CONTROLLER2:2551\"]/g" ${AKKACONF}
+sed -ie "s/{{{RPC_SEED_NODES}}}/[\"akka.tcp:\/\/odl-cluster-rpc@$CONTROLLER_IP:2551\",\"akka.tcp:\/\/odl-cluster-rpc@$CONTROLLER_2_IP:2551\",\"akka.tcp:\/\/odl-cluster-rpc@$CONTROLLER_3_IP:2551\"]/g" ${AKKACONF}
 
 echo "Define unique name in akka.conf"
 sed -ie "s/{{MEMBER_NAME}}/\$CONTROLLERID/g" ${AKKACONF}
@@ -44,7 +44,7 @@ echo "Starting controller..."
 
 EOF
 
-CONTROLLERIPS=(${CONTROLLER0} ${CONTROLLER1} ${CONTROLLER2})
+CONTROLLERIPS=(${CONTROLLER_IP} ${CONTROLLER_2_IP} ${CONTROLLER_3_IP})
 for i in "${!CONTROLLERIPS[@]}"
 do
     echo "Configuring member-$((i+1)) with IP address ${CONTROLLERIPS[$i]}"

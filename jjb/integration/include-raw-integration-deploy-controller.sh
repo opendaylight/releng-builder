@@ -40,7 +40,7 @@ cat \${MEMCONF}
 
 EOF
 
-CONTROLLERIPS=(${CONTROLLER0} ${CONTROLLER1} ${CONTROLLER2})
+CONTROLLERIPS=(${CONTROLLER_IP} ${CONTROLLER_2_IP} ${CONTROLLER_3_IP})
 for i in "${!CONTROLLERIPS[@]}"
 do
     echo "Installing distribution in member-$((i+1)) with IP address ${CONTROLLERIPS[$i]}"
