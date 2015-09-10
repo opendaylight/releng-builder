@@ -40,12 +40,12 @@ cat \${MEMCONF}
 
 EOF
 
-CONTROLLERIPS=(${CONTROLLER0} ${CONTROLLER1} ${CONTROLLER2})
-for i in "${!CONTROLLERIPS[@]}"
+ODL_SYSTEM_IPS=(${ODL_SYSTEM_1_IP} ${ODL_SYSTEM_2_IP} ${ODL_SYSTEM_3_IP})
+for i in "${!ODL_SYSTEM_IPS[@]}"
 do
-    echo "Installing distribution in member-$((i+1)) with IP address ${CONTROLLERIPS[$i]}"
-    scp ${WORKSPACE}/deploy-controller-script.sh ${CONTROLLERIPS[$i]}:/tmp
-    ssh ${CONTROLLERIPS[$i]} 'bash /tmp/deploy-controller-script.sh'
+    echo "Installing distribution in member-$((i+1)) with IP address ${ODL_SYSTEM_IPS[$i]}"
+    scp ${WORKSPACE}/deploy-controller-script.sh ${ODL_SYSTEM_IPS[$i]}:/tmp
+    ssh ${ODL_SYSTEM_IPS[$i]} 'bash /tmp/deploy-controller-script.sh'
 done
 
 # vim: ts=4 sw=4 sts=4 et ft=sh :
