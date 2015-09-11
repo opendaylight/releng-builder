@@ -348,7 +348,7 @@
 
     triggers:
         - reverse:
-            jobs: 'controller-merge-{stream},yangtools-merge-{stream},odlparent-merge-{stream},openflowplugin-merge-{stream}'
+            jobs: 'controller-merge-{stream},yangtools-merge-{stream},odlparent-merge-{stream},openflowplugin-merge-{stream},neutron-merge-{stream}'
             result: 'success'
 
     prebuilders:
@@ -371,7 +371,7 @@
 
     publishers:
         - email-notification:
-            email-prefix: '[vpnservice] [controller] [yangtools] [odlparent] [openflowplugin]'
+            email-prefix: '[vpnservice] [controller] [yangtools] [odlparent] [openflowplugin] [neutron]'
         - jacoco-report
 
 - job-template:
