@@ -8,11 +8,16 @@
     </bannerLeft>
 
     <body>
-        <menu name="releng/builder" inherit="top">
+        <menu name="Releng Documentation">
             <item name="Jenkins" href="jenkins.html" />
-            <item name="Project Info" href="project-info.html" />
+            <item name="Maven Site" href="maven-site.html" />
         </menu>
+
+        <menu ref="parent" />
+        <menu ref="reports" />
+        <menu ref="modules" />
     </body>
+
     <skin>
         <groupId>org.apache.maven.skins</groupId>
         <artifactId>maven-fluido-skin</artifactId>

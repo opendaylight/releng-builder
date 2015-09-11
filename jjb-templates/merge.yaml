@@ -51,10 +51,41 @@
     maven:
         maven-name: '{mvn33}'
         root-pom: 'POM'
-        goals: 'MAVEN_GOALS -Dmerge'
+        goals: 'MAVEN_GOALS -Dmerge -Dstream={stream}'
         maven-opts: 'MAVEN_OPTS'
         settings: '{JENKINS_SETTINGS}'
         global-settings: '{odl-global-settings}'
+        post-step-run-condition: UNSTABLE
+
+    postbuilders:
+        - conditional-step:
+            condition-kind: file-exists
+            condition-filename: deploy-site.xml
+            condition-basedir: workspace
+
+            # The strategy here is intentional to run Maven site:deploy twice
+            # once using regular pom.xml to produce a staged-site which is
+            # then used by deploy-site.xml to push to Nexus. This is a
+            # workaround to Maven Site's default linking code which creates
+            # incorrect URLs for sites due to auto-detection assuming your
+            # project is configured in a certain way which ODL is not.
+            steps:
+            - maven-target:
+                maven-version: '{mvn33}'
+                pom: pom.xml
+                goals: 'site:deploy -Dstream={stream}'
+                java-opts:
+                    - '-Xmx2g'
+                settings: '{JENKINS_SETTINGS}'
+                global-settings: '{odl-global-settings}'
+            - maven-target:
+                maven-version: '{mvn33}'
+                pom: deploy-site.xml
+                goals: 'site:deploy -Dstream={stream}'
+                java-opts:
+                    - '-Xmx2g'
+                settings: '{JENKINS_SETTINGS}'
+                global-settings: '{odl-global-settings}'
 
     reporters:
         - findbugs
