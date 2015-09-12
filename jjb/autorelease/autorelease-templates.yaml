@@ -156,6 +156,72 @@
           property-file: variables.prop
           fail-on-missing: true
 
+- job-template:
+    name: 'autorelease-project-report-{stream}'
+
+    project-type: freestyle
+    node: dynamic_verify
+
+    logrotate:
+        daysToKeep: '{build-days-to-keep}'
+        numToKeep: '{build-num-to-keep}'
+        artifactDaysToKeep: '{build-artifact-days-to-keep}'
+        artifactNumToKeep: '{build-artifact-num-to-keep}'
+
+    parameters:
+        - project-parameter:
+            project: '{project}'
+        - string:
+            name: REPORT_DIR
+            default: '$WORKSPACE/project-reports'
+            description: "The directory containing project reports"
+
+    scm:
+        - git:
+            credentials-id: '{ssh-credentials}'
+            url: '$GIT_BASE'
+            refspec: ''
+            branches:
+                - 'origin/{branch}'
+            skip-tag: true
+            submodule:
+                recursive: true
+
+    wrappers:
+        - timeout:
+            type: absolute
+            timeout: 30
+            fail: true
+        - ssh-agent-credentials:
+            users:
+                - '{ssh-credentials}'
+
+    triggers:
+        - timed: '0 0 * * 0'
+
+    builders:
+        - shell: 'echo "DATE=`date +%Y-%m-%d`" > $WORKSPACE/variables.prop'
+        - inject:
+            properties-file: variables.prop
+        - autorelease-generate-project-report
+
+    publishers:
+    - archive-artifacts:
+        artifacts: 'project-reports/*.log'
+    - email-ext:
+        attachments: 'project-reports/*.log'
+        recipients: 'skitt@redhat.com thanh.ha@linuxfoundation.org'
+        reply-to: dev@lists.opendaylight.org
+        content-type: default
+        subject: '[releng] ODL {stream} project report for ${{ENV, var="DATE"}}'
+        body: |
+            This is a project report generated on $DATE listing the commit
+            history of ODL projects for the past week. See attached
+            git-report.log
+
+            Archive also available on Jenkins at $BUILD_URL
+        always: true
+
 ###
 ### Maven Sites
 ###
