@@ -87,3 +87,8 @@
     name: autorelease-get-integration-test-variables
     builders:
     - shell: !include-raw include-raw-autorelease-get-integration-test-variables.sh
+
+- builder:
+    name: autorelease-generate-project-report
+    builders:
+    - shell: !include-raw include-raw-generate-project-report.sh
