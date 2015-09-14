@@ -153,12 +153,14 @@
     parameters:
         - project-parameter:
             project: 'integration/test'
+        - integration-patch-refspec:
+            branch: '$GERRIT_REFSPEC'
 
     scm:
         - integration-gerrit-scm:
             credentials-id: '{ssh-credentials}'
             basedir: 'test'
-            refspec: '$GERRIT_REFSPEC'
+            refspec: '$PATCHREFSPEC'
             branch: 'master'
 
     wrappers:
