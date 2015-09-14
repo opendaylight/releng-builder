@@ -100,7 +100,7 @@
         - maven-target:
             maven-version: '{mvn33}'
             pom: 'pom.xml'
-            goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r '
+            goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  -Dstream={stream}'
             java-opts:
                 - '-Xmx1024m -XX:MaxPermSize=256m'
             settings: '{capwap-settings}'
@@ -165,10 +165,41 @@
     maven:
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
-        goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  -Dmerge'
+        goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  -Dmerge -Dstream={stream}'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{capwap-settings}'
         global-settings: '{odl-global-settings}'
+        post-step-run-condition: UNSTABLE
+
+    postbuilders:
+        - conditional-step:
+            condition-kind: file-exists
+            condition-filename: deploy-site.xml
+            condition-basedir: workspace
+
+            # The strategy here is intentional to run Maven site:deploy twice
+            # once using regular pom.xml to produce a staged-site which is
+            # then used by deploy-site.xml to push to Nexus. This is a
+            # workaround to Maven Site's default linking code which creates
+            # incorrect URLs for sites due to auto-detection assuming your
+            # project is configured in a certain way which ODL is not.
+            steps:
+            - maven-target:
+                maven-version: '{mvn33}'
+                pom: pom.xml
+                goals: 'site:deploy -Dstream={stream}'
+                java-opts:
+                    - '-Xmx2g'
+                settings: '{capwap-settings}'
+                global-settings: '{odl-global-settings}'
+            - maven-target:
+                maven-version: '{mvn33}'
+                pom: deploy-site.xml
+                goals: 'site:deploy -Dstream={stream}'
+                java-opts:
+                    - '-Xmx2g'
+                settings: '{capwap-settings}'
+                global-settings: '{odl-global-settings}'
 
     reporters:
         - findbugs
