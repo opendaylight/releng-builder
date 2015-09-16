@@ -260,7 +260,7 @@
         - '{ssh-credentials}'
 
     triggers:
-    - gerrit-trigger-patch-site-merged:
+    - autorelease-trigger-patch-site-merged:
         name: '{project}'
         branch: '{branch}'
 
@@ -310,7 +310,7 @@
         - '{ssh-credentials}'
 
     triggers:
-    - gerrit-trigger-patch-submitted:
+    - autorelease-trigger-patch-site-submitted:
         name: '{project}'
         branch: '{branch}'
 
