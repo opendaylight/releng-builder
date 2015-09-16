@@ -21,7 +21,7 @@ all_systems() {
     echo "subdomain=${SUBDOM}" > /etc/facter/facts.d/subdomain.txt
 
     # final bits
-    puppet apply /vagrant/confignetwork.pp
+    puppet apply /vagrant/lib/lf-networking/confignetwork.pp
 
 }
 
