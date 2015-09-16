@@ -50,13 +50,30 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
+  # Explicitlly set default shared folder
+  config.vm.synced_folder ".", "/vagrant"
+
   # run our bootstrapping for the ovsdb-devstack system
   config.vm.provision 'shell', path: 'bootstrap.sh'
+
+
+  #################
+  # LF NETWORKING #
+  #################
+
+  if ENV['LFNETWORK']
+    config.vm.synced_folder "../lf-networking/", "/vagrant/lf-networking"
+
+    # reconfigure the network setup to support our special private setup
+    config.vm.provision 'shell', path: '../lf-networking/configure_lf_infra.sh',
+      args: ENV['RSSUBDOMAIN']
+  end
+
 
   # set RSRESEAL to... anything if you want to snap an image of this box
   # not setting the environment variable will cause the system to come
   # up fully and not be in a resealable state
   if ENV['RSRESEAL']
-    config.vm.provision 'shell', path: 'system_reseal.sh'
+    config.vm.provision 'shell', path: '../lf-networking/system_reseal.sh'
   end
 end
