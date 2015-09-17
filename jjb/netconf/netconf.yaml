@@ -98,7 +98,7 @@
             pom: 'pom.xml'
             goals: 'clean install -Pintegrationtests -Dstream={stream}'
             java-opts:
-                - '-Xmx2048m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
+                - '-Xmx2048m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
             settings: '{netconf-settings}'
             global-settings: '{odl-global-settings}'
 
@@ -162,7 +162,7 @@
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
         goals: 'clean install -Pintegrationtests -Dmerge -Dstream={stream}'
-        maven-opts: '-Xmx2048m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
+        maven-opts: '-Xmx2048m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
         settings: '{netconf-settings}'
         global-settings: '{odl-global-settings}'
         post-step-run-condition: UNSTABLE
@@ -261,7 +261,7 @@
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
         goals: 'clean install -Pintegrationtests'
-        maven-opts: '-Xmx2048m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
+        maven-opts: '-Xmx2048m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
         settings: '{netconf-settings}'
         global-settings: '{odl-global-settings}'
 
@@ -389,7 +389,7 @@
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
         goals: 'clean install -Pintegrationtests'
-        maven-opts: '-Xmx2048m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
+        maven-opts: '-Xmx2048m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
         settings: '{netconf-settings}'
         global-settings: '{odl-global-settings}'
 
@@ -446,7 +446,7 @@
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
         goals: 'clean install -Pintegrationtests -Dsonar'
-        maven-opts: '-Xmx2048m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
+        maven-opts: '-Xmx2048m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
         settings: '{netconf-settings}'
         global-settings: '{odl-global-settings}'
 
