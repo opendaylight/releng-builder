@@ -369,6 +369,8 @@
         - project-parameter:
             project: '$GERRIT_PROJECT'
         - integration-distribution-git-url
+        - nexus-proxy-parameter:
+            proxy: '$ODLNEXUSPROXY'
 
     scm:
         - integration-gerrit-scm:

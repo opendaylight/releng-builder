@@ -32,6 +32,14 @@
             default: '{refspec}'
             description: "GERRIT_REFSPEC parameter if not given by trigger"
 
+- parameter:
+    name: nexus-proxy-parameter
+    parameters:
+        - string:
+            name: ODLNEXUSPROXY
+            default: '{proxy}'
+            description: "ODLNEXUSPROXY parameter to use when there are sync issues"
+
 - scm:
     name: git-scm
     scm:
