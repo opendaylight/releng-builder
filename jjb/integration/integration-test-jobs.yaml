@@ -362,6 +362,10 @@
         artifactNumToKeep: '{build-artifact-num-to-keep}'
 
     parameters:
+        - gerrit-project-parameter:
+            project: '$GERRIT_PROJECT'
+        - gerrit-refspec-parameter:
+            refspec: '$GERRIT_REFSPEC'
         - project-parameter:
             project: '$GERRIT_PROJECT'
         - integration-distribution-git-url

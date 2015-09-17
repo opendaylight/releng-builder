@@ -16,6 +16,22 @@
             default: '{branch}'
             description: "JJB configured GERRIT_BRANCH parameter"
 
+- parameter:
+    name: gerrit-project-parameter
+    parameters:
+        - string:
+            name: GERRIT_PROJECT
+            default: '{project}'
+            description: "GERRIT_PROJECT parameter if not given by trigger"
+
+- parameter:
+    name: gerrit-refspec-parameter
+    parameters:
+        - string:
+            name: GERRIT_REFSPEC
+            default: '{refspec}'
+            description: "GERRIT_REFSPEC parameter if not given by trigger"
+
 - scm:
     name: git-scm
     scm:
