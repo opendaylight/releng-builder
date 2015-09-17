@@ -405,6 +405,9 @@
         - inject:
             properties-file: 'bundle.txt'
         - wipe-org-opendaylight-repo
+        - provide-maven-settings:
+            global-settings-file: '{odl-global-settings}'
+            settings-file: '{yangtools-settings}'
         - maven-target:
             maven-version: '{mvn33}'
             pom: '$GERRIT_PROJECT/pom.xml'
