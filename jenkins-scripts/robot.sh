@@ -35,7 +35,7 @@ python setup.py install > /dev/null 2>&1
 ## Install netcat & docker-py
 yum install -y -q nc python-docker-py
 
-# disable firewall rules
+# make sure the firewall is stopped
 service iptables stop
 
 # vim: sw=2 ts=2 sts=2 et :

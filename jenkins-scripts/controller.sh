@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # disable the firewall
-service iptables stop
+/bin/bash ./disable_firewall.sh
 
 # install sshpass
 yum install -y sshpass

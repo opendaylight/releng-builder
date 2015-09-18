@@ -56,6 +56,6 @@ echo 'jenkins' | passwd -f --stdin jenkins
 echo 'root' | passwd -f --stdin root
 
 # make sure the firewall is stopped
-service iptables stop
+/bin/bash disable_firewall.sh
 
 # vim: sw=2 ts=2 sts=2 et :
