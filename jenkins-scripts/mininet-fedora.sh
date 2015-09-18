@@ -13,9 +13,6 @@ semanage port -a -t openvswitch_port_t -p tcp 6640
 semanage permissive -a openvswitch_t
 
 # make sure the firewall is stopped
-service iptables stop
-
-# stop firewall
-systemctl stop firewalld
+/bin/bash disable_firewall.sh
 
 # vim: sw=2 ts=2 sts=2 et :
