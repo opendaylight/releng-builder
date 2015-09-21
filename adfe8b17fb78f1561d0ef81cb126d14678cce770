@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_f9e36f03",
+        "filename": "jenkins-scripts/ubuntu.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2015-09-21T16:22:27Z",
+      "side": 1,
+      "message": "No need for sudo to run docker. As long as the jenkins user is in the docker group it will be able to run docker commands.\n\nAlso you should be running the docker commands at the job level and not in the spinup script. This VM isn\u0027t created for just your projects but will be usable by any project so we should try to be generic in the spin up scripts.",
+      "revId": "adfe8b17fb78f1561d0ef81cb126d14678cce770",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_59d38338",
+        "filename": "jenkins-scripts/ubuntu.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2015-09-21T16:22:27Z",
+      "side": 1,
+      "message": "pip should be used at the project job level using a virtualenv. We\u0027re trying to move away from having the VM install all the Python modules as it\u0027s not a good way to maintain them and different projects tend to require different python modules which may conflict.\n\nFor example:\n\nhttps://git.opendaylight.org/gerrit/gitweb?p\u003dreleng/builder.git;a\u003dblob;f\u003djjb/integration/integration-test-jobs.yaml;h\u003dccf7acc60e6520672493e5f4032288523941fe60;hb\u003dHEAD#l178",
+      "revId": "adfe8b17fb78f1561d0ef81cb126d14678cce770",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_79d8bf53",
+        "filename": "jenkins-scripts/ubuntu.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2015-09-21T16:22:27Z",
+      "side": 1,
+      "message": "remove trailing whitespaces please.",
+      "revId": "adfe8b17fb78f1561d0ef81cb126d14678cce770",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
