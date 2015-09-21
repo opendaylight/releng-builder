@@ -96,9 +96,9 @@
         - maven-target:
             maven-version: '{mvn33}'
             pom: 'pom.xml'
-            goals: 'clean install -Dintegrationtests -Dstream={stream}'
+            goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -Dmaven.compile.fork=true clean install -Dintegrationtests -Dstream={stream}'
             java-opts:
-                - '-Xmx2048m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+                - '-Xmx2048m -XX:MaxPermSize=1024m'
             settings: '{mdsal-settings}'
             global-settings: '{odl-global-settings}'
 
@@ -161,8 +161,8 @@
     maven:
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
-        goals: 'clean install -Dintegrationtests -Dmerge -Dstream={stream}'
-        maven-opts: '-Xmx2048m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+        goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -Dmaven.compile.fork=true clean install -Dintegrationtests -Dmerge -Dstream={stream}'
+        maven-opts: '-Xmx2048m -XX:MaxPermSize=1024m'
         settings: '{mdsal-settings}'
         global-settings: '{odl-global-settings}'
         post-step-run-condition: UNSTABLE
@@ -260,8 +260,8 @@
     maven:
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
-        goals: 'clean install -Dintegrationtests'
-        maven-opts: '-Xmx2048m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+        goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -Dmaven.compile.fork=true clean install -Dintegrationtests'
+        maven-opts: '-Xmx2048m -XX:MaxPermSize=1024m'
         settings: '{mdsal-settings}'
         global-settings: '{odl-global-settings}'
 
@@ -388,8 +388,8 @@
     maven:
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
-        goals: 'clean install -Dintegrationtests'
-        maven-opts: '-Xmx2048m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+        goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -Dmaven.compile.fork=true clean install -Dintegrationtests'
+        maven-opts: '-Xmx2048m -XX:MaxPermSize=1024m'
         settings: '{mdsal-settings}'
         global-settings: '{odl-global-settings}'
 
@@ -445,8 +445,8 @@
     maven:
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
-        goals: 'clean install -Dintegrationtests -Dsonar'
-        maven-opts: '-Xmx2048m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+        goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -Dmaven.compile.fork=true clean install -Dintegrationtests -Dsonar'
+        maven-opts: '-Xmx2048m -XX:MaxPermSize=1024m'
         settings: '{mdsal-settings}'
         global-settings: '{odl-global-settings}'
 
