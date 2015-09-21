@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "1a76adc5_59a143a8",
+        "filename": "jenkins-scripts/ubuntu.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1010
+      },
+      "writtenOn": "2015-09-21T16:31:13Z",
+      "side": 1,
+      "message": "I don\u0027t believe we need this anymore. This was specific to a cloud image we were using, and needs to be cleaned up not only in our repo but here too and tested.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 11
+      },
+      "revId": "adfe8b17fb78f1561d0ef81cb126d14678cce770",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_f9e36f03",
         "filename": "jenkins-scripts/ubuntu.sh",
         "patchSetId": 1
@@ -19,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "1a76adc5_19abcb8a",
+        "filename": "jenkins-scripts/ubuntu.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1010
+      },
+      "writtenOn": "2015-09-21T16:31:13Z",
+      "side": 1,
+      "message": "Normally there is a step during manual install of docker that suggests adding users to the docker group. Perhaps we should add this part to our demo environment as well (see reply below to Thanh about our desire to keep these environments in sync)",
+      "parentUuid": "1a76adc5_f9e36f03",
+      "revId": "adfe8b17fb78f1561d0ef81cb126d14678cce770",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_59d38338",
         "filename": "jenkins-scripts/ubuntu.sh",
         "patchSetId": 1
@@ -30,6 +71,24 @@
       "writtenOn": "2015-09-21T16:22:27Z",
       "side": 1,
       "message": "pip should be used at the project job level using a virtualenv. We\u0027re trying to move away from having the VM install all the Python modules as it\u0027s not a good way to maintain them and different projects tend to require different python modules which may conflict.\n\nFor example:\n\nhttps://git.opendaylight.org/gerrit/gitweb?p\u003dreleng/builder.git;a\u003dblob;f\u003djjb/integration/integration-test-jobs.yaml;h\u003dccf7acc60e6520672493e5f4032288523941fe60;hb\u003dHEAD#l178",
+      "revId": "adfe8b17fb78f1561d0ef81cb126d14678cce770",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_79a67fc3",
+        "filename": "jenkins-scripts/ubuntu.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1010
+      },
+      "writtenOn": "2015-09-21T16:31:13Z",
+      "side": 1,
+      "message": "Not a bad idea. Our plan is to keep the demo environment in sync with this job, so as the vagrant provisioner changes (very infrequent) we sync it with the snapshot. Since I assume this is a manual process, then if we adopt using virtualenv, then we would have to test that against our demo env too.",
+      "parentUuid": "1a76adc5_59d38338",
       "revId": "adfe8b17fb78f1561d0ef81cb126d14678cce770",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
