@@ -1,0 +1,45 @@
+- project:
+    name: groupbasedpolicy-csit-gbpsfc
+    jobs:
+        - '{project}-csit-1node-{functionality}-{install}-{stream}'
+
+
+    # The project name
+    project: 'groupbasedpolicy'
+
+    # The functionality under test
+    functionality: 'gbpsfc'
+
+    # Project branches
+    stream:
+        - beryllium:
+            branch: 'master'
+            jdk: openjdk7
+            jdks:
+                - openjdk7
+        - stable-lithium:
+            branch: 'stable/lithium'
+            jdk: openjdk7
+            jdks:
+                - openjdk7
+
+    install:
+        - only:
+            scope: 'only'
+        - all:
+            scope: 'all'
+
+    # 6 Ubuntu VMs in JCloud configuration
+    mininet-image: 'ubuntu14-04-basic'
+    mininet-cloud-name: 'Ubuntu'
+    mininet-vms: 2
+
+    # Features to install
+    install-features: 'odl-groupbasedpolicy-ofoverlay,odl-groupbasedpolicy-ui,odl-restconf-all'
+
+    # Robot custom options
+    robot-options: ''
+
+    # Trigger jobs (upstream dependencies)
+    trigger-jobs: 'neutron-distribution-{stream},ovsdb-distribution-{stream},controller-distribution-{stream},openflowplugin-distribution-{stream},yangtools-distribution-{stream},sfc-distribution-{stream},dlux-distribution-{stream}'
+
