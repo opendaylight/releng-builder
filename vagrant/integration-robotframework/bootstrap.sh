@@ -13,6 +13,12 @@ yum install -q -y java-1.7.0-openjdk-devel git perl-XML-XPath
 yum install -q -y python-{devel,importlib,requests,setuptools,virtualenv,docker-py} \
     robotframework{,-{httplibrary,requests,sshlibrary}}
 
+# Install `udpreplay` to be used for (lispflowmapping) performance tests
+yum install -q -y libpcap-devel boost-devel
+git clone https://github.com/ska-sa/udpreplay.git &> /dev/null
+cd udpreplay
+make &> /dev/null && cp udpreplay /usr/local/bin
+
 # To handle the prompt style that is expected all over the environment
 # with how use use robotframework we need to make sure that it is
 # consistent for any of the users that are created during dynamic spin
