@@ -17,11 +17,23 @@
     # stream:    release stream (eg. stable-lithium or beryllium)
     # branch:    git branch (eg. stable/lithium or master)
     stream:
+        - clustering-lithium:
+            branch: 'topic/lithium/clustering'
+            jdk: openjdk7
+            jdks:
+                - openjdk7
+        - clustering-master:
+            branch: 'topic/master/clustering'
+            jdk: openjdk7
+            jdks:
+                - openjdk7
+                - openjdk8
         - neutron-yang-migration:
             branch: 'topic/master/neutron-yang-migration'
             jdk: openjdk7
             jdks:
                 - openjdk7
+                - openjdk8
         - routermanager:
             branch: 'topic/routermanager'
             jdk: openjdk7
