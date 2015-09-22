@@ -91,7 +91,10 @@ resolv_conf:
 }
 
 file_line { 'add_resolver':
-  path  => '/etc/cloud/cloud.cfg.d/10_rackspace.cfg',
+  path       => $::operatingsystem ? {
+    'Ubuntu' => '/etc/cloud/cloud.cfg',
+    default  => '/etc/cloud/cloud.cfg.d/10_rackspace.cfg',
+  },
   line  => ' - resolv_conf',
   after => ' - update_etc_hosts',
 }
