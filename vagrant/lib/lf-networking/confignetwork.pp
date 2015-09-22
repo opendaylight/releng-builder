@@ -118,6 +118,14 @@ case $::operatingsystem {
       content => "#!/bin/sh\nip route add default via ${router} dev eth0",
       mode    => '0755',
     }
+
+    file { '/etc/cloud/cloud.cfg.d/00_lf_unverified_modules':
+      content => "#cloud-config
+
+unverified_modules:
+ - resolv_conf
+",
+    }
   }
   default: {
     notice ("${::operatingsystem} is not supported by this configuration")
