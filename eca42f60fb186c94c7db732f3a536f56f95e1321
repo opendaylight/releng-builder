@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_dc1c5cc4",
+        "filename": "vagrant/gbp-ubuntu-docker-ovs-node/bootstrap.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-09-22T17:18:38Z",
+      "side": 1,
+      "message": "This isn\u0027t going to do any good and will actually cause the image creation to fail. The jenkins user does not (and cannot) exist until it is attached to by Jenkins during the slave spin-up. If the jenkins user exists before Jenkins does its slave attachment then it will not connect properly.",
+      "revId": "eca42f60fb186c94c7db732f3a536f56f95e1321",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
