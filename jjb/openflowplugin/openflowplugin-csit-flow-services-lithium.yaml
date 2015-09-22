@@ -1,29 +1,31 @@
 - project:
-    name: openflowplugin-csit-clustering
+    name: openflowplugin-csit-flow-services-lithium
     jobs:
-        - '{project}-csit-3node-{functionality}-{install}-{stream}'
+        - '{project}-csit-1node-{functionality}-{install}-{stream}'
+        - '{project}-csit-verify-1node-{functionality}-{stream}'
 
     # The project name
     project: 'openflowplugin'
 
     # The functionality under test
-    functionality: 'clustering'
+    functionality: 'flow-services'
 
     # Project branches
     stream:
-        - beryllium:
-            branch: 'master'
+        - stable-lithium:
+            branch: 'stable/lithium'
 
     install:
         - only:
             scope: 'only'
+        - all:
+            scope: 'all'
 
     # Features to install
-    install-features: 'odl-openflowplugin-flow-services-ui'
+    install-features: 'odl-openflowplugin-flow-services-ui,odl-openflowplugin-adsal-compatibility,odl-nsf-all'
 
     # Robot custom options
     robot-options: ''
 
     # Trigger jobs (upstream dependencies)
     trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream},openflowjava-distribution-{stream},openflowplugin-distribution-{stream}'
-
