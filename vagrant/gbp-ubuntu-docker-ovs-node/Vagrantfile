@@ -1,0 +1,73 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby sw=2 ts=2 sts=2 et :
+
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  # root off of the rackspace provider dummy box
+  config.vm.box = "dummy"
+
+  # rackspace systems even with cloud-init
+  # don't seem to have the cloud init user ${osname}
+  # getting the ssh key for some reason, root does
+  # so use that
+  config.ssh.username = 'root'
+  
+  # Fedora and EL systems default to requiring a tty for sudo
+  if (ENV['RSPTY'] == 'default')
+    config.ssh.pty = false
+  else
+    config.ssh.pty = true
+  end
+
+  # The rackspace provider by default tries to rsync
+  # the local folder / vagrant box to /vagrant
+  # unfortunately, even with config.ssh.pty = true
+  # this fails because it doesn't recognize the pty requirement
+  # when doing the sudo based rsync (not that it needs to sudo
+  # when doing things as root). To avoid this, disable the
+  # default sync, we don't need it anyway.
+  config.vm.synced_folder '.', '/vagrant', :disabled => true
+
+  # make sure to set the following in your
+  # ~/.vagrant.d/boxes/dummy/0/rackspace/Vagrantfile
+  # rs.username
+  # rs.api_key
+  # rs.rackspace_region
+  #
+  # If you are not using a SSH token / smartcard also set this
+  # rs.key_name
+  # config.ssh.private_key_path  -- set this outside the rackspace block
+  #         in your base box
+  config.vm.provider :rackspace do |rs|
+    # create these base builds always on the smallest system possible
+    rs.flavor = 'general1-1'
+
+    # allow for switching to ORD cloud but default to DFW
+    if (ENV['RSREGION'] == 'ord')
+      rs.rackspace_region = :ord
+    else
+      rs.rackspace_region = :dfw
+    end
+
+    # Default to the Fedora 20 image unless overridden by a RSIMAGE
+    # environment variable
+    if ENV['RSIMAGE']
+      rs.image = ENV['RSIMAGE']
+    else
+      rs.image = 'Fedora 20 (Heisenbug) (PVHVM)'
+    end
+  end
+
+  # Do a full system update and force enforcing on (it's in permissive
+  # by default in the rackspace base images)
+  config.vm.provision 'shell', path: 'bootstrap.sh'
+
+  # disable the default requiretty for sudo that Fedora and CentOS have
+  config.vm.provision 'shell', path: 'remove_requiretty.sh'
+
+  # Execute a system clean-up in prep for imaging so that this base
+  # image can be used for other Rackspace Vagrant configurations
+  config.vm.provision 'shell', path: 'system_reseal.sh'
+end
