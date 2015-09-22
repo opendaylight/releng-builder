@@ -1,0 +1,37 @@
+# This performance test can take up to one hour to finish,
+# so the job is defined to run once a day.
+# Robot options are workarounds for Sandbox not being as performant
+# as the private lab where this suite was developed.
+
+- project:
+    name: bgpcep-csit-throughpcep
+    jobs:
+        - '{project}-csit-1node-periodic-{functionality}-{install}-{stream}'
+
+    # The project name
+    project: 'bgpcep'
+
+    # The functionality under test
+    functionality: 'throughpcep'
+
+    # Project branches
+    stream:
+        - beryllium:
+            branch: 'master'
+        - stable-lithium:
+            branch: 'stable/lithium'
+
+    install:
+        - only:
+            scope: 'only'
+        - all:
+            scope: 'all'
+
+    # Features to install
+    install-features: 'odl-restconf,odl-bgpcep-pcep-all,odl-bgpcep-bgp-all,odl-bgpcep-bgp,odl-bgpcep-pcep,odl-netconf-connector-all'
+
+    # Robot custom options
+    robot-options: '-v RESTCONF_REUSE:False -v UPDATER_TIMEOUT:360'
+
+    # Trigger jobs (daily)
+    schedule: 'H H * * *'
