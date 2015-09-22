@@ -119,11 +119,10 @@ case $::operatingsystem {
       mode    => '0755',
     }
 
-    file { '/etc/cloud/cloud.cfg.d/00_lf_unverified_modules':
-      content => "#cloud-config
-
-unverified_modules:
- - resolv_conf
+    file { '/etc/resolvconf/resolv.conf.d/tail':
+      content => "# opendaylight dns
+nameserver 173.203.4.9
+nameserver 173.203.4.8
 ",
     }
   }
