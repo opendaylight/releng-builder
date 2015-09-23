@@ -7,11 +7,10 @@ yum clean all
 yum install -q -y https://nexus.opendaylight.org/content/repositories/opendaylight-yum-epel-6-x86_64/rpm/opendaylight-release/0.1.0-1.el6.noarch/opendaylight-release-0.1.0-1.el6.noarch.rpm
 yum update -q -y
 
-yum install -q -y java-1.7.0-openjdk-devel git perl-XML-XPath
-
-# The following are known requirements for our robotframework environments
-yum install -q -y python-{devel,importlib,requests,setuptools,virtualenv,docker-py} \
-    robotframework{,-{httplibrary,requests,sshlibrary}} scapy
+# Install minimal python requirements to get virtualenv going
+# Additional python dependencies should be installed via JJB configuration
+# inside project jobs using a virtualenv setup.
+yum install -q -y python-{devel,setuptools,virtualenv}
 
 # Install `udpreplay` to be used for (lispflowmapping) performance tests
 yum install -q -y libpcap-devel boost-devel
