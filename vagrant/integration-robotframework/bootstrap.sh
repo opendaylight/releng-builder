@@ -9,10 +9,6 @@ yum update -q -y
 
 yum install -q -y java-1.7.0-openjdk-devel git perl-XML-XPath
 
-# The following are known requirements for our robotframework environments
-yum install -q -y python-{devel,importlib,requests,setuptools,virtualenv,docker-py} \
-    robotframework{,-{httplibrary,requests,sshlibrary}} scapy
-
 # Install `udpreplay` to be used for (lispflowmapping) performance tests
 yum install -q -y libpcap-devel boost-devel
 git clone https://github.com/ska-sa/udpreplay.git &> /dev/null

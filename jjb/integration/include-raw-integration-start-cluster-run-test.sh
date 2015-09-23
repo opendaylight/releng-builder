@@ -52,6 +52,7 @@ cat testplan.txt
 SUITES=$( egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' testplan.txt | tr '\012' ' ' )
 
 echo "Starting Robot test suites ${SUITES} ..."
+source $WORKSPACE/venv-robotframework/bin/activate
 pybot -N ${TESTPLAN} -c critical -e exclude -v BUNDLEFOLDER:${BUNDLEFOLDER} -v WORKSPACE:/tmp \
 -v NEXUSURL_PREFIX:${NEXUSURL_PREFIX} -v CONTROLLER:${CONTROLLER0} -v CONTROLLER1:${CONTROLLER1} -v CONTROLLER2:${CONTROLLER2} \
 -v CONTROLLER_USER:${USER} -v MININET:${MININET0} -v MININET1:${MININET1} -v MININET2:${MININET2} \
