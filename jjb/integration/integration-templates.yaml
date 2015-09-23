@@ -1,5 +1,5 @@
 # Job templates in this file (please update with every new template):
-# 
+#
 # Old templates:
 # {project}-csit-verify-1node-{functionality}-{stream}
 # {project}-csit-1node-imds-{functionality}-{install}-{stream}
@@ -80,6 +80,7 @@
             pattern: 'csit/suites/{project}/**'
 
     builders:
+        - integration-install-robotframework
         - integration-get-slave-addresses
         - inject:
             properties-file: 'slave_addresses.txt'
@@ -151,6 +152,7 @@
             result: 'success'
 
     builders:
+        - integration-install-robotframework
         - integration-get-slave-addresses
         - inject:
             properties-file: 'slave_addresses.txt'
@@ -250,6 +252,7 @@
             pattern: 'csit/suites/{project}/**'
 
     builders:
+        - integration-install-robotframework
         - integration-get-slave-addresses
         - inject:
             properties-file: 'slave_addresses.txt'
@@ -321,6 +324,7 @@
             result: 'success'
 
     builders:
+        - integration-install-robotframework
         - integration-get-slave-addresses
         - inject:
             properties-file: 'slave_addresses.txt'
@@ -414,6 +418,7 @@
         - timed: '{schedule}'
 
     builders:
+        - integration-install-robotframework
         - integration-get-slave-addresses
         - inject:
             properties-file: 'slave_addresses.txt'
@@ -509,6 +514,7 @@
             pattern: 'csit/suites/{project}/**'
 
     builders:
+        - integration-install-robotframework
         - integration-get-slave-addresses
         - inject:
             properties-file: 'slave_addresses.txt'
@@ -581,6 +587,7 @@
             result: 'success'
 
     builders:
+        - integration-install-robotframework
         - integration-get-slave-addresses
         - inject:
             properties-file: 'slave_addresses.txt'
@@ -676,6 +683,7 @@
         - timed: '{schedule}'
 
     builders:
+        - integration-install-robotframework
         - integration-get-slave-addresses
         - inject:
             properties-file: 'slave_addresses.txt'
