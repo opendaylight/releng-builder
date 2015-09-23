@@ -23,6 +23,7 @@
             jdk: openjdk7
             jdks:
                 - openjdk7
+                - openjdk8
 
     project: 'yang-push'
 
@@ -374,7 +375,7 @@
 
     triggers:
         - reverse:
-            jobs: 'odlparent-merge-{stream}'
+            jobs: 'controller-merge-{stream},yangtools-merge-{stream},odlparent-merge-{stream}'
             result: 'success'
 
     prebuilders:
@@ -397,7 +398,7 @@
 
     publishers:
         - email-notification:
-            email-prefix: '[yang-push] [odlparent]'
+            email-prefix: '[yang-push] [controller] [yangtools] [odlparent]'
         - jacoco-report
 
 - job-template:
