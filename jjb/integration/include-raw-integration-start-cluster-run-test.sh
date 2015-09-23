@@ -1,3 +1,6 @@
+# Activate robotframework virtualenv
+source $WORKSPACE/venv-robotframework/bin/activate
+
 echo "#################################################"
 echo "##         Verify Cluster is UP                ##"
 echo "#################################################"
