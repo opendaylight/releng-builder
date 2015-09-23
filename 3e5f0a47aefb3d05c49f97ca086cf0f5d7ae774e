@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "1a76adc5_0bf928c8",
+        "filename": "jjb/integration/include-raw-integration-get-slave-addresses.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 2616
+      },
+      "writtenOn": "2015-09-23T22:47:43Z",
+      "side": 1,
+      "message": "Here we only want the names to start at 1..n. The arrays are 0-based. Array index was used to number variables in the original script, so starting loop at 1 would require either inserting a dummy entry in array[0] in first for-loop, inserting a \u0027i-1\u0027 in array access or something I haven\u0027t thought of. It seems like another method would be much less clean unless someone can point me to something I\u0027ve overlooked.\n\nThis did point me to a bug however, I believe I need to use arithmetic expansion $((i + 1)) to get this to add correctly.",
+      "parentUuid": "1a76adc5_7c4ae884",
+      "revId": "3e5f0a47aefb3d05c49f97ca086cf0f5d7ae774e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_3c447073",
         "filename": "jjb/integration/include-raw-integration-get-slave-addresses.sh",
         "patchSetId": 3
