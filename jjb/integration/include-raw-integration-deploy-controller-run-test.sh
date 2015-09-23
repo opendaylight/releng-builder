@@ -1,3 +1,6 @@
+# Activate robotframework virtualenv
+source $WORKSPACE/venv-robotframework/bin/activate
+
 CONTROLLERMEM="2048m"
 
 if [ ${CONTROLLERSCOPE} == 'all' ]; then
