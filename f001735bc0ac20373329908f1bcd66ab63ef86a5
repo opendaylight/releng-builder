@@ -34,6 +34,24 @@
       "revId": "f001735bc0ac20373329908f1bcd66ab63ef86a5",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_7193e1a3",
+        "filename": "vagrant/gbp-ubuntu-docker-ovs-node/bootstrap.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-09-28T16:39:38Z",
+      "side": 1,
+      "message": "I\u0027m aware that it\u0027s how docker says you should install it. But what I\u0027m saying is that I can\u0027t let this merge until it\u0027s shown that it will either not bring up a localized docker bridge or that the bridge that it brings up will be forced to 10.250.0.254/24 which is what we\u0027ve defined as the subnet for docker to utilize in the CI environment.\n\nSee https://git.opendaylight.org/gerrit/gitweb?p\u003dreleng/builder.git;a\u003dblob;f\u003dvagrant/docker/bootstrap.sh;h\u003debafa994f23555aaf444e2e3a29a32c4653514c7;hb\u003dHEAD#l20 for how we force it on RedHat systems. I don\u0027t know how docker\u0027s config files are managed on Ubuntu, I\u0027m sure it will be different.",
+      "parentUuid": "1a76adc5_b125f9ac",
+      "revId": "f001735bc0ac20373329908f1bcd66ab63ef86a5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
