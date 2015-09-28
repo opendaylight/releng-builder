@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_2e03c810",
+        "filename": "vagrant/gbp-ubuntu-docker-ovs-node/bootstrap.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-09-28T15:27:35Z",
+      "side": 1,
+      "message": "I\u0027m concerned by this. We had a hard time getting docker to not mess with our network routing on CentOS (which it does by default). What guarantees can you give me that this does _not_ setup a default network, or more precisely, how are you going to force it to use the default network we\u0027ve got defined in our RelEng managed docker image?",
+      "revId": "f001735bc0ac20373329908f1bcd66ab63ef86a5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
