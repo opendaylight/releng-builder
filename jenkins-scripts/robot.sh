@@ -1,7 +1,13 @@
 #!/bin/bash
 
+# make sure we don't require tty for sudo operations
+cat <<EOF >/etc/sudoers.d/89-jenkins-user-defaults
+Defaults:jenkins !requiretty
+jenkins     ALL = NOPASSWD: /usr/bin/sshuttle
+EOF
+
 yum clean all
-yum install -y -q unzip python-netaddr @development
+yum install -y -q unzip python-netaddr sshuttle @development
 yum remove -y robotframework-{sshlibrary,requests}
 
 ## install Latest Robot Framewrok from source
