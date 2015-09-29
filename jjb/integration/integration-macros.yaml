@@ -249,6 +249,18 @@
         - shell:
             !include-raw include-raw-integration-get-bundle-url.sh
 
+# Macro: integration-install-robotframework
+# Operation: Installs robotframework using pip to a virtualenv
+# Used by: {project}-csit-* job templates
+
+- builder:
+    name: integration-install-robotframework
+    builders:
+        - shell:
+            !include-raw include-raw-integration-install-robotframework.sh
+
+
+
 ##############
 # Publishers #
 ##############
