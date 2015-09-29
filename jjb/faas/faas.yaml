@@ -1,0 +1,516 @@
+# REMOVE THIS LINE IF YOU WANT TO CUSTOMIZE ANYTHING BELOW
+# Otherwise this file will be automatically overwritten by the template
+# autobuilder.
+
+# ODL Releng build templates
+- project:
+    name: faas
+    jobs:
+        - 'faas-verify-{stream}'
+        - 'faas-merge-{stream}'
+        - 'faas-daily-{stream}'
+        - 'faas-distribution-{stream}'
+        - 'faas-integration-{stream}'
+        - 'faas-sonar'
+        - 'faas-clm-{stream}'
+
+
+    # stream:    release stream (eg. stable-lithium or beryllium)
+    # branch:    git branch (eg. stable/lithium or master)
+    stream:
+        - beryllium:
+            branch: 'master'
+            jdk: openjdk7
+            jdks:
+                - openjdk7
+
+    project: 'faas'
+
+# For the Job templates below replace instances of:
+# PROJECT_SHORTNAME with your project name (eg. circuitsw)
+# PROJECT_PATH with your project name (eg. ofextensions/circuitsw)
+# MAVEN_GOALS with your maven goals to build
+# MAVEN_OPTS with your maven options to build
+
+- job-template:
+    name: 'faas-verify-{stream}'
+
+    # Job template for ODL verify jobs
+    #
+    # The purpose of this job template is to setup a ODL verify job
+    #
+    # Required Variables:
+    #     stream:    release stream (eg. stable-lithium or beryllium)
+    #     branch:    git branch (eg. stable/lithium or master)
+
+    project-type: matrix
+    node: matrix_master
+    concurrent: true
+
+    axes:
+        - axis:
+            type: slave
+            name: nodes
+            values:
+                - dynamic_verify
+        - axis:
+            type: jdk
+            values: '{obj:jdks}'
+
+    logrotate:
+        daysToKeep: '{build-days-to-keep}'
+        numToKeep: '{build-num-to-keep}'
+        artifactDaysToKeep: '{build-artifact-days-to-keep}'
+        artifactNumToKeep: '{build-artifact-num-to-keep}'
+
+    parameters:
+        - project-parameter:
+            project: '{project}'
+        - gerrit-parameter:
+            branch: '{branch}'
+
+    scm:
+        - gerrit-trigger-scm:
+            credentials-id: '{ssh-credentials}'
+            refspec: '$GERRIT_REFSPEC'
+            choosing-strategy: 'gerrit'
+
+    wrappers:
+        - build-timeout
+        - ssh-agent-credentials:
+            users:
+                - '{ssh-credentials}'
+
+    triggers:
+        - gerrit-trigger-patch-submitted:
+            name: 'faas'
+            branch: '{branch}'
+
+    builders:
+        - wipe-org-opendaylight-repo
+        - jacoco-nojava-workaround
+        - provide-maven-settings:
+            global-settings-file: '{odl-global-settings}'
+            settings-file: '{faas-settings}'
+        - maven-target:
+            maven-version: '{mvn33}'
+            pom: 'pom.xml'
+            goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  -Dstream={stream}'
+            java-opts:
+                - '-Xmx1024m -XX:MaxPermSize=256m'
+            settings: '{faas-settings}'
+            global-settings: '{odl-global-settings}'
+
+    publishers:
+        - findbugs
+        - email-notification:
+            email-prefix: '[faas]'
+        - jacoco-report
+
+- job-template:
+    name: 'faas-merge-{stream}'
+
+    # Job template for ODL merge jobs
+    #
+    # The purpose of this job template is to setup a ODL merge job
+    # and deploy artifacts to Nexus.
+    #
+    # Required Variables:
+    #     stream:    release stream (eg. stable-lithium or beryllium)
+    #     branch:    git branch (eg. stable/lithium or master)
+
+    project-type: maven
+    node: dynamic_merge
+    jdk: '{jdk}'
+
+    logrotate:
+        daysToKeep: '{build-days-to-keep}'
+        numToKeep: '{build-num-to-keep}'
+        artifactDaysToKeep: '{build-artifact-days-to-keep}'
+        artifactNumToKeep: '{build-artifact-num-to-keep}'
+
+    parameters:
+        - project-parameter:
+            project: '{project}'
+
+    scm:
+        - gerrit-trigger-scm:
+            credentials-id: '{ssh-credentials}'
+            refspec: ''
+            choosing-strategy: 'default'
+
+    wrappers:
+        - build-timeout
+        - ssh-agent-credentials:
+            users:
+                - '{ssh-credentials}'
+
+    triggers:
+        - gerrit-trigger-patch-merged:
+            name: 'faas'
+            branch: '{branch}'
+
+    prebuilders:
+        - wipe-org-opendaylight-repo
+        - jacoco-nojava-workaround
+        - provide-maven-settings:
+            global-settings-file: '{odl-global-settings}'
+            settings-file: '{faas-settings}'
+
+    maven:
+        maven-name: '{mvn33}'
+        root-pom: 'pom.xml'
+        goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  -Dmerge -Dstream={stream}'
+        maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+        settings: '{faas-settings}'
+        global-settings: '{odl-global-settings}'
+        post-step-run-condition: UNSTABLE
+
+    postbuilders:
+        - conditional-step:
+            condition-kind: file-exists
+            condition-filename: deploy-site.xml
+            condition-basedir: workspace
+
+            # The strategy here is intentional to run Maven site:deploy twice
+            # once using regular pom.xml to produce a staged-site which is
+            # then used by deploy-site.xml to push to Nexus. This is a
+            # workaround to Maven Site's default linking code which creates
+            # incorrect URLs for sites due to auto-detection assuming your
+            # project is configured in a certain way which ODL is not.
+            steps:
+            - maven-target:
+                maven-version: '{mvn33}'
+                pom: pom.xml
+                goals: 'site:deploy -Dstream={stream}'
+                java-opts:
+                    - '-Xmx2g'
+                settings: '{faas-settings}'
+                global-settings: '{odl-global-settings}'
+            - maven-target:
+                maven-version: '{mvn33}'
+                pom: deploy-site.xml
+                goals: 'site:deploy -Dstream={stream}'
+                java-opts:
+                    - '-Xmx2g'
+                settings: '{faas-settings}'
+                global-settings: '{odl-global-settings}'
+
+    reporters:
+        - findbugs
+
+    publishers:
+        - email-notification:
+            email-prefix: '[faas]'
+        - maven-deploy:
+            id: ''
+            unique-version: true
+            deploy-unstable: false
+        - jacoco-report
+
+- job-template:
+    name: 'faas-daily-{stream}'
+
+    # Job template for daily builders
+    #
+    # The purpose of this job template is to setup a daily/nightly
+    # builder and pushes to Sonar analysis.
+    #
+    # Required Variables:
+    #     stream:    release stream (eg. stable-lithium or beryllium)
+    #     branch:    git branch (eg. stable/lithium or master)
+
+    project-type: maven
+    node: dynamic_verify
+    jdk: '{jdk}'
+
+    logrotate:
+        daysToKeep: '{build-days-to-keep}'
+        numToKeep: '{build-num-to-keep}'
+        artifactDaysToKeep: '{build-artifact-days-to-keep}'
+        artifactNumToKeep: '{build-artifact-num-to-keep}'
+
+    parameters:
+        - project-parameter:
+            project: '{project}'
+
+    scm:
+        - git-scm:
+            credentials-id: '{ssh-credentials}'
+            refspec: ''
+            branch: '{branch}'
+
+    wrappers:
+        - build-timeout
+        - ssh-agent-credentials:
+            users:
+                - '{ssh-credentials}'
+
+    triggers:
+        - timed: 'H H * * *'
+
+    prebuilders:
+        - wipe-org-opendaylight-repo
+        - jacoco-nojava-workaround
+        - provide-maven-settings:
+            global-settings-file: '{odl-global-settings}'
+            settings-file: '{faas-settings}'
+
+    maven:
+        maven-name: '{mvn33}'
+        root-pom: 'pom.xml'
+        goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r '
+        maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+        settings: '{faas-settings}'
+        global-settings: '{odl-global-settings}'
+
+    reporters:
+        - findbugs
+
+    publishers:
+        - email-notification:
+            email-prefix: '[faas]'
+        - jacoco-report
+
+- job-template:
+    name: 'faas-distribution-{stream}'
+
+    # Required variables:
+    #     stream:    release stream (eg. stable-lithium or beryllium)
+    #     branch:    git branch (eg. stable/lithium or master)
+
+    project-type: maven
+    node: dynamic_merge
+    jdk: '{jdk}'
+
+    logrotate:
+        daysToKeep: '{build-days-to-keep}'
+        numToKeep: '{build-num-to-keep}'
+        artifactDaysToKeep: '{build-artifact-days-to-keep}'
+        artifactNumToKeep: '{build-artifact-num-to-keep}'
+
+    parameters:
+        - project-parameter:
+            project: 'integration/distribution'
+
+    scm:
+        - git-scm:
+            credentials-id: '{ssh-credentials}'
+            refspec: ''
+            branch: '{branch}'
+
+    wrappers:
+        - build-timeout
+        - ssh-agent-credentials:
+            users:
+                - '{ssh-credentials}'
+
+    triggers:
+        - reverse:
+            jobs: '{project}-merge-{stream}'
+            result: 'success'
+
+    prebuilders:
+        - wipe-org-opendaylight-repo
+        - provide-maven-settings:
+            global-settings-file: '{odl-global-settings}'
+            settings-file: '{faas-settings}'
+
+    maven:
+        maven-name: '{mvn33}'
+        root-pom: 'pom.xml'
+        goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r clean install'
+        maven-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
+        settings: '{integration-settings}'
+        global-settings: '{odl-global-settings}'
+
+    publishers:
+        - email-notification:
+            email-prefix: '[{project}]'
+        - maven-deploy:
+            id: ''
+            unique-version: true
+            deploy-unstable: false
+
+- job-template:
+    name: 'faas-integration-{stream}'
+    disabled: false
+
+    # Job template for ODL integration verify jobs
+    #
+    # This is similar to a normal verify job, but it runs
+    # when a project that's a dependency of your project
+    # is successfully built.
+    #
+    # Required Variables:
+    #     stream:    release stream (eg. stable-lithium or beryllium)
+    #     branch:    git branch (eg. stable/lithium or master)
+
+    project-type: maven
+    node: dynamic_merge
+    jdk: '{jdk}'
+
+    logrotate:
+        daysToKeep: '{build-days-to-keep}'
+        numToKeep: '{build-num-to-keep}'
+        artifactDaysToKeep: '{build-artifact-days-to-keep}'
+        artifactNumToKeep: '{build-artifact-num-to-keep}'
+
+    parameters:
+        - project-parameter:
+            project: '{project}'
+
+    scm:
+        - git-scm:
+            credentials-id: '{ssh-credentials}'
+            refspec: ''
+            branch: '{branch}'
+
+    wrappers:
+        - build-timeout
+        - ssh-agent-credentials:
+            users:
+                - '{ssh-credentials}'
+
+    triggers:
+        - reverse:
+            jobs: 'odlparent-merge-{stream}'
+            result: 'success'
+
+    prebuilders:
+        - wipe-org-opendaylight-repo
+        - jacoco-nojava-workaround
+        - provide-maven-settings:
+            global-settings-file: '{odl-global-settings}'
+            settings-file: '{faas-settings}'
+
+    maven:
+        maven-name: '{mvn33}'
+        root-pom: 'pom.xml'
+        goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r '
+        maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+        settings: '{faas-settings}'
+        global-settings: '{odl-global-settings}'
+
+    reporters:
+        - findbugs
+
+    publishers:
+        - email-notification:
+            email-prefix: '[faas] [odlparent]'
+        - jacoco-report
+
+- job-template:
+    name: 'faas-sonar'
+
+    project-type: maven
+    node: dynamic_verify
+    jdk: 'openjdk7'
+
+    logrotate:
+        daysToKeep: '7'
+        numToKeep: '10'
+        artifactDaysToKeep: '1'
+        artifactNumToKeep: '1'
+
+    parameters:
+        - project-parameter:
+            project: '{project}'
+
+    scm:
+        - git-scm:
+            credentials-id: '{ssh-credentials}'
+            refspec: ''
+            branch: 'master'
+
+    wrappers:
+        - build-timeout
+        - ssh-agent-credentials:
+            users:
+                - '{ssh-credentials}'
+
+    triggers:
+        - timed: 'H H * * *'
+        - gerrit-trigger-patch-sonar:
+            name: 'faas'
+
+    prebuilders:
+        - wipe-org-opendaylight-repo
+        - jacoco-nojava-workaround
+        - provide-maven-settings:
+            global-settings-file: '{odl-global-settings}'
+            settings-file: '{faas-settings}'
+
+    maven:
+        maven-name: '{mvn33}'
+        root-pom: 'pom.xml'
+        goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  -Dsonar'
+        maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+        settings: '{faas-settings}'
+        global-settings: '{odl-global-settings}'
+
+    reporters:
+        - findbugs
+
+    publishers:
+        - sonar:
+            language: 'java'
+            maven-opts: '-Xmx6144m -XX:MaxPermSize=1024m'
+        - email-notification:
+            email-prefix: '[faas]'
+        - jacoco-report
+
+- job-template:
+    name: 'faas-clm-{stream}'
+
+    project-type: maven
+    node: dynamic_verify
+    jdk: '{jdk}'
+
+    logrotate:
+        daysToKeep: '{build-days-to-keep}'
+        numToKeep: '{build-num-to-keep}'
+        artifactDaysToKeep: '{build-artifact-days-to-keep}'
+        artifactNumToKeep: '{build-artifact-num-to-keep}'
+
+    parameters:
+        - project-parameter:
+            project: '{project}'
+
+    scm:
+        - git-scm:
+            credentials-id: '{ssh-credentials}'
+            refspec: ''
+            branch: '{branch}'
+
+    wrappers:
+        - build-timeout
+        - ssh-agent-credentials:
+            users:
+                - '{ssh-credentials}'
+
+    triggers:
+        - timed: '@weekly'
+
+    prebuilders:
+        - wipe-org-opendaylight-repo
+        - provide-maven-settings:
+            global-settings-file: '{odl-global-settings}'
+            settings-file: '{faas-settings}'
+
+    maven:
+        maven-name: '{mvn33}'
+        root-pom: 'pom.xml'
+        goals: 'clean install com.sonatype.clm:clm-maven-plugin:index -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+        maven-opts: '-Xmx4096m -XX:MaxPermSize=512m'
+        settings: '{faas-settings}'
+        global-settings: '{odl-global-settings}'
+
+    postbuilders:
+        - check-clm:
+            application-name: faas
+
+    publishers:
+        - email-notification:
+            email-prefix: '[faas]'
+
