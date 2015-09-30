@@ -130,7 +130,8 @@ if cfg.get('DEPENDENCIES'):
         dependencies = "odlparent," + dependencies
     disabled = "false"
 else:
-    dependencies = "odlparent"  # All projects depend on odlparent
+    if cfg.project != "odlparent":  # Odlparent does not depend on odlparent
+        dependencies = "odlparent"  # All other projects depend on odlparent
     disabled = "false"
 
 email_prefix = (email_prefix + " " +
