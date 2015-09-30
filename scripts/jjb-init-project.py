@@ -130,13 +130,16 @@ if cfg.get('DEPENDENCIES'):
         dependencies = "odlparent," + dependencies
     disabled = "false"
 else:
-    dependencies = "odlparent"  # All projects depend on odlparent
+    dependencies = None
+    if project.project != "odlparent":  # Odlparent does not depend on itself
+        dependencies = "odlparent"  # All other projects depend on odlparent
     disabled = "false"
 
-email_prefix = (email_prefix + " " +
+if dependencies:
+    email_prefix = (email_prefix + " " +
                 " ".join(['[%s]' % d for d in dependencies.split(",")]))  # noqa
-dependent_jobs = ",".join(
-    ['%s-merge-{stream}' % d for d in dependencies.split(",")])
+    dependent_jobs = ",".join(
+        ['%s-merge-{stream}' % d for d in dependencies.split(",")])
 
 ############################
 # Handle ARCHIVE_ARTIFACTS #
