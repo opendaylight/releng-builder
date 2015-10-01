@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1a76adc5_f1aa84d3",
+        "filename": "jjb/opflex/include-raw-libuv_tgz-build.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2015-10-01T17:03:14Z",
+      "side": 1,
+      "message": "This actually does not operate on anything outside of workspace (DESTDIR installs into a directory in workspace called install-root).\n\nWhen this package is installed by the final opflex build, it does unpack into this root however.  The root can\u0027t be in workspace because it needs to be a fixed, shared, absolute path.\n\nOne thing I could do is to move the root to something like /tmp/opflex-prefix, and ensure it\u0027s cleaned up both before and after the main opflex build runs.  This might help to preserve the purity.",
+      "parentUuid": "1a76adc5_06834857",
+      "revId": "e5eab89bc2aa2a65999f2752ab8f0f757d5e6464",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_2688c470",
         "filename": "jjb/opflex/include-raw-openvswitch_tgz-build.sh",
         "patchSetId": 1
@@ -115,6 +133,24 @@
       "writtenOn": "2015-10-01T13:58:00Z",
       "side": 1,
       "message": "What is the plan for triggering builds of this?",
+      "revId": "e5eab89bc2aa2a65999f2752ab8f0f757d5e6464",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_51b9f82c",
+        "filename": "jjb/opflex/opflex-dependencies.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2015-10-01T17:03:14Z",
+      "side": 1,
+      "message": "These can be triggered manually when we bump the dependency version.  Would happen very rarely.  Note that it depends on a tagged release.",
+      "parentUuid": "1a76adc5_668d5c7b",
       "revId": "e5eab89bc2aa2a65999f2752ab8f0f757d5e6464",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
