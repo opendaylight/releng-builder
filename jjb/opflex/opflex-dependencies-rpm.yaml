@@ -1,0 +1,121 @@
+- project:
+    name: opflex-dependencies-rpm
+    jobs:
+        - 'opflex-dep_rpm-{stream}'
+        - 'opflex-openvswitch_rpm-{stream}'
+
+    stream:
+        - beryllium:
+            branch: 'master'
+            jdk: openjdk7
+            jdks:
+                - openjdk7
+
+    project: 'opflex'
+
+- parameter:
+    name: mock-target-parameter
+    parameters:
+        - string:
+            name: MOCK_TARGET
+            default: 'epel-7-x86_64'
+            description: "Target architecture for mock RPM builds"
+
+- scm:
+    name: 'git-opflex-3rdparty'
+    scm:
+        - git:
+            url: https://github.com/noironetworks/3rdparty-rpm.git
+            branches:
+                - 'origin/master'
+            wipe-workspace: true
+
+- job-template:
+    name: 'opflex-dep_rpm-{stream}'
+
+    project-type: matrix
+    node: matrix_master
+    concurrent: true
+
+    axes:
+        - axis:
+            type: slave
+            name: nodes
+            values:
+                - dynamic_verify
+        - axis:
+            type: jdk
+            values: '{obj:jdks}'
+
+    logrotate:
+        daysToKeep: '{build-days-to-keep}'
+        numToKeep: '{build-num-to-keep}'
+        artifactDaysToKeep: '{build-artifact-days-to-keep}'
+        artifactNumToKeep: '{build-artifact-num-to-keep}'
+
+    scm:
+        - git-opflex-3rdparty
+
+    wrappers:
+        - build-timeout
+        - ssh-agent-credentials:
+            users:
+                - '{ssh-credentials}'
+
+    parameters:
+        - mock-target-parameter
+
+    builders:
+        - shell:
+            !include-raw-escape include-raw-opflex-dep_rpm-build.sh
+
+    publishers:
+        - email-notification:
+            email-prefix: '[opflex]'
+        - archive:
+            artifacts: '*.rpm'
+
+- job-template:
+    name: 'opflex-openvswitch_rpm-{stream}'
+
+    project-type: matrix
+    node: matrix_master
+    concurrent: true
+
+    axes:
+        - axis:
+            type: slave
+            name: nodes
+            values:
+                - dynamic_verify
+        - axis:
+            type: jdk
+            values: '{obj:jdks}'
+
+    logrotate:
+        daysToKeep: '{build-days-to-keep}'
+        numToKeep: '{build-num-to-keep}'
+        artifactDaysToKeep: '{build-artifact-days-to-keep}'
+        artifactNumToKeep: '{build-artifact-num-to-keep}'
+
+    scm:
+        - git-opflex-ovs
+
+    wrappers:
+        - build-timeout
+        - ssh-agent-credentials:
+            users:
+                - '{ssh-credentials}'
+
+    parameters:
+        - mock-target-parameter
+
+    builders:
+        - shell:
+            !include-raw-escape include-raw-ovs_rpm-build.sh
+
+    publishers:
+        - email-notification:
+            email-prefix: '[opflex]'
+        - archive:
+            artifacts: '*.rpm'
