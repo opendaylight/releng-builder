@@ -12,7 +12,7 @@
 
 virtualenv $WORKSPACE/venv-robotframework
 source $WORKSPACE/venv-robotframework/bin/activate
-pip install -q docker-py importlib requests scapy
+pip install -q docker-py importlib requests scapy netaddr
 pip install -q robotframework{,-{httplibrary,requests,sshlibrary}}
 
 # vim: sw=4 ts=4 sts=4 et ft=sh :
