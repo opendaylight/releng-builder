@@ -245,6 +245,7 @@
             pattern: 'csit/libraries/*'
 
     builders:
+        - integration-install-robotframework
         - integration-get-slave-addresses
         - inject:
             properties-file: 'slave_addresses.txt'
