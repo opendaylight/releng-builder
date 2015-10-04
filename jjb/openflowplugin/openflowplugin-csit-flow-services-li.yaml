@@ -1,5 +1,5 @@
 - project:
-    name: openflowplugin-csit-scalability-lithium-redesign
+    name: openflowplugin-csit-flow-services-li
     jobs:
         - '{project}-csit-1node-{functionality}-{install}-{stream}'
 
@@ -7,7 +7,7 @@
     project: 'openflowplugin'
 
     # The functionality under test
-    functionality: 'scalability-lithium-redesign'
+    functionality: 'flow-services-li'
 
     # Project branches
     stream:
@@ -19,14 +19,12 @@
     install:
         - only:
             scope: 'only'
-        - all:
-            scope: 'all'
 
     # Features to install
     install-features: 'odl-openflowplugin-flow-services-ui-li'
 
     # Robot custom options
-    robot-options: '-v TOPO_TREE_DEPTH:7 -e adsal'
+    robot-options: '-e adsal'
 
     # Trigger jobs (upstream dependencies)
     trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream},openflowjava-distribution-{stream},openflowplugin-distribution-{stream}'

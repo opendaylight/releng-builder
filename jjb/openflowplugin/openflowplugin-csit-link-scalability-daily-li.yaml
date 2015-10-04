@@ -1,5 +1,5 @@
 - project:
-    name: openflowplugin-csit-scale-stats-collection-daily-lithium-redesign
+    name: openflowplugin-csit-link-scalability-daily-li
     jobs:
         - '{project}-csit-1node-periodic-{functionality}-{install}-{stream}'
 
@@ -7,7 +7,7 @@
     project: 'openflowplugin'
 
     # The functionality under test
-    functionality: 'scale-stats-collection-daily-lithium-redesign'
+    functionality: 'link-scalability-daily-li'
 
     # Project branches
     stream:
@@ -27,15 +27,10 @@
     robot-options: ''
 
     # Trigger jobs (daily)
-    schedule: 'H H/12 * * *'
+    schedule: 'H H * * *'
 
     # Plot Info
-    01-plot-title: 'Flows (100k) Setup Time'
-    01-plot-yaxis: '[s]'
-    01-plot-group: 'Config Performance'
-    01-plot-data-file: 'flows_setup_time.csv'
-
-    02-plot-title: 'REST setup rate (for 100k flows)'
-    02-plot-yaxis: 'setup time[s], req[flows/s]'
-    02-plot-group: 'Performance Rate'
-    02-plot-data-file: 'flows_install_rate.csv'
+    01-plot-title: 'Max number of switch links'
+    01-plot-yaxis: 'Links'
+    01-plot-group: 'Inventory Switch Link Scalability'
+    01-plot-data-file: 'links.csv'
