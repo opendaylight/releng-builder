@@ -1,5 +1,5 @@
 - project:
-    name: openflowplugin-csit-flow-services-lithium-redesign
+    name: openflowplugin-csit-config-performance-li
     jobs:
         - '{project}-csit-1node-{functionality}-{install}-{stream}'
 
@@ -7,7 +7,7 @@
     project: 'openflowplugin'
 
     # The functionality under test
-    functionality: 'flow-services-lithium-redesign'
+    functionality: 'config-performance-li'
 
     # Project branches
     stream:
@@ -24,7 +24,13 @@
     install-features: 'odl-openflowplugin-flow-services-ui-li'
 
     # Robot custom options
-    robot-options: '-e adsal'
+    robot-options: ''
 
     # Trigger jobs (upstream dependencies)
     trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream},openflowjava-distribution-{stream},openflowplugin-distribution-{stream}'
+
+    # Plot Info
+    01-plot-title: 'Config Rest Api Rate'
+    01-plot-yaxis: 'http_req/sec'
+    01-plot-group: 'Config Performance'
+    01-plot-data-file: 'rates.csv'
