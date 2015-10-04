@@ -12,7 +12,7 @@
 
     # Project branches
     stream:
-        - master:
+        - beryllium:
             branch: 'master'
         - stable-lithium:
             branch: 'stable/lithium'
@@ -22,10 +22,6 @@
             scope: 'only'
         - all:
             scope: 'all'
-
-    # Mininet configuration
-    mininet-image: 'rk-c-el6-mininet'
-    mininet-vms: 1
 
     # Features to install
     install-features: 'odl-sfc-core,odl-restconf-all'
