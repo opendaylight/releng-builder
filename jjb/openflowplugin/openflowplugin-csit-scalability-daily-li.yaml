@@ -1,5 +1,5 @@
 - project:
-    name: openflowplugin-csit-sw-scalability-daily-lithium-redesign
+    name: openflowplugin-csit-scalability-daily-li
     jobs:
         - '{project}-csit-1node-periodic-{functionality}-{install}-{stream}'
 
@@ -7,7 +7,7 @@
     project: 'openflowplugin'
 
     # The functionality under test
-    functionality: 'sw-scalability-daily-lithium-redesign'
+    functionality: 'scalability-daily-li'
 
     # Project branches
     stream:
@@ -24,7 +24,7 @@
     install-features: 'odl-openflowplugin-flow-services-ui-li'
 
     # Robot custom options
-    robot-options: ''
+    robot-options: '-v MIN_SWITCHES:100 -v MAX_SWITCHES:500 -v STEP_SWITCHES:100'
 
     # Trigger jobs (daily)
     schedule: 'H H * * *'
@@ -33,4 +33,4 @@
     01-plot-title: 'Max number of Switches'
     01-plot-yaxis: 'OpenFlow Switches'
     01-plot-group: 'Inventory Scalability'
-    01-plot-data-file: 'max_found.csv'
+    01-plot-data-file: 'switches.csv'

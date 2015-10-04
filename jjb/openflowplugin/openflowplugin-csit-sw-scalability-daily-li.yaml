@@ -1,13 +1,13 @@
 - project:
-    name: openflowplugin-csit-flow-services-more-lithium-redesign
+    name: openflowplugin-csit-sw-scalability-daily-li
     jobs:
-        - '{project}-csit-1node-{functionality}-{install}-{stream}'
+        - '{project}-csit-1node-periodic-{functionality}-{install}-{stream}'
 
     # The project name
     project: 'openflowplugin'
 
     # The functionality under test
-    functionality: 'flow-services-more-lithium-redesign'
+    functionality: 'sw-scalability-daily-li'
 
     # Project branches
     stream:
@@ -26,5 +26,11 @@
     # Robot custom options
     robot-options: ''
 
-    # Trigger jobs (upstream dependencies)
-    trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream},openflowjava-distribution-{stream},openflowplugin-distribution-{stream}'
+    # Trigger jobs (daily)
+    schedule: 'H H * * *'
+
+    # Plot Info
+    01-plot-title: 'Max number of Switches'
+    01-plot-yaxis: 'OpenFlow Switches'
+    01-plot-group: 'Inventory Scalability'
+    01-plot-data-file: 'max_found.csv'
