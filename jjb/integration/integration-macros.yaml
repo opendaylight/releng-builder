@@ -259,6 +259,15 @@
         - shell:
             !include-raw include-raw-integration-install-robotframework.sh
 
+# Macro: integration-cleanup-tmp
+# Operation: Cleans up temporary files created by build
+# Used by: {project}-csit-* job templates
+
+- builder:
+    name: integration-cleanup-tmp
+    builders:
+        - shell:
+            !include-raw include-raw-integration-cleanup-tmp.sh
 
 
 ##############

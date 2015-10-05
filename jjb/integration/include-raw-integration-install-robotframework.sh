@@ -1,5 +1,3 @@
-cat > ${WORKSPACE}/venv-script.sh <<EOF
-
 #!/bin/bash
 
 # @License EPL-1.0 <http://spdx.org/licenses/EPL-1.0>
@@ -12,14 +10,12 @@ cat > ${WORKSPACE}/venv-script.sh <<EOF
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
 
-virtualenv $WORKSPACE/venv-robotframework
-source $WORKSPACE/venv-robotframework/bin/activate
+ROBOT_VENV=`mktemp -d --suffix=robot_venv`
+echo ROBOT_VENV=${ROBOT_VENV} >> ${WORKSPACE}/env.properties
+
+virtualenv ${ROBOT_VENV}
+source ${ROBOT_VENV}/bin/activate
 pip install -q docker-py importlib requests scapy netaddr
 pip install -q robotframework{,-{httplibrary,requests,sshlibrary}}
-
-EOF
-
-chmod +x ${WORKSPACE}/venv-script.sh
-${WORKSPACE}/venv-script.sh
 
 # vim: sw=4 ts=4 sts=4 et ft=sh :

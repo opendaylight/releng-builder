@@ -1,5 +1,7 @@
 # Activate robotframework virtualenv
-source $WORKSPACE/venv-robotframework/bin/activate
+# ${ROBOT_VENV} comes from the include-raw-integration-install-robotframework.sh
+# script.
+source ${ROBOT_VENV}/bin/activate
 
 CONTROLLERMEM="2048m"
 

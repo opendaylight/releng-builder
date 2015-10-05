@@ -81,6 +81,8 @@
 
     builders:
         - integration-install-robotframework
+        - inject:
+            properties-file: 'env.properties'
         - integration-get-slave-addresses
         - inject:
             properties-file: 'slave_addresses.txt'
@@ -88,6 +90,7 @@
         - inject:
             properties-file: 'bundle_vars.txt'
         - integration-deploy-controller-run-test
+        - integration-cleanup-tmp
 
     publishers:
         - integration-robot:
@@ -153,6 +156,8 @@
 
     builders:
         - integration-install-robotframework
+        - inject:
+            properties-file: 'env.properties'
         - integration-get-slave-addresses
         - inject:
             properties-file: 'slave_addresses.txt'
@@ -160,6 +165,7 @@
         - inject:
             properties-file: 'bundle_vars.txt'
         - integration-deploy-controller-run-test
+        - integration-cleanup-tmp
 
     publishers:
         - integration-robot:
@@ -253,6 +259,8 @@
 
     builders:
         - integration-install-robotframework
+        - inject:
+            properties-file: 'env.properties'
         - integration-get-slave-addresses
         - inject:
             properties-file: 'slave_addresses.txt'
@@ -260,6 +268,7 @@
         - inject:
             properties-file: 'bundle_vars.txt'
         - integration-deploy-controller-run-test
+        - integration-cleanup-tmp
 
     publishers:
         - integration-robot:
@@ -325,6 +334,8 @@
 
     builders:
         - integration-install-robotframework
+        - inject:
+            properties-file: 'env.properties'
         - integration-get-slave-addresses
         - inject:
             properties-file: 'slave_addresses.txt'
@@ -332,6 +343,7 @@
         - inject:
             properties-file: 'bundle_vars.txt'
         - integration-deploy-controller-run-test
+        - integration-cleanup-tmp
 
     publishers:
         - integration-robot:
@@ -419,6 +431,8 @@
 
     builders:
         - integration-install-robotframework
+        - inject:
+            properties-file: 'env.properties'
         - integration-get-slave-addresses
         - inject:
             properties-file: 'slave_addresses.txt'
@@ -426,6 +440,7 @@
         - inject:
             properties-file: 'bundle_vars.txt'
         - integration-deploy-controller-run-test
+        - integration-cleanup-tmp
 
     publishers:
         - integration-robot:
@@ -515,6 +530,8 @@
 
     builders:
         - integration-install-robotframework
+        - inject:
+            properties-file: 'env.properties'
         - integration-get-slave-addresses
         - inject:
             properties-file: 'slave_addresses.txt'
@@ -524,6 +541,8 @@
         - integration-deploy-controller
         - integration-configure-clustering
         - integration-start-cluster-run-test
+        - integration-cleanup-tmp
+
     publishers:
         - integration-robot:
             unstable-if: 0.0
@@ -588,6 +607,8 @@
 
     builders:
         - integration-install-robotframework
+        - inject:
+            properties-file: 'env.properties'
         - integration-get-slave-addresses
         - inject:
             properties-file: 'slave_addresses.txt'
@@ -597,6 +618,7 @@
         - integration-deploy-controller
         - integration-configure-clustering
         - integration-start-cluster-run-test
+        - integration-cleanup-tmp
 
     publishers:
         - integration-robot:
@@ -684,6 +706,8 @@
 
     builders:
         - integration-install-robotframework
+        - inject:
+            properties-file: 'env.properties'
         - integration-get-slave-addresses
         - inject:
             properties-file: 'slave_addresses.txt'
@@ -693,6 +717,7 @@
         - integration-deploy-controller
         - integration-configure-clustering
         - integration-start-cluster-run-test
+        - integration-cleanup-tmp
 
     publishers:
         - integration-robot:
