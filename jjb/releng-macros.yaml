@@ -190,7 +190,7 @@
 - builder:
     name: jacoco-nojava-workaround
     builders:
-        - shell: 'mkdir -p $WORKSPACE/target/classes'
+        - shell: 'mkdir -p $WORKSPACE/target/classes $WORKSPACE/jacoco/classes'
 
 - builder:
     name: check-clm
