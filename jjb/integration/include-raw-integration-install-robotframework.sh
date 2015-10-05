@@ -1,3 +1,5 @@
+cat > ${WORKSPACE}/venv-script.sh <<EOF
+
 #!/bin/bash
 
 # @License EPL-1.0 <http://spdx.org/licenses/EPL-1.0>
@@ -14,5 +16,10 @@ virtualenv $WORKSPACE/venv-robotframework
 source $WORKSPACE/venv-robotframework/bin/activate
 pip install -q docker-py importlib requests scapy netaddr
 pip install -q robotframework{,-{httplibrary,requests,sshlibrary}}
+
+EOF
+
+chmod +x ${WORKSPACE}/venv-script.sh
+${WORKSPACE}/venv-script.sh
 
 # vim: sw=4 ts=4 sts=4 et ft=sh :
