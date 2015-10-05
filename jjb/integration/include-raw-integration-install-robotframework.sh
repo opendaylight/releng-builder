@@ -1,4 +1,4 @@
-cat > ${WORKSPACE}/venv-script.sh <<EOF
+cat > /tmp/venv-script.sh <<EOF
 
 #!/bin/bash
 
@@ -19,7 +19,7 @@ pip install -q robotframework{,-{httplibrary,requests,sshlibrary}}
 
 EOF
 
-chmod +x ${WORKSPACE}/venv-script.sh
-${WORKSPACE}/venv-script.sh
+chmod +x /tmp/venv-script.sh
+/tmp/venv-script.sh
 
 # vim: sw=4 ts=4 sts=4 et ft=sh :
