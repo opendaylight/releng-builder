@@ -246,6 +246,8 @@
 
     builders:
         - integration-install-robotframework
+        - inject:
+            properties-file: 'env.properties'
         - integration-get-slave-addresses
         - inject:
             properties-file: 'slave_addresses.txt'
@@ -253,6 +255,7 @@
         - inject:
             properties-file: 'bundle_vars.txt'
         - integration-deploy-controller-run-test
+        - integration-cleanup-tmp
 
     publishers:
         - integration-robot:
