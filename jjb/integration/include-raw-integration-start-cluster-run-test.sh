@@ -26,6 +26,8 @@ while true; do
         echo Timeout Controller DOWN
         echo "Dumping Karaf log..."
         cat /tmp/${BUNDLEFOLDER}/data/log/karaf.log
+        echo "Listing all open ports on controller system"
+        netstat -natu
         exit 1
     else
         COUNT=\$(( \${COUNT} + 5 ))
@@ -36,6 +38,15 @@ done
 
 echo "Checking OSGi bundles..."
 sshpass -p karaf /tmp/${BUNDLEFOLDER}/bin/client -u karaf 'bundle:list'
+
+echo "Listing all open ports on controller system"
+netstat -natu
+
+# checking for any bind exceptions in log which could indicate a port conflict
+if grep --quiet 'BindException: Address already in use' /tmp/${BUNDLEFOLDER}/data/log/karaf.log; then
+    echo BindException found: Possible port conflict
+    exit 1
+fi
 
 EOF
 
