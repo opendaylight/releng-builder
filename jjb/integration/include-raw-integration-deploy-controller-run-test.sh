@@ -50,6 +50,9 @@ MEMCONF=/tmp/${BUNDLEFOLDER}/bin/setenv
 sed -ie 's/JAVA_MAX_MEM="2048m"/JAVA_MAX_MEM="${CONTROLLERMEM}"/g' \${MEMCONF}
 cat \${MEMCONF}
 
+echo "Listing all open ports on controller system"
+netstat -natu
+
 echo "Starting controller..."
 /tmp/${BUNDLEFOLDER}/bin/start
 
@@ -65,6 +68,8 @@ while true; do
         echo Timeout Controller DOWN
         echo "Dumping Karaf log..."
         cat /tmp/${BUNDLEFOLDER}/data/log/karaf.log
+        echo "Listing all open ports on controller system"
+        netstat -natu
         exit 1
     else
         COUNT=\$(( \${COUNT} + 5 ))
@@ -78,6 +83,17 @@ sleep 60
 
 echo "Checking OSGi bundles..."
 sshpass -p karaf /tmp/${BUNDLEFOLDER}/bin/client -u karaf 'bundle:list'
+
+echo "Listing all open ports on controller system"
+netstat -natu
+
+# checking for any bind exceptions in log which could indicate a port conflict
+if grep --quiet 'BindException: Address already in use' /tmp/${BUNDLEFOLDER}/data/log/karaf.log; then
+    echo BindException found: Possible port conflict
+    echo "Dumping Karaf log..."
+    cat /tmp/${BUNDLEFOLDER}/data/log/karaf.log
+    exit 1
+fi
 
 EOF
 
