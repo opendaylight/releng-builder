@@ -426,7 +426,7 @@
         maven-name: '{mvn33}'
         root-pom: 'distribution/pom.xml'
         goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r source:jar javadoc:jar'
-        maven-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
+        maven-opts: '-Xmx2048m -XX:MaxPermSize=512m -Dmaven.compile.fork=true'
         settings: '{integration-settings}'
         global-settings: '{odl-global-settings}'
         ignore-upstream-changes: true
