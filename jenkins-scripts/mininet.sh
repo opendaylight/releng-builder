@@ -9,7 +9,11 @@ EOF
 # for whatever reason netopeer & CPqD aren't installed (they weren't in
 # one of the yum repos we were hooked up to when the base image was
 # built, they are now. Make sure they're install
-yum install -q -y netopeer-server-sl CPqD-ofsoftswitch13
+yum install -q -y netopeer-server-sl CPqD-ofsoftswitch13 
+
+# installing sshuttle to create a VPN-ish proxy to VMs that have
+# docker containers on them in order to make them externally accessible
+yum install -q -y sshuttle
 
 # netaddr and ipaddress libraries can be useful on this system as
 # some tests are starting to push pyhon scripts/tools to this VM
