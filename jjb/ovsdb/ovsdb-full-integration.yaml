@@ -1,18 +1,37 @@
 - project:
     name: ovsdb-full-integration
     jobs:
-        - 'ovsdb-daily-full-integration'
+        - 'ovsdb-daily-full-integration-{stream}'
+
+    # stream:    release stream (eg. stable-lithium or beryllium)
+    # branch:    git branch (eg. stable/lithium or master)
+    stream:
+        - beryllium:
+            branch: 'master'
+            jdk: openjdk8
+            jdks:
+                - openjdk8
+        - stable-lithium:
+            branch: 'stable/lithium'
+            jdk: openjdk8
+            jdks:
+                - openjdk8
 
     project: 'ovsdb'
 
 - job-template:
-    name: 'ovsdb-daily-full-integration'
+    name: 'ovsdb-daily-full-integration-{stream}'
+
+    # Required Variables:
+    #     stream:    release stream (eg. stable-lithium or beryllium)
+    #     branch:    git branch (eg. stable/lithium or master)
 
     project-type: matrix
     node: matrix_master
-    description: 'Integration tests for the OVSDB project against every known version of OVS. This job runs nightly. '
+    description: 'Integration tests for the OVSDB project against different versions of OVS and branches. This job runs nightly. '
     execution-strategy:
         sequential: true
+
     axes:
         - axis:
             type: user-defined
@@ -37,7 +56,6 @@
                 - 2.3.0
                 - 2.3.1
                 - 2.3.2
-                - 2.4.0
         - axis:
             type: jdk
             values:
@@ -57,12 +75,14 @@
     parameters:
         - project-parameter:
             project: '{project}'
+        - gerrit-parameter:
+            branch: '{branch}'
 
     scm:
         - git-scm:
             credentials-id: '{ssh-credentials}'
             refspec: ''
-            branch: 'master'
+            branch: '{branch}'
 
     wrappers:
         - timeout:
@@ -90,6 +110,7 @@
                 - 'ovsdbserver.port=6641'
                 - 'maven.repo.local=/tmp/r'
                 - 'org.ops4j.pax.url.mvn.localRepository=/tmp/r'
+                - 'stream={stream}'
             java-opts:
                 - '-Xmx1024m -XX:MaxPermSize=256m'
             settings: '{ovsdb-settings}'
