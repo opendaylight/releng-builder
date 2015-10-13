@@ -1,0 +1,34 @@
+- project:
+    name: lispflowmapping-csit-performance
+    jobs:
+        - '{project}-csit-1node-{functionality}-{install}-{stream}'
+
+    # The project name
+    project: 'lispflowmapping'
+
+    # The functionality under test
+    functionality: 'performance'
+
+    # Project branches
+    stream:
+        - beryllium:
+            branch: 'master'
+
+    install:
+        - only:
+            scope: 'only'
+
+    # Features to install
+    install-features: 'odl-lispflowmapping-msmr'
+
+    # Robot custom options
+    robot-options: ''
+
+    # Trigger jobs (upstream dependencies)
+    trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream},mdsal-distribution-{stream},netconf-distribution-{stream},lispflowmapping-distribution-{stream}'
+
+    # Plot Info
+    01-plot-title: 'Southbound Map-Reply Rate'
+    01-plot-yaxis: 'req/sec'
+    01-plot-group: 'Performance'
+    01-plot-data-file: 'pps.csv'
