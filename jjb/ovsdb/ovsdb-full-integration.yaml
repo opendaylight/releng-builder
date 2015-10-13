@@ -76,6 +76,16 @@
 
     triggers:
         - timed: '@midnight'
+        - gerrit:
+            trigger-on:
+                - comment-added-contains-event:
+                    comment-contains-value: 'recheck-daily-full-integration'
+            projects:
+              - project-compare-type: 'ANT'
+                project-pattern: '{project}'
+                branches:
+                  - branch-compare-type: 'ANT'
+                    branch-pattern: '**/master'
 
     builders:
         - wipe-org-opendaylight-repo

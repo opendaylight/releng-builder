@@ -76,6 +76,16 @@
 
     triggers:
         - timed: '@midnight'
+        - gerrit:
+            trigger-on:
+                - comment-added-contains-event:
+                    comment-contains-value: 'recheck-full-lithium-integration'
+            projects:
+              - project-compare-type: 'ANT'
+                project-pattern: '{project}'
+                branches:
+                  - branch-compare-type: 'ANT'
+                    branch-pattern: '**/stable/lithium'
 
     builders:
         - wipe-org-opendaylight-repo
