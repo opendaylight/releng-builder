@@ -1,7 +1,7 @@
-# Get the Controller and Mininet slave addresses
+# Get the Controller and Tools VM slave addresses
 
-CONTROLLER=()
-MININET=()
+ODL_SYSTEM=()
+TOOLS_SYSTEM=()
 
 IFS=',' read -ra ADDR <<< "${JCLOUDS_IPS}"
 
@@ -9,20 +9,24 @@ for i in "${ADDR[@]}"
 do
     REMHOST=`ssh ${i} hostname`
     if [ `echo ${REMHOST} | grep java` ]; then
-        CONTROLLER=( "${CONTROLLER[@]}" "${i}" )
+        ODL_SYSTEM=( "${ODL_SYSTEM[@]}" "${i}" )
     else
-        MININET=( "${MININET[@]}" "${i}" )
+        TOOLS_SYSTEM=( "${TOOLS_SYSTEM[@]}" "${i}" )
     fi
 done
 
-for i in `seq 0 $(( ${#CONTROLLER[@]} - 1 ))`
+# Add alias for ODL_SYSTEM_1_IP as ODL_SYSTEM_IP
+echo "ODL_SYSTEM_IP=${ODL_SYSTEM[0]}" >> slave_addresses.txt
+for i in `seq 0 $(( ${#ODL_SYSTEM[@]} - 1 ))`
 do
-    echo "CONTROLLER${i}=${CONTROLLER[${i}]}" >> slave_addresses.txt
+    echo "ODL_SYSTEM_$((i+1))_IP=${ODL_SYSTEM[${i}]}" >> slave_addresses.txt
 done
 
-for i in `seq 0 $(( ${#MININET[@]} - 1 ))`
+# Add alias for TOOLS_SYSTEM_1_IP as TOOLS_SYSTEM_IP
+echo "TOOLS_SYSTEM_IP=${TOOLS_SYSTEM[0]}" >> slave_addresses.txt
+for i in `seq 0 $(( ${#TOOLS_SYSTEM[@]} - 1 ))`
 do
-    echo "MININET${i}=${MININET[${i}]}" >> slave_addresses.txt
+    echo "TOOLS_SYSTEM_$((i+1))_IP=${TOOLS_SYSTEM[${i}]}" >> slave_addresses.txt
 done
 
 # vim: sw=4 ts=4 sts=4 et ft=sh :
