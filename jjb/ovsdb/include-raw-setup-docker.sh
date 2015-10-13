@@ -11,7 +11,7 @@ do
    docker rm "$x"
 done
 
-for x in $(docker images | egrep davetucker|mgkwill|socketplane | awk '{print $3}')
+for x in $(docker images | egrep -e 'davetucker|mgkwill|socketplane' | awk '{print $3}')
 do
    docker rmi "$x"
 done
