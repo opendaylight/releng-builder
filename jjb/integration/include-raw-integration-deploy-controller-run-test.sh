@@ -50,6 +50,9 @@ MEMCONF=/tmp/${BUNDLEFOLDER}/bin/setenv
 sed -ie 's/JAVA_MAX_MEM="2048m"/JAVA_MAX_MEM="${CONTROLLERMEM}"/g' \${MEMCONF}
 cat \${MEMCONF}
 
+echo "Increase soft limit for number of open files..."
+ulimit -n 16000
+
 echo "Starting controller..."
 /tmp/${BUNDLEFOLDER}/bin/start
 
