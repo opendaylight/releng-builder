@@ -76,6 +76,10 @@
 
     triggers:
         - timed: '@midnight'
+        - gerrit:
+            trigger-on:
+                - comment-added-contains-event:
+                    comment-contains-value: 'recheck-full-lithium-integration'
 
     builders:
         - wipe-org-opendaylight-repo
