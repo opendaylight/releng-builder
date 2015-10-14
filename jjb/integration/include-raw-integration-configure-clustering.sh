@@ -39,6 +39,11 @@ cat ${MODULESCONF}
 echo "Dump module-shards.conf"
 cat ${MODULESHARDSCONF}
 
+echo "Increase soft limit for number of open files..."
+id
+grep -r '' /etc/security/limits*
+ulimit -Sn 16000
+
 echo "Starting controller..."
 /tmp/${BUNDLEFOLDER}/bin/start
 
