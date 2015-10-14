@@ -1,9 +1,9 @@
 #!/bin/bash
 
 #Increase limits
-cat <<EOF > /etc/security/limits.d/jenkins
-jenkins               soft     nofile         16000
-jenkins               hard    nofile         16000
+cat <<EOF > /etc/security/limits.d/jenkins.conf
+jenkins         soft    nofile          16000
+jenkins         hard    nofile          16000
 EOF
 
 cat <<EOSSH >> /etc/ssh/ssh_config
