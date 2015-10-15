@@ -50,6 +50,16 @@ MEMCONF=/tmp/${BUNDLEFOLDER}/bin/setenv
 sed -ie 's/JAVA_MAX_MEM="2048m"/JAVA_MAX_MEM="${CONTROLLERMEM}"/g' \${MEMCONF}
 cat \${MEMCONF}
 
+echo "Increase soft limit for number of open files..."
+set -x
+grep -r '' /etc/security/limits*
+id
+ulimit -n
+ulimit -Sn
+ulimit -Sn 16000
+ulimit -n
+ulimit -Sn
+
 echo "Listing all open ports on controller system"
 netstat -natu
 
