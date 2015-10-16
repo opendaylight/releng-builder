@@ -15,7 +15,7 @@ echo ROBOT_VENV=${ROBOT_VENV} >> ${WORKSPACE}/env.properties
 
 virtualenv ${ROBOT_VENV}
 source ${ROBOT_VENV}/bin/activate
-pip install -q docker-py importlib requests scapy netifaces netaddr ipaddr
+pip install -q docker-py importlib requests scapy netifaces netaddr ipaddr jsonpath
 pip install -q robotframework{,-{httplibrary,requests,sshlibrary}}
 
 # vim: sw=4 ts=4 sts=4 et ft=sh :
