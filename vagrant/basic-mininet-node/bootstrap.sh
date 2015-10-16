@@ -51,20 +51,6 @@ Port 830
 Subsystem netconf /usr/bin/netopeer-server-sl
 EOSSH
 
-# set the system up for VTN as well (note we are not adding all the bits
-# to allow VTN to operate in the Hydrogen design erra)
-mkdir /usr/local/vtn
-
-yum install -q -y http://yum.postgresql.org/9.3/redhat/rhel-6-x86_64/pgdg-redhat93-9.3-1.noarch.rpm
-yum install -q -y postgresql93{,-{contrib,libs,server,odbc}}
-chkconfig postgresql-9.3 off
-
-# the current deploy_vtn.sh script used by integration will be pushed
-# into the system during dynamic spin-up as it has changed often enough
-# that sticking it into the image may not be good as changing it would
-# either require updating the image or doing it during the dynamic
-# spin-up anyway.
-
 # cbench installation for running openflow performance tests
 
 OF_DIR=$HOME/openflow  # Directory that contains OpenFlow code
