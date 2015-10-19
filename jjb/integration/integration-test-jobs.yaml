@@ -222,17 +222,19 @@
         - integration-controller-scope:
             controller-scope: 'only'
         - integration-controller-features:
-            controller-features: 'odl-openflowplugin-flow-services-ui'
+            controller-features: 'odl-openflowplugin-flow-services-ui,odl-bgpcep-pcep-all,odl-bgpcep-bgp-all,odl-bgpcep-bgp,odl-bgpcep-pcep,odl-netconf-connector-all'
         - integration-test-options:
             test-options: '-e adsal'
         - integration-test-plan:
-            test-plan: 'openflowplugin-flow-services.txt'
+            test-plan: 'test-libraries.txt'
+        - integration-patch-refspec:
+            branch: '$GERRIT_REFSPEC'
 
     scm:
         - integration-gerrit-scm:
             credentials-id: '{ssh-credentials}'
             basedir: 'test'
-            refspec: '$GERRIT_REFSPEC'
+            refspec: '$PATCHREFSPEC'
             branch: 'master'
 
     wrappers:
