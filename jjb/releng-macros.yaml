@@ -32,6 +32,14 @@
             default: '{refspec}'
             description: "GERRIT_REFSPEC parameter if not given by trigger"
 
+- parameter:
+    name: controller-version-parameter
+    parameters:
+        - string:
+            name: ODL_VERSION
+            default: '{odl_version}'
+            description: 'Controller version (for use with openstacks networking_odl project)'
+
 - scm:
     name: git-scm
     scm:

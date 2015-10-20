@@ -4,6 +4,7 @@
         - 'ovsdb-daily-openstack-beryllium'
 
     project: 'ovsdb'
+    odl_version: beryllium
 
 - job-template:
     name: 'ovsdb-daily-openstack-beryllium'
@@ -19,6 +20,8 @@
     parameters:
         - project-parameter:
             project: '{project}'
+        - controller-version-parameter:
+            odl_version: '{odl_version}'
 
     wrappers:
         - timeout:
@@ -38,7 +41,7 @@
     builders:
         - inject:
             properties-content: |
-              ODL_VERSION=lithium-latest
+              ODL_VERSION='{odl_version}'
               TEMPEST_REGEX=tempest.api.network
         - shell:
             !include-raw-escape include-raw-openstack-ci.sh
