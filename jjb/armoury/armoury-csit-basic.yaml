@@ -1,0 +1,31 @@
+- project:
+    name: armoury-csit-basic
+    jobs:
+        - '{project}-csit-1node-{functionality}-{install}-{stream}'
+        - '{project}-csit-verify-1node-{functionality}'
+
+    # The project name
+    project: 'armoury'
+
+    # The functionality under test
+    functionality: 'basic'
+
+    # Project branches
+    stream:
+        - beryllium:
+            branch: 'master'
+
+    install:
+        - only:
+            scope: 'only'
+        - all:
+            scope: 'all'
+
+    # Features to install
+    install-features: 'odl-armoury-workloadmanager'
+
+    # Robot custom options
+    robot-options: ''
+
+    # Trigger jobs (upstream dependencies)
+    trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream},mdsal-distribution-{stream},armoury-distribution-{stream}'
