@@ -1,0 +1,122 @@
+# ODL Releng build templates
+- project:
+    name: ovsdb-with-ovs
+    jobs:
+        - 'ovsdb-verify-with-ovs-{stream}'
+
+    # stream:    release stream (eg. stable-lithium or beryllium)
+    # branch:    git branch (eg. stable/lithium or master)
+    stream:
+        - beryllium:
+            branch: 'master'
+            jdk: openjdk8
+            jdks:
+                - openjdk8
+        - stable-lithium:
+            branch: 'stable/lithium'
+            jdk: openjdk8
+            jdks:
+                - openjdk8
+
+    project: 'ovsdb'
+
+# For the Job templates below replace instances of:
+# PROJECT_SHORTNAME with your project name (eg. circuitsw)
+# PROJECT_PATH with your project name (eg. ofextensions/circuitsw)
+# MAVEN_GOALS with your maven goals to build
+# MAVEN_OPTS with your maven options to build
+
+- job-template:
+    name: 'ovsdb-verify-with-ovs-{stream}'
+
+    # Job template for ODL verify jobs
+    #
+    # The purpose of this job template is to setup a ODL verify with ovs job
+    #
+    # Required Variables:
+    #     stream:    release stream (eg. stable-lithium or beryllium)
+    #     branch:    git branch (eg. stable/lithium or master)
+
+    project-type: matrix
+    node: matrix_master
+    concurrent: true
+
+    axes:
+        - axis:
+            type: user-defined
+            name: 'OVS_VERSION'
+            values:
+                - 2.3.2
+        - axis:
+            type: slave
+            name: nodes
+            values:
+                - dynamic_docker
+        - axis:
+            type: jdk
+            values: '{obj:jdks}'
+
+    logrotate:
+        daysToKeep: '{build-days-to-keep}'
+        numToKeep: '{build-num-to-keep}'
+        artifactDaysToKeep: '{build-artifact-days-to-keep}'
+        artifactNumToKeep: '{build-artifact-num-to-keep}'
+
+    parameters:
+        - project-parameter:
+            project: '{project}'
+        - gerrit-parameter:
+            branch: '{branch}'
+
+    scm:
+        - gerrit-trigger-scm:
+            credentials-id: '{ssh-credentials}'
+            refspec: '$GERRIT_REFSPEC'
+            choosing-strategy: 'gerrit'
+
+    wrappers:
+        - timeout:
+            fail: true
+            timeout: 360
+            timeout-var: 'BUILD_TIMEOUT'
+            type: absolute
+        - ssh-agent-credentials:
+            users:
+                - '{ssh-credentials}'
+
+    triggers:
+        - gerrit-trigger-patch-submitted:
+            name: 'ovsdb'
+            branch: '{branch}'
+
+    prebuilders:
+        - shell:
+            !include-raw-escape include-raw-setup-docker.sh
+
+    builders:
+        - maven-target:
+            maven-version: '{mvn33}'
+            pom: 'pom.xml'
+            goals: 'clean install -Pintegrationtest -V'
+            properties:
+                - 'ovsdbserver.ipaddress=127.0.0.1'
+                - 'ovsdbserver.port=6641'
+                - 'maven.repo.local=/tmp/r'
+                - 'org.ops4j.pax.url.mvn.localRepository=/tmp/r'
+                - 'stream={stream}'
+            settings: '{ovsdb-settings}'
+            java-opts:
+                - '-Xmx1024m -XX:MaxPermSize=256m'
+            global-settings: '{odl-global-settings}'
+        - inject:
+            properties-file: env.properties
+        - shell:
+            !include-raw-escape include-raw-cleanup-docker.sh
+        - jacoco-nojava-workaround
+        - wipe-org-opendaylight-repo
+
+    publishers:
+        - findbugs
+        - email-notification:
+            email-prefix: '[ovsdb]'
+        - jacoco-report
