@@ -20,9 +20,9 @@ sudo bash -c 'echo "stack ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers'
 cd ~
 echo "Setting up infra scripts"
 sudo mkdir -p /usr/local/jenkins/slave_scripts
-git clone https://git.openstack.org/openstack-infra/project-config
-cd project-config
-sudo cp jenkins/scripts/subunit2html.py /usr/local/jenkins/slave_scripts
+git clone https://github.com/openstack/os-testr.git
+cd os-testr/os_testr
+sudo cp subunit2html.py /usr/local/jenkins/slave_scripts
 
 # Save existing WORKSPACE
 SAVED_WORKSPACE=$WORKSPACE
@@ -81,8 +81,10 @@ fi
 ## export ODL_BOOT_WAIT=30
 
 # Use specific build, if asked to do so
-if [ "${ODL_VERSION}" == "lithium-latest" ] ; then
-    DEVSTACK_LOCAL_CONFIG+="ODL_RELEASE=lithium-snapshot;"
+if [ "${ODL_VERSION}" == "beryllium" ] ; then
+    DEVSTACK_LOCAL_CONFIG+="ODL_RELEASE=beryllium-snapshot-0.4.0;"
+elif [ "${ODL_VERSION}" == "lithium" ] ; then
+    DEVSTACK_LOCAL_CONFIG+="ODL_RELEASE=lithium-snapshot-0.3.1;"
 elif [ "${ODL_VERSION}" == "helium" ] ; then
     DEVSTACK_LOCAL_CONFIG+="ODL_RELEASE=helium;"
 fi
@@ -99,14 +101,14 @@ fi
 # Because we are testing a non standard project, add
 # our project repository. This makes zuul do the right
 # reference magic for testing changes.
-export PROJECTS="stackforge/networking-odl $PROJECTS"
+export PROJECTS="openstack/networking-odl $PROJECTS"
 # Note the actual url here is somewhat irrelevant because it
 # caches in nodepool, however make it a valid url for
 # documentation purposes.
-if [ "$GERRIT_PROJECT" == "stackforge/networking-odl" ]; then
+if [ "$GERRIT_PROJECT" == "openstack/networking-odl" ]; then
     export DEVSTACK_LOCAL_CONFIG+="enable_plugin networking-odl https://$GERRIT_HOST/$GERRIT_PROJECT $GERRIT_REFSPEC"
 else
-    export DEVSTACK_LOCAL_CONFIG+="enable_plugin networking-odl https://git.openstack.org/stackforge/networking-odl"
+    export DEVSTACK_LOCAL_CONFIG+="enable_plugin networking-odl https://git.openstack.org/openstack/networking-odl"
 fi
 
 
@@ -133,12 +135,15 @@ DGRET=$?
 OS_WORKSPACE=$WORKSPACE
 export WORKSPACE=$SAVED_WORKSPACE
 
-# Copy all the logs
+# Copy and display all the logs
+cat /opt/stack/new/devstacklog*
+ls /opt/stack/; ls /opt/stack/new; ls /opt/stack/new/opendaylight;
 cp -r $OS_WORKSPACE/logs $WORKSPACE
-cp -a /opt/stack/new/logs/q-odl-karaf* $WORKSPACE/logs
+cp -a /opt/stack/new/logs/screen-odl-karaf* $WORKSPACE/logs
 mkdir -p $WORKSPACE/logs/opendaylight
 cp -a /opt/stack/new/opendaylight/distribution*/etc $WORKSPACE/logs/opendaylight
 # Unzip the logs to make them easier to view
 gunzip $WORKSPACE/logs/*.gz
+
 
 exit $DGRET

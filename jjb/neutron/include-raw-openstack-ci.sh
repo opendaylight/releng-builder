@@ -104,14 +104,14 @@ fi
 # Because we are testing a non standard project, add
 # our project repository. This makes zuul do the right
 # reference magic for testing changes.
-export PROJECTS="stackforge/networking-odl $PROJECTS"
+export PROJECTS="openstack/networking-odl $PROJECTS"
 # Note the actual url here is somewhat irrelevant because it
 # caches in nodepool, however make it a valid url for
 # documentation purposes.
-if [ "$GERRIT_PROJECT" == "stackforge/networking-odl" ]; then
+if [ "$GERRIT_PROJECT" == "openstack/networking-odl" ]; then
     export DEVSTACK_LOCAL_CONFIG+="enable_plugin networking-odl https://$GERRIT_HOST/$GERRIT_PROJECT $GERRIT_REFSPEC"
 else
-    export DEVSTACK_LOCAL_CONFIG+="enable_plugin networking-odl https://git.openstack.org/stackforge/networking-odl"
+    export DEVSTACK_LOCAL_CONFIG+="enable_plugin networking-odl https://git.openstack.org/openstack/networking-odl"
 fi
 
 
