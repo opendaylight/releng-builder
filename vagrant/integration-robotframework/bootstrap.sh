@@ -11,8 +11,8 @@ yum update -q -y
 yum install -q -y python-{devel,setuptools,virtualenv}
 
 # Install `udpreplay` to be used for (lispflowmapping) performance tests
-yum install -q -y libpcap-devel boost-devel
-git clone https://github.com/ska-sa/udpreplay.git &> /dev/null
+yum install -q -y @development libpcap-devel boost-devel
+git clone -q https://github.com/ska-sa/udpreplay.git
 cd udpreplay
 make &> /dev/null && cp udpreplay /usr/local/bin
 
