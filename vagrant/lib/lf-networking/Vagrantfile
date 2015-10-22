@@ -26,9 +26,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
+  # explicitly configure shared folder syncs
+  config.vm.synced_folder '.', '/vagrant', :disabled => true
+  config.vm.synced_folder '..', '/vagrant/lib'
+
   # reconfigure the network setup to support our special private setup
   config.vm.provision 'shell', path: 'configure_lf_infra.sh', args: ENV['RSSUBDOMAIN']
 
   # reseal the system for imaging
-  config.vm.provision 'shell', path: 'system_reseal.sh'
+  config.vm.provision 'shell', path: '../system_reseal.sh'
 end
