@@ -1,5 +1,5 @@
 - project:
-    name: mdsal-csit-periodic-dsbenchmark
+    name: mdsal-csit-periodic-dsbenchmark-beryllium
     jobs:
         - '{project}-csit-1node-periodic-{functionality}-{install}-{stream}'
 
@@ -11,8 +11,6 @@
 
     # Project branches
     stream:
-        - beryllium:
-            branch: 'master'
         - stable-lithium:
             branch: 'stable/lithium'
 

@@ -1,0 +1,41 @@
+- project:
+    name: mdsal-csit-periodic-dsbenchmark-lithium
+    jobs:
+        - '{project}-csit-1node-periodic-{functionality}-{install}-{stream}'
+
+    # The project name
+    project: 'mdsal'
+
+    # The functionality under test
+    functionality: 'dsbenchmark'
+
+    # Project branches
+    stream:
+        - beryllium:
+            branch: 'master'
+
+    install:
+        - only:
+            scope: 'only'
+        - all:
+            scope: 'all'
+
+    # Features to install
+    install-features: 'odl-restconf,odl-dsbenchmark-impl'
+
+    # Robot custom options
+    robot-options: '-v UNITS:miliseconds'
+
+    # Trigger jobs (daily)
+    schedule: 'H H * * *'
+
+    # Plot Info
+    01-plot-title: 'Performance by structure'
+    01-plot-yaxis: 'Average total time [ms]'
+    01-plot-group: 'MD-SAL Data Store Performance'
+    01-plot-data-file: 'perf_per_struct.csv'
+    02-plot-title: 'Performance by operations'
+    02-plot-yaxis: 'Average total time [ms]'
+    02-plot-group: 'MD-SAL Data Store Performance'
+    02-plot-data-file: 'perf_per_ops.csv'
+
