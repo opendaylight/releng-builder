@@ -10,6 +10,9 @@ yum update -q -y
 # inside project jobs using a virtualenv setup.
 yum install -q -y python-{devel,setuptools,virtualenv}
 
+# Install the `time` binary
+yum install -q -y time
+
 # Install `udpreplay` to be used for (lispflowmapping) performance tests
 yum install -q -y @development libpcap-devel boost-devel
 git clone -q https://github.com/ska-sa/udpreplay.git
