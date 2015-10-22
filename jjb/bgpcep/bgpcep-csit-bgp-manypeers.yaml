@@ -1,0 +1,32 @@
+- project:
+    name: bgpcep-csit-bgp-manypeers
+    jobs:
+        - '{project}-csit-1node-periodic-{functionality}-{install}-{stream}'
+
+    # The project name
+    project: 'bgpcep'
+
+    # The functionality under test
+    functionality: 'bgp-manypeers'
+
+    # Project branches
+    stream:
+        - beryllium:
+            branch: 'master'
+        - stable-lithium:
+            branch: 'stable/lithium'
+
+    install:
+        - only:
+            scope: 'only'
+        - all:
+            scope: 'all'
+
+    # Features to install
+    install-features: 'odl-bgpcep-data-change-counter,odl-restconf,odl-bgpcep-pcep-all,odl-bgpcep-bgp-all,odl-bgpcep-bgp,odl-bgpcep-pcep,odl-netconf-connector-all'
+
+    # Robot custom options:
+    robot-options: ''
+
+    # Trigger jobs: (daily)
+    schedule: 'H H * * *'
