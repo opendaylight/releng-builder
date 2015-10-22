@@ -1,5 +1,5 @@
 - project:
-    name: mdsal-csit-periodic-dsbenchmark
+    name: mdsal-csit-periodic-dsbenchmark-beryllium
     jobs:
         - '{project}-csit-1node-periodic-{functionality}-{install}-{stream}'
 
@@ -13,8 +13,6 @@
     stream:
         - beryllium:
             branch: 'master'
-        - stable-lithium:
-            branch: 'stable/lithium'
 
     install:
         - only:
@@ -26,7 +24,7 @@
     install-features: 'odl-restconf,odl-dsbenchmark-impl'
 
     # Robot custom options
-    robot-options: ''
+    robot-options: '-v UNITS:miliseconds'
 
     # Trigger jobs (daily)
     schedule: 'H H * * *'
