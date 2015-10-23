@@ -1,16 +1,16 @@
-# Lithium build jobs
+# Beryllium build jobs
 
 - project:
-    name: autorelease-lithium
+    name: autorelease-beryllium
     jobs:
-        - 'autorelease-daily-lithium-jdk8'
+        - 'autorelease-daily-beryllium-jdk8'
 
-    branch: 'stable/lithium'
+    branch: 'master'
     project: 'releng/autorelease'
-    jdk: 'openjdk7'
+    jdk: 'openjdk8'
 
 - job-template:
-    name: 'autorelease-daily-lithium-jdk8'
+    name: 'autorelease-daily-beryllium-jdk8'
 
     project-type: maven
     node: dynamic_autorelease
