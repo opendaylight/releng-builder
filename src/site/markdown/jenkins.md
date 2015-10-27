@@ -333,6 +333,9 @@ Update: Here is a link to e-mail with suggestions on how to install and
 upgrade JJB properly:
 https://lists.opendaylight.org/pipermail/integration-dev/2015-April/003016.html
 
+Update: There was an issue with certain JJB versions. Workaround:
+https://lists.opendaylight.org/pipermail/integration-dev/2015-October/005000.html
+
 ## <a name="jjb_templates">Jenkins Job Templates</a>
 
 The ODL Releng project provides 4 job templates which can be used to
