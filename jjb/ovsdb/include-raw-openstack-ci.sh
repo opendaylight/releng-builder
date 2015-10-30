@@ -14,7 +14,7 @@ echo "Making /opt/stack/new jenkins:jenkins"
 sudo /usr/sbin/groupadd jenkins
 sudo mkdir -p /opt/stack/new
 sudo chown -R jenkins:jenkins /opt/stack/new
-sudo bash -c 'echo "stack ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers'
+sudo bash -c 'echo "jenkins ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers'
 
 # We need to install some scripts from openstack-infra/project-config
 cd ~
@@ -70,6 +70,7 @@ DEVSTACK_LOCAL_CONFIG+="ODL_NETVIRT_DEBUG_LOGS=True;"
 DEVSTACK_LOCAL_CONFIG+="ODL_JAVA_MIN_MEM=512m;"
 DEVSTACK_LOCAL_CONFIG+="ODL_JAVA_MAX_MEM=784m;"
 DEVSTACK_LOCAL_CONFIG+="ODL_JAVA_MAX_PERM_MEM=784m;"
+DEVSTACK_LOCAL_CONFIG+="NEUTRON_CREATE_INITIAL_NETWORKS=False;"
 
 # Set ODL_URL_PREFIX if "nexus proxy" is provided
 URL_PREFIX=${ODLNEXUSPROXY:-https://nexus.opendaylight.org}
