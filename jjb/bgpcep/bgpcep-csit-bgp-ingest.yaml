@@ -30,3 +30,49 @@
 
     # Trigger jobs: (daily)
     schedule: 'H H * * *'
+
+- project:
+    name: bgpcep-csit-bgp-ingest-mixed
+    jobs:
+        - '{project}-csit-1node-periodic-{functionality}-{install}-{stream}'
+
+    # The project name
+    project: 'bgpcep'
+
+    # The functionality under test
+    functionality: 'bgp-ingest-mixed'
+
+    # Project branches
+    stream:
+        - beryllium:
+            branch: 'master'
+        - stable-lithium:
+            branch: 'stable/lithium'
+
+    install:
+        - only:
+            scope: 'only'
+        - all:
+            scope: 'all'
+
+    # Features to install
+    install-features: 'odl-restconf,odl-bgpcep-pcep-all,odl-bgpcep-bgp-all,odl-netconf-connector-all,odl-bgpcep-data-change-counter'
+
+    # Robot custom options
+    # Currently timeout values are calculated based on number of target prefixes
+    # and do not take into account test environment performance variation.
+    # FIXME: Add a new parameter to the test suite which allows to modify timeout if needed
+    robot-options: '-v COUNT:1000000 -v INSERT:10 -v WITHDRAW:9 -v PREFILL:10 -v UPDATE:single'
+
+    # Trigger jobs (daily)
+    schedule: 'H H * * *'
+
+    # Plot Info
+    01-plot-title: 'Number of generated updates'
+    01-plot-yaxis: 'Total number of updates'
+    01-plot-group: 'BGP Scaling test suite'
+    01-plot-data-file: 'totals-bgp.csv'
+    02-plot-title: 'Generated load'
+    02-plot-yaxis: 'Updates per second'
+    02-plot-group: 'BGP Scaling test suite'
+    02-plot-data-file: 'performance-bgp.csv'
