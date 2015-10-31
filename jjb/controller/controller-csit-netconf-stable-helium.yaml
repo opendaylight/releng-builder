@@ -21,6 +21,9 @@
         - all:
             scope: 'all'
 
+    # Mininet configuration, this is needed as netopeer is only available in this vm
+    mininet-image: 'rk-c-el6-mininet'
+
     # Features to install
     install-features: 'odl-netconf-connector-all,odl-restconf-all'
 
