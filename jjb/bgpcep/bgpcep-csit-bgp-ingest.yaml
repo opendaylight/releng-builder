@@ -59,10 +59,8 @@
     install-features: 'odl-restconf,odl-bgpcep-pcep-all,odl-bgpcep-bgp-all,odl-netconf-connector-all,odl-bgpcep-data-change-counter'
 
     # Robot custom options
-    # Currently timeout values are calculated based on number of target prefixes
-    # and do not take into account test environment performance variation.
-    # FIXME: Add a new parameter to the test suite which allows to modify timeout if needed
-    robot-options: '-v COUNT:1000000 -v INSERT:10 -v WITHDRAW:9 -v PREFILL:10 -v UPDATE:single'
+    # Increase the TEST_DURATION_INDEX if the test runs in slower test environment or more complex scenario is chosen
+    robot-options: '-v COUNT:1000000 -v INSERT:10 -v WITHDRAW:9 -v PREFILL:10 -v UPDATE:single -v TEST_DURATION_MULTIPLIER:4'
 
     # Trigger jobs (daily)
     schedule: 'H H * * *'
