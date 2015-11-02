@@ -43,12 +43,12 @@ netstat -natu
 
 EOF
 
-ODL_SYSTEM_IPS=(${ODL_SYSTEM_1_IP} ${ODL_SYSTEM_2_IP} ${ODL_SYSTEM_3_IP})
-for i in "${!ODL_SYSTEM_IPS[@]}"
+for i in `seq 1 ${CONTROLLERCOUNT}`
 do
-    echo "Installing distribution in member-$((i+1)) with IP address ${ODL_SYSTEM_IPS[$i]}"
-    scp ${WORKSPACE}/deploy-controller-script.sh ${ODL_SYSTEM_IPS[$i]}:/tmp
-    ssh ${ODL_SYSTEM_IPS[$i]} 'bash /tmp/deploy-controller-script.sh'
+    CONTROLLERIP=ODL_SYSTEM_${i}_IP 
+    echo "Installing distribution in member-${i} with IP address ${!CONTROLLERIP}"
+    scp ${WORKSPACE}/deploy-controller-script.sh ${!CONTROLLERIP}:/tmp
+    ssh ${!CONTROLLERIP} 'bash /tmp/deploy-controller-script.sh'
 done
 
 # vim: ts=4 sw=4 sts=4 et ft=sh :
