@@ -7,28 +7,60 @@ MODULESCONF=/tmp/${BUNDLEFOLDER}/configuration/initial/modules.conf
 MODULESHARDSCONF=/tmp/${BUNDLEFOLDER}/configuration/initial/module-shards.conf
 JOLOKIACONF=/tmp/${BUNDLEFOLDER}/deploy/jolokia.xml
 
+# Utility function for joining strings.
+function join {
+    delim=',\n\t\t'
+    final=$1; shift
+
+    for str in $* ; do
+	final=${final}${delim}${str}
+    done
+
+    echo ${final}
+}
+
+# Create the strings for data and rpc seed nodes
+# First create various arrays with one element per controller.
+# Then merge each array using the join utility defined above.
+
+for i in `seq 1 ${CONTROLLERCOUNT}` ; do
+    CONTROLLERIP=ODL_SYSTEM_${i}_IP
+    data_seed_nodes[$i]=\\\"akka.tcp:\\/\\/opendaylight-cluster-data@${!CONTROLLERIP}:2550\\\"
+    rpc_seed_nodes[$i]=\\\"akka.tcp:\\/\\/odl-cluster-rpc@${!CONTROLLERIP}:2551\\\"
+    member_names[$i]=\\\"member-${i}\\\"
+done
+
+data_seed_list=$(join ${data_seed_nodes[@]})
+rpc_seed_list=$(join ${rpc_seed_nodes[@]})
+member_name_list=$(join ${member_names[@]})
+
+# echo ${data_seed_list}
+# echo ${rpc_seed_list}
+# echo ${member_name_list}
+
+# Create the configuration script to be run on controllers.
 cat > ${WORKSPACE}/configuration-script.sh <<EOF
 
 CONTROLLERID="member-\$1"
-ODL_SYSTEM_IP_PATH=\$2
+CONTROLLERIP=\$2
 
 echo "Configuring hostname in akka.conf"
-sed -ie "s:{{HOST}}:\${ODL_SYSTEM_IP_PATH}:" ${AKKACONF}
+sed -i -e "s:{{HOST}}:\${CONTROLLERIP}:" ${AKKACONF}
 
 echo "Configuring data seed nodes in akka.conf"
-sed -ie "s/{{{DS_SEED_NODES}}}/[\"akka.tcp:\/\/opendaylight-cluster-data@$ODL_SYSTEM_IP:2550\",\"akka.tcp:\/\/opendaylight-cluster-data@$ODL_SYSTEM_2_IP:2550\",\"akka.tcp:\/\/opendaylight-cluster-data@$ODL_SYSTEM_3_IP:2550\"]/g" ${AKKACONF}
+sed -i -e "s/{{{DS_SEED_NODES}}}/[${data_seed_list}]/g" ${AKKACONF}
 
 echo "Configuring rpc seed nodes in akka.conf"
-sed -ie "s/{{{RPC_SEED_NODES}}}/[\"akka.tcp:\/\/odl-cluster-rpc@$ODL_SYSTEM_IP:2551\",\"akka.tcp:\/\/odl-cluster-rpc@$ODL_SYSTEM_2_IP:2551\",\"akka.tcp:\/\/odl-cluster-rpc@$ODL_SYSTEM_3_IP:2551\"]/g" ${AKKACONF}
+sed -i -e "s/{{{RPC_SEED_NODES}}}/[${rpc_seed_list}]/g" ${AKKACONF}
 
 echo "Define unique name in akka.conf"
-sed -ie "s/{{MEMBER_NAME}}/\$CONTROLLERID/g" ${AKKACONF}
+sed -i -e "s/{{MEMBER_NAME}}/\${CONTROLLERID}/g" ${AKKACONF}
 
 echo "Define replication type in module-shards.conf"
-sed -ie "s/{{{REPLICAS_1}}}/[\"member-1\",\n\t\t\t\"member-2\",\n\t\t\t\"member-3\"]/g" ${MODULESHARDSCONF}
-sed -ie "s/{{{REPLICAS_2}}}/[\"member-1\",\n\t\t\t\"member-2\",\n\t\t\t\"member-3\"]/g" ${MODULESHARDSCONF}
-sed -ie "s/{{{REPLICAS_3}}}/[\"member-1\",\n\t\t\t\"member-2\",\n\t\t\t\"member-3\"]/g" ${MODULESHARDSCONF}
-sed -ie "s/{{{REPLICAS_4}}}/[\"member-1\",\n\t\t\t\"member-2\",\n\t\t\t\"member-3\"]/g" ${MODULESHARDSCONF}
+sed -i -e "s/{{{REPLICAS_1}}}/[${member_name_list}]/g" ${MODULESHARDSCONF}
+sed -i -e "s/{{{REPLICAS_2}}}/[${member_name_list}]/g" ${MODULESHARDSCONF}
+sed -i -e "s/{{{REPLICAS_3}}}/[${member_name_list}]/g" ${MODULESHARDSCONF}
+sed -i -e "s/{{{REPLICAS_4}}}/[${member_name_list}]/g" ${MODULESHARDSCONF}
 
 echo "Dump akka.conf"
 cat ${AKKACONF}
@@ -44,17 +76,19 @@ echo "Starting controller..."
 
 EOF
 
-ODL_SYSTEM_IPS=(${ODL_SYSTEM_IP} ${ODL_SYSTEM_2_IP} ${ODL_SYSTEM_3_IP})
-for i in "${!ODL_SYSTEM_IPS[@]}"
+# Copy over the configuration script and configuration files to each controller
+# Execute the configuration script on each controller.
+for i in `seq 1 ${CONTROLLERCOUNT}`
 do
-    echo "Configuring member-$((i+1)) with IP address ${ODL_SYSTEM_IPS[$i]}"
-    ssh ${ODL_SYSTEM_IPS[$i]} "mkdir /tmp/${BUNDLEFOLDER}/configuration/initial"
-    scp  ${WORKSPACE}/test/tools/clustering/cluster-deployer/templates/multi-node-test/akka.conf.template ${ODL_SYSTEM_IPS[$i]}:${AKKACONF}
-    scp  ${WORKSPACE}/test/tools/clustering/cluster-deployer/templates/multi-node-test/modules.conf.template ${ODL_SYSTEM_IPS[$i]}:${MODULESCONF}
-    scp  ${WORKSPACE}/test/tools/clustering/cluster-deployer/templates/multi-node-test/module-shards.conf.template ${ODL_SYSTEM_IPS[$i]}:${MODULESHARDSCONF}
-    scp  ${WORKSPACE}/test/tools/clustering/cluster-deployer/templates/multi-node-test/jolokia.xml.template ${ODL_SYSTEM_IPS[$i]}:${JOLOKIACONF}
-    scp  ${WORKSPACE}/configuration-script.sh    ${ODL_SYSTEM_IPS[$i]}:/tmp/
-    ssh ${ODL_SYSTEM_IPS[$i]} "bash /tmp/configuration-script.sh $((i+1)) ${ODL_SYSTEM_IPS[$i]}"
+    CONTROLLERIP=ODL_SYSTEM_${i}_IP
+    echo "Configuring member-${i} with IP address ${!CONTROLLERIP}"
+    ssh ${!CONTROLLERIP} "mkdir /tmp/${BUNDLEFOLDER}/configuration/initial"
+    scp  ${WORKSPACE}/test/tools/clustering/cluster-deployer/templates/multi-node-test/akka.conf.template ${!CONTROLLERIP}:${AKKACONF}
+    scp  ${WORKSPACE}/test/tools/clustering/cluster-deployer/templates/multi-node-test/modules.conf.template ${!CONTROLLERIP}:${MODULESCONF}
+    scp  ${WORKSPACE}/test/tools/clustering/cluster-deployer/templates/multi-node-test/module-shards.conf.template ${!CONTROLLERIP}:${MODULESHARDSCONF}
+    scp  ${WORKSPACE}/test/tools/clustering/cluster-deployer/templates/multi-node-test/jolokia.xml.template ${!CONTROLLERIP}:${JOLOKIACONF}
+    scp  ${WORKSPACE}/configuration-script.sh    ${!CONTROLLERIP}:/tmp/
+    ssh ${!CONTROLLERIP} "bash /tmp/configuration-script.sh ${i} ${!CONTROLLERIP}"
 done
 
 # vim: ts=4 sw=4 sts=4 et ft=sh :
