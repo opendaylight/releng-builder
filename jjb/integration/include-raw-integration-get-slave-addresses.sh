@@ -15,6 +15,9 @@ do
     fi
 done
 
+echo "NUM_ODL_SYSTEM=${#ODL_SYSTEM[@]}" >> slave_addresses.txt
+echo "NUM_TOOLS_SYSTEM=${#TOOLS_SYSTEM[@]}" >> slave_addresses.txt
+
 # Add alias for ODL_SYSTEM_1_IP as ODL_SYSTEM_IP
 echo "ODL_SYSTEM_IP=${ODL_SYSTEM[0]}" >> slave_addresses.txt
 for i in `seq 0 $(( ${#ODL_SYSTEM[@]} - 1 ))`
