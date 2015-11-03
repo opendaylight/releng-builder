@@ -26,7 +26,7 @@
     install-features: 'odl-bgpcep-data-change-counter,odl-restconf,odl-bgpcep-pcep-all,odl-bgpcep-bgp-all,odl-bgpcep-bgp,odl-bgpcep-pcep,odl-netconf-connector-all'
 
     # Robot custom options:
-    robot-options: ''
+    robot-options: '-v REPETITIONS_CHANGE_COUNT_SINGLE:5 -v CHECK_PERIOD_PREFIX_COUNT_SINGLE:10 -v REPETITIONS_CHANGE_COUNT_MANY:10 -v MULTIPLICITY_PREFIX_COUNT_MANY:600 -v CHECK_PERIOD_PREFIX_COUNT_MANY:60'
 
     # Trigger jobs: (daily)
     schedule: 'H H * * *'
