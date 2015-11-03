@@ -1,9 +1,8 @@
-The [Release Engineering project](https://wiki.opendaylight.org/view/RelEng:Main "Releng:Main")
-consolidates the Jenkins jobs from project-specific VMs to a single Jenkins
-server. Each OpenDaylight project will have a tab on the RelEng Jenkins
-server. The system utilizes
-[Jenkins Job Builder](http://ci.openstack.org/jenkins-job-builder/ "JJB")
-\(JJB\) for the creation and management of the Jenkins jobs.
+The [Release Engineering project][0] consolidates the Jenkins jobs from
+project-specific VMs to a single Jenkins server. Each OpenDaylight project
+has a tab for their jobs on the [RelEng Jenkins server][3]. The system utilizes
+[Jenkins Job Builder][7] \(JJB\) for the creation and management of the Jenkins
+jobs.
 
 Sections:
 
@@ -20,18 +19,17 @@ Sections:
 
 https://jenkins.opendaylight.org/releng/
 
-The Jenkins Master server is the new home for all project Jenkins jobs.  All
+The Jenkins Master server is the home for all project's Jenkins jobs. All
 maintenance and configuration of these jobs must be done via JJB through the
-RelEng repo ([https://git.opendaylight.org/gerrit/gitweb?p=releng%2Fbuilder.git;a=summary RelEng/Builder gitweb]).
-Project contributors can no longer edit the Jenkins jobs directly on the
-server.
+[RelEng repo][4]. Project contributors can no longer edit the Jenkins jobs
+directly on the server.
 
 # <a name="build_slaves">Build Slaves</a>
 
 The Jenkins jobs are run on build slaves (executors) which are created on an
-as-needed basis.  If no idle build slaves are available a new VM is brought
+as-needed basis. If no idle build slaves are available a new VM is brought
 up. This process can take up to 2 minutes. Once the build slave has finished a
-job, it will remain online for 45 minutes before shutting down.  Subsequent
+job, it will remain online for 45 minutes before shutting down. Subsequent
 jobs will use an idle build slave if available.
 
 Our Jenkins master supports many types of dynamic build slaves. If you are
@@ -44,44 +42,41 @@ label.
 ## Adding new components to the slaves
 
 If your project needs something added to one of the slaves used during build
-and test you can help us get things added in faster by doing one of the
-following:
+and test you can help us get things added faster by doing one of the following:
 
-* Submit a patch to releng/builder for the
-  [Jenkins Spinup script](https://git.opendaylight.org/gerrit/gitweb?p=releng/builder.git;a=tree;f=jenkins-scripts;h=69252dd61ece511bd2018039b40e7836a8d49d21;hb=HEAD)
-  that configures your new piece of software.
+* Submit a patch to releng/builder for the [Jenkins Spinup script][5] that
+  configures your new piece of software.
 
-* Submit a patch to releng/builder for the
-  [Vagrant template's bootstrap.sh](https://git.opendaylight.org/gerrit/gitweb?p=releng/builder.git;a=tree;f=vagrant;h=409a2915d48bbdeea9edc811e1661ae17ca28280;hb=HEAD)
+* Submit a patch to releng/builder for the [Vagrant template's bootstrap.sh][6]
   that configures your new piece of software.
 
 Going the first route will be faster in the short term as we can inspect the
 changes and make test modifications in the sandbox to verify that it works.
 
 The second route, however, is better for the community as a whole as it will
-allow others that utilize our vagrant startups to replicate our systems more
+allow others that utilize our Vagrant setups to replicate our systems more
 closely. It is, however, more time consuming as an image snapshot needs to be
-created based on the updated vagrant definition before it can be attached to
+created based on the updated Vagrant definition before it can be attached to
 the sandbox for validation testing.
 
 In either case, the changes must be validated in the sandbox with tests to
-make sure that we don't break current jobs but also that the new software
-features are operating as intended. Once this is done the changes will be
-merged and the updates applied to the releng Jenkins production silo.
+make sure that we don't break current jobs and that the new software features
+are operating as intended. Once this is done the changes will be merged and
+the updates applied to the releng Jenkins production silo.
 
-Please note that the combination of the Vagrant slave snapshot and the Jenkins
-Spinup script is what defines a given slave. That means for instance that a
-slave that is defined using the releng/builder/vagrant/basic-java-node Vagrant
-and a Jenkins Spinup script of releng/builder/jenkins-script/controller.sh
-(as the dynamic_controller slave is) is the full definition of the realized
-slave. Jenkins starts a slave using the snapshot created that has been saved
-from when the vagrant was last run and once the instance is online it then
-checks out the releng/builder repo and executes two scripts. The first is the
-basic_settings.sh which is a baseline for all of the slaves and the second is
-the specialization script that does any syste updates, new software installs
-or extra environment tweaks that don't make sense in a snapshot. After all of
-these scripts have executed Jenkins will finally attach the slave as an actual
-slave and start handling jobs on it.
+Please note that the combination of a Vagrant slave snapshot and a Jenkins
+Spinup script is what defines a given slave. For instance, a slave may be
+defined by the [`releng/builder/vagrant/basic-java-node/`][8] Vagrant definition
+and the [`releng/builder/jenkins-script/controller.sh`][9] Jenkins Spinup script
+(as the dynamic_controller slave is). The pair provides the full definition of
+the realized slave. Jenkins starts a slave using the last-spun Vagrant snapshot
+for the specified definition. Once the base Vagrant instance is online Jenkins
+checks out the releng/builder repo on it and executes two scripts. The first is
+[`basic_settings.sh`][10], which is a baseline for all of the slaves. The second is
+the specialized Spinup script, which andles any system updates, new software
+installs or extra environment tweaks that don't make sense in a snapshot. After
+all of these scripts have executed Jenkins will finally attach the slave as an
+actual slave and start handling jobs on it.
 
 ### Pool: Rackspace - Docker
 
@@ -95,7 +90,7 @@ slave and start handling jobs on it.
   <tr>
     <td colspan="4">
       A Fedora 20 system that is configured with OpenJDK 1.7 (aka Java7) and
-      docker. This system was originally custom built for the test needs of
+      Docker. This system was originally custom built for the test needs of
       the OVSDB project but other projects have expressed interest in using
       it.
     </td>
@@ -265,80 +260,87 @@ slave and start handling jobs on it.
 
 Jenkins Job Builder takes simple descriptions of Jenkins jobs in YAML format, and uses them to configure Jenkins.
 
-* [Jenkins Job Builder](http://ci.openstack.org/jenkins-job-builder/) \(JJB\)
-  documentation
-
-OpenDaylight releng/builder gerrit project
-
-* [releng/builder](https://git.opendaylight.org/gerrit/#/admin/projects/releng/builder)
-  Git repo
+* [Jenkins Job Builder][11] \(JJB\) documentation
+* [releng/builder Gerrit][12]
+* [releng/builder Git repository][13]
 
 ## <a name="jjb_install">Jenkins Job Builder Installation</a>
 
 ### Using Docker
-[Docker](https://www.docker.com/whatisdocker/) is an open platform used to
-create virtualized Linux containers for shipping self-contained applications.
-Docker leverages LinuX Containers \(LXC\) running on the same operating system
-as the host machine, whereas a traditional VM runs an operating system over
-the host.
+
+[Docker][14] is an open platform used to create virtualized Linux containers
+for shipping self-contained applications. Docker leverages LinuX Containers
+\(LXC\) running on the same operating system as the host machine, whereas a
+traditional VM runs an operating system over the host.
 
     docker pull zxiiro/jjb-docker
     docker run --rm -v ${PWD}:/jjb jjb-docker
 
-The Dockerfile that created that image is
-[here](https://github.com/zxiiro/jjb-docker/blob/master/Dockerfile).
-By default it will run:
+The Dockerfile that created that image is [here][15]. By default it will run:
 
     jenkins-jobs test .
 
-Using the volume mount "-v" parameter you need to mount a directory containing
-your YAML files as well as a configured jenkins.ini file if you wish to upload
-your jobs to the Sandbox.
+You'll need to use the "-v" parameter to mount a directory containing your YAML
+files, as well as a configured `jenkins.ini` file if you wish to upload your
+jobs to the Sandbox.
 
 ### Manual install
 
-Jenkins Jobs in the releng silo use Jenkins Job Builder so if you need to test
+Jenkins Jobs in the releng silo use Jenkins Job Builder, so if you need to test
 your Jenkins job against the Sandbox you will need to install JJB.
 
-The templates below depend on a modified JJB version to add support for some
-missing features needed by our Jenkins instance. You can download JJB from
-OpenStack:
+While some OSs do package JJB, it's typically too old to work correctly with
+our RelEng templates. We recommend installing from source, either master or
+the most recent release. This applies for both Linux and OSX.
 
-    git clone https://git.openstack.org/openstack-infra/jenkins-job-builder
+For example, using 1.3.0:
 
-Before installing JJB make sure following python modules are installed (see
-requirements.txt):
+    $ git clone https://git.openstack.org/openstack-infra/jenkins-job-builder
+    $ cd jenkins-job-builder
+    # Stop here if you want to use master
+    $ git checkout tags/1.3.0
 
-* argparse
-* ordereddict
-* six>=1.5.2
-* PyYAML
-* python-jenkins>=0.4.1
-* pbr>=0.8.2,<1.0
+We [recommend using virtual environments][17] to manage JJB's Python
+dependencies. The tool [Virtualenv][18] can help you do so. Once you have
+Virtualenv [installed][19], create a new venv for JJB and install its
+dependencies, as described in its [`requirements.txt`][20].
 
-Follow steps in README.rst to install JJB:
+    # From your JJB clone's root dir
+    $ virtualenv jjb
+    $ source jjb/bin/activate
+    (jjb)$ pip install -r requirements.txt
 
-   sudo python setup.py install
+Now install JJB.
 
-Notes for Mac: [instructions here](https://github.com/openstack-infra/jenkins-job-builder).
-The <tt>sudo python setup.py install</tt> seems to work better than the
-version using brew and pip.
+    (jjb)$ python setup.py install
 
-Note: Some Linux distributions already contain a JJB package, usually with
-version too low to work correctly with Releng templates. You may need to
-uninstall the corresponding Linux package (or find another workaround) before
-proceeding with steps from *README.rst*.
+Note that we're not using `sudo` to install as root, since we want to make
+use of the venv we've configured for our current user.
 
-Update: Here is a link to e-mail with suggestions on how to install and
-upgrade JJB properly:
-https://lists.opendaylight.org/pipermail/integration-dev/2015-April/003016.html
+If you may have a system-level install of JJB as well, you should verify you're
+path is resolving to the one you'd expect.
+
+    (jjb)$ command -v jenkins-jobs
+    /home/daniel/jenkins-job-builder/jjb/bin/jenkins-jobs
+    (jjb)$ jenkins-jobs --version
+    Jenkins Job Builder version: 1.3.0
+
+You can easily leave and return to your venv. Make sure you activate it before
+each use of JJB.
+
+    (jjb)$ deactivate
+    $ command -v jenkins-jobs
+    # No jenkins-jobs executable found
+    $ source jjb/bin/activate
+    (jjb)$ # JJB works again
 
 Update: There was an issue with certain JJB versions. Workaround:
+TODO: Is this still needed?
 https://lists.opendaylight.org/pipermail/integration-dev/2015-October/005000.html
 
 ## <a name="jjb_templates">Jenkins Job Templates</a>
 
-The ODL Releng project provides 4 job templates which can be used to
+The ODL Releng project provides [JJB job templates][2] that can be used to
 define basic jobs.
 
 ### Verify Job Template
@@ -376,10 +378,10 @@ day.
 Trigger: **run-sonar**
 
 This job runs Sonar analysis and reports the results to
-[OpenDaylight's Sonar dashboard(https://sonar.opendaylight.org).
+[OpenDaylight's Sonar dashboard](https://sonar.opendaylight.org).
 
-**Note:** Running the "run-sonar" trigger will cause Jenkins to remove it's
-existing vote if it's already -1 or +1'd a comment. You will need to re-run
+**Note:** Running the "run-sonar" trigger will cause Jenkins to remove its
+existing vote if it's already -1'd or +1'd a comment. You will need to re-run
 your verify job (recheck) after running this to get Jenkins to put back the
 correct vote.
 
@@ -389,11 +391,11 @@ or if BRANCHES are specified in the CFG file it will create a job for the
 
 ### Integration Job Template
 
-The Integration Job Template create a job which runs when a project that your
+The Integration Job Template creates a job which runs when a project that your
 project depends on is successfully built. This job type is basically the same
-as a verify job except that it triggers from other jenkins jobs instead of via
-Gerrit review update. The dependencies are listed in your project.cfg file
-under the **DEPENDENCIES** variable.
+as a verify job except that it triggers from other Jenkins jobs instead of via
+Gerrit review updates. The dependencies that triger integration jobs are listed
+in your project.cfg file under the **DEPENDENCIES** variable.
 
 If no dependencies are listed then this job type is disabled by default.
 
@@ -402,9 +404,10 @@ If no dependencies are listed then this job type is disabled by default.
 Trigger: **test-integration**
 
 This job runs a full integration test suite against your patch and reports
-back the results to Gerrit. This job is maintained by the integration project
-and you just need to leave a comment with trigger keyword above to activate it
+back the results to Gerrit. Leave a comment with trigger keyword above to activate it
 for a particular patch.
+
+This job is maintained by the [Integration/Test][1] project.
 
 **Note:** Running the "test-integration" trigger will cause Jenkins to remove
 it's existing vote if it's already -1 or +1'd a comment. You will need to
@@ -413,14 +416,14 @@ the correct vote.
 
 Some considerations when using this job:
 
-* The patch test verification takes some time (~ 2 hours) + consumes a lot of
-  resources so it is not meant to be used for every patch
-* The system test for master patches will fail most of the times because both
+* The patch test verification takes some time (~2 hours) + consumes a lot of
+  resources so it is not meant to be used for every patch.
+* The system tests for master patches will fail most of the times because both
   code and test are unstable during the release cycle (should be good by the
-  end of the cycle)
-* Because of the above, patch test results has to be interpreted most of the
-  times by a system test knowable person, the integration group can help with
-  that
+  end of the cycle).
+* Because of the above, patch test results typically have to be interpreted by
+  system test experts. The [Integration/Test][1] project can help with that.
+
 
 ## <a name="jjb_basic_configuration">Basic Job Configuration</a>
 
@@ -617,3 +620,25 @@ If using Docker:
     # To upload jobs to the sandbox
     # Please ensure that you include a configured jenkins.ini in your volume mount
     docker run --rm -v ${PWD}:/jjb zxiiro/jjb-docker jenkins-jobs --conf jenkins.ini update . openflowplugin-csit-periodic-1node-cds-longevity-only-master
+
+[0]: https://wiki.opendaylight.org/view/RelEng:Main "Releng:Main"
+[1]: https://wiki.opendaylight.org/view/Integration/Test
+[2]: https://git.opendaylight.org/gerrit/gitweb?p=releng/builder.git;a=tree;f=jenkins-scripts;h=371193b89f418de2ca0ffcb78be4a2d8046701ae;hb=refs/heads/master "JJB Templates Directory"
+[3]: https://jenkins.opendaylight.org/releng "RelEng Jenkins"
+[4]: https://git.opendaylight.org/gerrit/gitweb?p=releng%2Fbuilder.git;a=summary "RelEng/Builder gitweb"
+[5]: https://git.opendaylight.org/gerrit/gitweb?p=releng/builder.git;a=tree;f=jenkins-scripts;h=69252dd61ece511bd2018039b40e7836a8d49d21;hb=HEAD
+[6]: https://git.opendaylight.org/gerrit/gitweb?p=releng/builder.git;a=tree;f=vagrant;h=409a2915d48bbdeea9edc811e1661ae17ca28280;hb=HEAD
+[7]: http://ci.openstack.org/jenkins-job-builder/ "JJB"
+[8]: https://git.opendaylight.org/gerrit/gitweb?p=releng/builder.git;a=tree;f=vagrant/basic-java-node;h=7197b26b747deba38c08f30a569c233fd9636d72;hb=HEAD
+[9]: https://git.opendaylight.org/gerrit/gitweb?p=releng/builder.git;a=blob;f=jenkins-scripts/controller.sh;h=893a04118a9bd9c55ae2a4a6af833fa089e0e0b4;hb=HEAD
+[10]: https://git.opendaylight.org/gerrit/gitweb?p=releng/builder.git;a=blob;f=jenkins-scripts/basic_settings.sh;h=9f6d2a89948d0a25a8a4a24102630ada494e8623;hb=HEAD
+[11]: http://ci.openstack.org/jenkins-job-builder/
+[12]: https://git.opendaylight.org/gerrit/#/admin/projects/releng/builder
+[13]: https://git.opendaylight.org/gerrit/gitweb?p=releng/builder.git;a=summary
+[14]: https://www.docker.com/whatisdocker/
+[15]: https://github.com/zxiiro/jjb-docker/blob/master/Dockerfile
+[16]: https://github.com/openstack-infra/jenkins-job-builder
+[17]: https://lists.opendaylight.org/pipermail/integration-dev/2015-April/003016.html
+[18]: https://virtualenv.readthedocs.org/en/latest/
+[19]: http://virtualenv.readthedocs.org/en/latest/installation.html
+[20]: https://github.com/openstack-infra/jenkins-job-builder/blob/master/requirements.txt
