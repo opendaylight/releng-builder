@@ -20,6 +20,11 @@ jenkins     ALL=NOPASSWD: /usr/bin/ovs-ofctl
 jenkins     ALL=NOPASSWD: /usr/bin/ovs-dpctl
 jenkins     ALL=NOPASSWD: /sbin/ip
 jenkins     ALL=NOPASSWD: /var/run/netns
+jenkins     ALL=NOPASSWD: /bin/mkdir
+jenkins     ALL=NOPASSWD: /bin/ln
+jenkins     ALL=NOPASSWD: /bin/rm
+vagrant     ALL=NOPASSWD: /etc/init.d/openvswitch-switch
+vagrant     ALL=NOPASSWD: /etc/openvswitch
 EOF
 
 # vim: sw=2 ts=2 sts=2 et :
