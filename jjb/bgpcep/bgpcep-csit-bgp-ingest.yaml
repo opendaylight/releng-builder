@@ -26,7 +26,9 @@
     install-features: 'odl-bgpcep-data-change-counter,odl-restconf,odl-bgpcep-pcep-all,odl-bgpcep-bgp-all,odl-bgpcep-bgp,odl-bgpcep-pcep,odl-netconf-connector-all'
 
     # Robot custom options:
-    robot-options: ''
+    robot-options: '-v REPETITIONS_CHANGE_COUNT_SINGLE:3 -v CHECK_PERIOD_PREFIX_COUNT_SINGLE:10 -v REPETITIONS_CHANGE_COUNT_MANY:4 -v MULTIPLICITY_PREFIX_COUNT_MANY:600 -v CHECK_PERIOD_PREFIX_COUNT_MANY:600'
+    # 10 minutes for CHECK_PERIOD_PREFIX_COUNT_MANY is to hide "Failed to establish a new connection" bug
+    # in order to expose "Metadata not available for modification" of Bug 4488.
 
     # Trigger jobs: (daily)
     schedule: 'H H * * *'
