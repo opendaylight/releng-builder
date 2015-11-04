@@ -56,6 +56,9 @@
             branch: '{branch}'
 
     prebuilders:
+        - integration-get-bundle-url-root
+        - inject:
+            properties-file: 'bundle.txt'
         - wipe-org-opendaylight-repo
 
     maven:
@@ -66,6 +69,14 @@
         settings: '{integration-settings}'
         global-settings: '{odl-global-settings}'
         ignore-upstream-changes: true
+        post-step-run-condition: 'SUCCESS'
+
+    postbuilders:
+        - trigger-builds:
+            - project: 'integration-csit-1node-basic-all-{stream}'
+              block: true
+              predefined-parameters:
+                  BUNDLEURL=$BUNDLEURL
 
     publishers:
         - email-notification:
