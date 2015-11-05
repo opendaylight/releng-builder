@@ -26,7 +26,7 @@ while true; do
     elif (( "\$COUNT" > "600" )); then
         echo Timeout Controller DOWN
         echo "Dumping Karaf log..."
-        cat /tmp/${BUNDLEFOLDER}/data/log/karaf.log
+        head --bytes=1000000 /tmp/${BUNDLEFOLDER}/data/log/karaf.log
         echo "Listing all open ports on controller system"
         netstat -natu
         exit 1
@@ -48,7 +48,7 @@ function exit_on_log_file_message {
     if grep --quiet "\$1" /tmp/${BUNDLEFOLDER}/data/log/karaf.log; then
         echo ABORTING: found "\$1"
         echo "Dumping Karaf log..."
-        cat /tmp/${BUNDLEFOLDER}/data/log/karaf.log
+        head --bytes=1000000 /tmp/${BUNDLEFOLDER}/data/log/karaf.log
         exit 1
     fi
 }
@@ -98,13 +98,19 @@ TOOLS_SYSTEM_IP:${TOOLS_SYSTEM_IP} ${tools_variables} -v NUM_TOOLS_SYSTEM:${NUM_
 -v USER_HOME:${HOME} ${TESTOPTIONS} ${SUITES} || true
 
 echo "Remove any Karaf log"
-rm -f controller?-karaf.log
+rm -f *-karaf.log*
 
 echo "Fetching Karaf log"
 for i in `seq 1 ${NUM_ODL_SYSTEM}`
 do
     CONTROLLERIP=ODL_SYSTEM_${i}_IP
-    scp ${!CONTROLLERIP}:/tmp/$BUNDLEFOLDER/data/log/karaf.log controller${i}-karaf.log
+    scp "${!CONTROLLERIP}:/tmp/$BUNDLEFOLDER/data/log/karaf.log" "odlsystem${i}-karaf.log"
+done
+
+echo "Compressing Karaf logs..."
+for i in `seq 1 ${NUM_ODL_SYSTEM}`
+do
+    xz 9evv "odlsystem${i}-karaf.log"
 done
 
 # vim: ts=4 sw=4 sts=4 et ft=sh :
