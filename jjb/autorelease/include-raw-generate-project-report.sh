@@ -23,6 +23,6 @@ for p in $projects; do
     echo "" >> $GIT_REPORT_FILE
 
     cd $WORKSPACE/$p
-    git log --after="1 week ago" >> $GIT_REPORT_FILE
+    git log --after="1 week ago" | sed 'sX^    Change-Id: X    -> https://git.opendaylight.org/gerrit/r/X' >> $GIT_REPORT_FILE
     cd $WORKSPACE
 done
