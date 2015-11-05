@@ -14,7 +14,7 @@ cat ${FEATURESCONF}
 
 echo "Configuring the log..."
 LOGCONF=${WORKSPACE}/${BUNDLEFOLDER}/etc/org.ops4j.pax.logging.cfg
-sed -ie 's/log4j.appender.out.maxFileSize=1MB/log4j.appender.out.maxFileSize=20MB/g' ${LOGCONF}
+sed -ie 's/log4j.appender.out.maxFileSize=1MB/log4j.appender.out.maxFileSize=5GB/g' ${LOGCONF}
 cat ${LOGCONF}
 
 echo "Configure the repos..."
@@ -37,8 +37,11 @@ sleep 10
 echo "Check OSGi bundles..."
 sshpass -p karaf ${WORKSPACE}/${BUNDLEFOLDER}/bin/client -u karaf "feature:install ${ACTUALFEATURES}" || echo $? > ${WORKSPACE}/error.txt
 
-echo "Fetching Karaf log"
-cp ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log .
+echo "Fetching Karaf log..."
+cp "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log" .
+
+echo "Compressing Karaf log..."
+xz -9evv "karaf.log"
 
 echo "Exit with error"
 if [ `cat error.txt` -ne 0 ]; then
