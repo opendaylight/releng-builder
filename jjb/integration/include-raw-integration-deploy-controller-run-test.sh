@@ -68,7 +68,7 @@ while true; do
     elif (( "\$COUNT" > "600" )); then
         echo Timeout Controller DOWN
         echo "Dumping Karaf log..."
-        cat /tmp/${BUNDLEFOLDER}/data/log/karaf.log
+        head --bytes=1000000 /tmp/${BUNDLEFOLDER}/data/log/karaf.log
         echo "Listing all open ports on controller system"
         netstat -natu
         exit 1
@@ -93,7 +93,7 @@ function exit_on_log_file_message {
     if grep --quiet "\$1" /tmp/${BUNDLEFOLDER}/data/log/karaf.log; then
         echo ABORTING: found "\$1"
         echo "Dumping Karaf log..."
-        cat /tmp/${BUNDLEFOLDER}/data/log/karaf.log
+        head --bytes=1000000 /tmp/${BUNDLEFOLDER}/data/log/karaf.log
         exit 1
     fi
 }
@@ -121,8 +121,11 @@ pybot -N ${TESTPLAN} -c critical -e exclude -v BUNDLEFOLDER:${BUNDLEFOLDER} -v W
 -v MININET:${TOOLS_SYSTEM_IP} -v MININET1:${TOOLS_SYSTEM_2_IP} -v MININET2:${TOOLS_SYSTEM_3_IP} -v MININET_USER:${USER} \
 -v USER_HOME:${HOME} ${TESTOPTIONS} ${SUITES} || true
 
-echo "Fetching Karaf log"
-scp ${ODL_SYSTEM_IP}:/tmp/${BUNDLEFOLDER}/data/log/karaf.log .
+echo "Fetching Karaf log..."
+scp "${ODL_SYSTEM_IP}:/tmp/${BUNDLEFOLDER}/data/log/karaf.log" .
+
+echo "Compressing Karaf log..."
+xz -9evv "karaf.log"
 
 # vim: ts=4 sw=4 sts=4 et ft=sh :
 
