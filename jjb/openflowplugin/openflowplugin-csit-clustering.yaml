@@ -2,6 +2,7 @@
     name: openflowplugin-csit-clustering
     jobs:
         - '{project}-csit-3node-{functionality}-{install}-{stream}'
+        - '{project}-csit-verify-3node-{functionality}'
 
     # The project name
     project: 'openflowplugin'
@@ -13,6 +14,8 @@
     stream:
         - beryllium:
             branch: 'master'
+        - stable-lithium:
+            branch: 'stable/lithium'
 
     install:
         - only:
