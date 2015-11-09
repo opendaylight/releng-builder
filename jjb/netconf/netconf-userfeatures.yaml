@@ -23,9 +23,8 @@
         - all:
             scope: 'all'
 
-    # Tools system configuration (formerly "mininet configuration")
+    # Tools system configuration (formerly "mininet configuration"), this is needed as netopeer is only available in this vm
     mininet-image: 'rk-c-el6-mininet'
-    mininet-vms: 1
 
     # Features to install
     install-features: 'odl-restconf,odl-netconf-mdsal,odl-netconf-connector-all'
