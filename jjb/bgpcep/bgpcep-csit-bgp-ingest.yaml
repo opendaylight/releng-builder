@@ -23,10 +23,12 @@
             scope: 'all'
 
     # Features to install
-    install-features: 'odl-bgpcep-data-change-counter,odl-restconf,odl-bgpcep-pcep-all,odl-bgpcep-bgp-all,odl-bgpcep-bgp,odl-bgpcep-pcep,odl-netconf-connector-all'
+    install-features: 'odl-restconf,odl-bgpcep-data-change-counter,odl-bgpcep-bgp-all,odl-bgpcep-bgp,odl-netconf-connector-all'
 
     # Robot custom options:
-    robot-options: ''
+    robot-options: '-v CHECK_PERIOD_PREFIX_COUNT_SINGLE:10 -v REPETITIONS_CHANGE_COUNT_SINGLE:3 -v CHECK_PERIOD_PREFIX_COUNT_MANY:10 -v TEST_DURATION_MULTIPLIER_PREFIX_COUNT_MANY:8.0 -v REPETITIONS_CHANGE_COUNT_MANY:10 -v MULTIPLICITY_CHANGE_COUNT_MANY:600 -v TEST_DURATION_MULTIPLIER_CHANGE_COUNT_MANY:8.0 '
+    # 10 minutes for CHECK_PERIOD_PREFIX_COUNT_MANY is to hide "Failed to establish a new connection" bug
+    # in order to expose "Metadata not available for modification" of Bug 4488.
 
     # Trigger jobs: (daily)
     schedule: 'H H * * *'
@@ -56,7 +58,7 @@
             scope: 'all'
 
     # Features to install
-    install-features: 'odl-restconf,odl-bgpcep-pcep-all,odl-bgpcep-bgp-all,odl-netconf-connector-all,odl-bgpcep-data-change-counter'
+    install-features: 'odl-restconf,odl-bgpcep-bgp-all,odl-bgpcep-bgp,odl-bgpcep-data-change-counter,odl-netconf-connector-all'
 
     # Robot custom options
     # Increase the TEST_DURATION_MULTIPLIER if the test runs in slower test environment or more complex scenario is chosen
