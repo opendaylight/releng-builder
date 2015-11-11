@@ -45,7 +45,7 @@
         - integration-distribution-stream:
             stream: 'beryllium'
         - integration-bundleurl:
-            bundleurl: 'last'
+            bundleurl: '{tested-image}'
         - integration-controller-scope:
             controller-scope: 'only'
         - integration-controller-features:
@@ -65,7 +65,7 @@
             credentials-id: '{ssh-credentials}'
             basedir: 'test'
             refspec: '$GERRIT_REFSPEC'
-            branch: 'master'
+            branch: '{tested-branch}'
 
     wrappers:
         - build-timeout
@@ -128,7 +128,7 @@
         - integration-distribution-stream:
             stream: '{stream}'
         - integration-bundleurl:
-            bundleurl: 'last'
+            bundleurl: '{tested-image}'
         - integration-controller-scope:
             controller-scope: '{scope}'
         - integration-controller-features:
@@ -140,7 +140,7 @@
         - integration-test-plan:
             test-plan: '{project}-{functionality}.txt'
         - integration-patch-refspec:
-            branch: 'master'
+            branch: '{tested-branch}'
         - integration-jdk-version:
             jdkversion: '{jre}'
 
@@ -149,7 +149,7 @@
             credentials-id: '{ssh-credentials}'
             basedir: 'test'
             refspec: '$PATCHREFSPEC'
-            branch: 'master'
+            branch: '{tested-branch}'
 
     wrappers:
         - build-timeout
@@ -235,7 +235,7 @@
         - integration-distribution-stream:
             stream: '{stream}'
         - integration-bundleurl:
-            bundleurl: 'last'
+            bundleurl: '{tested-image}'
         - integration-controller-scope:
             controller-scope: '{scope}'
         - integration-controller-features:
@@ -247,7 +247,7 @@
         - integration-test-plan:
             test-plan: '{project}-{functionality}.txt'
         - integration-patch-refspec:
-            branch: 'master'
+            branch: '{tested-branch}'
         - integration-jdk-version:
             jdkversion: '{jre}'
 
@@ -256,7 +256,7 @@
             credentials-id: '{ssh-credentials}'
             basedir: 'test'
             refspec: '$PATCHREFSPEC'
-            branch: 'master'
+            branch: '{tested-branch}'
 
     wrappers:
         - integration-jclouds-controller-mininet:
@@ -340,7 +340,7 @@
         - integration-distribution-stream:
             stream: 'beryllium'
         - integration-bundleurl:
-            bundleurl: 'last'
+            bundleurl: '{tested-image}'
         - integration-controller-scope:
             controller-scope: 'only'
         - integration-controller-features:
@@ -360,7 +360,7 @@
             credentials-id: '{ssh-credentials}'
             basedir: 'test'
             refspec: '$GERRIT_REFSPEC'
-            branch: 'master'
+            branch: '{tested-branch}'
 
     wrappers:
         - build-timeout
@@ -424,7 +424,7 @@
         - integration-distribution-stream:
             stream: '{stream}'
         - integration-bundleurl:
-            bundleurl: 'last'
+            bundleurl: '{tested-image}'
         - integration-controller-scope:
             controller-scope: '{scope}'
         - integration-controller-features:
@@ -436,7 +436,7 @@
         - integration-test-plan:
             test-plan: '{project}-{functionality}.txt'
         - integration-patch-refspec:
-            branch: 'master'
+            branch: '{tested-branch}'
         - integration-jdk-version:
             jdkversion: '{jre}'
 
@@ -445,7 +445,7 @@
             credentials-id: '{ssh-credentials}'
             basedir: 'test'
             refspec: '$PATCHREFSPEC'
-            branch: 'master'
+            branch: '{tested-branch}'
 
     wrappers:
         - build-timeout
@@ -532,7 +532,7 @@
         - integration-distribution-stream:
             stream: '{stream}'
         - integration-bundleurl:
-            bundleurl: 'last'
+            bundleurl: '{tested-image}'
         - integration-controller-scope:
             controller-scope: '{scope}'
         - integration-controller-features:
@@ -544,7 +544,7 @@
         - integration-test-plan:
             test-plan: '{project}-{functionality}.txt'
         - integration-patch-refspec:
-            branch: 'master'
+            branch: '{tested-branch}'
         - integration-jdk-version:
             jdkversion: '{jre}'
 
@@ -553,7 +553,7 @@
             credentials-id: '{ssh-credentials}'
             basedir: 'test'
             refspec: '$PATCHREFSPEC'
-            branch: 'master'
+            branch: '{tested-branch}'
 
     wrappers:
         - integration-jclouds-controller-mininet:
