@@ -279,6 +279,16 @@
         - shell:
             !include-raw include-raw-integration-cleanup-tmp.sh
 
+# Macro: integration-cleanup-worspace
+# Operation: Cleans up files possibly left there by the previous build
+# Used by: {project}-csit-* job templates
+
+- builder:
+    name: integration-cleanup-workspace
+    builders:
+        - shell:
+            !include-raw include-raw-integration-cleanup-workspace.sh
+
 
 ##############
 # Publishers #
