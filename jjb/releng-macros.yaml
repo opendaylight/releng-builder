@@ -40,6 +40,14 @@
             default: '{odl_version}'
             description: 'Controller version (for use with openstacks networking_odl project)'
 
+- parameter:
+    name: projects-to-build-parameter
+    parameters:
+        - string:
+            name: PROJECTS_TO_BUILD
+            default: ''
+            description: 'csv list of project:changeset to build distribution from'
+
 - scm:
     name: git-scm
     scm:
