@@ -7,6 +7,7 @@
         - 'integration-distribution-offline-{stream}'
         - 'integration-distribution-test-{stream}'
         - 'integration-patch-test-{stream}'
+        - 'integration-multipatch-test-{stream}'
 
     stream:
         - beryllium:
@@ -352,7 +353,7 @@
 
 # Template: integration-patch-test-{stream}
 # Goal: Build a patch and run all available system test on a distribution containing the change
-# Operation: This job teamplate builds a patch, creates a distribution containing the patch, and
+# Operation: This job template builds a patch, creates a distribution containing the patch, and
 # triggers the distribution test when test-integration is used in gerrit comments
 
 - job-template:
@@ -432,6 +433,62 @@
         maven-name: '{mvn33}'
         root-pom: 'distribution/pom.xml'
         goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r source:jar javadoc:jar'
+        maven-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
+        settings: '{integration-settings}'
+        global-settings: '{odl-global-settings}'
+        ignore-upstream-changes: true
+        post-step-run-condition: 'SUCCESS'
+
+    postbuilders:
+        - trigger-builds:
+            - project: 'integration-distribution-test-{stream}'
+              block: true
+              predefined-parameters:
+                  BUNDLEURL=$BUNDLEURL
+
+    publishers:
+        - email-notification:
+            email-prefix: '[integration]'
+
+# Template: integration-multipatch-test-{stream}
+# Goal: Build one or more patches and run all available system test on a distribution containing the change
+# Operation: This job template checks out and builds each patch provided in job parameters, creates a distribution
+# containing these patches, and triggers the distribution test job which includes most (if not all) available
+# CSIT jobs
+
+- job-template:
+    name: 'integration-multipatch-test-{stream}'
+
+    project-type: maven
+    node: dynamic_verify
+    jdk: '{jdk}'
+
+    logrotate:
+        daysToKeep: '{build-days-to-keep}'
+        numToKeep: '{build-num-to-keep}'
+        artifactDaysToKeep: '{build-artifact-days-to-keep}'
+        artifactNumToKeep: '{build-artifact-num-to-keep}'
+
+    parameters:
+        - patches-to-build-parameter:
+            patches_to_build: '$PATCHES_TO_BUILD'
+
+    wrappers:
+        - build-timeout
+        - ssh-agent-credentials:
+            users:
+                - '{ssh-credentials}'
+
+    prebuilders:
+        - wipe-org-opendaylight-repo
+        - integration-multipatch-builder
+        - inject:
+            properties-file: 'bundle.txt'
+
+    maven:
+        maven-name: '{mvn33}'
+        root-pom: 'patch_tester/pom.xml'
+        goals: 'clean install -f patch_tester/pom.xml -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
         settings: '{integration-settings}'
         global-settings: '{odl-global-settings}'
