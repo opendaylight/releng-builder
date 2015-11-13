@@ -279,6 +279,15 @@
         - shell:
             !include-raw include-raw-integration-cleanup-tmp.sh
 
+# Macro: integration-multipatch-builder
+# Operation: checks out multiple patches and builds custom distribution
+# Used by: integration-multipatch-test-* job templates
+
+- builder:
+    name: integration-multipatch-builder
+    builders:
+        - shell:
+            !include-raw include-raw-integration-multipatch-distribution-test.sh
 
 ##############
 # Publishers #
