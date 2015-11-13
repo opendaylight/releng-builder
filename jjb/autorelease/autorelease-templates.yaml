@@ -204,10 +204,12 @@
         - inject:
             properties-file: variables.prop
         - autorelease-generate-project-report
+        - shell: "./scripts/list-project-dependencies.sh"
+        - autorelease-sys-stats
 
     publishers:
     - archive-artifacts:
-        artifacts: 'project-reports/*.log'
+        artifacts: '*.log,project-reports/*.log'
     - email-ext:
         attachments: 'project-reports/*.log'
         recipients: 'skitt@redhat.com thanh.ha@linuxfoundation.org'
