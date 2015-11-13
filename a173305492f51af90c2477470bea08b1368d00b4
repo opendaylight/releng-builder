@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aade967_dadc5577",
+        "filename": "jjb/integration/integration-test-jobs.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 797
+      },
+      "writtenOn": "2015-11-13T02:01:54Z",
+      "side": 1,
+      "message": "I am not sure it is good idea to place your local maven repository in the same folder you are building. I would use /tmp/r like all projects in ODL and then use prebuilder script: wipe-org-opendaylight-repo to wipe it out every time. It is also that I see weird error downloading empty karaf and i am not sure whether it is related to this.",
+      "revId": "a173305492f51af90c2477470bea08b1368d00b4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
