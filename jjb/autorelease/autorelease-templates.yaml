@@ -205,6 +205,15 @@
             properties-file: variables.prop
         - autorelease-generate-project-report
 
+    postbuilders:
+        - shell: "./scripts/list-project-dependencies.sh"
+        - autorelease-maven-sources:
+            maven-version: '{mvn33}'
+            settings: '{autorelease-settings}'
+            global-settings: '{odl-global-settings}'
+        - autorelease-maven-sources-post-process
+        - autorelease-sys-stats
+
     publishers:
     - archive-artifacts:
         artifacts: 'project-reports/*.log'
