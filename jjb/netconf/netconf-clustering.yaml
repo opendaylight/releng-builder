@@ -1,0 +1,30 @@
+- project:
+    name: netconf-csit-clustering
+    jobs:
+        - '{project}-csit-3node-{functionality}-{install}-{stream}'
+
+    # The project name
+    project: 'netconf'
+
+    # The functionality under test
+    functionality: 'clustering'
+
+    # Project branches
+    stream:
+        - beryllium:
+            branch: 'master'
+
+    install:
+        - only:
+            scope: 'only'
+        - all:
+            scope: 'all'
+
+    # Features to install
+    install-features: 'odl-restconf,odl-netconf-connector-ssh,odl-netconf-clustered-topology'
+
+    # Robot custom options
+    robot-options: ''
+
+    # Trigger jobs (upstream dependencies)
+    trigger-jobs: 'odlparent-distribution-{stream},yangtools-distribution-{stream},controller-distribution-{stream},netconf-distribution-{stream},mdsal-distribution-{stream}'
