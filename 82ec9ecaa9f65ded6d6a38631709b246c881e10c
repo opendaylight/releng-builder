@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aade967_5b63871a",
+        "filename": "jjb/integration/integration-test-jobs.yaml",
+        "patchSetId": 5
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2015-11-13T23:57:44Z",
+      "side": 1,
+      "message": "I have an enhancement request (not necessarily for this Change).\nCan this be exposed as a build parameter? Right now I would realy like a way to add -DskipTests...",
+      "range": {
+        "startLine": 492,
+        "startChar": 21,
+        "endLine": 492,
+        "endChar": 77
+      },
+      "revId": "82ec9ecaa9f65ded6d6a38631709b246c881e10c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_db7697d8",
+        "filename": "jjb/integration/integration-test-jobs.yaml",
+        "patchSetId": 5
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2015-11-13T23:57:44Z",
+      "side": 1,
+      "message": "Another enhancement request. Currently distribution-test triggers a long list of jobs. I can imagine sometimes multipatch-test can be used to verify bugfixes that need multi-project patches (with temporary breakage between first and last patches are merged). In that case it would be useful to run only some of the tests to see the target issue is really fixed, only then followed by full list to verify nothing else got broken in the process.\nSo it would be nice to have a way to override the default list of tests to trigger.",
+      "range": {
+        "startLine": 502,
+        "startChar": 14,
+        "endLine": 502,
+        "endChar": 35
+      },
+      "revId": "82ec9ecaa9f65ded6d6a38631709b246c881e10c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
