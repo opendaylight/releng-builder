@@ -80,6 +80,15 @@
                       pattern: site.xml
 
 - builder:
+    name: autorelease-checkout-gerrit-patch
+    builders:
+        - shell: |
+            cd ${GERRIT_PROJECT}
+            echo "Checking out ${GERRIT_PROJECT} patch ${GERRIT_REFSPEC}..."
+            git fetch origin ${GERRIT_REFSPEC} && git checkout FETCH_HEAD
+            cd ..
+
+- builder:
     name: autorelease-cfp
     builders:
         - config-file-provider:

@@ -60,6 +60,9 @@ else:
     templates = "verify,merge,daily,distribution,integration,sonar"
 templates += ",clm"  # ensure we always create a clm job for all projects
 
+if cfg.get("AUTORELEASE"):
+    templates += ",validate-autorelease"
+
 ##################
 # Handle Streams #
 ##################
