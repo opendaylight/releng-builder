@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7aade967_a6f05bca",
+        "filename": "jjb/integration/integration-test-jobs.yaml",
+        "patchSetId": 6
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2015-11-15T09:42:55Z",
+      "side": 1,
+      "message": "Now I think I have been experiencing 3 different issues (with few others as consequences).\n\nThe first one is my fault, as I did not spot integration-distribution-test-beryllium can be also started by timer.\n\nThe second one is that Maven in this job has different behavior with respect to unit test failures.\nI have created unit test failure patch https://git.opendaylight.org/gerrit/#/c/29716/1\nIts bepcep verify job has exited early https://jenkins.opendaylight.org/releng/job/bgpcep-verify-beryllium/1776/jdk\u003dopenjdk7,nodes\u003ddynamic_verify/console\n\nBut https://jenkins.opendaylight.org/sandbox/job/integration-multipatch-test-beryllium/8/console\nhas marked \"concepts\" as SUCCESS, only switching to UNSTABLE after building and archiving everything. The distribution test job was correctly not-triggered. Similarly when build was aborted.\nThe introduced failure was visible in https://jenkins.opendaylight.org/sandbox/job/integration-multipatch-test-beryllium/8/ even during the build.\n\nThe third one is incorrect behavior when there is a syntax error somewhere in pom.xml files. I have introduced https://git.opendaylight.org/gerrit/#/c/29716/2\nBgpcep verify job printed nice error messages https://jenkins.opendaylight.org/releng/job/bgpcep-verify-beryllium/1777/jdk\u003dopenjdk7,nodes\u003ddynamic_verify/console\nMaven in multipatch test job failed instead silently while parsing POMs (without building anything of course), but integration-distribution-test-beryllium was triggered.\nhttps://jenkins.opendaylight.org/sandbox/job/integration-multipatch-test-beryllium/10/console\n\nWhat is worse, the distribution-test job detected some jobs are missing (Sandbox), there was no console output suggesting the few jobs present were actually triggered. https://jenkins.opendaylight.org/sandbox/job/integration-distribution-test-beryllium/5/console\nBut triggered they were. Of course they got 404 on .zip download, but they did not notice, ignored all sed failures and attributed result to failing restconf. https://jenkins.opendaylight.org/sandbox/job/bgpcep-csit-1node-userfeatures-all-beryllium/4/console",
+      "parentUuid": "7aade967_b02e55a4",
+      "revId": "39a1b318ac40cd86e14006ccc402db2fea58e6ac",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7aade967_ad927ef4",
         "filename": "jjb/integration/integration-test-jobs.yaml",
         "patchSetId": 6
