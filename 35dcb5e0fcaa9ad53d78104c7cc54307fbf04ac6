@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aade967_26ab0b8b",
+        "filename": "jjb/integration/include-raw-integration-deploy-controller-verify.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2015-11-15T10:09:33Z",
+      "side": 1,
+      "message": "We are never stopping ODL on this VM.\n\nThis already happens on *-offline-* jobs.\nI have checked, but I have not seen them run on the same VM twice. Possibly the VM is collected quickly to satisfy CSIT needs for ODL_SYSTEM VMs.\n\nAnyway, we should kill ODL at the end of this script to be sure.",
+      "range": {
+        "startLine": 33,
+        "startChar": 33,
+        "endLine": 33,
+        "endChar": 38
+      },
+      "revId": "35dcb5e0fcaa9ad53d78104c7cc54307fbf04ac6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
