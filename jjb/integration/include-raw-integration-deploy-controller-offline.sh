@@ -1,6 +1,12 @@
 CONTROLLERMEM="3072m"
 ACTUALFEATURES="odl-integration-all"
 
+echo "Kill any controller running"
+ps axf | grep karaf | grep -v grep | awk '{print "kill -9 " $1}' | sh
+
+echo "Clean workspace"
+rm -rf *
+
 echo "Downloading the distribution..."
 wget --no-verbose  ${ACTUALBUNDLEURL}
 
@@ -25,7 +31,7 @@ cat ${REPOCONF}
 
 echo "Configure max memory..."
 MEMCONF=${WORKSPACE}/${BUNDLEFOLDER}/bin/setenv
-sed -ie 's/JAVA_MAX_MEM="2048m"/JAVA_MAX_MEM="${CONTROLLERMEM}"/g' ${MEMCONF}
+sed -ie "s/2048m/${CONTROLLERMEM}/g" ${MEMCONF}
 cat ${MEMCONF}
 
 echo "Starting controller..."
@@ -39,6 +45,9 @@ sshpass -p karaf ${WORKSPACE}/${BUNDLEFOLDER}/bin/client -u karaf "feature:insta
 
 echo "Fetching Karaf log"
 cp ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log .
+
+echo "Kill controller"
+ps axf | grep karaf | grep -v grep | awk '{print "kill -9 " $1}' | sh
 
 echo "Exit with error"
 if [ `cat error.txt` -ne 0 ]; then
