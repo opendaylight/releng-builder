@@ -189,6 +189,26 @@
         - shell:
             !include-raw include-raw-integration-get-bundle-vars.sh
 
+# Macro: integration-deploy-controller-verify
+# Operation: this macro deployes the controller with all fetures
+# Used by: integration-distrbution-deploy-{stream} job template
+
+- builder:
+    name: integration-deploy-controller-verify
+    builders:
+        - shell:
+            !include-raw include-raw-integration-deploy-controller-verify.sh
+
+# Macro: integration-deploy-controller-offline
+# Operation: this macro deployes the controller with no external repo configuration
+# Used by: integration-distrbution-offline-{stream} job template
+
+- builder:
+    name: integration-deploy-controller-offline
+    builders:
+        - shell:
+            !include-raw include-raw-integration-deploy-controller-offline.sh
+
 # Macro: integration-deply-controller-run-test
 # Operation: this macro deployes single contoller and runs test
 # Used by: {project}-csit-1node-* job templates
@@ -228,16 +248,6 @@
     builders:
         - shell:
             !include-raw include-raw-integration-start-cluster-run-test.sh
-
-# Macro: integration-deploy-controller-offline
-# Operation: this macro deployes the controller with no external repo configuration
-# Used by: integration-distrbution-offline-{stream} job template
-
-- builder:
-    name: integration-deploy-controller-offline
-    builders:
-        - shell:
-            !include-raw include-raw-integration-deploy-controller-offline.sh
 
 # Macro: integration-get-bundle-url
 # Operation: this macro gets the job generated distribution URL from distribution pom.xml

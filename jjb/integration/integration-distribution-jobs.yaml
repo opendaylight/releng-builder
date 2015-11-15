@@ -4,6 +4,8 @@
     jobs:
         - 'integration-distribution-verify-{stream}'
         - 'integration-distribution-merge-{stream}'
+        - 'integration-distribution-deploy-{stream}'
+        - 'integration-distribution-offline-{stream}'
 
     stream:
         - beryllium:
@@ -37,11 +39,13 @@
             project: 'integration/distribution'
         - gerrit-parameter:
             branch: '{branch}'
+        - integration-patch-refspec:
+            branch: '$GERRIT_REFSPEC'
 
     scm:
         - gerrit-trigger-scm:
             credentials-id: '{ssh-credentials}'
-            refspec: '$GERRIT_REFSPEC'
+            refspec: '$PATCHREFSPEC'
             choosing-strategy: 'gerrit'
 
     wrappers:
@@ -73,7 +77,7 @@
 
     postbuilders:
         - trigger-builds:
-            - project: 'integration-csit-1node-basic-all-{stream}'
+            - project: 'integration-distribution-deploy-{stream}'
               block: true
               predefined-parameters:
                   BUNDLEURL=$BUNDLEURL
@@ -134,4 +138,95 @@
             id: ''
             unique-version: true
             deploy-unstable: false
+
+# Template: integration-distribution-deploy-{stream}
+# Goal: Verify distribution starts with no issues when all features are loaded
+# Operation: This job deployes the controller installing odl-integration-all
+
+- job-template:
+    name: 'integration-distribution-deploy-{stream}'
+
+    project-type: freestyle
+    node: dynamic_controller
+
+    logrotate:
+        daysToKeep: '{build-days-to-keep}'
+        numToKeep: '{build-num-to-keep}'
+        artifactDaysToKeep: '{build-artifact-days-to-keep}'
+        artifactNumToKeep: '{build-artifact-num-to-keep}'
+
+    parameters:
+        - project-parameter:
+            project: 'integration/distribution'
+        - integration-branch:
+            branch: '{branch}'
+        - integration-bundleurl:
+            bundleurl: 'last'
+
+    wrappers:
+        - build-timeout
+        - ssh-agent-credentials:
+            users:
+                - '{ssh-credentials}'
+
+    triggers:
+        - timed: 'H H * * *'
+
+    builders:
+        - integration-get-bundle-vars
+        - inject:
+            properties-file: 'bundle_vars.txt'
+        - integration-deploy-controller-verify
+
+    publishers:
+        - archive:
+            artifacts: 'karaf.log'
+        - email-notification:
+            email-prefix: '[integration]'
+
+# Template: integration-distribution-offline-{stream}
+# Goal: Verify distribution can start with no internet connection
+# Operation: This job deployes the controller removing any external repository definition
+# whenever there is a change in a kernel project (odlparent, controller, yangtools, etc...)
+
+- job-template:
+    name: 'integration-distribution-offline-{stream}'
+
+    project-type: freestyle
+    node: dynamic_controller
+
+    logrotate:
+        daysToKeep: '{build-days-to-keep}'
+        numToKeep: '{build-num-to-keep}'
+        artifactDaysToKeep: '{build-artifact-days-to-keep}'
+        artifactNumToKeep: '{build-artifact-num-to-keep}'
+
+    parameters:
+        - project-parameter:
+            project: 'integration/distribution'
+        - integration-branch:
+            branch: '{branch}'
+        - integration-bundleurl:
+            bundleurl: 'last'
+
+    wrappers:
+        - build-timeout
+        - ssh-agent-credentials:
+            users:
+                - '{ssh-credentials}'
+
+    triggers:
+        - timed: 'H H * * *'
+
+    builders:
+        - integration-get-bundle-vars
+        - inject:
+            properties-file: 'bundle_vars.txt'
+        - integration-deploy-controller-offline
+
+    publishers:
+        - archive:
+            artifacts: 'karaf.log'
+        - email-notification:
+            email-prefix: '[integration]'
 

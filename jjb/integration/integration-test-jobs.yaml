@@ -4,7 +4,6 @@
     jobs:
         - 'integration-verify-python'
         - 'integration-csit-verify-1node-library'
-        - 'integration-distribution-offline-{stream}'
         - 'integration-distribution-test-{stream}'
         - 'integration-patch-test-{stream}'
         - 'integration-multipatch-test-{stream}'
@@ -125,14 +124,6 @@
                 vtn-csit-1node-imds-manager-all-{stream}
 
     jdk: 'openjdk7'
-
-    # Trigger jobs (upstream dependencies)
-    trigger-jobs: >
-        odlparent-distribution-{stream},
-        yangtools-distribution-{stream},
-        controller-distribution-{stream},
-        aaa-distribution-{stream},
-        integration-distribution-merge-{stream}
 
 # Template: integration-verify-python
 # Goal: Verify python scripts correct syntax
@@ -264,54 +255,6 @@
         - integration-robot:
             unstable-if: 0.0
             pass-if: 0.0
-        - archive:
-            artifacts: 'karaf.log'
-        - email-notification:
-            email-prefix: '[integration]'
-
-# Template: integration-distribution-offline-{stream}
-# Goal: Verify distribution can start with no internet connection
-# Operation: This job deployes the controller removing any external repository definition
-# whenever there is a change in a kernel project (odlparent, controller, yangtools, etc...)
-
-- job-template:
-    name: 'integration-distribution-offline-{stream}'
-
-    project-type: freestyle
-    node: dynamic_controller
-
-    logrotate:
-        daysToKeep: '{build-days-to-keep}'
-        numToKeep: '{build-num-to-keep}'
-        artifactDaysToKeep: '{build-artifact-days-to-keep}'
-        artifactNumToKeep: '{build-artifact-num-to-keep}'
-
-    parameters:
-        - project-parameter:
-            project: 'integration/distribution'
-        - integration-branch:
-            branch: '{branch}'
-        - integration-bundleurl:
-            bundleurl: 'last'
-
-    wrappers:
-        - build-timeout
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
-
-    triggers:
-        - reverse:
-            jobs: '{trigger-jobs}'
-            result: 'success'
-
-    builders:
-        - integration-get-bundle-vars
-        - inject:
-            properties-file: 'bundle_vars.txt'
-        - integration-deploy-controller-offline
-
-    publishers:
         - archive:
             artifacts: 'karaf.log'
         - email-notification:
