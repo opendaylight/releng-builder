@@ -1,6 +1,9 @@
 CONTROLLERMEM="3072m"
 ACTUALFEATURES="odl-integration-all"
 
+echo "Cleaning workspace"
+rm -rf *
+
 echo "Downloading the distribution..."
 wget --no-verbose  ${ACTUALBUNDLEURL}
 
@@ -25,7 +28,7 @@ cat ${REPOCONF}
 
 echo "Configure max memory..."
 MEMCONF=${WORKSPACE}/${BUNDLEFOLDER}/bin/setenv
-sed -ie 's/JAVA_MAX_MEM="2048m"/JAVA_MAX_MEM="${CONTROLLERMEM}"/g' ${MEMCONF}
+sed -ie "s/2048m/${CONTROLLERMEM}/g" ${MEMCONF}
 cat ${MEMCONF}
 
 echo "Starting controller..."
