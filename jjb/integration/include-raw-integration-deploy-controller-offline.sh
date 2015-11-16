@@ -40,7 +40,7 @@ ${WORKSPACE}/${BUNDLEFOLDER}/bin/start
 echo "sleeping for 10 seconds..."
 sleep 10
 
-echo "Check OSGi bundles..."
+echo "Install all features"
 sshpass -p karaf ${WORKSPACE}/${BUNDLEFOLDER}/bin/client -u karaf "feature:install ${ACTUALFEATURES}" || echo $? > ${WORKSPACE}/error.txt
 
 echo "Fetching Karaf log"
@@ -50,7 +50,7 @@ echo "Kill controller"
 ps axf | grep karaf | grep -v grep | awk '{print "kill -9 " $1}' | sh
 
 echo "Exit with error"
-if [ `cat error.txt` -ne 0 ]; then
+if [ -f ${WORKSPACE}/error.txt ]; then
     echo "Failed to deploy offline"
     exit 1
 fi
