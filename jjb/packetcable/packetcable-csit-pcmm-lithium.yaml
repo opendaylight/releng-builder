@@ -1,5 +1,5 @@
 - project:
-    name: packetcable-csit-pcmm
+    name: packetcable-csit-pcmm-stable-lithium
     jobs:
         - '{project}-csit-1node-{functionality}-{install}-{stream}'
         - '{project}-csit-verify-1node-{functionality}-{stream}'
@@ -12,8 +12,8 @@
 
     # Project branches
     stream:
-        - beryllium:
-            branch: 'master'
+        - stable-lithium:
+            branch: 'stable/lithium'
 
     install:
         - only:
@@ -25,7 +25,7 @@
     install-features: 'odl-packetcable-policy-server'
 
     # Robot custom options
-    robot-options: ''
+    robot-options: '-v ODL_VERSION:lithium'
 
     # Trigger jobs (upstream dependencies)
     trigger-jobs: >
