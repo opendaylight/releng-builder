@@ -1,0 +1,36 @@
+- project:
+    name: dlux-csit-core
+    jobs:
+        - '{project}-csit-1node-{functionality}-{install}-{stream}'
+        - '{project}-csit-verify-1node-{functionality}'
+
+    # The project name
+    project: 'dlux'
+
+    # The functionality under test
+    functionality: 'core'
+
+    # Project branches
+    stream:
+        - beryllium:
+            branch: 'master'
+        - stable-lithium:
+            branch: 'stable/lithium'
+
+    install:
+        - only:
+            scope: 'only'
+        - all:
+            scope: 'all'
+
+    # Features to install
+    install-features: 'odl-dlux-core'
+
+    # Robot custom options
+    robot-options: ''
+
+    # Trigger jobs (upstream dependencies)
+    trigger-jobs: >
+        l2switch-distribution-{stream},
+        aaa-distribution-{stream},
+        dlux-distribution-{stream}
