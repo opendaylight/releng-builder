@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7aade967_ef54d8cb",
+        "filename": "src/site/markdown/jenkins.markdown",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2015-11-19T15:54:12Z",
+      "side": 1,
+      "message": "The same text is rendered as a clickable link. The only difference is that the link is extracted and referenced indirectly.",
+      "parentUuid": "7ac40928_ce402338",
+      "range": {
+        "startLine": 47,
+        "startChar": 43,
+        "endLine": 47,
+        "endChar": 69
+      },
+      "revId": "e52e6ecf6f4add9b2c63cd3015d8338457114554",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ac40928_ae19177b",
         "filename": "src/site/markdown/jenkins.markdown",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2015-11-06T12:37:42Z",
       "side": 1,
       "message": "Needed, but not in such complicated form. /TLDR\n\nI did some re-checking. The simplest installation (just after activating fresh virtualenv) that works for me is:\npip install --upgrade pip\npip install jenkins-job-builder\u003d\u003d1.2.0\n\nAfter that, Sandbox job creation works and \"pip freeze\" prints:\njenkins-job-builder\u003d\u003d1.2.0\nmulti-key-dict\u003d\u003d2.0.3\nordereddict\u003d\u003d1.1\npbr\u003d\u003d0.11.0\npython-jenkins\u003d\u003d0.4.11\nPyYAML\u003d\u003d3.11\nsix\u003d\u003d1.10.0\nwheel\u003d\u003d0.24.0\n\nIf I drop \"\u003d\u003d1.2.0\" it behaves the same as with \"\u003d\u003d1.3.0\", pip freeze prints:\njenkins-job-builder\u003d\u003d1.3.0\nmulti-key-dict\u003d\u003d2.0.3\nordereddict\u003d\u003d1.1\npbr\u003d\u003d1.8.1\npython-jenkins\u003d\u003d0.4.11\nPyYAML\u003d\u003d3.11\nsix\u003d\u003d1.10.0\nwheel\u003d\u003d0.24.0\n\n(note different \"pbr\" version) and Sandbox job creation fails like this:\nINFO:jenkins_jobs.builder:Number of jobs generated:  1\nTraceback (most recent call last):\n  File \"/home/vrpolak/tmp/.virtualenvs/jjb/bin/jenkins-jobs\", line 11, in \u003cmodule\u003e\n    sys.exit(main())\n  File \"/home/vrpolak/tmp/.virtualenvs/jjb/local/lib/python2.7/site-packages/jenkins_jobs/cmd.py\", line 172, in main\n    execute(options, config)\n  File \"/home/vrpolak/tmp/.virtualenvs/jjb/local/lib/python2.7/site-packages/jenkins_jobs/cmd.py\", line 314, in execute\n    options.names)\n  File \"/home/vrpolak/tmp/.virtualenvs/jjb/local/lib/python2.7/site-packages/jenkins_jobs/builder.py\", line 326, in update_job\n    if (self.jenkins.is_job(job.name)\n  File \"/home/vrpolak/tmp/.virtualenvs/jjb/local/lib/python2.7/site-packages/jenkins_jobs/builder.py\", line 132, in is_job\n    if job_name in self.job_list:\n  File \"/home/vrpolak/tmp/.virtualenvs/jjb/local/lib/python2.7/site-packages/jenkins_jobs/builder.py\", line 119, in job_list\n    self._job_list \u003d set(job[\u0027name\u0027] for job in self.jobs)\n  File \"/home/vrpolak/tmp/.virtualenvs/jjb/local/lib/python2.7/site-packages/jenkins_jobs/builder.py\", line 112, in jobs\n    self._jobs \u003d self.jenkins.get_jobs()\n  File \"/home/vrpolak/tmp/.virtualenvs/jjb/local/lib/python2.7/site-packages/jenkins/__init__.py\", line 625, in get_jobs\n    return self.get_all_jobs(folder_depth\u003dfolder_depth)\n  File \"/home/vrpolak/tmp/.virtualenvs/jjb/local/lib/python2.7/site-packages/jenkins/__init__.py\", line 674, in get_all_jobs\n    jobs \u003d [(0, \"\", self.get_info(query\u003dJOBS_QUERY)[\u0027jobs\u0027])]\n  File \"/home/vrpolak/tmp/.virtualenvs/jjb/local/lib/python2.7/site-packages/jenkins/__init__.py\", line 461, in get_info\n    Request(self._build_url(url))\n  File \"/home/vrpolak/tmp/.virtualenvs/jjb/local/lib/python2.7/site-packages/jenkins/__init__.py\", line 361, in jenkins_open\n    raise NotFoundException(\u0027Requested item could not be found\u0027)\njenkins.NotFoundException: Requested item could not be found\nINFO:jenkins_jobs.builder:Cache saved",
+      "range": {
+        "startLine": 363,
+        "startChar": 6,
+        "endLine": 363,
+        "endChar": 27
+      },
+      "revId": "e52e6ecf6f4add9b2c63cd3015d8338457114554",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_2f72f07c",
+        "filename": "src/site/markdown/jenkins.markdown",
+        "patchSetId": 3
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2015-11-19T15:54:12Z",
+      "side": 1,
+      "message": "I\u0027m seeing the failure you described with jenkins-jobs\u003d\u003d1.3.0 and not 1.2.0. I guess we should recommend 1.2.0 via pip, not building 1.3.0.",
+      "parentUuid": "7ac40928_ae19177b",
       "range": {
         "startLine": 363,
         "startChar": 6,
