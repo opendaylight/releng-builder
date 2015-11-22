@@ -360,13 +360,10 @@
         - inject:
             properties-file: 'bundle.txt'
         - wipe-org-opendaylight-repo
-        - provide-maven-settings:
-            global-settings-file: '{odl-global-settings}'
-            settings-file: '{yangtools-settings}'
         - maven-target:
             maven-version: '{mvn33}'
             pom: '$GERRIT_PROJECT/pom.xml'
-            goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r source:jar javadoc:jar'
+            goals: 'clean install -DskipTests -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r source:jar javadoc:jar'
             java-opts:
                 - '-Xmx4096m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
             settings: '{integration-settings}'
@@ -391,7 +388,7 @@
 
     publishers:
         - email-notification:
-            email-prefix: '[integration]'
+            email-prefix: '[$GERRIT_PROJECT]'
 
 # Template: integration-multipatch-test-{stream}
 # Goal: Build one or more patches and run all available system test on a distribution containing the change
