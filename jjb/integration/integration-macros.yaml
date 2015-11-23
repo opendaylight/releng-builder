@@ -209,7 +209,7 @@
         - shell:
             !include-raw include-raw-integration-deploy-controller-offline.sh
 
-# Macro: integration-deply-controller-run-test
+# Macro: integration-deploy-controller-run-test
 # Operation: this macro deploys single contoller and runs test
 # Used by: {project}-csit-1node-* job templates
 
@@ -298,6 +298,16 @@
     builders:
         - shell:
             !include-raw include-raw-integration-multipatch-distribution-test.sh
+
+# Macro: integration-create-merge-pom
+# Operation: Creates pom file for merge jobs
+# Used by: {project}-merge-* job templates
+
+- builder:
+    name: integration-create-merge-pom
+    builders:
+        - shell:
+            !include-raw include-raw-integration-create-merge-pom.sh
 
 ##############
 # Publishers #
