@@ -25,7 +25,7 @@
             jdks:
                 - openjdk7
                 - openjdk8
-            autorelease: False
+            disable_autorelease: True
 
     project: 'ofextensions/circuitsw'
 
@@ -519,7 +519,7 @@
 
 - job-template:
     name: 'circuitsw-validate-autorelease-{stream}'
-    disabled: '{autorelease}'
+    disabled: '{obj:disable_autorelease}'
 
     project-type: maven
     node: dynamic_verify

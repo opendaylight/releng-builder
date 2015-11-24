@@ -85,9 +85,11 @@ for stream, options in streams.items():
         str_streams += "                - %s\n" % jdk.strip()
 
     # Disable autorelease validate job unless project is participating
-    # in autorelease
-    str_streams += "            autorelease: %s\n" % options.get(
-        "autorelease", False)
+    # in autorelease, JJB does not allow flipping a boolean so we have to
+    # flip it here via not operator since the JJB configuration for disabling
+    # a Jenkins Job is "disabled: bool".
+    str_streams += "            disable_autorelease: %s\n" % (not options.get(
+        "autorelease", False))
 
 ###############
 # Handle JDKS #

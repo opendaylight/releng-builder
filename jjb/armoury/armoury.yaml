@@ -25,7 +25,7 @@
             jdks:
                 - openjdk8
                 - openjdk7
-            autorelease: False
+            disable_autorelease: True
 
     project: 'armoury'
 
@@ -519,7 +519,7 @@
 
 - job-template:
     name: 'armoury-validate-autorelease-{stream}'
-    disabled: '{autorelease}'
+    disabled: '{obj:disable_autorelease}'
 
     project-type: maven
     node: dynamic_verify

@@ -24,7 +24,7 @@
             jdk: openjdk7
             jdks:
                 - openjdk7
-            autorelease: False
+            disable_autorelease: True
 
     project: 'toolkit'
 
@@ -518,7 +518,7 @@
 
 - job-template:
     name: 'toolkit-validate-autorelease-{stream}'
-    disabled: '{autorelease}'
+    disabled: '{obj:disable_autorelease}'
 
     project-type: maven
     node: dynamic_verify

@@ -24,19 +24,19 @@
             jdk: openjdk7
             jdks:
                 - openjdk7
-            autorelease: False
+            disable_autorelease: True
         - stable-lithium:
             branch: 'stable/lithium'
             jdk: openjdk7
             jdks:
                 - openjdk7
-            autorelease: False
+            disable_autorelease: True
         - stable-helium:
             branch: 'stable/helium'
             jdk: openjdk7
             jdks:
                 - openjdk7
-            autorelease: False
+            disable_autorelease: True
 
     project: 'defense4all'
 
@@ -530,7 +530,7 @@
 
 - job-template:
     name: 'defense4all-validate-autorelease-{stream}'
-    disabled: '{autorelease}'
+    disabled: '{obj:disable_autorelease}'
 
     project-type: maven
     node: dynamic_verify

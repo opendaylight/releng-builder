@@ -24,14 +24,14 @@
             jdk: openjdk8
             jdks:
                 - openjdk8
-            autorelease: False
+            disable_autorelease: True
         - stable-lithium:
             branch: 'stable/lithium'
             jdk: openjdk7
             jdks:
                 - openjdk7
                 - openjdk8
-            autorelease: False
+            disable_autorelease: True
 
     project: 'neutron'
 
@@ -525,7 +525,7 @@
 
 - job-template:
     name: 'neutron-validate-autorelease-{stream}'
-    disabled: '{autorelease}'
+    disabled: '{obj:disable_autorelease}'
 
     project-type: maven
     node: dynamic_verify
