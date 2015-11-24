@@ -16,11 +16,31 @@
 # Clear workspace
 rm -rf *
 
+# Create python script to parse json
+cat > ${WORKSPACE}/parse_json.py << EOF
+import json
+import sys
+
+obj=json.load(sys.stdin)
+for key in obj.keys():
+    print(key)
+
+EOF
+
 # Clone all ODL projects
-for p in `ssh -p 29418 git.opendaylight.org gerrit ls-projects`
+curl -s --header "Accept: application/json" \
+    https://git.opendaylight.org/gerrit/projects/ | \
+    tail -n +2 > ${WORKSPACE}/projects.json
+for p in `cat ${WORKSPACE}/projects.json | python ${WORKSPACE}/parse_json.py`
 do
-  mkdir -p `dirname "$p"`
-  git clone "https://git.opendaylight.org/gerrit/$p.git" "$p"
+    if [ "$p" == "All-Users" ] || \
+       [ "$p" == "integration" ] || \
+       [ "$p" == "net-virt-platform" ]
+    then
+        continue
+    fi
+    mkdir -p `dirname "$p"`
+    git clone "https://git.opendaylight.org/gerrit/$p.git" "$p"
 done
 
 # Check pom.xml for <repositories> and <pluginRepositories>
