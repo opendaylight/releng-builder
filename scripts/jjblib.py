@@ -28,10 +28,6 @@ def parse_jjb_args():
                         help="Comma-seperated list of patterns of artifacts "
                              "to archive on build completion. "
                              "See: http://ant.apache.org/manual/Types/fileset.html")  # noqa
-    parser.add_argument("-r", "--autorelease", action="store_true",
-                        help="Enable the validate-autorelease job, you "
-                             "should enable this if your project is part of "
-                             "the simultanious release.")
     return parser.parse_args()
 
 
@@ -68,9 +64,6 @@ def create_template_config(project_dir, args):
 
     if args.archive_artifacts:
         cfg_data["ARCHIVE"] = args.archive_artifacts
-
-    if args.autorelease:
-        cfg_data["AUTORELEASE"] = args.autorelease
 
     if cfg_data:
         # Create project directory if it doesn't exist

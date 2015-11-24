@@ -474,10 +474,6 @@ jjb/\<project\>/\<project\>.yaml containing your project's base template.
     #                             See: http://ant.apache.org/manual/Types/fileset.html
     #
     #          Example      : *.log,*.patches
-    #
-    # -r / --autorelease    : Switch to enable the project-validate-autorelease
-    #                         job. Projects that are part of the simultanious
-    #                         release need to have this enabled.
 
 If all your project requires is the basic verify, merge, and
 daily jobs then using the job template should be all you need to
@@ -509,21 +505,28 @@ NOT want to tune simply remove the parameter or comment out the line with a
     JOB_TEMPLATES: verify,merge,sonar
     STREAMS:
     - beryllium:
+        branch: master
         jdks: openjdk7,openjdk8
-    - stable/lithium:
+        autorelease: true
+    - stable-lithium:
+        branch: stable/lithium
         jdks: openjdk7
     POM: dfapp/pom.xml
     MVN_GOALS: clean install javadoc:aggregate -DrepoBuild -Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo
     MVN_OPTS: -Xmx1024m -XX:MaxPermSize=256m
     DEPENDENCIES: aaa,controller,yangtools
     ARCHIVE_ARTIFACTS: *.logs, *.patches
-    AUTORELEASE: true
 
 Note: BRANCHES is a list of branches you want JJB to generate jobs for, the
 first branch will be the branch that reports Sonar analysis. Each branch must
 additionally define a "jdks:" section listing the jdks the verify jobs should
 run tests against for the branch; additionally the first jdk listed will be
 used as the default jdk for non-verify type jobs.
+
+Note: Projects that are participating in the simultanious release should set
+"autorelease: true" under the streams they are participating in autorelease
+for. This enables a new job type validate-autorelease which is used to help
+identify if Gerrit patches might break autorelease or not.
 
 #### Advanced
 
