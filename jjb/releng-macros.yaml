@@ -48,6 +48,14 @@
             default: ''
             description: 'csv list of patches in project:changeset format to build distribution with'
 
+- parameter:
+    name: distribution-branch-to-build-parameter
+    parameters:
+        - string:
+            name: DISTRIBUTION_BRANCH_TO_BUILD
+            default: 'master'
+            description: 'distribution repo branch to build with'
+
 - scm:
     name: git-scm
     scm:

@@ -412,6 +412,8 @@
     parameters:
         - patches-to-build-parameter:
             patches_to_build: '$PATCHES_TO_BUILD'
+        - distribution-branch-to-build-parameter:
+            distribution_branch_to_build: '$DISTRIBUTION_BRANCH_TO_BUILD'
 
     wrappers:
         - build-timeout
