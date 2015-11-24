@@ -6,7 +6,7 @@
         - 'integration-csit-verify-1node-library'
         - 'integration-distribution-test-{stream}'
         - 'integration-patch-test-{stream}'
-        - 'integration-multipatch-test-{stream}'
+        - 'integration-multipatch-test'
 
     stream:
         - beryllium:
@@ -397,7 +397,7 @@
 # CSIT jobs
 
 - job-template:
-    name: 'integration-multipatch-test-{stream}'
+    name: 'integration-multipatch-test'
 
     project-type: maven
     node: dynamic_verify
@@ -412,6 +412,8 @@
     parameters:
         - patches-to-build-parameter:
             patches_to_build: '$PATCHES_TO_BUILD'
+        - integration-branch:
+            branch: 'master'
 
     wrappers:
         - build-timeout

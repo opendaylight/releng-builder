@@ -1,6 +1,7 @@
 # create a fresh empty place to build this custom distribution
 BUILD_DIR=${WORKSPACE}/patch_tester
 POM_FILE=${WORKSPACE}/patch_tester/pom.xml
+DISTRIBUTION_BRANCH_TO_BUILD=$BRANCH  #renaming variable for clarity
 
 rm -rf $BUILD_DIR
 mkdir -p $BUILD_DIR
@@ -42,19 +43,23 @@ do
     git fetch https://git.opendaylight.org/gerrit/${PROJECT} refs/changes/${PATCH}
     git checkout FETCH_HEAD
     cd $BUILD_DIR
-
 done
-
-if [ "${distribution_status}" == "not_patched" ]; then
-    # clone distribution and add it as a module in root pom
-    git clone https://git.opendaylight.org/gerrit/p/integration/distribution
-    # TODO: Should we add support for non-master distribution branches?
-    echo "<module>distribution</module>" >> $POM_FILE
-fi
 
 # finish pom file
 echo "</modules>" >> $POM_FILE
 echo "</project>" >> $POM_FILE
+
+# if distribution was not cloned above, we still need to get it
+if [ "${distribution_status}" == "not_patched" ]; then
+    git clone https://git.opendaylight.org/gerrit/p/integration/distribution
+fi
+
+# by default we can stay in master branch or checkout something else here
+if [ "${DISTRIBUTION_BRANCH_TO_BUILD}" != "master" ]; then
+    cd distribution
+    git checkout ${DISTRIBUTION_BRANCH_TO_BUILD}
+fi
+
 
 # Extract the BUNDLEVERSION from the distribution pom.xml
 BUNDLEVERSION=`xpath $BUILD_DIR/distribution/pom.xml '/project/version/text()' 2> /dev/null`
