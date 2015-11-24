@@ -41,6 +41,12 @@ python setup.py install > /dev/null 2>&1
 ## Install netcat & docker-py
 yum install -y -q nc python-docker-py
 
+## DLUX dependencies
+# Note: The end goal will be to test with multiple browser (Firefox, Chrome)
+#       Chrome need a other library named chromedriver so let start with
+#       one already supported with selenium.
+yum install -y -q firefox
+
 # make sure the firewall is stopped
 service iptables stop
 
