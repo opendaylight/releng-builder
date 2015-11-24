@@ -59,9 +59,7 @@ if cfg.get("JOB_TEMPLATES"):
 else:
     templates = "verify,merge,daily,distribution,integration,sonar"
 templates += ",clm"  # ensure we always create a clm job for all projects
-
-if cfg.get("AUTORELEASE"):
-    templates += ",validate-autorelease"
+templates += ",validate-autorelease"  # Autorelease validate template
 
 ##################
 # Handle Streams #
@@ -85,6 +83,9 @@ for stream, options in streams.items():
     str_streams += "            jdks:\n"
     for jdk in options["jdks"].split(","):
         str_streams += "                - %s\n" % jdk.strip()
+
+    # Disable autorelease validate job unless project is participating in autorelease
+    str_streams += "            autorelease: %s\n" % options.get("autorelease", False)
 
 ###############
 # Handle JDKS #

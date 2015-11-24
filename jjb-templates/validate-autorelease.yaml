@@ -1,5 +1,6 @@
 - job-template:
     name: 'PROJECT_SHORTNAME-validate-autorelease-{stream}'
+    disabled: '{autorelease}'
 
     project-type: maven
     node: dynamic_verify
