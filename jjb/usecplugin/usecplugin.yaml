@@ -25,6 +25,7 @@
             jdks:
                 - openjdk7
                 - openjdk8
+            autorelease: True
 
     project: 'usecplugin'
 
@@ -518,6 +519,7 @@
 
 - job-template:
     name: 'usecplugin-validate-autorelease-{stream}'
+    disabled: '{autorelease}'
 
     project-type: maven
     node: dynamic_verify

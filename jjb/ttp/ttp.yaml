@@ -25,16 +25,19 @@
             jdks:
                 - openjdk7
                 - openjdk8
+            autorelease: True
         - stable-lithium:
             branch: 'stable/lithium'
             jdk: openjdk7
             jdks:
                 - openjdk7
+            autorelease: False
         - stable-helium:
             branch: 'stable/helium'
             jdk: openjdk7
             jdks:
                 - openjdk7
+            autorelease: False
 
     project: 'ttp'
 
@@ -528,6 +531,7 @@
 
 - job-template:
     name: 'ttp-validate-autorelease-{stream}'
+    disabled: '{autorelease}'
 
     project-type: maven
     node: dynamic_verify

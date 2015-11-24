@@ -25,12 +25,14 @@
             jdks:
                 - openjdk7
                 - openjdk8
+            autorelease: True
         - stable-lithium:
             branch: 'stable/lithium'
             jdk: openjdk8
             jdks:
                 - openjdk8
                 - openjdk7
+            autorelease: False
 
     project: 'usc'
 
@@ -524,6 +526,7 @@
 
 - job-template:
     name: 'usc-validate-autorelease-{stream}'
+    disabled: '{autorelease}'
 
     project-type: maven
     node: dynamic_verify
