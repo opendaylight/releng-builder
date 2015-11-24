@@ -390,7 +390,7 @@
 
     triggers:
         - reverse:
-            jobs: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream},tcpmd5-merge-{stream}'
+            jobs: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream},mdsal-merge-{stream},tcpmd5-merge-{stream}'
             result: 'success'
 
     prebuilders:
@@ -413,7 +413,7 @@
 
     publishers:
         - email-notification:
-            email-prefix: '[bgpcep] [odlparent] [yangtools] [controller] [tcpmd5]'
+            email-prefix: '[bgpcep] [odlparent] [yangtools] [controller] [mdsal] [tcpmd5]'
         - jacoco-report
 
 - job-template:
