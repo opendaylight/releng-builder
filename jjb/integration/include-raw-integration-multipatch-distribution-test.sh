@@ -41,12 +41,17 @@ do
 
 done
 
-# clone distribution and add it as a module in root pom
-git clone https://git.opendaylight.org/gerrit/p/integration/distribution
-
 echo "<module>distribution</module>" >> $POM_FILE
 echo "</modules>" >> $POM_FILE
 echo "</project>" >> $POM_FILE
+
+# clone distribution and add it as a module in root pom
+git clone https://git.opendaylight.org/gerrit/p/integration/distribution
+
+if [ "${DISTRIBUTION_BRANCH_TO_BUILD}" != "master" ]; then
+    cd distribution
+    git checkout ${DISTRIBUTION_BRANCH_TO_BUILD}
+fi
 
 # Extract the BUNDLEVERSION from the distribution pom.xml
 BUNDLEVERSION=`xpath $BUILD_DIR/distribution/pom.xml '/project/version/text()' 2> /dev/null`
