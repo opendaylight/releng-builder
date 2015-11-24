@@ -24,10 +24,20 @@
             scope: 'all'
 
     # Features to install
+    # *-all is for Lithium and Beryllium, without -all is for Lithium and Boron.
     install-features: 'odl-restconf,odl-bgpcep-pcep-all,odl-bgpcep-bgp-all,odl-bgpcep-bgp,odl-bgpcep-pcep,odl-netconf-connector-all'
 
     # Robot custom options
     robot-options: ''
 
     # Trigger jobs (upstream dependencies)
-    trigger-jobs: 'odlparent-distribution-{stream},yangtools-distribution-{stream},controller-distribution-{stream},tcpmd5-distribution-{stream},bgpcep-distribution-{stream}'
+    # Netconf is there for run-time re-configuration.
+    # AAA could also be a dependency, but probability of breakage is too low to trigger everytime.
+    trigger-jobs: >
+        odlparent-distribution-{stream},
+        yangtools-distribution-{stream},
+        controller-distribution-{stream},
+        mdsal-distribution-{stream},
+        netconf-distribution-{stream},
+        tcpmd5-distribution-{stream},
+        bgpcep-distribution-{stream}
