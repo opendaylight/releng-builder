@@ -436,7 +436,7 @@
         post-step-run-condition: 'SUCCESS'
 
     postbuilders:
-        - trigger-builds:
+        -  trigger-builds:
             - project: 'integration-distribution-test-{stream}'
               block: true
               predefined-parameters:
