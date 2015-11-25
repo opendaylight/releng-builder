@@ -26,7 +26,7 @@ while true; do
     elif (( "\$COUNT" > "600" )); then
         echo Timeout Controller DOWN
         echo "Dumping Karaf log..."
-        cat /tmp/${BUNDLEFOLDER}/data/log/karaf.log
+        head --bytes=1M "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
         echo "Listing all open ports on controller system"
         netstat -natu
         exit 1
@@ -40,15 +40,15 @@ done
 echo "Checking OSGi bundles..."
 sshpass -p karaf /tmp/${BUNDLEFOLDER}/bin/client -u karaf 'bundle:list'
 
-echo "Listing all open ports on controller system"
+echo "Listing all open ports on controller system.."
 netstat -natu
 
 function exit_on_log_file_message {
     echo "looking for \"\$1\" in log file"
-    if grep --quiet "\$1" /tmp/${BUNDLEFOLDER}/data/log/karaf.log; then
+    if grep --quiet "\$1" "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"; then
         echo ABORTING: found "\$1"
         echo "Dumping Karaf log..."
-        cat /tmp/${BUNDLEFOLDER}/data/log/karaf.log
+        head --bytes=1M "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
         exit 1
     fi
 }
@@ -97,14 +97,13 @@ TOOLS_SYSTEM_IP:${TOOLS_SYSTEM_IP} ${tools_variables} -v NUM_TOOLS_SYSTEM:${NUM_
 -v MININET:${TOOLS_SYSTEM_IP} -v MININET1:${TOOLS_SYSTEM_2_IP} -v MININET2:${TOOLS_SYSTEM_3_IP} -v MININET_USER:${USER} \
 -v USER_HOME:${HOME} ${TESTOPTIONS} ${SUITES} || true
 
-echo "Remove any Karaf log"
-rm -f controller?-karaf.log
-
-echo "Fetching Karaf log"
+echo "Compressing and fetching Karaf log..."
 for i in `seq 1 ${NUM_ODL_SYSTEM}`
 do
     CONTROLLERIP=ODL_SYSTEM_${i}_IP
-    scp ${!CONTROLLERIP}:/tmp/$BUNDLEFOLDER/data/log/karaf.log controller${i}-karaf.log
+    ssh "${!CONTROLLERIP}" xz -9ekvv "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
+    scp "${!CONTROLLERIP}:/tmp/${BUNDLEFOLDER}/data/log/karaf.log.xz" "odl${i}_karaf.log.xz"
+    ssh "${!CONTROLLERIP}" head --bytes=1M "/tmp/${BUNDLEFOLDER}/data/log/karaf.log" > "odl${i}_karaf.log"
 done
 
 # vim: ts=4 sw=4 sts=4 et ft=sh :
