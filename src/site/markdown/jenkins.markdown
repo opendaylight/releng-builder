@@ -397,7 +397,7 @@ under the **DEPENDENCIES** variable.
 
 If no dependencies are listed then this job type is disabled by default.
 
-### Patch Test Job
+### <a name="patch_test_job">Patch Test Job</a>
 
 Trigger: **test-integration**
 
