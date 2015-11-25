@@ -80,6 +80,7 @@
             pattern: 'csit/suites/{project}/**'
 
     builders:
+        - integration-cleanup-workspace
         - integration-install-robotframework
         - inject:
             properties-file: 'env.properties'
@@ -97,7 +98,7 @@
             unstable-if: 0.0
             pass-if: 0.0
         - archive:
-            artifacts: 'karaf.log'
+            artifacts: 'karaf.log*'
         - email-notification:
             email-prefix: '[{project}]'
 
@@ -155,6 +156,7 @@
             result: 'success'
 
     builders:
+        - integration-cleanup-workspace
         - integration-install-robotframework
         - inject:
             properties-file: 'env.properties'
@@ -172,7 +174,7 @@
             unstable-if: 0.0
             pass-if: 100.0
         - archive:
-            artifacts: 'karaf.log'
+            artifacts: 'karaf.log*'
         - email-notification:
             email-prefix: '[{project}]'
         - plot:
@@ -258,6 +260,7 @@
             pattern: 'csit/suites/{project}/**'
 
     builders:
+        - integration-cleanup-workspace
         - integration-install-robotframework
         - inject:
             properties-file: 'env.properties'
@@ -275,7 +278,7 @@
             unstable-if: 0.0
             pass-if: 0.0
         - archive:
-            artifacts: 'karaf.log'
+            artifacts: 'karaf.log*'
         - email-notification:
             email-prefix: '[{project}]'
 
@@ -333,6 +336,7 @@
             result: 'success'
 
     builders:
+        - integration-cleanup-workspace
         - integration-install-robotframework
         - inject:
             properties-file: 'env.properties'
@@ -350,7 +354,7 @@
             unstable-if: 0.0
             pass-if: 100.0
         - archive:
-            artifacts: 'karaf.log'
+            artifacts: 'karaf.log*'
         - email-notification:
             email-prefix: '[{project}]'
         - plot:
@@ -430,6 +434,7 @@
         - timed: '{schedule}'
 
     builders:
+        - integration-cleanup-workspace
         - integration-install-robotframework
         - inject:
             properties-file: 'env.properties'
@@ -447,7 +452,7 @@
             unstable-if: 0.0
             pass-if: 100.0
         - archive:
-            artifacts: 'karaf.log'
+            artifacts: 'karaf.log*'
         - email-notification:
             email-prefix: '[{project}]'
         - plot:
@@ -529,6 +534,7 @@
             pattern: 'csit/suites/{project}/**'
 
     builders:
+        - integration-cleanup-workspace
         - integration-install-robotframework
         - inject:
             properties-file: 'env.properties'
@@ -548,7 +554,7 @@
             unstable-if: 0.0
             pass-if: 0.0
         - archive:
-            artifacts: '*karaf.log'
+            artifacts: '*karaf.log*'
         - email-notification:
             email-prefix: '[{project}]'
 
@@ -606,6 +612,7 @@
             result: 'success'
 
     builders:
+        - integration-cleanup-workspace
         - integration-install-robotframework
         - inject:
             properties-file: 'env.properties'
@@ -625,7 +632,7 @@
             unstable-if: 0.0
             pass-if: 100.0
         - archive:
-            artifacts: '*karaf.log'
+            artifacts: '*karaf.log*'
         - email-notification:
             email-prefix: '[{project}]'
         - plot:
@@ -705,6 +712,7 @@
         - timed: '{schedule}'
 
     builders:
+        - integration-cleanup-workspace
         - integration-install-robotframework
         - inject:
             properties-file: 'env.properties'
@@ -724,7 +732,7 @@
             unstable-if: 0.0
             pass-if: 100.0
         - archive:
-            artifacts: '*karaf.log'
+            artifacts: '*karaf.log*'
         - email-notification:
             email-prefix: '[{project}]'
         - plot:
