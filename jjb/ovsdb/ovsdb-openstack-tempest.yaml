@@ -1,0 +1,93 @@
+- project:
+    name: ovsdb-openstack-tempest
+    jobs:
+        - 'ovsdb-openstack-tempest-{openstack}-{odl}'
+
+    openstack:
+        - mitaka:
+            openstack-branch: 'master'
+        - liberty:
+            openstack-branch: 'stable/liberty'
+    # can add kilo if it's needed, but would result in two more hour long jobs
+
+    odl:
+        - beryllium:
+            odl-version: 'beryllium'
+        - lithium:
+            odl-version: 'lithium'
+
+- job-template:
+    name: 'ovsdb-openstack-tempest-{openstack}-{odl}'
+
+    project-type: freestyle
+    node: dynamic_robot
+
+    logrotate:
+        daysToKeep: '{build-days-to-keep}'
+        numToKeep: '{build-num-to-keep}'
+        artifactDaysToKeep: '{build-artifact-days-to-keep}'
+        artifactNumToKeep: '{build-num-to-keep}'
+
+    parameters:
+        - project-parameter:
+            project: 'integration/test'
+        - integration-patch-refspec:
+            branch: 'master'
+        - string:
+            name: OPENSTACK_BRANCH
+            default: '{openstack-branch}'
+            description: 'Openstack branch to use with devstack'
+        - string:
+            name: ODL_VERSION
+            default: '{odl-version}'
+            description: 'OpenDaylight version to use with devstack + networking_odl project'
+        - string:
+            name: TEMPEST_REGEX
+            default: 'tempest.api.network'
+            description: 'Default grouping of tempest tests to run'
+
+    scm:
+        - integration-gerrit-scm:
+            credentials-id: '{ssh-credentials}'
+            basedir: 'test'
+            refspec: '$PATCHREFSPEC'
+            branch: 'master'
+
+    wrappers:
+          - build-timeout
+          - jclouds:
+              instances:
+                - rk-c7-devstack:
+                    cloud-name: 'Rackspace DFW - Devstack'
+                    count: '1'
+                    stop-on-terminate: False
+          - ssh-agent-credentials:
+              users:
+                  - '{ssh-credentials}'
+
+    # Trigger jobs (daily)
+    schedule: 'H H * * *'
+
+    builders:
+        - integration-install-robotframework
+        - inject:
+            properties-file: 'env.properties'
+        - integration-get-slave-addresses
+        - inject:
+            properties-file: 'slave_addresses.txt'
+        - shell: 'pybot -v WORKSPACE:/tmp -v USER_HOME:$HOME -L TRACE -v DEVSTACK_SYSTEM_USER:$USER
+                        -v DEVSTACK_SYSTEM_IP:$ODL_SYSTEM_IP -v DEFAULT_LINUX_PROMPT:\]\>
+                        -v OPENSTACK_BRANCH:$OPENSTACK_BRANCH -v ODL_VERSION:$ODL_VERSION
+                        -v TEMPEST_REGEX:$TEMPEST_REGEX $WORKSPACE/test/csit/suites/ovsdb/Devstack_Tempest_Tests/
+                        || true'
+        - shell: 'scp $ODL_SYSTEM_IP:/opt/stack/logs/devstacklog.txt $WORKSPACE/'
+        - integration-cleanup-tmp
+
+    publishers:
+        - integration-robot:
+            unstable-if: 0.0
+            pass-if: 100.0
+        - archive:
+            artifacts: 'devstacklog.txt'
+        - email-notification:
+            email-prefix: '[ovsdb]'
