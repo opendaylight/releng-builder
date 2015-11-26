@@ -43,7 +43,9 @@ cat \${FEATURESCONF}
 
 echo "Configuring the log..."
 LOGCONF=/tmp/${BUNDLEFOLDER}/etc/org.ops4j.pax.logging.cfg
-sed -ie 's/log4j.appender.out.maxFileSize=1MB/log4j.appender.out.maxFileSize=20MB/g' \${LOGCONF}
+sed -ie 's/log4j.appender.out.maxBackupIndex=10/log4j.appender.out.maxBackupIndex=1/g' \${LOGCONF}
+# FIXME: Make log size limit configurable from build parameter.
+sed -ie 's/log4j.appender.out.maxFileSize=1MB/log4j.appender.out.maxFileSize=100GB/g' \${LOGCONF}
 cat \${LOGCONF}
 
 echo "Configure max memory..."
@@ -51,7 +53,7 @@ MEMCONF=/tmp/${BUNDLEFOLDER}/bin/setenv
 sed -ie 's/JAVA_MAX_MEM="2048m"/JAVA_MAX_MEM="${CONTROLLERMEM}"/g' \${MEMCONF}
 cat \${MEMCONF}
 
-echo "Listing all open ports on controller system"
+echo "Listing all open ports on controller system..."
 netstat -natu
 
 echo "Starting controller..."
@@ -68,7 +70,7 @@ while true; do
     elif (( "\$COUNT" > "600" )); then
         echo Timeout Controller DOWN
         echo "Dumping Karaf log..."
-        cat /tmp/${BUNDLEFOLDER}/data/log/karaf.log
+        head --bytes=1M "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
         echo "Listing all open ports on controller system"
         netstat -natu
         exit 1
@@ -85,7 +87,7 @@ sleep 60
 echo "Checking OSGi bundles..."
 sshpass -p karaf /tmp/${BUNDLEFOLDER}/bin/client -u karaf 'bundle:list'
 
-echo "Listing all open ports on controller system"
+echo "Listing all open ports on controller system..."
 netstat -natu
 
 function exit_on_log_file_message {
@@ -93,7 +95,7 @@ function exit_on_log_file_message {
     if grep --quiet "\$1" /tmp/${BUNDLEFOLDER}/data/log/karaf.log; then
         echo ABORTING: found "\$1"
         echo "Dumping Karaf log..."
-        cat /tmp/${BUNDLEFOLDER}/data/log/karaf.log
+        head --bytes=1M "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
         exit 1
     fi
 }
@@ -121,8 +123,11 @@ pybot -N ${TESTPLAN} -c critical -e exclude -v BUNDLEFOLDER:${BUNDLEFOLDER} -v W
 -v MININET:${TOOLS_SYSTEM_IP} -v MININET1:${TOOLS_SYSTEM_2_IP} -v MININET2:${TOOLS_SYSTEM_3_IP} -v MININET_USER:${USER} \
 -v USER_HOME:${HOME} ${TESTOPTIONS} ${SUITES} || true
 
-echo "Fetching Karaf log"
-scp ${ODL_SYSTEM_IP}:/tmp/${BUNDLEFOLDER}/data/log/karaf.log .
+echo "Killing ODL and fetching Karaf log..."
+ssh "${ODL_SYSTEM_IP}" head --bytes=1M "/tmp/${BUNDLEFOLDER}/data/log/karaf.log" > "karaf.log"
+ssh "${ODL_SYSTEM_IP}" bash -c 'ps axf | grep karaf | grep -v grep | awk '"'"'{print "kill -9 " $1}'"'"' | sh'
+ssh "${ODL_SYSTEM_IP}" xz -9ekvv "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
+scp "${ODL_SYSTEM_IP}:/tmp/${BUNDLEFOLDER}/data/log/karaf.log.xz" .
 
 # vim: ts=4 sw=4 sts=4 et ft=sh :
 

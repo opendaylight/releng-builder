@@ -20,7 +20,9 @@ cat ${FEATURESCONF}
 
 echo "Configuring the log..."
 LOGCONF=${WORKSPACE}/${BUNDLEFOLDER}/etc/org.ops4j.pax.logging.cfg
-sed -ie 's/log4j.appender.out.maxFileSize=1MB/log4j.appender.out.maxFileSize=20MB/g' ${LOGCONF}
+sed -ie 's/log4j.appender.out.maxBackupIndex=10/log4j.appender.out.maxBackupIndex=1/g' ${LOGCONF}
+# FIXME: Make log size limit configurable from build parameter.
+sed -ie 's/log4j.appender.out.maxFileSize=1MB/log4j.appender.out.maxFileSize=100GB/g' ${LOGCONF}
 cat ${LOGCONF}
 
 echo "Configure the repos..."
@@ -40,14 +42,15 @@ ${WORKSPACE}/${BUNDLEFOLDER}/bin/start
 echo "sleeping for 10 seconds..."
 sleep 10
 
-echo "Install all features"
+echo "Installing all features..."
 sshpass -p karaf ${WORKSPACE}/${BUNDLEFOLDER}/bin/client -u karaf "feature:install ${ACTUALFEATURES}" || echo $? > ${WORKSPACE}/error.txt
 
-echo "Fetching Karaf log"
-cp ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log .
-
-echo "Kill controller"
+echo "Killing ODL and fetching Karaf log..."
+head --bytes=1M "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log" > "karaf.log"
+# TODO: Do we want different name for karaf.log chunk to signal it may be not complete?
 ps axf | grep karaf | grep -v grep | awk '{print "kill -9 " $1}' | sh
+xz -9ekvv "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log"
+mv "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log.xz" .
 
 echo "Exit with error"
 if [ -f ${WORKSPACE}/error.txt ]; then
