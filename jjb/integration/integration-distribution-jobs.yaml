@@ -148,7 +148,7 @@
     name: 'integration-distribution-deploy-{stream}'
 
     project-type: freestyle
-    node: dynamic_controller
+    node: dynamic_verify
 
     logrotate:
         daysToKeep: '{build-days-to-keep}'
@@ -193,7 +193,7 @@
     name: 'integration-distribution-offline-{stream}'
 
     project-type: freestyle
-    node: dynamic_controller
+    node: dynamic_verify
 
     logrotate:
         daysToKeep: '{build-days-to-keep}'
@@ -325,4 +325,3 @@
     publishers:
         - email-notification:
             email-prefix: '[$GERRIT_PROJECT]'
-
