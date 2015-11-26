@@ -8,7 +8,7 @@ IFS=',' read -ra ADDR <<< "${JCLOUDS_IPS}"
 for i in "${ADDR[@]}"
 do
     REMHOST=`ssh ${i} hostname`
-    if [ `echo ${REMHOST} | grep java` ]; then
+    if [ `echo ${REMHOST} | grep 'java\|devstack'` ]; then
         ODL_SYSTEM=( "${ODL_SYSTEM[@]}" "${i}" )
     else
         TOOLS_SYSTEM=( "${TOOLS_SYSTEM[@]}" "${i}" )
