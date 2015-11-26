@@ -102,13 +102,16 @@
         - wipe-org-opendaylight-repo
         - shell:
             !include-raw-escape include-raw-setup-docker.sh
+        - inject:
+            properties-file: env.properties
         - maven-target:
             maven-version: '{mvn33}'
             pom: 'pom.xml'
-            goals: 'clean install verify -Pintegrationtest,jenkins -V'
+            goals: 'clean install verify -Pintegrationtest,jenkins -V -Dovsdb.controller.address=${{CONTROLLER_IP}}'
             properties:
                 - 'ovsdbserver.ipaddress=127.0.0.1'
                 - 'ovsdbserver.port=6641'
+                - 'ovsdb.userspace.enabled=yes'
                 - 'maven.repo.local=/tmp/r'
                 - 'org.ops4j.pax.url.mvn.localRepository=/tmp/r'
                 - 'stream={stream}'
@@ -116,8 +119,6 @@
                 - '-Xmx1024m -XX:MaxPermSize=256m'
             settings: '{ovsdb-settings}'
             global-settings: '{odl-global-settings}'
-        - inject:
-            properties-file: env.properties
         - shell:
             !include-raw-escape include-raw-cleanup-docker.sh
         - jacoco-nojava-workaround
