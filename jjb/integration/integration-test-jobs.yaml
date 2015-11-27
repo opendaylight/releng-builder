@@ -424,15 +424,18 @@
         - integration-multipatch-builder
         - inject:
             properties-file: 'bundle.txt'
+        - provide-maven-settings:
+            global-settings-file: '{odl-global-settings}'
+            settings-file: '{yangtools-settings}'
+
 
     maven:
         maven-name: '{mvn33}'
         root-pom: 'patch_tester/pom.xml'
         goals: 'clean install -f patch_tester/pom.xml -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
-        maven-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
-        settings: '{integration-settings}'
+        maven-opts: '-Xmx4096m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
+        settings: '{yangtools-settings}'
         global-settings: '{odl-global-settings}'
-        ignore-upstream-changes: true
         post-step-run-condition: 'SUCCESS'
 
     postbuilders:
