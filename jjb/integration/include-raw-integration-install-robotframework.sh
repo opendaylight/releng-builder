@@ -18,7 +18,7 @@ source ${ROBOT_VENV}/bin/activate
 pip install -q --upgrade pip
 pip --version
 pip install -q docker-py importlib requests scapy netifaces netaddr ipaddr
-pip install -q robotframework{,-{httplibrary,requests,sshlibrary}}
+pip install -q robotframework{,-{httplibrary,requests,sshlibrary,selenium2library}}
 # jsonpath is needed by current AAA idmlite suite
 pip install -q --allow-external jsonpath --allow-unverified jsonpath jsonpath
 
