@@ -319,6 +319,8 @@
             refspec: '$GERRIT_REFSPEC'
         - project-parameter:
             project: '$GERRIT_PROJECT'
+        - integration-branch:
+            branch: '{branch}'
         - integration-distribution-git-url
 
     scm:
@@ -356,6 +358,7 @@
                 notbuilt: true
 
     prebuilders:
+        - integration-rebase-gerrit-patch
         - integration-get-bundle-url
         - inject:
             properties-file: 'bundle.txt'
