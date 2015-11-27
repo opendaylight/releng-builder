@@ -299,6 +299,16 @@
         - shell:
             !include-raw include-raw-integration-multipatch-distribution-test.sh
 
+# Macro: integration-rebase-patch
+# Operation: For cloned project, rebase checked-out Gerrit patch onto $BRANCH.
+# Used by: integration-patch-distribution-* job template
+
+- builder:
+    name: integration-rebase-gerrit-patch
+    builders:
+        - shell:
+            !include-raw include-raw-integration-rebase-gerrit-patch.sh
+
 ##############
 # Publishers #
 ##############
