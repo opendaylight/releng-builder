@@ -239,6 +239,7 @@
             pattern: 'csit/libraries/*'
 
     builders:
+        - integration-cleanup-workspace
         - integration-install-robotframework
         - inject:
             properties-file: 'env.properties'
@@ -256,7 +257,7 @@
             unstable-if: 0.0
             pass-if: 0.0
         - archive:
-            artifacts: 'karaf.log'
+            artifacts: 'karaf.log*'
         - email-notification:
             email-prefix: '[integration]'
 
