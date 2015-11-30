@@ -1,0 +1,34 @@
+- project:
+    name: ovsdb-csit-clustering
+    jobs:
+        - '{project}-csit-3node-{functionality}-{install}-{stream}'
+        - '{project}-csit-verify-3node-{functionality}'
+   # The project name
+    project: 'ovsdb'
+
+    # The functionality under test
+    functionality: 'clustering'
+
+    # Project branches
+    stream:
+        - beryllium:
+            branch: 'master'
+        - stable-lithium:
+            branch: 'stable/lithium'
+
+    install:
+        - only:
+            scope: 'only'
+
+    # Mininet configuration
+    mininet-vms: 2
+
+    # Features to install
+    install-features: 'odl-ovsdb-openstack'
+
+    # Robot custom options
+    robot-options: ''
+
+    # Trigger jobs (upstream dependencies)
+    trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream},openflowjava-distribution-{stream},openflowplugin-distributio
+n-{stream},ovsdb-distribution-{stream}'
