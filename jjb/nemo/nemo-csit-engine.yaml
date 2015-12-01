@@ -1,0 +1,31 @@
+- project:
+    name: nemo-csit-engine
+    jobs:
+        - '{project}-csit-1node-{functionality}-{install}-{stream}'
+        - '{project}-csit-verify-1node-{functionality}'
+
+    # The project name
+    project: 'nemo'
+
+    # The functionality under test
+    functionality: 'engine'
+
+    # Project branches
+    stream:
+        - beryllium:
+            branch: 'master'
+
+    install:
+        - only:
+            scope: 'only'
+        - all:
+            scope: 'all'
+
+    # Features to install
+    install-features: 'odl-restconf,odl-mdsal-apidocs,odl-nemo-engine-ui'
+
+    # Robot custom options
+    robot-options: ''
+
+    # Trigger jobs (upstream dependencies)
+    trigger-jobs: 'odlparent-distribution-{stream},yangtools-distribution-{stream},controller-distribution-{stream},nemo-distribution-{stream}'
