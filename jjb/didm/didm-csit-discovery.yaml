@@ -1,0 +1,47 @@
+# REMOVE THIS LINE IF YOU WANT TO CUSTOMIZE ANYTHING BELOW
+# Otherwise this file will be automatically overwritten by the template
+# autobuilder.
+# ODL Releng build templates
+- project:
+    name: didm-csit-discovery
+    jobs:
+        - '{project}-csit-1node-{functionality}-{install}-{stream}'
+
+    # The project name
+    project: 'didm'
+
+    # The functionality under test
+    functionality: 'discovery'
+
+    # Project branches
+    stream:
+        - beryllium:
+            branch: 'master'
+            jdk: openjdk7
+            jdks:
+                - openjdk7
+                - openjdk8
+        - stable-lithium:
+            branch: 'stable/lithium'
+            jdk: openjdk7
+            jdks:
+                - openjdk7
+
+    install:
+        - only:
+            scope: 'only'
+        - all:
+            scope: 'all'
+
+    # Mininet configuration
+    mininet-image: 'rk-f21-mininet'
+    mininet-vms: 1
+
+    # Features to install
+    install-features: 'odl-didm-all'
+
+    # Robot custom options
+    robot-options: ''
+
+    # Trigger jobs (upstream dependencies)
+    trigger-jobs: 'didm-verify-{stream}' 
