@@ -1,0 +1,38 @@
+- project:
+    name: didm-csit-discovery
+    jobs:
+        - '{project}-csit-1node-{functionality}-{install}-{stream}'
+        - '{project}-csit-verify-1node-{functionality}'
+
+    # The project name
+    project: 'didm'
+
+    # The functionality under test
+    functionality: 'discovery'
+
+    # Project branches
+    stream:
+        - beryllium:
+            branch: 'master'
+        - stable-lithium:
+            branch: 'stable/lithium'
+
+    install:
+        - only:
+            scope: 'only'
+        - all:
+            scope: 'all'
+
+    # Mininet configuration
+    mininet-image: 'rk-f21-mininet'
+    mininet-vms: 1
+
+    # Features to install
+    install-features: 'odl-didm-all'
+
+    # Robot custom options
+    robot-options: ''
+
+    # Trigger jobs (upstream dependencies)
+    trigger-jobs: 'didm-verify-{stream}'
+    trigger-jobs: 'openflowplugin-csit-1node-{functionality}-{install}-{stream}'
