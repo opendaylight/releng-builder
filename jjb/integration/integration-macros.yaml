@@ -114,6 +114,8 @@
                     comment-contains-value: 'recheck'
                 - comment-added-contains-event:
                     comment-contains-value: 'reverify'
+            override-votes: true
+            gerrit-build-unstable-verified-value: +1
             projects:
               - project-compare-type: 'ANT'
                 project-pattern: '{name}'
