@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_166ddc32",
+        "filename": "jjb/didm/didm-csit-discovery.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2015-12-01T23:09:33Z",
+      "side": 1,
+      "message": "The above comment does not apply to this template and should be removed as it\u0027s misleading.",
+      "revId": "8590aa1bfdc12fda1ef7fdbc9963b85fe2a21719",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_f64a80ab",
+        "filename": "jjb/didm/didm-csit-discovery.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2015-12-01T23:09:33Z",
+      "side": 1,
+      "message": "Based on An\u0027s patch for Nemo [1] you probably need to also list another job template for:\n\n    - \u0027{project}-csit-verify-1node-{functionality}\u0027\n\n[1] https://git.opendaylight.org/gerrit/#/c/30451/1/jjb/nemo/nemo-csit-engine.yaml",
+      "revId": "8590aa1bfdc12fda1ef7fdbc9963b85fe2a21719",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_d6766406",
+        "filename": "jjb/didm/didm-csit-discovery.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2015-12-01T23:09:33Z",
+      "side": 1,
+      "message": "Based on An\u0027s patch for Nemo [1] I believe you do not need any of the jdk options.\n\nhttps://git.opendaylight.org/gerrit/#/c/30451/1/jjb/nemo/nemo-csit-engine.yaml",
+      "revId": "8590aa1bfdc12fda1ef7fdbc9963b85fe2a21719",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_f6736013",
+        "filename": "jjb/didm/didm-csit-discovery.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2015-12-01T23:09:33Z",
+      "side": 1,
+      "message": "Same comment as above, no need for jdk options.",
+      "range": {
+        "startLine": 28,
+        "startChar": 23,
+        "endLine": 28,
+        "endChar": 24
+      },
+      "revId": "8590aa1bfdc12fda1ef7fdbc9963b85fe2a21719",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_9660ec36",
+        "filename": "jjb/didm/didm-csit-discovery.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2015-12-01T23:09:33Z",
+      "side": 1,
+      "message": "Based on An\u0027s patch for Nemo looks like triggering jobs off of didm-verify-{stream} is not correct here. Looks like it should be triggered off of distribution jobs from projects that didm depends on. Linh do you know what projects DIDM have dependencies against?\n\nAlso please clean up the trailing whitespace.",
+      "revId": "8590aa1bfdc12fda1ef7fdbc9963b85fe2a21719",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
