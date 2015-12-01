@@ -4,7 +4,8 @@
 
 echo "---> Updating operating system"
 apt-get update -qq
-apt-get upgrade -y --force-yes -qq
+DEBIAN_FRONTEND=noninteractive apt-get upgrade -y --force-yes -qq \
+    -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold"
 
 # we need garethr-docker in our puppet manifest to install docker
 # cleanly
