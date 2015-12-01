@@ -4,7 +4,8 @@
 
 echo "---> Updating operating system"
 apt-get update -qq
-apt-get upgrade -y --force-yes -qq
+DEBIAN_FRONTEND=noninteractive apt-get upgrade -y --force-yes -qq \
+    -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold"
 
 # To handle the prompt style that is expected all over the environment
 # with how use use robotframework we need to make sure that it is
