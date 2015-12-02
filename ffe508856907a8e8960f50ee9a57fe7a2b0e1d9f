@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "5aaae553_e79ba870",
+        "filename": "jjb/integration/integration-test-jobs.yaml",
+        "patchSetId": 20
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2015-12-02T15:15:44Z",
+      "side": 1,
+      "message": "The settings provided in the Maven settings only applies for that single build step. The \"provide-maven-settings\" step creates a variable which you can use to pass to mvn\u0027s -s and -gs parameters if you are running the \"mvn\" command directly and not through the Maven build step. for example if you ran the following in a bash script:\n\nmvn clean install -s ${SETTINGS_FILE} -gs ${GLOBAL_SETTINGS_FILE}\n\n\nYour project may or may not need it if you are running some mvn commands via bash script rather than via Maven build step in Jenkins.",
+      "parentUuid": "5aaae553_677338b2",
+      "revId": "ffe508856907a8e8960f50ee9a57fe7a2b0e1d9f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5aaae553_99d33d38",
         "filename": "jjb/integration/integration-test-jobs.yaml",
         "patchSetId": 20
