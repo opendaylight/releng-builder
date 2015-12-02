@@ -3,6 +3,9 @@
 yum clean all
 yum install -y python-virtualenv xmlstarlet
 
+# sshpass for the current deploy test to be runable immediatelly after build
+yum install -y sshpass
+
 # add in mono components for VTN
 yum install -y yum-utils
 #The following is needed for the new code in vtn project.
