@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5aaae553_27a0e08f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2015-12-02T15:32:08Z",
+      "side": 1,
+      "message": "A commit message is not a list of things you changed during patch review. A good commit message should describe the patch you are trying to get merged into the project. It helps the owners of the project to understand why something was changed and what the patch did. It\u0027s also useful for history if someone has to inspect the git log to identify what changed and why.\n\nA better commit message for this patch should remove the above 2 lines and instead replace it with something along the lines of:\n\n \"Add CSIT job for DIDM discovery test\"\n\nThis would be sufficient to describe that you are adding a new test to test the discovery functionality in didm and would pass my code review.\n\nIf however you feel like further describing the discovery test itself you can create a description body after your first summery line. For example:\n\n  \"\"\"\n  Add CSIT job for DIDM discovery test\n\n\n  This csit test will test the discovery functionality in \n  didm, the discovery functionality covers tests that do \n  x, y and z. Here is a list of tests we will be testing:\n\n\n  - random numbers\n  - find network peers\n  - save peers\n  - etc....\n\n\n  Change-Id: I43f81c6896802258c5d77503278faaba2254a2b7\n  Signed-off-by: Linh \u003clinh.pham@hpe.com\u003e\n  \"\"\"\n\n\nThe first line of a commit message should always be a short \u003c72 character description of the change. Optionally if there is further details leave a blank line and then enter your full description (I just made up some text for the description above as an example since I don\u0027t know what kind of tests you are adding) of the patch change as listed above. Finally you\u0027ll notice the last paragraph in a commit message is what\u0027s called the commit message footer. This footer is for metadata related to the patch. You should always a minimum have the Change-Id which is used by Gerrit to identify which Gerrit review to associate a patch to in the case that you are updating an existing patchset and also your Signed-off-by line. Other metadata you might include might be \"Bug: 123\" for example if you have a bug number in bugzilla relating to this patch.\n\nHere\u0027s some examples of a short commit message as well as a long commit message that I have created in recent memory:\n\n https://git.opendaylight.org/gerrit/30469/\n https://git.opendaylight.org/gerrit/30466/\n https://git.opendaylight.org/gerrit/30467/\n\nHope this helps clarify things.",
+      "parentUuid": "5aaae553_d9c3f536",
+      "revId": "e5b9e2cf709c4c78e9f73f864212ea73756f8a86",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5aaae553_b9bf19d0",
         "filename": "jjb/didm/didm-csit-discovery.yaml",
         "patchSetId": 3
