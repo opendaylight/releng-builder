@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "5aaae553_677338b2",
+        "filename": "jjb/integration/integration-test-jobs.yaml",
+        "patchSetId": 20
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2015-12-02T14:20:15Z",
+      "side": 1,
+      "message": "I only have a vague idea of what it does, so here is observation instead. I have run build for yangtools; Sandbox job https://jenkins.opendaylight.org/sandbox/job/integration-multipatch-test-beryllium/\n#16 is without settings in maven section; red dot as parent.relativePath is not resolved\n#15 is this unmodified patch set; it works.\n#14 is without provide-maven-settings; almost works except one unit test.\nhttps://jenkins.opendaylight.org/sandbox/job/integration-multipatch-test-beryllium/14/org.opendaylight.yangtools$yang-maven-plugin-it/testReport/junit/org.opendaylight.yangtools.yang2sources.plugin.it/YangToSourcesPluginTestIT/testInvalidVersion/",
+      "parentUuid": "5aaae553_f916f1f0",
+      "revId": "ffe508856907a8e8960f50ee9a57fe7a2b0e1d9f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5aaae553_99d33d38",
         "filename": "jjb/integration/integration-test-jobs.yaml",
         "patchSetId": 20
