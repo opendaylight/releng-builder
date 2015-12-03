@@ -1,0 +1,37 @@
+- project:
+    name: sfc-csit-restbasic
+    jobs:
+        - '{project}-csit-1node-{functionality}-{install}-{stream}'
+        - '{project}-csit-verify-1node-{functionality}'
+
+    # The project name
+    project: 'sfc'
+
+    # The functionality under test
+    functionality: 'restbasic'
+
+    # Project branches
+    stream:
+        - beryllium:
+            branch: 'master'
+        - stable-lithium:
+            branch: 'stable/lithium'
+
+    install:
+        - only:
+            scope: 'only'
+        - all:
+            scope: 'all'
+
+    # Features to install
+    install-features: 'odl-restconf-all,odl-sfc-core'
+
+    # Robot custom options
+    robot-options: ''
+
+    # Trigger jobs (upstream dependencies)
+    trigger-jobs: >
+        odlparent-distribution-{stream},
+        ovsdb-distribution-{stream},
+        controller-distribution-{stream},
+        yangtools-distribution-{stream}
