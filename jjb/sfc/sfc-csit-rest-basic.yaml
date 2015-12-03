@@ -1,0 +1,31 @@
+- project:
+    name: sfc-csit-rest-basic
+    jobs:
+        - '{project}-csit-1node-{functionality}-{install}-{stream}'
+
+
+    # The project name
+    project: 'sfc'
+
+    # The functionality under test
+    functionality: 'rest-basic'
+
+    # Project branches
+    stream:
+        - beryllium:
+            branch: 'master'
+        - stable-lithium:
+            branch: 'stable/lithium'
+
+    install:
+        - only:
+            scope: 'only'
+
+    # Features to install
+    install-features: 'odl-sfc-core,odl-restconf-all'
+
+    # Robot custom options
+    robot-options: ''
+
+    # Trigger jobs (upstream dependencies)
+    trigger-jobs: 'odlparent-distribution-{stream},lispflowmapping-distribution-{stream},ovsdb-distribution-{stream},controller-distribution-{stream},openflowplugin-distribution-{stream},yangtools-distribution-{stream}'
