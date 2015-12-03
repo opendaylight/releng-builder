@@ -16,6 +16,14 @@ git clone -q https://github.com/ska-sa/udpreplay.git
 cd udpreplay
 make &> /dev/null && cp udpreplay /usr/local/bin
 
+## DLUX dependencies
+#  - Xvfb: Display manager in RAM
+#
+# Note: The end goal will be to test with multiple browser (Firefox, Chrome)
+#       Chrome need a other library named chromedriver so let start with
+#       one already supported with selenium.
+yum install -y -q firefox xorg-x11-server-Xvfb
+
 # To handle the prompt style that is expected all over the environment
 # with how use use robotframework we need to make sure that it is
 # consistent for any of the users that are created during dynamic spin
