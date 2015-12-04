@@ -19,6 +19,13 @@
     # stream:    release stream (eg. stable-lithium or beryllium)
     # branch:    git branch (eg. stable/lithium or master)
     stream:
+        - pre-boron:
+            branch: 'pre-boron'
+            jdk: openjdk7
+            jdks:
+                - openjdk7
+                - openjdk8
+            disable_autorelease: False
         - beryllium:
             branch: 'master'
             jdk: openjdk7
@@ -430,7 +437,7 @@
         - git-scm:
             credentials-id: '{ssh-credentials}'
             refspec: ''
-            branch: 'master'
+            branch: 'pre-boron'
 
     wrappers:
         - build-timeout

@@ -42,6 +42,13 @@
             jdks:
                 - openjdk7
             disable_autorelease: True
+        - pre-boron:
+            branch: 'pre-boron'
+            jdk: openjdk7
+            jdks:
+                - openjdk7
+                - openjdk8
+            disable_autorelease: False
         - beryllium:
             branch: 'master'
             jdk: openjdk7
