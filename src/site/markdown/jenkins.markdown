@@ -422,6 +422,18 @@ Some considerations when using this job:
   times by a system test knowable person, the integration group can help with
   that
 
+### Autorelease Validate Job
+
+Trigger: **revalidate**
+
+This job runs the PROJECT-validate-autorelease-BRANCH job which is used as a
+quick sanity test to ensure that a patch does not depend on features that do
+not exist in the current release.
+
+The **revalidate** trigger is useful in cases where a project's verify job
+passed however validate failed due to infra problems or intermittent issues.
+It will retrigger just the validate-autorelease job.
+
 ## <a name="jjb_basic_configuration">Basic Job Configuration</a>
 
 To create jobs based on the above templates you can use the example
