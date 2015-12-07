@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_c3cd5688",
+        "filename": "jjb/integration/include-raw-integration-deploy-controller.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2015-12-07T19:33:51Z",
+      "side": 1,
+      "message": "Also include-raw-integration-deploy-controller-offline.sh and include-raw-integration-deploy-controller.sh need this. Perhaps it would be easier to move this block to a common file such as include-raw-integration-cleanup-workspace.sh (perhaps giving it a more generic name).",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 2
+      },
+      "revId": "0dba09d7bf2702d061b1c982afc9e004af003ca6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_83c75e64",
+        "filename": "jjb/integration/include-raw-integration-deploy-controller.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2015-12-07T19:33:51Z",
+      "side": 1,
+      "message": "Does this work in Sandbox? I know this from Debian-based distributions, but I am not sure it would work on Centos. Maybe yes, but I would like to see that.",
+      "range": {
+        "startLine": 9,
+        "startChar": 4,
+        "endLine": 9,
+        "endChar": 23
+      },
+      "revId": "0dba09d7bf2702d061b1c982afc9e004af003ca6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_63bfc2d1",
+        "filename": "jjb/integration/integration-templates.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2015-12-07T19:33:51Z",
+      "side": 1,
+      "message": "There are more templates in this file (and also in integration-test-jobs.yaml and integration-distribution-jobs.yaml) which need these two lines.",
+      "range": {
+        "startLine": 314,
+        "startChar": 8,
+        "endLine": 314,
+        "endChar": 10
+      },
+      "revId": "0dba09d7bf2702d061b1c982afc9e004af003ca6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
