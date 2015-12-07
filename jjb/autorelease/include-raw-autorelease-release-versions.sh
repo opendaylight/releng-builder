@@ -13,6 +13,9 @@
 # RELEASE_TAG=Helium-SR2  # Example
 # RELEASE_BRANCH=stable/helium  # Example
 
+# Directory to put git format-patches
+PATCH_DIR=`pwd`/patches
+
 if [ "$DATESTAMP" == "true" ]; then
    export RELEASE_TAG=$RELEASE_TAG-`date -u +v%Y%m%d%H%M`
 fi
@@ -25,9 +28,9 @@ git commit -am "Release $RELEASE_TAG"
 mkdir patches
 modules=`xmlstarlet sel -N x=http://maven.apache.org/POM/4.0.0 -t -m '//x:modules' -v '//x:module' pom.xml`
 for module in $modules; do
-    cd $module
-    git format-patch --stdout origin/$RELEASE_BRANCH > ../patches/$module.patch
-    cd ..
+    pushd $module
+    git format-patch --stdout origin/$RELEASE_BRANCH > $PATCH_DIR/${module//\//-}.patch
+    popd
 done
 
 ./scripts/fix-relativepaths.sh
