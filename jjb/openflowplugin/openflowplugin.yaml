@@ -155,12 +155,17 @@
     parameters:
         - project-parameter:
             project: '{project}'
+        - integration-distribution-git-url
 
     scm:
-        - gerrit-trigger-scm:
+        - integration-gerrit-scm:
             credentials-id: '{ssh-credentials}'
+            basedir: 'openflowplugin'
             refspec: ''
-            choosing-strategy: 'default'
+            branch: '{branch}'
+        - integration-distribution-scm:
+            credentials-id: '{ssh-credentials}'
+            branch: '{branch}'
 
     wrappers:
         - build-timeout
@@ -179,6 +184,10 @@
         - provide-maven-settings:
             global-settings-file: '{odl-global-settings}'
             settings-file: '{openflowplugin-settings}'
+        - integration-get-bundle-url
+        - inject:
+            properties-file: 'bundle.txt'
+        - integration-create-merge-pom
 
     maven:
         maven-name: '{mvn33}'
@@ -192,7 +201,7 @@
     postbuilders:
         - conditional-step:
             condition-kind: file-exists
-            condition-filename: deploy-site.xml
+            condition-filename: openflowplugin/deploy-site.xml
             condition-basedir: workspace
 
             # The strategy here is intentional to run Maven site:deploy twice
@@ -204,7 +213,7 @@
             steps:
             - maven-target:
                 maven-version: '{mvn33}'
-                pom: pom.xml
+                pom: openflowplugin/pom.xml
                 goals: 'site:deploy -Dstream={stream}'
                 java-opts:
                     - '-Xmx2g'
@@ -212,19 +221,25 @@
                 global-settings: '{odl-global-settings}'
             - maven-target:
                 maven-version: '{mvn33}'
-                pom: deploy-site.xml
+                pom: openflowplugin/deploy-site.xml
                 goals: 'site:deploy -Dstream={stream}'
                 java-opts:
                     - '-Xmx2g'
                 settings: '{openflowplugin-settings}'
                 global-settings: '{odl-global-settings}'
 
+        - trigger-builds:
+            - project: 'integration-distribution-deploy-{stream}'
+              block: true
+              predefined-parameters:
+                  BUNDLEURL=$BUNDLEURL
+
     reporters:
         - findbugs
 
     publishers:
         - archive-artifacts:
-            artifacts: 'model/*/target/site/**'
+            artifacts: 'openflowplugin/model/*/target/site/**'
         - email-notification:
             email-prefix: '[openflowplugin]'
         - maven-deploy:
