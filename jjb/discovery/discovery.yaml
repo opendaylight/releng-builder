@@ -70,6 +70,8 @@
             project: '{project}'
         - gerrit-parameter:
             branch: '{branch}'
+        - gerrit-refspec-parameter:
+            refspec: 'refs/heads/{branch}'
 
     scm:
         - gerrit-trigger-scm:
@@ -134,6 +136,10 @@
     parameters:
         - project-parameter:
             project: '{project}'
+        - gerrit-parameter:
+            branch: '{branch}'
+        - gerrit-refspec-parameter:
+            refspec: 'refs/heads/{branch}'
 
     scm:
         - gerrit-trigger-scm:
