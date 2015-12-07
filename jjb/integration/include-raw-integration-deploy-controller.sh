@@ -4,6 +4,14 @@ echo "#################################################"
 
 CONTROLLERMEM="2048m"
 
+if [ ${JDKVERSION} == 'openjdk8' ]; then
+    echo "Setting the JDK Version to 8"
+    /usr/sbin/alternatives --set java /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
+else
+    echo "Setting the JDK Version to 7"
+    /usr/sbin/alternatives --set java /usr/lib/jvm/java-7-openjdk-amd64/jre/bin/java
+fi
+
 if [ ${CONTROLLERSCOPE} == 'all' ]; then
     ACTUALFEATURES="odl-integration-compatible-with-all,${CONTROLLERFEATURES}"
     CONTROLLERMEM="3072m"
@@ -44,6 +52,9 @@ echo "Listing all open ports on controller system"
 netstat -natu
 
 EOF
+
+echo "JDK Version ..."
+java -version
 
 for i in `seq 1 ${NUM_ODL_SYSTEM}`
 do

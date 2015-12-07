@@ -1,6 +1,14 @@
 CONTROLLERMEM="3072m"
 ACTUALFEATURES="odl-integration-all"
 
+if [ ${JDKVERSION} == 'openjdk8' ]; then
+    echo "Setting the JDK Version to 8"
+    /usr/sbin/alternatives --set java /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
+else
+    echo "Setting the JDK Version to 7"
+    /usr/sbin/alternatives --set java /usr/lib/jvm/java-7-openjdk-amd64/jre/bin/java
+fi
+
 echo "Kill any controller running"
 ps axf | grep karaf | grep -v grep | awk '{print "kill -9 " $1}' | sh
 
@@ -35,6 +43,9 @@ echo "Configure max memory..."
 MEMCONF=${WORKSPACE}/${BUNDLEFOLDER}/bin/setenv
 sed -ie "s/2048m/${CONTROLLERMEM}/g" ${MEMCONF}
 cat ${MEMCONF}
+
+echo "JDK Version ..."
+java -version
 
 echo "Starting controller..."
 ${WORKSPACE}/${BUNDLEFOLDER}/bin/start
