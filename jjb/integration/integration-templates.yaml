@@ -311,6 +311,8 @@
             test-plan: '{project}-{functionality}.txt'
         - integration-patch-refspec:
             branch: 'master'
+        - integration-jdk-version:
+            jdkversion: 'java7'
 
     scm:
         - integration-gerrit-scm:
