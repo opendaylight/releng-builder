@@ -15,6 +15,14 @@
             description: 'URL to karaf distribution zip'
 
 - parameter:
+    name: integration-jdk-version
+    parameters:
+        - string:
+            name: JDKVERSION
+            default: '{jdkversion}'
+            description: 'Parameter to indicate JAVA Version'
+
+- parameter:
     name: integration-controller-scope
     parameters:
         - string:

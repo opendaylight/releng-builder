@@ -1,6 +1,17 @@
 CONTROLLERMEM="3072m"
 ACTUALFEATURES="odl-integration-all"
 
+find / -name alternatives
+echo $PATH
+java -version
+if [ ${JDKVERSION} == 'openjdk8' ]; then
+    echo "Setting the JDK Version to 8"
+    alternatives --set java /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
+else
+    echo "Setting the JDK Version to 7"
+    alternatives --set java /usr/lib/jvm/java-7-openjdk-amd64/jre/bin/java
+fi
+
 echo "Kill any controller running"
 ps axf | grep karaf | grep -v grep | awk '{print "kill -9 " $1}' | sh
 
