@@ -222,6 +222,7 @@
         - sonatype-clm:
             application-name: '{application-name}'
             scan-targets: '**/target/**'
+            module-excludes: '**/target/pax/**,**/target/assembly/**'
 
 - builder:
     name: releng-check-unicode
