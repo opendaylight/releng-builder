@@ -452,7 +452,7 @@
             unstable-if: 0.0
             pass-if: 100.0
         - archive:
-            artifacts: 'karaf.log*'
+            artifacts: '*.log,karaf.log*'
         - email-notification:
             email-prefix: '[{project}]'
         - plot:
