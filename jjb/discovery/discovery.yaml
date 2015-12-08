@@ -255,7 +255,7 @@
                 - '{ssh-credentials}'
 
     triggers:
-        - timed: 'H H * * *'
+        - timed: 'H H * * 7'
 
     prebuilders:
         - wipe-org-opendaylight-repo
