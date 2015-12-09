@@ -40,7 +40,8 @@
 
     prebuilders:
         - shell:
-            !include-raw-escape include-raw-setup-docker.sh
+            !include-raw-escape:
+                - include-raw-setup-docker.sh
 
     maven:
         maven-name: '{mvn33}'
@@ -64,7 +65,8 @@
             settings: '{ovsdb-settings}'
             global-settings: '{odl-global-settings}'
         - shell:
-            !include-raw-escape include-raw-cleanup-docker.sh
+            !include-raw-escape:
+                - include-raw-cleanup-docker.sh
         - jacoco-nojava-workaround
 
     publishers:

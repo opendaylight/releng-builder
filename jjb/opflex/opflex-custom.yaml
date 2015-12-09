@@ -34,7 +34,8 @@
           project: opflex-openvswitch_tgz-{stream}
           flatten: true
       - shell:
-          !include-raw-escape include-raw-opflex-build.sh
+          !include-raw-escape:
+            - include-raw-opflex-build.sh
 
 - job-template:
     name: 'opflex-verify-{stream}'
