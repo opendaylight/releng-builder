@@ -229,7 +229,7 @@
 
     publishers:
         - archive-artifacts:
-            artifacts: 'manager/dist/*/target/*.zip, coordinator/dist/target/*.bz2, manager/northbound/target/site/wsdocs/**, manager/api/target/*-javadoc.jar, manager/api/target/apidocs/**, manager/target/*-javadoc.jar, manager/target/apidocs/**, manager/model/target/site/models/**'
+            artifacts: 'manager/dist/*/target/*.zip, coordinator/dist/target/*.bz2, manager/northbound/target/site/wsdocs/**, manager/api/target/*-javadoc.jar, manager/api/target/apidocs/**, target/*-javadoc.jar, target/apidocs/**, manager/model/target/site/models/**'
         - email-notification:
             email-prefix: '[vtn]'
         - maven-deploy:
