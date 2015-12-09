@@ -180,7 +180,8 @@
     name: integration-get-slave-addresses
     builders:
         - shell:
-            !include-raw include-raw-integration-get-slave-addresses.sh
+            !include-raw:
+                - include-raw-integration-get-slave-addresses.sh
 
 # Macro: integration-get-bundle-vars
 # Operation: this macro gets all bundle related variables
@@ -190,7 +191,8 @@
     name: integration-get-bundle-vars
     builders:
         - shell:
-            !include-raw include-raw-integration-get-bundle-vars.sh
+            !include-raw:
+                - include-raw-integration-get-bundle-vars.sh
 
 # Macro: integration-deploy-controller-verify
 # Operation: this macro deploys the controller with all fetures
@@ -200,7 +202,8 @@
     name: integration-deploy-controller-verify
     builders:
         - shell:
-            !include-raw include-raw-integration-deploy-controller-verify.sh
+            !include-raw:
+                - include-raw-integration-deploy-controller-verify.sh
 
 # Macro: integration-deploy-controller-offline
 # Operation: this macro deploys the controller with no external repo configuration
@@ -210,7 +213,8 @@
     name: integration-deploy-controller-offline
     builders:
         - shell:
-            !include-raw include-raw-integration-deploy-controller-offline.sh
+            !include-raw:
+                - include-raw-integration-deploy-controller-offline.sh
 
 # Macro: integration-deply-controller-run-test
 # Operation: this macro deploys single contoller and runs test
@@ -220,7 +224,8 @@
     name: integration-deploy-controller-run-test
     builders:
         - shell:
-            !include-raw include-raw-integration-deploy-controller-run-test.sh
+            !include-raw:
+                - include-raw-integration-deploy-controller-run-test.sh
 
 # Macro: integration-deploy-controller
 # Operation: this macro prepares 3-node cluster controller
@@ -230,7 +235,8 @@
     name: integration-deploy-controller
     builders:
         - shell:
-            !include-raw include-raw-integration-deploy-controller.sh
+            !include-raw:
+                - include-raw-integration-deploy-controller.sh
 
 # Macro: integration-configure-clustering
 # Operation: this macro configures the clustering
@@ -240,7 +246,8 @@
     name: integration-configure-clustering
     builders:
         - shell:
-            !include-raw include-raw-integration-configure-clustering.sh
+            !include-raw:
+                - include-raw-integration-configure-clustering.sh
 
 # Macro: integration-start-cluster-run-test
 # Operation: this macro starts the 3-node cluster and runs test
@@ -250,7 +257,8 @@
     name: integration-start-cluster-run-test
     builders:
         - shell:
-            !include-raw include-raw-integration-start-cluster-run-test.sh
+            !include-raw:
+                - include-raw-integration-start-cluster-run-test.sh
 
 # Macro: integration-get-bundle-url
 # Operation: this macro gets the job generated distribution URL from distribution pom.xml
@@ -260,7 +268,8 @@
     name: integration-get-bundle-url
     builders:
         - shell:
-            !include-raw include-raw-integration-get-bundle-url.sh
+            !include-raw:
+                - include-raw-integration-get-bundle-url.sh
 
 # Macro: integration-get-bundle-url-root
 # Operation: this macro gets the job generated distribution URL from root pom.xml
@@ -270,7 +279,8 @@
     name: integration-get-bundle-url-root
     builders:
         - shell:
-            !include-raw include-raw-integration-get-bundle-url-root.sh
+            !include-raw:
+                - include-raw-integration-get-bundle-url-root.sh
 
 # Macro: integration-install-robotframework
 # Operation: Installs robotframework using pip to a virtualenv
@@ -280,7 +290,8 @@
     name: integration-install-robotframework
     builders:
         - shell:
-            !include-raw include-raw-integration-install-robotframework.sh
+            !include-raw:
+                - include-raw-integration-install-robotframework.sh
 
 # Macro: integration-cleanup-tmp
 # Operation: Cleans up temporary files created by build
@@ -290,7 +301,8 @@
     name: integration-cleanup-tmp
     builders:
         - shell:
-            !include-raw include-raw-integration-cleanup-tmp.sh
+            !include-raw:
+                - include-raw-integration-cleanup-tmp.sh
 
 # Macro: integration-multipatch-builder
 # Operation: checks out multiple patches and builds custom distribution
@@ -300,7 +312,8 @@
     name: integration-multipatch-builder
     builders:
         - shell:
-            !include-raw include-raw-integration-multipatch-distribution-test.sh
+            !include-raw:
+                - include-raw-integration-multipatch-distribution-test.sh
 
 # Macro: integration-cleanup-worspace
 # Operation: Cleans up files possibly left there by the previous build
@@ -310,7 +323,8 @@
     name: integration-cleanup-workspace
     builders:
         - shell:
-            !include-raw include-raw-integration-cleanup-workspace.sh
+            !include-raw:
+                - include-raw-integration-cleanup-workspace.sh
 
 ##############
 # Publishers #

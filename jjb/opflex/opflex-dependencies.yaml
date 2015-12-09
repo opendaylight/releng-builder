@@ -65,7 +65,8 @@
 
     builders:
         - shell:
-            !include-raw-escape include-raw-libuv_tgz-build.sh
+            !include-raw-escape:
+                - include-raw-libuv_tgz-build.sh
 
     publishers:
         - email-notification:
@@ -97,7 +98,8 @@
 
     builders:
         - shell:
-            !include-raw-escape include-raw-rapidjson_tgz-build.sh
+            !include-raw-escape:
+                - include-raw-rapidjson_tgz-build.sh
 
     publishers:
         - email-notification:
@@ -139,7 +141,8 @@
 
     builders:
         - shell:
-            !include-raw-escape include-raw-openvswitch_tgz-build.sh
+            !include-raw-escape:
+                - include-raw-openvswitch_tgz-build.sh
 
     publishers:
         - email-notification:

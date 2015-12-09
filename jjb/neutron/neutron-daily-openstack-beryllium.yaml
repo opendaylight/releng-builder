@@ -42,7 +42,8 @@
               TEMPEST_REGEX=tempest.api.network
               KARAFFEATURE=odl-neutron-dummyprovider-test
         - shell:
-            !include-raw-escape include-raw-openstack-ci.sh
+            !include-raw-escape:
+                - include-raw-openstack-ci.sh
 
     publishers:
         - archive:
