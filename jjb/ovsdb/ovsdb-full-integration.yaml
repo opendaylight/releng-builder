@@ -92,7 +92,8 @@
     builders:
         - wipe-org-opendaylight-repo
         - shell:
-            !include-raw-escape include-raw-setup-docker.sh
+            !include-raw-escape:
+                - include-raw-setup-docker.sh
         - inject:
             properties-file: env.properties
         - maven-target:
@@ -111,7 +112,8 @@
             settings: '{ovsdb-settings}'
             global-settings: '{odl-global-settings}'
         - shell:
-            !include-raw-escape include-raw-cleanup-docker.sh
+            !include-raw-escape:
+                - include-raw-cleanup-docker.sh
         - jacoco-nojava-workaround
 
     publishers:

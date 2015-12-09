@@ -44,7 +44,8 @@
               ODL_VERSION='{odl_version}'
               TEMPEST_REGEX=tempest.api.network
         - shell:
-            !include-raw-escape include-raw-openstack-ci.sh
+            !include-raw-escape:
+                - include-raw-openstack-ci.sh
 
     publishers:
         - archive:

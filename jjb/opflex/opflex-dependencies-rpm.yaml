@@ -57,7 +57,8 @@
 
     builders:
         - shell:
-            !include-raw-escape include-raw-opflex-dep_rpm-build.sh
+            !include-raw-escape:
+                - include-raw-opflex-dep_rpm-build.sh
 
     publishers:
         - email-notification:
@@ -92,7 +93,8 @@
 
     builders:
         - shell:
-            !include-raw-escape include-raw-ovs_rpm-build.sh
+            !include-raw-escape:
+                - include-raw-ovs_rpm-build.sh
 
     publishers:
         - email-notification:
