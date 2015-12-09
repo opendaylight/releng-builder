@@ -32,6 +32,9 @@ cat ${MEMCONF}
 echo "Listing all open ports on controller system"
 netstat -natu
 
+echo "redirected karaf console output to karaf_console.log"
+export KARAF_REDIRECT=${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log
+
 echo "Starting controller..."
 ${WORKSPACE}/${BUNDLEFOLDER}/bin/start
 
@@ -57,6 +60,9 @@ while true; do
     fi
 done
 
+echo "loading many features at once.  Need to allow time for problems to show up in logs.  cool down for 5 min ..."
+sleep 300
+
 echo "Checking OSGi bundles..."
 sshpass -p karaf ${WORKSPACE}/${BUNDLEFOLDER}/bin/client -u karaf 'bundle:list'
 
@@ -64,11 +70,19 @@ echo "Listing all open ports on controller system"
 netstat -natu
 
 function exit_on_log_file_message {
-    echo "looking for \"$1\" in log file"
+    echo "looking for \"$1\" in karaf.log file"
     if grep --quiet "$1" ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log; then
         echo ABORTING: found "$1"
-        echo "Dumping Karaf log..."
-        cat ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log
+        echo "Dumping first 1M of karaf.log..."
+        head --bytes=1M  ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log
+        exit 1
+    fi
+
+    echo "looking for \"$1\" in karaf_console.log file"
+    if grep --quiet "$1" ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log; then
+        echo ABORTING: found "$1"
+        echo "Dumping first 1M of karaf_console.log..."
+        head --bytes=1M  ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log
         exit 1
     fi
 }
@@ -76,8 +90,9 @@ function exit_on_log_file_message {
 exit_on_log_file_message 'BindException: Address already in use'
 exit_on_log_file_message 'server is unhealthy'
 
-echo "Fetching Karaf log"
+echo "Fetching Karaf logs"
 cp ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log .
+cp ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log .
 
 echo "Kill controller"
 ps axf | grep karaf | grep -v grep | awk '{print "kill -9 " $1}' | sh
