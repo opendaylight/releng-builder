@@ -1,3 +1,11 @@
+# TODO: 1) clean up inline todo's below :)
+# TODO: 2) Use just a topic branch to create a distribution.  see this email:
+#          https://lists.opendaylight.org/pipermail/discuss/2015-December/006040.html
+# TODO: 3) Bubble up CSIT jobs that are triggered by the multipatch job to a jenkins
+#          parameter.  the default can be distribution-test which calls all CSIT jobs
+#          but being able to easily override it to a smaller subset (or none) will be
+#          helpful
+
 # create a fresh empty place to build this custom distribution
 BUILD_DIR=${WORKSPACE}/patch_tester
 POM_FILE=${WORKSPACE}/patch_tester/pom.xml
