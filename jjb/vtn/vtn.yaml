@@ -119,7 +119,7 @@
         - maven-target:
             maven-version: '{mvn33}'
             pom: 'pom.xml'
-            goals: 'clean install -V -Pintegrationtests,strictcheck,docs,vtncoordinator,vtnapps -Dvtn.build.jobs=2 -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -Dstream={stream}'
+            goals: 'clean install -V -Pintegrationtests,strictcheck,docs -Dvtn.build.jobs=2 -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -Dstream={stream}'
             java-opts:
                 - '-Xmx1024m -XX:MaxPermSize=256m'
             settings: '{vtn-settings}'
@@ -188,7 +188,7 @@
     maven:
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
-        goals: 'clean install -V -Pintegrationtests,strictcheck,docs,vtncoordinator,vtnapps -Dvtn.build.jobs=2 -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -Dmerge -Dstream={stream}'
+        goals: 'clean install -V -Pintegrationtests,strictcheck,docs -Dvtn.build.jobs=2 -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -Dmerge -Dstream={stream}'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{vtn-settings}'
         global-settings: '{odl-global-settings}'
@@ -289,7 +289,7 @@
     maven:
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
-        goals: 'clean install -V -Pintegrationtests,strictcheck,docs,vtncoordinator,vtnapps -Dvtn.build.jobs=2 -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+        goals: 'clean install -V -Pintegrationtests,strictcheck,docs -Dvtn.build.jobs=2 -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{vtn-settings}'
         global-settings: '{odl-global-settings}'
@@ -417,7 +417,7 @@
     maven:
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
-        goals: 'clean install -V -Pintegrationtests,strictcheck,docs,vtncoordinator,vtnapps -Dvtn.build.jobs=2 -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+        goals: 'clean install -V -Pintegrationtests,strictcheck,docs -Dvtn.build.jobs=2 -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{vtn-settings}'
         global-settings: '{odl-global-settings}'
@@ -474,7 +474,7 @@
     maven:
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
-        goals: 'clean install -V -Pintegrationtests,strictcheck,docs,vtncoordinator,vtnapps -Dvtn.build.jobs=2 -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -Dsonar'
+        goals: 'clean install -V -Pintegrationtests,strictcheck,docs -Dvtn.build.jobs=2 -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -Dsonar'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{vtn-settings}'
         global-settings: '{odl-global-settings}'
