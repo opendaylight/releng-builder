@@ -366,7 +366,7 @@
         - maven-target:
             maven-version: '{mvn33}'
             pom: '$GERRIT_PROJECT/pom.xml'
-            goals: 'clean install -DskipTests -Dcheckstyle.skip=true -Dmaven.javadoc.skip=true -Dmaven.site.skip=true -DgenerateReports=false -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -Dstream={stream}'
+            goals: 'clean install -Djenkins -DskipTests -Dcheckstyle.skip=true -Dmaven.javadoc.skip=true -Dmaven.site.skip=true -DgenerateReports=false -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -Dstream={stream}'
             java-opts:
                 - '-Xmx4096m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
             settings: '{integration-settings}'
@@ -375,7 +375,7 @@
     maven:
         maven-name: '{mvn33}'
         root-pom: 'distribution/pom.xml'
-        goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+        goals: 'clean install -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
         settings: '{integration-settings}'
         global-settings: '{odl-global-settings}'
@@ -438,7 +438,7 @@
         maven-name: '{mvn33}'
         root-pom: 'patch_tester/pom.xml'
         # TODO: Make Maven option configurable. Currently tests are not skipped, everything elase is.
-        goals: 'clean install -f patch_tester/pom.xml -Dcheckstyle.skip=true -Dmaven.javadoc.skip=true -Dmaven.site.skip=true -DgenerateReports=false -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -Dstream={stream}'
+        goals: 'clean install -f patch_tester/pom.xml -Djenkins -Dcheckstyle.skip=true -Dmaven.javadoc.skip=true -Dmaven.site.skip=true -DgenerateReports=false -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -Dstream={stream}'
         maven-opts: '-Xmx4096m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
         settings: '{yangtools-settings}'
         global-settings: '{odl-global-settings}'

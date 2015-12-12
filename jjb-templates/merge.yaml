@@ -55,7 +55,7 @@
     maven:
         maven-name: '{mvn33}'
         root-pom: 'POM'
-        goals: 'MAVEN_GOALS -Dmerge -Dstream={stream}'
+        goals: 'MAVEN_GOALS -Djenkins -Dmerge -Dstream={stream}'
         maven-opts: 'MAVEN_OPTS'
         settings: '{JENKINS_SETTINGS}'
         global-settings: '{odl-global-settings}'
