@@ -1,5 +1,5 @@
 - project:
-    name: lispflowmapping-csit-all
+    name: lispflowmapping-csit-msmr
     jobs:
         - '{project}-csit-1node-{functionality}-{install}-{stream}'
         - '{project}-csit-verify-1node-{functionality}'
@@ -8,7 +8,7 @@
     project: 'lispflowmapping'
 
     # The functionality under test
-    functionality: 'all'
+    functionality: 'msmr'
 
     # Project branches
     stream:
