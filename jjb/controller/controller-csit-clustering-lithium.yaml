@@ -1,8 +1,7 @@
 - project:
-    name: controller-csit-clustering
+    name: controller-csit-clustering-lithium
     jobs:
         - '{project}-csit-3node-{functionality}-{install}-{stream}'
-        - '{project}-csit-verify-3node-{functionality}'
 
     # The project name
     project: 'controller'
@@ -12,14 +11,13 @@
 
     # Project branches
     stream:
-        - beryllium:
-            branch: 'master'
+        - stable-lithium:
+            branch: 'stable/lithium'
 
     install:
         - only:
             scope: 'only'
-        - all:
-            scope: 'all'
+        # Bug 4676 means -all- would fail.
 
     # Features to install
     install-features: 'odl-restconf,odl-clustering-test-app,odl-netconf-connector-ssh'
@@ -31,7 +29,5 @@
     trigger-jobs: >
         odlparent-distribution-{stream},
         yangtools-distribution-{stream},
-        mdsal-distribution-{stream},
         controller-distribution-{stream},
-        netconf-distribution-{stream},
         integration-distribution-merge-{stream}
