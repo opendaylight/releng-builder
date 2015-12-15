@@ -24,12 +24,14 @@
             jdks:
                 - openjdk7
             disable_autorelease: True
+            disabled: False
         - routermanager:
             branch: 'topic/routermanager'
             jdk: openjdk7
             jdks:
                 - openjdk7
             disable_autorelease: True
+            disabled: True
         - pre-boron:
             branch: 'pre-boron'
             jdk: openjdk7
@@ -37,6 +39,7 @@
                 - openjdk7
                 - openjdk8
             disable_autorelease: True
+            disabled: False
         - beryllium:
             branch: 'master'
             jdk: openjdk7
@@ -44,18 +47,21 @@
                 - openjdk7
                 - openjdk8
             disable_autorelease: False
+            disabled: False
         - stable-lithium:
             branch: 'stable/lithium'
             jdk: openjdk7
             jdks:
                 - openjdk7
             disable_autorelease: True
+            disabled: False
         - stable-helium:
             branch: 'stable/helium'
             jdk: openjdk7
             jdks:
                 - openjdk7
             disable_autorelease: True
+            disabled: False
 
     project: 'ovsdb'
 
@@ -445,6 +451,8 @@
     project-type: maven
     node: dynamic_verify
     jdk: '{jdk}'
+
+    disabled: '{obj:disabled}'
 
     logrotate:
         daysToKeep: '{build-days-to-keep}'
