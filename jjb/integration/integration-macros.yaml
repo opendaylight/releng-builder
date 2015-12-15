@@ -334,7 +334,8 @@
     name: integration-rebase-gerrit-patch
     builders:
         - shell:
-            !include-raw include-raw-integration-rebase-gerrit-patch.sh
+            !include-raw:
+                - include-raw-integration-rebase-gerrit-patch.sh
 
 ##############
 # Publishers #
