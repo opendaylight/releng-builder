@@ -1,0 +1,80 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby sw=2 ts=2 sts=2 et :
+
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  # root off of the rackspace provider dummy box
+  config.vm.box = "dummy"
+
+  # rackspace systems, even with cloud-init
+  # don't seem to have the cloud int user ${osname} (or similar)
+  # getting the ssh key for some reason, root does for sure
+  # so use that
+  config.ssh.username = 'root'
+
+  # Only baseline image should have config.ssh.pty = true
+  # Ensure we disable it.
+  config.ssh.pty = false
+
+  # make sure to set the following in your
+  # ~/.vagrant.d/boxes/dummy/0/rackspace/Vagrantfile
+  # rs.username
+  # rs.api_key
+  # rs.rackspace_region
+  #
+  # If you are not using an SSH token / smartcard also set this
+  # rs.key_name
+  # config.ssh.private_key_path -- set this outside the rackspace block
+  #         in your base box
+  config.vm.provider :rackspace do |rs|
+    # create these base builds always on the smallest system possible
+    rs.flavor = 'general1-1'
+
+    # allow for switching to ORD cloud but default to DFW
+    if (ENV['RSREGION'] == 'ord')
+      rs.rackspace_region = :ord
+    else
+      rs.rackspace_region = :dfw
+    end
+
+    # Default the Ubuntu 14.04 - Vagrant ready image unless overriden by a RSIMAGE
+    # environment variable
+    if ENV['RSIMAGE']
+      rs.image = ENV['RSIMAGE']
+    else
+      rs.image = 'Ubuntu 14.04 - Vagrant ready'
+    end
+  end
+
+  # Explicitlly set default shared folder and load lib folder
+  config.vm.synced_folder ".", "/vagrant"
+  config.vm.synced_folder "../lib/", "/vagrant/lib"
+
+  # run our bootstrapping for the system
+  config.vm.provision 'shell', path: 'bootstrap.sh'
+
+
+  #################
+  # LF NETWORKING #
+  #################
+
+  if ENV['LFNETWORK']
+    # reconfigure the network setup to support our special private setup
+    config.vm.provision 'shell', path: '../lib/lf-networking/configure_lf_infra.sh',
+      args: ENV['RSSUBDOMAIN']
+  end
+
+
+  #################
+  # FINAL CLEANUP #
+  #################
+
+  # set RSRESEAL to... anything if you want to snap an image of this box
+  # not setting the environment variable will cause the system to come
+  # up fully and not be in a resealable state
+  if ENV['RSRESEAL']
+    config.vm.provision 'shell', path: '../lib/system_reseal.sh'
+  end
+end
