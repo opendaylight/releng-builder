@@ -18,6 +18,13 @@
     # stream:    release stream (eg. stable-lithium or beryllium)
     # branch:    git branch (eg. stable/lithium or master)
     stream:
+        - beryllium:
+            branch: 'master'
+            jdk: openjdk7
+            jdks:
+                - openjdk7
+                - openjdk8
+            disable_autorelease: False
         - clustering-netvirt-master:
             branch: 'topic/master/net-virt-clustering'
             jdk: openjdk7
@@ -37,13 +44,6 @@
                 - openjdk7
                 - openjdk8
             disable_autorelease: True
-        - beryllium:
-            branch: 'master'
-            jdk: openjdk7
-            jdks:
-                - openjdk7
-                - openjdk8
-            disable_autorelease: False
         - stable-lithium:
             branch: 'stable/lithium'
             jdk: openjdk7

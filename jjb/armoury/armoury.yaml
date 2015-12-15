@@ -19,13 +19,6 @@
     # stream:    release stream (eg. stable-lithium or beryllium)
     # branch:    git branch (eg. stable/lithium or master)
     stream:
-        - pre-boron:
-            branch: 'pre-boron'
-            jdk: openjdk8
-            jdks:
-                - openjdk8
-                - openjdk7
-            disable_autorelease: True
         - beryllium:
             branch: 'master'
             jdk: openjdk8
@@ -33,6 +26,13 @@
                 - openjdk8
                 - openjdk7
             disable_autorelease: False
+        - pre-boron:
+            branch: 'pre-boron'
+            jdk: openjdk8
+            jdks:
+                - openjdk8
+                - openjdk7
+            disable_autorelease: True
 
     project: 'armoury'
 
@@ -437,7 +437,7 @@
         - git-scm:
             credentials-id: '{ssh-credentials}'
             refspec: ''
-            branch: 'pre-boron'
+            branch: 'master'
 
     wrappers:
         - build-timeout
