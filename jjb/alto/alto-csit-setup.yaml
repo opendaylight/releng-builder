@@ -1,0 +1,32 @@
+- project:
+    name: alto-csit-setup
+    jobs:
+        - '{project}-csit-1node-{functionality}-{install}-{stream}'
+
+    # The project name
+    project: 'alto'
+
+    # The functionality under test
+    functionality: 'setup'
+
+    # Project branches
+    stream:
+        - beryllium:
+            branch: 'master'
+        - stable-lithium:
+            branch: 'stable/lithium'
+
+    install:
+        - only:
+            scope: 'only'
+        - all:
+            scope: 'all'
+
+    # Features to install
+    install-features: 'odl-alto-resourcepool,odl-restconf-all'
+
+    # Robot custom options
+    robot-options: ''
+
+    # Trigger jobs (upstream dependencies)
+    trigger-jobs: 'odlparent-distribution-{stream}, yangtools-distribution-{stream}, controller-distribution-{stream}, aaa-distribution-{stream}, integration-distribution-merge-{stream}, alto-distribution-{stream}'
