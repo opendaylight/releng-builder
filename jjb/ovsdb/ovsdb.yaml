@@ -24,12 +24,6 @@
             jdks:
                 - openjdk7
             disable_autorelease: True
-        - routermanager:
-            branch: 'topic/routermanager'
-            jdk: openjdk7
-            jdks:
-                - openjdk7
-            disable_autorelease: True
         - pre-boron:
             branch: 'pre-boron'
             jdk: openjdk7
@@ -445,6 +439,8 @@
     project-type: maven
     node: dynamic_verify
     jdk: '{jdk}'
+
+    disabled: '{obj:disabled}'
 
     logrotate:
         daysToKeep: '{build-days-to-keep}'
