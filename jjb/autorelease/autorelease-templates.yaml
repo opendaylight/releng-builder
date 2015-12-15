@@ -121,6 +121,9 @@
     prebuilders:
         - wipe-org-opendaylight-repo
         - jacoco-nojava-workaround
+        - autorelease-cfp:
+            autorelease-settings: '{autorelease-settings}'
+            odl-global-settings: '{odl-global-settings}'
         - autorelease-generate-taglist
         - autorelease-generate-release-patches
 
@@ -135,9 +138,6 @@
         post-step-run-condition: UNSTABLE
 
     postbuilders:
-        - autorelease-cfp:
-            autorelease-settings: '{autorelease-settings}'
-            odl-global-settings: '{odl-global-settings}'
         - autorelease-maven-deploy
         - shell: "./scripts/list-project-dependencies.sh"
         - autorelease-get-integration-test-variables
