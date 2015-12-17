@@ -57,7 +57,7 @@ if os.path.isfile(project_conf):
 if cfg.get("JOB_TEMPLATES"):
     templates = cfg.get("JOB_TEMPLATES")
 else:
-    templates = "verify,merge,daily,distribution,integration,sonar"
+    templates = "verify,merge,periodic,distribution,integration,sonar"
 templates += ",clm"  # ensure we always create a clm job for all projects
 templates += ",validate-autorelease"  # Autorelease validate template
 
