@@ -8,7 +8,7 @@
     jobs:
         - 'tcpmd5-verify-{stream}'
         - 'tcpmd5-merge-{stream}'
-        - 'tcpmd5-daily-{stream}'
+        - 'tcpmd5-periodic-{stream}'
         - 'tcpmd5-distribution-{stream}'
         - 'tcpmd5-integration-{stream}'
         - 'tcpmd5-sonar'
@@ -238,12 +238,12 @@
         - jacoco-report
 
 - job-template:
-    name: 'tcpmd5-daily-{stream}'
+    name: 'tcpmd5-periodic-{stream}'
 
-    # Job template for daily builders
+    # Job template for periodic builders
     #
-    # The purpose of this job template is to setup a daily/nightly
-    # builder and pushes to Sonar analysis.
+    # The purpose of this job template is to setup a periodic
+    # builder.
     #
     # Required Variables:
     #     stream:    release stream (eg. stable-lithium or beryllium)
@@ -276,7 +276,7 @@
                 - '{ssh-credentials}'
 
     triggers:
-        - timed: 'H H * * 7'
+        - timed: '@daily'
 
     prebuilders:
         - wipe-org-opendaylight-repo

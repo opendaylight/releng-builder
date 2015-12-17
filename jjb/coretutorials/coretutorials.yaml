@@ -8,7 +8,7 @@
     jobs:
         - 'coretutorials-verify-{stream}'
         - 'coretutorials-merge-{stream}'
-        - 'coretutorials-daily-{stream}'
+        - 'coretutorials-periodic-{stream}'
         - 'coretutorials-distribution-{stream}'
         - 'coretutorials-integration-{stream}'
         - 'coretutorials-sonar'
@@ -223,12 +223,12 @@
         - jacoco-report
 
 - job-template:
-    name: 'coretutorials-daily-{stream}'
+    name: 'coretutorials-periodic-{stream}'
 
-    # Job template for daily builders
+    # Job template for periodic builders
     #
-    # The purpose of this job template is to setup a daily/nightly
-    # builder and pushes to Sonar analysis.
+    # The purpose of this job template is to setup a periodic
+    # builder.
     #
     # Required Variables:
     #     stream:    release stream (eg. stable-lithium or beryllium)
@@ -261,7 +261,7 @@
                 - '{ssh-credentials}'
 
     triggers:
-        - timed: 'H H * * 7'
+        - timed: '@daily'
 
     prebuilders:
         - wipe-org-opendaylight-repo

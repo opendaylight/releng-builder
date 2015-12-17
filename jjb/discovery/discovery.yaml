@@ -8,7 +8,7 @@
     jobs:
         - 'discovery-verify-{stream}'
         - 'discovery-merge-{stream}'
-        - 'discovery-daily-{stream}'
+        - 'discovery-periodic-{stream}'
         - 'discovery-distribution-{stream}'
         - 'discovery-integration-{stream}'
         - 'discovery-sonar'
@@ -217,12 +217,12 @@
         - jacoco-report
 
 - job-template:
-    name: 'discovery-daily-{stream}'
+    name: 'discovery-periodic-{stream}'
 
-    # Job template for daily builders
+    # Job template for periodic builders
     #
-    # The purpose of this job template is to setup a daily/nightly
-    # builder and pushes to Sonar analysis.
+    # The purpose of this job template is to setup a periodic
+    # builder.
     #
     # Required Variables:
     #     stream:    release stream (eg. stable-lithium or beryllium)
@@ -255,7 +255,7 @@
                 - '{ssh-credentials}'
 
     triggers:
-        - timed: 'H H * * 7'
+        - timed: '@daily'
 
     prebuilders:
         - wipe-org-opendaylight-repo

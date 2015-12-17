@@ -8,7 +8,7 @@
     jobs:
         - 'centinel-verify-{stream}'
         - 'centinel-merge-{stream}'
-        - 'centinel-daily-{stream}'
+        - 'centinel-periodic-{stream}'
         - 'centinel-distribution-{stream}'
         - 'centinel-integration-{stream}'
         - 'centinel-sonar'
@@ -225,12 +225,12 @@
         - jacoco-report
 
 - job-template:
-    name: 'centinel-daily-{stream}'
+    name: 'centinel-periodic-{stream}'
 
-    # Job template for daily builders
+    # Job template for periodic builders
     #
-    # The purpose of this job template is to setup a daily/nightly
-    # builder and pushes to Sonar analysis.
+    # The purpose of this job template is to setup a periodic
+    # builder.
     #
     # Required Variables:
     #     stream:    release stream (eg. stable-lithium or beryllium)
@@ -263,7 +263,7 @@
                 - '{ssh-credentials}'
 
     triggers:
-        - timed: 'H H * * 7'
+        - timed: '@daily'
 
     prebuilders:
         - wipe-org-opendaylight-repo

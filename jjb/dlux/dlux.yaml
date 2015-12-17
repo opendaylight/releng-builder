@@ -8,7 +8,7 @@
     jobs:
         - 'dlux-verify-{stream}'
         - 'dlux-merge-{stream}'
-        - 'dlux-daily-{stream}'
+        - 'dlux-periodic-{stream}'
         - 'dlux-distribution-{stream}'
         - 'dlux-integration-{stream}'
         - 'dlux-sonar'
@@ -237,12 +237,12 @@
         - jacoco-report
 
 - job-template:
-    name: 'dlux-daily-{stream}'
+    name: 'dlux-periodic-{stream}'
 
-    # Job template for daily builders
+    # Job template for periodic builders
     #
-    # The purpose of this job template is to setup a daily/nightly
-    # builder and pushes to Sonar analysis.
+    # The purpose of this job template is to setup a periodic
+    # builder.
     #
     # Required Variables:
     #     stream:    release stream (eg. stable-lithium or beryllium)
@@ -275,7 +275,7 @@
                 - '{ssh-credentials}'
 
     triggers:
-        - timed: 'H H * * 7'
+        - timed: '@daily'
 
     prebuilders:
         - wipe-org-opendaylight-repo

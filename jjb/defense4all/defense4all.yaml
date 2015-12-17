@@ -8,7 +8,7 @@
     jobs:
         - 'defense4all-verify-{stream}'
         - 'defense4all-merge-{stream}'
-        - 'defense4all-daily-{stream}'
+        - 'defense4all-periodic-{stream}'
         - 'defense4all-distribution-{stream}'
         - 'defense4all-integration-{stream}'
         - 'defense4all-sonar'
@@ -229,12 +229,12 @@
         - jacoco-report
 
 - job-template:
-    name: 'defense4all-daily-{stream}'
+    name: 'defense4all-periodic-{stream}'
 
-    # Job template for daily builders
+    # Job template for periodic builders
     #
-    # The purpose of this job template is to setup a daily/nightly
-    # builder and pushes to Sonar analysis.
+    # The purpose of this job template is to setup a periodic
+    # builder.
     #
     # Required Variables:
     #     stream:    release stream (eg. stable-lithium or beryllium)
@@ -267,7 +267,7 @@
                 - '{ssh-credentials}'
 
     triggers:
-        - timed: 'H H * * 7'
+        - timed: '@daily'
 
     prebuilders:
         - wipe-org-opendaylight-repo

@@ -8,7 +8,7 @@
     jobs:
         - 'vtn-verify-{stream}'
         - 'vtn-merge-{stream}'
-        - 'vtn-daily-{stream}'
+        - 'vtn-periodic-{stream}'
         - 'vtn-distribution-{stream}'
         - 'vtn-integration-{stream}'
         - 'vtn-sonar'
@@ -239,12 +239,12 @@
         - jacoco-report
 
 - job-template:
-    name: 'vtn-daily-{stream}'
+    name: 'vtn-periodic-{stream}'
 
-    # Job template for daily builders
+    # Job template for periodic builders
     #
-    # The purpose of this job template is to setup a daily/nightly
-    # builder and pushes to Sonar analysis.
+    # The purpose of this job template is to setup a periodic
+    # builder.
     #
     # Required Variables:
     #     stream:    release stream (eg. stable-lithium or beryllium)
@@ -277,7 +277,7 @@
                 - '{ssh-credentials}'
 
     triggers:
-        - timed: 'H H * * 7'
+        - timed: '@daily'
 
     prebuilders:
         - wipe-org-opendaylight-repo

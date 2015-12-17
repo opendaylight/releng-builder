@@ -8,7 +8,7 @@
     jobs:
         - 'topoprocessing-verify-{stream}'
         - 'topoprocessing-merge-{stream}'
-        - 'topoprocessing-daily-{stream}'
+        - 'topoprocessing-periodic-{stream}'
         - 'topoprocessing-distribution-{stream}'
         - 'topoprocessing-integration-{stream}'
         - 'topoprocessing-sonar'
@@ -232,12 +232,12 @@
         - jacoco-report
 
 - job-template:
-    name: 'topoprocessing-daily-{stream}'
+    name: 'topoprocessing-periodic-{stream}'
 
-    # Job template for daily builders
+    # Job template for periodic builders
     #
-    # The purpose of this job template is to setup a daily/nightly
-    # builder and pushes to Sonar analysis.
+    # The purpose of this job template is to setup a periodic
+    # builder.
     #
     # Required Variables:
     #     stream:    release stream (eg. stable-lithium or beryllium)
@@ -270,7 +270,7 @@
                 - '{ssh-credentials}'
 
     triggers:
-        - timed: 'H H * * 7'
+        - timed: '@daily'
 
     prebuilders:
         - wipe-org-opendaylight-repo

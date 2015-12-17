@@ -8,7 +8,7 @@
     jobs:
         - 'vpnservice-verify-{stream}'
         - 'vpnservice-merge-{stream}'
-        - 'vpnservice-daily-{stream}'
+        - 'vpnservice-periodic-{stream}'
         - 'vpnservice-distribution-{stream}'
         - 'vpnservice-integration-{stream}'
         - 'vpnservice-sonar'
@@ -231,12 +231,12 @@
         - jacoco-report
 
 - job-template:
-    name: 'vpnservice-daily-{stream}'
+    name: 'vpnservice-periodic-{stream}'
 
-    # Job template for daily builders
+    # Job template for periodic builders
     #
-    # The purpose of this job template is to setup a daily/nightly
-    # builder and pushes to Sonar analysis.
+    # The purpose of this job template is to setup a periodic
+    # builder.
     #
     # Required Variables:
     #     stream:    release stream (eg. stable-lithium or beryllium)
@@ -269,7 +269,7 @@
                 - '{ssh-credentials}'
 
     triggers:
-        - timed: 'H H * * 7'
+        - timed: '@daily'
 
     prebuilders:
         - wipe-org-opendaylight-repo

@@ -7,7 +7,7 @@
     name: yangtools
     jobs:
         - 'yangtools-merge-{stream}'
-        - 'yangtools-daily-{stream}'
+        - 'yangtools-periodic-{stream}'
         - 'yangtools-distribution-{stream}'
         - 'yangtools-integration-{stream}'
         - 'yangtools-sonar'
@@ -160,12 +160,12 @@
         - jacoco-report
 
 - job-template:
-    name: 'yangtools-daily-{stream}'
+    name: 'yangtools-periodic-{stream}'
 
-    # Job template for daily builders
+    # Job template for periodic builders
     #
-    # The purpose of this job template is to setup a daily/nightly
-    # builder and pushes to Sonar analysis.
+    # The purpose of this job template is to setup a periodic
+    # builder.
     #
     # Required Variables:
     #     stream:    release stream (eg. stable-lithium or beryllium)
@@ -198,7 +198,7 @@
                 - '{ssh-credentials}'
 
     triggers:
-        - timed: 'H H * * 7'
+        - timed: '@daily'
 
     prebuilders:
         - wipe-org-opendaylight-repo

@@ -8,7 +8,7 @@
     jobs:
         - 'toolkit-verify-{stream}'
         - 'toolkit-merge-{stream}'
-        - 'toolkit-daily-{stream}'
+        - 'toolkit-periodic-{stream}'
         - 'toolkit-distribution-{stream}'
         - 'toolkit-integration-{stream}'
         - 'toolkit-sonar'
@@ -217,12 +217,12 @@
         - jacoco-report
 
 - job-template:
-    name: 'toolkit-daily-{stream}'
+    name: 'toolkit-periodic-{stream}'
 
-    # Job template for daily builders
+    # Job template for periodic builders
     #
-    # The purpose of this job template is to setup a daily/nightly
-    # builder and pushes to Sonar analysis.
+    # The purpose of this job template is to setup a periodic
+    # builder.
     #
     # Required Variables:
     #     stream:    release stream (eg. stable-lithium or beryllium)
@@ -255,7 +255,7 @@
                 - '{ssh-credentials}'
 
     triggers:
-        - timed: 'H H * * 7'
+        - timed: '@daily'
 
     prebuilders:
         - wipe-org-opendaylight-repo

@@ -8,7 +8,7 @@
     jobs:
         - 'capwap-verify-{stream}'
         - 'capwap-merge-{stream}'
-        - 'capwap-daily-{stream}'
+        - 'capwap-periodic-{stream}'
         - 'capwap-distribution-{stream}'
         - 'capwap-integration-{stream}'
         - 'capwap-sonar'
@@ -231,12 +231,12 @@
         - jacoco-report
 
 - job-template:
-    name: 'capwap-daily-{stream}'
+    name: 'capwap-periodic-{stream}'
 
-    # Job template for daily builders
+    # Job template for periodic builders
     #
-    # The purpose of this job template is to setup a daily/nightly
-    # builder and pushes to Sonar analysis.
+    # The purpose of this job template is to setup a periodic
+    # builder.
     #
     # Required Variables:
     #     stream:    release stream (eg. stable-lithium or beryllium)
@@ -269,7 +269,7 @@
                 - '{ssh-credentials}'
 
     triggers:
-        - timed: 'H H * * 7'
+        - timed: '@daily'
 
     prebuilders:
         - wipe-org-opendaylight-repo

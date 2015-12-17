@@ -8,7 +8,7 @@
     jobs:
         - 'messaging4transport-verify-{stream}'
         - 'messaging4transport-merge-{stream}'
-        - 'messaging4transport-daily-{stream}'
+        - 'messaging4transport-periodic-{stream}'
         - 'messaging4transport-distribution-{stream}'
         - 'messaging4transport-integration-{stream}'
         - 'messaging4transport-sonar'
@@ -225,12 +225,12 @@
         - jacoco-report
 
 - job-template:
-    name: 'messaging4transport-daily-{stream}'
+    name: 'messaging4transport-periodic-{stream}'
 
-    # Job template for daily builders
+    # Job template for periodic builders
     #
-    # The purpose of this job template is to setup a daily/nightly
-    # builder and pushes to Sonar analysis.
+    # The purpose of this job template is to setup a periodic
+    # builder.
     #
     # Required Variables:
     #     stream:    release stream (eg. stable-lithium or beryllium)
@@ -263,7 +263,7 @@
                 - '{ssh-credentials}'
 
     triggers:
-        - timed: 'H H * * 7'
+        - timed: '@daily'
 
     prebuilders:
         - wipe-org-opendaylight-repo

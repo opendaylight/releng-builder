@@ -8,7 +8,7 @@
     jobs:
         - 'lacp-verify-{stream}'
         - 'lacp-merge-{stream}'
-        - 'lacp-daily-{stream}'
+        - 'lacp-periodic-{stream}'
         - 'lacp-distribution-{stream}'
         - 'lacp-integration-{stream}'
         - 'lacp-sonar'
@@ -231,12 +231,12 @@
         - jacoco-report
 
 - job-template:
-    name: 'lacp-daily-{stream}'
+    name: 'lacp-periodic-{stream}'
 
-    # Job template for daily builders
+    # Job template for periodic builders
     #
-    # The purpose of this job template is to setup a daily/nightly
-    # builder and pushes to Sonar analysis.
+    # The purpose of this job template is to setup a periodic
+    # builder.
     #
     # Required Variables:
     #     stream:    release stream (eg. stable-lithium or beryllium)
@@ -269,7 +269,7 @@
                 - '{ssh-credentials}'
 
     triggers:
-        - timed: 'H H * * 7'
+        - timed: '@daily'
 
     prebuilders:
         - wipe-org-opendaylight-repo
