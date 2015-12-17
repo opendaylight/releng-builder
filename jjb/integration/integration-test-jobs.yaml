@@ -213,6 +213,8 @@
             test-plan: 'test-libraries.txt'
         - integration-patch-refspec:
             branch: '$GERRIT_REFSPEC'
+        - integration-jdk-version:
+            jdkversion: 'openjdk7'
 
     scm:
         - integration-gerrit-scm:
@@ -280,6 +282,8 @@
     parameters:
         - integration-bundleurl:
             bundleurl: 'last'
+        - integration-jdk-version:
+            jdkversion: 'openjdk7'
 
     triggers:
         - timed: 'H H * * 6'
