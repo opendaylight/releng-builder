@@ -100,9 +100,6 @@ done
 echo "Cool down for 1 min :)..."
 sleep 60
 
-echo "Checking OSGi bundles..."
-sshpass -p karaf /tmp/${BUNDLEFOLDER}/bin/client -u karaf 'bundle:list'
-
 echo "Listing all open ports on controller system..."
 netstat -natu
 

@@ -37,9 +37,6 @@ while true; do
     fi
 done
 
-echo "Checking OSGi bundles..."
-sshpass -p karaf /tmp/${BUNDLEFOLDER}/bin/client -u karaf 'bundle:list'
-
 echo "Listing all open ports on controller system.."
 netstat -natu
 
