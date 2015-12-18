@@ -155,9 +155,8 @@
                 - '{ssh-credentials}'
 
     triggers:
-        - reverse:
+        - integration-csit-{install}:
             jobs: '{trigger-jobs}'
-            result: 'success'
 
     builders:
         - integration-cleanup-workspace
@@ -339,9 +338,8 @@
                 - '{ssh-credentials}'
 
     triggers:
-        - reverse:
+        - integration-csit-{install}:
             jobs: '{trigger-jobs}'
-            result: 'success'
 
     builders:
         - integration-cleanup-workspace
@@ -621,9 +619,8 @@
                 - '{ssh-credentials}'
 
     triggers:
-        - reverse:
+        - integration-csit-{install}:
             jobs: '{trigger-jobs}'
-            result: 'success'
 
     builders:
         - integration-cleanup-workspace
