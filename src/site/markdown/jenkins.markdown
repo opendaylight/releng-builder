@@ -488,6 +488,21 @@ in your project.cfg file under the **DEPENDENCIES** variable.
 
 If no dependencies are listed then this job type is disabled by default.
 
+### <a name="distribution_test_job">Distribution Test Job</a>
+
+Trigger: **test-distribution**
+
+This job builds a distrbution against your patch, passes distribution sanity test
+and reports back the results to Gerrit. Leave a comment with trigger keyword above
+to activate it for a particular patch.
+
+This job is maintained by the [Integration/Test][1] project.
+
+**Note:** Running the "test-distribution" trigger will cause Jenkins to remove
+it's existing vote if it's already -1 or +1'd a comment. You will need to
+re-run your verify job (recheck) after running this to get Jenkins to put back
+the correct vote.
+
 ### <a name="patch_test_job">Patch Test Job</a>
 
 Trigger: **test-integration**
