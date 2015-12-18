@@ -158,6 +158,26 @@
                   - compare-type: 'ANT'
                     pattern: '{pattern}'
 
+# Macro: integration-csit-only
+# Operation: this macro sets a trigger on reverse job list
+# Used by: csit -only- job templates
+
+- trigger:
+    name: integration-csit-only
+    triggers:
+        - reverse:
+            jobs: '{jobs}'
+            result: 'success'
+
+# Macro: integration-trigger-patch-merged
+# Operation: this macro sets a periodic trigger
+# Used by: csit -all- job teamplates
+
+- trigger:
+    name: integration-csit-all
+    triggers:
+        - timed: 'H H * * *'
+
 # Macro: integration-jclouds-controller-mininet
 # Operation: this macro will spin the controller and mininet vms
 # Used by: {project}-csit-* job templates
