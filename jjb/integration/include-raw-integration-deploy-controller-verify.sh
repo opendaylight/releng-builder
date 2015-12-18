@@ -79,9 +79,6 @@ done
 echo "loading many features at once.  Need to allow time for problems to show up in logs.  cool down for 5 min ..."
 sleep 300
 
-echo "Checking OSGi bundles..."
-sshpass -p karaf ${WORKSPACE}/${BUNDLEFOLDER}/bin/client -u karaf 'bundle:list'
-
 echo "Listing all open ports on controller system"
 netstat -natu
 
