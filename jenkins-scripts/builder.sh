@@ -5,6 +5,11 @@ yum install -y python-virtualenv xmlstarlet
 
 # sshpass for the current deploy test to be runable immediatelly after build
 yum install -y sshpass
+# deploy test also needs sudo for chooing java version
+cat <<EOF >/etc/sudoers.d/89-jenkins-user-defaults
+Defaults:jenkins !requiretty
+jenkins     ALL = NOPASSWD: ALL
+EOF
 
 # add in mono components for VTN
 yum install -y yum-utils
