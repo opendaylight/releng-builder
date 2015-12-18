@@ -368,10 +368,10 @@ to install from the latest commit to the master branch of JJB's git repository:
     $ cat jjb/requirements.txt
     -e git+https://git.openstack.org/openstack-infra/jenkins-job-builder#egg=jenkins-job-builder
 
-To install from a tag, like 1.3.0:
+To install from a tag, like 1.4.0:
 
     $ cat jjb/requirements.txt
-    -e git+https://git.openstack.org/openstack-infra/jenkins-job-builder@1.3.0#egg=jenkins-job-builder
+    -e git+https://git.openstack.org/openstack-infra/jenkins-job-builder@1.4.0#egg=jenkins-job-builder
 
 #### <a name="jjb_install_manual">Installing JJB Manually</a>
 
@@ -385,11 +385,11 @@ For example, using master:
 
     $ git clone https://git.openstack.org/openstack-infra/jenkins-job-builder
 
-Using a tag, like 1.3.0:
+Using a tag, like 1.4.0:
 
     $ git clone https://git.openstack.org/openstack-infra/jenkins-job-builder
     $ cd jenkins-job-builder
-    $ git checkout tags/1.3.0
+    $ git checkout tags/1.4.0
 
 Before actually installing JJB and its dependencies, make sure you've [created
 and activated](#jjb_install_venv) a virtual environment for JJB.
