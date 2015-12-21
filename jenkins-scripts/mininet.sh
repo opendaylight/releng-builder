@@ -62,4 +62,10 @@ echo 'root' | passwd -f --stdin root
 # make sure the firewall is stopped
 /bin/bash disable_firewall.sh
 
+# install git
+yum install -q -y git-all
+
+# git clone usc-tools for usc test purpose
+git clone https://github.com/victorxu99/usc-tools.git
+
 # vim: sw=2 ts=2 sts=2 et :

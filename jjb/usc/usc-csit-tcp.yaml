@@ -1,0 +1,37 @@
+- project:
+    name: usc-csit-tcp
+    jobs:
+        - '{project}-csit-1node-{functionality}-{install}-{stream}'
+        - '{project}-csit-verify-1node-{functionality}'
+
+    # The project name
+    project: 'usc'
+
+    # The functionality under test
+    functionality: 'tcp'
+
+    # Project branches
+    stream:
+        - beryllium:
+            branch: 'master'
+        - stable-lithium:
+            branch: 'stable/lithium'
+
+    install:
+        - only:
+            scope: 'only'
+        - all:
+            scope: 'all'
+
+    # Mininet configuration
+    mininet-image: 'rk-c-el6-mininet'
+    mininet-vms: 1
+
+    # Features to install
+    install-features: 'odl-restconf,odl-mdsal-apidocs,odl-usc-channel-ui'
+
+    # Robot custom options
+    robot-options: ''
+
+    # Trigger jobs (upstream dependencies)
+    trigger-jobs: 'odlparent-distribution-{stream},yangtools-distribution-{stream},controller-distribution-{stream},usc-distribution-{stream}'
