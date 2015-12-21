@@ -62,4 +62,7 @@ echo 'root' | passwd -f --stdin root
 # make sure the firewall is stopped
 /bin/bash disable_firewall.sh
 
+# Downlaod usc-tools for project usc csit test
+git clone https://github.com/victorxu99/usc-tools.git
+
 # vim: sw=2 ts=2 sts=2 et :
