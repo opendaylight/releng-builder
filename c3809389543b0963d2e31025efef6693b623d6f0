@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_0e04bd79",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2015-12-22T00:09:30Z",
+      "side": 1,
+      "message": "Please refer to [1] for details on how to write good commit messages. The first line in a git commit message is your summary line, and must always be followed by a blank line otherwise the commit message won\u0027t look proper certain views.\n\nAlso you should describe what your change is doing rather than describing what you are changing. The purpose of the commit message is so that the reader can have an understanding of the Purpose of the change as well as a description of the change. For example:\n\n \"\"\"\n Add csit test for tcp feature in usc\n \n This change adds a new csit test to test the tcp feature\n in usc. It also modifies mininet to download usc tools\n needed for testing the tcp feature.\n \n Change-Id: xxxxxxxxxxxxxxxxx\n Signed-off-by: Firstname Lastname \u003cemail\u003e\n \"\"\"\n\nHope this helps.\n\n[1] https://wiki.openstack.org/wiki/GitCommitMessages",
+      "revId": "c3809389543b0963d2e31025efef6693b623d6f0",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_2e05f979",
+        "filename": "jenkins-scripts/mininet.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2015-12-22T00:09:30Z",
+      "side": 1,
+      "message": "No need to install git, our servers come with it otherwise you it wouldn\u0027t have access to this mininet.sh file ;)",
+      "revId": "c3809389543b0963d2e31025efef6693b623d6f0",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
