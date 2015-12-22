@@ -1,0 +1,15 @@
+- project:
+    name: ovsdb-verify-custom
+    jobs:
+        - 'ovsdb-verify-{stream}'
+
+    # stream:    release stream (eg. stable-lithium or beryllium)
+    # branch:    git branch (eg. stable/lithium or master)
+    stream:
+        - routermanager:
+            branch: 'topic/routermanager'
+            jdk: openjdk7
+            jdks:
+                - openjdk7
+
+    project: 'ovsdb'
