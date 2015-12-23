@@ -228,6 +228,8 @@
         - findbugs
 
     publishers:
+        - archive-artifacts:
+            artifacts: '**/target/surefire-reports/*-output.txt, '
         - email-notification:
             email-prefix: '[snmp4sdn]'
         - maven-deploy:

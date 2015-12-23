@@ -230,7 +230,7 @@
 
     publishers:
         - archive-artifacts:
-            artifacts: 'model/*/target/site/**'
+            artifacts: '**/target/surefire-reports/*-output.txt, model/*/target/site/**'
         - email-notification:
             email-prefix: '[openflowplugin]'
         - maven-deploy:
