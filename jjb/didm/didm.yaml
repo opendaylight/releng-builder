@@ -529,6 +529,7 @@
         global-settings: '{odl-global-settings}'
 
     postbuilders:
+        - shell: 'find . -regex ".*karaf/target" | xargs rm -rf'
         - check-clm:
             application-name: didm
 
