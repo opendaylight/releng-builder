@@ -152,13 +152,13 @@ if dependencies:
 ############################
 # Handle ARCHIVE_ARTIFACTS #
 ############################
-if cfg.get('ARCHIVE_ARTIFACTS'):
-    archive_artifacts = cfg.get('ARCHIVE_ARTIFACTS')
-    archive_artifacts = ("- archive-artifacts:\n"
-                         "            artifacts: '%s'" % archive_artifacts)
-else:
-    archive_artifacts = ""
 
+always_archive = "**/target/surefire-reports/*-output.txt"
+
+archive_artifacts = cfg.get('ARCHIVE_ARTIFACTS', '')
+archive_artifacts = ("- archive-artifacts:\n"
+                     "            artifacts: '%s, %s'" %
+                     (always_archive, archive_artifacts))
 
 ##############################
 # Create configuration start #
