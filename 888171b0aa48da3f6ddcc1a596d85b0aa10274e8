@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_ae9f9fb3",
+        "filename": "jjb/ovsdb/ovsdb-custom.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2015-12-24T16:54:40Z",
+      "side": 1,
+      "message": "The jenkins and coverage profiles were from older ovsdb code in commons/parent. That code no longer exists so I removed the profiles.\n\nThe -Dsonar was something Thanh added. I simply moved it to the front of the line to be consistent with other invocations we have in other yamls.",
+      "parentUuid": "1aa4ed85_4e6f0bc6",
+      "range": {
+        "startLine": 49,
+        "startChar": 34,
+        "endLine": 49,
+        "endChar": 40
+      },
+      "revId": "888171b0aa48da3f6ddcc1a596d85b0aa10274e8",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_2e640fe4",
         "filename": "jjb/ovsdb/ovsdb-custom.yaml",
         "patchSetId": 1
@@ -59,6 +83,30 @@
       "writtenOn": "2015-12-24T16:48:47Z",
       "side": 1,
       "message": "sonar neeed? is that used instead of coverage?",
+      "range": {
+        "startLine": 60,
+        "startChar": 49,
+        "endLine": 60,
+        "endChar": 55
+      },
+      "revId": "888171b0aa48da3f6ddcc1a596d85b0aa10274e8",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_4ea62b12",
+        "filename": "jjb/ovsdb/ovsdb-custom.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2015-12-24T16:54:40Z",
+      "side": 1,
+      "message": "simply moved the -Dsonar up to be consistent",
+      "parentUuid": "1aa4ed85_2e640fe4",
       "range": {
         "startLine": 60,
         "startChar": 49,
