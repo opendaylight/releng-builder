@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_8e9c23c2",
+        "filename": "jjb/ovsdb/ovsdb-custom.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2015-12-24T16:55:02Z",
+      "side": 1,
+      "message": "All our sonar jobs have -Dsonar, of course it doesn\u0027t do anything unless your project activates a profile on that trigger but nice to have for consistency.\n\nSame goes for -Djenkins, the difference is we pass -Djenkins to all jobs and not just the Sonar jobs.\n\nUsing properties to activate profiles gives you more flexibility and allows you to use different profile names and/or activate multiple profiles rather than just one.",
+      "parentUuid": "1aa4ed85_4e6f0bc6",
+      "range": {
+        "startLine": 49,
+        "startChar": 34,
+        "endLine": 49,
+        "endChar": 40
+      },
+      "revId": "888171b0aa48da3f6ddcc1a596d85b0aa10274e8",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_2e640fe4",
         "filename": "jjb/ovsdb/ovsdb-custom.yaml",
         "patchSetId": 1
