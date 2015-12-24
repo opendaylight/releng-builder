@@ -13,9 +13,9 @@
                 - openjdk8
         - stable-lithium:
             branch: 'stable/lithium'
-            jdk: openjdk8
+            jdk: openjdk7
             jdks:
-                - openjdk8
+                - openjdk7
 
     project: 'ovsdb'
 
@@ -41,8 +41,8 @@
                 - 2.4.0
         - axis:
             type: jdk
-            values:
-                - openjdk8
+            values: '{obj:jdks}'
+
         - axis:
             type: slave
             name: nodes
@@ -90,7 +90,7 @@
         - maven-target:
             maven-version: '{mvn33}'
             pom: 'pom.xml'
-            goals: 'clean install verify -Pintegrationtest,jenkins -V -Dovsdb.controller.address=${{CONTROLLER_IP}}'
+            goals: 'clean install -V verify -Pintegrationtest -Dskip.karaf.featureTest=true -Dmaven.compile.fork=true -Dovsdb.controller.address=${{CONTROLLER_IP}}'
             properties:
                 - 'ovsdbserver.ipaddress=127.0.0.1'
                 - 'ovsdbserver.port=6641'
