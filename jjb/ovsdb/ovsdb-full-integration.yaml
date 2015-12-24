@@ -8,13 +8,15 @@
     stream:
         - beryllium:
             branch: 'master'
-            jdk: openjdk8
+            jdk: openjdk7
             jdks:
+                - openjdk7
                 - openjdk8
         - stable-lithium:
             branch: 'stable/lithium'
-            jdk: openjdk8
+            jdk: openjdk7
             jdks:
+                - openjdk7
                 - openjdk8
 
     project: 'ovsdb'
@@ -41,8 +43,7 @@
                 - 2.4.0
         - axis:
             type: jdk
-            values:
-                - openjdk8
+            values: '{obj:jdks}'
         - axis:
             type: slave
             name: nodes
