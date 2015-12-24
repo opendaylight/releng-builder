@@ -36,7 +36,9 @@
                 - '{ssh-credentials}'
 
     triggers:
-        - timed: 'H H * * *'
+        - timed: '@weekly'
+        - gerrit-trigger-patch-sonar:
+            name: 'ovsdb'
 
     prebuilders:
         - shell:
