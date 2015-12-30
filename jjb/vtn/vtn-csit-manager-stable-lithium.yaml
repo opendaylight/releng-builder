@@ -1,5 +1,5 @@
 - project:
-    name: vtn-csit-manager
+    name: vtn-csit-manager-li
     jobs:
         - '{project}-csit-1node-{functionality}-{install}-{stream}'
         - '{project}-csit-verify-1node-{functionality}'
@@ -8,12 +8,12 @@
     project: 'vtn'
 
     # The functionality under test
-    functionality: 'manager'
+    functionality: 'manager_li'
 
     # Project branches
     stream:
-        - beryllium:
-            branch: 'master'
+        - stable-lithium:
+            branch: 'stable/lithium'
 
     install:
         - only:
