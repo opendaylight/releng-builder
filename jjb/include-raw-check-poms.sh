@@ -33,9 +33,13 @@ curl -s --header "Accept: application/json" \
     tail -n +2 > ${WORKSPACE}/projects.json
 for p in `cat ${WORKSPACE}/projects.json | python ${WORKSPACE}/parse_json.py`
 do
+    # Ignore non-projects and archived projects
     if [ "$p" == "All-Users" ] || \
+       [ "$p" == "affinity" ] || \
        [ "$p" == "integration" ] || \
-       [ "$p" == "net-virt-platform" ]
+       [ "$p" == "net-virt-platform" ] || \
+       [ "$p" == "opendove" ] || \
+       [ "$p" == "plugin2oc" ]
     then
         continue
     fi
