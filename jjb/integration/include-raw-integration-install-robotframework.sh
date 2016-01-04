@@ -19,10 +19,7 @@ pip install -q --upgrade pip
 pip --version
 pip install -q docker-py importlib requests scapy netifaces netaddr ipaddr
 pip install -q robotframework{,-{httplibrary,requests,sshlibrary,selenium2library}}
-
 # jsonpath is needed by current AAA idmlite suite
-pip install -q --allow-external jsonpath --allow-unverified jsonpath jsonpath || true
-# FIXME: jsonpath installation currently fails.
-# Rework the suite, or find a way to install correctly and remove " || true"
+pip install -q --allow-external jsonpath --allow-unverified jsonpath jsonpath
 
 # vim: sw=4 ts=4 sts=4 et ft=sh :
