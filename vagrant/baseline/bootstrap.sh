@@ -25,6 +25,12 @@ rh_systems() {
         echo "*******************************************"
     fi
 
+    # Allow jenkins access to alternatives command to switch java version
+    cat <<EOF >/etc/sudoers.d/89-jenkins-user-defaults
+Defaults:jenkins !requiretty
+jenkins ALL = NOPASSWD: /usr/sbin/alternatives
+EOF
+
     echo "---> Updating operating system"
     yum clean all -q
     yum update -y -q
@@ -67,6 +73,12 @@ ubuntu_systems() {
     # Ignore SELinux since slamming that onto Ubuntu leads to
     # frustration
 
+    # Allow jenkins access to update-alternatives command to switch java version
+    cat <<EOF >/etc/sudoers.d/89-jenkins-user-defaults
+Defaults:jenkins !requiretty
+jenkins ALL = NOPASSWD: /usr/bin/update-alternatives
+EOF
+
     echo "---> Updating operating system"
     apt-get update -qq
     apt-get upgrade -y --force-yes -qq
@@ -78,7 +90,7 @@ ubuntu_systems() {
     # install Java 7
     echo "---> Configuring OpenJDK"
     apt-get install -y --force-yes -qq openjdk-7-jdk
-    
+
     # make jdk8 available
     add-apt-repository -y ppa:openjdk-r/ppa
     apt-get update -qq
