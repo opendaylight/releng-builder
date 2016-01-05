@@ -6,19 +6,22 @@
         - 'integration-distribution-merge-{stream}'
         - 'integration-distribution-deploy-{stream}'
         - 'integration-distribution-offline-{stream}'
+        - 'integration-distribution-validate-autorelease-{stream}'
         - 'integration-patch-distribution-{stream}'
 
     stream:
         - pre-boron:
             branch: 'pre-boron'
+            disable_autorelease: true
         - beryllium:
             branch: 'master'
-
+            disable_autorelease: false
         - stable-lithium:
             branch: 'stable/lithium'
-
+            disable_autorelease: true
         - stable-helium:
             branch: 'stable/helium'
+            disable_autorelease: true
 
     jdk: 'openjdk7'
 
@@ -333,3 +336,108 @@
     publishers:
         - email-notification:
             email-prefix: '[$GERRIT_PROJECT]'
+
+# Template: integration-validate-autorelease-{stream}
+# Goal: Checks pom dependencies for autorelease projects
+# Operation: runs mvn validate goal against autorelease projects to check pom
+#            sanity
+
+- job-template:
+    name: 'integration-distribution-validate-autorelease-{stream}'
+    disabled: '{obj:disable_autorelease}'
+
+    project-type: maven
+    node: dynamic_verify
+    concurrent: true
+    jdk: '{jdk}'
+
+    logrotate:
+        daysToKeep: '{build-days-to-keep}'
+        numToKeep: '{build-num-to-keep}'
+        artifactDaysToKeep: '{build-artifact-days-to-keep}'
+        artifactNumToKeep: '{build-artifact-num-to-keep}'
+
+    parameters:
+        - project-parameter:
+            project: 'integration/distribution'
+        - gerrit-parameter:
+            branch: '{branch}'
+        - autorelease-release-tag:
+            release-tag: 'validate'
+        - autorelease-release-branch:
+            release-branch: '{branch}'
+        - autorelease-release-datestamp:
+            datestamp: true
+
+    scm:
+        - git:
+            url: 'https://git.opendaylight.org/gerrit/releng/autorelease'
+            refspec: ''
+            branches:
+                - 'origin/{branch}'
+            skip-tag: true
+            submodule:
+                recursive: true
+
+    wrappers:
+        - autorelease-build-timeout
+        - ssh-agent-credentials:
+            users:
+                - '{ssh-credentials}'
+
+    triggers:
+        - gerrit:
+            server-name: 'OpenDaylight'
+            trigger-on:
+                - patchset-created-event:
+                    exclude-drafts: 'false'
+                    exclude-trivial-rebase: 'false'
+                    exclude-no-code-change: 'false'
+                - draft-published-event
+                - comment-added-contains-event:
+                    comment-contains-value: 'recheck'
+                - comment-added-contains-event:
+                    comment-contains-value: 'reverify'
+                - comment-added-contains-event:
+                    comment-contains-value: 'revalidate'
+            projects:
+              - project-compare-type: 'ANT'
+                project-pattern: 'integration/distribution'
+                branches:
+                  - branch-compare-type: 'ANT'
+                    branch-pattern: '**/{branch}'
+
+    prebuilders:
+        - wipe-org-opendaylight-repo
+        - jacoco-nojava-workaround
+        - autorelease-checkout-gerrit-patch
+        - autorelease-generate-taglist
+        - autorelease-generate-release-patches
+        - maven-target:
+            maven-version: '{mvn33}'
+            pom: validate-pom.xml
+            goals: 'clean install -T1.5C -Djenkins -DskipTests -Dcheckstyle.skip=true -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+            java-opts:
+            - '-Xmx8g'
+            settings: '{autorelease-settings}'
+            global-settings: '{odl-global-settings}'
+
+    maven:
+        maven-name: '{mvn33}'
+        root-pom: 'pom.xml'
+        goals: 'clean validate -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+        maven-opts: '-Xmx8g -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
+        settings: '{autorelease-settings}'
+        global-settings: '{odl-global-settings}'
+        automatic-archiving: false
+        post-step-run-condition: UNSTABLE
+
+    postbuilders:
+        - shell: "./scripts/list-project-dependencies.sh"
+        - autorelease-sys-stats
+
+    publishers:
+        - archive-artifacts:
+            artifacts: '*.log'
+        - email-notification:
+            email-prefix: '[autorelease] [integration]'
