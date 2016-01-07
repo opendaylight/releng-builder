@@ -15,6 +15,7 @@
 
 - job-template:
     name: builder-verify-jjb
+    node: jjbuilder
 
     project-type: freestyle
 
@@ -65,10 +66,9 @@
 
     builders:
         - shell: |
-            source /opt/virtualenv/jenkins-job-builder/bin/activate
             pip freeze
             python scripts/jjb-autoupdate-project.py
-            jenkins-jobs test jjb/
+            jenkins-jobs test --recursive jjb/
         - releng-check-unicode
 
     publishers:
@@ -134,6 +134,7 @@
 
 - job-template:
     name: 'builder-merge'
+    node: jjbuilder
 
     # builder-merge job to run JJB update
     #
@@ -193,6 +194,7 @@
 
 - job-template:
     name: 'builder-weekly'
+    node: jjbuilder
 
     # builder-weekly job to run JJB update weekly
     #
@@ -226,8 +228,7 @@
 
     builders:
         - shell: |
-            source /opt/virtualenv/jenkins-job-builder/bin/activate
-            jenkins-jobs --flush-cache update jjb/
+            jenkins-jobs --flush-cache update --recursive jjb/
 
     publishers:
         - email-notification:
