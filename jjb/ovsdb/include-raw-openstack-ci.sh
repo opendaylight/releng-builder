@@ -139,7 +139,10 @@ export WORKSPACE=$SAVED_WORKSPACE
 cat /opt/stack/new/devstacklog*
 ls /opt/stack/; ls /opt/stack/new; ls /opt/stack/new/opendaylight;
 cp -r $OS_WORKSPACE/logs $WORKSPACE
-cp -a /opt/stack/new/logs/screen-odl-karaf* $WORKSPACE/logs
+SCREEN_ODL_KARAF_FILES=`find /opt/stack/new/logs/ -name screen-odl-karaf\*`
+if [ -n "$SCREEN_ODL_KARAF_FILES" ]; then
+    cp -a /opt/stack/new/logs/screen-odl-karaf* $WORKSPACE/logs
+fi
 mkdir -p $WORKSPACE/logs/opendaylight
 cp -a /opt/stack/new/opendaylight/distribution*/etc $WORKSPACE/logs/opendaylight
 # Unzip the logs to make them easier to view
