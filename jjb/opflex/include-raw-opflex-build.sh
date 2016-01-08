@@ -31,7 +31,7 @@ pushd libopflex
     CPPFLAGS="-isystem $ROOT/include"
     CXXFLAGS="-Wall"
 make -j8
-make check
+make check || find . -name test-suite.log -exec cat {} \; && false
 make install
 make dist
 popd
@@ -56,6 +56,6 @@ pushd agent-ovs
     CPPFLAGS="-isystem $ROOT/include" \
     CXXFLAGS="-Wall"
 make -j8
-make check
+make check || find . -name test-suite.log -exec cat {} \; && false
 make dist
 popd
