@@ -161,6 +161,7 @@
             branch: '{branch}'
         - gerrit-refspec-parameter:
             refspec: 'refs/heads/{branch}'
+        - distribution-check
 
     scm:
         - gerrit-trigger-scm:
@@ -196,6 +197,17 @@
         post-step-run-condition: UNSTABLE
 
     postbuilders:
+        - conditional-step:
+            condition-kind: boolean-expression
+            condition-expression: $DISTRIBUTION_CHECK
+            steps:
+            - trigger-builds:
+                - project: 'integration-patch-distribution-{stream}'
+                  block: true
+                  predefined-parameters: |
+                      GERRIT_PROJECT={project}
+                      GERRIT_REFSPEC={branch}
+
         - conditional-step:
             condition-kind: file-exists
             condition-filename: deploy-site.xml
