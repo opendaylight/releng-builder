@@ -161,6 +161,7 @@
             branch: '{branch}'
         - gerrit-refspec-parameter:
             refspec: 'refs/heads/{branch}'
+        - distribution-check
 
     scm:
         - gerrit-trigger-scm:
@@ -224,6 +225,17 @@
                     - '-Xmx2g'
                 settings: '{openflowplugin-settings}'
                 global-settings: '{odl-global-settings}'
+
+        - conditional-step:
+            condition-kind: boolean-expression
+            condition-expression: $DISTRIBUTION_CHECK
+            steps:
+            - trigger-builds:
+                - project: 'integration-patch-distribution-{stream}'
+                  block: true
+                  predefined-parameters: |
+                      GERRIT_PROJECT={project}
+                      GERRIT_REFSPEC={branch}
 
     reporters:
         - findbugs

@@ -56,6 +56,14 @@
             default: 'master'
             description: 'distribution repo branch to build with'
 
+- parameter:
+    name: distribution-check
+    parameters:
+        - string:
+            name: DISTRIBUTION_CHECK
+            default: 'true'
+            description: 'Enables/Disables Distribution check'
+
 - scm:
     name: git-scm
     scm:
