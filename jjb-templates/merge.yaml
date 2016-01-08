@@ -41,6 +41,7 @@
                 - '{ssh-credentials}'
 
     triggers:
+        - timed: 'H H * * 0'
         - gerrit-trigger-patch-merged:
             name: 'PROJECT_PATH'
             branch: '{branch}'
