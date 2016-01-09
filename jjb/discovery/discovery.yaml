@@ -154,6 +154,7 @@
                 - '{ssh-credentials}'
 
     triggers:
+        - timed: 'H H * * 0'
         - gerrit-trigger-patch-merged:
             name: 'discovery'
             branch: '{branch}'

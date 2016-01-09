@@ -168,6 +168,7 @@
                 - '{ssh-credentials}'
 
     triggers:
+        - timed: 'H H * * 0'
         - gerrit-trigger-patch-merged:
             name: 'nic'
             branch: '{branch}'
