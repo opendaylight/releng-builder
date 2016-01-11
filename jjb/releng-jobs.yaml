@@ -68,10 +68,12 @@
             source /opt/virtualenv/jenkins-job-builder/bin/activate
             pip freeze
             python scripts/jjb-autoupdate-project.py
-            jenkins-jobs test jjb/
+            jenkins-jobs test -o job_output jjb/
         - releng-check-unicode
 
     publishers:
+        - archive-artifacts:
+            artifacts: 'job_output/*'
         - email-notification:
             email-prefix: '[releng]'
 
