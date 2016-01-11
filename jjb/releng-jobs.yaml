@@ -79,6 +79,7 @@
 
 - job-template:
     name: builder-verify-python
+    node: dynamic_verify
 
     project-type: freestyle
 
@@ -128,6 +129,9 @@
 
     builders:
         - shell: |
+            virtualenv $WORKSPACE/venv
+            source $WORKSPACE/venv/bin/activate
+            pip install flake8
             flake8 scripts/
 
     publishers:
