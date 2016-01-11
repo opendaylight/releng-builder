@@ -95,10 +95,10 @@ example).
     <url>${odl.site.url}/${project.groupId}/${stream}/${project.artifactId}/</url>
 
     <distributionManagement>
-    <site>
-      <id>opendaylight-site</id>
-      <url>${nexus.site.url}/${project.artifactId}/</url>
-    </site>
+      <site>
+        <id>opendaylight-site</id>
+        <url>${nexus.site.url}/${project.artifactId}/</url>
+      </site>
     </distributionManagement>
 
 **Note:** For the project root pom.xml remove the final path
@@ -121,3 +121,44 @@ content:
 
   * https://maven.apache.org/plugins/maven-site-plugin/examples/creating-content.html
   * https://maven.apache.org/plugins/maven-site-plugin/examples/sitedescriptor.html
+
+## <a name="aggregate_apidocs">Aggregating Java apidocs</a>
+
+Javadoc is generated automatically for each bundle however to aggregate them
+all into a single convenient url we need to ensure that the root pom has a
+profile to activate it. The following should be copied into the profiles
+section of the project root pom.
+
+    <profiles>
+      <profile>
+        <!--
+            This profile is to ensure we only build javadocs reports
+            when we plan to deploy Maven site for our project.
+        -->
+        <id>maven-site</id>
+        <activation>
+          <file>
+            <exists>${user.dir}/deploy-site.xml</exists>
+          </file>
+        </activation>
+
+        <build>
+          <plugins>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-javadoc-plugin</artifactId>
+              <inherited>false</inherited>
+              <executions>
+                <execution>
+                  <id>aggregate</id>
+                  <goals>
+                    <goal>aggregate</goal>
+                  </goals>
+                  <phase>package</phase>
+              </execution>
+              </executions>
+            </plugin>
+          </plugins>
+        </build>
+      </profile>
+    </profiles>
