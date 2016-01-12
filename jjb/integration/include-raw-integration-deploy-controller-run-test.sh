@@ -10,8 +10,12 @@ if [ ${CONTROLLERSCOPE} == 'all' ]; then
     ACTUALFEATURES="odl-integration-compatible-with-all,${CONTROLLERFEATURES}"
     CONTROLLERMEM="3072m"
 else
-    ACTUALFEATURES="${CONTROLLERFEATURES}"
+    # This is to induce newline in Sandbox.
+    ACTUALFEATURES="${CONTROLLERFEATURES}
+"
 fi
+# Some versions of jenkins job builder result in feature list ending in newline; remove that.
+ACTUALFEATURES=`echo ${ACTUALFEATURES}`
 
 if [ -f ${WORKSPACE}/test/csit/scriptplans/${TESTPLAN} ]; then
     echo "scriptplan exists!!!"
