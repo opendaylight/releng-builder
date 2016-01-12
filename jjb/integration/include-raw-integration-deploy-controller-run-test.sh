@@ -12,6 +12,9 @@ if [ ${CONTROLLERSCOPE} == 'all' ]; then
 else
     ACTUALFEATURES="${CONTROLLERFEATURES}"
 fi
+# Some versions of jenkins job builder result in feature list containing spaces
+# and ending in newline. Remove all that.
+ACTUALFEATURES=`echo "${ACTUALFEATURES}" | tr -d '\n \r'`
 
 if [ -f ${WORKSPACE}/test/csit/scriptplans/${TESTPLAN} ]; then
     echo "scriptplan exists!!!"
