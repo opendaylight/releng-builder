@@ -10,8 +10,12 @@ if [ ${CONTROLLERSCOPE} == 'all' ]; then
     ACTUALFEATURES="odl-integration-compatible-with-all,${CONTROLLERFEATURES}"
     CONTROLLERMEM="3072m"
 else
-    ACTUALFEATURES="${CONTROLLERFEATURES}"
+    ACTUALFEATURES="${CONTROLLERFEATURES}
+"
 fi
+# Some versions of jenkins job builder result in feature list containing spaces
+# and ending in newline. Remove all that.
+ACTUALFEATURES=`echo "${ACTUALFEATURES}" | tr -d '\n \r'`
 
 if [ -f ${WORKSPACE}/test/csit/scriptplans/${TESTPLAN} ]; then
     echo "scriptplan exists!!!"
