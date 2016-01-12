@@ -77,7 +77,7 @@ function exit_on_log_file_message {
     if grep --quiet "$1" ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log; then
         echo ABORTING: found "$1"
         echo "Dumping first 1M of karaf.log..."
-        head --bytes=1M  ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log
+        tail --bytes=1M  ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log
         cp ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log .
         cp ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log .
         exit 1
@@ -87,7 +87,7 @@ function exit_on_log_file_message {
     if grep --quiet "$1" ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log; then
         echo ABORTING: found "$1"
         echo "Dumping first 1M of karaf_console.log..."
-        head --bytes=1M  ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log
+        tail --bytes=1M  ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log
         cp ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log .
         cp ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log .
         exit 1
