@@ -12,6 +12,8 @@ if [ ${CONTROLLERSCOPE} == 'all' ]; then
 else
     ACTUALFEATURES="${CONTROLLERFEATURES}"
 fi
+# Some versions of jenkins job builder result in feature list ending in newline; remove that.
+ACTUALFEATURES=`echo ${ACTUALFEATURES}`
 
 if [ -f ${WORKSPACE}/test/csit/scriptplans/${TESTPLAN} ]; then
     echo "scriptplan exists!!!"
