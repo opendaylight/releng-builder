@@ -10,7 +10,9 @@ if [ ${CONTROLLERSCOPE} == 'all' ]; then
     ACTUALFEATURES="odl-integration-compatible-with-all,${CONTROLLERFEATURES}"
     CONTROLLERMEM="3072m"
 else
-    ACTUALFEATURES="${CONTROLLERFEATURES}"
+    # This is to induce newline in Sandbox.
+    ACTUALFEATURES="${CONTROLLERFEATURES}
+"
 fi
 
 if [ -f ${WORKSPACE}/test/csit/scriptplans/${TESTPLAN} ]; then
@@ -50,7 +52,9 @@ unzip -q ${BUNDLE}
 
 echo "Configuring the startup features..."
 FEATURESCONF=/tmp/${BUNDLEFOLDER}/etc/org.apache.karaf.features.cfg
-sed -ie "s/featuresBoot=.*/featuresBoot=config,standard,region,package,kar,ssh,management,${ACTUALFEATURES}/g" \${FEATURESCONF}
+# Some versions of jenkins job builder result in feature list ending in newline; remove it.
+ACTUALFEATURES=`echo ${ACTUALFEATURES}`
+sed -ie "s/featuresBoot=.*/featuresBoot=config,standard,region,package,kar,ssh,management,\${ACTUALFEATURES}/g" \${FEATURESCONF}
 sed -ie "s%mvn:org.opendaylight.integration/features-integration-index/${BUNDLEVERSION}/xml/features%mvn:org.opendaylight.integration/features-integration-index/${BUNDLEVERSION}/xml/features,mvn:org.opendaylight.integration/features-integration-test/${BUNDLEVERSION}/xml/features%g" \${FEATURESCONF}
 cat \${FEATURESCONF}
 
