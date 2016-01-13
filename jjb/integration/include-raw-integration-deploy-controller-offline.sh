@@ -48,9 +48,12 @@ sleep 10
 echo "Installing all features..."
 sshpass -p karaf ${WORKSPACE}/${BUNDLEFOLDER}/bin/client -u karaf "feature:install ${ACTUALFEATURES}" || echo $? > ${WORKSPACE}/error.txt
 
-echo "Killing ODL and fetching Karaf log..."
-tail --bytes=1M "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log" > "karaf.log"
+echo "dumping first 500K bytes of karaf log..."
+head --bytes=500K "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log" > "karaf.log"
+echo "dumping last 500K bytes of karaf log..."
+tail --bytes=500K "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log" > "karaf.log"
 # TODO: Do we want different name for karaf.log chunk to signal it may be not complete?
+echo "killing karaf process..."
 ps axf | grep karaf | grep -v grep | awk '{print "kill -9 " $1}' | sh
 sleep 5
 xz -9ekvv "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log"

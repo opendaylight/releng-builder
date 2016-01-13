@@ -76,8 +76,10 @@ function exit_on_log_file_message {
     echo "looking for \"$1\" in karaf.log file"
     if grep --quiet "$1" ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log; then
         echo ABORTING: found "$1"
-        echo "Dumping first 1M of karaf.log..."
-        tail --bytes=1M  ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log
+        echo "Dumping first 500K bytes of karaf log..."
+        head --bytes=500K  ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log
+        echo "Dumping last 500K bytes of karaf log..."
+        tail --bytes=500K  ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log
         cp ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log .
         cp ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log .
         exit 1
@@ -86,8 +88,10 @@ function exit_on_log_file_message {
     echo "looking for \"$1\" in karaf_console.log file"
     if grep --quiet "$1" ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log; then
         echo ABORTING: found "$1"
-        echo "Dumping first 1M of karaf_console.log..."
-        tail --bytes=1M  ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log
+        echo "Dumping first 500K bytes of karaf log..."
+        head --bytes=500K  ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log
+        echo "Dumping last 500K bytes of karaf log..."
+        tail --bytes=500K  ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log
         cp ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log .
         cp ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log .
         exit 1

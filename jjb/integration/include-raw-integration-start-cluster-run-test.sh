@@ -25,8 +25,10 @@ while true; do
         break
     elif (( "\$COUNT" > "600" )); then
         echo Timeout Controller DOWN
-        echo "Dumping Karaf log..."
-        tail --bytes=1M "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
+        echo "Dumping first 500K bytes of karaf log..."
+        head --bytes=500K "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
+        echo "Dumping last 500K bytes of karaf log..."
+        tail --bytes=500K "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
         echo "Listing all open ports on controller system"
         netstat -natu
         exit 1
@@ -44,8 +46,10 @@ function exit_on_log_file_message {
     echo "looking for \"\$1\" in log file"
     if grep --quiet "\$1" "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"; then
         echo ABORTING: found "\$1"
-        echo "Dumping Karaf log..."
-        tail --bytes=1M "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
+        echo "Dumping first 500K bytes of karaf log..."
+        head --bytes=500K "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
+        echo "Dumping last 500K bytes of karaf log..."
+        tail --bytes=500K "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
         exit 1
     fi
 }
@@ -94,12 +98,15 @@ TOOLS_SYSTEM_IP:${TOOLS_SYSTEM_IP} ${tools_variables} -v NUM_TOOLS_SYSTEM:${NUM_
 -v MININET:${TOOLS_SYSTEM_IP} -v MININET1:${TOOLS_SYSTEM_2_IP} -v MININET2:${TOOLS_SYSTEM_3_IP} -v MININET_USER:${USER} \
 -v USER_HOME:${HOME} ${TESTOPTIONS} ${SUITES} || true
 
-echo "Killing ODL and fetching Karaf log..."
 set +e  # We do not want to create red dot just because something went wrong while fetching logs.
 for i in `seq 1 ${NUM_ODL_SYSTEM}`
 do
     CONTROLLERIP=ODL_SYSTEM_${i}_IP
-    ssh "${!CONTROLLERIP}" tail --bytes=1M "/tmp/${BUNDLEFOLDER}/data/log/karaf.log" > "odl${i}_karaf.log"
+    echo "dumping first 500K bytes of karaf log..." > "odl${i}_karaf.log"
+    ssh "${!CONTROLLERIP}" head --bytes=500K "/tmp/${BUNDLEFOLDER}/data/log/karaf.log" >> "odl${i}_karaf.log"
+    echo "dumping last 500K bytes of karaf log..." >> "odl${i}_karaf.log"
+    ssh "${!CONTROLLERIP}" tail --bytes=500K "/tmp/${BUNDLEFOLDER}/data/log/karaf.log" >> "odl${i}_karaf.log"
+    echo "killing karaf process..."
     ssh "${!CONTROLLERIP}" bash -c 'ps axf | grep karaf | grep -v grep | awk '"'"'{print "kill -9 " $1}'"'"' | sh'
 done
 sleep 5
