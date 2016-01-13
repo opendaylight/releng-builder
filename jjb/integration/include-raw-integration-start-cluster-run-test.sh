@@ -26,7 +26,7 @@ while true; do
     elif (( "\$COUNT" > "600" )); then
         echo Timeout Controller DOWN
         echo "Dumping Karaf log..."
-        head --bytes=1M "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
+        tail --bytes=1M "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
         echo "Listing all open ports on controller system"
         netstat -natu
         exit 1
@@ -45,7 +45,7 @@ function exit_on_log_file_message {
     if grep --quiet "\$1" "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"; then
         echo ABORTING: found "\$1"
         echo "Dumping Karaf log..."
-        head --bytes=1M "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
+        tail --bytes=1M "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
         exit 1
     fi
 }
@@ -99,7 +99,7 @@ set +e  # We do not want to create red dot just because something went wrong whi
 for i in `seq 1 ${NUM_ODL_SYSTEM}`
 do
     CONTROLLERIP=ODL_SYSTEM_${i}_IP
-    ssh "${!CONTROLLERIP}" head --bytes=1M "/tmp/${BUNDLEFOLDER}/data/log/karaf.log" > "odl${i}_karaf.log"
+    ssh "${!CONTROLLERIP}" tail --bytes=1M "/tmp/${BUNDLEFOLDER}/data/log/karaf.log" > "odl${i}_karaf.log"
     ssh "${!CONTROLLERIP}" bash -c 'ps axf | grep karaf | grep -v grep | awk '"'"'{print "kill -9 " $1}'"'"' | sh'
 done
 sleep 5

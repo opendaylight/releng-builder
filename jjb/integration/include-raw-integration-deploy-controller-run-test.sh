@@ -89,7 +89,7 @@ while true; do
     elif (( "\$COUNT" > "600" )); then
         echo Timeout Controller DOWN
         echo "Dumping Karaf log..."
-        head --bytes=1M "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
+        tail --bytes=1M "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
         echo "Listing all open ports on controller system"
         netstat -natu
         exit 1
@@ -111,7 +111,7 @@ function exit_on_log_file_message {
     if grep --quiet "\$1" /tmp/${BUNDLEFOLDER}/data/log/karaf.log; then
         echo ABORTING: found "\$1"
         echo "Dumping Karaf log..."
-        head --bytes=1M "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
+        tail --bytes=1M "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
         exit 1
     fi
 }
@@ -143,7 +143,7 @@ pybot -N ${TESTPLAN} -c critical -e exclude -v BUNDLEFOLDER:${BUNDLEFOLDER} -v W
 
 echo "Killing ODL and fetching Karaf log..."
 set +e  # We do not want to create red dot just because something went wrong while fetching logs.
-ssh "${ODL_SYSTEM_IP}" head --bytes=1M "/tmp/${BUNDLEFOLDER}/data/log/karaf.log" > "karaf.log"
+ssh "${ODL_SYSTEM_IP}" tail --bytes=1M "/tmp/${BUNDLEFOLDER}/data/log/karaf.log" > "karaf.log"
 ssh "${ODL_SYSTEM_IP}" bash -c 'ps axf | grep karaf | grep -v grep | awk '"'"'{print "kill -9 " $1}'"'"' | sh'
 sleep 5
 ssh "${ODL_SYSTEM_IP}" xz -9ekvv "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
