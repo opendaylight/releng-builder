@@ -241,6 +241,34 @@ actual slave and start handling jobs on it.
   </tr>
 </table>
 
+<table class="table table-bordered">
+  <tr>
+    <td><b>Jenkins Label</b><br/> ubuntu_trusty_mininet</td>
+    <td><b>Slave Template name</b><br/> ubuntu-trusty-mininet</td>
+    <td><b>Vagrant Definition</b><br/> releng/builder/vagrant/ubuntu-mininet</td>
+    <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/mininet-ubuntu.sh</td>
+  </tr>
+  <tr>
+    <td colspan="4">
+      Basic Ubuntu system with ovs ??? and mininet ???
+    </td>
+  </tr>
+</table>
+
+<table class="table table-bordered">
+  <tr>
+    <td><b>Jenkins Label</b><br/> ubuntu_trusty_mininet_ovs_23</td>
+    <td><b>Slave Template name</b><br/> ubuntu-trusty-mininet-ovs-23</td>
+    <td><b>Vagrant Definition</b><br/> releng/builder/vagrant/ubuntu-mininet-ovs-23</td>
+    <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/mininet-ubuntu.sh</td>
+  </tr>
+  <tr>
+    <td colspan="4">
+      Basic Ubuntu system with ovs 2.3 and mininet ???
+    </td>
+  </tr>
+</table>
+
 ### Pool: Rackspace DFW - Matrix
 
 <table class="table table-bordered">
