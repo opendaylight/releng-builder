@@ -17,11 +17,11 @@
         - project-parameter:
             project: '{project}'
         - autorelease-release-tag:
-            release-tag: 'Test-{stream}'
+            release-tag: '{stream}-daily'
         - autorelease-release-branch:
             release-branch: '{branch}'
         - autorelease-release-datestamp:
-            datestamp: false
+            datestamp: true
 
     scm:
         - git:
