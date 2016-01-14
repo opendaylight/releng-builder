@@ -6,8 +6,13 @@
         - 'opflex-openvswitch_tgz-{stream}'
 
     stream:
-        - beryllium:
+        - boron:
             branch: 'master'
+            jdk: openjdk7
+            jdks:
+                - openjdk7
+        - beryllium:
+            branch: 'stable/beryllium'
             jdk: openjdk7
             jdks:
                 - openjdk7

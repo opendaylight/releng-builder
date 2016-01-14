@@ -7,8 +7,12 @@
         - 'autorelease-site-verify-{stream}'
 
     stream:
-    - beryllium:
+    - boron:
         branch: 'master'
+        jdk: 'openjdk8'
+        integration-test: boron
+    - beryllium:
+        branch: 'stable/beryllium'
         jdk: 'openjdk8'
         integration-test: beryllium
     - lithium:

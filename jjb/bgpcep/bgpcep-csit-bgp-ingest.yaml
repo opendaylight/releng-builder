@@ -1,4 +1,4 @@
-- project:
+- project:autorelease: true
     name: bgpcep-csit-bgp-ingest
     jobs:
         - '{project}-csit-1node-periodic-{functionality}-{install}-{stream}'
@@ -11,8 +11,10 @@
 
     # Project branches
     stream:
-        - beryllium:
+        - boron:
             branch: 'master'
+        - beryllium:
+            branch: 'stable/beryllium'
         - stable-lithium:
             branch: 'stable/lithium'
 

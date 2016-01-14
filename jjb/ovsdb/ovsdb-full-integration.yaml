@@ -6,8 +6,13 @@
     # stream:    release stream (eg. stable-lithium or beryllium)
     # branch:    git branch (eg. stable/lithium or master)
     stream:
-        - beryllium:
+        - boron:
             branch: 'master'
+            jdk: openjdk8
+            jdks:
+                - openjdk8
+        - beryllium:
+            branch: 'stable/beryllium'
             jdk: openjdk8
             jdks:
                 - openjdk8
