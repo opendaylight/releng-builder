@@ -243,7 +243,7 @@ actual slave and start handling jobs on it.
 
 <table class="table table-bordered">
   <tr>
-    <td><b>Jenkins Label</b><br/> ubuntu_trusty_mininet</td>
+    <td><b>Jenkins Label</b><br/> ubuntu_mininet</td>
     <td><b>Slave Template name</b><br/> ubuntu-trusty-mininet</td>
     <td><b>Vagrant Definition</b><br/> releng/builder/vagrant/ubuntu-mininet</td>
     <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/mininet-ubuntu.sh</td>
@@ -257,7 +257,7 @@ actual slave and start handling jobs on it.
 
 <table class="table table-bordered">
   <tr>
-    <td><b>Jenkins Label</b><br/> ubuntu_trusty_mininet_ovs_23</td>
+    <td><b>Jenkins Label</b><br/> ubuntu_mininet_ovs_23</td>
     <td><b>Slave Template name</b><br/> ubuntu-trusty-mininet-ovs-23</td>
     <td><b>Vagrant Definition</b><br/> releng/builder/vagrant/ubuntu-mininet-ovs-23</td>
     <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/mininet-ubuntu.sh</td>
