@@ -19,18 +19,18 @@
     # stream:    release stream (eg. stable-lithium or beryllium)
     # branch:    git branch (eg. stable/lithium or master)
     stream:
-        - beryllium:
+        - boron:
             branch: 'master'
             jdk: openjdk8
             jdks:
                 - openjdk8
             disable_autorelease: False
-        - pre-boron:
-            branch: 'pre-boron'
+        - beryllium:
+            branch: 'stable/beryllium'
             jdk: openjdk8
             jdks:
                 - openjdk8
-            disable_autorelease: True
+            disable_autorelease: False
         - stable-lithium:
             branch: 'stable/lithium'
             jdk: openjdk7
