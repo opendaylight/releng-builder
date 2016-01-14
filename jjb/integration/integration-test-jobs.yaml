@@ -9,8 +9,57 @@
         - 'integration-multipatch-test-{stream}'
 
     stream:
-        - beryllium:
+        - boron:
             branch: 'master'
+            csit-list: >
+                aaa-csit-1node-authn-only-{stream},
+                aaa-csit-1node-authn-all-{stream},
+                bgpcep-csit-1node-userfeatures-only-{stream},
+                bgpcep-csit-1node-userfeatures-all-{stream},
+                capwap-csit-1node-ac-only-{stream},
+                capwap-csit-1node-ac-all-{stream},
+                controller-csit-3node-clustering-only-{stream},
+                controller-csit-3node-clustering-all-{stream},
+                integration-csit-3node-basic-only-{stream},
+                integration-csit-3node-basic-all-{stream},
+                integration-distribution-offline-{stream},
+                l2switch-csit-1node-switch-only-{stream},
+                l2switch-csit-1node-switch-all-{stream},
+                l2switch-csit-1node-scalability-only-{stream},
+                l2switch-csit-1node-scalability-all-{stream},
+                lispflowmapping-csit-1node-msmr-only-{stream},
+                lispflowmapping-csit-1node-msmr-all-{stream},
+                nic-csit-1node-basic-all-{stream},
+                nic-csit-1node-basic-only-{stream},
+                openflowplugin-csit-1node-flow-services-only-{stream},
+                openflowplugin-csit-1node-flow-services-lithium-redesign-only-{stream},
+                openflowplugin-csit-1node-flow-services-all-{stream},
+                openflowplugin-csit-1node-scalability-only-{stream},
+                openflowplugin-csit-1node-scalability-lithium-redesign-only-{stream},
+                openflowplugin-csit-1node-scalability-all-{stream},
+                openflowplugin-csit-1node-cbench-performance-only-{stream},
+                openflowplugin-csit-1node-cbench-performance-lithium-redesign-only-{stream},
+                openflowplugin-csit-1node-config-performance-only-{stream},
+                openflowplugin-csit-1node-config-performance-lithium-redesign-only-{stream},
+                ovsdb-csit-1node-netvirt-only-{stream},
+                ovsdb-csit-1node-netvirt-all-{stream},
+                ovsdb-csit-1node-southbound-only-{stream},
+                ovsdb-csit-1node-southbound-all-{stream},
+                snmp-csit-1node-basic-only-{stream},
+                snmp-csit-1node-basic-all-{stream},
+                topoprocessing-csit-1node-topology-operations-all-{stream},
+                topoprocessing-csit-1node-topology-operations-only-{stream},
+                tsdr-csit-1node-h2-datastore-only-{stream},
+                tsdr-csit-1node-h2-datastore-all-{stream},
+                tsdr-csit-1node-hbase-datastore-only-{stream},
+                tsdr-csit-1node-hbase-datastore-all-{stream},
+                usc-csit-1node-channel-only-{stream},
+                usc-csit-1node-channel-all-{stream},
+                vpnservice-csit-1node-vpnservice-only-{stream},
+                vpnservice-csit-1node-vpnservice-all-{stream}
+
+        - beryllium:
+            branch: 'stable/beryllium'
             csit-list: >
                 aaa-csit-1node-authn-only-{stream},
                 aaa-csit-1node-authn-all-{stream},
