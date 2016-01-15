@@ -88,8 +88,10 @@ while true; do
         break
     elif (( "\$COUNT" > "600" )); then
         echo Timeout Controller DOWN
-        echo "Dumping Karaf log..."
-        tail --bytes=1M "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
+        echo "Dumping first 500K bytes of karaf log..."
+        head --bytes=500K "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
+        echo "Dumping last 500K bytes of karaf log..."
+        tail --bytes=500K "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
         echo "Listing all open ports on controller system"
         netstat -natu
         exit 1
@@ -110,8 +112,10 @@ function exit_on_log_file_message {
     echo "looking for \"\$1\" in log file"
     if grep --quiet "\$1" /tmp/${BUNDLEFOLDER}/data/log/karaf.log; then
         echo ABORTING: found "\$1"
-        echo "Dumping Karaf log..."
-        tail --bytes=1M "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
+        echo "Dumping first 500K bytes of karaf log..."
+        head --bytes=500K "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
+        echo "Dumping last 500K bytes of karaf log..."
+        tail --bytes=500K "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
         exit 1
     fi
 }
