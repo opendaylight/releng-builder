@@ -1,4 +1,25 @@
 - project:
+    name: yangtools-verify-boron
+    jobs:
+        - 'yangtools-verify-{stream}-{maven}-{jdk}'
+
+    jdk:
+        - openjdk8
+
+    # {mvn*} values are defined in releng/builder jjb/releng-defaults.yaml
+    maven:
+        - mvn32:
+            mvnver: '{mvn32}'
+        - mvn33:
+            mvnver: '{mvn33}'
+
+    stream:
+        - boron:
+            branch: master
+
+    project: 'yangtools'
+
+- project:
     name: yangtools-verify-beryllium
     jobs:
         - 'yangtools-verify-{stream}-{maven}-{jdk}'
@@ -17,8 +38,6 @@
             mvnver: '{mvn33}'
 
     stream:
-        - boron:
-            branch: master
         - beryllium:
             branch: stable/beryllium
 
