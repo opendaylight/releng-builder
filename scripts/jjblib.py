@@ -32,7 +32,8 @@ def parse_jjb_args():
 
 
 STREAM_DEFAULTS = collections.OrderedDict([
-    ("beryllium", {"branch": "master", "jdks": "openjdk8"}),
+    ("boron", {"branch": "master", "jdks": "openjdk8"}),
+    ("beryllium", {"branch": "stable/beryllium", "jdks": "openjdk8"}),
     ("stable-lithium", {"branch": "stable/lithium", "jdks": "openjdk7"}),
     ("stable-helium", {"branch": "stable/helium", "jdks": "openjdk7"}),
 ])

@@ -69,7 +69,7 @@ if cfg.get("STREAMS"):  # this is a list of single-key dicts
     for stream_dict in cfg.get("STREAMS"):
         streams.update(stream_dict)
 else:
-    streams = {"beryllium": jjblib.STREAM_DEFAULTS["beryllium"]}
+    streams = {"boron": jjblib.STREAM_DEFAULTS["boron"]}
 
 first_stream = streams.iterkeys().next()  # Keep master branch at top.
 sonar_branch = streams[first_stream]["branch"]
