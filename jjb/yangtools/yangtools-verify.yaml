@@ -63,27 +63,6 @@
 
     project: 'yangtools'
 
-- project:
-    name: yangtools-verify-helium
-    jobs:
-        - 'yangtools-verify-{stream}-{maven}-{jdk}'
-
-    jdk:
-        - openjdk7
-    maven:
-        - mvn30:
-            mvnver: "Maven 3.0.5"
-        - mvn31:
-            mvnver: '{mvn31}'
-        - mvn32:
-            mvnver: '{mvn32}'
-
-    stream:
-        - stable-helium:
-            branch: stable/helium
-
-    project: 'yangtools'
-
 - job-template:
     name: 'yangtools-verify-{stream}-{maven}-{jdk}'
 
