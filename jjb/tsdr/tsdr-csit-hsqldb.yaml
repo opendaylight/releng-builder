@@ -1,5 +1,5 @@
 - project:
-    name: tsdr-csit-hbase
+    name: tsdr-csit-hsqldb
     jobs:
         - '{project}-csit-1node-{functionality}-{install}-{stream}'
         - '{project}-csit-verify-1node-{functionality}'
@@ -8,7 +8,7 @@
     project: 'tsdr'
 
     # The functionality under test to verify
-    functionality: 'hbase-datastore'
+    functionality: 'hsqldb-datastore'
 
     # Project branches
     stream:
@@ -26,7 +26,7 @@
             scope: 'all'
 
     # Features to install
-    install-features: 'odl-restconf,odl-tsdr-hbase,odl-tsdr-openflow-statistics-collector'
+    install-features: 'odl-restconf,odl-tsdr-hsqldb,odl-tsdr-openflow-statistics-collector'
 
     # Robot custom options
     robot-options: ' '
