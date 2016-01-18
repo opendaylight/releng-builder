@@ -39,9 +39,10 @@
     builders:
         - inject:
             properties-content: |
-              ODL_VERSION=lithium-latest
-              TEMPEST_REGEX=tempest.api.network
-              KARAFFEATURE=odl-neutron-dummyprovider-test
+                ODL_VERSION=lithium-latest
+                # So why there is "beryllium" in name of this job?
+                TEMPEST_REGEX=tempest.api.network
+                KARAFFEATURE=odl-neutron-dummyprovider-test
         - shell:
             !include-raw-escape:
                 - include-raw-openstack-ci.sh
