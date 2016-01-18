@@ -1,0 +1,46 @@
+- project:
+    name: groupbasedpolicy-csit-netvirt
+    jobs:
+#        - '{project}-csit-1node-{functionality}-{install}-{stream}'
+        - '{project}-csit-verify-1node-{functionality}'
+
+    # The project name
+    project: 'groupbasedpolicy'
+
+    # The functionality under test
+    functionality: 'devstack'
+
+    # Project branches
+    stream:
+        - beryllium:
+            branch: 'master'
+        - stable-lithium:
+            branch: 'stable/lithium'
+
+#    install:
+#        - only:
+#            scope: 'only'
+#        - all:
+#            scope: 'all'
+
+    # Mininet configuration
+    mininet-image: 'rk-c7-devstack'
+    mininet-cloud-name: 'Rackspace DFW - Devstack'
+    mininet-vms: 1
+
+    # Features to install
+    install-features: 'odl-groupbasedpolicy-neutronmapper,odl-restconf'
+
+    # Robot custom options
+    robot-options: ''
+
+    # Trigger jobs (upstream dependencies)
+    trigger-jobs: 'groupbasedpolicy-distribution-{stream},
+                   neutron-distribution-{stream},
+                   ovsdb-distribution-{stream},
+                   controller-distribution-{stream},
+                   openflowplugin-distribution-{stream},
+                   yangtools-distribution-{stream},
+                   sfc-distribution-{stream},
+                   dlux-distribution-{stream}'
+
