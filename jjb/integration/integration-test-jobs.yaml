@@ -11,6 +11,7 @@
     stream:
         - boron:
             branch: 'master'
+            jdk: 'openjdk8'
             csit-list: >
                 aaa-csit-1node-authn-only-{stream},
                 aaa-csit-1node-authn-all-{stream},
@@ -167,8 +168,6 @@
                 openflowplugin-csit-1node-imds-flow-services-all-{stream},
                 vtn-csit-1node-imds-manager-only-{stream},
                 vtn-csit-1node-imds-manager-all-{stream}
-
-    jdk: 'openjdk7'
 
 # Template: integration-verify-python
 # Goal: Verify python scripts correct syntax
