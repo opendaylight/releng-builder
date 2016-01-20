@@ -163,6 +163,8 @@
 
 - job-template:
     name: 'yangtools-periodic-{stream}'
+    # Temporarily disable until Rackspace networking issues are resolved
+    disabled: true
 
     # Job template for periodic builders
     #
@@ -358,6 +360,8 @@
 
 - job-template:
     name: 'yangtools-sonar'
+    # Temporarily disable until Rackspace networking issues are resolved
+    disabled: true
 
     project-type: maven
     node: dynamic_verify
@@ -418,6 +422,8 @@
 
 - job-template:
     name: 'yangtools-clm-{stream}'
+    # Temporarily disable until Rackspace networking issues are resolved
+    disabled: true
 
     project-type: maven
     node: dynamic_verify

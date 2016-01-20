@@ -236,6 +236,8 @@
 
 - job-template:
     name: 'persistence-periodic-{stream}'
+    # Temporarily disable until Rackspace networking issues are resolved
+    disabled: true
 
     # Job template for periodic builders
     #
@@ -431,6 +433,8 @@
 
 - job-template:
     name: 'persistence-sonar'
+    # Temporarily disable until Rackspace networking issues are resolved
+    disabled: true
 
     project-type: maven
     node: dynamic_verify
@@ -491,6 +495,8 @@
 
 - job-template:
     name: 'persistence-clm-{stream}'
+    # Temporarily disable until Rackspace networking issues are resolved
+    disabled: true
 
     project-type: maven
     node: dynamic_verify

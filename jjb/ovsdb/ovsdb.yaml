@@ -239,6 +239,8 @@
 
 - job-template:
     name: 'ovsdb-periodic-{stream}'
+    # Temporarily disable until Rackspace networking issues are resolved
+    disabled: true
 
     # Job template for periodic builders
     #
@@ -434,6 +436,8 @@
 
 - job-template:
     name: 'ovsdb-clm-{stream}'
+    # Temporarily disable until Rackspace networking issues are resolved
+    disabled: true
 
     project-type: maven
     node: dynamic_verify

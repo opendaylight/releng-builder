@@ -235,6 +235,8 @@
 
 - job-template:
     name: 'iotdm-periodic-{stream}'
+    # Temporarily disable until Rackspace networking issues are resolved
+    disabled: true
 
     # Job template for periodic builders
     #
@@ -430,6 +432,8 @@
 
 - job-template:
     name: 'iotdm-sonar'
+    # Temporarily disable until Rackspace networking issues are resolved
+    disabled: true
 
     project-type: maven
     node: dynamic_verify
@@ -490,6 +494,8 @@
 
 - job-template:
     name: 'iotdm-clm-{stream}'
+    # Temporarily disable until Rackspace networking issues are resolved
+    disabled: true
 
     project-type: maven
     node: dynamic_verify
