@@ -1,5 +1,5 @@
 - project:
-    name: openflowplugin-csit-clustering
+    name: openflowplugin-csit-clustering-helium-design
     jobs:
         - '{project}-csit-3node-{functionality}-{install}-{stream}'
         - '{project}-csit-verify-3node-{functionality}'
@@ -8,7 +8,7 @@
     project: 'openflowplugin'
 
     # The functionality under test
-    functionality: 'clustering'
+    functionality: 'clustering-helium-design'
 
     # Project branches
     stream:
@@ -24,10 +24,10 @@
             scope: 'only'
 
     # Features to install
-    install-features: 'odl-openflowplugin-flow-services-ui-li'
+    install-features: 'odl-openflowplugin-flow-services-ui'
 
     # Robot custom options
-    robot-options: '-v ODL_OF_PLUGIN:lithium'
+    robot-options: '-v ODL_OF_PLUGIN:helium'
 
     # Trigger jobs (upstream dependencies)
     trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream},openflowjava-distribution-{stream},openflowplugin-distribution-{stream}'
