@@ -14,7 +14,6 @@
             branch: 'stable/lithium'
 
     project: 'bgpcep'
-    jdk: 'openjdk7'
 
 - job-template:
     name: 'bgpcep-verify-python-{stream}'
@@ -30,7 +29,6 @@
     project-type: freestyle
     node: dynamic_verify
     concurrent: true
-    jdk: '{jdk}'
 
     logrotate:
         daysToKeep: '{build-days-to-keep}'
