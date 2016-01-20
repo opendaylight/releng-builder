@@ -233,6 +233,8 @@
 
 - job-template:
     name: 'coretutorials-periodic-{stream}'
+    # Temporarily disable until Rackspace networking issues are resolved
+    disabled: true
 
     # Job template for periodic builders
     #
@@ -357,7 +359,10 @@
 
 - job-template:
     name: 'coretutorials-integration-{stream}'
-    disabled: false
+    # Temporarily disable this job until Rackspace networking issues are
+    # resolved.
+    #disabled: DISABLED
+    disabled: true
 
     # Job template for ODL integration verify jobs
     #
@@ -425,6 +430,8 @@
 
 - job-template:
     name: 'coretutorials-sonar'
+    # Temporarily disable until Rackspace networking issues are resolved
+    disabled: true
 
     project-type: maven
     node: dynamic_verify
@@ -485,6 +492,8 @@
 
 - job-template:
     name: 'coretutorials-clm-{stream}'
+    # Temporarily disable until Rackspace networking issues are resolved
+    disabled: true
 
     project-type: maven
     node: dynamic_verify
