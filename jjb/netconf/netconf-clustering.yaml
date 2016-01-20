@@ -26,7 +26,7 @@
     install-features: 'odl-restconf,odl-netconf-clustered-topology'
 
     # Robot custom options
-    robot-options: ''
+    robot-options: '-v USE_NETCONF_CONNECTOR:False'
 
     # Trigger jobs (upstream dependencies)
     trigger-jobs: 'odlparent-distribution-{stream},yangtools-distribution-{stream},controller-distribution-{stream},netconf-distribution-{stream},mdsal-distribution-{stream}'
