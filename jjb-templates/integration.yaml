@@ -1,6 +1,9 @@
 - job-template:
     name: 'PROJECT_SHORTNAME-integration-{stream}'
-    disabled: DISABLED
+    # Temporarily disable this job until Rackspace networking issues are
+    # resolved.
+    #disabled: DISABLED
+    disabled: true
 
     # Job template for ODL integration verify jobs
     #
