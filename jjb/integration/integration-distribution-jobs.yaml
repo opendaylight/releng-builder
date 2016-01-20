@@ -85,6 +85,8 @@
               predefined-parameters:
                   BUNDLEURL=$BUNDLEURL
 
+                  JDKVERSION = $JDKVERSION
+
     publishers:
         - email-notification:
             email-prefix: '[integration]'
@@ -166,7 +168,7 @@
         - integration-bundleurl:
             bundleurl: 'last'
         - integration-jdk-version:
-            jdkversion: 'openjdk7'
+            jdkversion: '{jdk}'
 
     wrappers:
         - build-timeout
@@ -215,7 +217,7 @@
         - integration-bundleurl:
             bundleurl: 'last'
         - integration-jdk-version:
-            jdkversion: 'openjdk7'
+            jdkversion: '{jdk}'
 
     wrappers:
         - build-timeout
@@ -329,6 +331,8 @@
               block: true
               predefined-parameters:
                   BUNDLEURL=$BUNDLEURL
+
+                  JDKVERSION = $JDKVERSION
 
     publishers:
         - email-notification:

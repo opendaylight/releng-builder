@@ -11,7 +11,7 @@
     stream:
         - boron:
             branch: 'master'
-            jdk: 'openjdk7'
+            jdk: 'openjdk8'
             csit-list: >
                 aaa-csit-1node-authn-only-{stream},
                 aaa-csit-1node-authn-all-{stream},
@@ -265,7 +265,8 @@
         - integration-patch-refspec:
             branch: '$GERRIT_REFSPEC'
         - integration-jdk-version:
-            jdkversion: 'openjdk7'
+            # {jdk} is from releng-defaults
+            jdkversion: '{jdk}'
 
     scm:
         - integration-gerrit-scm:
@@ -334,7 +335,7 @@
         - integration-bundleurl:
             bundleurl: 'last'
         - integration-jdk-version:
-            jdkversion: 'openjdk7'
+            jdkversion: '{jdk}'
 
     triggers:
         - timed: 'H H * * 6'
@@ -345,6 +346,8 @@
               block: true
               predefined-parameters:
                   BUNDLEURL=$BUNDLEURL
+
+                  JDKVERSION = $JDKVERSION
 
     publishers:
         - email-notification:
@@ -445,6 +448,8 @@
               predefined-parameters:
                   BUNDLEURL=$BUNDLEURL
 
+                  JDKVERSION = $JDKVERSION
+
     publishers:
         - email-notification:
             email-prefix: '[$GERRIT_PROJECT]'
@@ -506,6 +511,8 @@
               block: true
               predefined-parameters:
                   BUNDLEURL=$BUNDLEURL
+
+                  JDKVERSION = $JDKVERSION
 
     publishers:
         - email-notification:
