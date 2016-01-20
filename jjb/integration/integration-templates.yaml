@@ -55,7 +55,7 @@
         - integration-test-plan:
             test-plan: '{project}-{functionality}.txt'
         - integration-jdk-version:
-            jdkversion: 'openjdk7'
+            jdkversion: '{jdk}'
 
     scm:
         - integration-gerrit-scm:
@@ -134,7 +134,7 @@
         - integration-patch-refspec:
             branch: 'stable/helium'
         - integration-jdk-version:
-            jdkversion: 'openjdk7'
+            jdkversion: '{jdk}'
 
     scm:
         - integration-gerrit-scm:
@@ -238,7 +238,8 @@
         - integration-test-plan:
             test-plan: '{project}-{functionality}.txt'
         - integration-jdk-version:
-            jdkversion: 'openjdk7'
+            # Here {jdk} is taken from releng-defaults.yaml
+            jdkversion: '{jdk}'
 
     scm:
         - integration-gerrit-scm:
@@ -317,7 +318,7 @@
         - integration-patch-refspec:
             branch: 'master'
         - integration-jdk-version:
-            jdkversion: 'openjdk7'
+            jdkversion: '{jdk}'
 
     scm:
         - integration-gerrit-scm:
@@ -419,7 +420,7 @@
         - integration-patch-refspec:
             branch: 'master'
         - integration-jdk-version:
-            jdkversion: 'openjdk7'
+            jdkversion: '{jdk}'
 
     scm:
         - integration-gerrit-scm:
@@ -517,7 +518,7 @@
         - integration-test-plan:
             test-plan: '{project}-{functionality}.txt'
         - integration-jdk-version:
-            jdkversion: 'openjdk7'
+            jdkversion: '{jdk}'
 
     scm:
         - integration-gerrit-scm:
@@ -598,7 +599,7 @@
         - integration-patch-refspec:
             branch: 'master'
         - integration-jdk-version:
-            jdkversion: 'openjdk7'
+            jdkversion: '{jdk}'
 
     scm:
         - integration-gerrit-scm:
@@ -702,7 +703,7 @@
         - integration-patch-refspec:
             branch: 'master'
         - integration-jdk-version:
-            jdkversion: 'openjdk7'
+            jdkversion: '{jdk}'
 
     scm:
         - integration-gerrit-scm:
