@@ -262,7 +262,7 @@
         - integration-patch-refspec:
             branch: '$GERRIT_REFSPEC'
         - integration-jdk-version:
-            jdkversion: 'openjdk7'
+            jdkversion: 'openjdk8'
 
     scm:
         - integration-gerrit-scm:
@@ -331,7 +331,7 @@
         - integration-bundleurl:
             bundleurl: 'last'
         - integration-jdk-version:
-            jdkversion: 'openjdk7'
+            jdkversion: '{jdk}'
 
     triggers:
         - timed: 'H H * * 6'
