@@ -1,5 +1,7 @@
 - job-template:
     name: 'PROJECT_SHORTNAME-clm-{stream}'
+    # Temporarily disable until Rackspace networking issues are resolved
+    disabled: true
 
     project-type: maven
     node: dynamic_verify
