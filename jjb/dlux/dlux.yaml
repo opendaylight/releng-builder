@@ -365,7 +365,10 @@
 
 - job-template:
     name: 'dlux-integration-{stream}'
-    disabled: false
+    # Temporarily disable this job until Rackspace networking issues are
+    # resolved.
+    #disabled: DISABLED
+    disabled: true
 
     # Job template for ODL integration verify jobs
     #
