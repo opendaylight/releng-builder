@@ -29,8 +29,7 @@
 
 - job-template:
     name: '{project}-csit-verify-1node-{functionality}-{stream}'
-    # Temporarily disable csit job until Rackspace networking issues are solved
-    disabled: true
+    disabled: false
 
     project-type: freestyle
     node: dynamic_robot
@@ -108,8 +107,7 @@
 
 - job-template:
     name: '{project}-csit-1node-imds-{functionality}-{install}-{stream}'
-    # Temporarily disable csit job until Rackspace networking issues are solved
-    disabled: true
+    disabled: false
 
     project-type: freestyle
     node: dynamic_robot
@@ -217,8 +215,7 @@
 
 - job-template:
     name: '{project}-csit-verify-1node-{functionality}'
-    # Temporarily disable csit job until Rackspace networking issues are solved
-    disabled: true
+    disabled: false
 
     project-type: freestyle
     node: dynamic_robot
@@ -296,8 +293,7 @@
 
 - job-template:
     name: '{project}-csit-1node-{functionality}-{install}-{stream}'
-    # Temporarily disable csit job until Rackspace networking issues are solved
-    disabled: true
+    disabled: false
 
     project-type: freestyle
     node: dynamic_robot
@@ -400,8 +396,7 @@
 
 - job-template:
     name: '{project}-csit-1node-periodic-{functionality}-{install}-{stream}'
-    # Temporarily disable csit job until Rackspace networking issues are solved
-    disabled: true
+    disabled: false
 
     project-type: freestyle
     node: dynamic_robot
@@ -502,8 +497,7 @@
 
 - job-template:
     name: '{project}-csit-verify-3node-{functionality}'
-    # Temporarily disable csit job until Rackspace networking issues are solved
-    disabled: true
+    disabled: false
 
     project-type: freestyle
     node: dynamic_robot
@@ -583,8 +577,7 @@
 
 - job-template:
     name: '{project}-csit-3node-{functionality}-{install}-{stream}'
-    # Temporarily disable csit job until Rackspace networking issues are solved
-    disabled: true
+    disabled: false
 
     project-type: freestyle
     node: dynamic_robot
@@ -689,8 +682,7 @@
 
 - job-template:
     name: '{project}-csit-3node-periodic-{functionality}-{install}-{stream}'
-    # Temporarily disable csit job until Rackspace networking issues are solved
-    disabled: true
+    disabled: false
 
     project-type: freestyle
     node: dynamic_robot
