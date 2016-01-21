@@ -38,8 +38,7 @@
 
 - job-template:
     name: 'distribution-sonar'
-    # Temporarily disable until Rackspace networking issues are resolved
-    disabled: true
+    disabled: false
 
     project-type: maven
     node: dynamic_verify
@@ -100,8 +99,7 @@
 
 - job-template:
     name: 'distribution-clm-{stream}'
-    # Temporarily disable until Rackspace networking issues are resolved
-    disabled: true
+    disabled: false
 
     project-type: maven
     node: dynamic_verify

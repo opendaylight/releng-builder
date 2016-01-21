@@ -163,8 +163,7 @@
 
 - job-template:
     name: 'yangtools-periodic-{stream}'
-    # Temporarily disable until Rackspace networking issues are resolved
-    disabled: true
+    disabled: false
 
     # Job template for periodic builders
     #
@@ -289,10 +288,7 @@
 
 - job-template:
     name: 'yangtools-integration-{stream}'
-    # Temporarily disable this job until Rackspace networking issues are
-    # resolved.
-    #disabled: DISABLED
-    disabled: true
+    disabled: false
 
     # Job template for ODL integration verify jobs
     #
@@ -360,8 +356,7 @@
 
 - job-template:
     name: 'yangtools-sonar'
-    # Temporarily disable until Rackspace networking issues are resolved
-    disabled: true
+    disabled: false
 
     project-type: maven
     node: dynamic_verify
@@ -422,8 +417,7 @@
 
 - job-template:
     name: 'yangtools-clm-{stream}'
-    # Temporarily disable until Rackspace networking issues are resolved
-    disabled: true
+    disabled: false
 
     project-type: maven
     node: dynamic_verify

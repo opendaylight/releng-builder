@@ -227,8 +227,7 @@
 
 - job-template:
     name: 'toolkit-periodic-{stream}'
-    # Temporarily disable until Rackspace networking issues are resolved
-    disabled: true
+    disabled: false
 
     # Job template for periodic builders
     #
@@ -353,10 +352,7 @@
 
 - job-template:
     name: 'toolkit-integration-{stream}'
-    # Temporarily disable this job until Rackspace networking issues are
-    # resolved.
-    #disabled: DISABLED
-    disabled: true
+    disabled: false
 
     # Job template for ODL integration verify jobs
     #
@@ -424,8 +420,7 @@
 
 - job-template:
     name: 'toolkit-sonar'
-    # Temporarily disable until Rackspace networking issues are resolved
-    disabled: true
+    disabled: false
 
     project-type: maven
     node: dynamic_verify
@@ -486,8 +481,7 @@
 
 - job-template:
     name: 'toolkit-clm-{stream}'
-    # Temporarily disable until Rackspace networking issues are resolved
-    disabled: true
+    disabled: false
 
     project-type: maven
     node: dynamic_verify
