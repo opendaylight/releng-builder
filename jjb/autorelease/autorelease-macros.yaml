@@ -94,9 +94,9 @@
         - config-file-provider:
             files:
                 - file-id: '{autorelease-settings}'
-                  variable: 'AUTORELEASE_SETTINGS'
+                  variable: 'SETTINGS_FILE'
                 - file-id: '{odl-global-settings}'
-                  variable: 'ODL_GLOBAL_SETTINGS'
+                  variable: 'GLOBAL_SETTINGS_FILE'
 
 - builder:
     name: autorelease-maven-deploy
