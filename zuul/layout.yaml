@@ -1,0 +1,24 @@
+pipelines:
+  - name: periodic
+    source: gerrit
+    manager: IndependentPipelineManager
+    trigger:
+      timer:
+        - time: '0 0 * * *'
+  - name: check
+    source: gerrit
+    manager: IndependentPipelineManager
+    precedence: low
+    trigger:
+      gerrit:
+        - event: comment-added
+          comment: (?i)^(Patch Set [0-9]+:)?( [\w\\+-]*)*(\n\n)?\s*(recheck|reverify)
+
+projects:
+  - name: releng/builder
+    periodic:
+      - builder-check-poms
+    check:
+      - builder-verify-jjb
+      - builder-verify-python
+
