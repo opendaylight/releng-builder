@@ -36,5 +36,5 @@ mvn org.sonatype.plugins:nexus-staging-maven-plugin:1.6.2:deploy-staged-reposito
     -DnexusUrl=http://nexus.opendaylight.org/ \
     -DstagingProfileId="425e43800fea70" \
     -DserverId="opendaylight.staging" \
-    -s $AUTORELEASE_SETTINGS \
-    -gs $ODL_GLOBAL_SETTINGS | tee $WORKSPACE/deploy-staged-repository.log
+    -s $SETTINGS_FILE \
+    -gs $GLOBAL_SETTINGS_FILE | tee $WORKSPACE/deploy-staged-repository.log
