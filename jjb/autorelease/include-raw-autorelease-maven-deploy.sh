@@ -9,6 +9,15 @@
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
 
+# Job will pass in a variable ${DATESTAMP} if this variable is false than we
+# we are likely releasing a release candidate. We should skip closing the
+# Nexus staging repository so that we can sign the artifacts.
+SKIP_STAGING_CLOSE=false
+if [ "${DATESTAMP}" == "false" ]
+then
+    SKIP_STAGING_CLOSE=true
+fi
+
 mkdir -p hide/from/pom/files
 cd hide/from/pom/files
 mkdir -p m2repo/org/opendaylight/
@@ -32,6 +41,7 @@ rsync -avz --exclude 'maven-metadata-local.xml' \
            "/tmp/r/org/opendaylight/integration" m2repo/org/opendaylight/
 
 mvn org.sonatype.plugins:nexus-staging-maven-plugin:1.6.2:deploy-staged-repository \
+    -DskipStagingRepositoryClose=${SKIP_STAGING_CLOSE}
     -DrepositoryDirectory="`pwd`/m2repo" \
     -DnexusUrl=http://nexus.opendaylight.org/ \
     -DstagingProfileId="425e43800fea70" \
