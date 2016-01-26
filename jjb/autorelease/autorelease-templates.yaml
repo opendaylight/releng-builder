@@ -75,7 +75,7 @@
 
     publishers:
     - archive-artifacts:
-        artifacts: '*.prop,*.log,patches/*.patch'
+        artifacts: '*.prop,*.log,patches/*.patch,patches/*.log'
     - email-notification:
         email-prefix: '[autorelease]'
     - trigger-parameterized-builds:

@@ -132,9 +132,9 @@
 - builder:
     name: autorelease-generate-release-patches
     builders:
-        - shell:
-            !include-raw-escape:
-                - include-raw-autorelease-release-versions.sh
+    - shell:
+        !include-raw:
+            - include-raw-autorelease-release-versions.sh
 
 - builder:
     name: autorelease-sys-stats
