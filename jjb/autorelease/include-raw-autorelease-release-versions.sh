@@ -26,6 +26,7 @@ git submodule foreach "git commit -am \"Release $RELEASE_TAG\" || true"
 git commit -am "Release $RELEASE_TAG"
 
 mkdir patches
+mv taglist.log $PATCH_DIR
 modules=`xmlstarlet sel -N x=http://maven.apache.org/POM/4.0.0 -t -m '//x:modules' -v '//x:module' pom.xml`
 for module in $modules; do
     pushd $module
