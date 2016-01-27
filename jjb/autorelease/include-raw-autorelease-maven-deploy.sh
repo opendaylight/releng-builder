@@ -41,7 +41,7 @@ rsync -avz --exclude 'maven-metadata-local.xml' \
            "/tmp/r/org/opendaylight/integration" m2repo/org/opendaylight/
 
 mvn org.sonatype.plugins:nexus-staging-maven-plugin:1.6.2:deploy-staged-repository \
-    -DskipStagingRepositoryClose=${SKIP_STAGING_CLOSE}
+    -DskipStagingRepositoryClose=${SKIP_STAGING_CLOSE} \
     -DrepositoryDirectory="`pwd`/m2repo" \
     -DnexusUrl=http://nexus.opendaylight.org/ \
     -DstagingProfileId="425e43800fea70" \
