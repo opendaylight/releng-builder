@@ -251,7 +251,7 @@
         - project-parameter:
             project: 'integration/test'
         - integration-branch:
-            branch: 'master'
+            branch: 'stable/beryllium'
         - integration-bundleurl:
             bundleurl: 'last'
         - integration-controller-scope:
@@ -259,6 +259,8 @@
         - integration-controller-features:
             controller-features: >
                 odl-openflowplugin-flow-services-ui,
+                odl-bgpcep-pcep,
+                odl-bgpcep-bgp,
                 odl-netconf-connector-all
         - integration-test-options:
             test-options: '-e adsal'
