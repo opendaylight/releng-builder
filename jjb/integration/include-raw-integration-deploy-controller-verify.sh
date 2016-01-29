@@ -108,5 +108,16 @@ cp ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log .
 echo "Kill controller"
 ps axf | grep karaf | grep -v grep | awk '{print "kill -9 " $1}' | sh
 
-# vim: ts=4 sw=4 sts=4 et ft=sh :
+echo "Detecting misplaced config files"
+pushd "${WORKSPACE}/${BUNDLEFOLDER}"
+XMLS_FOUND=`echo *.xml`
+popd
+if [ "$XMLS_FOUND" != "*.xml" ]; then
+    echo "Bug 4628 confirmed."
+    ## TODO: Uncomment the following when ODL is fixed, to guard against regression.
+    # exit 1
+else
+    echo "Bug 4628 not detected."
+fi
 
+# vim: ts=4 sw=4 sts=4 et ft=sh :
