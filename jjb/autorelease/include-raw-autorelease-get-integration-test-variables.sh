@@ -11,6 +11,6 @@
 
 NEXUSURL=http://nexus.opendaylight.org/content/repositories/
 VERSION=`grep -m1 '<version>' ${WORKSPACE}/integration/distribution/distribution-karaf/pom.xml | awk -F'[<|>]' '/version/ { printf $3 }'`
-REPOID=`grep "Closing staging repository with ID" $WORKSPACE/deploy-staged-repository.log | cut -d '"' -f2`
+REPOID=`grep "Created staging repository with ID" $WORKSPACE/deploy-staged-repository.log | cut -d '"' -f2`
 
 echo BUNDLEURL=${NEXUSURL}/${REPOID}/org/opendaylight/integration/distribution-karaf/${VERSION}/distribution-karaf-${VERSION}.zip > $WORKSPACE/variables.prop
