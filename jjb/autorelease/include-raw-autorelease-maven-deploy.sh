@@ -13,10 +13,13 @@
 # we are likely releasing a release candidate. We should skip closing the
 # Nexus staging repository so that we can sign the artifacts.
 SKIP_STAGING_CLOSE=false
-if [ "${DATESTAMP}" == "false" ]
-then
-    SKIP_STAGING_CLOSE=true
-fi
+# TODO: Figure out a solution to Open staging repos not being available
+#       immediately. This means integration tests cannot reliably download and
+#       test the new build if we leave the staging repo open.
+# if [ "${DATESTAMP}" == "false" ]
+# then
+#     SKIP_STAGING_CLOSE=true
+# fi
 
 mkdir -p hide/from/pom/files
 cd hide/from/pom/files
