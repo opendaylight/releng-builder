@@ -12,7 +12,6 @@
             branch: 'stable/beryllium'
 
     project: 'sfc'
-    jdk: 'openjdk7'
 
 - job-template:
     name: 'sfc-verify-python-{stream}'
@@ -28,7 +27,6 @@
     project-type: freestyle
     node: dynamic_verify
     concurrent: true
-    jdk: '{jdk}'
 
     logrotate:
         daysToKeep: '{build-days-to-keep}'
