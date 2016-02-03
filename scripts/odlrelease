@@ -37,7 +37,7 @@ function sign {
     echo "Fetching artifacts from $URL"
     # Fetch Artifacts
     wget --recursive --execute robots=off --no-parent --quiet \
-        --no-host-directories --cut-dirs=3 \
+        --no-host-directories --cut-dirs=2 \
         $URL
 
     # Remove files that don't need signing
