@@ -91,6 +91,10 @@ for stream, options in streams.items():
     str_streams += "            disable_autorelease: %s\n" % (not options.get(
         "autorelease", False))
 
+    # Disable the patch-distribution job unless project enables it
+    str_streams += "            disable_patch_distribution: %s\n" % (
+        not options.get("patch-distribution", False))
+
 ###############
 # Handle JDKS #
 ###############
