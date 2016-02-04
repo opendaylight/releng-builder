@@ -57,7 +57,9 @@ if os.path.isfile(project_conf):
 if cfg.get("JOB_TEMPLATES"):
     templates = cfg.get("JOB_TEMPLATES")
 else:
-    templates = "verify,merge,periodic,distribution,integration,sonar"
+    templates = (
+        "verify,merge,periodic,distribution,distribution-check,integration,"
+        "sonar")
 templates += ",clm"  # ensure we always create a clm job for all projects
 templates += ",validate-autorelease"  # Autorelease validate template
 
@@ -90,6 +92,10 @@ for stream, options in streams.items():
     # a Jenkins Job is "disabled: bool".
     str_streams += "            disable_autorelease: %s\n" % (not options.get(
         "autorelease", False))
+
+    # Disable the distribution-check job unless project enables it
+    str_streams += "            disable_distribution_check: %s\n" % (
+        not options.get("distribution-check", False))
 
 ###############
 # Handle JDKS #
