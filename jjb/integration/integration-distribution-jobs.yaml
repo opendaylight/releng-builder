@@ -150,7 +150,7 @@
     name: 'integration-distribution-deploy-{stream}'
 
     project-type: freestyle
-    node: dynamic_verify
+    node: dynamic_java
 
     logrotate:
         daysToKeep: '{build-days-to-keep}'
@@ -199,7 +199,7 @@
     name: 'integration-distribution-offline-{stream}'
 
     project-type: freestyle
-    node: dynamic_verify
+    node: dynamic_java
 
     logrotate:
         daysToKeep: '{build-days-to-keep}'
