@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9a3d3df0_570635cf",
+        "filename": "jjb-templates/distribution-check.yaml",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2016-02-05T14:47:20Z",
+      "side": 1,
+      "message": "sounds good, I\u0027ll set it to 14 days and max 10. Considering every project has their own version of this job.",
+      "parentUuid": "9a3d3df0_61bbbbe5",
+      "range": {
+        "startLine": 15,
+        "startChar": 21,
+        "endLine": 15,
+        "endChar": 41
+      },
+      "revId": "e74da7874b7cb9899a548fd69072867f4a16447a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3d3df0_01ff4fab",
         "filename": "jjb-templates/distribution-check.yaml",
         "patchSetId": 5
@@ -117,6 +141,30 @@
     },
     {
       "key": {
+        "uuid": "9a3d3df0_7713790d",
+        "filename": "jjb-templates/distribution-check.yaml",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2016-02-05T14:47:20Z",
+      "side": 1,
+      "message": "I\u0027ll test this but I think since basedir above is also set to $GERRIT_PROJECT it should be ok.",
+      "parentUuid": "9a3d3df0_01ed8fef",
+      "range": {
+        "startLine": 75,
+        "startChar": 18,
+        "endLine": 75,
+        "endChar": 33
+      },
+      "revId": "e74da7874b7cb9899a548fd69072867f4a16447a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3d3df0_41d79723",
         "filename": "jjb-templates/distribution-check.yaml",
         "patchSetId": 5
@@ -140,6 +188,47 @@
     },
     {
       "key": {
+        "uuid": "9a3d3df0_b7f4e1cf",
+        "filename": "jjb-templates/distribution-check.yaml",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2016-02-05T14:47:20Z",
+      "side": 1,
+      "message": "yep this should be {JENKINS_SETTINGS}",
+      "parentUuid": "9a3d3df0_41d79723",
+      "range": {
+        "startLine": 79,
+        "startChar": 24,
+        "endLine": 79,
+        "endChar": 35
+      },
+      "revId": "e74da7874b7cb9899a548fd69072867f4a16447a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_1704adbe",
+        "filename": "jjb-templates/distribution-check.yaml",
+        "patchSetId": 5
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2016-02-05T14:47:20Z",
+      "side": 1,
+      "message": "This should probably be PROJECT_SHORTNAME",
+      "revId": "e74da7874b7cb9899a548fd69072867f4a16447a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3d3df0_a1aca3a1",
         "filename": "scripts/jjb-init-project.py",
         "patchSetId": 5
@@ -151,6 +240,30 @@
       "writtenOn": "2016-02-05T09:26:58Z",
       "side": 1,
       "message": "I disagree.\nOnly few jobs override their JOB_TEMPLATES, and those which do usually have very good reasons. For example we definitely do not want this job for integration/distribution project itself.\nEspecially since projects can disable the job, omitting it from the list is just a slightly more environment-friendly way to do the same.",
+      "range": {
+        "startLine": 62,
+        "startChar": 14,
+        "endLine": 62,
+        "endChar": 33
+      },
+      "revId": "e74da7874b7cb9899a548fd69072867f4a16447a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_d7e7e510",
+        "filename": "scripts/jjb-init-project.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2016-02-05T14:47:20Z",
+      "side": 1,
+      "message": "Yes using JOB_TEMPLATES is an alternative way to set this. If we use that we don\u0027t need the code below to allow enable/disable since they can disable via override instead.\n\nBefore setting this though are we 100% sure that every project should have this job? (as in by default should this job automatically be enabled for every project?)",
+      "parentUuid": "9a3d3df0_a1aca3a1",
       "range": {
         "startLine": 62,
         "startChar": 14,
