@@ -14,6 +14,17 @@ fi
 # and ending in newline. Remove all that.
 ACTUALFEATURES=`echo "${ACTUALFEATURES}" | tr -d '\n \r'`
 
+if [ -f ${WORKSPACE}/test/csit/scriptplans/${TESTPLAN} ]; then
+    echo "scriptplan exists!!!"
+    echo "Changing the scriptplan path..."
+    cat ${WORKSPACE}/test/csit/scriptplans/${TESTPLAN} | sed "s:integration:${WORKSPACE}:" > scriptplan.txt
+    cat scriptplan.txt
+    for line in $( egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' scriptplan.txt ); do
+        echo "Executing ${line}..."
+        source ${line}
+    done
+fi
+
 cat > ${WORKSPACE}/deploy-controller-script.sh <<EOF
 
 echo "Changing to /tmp"
