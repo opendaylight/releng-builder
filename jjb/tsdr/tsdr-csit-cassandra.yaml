@@ -18,15 +18,10 @@
         - beryllium:
             branch: 'stable/beryllium'
             jdk: 'openjdk7'
-        - stable-lithium:
-            branch: 'stable/lithium'
-            jdk: 'openjdk7'
 
     install:
         - only:
             scope: 'only'
-        - all:
-            scope: 'all'
 
     # Features to install
     install-features: 'odl-restconf,odl-tsdr-cassandra,odl-tsdr-openflow-statistics-collector,odl-tsdr-netflow-statistics-collector,odl-tsdr-syslog-collector'
