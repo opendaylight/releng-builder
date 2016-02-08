@@ -5,6 +5,7 @@ echo "#################################################"
 AKKACONF=/tmp/${BUNDLEFOLDER}/configuration/initial/akka.conf
 MODULESCONF=/tmp/${BUNDLEFOLDER}/configuration/initial/modules.conf
 MODULESHARDSCONF=/tmp/${BUNDLEFOLDER}/configuration/initial/module-shards.conf
+BGPCONF=/tmp/${BUNDLEFOLDER}/system/org/opendaylight/bgpcep/bgp-controller-config/*/bgp-controller-config-*-config-example.xml
 JOLOKIACONF=/tmp/${BUNDLEFOLDER}/deploy/jolokia.xml
 
 # Utility function for joining strings.
@@ -62,6 +63,12 @@ sed -i -e "s/{{{REPLICAS_2}}}/[${member_name_list}]/g" ${MODULESHARDSCONF}
 sed -i -e "s/{{{REPLICAS_3}}}/[${member_name_list}]/g" ${MODULESHARDSCONF}
 sed -i -e "s/{{{REPLICAS_4}}}/[${member_name_list}]/g" ${MODULESHARDSCONF}
 
+echo "Update bgp configuration in 41-bgp-example.xml"
+sed -i -e "s/<rib-id>example-bgp-rib/<rib-id>example-bgp-rib-\$1/g" ${BGPCONF}
+sed -i -e "s/<topology-id>example-ipv4-topology/<topology-id>example-ipv4-topology-\$1/g" ${BGPCONF}
+sed -i -e "s/<topology-id>example-ipv6-topology/<topology-id>example-ipv6-topology-\$1/g" ${BGPCONF}
+sed -i -e "s/<topology-id>example-linkstate-topology/<topology-id>example-linkstate-topology-\$1/g" ${BGPCONF}
+
 echo "Dump akka.conf"
 cat ${AKKACONF}
 
@@ -70,6 +77,9 @@ cat ${MODULESCONF}
 
 echo "Dump module-shards.conf"
 cat ${MODULESHARDSCONF}
+
+echo "Dump ${BGPCONF}"
+cat ${BGPCONF}
 
 if [ ${JDKVERSION} == 'openjdk8' ]; then
     echo "Setting the JRE Version to 8"
@@ -87,7 +97,7 @@ echo "Java binary pointed at by JAVA_HOME: \${JAVA_RESOLVED}"
 echo "JDK default version ..."
 java -version
 
-echo "Starting controller..."
+echo "Starting controller-\$1 ..."
 /tmp/${BUNDLEFOLDER}/bin/start
 
 EOF
