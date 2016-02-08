@@ -1,0 +1,38 @@
+- project:
+    name: bgpcep-csit-bgpclustering
+    jobs:
+        - '{project}-csit-3node-{functionality}-{install}-{stream}'
+
+    # The project name
+    project: 'bgpcep'
+
+    # The functionality under test
+    functionality: 'bgpclustering'
+
+    # Project branches
+    stream:
+        - beryllium:
+            branch: 'master'
+        - stable-lithium:
+            branch: 'stable/lithium'
+
+    install:
+        - only:
+            scope: 'only'
+        - all:
+            scope: 'all'
+
+    # Features to install
+    install-features: 'odl-restconf,odl-clustering-test-app,odl-bgpcep-bgp-all,odl-bgpcep-bgp,odl-netconf-connector-all'
+
+    # Robot custom options:
+    robot-options: '-v COUNT:1000000'
+
+    # Trigger jobs (upstream dependencies)
+    trigger-jobs: >
+        odlparent-distribution-{stream},
+        yangtools-distribution-{stream},
+        controller-distribution-{stream},
+        mdsal-distribution-{stream},
+        netconf-distribution-{stream},
+        bgpcep-distribution-{stream}
