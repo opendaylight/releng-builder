@@ -23,7 +23,7 @@ tar -xvf hbase*.tar.gz
 mkdir /tmp/cassandra
 cd /tmp/cassandra
 
-wget --no-verbose http://www.eu.apache.org/dist/cassandra/2.1.12/apache-cassandra-2.1.12-bin.tar.gz
+wget --no-verbose http://archive.apache.org/dist/cassandra/2.1.12/apache-cassandra-2.1.12-bin.tar.gz
 
 echo "Installing the Cassandra Server..."
 tar -xvf apache*.tar.gz
