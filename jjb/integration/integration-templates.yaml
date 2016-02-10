@@ -241,9 +241,7 @@
             test-options: '{robot-options}'
         - integration-test-plan:
             test-plan: '{project}-{functionality}.txt'
-        - integration-jdk-version:
-            # Here {jdk} is taken from releng-defaults.yaml
-            jdkversion: '{jdk}'
+        # TODO: Use integration-jdk-version macro when switching to Boron
 
     scm:
         - integration-gerrit-scm:
@@ -524,8 +522,7 @@
             test-options: '{robot-options}'
         - integration-test-plan:
             test-plan: '{project}-{functionality}.txt'
-        - integration-jdk-version:
-            jdkversion: '{jdk}'
+        # TODO: Use integration-jdk-version macro when switching to Boron
 
     scm:
         - integration-gerrit-scm:
