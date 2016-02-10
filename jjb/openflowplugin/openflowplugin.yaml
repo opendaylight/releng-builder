@@ -10,6 +10,7 @@
         - 'openflowplugin-merge-{stream}'
         - 'openflowplugin-periodic-{stream}'
         - 'openflowplugin-distribution-{stream}'
+        - 'openflowplugin-distribution-check-{stream}'
         - 'openflowplugin-integration-{stream}'
         - 'openflowplugin-sonar'
         - 'openflowplugin-clm-{stream}'
@@ -25,6 +26,7 @@
             jdks:
                 - openjdk8
             disable_autorelease: False
+            disable_distribution_check: False
         - beryllium:
             branch: 'stable/beryllium'
             jdk: openjdk7
@@ -32,6 +34,7 @@
                 - openjdk7
                 - openjdk8
             disable_autorelease: False
+            disable_distribution_check: False
         - stable-lithium:
             branch: 'stable/lithium'
             jdk: openjdk7
@@ -39,12 +42,14 @@
                 - openjdk7
                 - openjdk8
             disable_autorelease: True
+            disable_distribution_check: True
         - stable-helium:
             branch: 'stable/helium'
             jdk: openjdk7
             jdks:
                 - openjdk7
             disable_autorelease: True
+            disable_distribution_check: True
 
     project: 'openflowplugin'
 
@@ -363,6 +368,108 @@
             id: ''
             unique-version: true
             deploy-unstable: false
+
+# Template: integration-patch-distribution-{stream}
+# Goal: Build a patch and make sure the distribution can deploy with this change
+# Operation: This job template builds a patch, creates a distribution containing
+#            the patch, and triggers the distribution deploy test
+
+- job-template:
+    name: 'openflowplugin-distribution-check-{stream}'
+    disabled: '{obj:disable_distribution_check}'
+
+    project-type: maven
+    node: dynamic_verify
+    jdk: '{jdk}'
+
+    logrotate:
+        daysToKeep: '14'
+        numToKeep: '10'
+        artifactDaysToKeep: '{build-artifact-days-to-keep}'
+        artifactNumToKeep: '{build-artifact-num-to-keep}'
+
+    parameters:
+        - gerrit-project-parameter:
+            project: '{project}'
+        - gerrit-refspec-parameter:
+            refspec: '{branch}'
+        - project-parameter:
+            project: '{project}'
+        - integration-distribution-git-url
+
+    scm:
+        - integration-gerrit-scm:
+            credentials-id: '{ssh-credentials}'
+            basedir: '$GERRIT_PROJECT'
+            refspec: '$GERRIT_REFSPEC'
+            branch: '{branch}'
+        - integration-distribution-scm:
+            credentials-id: '{ssh-credentials}'
+            branch: '{branch}'
+
+    wrappers:
+        - build-timeout
+        - ssh-agent-credentials:
+            users:
+                - '{ssh-credentials}'
+
+    triggers:
+        - gerrit:
+            server-name: 'OpenDaylight'
+            trigger-on:
+                - patchset-created-event:
+                    exclude-drafts: 'true'
+                    exclude-trivial-rebase: 'false'
+                    exclude-no-code-change: 'true'
+                - draft-published-event
+                - comment-added-contains-event:
+                    comment-contains-value: 'test-distribution'
+            projects:
+              - project-compare-type: 'ANT'
+                project-pattern: '{name}'
+                branches:
+                  - branch-compare-type: 'ANT'
+                    branch-pattern: '**/{branch}'
+            skip-vote:
+                successful: true
+                failed: true
+                unstable: true
+                notbuilt: true
+
+    prebuilders:
+        - integration-get-bundle-url
+        - inject:
+            properties-file: 'bundle.txt'
+        - wipe-org-opendaylight-repo
+        - maven-target:
+            maven-version: '{mvn33}'
+            pom: '$GERRIT_PROJECT/pom.xml'
+            goals: 'clean install -Djenkins -DskipTests -Dcheckstyle.skip=true -Dmaven.javadoc.skip=true -Dmaven.site.skip=true -DgenerateReports=false -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -Dstream={stream}'
+            java-opts:
+                - '-Xmx4096m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
+            settings: '{openflowplugin-settings}'
+            global-settings: '{odl-global-settings}'
+
+    maven:
+        maven-name: '{mvn33}'
+        root-pom: 'distribution/pom.xml'
+        goals: 'clean install -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+        maven-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
+        settings: '{openflowplugin-settings}'
+        global-settings: '{odl-global-settings}'
+        ignore-upstream-changes: true
+        post-step-run-condition: 'SUCCESS'
+
+    postbuilders:
+        - trigger-builds:
+            - project: 'integration-distribution-deploy-{stream}'
+              block: true
+              predefined-parameters:
+                  BUNDLEURL=$BUNDLEURL
+
+    publishers:
+        - email-notification:
+            email-prefix: '[openflowplugin]'
 
 - job-template:
     name: 'openflowplugin-integration-{stream}'

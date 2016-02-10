@@ -24,6 +24,7 @@
             jdks:
                 - openjdk8
             disable_autorelease: False
+            disable_distribution_check: False
         - beryllium:
             branch: 'stable/beryllium'
             jdk: openjdk7
@@ -31,6 +32,7 @@
                 - openjdk7
                 - openjdk8
             disable_autorelease: False
+            disable_distribution_check: False
         - stable-lithium:
             branch: 'stable/lithium'
             jdk: openjdk7
@@ -38,12 +40,14 @@
                 - openjdk7
                 - openjdk8
             disable_autorelease: True
+            disable_distribution_check: True
         - stable-helium:
             branch: 'stable/helium'
             jdk: openjdk7
             jdks:
                 - openjdk7
             disable_autorelease: True
+            disable_distribution_check: True
 
     project: 'yangtools'
 
