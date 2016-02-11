@@ -60,6 +60,7 @@
             source $WORKSPACE/venv-tox/bin/activate
             pip install tox argparse
             tox --version
+            cd spectrometer_server
             tox
 
     publishers:
