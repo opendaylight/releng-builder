@@ -430,9 +430,6 @@
                 notbuilt: true
 
     prebuilders:
-        - integration-get-bundle-url
-        - inject:
-            properties-file: 'bundle.txt'
         - wipe-org-opendaylight-repo
         - maven-target:
             maven-version: '{mvn33}'
@@ -454,13 +451,13 @@
         post-step-run-condition: 'SUCCESS'
 
     postbuilders:
-        - trigger-builds:
-            - project: 'integration-distribution-deploy-{stream}'
-              block: true
-              predefined-parameters:
-                  BUNDLEURL=$BUNDLEURL
+        - integration-distribution-check
 
     publishers:
+        - archive:
+            artifacts: 'karaf.log'
+        - archive:
+            artifacts: 'karaf_console.log'
         - email-notification:
             email-prefix: '[alto]'
 
