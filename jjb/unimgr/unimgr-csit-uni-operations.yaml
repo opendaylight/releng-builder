@@ -1,0 +1,38 @@
+- project:
+    name: unimgr-csit-uni-operations
+    jobs:
+        - '{project}-csit-1node-{functionality}-{install}-{stream}'
+        - '{project}-csit-verify-1node-{functionality}'
+
+    # The project name
+    project: 'unimgr'
+
+    # The functionality under test
+    functionality: 'uni-operations'
+
+    # Project branches
+    stream:
+        - boron:
+            branch: 'master'
+            jdk: 'openjdk8'
+        - beryllium:
+            branch: 'stable/beryllium'
+            jdk: 'openjdk7'
+
+    install:
+        - only:
+            scope: 'only'
+        - all:
+            scope: 'all'
+
+    # Mininet configuration
+    mininet-vms: 2
+
+    # Features to install
+    install-features: 'odl-unimgr'
+
+    # Robot custom options
+    robot-options: ''
+
+    # Trigger jobs (upstream dependencies)
+    trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream},ovsdb-distribution-{stream},unimgr-distribution-{stream}'
