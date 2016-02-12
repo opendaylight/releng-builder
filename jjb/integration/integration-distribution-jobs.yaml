@@ -10,16 +10,16 @@
     stream:
         - boron:
             branch: 'master'
-            jdk: 'openjdk8'
+            jre: 'openjdk8'
         - beryllium:
             branch: 'stable/beryllium'
-            jdk: 'openjdk7'
+            jre: 'openjdk7'
         - stable-lithium:
             branch: 'stable/lithium'
-            jdk: 'openjdk7'
+            jre: 'openjdk7'
         - stable-helium:
             branch: 'stable/helium'
-            jdk: 'openjdk7'
+            jre: 'openjdk7'
 
 
 - job-template:
@@ -28,7 +28,7 @@
     project-type: maven
     node: dynamic_verify
     concurrent: true
-    jdk: '{jdk}'
+    jdk: '{jre}'
 
     logrotate:
         daysToKeep: '{build-days-to-keep}'
@@ -93,7 +93,7 @@
 
     project-type: maven
     node: dynamic_merge
-    jdk: '{jdk}'
+    jdk: '{jre}'
 
     logrotate:
         daysToKeep: '{build-days-to-keep}'
@@ -166,7 +166,7 @@
         - integration-bundleurl:
             bundleurl: 'last'
         - integration-jdk-version:
-            jdkversion: '{jdk}'
+            jdkversion: '{jre}'
 
     wrappers:
         - build-timeout
@@ -178,6 +178,8 @@
         - timed: 'H H * * *'
 
     builders:
+        - inject:
+            properties-file: 'env.properties'
         - integration-get-bundle-vars
         - inject:
             properties-file: 'bundle_vars.txt'
@@ -215,7 +217,7 @@
         - integration-bundleurl:
             bundleurl: 'last'
         - integration-jdk-version:
-            jdkversion: '{jdk}'
+            jdkversion: '{jre}'
 
     wrappers:
         - build-timeout
@@ -227,6 +229,8 @@
         - timed: 'H H * * *'
 
     builders:
+        - inject:
+            properties-file: 'env.properties'
         - integration-get-bundle-vars
         - inject:
             properties-file: 'bundle_vars.txt'
