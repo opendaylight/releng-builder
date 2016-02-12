@@ -35,14 +35,13 @@ if [ ${JDKVERSION} == 'openjdk8' ]; then
     echo "Setting the JDK Version to 8"
     sudo /usr/sbin/alternatives --set java /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.60-2.b27.el7_1.x86_64/jre/bin/java
     export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.60-2.b27.el7_1.x86_64
-    java -version
 fi
 if [ ${JDKVERSION} == 'openjdk7' ]; then
     echo "Setting the JDK Version to 7"
     sudo /usr/sbin/alternatives --set java /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.85-2.6.1.2.el7_1.x86_64/jre/bin/java
     export JAVA_HOME=/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.85-2.6.1.2.el7_1.x86_64
-    java -version
 fi
+java -version
 
 echo "Changing to /tmp"
 cd /tmp
