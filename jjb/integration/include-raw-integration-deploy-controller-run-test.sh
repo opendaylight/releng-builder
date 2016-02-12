@@ -104,7 +104,7 @@ while true; do
     fi
 done
 
-echo "Cool down for \${COOLDOWN_PERIOD} seconds :)..."
+echo "Cool down for ${COOLDOWN_PERIOD} seconds :)..."
 sleep ${COOLDOWN_PERIOD}
 
 echo "Listing all open ports on controller system..."
