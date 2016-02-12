@@ -67,8 +67,13 @@ do
     ssh ${!CONTROLLERIP} "bash /tmp/verify-cluster-is-up.sh ${i} ${!CONTROLLERIP}"
 done
 
-echo "Cool down for 1 min :)..."
-sleep 60
+if [ ${CONTROLLERSCOPE} == 'all' ]; then
+    COOLDOWN_PERIOD="180"
+else
+    COOLDOWN_PERIOD="60"
+fi
+echo "Cool down for ${COOLDOWN_PERIOD} seconds :)..."
+sleep ${COOLDOWN_PERIOD}
 
 echo "Changing the testplan path..."
 cat ${WORKSPACE}/test/csit/testplans/${TESTPLAN} | sed "s:integration:${WORKSPACE}:" > testplan.txt

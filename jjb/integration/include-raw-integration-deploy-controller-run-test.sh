@@ -9,8 +9,10 @@ CONTROLLERMEM="2048m"
 if [ ${CONTROLLERSCOPE} == 'all' ]; then
     ACTUALFEATURES="odl-integration-compatible-with-all,${CONTROLLERFEATURES}"
     CONTROLLERMEM="3072m"
+    COOLDOWN_PERIOD="180"
 else
     ACTUALFEATURES="${CONTROLLERFEATURES}"
+    COOLDOWN_PERIOD="60"
 fi
 # Some versions of jenkins job builder result in feature list containing spaces
 # and ending in newline. Remove all that.
@@ -102,8 +104,8 @@ while true; do
     fi
 done
 
-echo "Cool down for 1 min :)..."
-sleep 60
+echo "Cool down for \${COOLDOWN_PERIOD} seconds :)..."
+sleep ${COOLDOWN_PERIOD}
 
 echo "Listing all open ports on controller system..."
 netstat -natu
