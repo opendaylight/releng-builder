@@ -222,17 +222,6 @@
             !include-raw:
                 - include-raw-integration-get-bundle-vars.sh
 
-# Macro: integration-distribution-check
-# Operation: this macro deploys the controller with all fetures
-# Used by: {project}-distribution-check-{stream} job template
-
-- builder:
-    name: integration-distribution-check
-    builders:
-        - shell:
-            !include-raw:
-                - include-raw-integration-distribution-check.sh
-
 # Macro: integration-deploy-controller-verify
 # Operation: this macro deploys the controller with all fetures
 # Used by: integration-distribution-deploy-{stream} job template
