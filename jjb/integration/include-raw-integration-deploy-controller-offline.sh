@@ -36,7 +36,19 @@ MEMCONF=${WORKSPACE}/${BUNDLEFOLDER}/bin/setenv
 sed -ie "s/2048m/${CONTROLLERMEM}/g" ${MEMCONF}
 cat ${MEMCONF}
 
-echo "JDK Version ..."
+if [ ${JDKVERSION} == 'openjdk8' ]; then
+    echo "Setting the JRE Version to 8"
+    # dynamic_verify does not allow sudo, JAVA_HOME should be enough for karaf start.
+    # sudo /usr/sbin/alternatives --set java /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.60-2.b27.el7_1.x86_64/jre/bin/java
+    export JAVA_HOME=/usr/lib/jvm/jre-1.8.0-openjdk.x86_64
+fi
+if [ ${JDKVERSION} == 'openjdk7' ]; then
+    echo "Setting the JRE Version to 7"
+    # dynamic_verify does not allow sudo, JAVA_HOME should be enough for karaf start.
+    # sudo /usr/sbin/alternatives --set java /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.85-2.6.1.2.el7_1.x86_64/jre/bin/java
+    export JAVA_HOME=/usr/lib/jvm/jre-1.7.0-openjdk.x86_64
+fi
+echo "Default JDK Version, JAVA_HOME should override"
 java -version
 
 echo "Starting controller..."
