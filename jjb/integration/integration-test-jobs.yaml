@@ -284,6 +284,7 @@
             controller-scope: 'only'
         - integration-controller-features:
             controller-features: >
+                odl-clustering-test-app,
                 odl-openflowplugin-flow-services-ui,
                 odl-bgpcep-pcep,
                 odl-bgpcep-bgp,
@@ -294,9 +295,7 @@
             test-plan: 'test-libraries.txt'
         - integration-patch-refspec:
             branch: '$GERRIT_REFSPEC'
-        - integration-jdk-version:
-            # {jdk} is from releng-defaults
-            jdkversion: '{jdk}'
+        # TODO: Use integration-jdk-version macro when switching to Boron
 
     scm:
         - integration-gerrit-scm:
