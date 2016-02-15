@@ -12,6 +12,7 @@
         - boron:
             branch: 'master'
             jdk: 'openjdk8'
+            jre: 'openjdk8'
             csit-list: >
                 aaa-csit-1node-authn-only-{stream},
                 aaa-csit-1node-authn-all-{stream},
@@ -74,6 +75,7 @@
         - beryllium:
             branch: 'stable/beryllium'
             jdk: 'openjdk7'
+            jre: 'openjdk7'
             csit-list: >
                 aaa-csit-1node-authn-only-{stream},
                 aaa-csit-1node-authn-all-{stream},
@@ -138,6 +140,7 @@
         - stable-lithium:
             branch: 'stable/lithium'
             jdk: 'openjdk7'
+            jre: 'openjdk7'
             csit-list: >
                 aaa-csit-1node-authn-only-{stream},
                 aaa-csit-1node-authn-all-{stream},
@@ -185,6 +188,7 @@
         - stable-helium:
             branch: 'stable/helium'
             jdk: 'openjdk7'
+            jre: 'openjdk7'
             csit-list: >
                 aaa-csit-1node-imds-authn-only-{stream},
                 aaa-csit-1node-imds-authn-all-{stream},
@@ -364,7 +368,7 @@
         - integration-bundleurl:
             bundleurl: 'last'
         - integration-jdk-version:
-            jdkversion: '{jdk}'
+            jdkversion: '{jre}'
 
     triggers:
         - timed: 'H H * * 6'
