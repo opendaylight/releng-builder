@@ -69,3 +69,7 @@ cd $OFLOPS_DIR
 ./configure --with-openflow-src-dir=$OF_DIR
 make
 make install
+
+# Installing exabgp
+apt-get install -y --force-yes -qq exabgp
+
