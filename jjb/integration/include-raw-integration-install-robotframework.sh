@@ -23,4 +23,7 @@ pip install -q robotframework{,-{httplibrary,requests,sshlibrary,selenium2librar
 # jsonpath is needed by current AAA idmlite suite
 pip install -q jsonpath-rw
 
+# print installed versions
+pip freeze
+
 # vim: sw=4 ts=4 sts=4 et ft=sh :
