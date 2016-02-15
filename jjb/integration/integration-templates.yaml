@@ -15,6 +15,7 @@
 # Parameters:
 #
 # project-parameter: main project integration/test ($PROJECT)
+# jre: (openjdk7 or openjdk8) Java runtime environment to use when launching ODL
 # integration-branch: distribution branch ($BRANCH)
 # integration-controller-bundleurl: distribution URL ($BUNDLEURL)
 # integration-controller-scope: only or all features ($CONTROLLERSCOPE)
@@ -56,7 +57,7 @@
         - integration-test-plan:
             test-plan: '{project}-{functionality}.txt'
         - integration-jdk-version:
-            jdkversion: '{jdk}'
+            jdkversion: '{jre}'
 
     scm:
         - integration-gerrit-scm:
@@ -136,7 +137,7 @@
         - integration-patch-refspec:
             branch: 'stable/helium'
         - integration-jdk-version:
-            jdkversion: '{jdk}'
+            jdkversion: '{jre}'
 
     scm:
         - integration-gerrit-scm:
@@ -241,7 +242,9 @@
             test-options: '{robot-options}'
         - integration-test-plan:
             test-plan: '{project}-{functionality}.txt'
-        # TODO: Use integration-jdk-version macro when switching to Boron
+        - integration-jdk-version:
+            jdkversion: 'openjdk7'
+            # TODO: Switch to openjdk8 from Boron on.
 
     scm:
         - integration-gerrit-scm:
@@ -321,7 +324,7 @@
         - integration-patch-refspec:
             branch: 'master'
         - integration-jdk-version:
-            jdkversion: '{jdk}'
+            jdkversion: '{jre}'
 
     scm:
         - integration-gerrit-scm:
@@ -424,7 +427,7 @@
         - integration-patch-refspec:
             branch: 'master'
         - integration-jdk-version:
-            jdkversion: '{jdk}'
+            jdkversion: '{jre}'
 
     scm:
         - integration-gerrit-scm:
@@ -522,7 +525,9 @@
             test-options: '{robot-options}'
         - integration-test-plan:
             test-plan: '{project}-{functionality}.txt'
-        # TODO: Use integration-jdk-version macro when switching to Boron
+        - integration-jdk-version:
+            jdkversion: 'openjdk7'
+            # TODO: Switch to openjdk8 from Boron on.
 
     scm:
         - integration-gerrit-scm:
@@ -604,7 +609,7 @@
         - integration-patch-refspec:
             branch: 'master'
         - integration-jdk-version:
-            jdkversion: '{jdk}'
+            jdkversion: '{jre}'
 
     scm:
         - integration-gerrit-scm:
@@ -709,7 +714,7 @@
         - integration-patch-refspec:
             branch: 'master'
         - integration-jdk-version:
-            jdkversion: '{jdk}'
+            jdkversion: '{jre}'
 
     scm:
         - integration-gerrit-scm:
