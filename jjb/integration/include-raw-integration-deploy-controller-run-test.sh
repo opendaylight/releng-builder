@@ -31,19 +31,6 @@ fi
 
 cat > ${WORKSPACE}/controller-script.sh <<EOF
 
-if [ ${JDKVERSION} == 'openjdk8' ]; then
-    echo "Setting the JDK Version to 8"
-    sudo /usr/sbin/alternatives --set java /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.60-2.b27.el7_1.x86_64/jre/bin/java
-    export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.60-2.b27.el7_1.x86_64
-    java -version
-fi
-if [ ${JDKVERSION} == 'openjdk7' ]; then
-    echo "Setting the JDK Version to 7"
-    sudo /usr/sbin/alternatives --set java /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.85-2.6.1.2.el7_1.x86_64/jre/bin/java
-    export JAVA_HOME=/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.85-2.6.1.2.el7_1.x86_64
-    java -version
-fi
-
 echo "Changing to /tmp"
 cd /tmp
 
@@ -74,7 +61,20 @@ cat \${MEMCONF}
 echo "Listing all open ports on controller system..."
 netstat -natu
 
-echo "JDK Version ..."
+if [ ${JDKVERSION} == 'openjdk8' ]; then
+    echo "Setting the JRE Version to 8"
+    # dynamic_verify does not allow sudo, JAVA_HOME should be enough for karaf start.
+    # sudo /usr/sbin/alternatives --set java /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.60-2.b27.el7_1.x86_64/jre/bin/java
+    export JAVA_HOME=/usr/lib/jvm/java-1.8.0
+elif [ ${JDKVERSION} == 'openjdk7' ]; then
+    echo "Setting the JRE Version to 7"
+    # dynamic_verify does not allow sudo, JAVA_HOME should be enough for karaf start.
+    # sudo /usr/sbin/alternatives --set java /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.85-2.6.1.2.el7_1.x86_64/jre/bin/java
+    export JAVA_HOME=/usr/lib/jvm/java-1.7.0
+fi
+JAVA_RESOLVED=`readlink -e "\${JAVA_HOME}/bin/java"`
+echo "Java binary pointed at by JAVA_HOME: \${JAVA_RESOLVED}"
+echo "JDK default version ..."
 java -version
 
 echo "Starting controller..."
