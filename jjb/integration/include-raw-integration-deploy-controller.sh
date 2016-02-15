@@ -16,19 +16,6 @@ ACTUALFEATURES=`echo "${ACTUALFEATURES}" | tr -d '\n \r'`
 
 cat > ${WORKSPACE}/deploy-controller-script.sh <<EOF
 
-if [ ${JDKVERSION} == 'openjdk8' ]; then
-    echo "Setting the JDK Version to 8"
-    sudo /usr/sbin/alternatives --set java /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.60-2.b27.el7_1.x86_64/jre/bin/java
-    export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.60-2.b27.el7_1.x86_64
-    java -version
-fi
-if [ ${JDKVERSION} == 'openjdk7' ]; then
-    echo "Setting the JDK Version to 7"
-    sudo /usr/sbin/alternatives --set java /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.85-2.6.1.2.el7_1.x86_64/jre/bin/java
-    export JAVA_HOME=/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.85-2.6.1.2.el7_1.x86_64
-    java -version
-fi
-
 echo "Changing to /tmp"
 cd /tmp
 
@@ -56,12 +43,6 @@ MEMCONF=/tmp/${BUNDLEFOLDER}/bin/setenv
 sed -ie 's/JAVA_MAX_MEM="2048m"/JAVA_MAX_MEM="${CONTROLLERMEM}"/g' \${MEMCONF}
 cat \${MEMCONF}
 
-echo "Listing all open ports on controller system"
-netstat -natu
-
-echo "JDK Version ..."
-java -version
-
 EOF
 
 for i in `seq 1 ${NUM_ODL_SYSTEM}`
@@ -73,4 +54,3 @@ do
 done
 
 # vim: ts=4 sw=4 sts=4 et ft=sh :
-
