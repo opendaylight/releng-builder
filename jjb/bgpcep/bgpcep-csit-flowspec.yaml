@@ -1,0 +1,45 @@
+- project:
+    name: bgpcep-csit-flowspec
+    jobs:
+        - '{project}-csit-1node-{functionality}-{install}-{stream}'
+
+    # The project name
+    project: 'bgpcep'
+
+    # The functionality under test
+    functionality: 'flowspec'
+
+    # Project branches
+    stream:
+        - boron:
+            branch: 'master'
+            jre: 'openjdk8'
+        - beryllium:
+            branch: 'stable/beryllium'
+            jre: 'openjdk7'
+
+    install:
+        - only:
+            scope: 'only'
+
+    # Tools vm configuration, exabgp needed
+    mininet-image: 'ubuntu-trusty-mininet-ovs-23'
+
+    # Features to install
+    # *-all is for Lithium and Beryllium, without -all is for Lithium and Boron.
+    install-features: 'odl-restconf,odl-bgpcep-pcep-all,odl-bgpcep-bgp-all,odl-bgpcep-bgp,odl-bgpcep-pcep,odl-netconf-connector-all'
+
+    # Robot custom options
+    robot-options: ''
+
+    # Trigger jobs (upstream dependencies)
+    # Netconf is there for run-time re-configuration.
+    # AAA could also be a dependency, but probability of breakage is too low to trigger everytime.
+    trigger-jobs: >
+        odlparent-distribution-{stream},
+        yangtools-distribution-{stream},
+        controller-distribution-{stream},
+        mdsal-distribution-{stream},
+        netconf-distribution-{stream},
+        tcpmd5-distribution-{stream},
+        bgpcep-distribution-{stream}
