@@ -82,7 +82,9 @@ elif [ ${JDKVERSION} == 'openjdk7' ]; then
     # sudo /usr/sbin/alternatives --set java /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.85-2.6.1.2.el7_1.x86_64/jre/bin/java
     export JAVA_HOME=/usr/lib/jvm/java-1.7.0
 fi
-JAVA_RESOLVED=`readlink -e "\${JAVA_HOME}/bin/java"`
+echo "JAVA_HOME is \${JAVA_HOME}"
+# Did you know that in HERE documents, single quote is an ordinary character, but backticks are still executing?
+JAVA_RESOLVED=\`readlink -e "\${JAVA_HOME}/bin/java"\`
 echo "Java binary pointed at by JAVA_HOME: \${JAVA_RESOLVED}"
 echo "JDK default version ..."
 java -version
