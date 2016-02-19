@@ -1,3 +1,12 @@
+# TODO: Extract this environment properties display section into its own
+#       script and edit YAML templates of the jobs to include this new
+#       script as the first script on each job.
+echo "#################################################"
+echo "##       Show Environment Properties           ##"
+echo "#################################################"
+echo "@@@ Installed PIP packages and their versions @@@"
+pip freeze
+
 echo "#################################################"
 echo "##       Inject Global Variables               ##"
 echo "#################################################"
