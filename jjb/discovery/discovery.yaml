@@ -115,6 +115,8 @@
             global-settings: '{odl-global-settings}'
 
     publishers:
+        - archive-artifacts:
+            artifacts: '**/target/surefire-reports/*-output.txt, '
         - findbugs
         - email-notification:
             email-prefix: '[discovery]'

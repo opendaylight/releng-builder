@@ -130,6 +130,8 @@
             global-settings: '{odl-global-settings}'
 
     publishers:
+        - archive-artifacts:
+            artifacts: '**/target/surefire-reports/*-output.txt, manager/dist/*/target/*.zip, coordinator/dist/target/*.bz2, manager/northbound/target/site/wsdocs/**, manager/api/target/*-javadoc.jar, manager/api/target/apidocs/**, target/*-javadoc.jar, target/apidocs/**, manager/model/target/site/models/**'
         - findbugs
         - email-notification:
             email-prefix: '[vtn]'
