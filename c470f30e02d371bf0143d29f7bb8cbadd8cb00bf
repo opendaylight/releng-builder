@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "9a3d3df0_0e18d71c",
+        "filename": "jjb/bgpcep/bgpcep-csit-userfeatures-be.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2016-02-22T11:36:36Z",
+      "side": 1,
+      "message": "I do not like -be suffix to apply for Boron+ builds.\n\u0027userfeatures-post-lithium\u0027\nor better yet, single job definition with \u0027userfeatures-{stream}\u0027.",
+      "range": {
+        "startLine": 11,
+        "startChar": 20,
+        "endLine": 11,
+        "endChar": 35
+      },
+      "revId": "c470f30e02d371bf0143d29f7bb8cbadd8cb00bf",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3d3df0_be8bde66",
         "filename": "jjb/bgpcep/bgpcep-csit-userfeatures-be.yaml",
         "patchSetId": 1
@@ -13,6 +36,30 @@
       "writtenOn": "2016-02-19T23:53:52Z",
       "side": 1,
       "message": "I have a hunch that you can trim this down to just\n\nodl-restconf,odl-bgpcep-pcep-all,odl-bgpcep-bgp-all\n\nif so, might as well to keep things concise.  see here,\nfor why I believe so, as I did not actually try :)\n\nhttps://wiki.opendaylight.org/view/BGP_LS_PCEP/FeatureTrees/Beryllium",
+      "range": {
+        "startLine": 29,
+        "startChar": 23,
+        "endLine": 29,
+        "endChar": 131
+      },
+      "revId": "c470f30e02d371bf0143d29f7bb8cbadd8cb00bf",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_0e6a9780",
+        "filename": "jjb/bgpcep/bgpcep-csit-userfeatures-be.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2016-02-22T11:36:36Z",
+      "side": 1,
+      "message": "*-all features were deprecated in Beryllium and will be removed in Boron. On the other hand, non-all features are not present in Lithium.\nAs this job definition is aimed for Be+, the *-all features could be removed.\n\nUpdate: As the deprecation was hinted at [0], but not clearly documented, both feature names will remain valid in Boron.\nI still recommend to use non-all ones in this Change.\n[0] https://wiki.opendaylight.org/view/BGP_LS_PCEP:Beryllium_Release_Notes#Migration_from_Previous_Releases",
+      "parentUuid": "9a3d3df0_be8bde66",
       "range": {
         "startLine": 29,
         "startChar": 23,
