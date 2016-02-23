@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9a3d3df0_d7483bb5",
+        "filename": "jjb/autorelease/autorelease-templates.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2016-02-23T16:21:49Z",
+      "side": 1,
+      "message": "I\u0027m not sure I agree with this change. My concern is that sometimes there are intermittent unit test issues that do not fail the build so the artifacts are still usable and testable. If we change this that means we\u0027ll no longer be deploying the artifacts. Especially in the lithium branch were there were numerous tests that have intermittent non-blocking failures.\n\nYou can see from the history here:\n\n https://jenkins.opendaylight.org/releng/view/autorelease/job/autorelease-release-lithium/\n\nWe\u0027ve released Lithium in the past with yellow (UNSTABLE) build results.",
+      "parentUuid": "9a3d3df0_37dfe70e",
+      "range": {
+        "startLine": 63,
+        "startChar": 33,
+        "endLine": 63,
+        "endChar": 40
+      },
+      "revId": "0d2ed0659122107a355d6786244c8a7176bc3e8b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3d3df0_97c87356",
         "filename": "jjb/autorelease/autorelease-templates.yaml",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2016-02-23T15:52:20Z",
       "side": 1,
       "message": "We do not want to trigger jobs on unit test failures so this is correct value according to https://github.com/openstack-infra/jenkins-job-builder/blob/master/jenkins_jobs/modules/publishers.py#L359",
+      "range": {
+        "startLine": 83,
+        "startChar": 21,
+        "endLine": 83,
+        "endChar": 27
+      },
+      "revId": "0d2ed0659122107a355d6786244c8a7176bc3e8b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_37c9a726",
+        "filename": "jjb/autorelease/autorelease-templates.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2016-02-23T16:21:49Z",
+      "side": 1,
+      "message": "I\u0027m not sure this is correct. According to the documentation the possible values are:\n\n Can be: \u0027SUCCESS\u0027,\n      \u0027UNSTABLE\u0027, \u0027FAILED_OR_BETTER\u0027, \u0027UNSTABLE_OR_BETTER\u0027,\n      \u0027UNSTABLE_OR_WORSE\u0027, \u0027FAILED\u0027, \u0027ALWAYS\u0027. (default: \u0027ALWAYS\u0027)",
+      "parentUuid": "9a3d3df0_97c87356",
       "range": {
         "startLine": 83,
         "startChar": 21,
