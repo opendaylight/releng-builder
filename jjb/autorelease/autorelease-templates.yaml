@@ -60,7 +60,7 @@
         settings: '{autorelease-settings}'
         global-settings: '{odl-global-settings}'
         automatic-archiving: true
-        post-step-run-condition: UNSTABLE
+        post-step-run-condition: STABLE
 
     postbuilders:
         - autorelease-maven-deploy
@@ -80,7 +80,7 @@
         email-prefix: '[autorelease]'
     - trigger-parameterized-builds:
         - project: 'integration-distribution-test-{integration-test}'
-          condition: SUCCESS
+          condition: STABLE
           property-file: variables.prop
           fail-on-missing: true
 
