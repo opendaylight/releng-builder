@@ -704,6 +704,9 @@
                 branches:
                   - branch-compare-type: 'ANT'
                     branch-pattern: '**/{branch}'
+                file-paths:
+                    - compare-type: ANT
+                      pattern: '**/*.xml'
 
     prebuilders:
         - wipe-org-opendaylight-repo
