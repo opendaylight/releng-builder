@@ -97,12 +97,13 @@ done
 
 echo "Starting Robot test suites ${SUITES} ..."
 pybot -N ${TESTPLAN} -c critical -e exclude -v BUNDLEFOLDER:${BUNDLEFOLDER} -v WORKSPACE:/tmp -v BUNDLE_URL:${ACTUALBUNDLEURL} \
--v NEXUSURL_PREFIX:${NEXUSURL_PREFIX} \
+-v NEXUSURL_PREFIX:${NEXUSURL_PREFIX} -v JDKVERSION:${JDKVERSION} \
 -v CONTROLLER:${ODL_SYSTEM_IP} -v CONTROLLER1:${ODL_SYSTEM_2_IP} -v CONTROLLER2:${ODL_SYSTEM_3_IP} -v ODL_SYSTEM_IP:${ODL_SYSTEM_IP} \
 ${odl_variables} -v NUM_ODL_SYSTEM:${NUM_ODL_SYSTEM} -v CONTROLLER_USER:${USER} -v ODL_SYSTEM_USER:${USER} -v \
 TOOLS_SYSTEM_IP:${TOOLS_SYSTEM_IP} ${tools_variables} -v NUM_TOOLS_SYSTEM:${NUM_TOOLS_SYSTEM} -v TOOLS_SYSTEM_USER:${USER} \
 -v MININET:${TOOLS_SYSTEM_IP} -v MININET1:${TOOLS_SYSTEM_2_IP} -v MININET2:${TOOLS_SYSTEM_3_IP} -v MININET_USER:${USER} \
 -v USER_HOME:${HOME} ${TESTOPTIONS} ${SUITES} || true
+# FIXME: Sort (at least -v) options alphabetically.
 
 set +e  # We do not want to create red dot just because something went wrong while fetching logs.
 for i in `seq 1 ${NUM_ODL_SYSTEM}`
