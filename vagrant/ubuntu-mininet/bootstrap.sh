@@ -96,3 +96,7 @@ cd $OFLOPS_DIR
 ./configure --with-openflow-src-dir=$OF_DIR
 make
 make install
+
+
+# Install bride-utils in mininet to test redirect action in NIC
+apt-get install -y --force-yes -qq bridge-utils

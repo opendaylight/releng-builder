@@ -73,3 +73,7 @@ make install
 # Installing exabgp
 apt-get install -y --force-yes -qq exabgp
 
+
+# Install bride-utils in mininet to test redirect action in NIC
+apt-get install -y --force-yes -qq bridge-utils
+
