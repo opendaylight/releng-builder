@@ -1,0 +1,38 @@
+- project:
+    name: netconf-csit-bug-5383
+    jobs:
+        - '{project}-csit-1node-{functionality}-{install}-{stream}'
+
+    # The project name
+    project: 'netconf'
+
+    # The functionality under test
+    functionality: 'bug-5383'
+
+    # Project branches
+    stream:
+        - boron:
+            branch: 'master'
+            jre: 'openjdk8'
+        - beryllium:
+            branch: 'stable/beryllium'
+            jre: 'openjdk7'
+        - stable-lithium:
+            branch: 'stable/lithium'
+            jre: 'openjdk7'
+
+    install:
+        - only:
+            scope: 'only'
+        # "all" makes no sense for this job as the test suite
+        # being executed here requires no installed features
+        # (except restconf).
+
+    # Features to install
+    install-features: 'odl-restconf'
+
+    # Robot custom options
+    robot-options: ''
+
+    # Trigger jobs (upstream dependencies)
+    trigger-jobs: ''
