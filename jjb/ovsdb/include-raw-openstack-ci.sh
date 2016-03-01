@@ -85,8 +85,6 @@ if [ "${ODL_VERSION}" == "beryllium" ] ; then
     DEVSTACK_LOCAL_CONFIG+="ODL_RELEASE=beryllium-snapshot-0.4.0;"
 elif [ "${ODL_VERSION}" == "lithium" ] ; then
     DEVSTACK_LOCAL_CONFIG+="ODL_RELEASE=lithium-snapshot-0.3.1;"
-elif [ "${ODL_VERSION}" == "helium" ] ; then
-    DEVSTACK_LOCAL_CONFIG+="ODL_RELEASE=helium;"
 fi
 
 # And this runs devstack-gate
