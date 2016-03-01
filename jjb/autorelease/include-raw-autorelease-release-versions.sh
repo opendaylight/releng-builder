@@ -10,8 +10,8 @@
 ##############################################################################
 
 # DATESTAMP=true  # Example
-# RELEASE_TAG=Helium-SR2  # Example
-# RELEASE_BRANCH=stable/helium  # Example
+# RELEASE_TAG=Beryllium-SR1  # Example
+# RELEASE_BRANCH=stable/beryllium  # Example
 
 # Directory to put git format-patches
 PATCH_DIR=`pwd`/patches
