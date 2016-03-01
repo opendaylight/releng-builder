@@ -83,8 +83,6 @@ fi
 # Use specific build, if asked to do so
 if [ "${ODL_VERSION}" == "lithium-latest" ] ; then
     DEVSTACK_LOCAL_CONFIG+="ODL_RELEASE=lithium-snapshot;"
-elif [ "${ODL_VERSION}" == "helium" ] ; then
-    DEVSTACK_LOCAL_CONFIG+="ODL_RELEASE=helium;"
 fi
 
 # If Karaf netvirt feature was explicitly provided, add it to DEVSTACK_LOCAL_CONFIG
