@@ -1,5 +1,5 @@
 - project:
-    name: tsdr-csit-hbase
+    name: tsdr-csit-hsqldb-lithium
     jobs:
         - '{project}-csit-1node-{functionality}-{install}-{stream}'
         - '{project}-csit-verify-1node-{functionality}'
@@ -8,15 +8,12 @@
     project: 'tsdr'
 
     # The functionality under test to verify
-    functionality: 'hbase-datastore'
+    functionality: 'hsqldb-datastore-lithium'
 
     # Project branches
     stream:
-        - boron:
-            branch: 'master'
-            jre: 'openjdk8'
-        - beryllium:
-            branch: 'stable/beryllium'
+        - lithium:
+            branch: 'stable/lithium'
             jre: 'openjdk7'
 
     install:
@@ -24,10 +21,10 @@
             scope: 'only'
 
     # Features to install
-    install-features: 'odl-restconf,odl-tsdr-hbase,odl-tsdr-openflow-statistics-collector,odl-tsdr-netflow-statistics-collector,odl-tsdr-syslog-collector'
+    install-features: 'odl-restconf,odl-tsdr-all'
 
     # Robot custom options
-    robot-options: '-v ODL_VERSION:master'
+    robot-options: '-v ODL_VERSION:stable-lithium'
 
     # Trigger jobs (upstream dependencies)
     trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream},openflowjava-distribution-{stream},openflowplugin-distribution-{stream},tsdr-distribution-{stream}'

@@ -27,7 +27,7 @@
     install-features: 'odl-restconf,odl-tsdr-hsqldb,odl-tsdr-openflow-statistics-collector,odl-tsdr-netflow-statistics-collector,odl-tsdr-syslog-collector'
 
     # Robot custom options
-    robot-options: ' '
+    robot-options: '-v ODL_VERSION:master'
 
     # Trigger jobs (upstream dependencies)
     trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream},openflowjava-distribution-{stream},openflowplugin-distribution-{stream},tsdr-distribution-{stream}'
