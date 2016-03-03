@@ -39,6 +39,14 @@
             description: 'Features to install in the controller separated by comma'
 
 - parameter:
+    name: integration-distribution-stream
+    parameters:
+        - string:
+            name: DISTROSTREAM
+            default: '{stream}'
+            description: 'Distribution stream string, for suites to know which behavior to expect'
+
+- parameter:
     name: integration-test-plan
     parameters:
         - string:
