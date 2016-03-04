@@ -17,7 +17,8 @@
 # integration-controller-scope: only or all features ($CONTROLLERSCOPE)
 # integration-controller-features: features under test ($CONTROLLER FEATURES)
 # integration-test-options: robot options ($TESTOPTIONS)
-# integration-test-plan: robot test plan ($TESTPLAN)
+# integration-stream-test-plan: stream specific robot test plan ($STREAMTESTPLAN)
+# integration-test-plan: fallback robot test plan ($TESTPLAN)
 # integration-patch-refspec: test branch ($PATCHREFSPEC)
 
 
@@ -49,6 +50,8 @@
             controller-features: '{install-features}'
         - integration-test-options:
             test-options: '{robot-options}'
+        - integration-stream-test-plan:
+            test-plan: '{project}-{functionality}-{stream}.txt'
         - integration-test-plan:
             test-plan: '{project}-{functionality}.txt'
         - integration-jdk-version:
@@ -128,6 +131,8 @@
             controller-features: '{install-features}'
         - integration-test-options:
             test-options: '{robot-options}'
+        - integration-stream-test-plan:
+            test-plan: '{project}-{functionality}-{stream}.txt'
         - integration-test-plan:
             test-plan: '{project}-{functionality}.txt'
         - integration-patch-refspec:
@@ -231,6 +236,8 @@
             controller-features: '{install-features}'
         - integration-test-options:
             test-options: '{robot-options}'
+        - integration-stream-test-plan:
+            test-plan: '{project}-{functionality}-{stream}.txt'
         - integration-test-plan:
             test-plan: '{project}-{functionality}.txt'
         - integration-patch-refspec:
@@ -332,6 +339,8 @@
             controller-features: 'odl-mdsal-clustering,{install-features}'
         - integration-test-options:
             test-options: '{robot-options}'
+        - integration-stream-test-plan:
+            test-plan: '{project}-{functionality}-{stream}.txt'
         - integration-test-plan:
             test-plan: '{project}-{functionality}.txt'
         - integration-jdk-version:
@@ -413,6 +422,8 @@
             controller-features: 'odl-mdsal-clustering,{install-features}'
         - integration-test-options:
             test-options: '{robot-options}'
+        - integration-stream-test-plan:
+            test-plan: '{project}-{functionality}-{stream}.txt'
         - integration-test-plan:
             test-plan: '{project}-{functionality}.txt'
         - integration-patch-refspec:
@@ -518,6 +529,8 @@
             controller-features: 'odl-mdsal-clustering,{install-features}'
         - integration-test-options:
             test-options: '{robot-options}'
+        - integration-stream-test-plan:
+            test-plan: '{project}-{functionality}-{stream}.txt'
         - integration-test-plan:
             test-plan: '{project}-{functionality}.txt'
         - integration-patch-refspec:

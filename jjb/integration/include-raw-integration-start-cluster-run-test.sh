@@ -75,12 +75,6 @@ fi
 echo "Cool down for ${COOLDOWN_PERIOD} seconds :)..."
 sleep ${COOLDOWN_PERIOD}
 
-echo "Changing the testplan path..."
-cat ${WORKSPACE}/test/csit/testplans/${TESTPLAN} | sed "s:integration:${WORKSPACE}:" > testplan.txt
-cat testplan.txt
-
-SUITES=`egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' testplan.txt | tr '\012' ' '`
-
 echo "Generating controller variables..."
 for i in `seq 1 ${NUM_ODL_SYSTEM}`
 do
@@ -94,6 +88,18 @@ do
     MININETIP=TOOLS_SYSTEM_${i}_IP
     tools_variables=${tools_variables}" -v ${MININETIP}:${!MININETIP}"
 done
+
+echo "Locating test plan to use..."
+testplan_filepath="${WORKSPACE}/test/csit/testplans/${STREAMTESTPLAN}"
+if [ ! -f "${testplan_filepath}" ]; then
+    testplan_filepath="${WORKSPACE}/test/csit/testplans/${TESTPLAN}"
+fi
+
+echo "Changing the testplan path..."
+cat "${testplan_filepath}" | sed "s:integration:${WORKSPACE}:" > testplan.txt
+cat testplan.txt
+
+SUITES=`egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' testplan.txt | tr '\012' ' '`
 
 echo "Starting Robot test suites ${SUITES} ..."
 pybot -N ${TESTPLAN} -c critical -e exclude -v BUNDLEFOLDER:${BUNDLEFOLDER} -v WORKSPACE:/tmp -v BUNDLE_URL:${ACTUALBUNDLEURL} \

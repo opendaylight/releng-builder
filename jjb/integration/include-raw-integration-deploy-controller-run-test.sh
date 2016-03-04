@@ -132,8 +132,14 @@ EOF
 scp ${WORKSPACE}/controller-script.sh ${ODL_SYSTEM_IP}:/tmp
 ssh ${ODL_SYSTEM_IP} 'bash /tmp/controller-script.sh'
 
+echo "Locating test plan to use..."
+testplan_filepath="${WORKSPACE}/test/csit/testplans/${STREAMTESTPLAN}"
+if [ ! -f "${testplan_filepath}" ]; then
+    testplan_filepath="${WORKSPACE}/test/csit/testplans/${TESTPLAN}"
+fi
+
 echo "Changing the testplan path..."
-cat ${WORKSPACE}/test/csit/testplans/${TESTPLAN} | sed "s:integration:${WORKSPACE}:" > testplan.txt
+cat "${testplan_filepath}" | sed "s:integration:${WORKSPACE}:" > testplan.txt
 cat testplan.txt
 
 SUITES=$( egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' testplan.txt | tr '\012' ' ' )
