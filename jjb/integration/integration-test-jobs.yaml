@@ -1,12 +1,13 @@
-
 - project:
-    name: integration-test-jobs
+    name: integration-test
     jobs:
-        - 'integration-verify-python'
+        - '{name}-verify-python-{stream}'
         - 'integration-csit-verify-1node-library'
         - 'integration-distribution-test-{stream}'
         - 'integration-patch-test-{stream}'
         - 'integration-multipatch-test-{stream}'
+
+    project: integration/test
 
     stream:
         - boron:
@@ -182,61 +183,6 @@
                 vtn-csit-1node-manager-li-all-{stream},
                 vtn-csit-1node-coordinator-only-{stream}
 
-
-# Template: integration-verify-python
-# Goal: Verify python scripts correct syntax
-# Operation: This job template performs a python tox check on any integration/test patch
-
-- job-template:
-    name: 'integration-verify-python'
-
-    project-type: freestyle
-    node: dynamic_verify
-    concurrent: true
-
-    logrotate:
-        daysToKeep: '{build-days-to-keep}'
-        numToKeep: '{build-num-to-keep}'
-        artifactDaysToKeep: '{build-artifact-days-to-keep}'
-        artifactNumToKeep: '{build-artifact-num-to-keep}'
-
-    parameters:
-        - project-parameter:
-            project: 'integration/test'
-        - integration-patch-refspec:
-            branch: '$GERRIT_REFSPEC'
-
-    scm:
-        - integration-gerrit-scm:
-            credentials-id: '{ssh-credentials}'
-            basedir: 'test'
-            refspec: '$PATCHREFSPEC'
-            branch: 'master'
-
-    wrappers:
-        - build-timeout
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
-
-    triggers:
-        - integration-trigger-patch-submitted:
-            name: 'integration/test'
-            branch: 'master'
-            pattern: '**'
-
-    builders:
-        - shell: |
-            virtualenv $WORKSPACE/venv-tox
-            source $WORKSPACE/venv-tox/bin/activate
-            pip install tox argparse
-            tox --version
-            cd $WORKSPACE/test
-            tox
-
-    publishers:
-        - email-notification:
-            email-prefix: '[integration]'
 
 # Template: integration-csit-verify-1node-library
 # Goal: Verify changes in csit folder not covered by projects suite verify jobs (e.g. libraries or variables)
