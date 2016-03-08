@@ -92,6 +92,52 @@
       "revId": "a96b48cf1e2df5eacdf0267130906fdc1efa6839",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_dce957b8",
+        "filename": "jjb/releng-templates.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2016-03-08T10:39:47Z",
+      "side": 1,
+      "message": "Currently this [0] outputs the following text:\nRequirement already satisfied (use --upgrade to upgrade): tox in ./venv-tox/lib/python2.7/site-packages\nRequirement already satisfied (use --upgrade to upgrade): argparse in ./venv-tox/lib/python2.7/site-packages\nRequirement already satisfied (use --upgrade to upgrade): virtualenv\u003e\u003d1.11.2 in ./venv-tox/lib/python2.7/site-packages (from tox)\nRequirement already satisfied (use --upgrade to upgrade): py\u003e\u003d1.4.17 in ./venv-tox/lib/python2.7/site-packages (from tox)\nRequirement already satisfied (use --upgrade to upgrade): pluggy\u003c0.4.0,\u003e\u003d0.3.0 in ./venv-tox/lib/python2.7/site-packages (from tox)\n\nIt seems that venv-tox is already created on the slave, but I do not have visibility into which packages (and which versions) are there.\nI recomend instaling explicit versions:\npip install --upgrade tox\u003d\u003d2.3.1\n\n[0] https://jenkins.opendaylight.org/sandbox/job/bgpcep-pcepy-verify-python-boron/2/console",
+      "range": {
+        "startLine": 78,
+        "startChar": 12,
+        "endLine": 78,
+        "endChar": 36
+      },
+      "revId": "a96b48cf1e2df5eacdf0267130906fdc1efa6839",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_3cd4c3ea",
+        "filename": "jjb/releng-templates.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2016-03-08T10:39:47Z",
+      "side": 1,
+      "message": "pip freeze",
+      "range": {
+        "startLine": 79,
+        "startChar": 12,
+        "endLine": 79,
+        "endChar": 25
+      },
+      "revId": "a96b48cf1e2df5eacdf0267130906fdc1efa6839",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
