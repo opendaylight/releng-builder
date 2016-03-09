@@ -5,48 +5,37 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  # root off of the rackspace provider dummy box
+  # root off of the openstack provider dummy box
   config.vm.box = "dummy"
-
-  # rackspace systems, even with cloud-init
-  # don't seem to have the cloud int user ${osname} (or similar)
-  # getting the ssh key for some reason, root does for sure
-  # so use that
   config.ssh.username = 'root'
 
-  # Fedora and EL systems default to requiring tty for sudo
-  # This should have been disabled with the Vagrant ready
-  # base box conversion (see rackspace-convert-base vagrant)
-  # but just to be safe
-  config.ssh.pty = true
-
   # make sure to set the following in your
-  # ~/.vagrant.d/boxes/dummy/0/rackspace/Vagrantfile
-  # rs.username
-  # rs.api_key
-  # rs.rackspace_region
+  # ~/.vagrant.d/boxes/dummy/0/openstack/Vagrantfile
+  #
+  # os.openstack_auth_url
+  # os.endpoint_type
+  # os.flavor
+  # os.tenant_name
+  # os.username
+  # os.password
+  # os.networks
   #
   # If you are not using an SSH token / smartcard also set this
-  # rs.key_name
-  # config.ssh.private_key_path -- set this outside the rackspace block
+  # os.key_name
+  # config.ssh.private_key_path -- set this outside the openstack block
   #         in your base box
-  config.vm.provider :rackspace do |rs|
-    # create these base builds always on the smallest system possible
-    rs.flavor = 'general1-1'
-
-    # allow for switching to ORD cloud but default to DFW
-    if (ENV['RSREGION'] == 'ord')
-      rs.rackspace_region = :ord
-    else
-      rs.rackspace_region = :dfw
-    end
-
+  config.vm.provider :openstack do |os, override|
     # Default the CentOS 6.5 - Vagrant ready image unless overriden by a RSIMAGE
     # environment variable
-    if ENV['RSIMAGE']
-      rs.image = ENV['RSIMAGE']
+    if ENV['IMAGE']
+      os.image = ENV['IMAGE']
     else
-      rs.image = 'CentOS 6.5 - Vagrant ready'
+      os.image = 'CentOS 7 - baseline - 20151215'
+    end
+
+    case ENV['IMAGE']
+      when /.*centos.*/i
+        override.ssh.username = 'centos'
     end
   end
 
@@ -57,26 +46,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # run our bootstrapping for the ovsdb-devstack system
   config.vm.provision 'shell', path: 'bootstrap.sh'
 
-
-  #################
-  # LF NETWORKING #
-  #################
-
-  if ENV['LFNETWORK']
-    # reconfigure the network setup to support our special private setup
-    config.vm.provision 'shell', path: '../lib/lf-networking/configure_lf_infra.sh',
-      args: ENV['RSSUBDOMAIN']
-  end
-
-
   #################
   # FINAL CLEANUP #
   #################
 
-  # set RSRESEAL to... anything if you want to snap an image of this box
+  # set RESEAL to... anything if you want to snap an image of this box
   # not setting the environment variable will cause the system to come
   # up fully and not be in a resealable state
-  if ENV['RSRESEAL']
+  if ENV['RESEAL']
     config.vm.provision 'shell', path: '../lib/system_reseal.sh'
   end
 end
