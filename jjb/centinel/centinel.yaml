@@ -717,7 +717,6 @@
         - wipe-org-opendaylight-repo
         - jacoco-nojava-workaround
         - autorelease-checkout-gerrit-patch
-        - autorelease-generate-taglist
         - autorelease-generate-release-patches
         - maven-target:
             maven-version: '{mvn33}'
@@ -739,12 +738,9 @@
         post-step-run-condition: UNSTABLE
 
     postbuilders:
-        - shell: "./scripts/list-project-dependencies.sh"
         - autorelease-sys-stats
 
     publishers:
-        - archive-artifacts:
-            artifacts: '*.log'
         - email-notification:
             email-prefix: '[autorelease] [centinel]'
 
