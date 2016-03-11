@@ -1,0 +1,11 @@
+- project:
+    name: autorelease-version-management
+    jobs:
+        - '{name}-verify-python-{stream}'
+
+    project: releng/autorelease
+    toxdir: 'scripts/version_management'
+
+    stream:
+        - boron:
+            branch: master
