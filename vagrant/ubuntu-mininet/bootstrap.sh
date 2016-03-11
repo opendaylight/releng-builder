@@ -96,3 +96,6 @@ cd $OFLOPS_DIR
 ./configure --with-openflow-src-dir=$OF_DIR
 make
 make install
+
+# Install vlan for vlan based tests in VTN suites
+apt-get install -y --force-yes -qq vlan
