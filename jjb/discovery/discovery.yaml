@@ -558,7 +558,7 @@
                 - '{ssh-credentials}'
 
     triggers:
-        - timed: '@weekly'
+        - timed: 'H H * * 6'
         - gerrit-trigger-patch-sonar:
             name: 'discovery'
 
@@ -619,7 +619,7 @@
                 - '{ssh-credentials}'
 
     triggers:
-        - timed: '@weekly'
+        - timed: 'H H * * 6'
 
     prebuilders:
         - wipe-org-opendaylight-repo

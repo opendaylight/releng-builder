@@ -565,7 +565,7 @@
                 - '{ssh-credentials}'
 
     triggers:
-        - timed: '@weekly'
+        - timed: 'H H * * 6'
         - gerrit-trigger-patch-sonar:
             name: 'coretutorials'
 
@@ -626,7 +626,7 @@
                 - '{ssh-credentials}'
 
     triggers:
-        - timed: '@weekly'
+        - timed: 'H H * * 6'
 
     prebuilders:
         - wipe-org-opendaylight-repo
