@@ -606,3 +606,79 @@
                 inclusion-flag: 'off'
                 display-table: true
                 format: csv
+
+- job-template:
+    name: '{project}-openstack-{functionality}-daily-{openstack}-{odl}'
+
+    project-type: freestyle
+    node: dynamic_robot
+
+    logrotate:
+        daysToKeep: '{build-days-to-keep}'
+        numToKeep: '{build-num-to-keep}'
+        artifactDaysToKeep: '{build-artifact-days-to-keep}'
+        artifactNumToKeep: '{build-num-to-keep}'
+
+    parameters:
+        - project-parameter:
+            project: 'integration/test'
+        - integration-patch-refspec:
+            branch: 'master'
+        - integration-test-plan:
+            test-plan: '{project}-{functionality}.txt'
+        - string:
+            name: OPENSTACK_BRANCH
+            default: '{openstack-branch}'
+            description: 'Openstack branch to use with devstack'
+        - string:
+            name: ODL_VERSION
+            default: '{odl-version}'
+            description: 'OpenDaylight version to use with devstack + networking_odl project'
+        - string:
+            name: TEMPEST_REGEX
+            default: 'tempest.api.network'
+            description: 'Default grouping of tempest tests to run'
+        - integration-test-plan:
+            test-plan: '{project}-{functionality}.txt'
+
+    scm:
+        - integration-gerrit-scm:
+            credentials-id: '{ssh-credentials}'
+            basedir: 'test'
+            refspec: '$PATCHREFSPEC'
+            branch: 'master'
+
+    wrappers:
+          - build-timeout
+          - jclouds:
+              instances:
+                - rk-c7-devstack:
+                    cloud-name: 'Rackspace DFW - Devstack'
+                    count: '1'
+                    stop-on-terminate: False
+          - ssh-agent-credentials:
+              users:
+                  - '{ssh-credentials}'
+
+    # Trigger jobs (daily)
+    triggers:
+        - integration-csit-all
+
+    builders:
+        - integration-install-robotframework
+        - inject:
+            properties-file: 'env.properties'
+        - integration-get-slave-addresses
+        - inject:
+            properties-file: 'slave_addresses.txt'
+        - include-raw-integration-deploy-devstack-testing
+        - integration-cleanup-tmp
+
+    publishers:
+        - integration-robot:
+            unstable-if: 0.0
+            pass-if: 100.0
+        - archive:
+            artifacts: '*log*'
+        - email-notification:
+            email-prefix: '[project]'
