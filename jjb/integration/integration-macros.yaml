@@ -274,6 +274,17 @@
             !include-raw:
                 - include-raw-integration-deploy-controller-run-test.sh
 
+# Macro: integration-resolve-test-suite-path
+# Operation: this macro only resolves suite path from testplan
+# Used by: {project}-openstack-tempest-* job templates
+
+- builder:
+    name: integration-resolve-test-suite-path
+    builders:
+        - shell:
+            !include-raw:
+                - include-raw-integration-resolve-test-suite-path.sh
+
 # Macro: integration-deploy-controller
 # Operation: this macro prepares 3-node cluster controller
 # Used by: {project}-csit-3node-* job templates
