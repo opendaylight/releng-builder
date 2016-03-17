@@ -1,11 +1,14 @@
 
 - project:
-    name: integration-distribution-jobs
+    name: integration-distribution
     jobs:
+        - '{name}-verify-python-{stream}'
         - 'integration-distribution-verify-{stream}'
         - 'integration-distribution-merge-{stream}'
         - 'integration-distribution-deploy-{stream}'
         - 'integration-distribution-offline-{stream}'
+
+    project: integration/distribution
 
     stream:
         - boron:
