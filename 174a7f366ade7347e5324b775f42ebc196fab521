@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a42497e_e747304a",
+        "filename": "jjb/integration/integration-templates.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2016-03-17T12:12:12Z",
+      "side": 1,
+      "message": "This macro is used by -all- jobs, but their periodicity may change depending on infra capacity (back to being triggered by snapshot builds, or reduced even more to weekly).\nAs your template has \"daily\" in its name, it should use separate trigger that would not mirror changes to -all- jobs.",
+      "range": {
+        "startLine": 665,
+        "startChar": 10,
+        "endLine": 665,
+        "endChar": 30
+      },
+      "revId": "174a7f366ade7347e5324b775f42ebc196fab521",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
