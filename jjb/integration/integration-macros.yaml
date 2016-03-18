@@ -47,12 +47,20 @@
             description: 'Distribution stream string, for suites to know which behavior to expect'
 
 - parameter:
+    name: integration-stream-test-plan
+    parameters:
+        - string:
+            name: STREAMTESTPLAN
+            default: '{stream-test-plan}'
+            description: 'Stream-specific test plan we will run'
+
+- parameter:
     name: integration-test-plan
     parameters:
         - string:
             name: TESTPLAN
             default: '{test-plan}'
-            description: 'Test plan we will run'
+            description: 'General test plan we will run unless stream-specific one is found'
 
 - parameter:
     name: integration-test-options
