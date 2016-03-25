@@ -375,7 +375,7 @@ each use of JJB.
 
 The recommended way to install JJB is via pip.
 
-Clone the latest version of the [`releng/builder`][4] repo.
+First, clone the latest version of the [`releng/builder`][4] repo.
 
     $ git clone https://git.opendaylight.org/gerrit/p/releng/builder.git
 
@@ -384,11 +384,15 @@ and activated](#jjb_install_venv) a virtual environment for JJB.
 
     $ mkvirtualenv jjb
 
-When in doubt, the best version of JJB to attempt to use is the version
-specified in the [`builder/jjb/requirements.txt`][33] file.
+The recommended version of JJB to install is the version specified in the
+[`builder/jjb/requirements.txt`][33] file.
 
     # From the root of the releng/builder repo
     (jjb)$ pip install -r jjb/requirements.txt
+
+To validate that JJB was successfully installed you can run this command:
+
+    (jjb)$ jenkins-jobs --version
 
 To change the version of JJB specified by [`builder/jjb/requirements.txt`][33]
 to install from the latest commit to the master branch of JJB's git repository:
@@ -425,19 +429,19 @@ and activated](#jjb_install_venv) a virtual environment for JJB.
     $ mkvirtualenv jjb
 
 You can then use [JJB's `requirements.txt`][20] file to install its
-dependences.
+dependencies. Note that we're not using `sudo` to install as root, since we want
+to make use of the venv we've configured for our current user.
 
     # In the cloned JJB repo, with the desired version of the code checked out
     (jjb)$ pip install -r requirements.txt
 
-Finally, install JJB.
+Then install JJB from the repo with:
 
-    # In the cloned JJB repo, with the desired version of the code checked out
-    (jjb)$ python setup.py sdist
-    (jjb)$ pip install dist/jenkins-job-builder-*.tar.gz
+    (jjb)$ pip install .
 
-Note that we're not using `sudo` to install as root, since we want to make
-use of the venv we've configured for our current user.
+To validate that JJB was successfully installed you can run this command:
+
+    (jjb)$ jenkins-jobs --version
 
 ### <a name="jjb_install_docker">JJB Docker Image</a>
 
