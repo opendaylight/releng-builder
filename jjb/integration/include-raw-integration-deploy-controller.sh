@@ -23,7 +23,7 @@ echo "Downloading the distribution from ${ACTUALBUNDLEURL}"
 wget --no-verbose  '${ACTUALBUNDLEURL}'
 
 echo "Extracting the new controller..."
-unzip -q ${BUNDLE}
+unzip -o -q ${BUNDLE}
 
 echo "Configuring the startup features..."
 FEATURESCONF=/tmp/${BUNDLEFOLDER}/etc/org.apache.karaf.features.cfg
