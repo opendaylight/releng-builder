@@ -111,7 +111,7 @@
         - maven-target:
             maven-version: '{maven-version}'
             pom: 'pom.xml'
-            goals: 'dependency:sources -Poffset0,offset1,offset2,offset3 -DoutputFile=$WORKSPACE/sources.log -DappendOutput -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+            goals: 'dependency:sources -DoutputFile=$WORKSPACE/sources.log -DappendOutput -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
             java-opts:
                 - '-Xmx4096m -XX:MaxPermSize=1024m'
             settings: '{settings}'
