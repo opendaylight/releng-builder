@@ -15,7 +15,7 @@ echo "Copying the distribution..."
 cp  ${BUNDLEURL} .
 
 echo "Extracting the new controller..."
-unzip -o -q ${BUNDLE}
+unzip -q ${BUNDLE}
 
 echo "Configuring the startup features..."
 FEATURESCONF=${WORKSPACE}/${BUNDLEFOLDER}/etc/org.apache.karaf.features.cfg
