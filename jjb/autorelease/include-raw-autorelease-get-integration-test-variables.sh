@@ -9,7 +9,7 @@
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
 
-NEXUSURL=https://nexus.opendaylight.org/staged-repos/
+NEXUSURL=https://nexus.opendaylight.org/content/repositories/
 VERSION=`grep -m1 '<version>' ${WORKSPACE}/integration/distribution/distribution-karaf/pom.xml | awk -F'[<|>]' '/version/ { printf $3 }'`
 if [ "x${VERSION}" == "x" ]; then
     echo "Lithium or sooner, different path needs to be searched."
