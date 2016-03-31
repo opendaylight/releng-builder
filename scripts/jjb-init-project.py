@@ -73,7 +73,7 @@ if cfg.get("STREAMS"):  # this is a list of single-key dicts
 else:
     streams = {"boron": jjblib.STREAM_DEFAULTS["boron"]}
 
-first_stream = streams.iterkeys().next()  # Keep master branch at top.
+first_stream = next(iter(streams))  # Keep master branch at top.
 sonar_branch = streams[first_stream]["branch"]
 # Create YAML to list branches to create jobs for
 str_streams = "stream:\n"
