@@ -1,0 +1,67 @@
+- project:
+    name: integration-packaging-python
+    jobs:
+        - 'integration-packaging-verify-python-{stream}'
+
+    stream:
+        - master:
+            branch: 'master'
+
+    project: 'integration/packaging'
+
+- job-template:
+    name: 'integration-packaging-verify-python-{stream}'
+
+    project-type: freestyle
+    node: dynamic_verify
+    concurrent: true
+
+    parameters:
+        - project-parameter:
+            project: '{project}'
+        - gerrit-parameter:
+            branch: '{branch}'
+
+    scm:
+        - gerrit-trigger-scm:
+            credentials-id: '{ssh-credentials}'
+            refspec: 'refs/heads/{branch}'
+            choosing-strategy: 'gerrit'
+
+    wrappers:
+        - build-timeout
+        - ssh-agent-credentials:
+            users:
+                - '{ssh-credentials}'
+
+    triggers:
+        - gerrit:
+            server-name: 'OpenDaylight'
+            trigger-on:
+                - patchset-created-event:
+                    exclude-drafts: 'false'
+                    exclude-trivial-rebase: 'false'
+                    exclude-no-code-change: 'false'
+                - draft-published-event
+                - comment-added-contains-event:
+                    comment-contains-value: 'recheck'
+                - comment-added-contains-event:
+                    comment-contains-value: 'reverify'
+            projects:
+              - project-compare-type: 'ANT'
+                project-pattern: 'integration/packaging'
+                branches:
+                  - branch-compare-type: 'ANT'
+                    branch-pattern: '**/{branch}'
+
+    builders:
+        - shell: |
+            virtualenv $WORKSPACE/venv-tox
+            source $WORKSPACE/venv-tox/bin/activate
+            pip install tox argparse
+            tox --version
+            tox
+
+    publishers:
+        - email-notification:
+            email-prefix: '[int/pack]'
