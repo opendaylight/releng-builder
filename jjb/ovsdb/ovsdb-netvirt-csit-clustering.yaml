@@ -1,0 +1,36 @@
+- project:
+    name: ovsdb-netvirt-csit-clustering
+    jobs:
+        - '{project}-csit-3node-{functionality}-{install}-{stream}'
+        - '{project}-csit-verify-3node-{functionality}'
+
+    # The project name
+    project: 'ovsdb-netvirt'
+
+    # The functionality under test
+    functionality: 'clustering'
+
+    # Project branches
+    stream:
+        - boron:
+            branch: 'master'
+            jre: 'openjdk8'
+        - beryllium:
+            branch: 'stable/beryllium'
+            jre: 'openjdk7'
+        - stable-lithium:
+            branch: 'stable/lithium'
+            jre: 'openjdk7'
+
+    install:
+        - only:
+            scope: 'only'
+
+    # Features to install
+    install-features: 'odl-ovsdb-openstack'
+
+    # Robot custom options
+    robot-options: ''
+
+    # Trigger jobs (upstream dependencies)
+    trigger-jobs: 'controller-distribution-{stream},ovsdb-distribution-{stream}'
