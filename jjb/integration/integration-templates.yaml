@@ -651,8 +651,6 @@
             name: TEMPEST_REGEX
             default: 'tempest.api.network'
             description: 'Default grouping of tempest tests to run'
-        - integration-test-plan:
-            test-plan: '{project}-{functionality}.txt'
 
     scm:
         - integration-gerrit-scm:
@@ -692,6 +690,6 @@
             unstable-if: 0.0
             pass-if: 100.0
         - archive:
-            artifacts: '*log*'
+            artifacts: 'logs/*log*,logs/*karaf*'
         - email-notification:
             email-prefix: '[project]'
