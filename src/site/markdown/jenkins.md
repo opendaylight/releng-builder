@@ -784,6 +784,24 @@ can push them to the Jenkins sandbox.
     # Don't push all jobs by omitting the final param! (ctrl+c to abort)
     jenkins-jobs --conf jenkins.ini update jjb/ <job-name>
 
+### <a name="jjb_manual_run">Running Jobs</a>
+
+Once you have your Jenkins job configuration [pushed to the
+Sandbox](#jjb_manual_push) you can trigger it to run.
+
+Find your newly-pushed job on the [Sandbox's web UI][27]. Click on its name to
+see the job's details.
+
+Make sure you're [logged in][32] to the Sandbox.
+
+Click "Build with Parameters" and then "Build".
+
+Wait for your job to be scheduled and run. Click on the job number to see
+details, including console output.
+
+Make changes to your JJB configuration, re-test, re-push and re-run until
+your job is ready.
+
 ## <a name="jjb_use_docker">Docker Method</a>
 
 If [using Docker](#jjb_install_docker):
