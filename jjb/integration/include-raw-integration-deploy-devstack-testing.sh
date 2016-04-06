@@ -15,7 +15,8 @@ pybot -e exclude \
 -v ODL_VERSION:$ODL_VERSION \
 -v TEMPEST_REGEX:$TEMPEST_REGEX ${SUITES} || true
 
-scp -r $ODL_SYSTEM_IP:/opt/stack/logs/ $WORKSPACE/
+scp $ODL_SYSTEM_IP:/opt/stack/logs/devstacklog.txt $WORKSPACE/
+scp -r $ODL_SYSTEM_IP:/opt/stack/logs/*karaf* $WORKSPACE/
 
 # vim: ts=4 sw=4 sts=4 et ft=sh :
 
