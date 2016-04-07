@@ -1,0 +1,42 @@
+- project:
+    name: vtn-csit-openstack-integration
+    jobs:
+        - '{project}-csit-1node-openstack-{liberty}-{functionality}-{stream}'
+
+    # The project name
+    project: 'vtn'
+
+    # The project name
+    functionality: 'neutron'
+
+    stream:
+        - boron:
+            branch: 'master'
+            jre: 'openjdk8'
+        - beryllium:
+            branch: 'stable/beryllium'
+            jre: 'openjdk7'
+        - stable-lithium:
+            branch: 'stable/lithium'
+            jre: 'openjdk7'
+
+    openstack:
+        - mitaka:
+            openstack-branch: 'stable/mitaka'
+            odl-ml2-version:  'master'
+        - liberty:
+            openstack-branch: 'stable/liberty'
+            odl-ml2-version:  'stable/liberty'
+    install:
+        - only:
+            scope: 'only'
+        - all:
+            scope: 'all'
+
+    openstack-vms: 1
+
+    install-features: 'odl-vtn-manager-rest,odl-vtn-manager-neutron'
+
+    schedule: 'H H * * *'
+
+    odl-enable-l3: 'no'
