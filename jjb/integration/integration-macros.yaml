@@ -211,6 +211,23 @@
                 cloud-name: '{mininet-cloud-name}'
                 count: '{mininet-vms}'
                 stop-on-terminate: False
+            - rk-c7-devstack:
+                cloud-name: 'Rackspace DFW - Devstack'
+                count: '{openstack-vms}'
+                stop-on-terminate: False
+
+    name: integration-jclouds-controller-devstack
+    wrappers:
+      - jclouds:
+          instances:
+            - rk-c7-java:
+                cloud-name: 'Rackspace DFW - Integration Dynamic Lab'
+                count: '{controller-vms}'
+                stop-on-terminate: False
+            - rk-c7-devstack:
+                cloud-name: 'Rackspace DFW - Devstack'
+                count: '{openstack-vms}'
+                stop-on-terminate: False
 
 #################
 # Shell Scripts #
@@ -403,6 +420,12 @@
             !include-raw:
                 - include-raw-integration-rebase-gerrit-patch.sh
 
+- builder:
+    name: integration-deploy-openstack-run-test
+    builders:
+        - shell:
+            !include-raw:
+                - include-raw-integration-deploy-openstack-run-test.sh
 ##############
 # Publishers #
 ##############
