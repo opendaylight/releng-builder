@@ -27,6 +27,7 @@ unzip -q ${BUNDLE}
 
 echo "Configuring the startup features..."
 FEATURESCONF=/tmp/${BUNDLEFOLDER}/etc/org.apache.karaf.features.cfg
+CUSTOMPROP=/tmp/${BUNDLEFOLDER}/etc/custom.properties
 sed -ie "s/featuresBoot=.*/featuresBoot=config,standard,region,package,kar,ssh,management,${ACTUALFEATURES}/g" \${FEATURESCONF}
 sed -ie "s%mvn:org.opendaylight.integration/features-integration-index/${BUNDLEVERSION}/xml/features%mvn:org.opendaylight.integration/features-integration-index/${BUNDLEVERSION}/xml/features,mvn:org.opendaylight.integration/features-integration-test/${BUNDLEVERSION}/xml/features%g" \${FEATURESCONF}
 cat \${FEATURESCONF}
@@ -38,6 +39,11 @@ sed -ie 's/log4j.appender.out.maxBackupIndex=10/log4j.appender.out.maxBackupInde
 sed -ie 's/log4j.appender.out.maxFileSize=1MB/log4j.appender.out.maxFileSize=100GB/g' \${LOGCONF}
 cat \${LOGCONF}
 
+if [ "${ODL_ENABLE_L3_FWD}" == "yes" ]; then
+  echo "ovsdb.l3.fwd.enabled=yes" >> \${CUSTOMPROP}
+fi
+cat \${CUSTOMPROP}
+
 echo "Configure max memory..."
 MEMCONF=/tmp/${BUNDLEFOLDER}/bin/setenv
 sed -ie 's/JAVA_MAX_MEM="2048m"/JAVA_MAX_MEM="${CONTROLLERMEM}"/g' \${MEMCONF}
@@ -47,10 +53,9 @@ EOF
 
 for i in `seq 1 ${NUM_ODL_SYSTEM}`
 do
-    CONTROLLERIP=ODL_SYSTEM_${i}_IP 
+    CONTROLLERIP=ODL_SYSTEM_${i}_IP
     echo "Installing distribution in member-${i} with IP address ${!CONTROLLERIP}"
     scp ${WORKSPACE}/deploy-controller-script.sh ${!CONTROLLERIP}:/tmp
     ssh ${!CONTROLLERIP} 'bash /tmp/deploy-controller-script.sh'
 done
-
 # vim: ts=4 sw=4 sts=4 et ft=sh :
