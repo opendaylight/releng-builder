@@ -1,0 +1,37 @@
+- project:
+    name: netvirt-csit-openstack-integration
+    jobs:
+        - '{project}-csit-1node-openstack-{openstack}-{functionality}-{stream}'
+
+    # The project name
+    project: 'netvirt'
+
+    # The project name
+    functionality: 'openstack'
+
+    stream:
+        - boron:
+            branch: 'master'
+            jre: 'openjdk8'
+        - beryllium:
+            branch: 'stable/beryllium'
+            jre: 'openjdk7'
+        - stable-lithium:
+            branch: 'stable/lithium'
+            jre: 'openjdk7'
+
+    openstack:
+        - mitaka:
+            openstack-branch: 'stable/mitaka'
+            odl-ml2-version:  'master'
+        - liberty:
+            openstack-branch: 'stable/liberty'
+            odl-ml2-version:  'stable/liberty'
+
+    openstack-vms: 3
+
+    install-features: 'odl-ovsdb-openstack'
+
+    schedule: 'H H * * *'
+
+    odl-enable-l3: 'yes'
