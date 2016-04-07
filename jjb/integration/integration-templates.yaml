@@ -690,6 +690,184 @@
             unstable-if: 0.0
             pass-if: 100.0
         - archive:
-            artifacts: 'devstacklog.txt,*karaf*'
+            artifacts: '*log*'
+        - email-notification:
+            email-prefix: '[project]'
+
+- job-template:
+    name: '{project}-csit-1node-openstack-{openstack}-{functionality}-{stream}'
+    disabled: false
+
+    project-type: freestyle
+    node: dynamic_robot
+
+    logrotate:
+        daysToKeep: '{build-days-to-keep}'
+        numToKeep: '{build-num-to-keep}'
+        artifactDaysToKeep: '{build-artifact-days-to-keep}'
+        artifactNumToKeep: '{build-num-to-keep}'
+
+    parameters:
+        - project-parameter:
+            project: 'integration/test'
+        - integration-branch:
+            branch: '{branch}'
+        - integration-distribution-stream:
+            stream: '{stream}'
+        - integration-bundleurl:
+            bundleurl: 'last'
+        - integration-controller-features:
+            controller-features: '{install-features}'
+        - integration-test-plan:
+            test-plan: '{project}-openstack-{functionality}.txt'
+        - integration-patch-refspec:
+            branch: 'master'
+        - integration-jdk-version:
+            jdkversion: '{jre}'
+        - string:
+            name: OPENSTACK_BRANCH
+            default: '{openstack-branch}'
+            description: 'Openstack version to use with devstack'
+        - string:
+            name: ODL_ML2_DRIVER_REPO
+            default: 'https://github.com/openstack/networking-odl'
+            description: 'URL to fetch networking-odl driver'
+        - string:
+            name: ODL_ML2_VERSION
+            default: '{odl-ml2-version}'
+            description: 'Version of networking-odl to checkout from the repo'
+        - string:
+            name: ODL_ENABLE_L3_FWD
+            default: '{odl-enable-l3}'
+            description: 'Enable L3 FWD in ODL for createing br-ex'
+    scm:
+        - integration-gerrit-scm:
+            credentials-id: '{ssh-credentials}'
+            basedir: 'test'
+            refspec: '$PATCHREFSPEC'
+            branch: 'master'
+
+    wrappers:
+        - build-timeout
+        - integration-jclouds-controller-devstack:
+            controller-vms: 1
+            openstack-vms: '{openstack-vms}'
+        - ssh-agent-credentials:
+            users:
+              - '{ssh-credentials}'
+
+    triggers:
+        - integration-csit-all
+
+    builders:
+        - integration-cleanup-workspace
+        - integration-install-robotframework
+        - inject:
+            properties-file: 'env.properties'
+        - integration-get-slave-addresses
+        - inject:
+            properties-file: 'slave_addresses.txt'
+        - integration-get-bundle-vars
+        - inject:
+            properties-file: 'bundle_vars.txt'
+        - integration-deploy-controller-run-test
+        - integration-deploy-openstack-run-test
+        - integration-cleanup-tmp
+
+    publishers:
+        - archive:
+            artifacts: '*log*'
+        - email-notification:
+            email-prefix: '[project]'
+
+- job-template:
+    name: '{project}-csit-3node-openstack-{openstack}-{functionality}-{stream}'
+    disabled: false
+
+    project-type: freestyle
+    node: dynamic_robot
+
+    logrotate:
+        daysToKeep: '{build-days-to-keep}'
+        numToKeep: '{build-num-to-keep}'
+        artifactDaysToKeep: '{build-artifact-days-to-keep}'
+        artifactNumToKeep: '{build-num-to-keep}'
+
+    parameters:
+        - project-parameter:
+            project: 'integration/test'
+        - integration-branch:
+            branch: '{branch}'
+        - integration-distribution-stream:
+            stream: '{stream}'
+        - integration-bundleurl:
+            bundleurl: 'last'
+        - integration-controller-features:
+            controller-features: '{install-features}'
+        - integration-test-plan:
+            test-plan: '{project}-openstack-{functionality}.txt'
+        - integration-patch-refspec:
+            branch: 'master'
+        - integration-jdk-version:
+            jdkversion: '{jre}'
+        - string:
+            name: OPENSTACK_BRANCH
+            default: '{openstack-branch}'
+            description: 'Openstack version to use with devstack'
+        - string:
+            name: ODL_ML2_DRIVER_REPO
+            default: 'https://github.com/openstack/networking-odl'
+            description: 'URL to fetch networking-odl driver'
+        - string:
+            name: ODL_ML2_VERSION
+            default: '{odl-ml2-version}'
+            description: 'Version of networking-odl to checkout from the repo'
+        - string:
+            name: ODL_ENABLE_L3_FWD
+            default: '{odl-enable-l3}'
+            description: 'Enable L3 FWD in ODL for createing br-ex'
+        - string:
+            name: ENABLE_HAPROXY_FOR_NEUTRON
+            default: 'no'
+            description: 'Enable HAProxy for using neutron interface as HA'
+    scm:
+        - integration-gerrit-scm:
+            credentials-id: '{ssh-credentials}'
+            basedir: 'test'
+            refspec: '$PATCHREFSPEC'
+            branch: 'master'
+
+    wrappers:
+        - build-timeout
+        - integration-jclouds-controller-devstack:
+            controller-vms: 3
+            openstack-vms: '{openstack-vms}'
+        - ssh-agent-credentials:
+            users:
+              - '{ssh-credentials}'
+
+    triggers:
+        - integration-csit-all
+
+    builders:
+        - integration-cleanup-workspace
+        - integration-install-robotframework
+        - inject:
+            properties-file: 'env.properties'
+        - integration-get-slave-addresses
+        - inject:
+            properties-file: 'slave_addresses.txt'
+        - integration-get-bundle-vars
+        - inject:
+            properties-file: 'bundle_vars.txt'
+        - integration-deploy-controller
+        - integration-configure-clustering
+        - integration-start-cluster-run-test
+        - integration-deploy-openstack-run-test
+        - integration-cleanup-tmp
+
+    publishers:
+        - archive:
+            artifacts: '*log*'
         - email-notification:
             email-prefix: '[project]'

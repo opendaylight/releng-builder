@@ -42,9 +42,15 @@ unzip -q ${BUNDLE}
 
 echo "Configuring the startup features..."
 FEATURESCONF=/tmp/${BUNDLEFOLDER}/etc/org.apache.karaf.features.cfg
+CUSTOMPROP=/tmp/${BUNDLEFOLDER}/etc/custom.properties
 sed -ie "s/featuresBoot=.*/featuresBoot=config,standard,region,package,kar,ssh,management,${ACTUALFEATURES}/g" \${FEATURESCONF}
 sed -ie "s%mvn:org.opendaylight.integration/features-integration-index/${BUNDLEVERSION}/xml/features%mvn:org.opendaylight.integration/features-integration-index/${BUNDLEVERSION}/xml/features,mvn:org.opendaylight.integration/features-integration-test/${BUNDLEVERSION}/xml/features%g" \${FEATURESCONF}
 cat \${FEATURESCONF}
+
+if [ "${ODL_ENABLE_L3_FWD}" == "yes" ]; then
+  echo "ovsdb.l3.fwd.enabled=yes" >> \${CUSTOMPROP}
+fi
+cat \${CUSTOMPROP}
 
 echo "Configuring the log..."
 LOGCONF=/tmp/${BUNDLEFOLDER}/etc/org.ops4j.pax.logging.cfg
@@ -122,6 +128,11 @@ EOF
 scp ${WORKSPACE}/controller-script.sh ${ODL_SYSTEM_IP}:/tmp
 ssh ${ODL_SYSTEM_IP} 'bash /tmp/controller-script.sh'
 
+if [ ${NUM_OPENSTACK_SYSTEM} -gt 0 ]; then
+   echo "Exiting without running tests to deploy openstack for testing"
+   exit
+fi
+
 echo "Locating test plan to use..."
 testplan_filepath="${WORKSPACE}/test/csit/testplans/${STREAMTESTPLAN}"
 if [ ! -f "${testplan_filepath}" ]; then
@@ -131,7 +142,6 @@ fi
 echo "Changing the testplan path..."
 cat "${testplan_filepath}" | sed "s:integration:${WORKSPACE}:" > testplan.txt
 cat testplan.txt
-
 SUITES=$( egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' testplan.txt | tr '\012' ' ' )
 
 echo "Starting Robot test suites ${SUITES} ..."
