@@ -509,7 +509,7 @@
 
     triggers:
         - reverse:
-            jobs: 'controller-merge-{stream},yangtools-merge-{stream},odlparent-merge-{stream},openflowplugin-merge-{stream},neutron-merge-{stream},ovsdb-merge-{stream},openflowjava-merge-{stream},sfc-merge-{stream}'
+            jobs: 'controller-merge-{stream},neutron-merge-{stream},odlparent-merge-{stream},openflowjava-merge-{stream},openflowplugin-merge-{stream},ovsdb-merge-{stream},sfc-merge-{stream},yangtools-merge-{stream}'
             result: 'success'
 
     prebuilders:
@@ -532,7 +532,7 @@
 
     publishers:
         - email-notification:
-            email-prefix: '[netvirt] [controller] [yangtools] [odlparent] [openflowplugin] [neutron] [ovsdb] [openflowjava] [sfc]'
+            email-prefix: '[netvirt] [controller] [neutron] [odlparent] [openflowjava] [openflowplugin] [ovsdb] [sfc] [yangtools]'
         - jacoco-report
 
 - job-template:
@@ -750,3 +750,4 @@
     publishers:
         - email-notification:
             email-prefix: '[autorelease] [netvirt]'
+
