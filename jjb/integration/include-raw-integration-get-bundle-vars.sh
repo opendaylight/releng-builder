@@ -26,11 +26,20 @@ else
     BUNDLEFOLDER="distribution-karaf-${BUNDLEVERSION}"
 fi
 
+if [ ${JDKVERSION} == 'openjdk8' ]; then
+    echo "Preparing for JRE Version 8"
+    JAVA_HOME="/usr/lib/jvm/java-1.8.0"
+elif [ ${JDKVERSION} == 'openjdk7' ]; then
+    echo "Preparing for JRE Version 7"
+    JAVA_HOME="/usr/lib/jvm/java-1.7.0"
+fi
+
 echo "Distribution bundle URL is ${ACTUALBUNDLEURL}"
 echo "Distribution bundle is ${BUNDLE}"
 echo "Distribution bundle version is ${BUNDLEVERSION}"
 echo "Distribution folder is ${BUNDLEFOLDER}"
 echo "Nexus prefix is ${NEXUSURL_PREFIX}"
+echo "Java home is ${JAVA_HOME}"
 
 cat > ${WORKSPACE}/bundle_vars.txt <<EOF
 ACTUALBUNDLEURL=${ACTUALBUNDLEURL}
@@ -38,6 +47,7 @@ BUNDLE=${BUNDLE}
 BUNDLEVERSION=${BUNDLEVERSION}
 BUNDLEFOLDER=${BUNDLEFOLDER}
 NEXUSURL_PREFIX=${NEXUSURL_PREFIX}
+JAVA_HOME=${JAVA_HOME}
 EOF
 
 # vim: ts=4 sw=4 sts=4 et ft=sh :
