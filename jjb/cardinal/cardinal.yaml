@@ -494,7 +494,7 @@
 
     triggers:
         - reverse:
-            jobs: 'controller-merge-{stream},yangtools-merge-{stream},odlparent-merge-{stream},openflowplugin-merge-{stream},neutron-merge-{stream}'
+            jobs: 'controller-merge-{stream},yangtools-merge-{stream},odlparent-merge-{stream},openflowplugin-merge-{stream},iotdm-merge-{stream},sfc-merge-{stream}'
             result: 'success'
 
     prebuilders:
@@ -517,7 +517,7 @@
 
     publishers:
         - email-notification:
-            email-prefix: '[cardinal] [controller] [yangtools] [odlparent] [openflowplugin] [neutron]'
+            email-prefix: '[cardinal] [controller] [yangtools] [odlparent] [openflowplugin] [iotdm] [sfc]'
         - jacoco-report
 
 - job-template:
