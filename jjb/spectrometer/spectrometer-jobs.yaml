@@ -1,16 +1,18 @@
 - project:
-    name: spectrometer-python
+    name: spectrometer
     jobs:
-        - 'spectrometer-verify-python-{stream}'
+        - 'spectrometer-merge-{stream}'
+        - '{name}-verify-python-{stream}'
 
     stream:
         - master:
             branch: 'master'
 
     project: 'spectrometer'
+    toxdir: server
 
 - job-template:
-    name: 'spectrometer-verify-python-{stream}'
+    name: 'spectrometer-merge-{stream}'
 
     project-type: freestyle
     node: dynamic_verify
@@ -21,6 +23,8 @@
             project: '{project}'
         - gerrit-parameter:
             branch: '{branch}'
+        - gerrit-refspec-parameter:
+            refspec: 'refs/heads/{branch}'
 
     scm:
         - gerrit-trigger-scm:
@@ -44,9 +48,7 @@
                     exclude-no-code-change: 'false'
                 - draft-published-event
                 - comment-added-contains-event:
-                    comment-contains-value: 'recheck'
-                - comment-added-contains-event:
-                    comment-contains-value: 'reverify'
+                    comment-contains-value: 'remerge'
             projects:
               - project-compare-type: 'ANT'
                 project-pattern: 'spectrometer'
@@ -56,12 +58,7 @@
 
     builders:
         - shell: |
-            virtualenv $WORKSPACE/venv-tox
-            source $WORKSPACE/venv-tox/bin/activate
-            pip install tox argparse
-            tox --version
-            cd server
-            tox
+            wget --post-data=test -qO- https://readthedocs.org/build/opendaylight-spectrometer &> /dev/null
 
     publishers:
         - email-notification:
