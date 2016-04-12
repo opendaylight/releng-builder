@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a494da4_c4acaf38",
+        "filename": "jjb/integration/include-raw-integration-deploy-controller-run-test.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 797
+      },
+      "writtenOn": "2016-04-12T19:09:09Z",
+      "side": 1,
+      "message": "Why do not use ODL_ENABLE_L3_FWD parameter directly to change this config?",
+      "revId": "a2c4f7b4abffd30aa6de87729fe521dc928ddf13",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a494da4_24aab319",
+        "filename": "jjb/integration/include-raw-integration-deploy-controller-run-test.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 797
+      },
+      "writtenOn": "2016-04-12T19:09:09Z",
+      "side": 1,
+      "message": "You can use this variable directly to change the controller config.",
+      "revId": "a2c4f7b4abffd30aa6de87729fe521dc928ddf13",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a494da4_04a7b750",
+        "filename": "jjb/integration/include-raw-integration-deploy-controller.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 797
+      },
+      "writtenOn": "2016-04-12T19:09:09Z",
+      "side": 1,
+      "message": "same comment as previous file + training spaces.",
+      "revId": "a2c4f7b4abffd30aa6de87729fe521dc928ddf13",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a494da4_64631b1b",
+        "filename": "jjb/integration/include-raw-integration-deploy-openstack-run-test.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 797
+      },
+      "writtenOn": "2016-04-12T19:09:09Z",
+      "side": 1,
+      "message": "why is this commented?",
+      "revId": "a2c4f7b4abffd30aa6de87729fe521dc928ddf13",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a494da4_449a5f15",
+        "filename": "jjb/integration/integration-templates.yaml",
+        "patchSetId": 7
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 797
+      },
+      "writtenOn": "2016-04-12T19:09:09Z",
+      "side": 1,
+      "message": "You already got this, see 3rd parameter in the list.",
+      "revId": "a2c4f7b4abffd30aa6de87729fe521dc928ddf13",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a494da4_84a46758",
+        "filename": "jjb/integration/integration-templates.yaml",
+        "patchSetId": 7
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 797
+      },
+      "writtenOn": "2016-04-12T19:09:09Z",
+      "side": 1,
+      "message": "I am not sure we want to run any test at this point, if so I think it would be better to use a different testplan name for controller and openstack. For example we can have 2 parameters in this template: integration-test-plan for controller test and integration-openstack-test-plan for openstack test. Same comment applies for 3node test.",
+      "revId": "a2c4f7b4abffd30aa6de87729fe521dc928ddf13",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a494da4_6495dbe3",
+        "filename": "jjb/ovsdb/ovsdb-csit-3node-netvirt-openstack.yaml",
+        "patchSetId": 7
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 797
+      },
+      "writtenOn": "2016-04-12T19:09:09Z",
+      "side": 1,
+      "message": "Would it be more clear {project}-csit-3node-openstack-{openstack}-{functionality}-{stream}?",
+      "revId": "a2c4f7b4abffd30aa6de87729fe521dc928ddf13",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a494da4_c485cfae",
+        "filename": "jjb/ovsdb/ovsdb-csit-3node-netvirt-openstack.yaml",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 797
+      },
+      "writtenOn": "2016-04-12T19:09:09Z",
+      "side": 1,
+      "message": "Since you are not using CONTROLLERSCOPE in the templates, you can neglect this setting. Is there use case to test with many features installed in the controller?",
+      "revId": "a2c4f7b4abffd30aa6de87729fe521dc928ddf13",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a494da4_44c1bfe3",
+        "filename": "jjb/ovsdb/ovsdb-csit-netvirt-openstack.yaml",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 797
+      },
+      "writtenOn": "2016-04-12T19:09:09Z",
+      "side": 1,
+      "message": "Similar comments as with 3node job. Also remove trailing spaces.",
+      "revId": "a2c4f7b4abffd30aa6de87729fe521dc928ddf13",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a494da4_a4b6c388",
+        "filename": "jjb/vtn/vtn-csit-manager-neutron-openstack.yaml",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 797
+      },
+      "writtenOn": "2016-04-12T19:09:09Z",
+      "side": 1,
+      "message": "Similar comments as with 3node job. Also remove trailing spaces.",
+      "revId": "a2c4f7b4abffd30aa6de87729fe521dc928ddf13",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
