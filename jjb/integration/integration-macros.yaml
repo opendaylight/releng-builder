@@ -101,6 +101,7 @@
             branches:
                 - 'origin/{branch}'
             skip-tag: true
+            shallow-clone: true
             choosing-strategy: 'gerrit'
 
 # Macro: integration-distribution-scm
@@ -118,6 +119,7 @@
             branches:
                 - 'origin/{branch}'
             skip-tag: true
+            shallow-clone: true
 
 # Macro: integration-trigger-patch-submitted
 # Operation: this macro sets a trigger for patch submitted on a path pattern
