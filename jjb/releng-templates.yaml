@@ -83,3 +83,38 @@
     publishers:
         - email-notification:
             email-prefix: '[{project}]'
+
+- job-template:
+    name: '{name}-merge-rtd-{stream}'
+    # Template for ReadTheDocs triggering
+
+    project-type: freestyle
+    node: dynamic_verify
+    concurrent: false
+
+    parameters:
+        - project-parameter:
+            project: '{project}'
+        - gerrit-parameter:
+            branch: '{branch}'
+        - gerrit-refspec-parameter:
+            refspec: 'refs/heads/{branch}'
+
+    wrappers:
+        - build-timeout
+        - ssh-agent-credentials:
+            users:
+                - '{ssh-credentials}'
+
+    triggers:
+        - gerrit-trigger-patch-merged:
+            name: '{project}'
+            branch: '{branch}'
+
+    builders:
+        - shell: |
+            curl -X POST https://readthedocs.org/build/{rtdproject}
+
+    publishers:
+        - email-notification:
+            email-prefix: '[{project}]'
