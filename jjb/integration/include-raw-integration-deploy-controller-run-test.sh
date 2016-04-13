@@ -53,21 +53,26 @@ sed -ie 's/log4j.appender.out.maxBackupIndex=10/log4j.appender.out.maxBackupInde
 sed -ie 's/log4j.appender.out.maxFileSize=1MB/log4j.appender.out.maxFileSize=100GB/g' \${LOGCONF}
 cat \${LOGCONF}
 
-echo "Configure max memory..."
+echo "Configure java home and max memory..."
 MEMCONF=/tmp/${BUNDLEFOLDER}/bin/setenv
+sed -ie 's%^# export JAVA_HOME%export JAVA_HOME="\${JAVA_HOME:-${JAVA_HOME}}"%g' \${MEMCONF}
 sed -ie 's/JAVA_MAX_MEM="2048m"/JAVA_MAX_MEM="${CONTROLLERMEM}"/g' \${MEMCONF}
 cat \${MEMCONF}
 
 echo "Listing all open ports on controller system..."
 netstat -natu
 
+echo "Set Java version"
+sudo /usr/sbin/alternatives --install /usr/bin/java java ${JAVA_HOME}/bin/java 1
+sudo /usr/sbin/alternatives --set java ${JAVA_HOME}/bin/java
+echo "JDK default version ..."
+java -version
+
 echo "Set JAVA_HOME"
 export JAVA_HOME="$JAVA_HOME"
 # Did you know that in HERE documents, single quote is an ordinary character, but backticks are still executing?
 JAVA_RESOLVED=\`readlink -e "\${JAVA_HOME}/bin/java"\`
 echo "Java binary pointed at by JAVA_HOME: \${JAVA_RESOLVED}"
-echo "JDK default version ..."
-java -version
 
 echo "Starting controller..."
 /tmp/${BUNDLEFOLDER}/bin/start
