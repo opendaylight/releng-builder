@@ -104,6 +104,8 @@
     parameters:
         - project-parameter:
             project: 'integration/distribution'
+        - gerrit-parameter:
+            branch: '{branch}'
 
     scm:
         - gerrit-trigger-scm:
