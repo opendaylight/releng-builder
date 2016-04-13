@@ -38,8 +38,9 @@ sed -ie 's/log4j.appender.out.maxBackupIndex=10/log4j.appender.out.maxBackupInde
 sed -ie 's/log4j.appender.out.maxFileSize=1MB/log4j.appender.out.maxFileSize=100GB/g' \${LOGCONF}
 cat \${LOGCONF}
 
-echo "Configure max memory..."
+echo "Configure java home and max memory..."
 MEMCONF=/tmp/${BUNDLEFOLDER}/bin/setenv
+sed -ie 's%^# export JAVA_HOME%export JAVA_HOME="${JAVA_HOME}"%g' \${MEMCONF}
 sed -ie 's/JAVA_MAX_MEM="2048m"/JAVA_MAX_MEM="${CONTROLLERMEM}"/g' \${MEMCONF}
 cat \${MEMCONF}
 
@@ -47,7 +48,7 @@ EOF
 
 for i in `seq 1 ${NUM_ODL_SYSTEM}`
 do
-    CONTROLLERIP=ODL_SYSTEM_${i}_IP 
+    CONTROLLERIP=ODL_SYSTEM_${i}_IP
     echo "Installing distribution in member-${i} with IP address ${!CONTROLLERIP}"
     scp ${WORKSPACE}/deploy-controller-script.sh ${!CONTROLLERIP}:/tmp
     ssh ${!CONTROLLERIP} 'bash /tmp/deploy-controller-script.sh'

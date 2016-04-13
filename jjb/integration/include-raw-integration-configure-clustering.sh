@@ -71,13 +71,17 @@ cat ${MODULESCONF}
 echo "Dump module-shards.conf"
 cat ${MODULESHARDSCONF}
 
+echo "Set Java version"
+sudo /usr/sbin/alternatives --install /usr/bin/java java ${JAVA_HOME}/bin/java 1
+sudo /usr/sbin/alternatives --set java ${JAVA_HOME}/bin/java
+echo "JDK default version ..."
+java -version
+
 echo "Set JAVA_HOME"
 export JAVA_HOME="${JAVA_HOME}"
 # Did you know that in HERE documents, single quote is an ordinary character, but backticks are still executing?
 JAVA_RESOLVED=\`readlink -e "\${JAVA_HOME}/bin/java"\`
 echo "Java binary pointed at by JAVA_HOME: \${JAVA_RESOLVED}"
-echo "JDK default version ..."
-java -version
 
 echo "Starting controller..."
 /tmp/${BUNDLEFOLDER}/bin/start
