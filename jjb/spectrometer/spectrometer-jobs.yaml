@@ -1,7 +1,7 @@
 - project:
     name: spectrometer
     jobs:
-        - 'spectrometer-merge-{stream}'
+        - '{name}-merge-rtd-{stream}'
         - '{name}-verify-python-{stream}'
 
     stream:
@@ -9,44 +9,5 @@
             branch: 'master'
 
     project: 'spectrometer'
+    rtdproject: 'opendaylight-spectrometer'
     toxdir: server
-
-- job-template:
-    name: 'spectrometer-merge-{stream}'
-
-    project-type: freestyle
-    node: dynamic_verify
-    concurrent: true
-
-    parameters:
-        - project-parameter:
-            project: '{project}'
-        - gerrit-parameter:
-            branch: '{branch}'
-        - gerrit-refspec-parameter:
-            refspec: 'refs/heads/{branch}'
-
-    scm:
-        - gerrit-trigger-scm:
-            credentials-id: '{ssh-credentials}'
-            refspec: '$GERRIT_REFSPEC'
-            choosing-strategy: 'gerrit'
-
-    wrappers:
-        - build-timeout
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
-
-    triggers:
-        - gerrit-trigger-patch-merged:
-            name: 'spectrometer'
-            branch: '{branch}'
-
-    builders:
-        - shell: |
-            wget --post-data=test -qO- https://readthedocs.org/build/opendaylight-spectrometer &> /dev/null
-
-    publishers:
-        - email-notification:
-            email-prefix: '[spectrometer]'
