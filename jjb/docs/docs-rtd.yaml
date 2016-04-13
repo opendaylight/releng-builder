@@ -1,0 +1,11 @@
+- project:
+    name: docs-rtd
+    jobs:
+        - '{name}-merge-rtd-{stream}'
+
+    stream:
+        - boron:
+            branch: 'master'
+
+    project: 'docs'
+    rtdproject: 'opendaylight'
