@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a494da4_0ed86e1c",
+        "filename": "jjb/integration/include-raw-integration-deploy-controller.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2016-04-14T11:55:33Z",
+      "side": 1,
+      "message": "\"\\${JAVA_HOME:-${JAVA_HOME}}\"\n\nThat would (if I escaped it correctly) take JAVA_HOME value defined at the time this *-deploy-controller.sh script runs only if there is not JAVA_HOME defined at the time setenv script is executed.\n\nThat way there always is a reasonable default, but suites have a way to override it without editing setenv.",
+      "range": {
+        "startLine": 43,
+        "startChar": 48,
+        "endLine": 43,
+        "endChar": 62
+      },
+      "revId": "b232b4d85fb95ac3ba1c3bcbe235297ca8acd27e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
