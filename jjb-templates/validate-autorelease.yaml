@@ -27,7 +27,7 @@
 
     scm:
         - git:
-            url: '$GIT_BASE'
+            url: 'ssh://jenkins-releng@git.opendaylight.org:29418/releng/autorelease'
             refspec: ''
             branches:
                 - 'origin/{branch}'
@@ -35,6 +35,7 @@
             shallow-clone: true
             submodule:
                 recursive: true
+                timeout: 15
 
     wrappers:
         - autorelease-build-timeout
