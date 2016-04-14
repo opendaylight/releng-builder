@@ -663,10 +663,14 @@
             release-branch: '{branch}'
         - autorelease-release-datestamp:
             datestamp: true
+        - string:
+            name: CLONE_URL
+            default: 'ssh://jenkins-$SILO@git.opendaylight.org:29418/releng/autorelease'
+            description: "Autorelease clone URL"
 
     scm:
         - git:
-            url: '$GIT_BASE'
+            url: '$CLONE_URL'
             refspec: ''
             branches:
                 - 'origin/{branch}'
@@ -674,6 +678,7 @@
             shallow-clone: true
             submodule:
                 recursive: true
+                timeout: 15
 
     wrappers:
         - autorelease-build-timeout
