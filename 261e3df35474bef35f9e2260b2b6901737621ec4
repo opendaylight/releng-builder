@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a494da4_218d787c",
+        "filename": "jjb/netvirt/netvirt-routermgr.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2016-04-15T20:06:46Z",
+      "side": 1,
+      "message": "Can we remove the merge? I think I see now why the previous jjb only had verify for the routermanager branch. it looks like merge will also publish artifacts which is something we don\u0027t want to do. So we can skip the merge.",
+      "revId": "261e3df35474bef35f9e2260b2b6901737621ec4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
