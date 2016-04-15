@@ -1,5 +1,5 @@
 - project:
-    name: ovsdb-custom
+    name: ovsdb-sonar
     jobs:
         - 'ovsdb-sonar'
 
@@ -36,7 +36,7 @@
                 - '{ssh-credentials}'
 
     triggers:
-        - timed: '@weekly'
+        - timed: 'H H * * 6'
         - gerrit-trigger-patch-sonar:
             name: 'ovsdb'
 
