@@ -8,3 +8,6 @@ EOF
 
 # disable the firewall
 /bin/bash ./disable_firewall.sh
+
+# Install vlan for vlan based tests in VTN suites
+apt-get install -y --force-yes -qq vlan
