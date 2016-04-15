@@ -26,7 +26,11 @@
             jdks:
                 - openjdk8
             disable_autorelease: False
+            disable_distribution: False
             disable_distribution_check: False
+            disable_integration: False
+            disable_clm: False
+            disable_periodic: False
         - beryllium:
             branch: 'stable/beryllium'
             jdk: openjdk7
@@ -34,14 +38,33 @@
                 - openjdk7
                 - openjdk8
             disable_autorelease: False
+            disable_distribution: False
             disable_distribution_check: False
+            disable_integration: False
+            disable_clm: False
+            disable_periodic: False
         - stable-lithium:
             branch: 'stable/lithium'
             jdk: openjdk7
             jdks:
                 - openjdk7
             disable_autorelease: True
+            disable_distribution: False
             disable_distribution_check: True
+            disable_integration: False
+            disable_clm: False
+            disable_periodic: False
+        - routermanager:
+            branch: 'topic/routermanager'
+            jdk: openjdk8
+            jdks:
+                - openjdk8
+            disable_autorelease: True
+            disable_distribution: True
+            disable_distribution_check: True
+            disable_integration: True
+            disable_clm: True
+            disable_periodic: True
 
     project: 'netvirt'
 
@@ -241,6 +264,7 @@
 - job-template:
     name: 'netvirt-periodic-{stream}'
     disabled: false
+    disabled: '{obj:disable_periodic}'
 
     # Job template for periodic builders
     #
@@ -305,6 +329,7 @@
 
 - job-template:
     name: 'netvirt-distribution-{stream}'
+    disabled: '{obj:disable_distribution}'
 
     # Required variables:
     #     stream:    release stream (eg. stable-lithium or beryllium)
@@ -470,6 +495,7 @@
 - job-template:
     name: 'netvirt-integration-{stream}'
     disabled: false
+    disabled: '{obj:disable_integration}'
 
     # Job template for ODL integration verify jobs
     #
@@ -599,6 +625,7 @@
 - job-template:
     name: 'netvirt-clm-{stream}'
     disabled: false
+    disabled: '{obj:disable_clm}'
 
     project-type: maven
     node: dynamic_verify
