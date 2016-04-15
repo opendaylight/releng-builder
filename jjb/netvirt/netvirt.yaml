@@ -42,6 +42,17 @@
                 - openjdk7
             disable_autorelease: True
             disable_distribution_check: True
+        - routermanager:
+            branch: 'topic/routermanager'
+            jdk: openjdk8
+            jdks:
+                - openjdk8
+            disable_autorelease: True
+            disable_distribution: True
+            disable_distribution_check: True
+            disable_integration: True
+            disable_clm: True
+            disable_periodic: True
 
     project: 'netvirt'
 
