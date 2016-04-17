@@ -344,7 +344,7 @@
         - integration-controller-scope:
             controller-scope: 'only'
         - integration-controller-features:
-            controller-features: '{install-features}'
+            controller-features: 'odl-jolokia,{install-features}'
         - integration-test-options:
             test-options: '{robot-options}'
         - integration-stream-test-plan:
@@ -390,7 +390,6 @@
         - integration-get-bundle-vars
         - inject:
             properties-file: 'bundle_vars.txt'
-        - integration-deploy-controller
         - integration-configure-clustering
         - integration-start-cluster-run-test
         - integration-cleanup-tmp
@@ -429,7 +428,7 @@
         - integration-controller-scope:
             controller-scope: '{scope}'
         - integration-controller-features:
-            controller-features: '{install-features}'
+            controller-features: 'odl-jolokia,{install-features}'
         - integration-test-options:
             test-options: '{robot-options}'
         - integration-stream-test-plan:
@@ -474,7 +473,6 @@
         - integration-get-bundle-vars
         - inject:
             properties-file: 'bundle_vars.txt'
-        - integration-deploy-controller
         - integration-configure-clustering
         - integration-start-cluster-run-test
         - integration-cleanup-tmp
@@ -538,7 +536,7 @@
         - integration-controller-scope:
             controller-scope: '{scope}'
         - integration-controller-features:
-            controller-features: '{install-features}'
+            controller-features: 'odl-jolokia,{install-features}'
         - integration-test-options:
             test-options: '{robot-options}'
         - integration-stream-test-plan:
@@ -581,7 +579,6 @@
         - integration-get-bundle-vars
         - inject:
             properties-file: 'bundle_vars.txt'
-        - integration-deploy-controller
         - integration-configure-clustering
         - integration-start-cluster-run-test
         - integration-cleanup-tmp
