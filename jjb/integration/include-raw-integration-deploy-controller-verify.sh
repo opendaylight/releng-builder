@@ -110,7 +110,11 @@ function exit_on_log_file_message {
     fi
 }
 
-exit_on_log_file_message 'BindException: Address already in use'
+# Do not run port conflict test in stable/lithium
+if [ ${BRANCH} != 'stable/lithium' ]; then
+    exit_on_log_file_message 'BindException: Address already in use'
+fi
+
 exit_on_log_file_message 'server is unhealthy'
 
 echo "Fetching Karaf logs"
