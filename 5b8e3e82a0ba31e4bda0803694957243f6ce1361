@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa57193c_9d9fa750",
+        "filename": "jjb/integration/include-raw-integration-configure-clustering.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2016-04-18T10:13:11Z",
+      "side": 1,
+      "message": "Netconf tests frequently use car/people to model the testing data.\nIn future, there may be advanced tests (involving MD-SAL netfonf northbound and 3-node cluster with node outages) which would could require car/people shards.\n\nThis Change needs another mechanism to signal whether car/people shards are to be created.\nFor now, always creating them would be the safer option, as they do not affect Openflow or Ovsdb tests.",
+      "range": {
+        "startLine": 36,
+        "startChar": 15,
+        "endLine": 36,
+        "endChar": 25
+      },
+      "revId": "5b8e3e82a0ba31e4bda0803694957243f6ce1361",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_fdace38e",
+        "filename": "jjb/integration/include-raw-integration-configure-clustering.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2016-04-18T10:13:11Z",
+      "side": 1,
+      "message": "Indent, to signify this block is conditional on the previous if.",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 4
+      },
+      "revId": "5b8e3e82a0ba31e4bda0803694957243f6ce1361",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
