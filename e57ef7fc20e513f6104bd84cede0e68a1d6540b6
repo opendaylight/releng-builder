@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa57193c_aed7cfbe",
+        "filename": "jjb/integration/include-raw-integration-configure-clustering.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2016-04-19T04:02:01Z",
+      "side": 1,
+      "message": "this feels cumbersome to me.  It works for now, but it could be the case in the future that we want all different kinds of\nshard module definitions.\n\nI wonder if we can make it more friendly somehow?  maybe a \nshard_config_file in our projects\u0027 jjb folder and some job\nparameter that points to that file to use here.  If there is\nno file or parameter defined for the job, then cluster config just takes the default.\n\nthinking out loud.",
+      "range": {
+        "startLine": 98,
+        "startChar": 0,
+        "endLine": 109,
+        "endChar": 2
+      },
+      "revId": "e57ef7fc20e513f6104bd84cede0e68a1d6540b6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
