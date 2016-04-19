@@ -295,17 +295,6 @@
             !include-raw:
                 - include-raw-integration-deploy-devstack-testing.sh
 
-# Macro: integration-deploy-controller
-# Operation: this macro prepares 3-node cluster controller
-# Used by: {project}-csit-3node-* job templates
-
-- builder:
-    name: integration-deploy-controller
-    builders:
-        - shell:
-            !include-raw:
-                - include-raw-integration-deploy-controller.sh
-
 # Macro: integration-configure-clustering
 # Operation: this macro configures the clustering
 # Used by: {project}-csit-3node-* job templates
