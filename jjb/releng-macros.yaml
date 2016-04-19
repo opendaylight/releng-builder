@@ -33,6 +33,14 @@
             description: "GERRIT_REFSPEC parameter if not given by trigger"
 
 - parameter:
+    name: build-tag
+    parameters:
+        - string:
+            name: BUILD_TAG
+            default: ''
+            description: 'Tag in Git to checkout'
+
+- parameter:
     name: controller-version-parameter
     parameters:
         - string:
@@ -55,6 +63,14 @@
             name: DISTRIBUTION_BRANCH_TO_BUILD
             default: 'master'
             description: 'distribution repo branch to build with'
+
+- parameter:
+    name: stage-id-parameter
+    parameters:
+        - string:
+            name: STAGING_PROFILE_ID
+            default: '{stage-id}'
+            description: 'Nexus staging profile id'
 
 - scm:
     name: git-scm
@@ -239,3 +255,8 @@
           variable: 'GLOBAL_SETTINGS_FILE'
         - file-id: '{settings-file}'
           variable: 'SETTINGS_FILE'
+
+- builder:
+    name: releng-stage-release
+    builders:
+        - shell: !include-raw: include-raw-stage-release.sh

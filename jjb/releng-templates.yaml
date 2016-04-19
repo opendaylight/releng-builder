@@ -1,4 +1,65 @@
 - job-template:
+    name: '{name}-release-java'
+
+    # Job template for producing a release candidate by creating a staging repo
+    # in Nexus.
+
+    project-type: maven
+    node: dynamic_merge
+    jdk: '{jdk}'
+
+    logrotate:
+        daysToKeep: '30'
+
+    parameters:
+        - project-parameter:
+            project: '{project}'
+        - build-tag
+        - stage-id-parameter:
+            stage-id: '{stage-id}'
+
+    scm:
+        - git:
+            credentials-id: '{ssh-credentials}'
+            url: '$GIT_BASE'
+            branches:
+                - '$BUILD_TAG'
+            skip-tag: true
+            shallow-clone: true
+            wipe-workspace: true
+
+    wrappers:
+        - build-timeout
+        - ssh-agent-credentials:
+            users:
+                - '{ssh-credentials}'
+
+    prebuilders:
+        - wipe-org-opendaylight-repo
+        - jacoco-nojava-workaround
+        - provide-maven-settings:
+            global-settings-file: '{odl-global-settings}'
+            settings-file: '{autorelease-settings}'
+
+    maven:
+        maven-name: '{mvn33}'
+        root-pom: 'pom.xml'
+        goals: 'clean deploy -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  -Djenkins -DaltDeploymentRepository=staging::default::file:hide/from/pom/files/stage'
+        maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+        settings: '{autorelease-settings}'
+        global-settings: '{odl-global-settings}'
+        post-step-run-condition: UNSTABLE
+
+    postbuilders:
+        - releng-stage-release
+
+    publishers:
+        - archive-artifacts:
+            artifacts: '*.log'
+        - email-notification:
+            email-prefix: '[releng]'
+
+- job-template:
     name: '{name}-verify-python-{stream}'
 
     # Job template for python verify jobs
