@@ -65,6 +65,14 @@
             description: 'distribution repo branch to build with'
 
 - parameter:
+    name: p2zip-parameter
+    parameters:
+        - string:
+            name: P2ZIP_URL
+            default: ''
+            description: 'Nexus staging profile id'
+
+- parameter:
     name: stage-id-parameter
     parameters:
         - string:
@@ -255,6 +263,22 @@
           variable: 'GLOBAL_SETTINGS_FILE'
         - file-id: '{settings-file}'
           variable: 'SETTINGS_FILE'
+
+- builder:
+    name: releng-generate-p2pom
+    builders:
+        - shell: !include-raw: include-raw-generate-p2pom.sh
+
+- builder:
+    name: releng-update-p2composite-metadata
+    builders:
+    - shell: !include-raw: include-raw-update-p2composite-metadata.sh
+    - maven-target:
+        maven-version: '{maven-version}'
+        pom: 'deploy-composite-repo.xml'
+        goals: 'clean deploy -V -Dmaven.repo.local=/tmp/r'
+        settings: '{settings}'
+        global-settings: '{global-settings}'
 
 - builder:
     name: releng-stage-release

@@ -59,6 +59,44 @@
         - email-notification:
             email-prefix: '[releng]'
 
+
+- job-template:
+    name: '{name}-publish-p2repo'
+
+    # Job template for publishing a p2 repo given a URL to a zipped p2repo.
+
+    project-type: maven
+    node: dynamic_merge
+    jdk: '{jdk}'
+
+    parameters:
+        - project-parameter:
+            project: '{project}'
+        - p2zip-parameter
+
+    prebuilders:
+        - wipe-org-opendaylight-repo
+        - jacoco-nojava-workaround
+        - releng-generate-p2pom
+
+    maven:
+        maven-name: '{mvn33}'
+        root-pom: 'pom.xml'
+        goals: 'clean deploy -V -Dmaven.repo.local=/tmp/r'
+        settings: '{project-settings}'
+        global-settings: '{odl-global-settings}'
+        post-step-run-condition: UNSTABLE
+
+    postbuilders:
+        - releng-update-p2composite-metadata:
+            maven-version: '{mvn33}'
+            settings: '{project-settings}'
+            global-settings: '{odl-global-settings}'
+
+    publishers:
+        - email-notification:
+            email-prefix: '[releng]'
+
 - job-template:
     name: '{name}-verify-python-{stream}'
 
