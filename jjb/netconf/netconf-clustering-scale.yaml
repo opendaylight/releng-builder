@@ -1,7 +1,7 @@
 - project:
     name: netconf-csit-clustering-scale
     jobs:
-        - '{project}-csit-3node-{functionality}-{install}-{stream}'
+        - '{project}-csit-3node-periodic-{functionality}-{install}-{stream}'
 
     # The project name
     project: 'netconf'
@@ -30,5 +30,7 @@
     # Robot custom options
     robot-options: '-v USE_NETCONF_CONNECTOR:False'
 
-    # Trigger jobs (upstream dependencies)
-    trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream},netconf-distribution-{stream},mdsal-distribution-{stream}'
+    # This scaling test can take several hours to finish,
+    # so the job is defined to run once a day.
+    # Trigger jobs (daily)
+    schedule: 'H H * * *'
