@@ -689,7 +689,7 @@
         - archive:
             artifacts: '*log*'
         - email-notification:
-            email-prefix: '[project]'
+            email-prefix: '[{project}]'
 
 - job-template:
     name: '{project}-csit-1node-openstack-{openstack}-{functionality}-{stream}'
@@ -778,7 +778,7 @@
         - archive:
             artifacts: '*log*'
         - email-notification:
-            email-prefix: '[project]'
+            email-prefix: '[{project}]'
 
 - job-template:
     name: '{project}-csit-3node-openstack-{openstack}-{functionality}-{stream}'
@@ -872,4 +872,4 @@
         - archive:
             artifacts: '*log*'
         - email-notification:
-            email-prefix: '[project]'
+            email-prefix: '[{project}]'
