@@ -100,6 +100,16 @@ cat >> ${local_conf_file_name} << EOF
 [[post-config|/etc/neutron/plugins/ml2/ml2_conf.ini]]
 [agent]
 minimize_polling=True
+
+[[post-config|/etc/neutron/dhcp_agent.ini]]
+[DEFAULT]
+force_metadata = True
+enable_isolated_metadata = True
+
+[[post-config|/etc/nova/nova.conf]]
+[DEFAULT]
+force_config_drive = False
+
 EOF
 
 echo "local.conf Created...."
