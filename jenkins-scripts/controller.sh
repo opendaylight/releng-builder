@@ -11,11 +11,11 @@ yum install -y sshpass
 mkdir /tmp/Hbase
 cd /tmp/Hbase
 
-wget --no-verbose https://archive.apache.org/dist/hbase/hbase-0.94.15/hbase-0.94.15.tar.gz
+wget --no-verbose http://apache.osuosl.org/hbase/hbase-0.94.27/hbase-0.94.27.tar.gz
 
 echo "Installing the Hbase Server..."
-tar -xvf hbase*.tar.gz
 
+tar -xvf hbase-0.94.27.tar.gz
 
 #Installation of Cassandra
 
@@ -23,11 +23,11 @@ tar -xvf hbase*.tar.gz
 mkdir /tmp/cassandra
 cd /tmp/cassandra
 
-wget --no-verbose http://archive.apache.org/dist/cassandra/2.1.12/apache-cassandra-2.1.12-bin.tar.gz
+wget --no-verbose http://apache.osuosl.org/cassandra/2.1.14/apache-cassandra-2.1.14-bin.tar.gz
 
 echo "Installing the Cassandra Server..."
-tar -xvf apache*.tar.gz
 
+tar -xvf apache-cassandra-2.1.14-bin.tar.gz
 
 cat <<EOF >/etc/sudoers.d/89-jenkins-user-defaults
 Defaults:jenkins !requiretty
