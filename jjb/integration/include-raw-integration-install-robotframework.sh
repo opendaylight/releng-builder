@@ -10,13 +10,18 @@
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
 
+set -exu
+
 ROBOT_VENV=`mktemp -d --suffix=robot_venv`
 echo ROBOT_VENV=${ROBOT_VENV} >> ${WORKSPACE}/env.properties
 
 virtualenv ${ROBOT_VENV}
 source ${ROBOT_VENV}/bin/activate
 pip install -q --upgrade pip
-pip --version
+
+# The most recent version of paramiko currently fails to install.
+pip install -q --upgrade paramiko==1.16.0
+
 pip install -q docker-py importlib requests scapy netifaces netaddr ipaddr
 pip install -q robotframework{,-{httplibrary,requests,sshlibrary,selenium2library}}
 
