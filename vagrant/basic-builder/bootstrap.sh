@@ -2,11 +2,6 @@
 
 # vim: sw=4 ts=4 sts=4 et tw=72 :
 
-yum clean all
-
-# Make sure the system is fully up to date
-yum update -q -y
-
 # The following packages are not needed by all projects, but they are
 # needed by enough to make them useful everywhere
 yum install -q -y @development perl-{Digest-SHA,ExtUtils-MakeMaker} \
