@@ -120,6 +120,11 @@ cat ${MODULESCONF}
 echo "Dump module-shards.conf"
 cat ${MODULESHARDSCONF}
 
+EOF
+
+# Create the startup script to be run on controllers.
+cat > ${WORKSPACE}/startup-script.sh <<EOF
+
 echo "Starting controller..."
 /tmp/${BUNDLEFOLDER}/bin/start
 
@@ -133,6 +138,15 @@ do
     echo "Configuring member-${i} with IP address ${!CONTROLLERIP}"
     scp ${WORKSPACE}/configuration-script.sh ${!CONTROLLERIP}:/tmp/
     ssh ${!CONTROLLERIP} "bash /tmp/configuration-script.sh ${i}"
+done
+
+# Copy over the startup script to each controller and execute it.
+for i in `seq 1 ${NUM_ODL_SYSTEM}`
+do
+    CONTROLLERIP=ODL_SYSTEM_${i}_IP
+    echo "Starting member-${i} with IP address ${!CONTROLLERIP}"
+    scp ${WORKSPACE}/startup-script.sh ${!CONTROLLERIP}:/tmp/
+    ssh ${!CONTROLLERIP} "bash /tmp/startup-script.sh"
 done
 
 # vim: ts=4 sw=4 sts=4 et ft=sh :
