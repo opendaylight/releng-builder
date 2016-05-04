@@ -2,10 +2,9 @@
 
 # vim: sw=4 ts=4 sts=4 et tw=72 :
 
-echo "---> Updating operating system"
-apt-get update -qq
-DEBIAN_FRONTEND=noninteractive apt-get upgrade -y --force-yes -qq \
-    -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold"
+# Ensure that necessary variables are set to enable noninteractive mode in
+# commands.
+export DEBIAN_FRONTEND=noninteractive
 
 # To handle the prompt style that is expected all over the environment
 # with how use use robotframework we need to make sure that it is
@@ -13,12 +12,11 @@ DEBIAN_FRONTEND=noninteractive apt-get upgrade -y --force-yes -qq \
 # ups
 echo 'PS1="[\u@\h \W]> "' >> /etc/skel/.bashrc
 
-# Install OpenVSwitch 2.3.1
+echo '---> Install OpenVSwitch 2.3.1'
 add-apt-repository -y ppa:vshn/openvswitch
-apt-get update -qq
 apt-get install -y --force-yes -qq openvswitch-switch
 
-# Install CPqD
+echo '---> Installing CPqD and dependencies'
 apt-get install -y --force-yes -qq build-essential cmake flex
 apt-get install -y --force-yes -qq libpcre++-dev libxerces-c-dev libpcap-dev libboost-all-dev
 
@@ -47,15 +45,14 @@ make
 make install
 cd ..
 
-# Install mininet 2.2.1
+echo '---> Installing mininet 2.2.1'
 git clone git://github.com/mininet/mininet
 cd mininet
 git checkout -b 2.2.1 2.2.1
 cd ..
 mininet/util/install.sh -nf
 
-# cbench installation for running openflow performance tests
-
+echo '---> Installing cbench for openflow performance tests'
 OF_DIR=$HOME/openflow  # Directory that contains OpenFlow code
 OFLOPS_DIR=$HOME/oflops  # Directory that contains oflops repo
 
@@ -70,6 +67,5 @@ cd $OFLOPS_DIR
 make
 make install
 
-# Installing exabgp
+echo '---> Installing exabgp'
 apt-get install -y --force-yes -qq exabgp
-
