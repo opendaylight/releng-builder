@@ -2,9 +2,6 @@
 
 # vim: sw=4 ts=4 sts=4 et tw=72 :
 
-yum clean all
-yum update -q -y
-
 # Install minimal python requirements to get virtualenv going
 # Additional python dependencies should be installed via JJB configuration
 # inside project jobs using a virtualenv setup.
@@ -23,9 +20,3 @@ make &> /dev/null && cp udpreplay /usr/local/bin
 #       Chrome need a other library named chromedriver so let start with
 #       one already supported with selenium.
 yum install -y -q firefox xorg-x11-server-Xvfb
-
-# To handle the prompt style that is expected all over the environment
-# with how use use robotframework we need to make sure that it is
-# consistent for any of the users that are created during dynamic spin
-# ups
-echo 'PS1="[\u@\h \W]> "' >> /etc/skel/.bashrc
