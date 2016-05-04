@@ -111,8 +111,9 @@ Dpkg::Options {
 EOF
 
     echo "---> Updating operating system"
-    apt-get update
-    apt-get upgrade
+    apt-get update -qq
+    apt-get upgrade -y --force-yes -qq \
+    -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold"
 
     # add in stuff we know we need
     echo "---> Installing base packages"
