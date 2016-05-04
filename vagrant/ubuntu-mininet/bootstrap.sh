@@ -2,10 +2,9 @@
 
 # vim: sw=4 ts=4 sts=4 et tw=72 :
 
-echo "---> Updating operating system"
-apt-get update -qq
-DEBIAN_FRONTEND=noninteractive apt-get upgrade -y --force-yes -qq \
-    -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold"
+# Ensure that necessary variables are set to enable noninteractive mode in
+# commands.
+export DEBIAN_FRONTEND=noninteractive
 
 # To handle the prompt style that is expected all over the environment
 # with how use use robotframework we need to make sure that it is
@@ -13,10 +12,7 @@ DEBIAN_FRONTEND=noninteractive apt-get upgrade -y --force-yes -qq \
 # ups
 echo 'PS1="[\u@\h \W]> "' >> /etc/skel/.bashrc
 
-# Install mininet
-# apt-get install -y --force-yes -qq mininet
-
-# Install mininet with OF13 patch
+echo '---> Install mininet with OF13 patch'
 cd /tmp
 cat > newOptions.patch <<EOF
 --- mininet/node.py     2014-09-12 13:48:03.165628683 +0100
@@ -52,7 +48,7 @@ git apply -p0 < ../newOptions.patch
 cd ./util
 ./install.sh -nfv
 
-# Install CPqD
+echo '---> Install CPqD and dependencies'
 apt-get install -y --force-yes -qq build-essential cmake flex
 apt-get install -y --force-yes -qq libpcre++-dev libxerces-c-dev libpcap-dev libboost-all-dev
 
@@ -81,8 +77,7 @@ make
 make install
 cd ..
 
-# cbench installation for running openflow performance tests
-
+echo '---> Installing cbench installation for running openflow performance tests'
 OF_DIR=$HOME/openflow  # Directory that contains OpenFlow code
 OFLOPS_DIR=$HOME/oflops  # Directory that contains oflops repo
 
@@ -97,5 +92,5 @@ cd $OFLOPS_DIR
 make
 make install
 
-# Install vlan for vlan based tests in VTN suites
+echo '---> Installing vlan for vlan based tests in VTN suites'
 apt-get install -y --force-yes -qq vlan
