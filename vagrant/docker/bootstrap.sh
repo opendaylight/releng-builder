@@ -3,11 +3,7 @@
 # vim: sw=4 ts=4 sts=4 et :
 
 rh_changes() {
-    # make sure we're fully updated
-    echo "---> Updating OS"
-    yum clean all
-    yum update -y -q
-
+    echo "---> RH changes"
     # install docker and enable it
     echo "---> Installing docker"
     yum install -y docker supervisor bridge-utils
@@ -28,13 +24,10 @@ EOL
 }
 
 ubuntu_changes() {
-    # make sure we're fully updated
-    echo "---> Updating OS"
-    apt-get update
-    apt-get upgrade -y -qq
+    echo "---> Ubuntu changes"
 }
 
-OS=`/usr/bin/facter operatingsystem`
+OS=$(/usr/bin/facter operatingsystem)
 case "$OS" in
     CentOS|Fedora|RedHat)
         rh_changes
