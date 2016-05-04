@@ -247,7 +247,7 @@
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
         goals: 'clean validate -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
-        maven-opts: '-Xmx8g -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
+        maven-opts: '-B -Xmx8g -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
         settings: '{autorelease-settings}'
         global-settings: '{odl-global-settings}'
         automatic-archiving: false
