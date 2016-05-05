@@ -128,6 +128,10 @@
             branch: '{branch}'
         - gerrit-refspec-parameter:
             refspec: 'refs/heads/{branch}'
+        - bool:
+            name: START_MONGO
+            default: '{start-mongo}'
+            description: "Whether or not to start a mongo process."
 
     scm:
         - git:
@@ -176,6 +180,13 @@
             pip install --upgrade pip
             pip install --upgrade tox argparse
             pip freeze
+
+            echo $START_MONGO
+            if [ "$START_MONGO" == "true" ]; then
+                mkdir $WORKSPACE/mongo
+                mongod --dbpath $WORKSPACE/mongo
+            fi
+
             cd $WORKSPACE/repo/{toxdir}
             tox
 
