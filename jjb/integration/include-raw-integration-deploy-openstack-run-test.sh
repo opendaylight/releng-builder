@@ -377,6 +377,13 @@ done
  fi
 done
 
+#Need to disable firewalld and iptables in control node
+echo "Stop Firewall in Control Node for compute nodes to be able to reach the ports and add to hypervisor-list"
+ssh ${OPENSTACK_CONTROL_NODE_IP} "sudo systemctl stop firewalld; sudo systemctl stop iptables"
+echo "sleep for a minute and print hypervisor-list"
+sleep 60
+ssh ${OPENSTACK_CONTROL_NODE_IP} "cd /opt/stack/devstack; source openrc admin admin; nova hypervisor-list"
+
 echo "Locating test plan to use..."
 testplan_filepath="${WORKSPACE}/test/csit/testplans/${STREAMTESTPLAN}"
 if [ ! -f "${testplan_filepath}" ]; then
