@@ -90,7 +90,6 @@
             branches:
                 - 'origin/{branch}'
             skip-tag: true
-            shallow-clone: true
             wipe-workspace: true
 
 - scm:
@@ -103,7 +102,6 @@
             branches:
                 - 'origin/$GERRIT_BRANCH'
             skip-tag: true
-            shallow-clone: true
             choosing-strategy: '{choosing-strategy}'
 
 - wrapper:
