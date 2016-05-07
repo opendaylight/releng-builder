@@ -25,7 +25,7 @@
             jdk: openjdk8
             jdks:
                 - openjdk8
-            disable_autorelease: True
+            disable_autorelease: False
             disable_distribution_check: False
 
     project: 'infrautils'
@@ -675,7 +675,6 @@
             branches:
                 - 'origin/{branch}'
             skip-tag: true
-            shallow-clone: true
             submodule:
                 recursive: true
                 timeout: 15
