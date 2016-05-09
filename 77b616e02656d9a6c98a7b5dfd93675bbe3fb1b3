@@ -22,6 +22,30 @@
       "revId": "77b616e02656d9a6c98a7b5dfd93675bbe3fb1b3",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_c1773f01",
+        "filename": "jjb/sfc/sfc-csit-rest-basic.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 5849
+      },
+      "writtenOn": "2016-05-09T08:49:55Z",
+      "side": 1,
+      "message": "Sure. Thanks for the comment. \nActually I got this info from another csit-sfc job and https://jenkins.opendaylight.org/releng/view/autorelease/job/autorelease-project-report-boron/lastSuccessfulBuild/artifact/dependencies.log where it shows many more dependencies. We tried to simplify and leave only the more relevant ones.\nAside from this, the main dependancies reported recently in the ODL sfc mailing list were: openflowplugin, ovsdb, netconf, lisp and genius.\n\nI noted however that in this and many other jobs the \u0027trigger-jobs\u0027 value is overriden by a a timed schedule trigger (those having \"H H * * *\"). Therefore I guess it only makes sense to use this just in case the timed scheduler do not apply.\n\nSummarizing, I would suggest:\n\n1)either we completely remove \u0027trigger-jobs\u0027 (and timed scheduler apply) \n\n2)leave it as:\n\nlispflowmapping\novsdb\ncontroller\nopenflowplugin\ngenius\nsfc\nyangtools\nmdsal\nodlparent\ndlux\n\n3) we reduce the list to the core ones: \nlispflowmapping\novsdb\ncontroller\nopenflowplugin\ngenius\nsfc \n\nDoes this sound reasonable? Which one do you like most? I\u0027d go either to 1) or 3).\n\nThanks for your comments.",
+      "parentUuid": "fa57193c_ee0a32d1",
+      "range": {
+        "startLine": 35,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 214
+      },
+      "revId": "77b616e02656d9a6c98a7b5dfd93675bbe3fb1b3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
