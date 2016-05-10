@@ -523,7 +523,15 @@ By default it will run:
 
 You'll need to use the `-v/--volume=[]` parameter to mount a directory
 containing your YAML files, as well as a configured `jenkins.ini` file if you
-wish to upload your jobs to the `Jenkins Sandbox`_.
+wish to upload your jobs to the `Jenkins Sandbox`_.  For example, to test:
+
+.. code-block:: bash
+
+    docker run --rm -v ${PWD}:/jjb zxiiro/jjb-docker jenkins-jobs --conf jenkins.ini test /jjb/jjb/ yangide-verify-boron
+
+Note the required /jjb/jjb/ path (assuming you're the command above from the releng builder repo root directory),
+because the ./jjb from your Docker host will be mounted into /jjb/jjb by the -v parameter.
+
 
 Jenkins Job Templates
 ---------------------
