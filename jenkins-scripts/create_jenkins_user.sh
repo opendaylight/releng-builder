@@ -4,7 +4,18 @@
 # Create Jenkins User #
 #######################
 
-DISTRO=$(logname)
+# Find $DISTRO
+for i in $(ls /home); do
+    case "${i}" in
+        centos|fedora|ubuntu)
+            DISTRO=$i
+        ;;
+        *)
+            DISTRO=unknown
+        ;;
+    esac
+done
+
 useradd -m jenkins
 mkdir /home/jenkins/.ssh
 mkdir /w
