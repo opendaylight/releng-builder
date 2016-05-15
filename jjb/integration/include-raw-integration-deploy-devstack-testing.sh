@@ -13,6 +13,7 @@ pybot -e exclude \
 -v DEFAULT_LINUX_PROMPT:\]\> \
 -v OPENSTACK_BRANCH:$OPENSTACK_BRANCH \
 -v ODL_VERSION:$ODL_VERSION \
+-v DEVSTACK_DEPLOY_PATH:/opt/stack/new/devstack \
 -v TEMPEST_REGEX:$TEMPEST_REGEX ${SUITES} || true
 
 scp $OPENSTACK_CONTROL_NODE_IP:/opt/stack/logs/devstacklog.txt $WORKSPACE/
