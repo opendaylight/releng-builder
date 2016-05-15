@@ -284,6 +284,7 @@ done
 cat > ${WORKSPACE}/get_devstack.sh << EOF
 sudo systemctl stop firewalld
 sudo yum install bridge-utils -y
+sudo systemctl stop  NetworkManager
 #Workaround for mysql failure
 echo "127.0.0.1    localhost \${HOSTNAME}" > /tmp/hosts
 echo "::1   localhost  \${HOSTNAME}" >> /tmp/hosts
@@ -402,6 +403,7 @@ pybot -N ${TESTPLAN} -c critical -e exclude -v BUNDLEFOLDER:${BUNDLEFOLDER} -v W
 -v ODL_SYSTEM_IP:${ODL_SYSTEM_IP} -v ODL_SYSTEM_1_IP:${ODL_SYSTEM_1_IP} -v ODL_SYSTEM_2_IP:${ODL_SYSTEM_2_IP} \
 -v ODL_SYSTEM_3_IP:${ODL_SYSTEM_3_IP} -v NUM_ODL_SYSTEM:${NUM_ODL_SYSTEM} -v CONTROLLER_USER:${USER} -v OS_USER:${USER} \
 -v NUM_OS_SYSTEM:${NUM_OPENSTACK_SYSTEM} -v OS_CONTROL_NODE_IP:${OPENSTACK_CONTROL_NODE_IP} \
+-v OS_COMPUTE_1_IP:${OPENSTACK_COMPUTE_NODE_1_IP} -v OS_COMPUTE_2_IP:${OPENSTACK_COMPUTE_NODE_2_IP} \
 -v DEVSTACK_DEPLOY_PATH:/opt/stack/devstack -v USER_HOME:${HOME} ${TESTOPTIONS} ${SUITES} || true
 
 echo "Tests Executed"
