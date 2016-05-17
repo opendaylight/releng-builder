@@ -50,16 +50,18 @@
         - wipe-org-opendaylight-repo
         - jacoco-nojava-workaround
         - provide-maven-settings:
-            global-settings-file: '{odl-global-settings}'
-            settings-file: '{JENKINS_SETTINGS}'
+            global-settings-file: 'odl-global-settings'
+            settings-file: 'JENKINS_SETTINGS'
 
     maven:
         maven-name: '{mvn33}'
         root-pom: 'POM'
         goals: 'MAVEN_GOALS -B -Djenkins -Dmerge -Dstream={stream}'
         maven-opts: 'MAVEN_OPTS'
-        settings: '{JENKINS_SETTINGS}'
-        global-settings: '{odl-global-settings}'
+        settings: 'JENKINS_SETTINGS'
+        settings-type: cfp
+        global-settings: 'odl-global-settings'
+        global-settings-type: cfp
         post-step-run-condition: UNSTABLE
 
     postbuilders:
@@ -81,16 +83,20 @@
                 goals: 'site:deploy -B -Dstream={stream}'
                 java-opts:
                     - '-Xmx2g'
-                settings: '{JENKINS_SETTINGS}'
-                global-settings: '{odl-global-settings}'
+                settings: 'JENKINS_SETTINGS'
+                settings-type: cfp
+                global-settings: 'odl-global-settings'
+                global-settings-type: cfp
             - maven-target:
                 maven-version: '{mvn33}'
                 pom: deploy-site.xml
                 goals: 'site:deploy -B -Dstream={stream}'
                 java-opts:
                     - '-Xmx2g'
-                settings: '{JENKINS_SETTINGS}'
-                global-settings: '{odl-global-settings}'
+                settings: 'JENKINS_SETTINGS'
+                settings-type: cfp
+                global-settings: 'odl-global-settings'
+                global-settings-type: cfp
 
     reporters:
         - findbugs
