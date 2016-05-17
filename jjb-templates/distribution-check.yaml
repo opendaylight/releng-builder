@@ -87,7 +87,9 @@
         goals: 'clean install -B -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
         settings: '{JENKINS_SETTINGS}'
+        settings-type: cfp
         global-settings: '{odl-global-settings}'
+        global-settings-type: cfp
         ignore-upstream-changes: true
         post-step-run-condition: 'SUCCESS'
 

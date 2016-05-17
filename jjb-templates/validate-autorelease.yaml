@@ -91,7 +91,9 @@
         goals: 'clean validate -B -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
         maven-opts: '-Xmx8g -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
         settings: '{autorelease-settings}'
+        settings-type: cfp
         global-settings: '{odl-global-settings}'
+        global-settings-type: cfp
         automatic-archiving: false
         post-step-run-condition: UNSTABLE
 

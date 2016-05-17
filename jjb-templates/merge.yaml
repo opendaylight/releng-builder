@@ -82,7 +82,9 @@
                 java-opts:
                     - '-Xmx2g'
                 settings: '{JENKINS_SETTINGS}'
+                settings-type: cfp
                 global-settings: '{odl-global-settings}'
+                global-settings-type: cfp
             - maven-target:
                 maven-version: '{mvn33}'
                 pom: deploy-site.xml
@@ -90,7 +92,9 @@
                 java-opts:
                     - '-Xmx2g'
                 settings: '{JENKINS_SETTINGS}'
+                settings-type: cfp
                 global-settings: '{odl-global-settings}'
+                global-settings-type: cfp
 
     reporters:
         - findbugs

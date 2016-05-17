@@ -43,7 +43,9 @@
         goals: 'clean install com.sonatype.clm:clm-maven-plugin:index -Djenkins -DskipTests=true -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
         maven-opts: '-Xmx4096m -XX:MaxPermSize=512m'
         settings: '{JENKINS_SETTINGS}'
+        settings-type: cfp
         global-settings: '{odl-global-settings}'
+        global-settings-type: cfp
 
     postbuilders:
         - shell: 'find . -regex ".*karaf/target" | xargs rm -rf'

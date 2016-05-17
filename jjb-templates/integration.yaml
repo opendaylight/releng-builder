@@ -56,7 +56,9 @@
         goals: 'MAVEN_GOALS -Djenkins'
         maven-opts: 'MAVEN_OPTS'
         settings: '{JENKINS_SETTINGS}'
+        settings-type: cfp
         global-settings: '{odl-global-settings}'
+        global-settings-type: cfp
 
     reporters:
         - findbugs

@@ -134,7 +134,9 @@
                 java-opts:
                     - '-Xmx2g'
                 settings: '{yangtools-settings}'
+                settings-type: cfp
                 global-settings: '{odl-global-settings}'
+                global-settings-type: cfp
             - maven-target:
                 maven-version: '{mvn33}'
                 pom: deploy-site.xml
@@ -142,7 +144,9 @@
                 java-opts:
                     - '-Xmx2g'
                 settings: '{yangtools-settings}'
+                settings-type: cfp
                 global-settings: '{odl-global-settings}'
+                global-settings-type: cfp
 
     reporters:
         - findbugs
@@ -213,7 +217,9 @@
         goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  -Djenkins'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{yangtools-settings}'
+        settings-type: cfp
         global-settings: '{odl-global-settings}'
+        global-settings-type: cfp
 
     reporters:
         - findbugs
@@ -273,7 +279,9 @@
         goals: 'clean install -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
         settings: '{integration-settings}'
+        settings-type: cfp
         global-settings: '{odl-global-settings}'
+        global-settings-type: cfp
 
     publishers:
         - email-notification:
@@ -341,7 +349,9 @@
         goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  -Djenkins'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{yangtools-settings}'
+        settings-type: cfp
         global-settings: '{odl-global-settings}'
+        global-settings-type: cfp
 
     reporters:
         - findbugs
@@ -399,7 +409,9 @@
         goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  -Djenkins -Dsonar'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{yangtools-settings}'
+        settings-type: cfp
         global-settings: '{odl-global-settings}'
+        global-settings-type: cfp
 
     reporters:
         - findbugs
@@ -457,7 +469,9 @@
         goals: 'clean install com.sonatype.clm:clm-maven-plugin:index -Djenkins -DskipTests=true -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
         maven-opts: '-Xmx4096m -XX:MaxPermSize=512m'
         settings: '{yangtools-settings}'
+        settings-type: cfp
         global-settings: '{odl-global-settings}'
+        global-settings-type: cfp
 
     postbuilders:
         - shell: 'find . -regex ".*karaf/target" | xargs rm -rf'
@@ -561,7 +575,9 @@
         goals: 'clean validate -B -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
         maven-opts: '-Xmx8g -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
         settings: '{autorelease-settings}'
+        settings-type: cfp
         global-settings: '{odl-global-settings}'
+        global-settings-type: cfp
         automatic-archiving: false
         post-step-run-condition: UNSTABLE
 

@@ -67,7 +67,9 @@
             java-opts:
                 - 'MAVEN_OPTS'
             settings: '{JENKINS_SETTINGS}'
+            settings-type: cfp
             global-settings: '{odl-global-settings}'
+            global-settings-type: cfp
 
     publishers:
         ARCHIVE_ARTIFACTS
