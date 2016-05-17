@@ -345,8 +345,8 @@
         root-pom: 'pom.xml'
         goals: 'site:site site:deploy -Dstream=master'
         maven-opts: '-Xmx1024m'
-        settings: '{releng-builder-settings}'
-        global-settings: '{odl-global-settings}'
+        settings: 'releng-builder-settings'
+        global-settings: 'odl-global-settings'
 
     publishers:
         - email-notification:
@@ -415,8 +415,8 @@
         root-pom: 'pom.xml'
         goals: 'site:site -Dstream=master'
         maven-opts: '-Xmx1024m'
-        settings: '{autorelease-settings}'
-        global-settings: '{odl-global-settings}'
+        settings: 'autorelease-settings'
+        global-settings: 'odl-global-settings'
 
     publishers:
         - email-notification:
