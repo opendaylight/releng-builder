@@ -77,16 +77,18 @@
         - wipe-org-opendaylight-repo
         - jacoco-nojava-workaround
         - provide-maven-settings:
-            global-settings-file: '{odl-global-settings}'
-            settings-file: '{integration-distribution-settings}'
+            global-settings-file: 'odl-global-settings'
+            settings-file: 'integration-distribution-settings'
 
     maven:
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
         goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  -B -Djenkins -Dsonar'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-        settings: '{integration-distribution-settings}'
-        global-settings: '{odl-global-settings}'
+        settings: 'integration-distribution-settings'
+        settings-type: cfp
+        global-settings: 'odl-global-settings'
+        global-settings-type: cfp
 
     reporters:
         - findbugs
@@ -135,16 +137,18 @@
     prebuilders:
         - wipe-org-opendaylight-repo
         - provide-maven-settings:
-            global-settings-file: '{odl-global-settings}'
-            settings-file: '{integration-distribution-settings}'
+            global-settings-file: 'odl-global-settings'
+            settings-file: 'integration-distribution-settings'
 
     maven:
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
         goals: 'clean install com.sonatype.clm:clm-maven-plugin:index -B -Djenkins -DskipTests=true -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
         maven-opts: '-Xmx4096m -XX:MaxPermSize=512m'
-        settings: '{integration-distribution-settings}'
-        global-settings: '{odl-global-settings}'
+        settings: 'integration-distribution-settings'
+        settings-type: cfp
+        global-settings: 'odl-global-settings'
+        global-settings-type: cfp
 
     postbuilders:
         - shell: 'find . -regex ".*karaf/target" | xargs rm -rf'
@@ -240,16 +244,20 @@
             goals: 'clean install -B -T1.5C -Djenkins -DskipTests -Dcheckstyle.skip=true -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
             java-opts:
             - '-Xmx8g'
-            settings: '{autorelease-settings}'
-            global-settings: '{odl-global-settings}'
+            settings: 'autorelease-settings'
+            settings-type: cfp
+            global-settings: 'odl-global-settings'
+            global-settings-type: cfp
 
     maven:
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
         goals: 'clean validate -B -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
         maven-opts: '-Xmx8g -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
-        settings: '{autorelease-settings}'
-        global-settings: '{odl-global-settings}'
+        settings: 'autorelease-settings'
+        settings-type: cfp
+        global-settings: 'odl-global-settings'
+        global-settings-type: cfp
         automatic-archiving: false
         post-step-run-condition: UNSTABLE
 
