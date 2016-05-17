@@ -45,8 +45,8 @@
         - wipe-org-opendaylight-repo
         - jacoco-nojava-workaround
         - autorelease-cfp:
-            autorelease-settings: '{autorelease-settings}'
-            odl-global-settings: '{odl-global-settings}'
+            autorelease-settings: 'autorelease-settings'
+            odl-global-settings: 'odl-global-settings'
         - autorelease-generate-taglist
         - autorelease-generate-release-patches
 
@@ -55,8 +55,8 @@
         root-pom: 'pom.xml'
         goals: 'clean deploy -Pintegrationtests,docs,repoBuild -Djenkins -Dcheckstyle.skip=true -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -DaltDeploymentRepository=staging::default::file:hide/from/pom/files/stage'
         maven-opts: '-Xmx10g -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
-        settings: '{autorelease-settings}'
-        global-settings: '{odl-global-settings}'
+        settings: 'autorelease-settings'
+        global-settings: 'odl-global-settings'
         automatic-archiving: true
         post-step-run-condition: UNSTABLE
 
@@ -66,8 +66,8 @@
         - autorelease-get-integration-test-variables
         - autorelease-maven-sources:
             maven-version: '{mvn33}'
-            settings: '{autorelease-settings}'
-            global-settings: '{odl-global-settings}'
+            settings: 'autorelease-settings'
+            global-settings: 'odl-global-settings'
         - autorelease-maven-sources-post-process
         - autorelease-sys-stats
 
@@ -199,8 +199,8 @@
         root-pom: 'site.xml'
         goals: 'site:site site:deploy -Dstream={stream}'
         maven-opts: '-Xmx1024m'
-        settings: '{autorelease-settings}'
-        global-settings: '{odl-global-settings}'
+        settings: 'autorelease-settings'
+        global-settings: 'odl-global-settings'
 
     publishers:
     - email-notification:
@@ -251,8 +251,8 @@
         root-pom: 'site.xml'
         goals: 'site:site -Dstream={stream}'
         maven-opts: '-Xmx1024m'
-        settings: '{autorelease-settings}'
-        global-settings: '{odl-global-settings}'
+        settings: 'autorelease-settings'
+        global-settings: 'odl-global-settings'
 
     publishers:
         - email-notification:
