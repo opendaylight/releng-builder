@@ -123,8 +123,8 @@
                 - 'stream={stream}'
             java-opts:
                 - '-Xmx1024m -XX:MaxPermSize=256m'
-            settings: '{ovsdb-settings}'
-            global-settings: '{odl-global-settings}'
+            settings: 'ovsdb-settings'
+            global-settings: 'odl-global-settings'
         - shell:
             !include-raw-escape:
                 - include-raw-cleanup-docker.sh
