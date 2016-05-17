@@ -34,16 +34,18 @@
     prebuilders:
         - wipe-org-opendaylight-repo
         - provide-maven-settings:
-            global-settings-file: '{odl-global-settings}'
-            settings-file: '{JENKINS_SETTINGS}'
+            global-settings-file: 'odl-global-settings'
+            settings-file: 'JENKINS_SETTINGS'
 
     maven:
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
         goals: 'clean install com.sonatype.clm:clm-maven-plugin:index -V -B -Djenkins -DskipTests=true -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
         maven-opts: '-Xmx4096m -XX:MaxPermSize=512m'
-        settings: '{JENKINS_SETTINGS}'
-        global-settings: '{odl-global-settings}'
+        settings: 'JENKINS_SETTINGS'
+        settings-type: cfp
+        global-settings: 'odl-global-settings'
+        global-settings-type: cfp
 
     postbuilders:
         - shell: 'find . -regex ".*karaf/target" | xargs rm -rf'

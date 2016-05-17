@@ -102,8 +102,10 @@
                 - 'stream={stream}'
             java-opts:
                 - '-Xmx1024m -XX:MaxPermSize=256m'
-            settings: '{netvirt-settings}'
-            global-settings: '{odl-global-settings}'
+            settings: 'netvirt-settings'
+            settings-type: cfp
+            global-settings: 'odl-global-settings'
+            global-settings-type: cfp
         - shell:
             !include-raw-escape:
                 - include-raw-cleanup-docker.sh

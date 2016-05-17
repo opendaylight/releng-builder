@@ -58,16 +58,18 @@
         - wipe-org-opendaylight-repo
         - jacoco-nojava-workaround
         - provide-maven-settings:
-            global-settings-file: '{odl-global-settings}'
-            settings-file: '{JENKINS_SETTINGS}'
+            global-settings-file: 'odl-global-settings'
+            settings-file: 'JENKINS_SETTINGS'
         - maven-target:
             maven-version: '{mvn33}'
             pom: 'POM'
             goals: 'MAVEN_GOALS -V -B -Djenkins -Dstream={stream}'
             java-opts:
                 - 'MAVEN_OPTS'
-            settings: '{JENKINS_SETTINGS}'
-            global-settings: '{odl-global-settings}'
+            settings: 'JENKINS_SETTINGS'
+            settings-type: cfp
+            global-settings: 'odl-global-settings'
+            global-settings-type: cfp
 
     publishers:
         ARCHIVE_ARTIFACTS
