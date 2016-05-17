@@ -23,6 +23,11 @@ Host 10.30.12.*
 Host 10.30.32.*
   StrictHostKeyChecking no
   UserKnownHostsFile /dev/null
+
+# Private Cloud (ODL)
+Host 10.29.8.*
+  StrictHostKeyChecking no
+  UserKnownHostsFile /dev/null
 EOSSH
 
 cat <<EOKNOWN >  /etc/ssh/ssh_known_hosts
