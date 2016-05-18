@@ -389,6 +389,13 @@ echo "sleep for a minute and print hypervisor-list"
 sleep 60
 ssh ${OPENSTACK_CONTROL_NODE_IP} "cd /opt/stack/devstack; source openrc admin admin; nova hypervisor-list"
 
+#Need to disable firewalld and iptables in compute 1 node
+echo "Stop Firewall in Compute 1 Node and add to hypervisor-list"
+ssh ${OPENSTACK_COMPUTE_NODE_1_IP} "sudo systemctl stop firewalld; sudo systemctl stop iptables"
+#Need to disable firewalld and iptables in compute 2 node
+echo "Stop Firewall in Compute 2 Node and add to hypervisor-list"
+ssh ${OPENSTACK_COMPUTE_NODE_2_IP} "sudo systemctl stop firewalld; sudo systemctl stop iptables"
+
 echo "Locating test plan to use..."
 testplan_filepath="${WORKSPACE}/test/csit/testplans/${STREAMTESTPLAN}"
 if [ ! -f "${testplan_filepath}" ]; then
