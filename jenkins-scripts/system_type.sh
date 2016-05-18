@@ -18,6 +18,7 @@ for i in "autorelease,autorelease" \
          "builder,builder" \
          "devstack,devstack" \
          "docker,docker" \
+         "gbp-trusty,ubuntu-docker-ovs" \
          "java,controller" \
          "matrix,matrix" \
          "robot,robot" \
