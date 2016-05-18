@@ -167,6 +167,7 @@
             jobs: '{trigger-jobs}'
 
     builders:
+        - integration-copy-ssh-keys
         - integration-cleanup-workspace
         - integration-install-robotframework
         - inject:
@@ -272,6 +273,7 @@
         - timed: '{schedule}'
 
     builders:
+        - integration-copy-ssh-keys
         - integration-cleanup-workspace
         - integration-install-robotframework
         - inject:
@@ -380,6 +382,7 @@
             pattern: 'csit/suites/{project}/**'
 
     builders:
+        - integration-copy-ssh-keys
         - integration-cleanup-workspace
         - integration-install-robotframework
         - inject:
@@ -463,6 +466,7 @@
             jobs: '{trigger-jobs}'
 
     builders:
+        - integration-copy-ssh-keys
         - integration-cleanup-workspace
         - integration-install-robotframework
         - inject:
@@ -569,6 +573,7 @@
         - timed: '{schedule}'
 
     builders:
+        - integration-copy-ssh-keys
         - integration-cleanup-workspace
         - integration-install-robotframework
         - inject:
@@ -673,6 +678,7 @@
         - integration-csit-all
 
     builders:
+        - integration-copy-ssh-keys
         - integration-install-robotframework
         - inject:
             properties-file: 'env.properties'
@@ -769,6 +775,7 @@
         - integration-csit-all
 
     builders:
+        - integration-copy-ssh-keys
         - integration-cleanup-workspace
         - integration-install-robotframework
         - inject:
@@ -874,6 +881,7 @@
         - integration-csit-all
 
     builders:
+        - integration-copy-ssh-keys
         - integration-cleanup-workspace
         - integration-install-robotframework
         - inject:
