@@ -6,7 +6,7 @@
 
 OS=`facter operatingsystem | tr '[:upper:]' '[:lower:]'`
 
-useradd -m jenkins
+useradd -m -s /bin/bash jenkins
 mkdir /home/jenkins/.ssh
 mkdir /w
 cp -r /home/${OS}/.ssh/authorized_keys /home/jenkins/.ssh/authorized_keys
