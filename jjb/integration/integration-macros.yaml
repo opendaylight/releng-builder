@@ -233,6 +233,25 @@
 # Shell Scripts #
 #################
 
+# Macro: integration-copy-ssh-keys
+# Operation: Copy ssh public key used as authentication for robot
+# Used by: {project}-csit-* job templates
+
+- builder:
+    name: integration-copy-ssh-keys
+    builders:
+        - shell: |
+            sleep 60  # Give the slaves a bit of time to enable ssh
+            echo "JCLOUDS IPS are ${JCLOUDS_IPS}"
+
+            IFS=',' read -ra ADDR <<< "${JCLOUDS_IPS}"
+
+            for i in "${ADDR[@]}"
+            do
+                ssh-copy-id -i /home/jenkins/.ssh/id_rsa.pub "jenkins@${i}"
+                ssh jenkins@${i} 'echo "$(facter ipaddress_eth0) $(/bin/hostname)" | sudo tee -a /etc/hosts'
+            done
+
 # Macro: integration-get-slave-addresses
 # Operation: this macro gets the IP addresses of the dynamic vms
 # Used by: {project}-csit-* job templates
