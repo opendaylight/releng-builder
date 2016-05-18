@@ -2,10 +2,9 @@
 
 # vim: sw=4 ts=4 sts=4 et tw=72 :
 
-echo "---> Updating operating system"
-apt-get update -qq
-DEBIAN_FRONTEND=noninteractive apt-get upgrade -y --force-yes -qq \
-    -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold"
+# Ensure that necessary variables are set to enable noninteractive mode in
+# commands.
+export DEBIAN_FRONTEND=noninteractive
 
 # we need garethr-docker in our puppet manifest to install docker
 # cleanly
