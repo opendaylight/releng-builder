@@ -13,24 +13,18 @@
 HOST=$(/usr/bin/hostname)
 SYSTEM_TYPE=''
 
-# We use a separator character of - for the slave parts
-IFS='-' read -r -a HOSTPARTS <<< "${HOST}"
-
-# slurp in the control scripts
-FILES=($(find . -maxdepth 1 -type f -iname '*.sh' -exec basename -s '.sh' {} \;))
-# remap into an associative array
-declare -A A_FILES
-for key in "${!FILES[@]}"
-do
-    A_FILES[${FILES[$key]}]="${key}"
-done
-
-# Find our system_type control script if possible
-for i in "${HOSTPARTS[@]}"
-do
-    if [ "${A_FILES[${i}]}" != "" ]
-    then
-        SYSTEM_TYPE=${i}
+IFS=','
+for i in "autorelease,autorelease" \
+         "builder,builder" \
+         "devstack,devstack" \
+         "docker,docker" \
+         "java,controller" \
+         "matrix,matrix" \
+         "robot,robot" \
+         "ubuntu-trusty-mininet,ubuntu-mininet"
+do set -- $i
+    if [[ $HOST == *"$1"* ]]; then
+        SYSTEM_TYPE="$2"
         break
     fi
 done
