@@ -10,7 +10,7 @@
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
 
-HOST=$(/usr/bin/hostname)
+HOST=$(/bin/hostname)
 SYSTEM_TYPE=''
 
 IFS=','
