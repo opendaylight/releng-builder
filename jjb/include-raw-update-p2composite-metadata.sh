@@ -9,6 +9,16 @@
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
 
+# If we detect a snapshot build then there is no need to run this script.
+# YangIDE has indicated that the only want the latest snapshot released to
+# the snapshot directory.
+if echo $P2ZIP_URL | grep opendaylight.snapshot; then
+    exit 0
+fi
+if [[ "$P2ZIP_URL" == "" ]]; then
+    exit 0
+fi
+
 EPOCH_DATE=`date +%s%3N`
 MVN_METADATA=`echo $P2ZIP_URL | sed 's,/*[^/]\+/*$,,' | sed 's,/*[^/]\+/*$,,'`/maven-metadata.xml
 P2_COMPOSITE_ARTIFACTS=compositeArtifacts.xml
@@ -109,7 +119,7 @@ cat > deploy-composite-repo.xml <<EOF
               <serverId>opendaylight-p2</serverId>
               <repositoryUrl>https://nexus.opendaylight.org/service/local/repositories/p2repos/content-compressed</repositoryUrl>
               <file>composite-repo.zip</file>
-              <repositoryPath>org.opendaylight.$PROJECT</repositoryPath>
+              <repositoryPath>org.opendaylight.$PROJECT/release</repositoryPath>
             </configuration>
           </execution>
         </executions>
