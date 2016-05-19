@@ -58,8 +58,10 @@
     parameters:
         - project-parameter:
             project: '{project}'
-        - gerrit-parameter:
+        - gerrit-parameters:
+            project: '{project}'
             branch: '{branch}'
+            refspec: 'refs/heads/{branch}'
 
     scm:
         - git-scm:

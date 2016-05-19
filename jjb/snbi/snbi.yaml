@@ -85,9 +85,9 @@
     parameters:
         - project-parameter:
             project: '{project}'
-        - gerrit-parameter:
+        - gerrit-parameters:
+            project: '{project}'
             branch: '{branch}'
-        - gerrit-refspec-parameter:
             refspec: 'refs/heads/{branch}'
 
     scm:
@@ -155,9 +155,9 @@
     parameters:
         - project-parameter:
             project: '{project}'
-        - gerrit-parameter:
+        - gerrit-parameters:
+            project: '{project}'
             branch: '{branch}'
-        - gerrit-refspec-parameter:
             refspec: 'refs/heads/{branch}'
 
     scm:
@@ -384,10 +384,10 @@
         artifactNumToKeep: '{build-artifact-num-to-keep}'
 
     parameters:
-        - gerrit-project-parameter:
+        - gerrit-parameters:
             project: '{project}'
-        - gerrit-refspec-parameter:
-            refspec: '{branch}'
+            branch: '{branch}'
+            refspec: 'refs/heads/{branch}'
         - project-parameter:
             project: '{project}'
         - integration-distribution-git-url
@@ -670,8 +670,10 @@
     parameters:
         - project-parameter:
             project: '{project}'
-        - gerrit-parameter:
+        - gerrit-parameters:
+            project: '{project}'
             branch: '{branch}'
+            refspec: 'refs/heads/{branch}'
         - autorelease-release-tag:
             release-tag: 'validate'
         - autorelease-release-branch:
