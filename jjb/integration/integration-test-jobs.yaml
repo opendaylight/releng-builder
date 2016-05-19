@@ -334,10 +334,10 @@
         artifactNumToKeep: '{build-artifact-num-to-keep}'
 
     parameters:
-        - gerrit-project-parameter:
-            project: '$GERRIT_PROJECT'
-        - gerrit-refspec-parameter:
-            refspec: '$GERRIT_REFSPEC'
+        - gerrit-parameters:
+            project: '{project}'
+            branch: '{branch}'
+            refspec: 'refs/heads/{branch}'
         - project-parameter:
             project: '$GERRIT_PROJECT'
         - integration-branch:
