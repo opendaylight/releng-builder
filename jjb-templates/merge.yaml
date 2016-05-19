@@ -23,9 +23,9 @@
     parameters:
         - project-parameter:
             project: '{project}'
-        - gerrit-parameter:
+        - gerrit-paramters:
+            project: '{project}'
             branch: '{branch}'
-        - gerrit-refspec-parameter:
             refspec: 'refs/heads/{branch}'
 
     scm:

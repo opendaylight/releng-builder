@@ -16,8 +16,10 @@
     parameters:
         - project-parameter:
             project: '{project}'
-        - gerrit-parameter:
+        - gerrit-paramters:
+            project: '{project}'
             branch: '{branch}'
+            refspec: 'refs/heads/{branch}'
         - autorelease-release-tag:
             release-tag: 'validate'
         - autorelease-release-branch:
