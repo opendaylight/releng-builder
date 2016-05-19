@@ -28,8 +28,10 @@
     parameters:
         - project-parameter:
             project: '{project}'
-        - gerrit-parameter:
-            branch: 'master'
+        - gerrit-parameters:
+            project: '{project}'
+            branch: '{branch}'
+            refspec: 'refs/heads/{branch}'
 
     scm:
         - gerrit-trigger-scm:
@@ -92,8 +94,10 @@
     parameters:
         - project-parameter:
             project: '{project}'
-        - gerrit-parameter:
-            branch: 'master'
+        - gerrit-parameters:
+            project: '{project}'
+            branch: '{branch}'
+            refspec: 'refs/heads/{branch}'
 
     scm:
         - gerrit-trigger-scm:
@@ -159,8 +163,10 @@
     parameters:
         - project-parameter:
             project: '{project}'
-        - gerrit-parameter:
-            branch: 'master'
+        - gerrit-parameters:
+            project: '{project}'
+            branch: '{branch}'
+            refspec: 'refs/heads/{branch}'
 
     scm:
         - gerrit-trigger-scm:
@@ -296,8 +302,10 @@
     parameters:
         - project-parameter:
             project: '{project}'
-        - gerrit-parameter:
-            branch: 'master'
+        - gerrit-parameters:
+            project: '{project}'
+            branch: '{branch}'
+            refspec: 'refs/heads/{branch}'
 
     scm:
         - gerrit-trigger-scm:
@@ -360,8 +368,10 @@
     parameters:
         - project-parameter:
             project: '{project}'
-        - gerrit-parameter:
-            branch: 'master'
+        - gerrit-parameters:
+            project: '{project}'
+            branch: '{branch}'
+            refspec: 'refs/heads/{branch}'
 
     scm:
         - gerrit-trigger-scm:

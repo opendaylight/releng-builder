@@ -9,24 +9,16 @@
             description: "JJB configured PROJECT parameter to identify an ODL Gerrit project"
 
 - parameter:
-    name: gerrit-parameter
-    parameters:
-        - string:
-            name: GERRIT_BRANCH
-            default: '{branch}'
-            description: "JJB configured GERRIT_BRANCH parameter"
-
-- parameter:
-    name: gerrit-project-parameter
+    name: gerrit-parameters
     parameters:
         - string:
             name: GERRIT_PROJECT
             default: '{project}'
             description: "GERRIT_PROJECT parameter if not given by trigger"
-
-- parameter:
-    name: gerrit-refspec-parameter
-    parameters:
+        - string:
+            name: GERRIT_BRANCH
+            default: '{branch}'
+            description: "JJB configured GERRIT_BRANCH parameter"
         - string:
             name: GERRIT_REFSPEC
             default: '{refspec}'
