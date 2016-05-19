@@ -19,10 +19,10 @@
         artifactNumToKeep: '{build-artifact-num-to-keep}'
 
     parameters:
-        - gerrit-project-parameter:
+        - gerrit-parameters:
             project: '{project}'
-        - gerrit-refspec-parameter:
-            refspec: '{branch}'
+            branch: '{branch}'
+            refspec: 'refs/heads/{branch}'
         - project-parameter:
             project: '{project}'
         - integration-distribution-git-url
