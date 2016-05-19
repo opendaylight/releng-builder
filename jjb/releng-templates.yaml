@@ -77,12 +77,16 @@
     prebuilders:
         - wipe-org-opendaylight-repo
         - jacoco-nojava-workaround
+        - releng-fetch-p2zip-if-necessary:
+            maven-version: '{mvn33}'
+            settings: '{project-settings}'
+            global-settings: '{odl-global-settings}'
         - releng-generate-p2pom
 
     maven:
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
-        goals: 'clean deploy -V -Dmaven.repo.local=/tmp/r'
+        goals: 'clean deploy -V -B -Dmaven.repo.local=/tmp/r'
         settings: '{project-settings}'
         global-settings: '{odl-global-settings}'
         post-step-run-condition: UNSTABLE
