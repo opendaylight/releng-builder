@@ -15,14 +15,15 @@ docker pull alagalah/odlpoc_ovs230
 # make sure we don't require tty for sudo operations
 cat <<EOF >/etc/sudoers.d/89-jenkins-user-defaults
 Defaults:jenkins !requiretty
-jenkins     ALL=NOPASSWD: /usr/bin/ovs-vsctl
-jenkins     ALL=NOPASSWD: /usr/bin/ovs-ofctl
-jenkins     ALL=NOPASSWD: /usr/bin/ovs-dpctl
-jenkins     ALL=NOPASSWD: /sbin/ip
 jenkins     ALL=NOPASSWD: /bin/mkdir
 jenkins     ALL=NOPASSWD: /bin/ln
 jenkins     ALL=NOPASSWD: /bin/rm
 jenkins     ALL=NOPASSWD: /etc/init.d/openvswitch-switch
+jenkins     ALL=NOPASSWD: /sbin/ip
+jenkins     ALL=NOPASSWD: /usr/bin/ovs-vsctl
+jenkins     ALL=NOPASSWD: /usr/bin/ovs-ofctl
+jenkins     ALL=NOPASSWD: /usr/bin/ovs-dpctl
+jenkins     ALL=NOPASSWD: /usr/sbin/alternatives
 EOF
 
 # vim: sw=2 ts=2 sts=2 et :
