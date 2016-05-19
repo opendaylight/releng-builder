@@ -263,6 +263,25 @@
           variable: 'SETTINGS_FILE'
 
 - builder:
+    name: releng-fetch-p2zip-if-necessary
+    builders:
+    - shell: |
+        # Cleanup any existing zips and metadata before we download the new update site
+        rm -f *.zip *.xml
+    - conditional-step:
+        condition-kind: strings-match
+        condition-string1: '$P2ZIP_URL'
+        condition-string2: ''
+        condition-basedir: workspace
+        steps:
+            # TODO: Figure out latest snapshot version number to pull rather than hardcoding 1.1.1-SNAPSHOT
+            - maven-target:
+                maven-version: '{maven-version}'
+                goals: 'org.apache.maven.plugins:maven-dependency-plugin:get org.apache.maven.plugins:maven-dependency-plugin:copy -V -B -Dartifact=org.opendaylight.yangide:org.opendaylight.yangide.update-site:1.1.1-SNAPSHOT:zip -DoutputDirectory=$WORKSPACE'
+                settings: '{settings}'
+                global-settings: '{global-settings}'
+
+- builder:
     name: releng-generate-p2pom
     builders:
         - shell: !include-raw: include-raw-generate-p2pom.sh
@@ -271,12 +290,17 @@
     name: releng-update-p2composite-metadata
     builders:
     - shell: !include-raw: include-raw-update-p2composite-metadata.sh
-    - maven-target:
-        maven-version: '{maven-version}'
-        pom: 'deploy-composite-repo.xml'
-        goals: 'clean deploy -V -Dmaven.repo.local=/tmp/r'
-        settings: '{settings}'
-        global-settings: '{global-settings}'
+    - conditional-step:
+        condition-kind: file-exists
+        condition-filename: deploy-composite-repo.xml
+        condition-basedir: workspace
+        steps:
+            - maven-target:
+                maven-version: '{maven-version}'
+                pom: 'deploy-composite-repo.xml'
+                goals: 'clean deploy -V -B -Dmaven.repo.local=/tmp/r'
+                settings: '{settings}'
+                global-settings: '{global-settings}'
 
 - builder:
     name: releng-stage-release
