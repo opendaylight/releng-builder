@@ -25,7 +25,7 @@ Host 10.30.32.*
   UserKnownHostsFile /dev/null
 
 # Private Cloud (ODL)
-Host 10.29.8.* 10.29.9.*
+Host 10.29.8.* 10.29.9.* 10.29.10.* 10.29.11.*
   StrictHostKeyChecking no
   UserKnownHostsFile /dev/null
 EOSSH
