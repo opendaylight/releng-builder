@@ -1,10 +1,10 @@
 - project:
-    name: ovsdb-openstack-tempest
+    name: netvirt-openstack-tempest
     jobs:
         - '{project}-openstack-{functionality}-daily-{openstack}-{odl}'
 
     # The project name
-    project: 'ovsdb'
+    project: 'netvirt'
 
     # The project name
     functionality: 'tempest'
@@ -17,6 +17,7 @@
     # can add kilo if it's needed, but would result in two more hour long jobs
 
     odl:
-        - lithium:
-            odl-version: 'lithium-latest'
-
+        - boron:
+            odl-version: 'boron-latest'
+        - beryllium:
+            odl-version: 'beryllium-latest'
