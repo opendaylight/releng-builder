@@ -1,3 +1,5 @@
+source ${ROBOT_VENV}/bin/activate
+
 echo "Changing the testplan path..."
 cat ${WORKSPACE}/test/csit/testplans/${TESTPLAN} | sed "s:integration:${WORKSPACE}:" > testplan.txt
 cat testplan.txt
