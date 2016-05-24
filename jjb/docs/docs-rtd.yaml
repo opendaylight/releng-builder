@@ -2,6 +2,7 @@
     name: docs-rtd
     jobs:
         - '{name}-merge-rtd-{stream}'
+        - 'docs-rtd-verify-{stream}'
 
     stream:
         - boron:
@@ -9,3 +10,69 @@
 
     project: 'docs'
     rtdproject: 'opendaylight'
+
+- job-template:
+    name: 'docs-rtd-verify-{stream}'
+    node: dynamic_verify
+
+    project-type: freestyle
+
+    logrotate:
+        daysToKeep: 14
+
+    parameters:
+        - project-parameter:
+            project: '{project}'
+        - gerrit-parameter:
+            branch: '{branch}'
+        - gerrit-refspec-parameter:
+            refspec: 'refs/heads/{branch}'
+
+    scm:
+        - git:
+            credentials-id: '{ssh-credentials}'
+            url: '$GIT_BASE'
+            refspec: '$GERRIT_REFSPEC'
+            branches:
+                - 'origin/{branch}'
+            skip-tag: true
+            submodule:
+                recursive: true
+
+    wrappers:
+        - ssh-agent-credentials:
+            users:
+                - '{ssh-credentials}'
+
+    triggers:
+        - gerrit:
+            trigger-on:
+                - patchset-created-event:
+                    exclude-drafts: 'true'
+                    exclude-trivial-rebase: 'true'
+                    exclude-no-code-change: 'true'
+                - draft-published-event
+                - comment-added-contains-event:
+                    comment-contains-value: 'recheck'
+            projects:
+              - project-compare-type: 'ANT'
+                project-pattern: '**'
+                branches:
+                  - branch-compare-type: 'ANT'
+                    branch-pattern: '**/{branch}'
+                file-paths:
+                    - compare-type: ANT
+                      pattern: docs/**
+
+    builders:
+        - shell: |
+            virtualenv $WORKSPACE/venv
+            source $WORKSPACE/venv/bin/activate
+            pip install --upgrade pip
+            pip freeze
+            pip install tox
+            tox -edocs
+
+    publishers:
+        - email-notification:
+            email-prefix: '[docs]'
