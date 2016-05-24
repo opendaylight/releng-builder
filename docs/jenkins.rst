@@ -13,6 +13,66 @@ Sections:
    :depth: 3
    :local:
 
+New Project Quick Start
+-----------------------
+
+.. note::
+
+    We will be revamping releng/builder in the near future to simplify
+    the below process.
+
+This section attempts to provide details on how to get going as a new project
+quickly with minimal steps. The rest of the guide should be read and understood
+by those who need to create and contribute new job types that is not already
+covered by the existing job templates provided by OpenDaylight's JJB repo.
+
+As a new project you will be mainly interested in getting your jobs to appear
+in the jenkins-master_ silo and this can be achieved by simply creating 2 files
+project.cfg and project.yaml in the releng/builder project's jjb directory.
+
+.. code-block:: bash
+
+    git clone https://git.opendaylight.org/gerrit/releng/builder
+    cd builder
+    mkdir jjb/<new-project>
+
+Where <new-project> should be the same name as your project's git repo in
+Gerrit. So if your project is called "aaa" then create a new jjb/aaa directory.
+
+Next we will create <new-project>.yaml as follows:
+
+    # REMOVE THIS LINE IF YOU WANT TO CUSTOMIZE ANYTHING BELOW
+
+That's right all you need is the above comment in this file. Jenkins will
+automatically regenerate this file when your patch is merged so we do not need
+to do anything special here.
+
+Next we will create <new-project>.cfg as follows:
+
+.. code-block:: yaml
+
+    STREAMS:
+        - boron:
+            branch: master
+            jdks: openjdk8
+    DEPENDENCIES: odlparent,controller,yangtools
+
+This is the minimal required CFG file contents and is used to auto-generate the
+YAML file. If you'd like to explore the additional tweaking options available
+please refer to the `Tuning Templates`_ section.
+
+Finally we need to push these files to Gerrit for review by the releng/builder
+team to push your jobs to Jenkins.
+
+.. code-block:: bash
+
+    git add jjb/<new-project>
+    git commit -sm "Add <new-project> jobs to Jenkins"
+    git review
+
+This will push the jobs to Gerrit and your jobs will appear in Jenkins once the
+releng/builder team has reviewed and merged your patch.
+
 Jenkins Master
 --------------
 
