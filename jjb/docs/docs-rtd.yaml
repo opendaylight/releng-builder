@@ -1,7 +1,8 @@
 - project:
     name: docs-rtd
     jobs:
-        - '{name}-merge-rtd-{stream}'
+        - 'docs-merge-rtd-{stream}'
+        - 'docs-verify-rtd-{stream}'
 
     stream:
         - boron:
@@ -9,3 +10,112 @@
 
     project: 'docs'
     rtdproject: 'opendaylight'
+
+- job-template:
+    name: 'docs-merge-rtd-{stream}'
+    node: dynamic_verify
+
+    project-type: freestyle
+
+    logrotate:
+        daysToKeep: 14
+
+    parameters:
+        - project-parameter:
+            project: '{project}'
+        - gerrit-parameters:
+            project: '{project}'
+            branch: '{branch}'
+            refspec: 'refs/heads/{branch}'
+
+    wrappers:
+        - ssh-agent-credentials:
+            users:
+                - '{ssh-credentials}'
+
+    triggers:
+        - gerrit:
+            trigger-on:
+                - patchset-created-event:
+                    exclude-drafts: 'true'
+                    exclude-trivial-rebase: 'true'
+                    exclude-no-code-change: 'true'
+                - draft-published-event
+                - comment-added-contains-event:
+                    comment-contains-value: 'recheck'
+            projects:
+              - project-compare-type: 'ANT'
+                project-pattern: '**'
+                branches:
+                  - branch-compare-type: 'ANT'
+                    branch-pattern: '**/{branch}'
+                file-paths:
+                    - compare-type: ANT
+                      pattern: docs/**
+
+    builders:
+        - shell: |
+            curl -X POST https://readthedocs.org/build/{rtdproject}
+
+    publishers:
+        - email-notification:
+            email-prefix: '[docs]'
+
+- job-template:
+    name: 'docs-verify-rtd-{stream}'
+    node: dynamic_verify
+
+    project-type: freestyle
+
+    logrotate:
+        daysToKeep: 14
+
+    parameters:
+        - project-parameter:
+            project: '{project}'
+        - gerrit-parameters:
+            project: '{project}'
+            branch: '{branch}'
+            refspec: 'refs/heads/{branch}'
+
+    scm:
+        - gerrit-trigger-scm-with-submodules:
+            credentials-id: '{ssh-credentials}'
+
+    wrappers:
+        - ssh-agent-credentials:
+            users:
+                - '{ssh-credentials}'
+
+    triggers:
+        - gerrit:
+            trigger-on:
+                - patchset-created-event:
+                    exclude-drafts: 'true'
+                    exclude-trivial-rebase: 'true'
+                    exclude-no-code-change: 'true'
+                - draft-published-event
+                - comment-added-contains-event:
+                    comment-contains-value: 'recheck'
+            projects:
+              - project-compare-type: 'ANT'
+                project-pattern: '**'
+                branches:
+                  - branch-compare-type: 'ANT'
+                    branch-pattern: '**/{branch}'
+                file-paths:
+                    - compare-type: ANT
+                      pattern: docs/**
+
+    builders:
+        - shell: |
+            virtualenv $WORKSPACE/venv
+            source $WORKSPACE/venv/bin/activate
+            pip install --upgrade pip
+            pip freeze
+            pip install tox
+            tox -edocs
+
+    publishers:
+        - email-notification:
+            email-prefix: '[docs]'

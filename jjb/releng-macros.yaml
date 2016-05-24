@@ -96,6 +96,20 @@
             skip-tag: true
             choosing-strategy: '{choosing-strategy}'
 
+- scm:
+    name: gerrit-trigger-scm-with-submodules
+    scm:
+        - git:
+            credentials-id: '{credentials-id}'
+            url: '$GIT_BASE'
+            refspec: '$GERRIT_REFSPEC'
+            branches:
+                - 'origin/$GERRIT_BRANCH'
+            skip-tag: true
+            choosing-strategy: 'gerrit'
+            submodule:
+                recursive: true
+
 - wrapper:
     name: build-timeout
     wrappers:
