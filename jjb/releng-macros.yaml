@@ -85,6 +85,20 @@
             wipe-workspace: true
 
 - scm:
+    name: git-scm-with-submodules
+    scm:
+        - git:
+            credentials-id: '{credentials-id}'
+            url: '$GIT_BASE'
+            refspec: ''
+            branches:
+                - 'refs/heads/{branch}'
+            skip-tag: true
+            wipe-workspace: true
+            submodule:
+                recursive: true
+
+- scm:
     name: gerrit-trigger-scm
     scm:
         - git:
