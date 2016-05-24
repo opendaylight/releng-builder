@@ -15,3 +15,4 @@ Contents:
 
    jenkins
    release-workflow
+   signing
