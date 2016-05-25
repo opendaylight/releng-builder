@@ -39,8 +39,10 @@
     parameters:
         - project-parameter:
             project: 'integration/distribution'
-        - gerrit-parameter:
+        - gerrit-parameters:
+            project: '{project}'
             branch: '{branch}'
+            refspec: 'refs/heads/{branch}'
         - integration-patch-refspec:
             branch: '$GERRIT_REFSPEC'
 
@@ -104,8 +106,10 @@
     parameters:
         - project-parameter:
             project: 'integration/distribution'
-        - gerrit-parameter:
+        - gerrit-parameters:
+            project: '{project}'
             branch: '{branch}'
+            refspec: 'refs/heads/{branch}'
 
     scm:
         - gerrit-trigger-scm:
