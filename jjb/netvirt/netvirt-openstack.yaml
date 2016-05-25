@@ -1,12 +1,12 @@
 - project:
-    name: ovsdb-dev
+    name: netvirt-dev
     jobs:
-        - 'ovsdb-openstack-gerrit'
+        - 'netvirt-openstack-gerrit'
 
-    project: 'ovsdb'
+    project: 'netvirt'
 
 - job-template:
-    name: 'ovsdb-openstack-gerrit'
+    name: 'netvirt-openstack-gerrit'
 
     project-type: freestyle
     node: dynamic_devstack
@@ -83,7 +83,7 @@
             artifacts: 'logs/**'
             fingerprint: false
         - email-ext:
-            subject: '[ovsdb] $DEFAULT_SUBJECT'
+            subject: '[netvirt] $DEFAULT_SUBJECT'
             attach-build-log: false
             failure: true
             unstable: true
