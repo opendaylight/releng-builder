@@ -1,4 +1,90 @@
 {
   "pushCert": "certificate version 0.1\npusher F566C9B1 1464139262 -0400\npushee ssh://git.opendaylight.org:29418/releng/builder.git\nnonce 1464139262-86EF7635A76AA8A1856C9252333DE8ABCA5A67F1\n\n0000000000000000000000000000000000000000 f7ec4a2ca511cf17de96b04b382c7e2a6505840e refs/for/master\n-----BEGIN PGP SIGNATURE-----\nVersion: GnuPG v1\n\niQIcBAABAgAGBQJXRP3+AAoJEF3VDEv1ZsmxbNwP/jlQzHQAqEoSOTsYZHiglQu8\nn8cPwon8PvwusESU0ABT0324XGZgA7RZ4J1onHHzFRab/AoLVEGEo1t+q5RaTJsX\n+J1uplPVjUeRLYOW5uBK4WwnUp1SgT28775qB7BejFGkqjSnaxkNcaHTb3lO4pZw\no3AKvDC9oGOfc8kFJO6q9xjVqNqkGi/oAtKtaUXpAv+CcTgQimgMlUcqoWxZIIZd\nUw3VSBZC7vIBENYVV8+A5vzIcSHvcUaZz38wk/LZD8wffZ38BSatPFRo7bb3MqUR\npKHa9BV3n4dJBzvBlfGWjVughXhlAZ1xfUCS+Yc0G0fhoLL6ScRWoeCyCqbAaX7p\n/+kxYUvvWQddQJaA6bLWaLxrCZsCsmykaB6JFCq+NcbAq/U6mbb7AImpAxscZ8eR\nDnPE50KgwnGhzEfBobWSTCIeEAOLmIpNKfpt2+5OQmjlStcaIDLqAmC9EGZBbWm+\nnLwSPokNFPZovWmOCAKxEQieGM0mFKtSaaJASyDWVLefselIOGgDAY6n9Z5XRyk7\n6Kmmrovag2RZ54vWqKSTg9Y+ZMojmqrKnPzbgTE/Zc22jyegl+wnOpLeYPEaDzAc\n+cGjfwpHcr3rNt5Ku965QVzVYQdq3m78sP6e3rz0Tj9aj1BnhPnPsgVTy+yq0ALj\n48wqc3j9q5hGCIsLX7UB\n\u003dwoCl\n-----END PGP SIGNATURE-----\n",
-  "comments": []
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa57193c_073d87de",
+        "filename": "docs/signing.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2016-05-25T13:45:39Z",
+      "side": 1,
+      "message": "The directive for notes in Sphinx is.\n\n  \n    .. note::\n\n       The message\n       multi-line\n       more lines if needed",
+      "revId": "f7ec4a2ca511cf17de96b04b382c7e2a6505840e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_47265fcf",
+        "filename": "docs/signing.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2016-05-25T13:45:39Z",
+      "side": 1,
+      "message": "Use .. note:: here too and yes ``command`` works from inside a note also.",
+      "revId": "f7ec4a2ca511cf17de96b04b382c7e2a6505840e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_672ba394",
+        "filename": "docs/signing.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2016-05-25T13:45:39Z",
+      "side": 1,
+      "message": "Personally I\u0027d probably write this like this:\n\n \n .. code-block:: bash\n    \n    git config commit.gpgsign true\n    git config push.gpgsign true\n    git config user.signingkey \u003cfingerprint\u003e\n    # e.g., git config.user.signingkey F566C9B1\n \n .. note::\n    \n    You can use ``git commit -S`` and ``git push --signed``\n    on the CLI instead of configuring it in config if you\n    want to control which commits use your signature.",
+      "revId": "f7ec4a2ca511cf17de96b04b382c7e2a6505840e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_c719cf89",
+        "filename": "docs/signing.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2016-05-25T13:45:39Z",
+      "side": 1,
+      "message": ".. note:: directive should be used.",
+      "revId": "f7ec4a2ca511cf17de96b04b382c7e2a6505840e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_0714674c",
+        "filename": "docs/signing.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2016-05-25T13:45:39Z",
+      "side": 1,
+      "message": ".. note:: directive should be used.",
+      "revId": "f7ec4a2ca511cf17de96b04b382c7e2a6505840e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
 }
