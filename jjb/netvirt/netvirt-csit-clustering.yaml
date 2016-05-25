@@ -1,11 +1,11 @@
 - project:
-    name: ovsdb-netvirt-csit-clustering
+    name: netvirt-csit-clustering
     jobs:
         - '{project}-csit-3node-{functionality}-{install}-{stream}'
         - '{project}-csit-verify-3node-{functionality}'
 
     # The project name
-    project: 'ovsdb-netvirt'
+    project: 'netvirt'
 
     # The functionality under test
     functionality: 'clustering'
@@ -33,4 +33,4 @@
     robot-options: ''
 
     # Trigger jobs (upstream dependencies)
-    trigger-jobs: 'controller-distribution-{stream},ovsdb-distribution-{stream}'
+    trigger-jobs: 'controller-distribution-{stream},netvirt-distribution-{stream},ovsdb-distribution-{stream}'

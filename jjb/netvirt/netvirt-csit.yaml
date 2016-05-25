@@ -1,11 +1,11 @@
 - project:
-    name: ovsdb-csit-netvirt
+    name: netvirt-csit
     jobs:
         - '{project}-csit-1node-{functionality}-{install}-{stream}'
         - '{project}-csit-verify-1node-{functionality}'
 
     # The project name
-    project: 'ovsdb'
+    project: 'netvirt'
 
     # The functionality under test
     functionality: 'netvirt'
@@ -39,4 +39,4 @@
     robot-options: ''
 
     # Trigger jobs (upstream dependencies)
-    trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream},openflowjava-distribution-{stream},openflowplugin-distribution-{stream},ovsdb-distribution-{stream}'
+    trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream},openflowjava-distribution-{stream},openflowplugin-distribution-{stream},netvirt-distribution-{stream},ovsdb-distribution-{stream}'
