@@ -97,14 +97,14 @@
         - jacoco-nojava-workaround
         - provide-maven-settings:
             global-settings-file: '{odl-global-settings}'
-            settings-file: '{honeycomb-vbd-settings}'
+            settings-file: vbd-settings'
         - maven-target:
             maven-version: '{mvn33}'
             pom: 'pom.xml'
             goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  -Djenkins -Dstream={stream}'
             java-opts:
                 - '-Xmx1024m -XX:MaxPermSize=256m'
-            settings: '{honeycomb-vbd-settings}'
+            settings: vbd-settings'
             global-settings: '{odl-global-settings}'
 
     publishers:
@@ -168,14 +168,14 @@
         - jacoco-nojava-workaround
         - provide-maven-settings:
             global-settings-file: '{odl-global-settings}'
-            settings-file: '{honeycomb-vbd-settings}'
+            settings-file: vbd-settings'
 
     maven:
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
         goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  -Djenkins -Dmerge -Dstream={stream}'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-        settings: '{honeycomb-vbd-settings}'
+        settings: vbd-settings'
         global-settings: '{odl-global-settings}'
         post-step-run-condition: UNSTABLE
 
@@ -198,7 +198,7 @@
                 goals: 'site:deploy -Dstream={stream}'
                 java-opts:
                     - '-Xmx2g'
-                settings: '{honeycomb-vbd-settings}'
+                settings: vbd-settings'
                 global-settings: '{odl-global-settings}'
             - maven-target:
                 maven-version: '{mvn33}'
@@ -206,7 +206,7 @@
                 goals: 'site:deploy -Dstream={stream}'
                 java-opts:
                     - '-Xmx2g'
-                settings: '{honeycomb-vbd-settings}'
+                settings: vbd-settings'
                 global-settings: '{odl-global-settings}'
 
     reporters:
@@ -270,14 +270,14 @@
         - jacoco-nojava-workaround
         - provide-maven-settings:
             global-settings-file: '{odl-global-settings}'
-            settings-file: '{honeycomb-vbd-settings}'
+            settings-file: vbd-settings'
 
     maven:
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
         goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  -Djenkins'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-        settings: '{honeycomb-vbd-settings}'
+        settings: vbd-settings'
         global-settings: '{odl-global-settings}'
 
     reporters:
@@ -330,7 +330,7 @@
         - wipe-org-opendaylight-repo
         - provide-maven-settings:
             global-settings-file: '{odl-global-settings}'
-            settings-file: '{honeycomb-vbd-settings}'
+            settings-file: vbd-settings'
 
     maven:
         maven-name: '{mvn33}'
@@ -428,7 +428,7 @@
             goals: 'clean install -B -Djenkins -DskipTests -Dcheckstyle.skip=true -Dmaven.javadoc.skip=true -Dmaven.site.skip=true -DgenerateReports=false -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -Dstream={stream}'
             java-opts:
                 - '-Xmx4096m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
-            settings: '{honeycomb-vbd-settings}'
+            settings: vbd-settings'
             global-settings: '{odl-global-settings}'
 
     maven:
@@ -436,7 +436,7 @@
         root-pom: 'distribution/pom.xml'
         goals: 'clean install -B -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
-        settings: '{honeycomb-vbd-settings}'
+        settings: vbd-settings'
         global-settings: '{odl-global-settings}'
         ignore-upstream-changes: true
         post-step-run-condition: 'SUCCESS'
@@ -502,14 +502,14 @@
         - jacoco-nojava-workaround
         - provide-maven-settings:
             global-settings-file: '{odl-global-settings}'
-            settings-file: '{honeycomb-vbd-settings}'
+            settings-file: vbd-settings'
 
     maven:
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
         goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  -Djenkins'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-        settings: '{honeycomb-vbd-settings}'
+        settings: vbd-settings'
         global-settings: '{odl-global-settings}'
 
     reporters:
@@ -560,14 +560,14 @@
         - jacoco-nojava-workaround
         - provide-maven-settings:
             global-settings-file: '{odl-global-settings}'
-            settings-file: '{honeycomb-vbd-settings}'
+            settings-file: vbd-settings'
 
     maven:
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
         goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  -Djenkins -Dsonar'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-        settings: '{honeycomb-vbd-settings}'
+        settings: vbd-settings'
         global-settings: '{odl-global-settings}'
 
     reporters:
@@ -618,14 +618,14 @@
         - wipe-org-opendaylight-repo
         - provide-maven-settings:
             global-settings-file: '{odl-global-settings}'
-            settings-file: '{honeycomb-vbd-settings}'
+            settings-file: vbd-settings'
 
     maven:
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
         goals: 'clean install com.sonatype.clm:clm-maven-plugin:index -Djenkins -DskipTests=true -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
         maven-opts: '-Xmx4096m -XX:MaxPermSize=512m'
-        settings: '{honeycomb-vbd-settings}'
+        settings: vbd-settings'
         global-settings: '{odl-global-settings}'
 
     postbuilders:
