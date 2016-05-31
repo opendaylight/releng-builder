@@ -1,7 +1,7 @@
 - project:
-    name: ovsdb-full-integration
+    name: ovsdb-on-demand-integration
     jobs:
-        - 'ovsdb-daily-full-integration-{stream}'
+        - 'ovsdb-on-demand-integration-{stream}'
 
     # stream:    release stream (eg. stable-lithium or beryllium)
     # branch:    git branch (eg. stable/lithium or master)
@@ -16,16 +16,11 @@
             jdk: openjdk8
             jdks:
                 - openjdk8
-        - stable-lithium:
-            branch: 'stable/lithium'
-            jdk: openjdk7
-            jdks:
-                - openjdk7
 
     project: 'ovsdb'
 
 - job-template:
-    name: 'ovsdb-daily-full-integration-{stream}'
+    name: 'ovsdb-on-demand-integration-{stream}'
 
     # Required Variables:
     #     stream:    release stream (eg. stable-lithium or beryllium)
@@ -33,7 +28,7 @@
 
     project-type: matrix
     node: matrix_master
-    description: 'Integration tests for the OVSDB project against different versions of OVS and branches. This job runs nightly. '
+    description: 'Integration tests for the OVSDB project against different branches. This job runs on demand. '
     execution-strategy:
         sequential: true
 
@@ -42,7 +37,6 @@
             type: user-defined
             name: 'OVS_VERSION'
             values:
-                - 2.3.2
                 - 2.4.0
         - axis:
             type: jdk
@@ -85,12 +79,12 @@
                 - '{ssh-credentials}'
 
     triggers:
-        - timed: '@midnight'
         - gerrit:
            server-name: 'OpenDaylight'
            triggers-on:
               - comment-added-contains-event:
                  comment-contains-value: 'runit'
+
 
     builders:
         - wipe-org-opendaylight-repo
