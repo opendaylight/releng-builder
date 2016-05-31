@@ -86,6 +86,11 @@
 
     triggers:
         - timed: '@midnight'
+        - gerrit:
+           server-name: 'OpenDaylight'
+           trigger-on:
+              - comment-added-contains-event:
+                 comment-contains-value: 'runit'
 
     builders:
         - wipe-org-opendaylight-repo
