@@ -35,6 +35,7 @@
 
     triggers:
         - gerrit:
+            server-name: 'OpenDaylight'
             trigger-on:
                 - change-merged-event
                 - comment-added-contains-event:
@@ -86,6 +87,7 @@
 
     triggers:
         - gerrit:
+            server-name: 'OpenDaylight'
             trigger-on:
                 - patchset-created-event:
                     exclude-drafts: 'true'
