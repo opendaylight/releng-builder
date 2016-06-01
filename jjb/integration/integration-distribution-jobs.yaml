@@ -79,13 +79,6 @@
         ignore-upstream-changes: true
         post-step-run-condition: 'SUCCESS'
 
-    postbuilders:
-        - trigger-builds:
-            - project: 'integration-distribution-deploy-{stream}'
-              block: true
-              predefined-parameters:
-                  BUNDLEURL=$BUNDLEURL
-
     publishers:
         - email-notification:
             email-prefix: '[integration]'
