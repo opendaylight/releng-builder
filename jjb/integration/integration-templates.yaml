@@ -737,6 +737,18 @@
             name: ODL_ENABLE_L3_FWD
             default: '{odl-enable-l3}'
             description: 'Enable L3 FWD in ODL for createing br-ex'
+        - string:
+            name: ENABLE_OS_SERVICES
+            default: '{enable-openstack-services}'
+            description: 'comma seperated list of services to enable'
+        - string:
+            name: DISABLE_OS_SERVICES
+            default: '{disable-openstack-services}'
+            description: 'comma seperated list of services to enable'
+        - string:
+            name: TENANT_NETWORK_TYPE
+            default: '{tenant-network-type}'
+            description: 'Tenant Network Type supported by the implementation'
     scm:
         - integration-gerrit-scm:
             credentials-id: '{ssh-credentials}'
@@ -830,6 +842,18 @@
             name: ENABLE_HAPROXY_FOR_NEUTRON
             default: '{enable-haproxy}'
             description: 'Enable HAProxy for using neutron interface as HA'
+        - string:
+            name: ENABLE_OS_SERVICES
+            default: '{enable-openstack-services}'
+            description: 'comma seperated list of services to enable'
+        - string:
+            name: DISABLE_OS_SERVICES
+            default: '{disable-openstack-services}'
+            description: 'comma seperated list of services to enable'
+        - string:
+            name: TENANT_NETWORK_TYPE
+            default: '{tenant-network-type}'
+            description: 'Tenant Network Type supported by the implementation'
     scm:
         - integration-gerrit-scm:
             credentials-id: '{ssh-credentials}'
