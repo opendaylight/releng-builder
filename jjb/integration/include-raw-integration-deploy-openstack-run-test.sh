@@ -16,27 +16,33 @@ LOGFILE=stack.sh.log
 SCREEN_LOGDIR=/opt/stack/data/log
 LOG_COLOR=False
 RECLONE=yes
+EOF
 
-disable_service swift
-disable_service cinder
-disable_service n-net
-disable_service q-vpn
-enable_service q-svc
-enable_service q-dhcp
-enable_service q-meta
-enable_service tempest
-enable_service n-novnc
-enable_service n-cauth
+IFS=,
+for service_name in ${DISABLE_OS_SERVICES}
+do
+cat >> ${local_conf_file_name} << EOF
+disable_service ${service_name}
+EOF
+done
+for service_name in ${ENABLE_OS_SERVICES}
+do
+cat >> ${local_conf_file_name} << EOF
+enable_service ${service_name}
+EOF
+done
+unset IFS
 
+cat >> ${local_conf_file_name} << EOF
 HOST_IP=$OPENSTACK_CONTROL_NODE_IP
 SERVICE_HOST=\$HOST_IP
 
 NEUTRON_CREATE_INITIAL_NETWORKS=False
 Q_PLUGIN=ml2
-Q_ML2_TENANT_NETWORK_TYPE=vxlan
+Q_ML2_TENANT_NETWORK_TYPE=${TENANT_NETWORK_TYPE}
+Q_OVS_USE_VETH=True
 
 ENABLE_TENANT_TUNNELS=True
-
 
 MYSQL_HOST=\$SERVICE_HOST
 RABBIT_HOST=\$SERVICE_HOST
@@ -50,7 +56,7 @@ SERVICE_TOKEN=service
 SERVICE_PASSWORD=admin
 ADMIN_PASSWORD=admin
 
-enable_plugin networking-odl ${ODL_ML2_DRIVER_REPO} ${ODL_ML2_BRANCH}
+enable_plugin networking-odl ${ODL_ML2_DRIVER_REPO} ${ODL_ML2_VERSION}
 
 ODL_PORT=8080
 ODL_MODE=externalodl
@@ -109,6 +115,7 @@ enable_isolated_metadata = True
 [[post-config|/etc/nova/nova.conf]]
 [DEFAULT]
 force_config_drive = False
+ram_allocation_ratio = 3
 
 EOF
 
@@ -150,9 +157,12 @@ SERVICE_TOKEN=service
 SERVICE_PASSWORD=admin
 ADMIN_PASSWORD=admin
 
-enable_plugin networking-odl ${ODL_ML2_DRIVER_REPO} ${ODL_ML2_BRANCH}
+enable_plugin networking-odl ${ODL_ML2_DRIVER_REPO} ${ODL_ML2_VERSION}
 ODL_MODE=compute
 
+[[post-config|/etc/nova/nova.conf]]
+[DEFAULT]
+ram_allocation_ratio = 3
 EOF
 
 if [ "${NUM_ODL_SYSTEM}" -gt 1 ]; then
@@ -257,10 +267,6 @@ set +e  # We do not want to create red dot just because something went wrong whi
 for i in `seq 1 ${NUM_ODL_SYSTEM}`
 do
     CONTROLLERIP=ODL_SYSTEM_${i}_IP
-    echo "dumping first 500K bytes of karaf log..." > "odl${i}_karaf.log"
-    ssh "${!CONTROLLERIP}" head --bytes=500K "/tmp/${BUNDLEFOLDER}/data/log/karaf.log" >> "odl${i}_karaf.log"
-    echo "dumping last 500K bytes of karaf log..." >> "odl${i}_karaf.log"
-    ssh "${!CONTROLLERIP}" tail --bytes=500K "/tmp/${BUNDLEFOLDER}/data/log/karaf.log" >> "odl${i}_karaf.log"
     echo "killing karaf process..."
     ssh "${!CONTROLLERIP}" bash -c 'ps axf | grep karaf | grep -v grep | awk '"'"'{print "kill -9 " $1}'"'"' | sh'
 done
@@ -268,8 +274,9 @@ sleep 5
 for i in `seq 1 ${NUM_ODL_SYSTEM}`
 do
     CONTROLLERIP=ODL_SYSTEM_${i}_IP
-    ssh "${!CONTROLLERIP}" xz -9ekvv "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
-    scp "${!CONTROLLERIP}:/tmp/${BUNDLEFOLDER}/data/log/karaf.log.xz" "odl${i}_karaf.log.xz"
+    ssh "${!CONTROLLERIP}"  "mv /tmp/${BUNDLEFOLDER}/data/log/ /tmp/odl_log/"
+    ssh "${!CONTROLLERIP}"  'tar -cf - "/tmp/odl_log/" | xz -9 -c - > /tmp/odl_karaf_log.tar.xz'
+    scp "${!CONTROLLERIP}:/tmp/odl_karaf_log.tar.xz" "odl${i}_karaf.log.tar.xz"
 done
 
 ssh ${OPENSTACK_CONTROL_NODE_IP} "xz -9ekvv /opt/stack/devstack/nohup.out"
@@ -282,6 +289,7 @@ done
 }
 
 cat > ${WORKSPACE}/get_devstack.sh << EOF
+sudo yum update -y
 sudo systemctl stop firewalld
 sudo yum install bridge-utils -y
 sudo systemctl stop  NetworkManager
@@ -387,14 +395,14 @@ echo "Stop Firewall in Control Node for compute nodes to be able to reach the po
 ssh ${OPENSTACK_CONTROL_NODE_IP} "sudo systemctl stop firewalld; sudo systemctl stop iptables"
 echo "sleep for a minute and print hypervisor-list"
 sleep 60
-ssh ${OPENSTACK_CONTROL_NODE_IP} "cd /opt/stack/devstack; source openrc admin admin; nova hypervisor-list"
+ssh ${OPENSTACK_CONTROL_NODE_IP} "cd /opt/stack/devstack; source openrc admin admin; nova hypervisor-list;nova-manage service list;sudo systemctl status libvirtd"
 
-#Need to disable firewalld and iptables in compute 1 node
-echo "Stop Firewall in Compute 1 Node and add to hypervisor-list"
-ssh ${OPENSTACK_COMPUTE_NODE_1_IP} "sudo systemctl stop firewalld; sudo systemctl stop iptables"
-#Need to disable firewalld and iptables in compute 2 node
-echo "Stop Firewall in Compute 2 Node and add to hypervisor-list"
-ssh ${OPENSTACK_COMPUTE_NODE_2_IP} "sudo systemctl stop firewalld; sudo systemctl stop iptables"
+#Need to disable firewalld and iptables in compute nodes as well
+for i in `seq 1 $((NUM_OPENSTACK_SYSTEM - 1))`
+do
+    OSIP=OPENSTACK_COMPUTE_NODE_${i}_IP
+    ssh "${!OSIP}" "sudo systemctl stop firewalld; sudo systemctl stop iptables"
+done
 
 echo "Locating test plan to use..."
 testplan_filepath="${WORKSPACE}/test/csit/testplans/${STREAMTESTPLAN}"
