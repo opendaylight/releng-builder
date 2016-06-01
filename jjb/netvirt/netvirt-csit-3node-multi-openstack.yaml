@@ -34,3 +34,9 @@
     odl-enable-l3: 'yes'
 
     enable-haproxy: 'yes'
+
+    enable-openstack-services: 'q-svc,q-dhcp,q-meta,n-cauth,tempest'
+
+    disable-openstack-services: 'swift,cinder,n-net,q-vpn'
+
+    tenant-network-type: 'vxlan'
