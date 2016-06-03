@@ -1,0 +1,36 @@
+- project:
+    name: distribution-csit-userfeatures
+    jobs:
+        - '{project}-csit-1node-{functionality}-{install}-{stream}'
+
+    # The project name
+    project: 'distribution'
+
+    # The functionality under test
+    functionality: 'userfeatures'
+
+    # Project branches
+    stream:
+        - boron:
+            branch: 'master'
+            jre: 'openjdk8'
+
+    # TODO: Add Beryllium when everything is backported there.
+
+    install:
+        - only:
+            scope: 'only'
+        - all:
+            scope: 'all'
+
+    # Features to install
+    install-features: 'odl-restconf,odl-distribution-version,odl-netconf-connector-all'
+
+    # Robot custom options
+    robot-options: ''
+
+    # Trigger jobs (upstream dependencies)
+    trigger-jobs: >
+        odlparent-distribution-{stream},
+        controller-distribution-{stream},
+        netconf-distribution-{stream}
