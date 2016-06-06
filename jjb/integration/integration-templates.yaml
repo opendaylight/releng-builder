@@ -69,7 +69,7 @@
 
     wrappers:
         - build-timeout
-        - integration-jclouds-controller-mininet:
+        - integration-openstack-controller-mininet:
             controller-vms: 1
             mininet-image: '{mininet-image}'
             mininet-vms: '{mininet-vms}'
@@ -153,7 +153,7 @@
 
     wrappers:
         - build-timeout
-        - integration-jclouds-controller-mininet:
+        - integration-openstack-controller-mininet:
             controller-vms: 1
             mininet-image: '{mininet-image}'
             mininet-vms: '{mininet-vms}'
@@ -260,7 +260,7 @@
             branch: 'master'
 
     wrappers:
-        - integration-jclouds-controller-mininet:
+        - integration-openstack-controller-mininet:
             controller-vms: 1
             mininet-image: '{mininet-image}'
             mininet-vms: '{mininet-vms}'
@@ -366,7 +366,7 @@
 
     wrappers:
         - build-timeout
-        - integration-jclouds-controller-mininet:
+        - integration-openstack-controller-mininet:
             controller-vms: 3
             mininet-image: '{mininet-image}'
             mininet-vms: '{mininet-vms}'
@@ -452,7 +452,7 @@
 
     wrappers:
         - build-timeout
-        - integration-jclouds-controller-mininet:
+        - integration-openstack-controller-mininet:
             controller-vms: 3
             mininet-image: '{mininet-image}'
             mininet-vms: '{mininet-vms}'
@@ -560,7 +560,7 @@
             branch: 'master'
 
     wrappers:
-        - integration-jclouds-controller-mininet:
+        - integration-openstack-controller-mininet:
             controller-vms: 3
             mininet-image: '{mininet-image}'
             mininet-vms: '{mininet-vms}'
@@ -663,12 +663,11 @@
 
     wrappers:
           - build-timeout
-          - jclouds:
+          - openstack:
               instances:
-                - rk-c7-devstack:
-                    cloud-name: 'Rackspace DFW - Devstack'
-                    count: '1'
-                    stop-on-terminate: False
+                - cloud-name: 'ODLRPC'
+                  template-name: 'centos7-devstack'
+                  count: '1'
           - ssh-agent-credentials:
               users:
                   - '{ssh-credentials}'
@@ -764,7 +763,7 @@
 
     wrappers:
         - build-timeout
-        - integration-jclouds-controller-devstack:
+        - integration-openstack-controller-devstack:
             controller-vms: 1
             openstack-vms: '{openstack-vms}'
         - ssh-agent-credentials:
@@ -870,7 +869,7 @@
 
     wrappers:
         - build-timeout
-        - integration-jclouds-controller-devstack:
+        - integration-openstack-controller-devstack:
             controller-vms: 3
             openstack-vms: '{openstack-vms}'
         - ssh-agent-credentials:

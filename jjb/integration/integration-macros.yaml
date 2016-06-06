@@ -194,40 +194,36 @@
     triggers:
         - timed: 'H H * * *'
 
-# Macro: integration-jclouds-controller-mininet
+# Macro: integration-openstack-controller-mininet
 # Operation: this macro will spin the controller and mininet vms
 # Used by: {project}-csit-* job templates
 
 - wrapper:
-    name: integration-jclouds-controller-mininet
+    name: integration-openstack-controller-mininet
     wrappers:
-      - jclouds:
+      - openstack:
           instances:
-            - rk-c7-java:
-                cloud-name: 'Rackspace DFW - Integration Dynamic Lab'
-                count: '{controller-vms}'
-                stop-on-terminate: False
-            - '{mininet-image}':
-                cloud-name: '{mininet-cloud-name}'
-                count: '{mininet-vms}'
-                stop-on-terminate: False
+            - cloud-name: 'ODLRPC'
+              template-name: centos7-java
+              count: '{controller-vms}'
+            - cloud-name: '{mininet-cloud-name}'
+              template-name: '{mininet-image}'
+              count: '{mininet-vms}'
 
-# Macro: integration-jclouds-controller-devstack
+# Macro: integration-openstack-controller-devstack
 # Operation: this macro will spin the controller and devstack vms
 # Used by: {project}-csit-openstack job templates
 - wrapper:
-    name: integration-jclouds-controller-devstack
+    name: integration-openstack-controller-devstack
     wrappers:
-      - jclouds:
+      - openstack:
           instances:
-            - rk-c7-java:
-                cloud-name: 'Rackspace DFW - Integration Dynamic Lab'
-                count: '{controller-vms}'
-                stop-on-terminate: False
-            - rk-c7-devstack:
-                cloud-name: 'Rackspace DFW - Devstack'
-                count: '{openstack-vms}'
-                stop-on-terminate: False
+            - cloud-name: 'ODLRPC'
+              template-name: centos7-java
+              count: '{controller-vms}'
+            - cloud-name: 'ODLRPC'
+              template-name: centos7-devstack
+              count: '{openstack-vms}'
 
 #################
 # Shell Scripts #
