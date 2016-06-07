@@ -287,7 +287,6 @@ done
 }
 
 cat > ${WORKSPACE}/get_devstack.sh << EOF
-sudo yum update -y
 sudo systemctl stop firewalld
 sudo yum install bridge-utils -y
 sudo systemctl stop  NetworkManager
