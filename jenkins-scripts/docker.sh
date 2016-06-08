@@ -6,7 +6,13 @@ Defaults:jenkins !requiretty
 jenkins     ALL = NOPASSWD: /sbin/ifconfig
 EOF
 
-/usr/sbin/usermod -a -G docker jenkins
+# make sure jenkins is part of the docker only if jenkins has already been
+# created
+grep -q jenkins /etc/passwd
+if [ "$?" == '0' ]
+then
+  /usr/sbin/usermod -a -G docker jenkins
+fi
 
 # stop firewall
 systemctl stop firewalld

@@ -4,9 +4,18 @@
 # Create Jenkins User #
 #######################
 
-OS=`facter operatingsystem | tr '[:upper:]' '[:lower:]'`
+OS=$(facter operatingsystem | tr '[:upper:]' '[:lower:]')
 
-useradd -m -s /bin/bash jenkins
+# Determine if we need to add jenkins to the docker group
+grep -q docker /etc/group
+if [ "$?" == '0' ]
+then
+  GROUP='-G docker'
+else
+  GROUP=''
+fi
+
+useradd -m ${GROUP} -s /bin/bash jenkins
 mkdir /home/jenkins/.ssh
 mkdir /w
 cp -r /home/${OS}/.ssh/authorized_keys /home/jenkins/.ssh/authorized_keys

@@ -15,5 +15,8 @@ chmod +x *.sh
 
 source /tmp/system_type.sh
 ./basic_settings.sh
-./create_jenkins_user.sh
 ./${SYSTEM_TYPE}.sh
+
+# Create the jenkins user last so that hopefully we don't have to deal with
+# guard files
+./create_jenkins_user.sh
