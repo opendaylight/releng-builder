@@ -31,6 +31,7 @@ modules=`xmlstarlet sel -N x=http://maven.apache.org/POM/4.0.0 -t -m '//x:module
 for module in $modules; do
     pushd $module
     git format-patch --stdout origin/$RELEASE_BRANCH > $PATCH_DIR/${module//\//-}.patch
+    git bundle create $PATCH_DIR/${module//\//-}.bundle "origin/master..HEAD"
     popd
 done
 
