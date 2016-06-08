@@ -242,6 +242,11 @@
         - shell: 'if [ -d /tmp/r/org/opendaylight ]; then rm -rf /tmp/r/org/opendaylight; fi'
 
 - builder:
+    name: wipe-local-maven-repo
+    builders:
+        - shell: 'if [ -d /tmp/r ]; then rm -rf /tmp/r; fi'
+
+- builder:
     name: jacoco-nojava-workaround
     builders:
         - shell: 'mkdir -p $WORKSPACE/target/classes $WORKSPACE/jacoco/classes'

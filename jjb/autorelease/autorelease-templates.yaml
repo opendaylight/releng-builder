@@ -42,7 +42,7 @@
         - timed: 'H 0 * * *'
 
     prebuilders:
-        - wipe-org-opendaylight-repo
+        - wipe-local-maven-repo
         - jacoco-nojava-workaround
         - autorelease-cfp:
             autorelease-settings: '{autorelease-settings}'
