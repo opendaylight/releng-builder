@@ -313,11 +313,6 @@ if [ "${ENABLE_HAPROXY_FOR_NEUTRON}" == "yes" ]; then
  configure_haproxy_for_neutron_requests
 fi
 
-# upgrading pip, urllib3 and httplib2 so that tempest tests can be run on ${OPENSTACK_CONTROL_NODE_IP}
-ssh ${OPENSTACK_CONTROL_NODE_IP} "sudo pip install --upgrade pip"
-ssh ${OPENSTACK_CONTROL_NODE_IP} "sudo pip install urllib3 --upgrade"
-ssh ${OPENSTACK_CONTROL_NODE_IP} "sudo pip install httplib2 --upgrade"
-
 os_node_list=()
 echo "Stack the Control Node"
 scp ${WORKSPACE}/get_devstack.sh ${OPENSTACK_CONTROL_NODE_IP}:/tmp
@@ -405,6 +400,13 @@ do
     OSIP=OPENSTACK_COMPUTE_NODE_${i}_IP
     ssh "${!OSIP}" "sudo systemctl stop firewalld; sudo systemctl stop iptables"
 done
+
+# upgrading pip, urllib3 and httplib2 so that tempest tests can be run on ${OPENSTACK_CONTROL_NODE_IP}
+# this needs to happen after devstack runs because it seems devstack is pulling in specific versions
+# of these libs that are not working for tempest.
+ssh ${OPENSTACK_CONTROL_NODE_IP} "sudo pip install --upgrade pip"
+ssh ${OPENSTACK_CONTROL_NODE_IP} "sudo pip install urllib3 --upgrade"
+ssh ${OPENSTACK_CONTROL_NODE_IP} "sudo pip install httplib2 --upgrade"
 
 echo "Locating test plan to use..."
 testplan_filepath="${WORKSPACE}/test/csit/testplans/${STREAMTESTPLAN}"
