@@ -313,6 +313,11 @@ if [ "${ENABLE_HAPROXY_FOR_NEUTRON}" == "yes" ]; then
  configure_haproxy_for_neutron_requests
 fi
 
+# upgrading pip, urllib3 and httplib2 so that tempest tests can be run on ${OPENSTACK_CONTROL_NODE_IP}
+ssh ${OPENSTACK_CONTROL_NODE_IP} "sudo pip install --upgrade pip"
+ssh ${OPENSTACK_CONTROL_NODE_IP} "sudo pip install urllib3 --upgrade"
+ssh ${OPENSTACK_CONTROL_NODE_IP} "sudo pip install httplib2 --upgrade"
+
 os_node_list=()
 echo "Stack the Control Node"
 scp ${WORKSPACE}/get_devstack.sh ${OPENSTACK_CONTROL_NODE_IP}:/tmp
