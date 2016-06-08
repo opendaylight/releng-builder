@@ -15,11 +15,9 @@
         - project-parameter:
             project: '{project}'
         - autorelease-release-tag:
-            release-tag: '{stream}-daily'
+            release-tag: '{next-release-tag}'
         - autorelease-release-branch:
             release-branch: '{branch}'
-        - autorelease-release-datestamp:
-            datestamp: true
 
     scm:
         - git:
@@ -75,7 +73,7 @@
 
     publishers:
     - archive-artifacts:
-        artifacts: '*.prop,*.log,patches/*.patch,patches/*.log'
+        artifacts: '*.prop,*.log,patches/*.bundle,patches/*.patch,patches/*.log'
     - email-notification:
         email-prefix: '[autorelease]'
     - trigger-parameterized-builds:

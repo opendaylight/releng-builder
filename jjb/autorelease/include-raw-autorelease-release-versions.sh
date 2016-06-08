@@ -9,16 +9,11 @@
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
 
-# DATESTAMP=true  # Example
 # RELEASE_TAG=Beryllium-SR1  # Example
 # RELEASE_BRANCH=stable/beryllium  # Example
 
 # Directory to put git format-patches
 PATCH_DIR=`pwd`/patches
-
-if [ "$DATESTAMP" == "true" ]; then
-   export RELEASE_TAG=$RELEASE_TAG-`date -u +v%Y%m%d%H%M`
-fi
 
 echo $RELEASE_TAG
 ./scripts/version.sh release $RELEASE_TAG
@@ -31,6 +26,7 @@ modules=`xmlstarlet sel -N x=http://maven.apache.org/POM/4.0.0 -t -m '//x:module
 for module in $modules; do
     pushd $module
     git format-patch --stdout origin/$RELEASE_BRANCH > $PATCH_DIR/${module//\//-}.patch
+    git bundle create $PATCH_DIR/${module//\//-}.bundle "origin/master..HEAD"
     popd
 done
 
