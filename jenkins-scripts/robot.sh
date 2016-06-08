@@ -10,8 +10,8 @@ yum clean all
 yum install -y -q unzip python-netaddr sshuttle @development
 yum remove -y robotframework-{sshlibrary,requests}
 
-# ffi.h is needed for successful installation of robotframework-sshlibrary (done elsewhere)
-yum install -y -q libffi-devel
+# These development packages are needed for successful installation of robotframework-sshlibrary (done elsewhere)
+yum install -y -q libffi-devel openssl-devel
 
 ## Install netcat & docker-py
 yum install -y -q nc python-docker-py
