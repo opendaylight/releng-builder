@@ -56,7 +56,9 @@
         goals: 'clean deploy -Pintegrationtests,docs,repoBuild -Djenkins -Dcheckstyle.skip=true -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -DaltDeploymentRepository=staging::default::file:hide/from/pom/files/stage'
         maven-opts: '-Xmx10g -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
         settings: '{autorelease-settings}'
+        settings-type: cfp
         global-settings: '{odl-global-settings}'
+        global-settings-type: cfp
         automatic-archiving: true
         post-step-run-condition: UNSTABLE
 
@@ -200,7 +202,9 @@
         goals: 'site:site site:deploy -Dstream={stream}'
         maven-opts: '-Xmx1024m'
         settings: '{autorelease-settings}'
+        settings-type: cfp
         global-settings: '{odl-global-settings}'
+        global-settings-type: cfp
 
     publishers:
     - email-notification:
@@ -252,7 +256,9 @@
         goals: 'site:site -Dstream={stream}'
         maven-opts: '-Xmx1024m'
         settings: '{autorelease-settings}'
+        settings-type: cfp
         global-settings: '{odl-global-settings}'
+        global-settings-type: cfp
 
     publishers:
         - email-notification:
