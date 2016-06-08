@@ -69,15 +69,11 @@
             refspec: 'refs/heads/{branch}'
 
     scm:
-        - git-scm:
+        - gerrit-trigger-scm:
             credentials-id: '{ssh-credentials}'
-            refspec: ''
-            branch: '{branch}'
-        - integration-gerrit-scm:
-            credentials-id: '{ssh-credentials}'
-            basedir: '$GERRIT_PROJECT'
             refspec: '$GERRIT_REFSPEC'
             branch: '{branch}'
+            choosing-strategy: gerrit
 
     wrappers:
         - timeout:
