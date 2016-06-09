@@ -95,9 +95,5 @@
         - integration-distribution-check
 
     publishers:
-        - archive:
-            artifacts: 'karaf.log'
-        - archive:
-            artifacts: 'karaf_console.log'
         - email-notification:
             email-prefix: '[PROJECT_SHORTNAME]'
