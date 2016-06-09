@@ -299,6 +299,7 @@ echo "127.0.0.1    localhost \${HOSTNAME}" > /tmp/hosts
 echo "::1   localhost  \${HOSTNAME}" >> /tmp/hosts
 sudo mv /tmp/hosts /etc/hosts
 sudo /usr/sbin/brctl addbr br100
+sudo ifconfig eth0 mtu 2000
 sudo mkdir /opt/stack
 sudo chmod 777 /opt/stack
 cd /opt/stack
