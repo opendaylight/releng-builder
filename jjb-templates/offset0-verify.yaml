@@ -1,0 +1,74 @@
+- job-template:
+    name: 'PROJECT_SHORTNAME-offset0-verify-{stream}'
+
+    # Job template for more thorough ODL verify jobs
+    #
+    # Required Variables:
+    #     stream:    release stream (eg. stable-lithium or beryllium)
+    #     branch:    git branch (eg. stable/lithium or master)
+
+    project-type: maven
+    node: dynamic_autorelease
+    jdk: '{jdk}'
+    concurrent: false
+
+    logrotate:
+        daysToKeep: '{build-days-to-keep}'
+        numToKeep: '{build-num-to-keep}'
+        artifactDaysToKeep: '{build-artifact-days-to-keep}'
+        artifactNumToKeep: '{build-artifact-num-to-keep}'
+
+    parameters:
+        - project-parameter:
+            project: '{project}'
+        - gerrit-parameters:
+            project: '{project}'
+            branch: '{branch}'
+            refspec: 'refs/heads/{branch}'
+
+    scm:
+        - git:
+            project: 'autorelease'
+            credentials-id: '{ssh-credentials}'
+            url: '$GIT_BASE'
+            refspec: ''
+            branches:
+                - 'origin/{branch}'
+            skip-tag: true
+            submodule:
+                recursive: true
+    wrappers:
+        - autorelease-build-timeout
+        - ssh-agent-credentials:
+            users:
+                - '{ssh-credentials}'
+
+    triggers:
+        - gerrit-trigger-patch-submitted:
+            name: 'PROJECT_PATH'
+            branch: '{branch}'
+
+    builders:
+        - wipe-org-opendaylight-repo
+        - jacoco-nojava-workaround
+        - provide-maven-settings:
+            global-settings-file: '{odl-global-settings}'
+            settings-file: '{autorelease-settings}'
+        - FIXME_SUBMOULE_GERRIT_CHECKOUT
+
+    maven:
+        maven-name: '{mvn33}'
+        root-pom: 'offset0-verify.xml'
+        goals: 'clean install -Pintegrationtests -Djenkins -Dcheckstyle.skip=true -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -DaltDeploymentRepository=staging::default::file:hide/from/pom/files/stage'
+        maven-opts: '-Xmx10g -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
+        settings: '{autorelease-settings}'
+        settings-type: cfp
+        global-settings: '{odl-global-settings}'
+        global-settings-type: cfp
+        automatic-archiving: true
+
+    publishers:
+        ARCHIVE_ARTIFACTS
+        - findbugs
+        - email-notification:
+            email-prefix: '[PROJECT_SHORTNAME]'
