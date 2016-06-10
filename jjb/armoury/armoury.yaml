@@ -167,7 +167,7 @@
                 - '{ssh-credentials}'
 
     triggers:
-        - timed: 'H H * * 0'
+        # - timed: 'H H * * 0'
         - gerrit-trigger-patch-merged:
             name: 'armoury'
             branch: '{branch}'
@@ -271,8 +271,8 @@
             users:
                 - '{ssh-credentials}'
 
-    triggers:
-        - timed: '@daily'
+    # triggers:
+    #     - timed: '@daily'
 
     prebuilders:
         - wipe-org-opendaylight-repo
@@ -560,7 +560,7 @@
                 - '{ssh-credentials}'
 
     triggers:
-        - timed: 'H H * * 6'
+        # - timed: 'H H * * 6'
         - gerrit-trigger-patch-sonar:
             name: 'armoury'
 
@@ -620,8 +620,8 @@
             users:
                 - '{ssh-credentials}'
 
-    triggers:
-        - timed: 'H H * * 6'
+    # triggers:
+    #     - timed: 'H H * * 6'
 
     prebuilders:
         - wipe-org-opendaylight-repo
