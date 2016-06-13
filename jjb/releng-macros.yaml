@@ -258,6 +258,21 @@
                       healthy: 50
                       unhealthy: 40
 
+- publisher:
+    name: archive-build
+    publishers:
+        - postbuildscript:
+            builders:
+                - shell: !include-raw: include-raw-deploy-archives.sh
+                - maven-target:
+                        maven-version: '{maven-version}'
+                        pom: '.archives/deploy-archives.xml'
+                        goals: 'clean deploy -V -B -Dmaven.repo.local=/tmp/r'
+                        settings: 'jenkins-log-archives-settings'
+                        settings-type: cfp
+                        global-settings: 'odl-global-settings'
+                        global-settings-type: cfp
+
 - builder:
     name: wipe-org-opendaylight-repo
     builders:
