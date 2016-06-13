@@ -7,6 +7,8 @@ jenkins         hard    nofile          16000
 EOF
 
 cat <<EOSSH >> /etc/ssh/ssh_config
+Host *
+  ServerAliveInterval 60
 
 # we don't want to do SSH host key checking on Rackspace spin-up systems
 # Dallas (ODL)
