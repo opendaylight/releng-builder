@@ -128,10 +128,10 @@
     name: autorelease-distribute-taglist
     builders:
         - shell: |
-            if [ -d "distribution/distributions" ]; then
-                cp -vf "$WORKSPACE/taglist.log" "distribution/distributions/karaf/src/main/assembly/"
+            if [ -d "integration/distribution/distributions" ]; then
+                cp -vf "$WORKSPACE/taglist.log" "integration/distribution/distributions/karaf/src/main/assembly/"
             else
-                cp -vf "$WORKSPACE/taglist.log" "distribution/distribution-karaf/src/main/assembly/"
+                cp -vf "$WORKSPACE/taglist.log" "integration/distribution/distribution-karaf/src/main/assembly/"
             fi
 
 - builder:
