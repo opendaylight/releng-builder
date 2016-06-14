@@ -54,7 +54,7 @@
             type: slave
             name: nodes
             values:
-                - dynamic_verify_8g
+                - dynamic_verify
         - axis:
             type: jdk
             values: '{obj:jdks}'
@@ -102,7 +102,7 @@
 - job-template:
     name: 'opflex-merge-{stream}'
 
-    node: dynamic_merge_8g
+    node: dynamic_merge
     jdk: '{jdk}'
 
     logrotate:
