@@ -22,9 +22,9 @@
     stream:
         - boron:
             branch: 'master'
-            jdk: openjdk7
+            jdk: openjdk8
             jdks:
-                - openjdk7
+                - openjdk8
             disable_autorelease: True
             disable_distribution_check: False
         - beryllium:
@@ -310,7 +310,7 @@
     #     branch:    git branch (eg. stable/lithium or master)
 
     project-type: maven
-    node: dynamic_merge_8g
+    node: dynamic_merge
     jdk: '{jdk}'
 
     logrotate:
@@ -372,7 +372,7 @@
     disabled: '{obj:disable_distribution_check}'
 
     project-type: maven
-    node: dynamic_verify_8g
+    node: dynamic_verify
     concurrent: true
     jdk: '{jdk}'
 
@@ -656,7 +656,7 @@
     disabled: '{obj:disable_autorelease}'
 
     project-type: maven
-    node: dynamic_verify_8g
+    node: dynamic_verify
     concurrent: true
     jdk: '{jdk}'
 
