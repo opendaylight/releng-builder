@@ -63,7 +63,7 @@
         - maven-target:
             maven-version: '{mvn33}'
             pom: 'POM'
-            goals: 'MAVEN_GOALS -Djenkins -Dstream={stream}'
+            goals: 'MAVEN_GOALS -B -Djenkins -Dstream={stream}'
             java-opts:
                 - 'MAVEN_OPTS'
             settings: '{JENKINS_SETTINGS}'
