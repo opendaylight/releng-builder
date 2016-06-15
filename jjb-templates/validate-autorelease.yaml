@@ -32,12 +32,14 @@
     scm:
         - git:
             url: '$CLONE_URL'
+            credentials-id: '{ssh-credentials}'
             refspec: ''
             branches:
                 - 'origin/{branch}'
             skip-tag: true
             submodule:
                 recursive: true
+                timeout: 60
 
     wrappers:
         - autorelease-build-timeout
