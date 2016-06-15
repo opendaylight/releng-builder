@@ -2,7 +2,9 @@
 BUNDLEVERSION=`xpath pom.xml '/project/version/text()' 2> /dev/null`
 echo "Bundle version is ${BUNDLEVERSION}"
 
-BUNDLEURL=${BUILD_URL}org.opendaylight.integration\$distribution-karaf/artifact/org.opendaylight.integration/distribution-karaf/${BUNDLEVERSION}/distribution-karaf-${BUNDLEVERSION}.zip
+PREFIX_EFFECTIVE="${JENKINSURL_PREFIX}/"
+BUILD_URL_EFFECTIVE="${BUILD_URL/$JENKINS_URL/$PREFIX_EFFECTIVE}"
+BUNDLEURL="${BUILD_URL_EFFECTIVE}org.opendaylight.integration\$distribution-karaf/artifact/org.opendaylight.integration/distribution-karaf/${BUNDLEVERSION}/distribution-karaf-${BUNDLEVERSION}.zip"
 echo "Bundle url is ${BUNDLEURL}"
 
 # Set BUNDLEVERSION & BUNDLEURL
