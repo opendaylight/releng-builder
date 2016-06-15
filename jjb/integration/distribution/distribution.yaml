@@ -83,7 +83,7 @@
     maven:
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
-        goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  -Djenkins -Dsonar'
+        goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  -B -Djenkins -Dsonar'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{integration-distribution-settings}'
         global-settings: '{odl-global-settings}'
@@ -141,7 +141,7 @@
     maven:
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
-        goals: 'clean install com.sonatype.clm:clm-maven-plugin:index -Djenkins -DskipTests=true -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+        goals: 'clean install com.sonatype.clm:clm-maven-plugin:index -B -Djenkins -DskipTests=true -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
         maven-opts: '-Xmx4096m -XX:MaxPermSize=512m'
         settings: '{integration-distribution-settings}'
         global-settings: '{odl-global-settings}'
@@ -189,12 +189,14 @@
     scm:
         - git:
             url: '$CLONE_URL'
+            credentials-id: '{ssh-credentials}'
             refspec: ''
             branches:
                 - 'origin/{branch}'
             skip-tag: true
             submodule:
                 recursive: true
+                timeout: 60
 
     wrappers:
         - autorelease-build-timeout
