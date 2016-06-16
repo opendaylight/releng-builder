@@ -255,6 +255,17 @@
             !include-raw:
                 - include-raw-integration-get-bundle-vars.sh
 
+# Macro: integration-determine-karaf-snapshot
+# Operation: this macro sets variable specifying lates 3.0.x Karaf snapshot version
+# Used by: snapshot-karaf-distribution-* job template
+
+- builder:
+    name: integration-determine-karaf-snapshot
+    builders:
+        - shell:
+            !include-raw:
+                - include-raw-integration-determine-karaf-snapshot.sh
+
 # Macro: integration-distribution-check
 # Operation: this macro deploys the controller with all fetures
 # Used by: {project}-distribution-check-{stream} job template
@@ -342,6 +353,17 @@
         - shell:
             !include-raw:
                 - include-raw-integration-get-bundle-url.sh
+
+# Macro: integration-get-snapshot-karaf-bundle-url
+# Operation: this macro crates Jenkins URL to download ODL distribution based on snapshot Karaf
+# Used by: snapshot-karaf-distribution-* job template
+
+- builder:
+    name: integration-get-snapshot-karaf-bundle-url
+    builders:
+        - shell:
+            !include-raw:
+                - include-raw-integration-get-snapshot-karaf-bundle-url.sh
 
 # Macro: integration-get-bundle-url-root
 # Operation: this macro gets the job generated distribution URL from root pom.xml

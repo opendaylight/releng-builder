@@ -7,6 +7,7 @@
         - 'integration-distribution-merge-{stream}'
         - 'integration-distribution-deploy-{stream}'
         - 'integration-distribution-offline-{stream}'
+        - 'snapshot-karaf-distribution-boron'
 
     project: integration/distribution
 
@@ -289,3 +290,82 @@
             artifacts: '*.log,*.log.xz'
         - email-notification:
             email-prefix: '[integration]'
+
+# Template: snapshot-karaf-distribution-{stream}
+# Goal: Build distribution using latest 3.0.x Karaf snapshot.
+# Operation: This job determines snapshot version and buildsintegration/distribution: snapshot-karaf
+
+- job-template:
+    name: 'snapshot-karaf-distribution-{stream}'
+
+    project-type: freestyle
+    node: dynamic_verify
+
+    logrotate:
+        daysToKeep: '{build-days-to-keep}'
+        numToKeep: '{build-num-to-keep}'
+        artifactDaysToKeep: '{build-artifact-days-to-keep}'
+        artifactNumToKeep: '{build-num-to-keep}'
+
+    parameters:
+        - project-parameter:
+            project: 'integration/distribution'
+        - integration-branch:
+            branch: '{branch}'
+        - integration-bundleurl:
+            bundleurl: 'last'
+        - integration-jdk-version:
+            jdkversion: '{jre}'
+
+    wrappers:
+        - build-timeout
+        - ssh-agent-credentials:
+            users:
+                - '{ssh-credentials}'
+
+    triggers:
+        - timed: 'H H * * *'
+
+    prebuilders:
+        - wipe-local-maven-repo
+        - jacoco-nojava-workaround
+        - provide-maven-settings:
+            global-settings-file: '{odl-global-settings}'
+            settings-file: '{integration-settings}'
+
+    builders:
+        - integration-get-snapshot-karaf-bundle-url
+        - inject:
+            properties-file: 'bundle.txt'
+        - integration-determine-karaf-snapshot
+        - inject:
+            properties-file: 'karaf_vars.txt'
+
+    maven:
+        maven-name: '{mvn33}'
+        root-pom: 'snapshot-karaf/pom.xml'
+        goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -Djenkins -Dmerge -Dstream={stream} -Dsnapshot.karaf.version=$SNAPSHOTKARAFVERSION'
+        maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+        global-settings: '{odl-global-settings}'
+        settings: '{integration-settings}'
+
+    postbuilders:
+        - trigger-builds:
+            - project: 'integration-distribution-test-{stream}'
+              block: false
+              predefined-parameters:
+                  BUNDLEURL=$BUNDLEURL
+
+    reporters:
+        - findbugs
+
+    publishers:
+        - archive-artifacts:
+            artifacts: '**/target/surefire-reports/*-output.txt, '
+        - email-notification:
+            email-prefix: '[integration]'
+        - maven-deploy:
+            id: ''
+            unique-version: true
+            deploy-unstable: false
+        - jacoco-report
