@@ -22,6 +22,29 @@
       "revId": "1e362fc5fed6f0eb27ecfa9085d829d5475dfc22",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba51214e_d173b1af",
+        "filename": "jjb/integration/integration-macros.yaml",
+        "patchSetId": 27
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2016-06-16T10:12:28Z",
+      "side": 1,
+      "message": "\"complete or given up\". Do we want to propagate result from line 235 and cause a red dot if that happened?\n\nYes we do, otherwise the tests will keep losing time trying to interact with unresponsive VMs.\n\nWould \"exit 1\" just after line 235 cause the red dot?",
+      "range": {
+        "startLine": 270,
+        "startChar": 35,
+        "endLine": 270,
+        "endChar": 43
+      },
+      "revId": "1e362fc5fed6f0eb27ecfa9085d829d5475dfc22",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
