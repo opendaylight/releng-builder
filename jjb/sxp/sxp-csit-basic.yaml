@@ -28,10 +28,10 @@
             scope: 'all'
 
     # Features to install
-    install-features: 'odl-restconf,odl-sxp-all'
+    install-features: 'odl-restconf,odl-sxp-controller'
 
     # Robot custom options
     robot-options: ''
 
     # Trigger jobs (upstream dependencies)
-    trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream},tcpmd5-distribution-{stream},sxp-distribution-{stream},mdsal-distribution-{stream},netconf-distribution-{stream}'
+    trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream},sxp-distribution-{stream},mdsal-distribution-{stream},netconf-distribution-{stream}'
