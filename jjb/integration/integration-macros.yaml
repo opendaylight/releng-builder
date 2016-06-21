@@ -225,6 +225,21 @@
               template-name: '{openstack-image}'
               count: '{openstack-vms}'
 
+# Macro: integration-openstack-controller-docker
+# Operation: this macro will sping the controller and docker vms
+# Used by: {project}-csit-docker job templates
+- wrapper:
+    name: integration-openstack-controller-docker
+    wrappers:
+      - openstack:
+          instances:
+            - cloud-name: 'ODLRPC'
+              template-name: '{controller-image}'
+              count: '{controller-vms}'
+            - cloud-name: 'ODLRPC'
+              template-name: '{docker-image}'
+              count: '{docker-vms}'
+
 #################
 # Shell Scripts #
 #################
