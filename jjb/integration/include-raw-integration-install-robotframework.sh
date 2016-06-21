@@ -18,18 +18,16 @@ source ${ROBOT_VENV}/bin/activate
 
 set -exu
 
-pip install -q --upgrade pip
+# Make sure pip itself us up-to-date.
+pip install --upgrade pip
 
-# The most recent version of paramiko currently fails to install.
-pip install -q --upgrade paramiko==1.16.0
+pip install --upgrade docker-py importlib requests scapy netifaces netaddr ipaddr
+pip install --upgrade robotframework{,-{httplibrary,requests,sshlibrary,selenium2library}}
 
-pip install -q docker-py importlib requests scapy netifaces netaddr ipaddr
-pip install -q robotframework{,-{httplibrary,requests,sshlibrary,selenium2library}}
+# Module jsonpath is needed by current AAA idmlite suite.
+pip install --upgrade jsonpath-rw
 
-# jsonpath is needed by current AAA idmlite suite
-pip install -q jsonpath-rw
-
-# print installed versions
+# Print installed versions.
 pip freeze
 
 # vim: sw=4 ts=4 sts=4 et ft=sh :
