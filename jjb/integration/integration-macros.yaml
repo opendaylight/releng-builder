@@ -225,6 +225,23 @@
               template-name: '{openstack-image}'
               count: '{openstack-vms}'
 
+# Macro: integration-jclouds-controller-docker
+# Operation: this macro will sping the controller and docker vms
+# Used by: {project}-csit-docker job templates
+- wrapper:
+    name: integration-jclouds-controller-docker
+    wrappers:
+      - jclouds:
+          instances:
+            - rk-c7-java:
+                cloud-name: 'ODLRPC'
+                count: '{controller-vms}'
+                stop-on-terminate: False
+            - rk-f20-docker:
+                cloud-name: 'ODLRPC'
+                count: '{docker-vms}'
+                stop-on-terminate: False
+
 #################
 # Shell Scripts #
 #################
