@@ -256,6 +256,21 @@
               template-name: '{openstack-image}'
               count: '{openstack-vms}'
 
+# Macro: integration-jclouds-controller-docker
+# Operation: this macro will sping the controller and docker vms
+# Used by: {project}-csit-docker job templates
+- wrapper:
+    name: integration-jclouds-controller-docker
+    wrappers:
+      - jclouds:
+          instances:
+            - '{controller-image}':
+                cloud-name: 'ODLPUB'
+                count: '{controller-vms}'
+            - '{docker-image}':
+                cloud-name: 'ODLPUB'
+                count: '{docker-vms}'
+
 #################
 # Shell Scripts #
 #################
