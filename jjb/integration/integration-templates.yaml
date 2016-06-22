@@ -722,6 +722,10 @@
         - integration-jdk-version:
             jdkversion: '{jre}'
         - string:
+            name: INSTALL_FEATURES
+            default: '{install-features}'
+            description: 'OpenDaylight features to install'
+        - string:
             name: OPENSTACK_BRANCH
             default: '{openstack-branch}'
             description: 'Openstack version to use with devstack'
@@ -749,6 +753,10 @@
             name: TENANT_NETWORK_TYPE
             default: '{tenant-network-type}'
             description: 'Tenant Network Type supported by the implementation'
+        - string:
+            name: OVS_CREATE_BRIDGES
+            default: '{ovs-create-bridges}'
+            description: 'comma seperated list of bridges to be created'
     scm:
         - integration-gerrit-scm:
             credentials-id: '{ssh-credentials}'
@@ -854,6 +862,10 @@
             name: TENANT_NETWORK_TYPE
             default: '{tenant-network-type}'
             description: 'Tenant Network Type supported by the implementation'
+        - string:
+            name: OVS_CREATE_BRIDGES
+            default: '{ovs-create-bridges}'
+            description: 'OVS Bridges that need to be created for stacking'
     scm:
         - integration-gerrit-scm:
             credentials-id: '{ssh-credentials}'
