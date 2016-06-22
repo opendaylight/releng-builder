@@ -509,7 +509,7 @@
 
     triggers:
         - reverse:
-            jobs: 'odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream},tcpmd5-merge-{stream}'
+            jobs: 'odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream}'
             result: 'success'
 
     prebuilders:
@@ -532,7 +532,7 @@
 
     publishers:
         - email-notification:
-            email-prefix: '[sxp] [odlparent] [controller] [yangtools] [tcpmd5]'
+            email-prefix: '[sxp] [odlparent] [controller] [yangtools]'
         - jacoco-report
 
 - job-template:
