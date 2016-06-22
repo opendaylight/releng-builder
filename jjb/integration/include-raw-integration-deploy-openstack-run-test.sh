@@ -354,38 +354,76 @@ elif [ \${ret} -eq 0 ]; then
 fi
 EOF
 
+cat > ${WORKSPACE}/add_bridges.sh << EOF
+> /tmp/stack_progress
+ps -ef | grep "stack.sh" | grep -v grep
+ret=\$?
+if [ \${ret} -eq 0 ]; then
+  grep "Waiting for bridge br-int" /opt/stack/devstack/nohup.out
+  if [ \$? -eq 0 ]; then
+     echo "Adding bridges br-int and br-ex" > /tmp/stack_progress
+     #sudo ovs-vsctl set-manager tcp:192.168.50.1:6640
+     sudo ovs-vsctl add-br br-int
+     sudo ovs-vsctl add-br br-ex
+     sudo ovs-vsctl set bridge br-int protocols=OpenFlow13
+     sudo ovs-vsctl set-controller br-int tcp:${ODL_SYSTEM_1_IP}:6653
+     echo "Added bridges" > /tmp/stack_progress
+  else
+     echo "Waiting for chance to create bridges" > /tmp/stack_progress
+  fi
+elif [ \${ret} -eq 0 ]; then
+  echo "Failed to create bridges" > /tmp/stack_progress
+fi
+EOF
+
 #the checking is repeated for an hour
 iteration=0
 in_progress=1
-while [ ${in_progress} -eq 1 ]; do
-iterator=$(($iterator + 1))
-for index in ${!os_node_list[@]}
-do
-echo "Check the status of stacking in ${os_node_list[index]}"
-scp ${WORKSPACE}/check_stacking.sh  ${os_node_list[index]}:/tmp
-ssh ${os_node_list[index]} "bash /tmp/check_stacking.sh"
-scp ${os_node_list[index]}:/tmp/stack_progress .
-#debug
-cat stack_progress
-stacking_status=`cat stack_progress`
-if [ "$stacking_status" == "Still Stacking" ]; then
-  continue
-elif [ "$stacking_status" == "Stacking Failed" ]; then
-  collect_logs_and_exit
-  exit 1
-elif [ "$stacking_status" == "Stacking Complete" ]; then
-  unset os_node_list[index]
-  if  [ ${#os_node_list[@]} -eq 0 ]; then
-     in_progress=0
-  fi
-fi
+os_bridge_list=()
+for index in ${!os_node_list[@]}; do
+    os_bridge_list[index]=0
 done
- echo "sleep for a minute before the next check"
- sleep 60
- if [ ${iteration} -eq 60 ]; then
-  collect_logs_and_exit
-  exit 1
- fi
+
+while [ ${in_progress} -eq 1 ]; do
+    iterator=$(($iterator + 1))
+    for index in ${!os_node_list[@]}; do
+        if [ ${os_bridge_list[index]} -eq 0 ]; then
+            echo "Check the chance to add bridges in ${os_node_list[index]}"
+            scp ${WORKSPACE}/add_bridges.sh  ${os_node_list[index]}:/tmp
+            ssh ${os_node_list[index]} "bash /tmp/add_bridges.sh"
+            scp ${os_node_list[index]}:/tmp/stack_progress .
+            cat stack_progress
+            stacking_status=`cat stack_progress`
+            if [ "$stacking_status" == "Added bridges" ]; then
+                os_bridge_list[index]=1
+            fi
+        fi
+
+        echo "Check the status of stacking in ${os_node_list[index]}"
+        scp ${WORKSPACE}/check_stacking.sh  ${os_node_list[index]}:/tmp
+        ssh ${os_node_list[index]} "bash /tmp/check_stacking.sh"
+        scp ${os_node_list[index]}:/tmp/stack_progress .
+        #debug
+        cat stack_progress
+        stacking_status=`cat stack_progress`
+        if [ "$stacking_status" == "Still Stacking" ]; then
+            continue
+        elif [ "$stacking_status" == "Stacking Failed" ]; then
+            collect_logs_and_exit
+            exit 1
+        elif [ "$stacking_status" == "Stacking Complete" ]; then
+            unset os_node_list[index]
+            if  [ ${#os_node_list[@]} -eq 0 ]; then
+                in_progress=0
+            fi
+        fi
+    done
+    echo "sleep for a minute before the next check"
+    sleep 60
+    if [ ${iteration} -eq 60 ]; then
+        collect_logs_and_exit
+    exit 1
+    fi
 done
 
 #Need to disable firewalld and iptables in control node
