@@ -727,6 +727,10 @@
         - integration-jdk-version:
             jdkversion: '{jre}'
         - string:
+            name: INSTALL_FEATURES
+            default: '{install-features}'
+            description: 'OpenDaylight features to install'
+        - string:
             name: OPENSTACK_BRANCH
             default: '{openstack-branch}'
             description: 'Openstack version to use with devstack'
