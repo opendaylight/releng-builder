@@ -8,6 +8,30 @@ echo "#################################################"
 echo "##         Deploy Openstack 3-node             ##"
 echo "#################################################"
 
+function create_script_install_ovs_create_bridges {
+
+cat > ${WORKSPACE}/ovs_script.sh << EOF
+sudo yum install -y https://www.rdoproject.org/repos/rdo-release.rpm
+sudo yum install -y openvswitch
+sudo systemctl start openvswitch
+EOF
+
+for i in `seq 1 ${NUM_ODL_SYSTEM}`
+do
+odlip=ODL_SYSTEM_${i}_IP
+odl_cmd="$odl_cmd tcp:${!odlip}:6653"
+done
+
+IFS=,
+for bridge_name in ${OVS_CREATE_BRIDGES}
+do
+cat >> ${WORKSPACE}/ovs_script.sh << EOF
+sudo ovs-vsctl add-br ${bridge_name}
+sudo ovs-vsctl set-controller ${bridge_name} ${odl_cmd}
+EOF
+done
+}
+
 function create_control_node_local_conf {
 local_conf_file_name=${WORKSPACE}/local.conf_control
 cat > ${local_conf_file_name} << EOF
@@ -318,6 +342,13 @@ os_node_list=()
 echo "Stack the Control Node"
 scp ${WORKSPACE}/get_devstack.sh ${OPENSTACK_CONTROL_NODE_IP}:/tmp
 ssh ${OPENSTACK_CONTROL_NODE_IP} "bash /tmp/get_devstack.sh"
+
+if [[ ${OVS_CREATE_BRIDGES} != "" ]]; then
+ create_script_install_ovs_create_bridges
+ scp ${WORKSPACE}/ovs_script.sh ${OPENSTACK_CONTROL_NODE_IP}:/tmp
+ ssh ${OPENSTACK_CONTROL_NODE_IP} "bash /tmp/ovs_script.sh"
+fi
+
 create_control_node_local_conf
 scp ${WORKSPACE}/local.conf_control ${OPENSTACK_CONTROL_NODE_IP}:/opt/stack/devstack/local.conf
 ssh ${OPENSTACK_CONTROL_NODE_IP} "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
@@ -331,6 +362,11 @@ do
     COMPUTEIP=OPENSTACK_COMPUTE_NODE_${i}_IP
     scp ${WORKSPACE}/get_devstack.sh  ${!COMPUTEIP}:/tmp
     ssh ${!COMPUTEIP} "bash /tmp/get_devstack.sh"
+    if [[ ${OVS_CREATE_BRIDGES} != "" ]]; then
+       create_script_install_ovs_create_bridges
+       scp ${WORKSPACE}/ovs_script.sh ${!COMPUTEIP}:/tmp
+       ssh ${!COMPUTEIP} "bash /tmp/ovs_script.sh"
+    fi
     create_compute_node_local_conf ${!COMPUTEIP}
     scp ${WORKSPACE}/local.conf_compute_${!COMPUTEIP} ${!COMPUTEIP}:/opt/stack/devstack/local.conf
     ssh ${!COMPUTEIP} "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
@@ -357,40 +393,52 @@ EOF
 #the checking is repeated for an hour
 iteration=0
 in_progress=1
+os_bridge_list=()
+for index in ${!os_node_list[@]}; do
+    os_bridge_list[index]=0
+done
+
 while [ ${in_progress} -eq 1 ]; do
-iterator=$(($iterator + 1))
-for index in ${!os_node_list[@]}
-do
-echo "Check the status of stacking in ${os_node_list[index]}"
-scp ${WORKSPACE}/check_stacking.sh  ${os_node_list[index]}:/tmp
-ssh ${os_node_list[index]} "bash /tmp/check_stacking.sh"
-scp ${os_node_list[index]}:/tmp/stack_progress .
-#debug
-cat stack_progress
-stacking_status=`cat stack_progress`
-if [ "$stacking_status" == "Still Stacking" ]; then
-  continue
-elif [ "$stacking_status" == "Stacking Failed" ]; then
-  collect_logs_and_exit
-  exit 1
-elif [ "$stacking_status" == "Stacking Complete" ]; then
-  unset os_node_list[index]
-  if  [ ${#os_node_list[@]} -eq 0 ]; then
-     in_progress=0
-  fi
-fi
+    iteration=$(($iteration + 1))
+    for index in ${!os_node_list[@]}; do
+        echo "Check the status of stacking in ${os_node_list[index]}"
+        scp ${WORKSPACE}/check_stacking.sh  ${os_node_list[index]}:/tmp
+        ssh ${os_node_list[index]} "bash /tmp/check_stacking.sh"
+        scp ${os_node_list[index]}:/tmp/stack_progress .
+        #debug
+        cat stack_progress
+        stacking_status=`cat stack_progress`
+        if [ "$stacking_status" == "Still Stacking" ]; then
+            continue
+        elif [ "$stacking_status" == "Stacking Failed" ]; then
+            collect_logs_and_exit
+            exit 1
+        elif [ "$stacking_status" == "Stacking Complete" ]; then
+            unset os_node_list[index]
+            if  [ ${#os_node_list[@]} -eq 0 ]; then
+                in_progress=0
+            fi
+        fi
+    done
+    echo "sleep for a minute before the next check"
+    sleep 60
+    if [ ${iteration} -eq 60 ]; then
+        collect_logs_and_exit
+    exit 1
+    fi
 done
- echo "sleep for a minute before the next check"
- sleep 60
- if [ ${iteration} -eq 60 ]; then
-  collect_logs_and_exit
-  exit 1
- fi
-done
+
+cat > ${WORKSPACE}/disable_firewall.sh << EOF
+sudo systemctl stop firewalld
+sudo systemctl stop iptables
+true
+EOF
 
 #Need to disable firewalld and iptables in control node
 echo "Stop Firewall in Control Node for compute nodes to be able to reach the ports and add to hypervisor-list"
-ssh ${OPENSTACK_CONTROL_NODE_IP} "sudo systemctl stop firewalld; sudo systemctl stop iptables"
+
+scp ${WORKSPACE}/disable_firewall.sh ${OPENSTACK_CONTROL_NODE_IP}:/tmp
+ssh ${OPENSTACK_CONTROL_NODE_IP} "bash /tmp/disable_firewall.sh"
 echo "sleep for a minute and print hypervisor-list"
 sleep 60
 ssh ${OPENSTACK_CONTROL_NODE_IP} "cd /opt/stack/devstack; source openrc admin admin; nova hypervisor-list;nova-manage service list;sudo systemctl status libvirtd"
@@ -399,7 +447,8 @@ ssh ${OPENSTACK_CONTROL_NODE_IP} "cd /opt/stack/devstack; source openrc admin ad
 for i in `seq 1 $((NUM_OPENSTACK_SYSTEM - 1))`
 do
     OSIP=OPENSTACK_COMPUTE_NODE_${i}_IP
-    ssh "${!OSIP}" "sudo systemctl stop firewalld; sudo systemctl stop iptables"
+    scp ${WORKSPACE}/disable_firewall.sh ${!OSIP}:/tmp
+    ssh "${!OSIP}" "bash /tmp/disable_firewall.sh"
 done
 
 # upgrading pip, urllib3 and httplib2 so that tempest tests can be run on ${OPENSTACK_CONTROL_NODE_IP}

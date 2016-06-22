@@ -1,13 +1,13 @@
 - project:
-    name: vtn-manager-csit-openstack-integration
+    name: netvirt-vpnservice-csit-openstack-integration
     jobs:
         - '{project}-csit-1node-openstack-{openstack}-{functionality}-{stream}'
 
     # The project name
-    project: 'vtn'
+    project: 'netvirt-vpnservice'
 
     # The project name
-    functionality: 'neutron'
+    functionality: 'openstack'
 
     stream:
         - boron:
@@ -25,18 +25,18 @@
             openstack-branch: 'stable/liberty'
             odl-ml2-version:  'stable/liberty'
 
-    openstack-vms: 1
+    openstack-vms: 3
 
-    install-features: 'odl-vtn-manager-neutron,odl-restconf-all'
+    install-features: 'odl-netvirt-vpnservice-openstack'
 
     schedule: 'H H * * *'
 
-    odl-enable-l3: 'no'
+    odl-enable-l3: 'yes'
 
-    enable-openstack-services: 'n-cpu,q-agt,q-svc,q-dhcp,q-meta,n-cauth,tempest'
+    enable-openstack-services: 'q-svc,q-meta,n-cauth,tempest'
 
-    disable-openstack-services: 'n-net,q-l3'
+    disable-openstack-services: 'swift,cinder,n-net,q-vpn'
 
-    tenant-network-type: 'local'
+    tenant-network-type: 'vxlan'
 
-    ovs-create-bridges: ''
+    ovs-create-bridges: 'br-int,br-ex'
