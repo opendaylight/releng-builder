@@ -6,12 +6,14 @@
 - project:
     name: PROJECT_SHORTNAME
     jobs:
+        - '{name}-clm-{stream}'
 JOB_TEMPLATES
 
     # stream:    release stream (eg. stable-lithium or beryllium)
     # branch:    git branch (eg. stable/lithium or master)
     STREAMS
     project: 'PROJECT_PATH'
+    mvn-settings: 'JENKINS_SETTINGS'
 
 # For the Job templates below replace instances of:
 # PROJECT_SHORTNAME with your project name (eg. circuitsw)
