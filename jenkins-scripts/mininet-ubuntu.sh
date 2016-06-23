@@ -13,4 +13,4 @@ EOF
 apt-get install -y --force-yes -qq vlan
 
 # Install netaddr package which is needed by some custom mininet topologies
-apt-get install python-netaddr
+apt-get install -y --force-yes -qq python-netaddr
