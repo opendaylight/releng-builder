@@ -1,5 +1,5 @@
 - project:
-    name: openflowplugin-csit-statistics-basic-lithium-redesign
+    name: openflowplugin-csit-flow-services-lithium-redesign-old
     jobs:
         - '{project}-csit-1node-{functionality}-{install}-{stream}'
 
@@ -7,15 +7,15 @@
     project: 'openflowplugin'
 
     # The functionality under test
-    functionality: 'statistics-basic-lithium-redesign'
+    functionality: 'flow-services-lithium-redesign'
 
     # Project branches
     stream:
-        - boron:
-            branch: 'master'
-            jre: 'openjdk8'
         - beryllium:
             branch: 'stable/beryllium'
+            jre: 'openjdk7'
+        - stable-lithium:
+            branch: 'stable/lithium'
             jre: 'openjdk7'
 
     install:
@@ -29,4 +29,4 @@
     robot-options: ''
 
     # Trigger jobs (upstream dependencies)
-    trigger-jobs: ''
+    trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream},openflowjava-distribution-{stream},openflowplugin-distribution-{stream}'

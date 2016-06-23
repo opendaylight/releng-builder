@@ -1,25 +1,18 @@
 - project:
-    name: openflowplugin-csit-clustering-helium-design
+    name: openflowplugin-csit-bulkomatic-clustering-daily-lithium-redesign-old
     jobs:
-        - '{project}-csit-3node-{functionality}-{install}-{stream}'
-        - '{project}-csit-verify-3node-{functionality}'
+        - '{project}-csit-3node-periodic-{functionality}-{install}-{stream}'
 
     # The project name
     project: 'openflowplugin'
 
     # The functionality under test
-    functionality: 'clustering-helium-design'
+    functionality: 'bulkomatic-clustering-daily-lithium-redesign'
 
     # Project branches
     stream:
-        - boron:
-            branch: 'master'
-            jre: 'openjdk8'
         - beryllium:
             branch: 'stable/beryllium'
-            jre: 'openjdk7'
-        - stable-lithium:
-            branch: 'stable/lithium'
             jre: 'openjdk7'
 
     install:
@@ -27,10 +20,13 @@
             scope: 'only'
 
     # Features to install
-    install-features: 'odl-openflowplugin-flow-services-ui'
+    install-features: 'odl-openflowplugin-flow-services-ui-li,odl-openflowplugin-app-bulk-o-matic-li'
 
     # Robot custom options
-    robot-options: '-v ODL_OF_PLUGIN:helium'
+    robot-options: '-v ODL_OF_PLUGIN:lithium'
+
+    # Trigger jobs (daily)
+    schedule: 'H H * * *'
 
     # Trigger jobs (upstream dependencies)
     trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream},openflowjava-distribution-{stream},openflowplugin-distribution-{stream}'

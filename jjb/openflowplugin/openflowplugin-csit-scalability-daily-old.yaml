@@ -1,5 +1,5 @@
 - project:
-    name: openflowplugin-csit-sw-scalability-daily
+    name: openflowplugin-csit-scalability-daily-old
     jobs:
         - '{project}-csit-1node-periodic-{functionality}-{install}-{stream}'
 
@@ -7,13 +7,16 @@
     project: 'openflowplugin'
 
     # The functionality under test
-    functionality: 'sw-scalability-daily'
+    functionality: 'scalability-daily'
 
     # Project branches
     stream:
-        - boron:
-            branch: 'master'
-            jre: 'openjdk8'
+        - beryllium:
+            branch: 'stable/beryllium'
+            jre: 'openjdk7'
+        - stable-lithium:
+            branch: 'stable/lithium'
+            jre: 'openjdk7'
 
     install:
         - only:
@@ -23,7 +26,7 @@
     install-features: 'odl-openflowplugin-flow-services-ui'
 
     # Robot custom options
-    robot-options: ''
+    robot-options: '-v MIN_SWITCHES:100 -v MAX_SWITCHES:500 -v STEP_SWITCHES:100'
 
     # Trigger jobs (daily)
     schedule: 'H H * * *'
@@ -32,4 +35,4 @@
     01-plot-title: 'Max number of Switches'
     01-plot-yaxis: 'OpenFlow Switches'
     01-plot-group: 'Inventory Scalability'
-    01-plot-data-file: 'max_found.csv'
+    01-plot-data-file: 'switches.csv'

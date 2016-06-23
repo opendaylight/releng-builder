@@ -1,19 +1,16 @@
 - project:
-    name: openflowplugin-csit-scalability-lithium-redesign
+    name: openflowplugin-csit-clustering-old
     jobs:
-        - '{project}-csit-1node-{functionality}-{install}-{stream}'
+        - '{project}-csit-3node-{functionality}-{install}-{stream}'
 
     # The project name
     project: 'openflowplugin'
 
     # The functionality under test
-    functionality: 'scalability-lithium-redesign'
+    functionality: 'clustering'
 
     # Project branches
     stream:
-        - boron:
-            branch: 'master'
-            jre: 'openjdk8'
         - beryllium:
             branch: 'stable/beryllium'
             jre: 'openjdk7'
@@ -26,10 +23,11 @@
             scope: 'only'
 
     # Features to install
-    install-features: 'odl-openflowplugin-flow-services-ui-li'
+    install-features: 'odl-openflowplugin-flow-services-ui'
 
     # Robot custom options
-    robot-options: '-v TOPO_TREE_DEPTH:7'
+    robot-options: '-v ODL_OF_PLUGIN:helium'
 
     # Trigger jobs (upstream dependencies)
     trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream},openflowjava-distribution-{stream},openflowplugin-distribution-{stream}'
+

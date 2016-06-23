@@ -1,5 +1,5 @@
 - project:
-    name: openflowplugin-csit-cbench-daily
+    name: openflowplugin-csit-cbench-helium-redesign-daily
     jobs:
         - '{project}-csit-1node-periodic-{functionality}-{install}-{stream}'
 
@@ -7,7 +7,7 @@
     project: 'openflowplugin'
 
     # The functionality under test
-    functionality: 'cbench-daily'
+    functionality: 'cbench-daily-helium-redesign'
 
     # Project branches
     stream:
@@ -20,7 +20,7 @@
             scope: 'only'
 
     # Features to install
-    install-features: 'odl-openflowplugin-flow-services-ui,odl-openflowplugin-drop-test'
+    install-features: 'odl-openflowplugin-flow-services-ui-he,odl-openflowplugin-drop-test-he'
 
     # Mininet configuration
     mininet-image: 'rk-c-el6-mininet'

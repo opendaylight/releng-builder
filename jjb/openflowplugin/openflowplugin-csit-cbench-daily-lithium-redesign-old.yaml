@@ -1,5 +1,5 @@
 - project:
-    name: openflowplugin-csit-cbench-daily
+    name: openflowplugin-csit-cbench-daily-lithium-redesign-old
     jobs:
         - '{project}-csit-1node-periodic-{functionality}-{install}-{stream}'
 
@@ -7,20 +7,23 @@
     project: 'openflowplugin'
 
     # The functionality under test
-    functionality: 'cbench-daily'
+    functionality: 'cbench-daily-lithium-redesign'
 
     # Project branches
     stream:
-        - boron:
-            branch: 'master'
-            jre: 'openjdk8'
+        - beryllium:
+            branch: 'stable/beryllium'
+            jre: 'openjdk7'
+        - stable-lithium:
+            branch: 'stable/lithium'
+            jre: 'openjdk7'
 
     install:
         - only:
             scope: 'only'
 
     # Features to install
-    install-features: 'odl-openflowplugin-flow-services-ui,odl-openflowplugin-drop-test'
+    install-features: 'odl-openflowplugin-flow-services-ui-li,odl-openflowplugin-drop-test-li'
 
     # Mininet configuration
     mininet-image: 'rk-c-el6-mininet'

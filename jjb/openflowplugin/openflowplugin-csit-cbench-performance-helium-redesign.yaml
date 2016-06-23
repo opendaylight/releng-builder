@@ -1,13 +1,13 @@
 - project:
-    name: openflowplugin-csit-cbench-daily
+    name: openflowplugin-csit-cbench-performance-helium-redesign
     jobs:
-        - '{project}-csit-1node-periodic-{functionality}-{install}-{stream}'
+        - '{project}-csit-1node-{functionality}-{install}-{stream}'
 
     # The project name
     project: 'openflowplugin'
 
     # The functionality under test
-    functionality: 'cbench-daily'
+    functionality: 'cbench-performance-helium-redesign'
 
     # Project branches
     stream:
@@ -20,16 +20,16 @@
             scope: 'only'
 
     # Features to install
-    install-features: 'odl-openflowplugin-flow-services-ui,odl-openflowplugin-drop-test'
+    install-features: 'odl-openflowplugin-flow-services-ui-he,odl-openflowplugin-drop-test-he'
 
     # Mininet configuration
     mininet-image: 'rk-c-el6-mininet'
 
     # Robot custom options
-    robot-options: '-v duration_in_secs:180'
+    robot-options: ''
 
-    # Trigger jobs (daily)
-    schedule: 'H H * * *'
+    # Trigger jobs (upstream dependencies)
+    trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream},openflowjava-distribution-{stream},openflowplugin-distribution-{stream}'
 
     # Plot Info
     01-plot-title: 'Throughput Mode'

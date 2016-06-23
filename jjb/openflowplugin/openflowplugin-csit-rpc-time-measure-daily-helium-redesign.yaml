@@ -1,5 +1,5 @@
 - project:
-    name: openflowplugin-csit-bulk-matic-ds-daily
+    name: openflowplugin-csit-rpc-time-measure-daily-helium-redesign
     jobs:
         - '{project}-csit-1node-periodic-{functionality}-{install}-{stream}'
 
@@ -7,7 +7,7 @@
     project: 'openflowplugin'
 
     # The functionality under test
-    functionality: 'bulk-matic-ds-daily'
+    functionality: 'rpc-time-measure-daily-helium-redesign'
 
     # Project branches
     stream:
@@ -20,7 +20,7 @@
             scope: 'only'
 
     # Features to install
-    install-features: 'odl-openflowplugin-flow-services-ui,odl-openflowplugin-app-bulk-o-matic'
+    install-features: 'odl-openflowplugin-flow-services-ui-he,odl-openflowplugin-app-bulk-o-matic-he'
 
     # Robot custom options
     robot-options: ''

@@ -1,5 +1,5 @@
 - project:
-    name: openflowplugin-csit-link-scalability-daily-lithium-redesign
+    name: openflowplugin-csit-longevity-lithium-redesign-old
     jobs:
         - '{project}-csit-1node-periodic-{functionality}-{install}-{stream}'
 
@@ -7,18 +7,12 @@
     project: 'openflowplugin'
 
     # The functionality under test
-    functionality: 'link-scalability-daily-lithium-redesign'
+    functionality: 'longevity-lithium-redesign'
 
     # Project branches
     stream:
-        - boron:
-            branch: 'master'
-            jre: 'openjdk8'
         - beryllium:
             branch: 'stable/beryllium'
-            jre: 'openjdk7'
-        - stable-lithium:
-            branch: 'stable/lithium'
             jre: 'openjdk7'
 
     install:
@@ -29,13 +23,7 @@
     install-features: 'odl-openflowplugin-flow-services-ui-li'
 
     # Robot custom options
-    robot-options: ''
+    robot-options: '-v TEST_LENGTH:23@hours --escape space:@'
 
     # Trigger jobs (daily)
     schedule: 'H H * * *'
-
-    # Plot Info
-    01-plot-title: 'Max number of switch links'
-    01-plot-yaxis: 'Links'
-    01-plot-group: 'Inventory Switch Link Scalability'
-    01-plot-data-file: 'links.csv'

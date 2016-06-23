@@ -1,5 +1,5 @@
 - project:
-    name: openflowplugin-csit-bulkomatic-clustering-daily
+    name: openflowplugin-csit-bulkomatic-clustering-daily-old
     jobs:
         - '{project}-csit-3node-periodic-{functionality}-{install}-{stream}'
 
@@ -11,9 +11,9 @@
 
     # Project branches
     stream:
-        - boron:
-            branch: 'master'
-            jre: 'openjdk8'
+        - beryllium:
+            branch: 'stable/beryllium'
+            jre: 'openjdk7'
 
     install:
         - only:
@@ -23,7 +23,7 @@
     install-features: 'odl-openflowplugin-flow-services-ui,odl-openflowplugin-app-bulk-o-matic'
 
     # Robot custom options
-    robot-options: '-v ODL_OF_PLUGIN:lithium'
+    robot-options: '-v ODL_OF_PLUGIN:helium'
 
     # Trigger jobs (daily)
     schedule: 'H H * * *'
