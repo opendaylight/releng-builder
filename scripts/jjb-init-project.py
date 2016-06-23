@@ -60,7 +60,6 @@ else:
     templates = (
         "verify,merge,periodic,distribution,distribution-check,integration,"
         "sonar")
-templates += ",clm"  # ensure we always create a clm job for all projects
 templates += ",validate-autorelease"  # Autorelease validate template
 
 ##################

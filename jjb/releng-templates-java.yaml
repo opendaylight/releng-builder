@@ -1,6 +1,12 @@
 - job-template:
-    name: 'PROJECT_SHORTNAME-clm-{stream}'
-    disabled: false
+    # Template used for running CLM scans
+    # Arguements:
+    #   {name}         - Project Shortname
+    #   {project}      - Fully qualified project name
+    #   {mvn-settings} - Project maven settings file
+    #   {stream}
+    #   {jdk}
+    name: '{name}-clm-{stream}'
 
     project-type: maven
     node: dynamic_verify
@@ -9,8 +15,6 @@
     logrotate:
         daysToKeep: '{build-days-to-keep}'
         numToKeep: '{build-num-to-keep}'
-        artifactDaysToKeep: '{build-artifact-days-to-keep}'
-        artifactNumToKeep: '{build-artifact-num-to-keep}'
 
     parameters:
         - project-parameter:
@@ -31,14 +35,14 @@
     prebuilders:
         - provide-maven-settings:
             global-settings-file: 'odl-global-settings'
-            settings-file: 'JENKINS_SETTINGS'
+            settings-file: '{mvn-settings}'
 
     maven:
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
         goals: 'clean install com.sonatype.clm:clm-maven-plugin:index -V -B -Djenkins -DskipTests=true -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
         maven-opts: '-Xmx4096m -XX:MaxPermSize=512m'
-        settings: 'JENKINS_SETTINGS'
+        settings: '{mvn-settings}'
         settings-type: cfp
         global-settings: 'odl-global-settings'
         global-settings-type: cfp
@@ -46,10 +50,10 @@
     postbuilders:
         - shell: 'find . -regex ".*karaf/target" | xargs rm -rf'
         - check-clm:
-            application-name: PROJECT_SHORTNAME
+            application-name: '{name}'
 
     publishers:
         - email-notification:
-            email-prefix: '[PROJECT_SHORTNAME]'
+            email-prefix: '[{name}]'
         - archive-build:
             maven-version: '{mvn33}'
