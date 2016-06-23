@@ -44,7 +44,7 @@
     maven:
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
-        goals: 'clean deploy -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  -Djenkins -DaltDeploymentRepository=staging::default::file:hide/from/pom/files/stage'
+        goals: 'clean deploy -V -B -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -Djenkins -DaltDeploymentRepository=staging::default::file:hide/from/pom/files/stage'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{autorelease-settings}'
         global-settings: '{odl-global-settings}'

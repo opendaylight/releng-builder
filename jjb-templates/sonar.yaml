@@ -43,7 +43,7 @@
     maven:
         maven-name: '{mvn33}'
         root-pom: 'POM'
-        goals: 'MAVEN_GOALS -B -Djenkins -Dsonar'
+        goals: 'MAVEN_GOALS -V -B -Djenkins -Dsonar'
         maven-opts: 'MAVEN_OPTS'
         settings: '{JENKINS_SETTINGS}'
         global-settings: '{odl-global-settings}'

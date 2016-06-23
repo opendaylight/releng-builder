@@ -75,7 +75,7 @@
     maven:
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
-        goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  -Djenkins -Dstream={stream}'
+        goals: 'clean install -V -B -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -Djenkins -Dstream={stream}'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         global-settings: '{odl-global-settings}'
         settings: '{integration-settings}'
@@ -146,7 +146,7 @@
     maven:
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
-        goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  -Djenkins -Dmerge -Dstream={stream}'
+        goals: 'clean install -V -B -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -Djenkins -Dmerge -Dstream={stream}'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         global-settings: '{odl-global-settings}'
         settings: '{integration-settings}'
@@ -167,7 +167,7 @@
             - maven-target:
                 maven-version: '{mvn33}'
                 pom: pom.xml
-                goals: 'site:deploy -Dstream={stream}'
+                goals: 'site:deploy -V -B -Dstream={stream}'
                 java-opts:
                     - '-Xmx2g'
                 global-settings: '{odl-global-settings}'
@@ -175,7 +175,7 @@
             - maven-target:
                 maven-version: '{mvn33}'
                 pom: deploy-site.xml
-                goals: 'site:deploy -Dstream={stream}'
+                goals: 'site:deploy -V -B -Dstream={stream}'
                 java-opts:
                     - '-Xmx2g'
                 global-settings: '{odl-global-settings}'

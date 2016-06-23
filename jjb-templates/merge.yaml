@@ -56,7 +56,7 @@
     maven:
         maven-name: '{mvn33}'
         root-pom: 'POM'
-        goals: 'MAVEN_GOALS -B -Djenkins -Dmerge -Dstream={stream}'
+        goals: 'MAVEN_GOALS -V -B -Djenkins -Dmerge -Dstream={stream}'
         maven-opts: 'MAVEN_OPTS'
         settings: '{JENKINS_SETTINGS}'
         global-settings: '{odl-global-settings}'
@@ -78,7 +78,7 @@
             - maven-target:
                 maven-version: '{mvn33}'
                 pom: pom.xml
-                goals: 'site:deploy -B -Dstream={stream}'
+                goals: 'site:deploy -V -B -Dstream={stream}'
                 java-opts:
                     - '-Xmx2g'
                 settings: '{JENKINS_SETTINGS}'
@@ -86,7 +86,7 @@
             - maven-target:
                 maven-version: '{mvn33}'
                 pom: deploy-site.xml
-                goals: 'site:deploy -B -Dstream={stream}'
+                goals: 'site:deploy -V -B -Dstream={stream}'
                 java-opts:
                     - '-Xmx2g'
                 settings: '{JENKINS_SETTINGS}'

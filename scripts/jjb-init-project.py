@@ -123,7 +123,6 @@ if cfg.get('MVN_GOALS'):
     mvn_goals = cfg.get('MVN_GOALS')
 else:
     mvn_goals = ("clean install "
-                 "-V "  # Show Maven / Java version before building
                  "-Dmaven.repo.local=/tmp/r "
                  "-Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r ")
 
