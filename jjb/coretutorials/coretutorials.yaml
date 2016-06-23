@@ -115,7 +115,7 @@
         - maven-target:
             maven-version: '{mvn33}'
             pom: 'pom.xml'
-            goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  -B -Djenkins -Dstream={stream}'
+            goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  -V -B -Djenkins -Dstream={stream}'
             java-opts:
                 - '-Xmx1024m -XX:MaxPermSize=256m'
             settings: '{coretutorials-settings}'
@@ -187,7 +187,7 @@
     maven:
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
-        goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  -B -Djenkins -Dmerge -Dstream={stream}'
+        goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  -V -B -Djenkins -Dmerge -Dstream={stream}'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{coretutorials-settings}'
         global-settings: '{odl-global-settings}'
@@ -209,7 +209,7 @@
             - maven-target:
                 maven-version: '{mvn33}'
                 pom: pom.xml
-                goals: 'site:deploy -B -Dstream={stream}'
+                goals: 'site:deploy -V -B -Dstream={stream}'
                 java-opts:
                     - '-Xmx2g'
                 settings: '{coretutorials-settings}'
@@ -217,7 +217,7 @@
             - maven-target:
                 maven-version: '{mvn33}'
                 pom: deploy-site.xml
-                goals: 'site:deploy -B -Dstream={stream}'
+                goals: 'site:deploy -V -B -Dstream={stream}'
                 java-opts:
                     - '-Xmx2g'
                 settings: '{coretutorials-settings}'
@@ -289,7 +289,7 @@
     maven:
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
-        goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  -B -Djenkins'
+        goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  -V -B -Djenkins'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{coretutorials-settings}'
         global-settings: '{odl-global-settings}'
@@ -349,7 +349,7 @@
     maven:
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
-        goals: 'clean install -B -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+        goals: 'clean install -V -B -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
         settings: '{integration-settings}'
         global-settings: '{odl-global-settings}'
@@ -439,7 +439,7 @@
         - maven-target:
             maven-version: '{mvn33}'
             pom: '$GERRIT_PROJECT/pom.xml'
-            goals: 'clean install -B -Djenkins -DskipTests -Dcheckstyle.skip=true -Dmaven.javadoc.skip=true -Dmaven.site.skip=true -DgenerateReports=false -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -Dstream={stream}'
+            goals: 'clean install -V -B -Djenkins -DskipTests -Dcheckstyle.skip=true -Dmaven.javadoc.skip=true -Dmaven.site.skip=true -DgenerateReports=false -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -Dstream={stream}'
             java-opts:
                 - '-Xmx4096m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
             settings: '{coretutorials-settings}'
@@ -448,7 +448,7 @@
     maven:
         maven-name: '{mvn33}'
         root-pom: 'distribution/pom.xml'
-        goals: 'clean install -B -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+        goals: 'clean install -V -B -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
         settings: '{coretutorials-settings}'
         global-settings: '{odl-global-settings}'
@@ -521,7 +521,7 @@
     maven:
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
-        goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  -B -Djenkins'
+        goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  -V -B -Djenkins'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{coretutorials-settings}'
         global-settings: '{odl-global-settings}'
@@ -579,7 +579,7 @@
     maven:
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
-        goals: 'clean install -V -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  -B -Djenkins -Dsonar'
+        goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  -V -B -Djenkins -Dsonar'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: '{coretutorials-settings}'
         global-settings: '{odl-global-settings}'
@@ -637,7 +637,7 @@
     maven:
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
-        goals: 'clean install com.sonatype.clm:clm-maven-plugin:index -B -Djenkins -DskipTests=true -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+        goals: 'clean install com.sonatype.clm:clm-maven-plugin:index -V -B -Djenkins -DskipTests=true -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
         maven-opts: '-Xmx4096m -XX:MaxPermSize=512m'
         settings: '{coretutorials-settings}'
         global-settings: '{odl-global-settings}'
@@ -733,7 +733,7 @@
         - maven-target:
             maven-version: '{mvn33}'
             pom: validate-pom.xml
-            goals: 'clean install -B -T1.5C -Djenkins -DskipTests -Dcheckstyle.skip=true -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+            goals: 'clean install -V -B -T1.5C -Djenkins -DskipTests -Dcheckstyle.skip=true -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
             java-opts:
             - '-Xmx8g'
             settings: '{autorelease-settings}'
@@ -742,7 +742,7 @@
     maven:
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
-        goals: 'clean validate -B -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+        goals: 'clean validate -V -B -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
         maven-opts: '-Xmx8g -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
         settings: '{autorelease-settings}'
         global-settings: '{odl-global-settings}'
