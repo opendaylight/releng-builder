@@ -708,6 +708,29 @@ The **revalidate** trigger is useful in cases where a project's verify job
 passed however validate failed due to infra problems or intermittent issues.
 It will retrigger just the validate-autorelease job.
 
+Python Verify Job
+^^^^^^^^^^^^^^^^^
+
+Trigger: **recheck** | **revalidate**
+
+This job template can be used by a project that is Python based. It simply
+installs a python virtualenv and uses tox to run tests. When using the template
+you need to provide a {toxdir} which is the path relative to the root of the
+project repo containing the tox.ini file.
+
+Node Verify Job
+^^^^^^^^^^^^^^^^^
+
+Trigger: **recheck** | **revalidate**
+
+This job template can be used by a project that is NodeJS based. It simply
+installs a python virtualenv and uses that to install nodeenv which is then
+used to install another virtualenv for nodejs. It then calls **npm install**
+and **npm test** to run the unit tests. When using this template you need to
+provide a {nodedir} and {nodever} containing the directory relative to the
+project root containing the nodejs package.json and version of node you wish to
+run tests with.
+
 Basic Job Configuration
 -----------------------
 
