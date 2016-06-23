@@ -101,6 +101,8 @@
         - email-notification:
             email-prefix: '[releng]'
 
+# Python Related
+
 - job-template:
     name: '{name}-verify-python-{stream}'
 
@@ -217,6 +219,102 @@
     builders:
         - shell: |
             curl -X POST https://readthedocs.org/build/{rtdproject}
+
+    publishers:
+        - email-notification:
+            email-prefix: '[{project}]'
+
+# Node related
+
+- job-template:
+    name: '{name}-verify-node-{stream}'
+
+    # Job template for python verify jobs
+    #
+    # The purpose of this job template is to run node tests for projects using
+    # this template. It uses python virtualenv to install nodeenv and create a
+    # virtualenv for nodejs.
+    #
+    # Required Variables:
+    #     stream:    release stream (eg. stable-lithium or beryllium)
+    #     branch:    git branch (eg. stable/lithium or master)
+    #     nodedir:   directory of nodejs project to run node test against
+    #     nodever:   version of node to install in virtualenv
+
+    project-type: freestyle
+    node: dynamic_verify
+    concurrent: true
+
+    logrotate:
+        daysToKeep: '7'
+        numToKeep: '-1'
+        artifactDaysToKeep: '-1'
+        artifactNumToKeep: '-1'
+
+    parameters:
+        - project-parameter:
+            project: '{project}'
+        - gerrit-parameters:
+            project: '{project}'
+            branch: '{branch}'
+            refspec: 'refs/heads/{branch}'
+
+    scm:
+        - git:
+            credentials-id: '{ssh-credentials}'
+            url: '$GIT_BASE'
+            basedir: 'repo'
+            refspec: '$GERRIT_REFSPEC'
+            branches:
+                - 'origin/$GERRIT_BRANCH'
+            skip-tag: true
+            choosing-strategy: 'gerrit'
+
+    wrappers:
+        - build-timeout
+        - ssh-agent-credentials:
+            users:
+                - '{ssh-credentials}'
+
+    triggers:
+        - gerrit:
+            server-name: 'OpenDaylight'
+            trigger-on:
+                - patchset-created-event:
+                    exclude-drafts: 'true'
+                    exclude-trivial-rebase: 'false'
+                    exclude-no-code-change: 'true'
+                - draft-published-event
+                - comment-added-contains-event:
+                    comment-contains-value: 'recheck'
+                - comment-added-contains-event:
+                    comment-contains-value: 'reverify'
+            projects:
+              - project-compare-type: 'ANT'
+                project-pattern: '{project}'
+                branches:
+                  - branch-compare-type: 'ANT'
+                    branch-pattern: '**/{branch}'
+                file-paths:
+                    - compare-type: ANT
+                      pattern: '{nodedir}/**'
+
+    builders:
+        - shell: |
+            #!/bin/bash
+            # Prepare Python
+            virtualenv $WORKSPACE/venv-python
+            source $WORKSPACE/venv-python/bin/activate
+            pip install --upgrade pip
+            pip install --upgrade tox argparse nodeenv
+            pip freeze
+
+            # Prepare node
+            nodeenv --node={nodever} --prebuilt $WORKSPACE/venv-node
+            source $WORKSPACE/venv-node/bin/activate
+            cd $WORKSPACE/repo/{nodedir}
+            npm install
+            npm test
 
     publishers:
         - email-notification:

@@ -2,6 +2,7 @@
     name: spectrometer
     jobs:
         - '{name}-merge-rtd-{stream}'
+        - '{name}-verify-node-{stream}'
         - '{name}-verify-python-{stream}'
 
     stream:
@@ -11,3 +12,5 @@
     project: 'spectrometer'
     rtdproject: 'opendaylight-spectrometer'
     toxdir: server
+    nodedir: web
+    nodever: 4.4.5
