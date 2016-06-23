@@ -1,5 +1,5 @@
 - project:
-    name: openflowplugin-csit-scale-stats-collection-daily
+    name: openflowplugin-csit-scale-stats-collection-daily-lithium-redesign-old
     jobs:
         - '{project}-csit-1node-periodic-{functionality}-{install}-{stream}'
 
@@ -7,20 +7,23 @@
     project: 'openflowplugin'
 
     # The functionality under test
-    functionality: 'scale-stats-collection-daily'
+    functionality: 'scale-stats-collection-daily-lithium-redesign'
 
     # Project branches
     stream:
-        - boron:
-            branch: 'master'
-            jre: 'openjdk8'
+        - beryllium:
+            branch: 'stable/beryllium'
+            jre: 'openjdk7'
+        - stable-lithium:
+            branch: 'stable/lithium'
+            jre: 'openjdk7'
 
     install:
         - only:
             scope: 'only'
 
     # Features to install
-    install-features: 'odl-openflowplugin-flow-services-ui'
+    install-features: 'odl-openflowplugin-flow-services-ui-li'
 
     # Robot custom options
     robot-options: ''

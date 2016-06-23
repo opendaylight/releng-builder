@@ -1,5 +1,5 @@
 - project:
-    name: openflowplugin-csit-cbench-performance-lithium-redesign
+    name: openflowplugin-csit-config-performance-lithium-redesign-old
     jobs:
         - '{project}-csit-1node-{functionality}-{install}-{stream}'
 
@@ -7,13 +7,10 @@
     project: 'openflowplugin'
 
     # The functionality under test
-    functionality: 'cbench-performance-lithium-redesign'
+    functionality: 'config-performance-lithium-redesign'
 
     # Project branches
     stream:
-        - boron:
-            branch: 'master'
-            jre: 'openjdk8'
         - beryllium:
             branch: 'stable/beryllium'
             jre: 'openjdk7'
@@ -26,10 +23,7 @@
             scope: 'only'
 
     # Features to install
-    install-features: 'odl-openflowplugin-flow-services-ui-li,odl-openflowplugin-drop-test-li'
-
-    # Mininet configuration
-    mininet-image: 'rk-c-el6-mininet'
+    install-features: 'odl-openflowplugin-flow-services-ui-li'
 
     # Robot custom options
     robot-options: ''
@@ -38,11 +32,12 @@
     trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream},openflowjava-distribution-{stream},openflowplugin-distribution-{stream}'
 
     # Plot Info
-    01-plot-title: 'Throughput Mode'
-    01-plot-yaxis: 'flow_mods/sec'
-    01-plot-group: 'Cbench Performance'
-    01-plot-data-file: 'throughput.csv'
-    02-plot-title: 'Latency Mode'
-    02-plot-yaxis: 'flow_mods/sec'
-    02-plot-group: 'Cbench Performance'
-    02-plot-data-file: 'latency.csv'
+    01-plot-title: 'Flow REST API Rate'
+    01-plot-yaxis: 'http_req/sec'
+    01-plot-group: 'Flow Config Performance'
+    01-plot-data-file: 'rates.csv'
+    02-plot-title: 'Flow Stats Collect Time'
+    02-plot-yaxis: 'seconds'
+    02-plot-group: 'Stats Collect Performance'
+    02-plot-data-file: 'times.csv'
+

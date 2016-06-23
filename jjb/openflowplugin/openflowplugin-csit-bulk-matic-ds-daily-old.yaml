@@ -1,5 +1,5 @@
 - project:
-    name: openflowplugin-csit-sw-scalability-daily-lithium-redesign
+    name: openflowplugin-csit-bulk-matic-ds-daily-old
     jobs:
         - '{project}-csit-1node-periodic-{functionality}-{install}-{stream}'
 
@@ -7,13 +7,10 @@
     project: 'openflowplugin'
 
     # The functionality under test
-    functionality: 'sw-scalability-daily-lithium-redesign'
+    functionality: 'bulk-matic-ds-daily'
 
     # Project branches
     stream:
-        - boron:
-            branch: 'master'
-            jre: 'openjdk8'
         - beryllium:
             branch: 'stable/beryllium'
             jre: 'openjdk7'
@@ -26,7 +23,7 @@
             scope: 'only'
 
     # Features to install
-    install-features: 'odl-openflowplugin-flow-services-ui-li'
+    install-features: 'odl-openflowplugin-flow-services-ui,odl-openflowplugin-app-bulk-o-matic'
 
     # Robot custom options
     robot-options: ''
@@ -35,7 +32,7 @@
     schedule: 'H H * * *'
 
     # Plot Info
-    01-plot-title: 'Max number of Switches'
-    01-plot-yaxis: 'OpenFlow Switches'
-    01-plot-group: 'Inventory Scalability'
-    01-plot-data-file: 'max_found.csv'
+    01-plot-title: 'REST setup rate (for 100k flows)'
+    01-plot-yaxis: 'setup time[s], req[flows/s]'
+    01-plot-group: 'Performance Rate'
+    01-plot-data-file: 'flows_setup_time.csv'

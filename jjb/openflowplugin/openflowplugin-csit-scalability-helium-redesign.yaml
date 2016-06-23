@@ -1,5 +1,5 @@
 - project:
-    name: openflowplugin-csit-config-performance
+    name: openflowplugin-csit-scalability-helium-redesign
     jobs:
         - '{project}-csit-1node-{functionality}-{install}-{stream}'
 
@@ -7,7 +7,7 @@
     project: 'openflowplugin'
 
     # The functionality under test
-    functionality: 'config-performance'
+    functionality: 'scalability-helium-redesign'
 
     # Project branches
     stream:
@@ -20,21 +20,10 @@
             scope: 'only'
 
     # Features to install
-    install-features: 'odl-openflowplugin-flow-services-ui'
+    install-features: 'odl-openflowplugin-flow-services-ui-he'
 
     # Robot custom options
-    robot-options: ''
+    robot-options: '-v TOPO_TREE_DEPTH:7'
 
     # Trigger jobs (upstream dependencies)
     trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream},openflowjava-distribution-{stream},openflowplugin-distribution-{stream}'
-
-    # Plot Info
-    01-plot-title: 'Flow REST API Rate'
-    01-plot-yaxis: 'http_req/sec'
-    01-plot-group: 'Flow Config Performance'
-    01-plot-data-file: 'rates.csv'
-    02-plot-title: 'Flow Stats Collect Time'
-    02-plot-yaxis: 'seconds'
-    02-plot-group: 'Stats Collect Performance'
-    02-plot-data-file: 'times.csv'
-
