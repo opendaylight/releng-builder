@@ -4,6 +4,7 @@
         - '{project-name}-merge-rtd-{stream}'
         - '{project-name}-verify-node-{stream}'
         - '{project-name}-verify-python-{stream}'
+        - 'spectrometer-deploy-webapp-master'
 
     stream:
         - master:
@@ -14,4 +15,89 @@
     rtdproject: 'opendaylight-spectrometer'
     toxdir: server
     nodedir: web
-    nodever: 4.4.5
+    nodever: 4.4.6
+    staging-server: spectrometer03.dfw.opendaylight.org
+
+- job-template:
+    name: 'spectrometer-deploy-webapp-master'
+
+    project-type: freestyle
+    node: dynamic_verify
+    concurrent: false
+
+    logrotate:
+        daysToKeep: '{build-days-to-keep}'
+        numToKeep: '{build-num-to-keep}'
+
+    wrappers:
+        - build-timeout
+        - ssh-agent-credentials:
+            users:
+                - 'spectrometer-deploy-key'
+
+    triggers:
+        - gerrit-trigger-patch-merged:
+            name: 'spectrometer'
+            branch: 'master'
+
+    builders:
+        - shell: |
+            echo "Deploying spectrometer"
+            ssh -oStrictHostKeyChecking=no spectrometer@{staging-server} 'bash -s' << EOF
+
+            if [ -e spectrometer ]; then
+                cd spectrometer
+                git pull
+                cd ..
+            else
+                git clone https://git.opendaylight.org/gerrit/spectrometer
+            fi
+
+            echo "---> Setup Python"
+            if [ -e venv-python34/bin/activate ]; then
+                echo "---> Updating Python dependencies"
+            else
+                echo "---> virtualenv not found. Setting up new virtualenv."
+                pyvenv venv-python34
+                pip install -e spectrometer/server
+            fi
+            source venv-python34/bin/activate
+            pip install --upgrade -r spectrometer/server/requirements.txt
+            pip install --upgrade nodeenv
+            pip freeze
+
+            echo "---> Setup NodeJS"
+            if [ -e venv-nodejs/bin/activate ]; then
+                echo "---> Updating NodeJS dependencies"
+            else
+                echo "---> nodeenv not found. Setting up new nodeenv"
+                nodeenv --node={nodever} --prebuilt venv-nodejs
+            fi
+            source venv-nodejs/bin/activate
+            npm install -g spectrometer/web
+            node -v
+            npm -v
+
+            echo "---> Ensure mongo is running"
+            ps -A | grep -q '[m]ongod'
+            if [ ! "$?" -eq "0" ]; then
+                echo "The mongod server DOWN", restarting...
+                if [ ! -d mongo ]; then
+                    mkdir mongo
+                fi
+                echo "---> Starting mongo"
+                mongod --dbpath ~/mongo &
+            fi
+
+            echo "---> Restart spectrometer-api"
+            pkill gunicorn
+            sleep 5  # Sleep 5 seconds for cooldown
+            nohup gunicorn -b 0.0.0.0:5000 'spectrometer:run_app()' --timeout 600 -k gevent >> ~/gunicorn.out &
+
+            echo "---> Restart spectrometer-web"
+            pkill node
+            sleep 5  # Sleep 5 seconds for cooldown
+            cd spectrometer/web
+            nohup npm start >> ~/node.out &
+
+            EOF
