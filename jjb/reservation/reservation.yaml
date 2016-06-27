@@ -131,6 +131,8 @@
         - email-notification:
             email-prefix: '[reservation]'
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'reservation-merge-{stream}'
@@ -245,6 +247,8 @@
             unique-version: true
             deploy-unstable: false
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'reservation-periodic-{stream}'
@@ -312,6 +316,8 @@
         - email-notification:
             email-prefix: '[reservation]'
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'reservation-distribution-{stream}'
@@ -374,6 +380,8 @@
             id: ''
             unique-version: true
             deploy-unstable: false
+        - archive-build:
+            maven-version: '{mvn33}'
 
 # Template: integration-patch-distribution-{stream}
 # Goal: Build a patch and make sure the distribution can deploy with this change
@@ -482,6 +490,8 @@
             artifacts: 'karaf_console.log'
         - email-notification:
             email-prefix: '[reservation]'
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'reservation-integration-{stream}'
@@ -552,6 +562,8 @@
         - email-notification:
             email-prefix: '[reservation] [odlparent] [controller] [yangtools] [groupbasedpolicy]'
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'reservation-sonar'
@@ -615,6 +627,8 @@
         - email-notification:
             email-prefix: '[reservation]'
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'reservation-clm-{stream}'
@@ -673,6 +687,8 @@
     publishers:
         - email-notification:
             email-prefix: '[reservation]'
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'reservation-validate-autorelease-{stream}'
@@ -782,4 +798,6 @@
     publishers:
         - email-notification:
             email-prefix: '[autorelease] [reservation]'
+        - archive-build:
+            maven-version: '{mvn33}'
 

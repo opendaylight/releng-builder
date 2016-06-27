@@ -131,6 +131,8 @@
         - email-notification:
             email-prefix: '[groupbasedpolicy]'
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'groupbasedpolicy-merge-{stream}'
@@ -245,6 +247,8 @@
             unique-version: true
             deploy-unstable: false
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'groupbasedpolicy-periodic-{stream}'
@@ -312,6 +316,8 @@
         - email-notification:
             email-prefix: '[groupbasedpolicy]'
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'groupbasedpolicy-distribution-{stream}'
@@ -374,6 +380,8 @@
             id: ''
             unique-version: true
             deploy-unstable: false
+        - archive-build:
+            maven-version: '{mvn33}'
 
 # Template: integration-patch-distribution-{stream}
 # Goal: Build a patch and make sure the distribution can deploy with this change
@@ -482,6 +490,8 @@
             artifacts: 'karaf_console.log'
         - email-notification:
             email-prefix: '[groupbasedpolicy]'
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'groupbasedpolicy-integration-{stream}'
@@ -552,6 +562,8 @@
         - email-notification:
             email-prefix: '[groupbasedpolicy] [odlparent] [yangtools] [controller] [openflowjava] [openflowplugin] [neutron] [sfc] [ovsdb]'
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'groupbasedpolicy-sonar'
@@ -615,6 +627,8 @@
         - email-notification:
             email-prefix: '[groupbasedpolicy]'
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'groupbasedpolicy-clm-{stream}'
@@ -673,6 +687,8 @@
     publishers:
         - email-notification:
             email-prefix: '[groupbasedpolicy]'
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'groupbasedpolicy-validate-autorelease-{stream}'
@@ -782,4 +798,6 @@
     publishers:
         - email-notification:
             email-prefix: '[autorelease] [groupbasedpolicy]'
+        - archive-build:
+            maven-version: '{mvn33}'
 

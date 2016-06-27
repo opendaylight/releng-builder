@@ -164,6 +164,8 @@
             unique-version: true
             deploy-unstable: false
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'yangtools-periodic-{stream}'
@@ -231,6 +233,8 @@
         - email-notification:
             email-prefix: '[yangtools]'
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'yangtools-distribution-{stream}'
@@ -293,6 +297,8 @@
             id: ''
             unique-version: true
             deploy-unstable: false
+        - archive-build:
+            maven-version: '{mvn33}'
 
 # Template: integration-patch-distribution-{stream}
 # Goal: Build a patch and make sure the distribution can deploy with this change
@@ -401,6 +407,8 @@
             artifacts: 'karaf_console.log'
         - email-notification:
             email-prefix: '[yangtools]'
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'yangtools-integration-{stream}'
@@ -471,6 +479,8 @@
         - email-notification:
             email-prefix: '[yangtools] [odlparent]'
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'yangtools-sonar'
@@ -534,6 +544,8 @@
         - email-notification:
             email-prefix: '[yangtools]'
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'yangtools-clm-{stream}'
@@ -592,6 +604,8 @@
     publishers:
         - email-notification:
             email-prefix: '[yangtools]'
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'yangtools-validate-autorelease-{stream}'
@@ -701,4 +715,6 @@
     publishers:
         - email-notification:
             email-prefix: '[autorelease] [yangtools]'
+        - archive-build:
+            maven-version: '{mvn33}'
 

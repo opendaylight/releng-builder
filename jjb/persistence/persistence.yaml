@@ -133,6 +133,8 @@
         - email-notification:
             email-prefix: '[persistence]'
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'persistence-merge-{stream}'
@@ -247,6 +249,8 @@
             unique-version: true
             deploy-unstable: false
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'persistence-periodic-{stream}'
@@ -314,6 +318,8 @@
         - email-notification:
             email-prefix: '[persistence]'
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'persistence-distribution-{stream}'
@@ -376,6 +382,8 @@
             id: ''
             unique-version: true
             deploy-unstable: false
+        - archive-build:
+            maven-version: '{mvn33}'
 
 # Template: integration-patch-distribution-{stream}
 # Goal: Build a patch and make sure the distribution can deploy with this change
@@ -484,6 +492,8 @@
             artifacts: 'karaf_console.log'
         - email-notification:
             email-prefix: '[persistence]'
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'persistence-integration-{stream}'
@@ -554,6 +564,8 @@
         - email-notification:
             email-prefix: '[persistence] [odlparent]'
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'persistence-sonar'
@@ -617,6 +629,8 @@
         - email-notification:
             email-prefix: '[persistence]'
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'persistence-clm-{stream}'
@@ -675,6 +689,8 @@
     publishers:
         - email-notification:
             email-prefix: '[persistence]'
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'persistence-validate-autorelease-{stream}'
@@ -784,4 +800,6 @@
     publishers:
         - email-notification:
             email-prefix: '[autorelease] [persistence]'
+        - archive-build:
+            maven-version: '{mvn33}'
 

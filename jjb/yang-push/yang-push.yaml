@@ -124,6 +124,8 @@
         - email-notification:
             email-prefix: '[yang-push]'
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'yang-push-merge-{stream}'
@@ -238,6 +240,8 @@
             unique-version: true
             deploy-unstable: false
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'yang-push-periodic-{stream}'
@@ -305,6 +309,8 @@
         - email-notification:
             email-prefix: '[yang-push]'
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'yang-push-distribution-{stream}'
@@ -367,6 +373,8 @@
             id: ''
             unique-version: true
             deploy-unstable: false
+        - archive-build:
+            maven-version: '{mvn33}'
 
 # Template: integration-patch-distribution-{stream}
 # Goal: Build a patch and make sure the distribution can deploy with this change
@@ -475,6 +483,8 @@
             artifacts: 'karaf_console.log'
         - email-notification:
             email-prefix: '[yang-push]'
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'yang-push-integration-{stream}'
@@ -545,6 +555,8 @@
         - email-notification:
             email-prefix: '[yang-push] [controller] [yangtools] [odlparent]'
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'yang-push-sonar'
@@ -608,6 +620,8 @@
         - email-notification:
             email-prefix: '[yang-push]'
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'yang-push-clm-{stream}'
@@ -666,6 +680,8 @@
     publishers:
         - email-notification:
             email-prefix: '[yang-push]'
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'yang-push-validate-autorelease-{stream}'
@@ -775,4 +791,6 @@
     publishers:
         - email-notification:
             email-prefix: '[autorelease] [yang-push]'
+        - archive-build:
+            maven-version: '{mvn33}'
 

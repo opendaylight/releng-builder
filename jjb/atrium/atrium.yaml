@@ -116,6 +116,8 @@
         - email-notification:
             email-prefix: '[atrium]'
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'atrium-merge-{stream}'
@@ -230,6 +232,8 @@
             unique-version: true
             deploy-unstable: false
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'atrium-periodic-{stream}'
@@ -297,6 +301,8 @@
         - email-notification:
             email-prefix: '[atrium]'
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'atrium-distribution-{stream}'
@@ -359,6 +365,8 @@
             id: ''
             unique-version: true
             deploy-unstable: false
+        - archive-build:
+            maven-version: '{mvn33}'
 
 # Template: integration-patch-distribution-{stream}
 # Goal: Build a patch and make sure the distribution can deploy with this change
@@ -467,6 +475,8 @@
             artifacts: 'karaf_console.log'
         - email-notification:
             email-prefix: '[atrium]'
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'atrium-integration-{stream}'
@@ -537,6 +547,8 @@
         - email-notification:
             email-prefix: '[atrium] [odlparent] [yangtools] [controller] [mdsal]'
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'atrium-sonar'
@@ -600,6 +612,8 @@
         - email-notification:
             email-prefix: '[atrium]'
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'atrium-clm-{stream}'
@@ -658,6 +672,8 @@
     publishers:
         - email-notification:
             email-prefix: '[atrium]'
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'atrium-validate-autorelease-{stream}'
@@ -767,4 +783,6 @@
     publishers:
         - email-notification:
             email-prefix: '[autorelease] [atrium]'
+        - archive-build:
+            maven-version: '{mvn33}'
 

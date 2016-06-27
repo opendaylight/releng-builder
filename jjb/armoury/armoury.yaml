@@ -125,6 +125,8 @@
         - email-notification:
             email-prefix: '[armoury]'
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'armoury-merge-{stream}'
@@ -239,6 +241,8 @@
             unique-version: true
             deploy-unstable: false
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'armoury-periodic-{stream}'
@@ -306,6 +310,8 @@
         - email-notification:
             email-prefix: '[armoury]'
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'armoury-distribution-{stream}'
@@ -368,6 +374,8 @@
             id: ''
             unique-version: true
             deploy-unstable: false
+        - archive-build:
+            maven-version: '{mvn33}'
 
 # Template: integration-patch-distribution-{stream}
 # Goal: Build a patch and make sure the distribution can deploy with this change
@@ -476,6 +484,8 @@
             artifacts: 'karaf_console.log'
         - email-notification:
             email-prefix: '[armoury]'
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'armoury-integration-{stream}'
@@ -546,6 +556,8 @@
         - email-notification:
             email-prefix: '[armoury] [odlparent] [yangtools] [controller] [mdsal]'
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'armoury-sonar'
@@ -609,6 +621,8 @@
         - email-notification:
             email-prefix: '[armoury]'
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'armoury-clm-{stream}'
@@ -667,6 +681,8 @@
     publishers:
         - email-notification:
             email-prefix: '[armoury]'
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'armoury-validate-autorelease-{stream}'
@@ -776,4 +792,6 @@
     publishers:
         - email-notification:
             email-prefix: '[autorelease] [armoury]'
+        - archive-build:
+            maven-version: '{mvn33}'
 

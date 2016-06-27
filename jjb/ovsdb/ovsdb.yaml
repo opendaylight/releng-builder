@@ -130,6 +130,8 @@
         - email-notification:
             email-prefix: '[ovsdb]'
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'ovsdb-merge-{stream}'
@@ -244,6 +246,8 @@
             unique-version: true
             deploy-unstable: false
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'ovsdb-periodic-{stream}'
@@ -311,6 +315,8 @@
         - email-notification:
             email-prefix: '[ovsdb]'
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'ovsdb-distribution-{stream}'
@@ -373,6 +379,8 @@
             id: ''
             unique-version: true
             deploy-unstable: false
+        - archive-build:
+            maven-version: '{mvn33}'
 
 # Template: integration-patch-distribution-{stream}
 # Goal: Build a patch and make sure the distribution can deploy with this change
@@ -481,6 +489,8 @@
             artifacts: 'karaf_console.log'
         - email-notification:
             email-prefix: '[ovsdb]'
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'ovsdb-integration-{stream}'
@@ -551,6 +561,8 @@
         - email-notification:
             email-prefix: '[ovsdb] [odlparent] [controller] [yangtools]'
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'ovsdb-clm-{stream}'
@@ -609,6 +621,8 @@
     publishers:
         - email-notification:
             email-prefix: '[ovsdb]'
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'ovsdb-validate-autorelease-{stream}'
@@ -718,4 +732,6 @@
     publishers:
         - email-notification:
             email-prefix: '[autorelease] [ovsdb]'
+        - archive-build:
+            maven-version: '{mvn33}'
 

@@ -123,6 +123,8 @@
         - email-notification:
             email-prefix: '[discovery]'
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'discovery-merge-{stream}'
@@ -237,6 +239,8 @@
             unique-version: true
             deploy-unstable: false
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'discovery-periodic-{stream}'
@@ -304,6 +308,8 @@
         - email-notification:
             email-prefix: '[discovery]'
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'discovery-distribution-{stream}'
@@ -366,6 +372,8 @@
             id: ''
             unique-version: true
             deploy-unstable: false
+        - archive-build:
+            maven-version: '{mvn33}'
 
 # Template: integration-patch-distribution-{stream}
 # Goal: Build a patch and make sure the distribution can deploy with this change
@@ -474,6 +482,8 @@
             artifacts: 'karaf_console.log'
         - email-notification:
             email-prefix: '[discovery]'
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'discovery-integration-{stream}'
@@ -544,6 +554,8 @@
         - email-notification:
             email-prefix: '[discovery] [odlparent]'
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'discovery-sonar'
@@ -607,6 +619,8 @@
         - email-notification:
             email-prefix: '[discovery]'
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'discovery-clm-{stream}'
@@ -665,6 +679,8 @@
     publishers:
         - email-notification:
             email-prefix: '[discovery]'
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'discovery-validate-autorelease-{stream}'
@@ -774,4 +790,6 @@
     publishers:
         - email-notification:
             email-prefix: '[autorelease] [discovery]'
+        - archive-build:
+            maven-version: '{mvn33}'
 

@@ -124,6 +124,8 @@
         - email-notification:
             email-prefix: '[nemo]'
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'nemo-merge-{stream}'
@@ -238,6 +240,8 @@
             unique-version: true
             deploy-unstable: false
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'nemo-periodic-{stream}'
@@ -305,6 +309,8 @@
         - email-notification:
             email-prefix: '[nemo]'
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'nemo-distribution-{stream}'
@@ -367,6 +373,8 @@
             id: ''
             unique-version: true
             deploy-unstable: false
+        - archive-build:
+            maven-version: '{mvn33}'
 
 # Template: integration-patch-distribution-{stream}
 # Goal: Build a patch and make sure the distribution can deploy with this change
@@ -475,6 +483,8 @@
             artifacts: 'karaf_console.log'
         - email-notification:
             email-prefix: '[nemo]'
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'nemo-integration-{stream}'
@@ -545,6 +555,8 @@
         - email-notification:
             email-prefix: '[nemo] [controller] [yangtools] [odlparent]'
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'nemo-sonar'
@@ -608,6 +620,8 @@
         - email-notification:
             email-prefix: '[nemo]'
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'nemo-clm-{stream}'
@@ -666,6 +680,8 @@
     publishers:
         - email-notification:
             email-prefix: '[nemo]'
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'nemo-validate-autorelease-{stream}'
@@ -775,4 +791,6 @@
     publishers:
         - email-notification:
             email-prefix: '[autorelease] [nemo]'
+        - archive-build:
+            maven-version: '{mvn33}'
 

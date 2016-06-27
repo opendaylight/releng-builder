@@ -132,6 +132,8 @@
         - email-notification:
             email-prefix: '[usc]'
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'usc-merge-{stream}'
@@ -246,6 +248,8 @@
             unique-version: true
             deploy-unstable: false
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'usc-periodic-{stream}'
@@ -313,6 +317,8 @@
         - email-notification:
             email-prefix: '[usc]'
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'usc-distribution-{stream}'
@@ -375,6 +381,8 @@
             id: ''
             unique-version: true
             deploy-unstable: false
+        - archive-build:
+            maven-version: '{mvn33}'
 
 # Template: integration-patch-distribution-{stream}
 # Goal: Build a patch and make sure the distribution can deploy with this change
@@ -483,6 +491,8 @@
             artifacts: 'karaf_console.log'
         - email-notification:
             email-prefix: '[usc]'
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'usc-integration-{stream}'
@@ -553,6 +563,8 @@
         - email-notification:
             email-prefix: '[usc] [controller] [yangtools] [odlparent]'
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'usc-sonar'
@@ -616,6 +628,8 @@
         - email-notification:
             email-prefix: '[usc]'
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'usc-clm-{stream}'
@@ -674,6 +688,8 @@
     publishers:
         - email-notification:
             email-prefix: '[usc]'
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'usc-validate-autorelease-{stream}'
@@ -783,4 +799,6 @@
     publishers:
         - email-notification:
             email-prefix: '[autorelease] [usc]'
+        - archive-build:
+            maven-version: '{mvn33}'
 

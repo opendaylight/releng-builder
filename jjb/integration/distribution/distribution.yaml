@@ -100,6 +100,8 @@
         - email-notification:
             email-prefix: '[distribution]'
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'distribution-clm-{stream}'
@@ -158,6 +160,8 @@
     publishers:
         - email-notification:
             email-prefix: '[distribution]'
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'distribution-validate-autorelease-{stream}'
@@ -267,4 +271,6 @@
     publishers:
         - email-notification:
             email-prefix: '[autorelease] [distribution]'
+        - archive-build:
+            maven-version: '{mvn33}'
 
