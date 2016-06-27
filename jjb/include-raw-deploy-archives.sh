@@ -62,9 +62,3 @@ find $ARCHIVES_DIR -name "*.txt" \
                 | xargs gzip
 
 zip -r archives.zip $JOB_NAME/
-
-# Notify Gerrit where logs are located
-if [ -n "$GERRIT_PATCHSET_REVISION" ]; then
-    LOG_MESSAGE="Logs located at https://nexus.opendaylight.org/content/sites/logs/$SILO/$ARCHIVES_DIR/"
-    ssh -p 29418 git.opendaylight.org gerrit review -m "$LOG_MESSAGE" $GERRIT_PATCHSET_REVISION
-fi
