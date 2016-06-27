@@ -79,6 +79,8 @@
             artifacts: 'job_output/*'
         - email-notification:
             email-prefix: '[releng]'
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: builder-verify-python
@@ -145,6 +147,8 @@
     publishers:
         - email-notification:
             email-prefix: '[releng]'
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'builder-merge'
@@ -208,6 +212,8 @@
     publishers:
         - email-notification:
             email-prefix: '[releng]'
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'builder-weekly'
@@ -251,6 +257,8 @@
     publishers:
         - email-notification:
             email-prefix: '[releng]'
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: builder-check-poms
@@ -280,6 +288,8 @@
     publishers:
         - email-notification:
             email-prefix: '[releng]'
+        - archive-build:
+            maven-version: '{mvn33}'
 
 
 ###
@@ -351,6 +361,8 @@
     publishers:
         - email-notification:
             email-prefix: '[releng]'
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'builder-site-verify'
@@ -421,3 +433,5 @@
     publishers:
         - email-notification:
             email-prefix: '[releng]'
+        - archive-build:
+            maven-version: '{mvn33}'
