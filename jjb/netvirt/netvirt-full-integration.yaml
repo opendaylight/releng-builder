@@ -64,10 +64,11 @@
             refspec: 'refs/heads/{branch}'
 
     scm:
-        - git-scm:
+        - gerrit-trigger-scm:
             credentials-id: '{ssh-credentials}'
-            refspec: ''
+            refspec: '$GERRIT_REFSPEC'
             branch: '{branch}'
+            choosing-strategy: gerrit
 
     wrappers:
         - timeout:
@@ -81,6 +82,22 @@
 
     triggers:
         - timed: '@midnight'
+        - gerrit:
+            server-name: 'OpenDaylight'
+            trigger-on:
+              - comment-added-contains-event:
+                 comment-contains-value: 'runit'
+            projects:
+              - project-compare-type: 'ANT'
+                project-pattern: '{project}'
+                branches:
+                  - branch-compare-type: 'ANT'
+                    branch-pattern: '**/{branch}'
+            skip-vote:
+                successful: true
+                failed: true
+                unstable: true
+                notbuilt: true
 
     builders:
         - wipe-org-opendaylight-repo
