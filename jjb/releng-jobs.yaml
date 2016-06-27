@@ -74,6 +74,9 @@
             jenkins-jobs test --recursive -o job_output jjb/
         - releng-check-unicode
 
+        # Please run archive-build-notification last
+        - archive-build-notification
+
     publishers:
         - archive-artifacts:
             artifacts: 'job_output/*'
@@ -144,6 +147,9 @@
             pip install flake8
             flake8 scripts/
 
+        # Please run archive-build-notification last
+        - archive-build-notification
+
     publishers:
         - email-notification:
             email-prefix: '[releng]'
@@ -209,6 +215,9 @@
             !include-raw-escape:
                 - include-raw-jjb-update.sh
 
+        # Please run archive-build-notification last
+        - archive-build-notification
+
     publishers:
         - email-notification:
             email-prefix: '[releng]'
@@ -254,6 +263,9 @@
         - shell: |
             jenkins-jobs --flush-cache update --recursive jjb/
 
+        # Please run archive-build-notification last
+        - archive-build-notification
+
     publishers:
         - email-notification:
             email-prefix: '[releng]'
@@ -284,6 +296,9 @@
         - shell:
             !include-raw-escape:
                 - include-raw-check-poms.sh
+
+        # Please run archive-build-notification last
+        - archive-build-notification
 
     publishers:
         - email-notification:
@@ -358,6 +373,10 @@
         settings: 'releng-builder-settings'
         global-settings: 'odl-global-settings'
 
+    postbuilders:
+        # Please run archive-build-notification last
+        - archive-build-notification
+
     publishers:
         - email-notification:
             email-prefix: '[releng]'
@@ -429,6 +448,10 @@
         maven-opts: '-Xmx1024m'
         settings: 'autorelease-settings'
         global-settings: 'odl-global-settings'
+
+    postbuilders:
+        # Please run archive-build-notification last
+        - archive-build-notification
 
     publishers:
         - email-notification:
