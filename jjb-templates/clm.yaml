@@ -32,7 +32,6 @@
         - timed: 'H H * * 6'
 
     prebuilders:
-        - wipe-org-opendaylight-repo
         - provide-maven-settings:
             global-settings-file: 'odl-global-settings'
             settings-file: 'JENKINS_SETTINGS'

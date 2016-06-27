@@ -278,6 +278,8 @@
                         global-settings-type: cfp
                 - description-setter:
                     regexp: '^Build logs: .*'
+                # Cleanup after ourselves
+                - wipe-org-opendaylight-repo
             script-only-if-succeeded: False
             script-only-if-failed: False
             mark-unstable-if-failed: True
