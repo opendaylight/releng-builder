@@ -102,10 +102,11 @@
         - integration-robot:
             unstable-if: 0.0
             pass-if: 100.0
-        - archive:
-            artifacts: '*.log,*.log.xz,*.csv'
         - email-notification:
             email-prefix: '[{project}]'
+        - integration-csit-archive-build
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: '{project}-csit-1node-{functionality}-{install}-{stream}'
@@ -185,8 +186,6 @@
         - integration-robot:
             unstable-if: 0.0
             pass-if: 100.0
-        - archive:
-            artifacts: '*.log,*.log.xz,*.csv'
         - email-notification:
             email-prefix: '[{project}]'
         - plot:
@@ -214,6 +213,9 @@
                 inclusion-flag: 'off'
                 display-table: true
                 format: csv
+        - integration-csit-archive-build
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: '{project}-csit-1node-periodic-{functionality}-{install}-{stream}'
@@ -291,8 +293,6 @@
         - integration-robot:
             unstable-if: 0.0
             pass-if: 100.0
-        - archive:
-            artifacts: '*.log,*.log.xz,*.csv'
         - email-notification:
             email-prefix: '[{project}]'
         - plot:
@@ -320,6 +320,9 @@
                 inclusion-flag: 'off'
                 display-table: true
                 format: csv
+        - integration-csit-archive-build
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: '{project}-csit-verify-3node-{functionality}'
@@ -401,10 +404,11 @@
         - integration-robot:
             unstable-if: 0.0
             pass-if: 100.0
-        - archive:
-            artifacts: '*.log,*.log.xz,*.csv'
         - email-notification:
             email-prefix: '[{project}]'
+        - integration-csit-archive-build
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: '{project}-csit-3node-{functionality}-{install}-{stream}'
@@ -485,8 +489,6 @@
         - integration-robot:
             unstable-if: 0.0
             pass-if: 100.0
-        - archive:
-            artifacts: '*.log,*.log.xz,*.csv'
         - email-notification:
             email-prefix: '[{project}]'
         - plot:
@@ -514,6 +516,9 @@
                 inclusion-flag: 'off'
                 display-table: true
                 format: csv
+        - integration-csit-archive-build
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: '{project}-csit-3node-periodic-{functionality}-{install}-{stream}'
@@ -592,8 +597,6 @@
         - integration-robot:
             unstable-if: 0.0
             pass-if: 100.0
-        - archive:
-            artifacts: '*.log,*.log.xz,*.csv'
         - email-notification:
             email-prefix: '[{project}]'
         - plot:
@@ -621,6 +624,9 @@
                 inclusion-flag: 'off'
                 display-table: true
                 format: csv
+        - integration-csit-archive-build
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: '{project}-openstack-{functionality}-daily-{openstack}-{odl}'
@@ -691,10 +697,11 @@
         - integration-robot:
             unstable-if: 0.0
             pass-if: 100.0
-        - archive:
-            artifacts: '*log*'
         - email-notification:
             email-prefix: '[{project}]'
+        - integration-csit-archive-build
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: '{project}-csit-1node-openstack-{openstack}-{functionality}-{stream}'
@@ -793,10 +800,11 @@
         - integration-robot:
             unstable-if: 0.0
             pass-if: 100.0
-        - archive:
-            artifacts: '*log*'
         - email-notification:
             email-prefix: '[{project}]'
+        - integration-csit-archive-build
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: '{project}-csit-3node-openstack-{openstack}-{functionality}-{stream}'
@@ -900,7 +908,8 @@
         - integration-robot:
             unstable-if: 0.0
             pass-if: 100.0
-        - archive:
-            artifacts: '*log*'
         - email-notification:
             email-prefix: '[{project}]'
+        - integration-csit-archive-build
+        - archive-build:
+            maven-version: '{mvn33}'

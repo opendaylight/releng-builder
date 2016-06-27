@@ -465,3 +465,17 @@
             unstable-threshold: '{unstable-if}'
             pass-threshold: '{pass-if}'
             only-critical: false
+
+- publisher:
+    name: integration-csit-archive-build
+    publishers:
+        - postbuildscript:
+            builders:
+                - shell: |
+                    #!/bin/bash
+                    curl --output robot-plugin.zip "$BUILD_URL/robot/report/*zip*/robot-plugin.zip"
+                    unzip -d $WORKSPACE/archives robot-plugin.zip
+                    mv *log* *.log *.csv $WORKSPACE/archives || true  # Don't fail if file missing
+            script-only-if-succeeded: False
+            script-only-if-failed: False
+            mark-unstable-if-failed: True
