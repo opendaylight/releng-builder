@@ -185,8 +185,6 @@
         - integration-robot:
             unstable-if: 0.0
             pass-if: 100.0
-        - archive:
-            artifacts: '*.log,*.log.xz,*.csv'
         - email-notification:
             email-prefix: '[{project}]'
         - plot:
@@ -214,6 +212,9 @@
                 inclusion-flag: 'off'
                 display-table: true
                 format: csv
+        - integration-csit-archive-build
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: '{project}-csit-1node-periodic-{functionality}-{install}-{stream}'
