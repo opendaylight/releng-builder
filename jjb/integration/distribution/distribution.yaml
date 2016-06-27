@@ -74,7 +74,6 @@
             name: 'integration/distribution'
 
     prebuilders:
-        - wipe-org-opendaylight-repo
         - jacoco-nojava-workaround
         - provide-maven-settings:
             global-settings-file: 'odl-global-settings'
@@ -137,7 +136,6 @@
         - timed: 'H H * * 6'
 
     prebuilders:
-        - wipe-org-opendaylight-repo
         - provide-maven-settings:
             global-settings-file: 'odl-global-settings'
             settings-file: 'integration-distribution-settings'
@@ -238,7 +236,6 @@
                       pattern: '**/*.xml'
 
     prebuilders:
-        - wipe-org-opendaylight-repo
         - jacoco-nojava-workaround
         - autorelease-checkout-gerrit-patch
         - autorelease-generate-release-patches
