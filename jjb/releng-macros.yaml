@@ -285,6 +285,15 @@
             fail-build: false
 
 - builder:
+    name: archive-build-notification
+    # Notify Gerrit of the log location once the build is complete.
+    builders:
+        - shell: |
+            ARHCIVES_DIR=$JENKINS_HOSTNAME/$JOB_NAME/$BUILD_NUMBER
+            LOG_MESSAGE="Logs located at https://nexus.opendaylight.org/content/sites/logs/$SILO/$ARCHIVES_DIR/"
+            ssh -p 29418 git.opendaylight.org gerrit review -m "$LOG_MESSAGE" $GERRIT_PATCHSET_REVISION
+
+- builder:
     name: wipe-org-opendaylight-repo
     builders:
         - shell: 'if [ -d /tmp/r/org/opendaylight ]; then rm -rf /tmp/r/org/opendaylight; fi'

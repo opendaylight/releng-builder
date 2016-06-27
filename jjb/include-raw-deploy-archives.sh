@@ -1,5 +1,5 @@
 #!/bin/bash
-ARCHIVES_DIR="$JOB_NAME/`date +'%Y-%m-%d.%H%M%S'`-$BUILD_NUMBER-$BUILD_CAUSE"
+ARCHIVES_DIR="$JENKINS_HOSTNAME/$JOB_NAME/$BUILD_NUMBER"
 LOGS_SERVER="https://logs.opendaylight.org"
 echo "Build logs: <a href=\"$LOGS_SERVER/$SILO/$ARCHIVES_DIR\">$LOGS_SERVER/$SILO/$ARCHIVES_DIR</a>"
 
