@@ -263,6 +263,7 @@
     # To archive things the job will need to create a "archives" directory in
     # the workspace and this macro will handle copying the contents of the
     # archives directory.
+    # Also ensure that the workspace is cleaned up at the end of the build.
     publishers:
         - postbuildscript:
             builders:
@@ -280,6 +281,8 @@
             script-only-if-succeeded: False
             script-only-if-failed: False
             mark-unstable-if-failed: True
+        - workspace-cleanup:
+            fail-build: false
 
 - builder:
     name: wipe-org-opendaylight-repo
