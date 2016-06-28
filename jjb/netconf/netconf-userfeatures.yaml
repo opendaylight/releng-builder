@@ -29,7 +29,8 @@
             scope: 'all'
 
     # Features to install
-    install-features: 'odl-restconf,odl-netconf-mdsal,odl-clustering-test-app,odl-netconf-connector-all,odl-openflowplugin-all'
+    # ofp feature added in https://git.opendaylight.org/gerrit/#/c/33712/
+    install-features: 'odl-restconf,odl-netconf-mdsal,odl-clustering-test-app,odl-netconf-connector-all,odl-openflowplugin-flow-services-ui'
 
     # Robot custom options
     robot-options: '-v NETOPEER_USER:root'
