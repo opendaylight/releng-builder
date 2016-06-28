@@ -286,6 +286,12 @@ do
 done
 }
 
+cat > ${WORKSPACE}/disable_firewall.sh << EOF
+sudo systemctl stop firewalld
+sudo systemctl stop iptables
+true
+EOF
+
 cat > ${WORKSPACE}/get_devstack.sh << EOF
 sudo systemctl stop firewalld
 sudo yum install bridge-utils -y
@@ -390,7 +396,8 @@ done
 
 #Need to disable firewalld and iptables in control node
 echo "Stop Firewall in Control Node for compute nodes to be able to reach the ports and add to hypervisor-list"
-ssh ${OPENSTACK_CONTROL_NODE_IP} "sudo systemctl stop firewalld; sudo systemctl stop iptables"
+scp ${WORKSPACE}/disable_firewall.sh ${OPENSTACK_CONTROL_NODE_IP}:/tmp
+ssh ${OPENSTACK_CONTROL_NODE_IP} "sudo bash /tmp/disable_firewall.sh"
 echo "sleep for a minute and print hypervisor-list"
 sleep 60
 ssh ${OPENSTACK_CONTROL_NODE_IP} "cd /opt/stack/devstack; source openrc admin admin; nova hypervisor-list;nova-manage service list;sudo systemctl status libvirtd"
@@ -399,7 +406,8 @@ ssh ${OPENSTACK_CONTROL_NODE_IP} "cd /opt/stack/devstack; source openrc admin ad
 for i in `seq 1 $((NUM_OPENSTACK_SYSTEM - 1))`
 do
     OSIP=OPENSTACK_COMPUTE_NODE_${i}_IP
-    ssh "${!OSIP}" "sudo systemctl stop firewalld; sudo systemctl stop iptables"
+    scp ${WORKSPACE}/disable_firewall.sh "${!OSIP}:/tmp"
+    ssh "${!OSIP}" "sudo bash /tmp/disable_firewall.sh"
 done
 
 # upgrading pip, urllib3 and httplib2 so that tempest tests can be run on ${OPENSTACK_CONTROL_NODE_IP}
