@@ -62,3 +62,4 @@ find $ARCHIVES_DIR -name "*.txt" \
                 | xargs gzip
 
 zip -r archives.zip $JENKINS_HOSTNAME/
+du -sh archives.zip
