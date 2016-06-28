@@ -110,7 +110,9 @@
         goals: '-Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo clean install'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: 'yangtools-settings'
+        settings-type: cfp
         global-settings: 'odl-global-settings'
+        global-settings-type: cfp
         ignore-upstream-changes: true
 
     publishers:
