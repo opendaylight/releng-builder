@@ -81,26 +81,26 @@ maintenance and configuration of these jobs must be done via JJB through the
 `releng-builder-repo`_. Project contributors can no longer edit the Jenkins jobs
 directly on the server.
 
-Build Slaves
+Build Minions
 ------------
 
-The Jenkins jobs are run on build slaves (executors) which are created on an
-as-needed basis. If no idle build slaves are available a new VM is brought
-up. This process can take up to 2 minutes. Once the build slave has finished a
+The Jenkins jobs are run on build minions (executors) which are created on an
+as-needed basis. If no idle build minions are available a new VM is brought
+up. This process can take up to 2 minutes. Once the build minion has finished a
 job, it will remain online for 45 minutes before shutting down. Subsequent
-jobs will use an idle build slave if available.
+jobs will use an idle build minion if available.
 
-Our Jenkins master supports many types of dynamic build slaves. If you are
-creating custom jobs then you will need to have an idea of what type of slaves
-are available. The following are the current slave types and descriptions.
-Slave Template Names are needed for jobs that take advantage of multiple
-slaves as they must be specifically called out by template name instead of
+Our Jenkins master supports many types of dynamic build minions. If you are
+creating custom jobs then you will need to have an idea of what type of minions
+are available. The following are the current minion types and descriptions.
+Minion Template Names are needed for jobs that take advantage of multiple
+minions as they must be specifically called out by template name instead of
 label.
 
-Adding New Components to the Slaves
+Adding New Components to the Minions
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-If your project needs something added to one of the slaves used during build
+If your project needs something added to one of the minions used during build
 and test you can help us get things added faster by doing one of the following:
 
 * Submit a patch to RelEng/Builder for the `spinup-scripts`_ that
@@ -123,44 +123,22 @@ make sure that we don't break current jobs and that the new software features
 are operating as intended. Once this is done the changes will be merged and
 the updates applied to the RelEng Jenkins production silo.
 
-Please note that the combination of a Vagrant slave snapshot and a Jenkins
-spinup script is what defines a given slave. For instance, a slave may be
+Please note that the combination of a Vagrant minion snapshot and a Jenkins
+spinup script is what defines a given minion. For instance, a minion may be
 defined by the `vagrant-basic-java-node`_ Vagrant definition
 and the `spinup-scripts-controller.sh`_ Jenkins spinup script
-(as the dynamic\_controller slave is). The pair provides the full definition of
-the realized slave. Jenkins starts a slave using the last-spun Vagrant snapshot
+(as the dynamic\_controller minion is). The pair provides the full definition of
+the realized minion. Jenkins starts a minion using the last-spun Vagrant snapshot
 for the specified definition. Once the base Vagrant instance is online Jenkins
 checks out the RelEng/Builder repo on it and executes two scripts. The first is
-`spinup-scripts-basic_settings.sh`_, which is a baseline for all of the slaves.
+`spinup-scripts-basic_settings.sh`_, which is a baseline for all of the minions.
 The second is
 the specialized spinup script, which handles any system updates, new software
 installs or extra environment tweaks that don't make sense in a snapshot. After
-all of these scripts have executed Jenkins will finally attach the slave as an
-actual slave and start handling jobs on it.
+all of these scripts have executed Jenkins will finally attach the minion as an
+actual minion and start handling jobs on it.
 
-Pool: Rackspace - Docker
-^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. raw:: html
-
-    <table border="1">
-      <tr>
-        <td><b>Jenkins Label</b><br/> dynamic_docker</td>
-        <td><b>Slave Template name</b><br/> rk-f20-docker</td>
-        <td><b>Vagrant Definition</b><br/> releng/builder/vagrant/ovsdb-docker</td>
-        <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/docker.sh</td>
-      </tr>
-      <tr>
-        <td colspan="4">
-          A Fedora 20 system that is configured with OpenJDK 1.7 (aka Java7) and
-          Docker. This system was originally custom built for the test needs of
-          the OVSDB project but other projects have expressed interest in using
-          it.
-        </td>
-      </tr>
-    </table>
-
-Pool: Rackspace DFW
+Pool: ODLRPC
 ^^^^^^^^^^^^^^^^^^^
 
 .. raw:: html
@@ -168,13 +146,13 @@ Pool: Rackspace DFW
     <table border="1">
       <tr>
         <td><b>Jenkins Label</b><br/> dynamic_verify</td>
-        <td><b>Slave Template name</b><br/> rk-c-el65-build</td>
+        <td><b>Minion Template name</b><br/> centos7-builder</td>
         <td><b>Vagrant Definition</b><br/> releng/builder/vagrant/basic-builder</td>
         <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/builder.sh</td>
       </tr>
       <tr>
         <td colspan="4">
-          A CentOS 6 build slave. This system has OpenJDK 1.7 (Java7) and OpenJDK
+          A CentOS 7 huild minion. This system has OpenJDK 1.7 (Java7) and OpenJDK
           1.8 (Java8) installed on it along with all the other components and
           libraries needed for building any current OpenDaylight project. This is
           the label that is used for all basic -verify and -daily- builds for
@@ -186,7 +164,7 @@ Pool: Rackspace DFW
     <table border="1">
       <tr>
         <td><b>Jenkins Label</b><br/> dynamic_merge</td>
-        <td><b>Slave Template name</b><br/> rk-c-el65-build</td>
+        <td><b>Minion Template name</b><br/> centos7-builder</td>
         <td><b>Vagrant Definition</b><br/> releng/builder/vagrant/basic-builder</td>
         <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/builder.sh</td>
       </tr>
@@ -198,115 +176,39 @@ Pool: Rackspace DFW
       </tr>
     </table>
 
-Pool: Rackspace DFW - Devstack
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. raw:: html
-
     <table border="1">
       <tr>
-        <td><b>Jenkins Label</b><br/> dynamic_devstack</td>
-        <td><b>Slave Template name</b><br/> rk-c7-devstack</td>
-        <td><b>Vagrant Definition</b><br/> releng/builder/vagrant/ovsdb-devstack</td>
-        <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/devstack.sh</td>
+        <td><b>Jenkins Label</b><br/> matrix_master</td>
+        <td><b>Minion Template name</b><br/> centos7-matrix</td>
+        <td><b>Vagrant Definition</b><br/> releng/builder/vagrant/basic-java-node</td>
+        <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/matrix.sh</td>
       </tr>
       <tr>
         <td colspan="4">
-          A CentOS 7 system purpose built for doing OpenStack testing using
-          DevStack. This slave is primarily targeted at the needs of the OVSDB
-          project. It has OpenJDK 1.7 (aka Java7) and other basic DevStack related
-          bits installed.
+          This is a very minimal system that is designed to spin up with 2 build
+          instances on it. The purpose is to have a location that is not the
+          Jenkins master itself for jobs that are executing matrix operations
+          since they need a director location. This image should not be used for
+          anything but tying matrix jobs before the matrx defined label ties.
         </td>
       </tr>
     </table>
 
-Pool: Rackspace DFW - Integration
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. raw:: html
-
     <table border="1">
       <tr>
         <td><b>Jenkins Label</b><br/> dynamic_robot</td>
-        <td><b>Slave Template name</b><br/> rk-c-el6-robot</td>
+        <td><b>Minion Template name</b><br/> centos7-robot</td>
         <td><b>Vagrant Definition</b><br/> releng/builder/vagrant/integration-robotframework</td>
         <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/robot.sh</td>
       </tr>
       <tr>
         <td colspan="4">
-          A CentOS 6 slave that is configured with OpenJDK 1.7 (Java7) and all the
-          current packages used by the integration project for doing robot driven
-          jobs. If you are executing robot framework jobs then your job should be
-          using this as the slave that you are tied to. This image does not
-          contain the needed libraries for building components of OpenDaylight,
-          only for executing robot tests.
-        </td>
-      </tr>
-    </table>
-
-Pool: Rackspace DFW - Integration Dynamic Lab
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. raw:: html
-
-    <table border="1">
-      <tr>
-        <td><b>Jenkins Label</b><br/> dynamic_controller</td>
-        <td><b>Slave Template name</b><br/> rk-c-el6-java</td>
-        <td><b>Vagrant Definition</b><br/> releng/builder/vagrant/basic-java-node</td>
-        <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/controller.sh</td>
-      </tr>
-      <tr>
-        <td colspan="4">
-          A CentOS 6 slave that has the basic OpenJDK 1.7 (Java7) installed and is
-          capable of running the controller, not building.
-        </td>
-      </tr>
-    </table>
-
-    <table border="1">
-      <tr>
-        <td><b>Jenkins Label</b><br/> dynamic_java</td>
-        <td><b>Slave Template name</b><br/> rk-c-el6-java</td>
-        <td><b>Vagrant Definition</b><br/> releng/builder/vagrant/basic-java-node</td>
-        <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/controller.sh</td>
-      </tr>
-      <tr>
-        <td colspan="4">
-          See dynamic_controller as it is currently the same image.
-        </td>
-      </tr>
-    </table>
-
-    <table border="1">
-      <tr>
-        <td><b>Jenkins Label</b><br/> dynamic_mininet</td>
-        <td><b>Slave Template name</b><br/> rk-c-el6-mininet</td>
-        <td><b>Vagrant Definition</b><br/> releng/builder/vagrant/basic-mininet-node</td>
-        <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/mininet.sh</td>
-      </tr>
-      <tr>
-        <td colspan="4">
-          A CentOS 6 image that has mininet, openvswitch v2.0.x, netopeer and
-          PostgreSQL 9.3 installed. This system is targeted at playing the role of
-          a mininet system for integration tests. Netopeer is installed as it is
-          needed for various tests by Integration. PostgreSQL 9.3 is installed as
-          the system is also capable of being used as a VTN project controller and
-          VTN requires PostgreSQL 9.3.
-        </td>
-      </tr>
-    </table>
-
-    <table border="1">
-      <tr>
-        <td><b>Jenkins Label</b><br/> dynamic_mininet_fedora</td>
-        <td><b>Slave Template name</b><br/> rk-f21-mininet</td>
-        <td><b>Vagrant Definition</b><br/> releng/builder/vagrant/basic-mininet-fedora-node</td>
-        <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/mininet-fedora.sh</td>
-      </tr>
-      <tr>
-        <td colspan="4">
-          Basic Fedora 21 system with ovs v2.3.x and mininet 2.2.1
+          A CentOS 7 minion that is configured with OpenJDK 1.7 (Java7), OpenJDK
+          1.8 (Java8) and all the current packages used by the integration
+          project for doing robot driven jobs. If you are executing robot
+          framework jobs then your job should be using this as the minion that
+          you are tied to. This image does not contain the needed libraries for
+          building components of OpenDaylight, only for executing robot tests.
         </td>
       </tr>
     </table>
@@ -314,7 +216,7 @@ Pool: Rackspace DFW - Integration Dynamic Lab
     <table border="1">
       <tr>
         <td><b>Jenkins Label</b><br/> ubuntu_mininet</td>
-        <td><b>Slave Template name</b><br/> ubuntu-trusty-mininet</td>
+        <td><b>Minion Template name</b><br/> ubuntu-trusty-mininet</td>
         <td><b>Vagrant Definition</b><br/> releng/builder/vagrant/ubuntu-mininet</td>
         <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/mininet-ubuntu.sh</td>
       </tr>
@@ -328,7 +230,7 @@ Pool: Rackspace DFW - Integration Dynamic Lab
     <table border="1">
       <tr>
         <td><b>Jenkins Label</b><br/> ubuntu_mininet_ovs_23</td>
-        <td><b>Slave Template name</b><br/> ubuntu-trusty-mininet-ovs-23</td>
+        <td><b>Minion Template name</b><br/> ubuntu-trusty-mininet-ovs-23</td>
         <td><b>Vagrant Definition</b><br/> releng/builder/vagrant/ubuntu-mininet-ovs-23</td>
         <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/mininet-ubuntu.sh</td>
       </tr>
@@ -339,25 +241,94 @@ Pool: Rackspace DFW - Integration Dynamic Lab
       </tr>
     </table>
 
-Pool: Rackspace DFW - Matrix
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. raw:: html
-
     <table border="1">
       <tr>
-        <td><b>Jenkins Label</b><br/> matrix_master</td>
-        <td><b>Slave Template name</b><br/> rk-c-el6-matrix</td>
+        <td><b>Jenkins Label</b><br/> dynamic_controller</td>
+        <td><b>Minion Template name</b><br/> centos7-java</td>
         <td><b>Vagrant Definition</b><br/> releng/builder/vagrant/basic-java-node</td>
-        <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/matrix.sh</td>
+        <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/controller.sh</td>
       </tr>
       <tr>
         <td colspan="4">
-          This is a very minimal system that is designed to spin up with 2 build
-          instances on it. The purpose is to have a location that is not the
-          Jenkins master itself for jobs that are executing matrix operations
-          since they need a director location. This image should not be used for
-          anything but tying matrix jobs before the matrx defined label ties.
+          A CentOS 7 minion that has the basic OpenJDK 1.7 (Java7) and OpenJDK
+          1.8 (Java8) installed and is capable of running the controller, not
+          building.
+        </td>
+      </tr>
+    </table>
+
+    <table border="1">
+      <tr>
+        <td><b>Jenkins Label</b><br/> dynamic_java</td>
+        <td><b>Minion Template name</b><br/> centos7-java</td>
+        <td><b>Vagrant Definition</b><br/> releng/builder/vagrant/basic-java-node</td>
+        <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/controller.sh</td>
+      </tr>
+      <tr>
+        <td colspan="4">
+          See dynamic_controller as it is currently the same image.
+        </td>
+      </tr>
+    </table>
+
+    <table border="1">
+      <tr>
+        <td><b>Jenkins Label</b><br/> dynamic_java_8g</td>
+        <td><b>Minion Template name</b><br/> centos7-java-8g</td>
+        <td><b>Vagrant Definition</b><br/> releng/builder/vagrant/basic-java-node</td>
+        <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/controller.sh</td>
+      </tr>
+      <tr>
+        <td colspan="4">
+          See dynamic_controller as it is currently the same image but with 8G of RAM.
+        </td>
+      </tr>
+    </table>
+
+    <table border="1">
+      <tr>
+        <td><b>Jenkins Label</b><br/> dynamic_devstack</td>
+        <td><b>Minion Template name</b><br/> centos7-devstack</td>
+        <td><b>Vagrant Definition</b><br/> releng/builder/vagrant/ovsdb-devstack</td>
+        <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/devstack.sh</td>
+      </tr>
+      <tr>
+        <td colspan="4">
+          A CentOS 7 system purpose built for doing OpenStack testing using
+          DevStack. This minion is primarily targeted at the needs of the OVSDB
+          project. It has OpenJDK 1.7 (aka Java7) and OpenJDK 1.8 (Java8) and
+          other basic DevStack related bits installed.
+        </td>
+      </tr>
+    </table>
+
+    <table border="1">
+      <tr>
+        <td><b>Jenkins Label</b><br/> dynamic_docker</td>
+        <td><b>Minion Template name</b><br/> centos7-docker</td>
+        <td><b>Vagrant Definition</b><br/> releng/builder/vagrant/ovsdb-docker</td>
+        <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/docker.sh</td>
+      </tr>
+      <tr>
+        <td colspan="4">
+          A CentOS 7 system that is configured with OpenJDK 1.7 (aka Java7),
+          OpenJDK 1.8 (Java8) and Docker. This system was originally custom
+          built for the test needs of the OVSDB project but other projects have
+          expressed interest in using it.
+        </td>
+      </tr>
+    </table>
+
+    <table border="1">
+      <tr>
+        <td><b>Jenkins Label</b><br/> gbp_trusty</td>
+        <td><b>Minion Template name</b><br/> gbp_trusty</td>
+        <td><b>Vagrant Definition</b><br/> releng/builder/vagrant/gbp-ubuntu-docker-ovs-node</td>
+        <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/ubuntu-docker-ovs.sh</td>
+      </tr>
+      <tr>
+        <td colspan="4">
+          A basic Ubuntu node with latest OVS and docker installed. Used by Group Based Policy.
         </td>
       </tr>
     </table>
