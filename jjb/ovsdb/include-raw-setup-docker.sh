@@ -11,7 +11,7 @@ do
    docker rm "$x"
 done
 
-for x in $(docker images | egrep -e 'davetucker|mgkwill|socketplane' | awk '{print $3}')
+for x in $(docker images | grep vpickard | awk '{print $3}')
 do
    docker rmi "$x"
 done
@@ -19,8 +19,8 @@ done
 
 
 echo "---> Starting OVS $OVS_VERSION"
-/usr/bin/docker pull mgkwill/openvswitch:$OVS_VERSION
-CID=$(/usr/bin/docker run -p 6641:6640 --privileged=true -d -i -t mgkwill/openvswitch:$OVS_VERSION /usr/bin/supervisord)
+/usr/bin/docker pull vpickard/openvswitch:$OVS_VERSION
+CID=$(/usr/bin/docker run -p 6641:6640 --privileged=true -d -i -t vpickard/openvswitch:$OVS_VERSION /usr/bin/supervisord)
 REALCID=`echo $CID | rev | cut -d ' ' -f 1 | rev`
 echo "CID=$REALCID" > env.properties
 echo "OVS_VERSION=${OVS_VERSION}" >> env.properties
