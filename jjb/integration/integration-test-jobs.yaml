@@ -391,7 +391,7 @@
 
     postbuilders:
         - trigger-builds:
-            - project: 'integration-distribution-test-{stream}'
+            - project: '{csit-list}'
               block: true
               predefined-parameters:
                   BUNDLEURL=$BUNDLEURL
@@ -454,7 +454,7 @@
 
     postbuilders:
         - trigger-builds:
-            - project: 'integration-distribution-test-{stream}'
+            - project: '{csit-list}'
               block: true
               predefined-parameters:
                   BUNDLEURL=$BUNDLEURL
