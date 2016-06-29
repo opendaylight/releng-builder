@@ -204,9 +204,9 @@
       - openstack:
           instances:
             - cloud-name: 'ODLRPC'
-              template-name: centos7-java
+              template-name: '{controller-image}'
               count: '{controller-vms}'
-            - cloud-name: '{mininet-cloud-name}'
+            - cloud-name: 'ODLRPC'
               template-name: '{mininet-image}'
               count: '{mininet-vms}'
 
@@ -219,10 +219,10 @@
       - openstack:
           instances:
             - cloud-name: 'ODLRPC'
-              template-name: centos7-java
+              template-name: '{controller-image}'
               count: '{controller-vms}'
             - cloud-name: 'ODLRPC'
-              template-name: centos7-devstack
+              template-name: '{openstack-image}'
               count: '{openstack-vms}'
 
 #################
