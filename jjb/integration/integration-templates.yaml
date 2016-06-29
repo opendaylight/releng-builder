@@ -70,10 +70,10 @@
     wrappers:
         - build-timeout
         - integration-openstack-controller-mininet:
+            controller-image: '{controller-image}'
             controller-vms: 1
             mininet-image: '{mininet-image}'
             mininet-vms: '{mininet-vms}'
-            mininet-cloud-name: '{mininet-cloud-name}'
         - ssh-agent-credentials:
             users:
                 - '{ssh-credentials}'
@@ -154,10 +154,10 @@
     wrappers:
         - build-timeout
         - integration-openstack-controller-mininet:
+            controller-image: '{controller-image}'
             controller-vms: 1
             mininet-image: '{mininet-image}'
             mininet-vms: '{mininet-vms}'
-            mininet-cloud-name: '{mininet-cloud-name}'
         - ssh-agent-credentials:
             users:
                 - '{ssh-credentials}'
@@ -261,10 +261,10 @@
 
     wrappers:
         - integration-openstack-controller-mininet:
+            controller-image: '{controller-image}'
             controller-vms: 1
             mininet-image: '{mininet-image}'
             mininet-vms: '{mininet-vms}'
-            mininet-cloud-name: '{mininet-cloud-name}'
         - ssh-agent-credentials:
             users:
                 - '{ssh-credentials}'
@@ -367,10 +367,10 @@
     wrappers:
         - build-timeout
         - integration-openstack-controller-mininet:
+            controller-image: '{controller-image}'
             controller-vms: 3
             mininet-image: '{mininet-image}'
             mininet-vms: '{mininet-vms}'
-            mininet-cloud-name: '{mininet-cloud-name}'
         - ssh-agent-credentials:
             users:
                 - '{ssh-credentials}'
@@ -453,10 +453,10 @@
     wrappers:
         - build-timeout
         - integration-openstack-controller-mininet:
+            controller-image: '{controller-image}'
             controller-vms: 3
             mininet-image: '{mininet-image}'
             mininet-vms: '{mininet-vms}'
-            mininet-cloud-name: '{mininet-cloud-name}'
         - ssh-agent-credentials:
             users:
                 - '{ssh-credentials}'
@@ -561,10 +561,10 @@
 
     wrappers:
         - integration-openstack-controller-mininet:
+            controller-image: '{controller-image}'
             controller-vms: 3
             mininet-image: '{mininet-image}'
             mininet-vms: '{mininet-vms}'
-            mininet-cloud-name: '{mininet-cloud-name}'
         - ssh-agent-credentials:
             users:
                 - '{ssh-credentials}'
@@ -764,7 +764,9 @@
     wrappers:
         - build-timeout
         - integration-openstack-controller-devstack:
+            controller-image: '{controller-image}'
             controller-vms: 1
+            openstack-image: '{openstack-image}'
             openstack-vms: '{openstack-vms}'
         - ssh-agent-credentials:
             users:
@@ -870,7 +872,9 @@
     wrappers:
         - build-timeout
         - integration-openstack-controller-devstack:
+            controller-image: '{controller-image}'
             controller-vms: 3
+            controller-image: '{openstack-image}'
             openstack-vms: '{openstack-vms}'
         - ssh-agent-credentials:
             users:

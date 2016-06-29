@@ -27,10 +27,11 @@
     02-plot-group: 'Default Plot Group'
     02-plot-data-file: 'plot-data.csv'
 
-    # Mininet configuration
+    # CSIT images configuration
+    controller-image: 'centos7-java'
+    openstack-image: 'centos7-devstack'
     mininet-image: 'ubuntu-trusty-mininet'
     mininet-vms: 1
-    mininet-cloud-name: 'ODLRPC'
 
     # In case a CSIT job is merged without Java version specified
     jdk: 'openjdk8'
