@@ -123,3 +123,48 @@ Signing Gerrit Commits
 5. Verify that your commit is signed by going to the change in Gerrit
    and checking for a green check (instead of a blue ?) next to your
    name.
+
+
+Setting up gpg-agent on a Mac
+-----------------------------
+
+#. Install ``gpg-agent`` and ``pinentry-mac`` using ``brew``::
+
+      brew install gpg-agent pinentry-mac
+
+#. Edit your ``~/.gnupg/gpg.conf`` contain the line::
+
+      use-agent
+
+#. Edit your ``~/.gnupg/gpg-agent.conf`` to something like::
+
+      use-standard-socket
+      enable-ssh-support
+      default-cache-ttl 600
+      max-cache-ttl 7200
+      pinentry-program /usr/local/bin/pinentry-mac
+
+#. Edit your ``.bash_profile`` or equivalent file to contain the
+   following:
+
+   .. code-block:: bash
+
+      [ -f ~/.gpg-agent-info ] && source ~/.gpg-agent-info
+      if [ -S "${GPG_AGENT_INFO%%:*}" ]; then
+        export GPG_AGENT_INFO
+      else
+        eval $( gpg-agent --daemon --write-env-file ~/.gpg-agent-info )
+      fi
+
+#. Kill any stray ``gpg-agent`` daemons running::
+
+      sudo killall gpg-agent
+
+#. Restart your terminal (or log in and out) to reload the your
+   ``.bash_profile`` or equivalent file
+
+#. The next time a git operation makes a call to gpg, it should use
+   your gpg-agent to run a GUI window to ask for your passphrase and
+   give you an option to save your passphrase in the keychain.
+
+   .. image:: images/pinentry-mac.png
