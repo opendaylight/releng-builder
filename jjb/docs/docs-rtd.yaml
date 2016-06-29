@@ -105,8 +105,6 @@
                 file-paths:
                     - compare-type: ANT
                       pattern: docs/**
-        - timed: 'H H * * *'
-
 
     builders:
         - shell: |
@@ -116,13 +114,6 @@
             else
                 git fetch origin $GERRIT_REFSPEC && git checkout FETCH_HEAD
             fi
-        - shell: |
-            mkdir -p docs/_static/integration/robot
-            cd docs/submodules/integration/test
-            git pull origin master
-            cd csit/libraries
-            for f in *.robot; do python -m robot.libdoc $f $WORKSPACE/docs/_static/integration/robot/$f.html; done
-            for f in *.py; do python -m robot.libdoc $f $WORKSPACE/docs/_static/integration/robot/$f.html; done
         - shell: |
             virtualenv $WORKSPACE/venv
             source $WORKSPACE/venv/bin/activate
