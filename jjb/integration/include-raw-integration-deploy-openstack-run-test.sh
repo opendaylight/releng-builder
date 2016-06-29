@@ -273,12 +273,15 @@ for i in `seq 1 ${NUM_ODL_SYSTEM}`
 do
     CONTROLLERIP=ODL_SYSTEM_${i}_IP
     ssh "${!CONTROLLERIP}"  "mv /tmp/${BUNDLEFOLDER}/data/log/ /tmp/odl_log/"
-    ssh "${!CONTROLLERIP}"  'tar -cf - "/tmp/odl_log/" | xz -9 -c - > /tmp/odl_karaf_log.tar.xz'
-    scp "${!CONTROLLERIP}:/tmp/odl_karaf_log.tar.xz" "odl${i}_karaf.log.tar.xz"
+
+    tar -cf - tar/ | gzip > my.tar.gz
+    ssh "${!CONTROLLERIP}"  'tar -cf "/tmp/odl${i}_karaf.log.tar" "/tmp/odl_log/"'
+    scp "${!CONTROLLERIP}:/tmp/odl${i}_karaf_log.tar" "${WORKSPACE}/odl${i}_karaf.log.tar"
+    tar -xvf ${WORKSPACE}/odl${i}_karaf.log.tar odl${1}/
+
 done
 
-ssh ${OPENSTACK_CONTROL_NODE_IP} "xz -9ekvv /opt/stack/devstack/nohup.out"
-scp ${OPENSTACK_CONTROL_NODE_IP}:/opt/stack/devstack/nohup.out.xz "openstack_control_stack.log.xz"
+scp ${OPENSTACK_CONTROL_NODE_IP}:/opt/stack/devstack/nohup.out "openstack_control_stack.log"
 for i in `seq 1 $((NUM_OPENSTACK_SYSTEM - 1))`
 do
     OSIP=OPENSTACK_COMPUTE_NODE_${i}_IP
