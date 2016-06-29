@@ -26,7 +26,7 @@
     install-features: 'odl-openflowplugin-flow-services-ui-li,odl-openflowplugin-drop-test-li'
 
     # Robot custom options
-    robot-options: '-v duration_in_secs:180'
+    robot-options: '-v duration_in_secs:180 -v throughput_threshold:20000 -v latency_threshold:5000'
 
     # Trigger jobs (daily)
     schedule: 'H H * * *'

@@ -23,7 +23,7 @@
     install-features: 'odl-openflowplugin-flow-services-ui,odl-openflowplugin-drop-test'
 
     # Robot custom options
-    robot-options: ''
+    robot-options: '-v throughput_threshold:20000 -v latency_threshold:5000'
 
     # Trigger jobs (upstream dependencies)
     trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream},openflowjava-distribution-{stream},openflowplugin-distribution-{stream}'
