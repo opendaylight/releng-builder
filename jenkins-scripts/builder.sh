@@ -1,17 +1,29 @@
 #!/bin/bash
+# vim: sw=2 ts=2 sts=2 et :
 
 yum clean all
 
-# add in mono components for VTN
+#
+# VTN
+#
+
+# Add mono components for VTN
 yum install -y yum-utils
-#The following is needed for the new code in vtn project.
-#these packages will enable C# compilation.
+# The following is needed for the new code in VTN project
+# These packages will enable C# compilation
 rpm --import "http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF"
-#Added the mono tools repository
+# Add the mono tools repository
 yum-config-manager -q -y --add-repo http://origin-download.mono-project.com/repo/centos
-#Install the nuget binary
+# Install the nuget binary
 yum install -q -y http://origin-download.mono-project.com/repo/centos/n/nuget/nuget-2.8.3+md58+dhx1-0.noarch.rpm
-#install the mono toolchain
+# Install the mono toolchain
 yum -q -y install mono-complete
 
-# vim: sw=2 ts=2 sts=2 et :
+#
+# Integration/Packaging
+#
+
+# Install software for building RPMs
+sudo yum install -y fedora-packager
+# Add jenkins user to mock group so they can build RPMs
+sudo usermod -a -G mock jenkins
