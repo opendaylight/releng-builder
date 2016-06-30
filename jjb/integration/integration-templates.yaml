@@ -761,6 +761,10 @@
             name: TENANT_NETWORK_TYPE
             default: '{tenant-network-type}'
             description: 'Tenant Network Type supported by the implementation'
+        - string:
+            name: LIMIT_TEST_VM_INSTANCES_PER_NW
+            default: '{limit-test-instances}'
+            description: 'Tenant Network Type supported by the implementation'
     scm:
         - integration-gerrit-scm:
             credentials-id: '{ssh-credentials}'
