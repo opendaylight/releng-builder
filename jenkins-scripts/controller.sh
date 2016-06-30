@@ -29,6 +29,17 @@ echo "Installing the Cassandra Server..."
 
 tar -xvf apache-cassandra-2.1.14-bin.tar.gz
 
+# Installation of Elasticsearch node
+
+mkdir /tmp/elasticsearch
+cd /tmp/elasticsearch
+
+wget --no-verbose https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.7.5.tar.gz
+
+echo "Installing the Elasticsearch node..."
+
+tar -xvzf elasticsearch-1.7.5.tar.gz
+
 cat <<EOF >/etc/sudoers.d/89-jenkins-user-defaults
 Defaults:jenkins !requiretty
 jenkins     ALL = NOPASSWD: ALL
