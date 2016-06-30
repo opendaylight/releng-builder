@@ -16,6 +16,24 @@
       "revId": "b3f1e6e3391c55ae88b0729ae0c6f0bac3c04cd2",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_a6888123",
+        "filename": "jjb/integration/include-raw-integration-install-robotframework.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5406
+      },
+      "writtenOn": "2016-06-30T20:39:54Z",
+      "side": 1,
+      "message": "Hi Luis, Thanks for the review. This is the python library that will be used by longevity robot framework(part of robotVM) to interact with elasticsearch node(that will be installed on controllerVM). Basically it is used to make the rest calls to the elasticsearch node. This does not install elasticsearch node as such. Hence imo it should remain here. Let me know if my understanding is wrong here.",
+      "parentUuid": "9a561d44_46eec5ed",
+      "revId": "b3f1e6e3391c55ae88b0729ae0c6f0bac3c04cd2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
