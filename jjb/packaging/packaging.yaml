@@ -1,10 +1,11 @@
 - project:
     name: packaging
     jobs:
-        - '{name}-verify-python-{stream}'
+        - '{name}-verify-python'
+
+    project: 'integration/packaging'
 
     stream:
         - master:
             branch: 'master'
 
-    project: 'integration/packaging'
