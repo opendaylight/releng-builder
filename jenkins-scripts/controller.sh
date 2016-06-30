@@ -33,3 +33,6 @@ cat <<EOF >/etc/sudoers.d/89-jenkins-user-defaults
 Defaults:jenkins !requiretty
 jenkins     ALL = NOPASSWD: ALL
 EOF
+
+# install crudini command line tool for editing config files
+yum install -y crudini

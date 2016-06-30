@@ -28,4 +28,7 @@ Defaults:jenkins !requiretty
 jenkins     ALL = NOPASSWD: ALL
 EOF
 
+# install crudini command line tool for editing config files
+yum install -y crudini
+
 # vim: sw=2 ts=2 sts=2 et :

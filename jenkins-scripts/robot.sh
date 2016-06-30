@@ -19,4 +19,7 @@ yum install -y -q nc python-docker-py
 # make sure the firewall is stopped
 service iptables stop
 
+# install crudini command line tool for editing config files
+yum install -y crudini
+
 # vim: sw=2 ts=2 sts=2 et :

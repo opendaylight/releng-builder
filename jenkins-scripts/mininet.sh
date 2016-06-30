@@ -62,4 +62,7 @@ echo 'root' | passwd -f --stdin root
 # make sure the firewall is stopped
 /bin/bash disable_firewall.sh
 
+# install crudini command line tool for editing config files
+yum install -y crudini
+
 # vim: sw=2 ts=2 sts=2 et :
