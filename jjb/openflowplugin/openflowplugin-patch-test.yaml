@@ -10,6 +10,7 @@
     stream:
         - boron:
             branch: 'master'
+            jdk: 'openjdk8'
             csit-list: >
                 openflowplugin-csit-1node-flow-services-only-{stream},
                 openflowplugin-csit-1node-flow-services-helium-redesign-only-{stream},
@@ -25,6 +26,7 @@
 
         - beryllium:
             branch: 'stable/beryllium'
+            jdk: 'openjdk7'
             csit-list: >
                 openflowplugin-csit-1node-flow-services-only-{stream},
                 openflowplugin-csit-1node-flow-services-lithium-redesign-only-{stream},
