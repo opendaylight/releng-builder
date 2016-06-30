@@ -1,0 +1,54 @@
+- project:
+    name: sandbox
+    jobs:
+        - sandbox-verify-master
+    project: releng/sandbox
+
+- job-template:
+    name: 'sandbox-verify-master'
+    node: dynamic_verify
+
+    parameters:
+        - project-parameter:
+            project: '{project}'
+        - gerrit-parameters:
+            project: '{project}'
+            branch: 'master'
+            refspec: 'refs/heads/master'
+
+    scm:
+        - git:
+            credentials-id: '{ssh-credentials}'
+            url: '$GIT_BASE'
+            refspec: '$GERRIT_REFSPEC'
+            branches:
+                - 'origin/$GERRIT_BRANCH'
+            skip-tag: true
+            choosing-strategy: 'gerrit'
+
+    triggers:
+        - gerrit:
+            server-name: 'OpenDaylight'
+            trigger-on:
+                - patchset-created-event:
+                    exclude-drafts: 'false'
+                    exclude-trivial-rebase: 'false'
+                    exclude-no-code-change: 'false'
+                - draft-published-event
+                - comment-added-contains-event:
+                    comment-contains-value: 'recheck'
+                - comment-added-contains-event:
+                    comment-contains-value: 'reverify'
+                - comment-added-event:
+                    approval-category: Code-Review
+                    approval-value: 2
+            projects:
+              - project-compare-type: 'ANT'
+                project-pattern: 'releng/sandbox'
+                branches:
+                  - branch-compare-type: 'ANT'
+                    branch-pattern: '**/master'
+
+    builders:
+        - shell: |
+            ./build.sh
