@@ -6,16 +6,24 @@
 
 OS=$(facter operatingsystem | tr '[:upper:]' '[:lower:]')
 
-# Determine if we need to add jenkins to the docker group
+useradd -m -s /bin/bash jenkins
+
+# Check if docker group exists
 grep -q docker /etc/group
 if [ "$?" == '0' ]
 then
-  GROUP='-G docker'
-else
-  GROUP=''
+  # Add jenkins user to docker group
+  usermod -a -G docker jenkins
 fi
 
-useradd -m ${GROUP} -s /bin/bash jenkins
+# Check if mock group exists
+grep -q mock /etc/group
+if [ "$?" == '0' ]
+then
+  # Add jenkins user to mock group so they can build Int/Pack's RPMs
+  usermod -a -G mock jenkins
+fi
+
 mkdir /home/jenkins/.ssh
 mkdir /w
 cp -r /home/${OS}/.ssh/authorized_keys /home/jenkins/.ssh/authorized_keys
