@@ -36,6 +36,9 @@
     # Trigger jobs: (daily)
     schedule: 'H H * * *'
 
+    # Controller configuration
+    controller-image: 'centos7-java-8g'
+
 - project:
     name: bgpcep-csit-bgp-ingest-mixed
     jobs:
@@ -74,6 +77,9 @@
 
     # Trigger jobs (daily)
     schedule: 'H H * * *'
+
+    # Controller configuration
+    controller-image: 'centos7-java-8g'
 
     # Plot Info
     01-plot-title: 'Number of generated updates'
