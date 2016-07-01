@@ -274,8 +274,7 @@ do
     CONTROLLERIP=ODL_SYSTEM_${i}_IP
     ssh "${!CONTROLLERIP}"  "mv /tmp/${BUNDLEFOLDER}/data/log/ /tmp/odl_log/"
 
-    tar -cf - tar/ | gzip > my.tar.gz
-    ssh "${!CONTROLLERIP}"  'tar -cf "/tmp/odl${i}_karaf.log.tar" "/tmp/odl_log/"'
+    ssh "${!CONTROLLERIP}"  tar -cf "/tmp/odl${i}_karaf.log.tar" "/tmp/odl_log/"
     scp "${!CONTROLLERIP}:/tmp/odl${i}_karaf_log.tar" "${WORKSPACE}/odl${i}_karaf.log.tar"
     tar -xvf ${WORKSPACE}/odl${i}_karaf.log.tar odl${1}/
 
