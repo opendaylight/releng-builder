@@ -1,0 +1,32 @@
+- project:
+    name: vtn-csit-3node-manager
+    jobs:
+        - '{project}-csit-3node-{functionality}-{install}-{stream}'
+        - '{project}-csit-verify-3node-{functionality}'
+
+    # The project name
+    project: 'vtn'
+
+    # The functionality under test
+    functionality: 'manager'
+
+    # Project branches
+    stream:
+        - boron:
+            branch: 'master'
+            jre: 'openjdk8'
+
+    install:
+        - only:
+            scope: 'only'
+        - all:
+            scope: 'all'
+
+    # Features to install
+    install-features: 'odl-vtn-manager-rest,odl-vtn-manager-neutron'
+
+    # Robot custom options
+    robot-options: ''
+
+    # Trigger jobs (upstream dependencies)
+    trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream},openflowjava-distribution-{stream},openflowplugin-distribution-{stream},vtn-distribution-{stream}'
