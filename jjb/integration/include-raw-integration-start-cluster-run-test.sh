@@ -121,10 +121,6 @@ set +e  # We do not want to create red dot just because something went wrong whi
 for i in `seq 1 ${NUM_ODL_SYSTEM}`
 do
     CONTROLLERIP=ODL_SYSTEM_${i}_IP
-    echo "dumping first 500K bytes of karaf log..." > "odl${i}_karaf.log"
-    ssh "${!CONTROLLERIP}" head --bytes=500K "/tmp/${BUNDLEFOLDER}/data/log/karaf.log" >> "odl${i}_karaf.log"
-    echo "dumping last 500K bytes of karaf log..." >> "odl${i}_karaf.log"
-    ssh "${!CONTROLLERIP}" tail --bytes=500K "/tmp/${BUNDLEFOLDER}/data/log/karaf.log" >> "odl${i}_karaf.log"
     echo "killing karaf process..."
     ssh "${!CONTROLLERIP}" bash -c 'ps axf | grep karaf | grep -v grep | awk '"'"'{print "kill -9 " $1}'"'"' | sh'
 done
@@ -132,10 +128,8 @@ sleep 5
 for i in `seq 1 ${NUM_ODL_SYSTEM}`
 do
     CONTROLLERIP=ODL_SYSTEM_${i}_IP
-    ssh "${!CONTROLLERIP}" xz -9ekvv "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
-    scp "${!CONTROLLERIP}:/tmp/${BUNDLEFOLDER}/data/log/karaf.log.xz" "odl${i}_karaf.log.xz"
+    scp "${!CONTROLLERIP}:/tmp/${BUNDLEFOLDER}/data/log/karaf.log" "odl${i}_karaf.log"
 done
 true  # perhaps Jenkins is testing last exit code
 
 # vim: ts=4 sw=4 sts=4 et ft=sh :
-

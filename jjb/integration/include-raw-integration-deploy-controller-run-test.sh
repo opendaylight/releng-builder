@@ -164,12 +164,9 @@ pybot -N ${TESTPLAN} -c critical -e exclude -v BUNDLEFOLDER:${BUNDLEFOLDER} -v W
 
 echo "Killing ODL and fetching Karaf log..."
 set +e  # We do not want to create red dot just because something went wrong while fetching logs.
-ssh "${ODL_SYSTEM_IP}" tail --bytes=1M "/tmp/${BUNDLEFOLDER}/data/log/karaf.log" > "karaf.log"
 ssh "${ODL_SYSTEM_IP}" bash -c 'ps axf | grep karaf | grep -v grep | awk '"'"'{print "kill -9 " $1}'"'"' | sh'
 sleep 5
-ssh "${ODL_SYSTEM_IP}" xz -9ekvv "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
-scp "${ODL_SYSTEM_IP}:/tmp/${BUNDLEFOLDER}/data/log/karaf.log.xz" .
+scp "${ODL_SYSTEM_IP}:/tmp/${BUNDLEFOLDER}/data/log/karaf.log" .
 true  # perhaps Jenkins is testing last exit code
 
 # vim: ts=4 sw=4 sts=4 et ft=sh :
-

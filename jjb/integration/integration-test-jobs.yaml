@@ -250,10 +250,11 @@
         - integration-robot:
             unstable-if: 0.0
             pass-if: 100.0
-        - archive:
-            artifacts: '*.log,*.log.xz'
         - email-notification:
             email-prefix: '[integration]'
+        - integration-csit-archive-build
+        - archive-build:
+            maven-version: '{mvn33}'
 
 # Template: integration-distribution-test-{stream}
 # Goal: Verify a distribution through all system test available

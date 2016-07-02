@@ -246,10 +246,11 @@
         - integration-deploy-controller-verify
 
     publishers:
-        - archive:
-            artifacts: '*.log,*.log.xz'
         - email-notification:
             email-prefix: '[integration]'
+        - integration-csit-archive-build
+        - archive-build:
+            maven-version: '{mvn33}'
 
 # Template: integration-distribution-offline-{stream}
 # Goal: Verify distribution can start with no internet connection
@@ -293,7 +294,8 @@
         - integration-deploy-controller-offline
 
     publishers:
-        - archive:
-            artifacts: '*.log,*.log.xz'
         - email-notification:
             email-prefix: '[integration]'
+        - integration-csit-archive-build
+        - archive-build:
+            maven-version: '{mvn33}'
