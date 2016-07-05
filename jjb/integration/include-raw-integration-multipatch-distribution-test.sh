@@ -58,6 +58,8 @@ do
         echo "checking out ${CHECKOUT}"
         git fetch "https://git.opendaylight.org/gerrit/${PROJECT}" "refs/changes/$CHECKOUT"
         git checkout FETCH_HEAD
+        echo "Rebasing the patch"
+        git rebase "origin/${DISTRIBUTION_BRANCH_TO_BUILD}"
     else
         echo "checking out ${DISTRIBUTION_BRANCH_TO_BUILD}"
         git checkout "${DISTRIBUTION_BRANCH_TO_BUILD}"
