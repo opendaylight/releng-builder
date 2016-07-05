@@ -82,7 +82,7 @@ maintenance and configuration of these jobs must be done via JJB through the
 directly on the server.
 
 Build Minions
-------------
+-------------
 
 The Jenkins jobs are run on build minions (executors) which are created on an
 as-needed basis. If no idle build minions are available a new VM is brought
@@ -98,7 +98,7 @@ minions as they must be specifically called out by template name instead of
 label.
 
 Adding New Components to the Minions
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 If your project needs something added to one of the minions used during build
 and test you can help us get things added faster by doing one of the following:
@@ -878,8 +878,8 @@ example is provided by releng/builder at `example-jenkins.ini`_.
     <snip>
 
 To get your API token, `login to the Jenkins **sandbox** instance
-<jenkins-sandbox-login_>`_ (_not
-the main master Jenkins instance, different tokens_), go to your user page (by
+<jenkins-sandbox-login_>`_ (*not
+the main master Jenkins instance, different tokens*), go to your user page (by
 clicking on your username, for example), click "Configure" and then "Show API
 Token".
 
