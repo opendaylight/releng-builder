@@ -30,6 +30,8 @@
         - ssh-agent-credentials:
             users:
                 - '{ssh-credentials}'
+        - openstack:
+            single-use: true
 
     triggers:
         - reverse:
