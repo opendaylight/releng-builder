@@ -172,6 +172,8 @@
         - ssh-agent-credentials:
             users:
                 - '{ssh-credentials}'
+        - openstack:
+            single-use: true
 
     triggers:
         - timed: 'H H * * 0'
@@ -284,6 +286,8 @@
         - ssh-agent-credentials:
             users:
                 - '{ssh-credentials}'
+        - openstack:
+            single-use: true
 
     triggers:
         - timed: '@daily'
@@ -346,6 +350,8 @@
         - ssh-agent-credentials:
             users:
                 - '{ssh-credentials}'
+        - openstack:
+            single-use: true
 
     triggers:
         - reverse:
@@ -421,6 +427,8 @@
         - ssh-agent-credentials:
             users:
                 - '{ssh-credentials}'
+        - openstack:
+            single-use: true
 
     triggers:
         - gerrit:
@@ -525,6 +533,8 @@
         - ssh-agent-credentials:
             users:
                 - '{ssh-credentials}'
+        - openstack:
+            single-use: true
 
     triggers:
         - reverse:
@@ -586,6 +596,8 @@
         - ssh-agent-credentials:
             users:
                 - '{ssh-credentials}'
+        - openstack:
+            single-use: true
 
     triggers:
         - timed: 'H H * * 6'
@@ -650,6 +662,8 @@
         - ssh-agent-credentials:
             users:
                 - '{ssh-credentials}'
+        - openstack:
+            single-use: true
 
     triggers:
         - timed: 'H H * * 6'
@@ -728,6 +742,8 @@
         - ssh-agent-credentials:
             users:
                 - '{ssh-credentials}'
+        - openstack:
+            single-use: true
 
     triggers:
         - gerrit:
