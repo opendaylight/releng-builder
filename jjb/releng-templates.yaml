@@ -33,6 +33,8 @@
         - ssh-agent-credentials:
             users:
                 - '{ssh-credentials}'
+        - openstack:
+            single-use: true
 
     prebuilders:
         - wipe-org-opendaylight-repo
@@ -151,6 +153,8 @@
         - ssh-agent-credentials:
             users:
                 - '{ssh-credentials}'
+        - openstack:
+            single-use: true
 
     triggers:
         - gerrit:
@@ -210,6 +214,8 @@
         - ssh-agent-credentials:
             users:
                 - '{ssh-credentials}'
+        - openstack:
+            single-use: true
 
     triggers:
         - gerrit-trigger-patch-merged:
@@ -275,6 +281,8 @@
         - ssh-agent-credentials:
             users:
                 - '{ssh-credentials}'
+        - openstack:
+            single-use: true
 
     triggers:
         - gerrit:
