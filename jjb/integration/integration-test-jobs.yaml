@@ -220,15 +220,13 @@
             branch: 'master'
 
     wrappers:
-        - build-timeout
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
         - integration-openstack-controller-mininet:
             controller-image: '{controller-image}'
             controller-vms: 1
             mininet-image: '{mininet-image}'
             mininet-vms: '{mininet-vms}'
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
 
     triggers:
         - integration-trigger-patch-submitted:
@@ -336,10 +334,8 @@
             branch: '{branch}'
 
     wrappers:
-        - build-timeout
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
 
     triggers:
         - gerrit:
@@ -428,10 +424,8 @@
             branch: '{branch}'
 
     wrappers:
-        - build-timeout
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
 
     prebuilders:
         - wipe-org-opendaylight-repo

@@ -71,14 +71,8 @@
             choosing-strategy: gerrit
 
     wrappers:
-        - timeout:
-            fail: true
-            timeout: 360
-            timeout-var: 'BUILD_TIMEOUT'
-            type: absolute
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
 
     triggers:
         - timed: '@midnight'

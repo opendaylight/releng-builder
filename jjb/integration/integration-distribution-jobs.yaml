@@ -53,10 +53,8 @@
             choosing-strategy: 'gerrit'
 
     wrappers:
-        - build-timeout
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
 
     triggers:
         - gerrit-trigger-relevant-patch-submitted:
@@ -127,10 +125,8 @@
             choosing-strategy: 'default'
 
     wrappers:
-        - build-timeout
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
 
     triggers:
         - timed: 'H H * * 0'
@@ -231,10 +227,8 @@
             jdkversion: '{jre}'
 
     wrappers:
-        - build-timeout
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
 
     triggers:
         - timed: 'H H * * *'
@@ -279,10 +273,8 @@
             jdkversion: '{jre}'
 
     wrappers:
-        - build-timeout
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
 
     triggers:
         - timed: 'H H * * *'

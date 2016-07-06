@@ -49,10 +49,8 @@
             choosing-strategy: 'gerrit'
 
     wrappers:
-        - build-timeout
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
 
     triggers:
         - gerrit:
@@ -90,4 +88,3 @@
     publishers:
         - email-notification:
             email-prefix: '[sfc]'
-

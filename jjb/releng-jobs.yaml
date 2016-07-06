@@ -37,9 +37,8 @@
             choosing-strategy: 'gerrit'
 
     wrappers:
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
 
     triggers:
         - gerrit:
@@ -106,11 +105,8 @@
             choosing-strategy: 'gerrit'
 
     wrappers:
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
-        - openstack:
-            single-use: true
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
 
     triggers:
         - gerrit:
@@ -180,9 +176,8 @@
             choosing-strategy: 'default'
 
     wrappers:
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
 
     triggers:
         - gerrit:
@@ -242,9 +237,8 @@
             branch: 'master'
 
     wrappers:
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
 
     triggers:
         - timed: 'H H * * 0'
@@ -272,11 +266,8 @@
         artifactNumToKeep: -1
 
     wrappers:
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
-        - openstack:
-            single-use: true
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
 
     triggers:
         - timed: 'H H * * 1'
@@ -328,11 +319,8 @@
             choosing-strategy: 'default'
 
     wrappers:
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
-        - openstack:
-            single-use: true
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
 
     triggers:
         - gerrit:
@@ -398,11 +386,8 @@
             choosing-strategy: 'gerrit'
 
     wrappers:
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
-        - openstack:
-            single-use: true
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
 
     triggers:
         - gerrit:

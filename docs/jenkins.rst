@@ -544,6 +544,9 @@ The *Gerrit Trigger* listed in the jobs are keywords that can be used to
 trigger the job to run manually by simply leaving a comment in Gerrit for the
 patch you wish to trigger against.
 
+All jobs have a default build-timeout value of 360 minutes (6 hrs) but can be
+overrided via the opendaylight-infra-wrappers' build-timeout property.
+
 .. raw:: html
 
     <table class="table table-bordered">

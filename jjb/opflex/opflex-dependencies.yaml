@@ -63,10 +63,8 @@
         - git-opflex-libuv
 
     wrappers:
-        - build-timeout
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
 
     builders:
         - shell:
@@ -96,10 +94,8 @@
         - git-opflex-rapidjson
 
     wrappers:
-        - build-timeout
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
 
     builders:
         - shell:
@@ -139,10 +135,8 @@
         - git-opflex-ovs
 
     wrappers:
-        - build-timeout
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
 
     builders:
         - shell:

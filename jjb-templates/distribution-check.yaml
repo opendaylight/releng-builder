@@ -38,12 +38,8 @@
             branch: '{branch}'
 
     wrappers:
-        - build-timeout
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
-        - openstack:
-            single-use: true
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
 
     triggers:
         - gerrit:

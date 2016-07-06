@@ -52,10 +52,8 @@
         - git-opflex-3rdparty
 
     wrappers:
-        - build-timeout
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
 
     parameters:
         - mock-target-parameter
@@ -88,10 +86,8 @@
         - git-opflex-ovs
 
     wrappers:
-        - build-timeout
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
 
     parameters:
         - mock-target-parameter

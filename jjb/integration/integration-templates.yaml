@@ -68,15 +68,13 @@
             branch: 'master'
 
     wrappers:
-        - build-timeout
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
         - integration-openstack-controller-mininet:
             controller-image: '{controller-image}'
             controller-vms: 1
             mininet-image: '{mininet-image}'
             mininet-vms: '{mininet-vms}'
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
 
     triggers:
         - integration-trigger-patch-submitted:
@@ -153,15 +151,13 @@
             branch: 'master'
 
     wrappers:
-        - build-timeout
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
         - integration-openstack-controller-mininet:
             controller-image: '{controller-image}'
             controller-vms: 1
             mininet-image: '{mininet-image}'
             mininet-vms: '{mininet-vms}'
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
 
     triggers:
         - integration-csit-{install}:
@@ -262,14 +258,13 @@
             branch: 'master'
 
     wrappers:
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
         - integration-openstack-controller-mininet:
             controller-image: '{controller-image}'
             controller-vms: 1
             mininet-image: '{mininet-image}'
             mininet-vms: '{mininet-vms}'
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
 
     triggers:
         - timed: '{schedule}'
@@ -368,15 +363,13 @@
             branch: 'master'
 
     wrappers:
-        - build-timeout
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
         - integration-openstack-controller-mininet:
             controller-image: '{controller-image}'
             controller-vms: 3
             mininet-image: '{mininet-image}'
             mininet-vms: '{mininet-vms}'
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
 
     triggers:
         - integration-trigger-patch-submitted:
@@ -455,15 +448,13 @@
             branch: 'master'
 
     wrappers:
-        - build-timeout
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
         - integration-openstack-controller-mininet:
             controller-image: '{controller-image}'
             controller-vms: 3
             mininet-image: '{mininet-image}'
             mininet-vms: '{mininet-vms}'
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
 
     triggers:
         - integration-csit-{install}:
@@ -565,14 +556,13 @@
             branch: 'master'
 
     wrappers:
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
         - integration-openstack-controller-mininet:
             controller-image: '{controller-image}'
             controller-vms: 3
             mininet-image: '{mininet-image}'
             mininet-vms: '{mininet-vms}'
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
 
     triggers:
         - timed: '{schedule}'
@@ -668,15 +658,13 @@
             branch: 'master'
 
     wrappers:
-          - build-timeout
-          - openstack:
-              instances:
-                - cloud-name: 'ODLRPC'
-                  template-name: 'centos7-devstack'
-                  count: '1'
-          - ssh-agent-credentials:
-              users:
-                  - '{ssh-credentials}'
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
+        - openstack:
+            instances:
+              - cloud-name: 'ODLRPC'
+                template-name: 'centos7-devstack'
+                count: '1'
 
     # Trigger jobs (daily)
     triggers:
@@ -769,15 +757,13 @@
             branch: 'master'
 
     wrappers:
-        - build-timeout
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
         - integration-openstack-controller-devstack:
             controller-image: '{controller-image}'
             controller-vms: 1
             openstack-image: '{openstack-image}'
             openstack-vms: '{openstack-vms}'
-        - ssh-agent-credentials:
-            users:
-              - '{ssh-credentials}'
 
     triggers:
         - integration-csit-all
@@ -878,15 +864,13 @@
             branch: 'master'
 
     wrappers:
-        - build-timeout
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
         - integration-openstack-controller-devstack:
             controller-image: '{controller-image}'
             controller-vms: 3
             openstack-image: '{openstack-image}'
             openstack-vms: '{openstack-vms}'
-        - ssh-agent-credentials:
-            users:
-              - '{ssh-credentials}'
 
     triggers:
         - integration-csit-all
@@ -958,10 +942,8 @@
             branch: '{branch}'
 
     wrappers:
-        - build-timeout
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
 
     triggers:
         - gerrit:

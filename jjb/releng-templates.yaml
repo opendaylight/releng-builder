@@ -29,12 +29,8 @@
             wipe-workspace: true
 
     wrappers:
-        - build-timeout
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
-        - openstack:
-            single-use: true
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
 
     prebuilders:
         - wipe-org-opendaylight-repo
@@ -75,6 +71,10 @@
         - project-parameter:
             project: '{project}'
         - p2zip-parameter
+
+    wrappers:
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
 
     prebuilders:
         - wipe-org-opendaylight-repo
@@ -149,12 +149,8 @@
             choosing-strategy: 'gerrit'
 
     wrappers:
-        - build-timeout
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
-        - openstack:
-            single-use: true
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
 
     triggers:
         - gerrit:
@@ -210,12 +206,8 @@
             refspec: 'refs/heads/{branch}'
 
     wrappers:
-        - build-timeout
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
-        - openstack:
-            single-use: true
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
 
     triggers:
         - gerrit-trigger-patch-merged:
@@ -277,12 +269,8 @@
             choosing-strategy: 'gerrit'
 
     wrappers:
-        - build-timeout
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
-        - openstack:
-            single-use: true
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
 
     triggers:
         - gerrit:

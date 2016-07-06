@@ -29,9 +29,8 @@
             refspec: 'refs/heads/{branch}'
 
     wrappers:
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
+        - opendaylight-infra-wrappers:
+            build-timeout: '30'
 
     triggers:
         - gerrit:
@@ -81,9 +80,8 @@
             branch: '{branch}'
 
     wrappers:
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
 
     triggers:
         - gerrit:

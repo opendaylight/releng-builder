@@ -32,10 +32,8 @@
                 timeout: 60
 
     wrappers:
-        - autorelease-build-timeout
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
+        - opendaylight-infra-wrappers:
+            build-timeout: '1440'
 
     triggers:
         - timed: 'H 0 * * *'
@@ -116,13 +114,8 @@
                 recursive: true
 
     wrappers:
-        - timeout:
-            type: absolute
-            timeout: 30
-            fail: true
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
+        - opendaylight-infra-wrappers:
+            build-timeout: '30'
 
     triggers:
         - timed: '0 0 * * 0'
@@ -187,9 +180,8 @@
         choosing-strategy: 'default'
 
     wrappers:
-    - ssh-agent-credentials:
-        users:
-        - '{ssh-credentials}'
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
 
     triggers:
     - autorelease-trigger-patch-site-merged:
@@ -241,9 +233,8 @@
         choosing-strategy: 'gerrit'
 
     wrappers:
-    - ssh-agent-credentials:
-        users:
-        - '{ssh-credentials}'
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
 
     triggers:
     - autorelease-trigger-patch-site-submitted:

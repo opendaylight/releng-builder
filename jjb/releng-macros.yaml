@@ -366,3 +366,19 @@
     name: releng-stage-release
     builders:
         - shell: !include-raw: include-raw-stage-release.sh
+
+- wrapper:
+    # This wrapper is required for all jobs as it configures the wrappers
+    # needed by OpenDaylight infra.
+    name: opendaylight-infra-wrappers
+    wrappers:
+        - timeout:
+            type: absolute
+            timeout: '{build-timeout}'
+            timeout-var: 'BUILD_TIMEOUT'
+            fail: true
+        - ssh-agent-credentials:
+            users:
+                - 'b241a488-1acc-4264-a010-2db3acb07fb0'
+        - openstack:
+            single-use: True

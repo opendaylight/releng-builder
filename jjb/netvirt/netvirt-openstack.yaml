@@ -21,16 +21,8 @@
             project: '{project}'
 
     wrappers:
-        - timeout:
-            fail: true
-            timeout: 90
-            timeout-var: 'BUILD_TIMEOUT'
-            type: absolute
-        - ssh-agent-credentials:
-            users:
-                - '{openstack-gerrit-credentials}'
-        - openstack:
-            single-use: true
+        - opendaylight-infra-wrappers:
+            build-timeout: '90'
 
     triggers:
         - gerrit:
