@@ -143,8 +143,8 @@ Pool: ODLRPC
 
 .. raw:: html
 
-    <table border="1">
-      <tr>
+    <table class="table table-bordered">
+      <tr class="warning">
         <td><b>Jenkins Label</b><br/> dynamic_verify</td>
         <td><b>Minion Template name</b><br/> centos7-builder</td>
         <td><b>Vagrant Definition</b><br/> releng/builder/vagrant/basic-builder</td>
@@ -159,10 +159,8 @@ Pool: ODLRPC
           projects.
         </td>
       </tr>
-    </table>
 
-    <table border="1">
-      <tr>
+      <tr class="warning">
         <td><b>Jenkins Label</b><br/> dynamic_merge</td>
         <td><b>Minion Template name</b><br/> centos7-builder</td>
         <td><b>Vagrant Definition</b><br/> releng/builder/vagrant/basic-builder</td>
@@ -174,10 +172,8 @@ Pool: ODLRPC
           is used for all basic -merge and -integration- builds for projects.
         </td>
       </tr>
-    </table>
 
-    <table border="1">
-      <tr>
+      <tr class="warning">
         <td><b>Jenkins Label</b><br/> matrix_master</td>
         <td><b>Minion Template name</b><br/> centos7-matrix</td>
         <td><b>Vagrant Definition</b><br/> releng/builder/vagrant/basic-java-node</td>
@@ -192,10 +188,8 @@ Pool: ODLRPC
           anything but tying matrix jobs before the matrx defined label ties.
         </td>
       </tr>
-    </table>
 
-    <table border="1">
-      <tr>
+      <tr class="warning">
         <td><b>Jenkins Label</b><br/> dynamic_robot</td>
         <td><b>Minion Template name</b><br/> centos7-robot</td>
         <td><b>Vagrant Definition</b><br/> releng/builder/vagrant/integration-robotframework</td>
@@ -211,10 +205,8 @@ Pool: ODLRPC
           building components of OpenDaylight, only for executing robot tests.
         </td>
       </tr>
-    </table>
 
-    <table border="1">
-      <tr>
+      <tr class="warning">
         <td><b>Jenkins Label</b><br/> ubuntu_mininet</td>
         <td><b>Minion Template name</b><br/> ubuntu-trusty-mininet</td>
         <td><b>Vagrant Definition</b><br/> releng/builder/vagrant/ubuntu-mininet</td>
@@ -225,10 +217,8 @@ Pool: ODLRPC
           Basic Ubuntu system with ovs 2.0.2 and mininet 2.1.0
         </td>
       </tr>
-    </table>
 
-    <table border="1">
-      <tr>
+      <tr class="warning">
         <td><b>Jenkins Label</b><br/> ubuntu_mininet_ovs_23</td>
         <td><b>Minion Template name</b><br/> ubuntu-trusty-mininet-ovs-23</td>
         <td><b>Vagrant Definition</b><br/> releng/builder/vagrant/ubuntu-mininet-ovs-23</td>
@@ -239,10 +229,8 @@ Pool: ODLRPC
           Basic Ubuntu system with ovs 2.3 and mininet 2.2.1
         </td>
       </tr>
-    </table>
 
-    <table border="1">
-      <tr>
+      <tr class="warning">
         <td><b>Jenkins Label</b><br/> dynamic_controller</td>
         <td><b>Minion Template name</b><br/> centos7-java</td>
         <td><b>Vagrant Definition</b><br/> releng/builder/vagrant/basic-java-node</td>
@@ -255,10 +243,8 @@ Pool: ODLRPC
           building.
         </td>
       </tr>
-    </table>
 
-    <table border="1">
-      <tr>
+      <tr class="warning">
         <td><b>Jenkins Label</b><br/> dynamic_java</td>
         <td><b>Minion Template name</b><br/> centos7-java</td>
         <td><b>Vagrant Definition</b><br/> releng/builder/vagrant/basic-java-node</td>
@@ -269,10 +255,8 @@ Pool: ODLRPC
           See dynamic_controller as it is currently the same image.
         </td>
       </tr>
-    </table>
 
-    <table border="1">
-      <tr>
+      <tr class="warning">
         <td><b>Jenkins Label</b><br/> dynamic_java_8g</td>
         <td><b>Minion Template name</b><br/> centos7-java-8g</td>
         <td><b>Vagrant Definition</b><br/> releng/builder/vagrant/basic-java-node</td>
@@ -283,10 +267,8 @@ Pool: ODLRPC
           See dynamic_controller as it is currently the same image but with 8G of RAM.
         </td>
       </tr>
-    </table>
 
-    <table border="1">
-      <tr>
+      <tr class="warning">
         <td><b>Jenkins Label</b><br/> dynamic_devstack</td>
         <td><b>Minion Template name</b><br/> centos7-devstack</td>
         <td><b>Vagrant Definition</b><br/> releng/builder/vagrant/ovsdb-devstack</td>
@@ -300,10 +282,8 @@ Pool: ODLRPC
           other basic DevStack related bits installed.
         </td>
       </tr>
-    </table>
 
-    <table border="1">
-      <tr>
+      <tr class="warning">
         <td><b>Jenkins Label</b><br/> dynamic_docker</td>
         <td><b>Minion Template name</b><br/> centos7-docker</td>
         <td><b>Vagrant Definition</b><br/> releng/builder/vagrant/ovsdb-docker</td>
@@ -317,10 +297,8 @@ Pool: ODLRPC
           expressed interest in using it.
         </td>
       </tr>
-    </table>
 
-    <table border="1">
-      <tr>
+      <tr class="warning">
         <td><b>Jenkins Label</b><br/> gbp_trusty</td>
         <td><b>Minion Template name</b><br/> gbp_trusty</td>
         <td><b>Vagrant Definition</b><br/> releng/builder/vagrant/gbp-ubuntu-docker-ovs-node</td>
