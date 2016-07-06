@@ -821,7 +821,7 @@ sign.
     MVN_GOALS: clean install javadoc:aggregate -DrepoBuild -Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo
     MVN_OPTS: -Xmx1024m -XX:MaxPermSize=256m
     DEPENDENCIES: aaa,controller,yangtools
-    ARCHIVE_ARTIFACTS: *.logs, *.patches
+    ARCHIVE_ARTIFACTS: "*.logs, *.patches"
 
 .. note:: `STREAMS <streams-design-background_>`_ is a list of branches you want
           JJB to generate jobs for.
