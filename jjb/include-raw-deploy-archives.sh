@@ -50,10 +50,16 @@ cat > deploy-archives.xml <<EOF
 EOF
 
 mkdir -p $ARCHIVES_DIR
-mv $WORKSPACE/archives/ $ARCHIVES_DIR
+# Ignore logging if archives doesn't exist
+mv $WORKSPACE/archives/ $ARCHIVES_DIR > /dev/null 2>&1
 touch $ARCHIVES_DIR/_build-details.txt
 echo "build-url: ${{BUILD_URL}}" >> $ARCHIVES_DIR/_build-details.txt
+
+# Magic string used to trim console logs at the appropriate level during wget
+echo "-----END_OF_BUILD-----"
 wget -O $ARCHIVES_DIR/_console-output.log ${{BUILD_URL}}consoleText
+sed -i '/^-----END_OF_BUILD-----$/,$d' $ARCHIVES_DIR/_console-output.log
+
 gzip $ARCHIVES_DIR/*.txt $ARCHIVES_DIR/*.log
 # find and gzip all text files
 find $ARCHIVES_DIR -name "*.txt" \
