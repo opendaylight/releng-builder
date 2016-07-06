@@ -95,10 +95,8 @@
             choosing-strategy: 'gerrit'
 
     wrappers:
-        - build-timeout
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
 
     triggers:
         - gerrit-trigger-patch-submitted:
@@ -168,12 +166,8 @@
             choosing-strategy: 'default'
 
     wrappers:
-        - build-timeout
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
-        - openstack:
-            single-use: true
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
 
     triggers:
         - timed: 'H H * * 0'
@@ -282,12 +276,8 @@
             branch: '{branch}'
 
     wrappers:
-        - build-timeout
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
-        - openstack:
-            single-use: true
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
 
     triggers:
         - timed: '@daily'
@@ -346,12 +336,8 @@
             branch: '{branch}'
 
     wrappers:
-        - build-timeout
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
-        - openstack:
-            single-use: true
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
 
     triggers:
         - reverse:
@@ -423,12 +409,8 @@
             branch: '{branch}'
 
     wrappers:
-        - build-timeout
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
-        - openstack:
-            single-use: true
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
 
     triggers:
         - gerrit:
@@ -485,12 +467,17 @@
         - integration-distribution-check
 
     publishers:
-        - archive:
-            artifacts: 'karaf.log'
-        - archive:
-            artifacts: 'karaf_console.log'
         - email-notification:
             email-prefix: '[tcpmd5]'
+        - postbuildscript:
+            builders:
+                - shell: |
+                    #!/bin/bash
+                    mkdir -p $WORKSPACE/archives
+                    cp karaf*.log $WORKSPACE/archives
+            script-only-if-succeeded: False
+            script-only-if-failed: False
+            mark-unstable-if-failed: True
         - archive-build:
             maven-version: '{mvn33}'
 
@@ -529,12 +516,8 @@
             branch: '{branch}'
 
     wrappers:
-        - build-timeout
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
-        - openstack:
-            single-use: true
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
 
     triggers:
         - reverse:
@@ -592,12 +575,8 @@
             branch: 'master'
 
     wrappers:
-        - build-timeout
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
-        - openstack:
-            single-use: true
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
 
     triggers:
         - timed: 'H H * * 6'
@@ -658,12 +637,8 @@
             branch: '{branch}'
 
     wrappers:
-        - build-timeout
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
-        - openstack:
-            single-use: true
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
 
     triggers:
         - timed: 'H H * * 6'
@@ -738,12 +713,8 @@
                 timeout: 60
 
     wrappers:
-        - autorelease-build-timeout
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
-        - openstack:
-            single-use: true
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
 
     triggers:
         - gerrit:

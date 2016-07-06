@@ -63,12 +63,8 @@
             branch: 'master'
 
     wrappers:
-        - build-timeout
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
-        - openstack:
-            single-use: true
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
 
     triggers:
         - timed: 'H H * * 6'
@@ -129,12 +125,8 @@
             branch: '{branch}'
 
     wrappers:
-        - build-timeout
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
-        - openstack:
-            single-use: true
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
 
     triggers:
         - timed: 'H H * * 6'
@@ -209,12 +201,8 @@
                 timeout: 60
 
     wrappers:
-        - autorelease-build-timeout
-        - ssh-agent-credentials:
-            users:
-                - '{ssh-credentials}'
-        - openstack:
-            single-use: true
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
 
     triggers:
         - gerrit:
