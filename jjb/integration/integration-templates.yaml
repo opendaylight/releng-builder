@@ -85,6 +85,7 @@
             pattern: 'csit/suites/{project}/**'
 
     builders:
+        - integration-copy-ssh-keys
         - integration-cleanup-workspace
         - integration-install-robotframework
         - inject:
