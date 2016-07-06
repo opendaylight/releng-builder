@@ -540,145 +540,199 @@ Jenkins Job Templates
 The OpenDaylight `RelEng/Builder <releng-builder-wiki_>`_ project provides
 `jjb-templates`_ that can be used to define basic jobs.
 
-Verify Job Template
-^^^^^^^^^^^^^^^^^^^
+The *Gerrit Trigger* listed in the jobs are keywords that can be used to
+trigger the job to run manually by simply leaving a comment in Gerrit for the
+patch you wish to trigger against.
 
-Trigger: **recheck**
+.. raw:: html
 
-The Verify job template creates a Gerrit Trigger job that will trigger when a
-new patch is submitted to Gerrit.
+    <table class="table table-bordered">
+      <tr class="warning">
+        <td><b>Job Template</b><br/>{project}-distribution-{stream}</td>
+        <td><b>Gerrit Trigger</b><br/>test-distribution</td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          This job builds a distrbution against your patch, passes distribution sanity test
+          and reports back the results to Gerrit. Leave a comment with trigger keyword above
+          to activate it for a particular patch.
 
-Verify jobs can be retriggered in Gerrit by leaving a comment that says
-**recheck**.
+          This job is maintained by the <a href="https://wiki.opendaylight.org/view/Integration/Test">Integration/Test</a>
+          project.
 
-Merge Job Template
-^^^^^^^^^^^^^^^^^^
+          <div class="admonition note">
+            <p class="first admonition-title">Note</p>
+            <p>
+              Running the "test-distribution" trigger will cause Jenkins to
+              remove it's existing vote if it's already -1 or +1'd a comment.
+              You will need to re-run your verify job (recheck) after running
+              this to get Jenkins to put back the correct vote.
+            </p>
+          </div>
+        </td>
+      </tr>
 
-Trigger: **remerge**
+      <tr class="warning">
+        <td><b>Job Template</b><br/>{project}-integration-{stream}</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          The Integration Job Template creates a job which runs when a project that your
+          project depends on is successfully built. This job type is basically the same
+          as a verify job except that it triggers from other Jenkins jobs instead of via
+          Gerrit review updates. The dependencies that triger integration jobs are listed
+          in your project.cfg file under the <b>DEPENDENCIES</b> variable.
 
-The Merge job template is similar to the Verify Job Template except it will
-trigger once a Gerrit patch is merged into the repo. It also automatically
-runs the Maven goals **source:jar** and **javadoc:jar**.
+          If no dependencies are listed then this job type is disabled by default.
+        </td>
+      </tr>
 
-This job will upload artifacts to `OpenDaylight's Nexus <odl-nexus_>`_ on completion.
+      <tr class="warning">
+        <td><b>Job Template</b><br/>{project}-merge-{stream}</td>
+        <td><b>Gerrit Trigger</b><br/>remerge</td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          The Merge job template is similar to the Verify Job Template except
+          it will trigger once a Gerrit patch is merged into the repo. It
+          also automatically runs the Maven goals <b>source:jar</b> and
+          <b>javadoc:jar</b>.
 
-Merge jobs can be retriggered in Gerrit by leaving a comment that says
-**remerge**.
+          This job will upload artifacts to OpenDaylight's
+          <a href="https://nexus.opendaylight.org">Nexus</a> on completion.
+        </td>
+      </tr>
 
-Daily Job Template
-^^^^^^^^^^^^^^^^^^
+      <tr class="warning">
+        <td><b>Job Template</b><br/>{project}-sonar</td>
+        <td><b>Gerrit Trigger</b><br/>run-sonar</td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          This job runs Sonar analysis and reports the results to
+          OpenDaylight's <a href="https://sonar.opendaylight.org">Sonar</a>
+          dashboard.
 
-The Daily (or Nightly) Job Template creates a job which will run on a build on
-a Daily basis as a sanity check to ensure the build is still working day to
-day.
+          The Sonar Job Template creates a job which will run against the
+          master branch, or if BRANCHES are specified in the CFG file it will
+          create a job for the <b>First</b> branch listed.
 
-Sonar Job Template
-^^^^^^^^^^^^^^^^^^
+          <div class="admonition note">
+            <p class="first admonition-title">Note</p>
+            <p>
+              Running the "run-sonar" trigger will cause Jenkins to remove
+              its existing vote if it's already -1'd or +1'd a comment. You
+              will need to re-run your verify job (recheck) after running
+              this to get Jenkins to re-vote.
+            </p>
+          </div>
+        </td>
+      </tr>
 
-Trigger: **run-sonar**
+      <tr class="warning">
+        <td><b>Job Template</b><br/>{project}-validate-autorelease-{stream}</td>
+        <td><b>Gerrit Trigger</b><br/>recheck | reverify</td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          This job runs the PROJECT-validate-autorelease-BRANCH job which is
+          used as a quick sanity test to ensure that a patch does not depend on
+          features that do not exist in the current release.
 
-This job runs Sonar analysis and reports the results to `OpenDaylight's Sonar
-dashboard <odl-sonar_>`_.
+          The <b>revalidate</b> trigger is useful in cases where a project's
+          verify job passed however validate failed due to infra problems or
+          intermittent issues. It will retrigger just the validate-autorelease
+          job.
+        </td>
+      </tr>
 
-The Sonar Job Template creates a job which will run against the master branch,
-or if BRANCHES are specified in the CFG file it will create a job for the
-**First** branch listed.
+      <tr class="warning">
+        <td><b>Job Template</b><br/>{project}-verify-{stream}</td>
+        <td><b>Gerrit Trigger</b><br/>recheck | reverify</td>
+      </tr>
+      <tr>
+        <td colspan="2">
+            The Verify job template creates a Gerrit Trigger job that will
+            trigger when a new patch is submitted to Gerrit.
+        </td>
+      </tr>
 
-.. note:: Running the "run-sonar" trigger will cause Jenkins to remove its
-          existing vote if it's already -1'd or +1'd a comment. You will need to
-          re-run your verify job (recheck) after running this to get Jenkins to
-          re-vote.
+      <tr class="warning">
+        <td><b>Job Template</b><br/>{project}-verify-node-{stream}</td>
+        <td><b>Gerrit Trigger</b><br/>recheck | reverify</td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          This job template can be used by a project that is NodeJS based. It
+          simply installs a python virtualenv and uses that to install nodeenv
+          which is then used to install another virtualenv for nodejs. It then
+          calls <b>npm install</b> and <b>npm test</b> to run the unit tests.
+          When  using this template you need to provide a {nodedir} and
+          {nodever} containing the directory relative to the project root
+          containing the nodejs package.json and version of node you wish to
+          run tests with.
+        </td>
+      </tr>
 
-Integration Job Template
-^^^^^^^^^^^^^^^^^^^^^^^^
+      <tr class="warning">
+        <td><b>Job Template</b><br/>{project}-verify-python-{stream}</td>
+        <td><b>Gerrit Trigger</b><br/>recheck | reverify</td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          This job template can be used by a project that is Python based. It
+          simply installs a python virtualenv and uses tox to run tests. When
+          using the template you need to provide a {toxdir} which is the path
+          relative to the root of the project repo containing the tox.ini file.
+        </td>
+      </tr>
 
-The Integration Job Template creates a job which runs when a project that your
-project depends on is successfully built. This job type is basically the same
-as a verify job except that it triggers from other Jenkins jobs instead of via
-Gerrit review updates. The dependencies that triger integration jobs are listed
-in your project.cfg file under the **DEPENDENCIES** variable.
+      <tr class="warning">
+        <td><b>Job Template</b><br/>integration-patch-test-{stream}</td>
+        <td><b>Gerrit Trigger</b><br/>test-integration</td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          This job runs a full integration test suite against your patch and
+          reports back the results to Gerrit. Leave a comment with trigger
+          keyword above to activate it for a particular patch.
 
-If no dependencies are listed then this job type is disabled by default.
+          It then spawns the list of jobs in csit-list defined
+          <a href="https://git.opendaylight.org/gerrit/gitweb?p=releng/builder.git;a=blob;f=jjb/integration/integration-test-jobs.yaml">here</a>.
 
-Distribution Test Job
-^^^^^^^^^^^^^^^^^^^^^
+          This job is maintained by the <a href="https://wiki.opendaylight.org/view/Integration/Test">Integration/Test</a>
+          project.
 
-Trigger: **test-distribution**
+          <div class="admonition note">
+            <p class="first admonition-title">Note</p>
+            <p>
+              Running the "test-integration" trigger will cause Jenkins to remove
+              it's existing vote if it's already -1 or +1'd a comment. You will need
+              to re-run your verify job (recheck) after running this to get Jenkins
+              to put back the correct vote.
+            </p>
+          </div>
 
-This job builds a distrbution against your patch, passes distribution sanity test
-and reports back the results to Gerrit. Leave a comment with trigger keyword above
-to activate it for a particular patch.
-
-This job is maintained by the Integration/Test (`integration-test-wiki`_) project.
-
-.. note:: Running the "test-distribution" trigger will cause Jenkins to remove
-          it's existing vote if it's already -1 or +1'd a comment. You will need
-          to re-run your verify job (recheck) after running this to get Jenkins
-          to put back the correct vote.
-
-Patch Test Job
-^^^^^^^^^^^^^^
-
-Trigger: **test-integration**
-
-This job runs a full integration test suite against your patch and reports
-back the results to Gerrit. Leave a comment with trigger keyword above to activate it
-for a particular patch.
-
-This job is maintained by the Integration/Test (`integration-test-wiki`_) project.
-
-.. note:: Running the "test-integration" trigger will cause Jenkins to remove
-          it's existing vote if it's already -1 or +1'd a comment. You will need
-          to re-run your verify job (recheck) after running this to get Jenkins
-          to put back the correct vote.
-
-Some considerations when using this job:
-
-* The patch test verification takes some time (~2 hours) + consumes a lot of
-  resources so it is not meant to be used for every patch.
-* The system tests for master patches will fail most of the times because both
-  code and test are unstable during the release cycle (should be good by the
-  end of the cycle).
-* Because of the above, patch test results typically have to be interpreted by
-  system test experts. The Integration/Test (`integration-test-wiki`_) project
-  can help with that.
-
-
-Autorelease Validate Job
-^^^^^^^^^^^^^^^^^^^^^^^^
-
-Trigger: **revalidate**
-
-This job runs the PROJECT-validate-autorelease-BRANCH job which is used as a
-quick sanity test to ensure that a patch does not depend on features that do
-not exist in the current release.
-
-The **revalidate** trigger is useful in cases where a project's verify job
-passed however validate failed due to infra problems or intermittent issues.
-It will retrigger just the validate-autorelease job.
-
-Python Verify Job
-^^^^^^^^^^^^^^^^^
-
-Trigger: **recheck** | **revalidate**
-
-This job template can be used by a project that is Python based. It simply
-installs a python virtualenv and uses tox to run tests. When using the template
-you need to provide a {toxdir} which is the path relative to the root of the
-project repo containing the tox.ini file.
-
-Node Verify Job
-^^^^^^^^^^^^^^^^^
-
-Trigger: **recheck** | **revalidate**
-
-This job template can be used by a project that is NodeJS based. It simply
-installs a python virtualenv and uses that to install nodeenv which is then
-used to install another virtualenv for nodejs. It then calls **npm install**
-and **npm test** to run the unit tests. When using this template you need to
-provide a {nodedir} and {nodever} containing the directory relative to the
-project root containing the nodejs package.json and version of node you wish to
-run tests with.
+          Some considerations when using this job:
+          <ul>
+            <li>
+              The patch test verification takes some time (~2 hours) + consumes a lot of
+              resources so it is not meant to be used for every patch.
+            </li>
+            <li>
+              The system tests for master patches will fail most of the times because both
+              code and test are unstable during the release cycle (should be good by the
+              end of the cycle).
+            </li>
+            <li>
+              Because of the above, patch test results typically have to be interpreted by
+              system test experts. The <a href="https://wiki.opendaylight.org/view/Integration/Test">Integration/Test</a>
+              project can help with that.
+            </li>
+        </td>
+      </tr>
+    </table>
 
 Basic Job Configuration
 -----------------------
