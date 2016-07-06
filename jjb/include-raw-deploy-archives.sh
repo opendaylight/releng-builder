@@ -54,6 +54,7 @@ mkdir -p $ARCHIVES_DIR
 mv $WORKSPACE/archives/ $ARCHIVES_DIR > /dev/null 2>&1
 touch $ARCHIVES_DIR/_build-details.txt
 echo "build-url: ${{BUILD_URL}}" >> $ARCHIVES_DIR/_build-details.txt
+env > $ARCHIVES_DIR/_build-enviroment-variables.txt
 
 # Magic string used to trim console logs at the appropriate level during wget
 echo "-----END_OF_BUILD-----"
