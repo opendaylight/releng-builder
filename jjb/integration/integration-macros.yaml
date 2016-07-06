@@ -332,17 +332,6 @@
             !include-raw:
                 - include-raw-integration-deploy-controller-run-test.sh
 
-# Macro: include-raw-integration-deploy-robot-testing
-# Operation: this macro only resolves suite path from testplan
-# Used by: {project}-openstack-{functionality}-daily-{openstack}-{odl} job templates
-
-- builder:
-    name: include-raw-integration-deploy-devstack-testing
-    builders:
-        - shell:
-            !include-raw:
-                - include-raw-integration-deploy-devstack-testing.sh
-
 # Macro: integration-configure-clustering
 # Operation: this macro configures the clustering
 # Used by: {project}-csit-3node-* job templates
