@@ -268,16 +268,15 @@ do
     echo "killing karaf process..."
     ssh "${!CONTROLLERIP}" bash -c 'ps axf | grep karaf | grep -v grep | awk '"'"'{print "kill -9 " $1}'"'"' | sh'
 done
+
 sleep 5
 for i in `seq 1 ${NUM_ODL_SYSTEM}`
 do
     CONTROLLERIP=ODL_SYSTEM_${i}_IP
-    ssh "${!CONTROLLERIP}"  "mv /tmp/${BUNDLEFOLDER}/data/log/ /tmp/odl_log/"
-
-    tar -cf - tar/ | gzip > my.tar.gz
-    ssh "${!CONTROLLERIP}"  'tar -cf "/tmp/odl${i}_karaf.log.tar" "/tmp/odl_log/"'
-    scp "${!CONTROLLERIP}:/tmp/odl${i}_karaf_log.tar" "${WORKSPACE}/odl${i}_karaf.log.tar"
-    tar -xvf ${WORKSPACE}/odl${i}_karaf.log.tar odl${1}/
+    ssh "${!CONTROLLERIP}"  "cp -r /tmp/${BUNDLEFOLDER}/data/log /tmp/odl_log"
+    ssh "${!CONTROLLERIP}"  "tar -cf /tmp/odl${i}_karaf.log.tar /tmp/odl_log/*"
+    scp "${!CONTROLLERIP}:/tmp/odl${i}_karaf.log.tar" "${WORKSPACE}/odl${i}_karaf.log.tar"
+    mkdir odl${i} && tar -xvf ${WORKSPACE}/odl${i}_karaf.log.tar -C odl${i}/
 
 done
 
