@@ -62,7 +62,6 @@
 
     scm:
         - integration-gerrit-scm:
-            credentials-id: '{ssh-credentials}'
             basedir: 'test'
             refspec: '$GERRIT_REFSPEC'
             branch: 'master'
@@ -145,7 +144,6 @@
 
     scm:
         - integration-gerrit-scm:
-            credentials-id: '{ssh-credentials}'
             basedir: 'test'
             refspec: '$PATCHREFSPEC'
             branch: 'master'
@@ -252,7 +250,6 @@
 
     scm:
         - integration-gerrit-scm:
-            credentials-id: '{ssh-credentials}'
             basedir: 'test'
             refspec: '$PATCHREFSPEC'
             branch: 'master'
@@ -357,7 +354,6 @@
 
     scm:
         - integration-gerrit-scm:
-            credentials-id: '{ssh-credentials}'
             basedir: 'test'
             refspec: '$GERRIT_REFSPEC'
             branch: 'master'
@@ -442,7 +438,6 @@
 
     scm:
         - integration-gerrit-scm:
-            credentials-id: '{ssh-credentials}'
             basedir: 'test'
             refspec: '$PATCHREFSPEC'
             branch: 'master'
@@ -550,7 +545,6 @@
 
     scm:
         - integration-gerrit-scm:
-            credentials-id: '{ssh-credentials}'
             basedir: 'test'
             refspec: '$PATCHREFSPEC'
             branch: 'master'
@@ -652,7 +646,6 @@
 
     scm:
         - integration-gerrit-scm:
-            credentials-id: '{ssh-credentials}'
             basedir: 'test'
             refspec: '$PATCHREFSPEC'
             branch: 'master'
@@ -751,7 +744,6 @@
             description: 'Tenant Network Type supported by the implementation'
     scm:
         - integration-gerrit-scm:
-            credentials-id: '{ssh-credentials}'
             basedir: 'test'
             refspec: '$PATCHREFSPEC'
             branch: 'master'
@@ -858,7 +850,6 @@
             description: 'Tenant Network Type supported by the implementation'
     scm:
         - integration-gerrit-scm:
-            credentials-id: '{ssh-credentials}'
             basedir: 'test'
             refspec: '$PATCHREFSPEC'
             branch: 'master'
@@ -933,12 +924,10 @@
 
     scm:
         - integration-gerrit-scm:
-            credentials-id: '{ssh-credentials}'
             basedir: '{project}'
             refspec: '$GERRIT_REFSPEC'
             branch: '{branch}'
         - integration-distribution-scm:
-            credentials-id: '{ssh-credentials}'
             branch: '{branch}'
 
     wrappers:

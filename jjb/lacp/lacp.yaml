@@ -89,7 +89,6 @@
 
     scm:
         - gerrit-trigger-scm:
-            credentials-id: '{ssh-credentials}'
             refspec: '$GERRIT_REFSPEC'
             choosing-strategy: 'gerrit'
 
@@ -160,7 +159,6 @@
 
     scm:
         - gerrit-trigger-scm:
-            credentials-id: '{ssh-credentials}'
             refspec: ''
             choosing-strategy: 'default'
 
@@ -270,7 +268,6 @@
 
     scm:
         - git-scm:
-            credentials-id: '{ssh-credentials}'
             refspec: ''
             branch: '{branch}'
 
@@ -330,7 +327,6 @@
 
     scm:
         - git-scm:
-            credentials-id: '{ssh-credentials}'
             refspec: ''
             branch: '{branch}'
 
@@ -399,12 +395,10 @@
 
     scm:
         - integration-gerrit-scm:
-            credentials-id: '{ssh-credentials}'
             basedir: '$GERRIT_PROJECT'
             refspec: '$GERRIT_REFSPEC'
             branch: '{branch}'
         - integration-distribution-scm:
-            credentials-id: '{ssh-credentials}'
             branch: '{branch}'
 
     wrappers:
@@ -510,7 +504,6 @@
 
     scm:
         - git-scm:
-            credentials-id: '{ssh-credentials}'
             refspec: ''
             branch: '{branch}'
 
@@ -569,7 +562,6 @@
 
     scm:
         - git-scm:
-            credentials-id: '{ssh-credentials}'
             refspec: ''
             branch: 'master'
 
@@ -631,7 +623,6 @@
 
     scm:
         - git-scm:
-            credentials-id: '{ssh-credentials}'
             refspec: ''
             branch: '{branch}'
 
@@ -702,7 +693,7 @@
     scm:
         - git:
             url: '$CLONE_URL'
-            credentials-id: '{ssh-credentials}'
+            credentials-id: 'opendaylight-jenkins-ssh'
             refspec: ''
             branches:
                 - 'origin/{branch}'

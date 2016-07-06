@@ -94,7 +94,7 @@
     name: integration-gerrit-scm
     scm:
         - git:
-            credentials-id: '{credentials-id}'
+            credentials-id: 'opendaylight-jenkins-ssh'
             url: '$GIT_BASE'
             basedir: '{basedir}'
             refspec: '{refspec}'
@@ -111,7 +111,7 @@
     name: integration-distribution-scm
     scm:
         - git:
-            credentials-id: '{credentials-id}'
+            credentials-id: 'opendaylight-jenkins-ssh'
             basedir: 'distribution'
             url: '$DISTROGITURL'
             refspec: ''

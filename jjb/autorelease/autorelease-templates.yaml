@@ -21,7 +21,7 @@
 
     scm:
         - git:
-            credentials-id: '{ssh-credentials}'
+            credentials-id: 'opendaylight-jenkins-ssh'
             url: '$GIT_BASE'
             refspec: ''
             branches:
@@ -104,7 +104,7 @@
 
     scm:
         - git:
-            credentials-id: '{ssh-credentials}'
+            credentials-id: 'opendaylight-jenkins-ssh'
             url: '$GIT_BASE'
             refspec: ''
             branches:
@@ -175,7 +175,6 @@
 
     scm:
     - gerrit-trigger-scm:
-        credentials-id: '{ssh-credentials}'
         refspec: ''
         choosing-strategy: 'default'
 
@@ -228,7 +227,6 @@
 
     scm:
     - gerrit-trigger-scm:
-        credentials-id: '{ssh-credentials}'
         refspec: '$GERRIT_REFSPEC'
         choosing-strategy: 'gerrit'
 

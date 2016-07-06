@@ -23,6 +23,9 @@
     wrappers:
         - opendaylight-infra-wrappers:
             build-timeout: '90'
+        - ssh-agent-credentials:
+            users:
+                - 'openstack-gerrit-ssh'
 
     triggers:
         - gerrit:

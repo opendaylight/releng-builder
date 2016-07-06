@@ -29,12 +29,10 @@
 
     scm:
         - integration-gerrit-scm:
-            credentials-id: '{ssh-credentials}'
             basedir: '$GERRIT_PROJECT'
             refspec: '$GERRIT_REFSPEC'
             branch: '{branch}'
         - integration-distribution-scm:
-            credentials-id: '{ssh-credentials}'
             branch: '{branch}'
 
     wrappers:

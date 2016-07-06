@@ -75,7 +75,6 @@
 
     scm:
         - gerrit-trigger-scm:
-            credentials-id: '{ssh-credentials}'
             refspec: '$GERRIT_REFSPEC'
             choosing-strategy: 'gerrit'
 
@@ -119,7 +118,6 @@
 
     scm:
         - gerrit-trigger-scm:
-            credentials-id: '{ssh-credentials}'
             refspec: ''
             choosing-strategy: 'default'
 

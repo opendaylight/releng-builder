@@ -32,7 +32,6 @@
 
     scm:
         - gerrit-trigger-scm:
-            credentials-id: '{ssh-credentials}'
             refspec: '$GERRIT_REFSPEC'
             choosing-strategy: 'gerrit'
 
@@ -100,7 +99,6 @@
 
     scm:
         - gerrit-trigger-scm:
-            credentials-id: '{ssh-credentials}'
             refspec: '$GERRIT_REFSPEC'
             choosing-strategy: 'gerrit'
 
@@ -171,7 +169,6 @@
 
     scm:
         - gerrit-trigger-scm:
-            credentials-id: '{ssh-credentials}'
             refspec: ''
             choosing-strategy: 'default'
 
@@ -233,7 +230,6 @@
 
     scm:
         - git-scm:
-            credentials-id: '{ssh-credentials}'
             branch: 'master'
 
     wrappers:
@@ -314,7 +310,6 @@
 
     scm:
         - gerrit-trigger-scm:
-            credentials-id: '{ssh-credentials}'
             refspec: ''
             choosing-strategy: 'default'
 
@@ -381,7 +376,6 @@
 
     scm:
         - gerrit-trigger-scm:
-            credentials-id: '{ssh-credentials}'
             refspec: '$GERRIT_REFSPEC'
             choosing-strategy: 'gerrit'
 
