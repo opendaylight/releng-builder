@@ -16,6 +16,10 @@ yum install -y -q libffi-devel openssl-devel
 ## Install netcat & docker-py
 yum install -y -q nc python-docker-py
 
+# Install dependencies for matplotlib library used in longevity framework
+yum install -y yum-utils
+yum-builddep -y python-matplotlib
+
 # make sure the firewall is stopped
 service iptables stop
 
