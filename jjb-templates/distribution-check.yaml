@@ -100,11 +100,16 @@
         - integration-distribution-check
 
     publishers:
-        - archive:
-            artifacts: 'karaf.log'
-        - archive:
-            artifacts: 'karaf_console.log'
         - email-notification:
             email-prefix: '[PROJECT_SHORTNAME]'
+        - postbuildscript:
+            builders:
+                - shell: |
+                    #!/bin/bash
+                    mkdir -p $WORKSPACE/archives
+                    cp karaf*.log $WORKSPACE/archives
+            script-only-if-succeeded: False
+            script-only-if-failed: False
+            mark-unstable-if-failed: True
         - archive-build:
             maven-version: '{mvn33}'
