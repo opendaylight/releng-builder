@@ -25,3 +25,6 @@ yum -q -y install mono-complete
 
 # Install software for building RPMs
 yum install -y fedora-packager
+
+# Install software for building docs
+yum install -y libxslt-devel
