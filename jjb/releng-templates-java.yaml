@@ -229,6 +229,72 @@
             maven-version: '{mvn33}'
 
 - job-template:
+    name: '{name}-integration-{stream}'
+
+    # Job template for ODL integration verify jobs
+    #
+    # This is similar to a normal verify job, but it runs
+    # when a project that's a dependency of your project
+    # is successfully built.
+    #
+    # Required Variables:
+    #     stream:    release stream (eg. stable-lithium or beryllium)
+    #     branch:    git branch (eg. stable/lithium or master)
+
+    project-type: maven
+    node: dynamic_merge
+    jdk: '{jdk}'
+
+    logrotate:
+        daysToKeep: '{build-days-to-keep}'
+        numToKeep: '{build-num-to-keep}'
+        artifactDaysToKeep: '{build-artifact-days-to-keep}'
+        artifactNumToKeep: '{build-artifact-num-to-keep}'
+
+    parameters:
+        - project-parameter:
+            project: '{project}'
+
+    scm:
+        - git-scm:
+            refspec: ''
+            branch: '{branch}'
+
+    wrappers:
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
+
+    triggers:
+        - reverse:
+            jobs: '{dependencies}'
+            result: 'success'
+
+    prebuilders:
+        - jacoco-nojava-workaround
+        - provide-maven-settings:
+            global-settings-file: 'odl-global-settings'
+            settings-file: '{mvn-settings}'
+
+    maven:
+        maven-name: '{mvn33}'
+        goals: '{mvn-goals} -V -B -Djenkins'
+        maven-opts: '{mvn-opts}'
+        settings: '{mvn-settings}'
+        settings-type: cfp
+        global-settings: 'odl-global-settings'
+        global-settings-type: cfp
+
+    reporters:
+        - findbugs
+
+    publishers:
+        - email-notification:
+            email-prefix: '{email-upstream}'
+        - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
+
+- job-template:
     name: '{name}-validate-autorelease-{stream}'
     disabled: '{obj:disable_autorelease}'
 
