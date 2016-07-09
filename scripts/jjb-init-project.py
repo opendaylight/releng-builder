@@ -57,9 +57,7 @@ if os.path.isfile(project_conf):
 if cfg.get("JOB_TEMPLATES"):
     templates = cfg.get("JOB_TEMPLATES")
 else:
-    templates = (
-        "verify,merge,"
-        "sonar")
+    templates = ("verify,sonar")
 
 ##################
 # Handle Streams #
@@ -156,12 +154,7 @@ if dependencies:
 # Handle ARCHIVE_ARTIFACTS #
 ############################
 
-always_archive = "**/target/surefire-reports/*-output.txt"
-
 archive_artifacts = cfg.get('ARCHIVE_ARTIFACTS', '')
-archive_artifacts = ("- archive-artifacts:\n"
-                     "            artifacts: '%s, %s'" %
-                     (always_archive, archive_artifacts))
 
 ##############################
 # Create configuration start #
