@@ -58,7 +58,7 @@ if cfg.get("JOB_TEMPLATES"):
     templates = cfg.get("JOB_TEMPLATES")
 else:
     templates = (
-        "verify,merge,periodic,"
+        "verify,merge,"
         "sonar")
 
 ##################
