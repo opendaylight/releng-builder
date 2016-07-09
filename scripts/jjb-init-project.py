@@ -60,7 +60,6 @@ else:
     templates = (
         "verify,merge,periodic,integration,"
         "sonar")
-templates += ",validate-autorelease"  # Autorelease validate template
 
 ##################
 # Handle Streams #
