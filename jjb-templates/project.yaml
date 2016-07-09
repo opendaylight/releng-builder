@@ -10,6 +10,7 @@
         - '{name}-distribution-{stream}'
         - '{name}-distribution-check-{stream}'
         - '{name}-integration-{stream}'
+        - '{name}-merge-{stream}'
         - '{name}-periodic-{stream}'
         - '{name}-validate-autorelease-{stream}'
 JOB_TEMPLATES
@@ -23,6 +24,7 @@ JOB_TEMPLATES
     mvn-opts: 'MAVEN_OPTS'
     dependencies: 'DEPENDENCIES'
     email-upstream: 'EMAIL_PREFIX'
+    artifacts: 'ARCHIVE_ARTIFACTS'
 
 # For the Job templates below replace instances of:
 # PROJECT_SHORTNAME with your project name (eg. circuitsw)
