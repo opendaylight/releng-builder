@@ -1,19 +1,10 @@
-# REMOVE THIS LINE IF YOU WANT TO CUSTOMIZE ANYTHING BELOW
-# Otherwise this file will be automatically overwritten by the template
-# autobuilder.
-
 # ODL Releng build templates
 - project:
     name: distribution
     jobs:
         - '{name}-clm-{stream}'
-        - '{name}-distribution-{stream}'
-        - '{name}-distribution-check-{stream}'
-        - '{name}-integration-{stream}'
-        - '{name}-periodic-{stream}'
+        - '{name}-sonar'
         - '{name}-validate-autorelease-{stream}'
-        - 'distribution-sonar'
-
 
     # stream:    release stream (eg. stable-lithium or beryllium)
     # branch:    git branch (eg. stable/lithium or master)
@@ -40,74 +31,4 @@
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream}'
     email-upstream: '[distribution] [odlparent]'
-
-# For the Job templates below replace instances of:
-# PROJECT_SHORTNAME with your project name (eg. circuitsw)
-# PROJECT_PATH with your project name (eg. ofextensions/circuitsw)
-# MAVEN_GOALS with your maven goals to build
-# MAVEN_OPTS with your maven options to build
-
-- job-template:
-    name: 'distribution-sonar'
-    disabled: false
-
-    project-type: maven
-    node: dynamic_verify
-    jdk: 'openjdk8'
-
-    logrotate:
-        daysToKeep: '7'
-        numToKeep: '10'
-        artifactDaysToKeep: '1'
-        artifactNumToKeep: '1'
-
-    parameters:
-        - opendaylight-infra-parameters:
-            project: '{project}'
-            branch: '{branch}'
-            refspec: 'refs/heads/{branch}'
-            artifacts: '{archive-artifacts}'
-
-    scm:
-        - git-scm:
-            refspec: ''
-            branch: 'master'
-
-    wrappers:
-        - opendaylight-infra-wrappers:
-            build-timeout: '{build-timeout}'
-
-    triggers:
-        - timed: 'H H * * 6'
-        - gerrit-trigger-patch-sonar:
-            name: 'integration/distribution'
-
-    prebuilders:
-        - jacoco-nojava-workaround
-        - provide-maven-settings:
-            global-settings-file: 'odl-global-settings'
-            settings-file: 'integration-distribution-settings'
-
-    maven:
-        maven-name: '{mvn33}'
-        root-pom: 'pom.xml'
-        goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r  -V -B -Djenkins -Dsonar'
-        maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-        settings: 'integration-distribution-settings'
-        settings-type: cfp
-        global-settings: 'odl-global-settings'
-        global-settings-type: cfp
-
-    reporters:
-        - findbugs
-
-    publishers:
-        - sonar:
-            language: 'java'
-            maven-opts: '-Xmx6144m -XX:MaxPermSize=1024m'
-        - email-notification:
-            email-prefix: '[distribution]'
-        - jacoco-report
-        - archive-build:
-            maven-version: '{mvn33}'
-
+    archive-artifacts: ''
