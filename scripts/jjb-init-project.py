@@ -58,7 +58,7 @@ if cfg.get("JOB_TEMPLATES"):
     templates = cfg.get("JOB_TEMPLATES")
 else:
     templates = (
-        "verify,merge,periodic,distribution,distribution-check,integration,"
+        "verify,merge,periodic,distribution,integration,"
         "sonar")
 templates += ",validate-autorelease"  # Autorelease validate template
 
