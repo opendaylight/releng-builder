@@ -20,10 +20,10 @@
             scope: 'only'
 
     # Features to install
-    install-features: 'odl-openflowplugin-flow-services-ui'
+    install-features: 'odl-openflowplugin-flow-services-ui,decanter-collector-jmx,decanter-appender-elasticsearch'
 
     # Robot custom options
-    robot-options: '-v TOPO_TREE_DEPTH:7'
+    robot-options: '-v TOPO_TREE_DEPTH:7 -v DURATION:10 -v STEP:2'
 
     # Trigger jobs (upstream dependencies)
     trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream},openflowjava-distribution-{stream},openflowplugin-distribution-{stream}'
