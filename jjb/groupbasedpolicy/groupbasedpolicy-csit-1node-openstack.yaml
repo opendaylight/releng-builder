@@ -1,10 +1,10 @@
 - project:
-    name: netvirt-csit-openstack-integration
+    name: groupbasedpolicy-csit-openstack-integration
     jobs:
         - '{project}-csit-1node-openstack-{openstack}-{functionality}-{stream}'
 
     # The project name
-    project: 'netvirt'
+    project: 'groupbasedpolicy'
 
     # The project name
     functionality: 'openstack'
@@ -25,15 +25,15 @@
             openstack-branch: 'stable/liberty'
             odl-ml2-version:  'stable/liberty'
 
-    openstack-vms: 3
+    openstack-vms: 1
 
-    install-features: 'odl-ovsdb-openstack'
+    install-features: 'odl-groupbasedpolicy-neutron-and-ofoverlay,odl-restconf'
 
     schedule: 'H H * * *'
 
     odl-enable-l3: 'yes'
 
-    public-bridge: 'br-ex'
+    public-bridge: 'br-int'
 
     enable-openstack-services: 'q-svc,q-dhcp,q-meta,n-cauth,tempest'
 
