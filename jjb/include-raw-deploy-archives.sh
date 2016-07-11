@@ -50,6 +50,19 @@ cat > deploy-archives.xml <<EOF
 EOF
 
 mkdir -p $ARCHIVES_DIR
+mkdir -p $WORKSPACE/archives
+if [ ! -z $ARCHIVE_ARTIFACTS ]; then
+    pushd $WORKSPACE
+    shopt -s globstar  # Enable globstar to copy archives
+    archive_artifacts=$(echo $ARCHIVE_ARTIFACTS)
+    echo "Archiving $archive_artifacts"
+    for f in $archive_artifacts; do
+        mkdir -p $WORKSPACE/archives/$(dirname $f)
+        mv $f $WORKSPACE/archives/$f
+    done
+    shopt -u globstar  # Disable globstar once archives are copied
+    popd
+fi
 # Ignore logging if archives doesn't exist
 mv $WORKSPACE/archives/ $ARCHIVES_DIR > /dev/null 2>&1
 touch $ARCHIVES_DIR/_build-details.txt
