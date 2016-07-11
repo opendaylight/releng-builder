@@ -439,7 +439,7 @@
         root-pom: 'patch_tester/pom.xml'
         # TODO: Make Maven options configurable. Currently tests are not skipped, everything else is.
         goals: 'clean install -f patch_tester/pom.xml -V -B -Djenkins -Dcheckstyle.skip=true -Dmaven.javadoc.skip=true -Dmaven.site.skip=true -DgenerateReports=false -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -Dstream={stream}'
-        maven-opts: '-Xmx4096m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
+        maven-opts: '-Xmx7168m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
         settings: 'yangtools-settings'
         settings-type: cfp
         global-settings: 'odl-global-settings'
