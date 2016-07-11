@@ -1,10 +1,10 @@
 - project:
-    name: netvirt-csit-openstack-integration
+    name: groupbasedpolicy-csit-openstack-integration
     jobs:
         - '{project}-csit-1node-openstack-{openstack}-{functionality}-{stream}'
 
     # The project name
-    project: 'netvirt'
+    project: 'groupbasedpolicy'
 
     # The project name
     functionality: 'openstack'
@@ -13,9 +13,11 @@
         - boron:
             branch: 'master'
             jre: 'openjdk8'
+            install-features: 'odl-groupbasedpolicy-neutron-and-ofoverlay,odl-restconf'
         - beryllium:
             branch: 'stable/beryllium'
             jre: 'openjdk7'
+            install-features: 'odl-groupbasedpolicy-neutronmapper,odl-restconf'
 
     openstack:
         - mitaka:
@@ -25,15 +27,13 @@
             openstack-branch: 'stable/liberty'
             odl-ml2-version:  'stable/liberty'
 
-    openstack-vms: 3
-
-    install-features: 'odl-ovsdb-openstack'
+    openstack-vms: 1
 
     schedule: 'H H * * *'
 
     odl-enable-l3: 'yes'
 
-    public-bridge: 'br-ex'
+    public-bridge: 'br-int'
 
     enable-openstack-services: 'q-svc,q-dhcp,q-meta,n-cauth,tempest'
 
