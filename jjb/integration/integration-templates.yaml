@@ -671,6 +671,10 @@
             name: TENANT_NETWORK_TYPE
             default: '{tenant-network-type}'
             description: 'Tenant Network Type supported by the implementation'
+        - string:
+            name: LIMIT_TEST_VM_INSTANCES_PER_NW
+            default: '{limit-test-instances}'
+            description: 'Number of vm instances to be created per network'
     scm:
         - integration-gerrit-scm:
             basedir: 'test'
@@ -777,6 +781,10 @@
             name: TENANT_NETWORK_TYPE
             default: '{tenant-network-type}'
             description: 'Tenant Network Type supported by the implementation'
+        - string:
+            name: LIMIT_TEST_VM_INSTANCES_PER_NW
+            default: '{limit-test-instances}'
+            description: 'Number of vm instances to be created per network'
     scm:
         - integration-gerrit-scm:
             basedir: 'test'
