@@ -6,9 +6,13 @@
 - project:
     name: distribution
     jobs:
+        - '{name}-clm-{stream}'
+        - '{name}-distribution-{stream}'
+        - '{name}-distribution-check-{stream}'
+        - '{name}-integration-{stream}'
+        - '{name}-periodic-{stream}'
+        - '{name}-validate-autorelease-{stream}'
         - 'distribution-sonar'
-        - 'distribution-clm-{stream}'
-        - 'distribution-validate-autorelease-{stream}'
 
 
     # stream:    release stream (eg. stable-lithium or beryllium)
@@ -31,6 +35,11 @@
             disable_distribution_check: False
 
     project: 'integration/distribution'
+    mvn-settings: 'integration-distribution-settings'
+    mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r '
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: 'odlparent-merge-{stream}'
+    email-upstream: '[distribution] [odlparent]'
 
 # For the Job templates below replace instances of:
 # PROJECT_SHORTNAME with your project name (eg. circuitsw)
@@ -96,170 +105,6 @@
         - email-notification:
             email-prefix: '[distribution]'
         - jacoco-report
-        - archive-build:
-            maven-version: '{mvn33}'
-
-- job-template:
-    name: 'distribution-clm-{stream}'
-    disabled: false
-
-    project-type: maven
-    node: dynamic_verify
-    jdk: '{jdk}'
-
-    logrotate:
-        daysToKeep: '{build-days-to-keep}'
-        numToKeep: '{build-num-to-keep}'
-        artifactDaysToKeep: '{build-artifact-days-to-keep}'
-        artifactNumToKeep: '{build-artifact-num-to-keep}'
-
-    parameters:
-        - project-parameter:
-            project: '{project}'
-
-    scm:
-        - git-scm:
-            refspec: ''
-            branch: '{branch}'
-
-    wrappers:
-        - opendaylight-infra-wrappers:
-            build-timeout: '{build-timeout}'
-
-    triggers:
-        - timed: 'H H * * 6'
-
-    prebuilders:
-        - provide-maven-settings:
-            global-settings-file: 'odl-global-settings'
-            settings-file: 'integration-distribution-settings'
-
-    maven:
-        maven-name: '{mvn33}'
-        root-pom: 'pom.xml'
-        goals: 'clean install com.sonatype.clm:clm-maven-plugin:index -V -B -Djenkins -DskipTests=true -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
-        maven-opts: '-Xmx4096m -XX:MaxPermSize=512m'
-        settings: 'integration-distribution-settings'
-        settings-type: cfp
-        global-settings: 'odl-global-settings'
-        global-settings-type: cfp
-
-    postbuilders:
-        - shell: 'find . -regex ".*karaf/target" | xargs rm -rf'
-        - check-clm:
-            application-name: distribution
-
-    publishers:
-        - email-notification:
-            email-prefix: '[distribution]'
-        - archive-build:
-            maven-version: '{mvn33}'
-
-- job-template:
-    name: 'distribution-validate-autorelease-{stream}'
-    disabled: '{obj:disable_autorelease}'
-
-    project-type: maven
-    node: dynamic_verify
-    concurrent: true
-    jdk: '{jdk}'
-
-    logrotate:
-        daysToKeep: '{build-days-to-keep}'
-        numToKeep: '{build-num-to-keep}'
-        artifactDaysToKeep: '{build-artifact-days-to-keep}'
-        artifactNumToKeep: '{build-artifact-num-to-keep}'
-
-    parameters:
-        - project-parameter:
-            project: '{project}'
-        - gerrit-parameters:
-            project: '{project}'
-            branch: '{branch}'
-            refspec: 'refs/heads/{branch}'
-        - autorelease-release-tag:
-            release-tag: 'validate'
-        - autorelease-release-branch:
-            release-branch: '{branch}'
-        - string:
-            name: CLONE_URL
-            default: 'ssh://jenkins-$SILO@git.opendaylight.org:29418/releng/autorelease'
-            description: "Autorelease clone URL"
-
-    scm:
-        - git:
-            url: '$CLONE_URL'
-            credentials-id: 'opendaylight-jenkins-ssh'
-            refspec: ''
-            branches:
-                - 'origin/{branch}'
-            skip-tag: true
-            submodule:
-                recursive: true
-                timeout: 60
-
-    wrappers:
-        - opendaylight-infra-wrappers:
-            build-timeout: '{build-timeout}'
-
-    triggers:
-        - gerrit:
-            server-name: 'OpenDaylight'
-            trigger-on:
-                - patchset-created-event:
-                    exclude-drafts: 'true'
-                    exclude-trivial-rebase: 'false'
-                    exclude-no-code-change: 'true'
-                - draft-published-event
-                - comment-added-contains-event:
-                    comment-contains-value: 'recheck'
-                - comment-added-contains-event:
-                    comment-contains-value: 'reverify'
-                - comment-added-contains-event:
-                    comment-contains-value: 'revalidate'
-            projects:
-              - project-compare-type: 'ANT'
-                project-pattern: 'integration/distribution'
-                branches:
-                  - branch-compare-type: 'ANT'
-                    branch-pattern: '**/{branch}'
-                file-paths:
-                    - compare-type: ANT
-                      pattern: '**/*.xml'
-
-    prebuilders:
-        - jacoco-nojava-workaround
-        - autorelease-checkout-gerrit-patch
-        - autorelease-generate-release-patches
-        - maven-target:
-            maven-version: '{mvn33}'
-            pom: validate-pom.xml
-            goals: 'clean install -V -B -T1.5C -Djenkins -DskipTests -Dcheckstyle.skip=true -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
-            java-opts:
-            - '-Xmx8g'
-            settings: 'autorelease-settings'
-            settings-type: cfp
-            global-settings: 'odl-global-settings'
-            global-settings-type: cfp
-
-    maven:
-        maven-name: '{mvn33}'
-        root-pom: 'pom.xml'
-        goals: 'clean validate -V -B -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
-        maven-opts: '-Xmx8g -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
-        settings: 'autorelease-settings'
-        settings-type: cfp
-        global-settings: 'odl-global-settings'
-        global-settings-type: cfp
-        automatic-archiving: false
-        post-step-run-condition: UNSTABLE
-
-    postbuilders:
-        - autorelease-sys-stats
-
-    publishers:
-        - email-notification:
-            email-prefix: '[autorelease] [distribution]'
         - archive-build:
             maven-version: '{mvn33}'
 
