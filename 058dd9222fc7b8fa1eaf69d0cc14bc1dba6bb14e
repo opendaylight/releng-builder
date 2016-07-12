@@ -45,6 +45,30 @@
       "revId": "058dd9222fc7b8fa1eaf69d0cc14bc1dba6bb14e",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_21b1cd8f",
+        "filename": "jjb/include-raw-deploy-archives.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2016-07-12T14:38:29Z",
+      "side": 1,
+      "message": "I ran file against an html file and it printed this:\nindex.html: HTML document, UTF-8 Unicode text\n\nSo I think a regex grep for things that end in text might be the right thing. I think a simple grep won\u0027t cut it just in case it greps against a binary package with the word text in it\u0027s name. For example org.eclipse.xtext.jar",
+      "parentUuid": "9a561d44_813b799b",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 24
+      },
+      "revId": "058dd9222fc7b8fa1eaf69d0cc14bc1dba6bb14e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
