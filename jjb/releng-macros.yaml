@@ -262,6 +262,11 @@
     # To archive things the job will need to create a "archives" directory in
     # the workspace and this macro will handle copying the contents of the
     # archives directory.
+    #
+    # Uses the build parameter ARCHIVE_ARTIFACTS if not empty to find files
+    # to archive. You can pass globstar patterns for example "**/*.xml **/*.log"
+    # as the archive pattern. This is a space separated list of files to archive.
+    #
     # Also ensure that the workspace is cleaned up at the end of the build.
     publishers:
         - postbuildscript:
