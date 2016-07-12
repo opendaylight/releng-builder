@@ -189,6 +189,9 @@
                       pattern: jjb-templates/**
 
     builders:
+        - shell: |
+            pip freeze
+
         - shell:
             !include-raw-escape:
                 - include-raw-jjb-update.sh
