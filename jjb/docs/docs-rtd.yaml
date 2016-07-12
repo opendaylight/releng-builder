@@ -23,12 +23,11 @@
         daysToKeep: 14
 
     parameters:
-        - project-parameter:
-            project: '{project}'
-        - gerrit-parameters:
+        - opendaylight-infra-parameters:
             project: '{project}'
             branch: '{branch}'
             refspec: 'refs/heads/{branch}'
+            artifacts: '{archive-artifacts}'
 
     wrappers:
         - opendaylight-infra-wrappers:
@@ -69,12 +68,11 @@
         daysToKeep: 14
 
     parameters:
-        - project-parameter:
-            project: '{project}'
-        - gerrit-parameters:
+        - opendaylight-infra-parameters:
             project: '{project}'
             branch: '{branch}'
             refspec: 'refs/heads/{branch}'
+            artifacts: '{archive-artifacts}'
 
     scm:
         - git-scm-with-submodules:

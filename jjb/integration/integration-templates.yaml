@@ -10,7 +10,7 @@
 #
 # Parameters:
 #
-# project-parameter: main project integration/test ($PROJECT)
+# opendaylight-infra-parameters: main project integration/test ($PROJECT)
 # jre: (openjdk7 or openjdk8) Java runtime environment to use when launching ODL
 # integration-branch: distribution branch ($BRANCH)
 # integration-controller-bundleurl: distribution URL ($BUNDLEURL)
@@ -38,8 +38,11 @@
         artifactNumToKeep: '{build-num-to-keep}'
 
     parameters:
-        - project-parameter:
+        - opendaylight-infra-parameters:
             project: 'integration/test'
+            branch: '{branch}'
+            refspec: 'refs/heads/{branch}'
+            artifacts: '{archive-artifacts}'
         - integration-branch:
             branch: 'stable/beryllium'
         - integration-distribution-stream:
@@ -120,8 +123,11 @@
         artifactNumToKeep: '{build-num-to-keep}'
 
     parameters:
-        - project-parameter:
+        - opendaylight-infra-parameters:
             project: 'integration/test'
+            branch: '{branch}'
+            refspec: 'refs/heads/{branch}'
+            artifacts: '{archive-artifacts}'
         - integration-branch:
             branch: '{branch}'
         - integration-distribution-stream:
@@ -226,8 +232,11 @@
         artifactNumToKeep: '{build-num-to-keep}'
 
     parameters:
-        - project-parameter:
+        - opendaylight-infra-parameters:
             project: 'integration/test'
+            branch: '{branch}'
+            refspec: 'refs/heads/{branch}'
+            artifacts: '{archive-artifacts}'
         - integration-branch:
             branch: '{branch}'
         - integration-distribution-stream:
@@ -331,8 +340,11 @@
         artifactNumToKeep: '{build-num-to-keep}'
 
     parameters:
-        - project-parameter:
+        - opendaylight-infra-parameters:
             project: 'integration/test'
+            branch: '{branch}'
+            refspec: 'refs/heads/{branch}'
+            artifacts: '{archive-artifacts}'
         - integration-branch:
             branch: 'stable/beryllium'
         - integration-distribution-stream:
@@ -414,8 +426,11 @@
         artifactNumToKeep: '{build-num-to-keep}'
 
     parameters:
-        - project-parameter:
+        - opendaylight-infra-parameters:
             project: 'integration/test'
+            branch: '{branch}'
+            refspec: 'refs/heads/{branch}'
+            artifacts: '{archive-artifacts}'
         - integration-branch:
             branch: '{branch}'
         - integration-distribution-stream:
@@ -521,8 +536,11 @@
         artifactNumToKeep: '{build-num-to-keep}'
 
     parameters:
-        - project-parameter:
+        - opendaylight-infra-parameters:
             project: 'integration/test'
+            branch: '{branch}'
+            refspec: 'refs/heads/{branch}'
+            artifacts: '{archive-artifacts}'
         - integration-branch:
             branch: '{branch}'
         - integration-distribution-stream:
@@ -627,8 +645,11 @@
         artifactNumToKeep: '{build-num-to-keep}'
 
     parameters:
-        - project-parameter:
+        - opendaylight-infra-parameters:
             project: 'integration/test'
+            branch: '{branch}'
+            refspec: 'refs/heads/{branch}'
+            artifacts: '{archive-artifacts}'
         - integration-branch:
             branch: '{branch}'
         - integration-distribution-stream:
@@ -729,8 +750,11 @@
         artifactNumToKeep: '{build-num-to-keep}'
 
     parameters:
-        - project-parameter:
+        - opendaylight-infra-parameters:
             project: 'integration/test'
+            branch: '{branch}'
+            refspec: 'refs/heads/{branch}'
+            artifacts: '{archive-artifacts}'
         - integration-branch:
             branch: '{branch}'
         - integration-distribution-stream:
@@ -841,12 +865,11 @@
         artifactNumToKeep: '{build-artifact-num-to-keep}'
 
     parameters:
-        - gerrit-parameters:
+        - opendaylight-infra-parameters:
             project: '{project}'
             branch: '{branch}'
             refspec: '$GERRIT_REFSPEC'
-        - project-parameter:
-            project: '{project}'
+            artifacts: '{archive-artifacts}'
         - integration-branch:
             branch: '{branch}'
         - integration-distribution-git-url

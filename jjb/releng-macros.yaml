@@ -1,16 +1,16 @@
 # OLD Releng macros
 
 - parameter:
-    name: project-parameter
+    name: opendaylight-infra-parameters
     parameters:
         - string:
             name: PROJECT
             default: '{project}'
-            description: "JJB configured PROJECT parameter to identify an ODL Gerrit project"
-
-- parameter:
-    name: gerrit-parameters
-    parameters:
+            description: 'Parameter to identify an ODL Gerrit project'
+        - string:
+            name: ARCHIVE_ARTIFACTS
+            default: '{artifacts}'
+            description: 'Artifacts to archive into logs.opendaylight.org'
         - string:
             name: GERRIT_PROJECT
             default: '{project}'

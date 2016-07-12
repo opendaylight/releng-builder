@@ -76,12 +76,11 @@
         artifactNumToKeep: '{build-artifact-num-to-keep}'
 
     parameters:
-        - project-parameter:
-            project: '{project}'
-        - gerrit-parameters:
+        - opendaylight-infra-parameters:
             project: '{project}'
             branch: '{branch}'
             refspec: 'refs/heads/{branch}'
+            artifacts: '{archive-artifacts}'
 
     scm:
         - gerrit-trigger-scm:

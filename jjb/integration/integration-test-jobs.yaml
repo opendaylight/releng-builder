@@ -183,8 +183,11 @@
         artifactNumToKeep: '{build-artifact-num-to-keep}'
 
     parameters:
-        - project-parameter:
+        - opendaylight-infra-parameters:
             project: 'integration/test'
+            branch: '{branch}'
+            refspec: 'refs/heads/{branch}'
+            artifacts: '{archive-artifacts}'
         - integration-branch:
             branch: 'stable/beryllium'
         - integration-distribution-stream:
@@ -313,12 +316,11 @@
         artifactNumToKeep: '{build-artifact-num-to-keep}'
 
     parameters:
-        - gerrit-parameters:
+        - opendaylight-infra-parameters:
             project: '$GERRIT_PROJECT'
             branch: '{branch}'
             refspec: '$GERRIT_REFSPEC'
-        - project-parameter:
-            project: '$GERRIT_PROJECT'
+            artifacts: '{archive-artifacts}'
         - integration-branch:
             branch: '{branch}'
         - integration-distribution-git-url
