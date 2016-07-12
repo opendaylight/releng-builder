@@ -62,11 +62,12 @@ wget -O $ARCHIVES_DIR/_console-output.log ${{BUILD_URL}}consoleText
 sed -i '/^-----END_OF_BUILD-----$/,$d' $ARCHIVES_DIR/_console-output.log
 
 gzip $ARCHIVES_DIR/*.txt $ARCHIVES_DIR/*.log
-# find and gzip all text files
-find $ARCHIVES_DIR -name "*.txt" \
-                -o -name "*.log" \
-                -o -name "*.html" \
-                | xargs gzip
+# find and gzip all ASCII files
+find $ARCHIVES_DIR -type f -print0 \
+		| xargs -0r file \
+		| grep 'ASCII text' \
+		| cut -d: -f1 \
+		| xargs -d'\n' -r gzip
 
 zip -r archives.zip $JENKINS_HOSTNAME/
 du -sh archives.zip
