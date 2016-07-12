@@ -37,12 +37,11 @@
         artifactNumToKeep: '{build-artifact-num-to-keep}'
 
     parameters:
-        - project-parameter:
-            project: 'integration/distribution'
-        - gerrit-parameters:
+        - opendaylight-infra-parameters:
             project: '{project}'
             branch: '{branch}'
             refspec: 'refs/heads/{branch}'
+            artifacts: '{archive-artifacts}'
         - integration-patch-refspec:
             branch: '$GERRIT_REFSPEC'
 
@@ -110,12 +109,11 @@
         artifactNumToKeep: '{build-artifact-num-to-keep}'
 
     parameters:
-        - project-parameter:
-            project: 'integration/distribution'
-        - gerrit-parameters:
+        - opendaylight-infra-parameters:
             project: '{project}'
             branch: '{branch}'
             refspec: 'refs/heads/{branch}'
+            artifacts: '{archive-artifacts}'
 
     scm:
         - gerrit-trigger-scm:
@@ -215,8 +213,11 @@
         artifactNumToKeep: '{build-num-to-keep}'
 
     parameters:
-        - project-parameter:
-            project: 'integration/distribution'
+        - opendaylight-infra-parameters:
+            project: '{project}'
+            branch: '{branch}'
+            refspec: 'refs/heads/{branch}'
+            artifacts: '{archive-artifacts}'
         - integration-branch:
             branch: '{branch}'
         - integration-bundleurl:
@@ -261,8 +262,11 @@
         artifactNumToKeep: '{build-num-to-keep}'
 
     parameters:
-        - project-parameter:
-            project: 'integration/distribution'
+        - opendaylight-infra-parameters:
+            project: '{project}'
+            branch: '{branch}'
+            refspec: 'refs/heads/{branch}'
+            artifacts: '{archive-artifacts}'
         - integration-branch:
             branch: '{branch}'
         - integration-bundleurl:

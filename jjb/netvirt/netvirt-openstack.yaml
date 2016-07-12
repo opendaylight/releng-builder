@@ -17,8 +17,11 @@
         daysToKeep: '198'
 
     parameters:
-        - project-parameter:
+        - opendaylight-infra-parameters:
             project: '{project}'
+            branch: '{branch}'
+            refspec: 'refs/heads/{branch}'
+            artifacts: '{archive-artifacts}'
 
     wrappers:
         - opendaylight-infra-wrappers:

@@ -19,12 +19,11 @@
         daysToKeep: 7
 
     parameters:
-        - project-parameter:
-            project: '{project}'
-        - gerrit-parameters:
+        - opendaylight-infra-parameters:
             project: '{project}'
             branch: 'master'
             refspec: 'refs/heads/master'
+            artifacts: '{archive-artifacts}'
 
     scm:
         - gerrit-trigger-scm:
@@ -86,12 +85,11 @@
         artifactNumToKeep: -1
 
     parameters:
-        - project-parameter:
-            project: '{project}'
-        - gerrit-parameters:
+        - opendaylight-infra-parameters:
             project: '{project}'
             branch: 'master'
             refspec: 'refs/heads/master'
+            artifacts: '{archive-artifacts}'
 
     scm:
         - gerrit-trigger-scm:
@@ -156,12 +154,11 @@
         artifactNumToKeep: -1
 
     parameters:
-        - project-parameter:
-            project: '{project}'
-        - gerrit-parameters:
+        - opendaylight-infra-parameters:
             project: '{project}'
             branch: 'master'
             refspec: 'refs/heads/master'
+            artifacts: '{archive-artifacts}'
 
     scm:
         - gerrit-trigger-scm:
@@ -221,8 +218,11 @@
         artifactNumToKeep: -1
 
     parameters:
-        - project-parameter:
+        - opendaylight-infra-parameters:
             project: '{project}'
+            branch: 'master'
+            refspec: 'refs/heads/master'
+            artifacts: '{archive-artifacts}'
 
     scm:
         - git-scm:
@@ -256,6 +256,13 @@
         numToKeep: 1
         artifactDaysToKeep: -1
         artifactNumToKeep: -1
+
+    parameters:
+        - opendaylight-infra-parameters:
+            project: '{project}'
+            branch: 'master'
+            refspec: 'refs/heads/master'
+            artifacts: '{archive-artifacts}'
 
     wrappers:
         - opendaylight-infra-wrappers:
