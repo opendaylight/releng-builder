@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a561d44_2821b24d",
+        "filename": "jjb/integration/include-raw-integration-deploy-controller-run-test.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 797
+      },
+      "writtenOn": "2016-07-12T05:32:41Z",
+      "side": 1,
+      "message": "This script is common for all josb and we do not want to enable decanter for all of them at least for now. We have 2 options to fix this:\n1) Add a condition (if) based on some file you already moved to controller.\n2) use the jjb project file to add the feature:  jjb/openflowplugin/openflowplugin-csit-scalability.yaml",
+      "revId": "a30483c32f8cdc889be72cd6615d006fd67a5b6b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
