@@ -21,7 +21,7 @@
             project: '{project}'
             branch: '{branch}'
             refspec: 'refs/heads/{branch}'
-            artifacts: '{archive-artifacts}'
+            artifacts: '{archive-artifacts} **/target/surefire-reports/*-output.txt'
 
     scm:
         - git-scm:
