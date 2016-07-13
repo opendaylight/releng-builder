@@ -189,9 +189,9 @@
                       pattern: jjb-templates/**
 
     builders:
-        - shell:
-            !include-raw-escape:
-                - include-raw-jjb-update.sh
+        - shell: |
+            jenkins-jobs --version
+            jenkins-jobs update --recursive --delete-old --workers 4 jjb/
 
     publishers:
         - email-notification:
