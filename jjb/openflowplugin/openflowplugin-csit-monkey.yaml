@@ -1,0 +1,40 @@
+- project:
+    name: openflowplugin-csit-monkey
+    jobs:
+        - '{project}-csit-3node-{functionality}-{install}-{stream}'
+        # - '{project}-csit-verify-3node-{functionality}'
+
+    # The project name
+    project: 'openflowplugin'
+
+    # The functionality under test
+    functionality: 'monkey'
+
+    # Project branches
+    stream:
+        - boron:
+            branch: 'master'
+            jre: 'openjdk8'
+        - beryllium:
+            branch: 'stable/beryllium'
+            jre: 'openjdk7'
+
+    install:
+        - only:
+            scope: 'only'
+
+    # Features to install
+    install-features: 'odl-openflowplugin-flow-services-rest'
+
+    # Robot custom options
+    robot-options: '-v ODL_OF_PLUGIN:lithium -v RUN_TIME:300 -v TIMEOUT:1200'
+
+    # Trigger jobs (daily)
+    schedule: 'H H * * *'
+    
+    # Plot Info
+    01-plot-title: 'Disruptions summary'
+    01-plot-yaxis: 'Disruptions count'
+    01-plot-group: 'Monkey Test summary'
+    01-plot-data-file: 'plot-data.csv'
+
