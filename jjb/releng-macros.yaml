@@ -10,7 +10,7 @@
         - string:
             name: ARCHIVE_ARTIFACTS
             default: '{artifacts} **/target/surefire-reports/*-output.txt'
-            description: 'Artifacts to archive into logs.opendaylight.org'
+            description: 'Space separated glob patterns for artifacts to archive into logs.opendaylight.org'
         - string:
             name: GERRIT_PROJECT
             default: '{project}'
