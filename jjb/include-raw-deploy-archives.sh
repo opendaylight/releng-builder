@@ -51,10 +51,10 @@ EOF
 
 mkdir -p $ARCHIVES_DIR
 mkdir -p $WORKSPACE/archives
-if [ ! -z $ARCHIVE_ARTIFACTS ]; then
+if [ ! -z "${{ARCHIVE_ARTIFACTS}}" ]; then
     pushd $WORKSPACE
     shopt -s globstar  # Enable globstar to copy archives
-    archive_artifacts=$(echo $ARCHIVE_ARTIFACTS)
+    archive_artifacts=$(echo ${{ARCHIVE_ARTIFACTS}})
     for f in $archive_artifacts; do
         echo "Archiving $f"
         mkdir -p $WORKSPACE/archives/$(dirname $f)
