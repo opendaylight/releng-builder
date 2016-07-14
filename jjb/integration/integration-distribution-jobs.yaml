@@ -41,7 +41,7 @@
             project: '{project}'
             branch: '{branch}'
             refspec: 'refs/heads/{branch}'
-            artifacts: '{archive-artifacts}'
+            artifacts: '{archive-artifacts} **/dependency_tree.txt'
         - integration-patch-refspec:
             branch: '$GERRIT_REFSPEC'
 
@@ -71,7 +71,7 @@
     maven:
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
-        goals: 'clean install dependency:tree -V -B -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -Djenkins -Dstream={stream}'
+        goals: 'clean install dependency:tree -DoutputFile=dependency_tree.txt -V -B -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -Djenkins -Dstream={stream}'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: 'integration-settings'
         settings-type: cfp
@@ -87,13 +87,15 @@
               predefined-parameters:
                   BUNDLEURL=$BUNDLEURL
 
-    publishers:
-        - email-notification:
-            email-prefix: '[integration]'
-        - archive-artifacts:
-            artifacts: '**/target/surefire-reports/*-output.txt, '
+    reporters:
         - findbugs
+
+    publishers:
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
+        - email-notification:
+            email-prefix: '[int/dist]'
 
 - job-template:
     name: 'integration-distribution-merge-{stream}'
@@ -113,7 +115,7 @@
             project: '{project}'
             branch: '{branch}'
             refspec: 'refs/heads/{branch}'
-            artifacts: '{archive-artifacts}'
+            artifacts: '{archive-artifacts} **/dependency_tree.txt'
 
     scm:
         - gerrit-trigger-scm:
@@ -140,7 +142,7 @@
     maven:
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
-        goals: 'clean install dependency:tree -V -B -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -Djenkins -Dmerge -Dstream={stream}'
+        goals: 'clean install dependency:tree -DoutputFile=dependency_tree.txt -V -B -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -Djenkins -Dmerge -Dstream={stream}'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: 'integration-settings'
         settings-type: cfp
@@ -185,15 +187,15 @@
         - findbugs
 
     publishers:
-        - archive-artifacts:
-            artifacts: '**/target/surefire-reports/*-output.txt, '
-        - email-notification:
-            email-prefix: '[integration]'
         - maven-deploy:
             id: ''
             unique-version: true
             deploy-unstable: false
         - jacoco-report
+        - archive-build:
+            maven-version: '{mvn33}'
+        - email-notification:
+            email-prefix: '[integration]'
 
 # Template: integration-distribution-deploy-{stream}
 # Goal: Verify distribution starts with no issues when all features are loaded
