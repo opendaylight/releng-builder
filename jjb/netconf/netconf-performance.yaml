@@ -1,0 +1,39 @@
+- project:
+    name: netconf-csit-performance
+    jobs:
+        - '{project}-csit-1node-periodic-{functionality}-{install}-{stream}'
+
+    # The project name
+    project: 'netconf'
+
+    # The functionality under test
+    functionality: 'performance'
+
+    # Project branches
+    stream:
+        - boron:
+            branch: 'master'
+            jre: 'openjdk8'
+        - beryllium:
+            branch: 'stable/beryllium'
+            jre: 'openjdk7'
+        - stable-lithium:
+            branch: 'stable/lithium'
+            jre: 'openjdk7'
+
+    install:
+        - only:
+            scope: 'only'
+        - all:
+            scope: 'all'
+
+    # Features to install
+    install-features: 'odl-restconf,odl-netconf-connector-all,odl-jolokia'
+
+    # Robot custom options
+    robot-options: ''
+
+    # This scaling test can take several hours to finish,
+    # so the job is defined to run once a day.
+    # Trigger jobs (daily)
+    schedule: 'H H * * *'
