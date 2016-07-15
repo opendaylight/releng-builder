@@ -190,6 +190,7 @@
 
     builders:
         - shell: |
+            pip freeze
             jenkins-jobs --version
             jenkins-jobs update --recursive --delete-old --workers 4 jjb/
 
