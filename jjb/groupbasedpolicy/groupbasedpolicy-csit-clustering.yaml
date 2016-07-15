@@ -35,4 +35,8 @@
     robot-options: '-v ODL_VERSION:{stream}'
 
     # Trigger jobs (upstream dependencies)
-    trigger-jobs: 'neutron-distribution-{stream},ovsdb-distribution-{stream},controller-distribution-{stream},openflowplugin-distribution-{stream},yangtools-distribution-{stream},sfc-distribution-{stream},dlux-distribution-{stream}'
+    trigger-jobs: 'neutron-distribution-{stream},
+                   ovsdb-distribution-{stream},
+                   openflowplugin-distribution-{stream},
+                   sfc-distribution-{stream},
+                   dlux-distribution-{stream}'
