@@ -1,0 +1,36 @@
+- project:
+    name: openflowplugin-csit-failover-cluster-daily
+    jobs:
+        - '{project}-csit-3node-periodic-{functionality}-{install}-{stream}'
+        # - '{project}-csit-verify-3node-{functionality}'
+
+    # The project name
+    project: 'openflowplugin'
+
+    # The functionality under test
+    functionality: 'failover-cluster-daily'
+
+    # Project branches
+    stream:
+        - boron:
+            branch: 'master'
+            jre: 'openjdk8'
+        - beryllium:
+            branch: 'stable/beryllium'
+            jre: 'openjdk7'
+
+    install:
+        - only:
+            scope: 'only'
+
+    # Features to install
+    install-features: 'odl-openflowplugin-flow-services-rest'
+
+    # Robot custom options
+    robot-options: '-v ODL_OF_PLUGIN:lithium'
+
+    # Trigger jobs (daily)
+    schedule: 'H H * * *'
+
+    # Trigger jobs (upstream dependencies)
+    trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream},openflowjava-distribution-{stream},openflowplugin-distribution-{stream}'
