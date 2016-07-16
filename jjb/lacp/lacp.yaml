@@ -42,7 +42,6 @@
     mvn-settings: 'lacp-settings'
     mvn-goals: 'clean install javadoc:aggregate -DrepoBuild -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: 'yangtools-merge-{stream},controller-merge-{stream},openflowjava-merge-{stream},openflowplugin-merge-{stream},odlparent-merge-{stream}'
-    email-upstream: '[lacp] [yangtools] [controller] [openflowjava] [openflowplugin] [odlparent]'
+    dependencies: 'openflowjava-merge-{stream},openflowplugin-merge-{stream}'
+    email-upstream: '[lacp] [openflowjava] [openflowplugin]'
     archive-artifacts: ''
-
