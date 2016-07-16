@@ -42,7 +42,6 @@
     mvn-settings: 'groupbasedpolicy-settings'
     mvn-goals: '-U clean install findbugs:findbugs -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream},openflowjava-merge-{stream},openflowplugin-merge-{stream},neutron-merge-{stream},sfc-merge-{stream},ovsdb-merge-{stream}'
-    email-upstream: '[groupbasedpolicy] [odlparent] [yangtools] [controller] [openflowjava] [openflowplugin] [neutron] [sfc] [ovsdb]'
+    dependencies: 'openflowjava-merge-{stream},openflowplugin-merge-{stream},neutron-merge-{stream},sfc-merge-{stream},ovsdb-merge-{stream}'
+    email-upstream: '[groupbasedpolicy] [openflowjava] [openflowplugin] [neutron] [sfc] [ovsdb]'
     archive-artifacts: ''
-

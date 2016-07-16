@@ -35,7 +35,6 @@
     mvn-settings: 'mdsal-settings'
     mvn-goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -Dmaven.compile.fork=true clean install -Dintegrationtests'
     mvn-opts: '-Xmx2048m -XX:MaxPermSize=1024m'
-    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream}'
-    email-upstream: '[mdsal] [odlparent] [yangtools]'
+    dependencies: ''
+    email-upstream: '[mdsal]'
     archive-artifacts: ''
-
