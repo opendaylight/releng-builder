@@ -27,7 +27,6 @@
     mvn-settings: 'natapp-settings'
     mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r '
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: 'controller-merge-{stream},yangtools-merge-{stream},odlparent-merge-{stream},openflowplugin-merge-{stream}'
-    email-upstream: '[natapp] [controller] [yangtools] [odlparent] [openflowplugin]'
+    dependencies: 'openflowplugin-merge-{stream}'
+    email-upstream: '[natapp] [openflowplugin]'
     archive-artifacts: ''
-

@@ -42,7 +42,6 @@
     mvn-settings: 'alto-settings'
     mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r '
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: 'controller-merge-{stream},yangtools-merge-{stream},odlparent-merge-{stream},l2switch-merge-{stream}'
-    email-upstream: '[alto] [controller] [yangtools] [odlparent] [l2switch]'
+    dependencies: 'l2switch-merge-{stream}'
+    email-upstream: '[alto] [l2switch]'
     archive-artifacts: ''
-

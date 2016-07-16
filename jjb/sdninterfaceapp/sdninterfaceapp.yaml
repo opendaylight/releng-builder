@@ -43,7 +43,6 @@
     mvn-settings: 'sdninterfaceapp-settings'
     mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: 'odlparent-merge-{stream},bgpcep-merge-{stream}'
-    email-upstream: '[sdninterfaceapp] [odlparent] [bgpcep]'
+    dependencies: 'bgpcep-merge-{stream}'
+    email-upstream: '[sdninterfaceapp] [bgpcep]'
     archive-artifacts: ''
-

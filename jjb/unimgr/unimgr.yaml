@@ -35,7 +35,6 @@
     mvn-settings: 'unimgr-settings'
     mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r '
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream},ovsdb-merge-{stream}'
-    email-upstream: '[unimgr] [odlparent] [yangtools] [controller] [ovsdb]'
+    dependencies: 'ovsdb-merge-{stream}'
+    email-upstream: '[unimgr] [ovsdb]'
     archive-artifacts: ''
-
