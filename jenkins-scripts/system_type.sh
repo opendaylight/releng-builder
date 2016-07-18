@@ -15,11 +15,10 @@ SYSTEM_TYPE=''
 
 IFS=','
 for i in "autorelease,autorelease" \
-         "builder,builder" \
+         "java-builder,builder" \
          "devstack,devstack" \
          "docker,docker" \
          "gbp-trusty,ubuntu-docker-ovs" \
-         "java,controller" \
          "matrix,matrix" \
          "robot,robot" \
          "ubuntu-trusty-mininet,mininet-ubuntu"
