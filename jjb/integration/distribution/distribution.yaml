@@ -2,9 +2,9 @@
 - project:
     name: distribution
     jobs:
-        - '{name}-clm-{stream}'
-        - '{name}-sonar'
-        - '{name}-validate-autorelease-{stream}'
+        - '{project-name}-clm-{stream}'
+        - '{project-name}-sonar'
+        - '{project-name}-validate-autorelease-{stream}'
 
     # stream:    release stream (eg. stable-lithium or beryllium)
     # branch:    git branch (eg. stable/lithium or master)
@@ -26,6 +26,7 @@
             disable_distribution_check: False
 
     project: 'integration/distribution'
+    project-name: 'distribution'
     mvn-settings: 'integration-distribution-settings'
     mvn-goals: 'clean install dependency:tree -DoutputFile=dependency_tree.txt -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r '
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'

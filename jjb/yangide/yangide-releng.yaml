@@ -1,10 +1,11 @@
 - project:
     name: yangide-releng
     jobs:
-    - '{name}-publish-p2repo'
-    - '{name}-release-java'
+    - '{project-name}-publish-p2repo'
+    - '{project-name}-release-java'
 
     project: yangide
+    project-name: 'yangide'
     jdk: 'openjdk8'
     stage-id: 'fba306956f98'
     project-settings: 'org.jenkinsci.plugins.configfiles.maven.MavenSettingsConfig1448465159080'

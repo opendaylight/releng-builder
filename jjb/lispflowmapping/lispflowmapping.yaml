@@ -2,15 +2,15 @@
 - project:
     name: lispflowmapping
     jobs:
-        - '{name}-clm-{stream}'
-        - '{name}-distribution-{stream}'
-        - '{name}-distribution-check-{stream}'
-        - '{name}-integration-{stream}'
-        - '{name}-merge-{stream}'
-        - '{name}-periodic-{stream}'
-        - '{name}-sonar'
-        - '{name}-validate-autorelease-{stream}'
-        - '{name}-verify-{stream}'
+        - '{project-name}-clm-{stream}'
+        - '{project-name}-distribution-{stream}'
+        - '{project-name}-distribution-check-{stream}'
+        - '{project-name}-integration-{stream}'
+        - '{project-name}-merge-{stream}'
+        - '{project-name}-periodic-{stream}'
+        - '{project-name}-sonar'
+        - '{project-name}-validate-autorelease-{stream}'
+        - '{project-name}-verify-{stream}'
 
     # stream:    release stream (eg. stable-lithium or beryllium)
     # branch:    git branch (eg. stable/lithium or master)
@@ -40,10 +40,10 @@
             disable_distribution_check: True
 
     project: 'lispflowmapping'
+    project-name: 'lispflowmapping'
     mvn-settings: 'lispflowmapping-settings'
     mvn-goals: 'clean install findbugs:findbugs javadoc:aggregate -DrepoBuild -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
     mvn-opts: '-Xmx2048m -XX:MaxPermSize=512m -Dmaven.compile.fork=true'
     dependencies: 'controller-merge-{stream},odlparent-merge-{stream},yangtools-merge-{stream},neutron-merge-{stream}'
     email-upstream: '[lispflowmapping] [controller] [odlparent] [yangtools] [neutron]'
     archive-artifacts: ''
-

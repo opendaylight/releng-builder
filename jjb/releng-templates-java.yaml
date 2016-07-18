@@ -6,7 +6,7 @@
     #   {mvn-settings} - Project maven settings file
     #   {stream}
     #   {jdk}
-    name: '{name}-clm-{stream}'
+    name: '{project-name}-clm-{stream}'
 
     project-type: maven
     node: '{build-node}'
@@ -53,7 +53,7 @@
     postbuilders:
         - shell: 'find . -regex ".*karaf/target" | xargs rm -rf'
         - check-clm:
-            application-name: '{name}'
+            application-name: '{project-name}'
 
     publishers:
         - email-notification:
@@ -62,7 +62,7 @@
             maven-version: '{mvn33}'
 
 - job-template:
-    name: '{name}-distribution-{stream}'
+    name: '{project-name}-distribution-{stream}'
 
     # Required variables:
     #     stream:    release stream (eg. stable-lithium or beryllium)
@@ -130,7 +130,7 @@
     # Operation: This job template builds a patch, creates a distribution containing
     #            the patch, and triggers the distribution deploy test
 
-    name: '{name}-distribution-check-{stream}'
+    name: '{project-name}-distribution-check-{stream}'
     disabled: '{obj:disable_distribution_check}'
 
     project-type: maven
@@ -181,7 +181,7 @@
                     comment-contains-value: 'recheck'
             projects:
               - project-compare-type: 'ANT'
-                project-pattern: '{name}'
+                project-pattern: '{project}'
                 branches:
                   - branch-compare-type: 'ANT'
                     branch-pattern: '**/{branch}'
@@ -234,7 +234,7 @@
             maven-version: '{mvn33}'
 
 - job-template:
-    name: '{name}-integration-{stream}'
+    name: '{project-name}-integration-{stream}'
 
     # Job template for ODL integration verify jobs
     #
@@ -303,7 +303,7 @@
             maven-version: '{mvn33}'
 
 - job-template:
-    name: '{name}-merge-{stream}'
+    name: '{project-name}-merge-{stream}'
 
     # Job template for ODL merge jobs
     #
@@ -411,7 +411,7 @@
             maven-version: '{mvn33}'
 
 - job-template:
-    name: '{name}-periodic-{stream}'
+    name: '{project-name}-periodic-{stream}'
 
     # Job template for periodic builders
     #
@@ -474,7 +474,7 @@
             maven-version: '{mvn33}'
 
 - job-template:
-    name: '{name}-sonar'
+    name: '{project-name}-sonar'
     disabled: false
 
     project-type: maven
@@ -537,7 +537,7 @@
             maven-version: '{mvn33}'
 
 - job-template:
-    name: '{name}-validate-autorelease-{stream}'
+    name: '{project-name}-validate-autorelease-{stream}'
     disabled: '{obj:disable_autorelease}'
 
     project-type: maven
@@ -644,7 +644,7 @@
             maven-version: '{mvn33}'
 
 - job-template:
-    name: '{name}-verify-{stream}'
+    name: '{project-name}-verify-{stream}'
 
     # Job template for ODL verify jobs
     #
@@ -716,7 +716,7 @@
             maven-version: '{mvn33}'
 
 - job-template:
-    name: '{name}-verify-{stream}-{maven}-{jdk}'
+    name: '{project-name}-verify-{stream}-{maven}-{jdk}'
 
     # Job template for ODL verify jobs
     #

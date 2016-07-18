@@ -2,15 +2,15 @@
 - project:
     name: bgpcep
     jobs:
-        - '{name}-clm-{stream}'
-        - '{name}-distribution-{stream}'
-        - '{name}-distribution-check-{stream}'
-        - '{name}-integration-{stream}'
-        - '{name}-merge-{stream}'
-        - '{name}-periodic-{stream}'
-        - '{name}-sonar'
-        - '{name}-validate-autorelease-{stream}'
-        - '{name}-verify-{stream}'
+        - '{project-name}-clm-{stream}'
+        - '{project-name}-distribution-{stream}'
+        - '{project-name}-distribution-check-{stream}'
+        - '{project-name}-integration-{stream}'
+        - '{project-name}-merge-{stream}'
+        - '{project-name}-periodic-{stream}'
+        - '{project-name}-sonar'
+        - '{project-name}-validate-autorelease-{stream}'
+        - '{project-name}-verify-{stream}'
 
     # stream:    release stream (eg. stable-lithium or beryllium)
     # branch:    git branch (eg. stable/lithium or master)
@@ -40,6 +40,7 @@
             disable_distribution_check: True
 
     project: 'bgpcep'
+    project-name: 'bgpcep'
     mvn-settings: 'bgpcep-settings'
     mvn-goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r clean -DrepoBuild install javadoc:aggregate'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
@@ -47,4 +48,3 @@
     email-upstream: '[bgpcep] [odlparent] [yangtools] [controller] [mdsal] [tcpmd5]'
     archive-artifacts: ''
     build-node: centos7-java-builder-4c-8g
-

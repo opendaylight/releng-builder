@@ -1,13 +1,14 @@
 - project:
     name: integration-test
     jobs:
-        - '{name}-verify-python-{stream}'
+        - '{project-name}-verify-python-{stream}'
         - 'integration-csit-verify-1node-library'
         - 'integration-distribution-test-{stream}'
         - 'integration-patch-test-{stream}'
         - 'integration-multipatch-test-{stream}'
 
     project: integration/test
+    project-name: integration-test
 
     stream:
         - boron:

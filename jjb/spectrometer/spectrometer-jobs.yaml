@@ -1,15 +1,16 @@
 - project:
     name: spectrometer
     jobs:
-        - '{name}-merge-rtd-{stream}'
-        - '{name}-verify-node-{stream}'
-        - '{name}-verify-python-{stream}'
+        - '{project-name}-merge-rtd-{stream}'
+        - '{project-name}-verify-node-{stream}'
+        - '{project-name}-verify-python-{stream}'
 
     stream:
         - master:
             branch: 'master'
 
     project: 'spectrometer'
+    project-name: 'spectrometer'
     rtdproject: 'opendaylight-spectrometer'
     toxdir: server
     nodedir: web

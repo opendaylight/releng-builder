@@ -1,9 +1,10 @@
 - project:
     name: autorelease-version-management
     jobs:
-        - '{name}-verify-python-{stream}'
+        - '{project-name}-verify-python-{stream}'
 
     project: releng/autorelease
+    project-name: autorelease-version-management
     toxdir: 'scripts/version_management'
 
     stream:

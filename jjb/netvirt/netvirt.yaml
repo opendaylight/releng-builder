@@ -2,14 +2,14 @@
 - project:
     name: netvirt
     jobs:
-        - '{name}-clm-{stream}'
-        - '{name}-distribution-{stream}'
-        - '{name}-distribution-check-{stream}'
-        - '{name}-integration-{stream}'
-        - '{name}-merge-{stream}'
-        - '{name}-periodic-{stream}'
-        - '{name}-validate-autorelease-{stream}'
-        - '{name}-verify-{stream}'
+        - '{project-name}-clm-{stream}'
+        - '{project-name}-distribution-{stream}'
+        - '{project-name}-distribution-check-{stream}'
+        - '{project-name}-integration-{stream}'
+        - '{project-name}-merge-{stream}'
+        - '{project-name}-periodic-{stream}'
+        - '{project-name}-validate-autorelease-{stream}'
+        - '{project-name}-verify-{stream}'
 
     # stream:    release stream (eg. stable-lithium or beryllium)
     # branch:    git branch (eg. stable/lithium or master)
@@ -38,6 +38,7 @@
             disable_distribution_check: False
 
     project: 'netvirt'
+    project-name: 'netvirt'
     mvn-settings: 'netvirt-settings'
     mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r '
     mvn-opts: '-Xmx2048m -XX:MaxPermSize=512m'

@@ -2,15 +2,15 @@
 - project:
     name: l2switch
     jobs:
-        - '{name}-clm-{stream}'
-        - '{name}-distribution-{stream}'
-        - '{name}-distribution-check-{stream}'
-        - '{name}-integration-{stream}'
-        - '{name}-merge-{stream}'
-        - '{name}-periodic-{stream}'
-        - '{name}-sonar'
-        - '{name}-validate-autorelease-{stream}'
-        - '{name}-verify-{stream}'
+        - '{project-name}-clm-{stream}'
+        - '{project-name}-distribution-{stream}'
+        - '{project-name}-distribution-check-{stream}'
+        - '{project-name}-integration-{stream}'
+        - '{project-name}-merge-{stream}'
+        - '{project-name}-periodic-{stream}'
+        - '{project-name}-sonar'
+        - '{project-name}-validate-autorelease-{stream}'
+        - '{project-name}-verify-{stream}'
 
     # stream:    release stream (eg. stable-lithium or beryllium)
     # branch:    git branch (eg. stable/lithium or master)
@@ -39,10 +39,10 @@
             disable_distribution_check: True
 
     project: 'l2switch'
+    project-name: 'l2switch'
     mvn-settings: 'l2switch-settings'
     mvn-goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream},openflowjava-merge-{stream},openflowplugin-merge-{stream}'
     email-upstream: '[l2switch] [odlparent] [yangtools] [controller] [openflowjava] [openflowplugin]'
     archive-artifacts: ''
-

@@ -1,5 +1,5 @@
 - job-template:
-    name: '{name}-release-java'
+    name: '{project-name}-release-java'
 
     # Job template for producing a release candidate by creating a staging repo
     # in Nexus.
@@ -62,7 +62,7 @@
 
 
 - job-template:
-    name: '{name}-publish-p2repo'
+    name: '{project-name}-publish-p2repo'
 
     # Job template for publishing a p2 repo given a URL to a zipped p2repo.
 
@@ -112,7 +112,7 @@
 # Python Related
 
 - job-template:
-    name: '{name}-verify-python-{stream}'
+    name: '{project-name}-verify-python-{stream}'
 
     # Job template for python verify jobs
     #
@@ -195,7 +195,7 @@
             email-prefix: '[{project}]'
 
 - job-template:
-    name: '{name}-merge-rtd-{stream}'
+    name: '{project-name}-merge-rtd-{stream}'
     # Template for ReadTheDocs triggering
 
     project-type: freestyle
@@ -229,7 +229,7 @@
 # Node related
 
 - job-template:
-    name: '{name}-verify-node-{stream}'
+    name: '{project-name}-verify-node-{stream}'
 
     # Job template for python verify jobs
     #
