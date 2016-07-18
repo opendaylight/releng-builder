@@ -9,7 +9,7 @@
     name: '{name}-clm-{stream}'
 
     project-type: maven
-    node: dynamic_verify
+    node: '{build-node}'
     jdk: '{jdk}'
 
     logrotate:
@@ -69,7 +69,7 @@
     #     branch:    git branch (eg. stable/lithium or master)
 
     project-type: maven
-    node: dynamic_merge
+    node: '{build-node}'
     jdk: '{jdk}'
 
     logrotate:
@@ -134,7 +134,7 @@
     disabled: '{obj:disable_distribution_check}'
 
     project-type: maven
-    node: dynamic_verify
+    node: '{build-node}'
     concurrent: true
     jdk: '{jdk}'
 
@@ -247,7 +247,7 @@
     #     branch:    git branch (eg. stable/lithium or master)
 
     project-type: maven
-    node: dynamic_merge
+    node: '{build-node}'
     jdk: '{jdk}'
 
     logrotate:
@@ -315,7 +315,7 @@
     #     branch:    git branch (eg. stable/lithium or master)
 
     project-type: maven
-    node: dynamic_merge
+    node: '{build-node}'
     jdk: '{jdk}'
 
     logrotate:
@@ -423,7 +423,7 @@
     #     branch:    git branch (eg. stable/lithium or master)
 
     project-type: maven
-    node: dynamic_verify
+    node: '{build-node}'
     jdk: '{jdk}'
 
     logrotate:
@@ -478,7 +478,7 @@
     disabled: false
 
     project-type: maven
-    node: dynamic_verify
+    node: '{build-node}'
     jdk: 'openjdk8'
 
     logrotate:
@@ -541,7 +541,7 @@
     disabled: '{obj:disable_autorelease}'
 
     project-type: maven
-    node: dynamic_verify
+    node: '{build-node}'
     concurrent: true
     jdk: '{jdk}'
 
@@ -663,7 +663,7 @@
             type: slave
             name: nodes
             values:
-                - dynamic_verify
+                - '{build-node}'
         - axis:
             type: jdk
             values: '{obj:jdks}'
