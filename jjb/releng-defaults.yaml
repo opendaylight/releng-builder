@@ -9,7 +9,7 @@
     build-artifact-num-to-keep: 5
     # Timeout in minutes
     build-timeout: 360
-    build-node: dynamic_verify
+    build-node: centos7-java-builder-2c-8g
 
     # openstack-infra-parameters defaults
     archive-artifacts: ''
@@ -32,9 +32,9 @@
     02-plot-data-file: 'plot-data.csv'
 
     # CSIT images configuration
-    controller-image: 'centos7-java'
-    openstack-image: 'centos7-devstack'
-    mininet-image: 'ubuntu-trusty-mininet'
+    controller-image: 'centos7-java-builder-2c-4g'
+    openstack-image: 'centos7-devstack-2c-4g'
+    mininet-image: 'ubuntu-trusty-mininet-2c-2g'
     mininet-vms: 1
 
     # In case a CSIT job is merged without Java version specified

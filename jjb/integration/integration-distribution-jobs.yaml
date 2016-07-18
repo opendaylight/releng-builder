@@ -26,7 +26,7 @@
     name: 'integration-distribution-verify-{stream}'
 
     project-type: maven
-    node: dynamic_verify
+    node: centos7-java-builder-2c-8g
     concurrent: true
     jdk: '{jre}'
 
@@ -101,7 +101,7 @@
     name: 'integration-distribution-merge-{stream}'
 
     project-type: maven
-    node: dynamic_merge
+    node: centos7-java-builder-2c-8g
     jdk: '{jre}'
 
     logrotate:
@@ -205,7 +205,7 @@
     name: 'integration-distribution-deploy-{stream}'
 
     project-type: freestyle
-    node: dynamic_verify
+    node: centos7-java-builder-2c-8g
     concurrent: true
 
     logrotate:
@@ -255,7 +255,7 @@
     name: 'integration-distribution-offline-{stream}'
 
     project-type: freestyle
-    node: dynamic_verify
+    node: centos7-java-builder-2c-8g
 
     logrotate:
         daysToKeep: '{build-days-to-keep}'

@@ -175,7 +175,7 @@
     name: 'integration-csit-verify-1node-library'
 
     project-type: freestyle
-    node: dynamic_robot
+    node: centos7-robot-2c-2g
 
     logrotate:
         daysToKeep: '{build-days-to-keep}'
@@ -270,7 +270,7 @@
     name: 'integration-distribution-test-{stream}'
 
     project-type: freestyle
-    node: dynamic_verify
+    node: centos7-java-builder-2c-8g
 
     logrotate:
         daysToKeep: '{build-days-to-keep}'
@@ -307,7 +307,7 @@
     name: 'integration-patch-test-{stream}'
 
     project-type: maven
-    node: dynamic_verify
+    node: centos7-java-builder-2c-8g
     jdk: '{jdk}'
 
     logrotate:
@@ -411,7 +411,7 @@
     name: 'integration-multipatch-test-{stream}'
 
     project-type: maven
-    node: dynamic_verify_8c
+    node: centos7-java-builder-8c-8g
     jdk: '{jdk}'
 
     logrotate:
