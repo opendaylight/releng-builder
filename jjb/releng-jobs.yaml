@@ -74,7 +74,7 @@
 
 - job-template:
     name: builder-verify-python
-    node: dynamic_verify
+    node: centos7-java-builder-2c-8g
 
     project-type: freestyle
 
@@ -248,7 +248,7 @@
 
 - job-template:
     name: builder-check-poms
-    node: dynamic_verify
+    node: centos7-java-builder-2c-8g
 
     project-type: freestyle
 

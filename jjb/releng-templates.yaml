@@ -5,7 +5,7 @@
     # in Nexus.
 
     project-type: maven
-    node: dynamic_merge
+    node: centos7-java-builder-2c-8g
     jdk: '{jdk}'
 
     logrotate:
@@ -67,7 +67,7 @@
     # Job template for publishing a p2 repo given a URL to a zipped p2repo.
 
     project-type: maven
-    node: dynamic_merge
+    node: centos7-java-builder-2c-8g
     jdk: '{jdk}'
 
     parameters:
@@ -126,7 +126,7 @@
     #                the workspace.
 
     project-type: freestyle
-    node: dynamic_verify
+    node: centos7-java-builder-2c-8g
     concurrent: true
 
     logrotate:
@@ -199,7 +199,7 @@
     # Template for ReadTheDocs triggering
 
     project-type: freestyle
-    node: dynamic_verify
+    node: centos7-java-builder-2c-8g
     concurrent: false
 
     parameters:
@@ -244,7 +244,7 @@
     #     nodever:   version of node to install in virtualenv
 
     project-type: freestyle
-    node: dynamic_verify
+    node: centos7-java-builder-2c-8g
     concurrent: true
 
     logrotate:
