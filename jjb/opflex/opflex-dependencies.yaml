@@ -50,7 +50,7 @@
     name: 'opflex-libuv_tgz-{stream}'
 
     project-type: freestyle
-    node: dynamic_verify
+    node: centos7-java-builder-2c-8g
     concurrent: true
 
     logrotate:
@@ -81,7 +81,7 @@
     name: 'opflex-rapidjson_tgz-{stream}'
 
     project-type: freestyle
-    node: dynamic_verify
+    node: centos7-java-builder-2c-8g
     concurrent: true
 
     logrotate:
@@ -112,7 +112,7 @@
     name: 'opflex-openvswitch_tgz-{stream}'
 
     project-type: freestyle
-    node: dynamic_verify
+    node: centos7-java-builder-2c-8g
     concurrent: true
 
     axes:
@@ -120,7 +120,7 @@
             type: slave
             name: nodes
             values:
-                - dynamic_verify
+                - centos7-java-builder-2c-8g
         - axis:
             type: jdk
             values: '{obj:jdks}'
