@@ -4,7 +4,7 @@
     name: 'autorelease-release-{stream}'
 
     project-type: maven
-    node: dynamic_autorelease
+    node: centos7-autorelease-2c-16g
     jdk: '{jdk}'
 
     logrotate:
@@ -89,7 +89,7 @@
     name: 'autorelease-project-report-{stream}'
 
     project-type: freestyle
-    node: dynamic_verify
+    node: centos7-java-builder-2c-8g
 
     logrotate:
         daysToKeep: '{build-days-to-keep}'
@@ -157,7 +157,7 @@
 
 - job-template:
     name: 'autorelease-site-publish-{stream}'
-    node: dynamic_merge
+    node: centos7-java-builder-2c-8g
     concurrent: false
     jdk: 'openjdk8'
 
@@ -208,7 +208,7 @@
 
 - job-template:
     name: 'autorelease-site-verify-{stream}'
-    node: dynamic_verify
+    node: centos7-java-builder-2c-8g
     concurrent: true
     jdk: 'openjdk8'
 
