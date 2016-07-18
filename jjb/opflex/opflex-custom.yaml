@@ -54,7 +54,7 @@
             type: slave
             name: nodes
             values:
-                - dynamic_verify
+                - centos7-java-builder-2c-8g
         - axis:
             type: jdk
             values: '{obj:jdks}'
@@ -98,7 +98,7 @@
 - job-template:
     name: 'opflex-merge-{stream}'
 
-    node: dynamic_merge
+    node: centos7-java-builder-2c-8g
     jdk: '{jdk}'
 
     logrotate:
