@@ -5,10 +5,17 @@
 # Install minimal python requirements to get virtualenv going
 # Additional python dependencies should be installed via JJB configuration
 # inside project jobs using a virtualenv setup.
-yum install -q -y python-{devel,setuptools,virtualenv}
+yum install -q -y python-{devel,setuptools,virtualenv} @development
+
+# Install dependencies for robotframework and robotframework-sshlibrary
+# installed elsewhere
+yum install -y -q yum-utils unzip sshuttle nc libffi-devel openssl-devel
+
+# install crudini command line tool for editing config files
+yum install -y -q crudini
 
 # Install `udpreplay` to be used for (lispflowmapping) performance tests
-yum install -q -y @development libpcap-devel boost-devel
+yum install -q -y libpcap-devel boost-devel
 git clone -q https://github.com/ska-sa/udpreplay.git
 cd udpreplay
 make &> /dev/null && cp udpreplay /usr/local/bin
