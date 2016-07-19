@@ -369,7 +369,7 @@
         - maven-target:
             maven-version: '{mvn33}'
             pom: '$GERRIT_PROJECT/pom.xml'
-            goals: 'clean install dependency:tree -DoutputFile=dependency_tree.txt -V -B -Djenkins -DskipTests -Dcheckstyle.skip=true -Dmaven.javadoc.skip=true -Dmaven.site.skip=true -DgenerateReports=false -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -Dstream={stream}'
+            goals: 'clean install dependency:tree -DoutputFile=dependency_tree.txt -V -B -Pq -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -Dstream={stream}'
             java-opts:
                 - '-Xmx4096m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
             settings: 'integration-settings'
@@ -449,7 +449,7 @@
         maven-name: '{mvn33}'
         root-pom: 'patch_tester/pom.xml'
         # TODO: Make Maven options configurable. Currently tests are not skipped, everything else is.
-        goals: 'clean install dependency:tree -DoutputFile=dependency_tree.txt -f patch_tester/pom.xml -V -B -Djenkins -Dcheckstyle.skip=true -Dmaven.javadoc.skip=true -Dmaven.site.skip=true -DgenerateReports=false -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -Dstream={stream}'
+        goals: 'clean install dependency:tree -DoutputFile=dependency_tree.txt -f patch_tester/pom.xml -V -B -Pq -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -Dstream={stream}'
         maven-opts: '-Xmx7168m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
         settings: 'yangtools-settings'
         settings-type: cfp
