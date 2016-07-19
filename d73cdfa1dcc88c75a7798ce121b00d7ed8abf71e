@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a561d44_87c52d90",
+        "filename": "jjb/ovsdb/ovsdb-full-integration.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2016-07-19T01:45:53Z",
+      "side": 1,
+      "message": "Add below the \"project\" line\n\n archive-artifacts: \u0027docker-ovs-*.log\u0027",
+      "revId": "d73cdfa1dcc88c75a7798ce121b00d7ed8abf71e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_47ccb5bc",
+        "filename": "jjb/ovsdb/ovsdb-full-integration.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2016-07-19T01:45:53Z",
+      "side": 1,
+      "message": "What about these artifacts?\n\nWe should archive them too. The easy way to do this is to add an \"archive-artifacts:\" statement in the - project section. (See comment above)\n\nThen we can remove the entire \"- archive:\" block as it\u0027ll send the logs to the archive-build macro below.",
+      "revId": "d73cdfa1dcc88c75a7798ce121b00d7ed8abf71e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
