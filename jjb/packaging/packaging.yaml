@@ -1,11 +1,69 @@
 - project:
     name: packaging
+    project-name: packaging
+
     jobs:
         - '{project-name}-verify-python-{stream}'
+        - '{name}-build-rpm-{stream}'
+
+    project: 'integration/packaging'
 
     stream:
         - master:
             branch: 'master'
 
-    project: 'integration/packaging'
-    project-name: 'packaging'
+- job-template:
+    name: '{name}-build-rpm-{stream}'
+
+    node: dynamic_verify
+
+    parameters:
+        - string:
+            name: VERSION_MAJOR
+            default: '4'
+            description: 'OpenDaylight major (element) version number to build'
+        - string:
+            name: VERSION_MINOR
+            default: '2'
+            description: 'OpenDaylight minor (SR) version number to build'
+        - string:
+            name: VERSION_PATCH
+            default: '0'
+            description: 'OpenDaylight patch version to build'
+        - string:
+            name: RPM_RELEASE
+            default: '1'
+            description: 'RPM version for the given ODL major.minor.patch'
+        - string:
+            name: SYSD_COMMIT
+            default: 'c6d7ee1f21d62ff8ffb741c7a12c3d8d3aa3d6ed'
+            description: 'Version of ODL systemd unitfile to download and package in ODL RPM'
+        - string:
+            name: CODENAME
+            default: 'Beryllium-SR2'
+            description: 'Elemental codename for the ODL release, including SR if applicable'
+        - string:
+            name: DOWNLOAD_URL
+            default: 'https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/integration/distribution-karaf/0.4.2-Beryllium-SR2/distribution-karaf-0.4.2-Beryllium-SR2.tar.gz'
+            description: 'URL to ODL tarball artifact to repackage into RPM'
+        - string:
+            name: CHANGELOG_DATE
+            default: 'Wed May 11 2016'
+            description: 'Date this RPM was defined'
+        - string:
+            name: CHANGELOG_NAME
+            default: 'Jenkins'
+            description: 'Name of person who defined RPM'
+        - string:
+            name: CHANGELOG_EMAIL
+            default: 'jenkins-donotreply@opendaylight.org'
+            description: 'Email of person who defined RPM'
+
+    scm:
+        - integration-gerrit-scm:
+            basedir: 'packaging'
+            refspec: '$GERRIT_REFSPEC'
+            branch: 'master'
+
+    builders:
+        - shell: !include-raw: include-raw-build-rpm.sh
