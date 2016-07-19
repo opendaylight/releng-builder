@@ -1,4 +1,3 @@
-Documentation for the Releng Builder repo can be found on our site page.
+Documentation for Releng/Builder can be found on our [readthedocs][1] site.
 
-* Main: https://nexus.opendaylight.org/content/sites/site/org.opendaylight.releng.builder/master/
-* Jenkins: https://nexus.opendaylight.org/content/sites/site/org.opendaylight.releng.builder/master/jenkins.html
+[1]: http://docs.opendaylight.org/en/latest/submodules/releng/builder/docs/index.html
