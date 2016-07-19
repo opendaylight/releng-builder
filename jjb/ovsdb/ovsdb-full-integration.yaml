@@ -23,6 +23,7 @@
                 - openjdk7
 
     project: 'ovsdb'
+    artifacts: 'docker-ovs-*.log'
 
 - job-template:
     name: 'ovsdb-daily-full-integration-{stream}'
@@ -128,7 +129,8 @@
 
     publishers:
         - archive:
-            artifacts: 'docker-ovs-*.log'
             fingerprint: false
         - email-notification:
             email-prefix: '[ovsdb]'
+        - archive-build:
+            maven-version: '{mvn33}'
