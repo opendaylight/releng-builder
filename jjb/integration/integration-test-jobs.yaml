@@ -1,14 +1,13 @@
 - project:
     name: integration-test
     jobs:
-        - '{project-name}-verify-python-{stream}'
+        - '{name}-verify-python-{stream}'
         - 'integration-csit-verify-1node-library'
         - 'integration-distribution-test-{stream}'
         - 'integration-patch-test-{stream}'
         - 'integration-multipatch-test-{stream}'
 
     project: integration/test
-    project-name: integration-test
 
     stream:
         - boron:
@@ -60,7 +59,6 @@
                 usc-csit-1node-tcp-only-{stream},
                 usc-csit-1node-tcp-all-{stream},
                 vtn-csit-1node-manager-only-{stream},
-                vtn-csit-1node-manager-all-{stream},
                 vtn-csit-1node-coordinator-only-{stream}
 
         - beryllium:
@@ -176,7 +174,7 @@
     name: 'integration-csit-verify-1node-library'
 
     project-type: freestyle
-    node: centos7-robot-2c-2g
+    node: dynamic_robot
 
     logrotate:
         daysToKeep: '{build-days-to-keep}'
@@ -271,7 +269,7 @@
     name: 'integration-distribution-test-{stream}'
 
     project-type: freestyle
-    node: centos7-java-builder-2c-8g
+    node: dynamic_verify
 
     logrotate:
         daysToKeep: '{build-days-to-keep}'
@@ -308,7 +306,7 @@
     name: 'integration-patch-test-{stream}'
 
     project-type: maven
-    node: centos7-java-builder-2c-8g
+    node: dynamic_verify
     jdk: '{jdk}'
 
     logrotate:
@@ -369,7 +367,7 @@
         - maven-target:
             maven-version: '{mvn33}'
             pom: '$GERRIT_PROJECT/pom.xml'
-            goals: 'clean install dependency:tree -DoutputFile=dependency_tree.txt -V -B -Djenkins -DskipTests -Dcheckstyle.skip=true -Dmaven.javadoc.skip=true -Dmaven.site.skip=true -DgenerateReports=false -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -Dstream={stream}'
+            goals: 'clean install dependency:tree -DoutputFile=dependency_tree.txt -V -B -Pq -Djenkins -DskipTests -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -Dstream={stream}'
             java-opts:
                 - '-Xmx4096m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
             settings: 'integration-settings'
@@ -412,7 +410,7 @@
     name: 'integration-multipatch-test-{stream}'
 
     project-type: maven
-    node: centos7-java-builder-8c-8g
+    node: dynamic_verify_8c
     jdk: '{jdk}'
 
     logrotate:
@@ -449,7 +447,7 @@
         maven-name: '{mvn33}'
         root-pom: 'patch_tester/pom.xml'
         # TODO: Make Maven options configurable. Currently tests are not skipped, everything else is.
-        goals: 'clean install dependency:tree -DoutputFile=dependency_tree.txt -f patch_tester/pom.xml -V -B -Djenkins -Dcheckstyle.skip=true -Dmaven.javadoc.skip=true -Dmaven.site.skip=true -DgenerateReports=false -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -Dstream={stream}'
+        goals: 'clean install dependency:tree -DoutputFile=dependency_tree.txt -f patch_tester/pom.xml -V -B -Pq -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -Dstream={stream}'
         maven-opts: '-Xmx7168m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
         settings: 'yangtools-settings'
         settings-type: cfp
