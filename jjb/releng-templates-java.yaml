@@ -57,7 +57,7 @@
 
     publishers:
         - email-notification:
-            email-prefix: '[{name}]'
+            email-prefix: '[{project-name}]'
         - archive-build:
             maven-version: '{mvn33}'
 
@@ -220,7 +220,7 @@
 
     publishers:
         - email-notification:
-            email-prefix: '[{name}]'
+            email-prefix: '[{project-name}]'
         - postbuildscript:
             builders:
                 - shell: |
@@ -401,7 +401,7 @@
 
     publishers:
         - email-notification:
-            email-prefix: '[{name}]'
+            email-prefix: '[{project-name}]'
         - maven-deploy:
             id: ''
             unique-version: true
@@ -468,7 +468,7 @@
 
     publishers:
         - email-notification:
-            email-prefix: '[{name}]'
+            email-prefix: '[{project-name}]'
         - jacoco-report
         - archive-build:
             maven-version: '{mvn33}'
@@ -531,7 +531,7 @@
             language: 'java'
             maven-opts: '-Xmx6144m -XX:MaxPermSize=1024m'
         - email-notification:
-            email-prefix: '[{name}]'
+            email-prefix: '[{project-name}]'
         - jacoco-report
         - archive-build:
             maven-version: '{mvn33}'
@@ -639,7 +639,7 @@
 
     publishers:
         - email-notification:
-            email-prefix: '[autorelease] [{name}]'
+            email-prefix: '[autorelease] [{project-name}]'
         - archive-build:
             maven-version: '{mvn33}'
 
@@ -710,7 +710,7 @@
     publishers:
         - findbugs
         - email-notification:
-            email-prefix: '[{name}]'
+            email-prefix: '[{project-name}]'
         - jacoco-report
         - archive-build:
             maven-version: '{mvn33}'
@@ -773,7 +773,7 @@
     publishers:
         - findbugs
         - email-notification:
-            email-prefix: '[{name}]'
+            email-prefix: '[{project-name}]'
         - jacoco-report
         - archive-build:
             maven-version: '{mvn-version}'
