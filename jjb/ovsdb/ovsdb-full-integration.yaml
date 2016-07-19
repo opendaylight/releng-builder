@@ -23,6 +23,7 @@
                 - openjdk7
 
     project: 'ovsdb'
+    archive-artifacts: 'docker-ovs-*.log'
 
 - job-template:
     name: 'ovsdb-daily-full-integration-{stream}'
@@ -127,8 +128,7 @@
         - jacoco-nojava-workaround
 
     publishers:
-        - archive:
-            artifacts: 'docker-ovs-*.log'
-            fingerprint: false
         - email-notification:
             email-prefix: '[ovsdb]'
+        - archive-build:
+            maven-version: '{mvn33}'
