@@ -1,6 +1,6 @@
 # ODL Releng build templates
 - project:
-    name: yangtools
+    name: yangtools-boron
     jobs:
         - '{project-name}-clm-{stream}'
         - '{project-name}-distribution-{stream}'
@@ -16,22 +16,69 @@
     stream:
         - boron:
             branch: 'master'
-            jdk: openjdk8
             jdks:
                 - openjdk8
             disable_autorelease: False
             disable_distribution_check: False
+
+    project: 'yangtools'
+    project-name: 'yangtools'
+    jdk: openjdk8
+    mvn-settings: 'yangtools-settings'
+    mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r '
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: 'odlparent-merge-{stream}'
+    email-upstream: '[yangtools] [odlparent]'
+    archive-artifacts: ''
+
+- project:
+    name: yangtools-beryllium
+    jobs:
+        - '{project-name}-clm-{stream}'
+        - '{project-name}-distribution-{stream}'
+        - '{project-name}-distribution-check-{stream}'
+        - '{project-name}-integration-{stream}'
+        - '{project-name}-merge-{stream}'
+        - '{project-name}-periodic-{stream}'
+        - '{project-name}-sonar'
+        - '{project-name}-validate-autorelease-{stream}'
+
+    stream:
         - beryllium:
             branch: 'stable/beryllium'
-            jdk: openjdk7
             jdks:
                 - openjdk7
                 - openjdk8
             disable_autorelease: False
             disable_distribution_check: False
+
+    project: 'yangtools'
+    project-name: 'yangtools'
+    jdk:
+      - openjdk7
+      - openjdk8
+    mvn-settings: 'yangtools-settings'
+    mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r '
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: 'odlparent-merge-{stream}'
+    email-upstream: '[yangtools] [odlparent]'
+    archive-artifacts: ''
+
+- project:
+    name: yangtools-stable-lithium
+    jobs:
+        - '{project-name}-clm-{stream}'
+        - '{project-name}-distribution-{stream}'
+        - '{project-name}-distribution-check-{stream}'
+        - '{project-name}-integration-{stream}'
+        - '{project-name}-merge-{stream}'
+        - '{project-name}-periodic-{stream}'
+        - '{project-name}-sonar'
+        - '{project-name}-validate-autorelease-{stream}'
+
+    stream:
         - stable-lithium:
             branch: 'stable/lithium'
-            jdk: openjdk7
             jdks:
                 - openjdk7
                 - openjdk8
@@ -40,6 +87,7 @@
 
     project: 'yangtools'
     project-name: 'yangtools'
+    jdk: openjdk7
     mvn-settings: 'yangtools-settings'
     mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r '
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
