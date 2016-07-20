@@ -18,7 +18,7 @@ for i in "autorelease,autorelease" \
          "java-builder,builder" \
          "devstack,devstack" \
          "docker,docker" \
-         "gbp-trusty,ubuntu-docker-ovs" \
+         "ubuntu-trusty-gbp,ubuntu-docker-ovs" \
          "matrix,matrix" \
          "robot,robot" \
          "ubuntu-trusty-mininet,mininet-ubuntu"
