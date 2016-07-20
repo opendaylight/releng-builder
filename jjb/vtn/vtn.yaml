@@ -1,6 +1,6 @@
 # ODL Releng build templates
 - project:
-    name: vtn
+    name: vtn-boron
     jobs:
         - '{project-name}-clm-{stream}'
         - '{project-name}-distribution-{stream}'
@@ -8,31 +8,90 @@
         - '{project-name}-integration-{stream}'
         - '{project-name}-merge-{stream}'
         - '{project-name}-periodic-{stream}'
-        - '{project-name}-sonar'
         - '{project-name}-validate-autorelease-{stream}'
-        - '{project-name}-verify-{stream}'
+        - '{project-name}-verify-{stream}-{maven}-{jdk}'
 
     # stream:    release stream (eg. stable-lithium or beryllium)
     # branch:    git branch (eg. stable/lithium or master)
     stream:
         - boron:
-            branch: 'master'
-            jdk: openjdk8
             jdks:
                 - openjdk8
             disable_autorelease: False
             disable_distribution_check: False
+
+    project: 'vtn'
+    project-name: 'vtn'
+    branch: 'master'
+    jdk: openjdk8
+    maven:
+        - mvn32:
+            mvn-version: '{mvn32}'
+        - mvn33:
+            mvn-version: '{mvn33}'
+    mvn-settings: 'vtn-settings'
+    mvn-goals: 'clean install -V -Pintegrationtests,strictcheck,docs -Dvtn.build.jobs=2 -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: 'neutron-merge-{stream},openflowplugin-merge-{stream},ovsdb-merge-{stream}'
+    email-upstream: '[vtn] [neutron] [openflowplugin] [ovsdb]'
+    archive-artifacts: 'manager/dist/*/target/*.zip coordinator/dist/target/*.bz2 manager/northbound/target/site/wsdocs/** manager/api/target/*-javadoc.jar manager/api/target/apidocs/** target/*-javadoc.jar target/apidocs/** manager/model/target/site/models/**'
+
+- project:
+    name: vtn-beryllium
+    jobs:
+        - '{project-name}-clm-{stream}'
+        - '{project-name}-distribution-{stream}'
+        - '{project-name}-distribution-check-{stream}'
+        - '{project-name}-integration-{stream}'
+        - '{project-name}-merge-{stream}'
+        - '{project-name}-periodic-{stream}'
+        - '{project-name}-validate-autorelease-{stream}'
+        - '{project-name}-verify-{stream}-{maven}-{jdk}'
+    # stream:    release stream (eg. stable-lithium or beryllium)
+    # branch:    git branch (eg. stable/lithium or master)
+
+    stream:
         - beryllium:
-            branch: 'stable/beryllium'
-            jdk: openjdk7
             jdks:
                 - openjdk7
                 - openjdk8
             disable_autorelease: False
             disable_distribution_check: False
+
+    project: 'vtn'
+    project-name: 'vtn'
+    branch: 'stable/beryllium'
+    maven:
+        - mvn32:
+            mvn-version: '{mvn32}'
+        - mvn33:
+            mvn-version: '{mvn33}'
+    jdk:
+        - openjdk7
+        - openjdk8
+    mvn-settings: 'vtn-settings'
+    mvn-goals: 'clean install -V -Pintegrationtests,strictcheck,docs -Dvtn.build.jobs=2 -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: 'neutron-merge-{stream},openflowplugin-merge-{stream},ovsdb-merge-{stream}'
+    email-upstream: '[vtn] [neutron] [openflowplugin] [ovsdb]'
+    archive-artifacts: 'manager/dist/*/target/*.zip coordinator/dist/target/*.bz2 manager/northbound/target/site/wsdocs/** manager/api/target/*-javadoc.jar manager/api/target/apidocs/** target/*-javadoc.jar target/apidocs/** manager/model/target/site/models/**'
+
+- project:
+    name: vtn-stable-lithium
+    jobs:
+        - '{project-name}-clm-{stream}'
+        - '{project-name}-distribution-{stream}'
+        - '{project-name}-distribution-check-{stream}'
+        - '{project-name}-integration-{stream}'
+        - '{project-name}-merge-{stream}'
+        - '{project-name}-periodic-{stream}'
+        - '{project-name}-validate-autorelease-{stream}'
+        - '{project-name}-verify-{stream}-{maven}-{jdk}'
+
+    # stream:    release stream (eg. stable-lithium or beryllium)
+    # branch:    git branch (eg. stable/lithium or master)
+    stream:
         - stable-lithium:
-            branch: 'stable/lithium'
-            jdk: openjdk7
             jdks:
                 - openjdk7
             disable_autorelease: True
@@ -40,6 +99,13 @@
 
     project: 'vtn'
     project-name: 'vtn'
+    branch: 'stable/lithium'
+    jdk: openjdk7
+    maven:
+        - mvn31:
+            mvn-version: '{mvn31}'
+        - mvn32:
+            mvn-version: '{mvn32}'
     mvn-settings: 'vtn-settings'
     mvn-goals: 'clean install -V -Pintegrationtests,strictcheck,docs -Dvtn.build.jobs=2 -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
