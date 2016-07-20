@@ -23,7 +23,7 @@
                 - openjdk7
 
     project: 'ovsdb'
-    archive-artifacts: 'docker-ovs-*.log'
+    archive-artifacts: 'docker-ovs-*.log libraryIT.log southboundIT.log hwvtepsouthboundIT.log'
 
 - job-template:
     name: 'ovsdb-daily-full-integration-{stream}'
@@ -108,7 +108,21 @@
         - maven-target:
             maven-version: '{mvn33}'
             pom: 'pom.xml'
-            goals: 'clean install dependency:tree -V -B verify -Pintegrationtest -Dskip.karaf.featureTest=true -Dmaven.compile.fork=true -Dovsdb.controller.address=${{CONTROLLER_IP}}'
+            goals: 'clean install dependency:tree -Pq -Dmaven.compile.fork=true'
+            properties:
+                - 'maven.repo.local=/tmp/r'
+                - 'org.ops4j.pax.url.mvn.localRepository=/tmp/r'
+                - 'stream={stream}'
+            java-opts:
+                - '-Xmx1024m -XX:MaxPermSize=256m'
+            settings: 'ovsdb-settings'
+            settings-type: cfp
+            global-settings: 'odl-global-settings'
+            global-settings-type: cfp
+        - maven-target:
+            maven-version: '{mvn33}'
+            pom: 'southbound/southbound-it/pom.xml'
+            goals: '-V -B verify -l southboundIT.log -Pintegrationtest -Dskip.karaf.featureTest=true -Dmaven.compile.fork=true -Dovsdb.controller.address=${{CONTROLLER_IP}}'
             properties:
                 - 'ovsdbserver.ipaddress=127.0.0.1'
                 - 'ovsdbserver.port=6641'
@@ -122,6 +136,44 @@
             settings-type: cfp
             global-settings: 'odl-global-settings'
             global-settings-type: cfp
+        - shell:
+            !include-raw-escape:
+                - include-setup-hwvtep-docker.sh
+        - maven-target:
+            maven-version: '{mvn33}'
+            pom: 'library/it/pom.xml'
+            goals: '-V -B verify -l libraryIT.log -Pintegrationtest -Dskip.karaf.featureTest=true -Dmaven.compile.fork=true -Dovsdb.controller.address=${{CONTROLLER_IP}}'
+            properties:
+                - 'ovsdbserver.ipaddress=127.0.0.1'
+                - 'ovsdbserver.port=6641'
+                - 'ovsdb.userspace.enabled=yes'
+                - 'maven.repo.local=/tmp/r'
+                - 'org.ops4j.pax.url.mvn.localRepository=/tmp/r'
+                - 'stream={stream}'
+            java-opts:  
+                - '-Xmx1024m -XX:MaxPermSize=256m'
+            settings: 'ovsdb-settings'
+            settings-type: cfp
+            global-settings: 'odl-global-settings'
+            global-settings-type: cfp
+        - maven-target:
+            maven-version: '{mvn33}'
+            pom: 'hwvtepsouthbound/hwvtepsouthbound-it/pom.xml'
+            goals: '-V -B verify -l hwvtepsouthboundIT.log -Pintegrationtest -Dskip.karaf.featureTest=true -Dmaven.compile.fork=true -Dovsdb.controller.address=${{CONTROLLER_IP}}'
+            properties:
+                - 'ovsdbserver.ipaddress=127.0.0.1'
+                - 'ovsdbserver.port=6641'
+                - 'ovsdb.userspace.enabled=yes'
+                - 'maven.repo.local=/tmp/r'
+                - 'org.ops4j.pax.url.mvn.localRepository=/tmp/r'
+                - 'stream={stream}'
+            java-opts:
+                - '-Xmx1024m -XX:MaxPermSize=256m'
+            settings: 'ovsdb-settings'
+            settings-type: cfp
+            global-settings: 'odl-global-settings'
+            global-settings-type: cfp
+
         - shell:
             !include-raw-escape:
                 - include-raw-cleanup-docker.sh
