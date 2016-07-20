@@ -61,7 +61,7 @@
         - shell: |
             pip freeze
             python scripts/jjb-autoupdate-project.py
-            jenkins-jobs test --recursive -o archives/job_output jjb/
+            jenkins-jobs -l DEBUG test --recursive -o archives/job_output jjb/
             gzip archives/job_output/*
 
         - releng-check-unicode
