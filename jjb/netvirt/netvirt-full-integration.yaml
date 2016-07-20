@@ -18,6 +18,7 @@
                 - openjdk8
 
     project: 'netvirt'
+    archive-artifacts: 'docker-ovs-*.log'
 
 - job-template:
     name: 'netvirt-daily-full-integration-{stream}'
@@ -122,8 +123,7 @@
         - jacoco-nojava-workaround
 
     publishers:
-        - archive:
-            artifacts: 'docker-ovs-*.log'
-            fingerprint: false
         - email-notification:
             email-prefix: '[netvirt]'
+        - archive-build:
+            maven-version: '{mvn33}'

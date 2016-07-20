@@ -4,6 +4,7 @@
         - 'netvirt-openstack-gerrit'
 
     project: 'netvirt'
+    archive-artifacts: 'logs/**'
 
 - job-template:
     name: 'netvirt-openstack-gerrit'
@@ -77,12 +78,11 @@
                 - include-raw-openstack-ci.sh
 
     publishers:
-        - archive:
-            artifacts: 'logs/**'
-            fingerprint: false
         - email-ext:
             subject: '[netvirt] $DEFAULT_SUBJECT'
             attach-build-log: false
             failure: true
             unstable: true
             fixed: true
+        - archive-build:
+            maven-version: '{mvn33}'
