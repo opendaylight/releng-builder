@@ -12,7 +12,7 @@ Host *
 
 # we don't want to do SSH host key checking on Rackspace spin-up systems
 # Dallas (ODL)
-Host 10.30.11.*
+Host 10.30.11.* 10.29.12.*
   StrictHostKeyChecking no
   UserKnownHostsFile /dev/null
 
