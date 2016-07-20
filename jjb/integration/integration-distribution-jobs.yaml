@@ -42,7 +42,7 @@
             project: '{project}'
             branch: '{branch}'
             refspec: 'refs/heads/{branch}'
-            artifacts: '{archive-artifacts} **/dependency_tree.txt'
+            artifacts: '{archive-artifacts} **/dependency_tree.txt **/*.hprof'
         - integration-patch-refspec:
             branch: '$GERRIT_REFSPEC'
 
@@ -116,7 +116,7 @@
             project: '{project}'
             branch: '{branch}'
             refspec: 'refs/heads/{branch}'
-            artifacts: '{archive-artifacts} **/dependency_tree.txt'
+            artifacts: '{archive-artifacts} **/dependency_tree.txt **/*.hprof'
 
     scm:
         - gerrit-trigger-scm:
@@ -220,7 +220,7 @@
             project: '{project}'
             branch: '{branch}'
             refspec: 'refs/heads/{branch}'
-            artifacts: '{archive-artifacts}'
+            artifacts: '{archive-artifacts} **/*.hprof'
         - integration-branch:
             branch: '{branch}'
         - integration-bundleurl:
@@ -269,7 +269,7 @@
             project: '{project}'
             branch: '{branch}'
             refspec: 'refs/heads/{branch}'
-            artifacts: '{archive-artifacts}'
+            artifacts: '{archive-artifacts} **/*.hprof'
         - integration-branch:
             branch: '{branch}'
         - integration-bundleurl:
