@@ -102,7 +102,7 @@
         - maven-target:
             maven-version: '{mvn33}'
             pom: 'pom.xml'
-            goals: 'clean install dependency:tree -V verify -Pintegrationtest -Dskip.karaf.featureTest=true -Dmaven.compile.fork=true -Dovsdb.controller.address=${{CONTROLLER_IP}}'
+            goals: 'clean install dependency:tree -V -B verify -Pintegrationtest -Dskip.karaf.featureTest=true -Dmaven.compile.fork=true -Dovsdb.controller.address=${{CONTROLLER_IP}}'
             properties:
                 - 'ovsdbserver.ipaddress=127.0.0.1'
                 - 'ovsdbserver.port=6641'
