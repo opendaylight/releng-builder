@@ -13,7 +13,10 @@
 ROBOT_VENV=`mktemp -d --suffix=robot_venv`
 echo ROBOT_VENV=${ROBOT_VENV} >> ${WORKSPACE}/env.properties
 
-virtualenv ${ROBOT_VENV}
+# The --system-site-packages parameter allows us to pick up system level
+# installed packages. This allows us to bake matplotlib which takes very long
+# to install into the image.
+virtualenv --system-site-packages ${ROBOT_VENV}
 source ${ROBOT_VENV}/bin/activate
 
 set -exu
@@ -29,7 +32,6 @@ pip install --upgrade jsonpath-rw
 
 # Modules for longevity framework robot library
 pip install elasticsearch==1.7.0 elasticsearch-dsl==0.0.11
-pip install --upgrade matplotlib
 
 # Print installed versions.
 pip freeze
