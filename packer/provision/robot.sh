@@ -12,7 +12,7 @@ yum install -q -y python-{devel,setuptools,virtualenv} @development
 yum install -y -q yum-utils unzip sshuttle nc libffi-devel openssl-devel
 
 # Install dependencies for matplotlib library used in longevity framework
-yum-builddep -y python-matplotlib
+yum install -y -q libpng-devel freetype-devel python-matplotlib
 
 # install crudini command line tool for editing config files
 yum install -y -q crudini

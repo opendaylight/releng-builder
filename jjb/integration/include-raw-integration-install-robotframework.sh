@@ -29,7 +29,6 @@ pip install --upgrade jsonpath-rw
 
 # Modules for longevity framework robot library
 pip install elasticsearch==1.7.0 elasticsearch-dsl==0.0.11
-pip install --upgrade matplotlib
 
 # Print installed versions.
 pip freeze
