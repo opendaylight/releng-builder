@@ -291,6 +291,19 @@
             fail-build: false
 
 - builder:
+    name: opendaylight-infra-pre-builders
+    builders:
+        - shell: |
+            if [ ! -z "$GERRIT_PATCHSET_REVISION" ]; then
+                LOG_MESSAGE="
+                    Logs for $JOB_NAME:
+                    https://logs.opendaylight.org/$SILO/$JENKINS_HOSTNAME/$JOB_NAME/$BUILD_NUMBER
+                    (note that logs will be unavailable until the job is completed running.)
+                "
+                ssh -p 29418 jenkins-$SILO@git.opendaylight.org gerrit review -m \"${LOG_MESSAGE}\" $GERRIT_PATCHSET_REVISION
+            fi
+
+- builder:
     name: wipe-org-opendaylight-repo
     builders:
         - shell: 'if [ -d /tmp/r/org/opendaylight ]; then rm -rf /tmp/r/org/opendaylight; fi'
