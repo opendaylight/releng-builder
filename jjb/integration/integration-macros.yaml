@@ -194,6 +194,22 @@
     triggers:
         - timed: 'H H * * *'
 
+# Macro: integration-jclouds-controller-mininet
+# Operation: this macro will spin the controller and mininet vms
+# Used by: {project}-csit-* job templates
+
+- wrapper:
+    name: integration-jclouds-controller-mininet
+    wrappers:
+      - jclouds:
+          instances:
+            - '{controller-image}':
+                cloud-name: 'ODLPUB'
+                count: '{controller-vms}'
+            - '{mininet-image}':
+                cloud-name: 'ODLPUB'
+                count: '{mininet-vms}'
+
 # Macro: integration-openstack-controller-mininet
 # Operation: this macro will spin the controller and mininet vms
 # Used by: {project}-csit-* job templates
