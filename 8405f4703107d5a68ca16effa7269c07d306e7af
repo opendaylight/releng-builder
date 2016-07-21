@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9a561d44_c0eff985",
+        "filename": "jjb/ovsdb/include-setup-hwvtep-docker.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 2029
+      },
+      "writtenOn": "2016-07-21T18:36:38Z",
+      "side": 1,
+      "message": "When the IT test first starts, all of the docker images are removed, with both rm and rmi, in the include-raw-setup docker.sh file, at the beginning. \n\nFollowing docker image cleanup/removal, the docker image is then pulled from docker hub. This should ensure a clean docker container, at the start of each test run, correct?\n\nIf there is a failure in one of the mvn targets (for example, southbound-it), then subsequent mvn targets are not invoked. That is the behavior that I observed from my run in the sandbox testing/debugging this jjb patch.\n\nSo, we start out with clean container, run tests. If any tests fails, no additional mvn targets invoked. \n\nWhen the next integration test runs, the above process repeats, with a clean container from the beginning.\n\nGiven the above, I don\u0027t see how we could encounter a scenario where the container is left with a stale DB at the beginning of the test.\n\nDo you agree, or do you think that we still need to do some additional cleanup in between mvn targets, perhaps due to some other scenario that may not be covered above?",
+      "parentUuid": "9a561d44_8ae6c0b2",
+      "revId": "8405f4703107d5a68ca16effa7269c07d306e7af",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a561d44_4a55c84e",
         "filename": "jjb/ovsdb/ovsdb-full-integration.yaml",
         "patchSetId": 2
