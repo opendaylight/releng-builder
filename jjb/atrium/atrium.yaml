@@ -8,7 +8,7 @@
         - '{project-name}-merge-{stream}'
         - '{project-name}-periodic-{stream}'
         - '{project-name}-validate-autorelease-{stream}'
-        - '{project-name}-verify-{stream}-{maven}-{jdk}'
+        - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     # stream:    release stream (eg. stable-lithium or beryllium)
     # branch:    git branch (eg. stable/lithium or master)
@@ -21,6 +21,8 @@
     project-name: 'atrium'
     branch: 'master'
     jdk: openjdk8
+    jdks:
+        - openjdk8
     maven:
         - mvn33:
             mvn-version: '{mvn33}'

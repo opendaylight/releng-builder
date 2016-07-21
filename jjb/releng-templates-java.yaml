@@ -716,7 +716,7 @@
             maven-version: '{mvn33}'
 
 - job-template:
-    name: '{project-name}-verify-{stream}-{maven}-{jdk}'
+    name: '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     # Job template for ODL verify jobs
     #
@@ -729,7 +729,7 @@
     project-type: freestyle
     node: '{build-node}'
     concurrent: true
-    jdk: '{jdk}'
+    jdk: '{jdks}'
 
     logrotate:
         daysToKeep: '7'
