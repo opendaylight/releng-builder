@@ -60,7 +60,6 @@
     builders:
         - shell: |
             pip freeze
-            python scripts/jjb-autoupdate-project.py
             jenkins-jobs -l DEBUG test --recursive -o archives/job_output jjb/
             gzip archives/job_output/*
 
