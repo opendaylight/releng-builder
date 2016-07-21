@@ -1,6 +1,5 @@
-# ODL Releng build templates
 - project:
-    name: alto
+    name: alto-boron
     jobs:
         - '{project-name}-clm-{stream}'
         - '{project-name}-distribution-{stream}'
@@ -8,41 +7,106 @@
         - '{project-name}-integration-{stream}'
         - '{project-name}-merge-{stream}'
         - '{project-name}-periodic-{stream}'
-        - '{project-name}-sonar'
         - '{project-name}-validate-autorelease-{stream}'
-        - '{project-name}-verify-{stream}'
+        - '{project-name}-verify-{stream}-{maven}-{jdk}'
 
     # stream:    release stream (eg. stable-lithium or beryllium)
     # branch:    git branch (eg. stable/lithium or master)
     stream:
         - boron:
-            branch: 'master'
-            jdk: openjdk8
-            jdks:
-                - openjdk8
             disable_autorelease: False
             disable_distribution_check: False
-        - beryllium:
-            branch: 'stable/beryllium'
-            jdk: openjdk7
-            jdks:
-                - openjdk7
-                - openjdk8
-            disable_autorelease: False
-            disable_distribution_check: False
-        - stable-lithium:
-            branch: 'stable/lithium'
-            jdk: openjdk7
-            jdks:
-                - openjdk7
-            disable_autorelease: True
-            disable_distribution_check: True
 
     project: 'alto'
     project-name: 'alto'
+    branch: 'master'
+    jdk: openjdk8
+    maven:
+        - mvn33:
+            mvn-version: '{mvn33}'
     mvn-settings: 'alto-settings'
     mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r '
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'l2switch-merge-{stream}'
     email-upstream: '[alto] [l2switch]'
     archive-artifacts: ''
+
+- project:
+    name: alto-beryllium
+    jobs:
+        - '{project-name}-clm-{stream}'
+        - '{project-name}-distribution-{stream}'
+        - '{project-name}-distribution-check-{stream}'
+        - '{project-name}-integration-{stream}'
+        - '{project-name}-merge-{stream}'
+        - '{project-name}-periodic-{stream}'
+        - '{project-name}-validate-autorelease-{stream}'
+        - '{project-name}-verify-{stream}-{maven}-{jdk}'
+
+    # stream:    release stream (eg. stable-lithium or beryllium)
+    # branch:    git branch (eg. stable/lithium or master)
+    stream:
+        - beryllium:
+            disable_autorelease: False
+            disable_distribution_check: False
+
+    project: 'alto'
+    project-name: 'alto'
+    branch: 'stable/beryllium'
+    jdk:
+        - openjdk7
+        - openjdk8
+    maven:
+        - mvn33:
+            mvn-version: '{mvn33}'
+    mvn-settings: 'alto-settings'
+    mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r '
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: 'l2switch-merge-{stream}'
+    email-upstream: '[alto] [l2switch]'
+    archive-artifacts: ''
+
+- project:
+    name: alto-lithium
+    jobs:
+        - '{project-name}-clm-{stream}'
+        - '{project-name}-distribution-{stream}'
+        - '{project-name}-distribution-check-{stream}'
+        - '{project-name}-integration-{stream}'
+        - '{project-name}-merge-{stream}'
+        - '{project-name}-periodic-{stream}'
+        - '{project-name}-validate-autorelease-{stream}'
+        - '{project-name}-verify-{stream}-{maven}-{jdk}'
+
+    # stream:    release stream (eg. stable-lithium or beryllium)
+    # branch:    git branch (eg. stable/lithium or master)
+    stream:
+        - stable-lithium:
+            disable_autorelease: True
+            disable_distribution_check: True
+
+    project: 'alto'
+    project-name: 'alto'
+    branch: 'stable/lithium'
+    jdk: openjdk7
+    maven:
+        - mvn33:
+            mvn-version: '{mvn33}'
+    mvn-settings: 'alto-settings'
+    mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r '
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: 'l2switch-merge-{stream}'
+    email-upstream: '[alto] [l2switch]'
+    archive-artifacts: ''
+
+- project:
+    name: alto-sonar
+    jobs:
+        - '{project-name}-sonar'
+
+    project: 'alto'
+    project-name: 'alto'
+    branch: 'master'
+    mvn-settings: 'alto-settings'
+    mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r '
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
