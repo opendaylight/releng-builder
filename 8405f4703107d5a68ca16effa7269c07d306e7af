@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a561d44_8ae6c0b2",
+        "filename": "jjb/ovsdb/include-setup-hwvtep-docker.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2016-07-21T13:10:28Z",
+      "side": 1,
+      "message": "maybe add the rm of conf.db so that it is clean between test runs. if any of the previous runs fail then the container is dirty.",
+      "revId": "8405f4703107d5a68ca16effa7269c07d306e7af",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_4a55c84e",
+        "filename": "jjb/ovsdb/ovsdb-full-integration.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2016-07-21T13:10:28Z",
+      "side": 1,
+      "message": "add the -V -B back here",
+      "revId": "8405f4703107d5a68ca16effa7269c07d306e7af",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_ead5bcb9",
+        "filename": "jjb/ovsdb/ovsdb-full-integration.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2016-07-21T13:10:28Z",
+      "side": 1,
+      "message": "Should there be some cleanup before starting these tests? It is only a problem if the previous tests fail and leave some junk behind in the container.",
+      "revId": "8405f4703107d5a68ca16effa7269c07d306e7af",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
