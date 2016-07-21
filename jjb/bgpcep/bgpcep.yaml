@@ -1,6 +1,5 @@
-# ODL Releng build templates
 - project:
-    name: bgpcep
+    name: bgpcep-boron
     jobs:
         - '{project-name}-clm-{stream}'
         - '{project-name}-distribution-{stream}'
@@ -8,39 +7,60 @@
         - '{project-name}-integration-{stream}'
         - '{project-name}-merge-{stream}'
         - '{project-name}-periodic-{stream}'
-        - '{project-name}-sonar'
+        - '{project-name}-validate-autorelease-{stream}'
+        - '{project-name}-verify-{stream}-{maven}-{jdk}'
+
+    # stream:    release stream (eg. stable-lithium or beryllium)
+    # branch:    git branch (eg. stable/lithium or master)
+    stream:
+        - boron:
+            disable_autorelease: False
+            disable_distribution_check: False
+
+    project: 'bgpcep'
+    project-name: 'bgpcep'
+    build-node: centos7-java-builder-4c-8g
+    branch: 'master'
+    jdk: openjdk8
+    maven:
+        - mvn33:
+            mvn-version: '{mvn33}'
+    mvn-settings: 'bgpcep-settings'
+    mvn-goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r clean -DrepoBuild install javadoc:aggregate'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream},mdsal-merge-{stream},tcpmd5-merge-{stream}'
+    email-upstream: '[bgpcep] [odlparent] [yangtools] [controller] [mdsal] [tcpmd5]'
+    archive-artifacts: ''
+
+
+- project:
+    name: bgpcep-beryllium
+    jobs:
+        - '{project-name}-clm-{stream}'
+        - '{project-name}-distribution-{stream}'
+        - '{project-name}-distribution-check-{stream}'
+        - '{project-name}-integration-{stream}'
+        - '{project-name}-merge-{stream}'
+        - '{project-name}-periodic-{stream}'
         - '{project-name}-validate-autorelease-{stream}'
         - '{project-name}-verify-{stream}'
 
     # stream:    release stream (eg. stable-lithium or beryllium)
     # branch:    git branch (eg. stable/lithium or master)
     stream:
-        - boron:
-            branch: 'master'
-            jdk: openjdk8
-            jdks:
-                - openjdk8
-            disable_autorelease: False
-            disable_distribution_check: False
         - beryllium:
-            branch: 'stable/beryllium'
-            jdk: openjdk7
-            jdks:
-                - openjdk7
-                - openjdk8
             disable_autorelease: False
             disable_distribution_check: False
-        - stable-lithium:
-            branch: 'stable/lithium'
-            jdk: openjdk7
-            jdks:
-                - openjdk7
-                - openjdk8
-            disable_autorelease: True
-            disable_distribution_check: True
 
     project: 'bgpcep'
     project-name: 'bgpcep'
+    branch: 'stable/beryllium'
+    jdk:
+        - openjdk7
+        - openjdk8
+    maven:
+        - mvn33:
+            mvn-version: '{mvn33}'
     mvn-settings: 'bgpcep-settings'
     mvn-goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r clean -DrepoBuild install javadoc:aggregate'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
@@ -48,3 +68,52 @@
     email-upstream: '[bgpcep] [odlparent] [yangtools] [controller] [mdsal] [tcpmd5]'
     archive-artifacts: ''
     build-node: centos7-java-builder-4c-8g
+
+- project:
+    name: bgpcep-lithium
+    jobs:
+        - '{project-name}-clm-{stream}'
+        - '{project-name}-distribution-{stream}'
+        - '{project-name}-distribution-check-{stream}'
+        - '{project-name}-integration-{stream}'
+        - '{project-name}-merge-{stream}'
+        - '{project-name}-periodic-{stream}'
+        - '{project-name}-validate-autorelease-{stream}'
+        - '{project-name}-verify-{stream}-{maven}-{jdk}'
+
+    # stream:    release stream (eg. stable-lithium or beryllium)
+    # branch:    git branch (eg. stable/lithium or master)
+    stream:
+        - stable-lithium:
+            disable_autorelease: True
+            disable_distribution_check: True
+
+    project: 'bgpcep'
+    project-name: 'bgpcep'
+    build-node: centos7-java-builder-4c-8g
+    branch: 'stable/lithium'
+    jdk:
+        - openjdk7
+        - openjdk8
+    maven:
+        - mvn33:
+            mvn-version: '{mvn33}'
+    mvn-settings: 'bgpcep-settings'
+    mvn-goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r clean -DrepoBuild install javadoc:aggregate'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream},mdsal-merge-{stream},tcpmd5-merge-{stream}'
+    email-upstream: '[bgpcep] [odlparent] [yangtools] [controller] [mdsal] [tcpmd5]'
+    archive-artifacts: ''
+
+- project:
+    name: bgpcep-sonar
+    jobs:
+        - '{project-name}-sonar'
+
+    project: 'bgpcep'
+    project-name: 'bgpcep'
+    build-node: centos7-java-builder-4c-8g
+    branch: 'master'
+    mvn-settings: 'bgpcep-settings'
+    mvn-goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r clean -DrepoBuild install javadoc:aggregate'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
