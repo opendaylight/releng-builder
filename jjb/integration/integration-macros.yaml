@@ -230,6 +230,21 @@
 # Operation: this macro will spin the controller and devstack vms
 # Used by: {project}-csit-openstack job templates
 - wrapper:
+    name: integration-jclouds-controller-devstack
+    wrappers:
+      - openstack:
+          instances:
+            - '{controller-image}':
+                cloud-name: 'ODLRPC'
+                count: '{controller-vms}'
+            - '{openstack-image}':
+                cloud-name: 'ODLRPC'
+                count: '{openstack-vms}'
+
+# Macro: integration-openstack-controller-devstack
+# Operation: this macro will spin the controller and devstack vms
+# Used by: {project}-csit-openstack job templates
+- wrapper:
     name: integration-openstack-controller-devstack
     wrappers:
       - openstack:
