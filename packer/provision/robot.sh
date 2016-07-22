@@ -21,6 +21,8 @@ yum install -y -q crudini
 yum install -q -y libpcap-devel boost-devel
 git clone -q https://github.com/ska-sa/udpreplay.git
 cd udpreplay
+./bootstrap.sh
+./configure
 make &> /dev/null && cp udpreplay /usr/local/bin
 
 ## DLUX dependencies
