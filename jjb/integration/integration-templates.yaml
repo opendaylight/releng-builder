@@ -735,7 +735,7 @@
         - integration-cleanup-tmp
 
     publishers:
-        - integration-robot:
+        - integration-robot-tempest:
             unstable-if: 0.0
             pass-if: 100.0
         - email-notification:
@@ -845,7 +845,7 @@
         - integration-cleanup-tmp
 
     publishers:
-        - integration-robot:
+        - integration-robot-tempest:
             unstable-if: 0.0
             pass-if: 100.0
         - email-notification:

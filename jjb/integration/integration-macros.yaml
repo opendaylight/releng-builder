@@ -487,6 +487,17 @@
             only-critical: false
 
 - publisher:
+    name: integration-robot-tempest
+    publishers:
+        - robot:
+            output-path: ''
+            other-files:
+                - tempest_results.html
+            unstable-threshold: '{unstable-if}'
+            pass-threshold: '{pass-if}'
+            only-critical: false
+
+- publisher:
     name: integration-csit-archive-build
     publishers:
         - postbuildscript:
