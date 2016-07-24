@@ -441,6 +441,9 @@ pybot -N ${TESTPLAN} -c critical -e exclude -v BUNDLEFOLDER:${BUNDLEFOLDER} -v W
 -v DEVSTACK_DEPLOY_PATH:/opt/stack/devstack -v USER_HOME:${HOME} ${TESTOPTIONS} ${SUITES} || true
 
 echo "Tests Executed"
+ssh ${OPENSTACK_CONTROL_NODE_IP} "sudo sh -c '/opt/stack/tempest/.tox/tempest/bin/subunit-1to2 < /opt/stack/tempest/.testrepository/0 > /opt/stack/tempest/subunit_log.txt'"
+ssh ${OPENSTACK_CONTROL_NODE_IP} "sudo sh -c '/opt/stack/tempest/.tox/tempest/bin/python /opt/stack/tempest/.tox/tempest/lib/python2.7/site-packages/os_testr/subunit2html.py /opt/stack/tempest/subunit_log.txt /opt/stack/tempest/tempest_results.html'"
+scp ${OPENSTACK_CONTROL_NODE_IP}:/opt/stack/tempest/tempest_results.html ${WORKSPACE}/
 collect_logs_and_exit
 
 true  # perhaps Jenkins is testing last exit code
