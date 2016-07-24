@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a561d44_d0397da5",
+        "filename": "jjb/integration/include-raw-integration-deploy-openstack-run-test.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 670
+      },
+      "writtenOn": "2016-07-24T07:37:44Z",
+      "side": 1,
+      "message": "I would add a variable for Tempest directory, e.g. DEVSTACK_TEMPEST_DIR\u003d\"/opt/stack/tempest\" and then use ${DEVSTACK_TEMPEST_DIR} instead in these 3 lines.\n\nJamo if such a variable exists already please advise but I didn\u0027t see one",
+      "revId": "ce385e5f0eab8fb75f1b28ac87874dd4cd249a41",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_10401506",
+        "filename": "jjb/integration/integration-macros.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 670
+      },
+      "writtenOn": "2016-07-24T07:37:44Z",
+      "side": 1,
+      "message": "Jamo, is there a more elegant way to add tempest_results.html to other_files, without creating a new (almost) duplicated publisher?\n\nI would think using {files} param in other-files should work - that might require refactoring a lot of other publisher calls though so this might be cleaner",
+      "revId": "ce385e5f0eab8fb75f1b28ac87874dd4cd249a41",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
