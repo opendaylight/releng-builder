@@ -94,3 +94,7 @@ make install
 
 echo '---> Installing vlan for vlan based tests in VTN suites'
 apt-get install -y --force-yes -qq vlan
+
+echo '---> Installing exabgp'
+apt-get install -y --force-yes -qq python-pip
+pip install exabgp==3.4.16
