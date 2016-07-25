@@ -1,6 +1,6 @@
 # ODL Releng build templates
 - project:
-    name: natapp
+    name: natapp-boron
     jobs:
         - '{project-name}-clm-{stream}'
         - '{project-name}-distribution-{stream}'
@@ -8,26 +8,38 @@
         - '{project-name}-integration-{stream}'
         - '{project-name}-merge-{stream}'
         - '{project-name}-periodic-{stream}'
-        - '{project-name}-sonar'
         - '{project-name}-validate-autorelease-{stream}'
-        - '{project-name}-verify-{stream}'
+        - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     # stream:    release stream (eg. stable-lithium or beryllium)
     # branch:    git branch (eg. stable/lithium or master)
     stream:
         - boron:
-            branch: 'master'
-            jdk: openjdk8
-            jdks:
-                - openjdk8
             disable_autorelease: False
             disable_distribution_check: False
-
     project: 'natapp'
     project-name: 'natapp'
+    branch: 'master'
+    jdk: openjdk8
+    jdks:
+        - openjdk8
+    maven:
+        - mvn33:
+            mvn-version: '{mvn33}'
     mvn-settings: 'natapp-settings'
     mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r '
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'openflowplugin-merge-{stream}'
     email-upstream: '[natapp] [openflowplugin]'
     archive-artifacts: ''
+
+- project:
+    name: natapp-sonar
+    jobs:
+        - '{project-name}-sonar'
+    project: 'natapp'
+    project-name: 'natapp'
+    branch: 'master'
+    mvn-settings: 'natapp-settings'
+    mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r '
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
