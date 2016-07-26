@@ -16,6 +16,24 @@
       "revId": "4f3e3f14677c5a1744e5f4e1361bc00267bd45c3",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_3911bd5d",
+        "filename": "packer/provision/mininet.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 2630
+      },
+      "writtenOn": "2016-07-26T07:26:21Z",
+      "side": 1,
+      "message": "Using virtual env will need to \"source\" it, which is a bit complication at this point. And once it is installed on job level, virtual env does not provide any added value.\nBecause exabgp is basically the first tool which may use virtualenv, i would prefer to wait for at least one more tool and set the common approach fot all.\nAnyway, installing exabgp is moved to jenkins-scripts.",
+      "parentUuid": "9a561d44_7fc31a57",
+      "revId": "4f3e3f14677c5a1744e5f4e1361bc00267bd45c3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
