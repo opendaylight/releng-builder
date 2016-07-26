@@ -94,3 +94,6 @@ make install
 
 echo '---> Installing vlan for vlan based tests in VTN suites'
 apt-get install -y --force-yes -qq vlan
+
+echo '---> All Python package installation should happen in virtualenv'
+apt-get install -y --force-yes -qq python-virtualenv python-pip
