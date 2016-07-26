@@ -30,12 +30,11 @@ yum install -q -y glibc-devel.i686 kernel-headers
 # should only really be done on an EL7 (or F18+) system
 yum install -q -y {jansson,libevent,libnl,libuuid}-devel
 
-#The following is needed for the new code in vtn project.
+#The following is needed for the vsemprovider build in vtn project.
 #these packages will enable C# compilation.
 rpm --import "http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF"
 #Added the mono tools repository
 yum-config-manager -q -y --add-repo http://download.mono-project.com/repo/centos/
-#Install the nuget binary
-yum install -q -y http://download.mono-project.com/repo/centos/n/nuget/nuget-2.8.3+md58+dhx1-0.noarch.rpm
-#install the mono toolchain
-yum -q -y install mono-complete
+#install the mono toolchain and nuget
+yum -q -y install mono-complete-4.2.3.4 nuget
+#end changes for vsemprovider in VTN
