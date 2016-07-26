@@ -17,6 +17,14 @@ yum install -y -q libpng-devel freetype-devel python-matplotlib
 # install crudini command line tool for editing config files
 yum install -y -q crudini
 
+
+################################
+# LISPFLOWMAPPING REQUIREMENTS #
+################################
+
+# Needed for pyangbind
+yum install -y -q libxml2-devel libxslt-devel
+
 # Install `udpreplay` to be used for (lispflowmapping) performance tests
 yum install -q -y libpcap-devel boost-devel
 git clone -q https://github.com/ska-sa/udpreplay.git
@@ -25,7 +33,10 @@ cd udpreplay
 ./configure
 make &> /dev/null && cp udpreplay /usr/local/bin
 
-## DLUX dependencies
+#####################
+# DLUX requirements #
+#####################
+
 #  - Xvfb: Display manager in RAM
 #
 # Note: The end goal will be to test with multiple browser (Firefox, Chrome)
