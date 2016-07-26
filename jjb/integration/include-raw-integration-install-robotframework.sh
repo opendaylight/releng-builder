@@ -33,6 +33,9 @@ pip install --upgrade jsonpath-rw
 # Modules for longevity framework robot library
 pip install elasticsearch==1.7.0 elasticsearch-dsl==0.0.11
 
+# Module for pyangbind used by lispflowmapping project
+pip install pyangbind==0.5.6
+
 # Print installed versions.
 pip freeze
 
