@@ -16,19 +16,14 @@ Sections:
 New Project Quick Start
 -----------------------
 
-.. note::
-
-    We will be revamping releng/builder in the near future to simplify
-    the below process.
-
 This section attempts to provide details on how to get going as a new project
 quickly with minimal steps. The rest of the guide should be read and understood
 by those who need to create and contribute new job types that is not already
 covered by the existing job templates provided by OpenDaylight's JJB repo.
 
 As a new project you will be mainly interested in getting your jobs to appear
-in the jenkins-master_ silo and this can be achieved by simply creating 2 files
-project.cfg and project.yaml in the releng/builder project's jjb directory.
+in the jenkins-master_ silo and this can be achieved by simply creating a
+<project>.yaml in the releng/builder project's jjb directory.
 
 .. code-block:: bash
 
@@ -41,25 +36,56 @@ Gerrit. So if your project is called "aaa" then create a new jjb/aaa directory.
 
 Next we will create <new-project>.yaml as follows:
 
-    # REMOVE THIS LINE IF YOU WANT TO CUSTOMIZE ANYTHING BELOW
+    - project:
+        name: <NEW_PROJECT>-carbon
+        jobs:
+            - '{project-name}-clm-{stream}'
+            - '{project-name}-distribution-{stream}'
+            - '{project-name}-integration-{stream}'
+            - '{project-name}-merge-{stream}'
+            - '{project-name}-periodic-{stream}'
+            - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
-That's right all you need is the above comment in this file. Jenkins will
-automatically regenerate this file when your patch is merged so we do not need
-to do anything special here.
+        project: '<NEW_PROJECT>'
+        project-name: '<NEW_PROJECT>'
+        stream: carbon
+        branch: 'master'
+        jdk: openjdk8
+        jdks:
+            - openjdk8
+        maven:
+            - mvn33:
+                mvn-version: '{mvn33}'
+        mvn-settings: '<NEW_PROJECT>-settings'
+        mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+        mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+        dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
+        email-upstream: '[<NEW_PROJECT>] [odlparent] [yangtools] [controller]'
+        archive-artifacts: ''
 
-Next we will create <new-project>.cfg as follows:
+    - project:
+        name: <NEW_PROJECT>-sonar
+        jobs:
+            - '{project-name}-sonar'
 
-.. code-block:: yaml
+        project: '<NEW_PROJECT>'
+        project-name: '<NEW_PROJECT>'
+        branch: 'master'
+        mvn-settings: '<NEW_PROJECT>-settings'
+        mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+        mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
 
-    STREAMS:
-        - boron:
-            branch: master
-            jdks: openjdk8
-    DEPENDENCIES: odlparent,controller,yangtools
+Replace all instances of <new-project> with the name of your project. This will
+create the jobs with the default job types we recommend for Java projects. If
+your project is participating in the simultanious-release and ultimately will
+be included in the final distribution. We recommend adding the following job
+types into the job list for the release you are participating.
 
-This is the minimal required CFG file contents and is used to auto-generate the
-YAML file. If you'd like to explore the additional tweaking options available
-please refer to the `Tuning Templates`_ section.
+    '{project-name}-distribution-check-{stream}'
+    '{project-name}-validate-autorelease-{stream}'
+
+If you'd like to explore the additional tweaking options available
+please refer to the `Jenkins Job Templates`_ section.
 
 Finally we need to push these files to Gerrit for review by the releng/builder
 team to push your jobs to Jenkins.
@@ -656,6 +682,18 @@ overrided via the opendaylight-infra-wrappers' build-timeout property.
       </tr>
       <tr>
         <td colspan="2">
+            <b>(deprecated)</b>
+            The Verify job template creates a Gerrit Trigger job that will
+            trigger when a new patch is submitted to Gerrit.
+        </td>
+      </tr>
+
+      <tr class="warning">
+        <td><b>Job Template</b><br/>{project}-verify-{stream}-{maven}-{jdks}</td>
+        <td><b>Gerrit Trigger</b><br/>recheck | reverify</td>
+      </tr>
+      <tr>
+        <td colspan="2">
             The Verify job template creates a Gerrit Trigger job that will
             trigger when a new patch is submitted to Gerrit.
         </td>
@@ -736,115 +774,6 @@ overrided via the opendaylight-infra-wrappers' build-timeout property.
         </td>
       </tr>
     </table>
-
-Basic Job Configuration
------------------------
-
-To create jobs based on existing `templates <Jenkins Job Templates_>`_, use the
-`jjb-init-project.py`_ helper script. When run from the root of
-`RelEng/Builder's repo <releng-builder-repo_>`_, it will produce a file in
-`jjb/<project>/<project>.yaml` containing your project's base template.
-
-.. code-block:: bash
-
-    $ python scripts/jjb-init-project.py --help
-    usage: jjb-init-project.py [-h] [-c CONF] [-d DEPENDENCIES] [-t TEMPLATES]
-                               [-s STREAMS] [-p POM] [-g MVN_GOALS] [-o MVN_OPTS]
-                               [-a ARCHIVE_ARTIFACTS]
-                               project
-
-    positional arguments:
-      project               project
-
-    optional arguments:
-      -h, --help            show this help message and exit
-      -c CONF, --conf CONF  Config file
-      -d DEPENDENCIES, --dependencies DEPENDENCIES
-                            Project dependencies A comma-seperated (no spaces)
-                            list of projects your project depends on. This is used
-                            to create an integration job that will trigger when a
-                            dependent project-merge job is built successfully.
-                            Example: aaa,controller,yangtools
-      -t TEMPLATES, --templates TEMPLATES
-                            Job templates to use
-      -s STREAMS, --streams STREAMS
-                            Release streams to fill with default options
-      -p POM, --pom POM     Path to pom.xml to use in Maven build (Default:
-                            pom.xml
-      -g MVN_GOALS, --mvn-goals MVN_GOALS
-                            Maven Goals
-      -o MVN_OPTS, --mvn-opts MVN_OPTS
-                            Maven Options
-      -a ARCHIVE_ARTIFACTS, --archive-artifacts ARCHIVE_ARTIFACTS
-                            Comma-seperated list of patterns of artifacts to
-                            archive on build completion. See:
-                            http://ant.apache.org/manual/Types/fileset.html
-
-If all your project requires is the basic verify, merge, and daily jobs then
-using the job template should be all you need to configure for your jobs.
-
-Auto-Update Job Templates
-^^^^^^^^^^^^^^^^^^^^^^^^^
-
-The first line of the job YAML file produced by the `jjb-init-project.py`_ script will
-contain the words `# REMOVE THIS LINE IF...`. Leaving this line will allow the
-RelEng/Builder `jjb-autoupdate-project.py`_ script to maintain this file for your project,
-should the base templates ever change. It is a good idea to leave this line if
-you do not plan to create any complex jobs outside of the provided template.
-
-However, if your project needs more control over your jobs or if you have any
-additional configuration outside of the standard configuration provided by the
-template, then this line should be removed.
-
-Tuning Templates
-""""""""""""""""
-
-Allowing the auto-updated to manage your templates doesn't prevent you from
-doing some configuration changes. Parameters can be passed to templates via
-a `<project>.cfg` in your `builder/jjb/<project>` directory. An example is
-provided below, others can be found in the repos of other projects. Tune as
-necessary. Unnecessary paramaters can be removed or commented out with a "#"
-sign.
-
-.. code-block:: yaml
-
-    JOB_TEMPLATES: verify,merge,sonar
-    STREAMS:
-    - beryllium:
-        branch: master
-        jdks: openjdk7,openjdk8
-        autorelease: true
-    - stable-lithium:
-        branch: stable/lithium
-        jdks: openjdk7
-    POM: dfapp/pom.xml
-    MVN_GOALS: clean install javadoc:aggregate -DrepoBuild -Dmaven.repo.local=$WORKSPACE/.m2repo -Dorg.ops4j.pax.url.mvn.localRepository=$WORKSPACE/.m2repo
-    MVN_OPTS: -Xmx1024m -XX:MaxPermSize=256m
-    DEPENDENCIES: aaa,controller,yangtools
-    ARCHIVE_ARTIFACTS: "*.logs, *.patches"
-
-.. note:: `STREAMS <streams-design-background_>`_ is a list of branches you want
-          JJB to generate jobs for.
-          The first branch will be the branch that reports Sonar analysis. Each
-          branch must define a "jdks:" section listing the JDKs the verify jobs
-          should run tests against for the branch. The first JDK listed will be
-          used as the default JDK for non-verify type jobs.
-
-.. note:: Projects that are participating in the simultanious release should set
-          "autorelease: true" under the streams they are participating in
-          autorelease for. This enables a new job type validate-autorelease
-          which is used to help identify if Gerrit patches might break
-          autorelease or not.
-
-Advanced
-""""""""
-
-It is also possible to take advantage of both the auto-updater and creating
-your own jobs. To do this, create a YAML file in your project's sub-directory
-with any name other than \<project\>.yaml. The auto-update script will only
-search for files with the name \<project\>.yaml. The normal \<project\>.yaml
-file can then be left in tact with the "# REMOVE THIS LINE IF..." comment so
-it will be automatically updated.
 
 Maven Properties
 ----------------
