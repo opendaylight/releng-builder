@@ -1,6 +1,6 @@
 # ODL Releng build templates
 - project:
-    name: snmp
+    name: snmp-boron
     jobs:
         - '{project-name}-clm-{stream}'
         - '{project-name}-distribution-{stream}'
@@ -8,42 +8,102 @@
         - '{project-name}-integration-{stream}'
         - '{project-name}-merge-{stream}'
         - '{project-name}-periodic-{stream}'
-        - '{project-name}-sonar'
         - '{project-name}-validate-autorelease-{stream}'
-        - '{project-name}-verify-{stream}'
+        - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     # stream:    release stream (eg. stable-lithium or beryllium)
     # branch:    git branch (eg. stable/lithium or master)
     stream:
         - boron:
-            branch: 'master'
-            jdk: openjdk8
-            jdks:
-                - openjdk8
             disable_autorelease: False
             disable_distribution_check: False
-        - beryllium:
-            branch: 'stable/beryllium'
-            jdk: openjdk7
-            jdks:
-                - openjdk7
-                - openjdk8
-            disable_autorelease: False
-            disable_distribution_check: False
-        - stable-lithium:
-            branch: 'stable/lithium'
-            jdk: openjdk7
-            jdks:
-                - openjdk7
-                - openjdk8
-            disable_autorelease: True
-            disable_distribution_check: True
-
     project: 'snmp'
     project-name: 'snmp'
+    branch: 'master'
+    jdk: openjdk8
+    jdks:
+        - openjdk8
+    maven:
+        - mvn33:
+            mvn-version: '{mvn33}'
     mvn-settings: 'snmp-settings'
     mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r '
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream}'
     email-upstream: '[snmp] [odlparent]'
     archive-artifacts: ''
+
+- project:
+    name: snmp-beryllium
+    jobs:
+        - '{project-name}-clm-{stream}'
+        - '{project-name}-distribution-{stream}'
+        - '{project-name}-distribution-check-{stream}'
+        - '{project-name}-integration-{stream}'
+        - '{project-name}-merge-{stream}'
+        - '{project-name}-periodic-{stream}'
+        - '{project-name}-validate-autorelease-{stream}'
+        - '{project-name}-verify-{stream}-{maven}-{jdks}'
+    stream:
+        - beryllium:
+            disable_autorelease: False
+            disable_distribution_check: False
+    project: 'snmp'
+    project-name: 'snmp'
+    branch: 'stable/beryllium'
+    jdk: openjdk7
+    jdks:
+        - openjdk7
+        - openjdk8
+    maven:
+        - mvn33:
+            mvn-version: '{mvn33}'
+    mvn-settings: 'snmp-settings'
+    mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r '
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: 'odlparent-merge-{stream}'
+    email-upstream: '[snmp] [odlparent]'
+    archive-artifacts: ''
+
+- project:
+    name: snmp-lithium
+    jobs:
+        - '{project-name}-clm-{stream}'
+        - '{project-name}-distribution-{stream}'
+        - '{project-name}-distribution-check-{stream}'
+        - '{project-name}-integration-{stream}'
+        - '{project-name}-merge-{stream}'
+        - '{project-name}-periodic-{stream}'
+        - '{project-name}-validate-autorelease-{stream}'
+        - '{project-name}-verify-{stream}-{maven}-{jdks}'
+    stream:
+        - stable-lithium:
+            disable_autorelease: True
+            disable_distribution_check: True
+    project: 'snmp'
+    project-name: 'snmp'
+    branch: 'stable/lithium'
+    jdk: openjdk7
+    jdks:
+        - openjdk7
+        - openjdk8
+    maven:
+        - mvn33:
+            mvn-version: '{mvn33}'
+    mvn-settings: 'snmp-settings'
+    mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r '
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: 'odlparent-merge-{stream}'
+    email-upstream: '[snmp] [odlparent]'
+    archive-artifacts: ''
+
+- project:
+    name: snmp-sonar
+    jobs:
+        - '{project-name}-sonar'
+    project: 'snmp'
+    project-name: 'snmp'
+    branch: 'master'
+    mvn-settings: 'snmp-settings'
+    mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r '
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
