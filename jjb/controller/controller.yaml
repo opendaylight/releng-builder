@@ -1,6 +1,5 @@
-# ODL Releng build templates
 - project:
-    name: controller
+    name: controller-boron
     jobs:
         - '{project-name}-clm-{stream}'
         - '{project-name}-distribution-{stream}'
@@ -8,42 +7,112 @@
         - '{project-name}-integration-{stream}'
         - '{project-name}-merge-{stream}'
         - '{project-name}-periodic-{stream}'
-        - '{project-name}-sonar'
         - '{project-name}-validate-autorelease-{stream}'
-        - '{project-name}-verify-{stream}'
+        - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     # stream:    release stream (eg. stable-lithium or beryllium)
     # branch:    git branch (eg. stable/lithium or master)
     stream:
         - boron:
-            branch: 'master'
-            jdk: openjdk8
-            jdks:
-                - openjdk8
             disable_autorelease: False
             disable_distribution_check: False
-        - beryllium:
-            branch: 'stable/beryllium'
-            jdk: openjdk7
-            jdks:
-                - openjdk7
-                - openjdk8
-            disable_autorelease: False
-            disable_distribution_check: False
-        - stable-lithium:
-            branch: 'stable/lithium'
-            jdk: openjdk7
-            jdks:
-                - openjdk7
-                - openjdk8
-            disable_autorelease: True
-            disable_distribution_check: True
 
     project: 'controller'
     project-name: 'controller'
+    branch: 'master'
+    jdk: openjdk8
+    jdks:
+        - openjdk8
+    maven:
+        - mvn33:
+            mvn-version: '{mvn33}'
     mvn-settings: 'controller-settings'
     mvn-goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r clean install -Pintegrationtests,docs'
     mvn-opts: '-Xmx4096m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},aaa-merge-{stream}'
     email-upstream: '[controller] [odlparent] [yangtools] [aaa]'
     archive-artifacts: ''
+
+- project:
+    name: controller-beryllium
+    jobs:
+        - '{project-name}-clm-{stream}'
+        - '{project-name}-distribution-{stream}'
+        - '{project-name}-distribution-check-{stream}'
+        - '{project-name}-integration-{stream}'
+        - '{project-name}-merge-{stream}'
+        - '{project-name}-periodic-{stream}'
+        - '{project-name}-validate-autorelease-{stream}'
+        - '{project-name}-verify-{stream}-{maven}-{jdks}'
+
+    # stream:    release stream (eg. stable-lithium or beryllium)
+    # branch:    git branch (eg. stable/lithium or master)
+    stream:
+        - beryllium:
+            disable_autorelease: False
+            disable_distribution_check: False
+
+    project: 'controller'
+    project-name: 'controller'
+    branch: 'stable/beryllium'
+    jdk: openjdk7
+    jdks:
+        - openjdk7
+        - openjdk8
+    maven:
+        - mvn33:
+            mvn-version: '{mvn33}'
+    mvn-settings: 'controller-settings'
+    mvn-goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r clean install -Pintegrationtests,docs'
+    mvn-opts: '-Xmx4096m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
+    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},aaa-merge-{stream}'
+    email-upstream: '[controller] [odlparent] [yangtools] [aaa]'
+    archive-artifacts: ''
+
+- project:
+    name: controller-lithium
+    jobs:
+        - '{project-name}-clm-{stream}'
+        - '{project-name}-distribution-{stream}'
+        - '{project-name}-distribution-check-{stream}'
+        - '{project-name}-integration-{stream}'
+        - '{project-name}-merge-{stream}'
+        - '{project-name}-periodic-{stream}'
+        - '{project-name}-validate-autorelease-{stream}'
+        - '{project-name}-verify-{stream}-{maven}-{jdks}'
+
+    # stream:    release stream (eg. stable-lithium or beryllium)
+    # branch:    git branch (eg. stable/lithium or master)
+    stream:
+        - stable-lithium:
+            disable_autorelease: True
+            disable_distribution_check: True
+
+    project: 'controller'
+    project-name: 'controller'
+    branch: 'stable/lithium'
+    jdk: openjdk7
+    jdks:
+        - openjdk7
+        - openjdk8
+    maven:
+        - mvn33:
+            mvn-version: '{mvn33}'
+    mvn-settings: 'controller-settings'
+    mvn-goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r clean install -Pintegrationtests,docs'
+    mvn-opts: '-Xmx4096m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
+    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},aaa-merge-{stream}'
+    email-upstream: '[controller] [odlparent] [yangtools] [aaa]'
+    archive-artifacts: ''
+
+- project:
+    name: controller-sonar
+    jobs:
+        - '{project-name}-sonar'
+
+    project: 'controller'
+    project-name: 'controller'
+    branch: master
+    mvn-settings: 'controller-settings'
+    mvn-goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r clean install -Pintegrationtests,docs'
+    mvn-opts: '-Xmx4096m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
