@@ -1,6 +1,6 @@
 # ODL Releng build templates
 - project:
-    name: l2switch
+    name: l2switch-boron
     jobs:
         - '{project-name}-clm-{stream}'
         - '{project-name}-distribution-{stream}'
@@ -8,41 +8,101 @@
         - '{project-name}-integration-{stream}'
         - '{project-name}-merge-{stream}'
         - '{project-name}-periodic-{stream}'
-        - '{project-name}-sonar'
         - '{project-name}-validate-autorelease-{stream}'
-        - '{project-name}-verify-{stream}'
+        - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     # stream:    release stream (eg. stable-lithium or beryllium)
     # branch:    git branch (eg. stable/lithium or master)
     stream:
         - boron:
-            branch: 'master'
-            jdk: openjdk8
-            jdks:
-                - openjdk8
             disable_autorelease: False
             disable_distribution_check: False
-        - beryllium:
-            branch: 'stable/beryllium'
-            jdk: openjdk7
-            jdks:
-                - openjdk7
-                - openjdk8
-            disable_autorelease: False
-            disable_distribution_check: False
-        - stable-lithium:
-            branch: 'stable/lithium'
-            jdk: openjdk7
-            jdks:
-                - openjdk7
-            disable_autorelease: True
-            disable_distribution_check: True
-
     project: 'l2switch'
     project-name: 'l2switch'
+    branch: 'master'
+    jdk: openjdk8
+    jdks:
+        - openjdk8
+    maven:
+        - mvn33:
+            mvn-version: '{mvn33}'
     mvn-settings: 'l2switch-settings'
     mvn-goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream},openflowjava-merge-{stream},openflowplugin-merge-{stream}'
     email-upstream: '[l2switch] [odlparent] [yangtools] [controller] [openflowjava] [openflowplugin]'
     archive-artifacts: ''
+
+- project:
+    name: l2switch-beryllium
+    jobs:
+        - '{project-name}-clm-{stream}'
+        - '{project-name}-distribution-{stream}'
+        - '{project-name}-distribution-check-{stream}'
+        - '{project-name}-integration-{stream}'
+        - '{project-name}-merge-{stream}'
+        - '{project-name}-periodic-{stream}'
+        - '{project-name}-validate-autorelease-{stream}'
+        - '{project-name}-verify-{stream}-{maven}-{jdks}'
+    stream:
+        - beryllium:
+            disable_autorelease: False
+            disable_distribution_check: False
+    project: 'l2switch'
+    project-name: 'l2switch'
+    branch: 'stable/beryllium'
+    jdk: openjdk7
+    jdks:
+        - openjdk7
+        - openjdk8
+    maven:
+        - mvn33:
+            mvn-version: '{mvn33}'
+    mvn-settings: 'l2switch-settings'
+    mvn-goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r clean install'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
+    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream},openflowjava-merge-{stream},openflowplugin-merge-{stream}'
+    email-upstream: '[l2switch] [odlparent] [yangtools] [controller] [openflowjava] [openflowplugin]'
+    archive-artifacts: ''
+
+- project:
+    name: l2switch-lithium
+    jobs:
+        - '{project-name}-clm-{stream}'
+        - '{project-name}-distribution-{stream}'
+        - '{project-name}-distribution-check-{stream}'
+        - '{project-name}-integration-{stream}'
+        - '{project-name}-merge-{stream}'
+        - '{project-name}-periodic-{stream}'
+        - '{project-name}-validate-autorelease-{stream}'
+        - '{project-name}-verify-{stream}-{maven}-{jdks}'
+    stream:
+        - stable-lithium:
+            disable_autorelease: True
+            disable_distribution_check: True
+    project: 'l2switch'
+    project-name: 'l2switch'
+    branch: 'stable/lithium'
+    jdk: openjdk7
+    jdks:
+        - openjdk7
+    maven:
+        - mvn33:
+            mvn-version: '{mvn33}'
+    mvn-settings: 'l2switch-settings'
+    mvn-goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r clean install'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
+    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream},openflowjava-merge-{stream},openflowplugin-merge-{stream}'
+    email-upstream: '[l2switch] [odlparent] [yangtools] [controller] [openflowjava] [openflowplugin]'
+    archive-artifacts: ''
+
+- project:
+    name: l2switch-sonar
+    jobs:
+        - '{project-name}-sonar'
+    project: 'l2switch'
+    project-name: 'l2switch'
+    branch: 'master'
+    mvn-settings: 'l2switch-settings'
+    mvn-goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r clean install'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
