@@ -1,5 +1,39 @@
 # ODL Releng build templates
 - project:
+    name: netconf-boron
+    jobs:
+        - '{project-name}-clm-{stream}'
+        - '{project-name}-distribution-{stream}'
+        - '{project-name}-distribution-check-{stream}'
+        - '{project-name}-integration-{stream}'
+        - '{project-name}-merge-{stream}'
+        - '{project-name}-periodic-{stream}'
+        - '{project-name}-validate-autorelease-{stream}'
+        - '{project-name}-verify-{stream}-{maven}-{jdks}'
+
+    # stream:    release stream (eg. stable-lithium or beryllium)
+    # branch:    git branch (eg. stable/lithium or master)
+    stream:
+        - boron:
+            disable_autorelease: False
+            disable_distribution_check: False
+    project: 'netconf'
+    project-name: 'netconf'
+    branch: 'master'
+    jdk: openjdk8
+    jdks:
+        - openjdk8
+    maven:
+        - mvn33:
+            mvn-version: '{mvn33}'
+    mvn-settings: 'netconf-settings'
+    mvn-goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r clean install -Pintegrationtests'
+    mvn-opts: '-Xmx2048m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
+    dependencies: 'aaa-merge-{stream},controller-merge-{stream},odlparent-merge-{stream},yangtools-merge-{stream}'
+    email-upstream: '[netconf] [aaa] [controller] [odlparent] [yangtools]'
+    archive-artifacts: ''
+
+- project:
     name: netconf
     jobs:
         - '{project-name}-clm-{stream}'
@@ -8,20 +42,9 @@
         - '{project-name}-integration-{stream}'
         - '{project-name}-merge-{stream}'
         - '{project-name}-periodic-{stream}'
-        - '{project-name}-sonar'
         - '{project-name}-validate-autorelease-{stream}'
-        - '{project-name}-verify-{stream}'
-
-    # stream:    release stream (eg. stable-lithium or beryllium)
-    # branch:    git branch (eg. stable/lithium or master)
+        - '{project-name}-verify-{stream}-{maven}-{jdks}'
     stream:
-        - boron:
-            branch: 'master'
-            jdk: openjdk8
-            jdks:
-                - openjdk8
-            disable_autorelease: False
-            disable_distribution_check: False
         - beryllium:
             branch: 'stable/beryllium'
             jdk: openjdk7
@@ -33,9 +56,28 @@
 
     project: 'netconf'
     project-name: 'netconf'
+    branch: 'stable/beryllium'
+    jdk: openjdk7
+    jdks:
+        - openjdk7
+        - openjdk8
+    maven:
+        - mvn33:
+            mvn-version: '{mvn33}'
     mvn-settings: 'netconf-settings'
     mvn-goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r clean install -Pintegrationtests'
     mvn-opts: '-Xmx2048m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
     dependencies: 'aaa-merge-{stream},controller-merge-{stream},odlparent-merge-{stream},yangtools-merge-{stream}'
     email-upstream: '[netconf] [aaa] [controller] [odlparent] [yangtools]'
     archive-artifacts: ''
+
+- project:
+    name: netconf-sonar
+    jobs:
+        - '{project-name}-sonar'
+    project: 'netconf'
+    project-name: 'netconf'
+    branch: 'master'
+    mvn-settings: 'netconf-settings'
+    mvn-goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r clean install -Pintegrationtests'
+    mvn-opts: '-Xmx2048m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
