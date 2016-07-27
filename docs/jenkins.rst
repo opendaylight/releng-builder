@@ -722,10 +722,11 @@ overrided via the opendaylight-infra-wrappers' build-timeout property.
       </tr>
       <tr>
         <td colspan="2">
-          This job template can be used by a project that is Python based. It
-          simply installs a python virtualenv and uses tox to run tests. When
-          using the template you need to provide a {toxdir} which is the path
-          relative to the root of the project repo containing the tox.ini file.
+          This job template can be used by a project that contains Python. It
+          simply installs a Python virtualenv and uses tox to run the tests
+          defined in the project's tox.ini file. If the tox.ini is anywhere
+          other than the project's repo root, the path to its directory
+          releative to the project's repo root should be passed as {toxdir}.
         </td>
       </tr>
 

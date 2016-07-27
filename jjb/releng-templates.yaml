@@ -123,7 +123,7 @@
     #     stream:    release stream (eg. stable-lithium or beryllium)
     #     branch:    git branch (eg. stable/lithium or master)
     #     toxdir:    directory containing the project's tox.ini relative to
-    #                the workspace.
+    #                the workspace. Empty works if tox.ini is at project root.
 
     project-type: freestyle
     node: '{build-node}'
