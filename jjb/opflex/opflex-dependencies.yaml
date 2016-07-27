@@ -9,13 +9,9 @@
         - boron:
             branch: 'master'
             jdk: openjdk7
-            jdks:
-                - openjdk7
         - beryllium:
             branch: 'stable/beryllium'
             jdk: openjdk7
-            jdks:
-                - openjdk7
 
     project: 'opflex'
 
@@ -114,16 +110,6 @@
     project-type: freestyle
     node: centos7-java-builder-2c-8g
     concurrent: true
-
-    axes:
-        - axis:
-            type: slave
-            name: nodes
-            values:
-                - centos7-java-builder-2c-8g
-        - axis:
-            type: jdk
-            values: '{obj:jdks}'
 
     logrotate:
         daysToKeep: '{build-days-to-keep}'
