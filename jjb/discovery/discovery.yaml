@@ -1,6 +1,6 @@
 # ODL Releng build templates
 - project:
-    name: discovery
+    name: discovery-boron
     jobs:
         - '{project-name}-clm-{stream}'
         - '{project-name}-distribution-{stream}'
@@ -8,33 +8,69 @@
         - '{project-name}-integration-{stream}'
         - '{project-name}-merge-{stream}'
         - '{project-name}-periodic-{stream}'
-        - '{project-name}-sonar'
         - '{project-name}-validate-autorelease-{stream}'
-        - '{project-name}-verify-{stream}'
+        - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     # stream:    release stream (eg. stable-lithium or beryllium)
     # branch:    git branch (eg. stable/lithium or master)
     stream:
         - boron:
-            branch: 'master'
-            jdk: openjdk7
-            jdks:
-                - openjdk7
             disable_autorelease: True
             disable_distribution_check: False
-        - beryllium:
-            branch: 'stable/beryllium'
-            jdk: openjdk7
-            jdks:
-                - openjdk7
-            disable_autorelease: True
-            disable_distribution_check: False
-
     project: 'discovery'
     project-name: 'discovery'
+    branch: 'master'
+    jdk: openjdk7
+    jdks:
+        - openjdk7
+    maven:
+        - mvn33:
+            mvn-version: '{mvn33}'
     mvn-settings: 'discovery-settings'
     mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r '
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: ''
     email-upstream: '[discovery]'
     archive-artifacts: ''
+
+- project:
+    name: discovery-beryllium
+    jobs:
+        - '{project-name}-clm-{stream}'
+        - '{project-name}-distribution-{stream}'
+        - '{project-name}-distribution-check-{stream}'
+        - '{project-name}-integration-{stream}'
+        - '{project-name}-merge-{stream}'
+        - '{project-name}-periodic-{stream}'
+        - '{project-name}-validate-autorelease-{stream}'
+        - '{project-name}-verify-{stream}-{maven}-{jdks}'
+    stream:
+        - beryllium:
+            disable_autorelease: True
+            disable_distribution_check: False
+    project: 'discovery'
+    project-name: 'discovery'
+    branch: 'stable/beryllium'
+    jdk: openjdk7
+    jdks:
+        - openjdk7
+    maven:
+        - mvn33:
+            mvn-version: '{mvn33}'
+    mvn-settings: 'discovery-settings'
+    mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r '
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: ''
+    email-upstream: '[discovery]'
+    archive-artifacts: ''
+
+- project:
+    name: discovery-sonar
+    jobs:
+        - '{project-name}-sonar'
+    project: 'discovery'
+    project-name: 'discovery'
+    branch: 'master'
+    mvn-settings: 'discovery-settings'
+    mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r '
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
