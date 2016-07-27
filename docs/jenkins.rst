@@ -677,18 +677,6 @@ overrided via the opendaylight-infra-wrappers' build-timeout property.
       </tr>
 
       <tr class="warning">
-        <td><b>Job Template</b><br/>{project}-verify-{stream}</td>
-        <td><b>Gerrit Trigger</b><br/>recheck | reverify</td>
-      </tr>
-      <tr>
-        <td colspan="2">
-            <b>(deprecated)</b>
-            The Verify job template creates a Gerrit Trigger job that will
-            trigger when a new patch is submitted to Gerrit.
-        </td>
-      </tr>
-
-      <tr class="warning">
         <td><b>Job Template</b><br/>{project}-verify-{stream}-{maven}-{jdks}</td>
         <td><b>Gerrit Trigger</b><br/>recheck | reverify</td>
       </tr>
