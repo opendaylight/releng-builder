@@ -69,3 +69,6 @@ make install
 
 echo '---> Installing exabgp'
 apt-get install -y --force-yes -qq exabgp
+
+echo '---> All Python package installation should happen in virtualenv'
+apt-get install -y --force-yes -qq python-virtualenv python-pip
