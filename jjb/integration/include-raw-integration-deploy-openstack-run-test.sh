@@ -91,7 +91,8 @@ fi
 if [ "${ODL_ENABLE_L3_FWD}" == "yes" ]; then
 cat >> ${local_conf_file_name} << EOF
 
-ODL_PROVIDER_MAPPINGS=br-ex:br100
+PUBLIC_BRIDGE=${PUBLIC_BRIDGE}
+ODL_PROVIDER_MAPPINGS=${PUBLIC_BRIDGE}:br100
 
 disable_service q-l3
 Q_L3_ENABLED=True
