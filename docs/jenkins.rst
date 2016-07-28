@@ -36,6 +36,8 @@ Gerrit. So if your project is called "aaa" then create a new jjb/aaa directory.
 
 Next we will create <new-project>.yaml as follows:
 
+.. code-block:: yaml
+
     - project:
         name: <NEW_PROJECT>-carbon
         jobs:
@@ -81,8 +83,11 @@ your project is participating in the simultanious-release and ultimately will
 be included in the final distribution. We recommend adding the following job
 types into the job list for the release you are participating.
 
-    '{project-name}-distribution-check-{stream}'
-    '{project-name}-validate-autorelease-{stream}'
+
+.. code-block:: yaml
+
+    - '{project-name}-distribution-check-{stream}'
+    - '{project-name}-validate-autorelease-{stream}'
 
 If you'd like to explore the additional tweaking options available
 please refer to the `Jenkins Job Templates`_ section.
