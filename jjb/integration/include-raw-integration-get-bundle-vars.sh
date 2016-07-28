@@ -3,6 +3,7 @@ echo "##       Inject Global Variables               ##"
 echo "#################################################"
 
 NEXUSURL_PREFIX=${ODLNEXUSPROXY:-https://nexus.opendaylight.org}
+ODL_NEXUS_REPO=${ODL_NEXUS_REPO:-content/repositories/opendaylight.snapshot}
 
 if [ ${BUNDLEURL} == 'last' ]; then
     # Obtain current pom.xml of integration/distribution, correct branch.
@@ -11,7 +12,7 @@ if [ ${BUNDLEURL} == 'last' ]; then
     BUNDLEVERSION=`xpath pom.xml '/project/version/text()' 2> /dev/null`
     echo "Bundle version is ${BUNDLEVERSION}"
     # Acquire the timestamp information from maven-metadata.xml
-    NEXUSPATH="${NEXUSURL_PREFIX}/content/repositories/opendaylight.snapshot/org/opendaylight/integration/distribution-karaf"
+    NEXUSPATH="${NEXUSURL_PREFIX}/${ODL_NEXUS_REPO}/org/opendaylight/integration/distribution-karaf"
     wget ${NEXUSPATH}/${BUNDLEVERSION}/maven-metadata.xml
     less maven-metadata.xml
     TIMESTAMP=`xpath maven-metadata.xml "//snapshotVersion[extension='zip'][1]/value/text()" 2>/dev/null`
