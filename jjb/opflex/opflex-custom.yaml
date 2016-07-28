@@ -12,15 +12,12 @@
         - boron:
             branch: 'master'
             jdk: openjdk7
-            jdks:
-                - openjdk7
         - beryllium:
             branch: 'stable/beryllium'
             jdk: openjdk7
-            jdks:
-                - openjdk7
 
     project: 'opflex'
+    archive-artifacts: '**/*.tar.gz'
 
 - builder:
     name: opflex-build
@@ -45,19 +42,10 @@
 - job-template:
     name: 'opflex-verify-{stream}'
 
-    project-type: matrix
-    node: matrix_master
+    project-type: freestyle
+    node: centos7-java-builder-2c-8g
     concurrent: true
-
-    axes:
-        - axis:
-            type: slave
-            name: nodes
-            values:
-                - centos7-java-builder-2c-8g
-        - axis:
-            type: jdk
-            values: '{obj:jdks}'
+    jdk: '{jdk}'
 
     logrotate:
         daysToKeep: '{build-days-to-keep}'
@@ -94,6 +82,8 @@
     publishers:
         - email-notification:
             email-prefix: '[opflex]'
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'opflex-merge-{stream}'
@@ -136,5 +126,5 @@
     publishers:
         - email-notification:
             email-prefix: '[opflex]'
-        - archive:
-            artifacts: '**/*.tar.gz'
+        - archive-build:
+            maven-version: '{mvn33}'
