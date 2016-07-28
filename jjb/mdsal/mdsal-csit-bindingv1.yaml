@@ -1,0 +1,39 @@
+- project:
+    name: mdsal-csit-bindingv1
+    jobs:
+        - '{project}-csit-1node-periodic-{functionality}-{install}-{stream}'
+
+    # The project name
+    project: 'mdsal'
+
+    # The functionality under test
+    functionality: 'bindingv1'
+
+    # Project branches. Boron for actual testing, Beryllium for sanity.
+    stream:
+        - boron:
+            branch: 'master'
+            jre: 'openjdk8'
+            robot-options: '-v JAVA_OPTIONS:-Xmx6656m'
+
+        - beryllium:
+            branch: 'stable/beryllium'
+            jre: 'openjdk7'
+            robot-options: '-v JAVA_7_OPTIONS:-Xmx6144m@-XX:MaxPermSize=512m --escape space:@'
+
+    install:
+        - only:
+            scope: 'only'
+
+    # No tools system VMs needed, but ODL system needs RAM and benefits from CPUs.
+    mininet-vms: 0
+    controller-image: 'centos7-java-builder-4c-8g'
+
+    # Features to install
+    install-features: 'odl-restconf'
+
+    # Additional patterns to archive
+    archive-artifacts: '*.xml'
+
+    # Trigger jobs (daily)
+    schedule: 'H H * * *'
