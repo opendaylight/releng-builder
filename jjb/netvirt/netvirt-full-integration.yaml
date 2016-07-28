@@ -18,7 +18,68 @@
                 - openjdk8
 
     project: 'netvirt'
-    archive-artifacts: 'docker-ovs-*.log'
+    archive-artifacts: '*.log'
+
+- builder:
+    name: run-it
+    builders:
+        - maven-target:
+            maven-version: '{maven-version}'
+            pom: '{pomFile}'
+            goals: '-V -B verify -l {logfile} -Pintegrationtest -Dskip.karaf.featureTest=true -Dmaven.compile.fork=true -Dovsdb.controller.address=${{CONTROLLER_IP}}'
+            properties:
+                - 'ovsdbserver.ipaddress=127.0.0.1'
+                - 'ovsdbserver.port=6641'
+                - 'ovsdb.userspace.enabled=yes'
+                - 'maven.repo.local=/tmp/r'
+                - 'org.ops4j.pax.url.mvn.localRepository=/tmp/r'
+                - 'stream={stream}'
+            java-opts:
+                - '-Xmx1024m -XX:MaxPermSize=256m'
+            settings: 'netvirt-settings'
+            settings-type: cfp
+            global-settings: 'odl-global-settings'
+            global-settings-type: cfp
+
+- builder:
+    name: run-net-virt-it
+    builders:
+        - run-it:
+            maven-version: '{maven-version}'
+            stream: '{stream}'
+            pomFile: 'openstack/net-virt-it/pom.xml'
+            logfile: '{OVS_VERSION}-net-virt-IT.log'
+
+- builder:
+    name: run-netvirt-sfc-it
+    builders:
+        - run-it:
+            maven-version: '{maven-version}'
+            stream: '{stream}'
+            pomFile: 'openstack/net-virt-sfc/it/pom.xml'
+            logfile: '{OVS_VERSION}-netvirt-sfc-IT.log'
+
+- builder:
+    name: run-netvirt-it
+    builders:
+        - inject:
+            properties-content: OVS_VERSION={OVS_VERSION}
+        - shell:
+            !include-raw-escape:
+                - include-raw-setup-docker.sh
+        - inject:
+            properties-file: env.properties
+        - run-net-virt-it:
+            OVS_VERSION: '{OVS_VERSION}'
+            maven-version: '{maven-version}'
+            stream: '{stream}'
+        - run-netvirt-sfc-it:
+            OVS_VERSION: '{OVS_VERSION}'
+            maven-version: '{maven-version}'
+            stream: '{stream}'
+        - shell:
+            !include-raw-escape:
+                - include-raw-cleanup-docker.sh
 
 - job-template:
     name: 'netvirt-daily-full-integration-{stream}'
@@ -27,29 +88,10 @@
     #     stream:    release stream (eg. stable-lithium or beryllium)
     #     branch:    git branch (eg. stable/lithium or master)
 
-    project-type: matrix
-    node: matrix_master
-    description: 'Integration tests for the netvirt project against different versions of OVS and branches. This job runs nightly. '
-    execution-strategy:
-        sequential: true
-
-    axes:
-        - axis:
-            type: user-defined
-            name: 'OVS_VERSION'
-            values:
-                - 2.3.3
-                - 2.4.0
-                - 2.5.0
-        - axis:
-            type: jdk
-            values: '{obj:jdks}'
-
-        - axis:
-            type: slave
-            name: nodes
-            values:
-                - centos7-docker-2c-4g
+    project-type: freestyle
+    node: centos7-docker-2c-4g
+    jdk: '{jdk}'
+    description: 'Integration tests for the Netvirt project against different versions of OVS and branches. This job runs nightly. '
 
     logrotate:
         daysToKeep: '{build-days-to-keep}'
@@ -95,19 +137,11 @@
 
     builders:
         - wipe-org-opendaylight-repo
-        - shell:
-            !include-raw-escape:
-                - include-raw-setup-docker.sh
-        - inject:
-            properties-file: env.properties
         - maven-target:
             maven-version: '{mvn33}'
             pom: 'pom.xml'
-            goals: 'clean install dependency:tree -V -B verify -Pintegrationtest -Dskip.karaf.featureTest=true -Dmaven.compile.fork=true -Dovsdb.controller.address=${{CONTROLLER_IP}}'
+            goals: '-V -B -l build.log clean install dependency:tree -Pq -Dmaven.compile.fork=true'
             properties:
-                - 'ovsdbserver.ipaddress=127.0.0.1'
-                - 'ovsdbserver.port=6641'
-                - 'ovsdb.userspace.enabled=yes'
                 - 'maven.repo.local=/tmp/r'
                 - 'org.ops4j.pax.url.mvn.localRepository=/tmp/r'
                 - 'stream={stream}'
@@ -117,9 +151,14 @@
             settings-type: cfp
             global-settings: 'odl-global-settings'
             global-settings-type: cfp
-        - shell:
-            !include-raw-escape:
-                - include-raw-cleanup-docker.sh
+        - run-netvirt-it:
+            maven-version: '{mvn33}'
+            stream: '{stream}'
+            OVS_VERSION: '2.4.0'
+        - run-netvirt-it:
+            maven-version: '{mvn33}'
+            stream: '{stream}'
+            OVS_VERSION: '2.5.0'
         - jacoco-nojava-workaround
 
     publishers:
