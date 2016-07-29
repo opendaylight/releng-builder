@@ -22,10 +22,6 @@ echo "---> Starting OVS $OVS_VERSION"
 /usr/bin/docker pull vpickard/openvswitch:$OVS_VERSION
 CID=$(/usr/bin/docker run -p 6641:6640 --privileged=true -d -i -t vpickard/openvswitch:$OVS_VERSION /usr/bin/supervisord)
 REALCID=`echo $CID | rev | cut -d ' ' -f 1 | rev`
-echo "---> Waiting to start OVS HW VTEP Emulator"
-sleep 5
-echo "---> Starting OVS HW VTEP Emulator"
-/usr/bin/docker exec $REALCID supervisorctl start ovs-vtep
 echo "CID=$REALCID" > env.properties
 echo "OVS_VERSION=${OVS_VERSION}" >> env.properties
 CONTROLLER_IP=`facter ipaddress`
