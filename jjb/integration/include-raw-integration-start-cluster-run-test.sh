@@ -73,7 +73,7 @@ if [ ${NUM_OPENSTACK_SYSTEM} -gt 0 ]; then
 fi
 
 if [ ${CONTROLLERSCOPE} == 'all' ]; then
-    COOLDOWN_PERIOD="180"
+    COOLDOWN_PERIOD="240"
 else
     COOLDOWN_PERIOD="60"
 fi
