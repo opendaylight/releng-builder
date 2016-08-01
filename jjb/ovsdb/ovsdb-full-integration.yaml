@@ -26,7 +26,7 @@
     archive-artifacts: '*.log'
 
 - builder:
-    name: run-it
+    name: ovsdb-run-it
     builders:
         - maven-target:
             maven-version: '{maven-version}'
@@ -49,7 +49,7 @@
 - builder:
     name: run-library-it
     builders:
-        - run-it:
+        - ovsdb-run-it:
             maven-version: '{maven-version}'
             stream: '{stream}'
             pomFile: 'library/it/pom.xml'
@@ -58,7 +58,7 @@
 - builder:
     name: run-southbound-it
     builders:
-        - run-it:
+        - ovsdb-run-it:
             maven-version: '{maven-version}'
             stream: '{stream}'
             pomFile: 'southbound/southbound-it/pom.xml'
@@ -67,7 +67,7 @@
 - builder:
     name: run-hwvtepsouthbound-it
     builders:
-        - run-it:
+        - ovsdb-run-it:
             maven-version: '{maven-version}'
             stream: '{stream}'
             pomFile: 'hwvtepsouthbound/hwvtepsouthbound-it/pom.xml'

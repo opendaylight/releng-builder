@@ -21,7 +21,7 @@
     archive-artifacts: '*.log'
 
 - builder:
-    name: run-it
+    name: netvirt-run-it
     builders:
         - maven-target:
             maven-version: '{maven-version}'
@@ -44,7 +44,7 @@
 - builder:
     name: run-net-virt-it
     builders:
-        - run-it:
+        - netvirt-run-it:
             maven-version: '{maven-version}'
             stream: '{stream}'
             pomFile: 'openstack/net-virt-it/pom.xml'
@@ -53,7 +53,7 @@
 - builder:
     name: run-netvirt-sfc-it
     builders:
-        - run-it:
+        - netvirt-run-it:
             maven-version: '{maven-version}'
             stream: '{stream}'
             pomFile: 'openstack/net-virt-sfc/it/pom.xml'
