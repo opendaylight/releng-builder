@@ -55,10 +55,10 @@
         - releng-stage-release
 
     publishers:
-        - archive-artifacts:
-            artifacts: '*.log'
         - email-notification:
             email-prefix: '[releng]'
+        - archive-build:
+            maven-version: '{mvn33}'
 
 
 - job-template:
@@ -108,6 +108,8 @@
     publishers:
         - email-notification:
             email-prefix: '[releng]'
+        - archive-build:
+            maven-version: '{mvn33}'
 
 # Python Related
 
@@ -193,6 +195,8 @@
     publishers:
         - email-notification:
             email-prefix: '[{project}]'
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: '{project-name}-merge-rtd-{stream}'
@@ -225,6 +229,8 @@
     publishers:
         - email-notification:
             email-prefix: '[{project}]'
+        - archive-build:
+            maven-version: '{mvn33}'
 
 # Node related
 
@@ -318,3 +324,5 @@
     publishers:
         - email-notification:
             email-prefix: '[{project}]'
+        - archive-build:
+            maven-version: '{mvn33}'
