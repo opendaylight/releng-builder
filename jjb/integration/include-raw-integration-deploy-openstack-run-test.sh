@@ -8,6 +8,8 @@ echo "#################################################"
 echo "##         Deploy Openstack 3-node             ##"
 echo "#################################################"
 
+
+SSH="ssh -t -t"
 function create_control_node_local_conf {
 local_conf_file_name=${WORKSPACE}/local.conf_control
 cat > ${local_conf_file_name} << EOF
@@ -255,10 +257,10 @@ sudo systemctl status haproxy
 true
 EOF
 scp ${WORKSPACE}/install_ha_proxy.sh ${ha_proxy_ip}:/tmp
-ssh ${ha_proxy_ip} "sudo bash /tmp/install_ha_proxy.sh"
+${SSH} ${ha_proxy_ip} "sudo bash /tmp/install_ha_proxy.sh"
 scp ${WORKSPACE}/haproxy.cfg ${ha_proxy_ip}:/tmp
 scp ${WORKSPACE}/deploy_ha_proxy.sh ${ha_proxy_ip}:/tmp
-ssh ${ha_proxy_ip} "sudo bash /tmp/deploy_ha_proxy.sh"
+${SSH} ${ha_proxy_ip} "sudo bash /tmp/deploy_ha_proxy.sh"
 }
 
 function collect_logs_and_exit (){
@@ -267,15 +269,15 @@ for i in `seq 1 ${NUM_ODL_SYSTEM}`
 do
     CONTROLLERIP=ODL_SYSTEM_${i}_IP
     echo "killing karaf process..."
-    ssh "${!CONTROLLERIP}" bash -c 'ps axf | grep karaf | grep -v grep | awk '"'"'{print "kill -9 " $1}'"'"' | sh'
+    ${SSH} "${!CONTROLLERIP}" bash -c 'ps axf | grep karaf | grep -v grep | awk '"'"'{print "kill -9 " $1}'"'"' | sh'
 done
 
 sleep 5
 for i in `seq 1 ${NUM_ODL_SYSTEM}`
 do
     CONTROLLERIP=ODL_SYSTEM_${i}_IP
-    ssh "${!CONTROLLERIP}"  "cp -r /tmp/${BUNDLEFOLDER}/data/log /tmp/odl_log"
-    ssh "${!CONTROLLERIP}"  "tar -cf /tmp/odl${i}_karaf.log.tar /tmp/odl_log/*"
+    ${SSH} "${!CONTROLLERIP}"  "cp -r /tmp/${BUNDLEFOLDER}/data/log /tmp/odl_log"
+    ${SSH} "${!CONTROLLERIP}"  "tar -cf /tmp/odl${i}_karaf.log.tar /tmp/odl_log/*"
     scp "${!CONTROLLERIP}:/tmp/odl${i}_karaf.log.tar" "${WORKSPACE}/odl${i}_karaf.log.tar"
     tar -xvf ${WORKSPACE}/odl${i}_karaf.log.tar -C . --strip-components 2 --transform s/karaf/odl${i}_karaf/g
     rm ${WORKSPACE}/odl${i}_karaf.log.tar
@@ -308,7 +310,8 @@ echo "127.0.0.1    localhost \${HOSTNAME}" > /tmp/hosts
 echo "::1   localhost  \${HOSTNAME}" >> /tmp/hosts
 sudo mv /tmp/hosts /etc/hosts
 sudo /usr/sbin/brctl addbr br100
-sudo ifconfig eth0 mtu 2000
+#Change for Private Cloud
+#sudo ifconfig eth0 mtu 2000 
 sudo mkdir /opt/stack
 sudo chmod 777 /opt/stack
 cd /opt/stack
@@ -326,7 +329,7 @@ fi
 os_node_list=()
 echo "Stack the Control Node"
 scp ${WORKSPACE}/get_devstack.sh ${OPENSTACK_CONTROL_NODE_IP}:/tmp
-ssh ${OPENSTACK_CONTROL_NODE_IP} "bash /tmp/get_devstack.sh"
+${SSH} ${OPENSTACK_CONTROL_NODE_IP} "bash /tmp/get_devstack.sh"
 create_control_node_local_conf
 scp ${WORKSPACE}/local.conf_control ${OPENSTACK_CONTROL_NODE_IP}:/opt/stack/devstack/local.conf
 ssh ${OPENSTACK_CONTROL_NODE_IP} "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
@@ -339,7 +342,7 @@ for i in `seq 1 $((NUM_OPENSTACK_SYSTEM - 1))`
 do
     COMPUTEIP=OPENSTACK_COMPUTE_NODE_${i}_IP
     scp ${WORKSPACE}/get_devstack.sh  ${!COMPUTEIP}:/tmp
-    ssh ${!COMPUTEIP} "bash /tmp/get_devstack.sh"
+    ${SSH} ${!COMPUTEIP} "bash /tmp/get_devstack.sh"
     create_compute_node_local_conf ${!COMPUTEIP}
     scp ${WORKSPACE}/local.conf_compute_${!COMPUTEIP} ${!COMPUTEIP}:/opt/stack/devstack/local.conf
     ssh ${!COMPUTEIP} "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
@@ -372,7 +375,7 @@ for index in ${!os_node_list[@]}
 do
 echo "Check the status of stacking in ${os_node_list[index]}"
 scp ${WORKSPACE}/check_stacking.sh  ${os_node_list[index]}:/tmp
-ssh ${os_node_list[index]} "bash /tmp/check_stacking.sh"
+${SSH} ${os_node_list[index]} "bash /tmp/check_stacking.sh"
 scp ${os_node_list[index]}:/tmp/stack_progress .
 #debug
 cat stack_progress
@@ -400,25 +403,25 @@ done
 #Need to disable firewalld and iptables in control node
 echo "Stop Firewall in Control Node for compute nodes to be able to reach the ports and add to hypervisor-list"
 scp ${WORKSPACE}/disable_firewall.sh ${OPENSTACK_CONTROL_NODE_IP}:/tmp
-ssh ${OPENSTACK_CONTROL_NODE_IP} "sudo bash /tmp/disable_firewall.sh"
+${SSH} -t -t ${OPENSTACK_CONTROL_NODE_IP} "sudo bash /tmp/disable_firewall.sh"
 echo "sleep for a minute and print hypervisor-list"
 sleep 60
-ssh ${OPENSTACK_CONTROL_NODE_IP} "cd /opt/stack/devstack; source openrc admin admin; nova hypervisor-list;nova-manage service list"
+${SSH} ${OPENSTACK_CONTROL_NODE_IP} "cd /opt/stack/devstack; source openrc admin admin; nova hypervisor-list;nova-manage service list"
 
 #Need to disable firewalld and iptables in compute nodes as well
 for i in `seq 1 $((NUM_OPENSTACK_SYSTEM - 1))`
 do
     OSIP=OPENSTACK_COMPUTE_NODE_${i}_IP
     scp ${WORKSPACE}/disable_firewall.sh "${!OSIP}:/tmp"
-    ssh "${!OSIP}" "sudo bash /tmp/disable_firewall.sh"
+    ${SSH} -t -t "${!OSIP}" "sudo bash /tmp/disable_firewall.sh"
 done
 
 # upgrading pip, urllib3 and httplib2 so that tempest tests can be run on ${OPENSTACK_CONTROL_NODE_IP}
 # this needs to happen after devstack runs because it seems devstack is pulling in specific versions
 # of these libs that are not working for tempest.
-ssh ${OPENSTACK_CONTROL_NODE_IP} "sudo pip install --upgrade pip"
-ssh ${OPENSTACK_CONTROL_NODE_IP} "sudo pip install urllib3 --upgrade"
-ssh ${OPENSTACK_CONTROL_NODE_IP} "sudo pip install httplib2 --upgrade"
+${SSH} ${OPENSTACK_CONTROL_NODE_IP} "sudo pip install --upgrade pip"
+${SSH} ${OPENSTACK_CONTROL_NODE_IP} "sudo pip install urllib3 --upgrade"
+${SSH} ${OPENSTACK_CONTROL_NODE_IP} "sudo pip install httplib2 --upgrade"
 
 echo "Locating test plan to use..."
 testplan_filepath="${WORKSPACE}/test/csit/testplans/${STREAMTESTPLAN}"
@@ -443,9 +446,9 @@ pybot -N ${TESTPLAN} -c critical -e exclude -v BUNDLEFOLDER:${BUNDLEFOLDER} -v W
 
 echo "Tests Executed"
 DEVSTACK_TEMPEST_DIR="/opt/stack/tempest"
-if $(ssh ${OPENSTACK_CONTROL_NODE_IP} "sudo sh -c '[ -f ${DEVSTACK_TEMPEST_DIR}/.testrepository/0]"); then # if Tempest results exist
-    ssh ${OPENSTACK_CONTROL_NODE_IP} "sudo sh -c '${DEVSTACK_TEMPEST_DIR}/.tox/tempest/bin/subunit-1to2 < ${DEVSTACK_TEMPEST_DIR}/.testrepository/0 > ${DEVSTACK_TEMPEST_DIR}/subunit_log.txt'"
-    ssh ${OPENSTACK_CONTROL_NODE_IP} "sudo sh -c '${DEVSTACK_TEMPEST_DIR}/.tox/tempest/bin/python ${DEVSTACK_TEMPEST_DIR}/.tox/tempest/lib/python2.7/site-packages/os_testr/subunit2html.py ${DEVSTACK_TEMPEST_DIR}/subunit_log.txt ${DEVSTACK_TEMPEST_DIR}/tempest_results.html'"
+if $(${SSH} ${OPENSTACK_CONTROL_NODE_IP} "sudo sh -c '[ -f ${DEVSTACK_TEMPEST_DIR}/.testrepository/0]"); then # if Tempest results exist
+    ${SSH} ${OPENSTACK_CONTROL_NODE_IP} "sudo sh -c '${DEVSTACK_TEMPEST_DIR}/.tox/tempest/bin/subunit-1to2 < ${DEVSTACK_TEMPEST_DIR}/.testrepository/0 > ${DEVSTACK_TEMPEST_DIR}/subunit_log.txt'"
+    ${SSH} ${OPENSTACK_CONTROL_NODE_IP} "sudo sh -c '${DEVSTACK_TEMPEST_DIR}/.tox/tempest/bin/python ${DEVSTACK_TEMPEST_DIR}/.tox/tempest/lib/python2.7/site-packages/os_testr/subunit2html.py ${DEVSTACK_TEMPEST_DIR}/subunit_log.txt ${DEVSTACK_TEMPEST_DIR}/tempest_results.html'"
     scp ${OPENSTACK_CONTROL_NODE_IP}:${DEVSTACK_TEMPEST_DIR}/tempest_results.html ${WORKSPACE}/
 fi
 collect_logs_and_exit
