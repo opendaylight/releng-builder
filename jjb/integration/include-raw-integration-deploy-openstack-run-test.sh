@@ -308,7 +308,8 @@ echo "127.0.0.1    localhost \${HOSTNAME}" > /tmp/hosts
 echo "::1   localhost  \${HOSTNAME}" >> /tmp/hosts
 sudo mv /tmp/hosts /etc/hosts
 sudo /usr/sbin/brctl addbr br100
-sudo ifconfig eth0 mtu 2000
+#Change for Private Cloud
+#sudo ifconfig eth0 mtu 2000 
 sudo mkdir /opt/stack
 sudo chmod 777 /opt/stack
 cd /opt/stack
@@ -400,7 +401,7 @@ done
 #Need to disable firewalld and iptables in control node
 echo "Stop Firewall in Control Node for compute nodes to be able to reach the ports and add to hypervisor-list"
 scp ${WORKSPACE}/disable_firewall.sh ${OPENSTACK_CONTROL_NODE_IP}:/tmp
-ssh ${OPENSTACK_CONTROL_NODE_IP} "sudo bash /tmp/disable_firewall.sh"
+ssh -t -t ${OPENSTACK_CONTROL_NODE_IP} "sudo bash /tmp/disable_firewall.sh"
 echo "sleep for a minute and print hypervisor-list"
 sleep 60
 ssh ${OPENSTACK_CONTROL_NODE_IP} "cd /opt/stack/devstack; source openrc admin admin; nova hypervisor-list;nova-manage service list"
@@ -410,7 +411,7 @@ for i in `seq 1 $((NUM_OPENSTACK_SYSTEM - 1))`
 do
     OSIP=OPENSTACK_COMPUTE_NODE_${i}_IP
     scp ${WORKSPACE}/disable_firewall.sh "${!OSIP}:/tmp"
-    ssh "${!OSIP}" "sudo bash /tmp/disable_firewall.sh"
+    ssh -t -t "${!OSIP}" "sudo bash /tmp/disable_firewall.sh"
 done
 
 # upgrading pip, urllib3 and httplib2 so that tempest tests can be run on ${OPENSTACK_CONTROL_NODE_IP}
