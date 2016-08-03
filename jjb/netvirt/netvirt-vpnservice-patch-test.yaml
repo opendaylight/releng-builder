@@ -1,0 +1,15 @@
+- project:
+    name: netvirt-vpnservice-patch-test
+    jobs:
+        - '{project}-patch-test-{stream}'
+
+    # The project name
+    project: 'netvirt-vpnservice'
+
+    # Project branches
+    stream:
+        - boron:
+            branch: 'master'
+            jdk: 'openjdk8'
+            csit-list: >
+                netvirt-vpnservice-csit-1node-openstack-mitaka-openstack-{stream}
