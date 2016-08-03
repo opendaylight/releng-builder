@@ -29,7 +29,7 @@ if [ -f ${WORKSPACE}/test/csit/scriptplans/${TESTPLAN} ]; then
     done
 fi
 
-cat > ${WORKSPACE}/controller-script.sh <<EOF
+cat > ${WORKSPACE}/configuration-script.sh <<EOF
 
 echo "Changing to /tmp"
 cd /tmp
@@ -79,6 +79,11 @@ export JAVA_HOME="$JAVA_HOME"
 # Did you know that in HERE documents, single quote is an ordinary character, but backticks are still executing?
 JAVA_RESOLVED=\`readlink -e "\${JAVA_HOME}/bin/java"\`
 echo "Java binary pointed at by JAVA_HOME: \${JAVA_RESOLVED}"
+
+EOF
+
+# Create the startup script to be run on controller.
+cat > ${WORKSPACE}/startup-script.sh <<EOF
 
 echo "Starting controller..."
 /tmp/${BUNDLEFOLDER}/bin/start
@@ -130,8 +135,26 @@ exit_on_log_file_message 'server is unhealthy'
 
 EOF
 
-scp ${WORKSPACE}/controller-script.sh ${ODL_SYSTEM_IP}:/tmp
-ssh ${ODL_SYSTEM_IP} 'bash /tmp/controller-script.sh'
+# Execute the configuration script on controller.
+scp ${WORKSPACE}/configuration-script.sh ${ODL_SYSTEM_IP}:/tmp
+ssh ${ODL_SYSTEM_IP} 'bash /tmp/configuration-script.sh'
+
+# Run config plan in case it exists
+if [ -f ${WORKSPACE}/test/csit/configplans/${TESTPLAN} ]; then
+    echo "configplan exists!!!"
+    echo "Reading the configplan:"
+    cat ${WORKSPACE}/test/csit/configplans/${TESTPLAN} | sed "s:integration:${WORKSPACE}:" > configplan.txt
+    cat configplan.txt
+    for line in $( egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' configplan.txt ); do
+        echo "Executing ${line}..."
+        source ${line}
+    done
+fi
+
+# Copy over the startup script to controller and execute it.
+scp ${WORKSPACE}/startup-script.sh ${ODL_SYSTEM_IP}:/tmp
+ssh ${ODL_SYSTEM_IP} 'bash /tmp/startup-script.sh'
+
 
 if [ ${NUM_OPENSTACK_SYSTEM} -gt 0 ]; then
    echo "Exiting without running tests to deploy openstack for testing"
