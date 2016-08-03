@@ -138,6 +138,10 @@ if [ ${NUM_OPENSTACK_SYSTEM} -gt 0 ]; then
    exit
 fi
 
+echo "Lets's take the karaf thread dump"
+KARAF_PID=$(ssh ${ODL_SYSTEM_IP} "ps aux | grep 'distribution-karaf' | grep -v grep | tr -s ' ' | cut -f2 -d' '")
+ssh ${ODL_SYSTEM_IP} "jstack $KARAF_PID"> ${WORKSPACE}/karaf_threads_before.log
+
 echo "Locating test plan to use..."
 testplan_filepath="${WORKSPACE}/test/csit/testplans/${STREAMTESTPLAN}"
 if [ ! -f "${testplan_filepath}" ]; then
@@ -161,6 +165,10 @@ pybot -N ${TESTPLAN} -c critical -e exclude -v BUNDLEFOLDER:${BUNDLEFOLDER} -v W
 -v MININET3:${TOOLS_SYSTEM_4_IP} -v MININET4:${TOOLS_SYSTEM_5_IP} -v MININET5:${TOOLS_SYSTEM_6_IP} \
 -v MININET_USER:${USER} -v USER_HOME:${HOME} ${TESTOPTIONS} ${SUITES} || true
 # FIXME: Sort (at least -v) options alphabetically.
+
+echo "Lets's take the karaf thread dump again"
+KARAF_PID=$(ssh ${ODL_SYSTEM_IP} "ps aux | grep 'distribution-karaf' | grep -v grep | tr -s ' ' | cut -f2 -d' '")
+ssh ${ODL_SYSTEM_IP} "jstack $KARAF_PID"> ${WORKSPACE}/karaf_threads_after.log
 
 echo "Killing ODL and fetching Karaf log..."
 set +e  # We do not want to create red dot just because something went wrong while fetching logs.
