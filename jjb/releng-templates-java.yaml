@@ -285,7 +285,7 @@
 
     maven:
         maven-name: '{mvn33}'
-        goals: '{mvn-goals} -V -B -Djenkins'
+        goals: '{mvn-goals} -VB -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
         maven-opts: '{mvn-opts}'
         settings: '{mvn-settings}'
         settings-type: cfp
@@ -354,7 +354,7 @@
 
     maven:
         maven-name: '{mvn33}'
-        goals: '{mvn-goals} -V -B -Djenkins -Dmerge -Dstream={stream}'
+        goals: '{mvn-goals} -VB -Djenkins -Dmerge -Dstream={stream} -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
         maven-opts: '{mvn-opts}'
         settings: '{mvn-settings}'
         settings-type: cfp
@@ -456,7 +456,7 @@
 
     maven:
         maven-name: '{mvn33}'
-        goals: '{mvn-goals} -V -B -Djenkins'
+        goals: '{mvn-goals} -VB -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
         maven-opts: '{mvn-opts}'
         settings: '{mvn-settings}'
         settings-type: cfp
@@ -516,7 +516,7 @@
 
     maven:
         maven-name: '{mvn33}'
-        goals: '{mvn-goals} -V -B -Djenkins -Dsonar'
+        goals: '{mvn-goals} -VB -Djenkins -Dsonar -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
         maven-opts: '{mvn-opts}'
         settings: '{mvn-settings}'
         settings-type: cfp
@@ -690,7 +690,7 @@
             settings-file: '{mvn-settings}'
         - maven-target:
             maven-version: '{mvn-version}'
-            goals: '{mvn-goals} -V -B -Djenkins -Dstream={stream}'
+            goals: '{mvn-goals} -VB -Djenkins -Dstream={stream} -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
             java-opts:
                 - '{mvn-opts}'
             settings: '{mvn-settings}'

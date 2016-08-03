@@ -28,7 +28,7 @@
     project: 'integration/distribution'
     project-name: 'distribution'
     mvn-settings: 'integration-distribution-settings'
-    mvn-goals: 'clean install dependency:tree -DoutputFile=dependency_tree.txt -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r '
+    mvn-goals: 'clean install dependency:tree -DoutputFile=dependency_tree.txt'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream}'
     email-upstream: '[int/dist]'

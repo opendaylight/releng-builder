@@ -27,7 +27,7 @@
         - mvn33:
             mvn-version: '{mvn33}'
     mvn-settings: 'dlux-settings'
-    mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r '
+    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream}'
     email-upstream: '[dlux] [odlparent]'
@@ -59,7 +59,7 @@
         - mvn33:
             mvn-version: '{mvn33}'
     mvn-settings: 'dlux-settings'
-    mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r '
+    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream}'
     email-upstream: '[dlux] [odlparent]'
@@ -90,7 +90,7 @@
         - mvn33:
             mvn-version: '{mvn33}'
     mvn-settings: 'dlux-settings'
-    mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r '
+    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream}'
     email-upstream: '[dlux] [odlparent]'
@@ -104,5 +104,5 @@
     project-name: 'dlux'
     branch: 'master'
     mvn-settings: 'dlux-settings'
-    mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r '
+    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'

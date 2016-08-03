@@ -27,7 +27,7 @@
         - mvn33:
             mvn-version: '{mvn33}'
     mvn-settings: 'alto-settings'
-    mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r '
+    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'l2switch-merge-{stream}'
     email-upstream: '[alto] [l2switch]'
@@ -63,7 +63,7 @@
         - mvn33:
             mvn-version: '{mvn33}'
     mvn-settings: 'alto-settings'
-    mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r '
+    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'l2switch-merge-{stream}'
     email-upstream: '[alto] [l2switch]'
@@ -98,7 +98,7 @@
         - mvn33:
             mvn-version: '{mvn33}'
     mvn-settings: 'alto-settings'
-    mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r '
+    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'l2switch-merge-{stream}'
     email-upstream: '[alto] [l2switch]'
@@ -113,5 +113,5 @@
     project-name: 'alto'
     branch: 'master'
     mvn-settings: 'alto-settings'
-    mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r '
+    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
