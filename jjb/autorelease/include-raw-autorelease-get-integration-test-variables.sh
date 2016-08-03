@@ -10,7 +10,7 @@
 ##############################################################################
 
 NEXUSURL=https://nexus.opendaylight.org/content/repositories/
-VERSION=`grep -m1 '<version>' ${WORKSPACE}/integration/distribution/distribution-karaf/pom.xml | awk -F'[<|>]' '/version/ { printf $3 }'`
+VERSION=`grep -m2 '<version>' ${WORKSPACE}/integration/distribution/distribution-karaf/pom.xml | tail -n1 | awk -F'[<|>]' '/version/ { printf $3 }'`
 if [ "x${VERSION}" == "x" ]; then
     echo "Lithium or sooner, different path needs to be searched."
     VERSION=`grep -m1 '<version>' ${WORKSPACE}/integration/distribution/distributions/karaf/pom.xml | awk -F'[<|>]' '/version/ { printf $3 }'`
