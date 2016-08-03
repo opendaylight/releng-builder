@@ -798,6 +798,10 @@
             default: '{odl-enable-l3}'
             description: 'Enable L3 FWD in ODL for createing br-ex'
         - string:
+            name: PUBLIC_BRIDGE
+            default: '{public-bridge}'
+            description: 'Specifies public bridge for provider and external networking'
+        - string:
             name: ENABLE_HAPROXY_FOR_NEUTRON
             default: '{enable-haproxy}'
             description: 'Enable HAProxy for using neutron interface as HA'
