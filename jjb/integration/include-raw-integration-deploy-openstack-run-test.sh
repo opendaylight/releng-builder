@@ -90,6 +90,15 @@ ODL_MGR_IP=${ODL_SYSTEM_1_IP}
 EOF
 fi
 
+# if we are using the old netvirt impl, as determined by the feature name
+# odl-ovsdb-openstack (note: new impl is odl-netvirt-openstack) then we
+# want ODL_L3 to be True.  New impl wants it False
+if [[ ${CONTROLLERFEATURES}} == *"odl-ovsdb-openstack"* ]]; then
+  ODL_L3=True
+else
+  ODL_L3=False
+fi
+
 if [ "${ODL_ENABLE_L3_FWD}" == "yes" ]; then
 cat >> ${local_conf_file_name} << EOF
 
@@ -98,7 +107,7 @@ ODL_PROVIDER_MAPPINGS=${PUBLIC_BRIDGE}:br100
 
 disable_service q-l3
 Q_L3_ENABLED=True
-ODL_L3=True
+ODL_L3=${ODL_L3}
 PUBLIC_INTERFACE=br100
 [[post-config|\$NEUTRON_CONF]]
 [DEFAULT]
