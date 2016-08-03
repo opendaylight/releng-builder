@@ -43,7 +43,7 @@ echo ${nodes_list}
 # Run script plan in case it exists
 if [ -f ${WORKSPACE}/test/csit/scriptplans/${TESTPLAN} ]; then
     echo "scriptplan exists!!!"
-    echo "Changing the scriptplan path..."
+    echo "Reading the scriptplan:"
     cat ${WORKSPACE}/test/csit/scriptplans/${TESTPLAN} | sed "s:integration:${WORKSPACE}:" > scriptplan.txt
     cat scriptplan.txt
     for line in $( egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' scriptplan.txt ); do
@@ -149,6 +149,18 @@ do
     scp ${WORKSPACE}/configuration-script.sh ${!CONTROLLERIP}:/tmp/
     ssh ${!CONTROLLERIP} "bash /tmp/configuration-script.sh ${i}"
 done
+
+# Run config plan in case it exists
+if [ -f ${WORKSPACE}/test/csit/configplans/${TESTPLAN} ]; then
+    echo "configplan exists!!!"
+    echo "Reading the configplan:"
+    cat ${WORKSPACE}/test/csit/configplans/${TESTPLAN} | sed "s:integration:${WORKSPACE}:" > configplan.txt
+    cat configplan.txt
+    for line in $( egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' configplan.txt ); do
+        echo "Executing ${line}..."
+        source ${line}
+    done
+fi
 
 # Copy over the startup script to each controller and execute it.
 for i in `seq 1 ${NUM_ODL_SYSTEM}`
