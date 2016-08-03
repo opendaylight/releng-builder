@@ -54,8 +54,8 @@ java -version
 echo "Starting controller..."
 ${WORKSPACE}/${BUNDLEFOLDER}/bin/start
 
-echo "sleeping for 10 seconds..."
-sleep 10
+echo "Sleeping 30 seconds to make sure Karaf ssh has started..."
+sleep 30
 
 echo "Installing all features..."
 sshpass -p karaf ${WORKSPACE}/${BUNDLEFOLDER}/bin/client -u karaf "feature:install ${ACTUALFEATURES}" || echo $? > ${WORKSPACE}/error.txt
