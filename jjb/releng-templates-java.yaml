@@ -43,7 +43,7 @@
     maven:
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
-        goals: 'clean install dependency:tree com.sonatype.clm:clm-maven-plugin:index -V -B -Djenkins -DskipTests=true -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+        goals: 'clean install dependency:tree com.sonatype.clm:clm-maven-plugin:index -VB -Djenkins -DskipTests=true -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
         maven-opts: '-Xmx4096m -XX:MaxPermSize=512m'
         settings: '{mvn-settings}'
         settings-type: cfp
@@ -107,7 +107,7 @@
     maven:
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
-        goals: 'clean install dependency:tree -DoutputFile=dependency_tree.txt -V -B -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+        goals: 'clean install dependency:tree -DoutputFile=dependency_tree.txt -VB -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
         settings: 'integration-distribution-settings'
         settings-type: cfp
@@ -195,7 +195,7 @@
         - maven-target:
             maven-version: '{mvn33}'
             pom: '$GERRIT_PROJECT/pom.xml'
-            goals: 'clean install dependency:tree -DoutputFile=dependency_tree.txt -V -B -Pq -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -Dstream={stream}'
+            goals: 'clean install dependency:tree -DoutputFile=dependency_tree.txt -VB -Pq -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -Dstream={stream}'
             java-opts:
                 - '-Xmx4096m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
             settings: '{mvn-settings}'
@@ -206,7 +206,7 @@
     maven:
         maven-name: '{mvn33}'
         root-pom: 'distribution/pom.xml'
-        goals: 'clean install dependency:tree -DoutputFile=dependency_tree.txt -V -B -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+        goals: 'clean install dependency:tree -DoutputFile=dependency_tree.txt -VB -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
         settings: '{mvn-settings}'
         settings-type: cfp
@@ -378,7 +378,7 @@
             - maven-target:
                 maven-version: '{mvn33}'
                 pom: pom.xml
-                goals: 'site:deploy -V -B -Dstream={stream}'
+                goals: 'site:deploy -VB -Dstream={stream}'
                 java-opts:
                     - '-Xmx2g'
                 settings: '{mvn-settings}'
@@ -388,7 +388,7 @@
             - maven-target:
                 maven-version: '{mvn33}'
                 pom: deploy-site.xml
-                goals: 'site:deploy -V -B -Dstream={stream}'
+                goals: 'site:deploy -VB -Dstream={stream}'
                 java-opts:
                     - '-Xmx2g'
                 settings: '{mvn-settings}'
@@ -614,7 +614,7 @@
         - maven-target:
             maven-version: '{mvn33}'
             pom: validate-pom.xml
-            goals: 'clean install dependency:tree -V -B -T1.5C -Pq -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+            goals: 'clean install dependency:tree -VB -T1.5C -Pq -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
             java-opts:
             - '-Xmx8g'
             settings: 'autorelease-settings'
@@ -625,7 +625,7 @@
     maven:
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
-        goals: 'clean validate -V -B -Pq -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+        goals: 'clean validate -VB -Pq -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
         maven-opts: '-Xmx8g -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
         settings: 'autorelease-settings'
         settings-type: cfp
