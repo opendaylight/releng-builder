@@ -27,7 +27,7 @@
         - mvn33:
             mvn-version: '{mvn33}'
     mvn-settings: 'usc-settings'
-    mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r '
+    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'controller-merge-{stream},yangtools-merge-{stream},odlparent-merge-{stream}'
     email-upstream: '[usc] [controller] [yangtools] [odlparent]'
@@ -59,7 +59,7 @@
         - mvn33:
             mvn-version: '{mvn33}'
     mvn-settings: 'usc-settings'
-    mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r '
+    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'controller-merge-{stream},yangtools-merge-{stream},odlparent-merge-{stream}'
     email-upstream: '[usc] [controller] [yangtools] [odlparent]'
@@ -92,7 +92,7 @@
         - mvn33:
             mvn-version: '{mvn33}'
     mvn-settings: 'usc-settings'
-    mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r '
+    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'controller-merge-{stream},yangtools-merge-{stream},odlparent-merge-{stream}'
     email-upstream: '[usc] [controller] [yangtools] [odlparent]'
@@ -106,5 +106,5 @@
     project-name: 'usc'
     branch: 'master'
     mvn-settings: 'usc-settings'
-    mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r '
+    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'

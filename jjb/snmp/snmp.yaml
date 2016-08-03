@@ -27,7 +27,7 @@
         - mvn33:
             mvn-version: '{mvn33}'
     mvn-settings: 'snmp-settings'
-    mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r '
+    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream}'
     email-upstream: '[snmp] [odlparent]'
@@ -59,7 +59,7 @@
         - mvn33:
             mvn-version: '{mvn33}'
     mvn-settings: 'snmp-settings'
-    mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r '
+    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream}'
     email-upstream: '[snmp] [odlparent]'
@@ -91,7 +91,7 @@
         - mvn33:
             mvn-version: '{mvn33}'
     mvn-settings: 'snmp-settings'
-    mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r '
+    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream}'
     email-upstream: '[snmp] [odlparent]'
@@ -105,5 +105,5 @@
     project-name: 'snmp'
     branch: 'master'
     mvn-settings: 'snmp-settings'
-    mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r '
+    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'

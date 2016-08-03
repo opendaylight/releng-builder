@@ -28,7 +28,7 @@
         - mvn33:
             mvn-version: '{mvn33}'
     mvn-settings: 'persistence-settings'
-    mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r '
+    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: ''
     email-upstream: '[persistence]'
@@ -60,7 +60,7 @@
         - mvn33:
             mvn-version: '{mvn33}'
     mvn-settings: 'persistence-settings'
-    mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r '
+    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: ''
     email-upstream: '[persistence]'
@@ -92,7 +92,7 @@
         - mvn33:
             mvn-version: '{mvn33}'
     mvn-settings: 'persistence-settings'
-    mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r '
+    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: ''
     email-upstream: '[persistence]'
@@ -106,5 +106,5 @@
     project-name: 'persistence'
     branch: 'master'
     mvn-settings: 'persistence-settings'
-    mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r '
+    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
