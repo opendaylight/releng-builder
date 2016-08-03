@@ -85,6 +85,9 @@ for i in `seq 1 ${NUM_ODL_SYSTEM}`
 do
     CONTROLLERIP=ODL_SYSTEM_${i}_IP
     odl_variables=${odl_variables}" -v ${CONTROLLERIP}:${!CONTROLLERIP}"
+    echo "Lets's take the karaf thread dump"
+    KARAF_PID=$(ssh ${!CONTROLLERIP} "ps aux | grep 'distribution-karaf' | grep -v grep | tr -s ' ' | cut -f2 -d' '")
+    ssh ${!CONTROLLERIP} "jstack $KARAF_PID"> ${WORKSPACE}/karaf_${i}_threads_before.log
 done
 
 echo "Generating mininet variables..."
@@ -121,6 +124,9 @@ set +e  # We do not want to create red dot just because something went wrong whi
 for i in `seq 1 ${NUM_ODL_SYSTEM}`
 do
     CONTROLLERIP=ODL_SYSTEM_${i}_IP
+    echo "Lets's take the karaf thread dump again"
+    KARAF_PID=$(ssh ${!CONTROLLERIP} "ps aux | grep 'distribution-karaf' | grep -v grep | tr -s ' ' | cut -f2 -d' '")
+    ssh ${!CONTROLLERIP} "jstack $KARAF_PID"> ${WORKSPACE}/karaf_${i}_threads_after.log
     echo "killing karaf process..."
     ssh "${!CONTROLLERIP}" bash -c 'ps axf | grep karaf | grep -v grep | awk '"'"'{print "kill -9 " $1}'"'"' | sh'
 done
