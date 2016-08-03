@@ -80,6 +80,13 @@ export JAVA_HOME="$JAVA_HOME"
 JAVA_RESOLVED=\`readlink -e "\${JAVA_HOME}/bin/java"\`
 echo "Java binary pointed at by JAVA_HOME: \${JAVA_RESOLVED}"
 
+# Disable persistence if file exists
+if [ -f /tmp/persistence.txt ]; then
+    echo "Persistence setting exists!!!"
+    echo "Applying persistence \`cat /tmp/persistence.txt\`"
+    /tmp/${BUNDLEFOLDER}/bin/set_persistence.sh \`cat /tmp/persistence.txt\`
+fi
+
 echo "Starting controller..."
 /tmp/${BUNDLEFOLDER}/bin/start
 
