@@ -26,7 +26,7 @@
         - maven-target:
             maven-version: '{maven-version}'
             pom: '{pomFile}'
-            goals: '-V -B verify -l {logfile} -Pintegrationtest -Dskip.karaf.featureTest=true -Dmaven.compile.fork=true -Dovsdb.controller.address=${{CONTROLLER_IP}}'
+            goals: '-V -B verify -l {logfile} -Pintegrationtest -Dskip.karaf.featureTest=true -Dmaven.compile.fork=true -Dovsdb.controller.address=${{CONTROLLER_IP}} {dockerYml}'
             properties:
                 - 'ovsdbserver.ipaddress=127.0.0.1'
                 - 'ovsdbserver.port=6641'
@@ -49,6 +49,7 @@
             stream: '{stream}'
             pomFile: 'openstack/net-virt-it/pom.xml'
             logfile: '{OVS_VERSION}-net-virt-IT.log'
+            dockerYml: ''
 
 - builder:
     name: run-netvirt-sfc-it
@@ -58,6 +59,17 @@
             stream: '{stream}'
             pomFile: 'openstack/net-virt-sfc/it/pom.xml'
             logfile: '{OVS_VERSION}-netvirt-sfc-IT.log'
+            dockerYml: ''
+
+- builder:
+    name: run-netvirt-vpnservice-it
+    builders:
+        - netvirt-run-it:
+            maven-version: '{maven-version}'
+            stream: '{stream}'
+            pomFile: 'vpnservice/it/pom.xml'
+            logfile: '{OVS_VERSION}-netvirt-vpnservice-IT.log'
+            dockerYml: '-Ddocker.compose.file=ovs-{OVS_VERSION}-hwvtep.yml'
 
 - builder:
     name: run-netvirt-it
@@ -74,6 +86,10 @@
             maven-version: '{maven-version}'
             stream: '{stream}'
         - run-netvirt-sfc-it:
+            OVS_VERSION: '{OVS_VERSION}'
+            maven-version: '{maven-version}'
+            stream: '{stream}'
+        - run-netvirt-vpnservice-it:
             OVS_VERSION: '{OVS_VERSION}'
             maven-version: '{maven-version}'
             stream: '{stream}'
