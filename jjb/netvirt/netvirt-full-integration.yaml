@@ -65,10 +65,50 @@
             logfile: '{OVS_VERSION}-netvirt-sfc-IT.log'
 
 - builder:
+    name: install-docker-compose
+    builders:
+        - shell: |
+            virtualenv $WORKSPACE/venv
+            source $WORKSPACE/venv/bin/activate
+            pip install --upgrade pip
+            pip install docker-compose
+
+- builder:
+    name: deactivate-docker-compose
+    builders:
+        - shell: |
+            source $WORKSPACE/venv/bin/deactivate
+
+- builder:
+    name: run-netvirt-vpnservice-it
+    builders:
+        - install-docker-compose
+        - maven-target:
+            maven-version: '{maven-version}'
+            pom: 'vpnservice/it/pom.xml'
+            goals: '-V -B verify -l {OVS_VERSION}-netvirt-vpnservice-IT.log -Pintegrationtest -Dskip.karaf.featureTest=true -Dmaven.compile.fork=true -Dovsdb.controller.address=${{CONTROLLER_IP}} -Ddocker.compose.file=ovs-{OVS_VERSION}-hwvtep.yml'
+            properties:
+                - 'ovsdb.userspace.enabled=yes'
+                - 'maven.repo.local=/tmp/r'
+                - 'org.ops4j.pax.url.mvn.localRepository=/tmp/r'
+                - 'stream={stream}'
+            java-opts:
+                - '-Xmx1024m -XX:MaxPermSize=256m'
+            settings: 'netvirt-settings'
+            settings-type: cfp
+            global-settings: 'odl-global-settings'
+            global-settings-type: cfp
+        - deactivate-docker-compose
+
+- builder:
     name: run-netvirt-it
     builders:
         - inject:
             properties-content: OVS_VERSION={OVS_VERSION}
+        - run-netvirt-vpnservice-it:
+            OVS_VERSION: '{OVS_VERSION}'
+            maven-version: '{maven-version}'
+            stream: '{stream}'
         - shell:
             !include-raw-escape:
                 - include-raw-setup-docker.sh
