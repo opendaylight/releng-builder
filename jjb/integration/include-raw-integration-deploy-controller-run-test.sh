@@ -52,6 +52,13 @@ if [ "${ODL_ENABLE_L3_FWD}" == "yes" ]; then
 fi
 cat \${CUSTOMPROP}
 
+VPNSERVICEVERSION="0.3.0-SNAPSHOT"
+VPNSERVICECONF=/tmp/${BUNDLEFOLDER}system/org/opendaylight/netvirt/dhcpservice-impl/${VPNSERVICEVERSION}/dhcpservice-impl-${VPNSERVICEVERSION}-config.xml
+if [ "${ENABLE_ODL_DHCP}" == "no" ]; then
+  sed -i 's/<controller-dhcp-enabled>true<\/controller-dhcp-enabled>/<controller-dhcp-enabled>false<\/controller-dhcp-enabled>/g' \${VPNSERVICECONF}
+fi
+cat \${VPNSERVICECONF}
+
 echo "Configuring the log..."
 LOGCONF=/tmp/${BUNDLEFOLDER}/etc/org.ops4j.pax.logging.cfg
 sed -ie 's/log4j.appender.out.maxBackupIndex=10/log4j.appender.out.maxBackupIndex=1/g' \${LOGCONF}
