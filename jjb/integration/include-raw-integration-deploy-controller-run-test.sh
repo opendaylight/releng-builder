@@ -52,6 +52,12 @@ if [ "${ODL_ENABLE_L3_FWD}" == "yes" ]; then
 fi
 cat \${CUSTOMPROP}
 
+VPNSERVICECONF=/tmp/${BUNDLEFOLDER}/etc/opendaylight/karaf/dhcpservice-impl-default-config.xml
+if [ "${ENABLE_ODL_DHCP}" == "no" ]; then
+  sed -i 's/<controller-dhcp-enabled>true<\/controller-dhcp-enabled>/<controller-dhcp-enabled>false<\/controller-dhcp-enabled>/g' \${VPNSERVICECONF}
+fi
+cat \${VPNSERVICECONF}
+
 echo "Configuring the log..."
 LOGCONF=/tmp/${BUNDLEFOLDER}/etc/org.ops4j.pax.logging.cfg
 sed -ie 's/log4j.appender.out.maxBackupIndex=10/log4j.appender.out.maxBackupIndex=1/g' \${LOGCONF}
