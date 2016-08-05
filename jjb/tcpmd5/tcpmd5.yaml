@@ -28,7 +28,7 @@
         - mvn33:
             mvn-version: '{mvn33}'
     mvn-settings: 'tcpmd5-settings'
-    mvn-goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r clean -DrepoBuild install javadoc:aggregate'
+    mvn-goals: 'clean -DrepoBuild install javadoc:aggregate'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
     email-upstream: '[tcpmd5] [odlparent] [yangtools] [controller]'
@@ -60,7 +60,7 @@
         - mvn33:
             mvn-version: '{mvn33}'
     mvn-settings: 'tcpmd5-settings'
-    mvn-goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r clean -DrepoBuild install javadoc:aggregate'
+    mvn-goals: 'clean -DrepoBuild install javadoc:aggregate'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
     email-upstream: '[tcpmd5] [odlparent] [yangtools] [controller]'
@@ -92,7 +92,7 @@
         - mvn33:
             mvn-version: '{mvn33}'
     mvn-settings: 'tcpmd5-settings'
-    mvn-goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r clean -DrepoBuild install javadoc:aggregate'
+    mvn-goals: 'clean -DrepoBuild install javadoc:aggregate'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
     email-upstream: '[tcpmd5] [odlparent] [yangtools] [controller]'
@@ -106,5 +106,5 @@
     project-name: 'tcpmd5'
     branch: 'master'
     mvn-settings: 'tcpmd5-settings'
-    mvn-goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r clean -DrepoBuild install javadoc:aggregate'
+    mvn-goals: 'clean -DrepoBuild install javadoc:aggregate'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'

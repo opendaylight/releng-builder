@@ -27,7 +27,7 @@
         - mvn33:
             mvn-version: '{mvn33}'
     mvn-settings: 'openflowplugin-settings'
-    mvn-goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r clean install javadoc:aggregate'
+    mvn-goals: 'clean install javadoc:aggregate'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream},openflowjava-merge-{stream}'
     email-upstream: '[openflowplugin] [odlparent] [yangtools] [controller] [openflowjava]'
@@ -59,7 +59,7 @@
         - mvn33:
             mvn-version: '{mvn33}'
     mvn-settings: 'openflowplugin-settings'
-    mvn-goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r clean install javadoc:aggregate'
+    mvn-goals: 'clean install javadoc:aggregate'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream},openflowjava-merge-{stream}'
     email-upstream: '[openflowplugin] [odlparent] [yangtools] [controller] [openflowjava]'
@@ -91,7 +91,7 @@
         - mvn33:
             mvn-version: '{mvn33}'
     mvn-settings: 'openflowplugin-settings'
-    mvn-goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r clean install javadoc:aggregate'
+    mvn-goals: 'clean install javadoc:aggregate'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream},openflowjava-merge-{stream}'
     email-upstream: '[openflowplugin] [odlparent] [yangtools] [controller] [openflowjava]'
@@ -105,5 +105,5 @@
     project-name: 'openflowplugin'
     branch: 'master'
     mvn-settings: 'openflowplugin-settings'
-    mvn-goals: '-Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r clean install javadoc:aggregate'
+    mvn-goals: 'clean install javadoc:aggregate'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
