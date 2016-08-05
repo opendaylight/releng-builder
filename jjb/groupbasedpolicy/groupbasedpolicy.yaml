@@ -27,7 +27,7 @@
         - mvn33:
             mvn-version: '{mvn33}'
     mvn-settings: 'groupbasedpolicy-settings'
-    mvn-goals: '-U clean install findbugs:findbugs -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+    mvn-goals: '-U clean install findbugs:findbugs'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'openflowjava-merge-{stream},openflowplugin-merge-{stream},neutron-merge-{stream},sfc-merge-{stream},ovsdb-merge-{stream}'
     email-upstream: '[groupbasedpolicy] [openflowjava] [openflowplugin] [neutron] [sfc] [ovsdb]'
@@ -59,7 +59,7 @@
         - mvn33:
             mvn-version: '{mvn33}'
     mvn-settings: 'groupbasedpolicy-settings'
-    mvn-goals: '-U clean install findbugs:findbugs -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+    mvn-goals: '-U clean install findbugs:findbugs'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'openflowjava-merge-{stream},openflowplugin-merge-{stream},neutron-merge-{stream},sfc-merge-{stream},ovsdb-merge-{stream}'
     email-upstream: '[groupbasedpolicy] [openflowjava] [openflowplugin] [neutron] [sfc] [ovsdb]'
@@ -90,7 +90,7 @@
         - mvn33:
             mvn-version: '{mvn33}'
     mvn-settings: 'groupbasedpolicy-settings'
-    mvn-goals: '-U clean install findbugs:findbugs -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+    mvn-goals: '-U clean install findbugs:findbugs'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'openflowjava-merge-{stream},openflowplugin-merge-{stream},neutron-merge-{stream},sfc-merge-{stream},ovsdb-merge-{stream}'
     email-upstream: '[groupbasedpolicy] [openflowjava] [openflowplugin] [neutron] [sfc] [ovsdb]'
@@ -104,5 +104,5 @@
     project-name: 'groupbasedpolicy'
     branch: 'master'
     mvn-settings: 'groupbasedpolicy-settings'
-    mvn-goals: '-U clean install findbugs:findbugs -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+    mvn-goals: '-U clean install findbugs:findbugs'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
