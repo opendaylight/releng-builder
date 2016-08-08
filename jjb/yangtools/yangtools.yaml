@@ -1,4 +1,40 @@
-# ODL Releng build templates
+- project:
+    name: yangtools-carbon
+    jobs:
+        - '{project-name}-clm-{stream}'
+        - '{project-name}-distribution-{stream}'
+        - '{project-name}-distribution-check-{stream}'
+        - '{project-name}-integration-{stream}'
+        - '{project-name}-merge-{stream}'
+        - '{project-name}-periodic-{stream}'
+        - '{project-name}-validate-autorelease-{stream}'
+        - '{project-name}-verify-{stream}-{maven}-{jdks}'
+
+    # stream:    release stream (eg. stable-lithium or beryllium)
+    # branch:    git branch (eg. stable/lithium or master)
+    stream:
+        - carbon:
+            disable_autorelease: False
+            disable_distribution_check: False
+
+    project: 'yangtools'
+    project-name: 'yangtools'
+    branch: 'master'
+    jdk: openjdk8
+    jdks:
+        - openjdk8
+    maven:
+        - mvn32:
+            mvn-version: '{mvn32}'
+        - mvn33:
+            mvn-version: '{mvn33}'
+    mvn-settings: 'yangtools-settings'
+    mvn-goals: 'clean install'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: 'odlparent-merge-{stream}'
+    email-upstream: '[yangtools] [odlparent]'
+    archive-artifacts: ''
+
 - project:
     name: yangtools-boron
     jobs:
@@ -20,7 +56,7 @@
 
     project: 'yangtools'
     project-name: 'yangtools'
-    branch: 'master'
+    branch: 'stable/boron'
     jdk: openjdk8
     jdks:
         - openjdk8

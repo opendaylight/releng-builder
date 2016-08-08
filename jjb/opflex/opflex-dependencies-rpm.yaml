@@ -5,8 +5,11 @@
         - 'opflex-openvswitch_rpm-{stream}'
 
     stream:
-        - boron:
+        - carbon:
             branch: 'master'
+            jdk: openjdk7
+        - boron:
+            branch: 'stable/boron'
             jdk: openjdk7
         - beryllium:
             branch: 'stable/beryllium'

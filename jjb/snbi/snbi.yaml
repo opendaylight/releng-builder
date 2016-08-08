@@ -1,4 +1,37 @@
-# ODL Releng build templates
+- project:
+    name: snbi-carbon
+    jobs:
+        - '{project-name}-clm-{stream}'
+        - '{project-name}-distribution-{stream}'
+        - '{project-name}-distribution-check-{stream}'
+        - '{project-name}-integration-{stream}'
+        - '{project-name}-merge-{stream}'
+        - '{project-name}-periodic-{stream}'
+        - '{project-name}-validate-autorelease-{stream}'
+        - '{project-name}-verify-{stream}-{maven}-{jdks}'
+
+    # stream:    release stream (eg. stable-lithium or beryllium)
+    # branch:    git branch (eg. stable/lithium or master)
+    stream:
+        - carbon:
+            disable_autorelease: False
+            disable_distribution_check: False
+    project: 'snbi'
+    project-name: 'snbi'
+    branch: 'master'
+    jdk: openjdk8
+    jdks:
+        - openjdk8
+    maven:
+        - mvn33:
+            mvn-version: '{mvn33}'
+    mvn-settings: 'snbi-settings'
+    mvn-goals: 'clean install'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: ''
+    email-upstream: '[snbi]'
+    archive-artifacts: ''
+
 - project:
     name: snbi-boron
     jobs:
@@ -19,7 +52,7 @@
             disable_distribution_check: False
     project: 'snbi'
     project-name: 'snbi'
-    branch: 'master'
+    branch: 'stable/boron'
     jdk: openjdk8
     jdks:
         - openjdk8

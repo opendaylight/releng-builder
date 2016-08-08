@@ -1,4 +1,38 @@
-# ODL Releng build templates
+- project:
+    name: toolkit-carbon
+    jobs:
+        - '{project-name}-clm-{stream}'
+        - '{project-name}-distribution-{stream}'
+        - '{project-name}-distribution-check-{stream}'
+        - '{project-name}-integration-{stream}'
+        - '{project-name}-merge-{stream}'
+        - '{project-name}-periodic-{stream}'
+        - '{project-name}-validate-autorelease-{stream}'
+        - '{project-name}-verify-{stream}-{maven}-{jdks}'
+
+    # stream:    release stream (eg. stable-lithium or beryllium)
+    # branch:    git branch (eg. stable/lithium or master)
+    stream:
+        - carbon:
+            disable_autorelease: True
+            disable_distribution_check: False
+
+    project: 'toolkit'
+    project-name: 'toolkit'
+    branch: 'master'
+    jdk: openjdk7
+    jdks:
+        - openjdk7
+    maven:
+        - mvn33:
+            mvn-version: '{mvn33}'
+    mvn-settings: 'toolkit-settings'
+    mvn-goals: 'clean install'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: ''
+    email-upstream: '[toolkit]'
+    archive-artifacts: ''
+
 - project:
     name: toolkit-boron
     jobs:
@@ -20,7 +54,7 @@
 
     project: 'toolkit'
     project-name: 'toolkit'
-    branch: 'master'
+    branch: 'stable/boron'
     jdk: openjdk7
     jdks:
         - openjdk7
