@@ -1,0 +1,38 @@
+- project:
+    name: usc-csit-udp
+    jobs:
+        - '{project}-csit-1node-{functionality}-{install}-{stream}'
+        - '{project}-csit-verify-1node-{functionality}'
+
+    # The project name
+    project: 'usc'
+
+    # The functionality under test
+    functionality: 'udp'
+
+    # Project branches
+    stream:
+        - boron:
+            branch: 'master'
+            jre: 'openjdk8'
+        - beryllium:
+            branch: 'stable/beryllium'
+            jre: 'openjdk7'
+        - stable-lithium:
+            branch: 'stable/lithium'
+            jre: 'openjdk7'
+
+    install:
+        - only:
+            scope: 'only'
+        - all:
+            scope: 'all'
+
+    # Features to install
+    install-features: 'odl-restconf,odl-mdsal-apidocs,odl-usc-channel-ui'
+
+    # Robot custom options
+    robot-options: ''
+
+    # Trigger jobs (upstream dependencies)
+    trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream},usc-distribution-{stream}'
