@@ -11,8 +11,11 @@
 
     # Project branches
     stream:
-        - boron:
+        - carbon:
             branch: 'master'
+            jre: 'openjdk8'
+        - boron:
+            branch: 'stable/boron'
             jre: 'openjdk8'
 
     install:
@@ -27,4 +30,3 @@
 
     # Trigger jobs (upstream dependencies)
     trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream},openflowjava-distribution-{stream},openflowplugin-distribution-{stream}'
-
