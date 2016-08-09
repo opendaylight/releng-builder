@@ -75,8 +75,6 @@
         - autorelease-sys-stats
 
     publishers:
-    - archive-artifacts:
-        artifacts: '*.prop,*.log,patches/*.bundle,patches/*.patch,patches/*.log'
     - email-notification:
         email-prefix: '[autorelease]'
     - trigger-parameterized-builds:
@@ -84,6 +82,8 @@
           condition: UNSTABLE_OR_BETTER
           property-file: variables.prop
           fail-on-missing: true
+    - archive-build:
+        maven-version: '{mvn33}'
 
 - job-template:
     name: 'autorelease-project-report-{stream}'
@@ -135,8 +135,6 @@
         - autorelease-sys-stats
 
     publishers:
-    - archive-artifacts:
-        artifacts: '*.log,project-reports/*.log'
     - email-ext:
         attachments: 'project-reports/*.log'
         recipients: 'skitt@redhat.com thanh.ha@linuxfoundation.org'
@@ -150,6 +148,8 @@
 
             Archive also available on Jenkins at $BUILD_URL
         always: true
+    - archive-build:
+        maven-version: '{mvn33}'
 
 ###
 ### Maven Sites
