@@ -540,7 +540,7 @@
     name: '{project-name}-validate-autorelease-{stream}'
     disabled: '{obj:disable_autorelease}'
 
-    project-type: maven
+    project-type: freestyle
     node: '{build-node}'
     concurrent: true
     jdk: '{jdk}'
@@ -607,7 +607,7 @@
                     - compare-type: ANT
                       pattern: '**/*.xml'
 
-    prebuilders:
+    builders:
         - jacoco-nojava-workaround
         - autorelease-checkout-gerrit-patch
         - autorelease-generate-release-patches
@@ -621,25 +621,22 @@
             settings-type: cfp
             global-settings: 'odl-global-settings'
             global-settings-type: cfp
-
-    maven:
-        maven-name: '{mvn33}'
-        root-pom: 'pom.xml'
-        goals: 'clean validate -V -B -Pq -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
-        maven-opts: '-Xmx8g -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
-        settings: 'autorelease-settings'
-        settings-type: cfp
-        global-settings: 'odl-global-settings'
-        global-settings-type: cfp
-        automatic-archiving: false
-        post-step-run-condition: UNSTABLE
-
-    postbuilders:
+        - maven-target:
+            maven-name: '{mvn33}'
+            root-pom: 'pom.xml'
+            goals: 'clean validate -V -B -Pq -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+            maven-opts: '-Xmx8g -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
+            settings: 'autorelease-settings'
+            settings-type: cfp
+            global-settings: 'odl-global-settings'
+            global-settings-type: cfp
         - autorelease-sys-stats
 
     publishers:
         - email-notification:
             email-prefix: '[autorelease] [{project-name}]'
+        - postbuildscript:
+            mark-unstable-if-failed: False
         - archive-build:
             maven-version: '{mvn33}'
 
