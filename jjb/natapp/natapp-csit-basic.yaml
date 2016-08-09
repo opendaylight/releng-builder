@@ -12,8 +12,11 @@
 
     # Project branches
     stream:
-        - boron:
+        - carbon:
             branch: 'master'
+            jre: 'openjdk8'
+        - boron:
+            branch: 'stable/boron'
             jre: 'openjdk8'
 
     install:
@@ -30,4 +33,3 @@
 
     # Trigger jobs (upstream dependencies)
     trigger-jobs: 'openflowplugin-distribution-{stream},natapp-distribution-{stream}'
-
