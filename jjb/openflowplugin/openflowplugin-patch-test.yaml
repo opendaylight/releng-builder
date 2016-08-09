@@ -8,8 +8,24 @@
 
     # Project branches
     stream:
-        - boron:
+        - carbon:
             branch: 'master'
+            jdk: 'openjdk8'
+            csit-list: >
+                openflowplugin-csit-1node-flow-services-only-{stream},
+                openflowplugin-csit-1node-flow-services-helium-redesign-only-{stream},
+                openflowplugin-csit-1node-flow-services-all-{stream},
+                openflowplugin-csit-1node-scalability-only-{stream},
+                openflowplugin-csit-1node-scalability-helium-redesign-only-{stream},
+                openflowplugin-csit-1node-cbench-performance-only-{stream},
+                openflowplugin-csit-1node-cbench-performance-helium-redesign-only-{stream},
+                openflowplugin-csit-1node-config-performance-only-{stream},
+                openflowplugin-csit-1node-config-performance-helium-redesign-only-{stream},
+                openflowplugin-csit-3node-clustering-only-{stream},
+                openflowplugin-csit-3node-clustering-helium-redesign-only-{stream}
+
+        - boron:
+            branch: 'stable/boron'
             jdk: 'openjdk8'
             csit-list: >
                 openflowplugin-csit-1node-flow-services-only-{stream},
@@ -39,4 +55,3 @@
                 openflowplugin-csit-1node-config-performance-lithium-redesign-only-{stream},
                 openflowplugin-csit-3node-clustering-only-{stream},
                 openflowplugin-csit-3node-clustering-lithium-redesign-only-{stream}
-
