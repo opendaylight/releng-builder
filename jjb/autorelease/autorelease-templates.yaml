@@ -44,6 +44,7 @@
     prebuilders:
         - wipe-local-maven-repo
         - jacoco-nojava-workaround
+        - shell: "./scripts/list-project-dependencies.sh"
         - autorelease-cfp:
             autorelease-settings: 'autorelease-settings'
             odl-global-settings: 'odl-global-settings'
@@ -65,7 +66,6 @@
 
     postbuilders:
         - autorelease-maven-deploy
-        - shell: "./scripts/list-project-dependencies.sh"
         - autorelease-get-integration-test-variables
         - autorelease-maven-sources:
             maven-version: '{mvn33}'
