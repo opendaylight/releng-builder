@@ -22,6 +22,8 @@
     install:
         - only:
             scope: 'only'
+        - all:
+            scope: 'all'
 
     # Features to install
     install-features: 'odl-restconf,odl-tsdr-hbase,odl-tsdr-openflow-statistics-collector,odl-tsdr-netflow-statistics-collector,odl-tsdr-syslog-collector'
