@@ -11,7 +11,7 @@
     project-name: integration-test
 
     stream:
-        - boron:
+        - carbon:
             branch: 'master'
             jdk: 'openjdk8'
             jre: 'openjdk8'
@@ -58,6 +58,58 @@
                 tsdr-csit-1node-cassandra-datastore-all-{stream},
                 tsdr-csit-1node-hbase-datastore-all-{stream},
                 tsdr-csit-1node-hsqldb-datastore-all-{stream},
+                usc-csit-1node-channel-only-{stream},
+                usc-csit-1node-channel-all-{stream},
+                usc-csit-1node-tcp-only-{stream},
+                usc-csit-1node-tcp-all-{stream},
+                vtn-csit-1node-manager-only-{stream},
+                vtn-csit-1node-manager-all-{stream},
+                vtn-csit-1node-coordinator-only-{stream}
+
+        - boron:
+            branch: 'stable/boron'
+            jdk: 'openjdk8'
+            jre: 'openjdk8'
+            csit-list: >
+                integration-distribution-deploy-{stream},
+                integration-distribution-offline-{stream},
+                l2switch-csit-1node-switch-only-{stream},
+                l2switch-csit-1node-switch-all-{stream},
+                l2switch-csit-1node-scalability-only-{stream},
+                l2switch-csit-1node-scalability-all-{stream},
+                lispflowmapping-csit-1node-msmr-only-{stream},
+                lispflowmapping-csit-1node-msmr-all-{stream},
+                nemo-csit-1node-engine-all-{stream},
+                nemo-csit-1node-engine-only-{stream},
+                netvirt-csit-1node-openstack-basic-only-{stream},
+                netvirt-csit-1node-openstack-basic-all-{stream},
+                netvirt-csit-3node-clustering-only-{stream},
+                ocpplugin-csit-1node-get-only-{stream},
+                ocpplugin-csit-1node-get-all-{stream},
+                ocpplugin-csit-1node-scalability-only-{stream},
+                ocpplugin-csit-1node-scalability-all-{stream},
+                openflowplugin-csit-1node-flow-services-only-{stream},
+                openflowplugin-csit-1node-flow-services-helium-redesign-only-{stream},
+                openflowplugin-csit-1node-flow-services-all-{stream},
+                openflowplugin-csit-1node-scalability-only-{stream},
+                openflowplugin-csit-1node-scalability-helium-redesign-only-{stream},
+                openflowplugin-csit-1node-cbench-performance-only-{stream},
+                openflowplugin-csit-1node-cbench-performance-helium-redesign-only-{stream},
+                openflowplugin-csit-1node-config-performance-only-{stream},
+                openflowplugin-csit-1node-config-performance-helium-redesign-only-{stream},
+                ovsdb-csit-1node-southbound-all-{stream},
+                ovsdb-csit-1node-southbound-only-{stream},
+                packetcable-csit-1node-pcmm-only-{stream},
+                packetcable-csit-1node-pcmm-all-{stream},
+                sxp-csit-1node-basic-only-{stream},
+                sxp-csit-1node-filtering-all-{stream},
+                sxp-csit-1node-topology-only-{stream},
+                sxp-csit-1node-topology-all-{stream},
+                topoprocessing-csit-1node-topology-operations-all-{stream},
+                topoprocessing-csit-1node-topology-operations-only-{stream},
+                tsdr-csit-1node-cassandra-datastore-only-{stream},
+                tsdr-csit-1node-hbase-datastore-only-{stream},
+                tsdr-csit-1node-hsqldb-datastore-only-{stream},
                 usc-csit-1node-channel-only-{stream},
                 usc-csit-1node-channel-all-{stream},
                 usc-csit-1node-tcp-only-{stream},
