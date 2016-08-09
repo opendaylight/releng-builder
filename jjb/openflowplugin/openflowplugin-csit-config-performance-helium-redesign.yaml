@@ -11,8 +11,11 @@
 
     # Project branches
     stream:
-        - boron:
+        - carbon:
             branch: 'master'
+            jre: 'openjdk8'
+        - boron:
+            branch: 'stable/boron'
             jre: 'openjdk8'
 
     install:
@@ -37,4 +40,3 @@
     02-plot-yaxis: 'seconds'
     02-plot-group: 'Stats Collect Performance'
     02-plot-data-file: 'times.csv'
-
