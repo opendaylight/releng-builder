@@ -21,6 +21,9 @@ EOL
 
     # docker group doesn't get created by default for some reason
     groupadd docker
+
+    # Install python dependencies
+    yum install -y python-{devel,virtualenv,setuptools,pip}
 }
 
 ubuntu_changes() {
