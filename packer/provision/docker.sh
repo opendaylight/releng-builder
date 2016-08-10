@@ -6,8 +6,10 @@ rh_changes() {
     echo "---> RH changes"
     # install docker and enable it
     echo "---> Installing docker"
-    yum install -y docker supervisor bridge-utils
+    yum install -y docker supervisor bridge-utils epel-release python-pip
     systemctl enable docker
+    echo "---> Installing docker-compose"
+    pip install docker-compose
 
     # configure docker networking so that it does not conflict with LF
     # internal networks
