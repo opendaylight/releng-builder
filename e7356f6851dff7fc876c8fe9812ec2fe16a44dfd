@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "7a6b29fe_9e8da87e",
+        "filename": "jjb/integration/integration-macros.yaml",
+        "patchSetId": 8
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2016-08-10T23:07:15Z",
+      "side": 1,
+      "message": "yeah just do a rebase I think.\n\nso the reason we have ODLPUB now, is so that we can use the \npublic cloud resources in addition to the private cloud.\nthere was a time when everything was in the private cloud\nand we had to cut back the number of robot jobs we could\nrun because of resources.  now that we can run CSIT jobs\nin the public cloud, we can use more resources and run more\nrobot jobs in parallel.  To keep things simple, it was \ndecided that we would just move all CSIT jobs to the public\ncloud.",
+      "parentUuid": "7a6b29fe_0fe33908",
+      "range": {
+        "startLine": 239,
+        "startChar": 27,
+        "endLine": 239,
+        "endChar": 33
+      },
+      "revId": "e7356f6851dff7fc876c8fe9812ec2fe16a44dfd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a6b29fe_23d294d2",
         "filename": "jjb/sfc/sfc-csit-full-deploy.yaml",
         "patchSetId": 8
