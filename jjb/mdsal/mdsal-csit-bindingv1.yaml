@@ -11,8 +11,12 @@
 
     # Project branches. Boron for actual testing, Beryllium for sanity.
     stream:
-        - boron:
+        - carbon:
             branch: 'master'
+            jre: 'openjdk8'
+            robot-options: '-v JAVA_OPTIONS:-Xmx6656m'
+        - boron:
+            branch: 'stable/boron'
             jre: 'openjdk8'
             robot-options: '-v JAVA_OPTIONS:-Xmx6656m'
 

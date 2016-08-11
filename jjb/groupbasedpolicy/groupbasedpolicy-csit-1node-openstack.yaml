@@ -10,8 +10,12 @@
     functionality: 'openstack'
 
     stream:
-        - boron:
+        - carbon:
             branch: 'master'
+            jre: 'openjdk8'
+            install-features: 'odl-groupbasedpolicy-neutron-and-ofoverlay,odl-restconf'
+        - boron:
+            branch: 'stable/boron'
             jre: 'openjdk8'
             install-features: 'odl-groupbasedpolicy-neutron-and-ofoverlay,odl-restconf'
         - beryllium:
