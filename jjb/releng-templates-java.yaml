@@ -8,7 +8,7 @@
     #   {jdk}
     name: '{project-name}-clm-{stream}'
 
-    project-type: maven
+    project-type: freestyle
     node: '{build-node}'
     jdk: '{jdk}'
 
@@ -35,22 +35,19 @@
     triggers:
         - timed: 'H H * * 6'
 
-    prebuilders:
+    builders:
         - provide-maven-settings:
             global-settings-file: 'odl-global-settings'
             settings-file: '{mvn-settings}'
-
-    maven:
-        maven-name: '{mvn33}'
-        root-pom: 'pom.xml'
-        goals: 'clean install dependency:tree com.sonatype.clm:clm-maven-plugin:index -V -B -Djenkins -DskipTests=true -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
-        maven-opts: '-Xmx4096m -XX:MaxPermSize=512m'
-        settings: '{mvn-settings}'
-        settings-type: cfp
-        global-settings: 'odl-global-settings'
-        global-settings-type: cfp
-
-    postbuilders:
+        - maven-target:
+            maven-name: '{mvn33}'
+            root-pom: 'pom.xml'
+            goals: 'clean install dependency:tree com.sonatype.clm:clm-maven-plugin:index -V -B -Djenkins -DskipTests=true -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+            maven-opts: '-Xmx4096m -XX:MaxPermSize=512m'
+            settings: '{mvn-settings}'
+            settings-type: cfp
+            global-settings: 'odl-global-settings'
+            global-settings-type: cfp
         - shell: 'find . -regex ".*karaf/target" | xargs rm -rf'
         - check-clm:
             application-name: '{project-name}'
