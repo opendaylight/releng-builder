@@ -346,23 +346,21 @@
             name: '{project}'
             branch: '{branch}'
 
-    prebuilders:
+    builders:
         - jacoco-nojava-workaround
         - provide-maven-settings:
             global-settings-file: 'odl-global-settings'
             settings-file: '{mvn-settings}'
-
-    maven:
-        maven-name: '{mvn33}'
-        goals: '{mvn-goals} -V -B -Djenkins -Dmerge -Dstream={stream} -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
-        maven-opts: '{mvn-opts}'
-        settings: '{mvn-settings}'
-        settings-type: cfp
-        global-settings: 'odl-global-settings'
-        global-settings-type: cfp
-        post-step-run-condition: UNSTABLE
-
-    postbuilders:
+        - maven-target:
+            maven-version: '{mvn33}'
+            goals: '{mvn-goals} -V -B -Djenkins -Dmerge -Dstream={stream} -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+            java-opts:
+              - '{mvn-opts}'
+            settings: '{mvn-settings}'
+            settings-type: cfp
+            global-settings: 'odl-global-settings'
+            global-settings-type: cfp
+            post-step-run-condition: UNSTABLE
         - conditional-step:
             condition-kind: file-exists
             condition-filename: deploy-site.xml
@@ -396,9 +394,6 @@
                 global-settings: 'odl-global-settings'
                 global-settings-type: cfp
 
-    reporters:
-        - findbugs
-
     publishers:
         - email-notification:
             email-prefix: '[{project-name}]'
@@ -407,6 +402,7 @@
             unique-version: true
             deploy-unstable: false
         - jacoco-report
+        - findbugs
         - archive-build:
             maven-version: '{mvn33}'
 
