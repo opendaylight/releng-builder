@@ -469,7 +469,7 @@
     name: '{project-name}-sonar'
     disabled: false
 
-    project-type: maven
+    project-type: freestyle
     node: '{build-node}'
     jdk: 'openjdk8'
 
@@ -500,23 +500,20 @@
         - gerrit-trigger-patch-sonar:
             name: '{project}'
 
-    prebuilders:
+    builders:
         - jacoco-nojava-workaround
         - provide-maven-settings:
             global-settings-file: 'odl-global-settings'
             settings-file: '{mvn-settings}'
-
-    maven:
-        maven-name: '{mvn33}'
-        goals: '{mvn-goals} -V -B -Djenkins -Dsonar -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
-        maven-opts: '{mvn-opts}'
-        settings: '{mvn-settings}'
-        settings-type: cfp
-        global-settings: 'odl-global-settings'
-        global-settings-type: cfp
-
-    reporters:
-        - findbugs
+        - maven-target:
+            maven-version: '{mvn33}'
+            goals: '{mvn-goals} -V -B -Djenkins -Dsonar -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+            maven-opts:
+              - '{mvn-opts}'
+            settings: '{mvn-settings}'
+            settings-type: cfp
+            global-settings: 'odl-global-settings'
+            global-settings-type: cfp
 
     publishers:
         - sonar:
@@ -525,6 +522,7 @@
         - email-notification:
             email-prefix: '[{project-name}]'
         - jacoco-report
+        - findbugs
         - opendaylight-infra-shiplogs:
             maven-version: '{mvn33}'
 
