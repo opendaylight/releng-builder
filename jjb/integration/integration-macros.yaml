@@ -289,12 +289,22 @@
             echo "OpenStack IPS are ${JCLOUDS_IPS}"
 
             IFS=',' read -ra ADDR <<< "${JCLOUDS_IPS}"
-
+            pids=""
             for i in "${ADDR[@]}"; do
-                copy-ssh-keys-to-slave &
+                ( copy-ssh-keys-to-slave ) &
+                # Store PID of process
+                pids+="$!"
             done
 
-            wait
+            # Detect when a process failed to copy ssh keys and fail build
+            for p in $pids; do
+                if wait $p; then
+                    echo "$p successfully copied ssh keys."
+                else
+                    echo "$p failed to copy ssh keys."
+                    exit 1
+                fi
+            done
             echo "Copying ssh keys complete."
 
 # Macro: integration-get-slave-addresses
