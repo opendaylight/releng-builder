@@ -73,6 +73,9 @@
             global-settings: 'odl-global-settings'
         - autorelease-maven-sources-post-process
         - autorelease-sys-stats
+        - shell: |
+            mkdir -p archives/
+            cp *.log *.prop $_
 
     publishers:
     - email-notification:
