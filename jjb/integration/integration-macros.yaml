@@ -293,7 +293,7 @@
             for i in "${ADDR[@]}"; do
                 ( copy-ssh-keys-to-slave ) &
                 # Store PID of process
-                pids+="$!"
+                pids+=" $!"
             done
 
             # Detect when a process failed to copy ssh keys and fail build
