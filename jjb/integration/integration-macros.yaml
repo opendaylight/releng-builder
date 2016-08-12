@@ -240,6 +240,9 @@
             - '{openstack-image}':
                 cloud-name: 'ODLPUB'
                 count: '{openstack-vms}'
+            - '{openstack-compute-image}':
+                cloud-name: 'ODLPUB'
+                count: '{openstack-compute-vms}'
 
 # Macro: integration-openstack-controller-devstack
 # Operation: this macro will spin the controller and devstack vms

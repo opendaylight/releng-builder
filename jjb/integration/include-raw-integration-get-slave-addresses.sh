@@ -17,6 +17,9 @@ do
        ;;
     *devstack*)
        OPENSTACK_SYSTEM=( "${OPENSTACK_SYSTEM[@]}" "${i}" )
+       if [[ "${REMHOST}" == *"8g" ]]; then
+         OPENSTACK_CONTROL_NODE_IP=${i}
+       fi
        ;;
     *)
        TOOLS_SYSTEM=( "${TOOLS_SYSTEM[@]}" "${i}" )
@@ -47,10 +50,11 @@ do
     echo "TOOLS_SYSTEM_$((i+1))_IP=${TOOLS_SYSTEM[${i}]}" >> slave_addresses.txt
 done
 
-echo "OPENSTACK_CONTROL_NODE_IP=${OPENSTACK_SYSTEM[0]}" >> slave_addresses.txt
-for i in `seq 1 $(( ${#OPENSTACK_SYSTEM[@]} - 1 ))`
+echo "OPENSTACK_CONTROL_NODE_IP=${OPENSTACK_CONTROL_NODE_IP}" >> slave_addresses.txt
+for i in `seq 0 $(( ${#OPENSTACK_SYSTEM[@]} - 1 ))`
 do
-    echo "OPENSTACK_COMPUTE_NODE_$((i))_IP=${OPENSTACK_SYSTEM[${i}]}" >> slave_addresses.txt
+    if [[ "${i}" != "${OPENSTACK_CONTROL_NODE_IP}" ]]; then
+      echo "OPENSTACK_COMPUTE_NODE_$((i))_IP=${OPENSTACK_SYSTEM[${i}]}" >> slave_addresses.txt
+    fi
 done
 # vim: sw=4 ts=4 sts=4 et ft=sh :
-
