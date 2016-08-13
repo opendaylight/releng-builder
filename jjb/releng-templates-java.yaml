@@ -240,7 +240,7 @@
     #     stream:    release stream (eg. stable-lithium or beryllium)
     #     branch:    git branch (eg. stable/lithium or master)
 
-    project-type: maven
+    project-type: freestyle
     node: '{build-node}'
     jdk: '{jdk}'
 
@@ -271,27 +271,25 @@
             jobs: '{dependencies}'
             result: 'success'
 
-    prebuilders:
+    builders:
         - jacoco-nojava-workaround
         - provide-maven-settings:
             global-settings-file: 'odl-global-settings'
             settings-file: '{mvn-settings}'
-
-    maven:
-        maven-name: '{mvn33}'
-        goals: '{mvn-goals} -V -B -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
-        maven-opts: '{mvn-opts}'
-        settings: '{mvn-settings}'
-        settings-type: cfp
-        global-settings: 'odl-global-settings'
-        global-settings-type: cfp
-
-    reporters:
-        - findbugs
+        - maven-target:
+            maven-version: '{mvn33}'
+            goals: '{mvn-goals} -V -B -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+            java-opts:
+              - '{mvn-opts}'
+            settings: '{mvn-settings}'
+            settings-type: cfp
+            global-settings: 'odl-global-settings'
+            global-settings-type: cfp
 
     publishers:
         - email-notification:
             email-prefix: '{email-upstream}'
+        - findbugs
         - jacoco-report
         - archive-build:
             maven-version: '{mvn33}'
