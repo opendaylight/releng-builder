@@ -22,7 +22,7 @@
             project: '{project}'
             branch: '{branch}'
             refspec: 'refs/heads/{branch}'
-            artifacts: 'rpm/cache/*.srpm rpm/cache/*.rpm'
+            artifacts: '{archive-artifacts}'
         - string:
             name: VERSION_MAJOR
             default: '4'
@@ -72,3 +72,7 @@
 
     builders:
         - shell: !include-raw: include-raw-build-rpm.sh
+
+    publishers:
+    - archive-artifacts:
+        artifacts: '**/*.rpm'
