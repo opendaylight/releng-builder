@@ -3,7 +3,9 @@
 set +e  # Do not affect the build result if some part of archiving fails.
 
 ARCHIVES_DIR="$JENKINS_HOSTNAME/$JOB_NAME/$BUILD_NUMBER"
-LOGS_SERVER="https://logs.opendaylight.org"
+[ "$LOGS_SERVER" ] || LOGS_SERVER="https://logs.opendaylight.org"
+[ "$LOGS_REPO_URL" ] || LOGS_REPO_URL="https://nexus.opendaylight.org/service/local/repositories/logs"
+
 echo "Build logs: <a href=\"$LOGS_SERVER/$SILO/$ARCHIVES_DIR\">$LOGS_SERVER/$SILO/$ARCHIVES_DIR</a>"
 
 mkdir .archives
@@ -40,7 +42,7 @@ cat > deploy-archives.xml <<EOF
             </goals>
             <configuration>
               <serverId>opendaylight-log-archives</serverId>
-              <repositoryUrl>https://nexus.opendaylight.org/service/local/repositories/logs/content-compressed</repositoryUrl>
+              <repositoryUrl>$LOGS_REPO_URL/content-compressed</repositoryUrl>
               <file>archives.zip</file>
               <repositoryPath>$SILO</repositoryPath>
             </configuration>
