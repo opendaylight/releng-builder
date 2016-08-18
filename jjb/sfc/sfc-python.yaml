@@ -17,8 +17,6 @@
 
 - job-template:
     name: 'sfc-verify-python-{stream}'
-    disabled: {disabled}
-    node: centos7-java-builder-2c-8g
 
     # Job template for ODL verify jobs
     #
@@ -29,6 +27,7 @@
     #     branch:    git branch (eg. stable/lithium or master)
 
     project-type: freestyle
+    node: centos7-java-builder-2c-8g
     concurrent: true
 
     logrotate:

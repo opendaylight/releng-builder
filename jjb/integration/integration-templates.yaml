@@ -26,10 +26,10 @@
 
 - job-template:
     name: '{project}-csit-verify-1node-{functionality}'
-    disabled: {disabled}
-    node: centos7-robot-2c-2g
+    disabled: false
 
     project-type: freestyle
+    node: centos7-robot-2c-2g
 
     logrotate:
         daysToKeep: '{build-days-to-keep}'
@@ -111,10 +111,10 @@
 
 - job-template:
     name: '{project}-csit-1node-{functionality}-{install}-{stream}'
-    disabled: {disabled}
-    node: centos7-robot-2c-2g
+    disabled: false
 
     project-type: freestyle
+    node: centos7-robot-2c-2g
 
     logrotate:
         daysToKeep: '{build-days-to-keep}'
@@ -222,10 +222,10 @@
 
 - job-template:
     name: '{project}-csit-1node-periodic-{functionality}-{install}-{stream}'
-    disabled: {disabled}
-    node: centos7-robot-2c-2g
+    disabled: false
 
     project-type: freestyle
+    node: centos7-robot-2c-2g
 
     logrotate:
         daysToKeep: '{build-days-to-keep}'
@@ -332,10 +332,10 @@
 
 - job-template:
     name: '{project}-csit-verify-3node-{functionality}'
-    disabled: {disabled}
-    node: centos7-robot-2c-2g
+    disabled: false
 
     project-type: freestyle
+    node: centos7-robot-2c-2g
 
     logrotate:
         daysToKeep: '{build-days-to-keep}'
@@ -418,10 +418,10 @@
 
 - job-template:
     name: '{project}-csit-3node-{functionality}-{install}-{stream}'
-    disabled: {disabled}
-    node: centos7-robot-2c-2g
+    disabled: false
 
     project-type: freestyle
+    node: centos7-robot-2c-2g
 
     logrotate:
         daysToKeep: '{build-days-to-keep}'
@@ -530,10 +530,10 @@
 
 - job-template:
     name: '{project}-csit-3node-docker-{functionality}-{install}-{stream}'
-    disabled: {disabled}
-    node: centos7-robot-2c-2g
+    disabled: false
 
     project-type: freestyle
+    node: centos7-robot-2c-2g
 
     logrotate:
         daysToKeep: '{build-days-to-keep}'
@@ -642,10 +642,10 @@
 
 - job-template:
     name: '{project}-csit-3node-periodic-{functionality}-{install}-{stream}'
-    disabled: {disabled}
-    node: centos7-robot-2c-2g
+    disabled: false
 
     project-type: freestyle
+    node: centos7-robot-2c-2g
 
     logrotate:
         daysToKeep: '{build-days-to-keep}'
@@ -753,10 +753,10 @@
 
 - job-template:
     name: '{project}-csit-1node-openstack-{openstack}-{functionality}-{stream}'
-    disabled: {disabled}
-    node: centos7-robot-2c-2g
+    disabled: false
 
     project-type: freestyle
+    node: centos7-robot-2c-2g
 
     logrotate:
         daysToKeep: '{build-days-to-keep}'
@@ -862,10 +862,10 @@
 
 - job-template:
     name: '{project}-csit-3node-openstack-{openstack}-{functionality}-{stream}'
-    disabled: {disabled}
-    node: centos7-robot-2c-2g
+    disabled: false
 
     project-type: freestyle
+    node: centos7-robot-2c-2g
 
     logrotate:
         daysToKeep: '{build-days-to-keep}'
@@ -981,10 +981,9 @@
 
 - job-template:
     name: '{project}-patch-test-{stream}'
-    disabled: {disabled}
-    node: centos7-java-builder-2c-8g
 
     project-type: maven
+    node: centos7-java-builder-2c-8g
     jdk: '{jdk}'
 
     logrotate:
