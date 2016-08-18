@@ -1,14 +1,14 @@
 - project:
-    name: mdsal-csit-periodic-dsbenchmark-beryllium
+    name: mdsal-csit-periodic-dsbenchmark
     jobs:
         - '{project}-csit-1node-periodic-{functionality}-{install}-{stream}'
         - '{project}-csit-3node-periodic-{functionality}-{install}-{stream}'
 
     # The project name
-    project: 'mdsal'
+    project: 'controller'
 
     # The functionality under test
-    functionality: 'dsbenchmark'
+    functionality: 'benchmark'
 
     # Project branches
     stream:
