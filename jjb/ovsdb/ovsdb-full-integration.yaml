@@ -22,6 +22,7 @@
             jdks:
                 - openjdk8
         - stable-lithium:
+            disabled: true
             branch: 'stable/lithium'
             jdk: openjdk7
             jdks:
@@ -109,15 +110,16 @@
 
 - job-template:
     name: 'ovsdb-daily-full-integration-{stream}'
+    disabled: {disabled}
+    node: centos7-docker-2c-4g
+
+    project-type: freestyle
+    jdk: '{jdk}'
+    description: 'Integration tests for the OVSDB project against different versions of OVS and branches. This job runs nightly. '
 
     # Required Variables:
     #     stream:    release stream (eg. stable-lithium or beryllium)
     #     branch:    git branch (eg. stable/lithium or master)
-
-    project-type: freestyle
-    node: centos7-docker-2c-4g
-    jdk: '{jdk}'
-    description: 'Integration tests for the OVSDB project against different versions of OVS and branches. This job runs nightly. '
 
     logrotate:
         daysToKeep: '{build-days-to-keep}'

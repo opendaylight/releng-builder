@@ -22,12 +22,14 @@
             branch: 'stable/beryllium'
             jre: 'openjdk7'
         - stable-lithium:
+            disabled: true
             branch: 'stable/lithium'
             jre: 'openjdk7'
 
 
 - job-template:
     name: 'integration-distribution-verify-{stream}'
+    disabled: {disabled}
 
     project-type: maven
     node: centos7-java-builder-2c-8g
@@ -103,6 +105,7 @@
 
 - job-template:
     name: 'integration-distribution-merge-{stream}'
+    disabled: {disabled}
 
     project-type: maven
     node: centos7-java-builder-2c-8g
@@ -207,6 +210,7 @@
 
 - job-template:
     name: 'integration-distribution-deploy-{stream}'
+    disabled: {disabled}
 
     project-type: freestyle
     node: centos7-java-builder-2c-8g
@@ -257,6 +261,7 @@
 
 - job-template:
     name: 'integration-distribution-offline-{stream}'
+    disabled: {disabled}
 
     project-type: freestyle
     node: centos7-java-builder-2c-8g
