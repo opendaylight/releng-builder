@@ -88,13 +88,14 @@
 
 - job-template:
     name: 'netvirt-daily-full-integration-{stream}'
+    disabled: {disabled}
+    node: centos7-docker-2c-4g
 
     # Required Variables:
     #     stream:    release stream (eg. stable-lithium or beryllium)
     #     branch:    git branch (eg. stable/lithium or master)
 
     project-type: freestyle
-    node: centos7-docker-2c-4g
     jdk: '{jdk}'
     description: 'Integration tests for the Netvirt project against different versions of OVS and branches. This job runs nightly. '
 

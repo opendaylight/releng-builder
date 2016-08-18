@@ -20,9 +20,10 @@
 
 - job-template:
     name: 'spectrometer-deploy-webapp-master'
+    disabled: {disabled}
+    node: dynamic_verify
 
     project-type: freestyle
-    node: dynamic_verify
     concurrent: false
 
     logrotate:

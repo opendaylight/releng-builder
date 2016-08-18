@@ -18,6 +18,7 @@
 
 - job-template:
     name: 'docs-merge-rtd-{stream}'
+    disabled: {disabled}
     node: centos7-java-builder-2c-8g
 
     project-type: freestyle
@@ -65,6 +66,7 @@
 
 - job-template:
     name: 'docs-verify-rtd-{stream}'
+    disabled: {disabled}
     node: centos7-java-builder-2c-8g
 
     project-type: freestyle

@@ -11,6 +11,7 @@
 
 - job-template:
     name: builder-verify-jjb
+    disabled: {disabled}
     node: jjbuilder
 
     project-type: freestyle
@@ -73,6 +74,7 @@
 
 - job-template:
     name: builder-verify-python
+    disabled: {disabled}
     node: centos7-java-builder-2c-8g
 
     project-type: freestyle
@@ -139,6 +141,7 @@
 
 - job-template:
     name: 'builder-merge'
+    disabled: {disabled}
     node: jjbuilder
 
     # builder-merge job to run JJB update
@@ -250,6 +253,7 @@
 
 - job-template:
     name: builder-check-poms
+    disabled: {disabled}
     node: centos7-java-builder-2c-8g
 
     project-type: freestyle
