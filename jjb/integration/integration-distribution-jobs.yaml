@@ -22,17 +22,15 @@
             branch: 'stable/beryllium'
             jre: 'openjdk7'
         - stable-lithium:
-            disabled: true
             branch: 'stable/lithium'
             jre: 'openjdk7'
 
 
 - job-template:
     name: 'integration-distribution-verify-{stream}'
-    disabled: {disabled}
-    node: centos7-java-builder-2c-8g
 
     project-type: maven
+    node: centos7-java-builder-2c-8g
     concurrent: true
     jdk: '{jre}'
 
@@ -105,10 +103,9 @@
 
 - job-template:
     name: 'integration-distribution-merge-{stream}'
-    disabled: {disabled}
-    node: centos7-java-builder-2c-8g
 
     project-type: maven
+    node: centos7-java-builder-2c-8g
     jdk: '{jre}'
 
     logrotate:
@@ -210,10 +207,9 @@
 
 - job-template:
     name: 'integration-distribution-deploy-{stream}'
-    disabled: {disabled}
-    node: centos7-java-builder-2c-8g
 
     project-type: freestyle
+    node: centos7-java-builder-2c-8g
     concurrent: true
 
     logrotate:
@@ -261,10 +257,9 @@
 
 - job-template:
     name: 'integration-distribution-offline-{stream}'
-    disabled: {disabled}
-    node: centos7-java-builder-2c-8g
 
     project-type: freestyle
+    node: centos7-java-builder-2c-8g
 
     logrotate:
         daysToKeep: '{build-days-to-keep}'

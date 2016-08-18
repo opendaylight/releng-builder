@@ -177,7 +177,6 @@
                 vtn-csit-1node-coordinator-only-{stream}
 
         - stable-lithium:
-            disabled: true
             branch: 'stable/lithium'
             jdk: 'openjdk7'
             jre: 'openjdk7'
@@ -230,10 +229,9 @@
 
 - job-template:
     name: 'integration-csit-verify-1node-library'
-    disabled: {disabled}
-    node: centos7-robot-2c-2g
 
     project-type: freestyle
+    node: centos7-robot-2c-2g
 
     logrotate:
         daysToKeep: '{build-days-to-keep}'
@@ -326,10 +324,9 @@
 
 - job-template:
     name: 'integration-distribution-test-{stream}'
-    disabled: {disabled}
-    node: centos7-java-builder-2c-8g
 
     project-type: freestyle
+    node: centos7-java-builder-2c-8g
 
     logrotate:
         daysToKeep: '{build-days-to-keep}'
@@ -364,10 +361,9 @@
 
 - job-template:
     name: 'integration-patch-test-{stream}'
-    disabled: {disabled}
-    node: centos7-java-builder-2c-8g
 
     project-type: maven
+    node: centos7-java-builder-2c-8g
     jdk: '{jdk}'
 
     logrotate:
@@ -469,10 +465,9 @@
 
 - job-template:
     name: 'integration-multipatch-test-{stream}'
-    disabled: {disabled}
-    node: centos7-java-builder-8c-8g
 
     project-type: maven
+    node: centos7-java-builder-8c-8g
     jdk: '{jdk}'
 
     logrotate:
