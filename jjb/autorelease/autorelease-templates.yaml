@@ -2,10 +2,9 @@
 
 - job-template:
     name: 'autorelease-release-{stream}'
-    disabled: {disabled}
-    node: centos7-autorelease-4c-16g
 
     project-type: maven
+    node: centos7-autorelease-4c-16g
     jdk: '{jdk}'
 
     logrotate:
@@ -91,10 +90,9 @@
 
 - job-template:
     name: 'autorelease-project-report-{stream}'
-    disabled: {disabled}
-    node: centos7-java-builder-2c-8g
 
     project-type: freestyle
+    node: centos7-java-builder-2c-8g
 
     logrotate:
         daysToKeep: '{build-days-to-keep}'
@@ -162,7 +160,6 @@
 
 - job-template:
     name: 'autorelease-site-publish-{stream}'
-    disabled: {disabled}
     node: centos7-java-builder-2c-8g
     concurrent: false
     jdk: 'openjdk8'
@@ -214,7 +211,6 @@
 
 - job-template:
     name: 'autorelease-site-verify-{stream}'
-    disabled: {disabled}
     node: centos7-java-builder-2c-8g
     concurrent: true
     jdk: 'openjdk8'

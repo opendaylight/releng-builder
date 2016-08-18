@@ -1,12 +1,11 @@
 - job-template:
     name: '{project-name}-release-java'
-    disabled: {disabled}
-    node: '{build-node}'
 
     # Job template for producing a release candidate by creating a staging repo
     # in Nexus.
 
     project-type: maven
+    node: '{build-node}'
     jdk: '{jdk}'
 
     logrotate:
@@ -64,12 +63,11 @@
 
 - job-template:
     name: '{project-name}-publish-p2repo'
-    disabled: {disabled}
-    node: '{build-node}'
 
     # Job template for publishing a p2 repo given a URL to a zipped p2repo.
 
     project-type: maven
+    node: '{build-node}'
     jdk: '{jdk}'
 
     parameters:
@@ -117,8 +115,6 @@
 
 - job-template:
     name: '{project-name}-verify-python-{stream}'
-    disabled: {disabled}
-    node: '{build-node}'
 
     # Job template for python verify jobs
     #
@@ -132,6 +128,7 @@
     #                the workspace. Empty works if tox.ini is at project root.
 
     project-type: freestyle
+    node: '{build-node}'
     concurrent: true
 
     logrotate:
@@ -203,12 +200,10 @@
 
 - job-template:
     name: '{project-name}-merge-rtd-{stream}'
-    disabled: {disabled}
-    node: '{build-node}'
-
     # Template for ReadTheDocs triggering
 
     project-type: freestyle
+    node: '{build-node}'
     concurrent: false
 
     parameters:
@@ -241,8 +236,6 @@
 
 - job-template:
     name: '{project-name}-verify-node-{stream}'
-    disabled: {disabled}
-    node: '{build-node}'
 
     # Job template for python verify jobs
     #
@@ -257,6 +250,7 @@
     #     nodever:   version of node to install in virtualenv
 
     project-type: freestyle
+    node: '{build-node}'
     concurrent: true
 
     logrotate:
