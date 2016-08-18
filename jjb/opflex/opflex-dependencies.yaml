@@ -47,9 +47,10 @@
 
 - job-template:
     name: 'opflex-libuv_tgz-{stream}'
+    disabled: {disabled}
+    node: centos7-java-builder-2c-8g
 
     project-type: freestyle
-    node: centos7-java-builder-2c-8g
     concurrent: true
 
     logrotate:
@@ -78,9 +79,10 @@
 
 - job-template:
     name: 'opflex-rapidjson_tgz-{stream}'
+    disabled: {disabled}
+    node: centos7-java-builder-2c-8g
 
     project-type: freestyle
-    node: centos7-java-builder-2c-8g
     concurrent: true
 
     logrotate:
@@ -109,9 +111,10 @@
 
 - job-template:
     name: 'opflex-openvswitch_tgz-{stream}'
+    disabled: {disabled}
+    node: centos7-java-builder-2c-8g
 
     project-type: freestyle
-    node: centos7-java-builder-2c-8g
     concurrent: true
 
     logrotate:

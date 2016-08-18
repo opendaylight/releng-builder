@@ -7,9 +7,10 @@
     #   {stream}
     #   {jdk}
     name: '{project-name}-clm-{stream}'
+    disabled: {disabled}
+    node: '{build-node}'
 
     project-type: freestyle
-    node: '{build-node}'
     jdk: '{jdk}'
 
     logrotate:
@@ -61,13 +62,14 @@
 
 - job-template:
     name: '{project-name}-distribution-{stream}'
+    disabled: {disabled}
+    node: '{build-node}'
 
     # Required variables:
     #     stream:    release stream (eg. stable-lithium or beryllium)
     #     branch:    git branch (eg. stable/lithium or master)
 
     project-type: maven
-    node: '{build-node}'
     jdk: '{jdk}'
 
     logrotate:
@@ -130,9 +132,9 @@
 
     name: '{project-name}-distribution-check-{stream}'
     disabled: '{obj:disable_distribution_check}'
+    node: '{build-node}'
 
     project-type: freestyle
-    node: '{build-node}'
     concurrent: true
     jdk: '{jdk}'
 
@@ -229,6 +231,8 @@
 
 - job-template:
     name: '{project-name}-integration-{stream}'
+    disabled: {disabled}
+    node: '{build-node}'
 
     # Job template for ODL integration verify jobs
     #
@@ -241,7 +245,6 @@
     #     branch:    git branch (eg. stable/lithium or master)
 
     project-type: freestyle
-    node: '{build-node}'
     jdk: '{jdk}'
 
     logrotate:
@@ -296,6 +299,8 @@
 
 - job-template:
     name: '{project-name}-merge-{stream}'
+    disabled: {disabled}
+    node: '{build-node}'
 
     # Job template for ODL merge jobs
     #
@@ -307,7 +312,6 @@
     #     branch:    git branch (eg. stable/lithium or master)
 
     project-type: maven
-    node: '{build-node}'
     jdk: '{jdk}'
 
     logrotate:
@@ -404,6 +408,8 @@
 
 - job-template:
     name: '{project-name}-periodic-{stream}'
+    disabled: {disabled}
+    node: '{build-node}'
 
     # Job template for periodic builders
     #
@@ -415,7 +421,6 @@
     #     branch:    git branch (eg. stable/lithium or master)
 
     project-type: freestyle
-    node: '{build-node}'
     jdk: '{jdk}'
 
     logrotate:
@@ -465,10 +470,10 @@
 
 - job-template:
     name: '{project-name}-sonar'
-    disabled: false
+    disabled: {disabled}
+    node: '{build-node}'
 
     project-type: maven
-    node: '{build-node}'
     jdk: 'openjdk8'
 
     logrotate:
@@ -529,9 +534,9 @@
 - job-template:
     name: '{project-name}-validate-autorelease-{stream}'
     disabled: '{obj:disable_autorelease}'
+    node: '{build-node}'
 
     project-type: freestyle
-    node: '{build-node}'
     concurrent: true
     jdk: '{jdk}'
 
@@ -628,6 +633,8 @@
 
 - job-template:
     name: '{project-name}-verify-{stream}-{maven}-{jdks}'
+    disabled: {disabled}
+    node: '{build-node}'
 
     # Job template for ODL verify jobs
     #
@@ -638,7 +645,6 @@
     #     branch:    git branch (eg. stable/lithium or master)
 
     project-type: freestyle
-    node: '{build-node}'
     concurrent: true
     jdk: '{jdks}'
 

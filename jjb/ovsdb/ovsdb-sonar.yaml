@@ -8,9 +8,10 @@
 
 - job-template:
     name: 'ovsdb-sonar'
+    disabled: {disabled}
+    node: centos7-docker-2c-4g
 
     project-type: maven
-    node: centos7-docker-2c-4g
     jdk: '{jdk}'
 
     logrotate:
