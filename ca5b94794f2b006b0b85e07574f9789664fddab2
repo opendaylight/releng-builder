@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a6b29fe_78f4f286",
+        "filename": "jjb/include-raw-deploy-archives.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2016-08-19T17:01:03Z",
+      "side": 1,
+      "message": "This code would be cleaner if you did it like this:\n\n {\n     echo -e \"uname -a:\\n $(uname -a) \\n\"\n     echo -e \"df -h:\\n $(df -h) \\n\"\n     echo -e \"free -m:\\n $(free -m) \\n\"\n     echo -e \"nproc:\\n $(nproc) \\n\"\n     echo -e \"lscpu:\\n $(lscpu) \\n\"\n     echo -e \"ip a:\\n $(ip a) \\n\"\n \n } 2\u003e\u00261 | tee -a $ARCHIVES_DIR/_sys-info.txt",
+      "revId": "ca5b94794f2b006b0b85e07574f9789664fddab2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
