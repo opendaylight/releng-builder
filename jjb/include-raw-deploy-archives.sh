@@ -74,6 +74,17 @@ touch $ARCHIVES_DIR/_build-details.txt
 echo "build-url: ${{BUILD_URL}}" >> $ARCHIVES_DIR/_build-details.txt
 env > $ARCHIVES_DIR/_build-enviroment-variables.txt
 
+# capture system info
+touch $ARCHIVES_DIR/_sys-info.txt
+{{
+    echo -e "uname -a:\n `uname -a` \n"
+    echo -e "df -h:\n `df -h` \n"
+    echo -e "free -m:\n `free -m` \n"
+    echo -e "nproc:\n `nproc` \n"
+    echo -e "lscpu:\n `lscpu` \n"
+    echo -e "ip addr:\n  `/sbin/ip addr` \n"
+}} 2>&1 | tee -a $ARCHIVES_DIR/_sys-info.txt
+
 # Magic string used to trim console logs at the appropriate level during wget
 echo "-----END_OF_BUILD-----"
 wget -O $ARCHIVES_DIR/_console-output.log ${{BUILD_URL}}consoleText
