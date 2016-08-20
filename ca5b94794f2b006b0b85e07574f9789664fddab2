@@ -52,6 +52,24 @@
       "revId": "ca5b94794f2b006b0b85e07574f9789664fddab2",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_93260fcd",
+        "filename": "jjb/include-raw-deploy-archives.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2016-08-20T12:25:58Z",
+      "side": 1,
+      "message": "{} are special characters in JJB. To escape them double them up. So something like\n\n {{\n   echo -e \"uname ....\n }} 2\u003e\u00261 | tee -a $ARCHIVES_DIR/_sys-info.txt",
+      "parentUuid": "7a6b29fe_d3ab671b",
+      "revId": "ca5b94794f2b006b0b85e07574f9789664fddab2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
