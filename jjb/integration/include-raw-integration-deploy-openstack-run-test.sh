@@ -203,7 +203,7 @@ if [ "${ODL_ENABLE_L3_FWD}" == "yes" ]; then
 cat >> ${local_conf_file_name} << EOF
 # Uncomment lines below if odl-compute is to be used for l3 forwarding
 Q_L3_ENABLED=True
-ODL_L3=True
+ODL_L3=${ODL_L3}
 PUBLIC_INTERFACE=br100
 EOF
 fi
