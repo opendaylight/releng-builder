@@ -18,6 +18,8 @@ LOGFILE=stack.sh.log
 SCREEN_LOGDIR=/opt/stack/data/log
 LOG_COLOR=False
 RECLONE=yes
+GIT_BASE=git://github.com # use github instead of openstack
+GIT_DEPTH=1 # use shallow git cloning to speed things up
 EOF
 
 IFS=,
