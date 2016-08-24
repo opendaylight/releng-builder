@@ -30,6 +30,10 @@ pip install --upgrade robotframework{,-{httplibrary,requests,sshlibrary,selenium
 # Module jsonpath is needed by current AAA idmlite suite.
 pip install --upgrade jsonpath-rw
 
+# Module for postgres database
+sudo yum -y install postgresql-devel
+pip install psycopg2
+
 # Modules for longevity framework robot library
 pip install elasticsearch==1.7.0 elasticsearch-dsl==0.0.11
 
