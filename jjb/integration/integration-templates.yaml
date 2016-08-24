@@ -816,6 +816,10 @@
             name: TENANT_NETWORK_TYPE
             default: '{tenant-network-type}'
             description: 'Tenant Network Type supported by the implementation'
+        - string:
+            name: SECURITY_GROUP_MODE
+            default: '{security-group-mode}'
+            description: 'Security Group Mode to be used in netvirt aclservice config'
     scm:
         - integration-gerrit-scm:
             basedir: 'test'
@@ -929,6 +933,11 @@
             name: TENANT_NETWORK_TYPE
             default: '{tenant-network-type}'
             description: 'Tenant Network Type supported by the implementation'
+        - string:
+            name: SECURITY_GROUP_MODE
+            default: '{security-group-mode}'
+            description: 'Security Group Mode to be used in netvirt aclservice config'
+
     scm:
         - integration-gerrit-scm:
             basedir: 'test'
