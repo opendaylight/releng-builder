@@ -26,7 +26,7 @@
     archive-artifacts: '*.log'
 
 - builder:
-    name: netvirt-run-it
+    name: netvirt-run-it-external-docker
     builders:
         - maven-target:
             maven-version: '{maven-version}'
@@ -47,46 +47,13 @@
             global-settings-type: cfp
 
 - builder:
-    name: run-net-virt-it
-    builders:
-        - netvirt-run-it:
-            maven-version: '{maven-version}'
-            stream: '{stream}'
-            pomFile: 'openstack/net-virt-it/pom.xml'
-            logfile: '{OVS_VERSION}-net-virt-IT.log'
-
-- builder:
-    name: run-netvirt-sfc-it
-    builders:
-        - netvirt-run-it:
-            maven-version: '{maven-version}'
-            stream: '{stream}'
-            pomFile: 'openstack/net-virt-sfc/it/pom.xml'
-            logfile: '{OVS_VERSION}-netvirt-sfc-IT.log'
-
-- builder:
-    name: install-docker-compose
-    builders:
-        - shell: |
-            virtualenv $WORKSPACE/venv
-            source $WORKSPACE/venv/bin/activate
-            pip install --upgrade pip
-            pip install docker-compose
-
-- builder:
-    name: deactivate-docker-compose
-    builders:
-        - shell: |
-            $WORKSPACE/venv/bin/deactivate
-
-- builder:
-    name: run-netvirt-vpnservice-it
+    name: netvirt-run-it-dockerOvs
     builders:
         - install-docker-compose
         - maven-target:
             maven-version: '{maven-version}'
-            pom: 'vpnservice/it/pom.xml'
-            goals: '-V -B verify -l {OVS_VERSION}-netvirt-vpnservice-IT.log -Pintegrationtest -Dskip.karaf.featureTest=true -Dmaven.compile.fork=true -Dovsdb.controller.address=${{CONTROLLER_IP}} -Ddocker.compose.file=ovs-{OVS_VERSION}-hwvtep.yml -Ddocker.vEnvWs=$WORKSPACE'
+            pom: '{pomFile}'
+            goals: '-V -B verify -l {logfile} -Pintegrationtest -Dskip.karaf.featureTest=true -Dmaven.compile.fork=true -Dovsdb.controller.address=${{CONTROLLER_IP}} -Ddocker.compose.file=ovs-{OVS_VERSION}-hwvtep.yml -Ddocker.vEnvWs=$WORKSPACE -Dsgm=transparent'
             properties:
                 - 'ovsdb.userspace.enabled=yes'
                 - 'maven.repo.local=/tmp/r'
@@ -98,14 +65,61 @@
             settings-type: cfp
             global-settings: 'odl-global-settings'
             global-settings-type: cfp
-        - deactivate-docker-compose
+
+- builder:
+    name: run-net-virt-it
+    builders:
+        - netvirt-run-it-dockerOvs:
+            maven-version: '{maven-version}'
+            stream: '{stream}'
+            pomFile: 'openstack/net-virt-it/pom.xml'
+            logfile: '{OVS_VERSION}-net-virt-IT.log'
+            OVS_VERSION: '{OVS_VERSION}'
+
+- builder:
+    name: run-netvirt-sfc-it
+    builders:
+        - netvirt-run-it-external-docker:
+            maven-version: '{maven-version}'
+            stream: '{stream}'
+            pomFile: 'openstack/net-virt-sfc/it/pom.xml'
+            logfile: '{OVS_VERSION}-netvirt-sfc-IT.log'
+
+- builder:
+    name: run-netvirt-vpnservice-it
+    builders:
+        - netvirt-run-it-dockerOvs:
+            maven-version: '{maven-version}'
+            stream: '{stream}'
+            pomFile: 'vpnservice/it/pom.xml'
+            logfile: '{OVS_VERSION}-netvirt-vpnservice-IT.log'
+            OVS_VERSION: '{OVS_VERSION}'
+
+- builder:
+    name: install-docker-compose
+    builders:
+        - shell: |
+            virtualenv $WORKSPACE/venv
+            source $WORKSPACE/venv/bin/activate
+            pip install --upgrade pip
+            pip install docker-compose
+
 
 - builder:
     name: run-netvirt-it
     builders:
         - inject:
             properties-content: OVS_VERSION={OVS_VERSION}
+        - shell:
+            !include-raw-escape:
+                - include-setup-controllerIp.sh
+        - inject:
+            properties-file: env.properties
         - run-netvirt-vpnservice-it:
+            OVS_VERSION: '{OVS_VERSION}'
+            maven-version: '{maven-version}'
+            stream: '{stream}'
+        - run-net-virt-it:
             OVS_VERSION: '{OVS_VERSION}'
             maven-version: '{maven-version}'
             stream: '{stream}'
@@ -114,10 +128,6 @@
                 - include-raw-setup-docker.sh
         - inject:
             properties-file: env.properties
-        - run-net-virt-it:
-            OVS_VERSION: '{OVS_VERSION}'
-            maven-version: '{maven-version}'
-            stream: '{stream}'
         - run-netvirt-sfc-it:
             OVS_VERSION: '{OVS_VERSION}'
             maven-version: '{maven-version}'
@@ -196,10 +206,11 @@
             settings-type: cfp
             global-settings: 'odl-global-settings'
             global-settings-type: cfp
-        - run-netvirt-it:
-            maven-version: '{mvn33}'
-            stream: '{stream}'
-            OVS_VERSION: '2.4.0'
+        #  skip 2.4.0 until we figure out conntrack
+        #- run-netvirt-it:
+        #    maven-version: '{mvn33}'
+        #    stream: '{stream}'
+        #    OVS_VERSION: '2.4.0'
         - run-netvirt-it:
             maven-version: '{mvn33}'
             stream: '{stream}'
