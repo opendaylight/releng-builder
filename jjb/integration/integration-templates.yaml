@@ -216,6 +216,15 @@
                 inclusion-flag: 'off'
                 display-table: true
                 format: csv
+        - store-perf-results:
+            01-plot-title: '{01-plot-title}'
+            01-plot-yaxis: '{01-plot-yaxis}'
+            01-plot-group: '{01-plot-group}'
+            01-plot-data-file: '{01-plot-data-file}'
+            02-plot-title: '{02-plot-title}'
+            02-plot-yaxis: '{02-plot-yaxis}'
+            02-plot-group: '{02-plot-group}'
+            02-plot-data-file: '{02-plot-data-file}'
         - integration-csit-archive-build
         - archive-build:
             maven-version: '{mvn33}'
