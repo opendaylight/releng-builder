@@ -536,3 +536,15 @@
             script-only-if-succeeded: False
             script-only-if-failed: False
             mark-unstable-if-failed: True
+
+- publisher:
+    name: store-perf-results
+    publishers:
+        - postbuildscript:
+            builders:
+                - shell:
+                    !include-raw:
+                        - include-raw-integration-store-database.sh
+            script-only-if-succeeded: False
+            script-only-if-failed: False
+            mark-unstable-if-failed: True
