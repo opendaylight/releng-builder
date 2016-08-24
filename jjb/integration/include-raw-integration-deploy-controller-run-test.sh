@@ -59,6 +59,10 @@ sed -ie 's/log4j.appender.out.maxBackupIndex=10/log4j.appender.out.maxBackupInde
 sed -ie 's/log4j.appender.out.maxFileSize=1MB/log4j.appender.out.maxFileSize=100GB/g' \${LOGCONF}
 cat \${LOGCONF}
 
+echo "Enabling counters in the log..."
+COUNTERSCONF=/tmp/${BUNDLEFOLDER}/etc/org.opendaylight.counters.cfg
+sed -i "s/writelog=false/writelog=true/g" \${COUNTERSCONF}
+
 echo "Configure java home and max memory..."
 MEMCONF=/tmp/${BUNDLEFOLDER}/bin/setenv
 sed -ie 's%^# export JAVA_HOME%export JAVA_HOME="\${JAVA_HOME:-${JAVA_HOME}}"%g' \${MEMCONF}
