@@ -115,6 +115,10 @@ done
 echo "Cool down for ${COOLDOWN_PERIOD} seconds :)..."
 sleep ${COOLDOWN_PERIOD}
 
+echo "Enabling counters in the log..."
+COUNTERSCONF=/tmp/${BUNDLEFOLDER}/etc/org.opendaylight.counters.cfg
+sed -i "s/writelog=false/writelog=true/g" \${COUNTERSCONF}
+
 echo "Listing all open ports on controller system..."
 netstat -natu
 
