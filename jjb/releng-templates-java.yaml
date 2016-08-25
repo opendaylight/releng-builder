@@ -224,8 +224,8 @@
             script-only-if-succeeded: False
             script-only-if-failed: False
             mark-unstable-if-failed: True
-        - archive-build:
-            maven-version: '{mvn33}'
+        - archive:
+            artifacts: '*.zip'
 
 - job-template:
     name: '{project-name}-integration-{stream}'
