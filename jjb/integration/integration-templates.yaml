@@ -44,9 +44,9 @@
             refspec: 'refs/heads/{branch}'
             artifacts: '{archive-artifacts}'
         - integration-branch:
-            branch: 'stable/beryllium'
+            branch: 'stable/boron'
         - integration-distribution-stream:
-            stream: 'beryllium'
+            stream: 'boron'
         - integration-bundleurl:
             bundleurl: 'last'
         - integration-controller-scope:
@@ -60,8 +60,7 @@
         - integration-test-plan:
             test-plan: '{project}-{functionality}.txt'
         - integration-jdk-version:
-            jdkversion: 'openjdk7'
-            # TODO: Switch to openjdk8 from Boron on.
+            jdkversion: 'openjdk8'
 
     scm:
         - integration-gerrit-scm:
@@ -350,9 +349,9 @@
             refspec: 'refs/heads/{branch}'
             artifacts: '{archive-artifacts}'
         - integration-branch:
-            branch: 'stable/beryllium'
+            branch: 'stable/boron'
         - integration-distribution-stream:
-            stream: 'beryllium'
+            stream: 'boron'
         - integration-bundleurl:
             bundleurl: 'last'
         - integration-controller-scope:
@@ -366,8 +365,7 @@
         - integration-test-plan:
             test-plan: '{project}-{functionality}.txt'
         - integration-jdk-version:
-            jdkversion: 'openjdk7'
-            # TODO: Switch to openjdk8 from Boron on.
+            jdkversion: 'openjdk8'
 
     scm:
         - integration-gerrit-scm:
