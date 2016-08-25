@@ -23,7 +23,7 @@
                 - openjdk8
 
     project: 'netvirt'
-    archive-artifacts: '*.log'
+    archive-artifacts: '*.log **/target/surefire-reports/*.txt'
 
 - builder:
     name: netvirt-run-it-external-docker
@@ -31,7 +31,7 @@
         - maven-target:
             maven-version: '{maven-version}'
             pom: '{pomFile}'
-            goals: '-V -B verify -l {logfile} -Pintegrationtest -Dskip.karaf.featureTest=true -Dmaven.compile.fork=true -Dovsdb.controller.address=${{CONTROLLER_IP}}'
+            goals: '-V -B verify -l {logfile} -Pintegrationtest -Dskip.karaf.featureTest=true -Dmaven.compile.fork=true -Dovsdb.controller.address=${{CONTROLLER_IP}} -Dmaven.test.failure.ignore=true'
             properties:
                 - 'ovsdbserver.ipaddress=127.0.0.1'
                 - 'ovsdbserver.port=6641'
@@ -49,11 +49,10 @@
 - builder:
     name: netvirt-run-it-dockerOvs
     builders:
-        - install-docker-compose
         - maven-target:
             maven-version: '{maven-version}'
             pom: '{pomFile}'
-            goals: '-V -B verify -l {logfile} -Pintegrationtest -Dskip.karaf.featureTest=true -Dmaven.compile.fork=true -Dovsdb.controller.address=${{CONTROLLER_IP}} -Ddocker.compose.file=ovs-{OVS_VERSION}-hwvtep.yml -Ddocker.vEnvWs=$WORKSPACE -Dsgm=transparent'
+            goals: '-V -B verify -l {logfile} -Pintegrationtest -Dskip.karaf.featureTest=true -Dmaven.compile.fork=true -Dovsdb.controller.address=${{CONTROLLER_IP}} -Ddocker.compose.file=ovs-{OVS_VERSION}-hwvtep.yml -Ddocker.vEnvWs=$WORKSPACE -Dsgm=transparent -Dmaven.test.failure.ignore=true'
             properties:
                 - 'ovsdb.userspace.enabled=yes'
                 - 'maven.repo.local=/tmp/r'
@@ -115,6 +114,7 @@
                 - include-setup-controllerIp.sh
         - inject:
             properties-file: env.properties
+        - install-docker-compose
         - run-netvirt-vpnservice-it:
             OVS_VERSION: '{OVS_VERSION}'
             maven-version: '{maven-version}'
@@ -220,5 +220,11 @@
     publishers:
         - email-notification:
             email-prefix: '[netvirt]'
+        - text-finder:
+            fileset: "**/target/surefire-reports/*.xml"
+            regexp: 'failures\=\"[^0]\"'
+            succeed-if-found: false
+            unstable-if-found: true
+            also-check-console-output: false
         - archive-build:
             maven-version: '{mvn33}'
