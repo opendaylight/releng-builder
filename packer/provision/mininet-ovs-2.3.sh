@@ -14,6 +14,7 @@ echo 'PS1="[\u@\h \W]> "' >> /etc/skel/.bashrc
 
 echo '---> Install OpenVSwitch 2.3.1'
 add-apt-repository -y ppa:vshn/openvswitch
+apt-get update -y --force-yes -qq
 apt-get install -y --force-yes -qq openvswitch-switch
 
 echo '---> Installing CPqD and dependencies'
