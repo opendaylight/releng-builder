@@ -12,44 +12,15 @@ export DEBIAN_FRONTEND=noninteractive
 # ups
 echo 'PS1="[\u@\h \W]> "' >> /etc/skel/.bashrc
 
-echo '---> Install OpenVSwitch 2.3.1'
-add-apt-repository -y ppa:vshn/openvswitch
-apt-get update
+echo '---> Install OpenVSwitch 2.5.0'
+add-apt-repository -y ppa:sgauthier/openvswitch-dpdk
+apt-get-update
 apt-get install -y --force-yes -qq openvswitch-switch
 
-echo '---> Installing CPqD and dependencies'
-apt-get install -y --force-yes -qq build-essential cmake flex
-apt-get install -y --force-yes -qq libpcre++-dev libxerces-c-dev libpcap-dev libboost-all-dev
-
-cd /tmp
-wget -nc http://de.archive.ubuntu.com/ubuntu/pool/main/b/bison/bison_2.5.dfsg-2.1_amd64.deb \
-         http://de.archive.ubuntu.com/ubuntu/pool/main/b/bison/libbison-dev_2.5.dfsg-2.1_amd64.deb
-
-dpkg -i bison_2.5.dfsg-2.1_amd64.deb libbison-dev_2.5.dfsg-2.1_amd64.deb
-rm bison_2.5.dfsg-2.1_amd64.deb libbison-dev_2.5.dfsg-2.1_amd64.deb
-
-wget -nc http://www.nbee.org/download/nbeesrc-jan-10-2013.zip
-unzip nbeesrc-jan-10-2013.zip
-cd nbeesrc-jan-10-2013/src
-cmake .
-make
-cp ../bin/libn*.so /usr/local/lib
-ldconfig
-cp -R ../include/* /usr/include/
-cd ../..
-
-git clone https://github.com/CPqD/ofsoftswitch13.git
-cd ofsoftswitch13
-./boot.sh
-./configure
-make
-make install
-cd ..
-
-echo '---> Installing mininet 2.2.1'
+echo '---> Installing mininet 2.2.2'
 git clone git://github.com/mininet/mininet
 cd mininet
-git checkout -b 2.2.1 2.2.1
+git checkout -b 2.2.2 2.2.2
 cd ..
 mininet/util/install.sh -nf
 
