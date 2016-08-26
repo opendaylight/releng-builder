@@ -226,6 +226,8 @@
             mark-unstable-if-failed: True
         - archive:
             artifacts: '*.zip'
+        - archive-build:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: '{project-name}-integration-{stream}'
