@@ -313,7 +313,7 @@
         - email-notification:
             email-prefix: '[integration]'
         - integration-csit-archive-build
-        - archive-build:
+        - opendaylight-infra-shiplogs:
             maven-version: '{mvn33}'
 
 # Template: integration-distribution-test-{stream}
@@ -450,7 +450,7 @@
                   BUNDLEURL=$BUNDLEURL
 
     publishers:
-        - archive-build:
+        - opendaylight-infra-shiplogs:
             maven-version: '{mvn33}'
         - email-notification:
             email-prefix: '[$GERRIT_PROJECT]'
@@ -518,7 +518,7 @@
                   BUNDLEURL=$BUNDLEURL
 
     publishers:
-        - archive-build:
+        - opendaylight-infra-shiplogs:
             maven-version: '{mvn33}'
         - email-notification:
             email-prefix: '[int/dist]'
