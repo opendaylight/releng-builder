@@ -56,7 +56,7 @@
     publishers:
         - email-notification:
             email-prefix: '[{project-name}]'
-        - archive-build:
+        - opendaylight-infra-shiplogs:
             maven-version: '{mvn33}'
 
 - job-template:
@@ -119,7 +119,7 @@
             id: ''
             unique-version: true
             deploy-unstable: false
-        - archive-build:
+        - opendaylight-infra-shiplogs:
             maven-version: '{mvn33}'
 
 - job-template:
@@ -226,7 +226,7 @@
             mark-unstable-if-failed: True
         - archive:
             artifacts: '*.zip'
-        - archive-build:
+        - opendaylight-infra-shiplogs:
             maven-version: '{mvn33}'
 
 - job-template:
@@ -293,7 +293,7 @@
             email-prefix: '{email-upstream}'
         - findbugs
         - jacoco-report
-        - archive-build:
+        - opendaylight-infra-shiplogs:
             maven-version: '{mvn33}'
 
 - job-template:
@@ -401,7 +401,7 @@
             unique-version: true
             deploy-unstable: false
         - jacoco-report
-        - archive-build:
+        - opendaylight-infra-shiplogs:
             maven-version: '{mvn33}'
 
 - job-template:
@@ -462,7 +462,7 @@
             email-prefix: '[{project-name}]'
         - jacoco-report
         - findbugs
-        - archive-build:
+        - opendaylight-infra-shiplogs:
             maven-version: '{mvn33}'
 
 - job-template:
@@ -525,7 +525,7 @@
         - email-notification:
             email-prefix: '[{project-name}]'
         - jacoco-report
-        - archive-build:
+        - opendaylight-infra-shiplogs:
             maven-version: '{mvn33}'
 
 - job-template:
@@ -625,7 +625,7 @@
     publishers:
         - email-notification:
             email-prefix: '[autorelease] [{project-name}]'
-        - archive-build:
+        - opendaylight-infra-shiplogs:
             maven-version: '{mvn33}'
 
 - job-template:
@@ -688,5 +688,5 @@
         - email-notification:
             email-prefix: '[{project-name}]'
         - jacoco-report
-        - archive-build:
+        - opendaylight-infra-shiplogs:
             maven-version: '{mvn-version}'

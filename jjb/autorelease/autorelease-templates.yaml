@@ -85,7 +85,7 @@
           condition: UNSTABLE_OR_BETTER
           property-file: variables.prop
           fail-on-missing: true
-    - archive-build:
+    - opendaylight-infra-shiplogs:
         maven-version: '{mvn33}'
 
 - job-template:
@@ -151,7 +151,7 @@
 
             Archive also available on Jenkins at $BUILD_URL
         always: true
-    - archive-build:
+    - opendaylight-infra-shiplogs:
         maven-version: '{mvn33}'
 
 ###

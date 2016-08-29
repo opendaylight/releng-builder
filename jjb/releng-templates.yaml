@@ -57,7 +57,7 @@
     publishers:
         - email-notification:
             email-prefix: '[releng]'
-        - archive-build:
+        - opendaylight-infra-shiplogs:
             maven-version: '{mvn33}'
 
 
@@ -108,7 +108,7 @@
     publishers:
         - email-notification:
             email-prefix: '[releng]'
-        - archive-build:
+        - opendaylight-infra-shiplogs:
             maven-version: '{mvn33}'
 
 # Python Related
@@ -195,7 +195,7 @@
     publishers:
         - email-notification:
             email-prefix: '[{project}]'
-        - archive-build:
+        - opendaylight-infra-shiplogs:
             maven-version: '{mvn33}'
 
 - job-template:
@@ -229,7 +229,7 @@
     publishers:
         - email-notification:
             email-prefix: '[{project}]'
-        - archive-build:
+        - opendaylight-infra-shiplogs:
             maven-version: '{mvn33}'
 
 # Node related
@@ -324,5 +324,5 @@
     publishers:
         - email-notification:
             email-prefix: '[{project}]'
-        - archive-build:
+        - opendaylight-infra-shiplogs:
             maven-version: '{mvn33}'
