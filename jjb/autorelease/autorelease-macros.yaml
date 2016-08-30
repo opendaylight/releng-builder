@@ -91,6 +91,15 @@
                   variable: 'GLOBAL_SETTINGS_FILE'
 
 - builder:
+    name: autorelease-deps
+    builders:
+        - shell: |
+            ./scripts/list-project-dependencies.sh
+            include-autorelease-install-merge-order-deps.sh
+            python ./scripts/determine-merge-order.py dependencies.log merge-order.log
+            include-autorelease-cleanup-merge-order-workspace.sh
+
+- builder:
     name: autorelease-maven-deploy
     builders:
         - shell:

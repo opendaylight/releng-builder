@@ -134,7 +134,7 @@
         - inject:
             properties-file: variables.prop
         - autorelease-generate-project-report
-        - shell: "./scripts/list-project-dependencies.sh"
+        - autorelease-deps
         - autorelease-sys-stats
 
     publishers:
