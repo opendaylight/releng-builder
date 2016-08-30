@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a6b29fe_54c39e88",
+        "filename": "jjb/netvirt/netvirt-vpnservice-csit-1node-multi-openstack-sg-learn.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2016-08-30T20:38:11Z",
+      "side": 1,
+      "message": "this wont create new/unique jobs because the {project} {openstack} {functionality} and {stream} are the same as with the already existing netvirt-vpnservice jobs.\n\nI think we need a refactor for those existing jobs.  the {functionality} variable can be the same as the mode below.",
+      "revId": "b48b54027c28eb1de83f04c5fbe049d359088b74",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_b4bcb207",
+        "filename": "jjb/netvirt/netvirt-vpnservice-csit-1node-multi-openstack-sg-learn.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2016-08-30T20:38:11Z",
+      "side": 1,
+      "message": "so instead of the string openstack here, we use \"learn\"",
+      "range": {
+        "startLine": 10,
+        "startChar": 20,
+        "endLine": 10,
+        "endChar": 29
+      },
+      "revId": "b48b54027c28eb1de83f04c5fbe049d359088b74",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_94b9b617",
+        "filename": "jjb/netvirt/netvirt-vpnservice-csit-1node-multi-openstack-sg-stateful.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2016-08-30T20:38:11Z",
+      "side": 1,
+      "message": "this would be \"stateful\" if you like the idea.",
+      "range": {
+        "startLine": 10,
+        "startChar": 20,
+        "endLine": 10,
+        "endChar": 29
+      },
+      "revId": "b48b54027c28eb1de83f04c5fbe049d359088b74",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
