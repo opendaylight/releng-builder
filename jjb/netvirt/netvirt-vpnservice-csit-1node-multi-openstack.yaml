@@ -3,11 +3,12 @@
     jobs:
         - '{project}-csit-1node-openstack-{openstack}-{functionality}-{stream}'
 
-    # The project name
     project: 'netvirt-vpnservice'
 
-    # The project name
-    functionality: 'openstack'
+    functionality:
+        - 'transparent'
+        - 'stateful'
+        - 'learn'
 
     stream:
         - carbon:
@@ -41,4 +42,4 @@
 
     tenant-network-type: 'vxlan'
 
-    security-group-mode: 'transparent'
+    security-group-mode: '{functionality}'
