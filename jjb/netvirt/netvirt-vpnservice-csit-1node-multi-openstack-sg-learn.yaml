@@ -1,0 +1,44 @@
+- project:
+    name: netvirt-vpnservice-csit-openstack-integration
+    jobs:
+        - '{project}-csit-1node-openstack-{openstack}-{functionality}-{stream}'
+
+    # The project name
+    project: 'netvirt-vpnservice'
+
+    # The project name
+    functionality: 'openstack-learn'
+
+    stream:
+        - carbon:
+            branch: 'master'
+            jre: 'openjdk8'
+        - boron:
+            branch: 'stable/boron'
+            jre: 'openjdk8'
+
+    openstack:
+        - mitaka:
+            openstack-branch: 'stable/mitaka'
+            odl-ml2-version:  'stable/mitaka'
+        - liberty:
+            openstack-branch: 'stable/liberty'
+            odl-ml2-version:  'stable/liberty'
+
+    openstack-vms: 3
+
+    install-features: 'odl-netvirt-openstack'
+
+    schedule: 'H H * * *'
+
+    odl-enable-l3: 'yes'
+
+    public-bridge: 'public' # PUBLIC_PHYSICAL_NETWORK
+
+    enable-openstack-services: 'q-svc,q-dhcp,q-meta,n-cauth,tempest'
+
+    disable-openstack-services: 'swift,cinder,n-net,q-vpn,n-cpu'
+
+    tenant-network-type: 'vxlan'
+
+    security-group-mode: 'learn'
