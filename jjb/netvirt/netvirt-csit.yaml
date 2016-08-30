@@ -1,5 +1,5 @@
 - project:
-    name: netvirt-csit
+    name: netvirt-legacy-csit
     jobs:
         - '{project}-csit-1node-{functionality}-{install}-{stream}'
         - '{project}-csit-verify-1node-{functionality}'
@@ -8,7 +8,7 @@
     project: 'netvirt'
 
     # The functionality under test
-    functionality: 'openstack-basic'
+    functionality: 'legacy-openstack-basic'
 
     # Project branches
     stream:
