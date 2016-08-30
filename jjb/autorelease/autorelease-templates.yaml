@@ -134,7 +134,12 @@
         - inject:
             properties-file: variables.prop
         - autorelease-generate-project-report
-        - shell: "./scripts/list-project-dependencies.sh"
+        - autorelease-list-dependencies
+        - autorelease-install-merge-order-deps
+        - inject:
+            properties-file: env.properties
+        - autorelease-determine-merge-order
+        - autorelease-cleanup-merge-order-workspace
         - autorelease-sys-stats
 
     publishers:
