@@ -395,6 +395,7 @@
             timeout: '{build-timeout}'
             timeout-var: 'BUILD_TIMEOUT'
             fail: true
+        - timestamps
         - ssh-agent-credentials:
             users:
                 - 'opendaylight-jenkins-ssh'
