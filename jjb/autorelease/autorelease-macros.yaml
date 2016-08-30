@@ -91,6 +91,19 @@
                   variable: 'GLOBAL_SETTINGS_FILE'
 
 - builder:
+    name: autorelease-determine-merge-order
+    builders:
+       - shell: |
+          virtualenv --system-site-packages $WORKSPACE/venv
+          source $WORKSPACE/venv/bin/activate
+          pip install --upgrade pip
+          pip install --upgrade networkx
+          pip freeze
+          python ./scripts/determine-merge-order.py dependencies.log merge-order.log
+          deactivate
+          rm -rf $WORKSPACE/venv
+
+- builder:
     name: autorelease-maven-deploy
     builders:
         - shell:
