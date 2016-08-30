@@ -1,7 +1,7 @@
 - project:
-    name: netvirt-3node-csit-openstack-integration
+    name: netvirt-legacy-csit-openstack-integration
     jobs:
-        - '{project}-csit-3node-openstack-{openstack}-{functionality}-{stream}'
+        - '{project}-legacy-csit-1node-openstack-{openstack}-{functionality}-{stream}'
 
     # The project name
     project: 'netvirt'
@@ -28,15 +28,13 @@
             openstack-branch: 'stable/liberty'
             odl-ml2-version:  'stable/liberty'
 
-    openstack-vms: 4
+    openstack-vms: 3
 
     install-features: 'odl-ovsdb-openstack,decanter-collector-jmx,decanter-appender-elasticsearch'
 
     schedule: 'H H * * *'
 
     odl-enable-l3: 'yes'
-
-    enable-haproxy: 'yes'
 
     public-bridge: 'br-ex'
 
