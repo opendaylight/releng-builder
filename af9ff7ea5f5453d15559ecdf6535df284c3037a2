@@ -16,6 +16,24 @@
       "revId": "af9ff7ea5f5453d15559ecdf6535df284c3037a2",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_63289ae2",
+        "filename": "jjb/autorelease/autorelease-macros.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2016-09-01T03:12:16Z",
+      "side": 1,
+      "message": "Actually I probably would just write this as a single script, no point having a bunch of one liners everywhere.\n\n - shell: |\n    virtualenv $WORKSPACE/venv\n    source $WORKSPACE/venv/bin/activate\n    pip install --upgrade pip\n    pip install --upgrade networkx\n    pip freeze\n    python ./scripts/determine-merge-order.py dependencies.log merge-order.log",
+      "parentUuid": "7a6b29fe_230b427e",
+      "revId": "af9ff7ea5f5453d15559ecdf6535df284c3037a2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
