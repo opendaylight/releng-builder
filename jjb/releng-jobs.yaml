@@ -58,11 +58,11 @@
                       pattern: jjb-templates/**
 
     builders:
-        - opendaylight-infra-pre-builders
         - shell: |
             pip freeze
             jenkins-jobs -l DEBUG test --recursive -o archives/job_output jjb/
             gzip archives/job_output/*
+
         - releng-check-unicode
 
     publishers:
@@ -122,7 +122,6 @@
 
 
     builders:
-        - opendaylight-infra-pre-builders
         - shell: |
             virtualenv $WORKSPACE/venv
             source $WORKSPACE/venv/bin/activate
@@ -189,7 +188,6 @@
                       pattern: jjb-templates/**
 
     builders:
-        - opendaylight-infra-pre-builders
         - shell: |
             pip freeze
             jenkins-jobs --version
@@ -238,7 +236,6 @@
         - timed: 'H H * * 0'
 
     builders:
-        - opendaylight-infra-pre-builders
         - shell: |
             jenkins-jobs --flush-cache update --recursive jjb/
 
@@ -275,7 +272,6 @@
         - timed: 'H H * * 1'
 
     builders:
-        - opendaylight-infra-pre-builders
         - shell:
             !include-raw-escape:
                 - include-raw-check-poms.sh
