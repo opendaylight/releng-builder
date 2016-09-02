@@ -1,0 +1,39 @@
+- project:
+    name: genius-csit-genius
+    jobs:
+        - '{project}-csit-1node-{functionality}-{install}-{stream}'
+        - '{project}-csit-verify-1node-{functionality}'
+
+    # The project name
+    project: 'genius'
+
+    # The functionality under test
+    functionality: 'genius'
+
+    # Project branches
+    stream:
+        - carbon:
+            branch: 'master'
+            jre: 'openjdk8'
+        - boron:
+            branch: 'stable/boron'
+            jre: 'openjdk8'
+
+    install:
+        - only:
+            scope: 'only'
+        - all:
+            scope: 'all'
+
+    # Mininet configuration
+    mininet-image: 'ubuntu-trusty-mininet-ovs-23-2c-2g'
+    mininet-vms: 2
+
+    # Features to install
+    install-features: 'odl-genius-ui'
+
+    # Robot custom options
+    robot-options: ' '
+
+    # Trigger jobs (upstream dependencies)
+    trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream},openflowjava-distribution-{stream},openflowplugin-distribution-{stream},genius-distribution-{stream}'
