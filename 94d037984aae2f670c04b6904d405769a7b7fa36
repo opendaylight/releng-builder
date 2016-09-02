@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7a6b29fe_4aa48a07",
+        "filename": "jjb/netvirt/include-setup-misc.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 2029
+      },
+      "writtenOn": "2016-09-02T13:11:20Z",
+      "side": 1,
+      "message": "Good question. During testing, I had this same line BEFORE the modprobe. \n\nThe job would fail, non-zero return from script, because openvswitch module was not loaded.\n\nSo, as is, the script will exit with non-zero, and the job will fail, if the openvswitch module is not loaded.",
+      "parentUuid": "7a6b29fe_14859b59",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 43
+      },
+      "revId": "94d037984aae2f670c04b6904d405769a7b7fa36",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a6b29fe_f489ff75",
         "filename": "jjb/netvirt/netvirt-full-integration.yaml",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2016-09-02T05:27:40Z",
       "side": 1,
       "message": "since this sets kernel module up the controller node is the file name change required?",
+      "range": {
+        "startLine": 114,
+        "startChar": 18,
+        "endLine": 114,
+        "endChar": 39
+      },
+      "revId": "94d037984aae2f670c04b6904d405769a7b7fa36",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_2a802e45",
+        "filename": "jjb/netvirt/netvirt-full-integration.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 2029
+      },
+      "writtenOn": "2016-09-02T13:11:20Z",
+      "side": 1,
+      "message": "The file name change is not required, but does more accurately describe the content, I believe. \n\nOriginally, I had named the script include-setup-controllerIp.sh, as all it was doing was exporting the controller IP. Now, I needed a place to also do a modprobe of the kernel. This was a nice fit, but since the script is now doing more than just setting controller ip, I wanted the name to reflect that. \n\nAnd, the kernel module modprobe is for the VM itself, not the controller.",
+      "parentUuid": "7a6b29fe_f489ff75",
       "range": {
         "startLine": 114,
         "startChar": 18,
