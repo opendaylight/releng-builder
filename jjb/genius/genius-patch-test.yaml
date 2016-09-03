@@ -1,0 +1,23 @@
+- project:
+    name: genius-patch-test
+    jobs:
+        - '{project}-patch-test-{stream}'
+
+    # The project name
+    project: 'genius'
+
+    # Project branches
+    stream:
+        - carbon:
+            branch: 'master'
+            jdk: 'openjdk8'
+            csit-list: >
+                genius-csit-1node-genius-only-{stream},
+                genius-csit-1node-genius-all-{stream}
+
+        - boron:
+            branch: 'stable/boron'
+            jdk: 'openjdk8'
+            csit-list: >
+                genius-csit-1node-genius-only-{stream},
+                genius-csit-1node-genius-all-{stream}
