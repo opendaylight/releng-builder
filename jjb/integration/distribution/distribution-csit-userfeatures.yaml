@@ -17,6 +17,9 @@
         - boron:
             branch: 'stable/boron'
             jre: 'openjdk8'
+        - beryllium:
+            branch: 'stable/beryllium'
+            jre: 'openjdk7'
 
     # TODO: Add Beryllium when everything is backported there.
 
@@ -34,6 +37,5 @@
 
     # Trigger jobs (upstream dependencies)
     trigger-jobs: >
-        odlparent-distribution-{stream},
         controller-distribution-{stream},
-        netconf-distribution-{stream}
+        integration-distribution-merge-{stream}
