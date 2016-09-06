@@ -5,7 +5,6 @@ echo "#################################################"
 AKKACONF=/tmp/${BUNDLEFOLDER}/configuration/initial/akka.conf
 MODULESCONF=/tmp/${BUNDLEFOLDER}/configuration/initial/modules.conf
 MODULESHARDSCONF=/tmp/${BUNDLEFOLDER}/configuration/initial/module-shards.conf
-BGPCONF=/tmp/${BUNDLEFOLDER}/system/org/opendaylight/bgpcep/bgp-controller-config/*/bgp-controller-config-*-config-example.xml
 CONTROLLERMEM="2048m"
 
 if [ ${CONTROLLERSCOPE} == 'all' ]; then
@@ -111,14 +110,6 @@ fi
 
 echo "Configuring cluster"
 /tmp/${BUNDLEFOLDER}/bin/configure_cluster.sh \$1 ${nodes_list}
-
-echo "Update bgp configuration in 41-bgp-example.xml"
-sed -i -e "s/<topology-id>example-ipv4-topology/<topology-id>example-ipv4-topology-\$1/g" ${BGPCONF}
-sed -i -e "s/<topology-id>example-ipv6-topology/<topology-id>example-ipv6-topology-\$1/g" ${BGPCONF}
-sed -i -e "s/<topology-id>example-linkstate-topology/<topology-id>example-linkstate-topology-\$1/g" ${BGPCONF}
-
-echo "Dump ${BGPCONF}"
-cat ${BGPCONF}
 
 echo "Dump akka.conf"
 cat ${AKKACONF}
