@@ -35,7 +35,6 @@
             properties:
                 - 'ovsdbserver.ipaddress=127.0.0.1'
                 - 'ovsdbserver.port=6641'
-                - 'ovsdb.userspace.enabled=yes'
                 - 'maven.repo.local=/tmp/r'
                 - 'org.ops4j.pax.url.mvn.localRepository=/tmp/r'
                 - 'stream={stream}'
@@ -54,7 +53,6 @@
             pom: '{pomFile}'
             goals: '-V -B verify -l {logfile} -Pintegrationtest -Dskip.karaf.featureTest=true -Dmaven.compile.fork=true -Dovsdb.controller.address=${{CONTROLLER_IP}} -Ddocker.compose.file=ovs-{OVS_VERSION}-hwvtep.yml -Ddocker.vEnvWs=$WORKSPACE -Dsgm=transparent -Dmaven.test.failure.ignore=true'
             properties:
-                - 'ovsdb.userspace.enabled=yes'
                 - 'maven.repo.local=/tmp/r'
                 - 'org.ops4j.pax.url.mvn.localRepository=/tmp/r'
                 - 'stream={stream}'
