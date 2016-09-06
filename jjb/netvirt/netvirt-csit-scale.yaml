@@ -1,0 +1,38 @@
+- project:
+    name: netvirt-csit-scale
+    jobs:
+        - '{project}-csit-1node-{functionality}-{install}-{stream}'
+
+    # The project name
+    project: 'netvirt'
+
+    # The functionality under test
+    functionality: 'scale'
+
+    # Project branches
+    stream:
+        - carbon:
+            branch: 'master'
+            jre: 'openjdk8'
+        - boron:
+            branch: 'stable/boron'
+            jre: 'openjdk8'
+        - beryllium:
+            branch: 'stable/beryllium'
+            jre: 'openjdk7'
+
+    install:
+        - only:
+            scope: 'only'
+
+    # Features to install
+    install-features: 'odl-ovsdb-openstack,decanter-collector-jmx,decanter-appender-elasticsearch'
+
+    # Robot custom options
+    robot-options: ''
+
+    # Trigger jobs (daily)
+    schedule: 'H H * * *'
+
+    # Trigger jobs (upstream dependencies)
+    trigger-jobs: ''
