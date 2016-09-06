@@ -111,7 +111,7 @@
             properties-content: OVS_VERSION={OVS_VERSION}
         - shell:
             !include-raw-escape:
-                - include-setup-controllerIp.sh
+                - include-setup-misc.sh
         - inject:
             properties-file: env.properties
         - install-docker-compose
