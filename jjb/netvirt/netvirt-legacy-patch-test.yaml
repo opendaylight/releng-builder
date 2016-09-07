@@ -1,0 +1,21 @@
+- project:
+    name: netvirt-legacy-patch-test
+    jobs:
+        - '{project}-patch-test-{stream}'
+
+    # The project name
+    project: 'netvirt-legacy'
+
+    # Project branches
+    stream:
+        - carbon:
+            branch: 'master'
+            jdk: 'openjdk8'
+            csit-list: >
+                netvirt-csit-1node-openstack-mitaka-openstack-{stream}
+
+        - boron:
+            branch: 'stable/boron'
+            jdk: 'openjdk8'
+            csit-list: >
+                netvirt-csit-1node-openstack-mitaka-openstack-{stream}
