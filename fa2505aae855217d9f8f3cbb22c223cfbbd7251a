@@ -16,6 +16,24 @@
       "revId": "fa2505aae855217d9f8f3cbb22c223cfbbd7251a",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_c50d1d40",
+        "filename": "packer/provision/java-builder.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2016-09-07T01:26:46Z",
+      "side": 1,
+      "message": "Are you building this with packer locally or just tried running an individual command ? We don\u0027t need to prefix the command with `sudo` as a part of the script, since the previous commands are already going through without an additional `sudo`! \n\nWe already building this for centos7 on both the public and private cloud, and have an images built on both on both the clouds without any errors, using the changes in this patch. \nName\tCentOS 7 - java-builder - 20160905-0141\nID\t0df9c28e-1525-4b6b-b1f7-ffee65da765a \n\nTypically, an rpm name has a convention of \u003cname\u003e.\u003cversion\u003e.\u003carch\u003e, when you give `yum install \u003cname\u003e`, this install the latest version from the repo, since the latest version is not signed all we need to provide is the version string `nuget-2.8.7` without all the additional suffix.",
+      "parentUuid": "7a6b29fe_ca708c42",
+      "revId": "fa2505aae855217d9f8f3cbb22c223cfbbd7251a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
