@@ -30,7 +30,11 @@
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'neutron-merge-{stream},openflowplugin-merge-{stream},ovsdb-merge-{stream}'
     email-upstream: '[vtn] [neutron] [openflowplugin] [ovsdb]'
-    archive-artifacts: 'manager/dist/*/target/*.zip coordinator/dist/target/*.bz2 manager/northbound/target/site/wsdocs/** manager/api/target/*-javadoc.jar manager/api/target/apidocs/** target/*-javadoc.jar target/apidocs/** manager/model/target/site/models/**'
+
+    # Please do not archive maven sites!!!
+    # Maven sites are published to Nexus at:
+    # https://nexus.opendaylight.org/content/sites/site/
+    archive-artifacts: 'manager/dist/*/target/*.zip coordinator/dist/target/*.bz2'
 
 - project:
     name: vtn-boron
@@ -64,7 +68,11 @@
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'neutron-merge-{stream},openflowplugin-merge-{stream},ovsdb-merge-{stream}'
     email-upstream: '[vtn] [neutron] [openflowplugin] [ovsdb]'
-    archive-artifacts: 'manager/dist/*/target/*.zip coordinator/dist/target/*.bz2 manager/northbound/target/site/wsdocs/** manager/api/target/*-javadoc.jar manager/api/target/apidocs/** target/*-javadoc.jar target/apidocs/** manager/model/target/site/models/**'
+
+    # Please do not archive maven sites!!!
+    # Maven sites are published to Nexus at:
+    # https://nexus.opendaylight.org/content/sites/site/
+    archive-artifacts: 'manager/dist/*/target/*.zip coordinator/dist/target/*.bz2'
 
 - project:
     name: vtn-beryllium
@@ -100,7 +108,11 @@
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'neutron-merge-{stream},openflowplugin-merge-{stream},ovsdb-merge-{stream}'
     email-upstream: '[vtn] [neutron] [openflowplugin] [ovsdb]'
-    archive-artifacts: 'manager/dist/*/target/*.zip coordinator/dist/target/*.bz2 manager/northbound/target/site/wsdocs/** manager/api/target/*-javadoc.jar manager/api/target/apidocs/** target/*-javadoc.jar target/apidocs/** manager/model/target/site/models/**'
+
+    # Please do not archive maven sites!!!
+    # Maven sites are published to Nexus at:
+    # https://nexus.opendaylight.org/content/sites/site/
+    archive-artifacts: 'manager/dist/*/target/*.zip coordinator/dist/target/*.bz2'
 
 - project:
     name: vtn-lithium
@@ -134,7 +146,11 @@
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'neutron-merge-{stream},openflowplugin-merge-{stream},ovsdb-merge-{stream}'
     email-upstream: '[vtn] [neutron] [openflowplugin] [ovsdb]'
-    archive-artifacts: 'manager/dist/*/target/*.zip coordinator/dist/target/*.bz2 manager/northbound/target/site/wsdocs/** manager/api/target/*-javadoc.jar manager/api/target/apidocs/** target/*-javadoc.jar target/apidocs/** manager/model/target/site/models/**'
+
+    # Please do not archive maven sites!!!
+    # Maven sites are published to Nexus at:
+    # https://nexus.opendaylight.org/content/sites/site/
+    archive-artifacts: 'manager/dist/*/target/*.zip coordinator/dist/target/*.bz2'
 
 - project:
     name: vtn-sonar
