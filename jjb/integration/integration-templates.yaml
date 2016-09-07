@@ -987,7 +987,7 @@
 # triggers the project system test defined in {csit-list} when gerrit receives test-{project} keyword
 
 - job-template:
-    name: '{project}-patch-test-{stream}'
+    name: '{project}-patch-test-{feature}-{stream}'
 
     project-type: maven
     node: centos7-java-builder-2c-8g
