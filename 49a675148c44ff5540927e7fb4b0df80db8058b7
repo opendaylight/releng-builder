@@ -16,6 +16,24 @@
       "revId": "49a675148c44ff5540927e7fb4b0df80db8058b7",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_3eb4df33",
+        "filename": "jjb/vtn/vtn.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2016-09-07T21:14:34Z",
+      "side": 1,
+      "message": "Distribution-check does not have the same file system layout as the other jobs. It checks out vtn to $WORKSPACE/vtn because the job also clones integration/distribution.\n\nAnyway I think it\u0027s not important to archive VTN artifacts in distribution-check. The job\u0027s purpose is not to archive things but to quickly run a few tests and detect distribution issues. If you need to archive things that should be done in the verify job.",
+      "parentUuid": "7a6b29fe_9e01b307",
+      "revId": "49a675148c44ff5540927e7fb4b0df80db8058b7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
