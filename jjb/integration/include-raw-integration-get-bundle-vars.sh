@@ -23,8 +23,8 @@ if [ ${BUNDLEURL} == 'last' ]; then
 else
     ACTUALBUNDLEURL="${BUNDLEURL}"
     BUNDLE="${BUNDLEURL##*/}"
-    BUNDLEVERSION="$(basename $(dirname $BUNDLEURL))"
-    BUNDLEFOLDER="distribution-karaf-${BUNDLEVERSION}"
+    BUNDLEFOLDER="${BUNDLE//.zip}"
+    BUNDLEVERSION="${BUNDLEFOLDER//distribution-karaf-}"
 fi
 
 if [ ${JDKVERSION} == 'openjdk8' ]; then
