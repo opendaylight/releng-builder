@@ -1,10 +1,12 @@
 - project:
     name: genius-patch-test
     jobs:
-        - '{project}-patch-test-{stream}'
+        - '{project}-patch-test-{feature}-{stream}'
 
     # The project name
     project: 'genius'
+
+    feature: 'all'
 
     # Project branches
     stream:
@@ -21,3 +23,4 @@
             csit-list: >
                 genius-csit-1node-genius-only-{stream},
                 genius-csit-1node-genius-all-{stream}
+
