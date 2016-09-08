@@ -48,7 +48,9 @@
         goals: 'clean deploy -V -B -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -Djenkins -DaltDeploymentRepository=staging::default::file:hide/from/pom/files/stage'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
         settings: 'autorelease-settings'
+        settings-type: cfp
         global-settings: 'odl-global-settings'
+        global-settings-type: cfp
         post-step-run-condition: UNSTABLE
 
     postbuilders:
@@ -87,7 +89,7 @@
         - jacoco-nojava-workaround
         - releng-fetch-p2zip-if-necessary:
             maven-version: '{mvn33}'
-            settings: '{project-settings}'
+            settings: '{mvn-settings}'
             global-settings: 'odl-global-settings'
         - releng-generate-p2pom
 
@@ -95,14 +97,14 @@
         maven-name: '{mvn33}'
         root-pom: 'pom.xml'
         goals: 'clean deploy -V -B -Dmaven.repo.local=/tmp/r'
-        settings: '{project-settings}'
+        settings: '{mvn-settings}'
         global-settings: 'odl-global-settings'
         post-step-run-condition: UNSTABLE
 
     postbuilders:
         - releng-update-p2composite-metadata:
             maven-version: '{mvn33}'
-            settings: '{project-settings}'
+            settings: '{mvn-settings}'
             global-settings: 'odl-global-settings'
 
     publishers:
