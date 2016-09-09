@@ -24,10 +24,13 @@
             scope: 'only'
 
     # Features to install
-    install-features: 'odl-openflowplugin-flow-services-ui'
+    install-features: 'odl-openflowplugin-flow-services-ui,odl-openflowplugin-app-table-miss-enforcer'
 
     # Robot custom options
     robot-options: '-v ODL_OF_PLUGIN:lithium'
+
+    # mininet image
+    mininet-image: 'ubuntu-trusty-mininet-ovs-25-2c-2g'
 
     # Trigger jobs (upstream dependencies)
     trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream},openflowjava-distribution-{stream},openflowplugin-distribution-{stream}'
