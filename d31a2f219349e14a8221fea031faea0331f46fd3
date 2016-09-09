@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a6b29fe_ed7ab722",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2016-09-09T09:58:45Z",
+      "side": 1,
+      "message": "EOF from Karaf console is a recent bug, not covered in Bugzilla as far as I know. The bug is not severe, so netconfready does not need to fail on it if a workaround exists.\n\nIn my testing, retrying KarafKeywords.Open_Controller_Karaf_Console_On_Background once helps. But in current state when the userfeatures job may fail without reporting, the job is not stable enough for inclusion to csit-list.",
+      "range": {
+        "startLine": 11,
+        "startChar": 40,
+        "endLine": 11,
+        "endChar": 60
+      },
+      "revId": "d31a2f219349e14a8221fea031faea0331f46fd3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
