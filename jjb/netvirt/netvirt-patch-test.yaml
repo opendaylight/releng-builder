@@ -1,7 +1,7 @@
 - project:
     name: netvirt-patch-test
     jobs:
-        - '{project}-patch-test-{stream}'
+        - '{project}-patch-test-{feature}-{stream}'
 
     # The project name
     project: 'netvirt'
@@ -11,13 +11,21 @@
         - carbon:
             branch: 'master'
             jdk: 'openjdk8'
-            csit-list: >
-                netvirt-vpnservice-csit-1node-openstack-mitaka-openstack-{stream},
-                netvirt-csit-1node-openstack-mitaka-openstack-{stream}
 
         - boron:
             branch: 'stable/boron'
             jdk: 'openjdk8'
+
+    feature:
+        - legacy:
+            csit-list: >
+                netvirt-csit-1node-openstack-mitaka-openstack-{stream}
+
+        - current:
+            csit-list: >
+                netvirt-vpnservice-csit-1node-openstack-mitaka-openstack-{stream}
+
+        - all:
             csit-list: >
                 netvirt-vpnservice-csit-1node-openstack-mitaka-openstack-{stream},
                 netvirt-csit-1node-openstack-mitaka-openstack-{stream}
