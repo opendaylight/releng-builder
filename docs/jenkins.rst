@@ -262,6 +262,18 @@ Pool: ODLRPC
       </tr>
 
       <tr class="warning">
+        <td><b>Jenkins Label</b><br/> ubuntu_mininet_ovs_25</td>
+        <td><b>Minion Template name</b><br/> ubuntu-trusty-mininet-ovs-25</td>
+        <td><b>Vagrant Definition</b><br/> releng/builder/vagrant/ubuntu-mininet-ovs-25</td>
+        <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/mininet-ubuntu.sh</td>
+      </tr>
+      <tr>
+        <td colspan="4">
+          Basic Ubuntu system with ovs 2.5 and mininet 2.2.2
+        </td>
+      </tr>
+
+      <tr class="warning">
         <td><b>Jenkins Label</b><br/> dynamic_controller</td>
         <td><b>Minion Template name</b><br/> centos7-java</td>
         <td><b>Vagrant Definition</b><br/> releng/builder/vagrant/basic-java-node</td>
