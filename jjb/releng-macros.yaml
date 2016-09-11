@@ -390,3 +390,42 @@
             single-use: True
         - openstack:
             single-use: True
+
+- builder:
+    name: packer-config-file-provider
+    builders:
+        - config-file-provider:
+            files:
+                - file-id: 'packer-cloud-env'
+                  variable: 'CLOUDENV'
+
+- builder:
+    name: packer-install
+    builders:
+        - shell: |
+            mkdir ~/packer
+            cd ~/packer
+            wget https://releases.hashicorp.com/packer/0.10.1/packer_0.10.1_linux_amd64.zip
+            sudo unzip packer_0.10.1_linux_amd64.zip -d /usr/local/bin/
+
+- builder:
+    name: packer-validate
+    builders:
+        - shell: |
+            cd repo/packer
+            export PACKER_LOG="yes" && \
+            export PACKER_LOG_PATH="packer-validate.log" && \
+                        packer validate -var-file=$CLOUDENV \
+                         -var-file=../packer/vars/{platform}.json \
+                         ../packer/templates/{template}.json
+
+- builder:
+    name: packer-build
+    builders:
+        - shell: |
+            cd repo/packer
+            export PACKER_LOG="yes" && \
+            export PACKER_LOG_PATH="packer-build.log" && \
+                        packer build -var-file=$CLOUDENV \
+                         -var-file=../packer/vars/{platform}.json \
+                         ../packer/templates/{template}.json
