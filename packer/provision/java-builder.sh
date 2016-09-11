@@ -38,3 +38,12 @@ yum-config-manager -q -y --add-repo http://download.mono-project.com/repo/centos
 #install the mono toolchain and nuget
 yum -q -y install mono-complete-4.2.3.4 nuget
 #end changes for vsemprovider in VTN
+
+# The following installs hashicorp's packer binary which is required  for
+# the {verify,merge}-packer jobs
+mkdir /tmp/packer
+cd /tmp/packer
+wget https://releases.hashicorp.com/packer/0.10.1/packer_0.10.1_linux_amd64.zip
+unzip packer_0.10.1_linux_amd64.zip -d /usr/local/bin/
+# rename packer to avoid conflict with binary in cracklib
+mv /usr/local/bin/packer /usr/local/bin/packer.io
