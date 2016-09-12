@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a6b29fe_9301a16c",
+        "filename": "jjb/releng-jobs.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2016-09-12T13:41:19Z",
+      "side": 1,
+      "message": "Why create a new project definition when there\u0027s already one at the top of this file?",
+      "range": {
+        "startLine": 285,
+        "startChar": 0,
+        "endLine": 286,
+        "endChar": 16
+      },
+      "revId": "ee180447ebde8b8f8d525a5af03836af65576d23",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_530b898d",
+        "filename": "jjb/releng-jobs.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2016-09-12T13:41:19Z",
+      "side": 1,
+      "message": "This doesn\u0027t appear to be used. If there\u0027s no purpose for these please remove them. releng/builder doesn\u0027t have streams anyway we only have a single master branch.",
+      "range": {
+        "startLine": 323,
+        "startChar": 6,
+        "endLine": 331,
+        "endChar": 38
+      },
+      "revId": "ee180447ebde8b8f8d525a5af03836af65576d23",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_5332695f",
+        "filename": "jjb/releng-jobs.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2016-09-12T13:41:19Z",
+      "side": 1,
+      "message": "Do we need to differentiate between verify and merge jobs? Is there a difference?\n\nAlso in regards to my comment above to consolidate the project definitions. You should call this job-template {name}-verify-packer-{platforms}-{templates}",
+      "range": {
+        "startLine": 337,
+        "startChar": 4,
+        "endLine": 337,
+        "endChar": 42
+      },
+      "revId": "ee180447ebde8b8f8d525a5af03836af65576d23",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_33f08d90",
+        "filename": "jjb/releng-jobs.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2016-09-12T13:41:19Z",
+      "side": 1,
+      "message": "recheck and reverify should already cover this, we don\u0027t need yet another trigger imo.",
+      "range": {
+        "startLine": 384,
+        "startChar": 16,
+        "endLine": 385,
+        "endChar": 53
+      },
+      "revId": "ee180447ebde8b8f8d525a5af03836af65576d23",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_d3f6798e",
+        "filename": "jjb/releng-macros.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2016-09-12T13:41:19Z",
+      "side": 1,
+      "message": "I\u0027m not a fan of this, we should bake it into the image we use for building. I think java-builder is probably the write image for now as we use it as a generic builder.",
+      "range": {
+        "startLine": 402,
+        "startChar": 0,
+        "endLine": 409,
+        "endChar": 71
+      },
+      "revId": "ee180447ebde8b8f8d525a5af03836af65576d23",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_d3cf9954",
+        "filename": "jjb/releng-macros.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2016-09-12T13:41:19Z",
+      "side": 1,
+      "message": "No point making 2 separate macros that take the same inputs. Just combine the 2. Actually even better just combine all 4 of these macros into a single \"packer-build\" macro. Remember you can call multiple builders in the same macro! For example:\n\n\n - builder:\n    name: packer-build\n    builders:\n        - config-file-provider:\n            files:\n                - file-id: \u0027packer-cloud-env\u0027\n                  variable: \u0027CLOUDENV\u0027\n\n        # INSTALL REQS\n        - shell: |\n            mkdir ~/packer\n            cd ~/packer\n            wget https://releases.hashicorp.com/packer/0.10.1/packer_0.10.1_linux_amd64.zip\n            sudo unzip packer_0.10.1_linux_amd64.zip -d /usr/local/bin/\n\n    name: packer-validate\n    builders:\n\n        # VALIDATE\n        - shell: |\n            cd repo/packer\n            export PACKER_LOG\u003d\"yes\" \u0026\u0026 \\\n            export PACKER_LOG_PATH\u003d\"packer-validate.log\" \u0026\u0026 \\\n                        packer validate -var-file\u003d$CLOUDENV \\\n                         -var-file\u003d../packer/vars/{platform}.json \\\n                         ../packer/templates/{template}.json\n\n        # BUILD\n        - shell: |\n            cd repo/packer\n            export PACKER_LOG\u003d\"yes\" \u0026\u0026 \\\n            export PACKER_LOG_PATH\u003d\"packer-build.log\" \u0026\u0026 \\\n                        packer build -var-file\u003d$CLOUDENV \\\n                         -var-file\u003d../packer/vars/{platform}.json \\\n                         ../packer/templates/{template}.json",
+      "range": {
+        "startLine": 423,
+        "startChar": 4,
+        "endLine": 423,
+        "endChar": 22
+      },
+      "revId": "ee180447ebde8b8f8d525a5af03836af65576d23",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
