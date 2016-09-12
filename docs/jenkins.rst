@@ -131,43 +131,55 @@ label.
 Adding New Components to the Minions
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-If your project needs something added to one of the minions used during build
-and test you can help us get things added faster by doing one of the following:
+If your project needs something added to one of the minions, you can help us
+get things added faster by doing one of the following:
 
-* Submit a patch to RelEng/Builder for the `spinup-scripts`_ that
-  configures your new piece of software.
-* Submit a patch to RelEng/Builder for the Vagrant template's bootstrap.sh in
-  the `vagrant-definitions`_ directory that configures your new piece of
-  software.
+* Submit a patch to RelEng/Builder for the `packer/provision`_ scripts that
+  configures your new piece of software during minion boot up.
+* Submit a patch to RelEng/Builder for the Packer's templates  in
+  the `packer/templates`_ directory that configures your new piece of
+  software which get baked into the image.
 
 Going the first route will be faster in the short term as we can inspect the
 changes and make test modifications in the sandbox to verify that it works.
 
+note:: 
+The first route may add additional setup time considering this is run every time
+the minion is booted.
+
 The second route, however, is better for the community as a whole as it will
-allow others that utilize our Vagrant setups to replicate our systems more
+allow others to utilize our Packer setups to replicate our systems more
 closely. It is, however, more time consuming as an image snapshot needs to be
-created based on the updated Vagrant definition before it can be attached to
-the sandbox for validation testing.
+created based on the updated Packer definitions before it can be attached to
+the Jenkins configuration on sandbox for validation testing.
 
 In either case, the changes must be validated in the sandbox with tests to
 make sure that we don't break current jobs and that the new software features
 are operating as intended. Once this is done the changes will be merged and
-the updates applied to the RelEng Jenkins production silo.
+the updates applied to the RelEng Jenkins production silo. Any changes to
+files under `releng/builder/packer`_ will be validated and images would be built
+triggered by verify-packer and merge-packer jobs.
 
-Please note that the combination of a Vagrant minion snapshot and a Jenkins
-spinup script is what defines a given minion. For instance, a minion may be
-defined by the `vagrant-basic-java-node`_ Vagrant definition
-and the `spinup-scripts-controller.sh`_ Jenkins spinup script
-(as the dynamic\_controller minion is). The pair provides the full definition of
-the realized minion. Jenkins starts a minion using the last-spun Vagrant snapshot
-for the specified definition. Once the base Vagrant instance is online Jenkins
-checks out the RelEng/Builder repo on it and executes two scripts. The first is
-`spinup-scripts-basic_settings.sh`_, which is a baseline for all of the minions.
-The second is
-the specialized spinup script, which handles any system updates, new software
-installs or extra environment tweaks that don't make sense in a snapshot. After
-all of these scripts have executed Jenkins will finally attach the minion as an
-actual minion and start handling jobs on it.
+Please note that the combination of a Packer definitions from `vars`, `templates`
+and the `provision` scripts is what defines a given minion. For instance, a minion
+may be defined as `centos7-java-builder`_ which is a combination of Packer OS image
+definitions from `vars/centos.json`_, Packer template definitions from
+`templates/java-buidler.json` and spinup scripts from `provision/java-builder.sh`_.
+This combination provides the full definition of the realized minion.
+
+Jenkins starts a minion using the latest image which is built and linked into the
+Jenkins configuration. Once the base instance is online Jenkins checks out the
+RelEng/Builder repo on it and executes two scripts. The first is
+`provision/baseline.sh`_, which is a baseline for all of the minions.
+
+The second is the specialized script, which handles any system updates,
+new software installs or extra environment tweaks that don't make sense in a
+snapshot. Examples could include installing new package or setting up a virtual
+environment. Its imperative to ensure modifications to these spinup scripts have
+considered time taken to install the packages, as this could increase the build
+time for every job which runs on the image. After all of these scripts have
+executed Jenkins will finally attach the minion as an actual minion and start
+handling jobs on it.
 
 Pool: ODLRPC
 ^^^^^^^^^^^^^^^^^^^
