@@ -514,11 +514,20 @@
             settings-type: cfp
             global-settings: 'odl-global-settings'
             global-settings-type: cfp
+        - maven-target:
+            maven-version: '{mvn33}'
+            # We should switch to the recommended configuration of sonar once
+            # JJB adds support for configurating the Sonar wrapper:
+            #    http://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner+for+Jenkins
+            goals: 'sonar:sonar -V -B -Djenkins -Dsonar -Dsonar.host.url=https://sonar.opendaylight.org -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+            maven-opts:
+              - '{mvn-opts}'
+            settings: '{mvn-settings}'
+            settings-type: cfp
+            global-settings: 'odl-global-settings'
+            global-settings-type: cfp
 
     publishers:
-        - sonar:
-            language: 'java'
-            maven-opts: '-Xmx6144m -XX:MaxPermSize=1024m'
         - email-notification:
             email-prefix: '[{project-name}]'
         - jacoco-report
