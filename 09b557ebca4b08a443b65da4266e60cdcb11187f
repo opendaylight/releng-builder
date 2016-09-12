@@ -16,6 +16,29 @@
       "revId": "09b557ebca4b08a443b65da4266e60cdcb11187f",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_93852109",
+        "filename": "jjb/integration/include-raw-integration-deploy-controller-run-test.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2016-09-12T13:11:51Z",
+      "side": 1,
+      "message": "This file only appears upon installation of odl-infrautils-counters feature. At this point of the script, ODL has not been started yet, so the sed command would fail.\n\nAlso, not every csit job would want to have counters logged, for example in performance testing.\n\nI recommend to edit this file during Robot test run.",
+      "range": {
+        "startLine": 119,
+        "startChar": 38,
+        "endLine": 119,
+        "endChar": 67
+      },
+      "revId": "09b557ebca4b08a443b65da4266e60cdcb11187f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
