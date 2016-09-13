@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a6b29fe_244cc1c7",
+        "filename": "jjb/releng-jobs.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2016-09-13T14:59:22Z",
+      "side": 1,
+      "message": "Minor nitpick but I\u0027d prefer to see new lines between clearly defined sections / blocks so that they stand out a bit more. Similar to what you did with the job-template below.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 4
+      },
+      "revId": "ee59d7d8bf8f5e313c5fd5d0657090dfc6e0fec2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_a4cf3128",
+        "filename": "jjb/releng-jobs.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2016-09-13T14:59:22Z",
+      "side": 1,
+      "message": "Let\u0027s make this 14 days just in case. Since we\u0027re no longer archiving files in Jenkins things are a bit faster now so 14 days of past logs should be safe.",
+      "range": {
+        "startLine": 318,
+        "startChar": 20,
+        "endLine": 318,
+        "endChar": 21
+      },
+      "revId": "ee59d7d8bf8f5e313c5fd5d0657090dfc6e0fec2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_44f57d55",
+        "filename": "jjb/releng-jobs.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2016-09-13T14:59:22Z",
+      "side": 1,
+      "message": "Instead of defining your own git scm you should be able to use the pre-existing macro \"- gerrit-trigger-scm\" (see the releng-macros file)",
+      "range": {
+        "startLine": 328,
+        "startChar": 7,
+        "endLine": 328,
+        "endChar": 14
+      },
+      "revId": "ee59d7d8bf8f5e313c5fd5d0657090dfc6e0fec2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_e403e93f",
+        "filename": "jjb/releng-jobs.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2016-09-13T14:59:22Z",
+      "side": 1,
+      "message": "This job is verify-packer so we don\u0027t need packer-build. There should be a merge-packer job that has the packer-validate \u0026 packer-build.",
+      "range": {
+        "startLine": 369,
+        "startChar": 8,
+        "endLine": 369,
+        "endChar": 23
+      },
+      "revId": "ee59d7d8bf8f5e313c5fd5d0657090dfc6e0fec2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_c4006d36",
+        "filename": "jjb/releng-macros.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2016-09-13T14:59:22Z",
+      "side": 1,
+      "message": "I think instead of installing this here we should bake it into the image so that if hashicorp\u0027s website goes down our builds don\u0027t fail. Can you move the install steps to the image bootstrap script?",
+      "range": {
+        "startLine": 397,
+        "startChar": 8,
+        "endLine": 403,
+        "endChar": 66
+      },
+      "revId": "ee59d7d8bf8f5e313c5fd5d0657090dfc6e0fec2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
