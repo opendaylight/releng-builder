@@ -390,3 +390,29 @@
             single-use: True
         - openstack:
             single-use: True
+
+- builder:
+    name: packer-validate
+    builders:
+        - config-file-provider:
+            files:
+                - file-id: 'packer-cloud-env'
+                  variable: 'CLOUDENV'
+        - shell: |
+            cd packer
+            export PACKER_LOG="yes" && \
+            export PACKER_LOG_PATH="packer-validate.log" && \
+                        packer.io validate -var-file=$CLOUDENV \
+                         -var-file=../packer/vars/{platform}.json \
+                         ../packer/templates/{template}.json
+
+- builder:
+    name: packer-build
+    builders:
+        - shell: |
+            cd packer
+            export PACKER_LOG="yes" && \
+            export PACKER_LOG_PATH="packer-build.log" && \
+                        packer.io build -var-file=$CLOUDENV \
+                         -var-file=../packer/vars/{platform}.json \
+                         ../packer/templates/{template}.json
