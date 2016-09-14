@@ -30,4 +30,10 @@ for module in $modules; do
     popd
 done
 
+tar cvzf all-bundles.tar.gz `find $PATCH_DIR -type f -print0 \
+                          | xargs -0r file
+                          | egrep -e ':.*Git bundle.*'
+                          | cut -d: -f1`
+rm $PATCH_DIR/*.bundle
+
 ./scripts/fix-relativepaths.sh

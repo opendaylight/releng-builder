@@ -68,6 +68,8 @@ if [ ! -z "${{ARCHIVE_ARTIFACTS}}" ]; then
     shopt -u globstar  # Disable globstar once archives are copied
     popd
 fi
+
+
 # Ignore logging if archives doesn't exist
 mv $WORKSPACE/archives/ $ARCHIVES_DIR > /dev/null 2>&1
 touch $ARCHIVES_DIR/_build-details.txt
