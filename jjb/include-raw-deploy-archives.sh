@@ -68,6 +68,8 @@ if [ ! -z "${{ARCHIVE_ARTIFACTS}}" ]; then
     shopt -u globstar  # Disable globstar once archives are copied
     popd
 fi
+
+
 # Ignore logging if archives doesn't exist
 mv $WORKSPACE/archives/ $ARCHIVES_DIR > /dev/null 2>&1
 touch $ARCHIVES_DIR/_build-details.txt
@@ -97,6 +99,13 @@ find $ARCHIVES_DIR -type f -print0 \
                 | egrep -e ':.*text.*' \
                 | cut -d: -f1 \
                 | xargs -d'\n' -r gzip
+
+if [ -d $WORKSPACE/archives/patches ]; then
+    tar cvzf all-patches.tar.gz `find $WORKSPACE/archives/patches -type f -print0 \
+                          | xargs -0r file
+                          | egrep -e ':.*Git bundle.*'
+                          | cut -d: -f1`
+fi
 
 zip -r archives.zip $JENKINS_HOSTNAME/
 du -sh archives.zip
