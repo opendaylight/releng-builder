@@ -384,14 +384,14 @@
     parameters:
         - opendaylight-infra-parameters:
             project: '{project}'
-            branch: '{branch}'
-            refspec: 'refs/heads/{branch}'
+            branch: 'master'
+            refspec: 'refs/heads/master'
             artifacts: '{archive-artifacts}'
 
     scm:
         - gerrit-trigger-scm:
-            refspec: '$GERRIT_REFSPEC'
-            choosing-strategy: 'gerrit'
+            refspec: ''
+            choosing-strategy: 'default'
 
     wrappers:
         - opendaylight-infra-wrappers:
@@ -401,21 +401,15 @@
         - gerrit:
             server-name: 'OpenDaylight'
             trigger-on:
-                - patchset-created-event:
-                    exclude-drafts: 'true'
-                    exclude-trivial-rebase: 'false'
-                    exclude-no-code-change: 'true'
-                - draft-published-event
+                - change-merged-event
                 - comment-added-contains-event:
-                    comment-contains-value: 'recheck'
-                - comment-added-contains-event:
-                    comment-contains-value: 'reverify'
+                    comment-contains-value: 'remerge'
             projects:
               - project-compare-type: 'ANT'
-                project-pattern: '{project}'
+                project-pattern: 'releng/builder'
                 branches:
-                  - branch-compare-type: 'ANT'
-                    branch-pattern: '**/{branch}'
+                    - branch-compare-type: 'ANT'
+                      branch-pattern: '**/master'
                 file-paths:
                     - compare-type: ANT
                       pattern: 'packer/**'
