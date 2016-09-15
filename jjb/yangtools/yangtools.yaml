@@ -109,42 +109,6 @@
     archive-artifacts: ''
 
 - project:
-    name: yangtools-stable-lithium
-    jobs:
-        - '{project-name}-clm-{stream}'
-        - '{project-name}-distribution-{stream}'
-        - '{project-name}-distribution-check-{stream}'
-        - '{project-name}-integration-{stream}'
-        - '{project-name}-merge-{stream}'
-        - '{project-name}-periodic-{stream}'
-        - '{project-name}-validate-autorelease-{stream}'
-        - '{project-name}-verify-{stream}-{maven}-{jdks}'
-
-    stream:
-        - stable-lithium:
-            disable_autorelease: True
-            disable_distribution_check: True
-
-    project: 'yangtools'
-    project-name: 'yangtools'
-    branch: 'stable/lithium'
-    jdk: openjdk7
-    jdks:
-        - openjdk7
-        - openjdk8
-    maven:
-        - mvn31:
-            mvn-version: '{mvn31}'
-        - mvn32:
-            mvn-version: '{mvn32}'
-    mvn-settings: 'yangtools-settings'
-    mvn-goals: 'clean install'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: 'odlparent-merge-{stream}'
-    email-upstream: '[yangtools] [odlparent]'
-    archive-artifacts: ''
-
-- project:
     name: yangtools-sonar
     jobs:
         - '{project-name}-sonar'

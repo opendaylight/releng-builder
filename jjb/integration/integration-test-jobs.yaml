@@ -170,48 +170,6 @@
                 vtn-csit-1node-manager-all-{stream},
                 vtn-csit-1node-coordinator-only-{stream}
 
-        - stable-lithium:
-            branch: 'stable/lithium'
-            jdk: 'openjdk7'
-            jre: 'openjdk7'
-            csit-list: >
-                aaa-csit-1node-authn-only-{stream},
-                aaa-csit-1node-authn-all-{stream},
-                bgpcep-csit-1node-userfeatures-only-{stream},
-                bgpcep-csit-1node-userfeatures-all-{stream},
-                capwap-csit-1node-ac-only-{stream},
-                capwap-csit-1node-ac-all-{stream},
-                controller-csit-3node-clustering-only-{stream},
-                integration-distribution-offline-{stream},
-                l2switch-csit-1node-switch-only-{stream},
-                l2switch-csit-1node-switch-all-{stream},
-                l2switch-csit-1node-scalability-only-{stream},
-                l2switch-csit-1node-scalability-all-{stream},
-                lispflowmapping-csit-1node-all-only-{stream},
-                lispflowmapping-csit-1node-all-all-{stream},
-                netconf-csit-1node-userfeatures-all-{stream},
-                netconf-csit-1node-userfeatures-only-{stream},
-                netvirt-csit-1node-openstack-basic-only-{stream},
-                netvirt-csit-1node-openstack-basic-all-{stream},
-                nic-csit-1node-basic-all-{stream},
-                nic-csit-1node-basic-only-{stream},
-                openflowplugin-csit-1node-flow-services-only-{stream},
-                openflowplugin-csit-1node-flow-services-all-{stream},
-                openflowplugin-csit-1node-scalability-only-{stream},
-                openflowplugin-csit-1node-cbench-performance-only-{stream},
-                openflowplugin-csit-1node-config-performance-only-{stream},
-                ovsdb-csit-1node-southbound-only-{stream},
-                ovsdb-csit-1node-southbound-all-{stream},
-                snmp-csit-1node-basic-only-{stream},
-                snmp-csit-1node-basic-all-{stream},
-                usc-csit-1node-channel-only-{stream},
-                usc-csit-1node-channel-all-{stream},
-                vpnservice-csit-1node-vpnservice-only-{stream},
-                vpnservice-csit-1node-vpnservice-all-{stream},
-                vtn-csit-1node-manager-li-only-{stream},
-                vtn-csit-1node-manager-li-all-{stream},
-                vtn-csit-1node-coordinator-only-{stream}
-
 
 # Template: integration-csit-verify-1node-library
 # Goal: Verify changes in csit folder not covered by projects suite verify jobs (e.g. libraries or variables)

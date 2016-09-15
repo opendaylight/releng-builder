@@ -99,37 +99,6 @@
     archive-artifacts: ''
 
 - project:
-    name: tsdr-lithium
-    jobs:
-        - '{project-name}-clm-{stream}'
-        - '{project-name}-distribution-{stream}'
-        - '{project-name}-distribution-check-{stream}'
-        - '{project-name}-integration-{stream}'
-        - '{project-name}-merge-{stream}'
-        - '{project-name}-periodic-{stream}'
-        - '{project-name}-validate-autorelease-{stream}'
-        - '{project-name}-verify-{stream}-{maven}-{jdks}'
-    stream:
-        - stable-lithium:
-            disable_autorelease: True
-            disable_distribution_check: True
-    project: 'tsdr'
-    project-name: 'tsdr'
-    branch: 'stable/lithium'
-    jdk: openjdk7
-    jdks:
-        - openjdk7
-    maven:
-        - mvn33:
-            mvn-version: '{mvn33}'
-    mvn-settings: 'tsdr-settings'
-    mvn-goals: 'clean install javadoc:aggregate -DrepoBuild'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: ''
-    email-upstream: '[tsdr]'
-    archive-artifacts: ''
-
-- project:
     name: tsdr-sonar
     jobs:
         - '{project-name}-sonar'
