@@ -14,9 +14,6 @@
         - beryllium:
             branch: 'stable/beryllium'
             jre: 'openjdk7'
-        - stable-lithium:
-            branch: 'stable/lithium'
-            jre: 'openjdk7'
 
     install:
         - only:
@@ -30,4 +27,3 @@
 
     # Trigger jobs (upstream dependencies)
     trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream},openflowjava-distribution-{stream},openflowplugin-distribution-{stream}'
-
