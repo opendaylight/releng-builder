@@ -3,8 +3,8 @@
     jobs:
         - 'sfc-verify-python-{stream}'
 
-    # stream:    release stream (eg. stable-lithium or beryllium)
-    # branch:    git branch (eg. stable/lithium or master)
+    # stream:    release stream (eg. stable-boron or beryllium)
+    # branch:    git branch (eg. stable/boron or master)
     stream:
         - carbon:
             branch: 'master'
@@ -23,8 +23,8 @@
     # The purpose of this job template is to setup a ODL verify job
     #
     # Required Variables:
-    #     stream:    release stream (eg. stable-lithium or beryllium)
-    #     branch:    git branch (eg. stable/lithium or master)
+    #     stream:    release stream (eg. stable-boron or beryllium)
+    #     branch:    git branch (eg. stable/boron or master)
 
     project-type: freestyle
     node: centos7-java-builder-2c-8g
