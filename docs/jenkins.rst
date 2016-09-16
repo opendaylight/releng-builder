@@ -735,16 +735,20 @@ overrided via the opendaylight-infra-wrappers' build-timeout property.
       </tr>
 
       <tr class="warning">
-        <td><b>Job Template</b><br/>{project}-verify-python-{stream}</td>
+        <td><b>Job Template</b><br/>{project}-verify-python-{stream} | {project}-verify-tox-{stream}</td>
         <td><b>Gerrit Trigger</b><br/>recheck | reverify</td>
       </tr>
       <tr>
         <td colspan="2">
-          This job template can be used by a project that contains Python. It
+          This job template can be used by a project that uses Tox to build. It
           simply installs a Python virtualenv and uses tox to run the tests
           defined in the project's tox.ini file. If the tox.ini is anywhere
           other than the project's repo root, the path to its directory
           relative to the project's repo root should be passed as {toxdir}.
+
+          The 2 template names verify-python & verify-tox are identical and are
+          aliases to each other. This allows the project to use the naming that
+          is most reasonable for them.
         </td>
       </tr>
 
