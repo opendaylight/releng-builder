@@ -108,16 +108,11 @@
         - opendaylight-infra-shiplogs:
             maven-version: '{mvn33}'
 
-# Python Related
+# Generic tox-based verify action
 
-- job-template:
-    name: '{project-name}-verify-python-{stream}'
+- tox_builder_verify: &tox_builder_verify
+    name: tox_builder_verify
 
-    # Job template for python verify jobs
-    #
-    # The purpose of this job template is to run tox for projects using this
-    # template.
-    #
     # Required Variables:
     #     stream:    release stream (eg. stable-lithium or beryllium)
     #     branch:    git branch (eg. stable/lithium or master)
@@ -130,9 +125,6 @@
 
     logrotate:
         daysToKeep: '7'
-        numToKeep: '-1'
-        artifactDaysToKeep: '-1'
-        artifactNumToKeep: '-1'
 
     parameters:
         - opendaylight-infra-parameters:
@@ -163,7 +155,7 @@
                 - patchset-created-event:
                     exclude-drafts: 'true'
                     exclude-trivial-rebase: 'false'
-                    exclude-no-code-change: 'true'
+                    exclude-no-code-change: 'false'
                 - draft-published-event
                 - comment-added-contains-event:
                     comment-contains-value: 'recheck'
@@ -194,6 +186,40 @@
             email-prefix: '[{project}]'
         - opendaylight-infra-shiplogs:
             maven-version: '{mvn33}'
+
+- job-template:
+    name: '{project-name}-verify-tox-{stream}'
+
+    # Job template for verify jobs executing tox envlist
+    #
+    # The purpose of this job template is to run tox for projects using this
+    # template.
+    #
+    # Required Variables:
+    #     stream:    release stream (eg. stable-lithium or beryllium)
+    #     branch:    git branch (eg. stable/lithium or master)
+    #     toxdir:    directory containing the project's tox.ini relative to
+    #                the workspace. Empty works if tox.ini is at project root.
+
+    <<: *tox_builder_verify
+
+# Python (pep8) specific, project should migrate to {project-name}-verify-tox-{stream}
+
+- job-template:
+    name: '{project-name}-verify-python-{stream}'
+
+    # Job template for python verify jobs
+    #
+    # The purpose of this job template is to run tox for projects using this
+    # template.
+    #
+    # Required Variables:
+    #     stream:    release stream (eg. stable-lithium or beryllium)
+    #     branch:    git branch (eg. stable/lithium or master)
+    #     toxdir:    directory containing the project's tox.ini relative to
+    #                the workspace. Empty works if tox.ini is at project root.
+
+    <<: *tox_builder_verify
 
 - job-template:
     name: '{project-name}-merge-rtd-{stream}'
