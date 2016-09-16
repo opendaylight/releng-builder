@@ -1,7 +1,7 @@
 - project:
     name: integration-test
     jobs:
-        - '{project-name}-verify-python-{stream}'
+        - '{project-name}-verify-{toxenv}-{stream}'
         - 'integration-csit-verify-1node-library'
         - 'integration-distribution-test-{stream}'
         - 'integration-patch-test-{stream}'
@@ -9,6 +9,8 @@
 
     project: integration/test
     project-name: integration-test
+    toxenv:
+        - pep8
 
     stream:
         - carbon:
