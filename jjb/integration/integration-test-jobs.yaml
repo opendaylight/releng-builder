@@ -1,7 +1,7 @@
 - project:
     name: integration-test
     jobs:
-        - '{project-name}-verify-python-{stream}'
+        - '{project-name}-verify-tox-{stream}'
         - 'integration-csit-verify-1node-library'
         - 'integration-distribution-test-{stream}'
         - 'integration-patch-test-{stream}'
