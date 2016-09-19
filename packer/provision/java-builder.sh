@@ -4,7 +4,7 @@
 
 # The following packages are not needed by all projects, but they are
 # needed by enough to make them useful everywhere
-yum install -q -y @development perl-{Digest-SHA,ExtUtils-MakeMaker} \
+yum install -y @development perl-{Digest-SHA,ExtUtils-MakeMaker} \
     ant {boost,gtest,json-c,libcurl,libxml2,libvirt,openssl}-devel \
     {readline,unixODBC}-devel yum-utils
 
@@ -22,21 +22,21 @@ yum install -y sshpass
 # requesting the following be installed (note the kernel headers are
 # going to be the x86_64 package as there aren't separate 32bit and
 # x86_64 packages for them
-yum install -q -y glibc-devel.i686 kernel-headers
+yum install -y glibc-devel.i686 kernel-headers
 
 # The following is needed by opendove, if this is to be perfomed against
 # an EL6 system some of these packages are not availalble (or at the
 # wrong version) in publically available repositories as such this
 # should only really be done on an EL7 (or F18+) system
-yum install -q -y {jansson,libevent,libnl,libuuid}-devel
+yum install -y {jansson,libevent,libnl,libuuid}-devel
 
 #The following is needed for the vsemprovider build in vtn project.
 #these packages will enable C# compilation.
 rpm --import "http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF"
 #Added the mono tools repository
-yum-config-manager -q -y --add-repo http://download.mono-project.com/repo/centos/
+yum-config-manager -y --add-repo http://download.mono-project.com/repo/centos/
 #install the mono toolchain and nuget
-yum -q -y install mono-complete-4.2.3.4 nuget-2.8.7
+yum -y install mono-complete-4.2.3.4 nuget-2.8.7+md510+dhx1
 #end changes for vsemprovider in VTN
 
 # The following installs hashicorp's packer binary which is required  for
