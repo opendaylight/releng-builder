@@ -1,0 +1,38 @@
+- project:
+    name: netconf-csit-cluster-stress
+    jobs:
+        - '{project}-csit-3node-{functionality}-{install}-{stream}'
+
+    # The project name
+    project: 'netconf'
+
+    # The functionality under test
+    functionality: 'cluster-stress'
+
+    # Project branches
+    stream:
+        - carbon:
+            branch: 'master'
+            jre: 'openjdk8'
+        - boron:
+            branch: 'stable/boron'
+            jre: 'openjdk8'
+        - beryllium:
+            branch: 'stable/beryllium'
+            jre: 'openjdk7'
+
+    install:
+        - only:
+            scope: 'only'
+        - all:
+            scope: 'all'
+
+    # Features to install
+    # Netconf clustered feature is installed at runtime.
+    install-features: 'odl-netconf-ssh,odl-restconf,odl-jolokia'
+
+    # Robot custom options
+    robot-options: '-v USE_NETCONF_CONNECTOR:False'
+
+    # Trigger jobs (upstream dependencies)
+    trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream},netconf-distribution-{stream},integration-distribution-merge-{stream}'
