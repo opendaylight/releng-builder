@@ -66,7 +66,7 @@
     #     stream:    release stream (eg. stable-lithium or beryllium)
     #     branch:    git branch (eg. stable/lithium or master)
 
-    project-type: maven
+    project-type: freestyle
     node: '{build-node}'
     jdk: '{jdk}'
 
@@ -97,28 +97,34 @@
             jobs: '{project}-merge-{stream}'
             result: 'success'
 
-    prebuilders:
+    builders:
         - provide-maven-settings:
             global-settings-file: 'odl-global-settings'
             settings-file: '{mvn-settings}'
-
-    maven:
-        maven-name: '{mvn33}'
-        root-pom: 'pom.xml'
-        goals: 'clean install dependency:tree -DoutputFile=dependency_tree.txt -V -B -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
-        maven-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
-        settings: 'integration-distribution-settings'
-        settings-type: cfp
-        global-settings: 'odl-global-settings'
-        global-settings-type: cfp
+        - maven-target:
+            maven-version: '{mvn33}'
+            pom: 'pom.xml'
+            goals: 'clean install dependency:tree -DoutputFile=dependency_tree.txt -V -B -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+            java-opts:
+              - '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
+            settings: 'integration-distribution-settings'
+            settings-type: cfp
+            global-settings: 'odl-global-settings'
+            global-settings-type: cfp
+        - maven-target:
+            maven-version: '{mvn33}'
+            pom: 'pom.xml'
+            goals: 'validate jar:jar deploy:deploy -V -B -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+            java-opts:
+              - '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
+            settings: 'integration-distribution-settings'
+            settings-type: cfp
+            global-settings: 'odl-global-settings'
+            global-settings-type: cfp
 
     publishers:
         - email-notification:
             email-prefix: '[{project}]'
-        - maven-deploy:
-            id: ''
-            unique-version: true
-            deploy-unstable: false
         - opendaylight-infra-shiplogs:
             maven-version: '{mvn33}'
 
