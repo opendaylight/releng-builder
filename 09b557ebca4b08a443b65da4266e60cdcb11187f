@@ -39,6 +39,30 @@
       "revId": "09b557ebca4b08a443b65da4266e60cdcb11187f",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_82ac948d",
+        "filename": "jjb/integration/include-raw-integration-deploy-controller-run-test.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2016-09-19T18:24:59Z",
+      "side": 1,
+      "message": "All valid points, Vratko.\n\nDavid, I think this is probably something we could do as a configplan for the relevant jobs that want counters.  I did\nsomething recently for netvirt.  you point your job to a script.  so, here is the pointer:\n\nhttps://github.com/opendaylight/integration-test/blob/master/csit/configplans/netvirt-vpnservice-1node-openstack.txt\n\nhere is the script:\n\nhttps://github.com/opendaylight/integration-test/blob/master/csit/scripts/set_sg_mode.sh\n\nthis is done before ODL starts so the config file is not there yet, so it\u0027s manually copying the right file to the right place and then modifying some config.\n\njust an idea.  doing it from robot would work too, although I think you would have to restart ODL, right?",
+      "parentUuid": "7a6b29fe_93852109",
+      "range": {
+        "startLine": 119,
+        "startChar": 38,
+        "endLine": 119,
+        "endChar": 67
+      },
+      "revId": "09b557ebca4b08a443b65da4266e60cdcb11187f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
