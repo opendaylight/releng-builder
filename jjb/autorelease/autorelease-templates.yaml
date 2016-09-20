@@ -166,7 +166,7 @@
 
     # This job's purpose is to publish maven site
 
-    project-type: maven
+    project-type: freestyle
 
     logrotate:
         daysToKeep: 7
@@ -195,15 +195,17 @@
         name: '{project}'
         branch: '{branch}'
 
-    maven:
-        maven-name: '{mvn33}'
-        root-pom: 'site.xml'
-        goals: 'site:site site:deploy -Dstream={stream}'
-        maven-opts: '-Xmx1024m'
-        settings: 'autorelease-settings'
-        settings-type: cfp
-        global-settings: 'odl-global-settings'
-        global-settings-type: cfp
+    builders:
+        - maven-target:
+              maven-version: '{mvn33}'
+              pom: 'site.xml'
+              goals: 'site:site site:deploy -Dstream={stream}'
+              java-opts:
+                - '-Xmx1024m'
+              settings: 'autorelease-settings'
+              settings-type: cfp
+              global-settings: 'odl-global-settings'
+              global-settings-type: cfp
 
     publishers:
     - email-notification:
