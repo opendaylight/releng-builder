@@ -24,13 +24,13 @@
 
     # Job images
     controller-image: 'centos7-java-builder-4c-8g'
-    mininet-image: 'ubuntu-trusty-mininet-ovs-23-2c-2g'
+    mininet-image: 'ubuntu-trusty-mininet-ovs-25-2c-2g'
 
     # Features to install
     install-features: 'odl-openflowplugin-flow-services-ui,odl-openflowplugin-app-bulk-o-matic,odl-jolokia,decanter-collector-jmx,decanter-appender-elasticsearch'
 
     # Robot custom options
-    robot-options: '-v ODL_OF_PLUGIN:lithium'
+    robot-options: '-v ODL_OF_PLUGIN:lithium -v switch_count:32 -v flow_count_per_switch:2000'
 
     # Trigger jobs (daily)
     schedule: 'H H * * *'
