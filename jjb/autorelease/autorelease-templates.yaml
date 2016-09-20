@@ -74,15 +74,15 @@
             cp *.log *.prop $_
 
     publishers:
-    - email-notification:
-        email-prefix: '[autorelease]'
-    - trigger-parameterized-builds:
-        - project: 'integration-distribution-test-{integration-test}'
-          condition: UNSTABLE_OR_BETTER
-          property-file: variables.prop
-          fail-on-missing: true
-    - opendaylight-infra-shiplogs:
-        maven-version: '{mvn33}'
+        - email-notification:
+            email-prefix: '[autorelease]'
+        - trigger-parameterized-builds:
+            - project: 'integration-distribution-test-{integration-test}'
+              condition: UNSTABLE_OR_BETTER
+              property-file: variables.prop
+              fail-on-missing: true
+        - opendaylight-infra-shiplogs:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'autorelease-project-report-{stream}'
@@ -134,18 +134,18 @@
         - autorelease-sys-stats
 
     publishers:
-    - email-ext:
-        attachments: 'project-reports/*.log'
-        recipients: 'skitt@redhat.com thanh.ha@linuxfoundation.org'
-        reply-to: dev@lists.opendaylight.org
-        content-type: default
-        subject: '[releng] ODL {stream} project report for ${{ENV, var="DATE"}}'
-        body: |
-            This is a project report generated on $DATE listing the commit
-            history of ODL projects for the past week. See attached
-            git-report.log
+        - email-ext:
+            attachments: 'project-reports/*.log'
+            recipients: 'skitt@redhat.com thanh.ha@linuxfoundation.org'
+            reply-to: dev@lists.opendaylight.org
+            content-type: default
+            subject: '[releng] ODL {stream} project report for ${{ENV, var="DATE"}}'
+            body: |
+                This is a project report generated on $DATE listing the commit
+                history of ODL projects for the past week. See attached
+                git-report.log
 
             Archive also available on Jenkins at $BUILD_URL
-        always: true
-    - opendaylight-infra-shiplogs:
-        maven-version: '{mvn33}'
+            always: true
+        - opendaylight-infra-shiplogs:
+            maven-version: '{mvn33}'
