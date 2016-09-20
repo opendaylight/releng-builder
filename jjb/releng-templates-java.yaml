@@ -314,7 +314,7 @@
     #     stream:    release stream (eg. stable-lithium or beryllium)
     #     branch:    git branch (eg. stable/lithium or master)
 
-    project-type: maven
+    project-type: freestyle
     node: '{build-node}'
     jdk: '{jdk}'
 
@@ -346,23 +346,29 @@
             name: '{project}'
             branch: '{branch}'
 
-    prebuilders:
+    builders:
         - jacoco-nojava-workaround
         - provide-maven-settings:
             global-settings-file: 'odl-global-settings'
             settings-file: '{mvn-settings}'
-
-    maven:
-        maven-name: '{mvn33}'
-        goals: '{mvn-goals} -V -B -Djenkins -Dmerge -Dstream={stream} -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
-        maven-opts: '{mvn-opts}'
-        settings: '{mvn-settings}'
-        settings-type: cfp
-        global-settings: 'odl-global-settings'
-        global-settings-type: cfp
-        post-step-run-condition: UNSTABLE
-
-    postbuilders:
+        - maven-target:
+            maven-version: '{mvn33}'
+            goals: '{mvn-goals} -V -B -Djenkins -Dmerge -Dstream={stream} -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+            java-opts:
+              - '{mvn-opts}'
+            settings: '{mvn-settings}'
+            settings-type: cfp
+            global-settings: 'odl-global-settings'
+            global-settings-type: cfp
+        - maven-target:
+            maven-version: '{mvn33}'
+            goals: 'validate jar:jar deploy:deploy -V -B -Djenkins -Dmerge -Dstream={stream} -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+            java-opts:
+              - '{mvn-opts}'
+            settings: '{mvn-settings}'
+            settings-type: cfp
+            global-settings: 'odl-global-settings'
+            global-settings-type: cfp
         - conditional-step:
             condition-kind: file-exists
             condition-filename: deploy-site.xml
@@ -396,17 +402,11 @@
                 global-settings: 'odl-global-settings'
                 global-settings-type: cfp
 
-    reporters:
-        - findbugs
-
     publishers:
         - email-notification:
             email-prefix: '[{project-name}]'
-        - maven-deploy:
-            id: ''
-            unique-version: true
-            deploy-unstable: false
         - jacoco-report
+        - findbugs
         - opendaylight-infra-shiplogs:
             maven-version: '{mvn33}'
 
