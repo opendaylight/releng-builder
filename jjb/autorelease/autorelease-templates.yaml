@@ -78,15 +78,15 @@
             cp *.log *.prop $_
 
     publishers:
-    - email-notification:
-        email-prefix: '[autorelease]'
-    - trigger-parameterized-builds:
-        - project: 'integration-distribution-test-{integration-test}'
-          condition: UNSTABLE_OR_BETTER
-          property-file: variables.prop
-          fail-on-missing: true
-    - opendaylight-infra-shiplogs:
-        maven-version: '{mvn33}'
+        - email-notification:
+            email-prefix: '[autorelease]'
+        - trigger-parameterized-builds:
+            - project: 'integration-distribution-test-{integration-test}'
+              condition: UNSTABLE_OR_BETTER
+              property-file: variables.prop
+              fail-on-missing: true
+        - opendaylight-infra-shiplogs:
+            maven-version: '{mvn33}'
 
 - job-template:
     name: 'autorelease-project-report-{stream}'
@@ -138,21 +138,21 @@
         - autorelease-sys-stats
 
     publishers:
-    - email-ext:
-        attachments: 'project-reports/*.log'
-        recipients: 'skitt@redhat.com thanh.ha@linuxfoundation.org'
-        reply-to: dev@lists.opendaylight.org
-        content-type: default
-        subject: '[releng] ODL {stream} project report for ${{ENV, var="DATE"}}'
-        body: |
-            This is a project report generated on $DATE listing the commit
-            history of ODL projects for the past week. See attached
-            git-report.log
+        - email-ext:
+            attachments: 'project-reports/*.log'
+            recipients: 'skitt@redhat.com thanh.ha@linuxfoundation.org'
+            reply-to: dev@lists.opendaylight.org
+            content-type: default
+            subject: '[releng] ODL {stream} project report for ${{ENV, var="DATE"}}'
+            body: |
+                This is a project report generated on $DATE listing the commit
+                history of ODL projects for the past week. See attached
+                git-report.log
 
-            Archive also available on Jenkins at $BUILD_URL
-        always: true
-    - opendaylight-infra-shiplogs:
-        maven-version: '{mvn33}'
+                Archive also available on Jenkins at $BUILD_URL
+            always: true
+        - opendaylight-infra-shiplogs:
+            maven-version: '{mvn33}'
 
 ###
 ### Maven Sites
@@ -182,18 +182,18 @@
             artifacts: '{archive-artifacts}'
 
     scm:
-    - gerrit-trigger-scm:
-        refspec: ''
-        choosing-strategy: 'default'
+        - gerrit-trigger-scm:
+            refspec: ''
+            choosing-strategy: 'default'
 
     wrappers:
         - opendaylight-infra-wrappers:
             build-timeout: '{build-timeout}'
 
     triggers:
-    - autorelease-trigger-patch-site-merged:
-        name: '{project}'
-        branch: '{branch}'
+        - autorelease-trigger-patch-site-merged:
+            name: '{project}'
+            branch: '{branch}'
 
     maven:
         maven-name: '{mvn33}'
@@ -206,8 +206,8 @@
         global-settings-type: cfp
 
     publishers:
-    - email-notification:
-        email-prefix: '[releng]'
+        - email-notification:
+            email-prefix: '[releng]'
 
 - job-template:
     name: 'autorelease-site-verify-{stream}'
@@ -233,18 +233,18 @@
             artifacts: '{archive-artifacts}'
 
     scm:
-    - gerrit-trigger-scm:
-        refspec: '$GERRIT_REFSPEC'
-        choosing-strategy: 'gerrit'
+        - gerrit-trigger-scm:
+            refspec: '$GERRIT_REFSPEC'
+            choosing-strategy: 'gerrit'
 
     wrappers:
         - opendaylight-infra-wrappers:
             build-timeout: '{build-timeout}'
 
     triggers:
-    - autorelease-trigger-patch-site-submitted:
-        name: '{project}'
-        branch: '{branch}'
+        - autorelease-trigger-patch-site-submitted:
+            name: '{project}'
+            branch: '{branch}'
 
     maven:
         maven-name: '{mvn33}'
