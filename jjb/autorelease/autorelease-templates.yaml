@@ -63,6 +63,8 @@
               global-settings-type: cfp
         - autorelease-maven-deploy
         - autorelease-get-integration-test-variables
+        - inject:
+            properties-file: variables.prop
         - autorelease-maven-sources:
             maven-version: '{mvn33}'
             settings: 'autorelease-settings'
