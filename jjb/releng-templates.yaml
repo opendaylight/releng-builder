@@ -4,7 +4,7 @@
     # Job template for producing a release candidate by creating a staging repo
     # in Nexus.
 
-    project-type: maven
+    project-type: freestyle
     node: '{build-node}'
     jdk: '{jdk}'
 
@@ -35,25 +35,22 @@
         - opendaylight-infra-wrappers:
             build-timeout: '{build-timeout}'
 
-    prebuilders:
+    builders:
         - wipe-org-opendaylight-repo
         - jacoco-nojava-workaround
         - provide-maven-settings:
             global-settings-file: 'odl-global-settings'
             settings-file: 'autorelease-settings'
-
-    maven:
-        maven-name: '{mvn33}'
-        root-pom: 'pom.xml'
-        goals: 'clean deploy -V -B -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -Djenkins -DaltDeploymentRepository=staging::default::file:hide/from/pom/files/stage'
-        maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-        settings: 'autorelease-settings'
-        settings-type: cfp
-        global-settings: 'odl-global-settings'
-        global-settings-type: cfp
-        post-step-run-condition: UNSTABLE
-
-    postbuilders:
+        - maven-target:
+            maven-version: '{mvn33}'
+            pom: 'pom.xml'
+            goals: 'clean deploy -V -B -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -Djenkins -DaltDeploymentRepository=staging::default::file:hide/from/pom/files/stage'
+            java-opts:
+              - '-Xmx1024m -XX:MaxPermSize=256m'
+            settings: 'autorelease-settings'
+            settings-type: cfp
+            global-settings: 'odl-global-settings'
+            global-settings-type: cfp
         - releng-stage-release
 
     publishers:
