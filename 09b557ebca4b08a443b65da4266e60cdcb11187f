@@ -111,6 +111,30 @@
       "revId": "09b557ebca4b08a443b65da4266e60cdcb11187f",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_c80862dc",
+        "filename": "jjb/integration/include-raw-integration-deploy-controller-run-test.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2016-09-21T15:12:32Z",
+      "side": 1,
+      "message": "\u003e when do you create a script for tests to run,\n\u003e and when do you add it as a parameter to the main template?\n\nParameters to template should be used if they affect Jenkins job configuration itself.\n\nScripts and scriptplans should be used when there are actions to be executed before ODL is started.\n\nAll other things are best to be done from Robot suite. You can use existing Resources and details are visible in log.html file.",
+      "parentUuid": "7a6b29fe_c22e8cfa",
+      "range": {
+        "startLine": 119,
+        "startChar": 38,
+        "endLine": 119,
+        "endChar": 67
+      },
+      "revId": "09b557ebca4b08a443b65da4266e60cdcb11187f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
