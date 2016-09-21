@@ -68,7 +68,7 @@
 
     # Job template for publishing a p2 repo given a URL to a zipped p2repo.
 
-    project-type: maven
+    project-type: freestyle
     node: '{build-node}'
     jdk: '{jdk}'
 
@@ -84,7 +84,7 @@
         - opendaylight-infra-wrappers:
             build-timeout: '{build-timeout}'
 
-    prebuilders:
+    builders:
         - wipe-org-opendaylight-repo
         - jacoco-nojava-workaround
         - releng-fetch-p2zip-if-necessary:
@@ -92,16 +92,12 @@
             settings: '{mvn-settings}'
             global-settings: 'odl-global-settings'
         - releng-generate-p2pom
-
-    maven:
-        maven-name: '{mvn33}'
-        root-pom: 'pom.xml'
-        goals: 'clean deploy -V -B -Dmaven.repo.local=/tmp/r'
-        settings: '{mvn-settings}'
-        global-settings: 'odl-global-settings'
-        post-step-run-condition: UNSTABLE
-
-    postbuilders:
+        - maven-target:
+            maven-version: '{mvn33}'
+            pom: 'pom.xml'
+            goals: 'clean deploy -V -B -Dmaven.repo.local=/tmp/r'
+            settings: '{mvn-settings}'
+            global-settings: 'odl-global-settings'
         - releng-update-p2composite-metadata:
             maven-version: '{mvn33}'
             settings: '{mvn-settings}'
