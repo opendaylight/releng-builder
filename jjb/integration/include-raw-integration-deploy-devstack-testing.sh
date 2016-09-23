@@ -1,3 +1,7 @@
+#@IgnoreInspection BashAddShebang
+# Activate robotframework virtualenv
+# ${ROBOT_VENV} comes from the include-raw-integration-install-robotframework.sh
+# script.
 source ${ROBOT_VENV}/bin/activate
 
 echo "Changing the testplan path..."
