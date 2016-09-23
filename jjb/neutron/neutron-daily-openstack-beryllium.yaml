@@ -37,6 +37,7 @@
     builders:
         - inject:
             properties-content: |
+              # FIXME: Should *-beryllium job set lithium version? Add a comment why.
               ODL_VERSION=lithium-latest
               TEMPEST_REGEX=tempest.api.network
               KARAFFEATURE=odl-neutron-dummyprovider-test

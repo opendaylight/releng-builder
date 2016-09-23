@@ -63,8 +63,8 @@
     name: '{project-name}-distribution-{stream}'
 
     # Required variables:
-    #     stream:    release stream (eg. stable-lithium or beryllium)
-    #     branch:    git branch (eg. stable/lithium or master)
+    #     stream:    release stream (eg. boron or carbon)
+    #     branch:    git branch (eg. stable/boron or master)
 
     # Need to keep jobs that deploy to Nexus at end of build as Maven
     # projects. Maybe reconsider this once upstream moves deploy to a
@@ -243,8 +243,8 @@
     # is successfully built.
     #
     # Required Variables:
-    #     stream:    release stream (eg. stable-lithium or beryllium)
-    #     branch:    git branch (eg. stable/lithium or master)
+    #     stream:    release stream (eg. boron or carbon)
+    #     branch:    git branch (eg. stable/boron or master)
 
     project-type: freestyle
     node: '{build-node}'
@@ -309,8 +309,8 @@
     # and deploy artifacts to Nexus.
     #
     # Required Variables:
-    #     stream:    release stream (eg. stable-lithium or beryllium)
-    #     branch:    git branch (eg. stable/lithium or master)
+    #     stream:    release stream (eg. boron or carbon)
+    #     branch:    git branch (eg. stable/boron or master)
 
     # Need to keep jobs that deploy to Nexus at end of build as Maven
     # projects. Maybe reconsider this once upstream moves deploy to a
@@ -421,8 +421,8 @@
     # builder.
     #
     # Required Variables:
-    #     stream:    release stream (eg. stable-lithium or beryllium)
-    #     branch:    git branch (eg. stable/lithium or master)
+    #     stream:    release stream (eg. boron or carbon)
+    #     branch:    git branch (eg. stable/boron or master)
 
     project-type: freestyle
     node: '{build-node}'
@@ -651,8 +651,8 @@
     # The purpose of this job template is to setup a ODL verify job
     #
     # Required Variables:
-    #     stream:    release stream (eg. stable-lithium or beryllium)
-    #     branch:    git branch (eg. stable/lithium or master)
+    #     stream:    release stream (eg. boron or carbon)
+    #     branch:    git branch (eg. stable/boron or master)
 
     project-type: freestyle
     node: '{build-node}'
