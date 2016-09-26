@@ -27,10 +27,16 @@
     openstack:
         - mitaka:
             openstack-branch: 'stable/mitaka'
-            odl-ml2-version:  'stable/mitaka'
+            odl-ml2-branch:  'stable/mitaka'
+            odl-ml2-driver-version:  'v1'
         - newton:
             openstack-branch: 'stable/newton'
-            odl-ml2-version:  'master'
+            odl-ml2-branch:  'master'
+            odl-ml2-driver-version:  'v1'
+        - newton-nodl-v2:
+            openstack-branch: 'stable/newton'
+            odl-ml2-branch:  'master'
+            odl-ml2-driver-version:  'v2'
 
     openstack-vms: 3
 
