@@ -39,7 +39,9 @@ do
        [ "$p" == "integration" ] || \
        [ "$p" == "net-virt-platform" ] || \
        [ "$p" == "opendove" ] || \
-       [ "$p" == "plugin2oc" ]
+       [ "$p" == "plugin2oc" ] || \
+       # Also ignore projects known to deploy to non-ODL repositories
+       [ "$p" == "yangide" ]
     then
         continue
     fi
