@@ -65,6 +65,11 @@ ODL_MODE=externalodl
 LIBVIRT_TYPE=qemu
 
 EOF
+if [ "${ODL_ML2_MODE}" == "v2" ]; then
+cat >> ${local_conf_file_name} << EOF
+ODL_V2DRIVER=True
+EOF
+fi
 
 if [ "${NUM_ODL_SYSTEM}" -gt 1 ]; then
 odl_list=${ODL_SYSTEM_1_IP}
@@ -109,9 +114,6 @@ disable_service q-l3
 Q_L3_ENABLED=True
 ODL_L3=${ODL_L3}
 PUBLIC_INTERFACE=br100
-[[post-config|\$NEUTRON_CONF]]
-[DEFAULT]
-service_plugins = networking_odl.l3.l3_odl.OpenDaylightL3RouterPlugin
 
 EOF
 fi
