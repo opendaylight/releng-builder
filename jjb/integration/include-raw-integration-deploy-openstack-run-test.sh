@@ -175,6 +175,12 @@ LIBVIRT_TYPE=qemu
 
 EOF
 
+if [ "${ODL_ML2_MODE}" == "v2" ]; then
+cat >> ${local_conf_file_name} << EOF
+ODL_V2DRIVER=True
+EOF
+fi
+
 if [ "${NUM_ODL_SYSTEM}" -gt 1 ]; then
 odl_list=${ODL_SYSTEM_1_IP}
 for i in `seq 2 ${NUM_ODL_SYSTEM}`

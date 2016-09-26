@@ -795,6 +795,10 @@
             default: '{odl-ml2-version}'
             description: 'Version of networking-odl to checkout from the repo'
         - string:
+            name: ODL_ML2_MODE
+            default: '{odl-ml2-mode}'
+            description: 'Mode of networking-odl (v1 or v2)'
+        - string:
             name: ODL_ENABLE_L3_FWD
             default: '{odl-enable-l3}'
             description: 'Enable L3 FWD in ODL for createing br-ex'

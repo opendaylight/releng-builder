@@ -22,9 +22,15 @@
         - mitaka:
             openstack-branch: 'stable/mitaka'
             odl-ml2-version:  'stable/mitaka'
+            odl-ml2-mode:  'v1'
         - newton:
             openstack-branch: 'stable/newton'
             odl-ml2-version:  'master'
+            odl-ml2-mode:  'v1'
+        - newton-v2:
+            openstack-branch: 'stable/newton'
+            odl-ml2-version:  'master'
+            odl-ml2-mode:  'v2'
 
     openstack-vms: 3
 
