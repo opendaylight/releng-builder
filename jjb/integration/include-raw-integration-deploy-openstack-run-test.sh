@@ -58,13 +58,16 @@ SERVICE_TOKEN=service
 SERVICE_PASSWORD=admin
 ADMIN_PASSWORD=admin
 
-enable_plugin networking-odl ${ODL_ML2_DRIVER_REPO} ${ODL_ML2_VERSION}
+enable_plugin networking-odl ${ODL_ML2_DRIVER_REPO} ${ODL_ML2_BRANCH}
 
 ODL_PORT=8080
 ODL_MODE=externalodl
 LIBVIRT_TYPE=qemu
 
 EOF
+if [ "${ODL_ML2_DRIVER_VERSION}" == "v2" ]; then
+    echo "ODL_V2DRIVER=True" >> ${local_conf_file_name}
+fi
 
 if [ "${NUM_ODL_SYSTEM}" -gt 1 ]; then
 odl_list=${ODL_SYSTEM_1_IP}
@@ -109,9 +112,6 @@ disable_service q-l3
 Q_L3_ENABLED=True
 ODL_L3=${ODL_L3}
 PUBLIC_INTERFACE=br100
-[[post-config|\$NEUTRON_CONF]]
-[DEFAULT]
-service_plugins = networking_odl.l3.l3_odl.OpenDaylightL3RouterPlugin
 
 EOF
 fi
@@ -169,7 +169,7 @@ SERVICE_TOKEN=service
 SERVICE_PASSWORD=admin
 ADMIN_PASSWORD=admin
 
-enable_plugin networking-odl ${ODL_ML2_DRIVER_REPO} ${ODL_ML2_VERSION}
+enable_plugin networking-odl ${ODL_ML2_DRIVER_REPO} ${ODL_ML2_BRANCH}
 ODL_MODE=compute
 LIBVIRT_TYPE=qemu
 
