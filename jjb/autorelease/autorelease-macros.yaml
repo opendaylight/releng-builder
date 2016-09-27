@@ -154,6 +154,8 @@
     - shell:
         !include-raw:
             - include-raw-autorelease-get-integration-test-variables.sh
+    - inject:
+        properties-file: variables.prop
 
 - builder:
     name: autorelease-generate-project-report
