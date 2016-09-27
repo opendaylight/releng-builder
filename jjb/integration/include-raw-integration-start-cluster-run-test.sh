@@ -134,7 +134,10 @@ sleep 5
 for i in `seq 1 ${NUM_ODL_SYSTEM}`
 do
     CONTROLLERIP=ODL_SYSTEM_${i}_IP
-    scp "${!CONTROLLERIP}:/tmp/${BUNDLEFOLDER}/data/log/karaf.log" "odl${i}_karaf.log"
+    echo "Compressing karaf.log ${i}"
+    ssh ${!CONTROLLERIP} gzip --best /tmp/${BUNDLEFOLDER}/data/log/karaf.log
+    echo "Fetching compressed karaf.log ${i}"
+    scp "${!CONTROLLERIP}:/tmp/${BUNDLEFOLDER}/data/log/karaf.log.gz" "odl${i}_karaf.log.gz"
 done
 true  # perhaps Jenkins is testing last exit code
 

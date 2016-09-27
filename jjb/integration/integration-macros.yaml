@@ -532,7 +532,7 @@
                     mkdir $WORKSPACE/archives
                     curl --output robot-plugin.zip "$BUILD_URL/robot/report/*zip*/robot-plugin.zip"
                     unzip -d $WORKSPACE/archives robot-plugin.zip
-                    mv *log* *.log *.csv *.png $WORKSPACE/archives || true  # Don't fail if file missing
+                    mv *log* *.log *.log.gz *.csv *.png $WORKSPACE/archives || true  # Don't fail if file missing
             script-only-if-succeeded: False
             script-only-if-failed: False
             mark-unstable-if-failed: True

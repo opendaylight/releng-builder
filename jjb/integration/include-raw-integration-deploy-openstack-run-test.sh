@@ -282,6 +282,7 @@ do
 done
 
 sleep 5
+# FIXME: Do not create .tar and gzip before copying.
 for i in `seq 1 ${NUM_ODL_SYSTEM}`
 do
     CONTROLLERIP=ODL_SYSTEM_${i}_IP
