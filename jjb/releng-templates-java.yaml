@@ -127,7 +127,7 @@
             maven-version: '{mvn33}'
 
 - job-template:
-    # Template: {name}-distribution-check-{stream}
+    # Template: {project-name}-distribution-check-{stream}
     # Goal: Build a patch and make sure the distribution can deploy with this change
     # Operation: This job template builds a patch, creates a distribution containing
     #            the patch, and triggers the distribution deploy test
@@ -194,26 +194,72 @@
                 notbuilt: false
 
     builders:
+        # This step is to cache artifacts needed fo build distribution. "fr" stands for "fake remote".
         - maven-target:
             maven-version: '{mvn33}'
-            pom: '$GERRIT_PROJECT/pom.xml'
-            goals: 'clean install dependency:tree -DoutputFile=dependency_tree.txt -V -B -Pq -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -Dstream={stream}'
-            java-opts:
-                - '-Xmx4096m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
-            settings: '{mvn-settings}'
-            settings-type: cfp
-            global-settings: 'odl-global-settings'
-            global-settings-type: cfp
-        - maven-target:
-            maven-version: '{mvn33}'
-            pom: 'distribution/pom.xml'
-            goals: 'clean install dependency:tree -DoutputFile=dependency_tree.txt -V -B -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+            pom: 'distribution/distribution-karaf/pom.xml'
+            goals: 'clean install dependency:tree -DoutputFile=dependency_tree.txt -V -B -Pq -Djenkins -Dmaven.repo.local=/tmp/fr -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/fr'
             java-opts:
               - '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
             settings: '{mvn-settings}'
             settings-type: cfp
             global-settings: 'odl-global-settings'
             global-settings-type: cfp
+        # Now delete artifacts related to {project-name}.
+        - shell: |
+            rm -rfv /tmp/fr/org/opendaylight/{project-name}
+        # Now build project in really local repository and deploy to /tmp/fr/.
+        - maven-target:
+            maven-version: '{mvn33}'
+            pom: '$GERRIT_PROJECT/pom.xml'
+            goals: 'clean deploy dependency:tree -DoutputFile=dependency_tree.txt -V -B -Pq -DaltDeploymentRepository=fake-remote::default::file:///tmp/fr/ -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -Dstream={stream}'
+            java-opts:
+                - '-Xmx4096m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
+            settings: '{mvn-settings}'
+            settings-type: cfp
+            global-settings: 'odl-global-settings'
+            global-settings-type: cfp
+        # Now wipe the local repository.
+        - shell: |
+            rm -rf /tmp/r
+        # Now the ugly part. It seems that the only way to tell Maven 2+ which remote repositories to use
+        # is by settings.xml file. So we create such file here.
+        - shell: |
+            set -exu
+            echo '
+            <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+              https://maven.apache.org/xsd/settings-1.0.0.xsd">
+              <repositories>
+                <repository>
+                  <id>file</id>
+                  <name>file</name>
+                  <url>file:///tmp/fr</url>
+                  <releases/>
+                  <snapshots/>
+                </repository>
+              </repositories>
+              <pluginRepositories>
+                <repository>
+                  <id>file</id>
+                  <name>file</name>
+                  <url>file:///tmp/fr</url>
+                  <releases/>
+                  <snapshots/>
+                </repository>
+              </pluginRepositories>
+            </settings>
+            ' > fake_remotes.xml
+        # Repeat the distribution build but with new settings and offline for safety.
+        # This not only fails if important project artifacts are not deployed,
+        # but also when they are deployed but POM reference for them is missing.
+        - maven-target:
+            maven-version: '{mvn33}'
+            pom: 'distribution/distribution-karaf/pom.xml'
+            goals: '--offline clean install dependency:tree -DoutputFile=dependency_tree.txt -s fake_remotes.xml -V -B -Pq -Dmaven.repo.remote=file:///tmp/fr/ -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+            java-opts:
+              - '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
         - integration-distribution-check
 
     publishers:
