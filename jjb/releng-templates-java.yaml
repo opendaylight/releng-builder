@@ -197,7 +197,7 @@
         - maven-target:
             maven-version: '{mvn33}'
             pom: '$GERRIT_PROJECT/pom.xml'
-            goals: 'clean install dependency:tree -DoutputFile=dependency_tree.txt -V -B -Pq -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -Dstream={stream}'
+            goals: 'clean deploy dependency:tree -DoutputFile=dependency_tree.txt -V -B -Pq -DaltDeploymentRepository=fake-remote::default::file:///tmp/fr -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -Dstream={stream}'
             java-opts:
                 - '-Xmx4096m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
             settings: '{mvn-settings}'
@@ -206,8 +206,8 @@
             global-settings-type: cfp
         - maven-target:
             maven-version: '{mvn33}'
-            pom: 'distribution/pom.xml'
-            goals: 'clean install dependency:tree -DoutputFile=dependency_tree.txt -V -B -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+            pom: 'distribution/distribution-karaf/pom.xml'
+            goals: 'clean install dependency:tree -DoutputFile=dependency_tree.txt -V -B -Pq -Djenkins -Dmaven.repo.local=/tmp/fr -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/fr'
             java-opts:
               - '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
             settings: '{mvn-settings}'
