@@ -36,7 +36,7 @@ rpm --import "http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x3FA7E032808
 #Added the mono tools repository
 yum-config-manager -y --add-repo http://download.mono-project.com/repo/centos/
 #install the mono toolchain and nuget
-yum -y install mono-complete-4.2.3.4 nuget-2.8.7+md510+dhx1
+yum -y install mono-complete nuget
 #end changes for vsemprovider in VTN
 
 # The following installs hashicorp's packer binary which is required  for
