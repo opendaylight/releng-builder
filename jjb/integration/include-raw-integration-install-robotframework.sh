@@ -25,7 +25,8 @@ set -exu
 pip install --upgrade pip
 
 pip install --upgrade docker-py importlib requests scapy netifaces netaddr ipaddr
-pip install --upgrade robotframework{,-{httplibrary,requests,sshlibrary,selenium2library}}
+pip install --upgrade robotframework{,-{httplibrary,requests,selenium2library}}
+pip install --upgrade robotframework-sshlibrary pycparser==2.13  # TODO: Unfreeze when cryptography stops failing on pycparser-2.14-py2.py3-none-any.whl
 
 # Module jsonpath is needed by current AAA idmlite suite.
 pip install --upgrade jsonpath-rw
