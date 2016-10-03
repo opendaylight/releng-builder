@@ -192,11 +192,14 @@ echo "Lets's take the karaf thread dump again"
 KARAF_PID=$(ssh ${ODL_SYSTEM_IP} "ps aux | grep 'distribution-karaf' | grep -v grep | tr -s ' ' | cut -f2 -d' '")
 ssh ${ODL_SYSTEM_IP} "jstack $KARAF_PID"> ${WORKSPACE}/karaf_threads_after.log
 
-echo "Killing ODL and fetching Karaf log..."
+echo "Killing ODL"
 set +e  # We do not want to create red dot just because something went wrong while fetching logs.
 ssh "${ODL_SYSTEM_IP}" bash -c 'ps axf | grep karaf | grep -v grep | awk '"'"'{print "kill -9 " $1}'"'"' | sh'
 sleep 5
-scp "${ODL_SYSTEM_IP}:/tmp/${BUNDLEFOLDER}/data/log/karaf.log" .
+echo "Compressing karaf.log"
+ssh ${ODL_SYSTEM_IP} gzip --best "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
+echo "Fetching compressed karaf.log"
+scp "${ODL_SYSTEM_IP}:/tmp/${BUNDLEFOLDER}/data/log/karaf.log.gz" .
 true  # perhaps Jenkins is testing last exit code
 
 # vim: ts=4 sw=4 sts=4 et ft=sh :
