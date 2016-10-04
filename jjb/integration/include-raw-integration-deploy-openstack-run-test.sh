@@ -227,7 +227,7 @@ global
   group  haproxy
   log  /dev/log local0
   maxconn  20480
-  pidfile  /tmp/haproxy.pid
+  pidfile  ${WORKSPACE}/haproxy.pid
   user  haproxy
 
 defaults
@@ -256,8 +256,8 @@ EOF
 done
 
 cat > ${WORKSPACE}/deploy_ha_proxy.sh<< EOF
-sudo chown haproxy:haproxy /tmp/haproxy.cfg
-sudo sed -i 's/\\/etc\\/haproxy\\/haproxy.cfg/\\/tmp\\/haproxy.cfg/g' /usr/lib/systemd/system/haproxy.service
+sudo chown haproxy:haproxy ${WORKSPACE}/haproxy.cfg
+sudo sed -i 's/\\/etc\\/haproxy\\/haproxy.cfg/\\${WORKSPACE}\\/haproxy.cfg/g' /usr/lib/systemd/system/haproxy.service
 sudo /usr/sbin/semanage permissive -a haproxy_t
 sudo systemctl restart haproxy
 sleep 3
@@ -265,11 +265,11 @@ sudo netstat -tunpl
 sudo systemctl status haproxy
 true
 EOF
-scp ${WORKSPACE}/install_ha_proxy.sh ${ha_proxy_ip}:/tmp
-${SSH} ${ha_proxy_ip} "sudo bash /tmp/install_ha_proxy.sh"
-scp ${WORKSPACE}/haproxy.cfg ${ha_proxy_ip}:/tmp
-scp ${WORKSPACE}/deploy_ha_proxy.sh ${ha_proxy_ip}:/tmp
-${SSH} ${ha_proxy_ip} "sudo bash /tmp/deploy_ha_proxy.sh"
+scp ${WORKSPACE}/install_ha_proxy.sh ${ha_proxy_ip}:${WORKSPACE}
+${SSH} ${ha_proxy_ip} "sudo bash ${WORKSPACE}/install_ha_proxy.sh"
+scp ${WORKSPACE}/haproxy.cfg ${ha_proxy_ip}:${WORKSPACE}
+scp ${WORKSPACE}/deploy_ha_proxy.sh ${ha_proxy_ip}:${WORKSPACE}
+${SSH} ${ha_proxy_ip} "sudo bash ${WORKSPACE}/deploy_ha_proxy.sh"
 }
 
 function collect_logs_and_exit (){
@@ -282,26 +282,27 @@ do
 done
 
 sleep 5
+# TODO: Archive Karaf console log as well.
 # FIXME: Do not create .tar and gzip before copying.
 for i in `seq 1 ${NUM_ODL_SYSTEM}`
 do
     CONTROLLERIP=ODL_SYSTEM_${i}_IP
-    ${SSH} "${!CONTROLLERIP}"  "cp -r /tmp/${BUNDLEFOLDER}/data/log /tmp/odl_log"
-    ${SSH} "${!CONTROLLERIP}"  "tar -cf /tmp/odl${i}_karaf.log.tar /tmp/odl_log/*"
-    scp "${!CONTROLLERIP}:/tmp/odl${i}_karaf.log.tar" "${WORKSPACE}/odl${i}_karaf.log.tar"
+    ${SSH} "${!CONTROLLERIP}"  "cp -r ${WORKSPACE}/${BUNDLEFOLDER}/data/log ${WORKSPACE}/odl_log"
+    ${SSH} "${!CONTROLLERIP}"  "tar -cf ${WORKSPACE}/odl${i}_karaf.log.tar ${WORKSPACE}/odl_log/*"
+    scp "${!CONTROLLERIP}:${WORKSPACE}/odl${i}_karaf.log.tar" "${WORKSPACE}/odl${i}_karaf.log.tar"
     tar -xvf ${WORKSPACE}/odl${i}_karaf.log.tar -C . --strip-components 2 --transform s/karaf/odl${i}_karaf/g
     rm ${WORKSPACE}/odl${i}_karaf.log.tar
 done
 
 scp ${OPENSTACK_CONTROL_NODE_IP}:/opt/stack/devstack/nohup.out "openstack_control_stack.log"
-${SSH} ${OPENSTACK_CONTROL_NODE_IP} "tar -cf /tmp/control_node_openstack_logs.tgz  /opt/stack/logs/*"
-scp "${OPENSTACK_CONTROL_NODE_IP}:/tmp/control_node_openstack_logs.tgz" control_node_openstack_logs.tgz
+${SSH} ${OPENSTACK_CONTROL_NODE_IP} "tar -cf ${WORKSPACE}/control_node_openstack_logs.tgz  /opt/stack/logs/*"
+scp "${OPENSTACK_CONTROL_NODE_IP}:${WORKSPACE}/control_node_openstack_logs.tgz" control_node_openstack_logs.tgz
 for i in `seq 1 $((NUM_OPENSTACK_SYSTEM - 1))`
 do
     OSIP=OPENSTACK_COMPUTE_NODE_${i}_IP
     scp "${!OSIP}:/opt/stack/devstack/nohup.out" "openstack_compute_stack_${i}.log"
-    ${SSH} "${!OSIP}" "tar -cf /tmp/compute_node_${i}_openstack_logs.tgz  /opt/stack/logs/*"
-    scp "${!OSIP}:/tmp/compute_node_${i}_openstack_logs.tgz"  "compute_node_${i}_openstack_logs.tgz"
+    ${SSH} "${!OSIP}" "tar -cf ${WORKSPACE}/compute_node_${i}_openstack_logs.tgz  /opt/stack/logs/*"
+    scp "${!OSIP}:${WORKSPACE}/compute_node_${i}_openstack_logs.tgz"  "compute_node_${i}_openstack_logs.tgz"
 done
 }
 
@@ -320,9 +321,9 @@ sudo systemctl stop NetworkManager
 sudo killall dhclient
 sudo killall dnsmasq
 #Workaround for mysql failure
-echo "127.0.0.1    localhost \${HOSTNAME}" > /tmp/hosts
-echo "::1   localhost  \${HOSTNAME}" >> /tmp/hosts
-sudo mv /tmp/hosts /etc/hosts
+echo "127.0.0.1    localhost \${HOSTNAME}" > ${WORKSPACE}/hosts
+echo "::1   localhost  \${HOSTNAME}" >> ${WORKSPACE}/hosts
+sudo mv ${WORKSPACE}/hosts /etc/hosts
 sudo /usr/sbin/brctl addbr br100
 #sudo ifconfig eth0 mtu 2000 
 sudo mkdir /opt/stack
@@ -341,8 +342,8 @@ fi
 
 os_node_list=()
 echo "Stack the Control Node"
-scp ${WORKSPACE}/get_devstack.sh ${OPENSTACK_CONTROL_NODE_IP}:/tmp
-${SSH} ${OPENSTACK_CONTROL_NODE_IP} "bash /tmp/get_devstack.sh"
+scp ${WORKSPACE}/get_devstack.sh ${OPENSTACK_CONTROL_NODE_IP}:${WORKSPACE}
+${SSH} ${OPENSTACK_CONTROL_NODE_IP} "bash ${WORKSPACE}/get_devstack.sh"
 create_control_node_local_conf
 scp ${WORKSPACE}/local.conf_control ${OPENSTACK_CONTROL_NODE_IP}:/opt/stack/devstack/local.conf
 ssh ${OPENSTACK_CONTROL_NODE_IP} "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
@@ -354,8 +355,8 @@ os_node_list+=(${OPENSTACK_CONTROL_NODE_IP})
 for i in `seq 1 $((NUM_OPENSTACK_SYSTEM - 1))`
 do
     COMPUTEIP=OPENSTACK_COMPUTE_NODE_${i}_IP
-    scp ${WORKSPACE}/get_devstack.sh  ${!COMPUTEIP}:/tmp
-    ${SSH} ${!COMPUTEIP} "bash /tmp/get_devstack.sh"
+    scp ${WORKSPACE}/get_devstack.sh  ${!COMPUTEIP}:${WORKSPACE}
+    ${SSH} ${!COMPUTEIP} "bash ${WORKSPACE}/get_devstack.sh"
     create_compute_node_local_conf ${!COMPUTEIP}
     scp ${WORKSPACE}/local.conf_compute_${!COMPUTEIP} ${!COMPUTEIP}:/opt/stack/devstack/local.conf
     ssh ${!COMPUTEIP} "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
@@ -364,18 +365,18 @@ do
 done
 
 cat > ${WORKSPACE}/check_stacking.sh << EOF
-> /tmp/stack_progress
+> ${WORKSPACE}/stack_progress
 ps -ef | grep "stack.sh" | grep -v grep
 ret=\$?
 if [ \${ret} -eq 1 ]; then
   grep "This is your host IP address:" /opt/stack/devstack/nohup.out
   if [ \$? -eq 0 ]; then
-     echo "Stacking Complete" > /tmp/stack_progress
+     echo "Stacking Complete" > ${WORKSPACE}/stack_progress
   else
-     echo "Stacking Failed" > /tmp/stack_progress
+     echo "Stacking Failed" > ${WORKSPACE}/stack_progress
   fi
 elif [ \${ret} -eq 0 ]; then
-  echo "Still Stacking" > /tmp/stack_progress
+  echo "Still Stacking" > ${WORKSPACE}/stack_progress
 fi
 EOF
 
@@ -387,9 +388,9 @@ iteration=$(($iteration + 1))
 for index in ${!os_node_list[@]}
 do
 echo "Check the status of stacking in ${os_node_list[index]}"
-scp ${WORKSPACE}/check_stacking.sh  ${os_node_list[index]}:/tmp
-${SSH} ${os_node_list[index]} "bash /tmp/check_stacking.sh"
-scp ${os_node_list[index]}:/tmp/stack_progress .
+scp ${WORKSPACE}/check_stacking.sh  ${os_node_list[index]}:${WORKSPACE}
+${SSH} ${os_node_list[index]} "bash ${WORKSPACE}/check_stacking.sh"
+scp ${os_node_list[index]}:${WORKSPACE}/stack_progress .
 #debug
 cat stack_progress
 stacking_status=`cat stack_progress`
@@ -415,8 +416,8 @@ done
 
 #Need to disable firewalld and iptables in control node
 echo "Stop Firewall in Control Node for compute nodes to be able to reach the ports and add to hypervisor-list"
-scp ${WORKSPACE}/disable_firewall.sh ${OPENSTACK_CONTROL_NODE_IP}:/tmp
-${SSH} ${OPENSTACK_CONTROL_NODE_IP} "sudo bash /tmp/disable_firewall.sh"
+scp ${WORKSPACE}/disable_firewall.sh ${OPENSTACK_CONTROL_NODE_IP}:${WORKSPACE}
+${SSH} ${OPENSTACK_CONTROL_NODE_IP} "sudo bash ${WORKSPACE}/disable_firewall.sh"
 echo "sleep for a minute and print hypervisor-list"
 sleep 60
 ${SSH} ${OPENSTACK_CONTROL_NODE_IP} "cd /opt/stack/devstack; source openrc admin admin; nova hypervisor-list;nova-manage service list"
@@ -425,8 +426,8 @@ ${SSH} ${OPENSTACK_CONTROL_NODE_IP} "cd /opt/stack/devstack; source openrc admin
 for i in `seq 1 $((NUM_OPENSTACK_SYSTEM - 1))`
 do
     OSIP=OPENSTACK_COMPUTE_NODE_${i}_IP
-    scp ${WORKSPACE}/disable_firewall.sh "${!OSIP}:/tmp"
-    ${SSH} "${!OSIP}" "sudo bash /tmp/disable_firewall.sh"
+    scp ${WORKSPACE}/disable_firewall.sh "${!OSIP}:${WORKSPACE}"
+    ${SSH} "${!OSIP}" "sudo bash ${WORKSPACE}/disable_firewall.sh"
 done
 
 # upgrading pip, urllib3 and httplib2 so that tempest tests can be run on ${OPENSTACK_CONTROL_NODE_IP}
@@ -449,7 +450,7 @@ cat testplan.txt
 SUITES=`egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' testplan.txt | tr '\012' ' '`
 
 echo "Starting Robot test suites ${SUITES} ..."
-pybot -N ${TESTPLAN} -c critical -e exclude -v BUNDLEFOLDER:${BUNDLEFOLDER} -v WORKSPACE:/tmp -v BUNDLE_URL:${ACTUALBUNDLEURL} \
+pybot -N ${TESTPLAN} -c critical -e exclude -v BUNDLEFOLDER:${BUNDLEFOLDER} -v WORKSPACE:${WORKSPACE} -v BUNDLE_URL:${ACTUALBUNDLEURL} \
 -v NEXUSURL_PREFIX:${NEXUSURL_PREFIX} -v JDKVERSION:${JDKVERSION} -v ODL_STREAM:${DISTROSTREAM} \
 -v ODL_SYSTEM_IP:${ODL_SYSTEM_IP} -v ODL_SYSTEM_1_IP:${ODL_SYSTEM_1_IP} -v ODL_SYSTEM_2_IP:${ODL_SYSTEM_2_IP} \
 -v ODL_SYSTEM_3_IP:${ODL_SYSTEM_3_IP} -v NUM_ODL_SYSTEM:${NUM_ODL_SYSTEM} -v CONTROLLER_USER:${USER} -v OS_USER:${USER} \

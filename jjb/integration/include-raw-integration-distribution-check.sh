@@ -3,7 +3,7 @@ ACTUALFEATURES="odl-integration-all"
 BUNDLEVERSION=`xpath distribution/pom.xml '/project/version/text()' 2> /dev/null`
 BUNDLEFOLDER="distribution-karaf-${BUNDLEVERSION}"
 BUNDLE="${BUNDLEFOLDER}.zip"
-BUNDLEURL="/tmp/r/org/opendaylight/integration/distribution-karaf/${BUNDLEVERSION}/${BUNDLE}"
+BUNDLEURL="${WORKSPACE}/r/org/opendaylight/integration/distribution-karaf/${BUNDLEVERSION}/${BUNDLE}"
 
 echo "Kill any controller running"
 ps axf | grep karaf | grep -v grep | awk '{print "kill -9 " $1}' | sh
@@ -36,9 +36,6 @@ cat ${MEMCONF}
 echo "Listing all open ports on controller system"
 netstat -natu
 
-echo "redirected karaf console output to karaf_console.log"
-export KARAF_REDIRECT=${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log
-
 if [ ${JDKVERSION} == 'openjdk8' ]; then
     echo "Setting the JRE Version to 8"
     # dynamic_verify does not allow sudo, JAVA_HOME should be enough for karaf start.
@@ -53,6 +50,9 @@ fi
 readlink -e "${JAVA_HOME}/bin/java"
 echo "JDK Version should be overriden by JAVA_HOME"
 java -version
+
+echo "Redirecting karaf console output to karaf_console.log"
+export KARAF_REDIRECT="${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log"
 
 echo "Starting controller..."
 ${WORKSPACE}/${BUNDLEFOLDER}/bin/start
@@ -119,6 +119,7 @@ exit_on_log_file_message 'BindException: Address already in use'
 exit_on_log_file_message 'server is unhealthy'
 
 echo "Fetching Karaf logs"
+# TODO: Move instead of copy? Gzip?
 cp ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log .
 cp ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log .
 

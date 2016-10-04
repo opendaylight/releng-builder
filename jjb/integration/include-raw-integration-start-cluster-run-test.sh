@@ -26,9 +26,9 @@ while true; do
     elif (( "\$COUNT" > "600" )); then
         echo Timeout Controller DOWN
         echo "Dumping first 500K bytes of karaf log..."
-        head --bytes=500K "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
+        head --bytes=500K "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log"
         echo "Dumping last 500K bytes of karaf log..."
-        tail --bytes=500K "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
+        tail --bytes=500K "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log"
         echo "Listing all open ports on controller system"
         netstat -natu
         exit 1
@@ -44,12 +44,12 @@ netstat -natu
 
 function exit_on_log_file_message {
     echo "looking for \"\$1\" in log file"
-    if grep --quiet "\$1" "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"; then
+    if grep --quiet "\$1" "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log"; then
         echo ABORTING: found "\$1"
         echo "Dumping first 500K bytes of karaf log..."
-        head --bytes=500K "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
+        head --bytes=500K "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log"
         echo "Dumping last 500K bytes of karaf log..."
-        tail --bytes=500K "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
+        tail --bytes=500K "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log"
         exit 1
     fi
 }
@@ -63,9 +63,11 @@ for i in `seq 1 ${NUM_ODL_SYSTEM}`
 do
     CONTROLLERIP=ODL_SYSTEM_${i}_IP
     echo "Verifying member-${i} with IP address ${!CONTROLLERIP} is UP"
-    scp ${WORKSPACE}/verify-cluster-is-up.sh ${!CONTROLLERIP}:/tmp
-    ssh ${!CONTROLLERIP} "bash /tmp/verify-cluster-is-up.sh ${i} ${!CONTROLLERIP}"
+    scp ${WORKSPACE}/verify-cluster-is-up.sh ${!CONTROLLERIP}:${WORKSPACE}
+    ssh ${!CONTROLLERIP} "bash ${WORKSPACE}/verify-cluster-is-up.sh ${i} ${!CONTROLLERIP}"
 done
+
+# TODO: Copy Karaf thread dump logic here.
 
 if [ ${NUM_OPENSTACK_SYSTEM} -gt 0 ]; then
    echo "Exiting without running tests to deploy openstack for testing"
@@ -111,7 +113,7 @@ SUITES=`egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' testplan.txt | tr '\012' ' '`
 
 echo "Starting Robot test suites ${SUITES} ..."
 pybot -N ${TESTPLAN} -c critical -e exclude -v BUNDLEFOLDER:${BUNDLEFOLDER} \
--v WORKSPACE:/tmp -v BUNDLE_URL:${ACTUALBUNDLEURL} -v JAVA_HOME:${JAVA_HOME} \
+-v WORKSPACE:${WORKSPACE} -v BUNDLE_URL:${ACTUALBUNDLEURL} -v JAVA_HOME:${JAVA_HOME} \
 -v NEXUSURL_PREFIX:${NEXUSURL_PREFIX} -v JDKVERSION:${JDKVERSION} -v ODL_STREAM:${DISTROSTREAM} \
 -v CONTROLLER:${ODL_SYSTEM_IP} -v CONTROLLER1:${ODL_SYSTEM_2_IP} -v CONTROLLER2:${ODL_SYSTEM_3_IP} -v ODL_SYSTEM_IP:${ODL_SYSTEM_IP} \
 ${odl_variables} -v NUM_ODL_SYSTEM:${NUM_ODL_SYSTEM} -v CONTROLLER_USER:${USER} -v ODL_SYSTEM_USER:${USER} -v \
@@ -135,9 +137,11 @@ for i in `seq 1 ${NUM_ODL_SYSTEM}`
 do
     CONTROLLERIP=ODL_SYSTEM_${i}_IP
     echo "Compressing karaf.log ${i}"
-    ssh ${!CONTROLLERIP} gzip --best /tmp/${BUNDLEFOLDER}/data/log/karaf.log
+    ssh ${!CONTROLLERIP} gzip --best ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log
     echo "Fetching compressed karaf.log ${i}"
-    scp "${!CONTROLLERIP}:/tmp/${BUNDLEFOLDER}/data/log/karaf.log.gz" "odl${i}_karaf.log.gz"
+    scp "${!CONTROLLERIP}:${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log.gz" "odl${i}_karaf.log.gz"
+    # TODO: Gzip also these?
+    scp "${!CONTROLLERIP}:${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log" "odl${i}_karaf_console.log"
 done
 true  # perhaps Jenkins is testing last exit code
 

@@ -8,9 +8,9 @@ echo "#################################################"
 echo "##         Configure Cluster and Start         ##"
 echo "#################################################"
 
-AKKACONF=/tmp/${BUNDLEFOLDER}/configuration/initial/akka.conf
-MODULESCONF=/tmp/${BUNDLEFOLDER}/configuration/initial/modules.conf
-MODULESHARDSCONF=/tmp/${BUNDLEFOLDER}/configuration/initial/module-shards.conf
+AKKACONF=${WORKSPACE}/${BUNDLEFOLDER}/configuration/initial/akka.conf
+MODULESCONF=${WORKSPACE}/${BUNDLEFOLDER}/configuration/initial/modules.conf
+MODULESHARDSCONF=${WORKSPACE}/${BUNDLEFOLDER}/configuration/initial/module-shards.conf
 CONTROLLERMEM="2048m"
 
 if [ ${CONTROLLERSCOPE} == 'all' ]; then
@@ -60,8 +60,8 @@ fi
 # Create the configuration script to be run on controllers.
 cat > ${WORKSPACE}/configuration-script.sh <<EOF
 
-echo "Changing to /tmp"
-cd /tmp
+echo "Changing to ${WORKSPACE}"
+cd ${WORKSPACE}
 
 echo "Downloading the distribution from ${ACTUALBUNDLEURL}"
 wget --progress=dot:mega  '${ACTUALBUNDLEURL}'
@@ -70,14 +70,14 @@ echo "Extracting the new controller..."
 unzip -q ${BUNDLE}
 
 echo "Configuring the startup features..."
-FEATURESCONF=/tmp/${BUNDLEFOLDER}/etc/org.apache.karaf.features.cfg
-CUSTOMPROP=/tmp/${BUNDLEFOLDER}/etc/custom.properties
+FEATURESCONF=${WORKSPACE}/${BUNDLEFOLDER}/etc/org.apache.karaf.features.cfg
+CUSTOMPROP=${WORKSPACE}/${BUNDLEFOLDER}/etc/custom.properties
 sed -ie "s/featuresBoot=.*/featuresBoot=config,standard,region,package,kar,ssh,management,${ACTUALFEATURES}/g" \${FEATURESCONF}
 sed -ie "s%mvn:org.opendaylight.integration/features-integration-index/${BUNDLEVERSION}/xml/features%mvn:org.opendaylight.integration/features-integration-index/${BUNDLEVERSION}/xml/features,mvn:org.opendaylight.integration/features-integration-test/${BUNDLEVERSION}/xml/features,mvn:org.apache.karaf.decanter/apache-karaf-decanter/1.0.0/xml/features%g" \${FEATURESCONF}
 cat \${FEATURESCONF}
 
 echo "Configuring the log..."
-LOGCONF=/tmp/${BUNDLEFOLDER}/etc/org.ops4j.pax.logging.cfg
+LOGCONF=${WORKSPACE}/${BUNDLEFOLDER}/etc/org.ops4j.pax.logging.cfg
 sed -ie 's/log4j.appender.out.maxBackupIndex=10/log4j.appender.out.maxBackupIndex=1/g' \${LOGCONF}
 # FIXME: Make log size limit configurable from build parameter.
 sed -ie 's/log4j.appender.out.maxFileSize=1MB/log4j.appender.out.maxFileSize=30GB/g' \${LOGCONF}
@@ -90,7 +90,7 @@ if [ "${ODL_ENABLE_L3_FWD}" == "yes" ]; then
 fi
 
 echo "Configure java home and max memory..."
-MEMCONF=/tmp/${BUNDLEFOLDER}/bin/setenv
+MEMCONF=${WORKSPACE}/${BUNDLEFOLDER}/bin/setenv
 sed -ie 's%^# export JAVA_HOME%export JAVA_HOME="\${JAVA_HOME:-${JAVA_HOME}}"%g' \${MEMCONF}
 sed -ie 's/JAVA_MAX_MEM="2048m"/JAVA_MAX_MEM="${CONTROLLERMEM}"/g' \${MEMCONF}
 cat \${MEMCONF}
@@ -108,14 +108,14 @@ JAVA_RESOLVED=\`readlink -e "\${JAVA_HOME}/bin/java"\`
 echo "Java binary pointed at by JAVA_HOME: \${JAVA_RESOLVED}"
 
 # Copy shard file if exists
-if [ -f /tmp/custom_shard_config.txt ]; then
+if [ -f ${WORKSPACE}/custom_shard_config.txt ]; then
     echo "Custom shard config exists!!!"
     echo "Copying the shard config..."
-    cp /tmp/custom_shard_config.txt /tmp/${BUNDLEFOLDER}/bin/
+    cp ${WORKSPACE}/custom_shard_config.txt ${WORKSPACE}/${BUNDLEFOLDER}/bin/
 fi
 
 echo "Configuring cluster"
-/tmp/${BUNDLEFOLDER}/bin/configure_cluster.sh \$1 ${nodes_list}
+${WORKSPACE}/${BUNDLEFOLDER}/bin/configure_cluster.sh \$1 ${nodes_list}
 
 echo "Dump akka.conf"
 cat ${AKKACONF}
@@ -131,8 +131,11 @@ EOF
 # Create the startup script to be run on controllers.
 cat > ${WORKSPACE}/startup-script.sh <<EOF
 
+echo "Redirecting karaf console output to karaf_console.log"
+export KARAF_REDIRECT="${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log"
+
 echo "Starting controller..."
-/tmp/${BUNDLEFOLDER}/bin/start
+${WORKSPACE}/${BUNDLEFOLDER}/bin/start
 
 EOF
 
@@ -142,8 +145,8 @@ for i in `seq 1 ${NUM_ODL_SYSTEM}`
 do
     CONTROLLERIP=ODL_SYSTEM_${i}_IP
     echo "Configuring member-${i} with IP address ${!CONTROLLERIP}"
-    scp ${WORKSPACE}/configuration-script.sh ${!CONTROLLERIP}:/tmp/
-    ssh ${!CONTROLLERIP} "bash /tmp/configuration-script.sh ${i}"
+    scp ${WORKSPACE}/configuration-script.sh ${!CONTROLLERIP}:${WORKSPACE}/
+    ssh ${!CONTROLLERIP} "bash ${WORKSPACE}/configuration-script.sh ${i}"
 done
 
 # Run config plan in case it exists
@@ -168,8 +171,8 @@ for i in `seq 1 ${NUM_ODL_SYSTEM}`
 do
     CONTROLLERIP=ODL_SYSTEM_${i}_IP
     echo "Starting member-${i} with IP address ${!CONTROLLERIP}"
-    scp ${WORKSPACE}/startup-script.sh ${!CONTROLLERIP}:/tmp/
-    ssh ${!CONTROLLERIP} "bash /tmp/startup-script.sh"
+    scp ${WORKSPACE}/startup-script.sh ${!CONTROLLERIP}:${WORKSPACE}/
+    ssh ${!CONTROLLERIP} "bash ${WORKSPACE}/startup-script.sh"
 done
 
 # vim: ts=4 sw=4 sts=4 et ft=sh :
