@@ -72,6 +72,14 @@
             default: '{stage-id}'
             description: 'Nexus staging profile id'
 
+- parameter:
+    name: maven-exec
+    parameters:
+      - string:
+          name: MVN
+          default: '$HOME/tools/tools/hudson.tasks.Maven_MavenInstallation/{maven-version}/bin/mvn'
+          description: 'Maven selector to be used by shell scripts'
+
 - scm:
     name: git-scm
     scm:

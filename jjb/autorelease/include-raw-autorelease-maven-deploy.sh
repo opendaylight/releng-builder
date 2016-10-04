@@ -29,7 +29,7 @@ rsync -avz --exclude 'maven-metadata*' \
            --exclude 'resolver-status.properties' \
            "stage/org/opendaylight/integration" m2repo/org/opendaylight/
 
-mvn -V -B org.sonatype.plugins:nexus-staging-maven-plugin:1.6.2:deploy-staged-repository \
+$MVN -V -B org.sonatype.plugins:nexus-staging-maven-plugin:1.6.2:deploy-staged-repository \
     -DrepositoryDirectory="`pwd`/m2repo" \
     -DnexusUrl=https://nexus.opendaylight.org/ \
     -DstagingProfileId="425e43800fea70" \
