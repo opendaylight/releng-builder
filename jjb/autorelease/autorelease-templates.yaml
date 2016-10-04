@@ -12,6 +12,10 @@
         artifactDaysToKeep: '14'
 
     parameters:
+        - maven-exec:
+            maven-version: '{mvn33}'
+            goals: '--version'
+            settings: '{mvn-settings}'
         - opendaylight-infra-parameters:
             project: '{project}'
             branch: '{branch}'
