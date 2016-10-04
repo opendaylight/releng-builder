@@ -67,6 +67,8 @@ do
     ssh ${!CONTROLLERIP} "bash /tmp/verify-cluster-is-up.sh ${i} ${!CONTROLLERIP}"
 done
 
+# TODO: Copy Karaf thread dump logic here.
+
 if [ ${NUM_OPENSTACK_SYSTEM} -gt 0 ]; then
    echo "Exiting without running tests to deploy openstack for testing"
    exit
