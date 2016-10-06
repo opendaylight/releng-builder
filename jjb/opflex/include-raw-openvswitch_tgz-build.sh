@@ -11,9 +11,8 @@ mkdir -p "$DESTDIR"
 
 ./boot.sh
 ./configure --prefix="$ROOT" --enable-shared
-make -j8
+make -j4
 DESTDIR=`pwd`/$DESTDIR make install
-find lib ofproto -name "*.h" -exec cp --parents -t "$DESTDIR/$ROOT/include/openvswitch/" {} \;
 
 pushd $DESTDIR
 tar -czf openvswitch.tgz *

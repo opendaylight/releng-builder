@@ -24,7 +24,7 @@
         - git:
             url: https://github.com/libuv/libuv.git
             branches:
-                - 'refs/tags/v1.7.5'
+                - 'refs/tags/v1.8.0'
             wipe-workspace: true
 
 - scm:
@@ -33,16 +33,16 @@
         - git:
             url: https://github.com/miloyip/rapidjson.git
             branches:
-                - 'refs/tags/v1.0.1'
+                - 'refs/tags/v1.0.2'
             wipe-workspace: true
 
 - scm:
-    name: 'git-opflex-ovs'
+    name: 'git-ovs'
     scm:
         - git:
-            url: https://github.com/noironetworks/ovs.git
+            url: https://github.com/openvswitch/ovs.git
             branches:
-                - 'origin/noiro'
+                - 'refs/tags/v2.6.0'
             wipe-workspace: true
 
 - job-template:
@@ -121,7 +121,7 @@
         artifactNumToKeep: '{build-artifact-num-to-keep}'
 
     scm:
-        - git-opflex-ovs
+        - git-ovs
 
     wrappers:
         - opendaylight-infra-wrappers:
