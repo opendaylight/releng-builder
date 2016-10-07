@@ -11,13 +11,13 @@
     stream:
         - carbon:
             branch: 'master'
-            jdk: openjdk7
+            jdk: openjdk8
         - boron:
             branch: 'stable/boron'
-            jdk: openjdk7
+            jdk: openjdk8
         - beryllium:
             branch: 'stable/beryllium'
-            jdk: openjdk7
+            jdk: openjdk8
 
     project: 'opflex'
     archive-artifacts: '**/*.tar.gz'
@@ -90,6 +90,16 @@
 
 - job-template:
     name: 'opflex-merge-{stream}'
+    stream:
+        - carbon:
+            branch: 'master'
+            jdk: openjdk8
+        - boron:
+            branch: 'stable/boron'
+            jdk: openjdk8
+        - beryllium:
+            branch: 'stable/beryllium'
+            jdk: openjdk8
 
     node: centos7-java-builder-2c-8g
     jdk: '{jdk}'

@@ -8,18 +8,42 @@
     stream:
         - carbon:
             branch: 'master'
-            jdk: openjdk7
+            libuv-build: v1
+            libuv-scm: v2
+            rapidjson-build: v1
+            rapidjson-scm: v2
+            openvswitch-build: v2
+            openvswitch-scm: v2
         - boron:
             branch: 'stable/boron'
-            jdk: openjdk7
+            libuv-build: v1
+            libuv-scm: v1
+            rapidjson-build: v1
+            rapidjson-scm: v1
+            openvswitch-build: v1
+            openvswitch-scm: v1
         - beryllium:
             branch: 'stable/beryllium'
-            jdk: openjdk7
+            libuv-build: v1
+            libuv-scm: v1
+            rapidjson-build: v1
+            rapidjson-scm: v1
+            openvswitch-build: v1
+            openvswitch-scm: v1
 
     project: 'opflex'
 
 - scm:
-    name: 'git-opflex-libuv'
+    name: 'git-opflex-libuv-v1'
+    scm:
+        - git:
+            url: https://github.com/libuv/libuv.git
+            branches:
+                - 'refs/tags/v1.7.5'
+            wipe-workspace: true
+
+- scm:
+    name: 'git-opflex-libuv-v2'
     scm:
         - git:
             url: https://github.com/libuv/libuv.git
@@ -28,7 +52,16 @@
             wipe-workspace: true
 
 - scm:
-    name: 'git-opflex-rapidjson'
+    name: 'git-opflex-rapidjson-v1'
+    scm:
+        - git:
+            url: https://github.com/miloyip/rapidjson.git
+            branches:
+                - 'refs/tags/v1.0.1'
+            wipe-workspace: true
+
+- scm:
+    name: 'git-opflex-rapidjson-v2'
     scm:
         - git:
             url: https://github.com/miloyip/rapidjson.git
@@ -37,13 +70,29 @@
             wipe-workspace: true
 
 - scm:
-    name: 'git-ovs'
+    name: 'git-opflex-ovs-v1'
+    scm:
+        - git:
+            url: https://github.com/noironetworks/ovs.git
+            branches:
+                - 'origin/noiro'
+            wipe-workspace: true
+
+- scm:
+    name: 'git-opflex-ovs-v2'
     scm:
         - git:
             url: https://github.com/openvswitch/ovs.git
             branches:
                 - 'refs/tags/v2.6.0'
             wipe-workspace: true
+
+- builder:
+    name: 'builder-opflex-libuv-v1'
+    builders:
+        - shell:
+            !include-raw-escape:
+                - deps-inc-v1/include-raw-libuv_tgz-build.sh
 
 - job-template:
     name: 'opflex-libuv_tgz-{stream}'
@@ -59,22 +108,27 @@
         artifactNumToKeep: '{build-artifact-num-to-keep}'
 
     scm:
-        - git-opflex-libuv
+        - git-opflex-libuv-{libuv-scm}
 
     wrappers:
         - opendaylight-infra-wrappers:
             build-timeout: '{build-timeout}'
 
     builders:
-        - shell:
-            !include-raw-escape:
-                - include-raw-libuv_tgz-build.sh
+        - builder-opflex-libuv-{libuv-build}
 
     publishers:
         - email-notification:
             email-prefix: '[opflex]'
         - archive:
             artifacts: 'install-root/*.tgz'
+
+- builder:
+    name: 'builder-opflex-rapidjson-v1'
+    builders:
+        - shell:
+            !include-raw-escape:
+                - deps-inc-v1/include-raw-rapidjson_tgz-build.sh
 
 - job-template:
     name: 'opflex-rapidjson_tgz-{stream}'
@@ -90,22 +144,34 @@
         artifactNumToKeep: '{build-artifact-num-to-keep}'
 
     scm:
-        - git-opflex-rapidjson
+        - git-opflex-rapidjson-{rapidjson-scm}
 
     wrappers:
         - opendaylight-infra-wrappers:
             build-timeout: '{build-timeout}'
 
     builders:
-        - shell:
-            !include-raw-escape:
-                - include-raw-rapidjson_tgz-build.sh
+        - builder-opflex-rapidjson-{rapidjson-build}
 
     publishers:
         - email-notification:
             email-prefix: '[opflex]'
         - archive:
             artifacts: 'install-root/*.tgz'
+
+- builder:
+    name: 'builder-opflex-openvswitch-v1'
+    builders:
+        - shell:
+            !include-raw:
+                - deps-inc-v1/include-raw-openvswitch_tgz-build.sh
+
+- builder:
+    name: 'builder-opflex-openvswitch-v2'
+    builders:
+        - shell:
+            !include-raw:
+                - deps-inc-v2/include-raw-openvswitch_tgz-build.sh
 
 - job-template:
     name: 'opflex-openvswitch_tgz-{stream}'
@@ -121,16 +187,14 @@
         artifactNumToKeep: '{build-artifact-num-to-keep}'
 
     scm:
-        - git-ovs
+        - git-opflex-ovs-{openvswitch-scm}
 
     wrappers:
         - opendaylight-infra-wrappers:
             build-timeout: '{build-timeout}'
 
     builders:
-        - shell:
-            !include-raw-escape:
-                - include-raw-openvswitch_tgz-build.sh
+        - builder-opflex-openvswitch-{openvswitch-build}
 
     publishers:
         - email-notification:
