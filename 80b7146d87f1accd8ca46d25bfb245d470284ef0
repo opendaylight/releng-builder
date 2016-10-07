@@ -46,6 +46,30 @@
       "revId": "80b7146d87f1accd8ca46d25bfb245d470284ef0",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_f31ebc0c",
+        "filename": "jjb/integration/integration-test-jobs.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2016-10-07T12:57:47Z",
+      "side": 1,
+      "message": "Current maven job follows this logic:\n\n1. Construct BUNDLEURL and inject it using bundle.txt file.\n\n2. Build *.zip file to test.\n\n3. Maven implicitly archives the *.zip file (amongst others), making it available in Jenkins master at exactly the BUNDLEURL that was prepared in step 1.\n\n4. Jobs from {csit-list} are triggered, each one gets BUNDLEURL as a parameter, so they know where to download from.\n\nNow, freestyle job does not perform any implicit archivation, so we need an explicit replacement for step 3. It may be possible to archive in such a way that the old BUNDLEFOLDER value still points there, but I think using a different (shorter) URL will be better.\n\nAs archivation is explicit, we have freedom. We can archive on Jenkins master as before, or we may archive somewhere into Nexus. Jenkins place would be short-lived and somewhat performance draining, Nexus place may be long lived and thus take too much space in the long run. For now, Jenkins seems easier, we can migrate later if need arises.\n\nEither way, we need to make sure step 1 still computes a URL where the *.zip file is available for step 4 jobs to download from.",
+      "parentUuid": "7a6b29fe_109edc63",
+      "range": {
+        "startLine": 451,
+        "startChar": 29,
+        "endLine": 451,
+        "endChar": 41
+      },
+      "revId": "80b7146d87f1accd8ca46d25bfb245d470284ef0",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
