@@ -18,9 +18,6 @@
         - boron:
             branch: 'stable/boron'
             jre: 'openjdk8'
-        - beryllium:
-            branch: 'stable/beryllium'
-            jre: 'openjdk7'
 
     install:
         - only:
@@ -29,7 +26,8 @@
             scope: 'all'
 
     # Features to install
-    install-features: 'odl-groupbasedpolicy-ofoverlay,odl-groupbasedpolicy-ui,odl-restconf-all'
+    #install-features: 'odl-groupbasedpolicy-ofoverlay,odl-groupbasedpolicy-ui,odl-restconf-all'
+    install-features: 'odl-groupbasedpolicy-ofoverlay,odl-groupbasedpolicy-ui,odl-groupbasedpolicy-vpp-neutron-mapper,odl-vbd-ui,odl-restconf-all,odl-jolokia'
 
     # Robot custom options
     robot-options: '-v ODL_VERSION:{stream}'
