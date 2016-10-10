@@ -131,6 +131,9 @@ EOF
 # Create the startup script to be run on controllers.
 cat > ${WORKSPACE}/startup-script.sh <<EOF
 
+echo "Redirecting karaf console output to karaf_console.log"
+export KARAF_REDIRECT="/tmp/${BUNDLEFOLDER}/data/log/karaf_console.log"
+
 echo "Starting controller..."
 /tmp/${BUNDLEFOLDER}/bin/start
 
