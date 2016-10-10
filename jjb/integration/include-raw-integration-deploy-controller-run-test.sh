@@ -85,6 +85,9 @@ EOF
 # Create the startup script to be run on controller.
 cat > ${WORKSPACE}/startup-script.sh <<EOF
 
+echo "Redirecting karaf console output to karaf_console.log"
+export KARAF_REDIRECT="/tmp/${BUNDLEFOLDER}/data/log/karaf_console.log"
+
 echo "Starting controller..."
 /tmp/${BUNDLEFOLDER}/bin/start
 
@@ -200,6 +203,8 @@ echo "Compressing karaf.log"
 ssh ${ODL_SYSTEM_IP} gzip --best "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
 echo "Fetching compressed karaf.log"
 scp "${ODL_SYSTEM_IP}:/tmp/${BUNDLEFOLDER}/data/log/karaf.log.gz" .
+# TODO: Should we compress the output log file as well?
+scp "${ODL_SYSTEM_IP}:/tmp/${BUNDLEFOLDER}/data/log/karaf_console.log" .
 true  # perhaps Jenkins is testing last exit code
 
 # vim: ts=4 sw=4 sts=4 et ft=sh :

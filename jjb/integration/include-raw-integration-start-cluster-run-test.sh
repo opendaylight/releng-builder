@@ -138,6 +138,8 @@ do
     ssh ${!CONTROLLERIP} gzip --best /tmp/${BUNDLEFOLDER}/data/log/karaf.log
     echo "Fetching compressed karaf.log ${i}"
     scp "${!CONTROLLERIP}:/tmp/${BUNDLEFOLDER}/data/log/karaf.log.gz" "odl${i}_karaf.log.gz"
+    # TODO: Gzip also these?
+    scp "${!CONTROLLERIP}:/tmp/${BUNDLEFOLDER}/data/log/karaf_console.log" "odl${i}_karaf_console.log"
 done
 true  # perhaps Jenkins is testing last exit code
 

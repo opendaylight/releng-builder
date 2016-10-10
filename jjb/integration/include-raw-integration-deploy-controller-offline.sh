@@ -51,6 +51,9 @@ readlink -e "${JAVA_HOME}/bin/java"
 echo "Default JDK Version, JAVA_HOME should override"
 java -version
 
+echo "Redirecting karaf console output to karaf_console.log"
+export KARAF_REDIRECT="${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log"
+
 echo "Starting controller..."
 ${WORKSPACE}/${BUNDLEFOLDER}/bin/start
 
@@ -65,7 +68,9 @@ ps axf | grep karaf | grep -v grep | awk '{print "kill -9 " $1}' | sh
 sleep 5
 
 echo "Fetching Karaf logs"
+# TODO: Move instead of copy? Gzip?
 cp ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log .
+cp ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log .
 
 echo "Exit with error"
 if [ -f ${WORKSPACE}/error.txt ]; then

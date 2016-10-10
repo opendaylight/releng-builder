@@ -50,6 +50,9 @@ readlink -e "${JAVA_HOME}/bin/java"
 echo "Default JDK Version, JAVA_HOME should override"
 java -version
 
+echo "Redirecting karaf console output to karaf_console.log"
+export KARAF_REDIRECT="${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log"
+
 echo "Starting controller..."
 ${WORKSPACE}/${BUNDLEFOLDER}/bin/start
 
@@ -115,6 +118,7 @@ exit_on_log_file_message 'BindException: Address already in use'
 exit_on_log_file_message 'server is unhealthy'
 
 echo "Fetching Karaf logs"
+# TODO: Move instead of copy? Gzip?
 cp ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log .
 cp ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log .
 
