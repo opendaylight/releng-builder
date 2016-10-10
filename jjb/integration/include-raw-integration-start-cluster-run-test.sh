@@ -87,7 +87,7 @@ do
     odl_variables=${odl_variables}" -v ${CONTROLLERIP}:${!CONTROLLERIP}"
     echo "Lets's take the karaf thread dump"
     KARAF_PID=$(ssh ${!CONTROLLERIP} "ps aux | grep 'distribution-karaf' | grep -v grep | tr -s ' ' | cut -f2 -d' '")
-    ssh ${!CONTROLLERIP} "jstack $KARAF_PID"> ${WORKSPACE}/karaf_${i}_threads_before.log
+    ssh ${!CONTROLLERIP} "jstack $KARAF_PID"> ${WORKSPACE}/karaf_${i}_threads_before.log || true
 done
 
 echo "Generating mininet variables..."
@@ -126,7 +126,7 @@ do
     CONTROLLERIP=ODL_SYSTEM_${i}_IP
     echo "Lets's take the karaf thread dump again"
     KARAF_PID=$(ssh ${!CONTROLLERIP} "ps aux | grep 'distribution-karaf' | grep -v grep | tr -s ' ' | cut -f2 -d' '")
-    ssh ${!CONTROLLERIP} "jstack $KARAF_PID"> ${WORKSPACE}/karaf_${i}_threads_after.log
+    ssh ${!CONTROLLERIP} "jstack $KARAF_PID"> ${WORKSPACE}/karaf_${i}_threads_after.log || true
     echo "killing karaf process..."
     ssh "${!CONTROLLERIP}" bash -c 'ps axf | grep karaf | grep -v grep | awk '"'"'{print "kill -9 " $1}'"'"' | sh'
 done
