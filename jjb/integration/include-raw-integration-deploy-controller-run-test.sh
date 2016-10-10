@@ -162,7 +162,7 @@ fi
 
 echo "Lets's take the karaf thread dump"
 KARAF_PID=$(ssh ${ODL_SYSTEM_IP} "ps aux | grep 'distribution-karaf' | grep -v grep | tr -s ' ' | cut -f2 -d' '")
-ssh ${ODL_SYSTEM_IP} "jstack $KARAF_PID"> ${WORKSPACE}/karaf_threads_before.log
+ssh ${ODL_SYSTEM_IP} "jstack $KARAF_PID"> ${WORKSPACE}/karaf_threads_before.log || true
 
 echo "Locating test plan to use..."
 testplan_filepath="${WORKSPACE}/test/csit/testplans/${STREAMTESTPLAN}"
@@ -190,7 +190,7 @@ pybot -N ${TESTPLAN} -c critical -e exclude -v BUNDLEFOLDER:${BUNDLEFOLDER} -v W
 
 echo "Lets's take the karaf thread dump again"
 KARAF_PID=$(ssh ${ODL_SYSTEM_IP} "ps aux | grep 'distribution-karaf' | grep -v grep | tr -s ' ' | cut -f2 -d' '")
-ssh ${ODL_SYSTEM_IP} "jstack $KARAF_PID"> ${WORKSPACE}/karaf_threads_after.log
+ssh ${ODL_SYSTEM_IP} "jstack $KARAF_PID"> ${WORKSPACE}/karaf_threads_after.log || true
 
 echo "Killing ODL"
 set +e  # We do not want to create red dot just because something went wrong while fetching logs.
