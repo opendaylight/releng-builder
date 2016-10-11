@@ -12,17 +12,18 @@
 
     # Project branches
     stream:
-        - boron:
+        - carbon:
             branch: 'master'
             jre: 'openjdk8'
 
     install:
+        - only:
+            scope: 'only'
         - all:
             scope: 'all'
 
-
     # Features to install
-    install-features: 'odl-sfc-provider-rest'
+    install-features: 'odl-sfc-provider,odl-sfc-ui,odl-sfc-openflow-renderer,odl-sfc-scf-openflow,odl-sfc-sb-rest,odl-sfc-ovs,odl-sfc-netconf'
 
     # Robot custom options
     robot-options: ''
