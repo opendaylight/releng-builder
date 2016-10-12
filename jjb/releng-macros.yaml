@@ -126,30 +126,9 @@
             timeout: 360
             fail: true
 
+# Used only by opflex-verify-{stream} and {project-name}-verify-{stream}-{maven}-{jdks}
 - trigger:
     name: gerrit-trigger-patch-submitted
-    triggers:
-        - gerrit:
-            server-name: 'OpenDaylight'
-            trigger-on:
-                - patchset-created-event:
-                    exclude-drafts: 'false'
-                    exclude-trivial-rebase: 'false'
-                    exclude-no-code-change: 'false'
-                - draft-published-event
-                - comment-added-contains-event:
-                    comment-contains-value: 'recheck'
-                - comment-added-contains-event:
-                    comment-contains-value: 'reverify'
-            projects:
-              - project-compare-type: 'ANT'
-                project-pattern: '{name}'
-                branches:
-                  - branch-compare-type: 'ANT'
-                    branch-pattern: '**/{branch}'
-
-- trigger:
-    name: gerrit-trigger-relevant-patch-submitted
     triggers:
         - gerrit:
             server-name: 'OpenDaylight'
