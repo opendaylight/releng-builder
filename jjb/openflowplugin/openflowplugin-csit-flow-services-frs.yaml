@@ -23,10 +23,13 @@
             scope: 'only'
 
     # Features to install
-    install-features: 'odl-restconf,odl-openflowplugin-app-config-pusher,odl-openflowplugin-app-topology,odl-openflowplugin-app-forwardingrules-sync'
+    install-features: 'odl-restconf,odl-openflowplugin-app-config-pusher,odl-openflowplugin-app-topology,odl-openflowplugin-app-forwardingrules-sync,odl-openflowplugin-app-table-miss-enforcer'
 
     # Robot custom options
     robot-options: ''
+
+    # mininet image
+    mininet-image: 'ubuntu-trusty-mininet-ovs-25-2c-2g'
 
     # Trigger jobs (upstream dependencies)
     trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream},openflowjava-distribution-{stream},openflowplugin-distribution-{stream}'
