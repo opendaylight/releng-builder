@@ -13,21 +13,10 @@
 cd hide/from/pom/files
 mkdir -p m2repo/org/opendaylight/
 
-(IFS='
-'
-for m in `xmlstarlet sel -N x=http://maven.apache.org/POM/4.0.0 -t -m '//x:modules' -v '//x:module' ../../../../pom.xml`; do
-    rsync -avz --exclude 'maven-metadata*' \
-               --exclude '_remote.repositories' \
-               --exclude 'resolver-status.properties' \
-               "stage/org/opendaylight/$m" m2repo/org/opendaylight/
-done)
-
-# Add exception for integration project since they release under the
-# integration top-level project.
 rsync -avz --exclude 'maven-metadata*' \
            --exclude '_remote.repositories' \
            --exclude 'resolver-status.properties' \
-           "stage/org/opendaylight/integration" m2repo/org/opendaylight/
+           "stage/org/opendaylight" m2repo/org/
 
 "$MVN" -V -B org.sonatype.plugins:nexus-staging-maven-plugin:1.6.2:deploy-staged-repository \
     -DrepositoryDirectory="`pwd`/m2repo" \
