@@ -632,6 +632,21 @@ overrided via the opendaylight-infra-wrappers' build-timeout property.
       </tr>
 
       <tr class="warning">
+        <td><b>Job Template</b><br/>{project}-distribution-check-{stream}</td>
+        <td><b>Gerrit Trigger</b><br/>recheck | redistcheck</td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          This job runs the PROJECT-distribution-check-BRANCH job which is
+          building also integration/distribution project in order to run SingleFeatureTest.
+
+          The <b>redistcheck</b> trigger is useful in cases where a project's
+          other verify jobs passed however distribution-check failed due to infra problems or
+          intermittent issues. It will retrigger just the distribution-check job.
+        </td>
+      </tr>
+
+      <tr class="warning">
         <td><b>Job Template</b><br/>{project}-integration-{stream}</td>
         <td></td>
       </tr>
@@ -691,7 +706,7 @@ overrided via the opendaylight-infra-wrappers' build-timeout property.
 
       <tr class="warning">
         <td><b>Job Template</b><br/>{project}-validate-autorelease-{stream}</td>
-        <td><b>Gerrit Trigger</b><br/>recheck | reverify</td>
+        <td><b>Gerrit Trigger</b><br/>recheck | revalidate</td>
       </tr>
       <tr>
         <td colspan="2">
@@ -712,14 +727,19 @@ overrided via the opendaylight-infra-wrappers' build-timeout property.
       </tr>
       <tr>
         <td colspan="2">
-            The Verify job template creates a Gerrit Trigger job that will
-            trigger when a new patch is submitted to Gerrit.
+          The Verify job template creates a Gerrit Trigger job that will
+          trigger when a new patch is submitted to Gerrit.
+          The job only builds the project code (including unit and integration tests).
+
+          The <b>reverify</b> trigger is useful in cases where a project's
+          other verify jobs passed however this verify failed due to infra problems or
+          intermittent issues. It will retrigger just this verify job.
         </td>
       </tr>
 
       <tr class="warning">
         <td><b>Job Template</b><br/>{project}-verify-node-{stream}</td>
-        <td><b>Gerrit Trigger</b><br/>recheck | reverify</td>
+        <td><b>Gerrit Trigger</b><br/>recheck | renode</td>
       </tr>
       <tr>
         <td colspan="2">
@@ -736,7 +756,7 @@ overrided via the opendaylight-infra-wrappers' build-timeout property.
 
       <tr class="warning">
         <td><b>Job Template</b><br/>{project}-verify-python-{stream} | {project}-verify-tox-{stream}</td>
-        <td><b>Gerrit Trigger</b><br/>recheck | reverify</td>
+        <td><b>Gerrit Trigger</b><br/>recheck | retox</td>
       </tr>
       <tr>
         <td colspan="2">
