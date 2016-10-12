@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a6b29fe_dd2aa3e6",
+        "filename": "jjb/releng-templates.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2016-10-12T15:28:22Z",
+      "side": 1,
+      "message": "The reason for this is we found recently that if a project fails to build and they update their commit message. The job that\u0027s skipping no-code-change won\u0027t run and then all other jobs if pass will pass the build. I\u0027d prefer there\u0027s no accidental workarounds like that so let\u0027s just rerun the jobs regardless of code change to ensure we don\u0027t hit that edge case.",
+      "range": {
+        "startLine": 158,
+        "startChar": 45,
+        "endLine": 158,
+        "endChar": 50
+      },
+      "revId": "e3111a8f1d99392a04f0dee5d08402b78fee7914",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
