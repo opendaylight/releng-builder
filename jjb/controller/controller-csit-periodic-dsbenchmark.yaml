@@ -37,6 +37,10 @@
     # Trigger jobs (daily)
     schedule: 'H H * * *'
 
+    # ODL system image to use
+    # The job uses scriptplan to set heap to 4GB, so 4GB RAM is not enough.
+    controller-image: 'centos7-java-builder-2c-8g'
+
     # Plot Info
     01-plot-title: 'Performance by structure'
     01-plot-yaxis: 'Average total time [ms]'
