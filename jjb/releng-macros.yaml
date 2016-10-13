@@ -296,6 +296,10 @@
             script-only-if-failed: False
             mark-unstable-if-failed: True
         - workspace-cleanup:
+            exclude:
+              # autorelease-release-{stream} reqires vaiables.prop file to be preserved
+              # as the downstream test jobs fails invoke without automatically
+              - variables.prop
             fail-build: false
 
 - builder:
