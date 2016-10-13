@@ -3,8 +3,6 @@
     jobs:
         - 'netvirt-daily-full-integration-{stream}'
 
-    # stream:    release stream (eg. stable-lithium or beryllium)
-    # branch:    git branch (eg. stable/lithium or master)
     stream:
         - carbon:
             branch: 'master'
@@ -137,10 +135,6 @@
 
 - job-template:
     name: 'netvirt-daily-full-integration-{stream}'
-
-    # Required Variables:
-    #     stream:    release stream (eg. stable-lithium or beryllium)
-    #     branch:    git branch (eg. stable/lithium or master)
 
     project-type: freestyle
     node: centos7-docker-2c-4g

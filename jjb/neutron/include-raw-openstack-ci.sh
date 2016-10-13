@@ -82,6 +82,7 @@ fi
 
 # Use specific build, if asked to do so
 if [ "${ODL_VERSION}" == "lithium-latest" ] ; then
+    # FIXME: Support more recent ODL release versions.
     DEVSTACK_LOCAL_CONFIG+="ODL_RELEASE=lithium-snapshot;"
 fi
 
