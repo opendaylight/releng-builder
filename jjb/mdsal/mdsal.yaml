@@ -24,7 +24,7 @@
         - openjdk8
     maven:
         - mvn33:
-            mvn-version: '{mvn33}'
+            mvn-version: 'mvn33'
     mvn-settings: 'mdsal-settings'
     mvn-goals: '-Dmaven.compile.fork=true clean install -Dintegrationtests'
     mvn-opts: '-Xmx2048m -XX:MaxPermSize=1024m'
@@ -58,7 +58,7 @@
         - openjdk8
     maven:
         - mvn33:
-            mvn-version: '{mvn33}'
+            mvn-version: 'mvn33'
     mvn-settings: 'mdsal-settings'
     mvn-goals: '-Dmaven.compile.fork=true clean install -Dintegrationtests'
     mvn-opts: '-Xmx2048m -XX:MaxPermSize=1024m'
@@ -90,7 +90,7 @@
         - openjdk8
     maven:
         - mvn33:
-            mvn-version: '{mvn33}'
+            mvn-version: 'mvn33'
     mvn-settings: 'mdsal-settings'
     mvn-goals: '-Dmaven.compile.fork=true clean install -Dintegrationtests'
     mvn-opts: '-Xmx2048m -XX:MaxPermSize=1024m'

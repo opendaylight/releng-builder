@@ -192,7 +192,7 @@
     builders:
         - wipe-org-opendaylight-repo
         - maven-target:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
             pom: 'pom.xml'
             goals: '-V -B -l build.log clean install dependency:tree -Pq -Dmaven.compile.fork=true'
             properties:
@@ -207,11 +207,11 @@
             global-settings-type: cfp
         #  skip 2.4.0 until we figure out conntrack
         #- run-netvirt-it:
-        #    maven-version: '{mvn33}'
+        #    maven-version: 'mvn33'
         #    stream: '{stream}'
         #    OVS_VERSION: '2.4.0'
         - run-netvirt-it:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
             stream: '{stream}'
             OVS_VERSION: '2.5.0'
         - jacoco-nojava-workaround
@@ -226,4 +226,4 @@
             unstable-if-found: true
             also-check-console-output: false
         - opendaylight-infra-shiplogs:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'

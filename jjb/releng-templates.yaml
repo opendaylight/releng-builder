@@ -42,7 +42,7 @@
             global-settings-file: 'odl-global-settings'
             settings-file: 'autorelease-settings'
         - maven-target:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
             pom: 'pom.xml'
             goals: 'clean deploy -V -B -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -Djenkins -DaltDeploymentRepository=staging::default::file:hide/from/pom/files/stage'
             java-opts:
@@ -57,7 +57,7 @@
         - email-notification:
             email-prefix: '[releng]'
         - opendaylight-infra-shiplogs:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
 
 
 - job-template:
@@ -85,12 +85,12 @@
         - wipe-org-opendaylight-repo
         - jacoco-nojava-workaround
         - releng-fetch-p2zip-if-necessary:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
             settings: '{mvn-settings}'
             global-settings: 'odl-global-settings'
         - releng-generate-p2pom
         - maven-target:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
             pom: 'pom.xml'
             goals: 'clean deploy -V -B -Dmaven.repo.local=/tmp/r'
             settings: '{mvn-settings}'
@@ -98,7 +98,7 @@
             global-settings: 'odl-global-settings'
             global-settings-type: cfp
         - releng-update-p2composite-metadata:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
             settings: '{mvn-settings}'
             global-settings: 'odl-global-settings'
 
@@ -106,7 +106,7 @@
         - email-notification:
             email-prefix: '[releng]'
         - opendaylight-infra-shiplogs:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
 
 # Python Related
 
@@ -193,7 +193,7 @@
         - email-notification:
             email-prefix: '[{project}]'
         - opendaylight-infra-shiplogs:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
 
 - job-template:
     name: '{project-name}-merge-rtd-{stream}'
@@ -227,7 +227,7 @@
         - email-notification:
             email-prefix: '[{project}]'
         - opendaylight-infra-shiplogs:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
 
 # Node related
 
@@ -322,4 +322,4 @@
         - email-notification:
             email-prefix: '[{project}]'
         - opendaylight-infra-shiplogs:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'

@@ -12,8 +12,6 @@
         artifactDaysToKeep: '14'
 
     parameters:
-        - maven-exec:
-            maven-version: 'mvn33'
         - opendaylight-infra-parameters:
             project: '{project}'
             branch: '{branch}'
@@ -44,14 +42,6 @@
         - timed: 'H 0 * * *'
 
     builders:
-        # force jenkins install of maven version before any shell scripts use it
-        - maven-target:
-            maven-version: 'mvn33'
-            goals: '-version'
-            settings: 'autorelease-settings'
-            settings-type: cfp
-            global-settings: 'odl-global-settings'
-            global-settings-type: cfp
         - wipe-local-maven-repo
         - jacoco-nojava-workaround
         - shell: "./scripts/list-project-dependencies.sh"
@@ -83,7 +73,9 @@
             mkdir -p archives/
             cp *.log *.prop $_
 
+
     publishers:
+        - opendaylight-parse-console-log
         - email-notification:
             email-prefix: '[autorelease]'
         - trigger-parameterized-builds:
@@ -157,4 +149,4 @@
                 Archive also available on Jenkins at $BUILD_URL
             always: true
         - opendaylight-infra-shiplogs:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
