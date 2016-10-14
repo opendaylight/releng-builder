@@ -40,7 +40,7 @@
             global-settings-file: 'odl-global-settings'
             settings-file: '{mvn-settings}'
         - maven-target:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
             pom: 'pom.xml'
             goals: 'clean install dependency:tree com.sonatype.clm:clm-maven-plugin:index -V -B -Pq -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
             java-opts:
@@ -57,7 +57,7 @@
         - email-notification:
             email-prefix: '[{project-name}]'
         - opendaylight-infra-shiplogs:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
 
 - job-template:
     name: '{project-name}-distribution-{stream}'
@@ -107,7 +107,7 @@
             settings-file: '{mvn-settings}'
 
     maven:
-        maven-name: '{mvn33}'
+        maven-name: 'mvn33'
         root-pom: 'pom.xml'
         goals: 'clean install dependency:tree -DoutputFile=dependency_tree.txt -V -B -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
@@ -124,7 +124,7 @@
             unique-version: true
             deploy-unstable: false
         - opendaylight-infra-shiplogs:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
 
 - job-template:
     # Template: {name}-distribution-check-{stream}
@@ -195,7 +195,7 @@
 
     builders:
         - maven-target:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
             pom: '$GERRIT_PROJECT/pom.xml'
             goals: 'clean install dependency:tree -DoutputFile=dependency_tree.txt -V -B -Pq -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -Dstream={stream}'
             java-opts:
@@ -205,7 +205,7 @@
             global-settings: 'odl-global-settings'
             global-settings-type: cfp
         - maven-target:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
             pom: 'distribution/pom.xml'
             goals: 'clean install dependency:tree -DoutputFile=dependency_tree.txt -V -B -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
             java-opts:
@@ -231,7 +231,7 @@
         - archive:
             artifacts: '*.zip'
         - opendaylight-infra-shiplogs:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
 
 - job-template:
     name: '{project-name}-integration-{stream}'
@@ -283,7 +283,7 @@
             global-settings-file: 'odl-global-settings'
             settings-file: '{mvn-settings}'
         - maven-target:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
             goals: '{mvn-goals} -V -B -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
             java-opts:
               - '{mvn-opts}'
@@ -298,7 +298,7 @@
         - findbugs
         - jacoco-report
         - opendaylight-infra-shiplogs:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
 
 - job-template:
     name: '{project-name}-merge-{stream}'
@@ -355,7 +355,7 @@
             settings-file: '{mvn-settings}'
 
     maven:
-        maven-name: '{mvn33}'
+        maven-name: 'mvn33'
         goals: '{mvn-goals} -V -B -Djenkins -Dmerge -Dstream={stream} -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
         maven-opts: '{mvn-opts}'
         settings: '{mvn-settings}'
@@ -378,7 +378,7 @@
             # project is configured in a certain way which ODL is not.
             steps:
             - maven-target:
-                maven-version: '{mvn33}'
+                maven-version: 'mvn33'
                 pom: pom.xml
                 goals: 'site:deploy -V -B -Dstream={stream}'
                 java-opts:
@@ -388,7 +388,7 @@
                 global-settings: 'odl-global-settings'
                 global-settings-type: cfp
             - maven-target:
-                maven-version: '{mvn33}'
+                maven-version: 'mvn33'
                 pom: deploy-site.xml
                 goals: 'site:deploy -V -B -Dstream={stream}'
                 java-opts:
@@ -410,7 +410,7 @@
             deploy-unstable: false
         - jacoco-report
         - opendaylight-infra-shiplogs:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
 
 - job-template:
     name: '{project-name}-periodic-{stream}'
@@ -456,7 +456,7 @@
             global-settings-file: 'odl-global-settings'
             settings-file: '{mvn-settings}'
         - maven-target:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
             goals: '{mvn-goals} -V -B -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
             java-opts:
               - '{mvn-opts}'
@@ -471,7 +471,7 @@
         - jacoco-report
         - findbugs
         - opendaylight-infra-shiplogs:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
 
 - job-template:
     name: '{project-name}-sonar'
@@ -514,7 +514,7 @@
             global-settings-file: 'odl-global-settings'
             settings-file: '{mvn-settings}'
         - maven-target:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
             goals: '{mvn-goals} -V -B -Djenkins -Dsonar -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
             maven-opts:
               - '{mvn-opts}'
@@ -523,7 +523,7 @@
             global-settings: 'odl-global-settings'
             global-settings-type: cfp
         - maven-target:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
             # We should switch to the recommended configuration of sonar once
             # JJB adds support for configurating the Sonar wrapper:
             #    http://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner+for+Jenkins
@@ -541,7 +541,7 @@
         - jacoco-report
         - findbugs
         - opendaylight-infra-shiplogs:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
 
 - job-template:
     name: '{project-name}-validate-autorelease-{stream}'
@@ -616,7 +616,7 @@
         - autorelease-checkout-gerrit-patch
         - autorelease-generate-release-patches
         - maven-target:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
             pom: validate-pom.xml
             goals: 'clean install dependency:tree -V -B -T1.5C -Pq -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
             java-opts:
@@ -626,7 +626,7 @@
             global-settings: 'odl-global-settings'
             global-settings-type: cfp
         - maven-target:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
             pom: 'pom.xml'
             goals: 'clean validate -V -B -Pq -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
             java-opts:
@@ -641,7 +641,7 @@
         - email-notification:
             email-prefix: '[autorelease] [{project-name}]'
         - opendaylight-infra-shiplogs:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
 
 - job-template:
     name: '{project-name}-verify-{stream}-{maven}-{jdks}'

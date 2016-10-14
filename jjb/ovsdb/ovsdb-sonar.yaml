@@ -50,7 +50,7 @@
             !include-raw-escape:
                 - include-setup-hwvtep-docker.sh
         - maven-target:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
             pom: 'pom.xml'
             goals: 'clean install dependency:tree -V -B -Dsonar -Dskip.karaf.featureTest=true -Dmaven.compile.fork=true -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
             java-opts:
@@ -62,7 +62,7 @@
         - inject:
             properties-file: env.properties
         - maven-target:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
             pom: 'pom.xml'
             goals: 'verify -V -B -Pintegrationtest -Dsonar -Dskip.karaf.featureTest=true -Dovsdb.controller.address=${{CONTROLLER_IP}} -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r '
             properties:
@@ -74,7 +74,7 @@
             global-settings: 'odl-global-settings'
             global-settings-type: cfp
         - maven-target:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
             # We should switch to the recommended configuration of sonar once
             # JJB adds support for configurating the Sonar wrapper:
             #    http://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner+for+Jenkins
@@ -93,4 +93,4 @@
             email-prefix: '[ovsdb]'
         - jacoco-report
         - opendaylight-infra-shiplogs:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
