@@ -24,7 +24,7 @@
     name: opflex-build
     builders:
       - maven-target:
-          maven-version: '{mvn33}'
+          maven-version: 'mvn33'
           pom: genie/pom.xml
           goals: compile
       - copyartifact:
@@ -77,14 +77,14 @@
 
     builders:
         - opflex-build:
-            mvn33: '{mvn33}'
+            mvn33: 'mvn33'
             stream: '{stream}'
 
     publishers:
         - email-notification:
             email-prefix: '[opflex]'
         - opendaylight-infra-shiplogs:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
 
 - job-template:
     name: 'opflex-merge-{stream}'
@@ -121,11 +121,11 @@
 
     builders:
         - opflex-build:
-            mvn33: '{mvn33}'
+            mvn33: 'mvn33'
             stream: '{stream}'
 
     publishers:
         - email-notification:
             email-prefix: '[opflex]'
         - opendaylight-infra-shiplogs:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'

@@ -70,7 +70,7 @@
             settings-file: 'integration-settings'
 
     maven:
-        maven-name: '{mvn33}'
+        maven-name: 'mvn33'
         root-pom: 'pom.xml'
         goals: 'clean install dependency:tree -DoutputFile=dependency_tree.txt -V -B -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -Djenkins -Dstream={stream}'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
@@ -94,7 +94,7 @@
     publishers:
         - jacoco-report
         - opendaylight-infra-shiplogs:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
         - email-notification:
             email-prefix: '[int/dist]'
 
@@ -141,7 +141,7 @@
             settings-file: 'integration-settings'
 
     maven:
-        maven-name: '{mvn33}'
+        maven-name: 'mvn33'
         root-pom: 'pom.xml'
         goals: 'clean install dependency:tree -DoutputFile=dependency_tree.txt -V -B -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -Djenkins -Dmerge -Dstream={stream}'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
@@ -164,7 +164,7 @@
             # project is configured in a certain way which ODL is not.
             steps:
             - maven-target:
-                maven-version: '{mvn33}'
+                maven-version: 'mvn33'
                 pom: pom.xml
                 goals: 'site:deploy -V -B -Dstream={stream}'
                 java-opts:
@@ -174,7 +174,7 @@
                 global-settings: 'odl-global-settings'
                 global-settings-type: cfp
             - maven-target:
-                maven-version: '{mvn33}'
+                maven-version: 'mvn33'
                 pom: deploy-site.xml
                 goals: 'site:deploy -V -B -Dstream={stream}'
                 java-opts:
@@ -194,7 +194,7 @@
             deploy-unstable: false
         - jacoco-report
         - opendaylight-infra-shiplogs:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
         - email-notification:
             email-prefix: '[int/dist]'
 
@@ -246,7 +246,7 @@
             email-prefix: '[int/dist]'
         - integration-csit-archive-build
         - opendaylight-infra-shiplogs:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
 
 # Template: integration-distribution-offline-{stream}
 # Goal: Verify distribution can start with no internet connection
@@ -295,4 +295,4 @@
             email-prefix: '[int/dist]'
         - integration-csit-archive-build
         - opendaylight-infra-shiplogs:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'

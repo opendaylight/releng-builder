@@ -58,7 +58,7 @@
             properties-file: env.properties
         - install-docker-composeSonar
         - maven-target:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
             pom: 'pom.xml'
             goals: 'clean install dependency:tree -V -B -Dsonar -Dskip.karaf.featureTest=true -Dmaven.compile.fork=true -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
             java-opts:
@@ -70,7 +70,7 @@
         - inject:
             properties-file: env.properties
         - maven-target:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
             pom: 'vpnservice/it/pom.xml'
             goals: 'verify -V -B -l netvirt-vpnservice-sonar.log -Pintegrationtest -Dsonar -Dskip.karaf.featureTest=true -Dovsdb.controller.address=${{CONTROLLER_IP}} -Ddocker.compose.file=ovs-2.5.0-hwvtep.yml -Ddocker.vEnvWs=$WORKSPACE -Dsgm=transparent'
             properties:
@@ -81,7 +81,7 @@
             global-settings: 'odl-global-settings'
             global-settings-type: cfp
         - maven-target:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
             pom: 'openstack/net-virt-it/pom.xml'
             goals: 'verify -V -B -l net-virt-sonar.log -Pintegrationtest -Dsonar -Dskip.karaf.featureTest=true -Dovsdb.controller.address=${{CONTROLLER_IP}} -Ddocker.compose.file=ovs-2.5.0-hwvtep.yml -Ddocker.vEnvWs=$WORKSPACE -Dsgm=transparent'
             properties:
@@ -97,7 +97,7 @@
         - inject:
             properties-file: env.properties
         - maven-target:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
             pom: 'openstack/net-virt-sfc/it/pom.xml'
             goals: 'verify -V -B -l openstack/net-virt-sfc-sonar.log -Pintegrationtest -Dsonar -Dskip.karaf.featureTest=true -Dovsdb.controller.address=${{CONTROLLER_IP}} -Dsgm=transparent'
             properties:
@@ -111,7 +111,7 @@
             global-settings: 'odl-global-settings'
             global-settings-type: cfp
         - maven-target:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
             # We should switch to the recommended configuration of sonar once
             # JJB adds support for configurating the Sonar wrapper:
             #    http://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner+for+Jenkins
@@ -131,4 +131,4 @@
         - jacoco-report
         - findbugs
         - opendaylight-infra-shiplogs:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'

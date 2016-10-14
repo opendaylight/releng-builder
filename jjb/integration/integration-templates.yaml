@@ -106,7 +106,7 @@
             email-prefix: '[{project}]'
         - integration-csit-archive-build
         - opendaylight-infra-shiplogs:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
 
 - job-template:
     name: '{project}-csit-1node-{functionality}-{install}-{stream}'
@@ -217,7 +217,7 @@
                 format: csv
         - integration-csit-archive-build
         - opendaylight-infra-shiplogs:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
 
 - job-template:
     name: '{project}-csit-1node-periodic-{functionality}-{install}-{stream}'
@@ -327,7 +327,7 @@
                 format: csv
         - integration-csit-archive-build
         - opendaylight-infra-shiplogs:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
 
 - job-template:
     name: '{project}-csit-verify-3node-{functionality}'
@@ -412,7 +412,7 @@
             email-prefix: '[{project}]'
         - integration-csit-archive-build
         - opendaylight-infra-shiplogs:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
 
 - job-template:
     name: '{project}-csit-3node-{functionality}-{install}-{stream}'
@@ -524,7 +524,7 @@
                 format: csv
         - integration-csit-archive-build
         - opendaylight-infra-shiplogs:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
 
 - job-template:
     name: '{project}-csit-3node-docker-{functionality}-{install}-{stream}'
@@ -636,7 +636,7 @@
                 format: csv
         - integration-csit-archive-build
         - opendaylight-infra-shiplogs:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
 
 - job-template:
     name: '{project}-csit-3node-periodic-{functionality}-{install}-{stream}'
@@ -747,7 +747,7 @@
                 format: csv
         - integration-csit-archive-build
         - opendaylight-infra-shiplogs:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
 
 - job-template:
     name: '{project}-csit-1node-openstack-{openstack}-{functionality}-{stream}'
@@ -860,7 +860,7 @@
             email-prefix: '[{project}]'
         - integration-csit-archive-build
         - opendaylight-infra-shiplogs:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
 
 - job-template:
     name: '{project}-csit-3node-openstack-{openstack}-{functionality}-{stream}'
@@ -979,7 +979,7 @@
             email-prefix: '[{project}]'
         - integration-csit-archive-build
         - opendaylight-infra-shiplogs:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
 
 # Template: {project}-patch-test-{stream}
 # Goal: Build a patch and run project specific system test on a distribution containing the change
@@ -1055,7 +1055,7 @@
             global-settings-file: 'odl-global-settings'
             settings-file: 'integration-settings'
         - maven-target:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
             pom: '{project}/pom.xml'
             goals: 'clean install dependency:tree -V -B -Djenkins -DskipTests -Dcheckstyle.skip=true -Dmaven.javadoc.skip=true -Dmaven.site.skip=true -DgenerateReports=false -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r -Dstream={stream}'
             java-opts:
@@ -1066,7 +1066,7 @@
             global-settings-type: cfp
 
     maven:
-        maven-name: '{mvn33}'
+        maven-name: 'mvn33'
         root-pom: 'distribution/pom.xml'
         goals: 'clean install dependency:tree -V -B -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
         maven-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'

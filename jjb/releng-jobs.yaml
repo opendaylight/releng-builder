@@ -104,7 +104,7 @@
         - email-notification:
             email-prefix: '[releng]'
         - opendaylight-infra-shiplogs:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
 
 - job-template:
     name: builder-verify-python
@@ -166,7 +166,7 @@
         - email-notification:
             email-prefix: '[releng]'
         - opendaylight-infra-shiplogs:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
 
 - job-template:
     name: 'builder-merge'
@@ -226,7 +226,7 @@
         - email-notification:
             email-prefix: '[releng]'
         - opendaylight-infra-shiplogs:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
 
 - job-template:
     name: 'builder-weekly'
@@ -269,7 +269,7 @@
         - email-notification:
             email-prefix: '[releng]'
         - opendaylight-infra-shiplogs:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
 
 - job-template:
     name: builder-check-poms
@@ -303,7 +303,7 @@
         - email-notification:
             email-prefix: '[releng]'
         - opendaylight-infra-shiplogs:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
 
 - job-template:
     name: 'builder-verify-packer-{platforms}-{templates}'
@@ -362,7 +362,7 @@
         - email-notification:
             email-prefix: '[{project}]'
         - opendaylight-infra-shiplogs:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
 
 - job-template:
     name: 'builder-merge-packer-{platforms}-{templates}'
@@ -418,4 +418,4 @@
         - email-notification:
             email-prefix: '[{project}]'
         - opendaylight-infra-shiplogs:
-            maven-version: '{mvn33}'
+            maven-version: 'mvn33'
