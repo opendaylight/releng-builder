@@ -302,9 +302,9 @@
             mark-unstable-if-failed: True
         - workspace-cleanup:
             exclude:
-              # autorelease-release-{stream} reqires vaiables.prop file to be preserved
-              # as the downstream test jobs fails invoke without automatically
-              - variables.prop
+              # Do not clean up *.jenkins-trigger files for jobs that use a
+              # properties file as input for triggering another build.
+              - **/*.jenkins-trigger
             fail-build: false
 
 - builder:
