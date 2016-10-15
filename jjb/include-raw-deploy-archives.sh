@@ -100,5 +100,5 @@ find $ARCHIVES_DIR -type f -print0 \
                 | cut -d: -f1 \
                 | xargs -d'\n' -r gzip
 
-zip -r archives.zip $JENKINS_HOSTNAME/
+zip -r archives.zip $JENKINS_HOSTNAME/ > $ARCHIVES_DIR/_archives-zip.log
 du -sh archives.zip
