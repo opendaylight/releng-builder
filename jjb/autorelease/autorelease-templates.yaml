@@ -89,7 +89,7 @@
         - trigger-parameterized-builds:
             - project: 'integration-distribution-test-{integration-test}'
               condition: UNSTABLE_OR_BETTER
-              property-file: variables.prop
+              property-file: variables.jenkins-trigger
               fail-on-missing: true
         - opendaylight-infra-shiplogs:
             maven-version: 'mvn33'

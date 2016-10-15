@@ -15,3 +15,9 @@ echo "VERSION: ${VERSION}"
 REPOID=`grep "Created staging repository with ID" $WORKSPACE/deploy-staged-repository.log | cut -d '"' -f2`
 echo BUNDLEURL=${NEXUSURL}/${REPOID}/org/opendaylight/integration/distribution-karaf/${VERSION}/distribution-karaf-${VERSION}.zip > $WORKSPACE/variables.prop
 echo "BUNDLEURL: ${BUNDLEURL}"
+
+# Copy variables.prop to variables.jenkins-trigger so that the end of build
+# trigger can pick up the file as input for triggering downstream jobs.
+# This allows variables.prop to get archive to logs.opendaylight.org while not
+# breaking the downstream trigger due to missing file from archiving.
+cp variables.prop variables.jenkins-trigger
