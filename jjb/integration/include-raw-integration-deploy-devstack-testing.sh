@@ -12,7 +12,7 @@ SUITES=$( egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' testplan.txt | tr '\012' ' 
 
 echo "Starting Robot test suites ${SUITES} ..."
 
-pybot -e exclude \
+pybot --removekeywords wuks -e exclude \
 -v WORKSPACE:$WORKSPACE -v USER_HOME:$HOME -L TRACE \
 -v DEVSTACK_SYSTEM_USER:$USER \
 -v DEVSTACK_SYSTEM_IP:$OPENSTACK_CONTROL_NODE_IP \
