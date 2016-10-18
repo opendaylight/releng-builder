@@ -15,9 +15,11 @@
         - carbon:
             branch: 'master'
             jre: 'openjdk8'
+            mininet-image: 'ubuntu-trusty-mininet-ovs-25-2c-2g'
         - boron:
             branch: 'stable/boron'
             jre: 'openjdk8'
+            mininet-image: 'ubuntu-trusty-mininet-ovs-25-2c-2g'
         - beryllium:
             branch: 'stable/beryllium'
             jre: 'openjdk7'
@@ -34,7 +36,6 @@
     # Robot custom options
     robot-options: ''
 
-    mininet-image: 'ubuntu-trusty-mininet-ovs-25-2c-2g'
 
     # Trigger jobs (upstream dependencies)
     trigger-jobs: 'openflowjava-distribution-{stream},openflowplugin-distribution-{stream},vtn-distribution-{stream}'
