@@ -1,0 +1,23 @@
+- project:
+    name: l2switch-patch-test
+    jobs:
+        - '{project}-patch-test-{feature}-{stream}'
+
+    # The project name
+    project: 'l2switch'
+
+    # Project branches
+    stream:
+        - carbon:
+            branch: 'master'
+            jdk: 'openjdk8'
+        - boron:
+            branch: 'stable/boron'
+            jdk: 'openjdk8'
+
+    feature:
+        - all:
+            csit-list: >
+                l2switch-csit-1node-periodic-host-scalability-daily-{stream}
+                l2switch-csit-1node-scalability-only-{stream}
+                l2switch-csit-1node-switch-only-{stream}
