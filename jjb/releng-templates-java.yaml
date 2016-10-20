@@ -164,7 +164,11 @@
 
     wrappers:
         - opendaylight-infra-wrappers:
-            build-timeout: '{build-timeout}'
+            # Distro-check jobs typically run within 10 - 30 minutes
+            # with 45 minutes being the occassional edge case.
+            # enforce a 60 minute limit to ensure stuck jobs get
+            # cleared up sooner.
+            build-timeout: '60'
 
     triggers:
         - gerrit:
