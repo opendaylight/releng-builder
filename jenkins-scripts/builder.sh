@@ -35,11 +35,11 @@ tar -xvf hbase-0.94.27.tar.gz
 mkdir /tmp/cassandra
 cd /tmp/cassandra
 
-wget --no-verbose http://apache.osuosl.org/cassandra/2.1.14/apache-cassandra-2.1.14-bin.tar.gz
+wget --no-verbose http://apache.osuosl.org/cassandra/2.1.16/apache-cassandra-2.1.16-bin.tar.gz
 
 echo "Installing the Cassandra Server..."
 
-tar -xvf apache-cassandra-2.1.14-bin.tar.gz
+tar -xvf apache-cassandra-2.1.16-bin.tar.gz
 
 # Installation of Elasticsearch node
 
