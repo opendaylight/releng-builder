@@ -14,10 +14,13 @@
         - boron:
             branch: 'stable/boron'
             jdk: 'openjdk8'
+        - beryllium:
+            branch: 'stable/beryllium'
+            jdk: 'openjdk7'
 
     feature:
         - all:
             csit-list: >
-                l2switch-csit-1node-periodic-host-scalability-daily-{stream}
-                l2switch-csit-1node-scalability-only-{stream}
+                l2switch-csit-1node-periodic-host-scalability-daily-{stream},
+                l2switch-csit-1node-scalability-only-{stream},
                 l2switch-csit-1node-switch-only-{stream}
