@@ -24,10 +24,13 @@
             scope: 'only'
 
     # Features to install
-    install-features: 'odl-openflowplugin-flow-services-ui,decanter-collector-jmx,decanter-appender-elasticsearch'
+    install-features: 'odl-openflowplugin-flow-services-ui,odl-openflowplugin-app-table-miss-enforcer,decanter-collector-jmx,decanter-appender-elasticsearch'
 
     # Robot custom options
-    robot-options: '-v TEST_LENGTH:23@hours --escape space:@'
+    robot-options: '-v TEST_LENGTH:23h'
+
+    # mininet image
+    mininet-image: 'ubuntu-trusty-mininet-ovs-25-2c-2g'
 
     # Trigger jobs (daily)
     schedule: 'H H * * *'
