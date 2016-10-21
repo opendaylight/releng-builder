@@ -1,5 +1,5 @@
 - project:
-    name: openflowplugin-csit-sw-scalability-daily-old
+    name: openflowplugin-csit-scalability-daily-old
     jobs:
         - '{project}-csit-1node-periodic-{functionality}-{install}-{stream}'
 
@@ -20,7 +20,7 @@
             scope: 'only'
 
     # Features to install
-    install-features: 'odl-openflowplugin-flow-services-ui'
+    install-features: 'odl-openflowplugin-flow-services-ui,decanter-collector-jmx,decanter-appender-elasticsearch'
 
     # Robot custom options
     robot-options: ''
@@ -31,5 +31,9 @@
     # Plot Info
     01-plot-title: 'Max number of Switches'
     01-plot-yaxis: 'OpenFlow Switches'
-    01-plot-group: 'Inventory Scalability'
-    01-plot-data-file: 'max_found.csv'
+    01-plot-group: 'Switch Scalability'
+    01-plot-data-file: 'switches.csv'
+    02-plot-title: 'Topology discover time'
+    02-plot-yaxis: 'Seconds'
+    02-plot-group: 'Switch Scalability'
+    02-plot-data-file: 'time.csv'

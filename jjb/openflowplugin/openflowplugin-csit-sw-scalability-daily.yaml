@@ -1,5 +1,5 @@
 - project:
-    name: openflowplugin-csit-sw-scalability-daily
+    name: openflowplugin-csit-scalability-daily
     jobs:
         - '{project}-csit-1node-periodic-{functionality}-{install}-{stream}'
 
@@ -23,10 +23,13 @@
             scope: 'only'
 
     # Features to install
-    install-features: 'odl-openflowplugin-flow-services-ui'
+    install-features: 'odl-openflowplugin-flow-services-ui,odl-openflowplugin-app-table-miss-enforcer,decanter-collector-jmx,decanter-appender-elasticsearch'
 
     # Robot custom options
     robot-options: ''
+
+    # mininet image
+    mininet-image: 'ubuntu-trusty-mininet-ovs-25-2c-2g'
 
     # Trigger jobs (daily)
     schedule: 'H H * * *'
@@ -34,5 +37,9 @@
     # Plot Info
     01-plot-title: 'Max number of Switches'
     01-plot-yaxis: 'OpenFlow Switches'
-    01-plot-group: 'Inventory Scalability'
-    01-plot-data-file: 'max_found.csv'
+    01-plot-group: 'Switch Scalability'
+    01-plot-data-file: 'switches.csv'
+    02-plot-title: 'Topology discover time'
+    02-plot-yaxis: 'Seconds'
+    02-plot-group: 'Switch Scalability'
+    02-plot-data-file: 'time.csv'
