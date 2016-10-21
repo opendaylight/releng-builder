@@ -23,16 +23,23 @@
             scope: 'only'
 
     # Features to install
-    install-features: 'odl-openflowplugin-flow-services-ui'
+    install-features: 'odl-openflowplugin-flow-services-ui,odl-openflowplugin-app-table-miss-enforcer,decanter-collector-jmx,decanter-appender-elasticsearch'
 
     # Robot custom options
     robot-options: ''
+
+    # mininet image
+    mininet-image: 'ubuntu-trusty-mininet-ovs-25-2c-2g'
 
     # Trigger jobs (daily)
     schedule: 'H H * * *'
 
     # Plot Info
-    01-plot-title: 'Max number of switch links'
+    01-plot-title: 'Maximum Links Full Mesh Topology'
     01-plot-yaxis: 'Links'
-    01-plot-group: 'Inventory Switch Link Scalability'
+    01-plot-group: 'Link Scalability'
     01-plot-data-file: 'links.csv'
+    02-plot-title: 'Topology Discover Time'
+    02-plot-yaxis: 'Seconds'
+    02-plot-group: 'Link Scalability'
+    02-plot-data-file: 'time.csv'
