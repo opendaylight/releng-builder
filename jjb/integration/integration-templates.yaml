@@ -834,7 +834,7 @@
             openstack-vms: '{openstack-vms}'
 
     triggers:
-        - integration-csit-all
+        - timed: '{schedule}'
 
     builders:
         - integration-copy-ssh-keys
@@ -952,7 +952,7 @@
             openstack-vms: '{openstack-vms}'
 
     triggers:
-        - integration-csit-all
+        - timed: '{schedule}'
 
     builders:
         - integration-copy-ssh-keys

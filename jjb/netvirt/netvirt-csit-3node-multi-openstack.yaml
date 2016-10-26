@@ -1,13 +1,17 @@
 - project:
-    name: netvirt-3node-csit-openstack-integration
+    name: netvirt-legacy-3node-csit-openstack-integration
     jobs:
         - '{project}-csit-3node-openstack-{openstack}-{functionality}-{stream}'
 
     # The project name
-    project: 'netvirt'
+    project: 'netvirt-legacy'
 
     # The project name
-    functionality: 'openstack'
+    functionality:
+        - upstream:
+            schedule: 'H H * * *'
+        - gate:
+            schedule: ''
 
     stream:
         - carbon:
@@ -31,8 +35,6 @@
     openstack-vms: 4
 
     install-features: 'odl-ovsdb-openstack,decanter-collector-jmx,decanter-appender-elasticsearch'
-
-    schedule: 'H H * * *'
 
     odl-enable-l3: 'yes'
 
