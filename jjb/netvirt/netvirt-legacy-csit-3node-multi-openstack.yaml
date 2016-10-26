@@ -1,13 +1,17 @@
 - project:
-    name: netvirt-vpnservice-3node-csit-openstack-integration
+    name: netvirt-legacy-3node-csit-openstack-integration
     jobs:
         - '{project}-csit-3node-openstack-{openstack}-{functionality}-{stream}'
 
     # The project name
-    project: 'netvirt-vpnservice'
+    project: 'netvirt-legacy'
 
     # The project name
-    functionality: 'openstack'
+    functionality:
+        - upstream:
+            schedule: 'H H * * *'
+        - gate:
+            schedule: ''
 
     stream:
         - carbon:
@@ -16,6 +20,9 @@
         - boron:
             branch: 'stable/boron'
             jre: 'openjdk8'
+        - beryllium:
+            branch: 'stable/beryllium'
+            jre: 'openjdk7'
 
     openstack:
         - mitaka:
@@ -27,15 +34,13 @@
 
     openstack-vms: 4
 
-    install-features: 'odl-netvirt-openstack'
-
-    schedule: 'H H * * *'
+    install-features: 'odl-ovsdb-openstack,decanter-collector-jmx,decanter-appender-elasticsearch'
 
     odl-enable-l3: 'yes'
 
     enable-haproxy: 'yes'
 
-    public-bridge: 'public' # PUBLIC_PHYSICAL_NETWORK
+    public-bridge: 'br-ex'
 
     enable-openstack-services: 'q-svc,q-dhcp,q-meta,n-cauth,tempest'
 
@@ -43,4 +48,4 @@
 
     tenant-network-type: 'vxlan'
 
-    security-group-mode: 'transparent'
+    security-group-mode: 'none'
