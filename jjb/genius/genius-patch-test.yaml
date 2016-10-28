@@ -11,7 +11,6 @@
         - carbon:
             branch: 'master'
             jdk: 'openjdk8'
-            csit-list: >
         - boron:
             branch: 'stable/boron'
             jdk: 'openjdk8'
@@ -21,7 +20,7 @@
             csit-list: >
                 netvirt-vpnservice-csit-1node-openstack-mitaka-transparent-{stream}
 
-        - all:
+        - genius:
             csit-list: >
                 genius-csit-1node-genius-only-{stream},
                 genius-csit-1node-genius-all-{stream}
