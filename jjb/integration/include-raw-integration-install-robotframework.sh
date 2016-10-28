@@ -26,6 +26,7 @@ pip install --upgrade pip
 
 pip install --upgrade docker-py importlib requests scapy netifaces netaddr ipaddr
 pip install --upgrade robotframework{,-{httplibrary,requests,sshlibrary,selenium2library}}
+pip install --upgrade pyhocon
 
 # Module jsonpath is needed by current AAA idmlite suite.
 pip install --upgrade jsonpath-rw
