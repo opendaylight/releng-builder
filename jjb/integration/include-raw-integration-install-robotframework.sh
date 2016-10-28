@@ -24,7 +24,7 @@ set -exu
 # Make sure pip itself us up-to-date.
 pip install --upgrade pip
 
-pip install --upgrade docker-py importlib requests scapy netifaces netaddr ipaddr
+pip install --upgrade docker-py importlib requests scapy netifaces netaddr ipaddr pyhocon
 pip install --upgrade robotframework{,-{httplibrary,requests,sshlibrary,selenium2library}}
 
 # Module jsonpath is needed by current AAA idmlite suite.
