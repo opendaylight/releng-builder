@@ -82,6 +82,7 @@
 
     publishers:
         - email-notification:
+            email-recipients: '{email-recipients}'
             email-prefix: '[opflex]'
         - opendaylight-infra-shiplogs:
             maven-version: 'mvn33'
@@ -126,6 +127,7 @@
 
     publishers:
         - email-notification:
+            email-recipients: '{email-recipients}'
             email-prefix: '[opflex]'
         - opendaylight-infra-shiplogs:
             maven-version: 'mvn33'

@@ -85,6 +85,7 @@
 
     publishers:
         - email-notification:
+            email-recipients: '{email-recipients}'
             email-prefix: '[autorelease]'
         - trigger-parameterized-builds:
             - project: 'integration-distribution-test-{integration-test}'

@@ -96,6 +96,7 @@
         - opendaylight-infra-shiplogs:
             maven-version: 'mvn33'
         - email-notification:
+            email-recipients: '{email-recipients}'
             email-prefix: '[int/dist]'
 
 
@@ -202,6 +203,7 @@
         - opendaylight-infra-shiplogs:
             maven-version: 'mvn33'
         - email-notification:
+            email-recipients: '{email-recipients}'
             email-prefix: '[int/dist]'
 
 # Template: integration-distribution-deploy-{stream}
@@ -249,6 +251,7 @@
 
     publishers:
         - email-notification:
+            email-recipients: '{email-recipients}'
             email-prefix: '[int/dist]'
         - integration-csit-archive-build
         - opendaylight-infra-shiplogs:
@@ -298,6 +301,7 @@
 
     publishers:
         - email-notification:
+            email-recipients: '{email-recipients}'
             email-prefix: '[int/dist]'
         - integration-csit-archive-build
         - opendaylight-infra-shiplogs:

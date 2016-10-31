@@ -103,6 +103,7 @@
             unstable-if: 0.0
             pass-if: 100.0
         - email-notification:
+            email-recipients: '{email-recipients}'
             email-prefix: '[{project}]'
         - integration-csit-archive-build
         - opendaylight-infra-shiplogs:
@@ -187,6 +188,7 @@
             unstable-if: 0.0
             pass-if: 100.0
         - email-notification:
+            email-recipients: '{email-recipients}'
             email-prefix: '[{project}]'
         - plot:
           - title: '{01-plot-title}'
@@ -297,6 +299,7 @@
             unstable-if: 0.0
             pass-if: 100.0
         - email-notification:
+            email-recipients: '{email-recipients}'
             email-prefix: '[{project}]'
         - plot:
           - title: '{01-plot-title}'
@@ -409,6 +412,7 @@
             unstable-if: 0.0
             pass-if: 100.0
         - email-notification:
+            email-recipients: '{email-recipients}'
             email-prefix: '[{project}]'
         - integration-csit-archive-build
         - opendaylight-infra-shiplogs:
@@ -494,6 +498,7 @@
             unstable-if: 0.0
             pass-if: 100.0
         - email-notification:
+            email-recipients: '{email-recipients}'
             email-prefix: '[{project}]'
         - plot:
           - title: '{01-plot-title}'
@@ -606,6 +611,7 @@
             unstable-if: 0.0
             pass-if: 100.0
         - email-notification:
+            email-recipients: '{email-recipients}'
             email-prefix: '[{project}]'
         - plot:
           - title: '{01-plot-title}'
@@ -717,6 +723,7 @@
             unstable-if: 0.0
             pass-if: 100.0
         - email-notification:
+            email-recipients: '{email-recipients}'
             email-prefix: '[{project}]'
         - plot:
           - title: '{01-plot-title}'
@@ -857,6 +864,7 @@
             unstable-if: 0.0
             pass-if: 100.0
         - email-notification:
+            email-recipients: '{email-recipients}'
             email-prefix: '[{project}]'
         - integration-csit-archive-build
         - opendaylight-infra-shiplogs:
@@ -976,6 +984,7 @@
             unstable-if: 0.0
             pass-if: 100.0
         - email-notification:
+            email-recipients: '{email-recipients}'
             email-prefix: '[{project}]'
         - integration-csit-archive-build
         - opendaylight-infra-shiplogs:
@@ -1086,6 +1095,7 @@
 
     publishers:
         - email-notification:
+            email-recipients: '{email-recipients}'
             email-prefix: '[{project}]'
 
 

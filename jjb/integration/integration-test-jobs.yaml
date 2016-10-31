@@ -268,6 +268,7 @@
             unstable-if: 0.0
             pass-if: 100.0
         - email-notification:
+            email-recipients: '{email-recipients}'
             email-prefix: '[integration]'
         - integration-csit-archive-build
         - opendaylight-infra-shiplogs:
@@ -307,6 +308,7 @@
 
     publishers:
         - email-notification:
+            email-recipients: '{email-recipients}'
             email-prefix: '[integration]'
 
 # Template: integration-patch-test-{stream}
@@ -410,6 +412,7 @@
         - opendaylight-infra-shiplogs:
             maven-version: 'mvn33'
         - email-notification:
+            email-recipients: '{email-recipients}'
             email-prefix: '[$GERRIT_PROJECT]'
 
 # Template: integration-multipatch-test-{stream}
@@ -478,4 +481,5 @@
         - opendaylight-infra-shiplogs:
             maven-version: 'mvn33'
         - email-notification:
+            email-recipients: '{email-recipients}'
             email-prefix: '[int/dist]'

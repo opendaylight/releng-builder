@@ -212,6 +212,7 @@
 
     publishers:
         - email-notification:
+            email-recipients: '{email-recipients}'
             email-prefix: '[netvirt]'
         - text-finder:
             fileset: "**/target/surefire-reports/*.xml"

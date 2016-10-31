@@ -55,6 +55,7 @@
 
     publishers:
         - email-notification:
+            email-recipients: '{email-recipients}'
             email-prefix: '[{project-name}]'
         - opendaylight-infra-shiplogs:
             maven-version: 'mvn33'
@@ -118,6 +119,7 @@
 
     publishers:
         - email-notification:
+            email-recipients: '{email-recipients}'
             email-prefix: '[{project}]'
         - maven-deploy:
             id: ''
@@ -220,6 +222,7 @@
 
     publishers:
         - email-notification:
+            email-recipients: '{email-recipients}'
             email-prefix: '[{project-name}]'
         - postbuildscript:
             builders:
@@ -296,6 +299,7 @@
 
     publishers:
         - email-notification:
+            email-recipients: '{email-recipients}'
             email-prefix: '{email-upstream}'
         - findbugs
         - jacoco-report
@@ -405,6 +409,7 @@
 
     publishers:
         - email-notification:
+            email-recipients: '{email-recipients}'
             email-prefix: '[{project-name}]'
         - maven-deploy:
             id: ''
@@ -469,6 +474,7 @@
 
     publishers:
         - email-notification:
+            email-recipients: '{email-recipients}'
             email-prefix: '[{project-name}]'
         - jacoco-report
         - findbugs
@@ -539,6 +545,7 @@
 
     publishers:
         - email-notification:
+            email-recipients: '{email-recipients}'
             email-prefix: '[{project-name}]'
         - jacoco-report
         - findbugs
@@ -639,6 +646,7 @@
 
     publishers:
         - email-notification:
+            email-recipients: '{email-recipients}'
             email-prefix: '[autorelease] [{project-name}]'
         - opendaylight-infra-shiplogs:
             maven-version: 'mvn33'
@@ -701,6 +709,7 @@
     publishers:
         - findbugs
         - email-notification:
+            email-recipients: '{email-recipients}'
             email-prefix: '[{project-name}]'
         - jacoco-report
         - opendaylight-infra-shiplogs:
