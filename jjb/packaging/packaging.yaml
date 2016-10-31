@@ -25,11 +25,11 @@
             artifacts: '{archive-artifacts}'
         - string:
             name: VERSION_MAJOR
-            default: '4'
+            default: '5'
             description: 'OpenDaylight major (element) version number to build'
         - string:
             name: VERSION_MINOR
-            default: '2'
+            default: '0'
             description: 'OpenDaylight minor (SR) version number to build'
         - string:
             name: VERSION_PATCH
@@ -41,19 +41,19 @@
             description: 'RPM version for the given ODL major.minor.patch'
         - string:
             name: SYSD_COMMIT
-            default: 'c6d7ee1f21d62ff8ffb741c7a12c3d8d3aa3d6ed'
+            default: '07f7c83b0ef46ad3809e5be03e09a77fe554eeae'
             description: 'Version of ODL systemd unitfile to download and package in ODL RPM'
         - string:
             name: CODENAME
-            default: 'Beryllium-SR2'
+            default: 'Boron'
             description: 'Elemental codename for the ODL release, including SR if applicable'
         - string:
             name: DOWNLOAD_URL
-            default: 'https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/integration/distribution-karaf/0.4.2-Beryllium-SR2/distribution-karaf-0.4.2-Beryllium-SR2.tar.gz'
+            default: 'https://nexus.opendaylight.org/content/repositories/public/org/opendaylight/integration/distribution-karaf/0.5.0-Boron/distribution-karaf-0.5.0-Boron.tar.gz'
             description: 'URL to ODL tarball artifact to repackage into RPM'
         - string:
             name: CHANGELOG_DATE
-            default: 'Wed May 11 2016'
+            default: 'Sun Aug 25 1991'
             description: 'Date this RPM was defined'
         - string:
             name: CHANGELOG_NAME
