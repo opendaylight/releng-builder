@@ -118,8 +118,7 @@ Build Minions
 The Jenkins jobs are run on build minions (executors) which are created on an
 as-needed basis. If no idle build minions are available a new VM is brought
 up. This process can take up to 2 minutes. Once the build minion has finished a
-job, it will remain online for 45 minutes before shutting down. Subsequent
-jobs will use an idle build minion if available.
+job, it will be destroyed.
 
 Our Jenkins master supports many types of dynamic build minions. If you are
 creating custom jobs then you will need to have an idea of what type of minions
@@ -134,11 +133,13 @@ Adding New Components to the Minions
 If your project needs something added to one of the minions, you can help us
 get things added faster by doing one of the following:
 
-* Submit a patch to RelEng/Builder for the `packer/provision`_ scripts that
-  configures your new piece of software during minion boot up.
+* Submit a patch to RelEng/Builder for the appropriate `jenkins-scripts`
+  definition which configure software during minion boot up.
+* Submit a patch to RelEng/Builder for the `packer/provision` scripts that
+  configures software during minion instance imaging.
 * Submit a patch to RelEng/Builder for the Packer's templates  in
-  the `packer/templates`_ directory that configures your new piece of
-  software which get baked into the image.
+  the `packer/templates` directory that configures a new instance defition
+  along with changes in `packer/provision`.
 
 Going the first route will be faster in the short term as we can inspect the
 changes and make test modifications in the sandbox to verify that it works.
@@ -148,30 +149,30 @@ changes and make test modifications in the sandbox to verify that it works.
    The first route may add additional setup time considering this is run every
    time the minion is booted.
 
-The second route, however, is better for the community as a whole as it will
-allow others to utilize our Packer setups to replicate our systems more
+The second and third routes, however, is better for the community as a whole as
+it will allow others to utilize our Packer setups to replicate our systems more
 closely. It is, however, more time consuming as an image snapshot needs to be
-created based on the updated Packer definitions before it can be attached to
-the Jenkins configuration on sandbox for validation testing.
+created based on the updated Packer definitions before it can be attached to the
+Jenkins configuration on sandbox for validation testing.
 
 In either case, the changes must be validated in the sandbox with tests to
 make sure that we don't break current jobs and that the new software features
 are operating as intended. Once this is done the changes will be merged and
 the updates applied to the RelEng Jenkins production silo. Any changes to
-files under `releng/builder/packer`_ will be validated and images would be built
+files under `releng/builder/packer` will be validated and images would be built
 triggered by verify-packer and merge-packer jobs.
 
 Please note that the combination of a Packer definitions from `vars`, `templates`
 and the `provision` scripts is what defines a given minion. For instance, a minion
-may be defined as `centos7-java-builder`_ which is a combination of Packer OS image
-definitions from `vars/centos.json`_, Packer template definitions from
-`templates/java-buidler.json` and spinup scripts from `provision/java-builder.sh`_.
+may be defined as `centos7-java-builder` which is a combination of Packer OS image
+definitions from `vars/centos.json`, Packer template definitions from
+`templates/java-buidler.json` and spinup scripts from `provision/java-builder.sh`.
 This combination provides the full definition of the realized minion.
 
 Jenkins starts a minion using the latest image which is built and linked into the
 Jenkins configuration. Once the base instance is online Jenkins checks out the
 RelEng/Builder repo on it and executes two scripts. The first is
-`provision/baseline.sh`_, which is a baseline for all of the minions.
+`provision/baseline.sh`, which is a baseline for all of the minions.
 
 The second is the specialized script, which handles any system updates,
 new software installs or extra environment tweaks that don't make sense in a
@@ -189,54 +190,32 @@ Pool: ODLRPC
 
     <table class="table table-bordered">
       <tr class="warning">
-        <td><b>Jenkins Label</b><br/> dynamic_verify</td>
-        <td><b>Minion Template name</b><br/> centos7-builder</td>
-        <td><b>Vagrant Definition</b><br/> releng/builder/vagrant/basic-builder</td>
-        <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/builder.sh</td>
+        <td><b>Jenkins Labels</b><br/> dynamic_controller, dynamic_verify,
+          dynamic_merge, centos7-java-builder-2c-4g, centos7-java-builder-2c-8g,
+          centos7-java-builder-4c-8g</td>
+        <td><b>Minion Template names</b><br/> centos7-java-builder-2c-4g,
+          centos7-java-builder-2c-8g, centos7-java-builder-2c-8g,
+          centos7-java-builder-4c-8g, centos7-java-builder-8c-8g</td>
+        <td><b>Packer Template</b><br/>
+        releng/builder/packer/templates/java-builder.json</td>
+        <td><b>Spinup Script</b><br/>
+        releng/builder/jenkins-scripts/builder.sh</td>
       </tr>
       <tr>
         <td colspan="4">
           A CentOS 7 huild minion. This system has OpenJDK 1.7 (Java7) and OpenJDK
           1.8 (Java8) installed on it along with all the other components and
           libraries needed for building any current OpenDaylight project. This is
-          the label that is used for all basic -verify and -daily- builds for
+          the label that is used for all basic verify, merge and daily builds for
           projects.
         </td>
       </tr>
 
       <tr class="warning">
-        <td><b>Jenkins Label</b><br/> dynamic_merge</td>
-        <td><b>Minion Template name</b><br/> centos7-builder</td>
-        <td><b>Vagrant Definition</b><br/> releng/builder/vagrant/basic-builder</td>
-        <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/builder.sh</td>
-      </tr>
-      <tr>
-        <td colspan="4">
-          See dynamic_verify (same image on the back side). This is the label that
-          is used for all basic -merge and -integration- builds for projects.
-        </td>
-      </tr>
-
-      <tr class="warning">
-        <td><b>Jenkins Label</b><br/> matrix_master</td>
-        <td><b>Minion Template name</b><br/> centos7-matrix</td>
-        <td><b>Vagrant Definition</b><br/> releng/builder/vagrant/basic-java-node</td>
-        <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/matrix.sh</td>
-      </tr>
-      <tr>
-        <td colspan="4">
-          This is a very minimal system that is designed to spin up with 2 build
-          instances on it. The purpose is to have a location that is not the
-          Jenkins master itself for jobs that are executing matrix operations
-          since they need a director location. This image should not be used for
-          anything but tying matrix jobs before the matrx defined label ties.
-        </td>
-      </tr>
-
-      <tr class="warning">
-        <td><b>Jenkins Label</b><br/> dynamic_robot</td>
-        <td><b>Minion Template name</b><br/> centos7-robot</td>
-        <td><b>Vagrant Definition</b><br/> releng/builder/vagrant/integration-robotframework</td>
+        <td><b>Jenkins Labels</b><br/> dynamic_robot, centos7-robot-2c-2g</td>
+        <td><b>Minion Template names</b><br/> centos7-robot-2c-2g</td>
+        <td><b>Packer Template</b><br/>
+        releng/builder/packer/templates/robot.json</td>
         <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/robot.sh</td>
       </tr>
       <tr>
@@ -251,9 +230,10 @@ Pool: ODLRPC
       </tr>
 
       <tr class="warning">
-        <td><b>Jenkins Label</b><br/> ubuntu_mininet</td>
-        <td><b>Minion Template name</b><br/> ubuntu-trusty-mininet</td>
-        <td><b>Vagrant Definition</b><br/> releng/builder/vagrant/ubuntu-mininet</td>
+        <td><b>Jenkins Labels</b><br/> ubuntu_mininet, ubuntu-trusty-mininet-2c-2g</td>
+        <td><b>Minion Template names</b><br/> ubuntu-trusty-mininet-2c-2g</td>
+        <td><b>Packer Template</b><br/>
+        releng/builder/packer/teamplates/mininet.json</td>
         <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/mininet-ubuntu.sh</td>
       </tr>
       <tr>
@@ -263,9 +243,10 @@ Pool: ODLRPC
       </tr>
 
       <tr class="warning">
-        <td><b>Jenkins Label</b><br/> ubuntu_mininet_ovs_23</td>
-        <td><b>Minion Template name</b><br/> ubuntu-trusty-mininet-ovs-23</td>
-        <td><b>Vagrant Definition</b><br/> releng/builder/vagrant/ubuntu-mininet-ovs-23</td>
+        <td><b>Jenkins Labels</b><br/> ubuntu_mininet_ovs_23,
+          ubuntu-trusty-mininet-ovs-23-2c-2g</td>
+        <td><b>Minion Template names</b><br/> ubuntu-trusty-mininet-ovs-23-2c-2g</td>
+        <td><b>Packer Template</b><br/> releng/builder/packer/templates/mininet-ovs-2.3.json</td>
         <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/mininet-ubuntu.sh</td>
       </tr>
       <tr>
@@ -275,9 +256,10 @@ Pool: ODLRPC
       </tr>
 
       <tr class="warning">
-        <td><b>Jenkins Label</b><br/> ubuntu_mininet_ovs_25</td>
-        <td><b>Minion Template name</b><br/> ubuntu-trusty-mininet-ovs-25</td>
-        <td><b>Vagrant Definition</b><br/> releng/builder/vagrant/ubuntu-mininet-ovs-25</td>
+        <td><b>Jenkins Labels</b><br/> ubuntu_mininet_ovs_25,
+          ubuntu-trusty-mininet-ovs-25-2c-2g</td>
+        <td><b>Minion Template names</b><br/> ubuntu-trusty-mininet-ovs-25-2c-2g</td>
+        <td><b>Packer Template</b><br/> releng/builder/packer/templates/mininet-ovs-2.5.json</td>
         <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/mininet-ubuntu.sh</td>
       </tr>
       <tr>
@@ -287,47 +269,9 @@ Pool: ODLRPC
       </tr>
 
       <tr class="warning">
-        <td><b>Jenkins Label</b><br/> dynamic_controller</td>
-        <td><b>Minion Template name</b><br/> centos7-java</td>
-        <td><b>Vagrant Definition</b><br/> releng/builder/vagrant/basic-java-node</td>
-        <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/controller.sh</td>
-      </tr>
-      <tr>
-        <td colspan="4">
-          A CentOS 7 minion that has the basic OpenJDK 1.7 (Java7) and OpenJDK
-          1.8 (Java8) installed and is capable of running the controller, not
-          building.
-        </td>
-      </tr>
-
-      <tr class="warning">
-        <td><b>Jenkins Label</b><br/> dynamic_java</td>
-        <td><b>Minion Template name</b><br/> centos7-java</td>
-        <td><b>Vagrant Definition</b><br/> releng/builder/vagrant/basic-java-node</td>
-        <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/controller.sh</td>
-      </tr>
-      <tr>
-        <td colspan="4">
-          See dynamic_controller as it is currently the same image.
-        </td>
-      </tr>
-
-      <tr class="warning">
-        <td><b>Jenkins Label</b><br/> dynamic_java_8g</td>
-        <td><b>Minion Template name</b><br/> centos7-java-8g</td>
-        <td><b>Vagrant Definition</b><br/> releng/builder/vagrant/basic-java-node</td>
-        <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/controller.sh</td>
-      </tr>
-      <tr>
-        <td colspan="4">
-          See dynamic_controller as it is currently the same image but with 8G of RAM.
-        </td>
-      </tr>
-
-      <tr class="warning">
-        <td><b>Jenkins Label</b><br/> dynamic_devstack</td>
-        <td><b>Minion Template name</b><br/> centos7-devstack</td>
-        <td><b>Vagrant Definition</b><br/> releng/builder/vagrant/ovsdb-devstack</td>
+        <td><b>Jenkins Labels</b><br/> dynamic_devstack, centos7-devstack-2c-4g</td>
+        <td><b>Minion Template names</b><br/> centos7-devstack-2c-4g</td>
+        <td><b>Packer Template</b><br/> releng/builder/packer/templates/devstack.json</td>
         <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/devstack.sh</td>
       </tr>
       <tr>
@@ -340,9 +284,9 @@ Pool: ODLRPC
       </tr>
 
       <tr class="warning">
-        <td><b>Jenkins Label</b><br/> dynamic_docker</td>
-        <td><b>Minion Template name</b><br/> centos7-docker</td>
-        <td><b>Vagrant Definition</b><br/> releng/builder/vagrant/ovsdb-docker</td>
+        <td><b>Jenkins Labels</b><br/> dynamic_docker, centos7-docker-2c-4g</td>
+        <td><b>Minion Template names</b><br/> centos7-docker-2c-4g</td>
+        <td><b>Packer Template</b><br/> releng/builder/packer/templates/docker.json</td>
         <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/docker.sh</td>
       </tr>
       <tr>
@@ -355,9 +299,9 @@ Pool: ODLRPC
       </tr>
 
       <tr class="warning">
-        <td><b>Jenkins Label</b><br/> gbp_trusty</td>
-        <td><b>Minion Template name</b><br/> gbp_trusty</td>
-        <td><b>Vagrant Definition</b><br/> releng/builder/vagrant/gbp-ubuntu-docker-ovs-node</td>
+        <td><b>Jenkins Labels</b><br/> gbp_trusty, ubuntu-trusty-gbp-2c-2g</td>
+        <td><b>Minion Template names</b><br/> ubuntu-trusty-gbp-2c-2g</td>
+        <td><b>Packer Template</b><br/> releng/builder/packer/templates/gbp.json</td>
         <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/ubuntu-docker-ovs.sh</td>
       </tr>
       <tr>
