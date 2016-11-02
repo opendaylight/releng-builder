@@ -396,6 +396,7 @@
             build-timeout: '{build-timeout}'
 
     triggers:
+        - timed: '00 10 1 * *'
         - gerrit:
             server-name: 'OpenDaylight'
             trigger-on:
