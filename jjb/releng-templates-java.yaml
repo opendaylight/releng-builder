@@ -25,6 +25,7 @@
 
     scm:
         - git-scm:
+            git-base: '{git-base}'
             refspec: ''
             branch: '{branch}'
 
@@ -90,6 +91,7 @@
 
     scm:
         - git-scm:
+            git-base: '{git-base}'
             refspec: ''
             branch: '{branch}'
 
@@ -158,6 +160,7 @@
 
     scm:
         - integration-gerrit-scm:
+            git-base: '{git-base}'
             basedir: '$GERRIT_PROJECT'
             refspec: '$GERRIT_REFSPEC'
             branch: '{branch}'
@@ -270,6 +273,7 @@
 
     scm:
         - git-scm:
+            git-base: '{git-base}'
             refspec: ''
             branch: '{branch}'
 
@@ -341,6 +345,7 @@
 
     scm:
         - gerrit-trigger-scm:
+            git-base: '{git-base}'
             refspec: ''
             choosing-strategy: 'default'
 
@@ -447,6 +452,7 @@
 
     scm:
         - git-scm:
+            git-base: '{git-base}'
             refspec: ''
             branch: '{branch}'
 
@@ -504,6 +510,7 @@
 
     scm:
         - git-scm:
+            git-base: '{git-base}'
             refspec: ''
             branch: 'master'
 
@@ -679,6 +686,7 @@
 
     scm:
         - gerrit-trigger-scm:
+            git-base: '{git-base}'
             refspec: '$GERRIT_REFSPEC'
             choosing-strategy: 'gerrit'
 

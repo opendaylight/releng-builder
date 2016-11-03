@@ -229,6 +229,7 @@
 
     scm:
         - integration-gerrit-scm:
+            git-base: '{git-base}'
             basedir: 'test'
             refspec: '$PATCHREFSPEC'
             branch: 'master'
@@ -341,6 +342,7 @@
 
     scm:
         - integration-gerrit-scm:
+            git-base: '{git-base}'
             basedir: '$GERRIT_PROJECT'
             refspec: '$GERRIT_REFSPEC'
             branch: '{branch}'

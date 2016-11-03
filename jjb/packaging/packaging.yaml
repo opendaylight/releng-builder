@@ -66,6 +66,7 @@
 
     scm:
         - integration-gerrit-scm:
+            git-base: '{git-base}'
             basedir: 'packaging'
             refspec: '$GERRIT_REFSPEC'
             branch: 'master'

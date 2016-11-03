@@ -45,6 +45,7 @@
 
     scm:
         - gerrit-trigger-scm:
+            git-base: '{git-base}'
             refspec: '$GERRIT_REFSPEC'
             choosing-strategy: 'gerrit'
 

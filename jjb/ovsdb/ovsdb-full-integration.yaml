@@ -123,6 +123,7 @@
 
     scm:
         - gerrit-trigger-scm:
+            git-base: '{git-base}'
             refspec: '$GERRIT_REFSPEC'
             branch: '{branch}'
             choosing-strategy: gerrit

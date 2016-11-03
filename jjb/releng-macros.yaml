@@ -85,7 +85,7 @@
     scm:
         - git:
             credentials-id: 'opendaylight-jenkins-ssh'
-            url: '$GIT_BASE'
+            url: '{git-base}'
             refspec: ''
             branches:
                 - 'origin/{branch}'
@@ -97,7 +97,7 @@
     scm:
         - git:
             credentials-id: 'opendaylight-jenkins-ssh'
-            url: '$GIT_BASE'
+            url: '{git-base}'
             refspec: ''
             branches:
                 - 'refs/heads/{branch}'
@@ -111,7 +111,7 @@
     scm:
         - git:
             credentials-id: 'opendaylight-jenkins-ssh'
-            url: '$GIT_BASE'
+            url: '{git-base}'
             refspec: '{refspec}'
             branches:
                 - 'origin/$GERRIT_BRANCH'

@@ -24,7 +24,7 @@
     scm:
         - git:
             credentials-id: 'opendaylight-jenkins-ssh'
-            url: '$GIT_BASE'
+            url: '{git-base}'
             branches:
                 - '$BUILD_TAG'
             skip-tag: true
@@ -138,7 +138,7 @@
     scm:
         - git:
             credentials-id: 'opendaylight-jenkins-ssh'
-            url: '$GIT_BASE'
+            url: '{git-base}'
             basedir: 'repo'
             refspec: '$GERRIT_REFSPEC'
             branches:
@@ -296,7 +296,7 @@
     scm:
         - git:
             credentials-id: 'opendaylight-jenkins-ssh'
-            url: '$GIT_BASE'
+            url: '{git-base}'
             basedir: 'repo'
             refspec: '$GERRIT_REFSPEC'
             branches:

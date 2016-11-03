@@ -48,6 +48,7 @@
 
     scm:
         - gerrit-trigger-scm:
+            git-base: '{git-base}'
             refspec: '$PATCHREFSPEC'
             choosing-strategy: 'gerrit'
 
@@ -127,6 +128,7 @@
 
     scm:
         - gerrit-trigger-scm:
+            git-base: '{git-base}'
             refspec: ''
             choosing-strategy: 'default'
 

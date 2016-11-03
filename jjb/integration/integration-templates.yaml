@@ -64,6 +64,7 @@
 
     scm:
         - integration-gerrit-scm:
+            git-base: '{git-base}'
             basedir: 'test'
             refspec: '$GERRIT_REFSPEC'
             branch: 'master'
@@ -151,6 +152,7 @@
 
     scm:
         - integration-gerrit-scm:
+            git-base: '{git-base}'
             basedir: 'test'
             refspec: '$PATCHREFSPEC'
             branch: 'master'
@@ -263,6 +265,7 @@
 
     scm:
         - integration-gerrit-scm:
+            git-base: '{git-base}'
             basedir: 'test'
             refspec: '$PATCHREFSPEC'
             branch: 'master'
@@ -372,6 +375,7 @@
 
     scm:
         - integration-gerrit-scm:
+            git-base: '{git-base}'
             basedir: 'test'
             refspec: '$GERRIT_REFSPEC'
             branch: 'master'
@@ -460,6 +464,7 @@
 
     scm:
         - integration-gerrit-scm:
+            git-base: '{git-base}'
             basedir: 'test'
             refspec: '$PATCHREFSPEC'
             branch: 'master'
@@ -573,6 +578,7 @@
 
     scm:
         - integration-gerrit-scm:
+            git-base: '{git-base}'
             basedir: 'test'
             refspec: '$PATCHREFSPEC'
             branch: 'master'
@@ -686,6 +692,7 @@
 
     scm:
         - integration-gerrit-scm:
+            git-base: '{git-base}'
             basedir: 'test'
             refspec: '$PATCHREFSPEC'
             branch: 'master'
@@ -827,6 +834,7 @@
             description: 'Security Group Mode to be used in netvirt aclservice config'
     scm:
         - integration-gerrit-scm:
+            git-base: '{git-base}'
             basedir: 'test'
             refspec: '$PATCHREFSPEC'
             branch: 'master'
@@ -946,6 +954,7 @@
 
     scm:
         - integration-gerrit-scm:
+            git-base: '{git-base}'
             basedir: 'test'
             refspec: '$PATCHREFSPEC'
             branch: 'master'
@@ -1024,6 +1033,7 @@
 
     scm:
         - integration-gerrit-scm:
+            git-base: '{git-base}'
             basedir: '{project}'
             refspec: '$GERRIT_REFSPEC'
             branch: '{branch}'
