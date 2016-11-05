@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a65312a_0741645a",
+        "filename": "jjb/integration/include-raw-integration-deploy-openstack-run-test.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 670
+      },
+      "writtenOn": "2016-11-05T18:02:45Z",
+      "side": 1,
+      "message": "You can just \u0027echo \"ODL_V2DRIVER\u003dTrue\" \u003e\u003e ${local_conf_file_name}\u0027 instead of EOF, it\u0027s usually used for multiline echoing",
+      "revId": "c4271fbd7f57657e751a296d1a92acf99c6bf7bd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_6725b8c1",
+        "filename": "jjb/integration/integration-templates.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 670
+      },
+      "writtenOn": "2016-11-05T18:02:45Z",
+      "side": 1,
+      "message": "For clarity, I propose we rename ODL_ML2_VERSION to ODL_ML2_BRANCH (change the description too, to say branch).. if you do this don\u0027t forget to replace odl-ml2-version in all the csit yamls\n\nAlso rename ODL_ML2_MODE to ODL_ML2_DRIVER_VERSION",
+      "revId": "c4271fbd7f57657e751a296d1a92acf99c6bf7bd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
