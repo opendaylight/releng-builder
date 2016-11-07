@@ -3,18 +3,12 @@
     jobs:
         - '{project-name}-clm-{stream}'
         - '{project-name}-distribution-{stream}'
-        - '{project-name}-distribution-check-{stream}'
         - '{project-name}-integration-{stream}'
         - '{project-name}-merge-{stream}'
         - '{project-name}-periodic-{stream}'
-        - '{project-name}-validate-autorelease-{stream}'
         - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
-    stream:
-        - carbon:
-            disable_autorelease: True
-            disable_distribution_check: False
-
+    stream: carbon
     project: 'armoury'
     project-name: 'armoury'
     branch: 'master'
@@ -37,18 +31,12 @@
     jobs:
         - '{project-name}-clm-{stream}'
         - '{project-name}-distribution-{stream}'
-        - '{project-name}-distribution-check-{stream}'
         - '{project-name}-integration-{stream}'
         - '{project-name}-merge-{stream}'
         - '{project-name}-periodic-{stream}'
-        - '{project-name}-validate-autorelease-{stream}'
         - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
-    stream:
-        - boron:
-            disable_autorelease: True
-            disable_distribution_check: False
-
+    stream: boron
     project: 'armoury'
     project-name: 'armoury'
     branch: 'stable/boron'
@@ -71,18 +59,12 @@
     jobs:
         - '{project-name}-clm-{stream}'
         - '{project-name}-distribution-{stream}'
-        - '{project-name}-distribution-check-{stream}'
         - '{project-name}-integration-{stream}'
         - '{project-name}-merge-{stream}'
         - '{project-name}-periodic-{stream}'
-        - '{project-name}-validate-autorelease-{stream}'
         - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
-    stream:
-        - beryllium:
-            disable_autorelease: True
-            disable_distribution_check: False
-
+    stream: beryllium
     project: 'armoury'
     project-name: 'armoury'
     branch: 'stable/beryllium'

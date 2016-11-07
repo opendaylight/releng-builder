@@ -3,17 +3,12 @@
     jobs:
         - '{project-name}-clm-{stream}'
         - '{project-name}-distribution-{stream}'
-        - '{project-name}-distribution-check-{stream}'
         - '{project-name}-integration-{stream}'
         - '{project-name}-merge-{stream}'
         - '{project-name}-periodic-{stream}'
-        - '{project-name}-validate-autorelease-{stream}'
         - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
-    stream:
-        - carbon:
-            disable_autorelease: False
-            disable_distribution_check: False
+    stream: carbon
     project: 'vpnservice'
     project-name: 'vpnservice'
     branch: 'master'
@@ -35,17 +30,12 @@
     jobs:
         - '{project-name}-clm-{stream}'
         - '{project-name}-distribution-{stream}'
-        - '{project-name}-distribution-check-{stream}'
         - '{project-name}-integration-{stream}'
         - '{project-name}-merge-{stream}'
         - '{project-name}-periodic-{stream}'
-        - '{project-name}-validate-autorelease-{stream}'
         - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
-    stream:
-        - boron:
-            disable_autorelease: False
-            disable_distribution_check: False
+    stream: boron
     project: 'vpnservice'
     project-name: 'vpnservice'
     branch: 'stable/boron'
@@ -74,10 +64,7 @@
         - '{project-name}-validate-autorelease-{stream}'
         - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
-    stream:
-        - beryllium:
-            disable_autorelease: False
-            disable_distribution_check: False
+    stream: beryllium
     project: 'vpnservice'
     project-name: 'vpnservice'
     branch: 'stable/beryllium'

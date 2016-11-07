@@ -10,10 +10,7 @@
         - '{project-name}-validate-autorelease-{stream}'
         - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
-    stream:
-        - carbon:
-            disable_autorelease: False
-            disable_distribution_check: False
+    stream: carbon
     project: 'lispflowmapping'
     project-name: 'lispflowmapping'
     branch: 'master'
@@ -43,10 +40,7 @@
         - '{project-name}-validate-autorelease-{stream}'
         - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
-    stream:
-        - boron:
-            disable_autorelease: False
-            disable_distribution_check: False
+    stream: boron
     project: 'lispflowmapping'
     project-name: 'lispflowmapping'
     branch: 'stable/boron'
@@ -75,10 +69,8 @@
         - '{project-name}-periodic-{stream}'
         - '{project-name}-validate-autorelease-{stream}'
         - '{project-name}-verify-{stream}-{maven}-{jdks}'
-    stream:
-        - beryllium:
-            disable_autorelease: False
-            disable_distribution_check: False
+
+    stream: beryllium
     project: 'lispflowmapping'
     project-name: 'lispflowmapping'
     branch: 'stable/beryllium'

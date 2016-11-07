@@ -10,10 +10,7 @@
         - '{project-name}-validate-autorelease-{stream}'
         - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
-    stream:
-        - carbon:
-            disable_autorelease: False
-            disable_distribution_check: False
+    stream: carbon
     project: 'vtn'
     project-name: 'vtn'
     branch: 'master'
@@ -46,10 +43,7 @@
         - '{project-name}-validate-autorelease-{stream}'
         - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
-    stream:
-        - boron:
-            disable_autorelease: False
-            disable_distribution_check: False
+    stream: boron
     project: 'vtn'
     project-name: 'vtn'
     branch: 'stable/boron'
@@ -82,11 +76,7 @@
         - '{project-name}-validate-autorelease-{stream}'
         - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
-    stream:
-        - beryllium:
-            disable_autorelease: False
-            disable_distribution_check: False
-
+    stream: beryllium
     project: 'vtn'
     project-name: 'vtn'
     branch: 'stable/beryllium'

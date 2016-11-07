@@ -135,7 +135,7 @@
     #            the patch, and triggers the distribution deploy test
 
     name: '{project-name}-distribution-check-{stream}'
-    disabled: '{obj:disable_distribution_check}'
+    disabled: false
 
     project-type: freestyle
     node: '{build-node}'
@@ -554,7 +554,7 @@
 
 - job-template:
     name: '{project-name}-validate-autorelease-{stream}'
-    disabled: '{obj:disable_autorelease}'
+    disabled: false
 
     project-type: freestyle
     node: '{build-node}'

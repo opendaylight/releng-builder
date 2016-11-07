@@ -10,11 +10,7 @@
         - '{project-name}-validate-autorelease-{stream}'
         - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
-    stream:
-        - carbon:
-            disable_autorelease: False
-            disable_distribution_check: False
-
+    stream: carbon
     project: 'bgpcep'
     project-name: 'bgpcep'
     build-node: centos7-java-builder-4c-8g
@@ -44,11 +40,7 @@
         - '{project-name}-validate-autorelease-{stream}'
         - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
-    stream:
-        - boron:
-            disable_autorelease: False
-            disable_distribution_check: False
-
+    stream: boron
     project: 'bgpcep'
     project-name: 'bgpcep'
     build-node: centos7-java-builder-4c-8g
@@ -79,11 +71,7 @@
         - '{project-name}-validate-autorelease-{stream}'
         - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
-    stream:
-        - beryllium:
-            disable_autorelease: False
-            disable_distribution_check: False
-
+    stream: beryllium
     project: 'bgpcep'
     project-name: 'bgpcep'
     branch: 'stable/beryllium'

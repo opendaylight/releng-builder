@@ -10,10 +10,7 @@
         - '{project-name}-validate-autorelease-{stream}'
         - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
-    stream:
-        - carbon:
-            disable_autorelease: False
-            disable_distribution_check: False
+    stream: carbon
     project: 'usecplugin'
     project-name: 'usecplugin'
     branch: 'master'
@@ -42,10 +39,7 @@
         - '{project-name}-validate-autorelease-{stream}'
         - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
-    stream:
-        - boron:
-            disable_autorelease: False
-            disable_distribution_check: False
+    stream: boron
     project: 'usecplugin'
     project-name: 'usecplugin'
     branch: 'stable/boron'
@@ -73,11 +67,8 @@
         - '{project-name}-periodic-{stream}'
         - '{project-name}-validate-autorelease-{stream}'
         - '{project-name}-verify-{stream}-{maven}-{jdks}'
-    stream:
-        - beryllium:
-            disable_autorelease: False
-            disable_distribution_check: False
 
+    stream: beryllium
     project: 'usecplugin'
     project-name: 'usecplugin'
     branch: 'stable/beryllium'
@@ -94,7 +85,6 @@
     dependencies: 'openflowplugin-merge-{stream}'
     email-upstream: '[usecplugin] [openflowplugin]'
     archive-artifacts: ''
-
 
 - project:
     name: usecplugin-sonar

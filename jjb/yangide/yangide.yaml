@@ -3,18 +3,12 @@
     jobs:
         - '{project-name}-clm-{stream}'
         - '{project-name}-distribution-{stream}'
-        - '{project-name}-distribution-check-{stream}'
         - '{project-name}-integration-{stream}'
         - '{project-name}-merge-{stream}'
         - '{project-name}-periodic-{stream}'
-        - '{project-name}-validate-autorelease-{stream}'
         - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
-    stream:
-        - carbon:
-            disable_autorelease: True
-            disable_distribution_check: True
-
+    stream: carbon
     project: 'yangide'
     project-name: 'yangide'
     branch: 'master'
@@ -36,18 +30,12 @@
     jobs:
         - '{project-name}-clm-{stream}'
         - '{project-name}-distribution-{stream}'
-        - '{project-name}-distribution-check-{stream}'
         - '{project-name}-integration-{stream}'
         - '{project-name}-merge-{stream}'
         - '{project-name}-periodic-{stream}'
-        - '{project-name}-validate-autorelease-{stream}'
         - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
-    stream:
-        - boron:
-            disable_autorelease: True
-            disable_distribution_check: True
-
+    stream: boron
     project: 'yangide'
     project-name: 'yangide'
     branch: 'stable/boron'
