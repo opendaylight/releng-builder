@@ -244,6 +244,7 @@
 
     triggers:
         - integration-trigger-patch-submitted:
+            server-name: '{server-name}'
             name: 'integration/test'
             branch: 'master'
             pattern: 'csit/libraries/*'
@@ -353,7 +354,7 @@
 
     triggers:
         - gerrit:
-            server-name: 'OpenDaylight'
+            server-name: '{server-name}'
             trigger-on:
                 - comment-added-contains-event:
                     comment-contains-value: 'test-integration'

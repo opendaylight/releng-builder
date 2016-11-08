@@ -72,6 +72,7 @@
 
     triggers:
         - gerrit-trigger-patch-submitted:
+            server-name: '{server-name}'
             name: 'opflex'
             branch: '{branch}'
 
@@ -117,6 +118,7 @@
 
     triggers:
         - gerrit-trigger-patch-merged:
+            server-name: '{server-name}'
             name: 'opflex'
             branch: '{branch}'
 

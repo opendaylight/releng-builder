@@ -79,6 +79,7 @@
 
     triggers:
         - integration-trigger-patch-submitted:
+            server-name: '{server-name}'
             name: 'integration/test'
             branch: 'master'
             pattern: 'csit/suites/{project}/**'
@@ -491,6 +492,7 @@
 
     triggers:
         - integration-trigger-patch-submitted:
+            server-name: '{server-name}'
             name: 'integration/test'
             branch: 'master'
             pattern: 'csit/suites/{project}/**'
@@ -1252,7 +1254,7 @@
 
     triggers:
         - gerrit:
-            server-name: 'OpenDaylight'
+            server-name: '{server-name}'
             trigger-on:
                 - comment-added-contains-event:
                     comment-contains-value: 'test-{project}-all'

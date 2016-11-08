@@ -127,7 +127,7 @@
     name: integration-trigger-patch-submitted
     triggers:
         - gerrit:
-            server-name: 'OpenDaylight'
+            server-name: '{server-name}'
             trigger-on:
                 - patchset-created-event:
                     exclude-drafts: 'true'
