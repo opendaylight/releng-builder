@@ -56,8 +56,8 @@
     parameters:
         - opendaylight-infra-parameters:
             project: '{project}'
-            branch: 'master'
-            refspec: 'refs/heads/master'
+            branch: '{branch}'
+            refspec: 'refs/heads/{branch}'
             artifacts: '{archive-artifacts}'
 
     scm:
@@ -119,8 +119,8 @@
     parameters:
         - opendaylight-infra-parameters:
             project: '{project}'
-            branch: 'master'
-            refspec: 'refs/heads/master'
+            branch: '{branch}'
+            refspec: 'refs/heads/{branch}'
             artifacts: '{archive-artifacts}'
 
     scm:
@@ -186,8 +186,8 @@
     parameters:
         - opendaylight-infra-parameters:
             project: '{project}'
-            branch: 'master'
-            refspec: 'refs/heads/master'
+            branch: '{branch}'
+            refspec: 'refs/heads/{branch}'
             artifacts: '{archive-artifacts}'
 
     scm:
@@ -249,13 +249,13 @@
     parameters:
         - opendaylight-infra-parameters:
             project: '{project}'
-            branch: 'master'
-            refspec: 'refs/heads/master'
+            branch: '{branch}'
+            refspec: 'refs/heads/{branch}'
             artifacts: '{archive-artifacts}'
 
     scm:
         - git-scm:
-            branch: 'master'
+            branch: '{branch}'
 
     wrappers:
         - opendaylight-infra-wrappers:
@@ -287,8 +287,8 @@
     parameters:
         - opendaylight-infra-parameters:
             project: '{project}'
-            branch: 'master'
-            refspec: 'refs/heads/master'
+            branch: '{branch}'
+            refspec: 'refs/heads/{branch}'
             artifacts: '{archive-artifacts}'
 
     wrappers:
@@ -382,8 +382,8 @@
     parameters:
         - opendaylight-infra-parameters:
             project: '{project}'
-            branch: 'master'
-            refspec: 'refs/heads/master'
+            branch: '{branch}'
+            refspec: 'refs/heads/{branch}'
             artifacts: '{archive-artifacts}'
 
     scm:
