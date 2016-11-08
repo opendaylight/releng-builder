@@ -131,7 +131,7 @@
     name: gerrit-trigger-patch-submitted
     triggers:
         - gerrit:
-            server-name: 'OpenDaylight'
+            server-name: '{server-name}'
             trigger-on:
                 - patchset-created-event:
                     exclude-drafts: 'true'
@@ -153,7 +153,7 @@
     name: gerrit-trigger-patch-merged
     triggers:
         - gerrit:
-            server-name: 'OpenDaylight'
+            server-name: '{server-name}'
             trigger-on:
                 - change-merged-event
                 - comment-added-contains-event:
@@ -187,7 +187,7 @@
     name: gerrit-trigger-patch-sonar
     triggers:
         - gerrit:
-            server-name: 'OpenDaylight'
+            server-name: '{server-name}'
             trigger-on:
                 - comment-added-contains-event:
                     comment-contains-value: 'run-sonar'
@@ -207,7 +207,7 @@
     name: gerrit-trigger-patch-site-merged
     triggers:
         - gerrit:
-            server-name: 'OpenDaylight'
+            server-name: '{server-name}'
             trigger-on:
                 - change-merged-event
                 - comment-added-contains-event:

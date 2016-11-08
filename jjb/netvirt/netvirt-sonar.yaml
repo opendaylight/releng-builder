@@ -48,6 +48,7 @@
     triggers:
         - timed: 'H H * * 6'
         - gerrit-trigger-patch-sonar:
+            server-name: '{server-name}'
             name: 'netvirt'
 
     builders:
