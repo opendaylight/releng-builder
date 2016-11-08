@@ -152,7 +152,7 @@
 
     triggers:
         - gerrit:
-            server-name: 'OpenDaylight'
+            server-name: '{server-name}'
             trigger-on:
                 - patchset-created-event:
                     exclude-drafts: 'true'
@@ -245,6 +245,7 @@
 
     triggers:
         - gerrit-trigger-patch-merged:
+            server-name: '{server-name}'
             name: '{project}'
             branch: '{branch}'
 
@@ -310,7 +311,7 @@
 
     triggers:
         - gerrit:
-            server-name: 'OpenDaylight'
+            server-name: '{server-name}'
             trigger-on:
                 - patchset-created-event:
                     exclude-drafts: 'true'
