@@ -23,54 +23,6 @@
             timeout: 1440
             fail: true
 
-- trigger:
-    name: autorelease-trigger-patch-site-merged
-    triggers:
-        - gerrit:
-            server-name: 'OpenDaylight'
-            trigger-on:
-                - change-merged-event
-                - comment-added-contains-event:
-                    comment-contains-value: 'republish'
-            projects:
-              - project-compare-type: 'ANT'
-                project-pattern: '{name}'
-                branches:
-                    - branch-compare-type: 'ANT'
-                      branch-pattern: '**/{branch}'
-                file-paths:
-                    - compare-type: ANT
-                      pattern: src/site/**
-                    - compare-type: ANT
-                      pattern: site.xml
-
-- trigger:
-    name: autorelease-trigger-patch-site-submitted
-    triggers:
-        - gerrit:
-            server-name: 'OpenDaylight'
-            trigger-on:
-                - patchset-created-event:
-                    exclude-drafts: 'true'
-                    exclude-trivial-rebase: 'false'
-                    exclude-no-code-change: 'true'
-                - draft-published-event
-                - comment-added-contains-event:
-                    comment-contains-value: 'recheck'
-                - comment-added-contains-event:
-                    comment-contains-value: 'reverify'
-            projects:
-              - project-compare-type: 'ANT'
-                project-pattern: '{name}'
-                branches:
-                  - branch-compare-type: 'ANT'
-                    branch-pattern: '**/{branch}'
-                file-paths:
-                    - compare-type: ANT
-                      pattern: src/site/**
-                    - compare-type: ANT
-                      pattern: site.xml
-
 - builder:
     name: autorelease-checkout-gerrit-patch
     builders:

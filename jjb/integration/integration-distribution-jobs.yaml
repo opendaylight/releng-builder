@@ -57,6 +57,7 @@
 
     triggers:
         - gerrit-trigger-patch-submitted:
+            server-name: '{server-name}'
             name: 'integration/distribution'
             branch: '{branch}'
 
@@ -137,6 +138,7 @@
     triggers:
         - timed: 'H H * * 0'
         - gerrit-trigger-patch-merged:
+            server-name: '{server-name}'
             name: 'integration/distribution'
             branch: '{branch}'
 
