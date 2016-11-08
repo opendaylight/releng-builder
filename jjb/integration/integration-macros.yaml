@@ -151,29 +151,6 @@
                   - compare-type: 'ANT'
                     pattern: '{pattern}'
 
-# Macro: integration-trigger-patch-merged
-# Operation: this macro sets a trigger for patch merged on a path pattern
-# Used by: not used yet
-
-- trigger:
-    name: integration-trigger-patch-merged
-    triggers:
-        - gerrit:
-            server-name: 'OpenDaylight'
-            trigger-on:
-                - change-merged-event
-                - comment-added-contains-event:
-                    comment-contains-value: 'remerge'
-            projects:
-              - project-compare-type: 'ANT'
-                project-pattern: '{name}'
-                branches:
-                  - branch-compare-type: 'ANT'
-                    branch-pattern: '**/{branch}'
-                file-paths:
-                  - compare-type: 'ANT'
-                    pattern: '{pattern}'
-
 # Macro: integration-csit-only
 # Operation: this macro sets a trigger on reverse job list
 # Used by: csit -only- job templates
