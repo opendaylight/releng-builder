@@ -134,7 +134,7 @@
     triggers:
         - timed: '@midnight'
         - gerrit:
-            server-name: 'OpenDaylight'
+            server-name: '{server-name}'
             trigger-on:
               - comment-added-contains-event:
                  comment-contains-value: 'runit'
