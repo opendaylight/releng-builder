@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a65312a_30000a01",
+        "filename": "jjb/integration/integration-test-jobs.yaml",
+        "patchSetId": 7
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2016-11-09T01:07:47Z",
+      "side": 1,
+      "message": "No this is a bad idea. Just leave it defaults.\n\nThe problem with keeping only a single artifact is if a 2nd build starts it deletes the artifacts so then we have 0 artifacts.\n\nI\u0027d prefer to remove the artifact[Days|Num]ToKeep and then setting the first 2 daysToKeep and numToKeep at something like 14.\n\nThis way we keep records for as long as 2 weeks and throw out everything older than that.",
+      "revId": "fa2c60010e089ae7899575a9e918ee10688de2b2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
