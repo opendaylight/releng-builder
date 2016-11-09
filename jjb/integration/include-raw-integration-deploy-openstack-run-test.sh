@@ -66,14 +66,6 @@ LIBVIRT_TYPE=qemu
 
 EOF
 
-if [ "${ODL_ML2_BRANCH}" == "stable/mitaka" ]; then
-cat >> ${local_conf_file_name} << EOF
-[[post-config|\$NEUTRON_CONF]]
-[DEFAULT]
-service_plugins = networking_odl.l3.l3_odl.OpenDaylightL3RouterPlugin
-EOF
-fi
-
 if [ "${ODL_ML2_DRIVER_VERSION}" == "v2" ]; then
     echo "ODL_V2DRIVER=True" >> ${local_conf_file_name}
 fi
@@ -123,7 +115,18 @@ ODL_L3=${ODL_L3}
 PUBLIC_INTERFACE=br100
 
 EOF
-fi
+
+if [ "${ODL_ML2_BRANCH}" == "stable/mitaka" ]; then
+cat >> ${local_conf_file_name} << EOF
+[[post-config|\$NEUTRON_CONF]]
+[DEFAULT]
+service_plugins = networking_odl.l3.l3_odl.OpenDaylightL3RouterPlugin
+
+EOF
+fi #check for ODL_ML2_BRANCH
+
+fi #ODL_ENABLE_L3_FWD check
+
 cat >> ${local_conf_file_name} << EOF
 [[post-config|/etc/neutron/plugins/ml2/ml2_conf.ini]]
 [agent]
