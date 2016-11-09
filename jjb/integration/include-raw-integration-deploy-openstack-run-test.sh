@@ -65,6 +65,16 @@ ODL_MODE=externalodl
 LIBVIRT_TYPE=qemu
 
 EOF
+
+if [ "${ODL_ML2_BRANCH}" == "stable/mitaka" ]; then
+cat >> ${local_conf_file_name} << EOF
+[[post-config|\$NEUTRON_CONF]]
+[DEFAULT]
+service_plugins = networking_odl.l3.l3_odl.OpenDaylightL3RouterPlugin
+EOF
+
+fi
+
 if [ "${ODL_ML2_DRIVER_VERSION}" == "v2" ]; then
     echo "ODL_V2DRIVER=True" >> ${local_conf_file_name}
 fi
