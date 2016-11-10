@@ -244,10 +244,10 @@
 
     triggers:
         - integration-trigger-patch-submitted:
-            server-name: '{server-name}'
-            name: 'integration/test'
+            server: '{server-name}'
+            project: '{project}'
             branch: 'master'
-            pattern: 'csit/libraries/*'
+            files: 'csit/libraries/*'
 
     builders:
         - integration-copy-ssh-keys
