@@ -120,14 +120,20 @@
             skip-tag: true
 
 # Macro: integration-trigger-patch-submitted
-# Operation: this macro sets a trigger for patch submitted on a path pattern
-# Used by: {project}-verify-csit-* job templates
-
+# This is a single macro to use for all csit jobs who vote on every (relevant) patch set.
+# Only 'recheck' trigger word is supported, it always triggers the full set of relevant jobs,
+# in order to prevent Jenkins from starting only a subset and still voting Verified+1.
+# Contrary to gerrit-trigger-patch-submitted, this votes +1 also on unstable runs.
+# Arguments:
+#     server: name of gerrit server to listen to
+#     project: pattern to match triggering projects
+#     branch: triggering branch name
+#     files: pattern to match triggering filepaths
 - trigger:
     name: integration-trigger-patch-submitted
     triggers:
         - gerrit:
-            server-name: '{server-name}'
+            server-name: '{server}'
             trigger-on:
                 - patchset-created-event:
                     exclude-drafts: 'true'
@@ -136,20 +142,18 @@
                 - draft-published-event
                 - comment-added-contains-event:
                     comment-contains-value: 'recheck'
-                - comment-added-contains-event:
-                    comment-contains-value: 'reverify'
             override-votes: true
             gerrit-build-unstable-verified-value: +1
             gerrit-build-unstable-codereview-value: 0
             projects:
-              - project-compare-type: 'ANT'
-                project-pattern: '{name}'
-                branches:
-                  - branch-compare-type: 'ANT'
-                    branch-pattern: '**/{branch}'
-                file-paths:
-                  - compare-type: 'ANT'
-                    pattern: '{pattern}'
+                - project-compare-type: 'ANT'
+                  project-pattern: '{project}'
+                  branches:
+                      - branch-compare-type: 'ANT'
+                        branch-pattern: '**/{branch}'
+                  file-paths:
+                      - compare-type: ANT
+                        pattern: '{files}'
 
 # Macro: integration-csit-only
 # Operation: this macro sets a trigger on reverse job list

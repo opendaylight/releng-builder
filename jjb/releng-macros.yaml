@@ -126,12 +126,19 @@
             timeout: 360
             fail: true
 
-# Used only by opflex-verify-{stream} and {project-name}-verify-{stream}-{maven}-{jdks}
+# This is a single macro to use for all jobs who vote on every (relevant) patch set.
+# Only 'recheck' trigger word is supported, it always triggers the full set of relevant jobs,
+# in order to prevent Jenkins from starting only a subset and still voting Verified+1.
+# Arguments:
+#     server: name of gerrit server to listen to
+#     project: pattern to match triggering projects
+#     branch: triggering branch name
+#     files: pattern to match triggering filepaths
 - trigger:
     name: gerrit-trigger-patch-submitted
     triggers:
         - gerrit:
-            server-name: '{server-name}'
+            server-name: '{server}'
             trigger-on:
                 - patchset-created-event:
                     exclude-drafts: 'true'
@@ -140,14 +147,15 @@
                 - draft-published-event
                 - comment-added-contains-event:
                     comment-contains-value: 'recheck'
-                - comment-added-contains-event:
-                    comment-contains-value: 'reverify'
             projects:
-              - project-compare-type: 'ANT'
-                project-pattern: '{name}'
-                branches:
-                  - branch-compare-type: 'ANT'
-                    branch-pattern: '**/{branch}'
+                - project-compare-type: 'ANT'
+                  project-pattern: '{project}'
+                  branches:
+                      - branch-compare-type: 'ANT'
+                        branch-pattern: '**/{branch}'
+                  file-paths:
+                      - compare-type: ANT
+                        pattern: '{files}'
 
 - trigger:
     name: gerrit-trigger-patch-merged
@@ -159,11 +167,11 @@
                 - comment-added-contains-event:
                     comment-contains-value: 'remerge'
             projects:
-              - project-compare-type: 'ANT'
-                project-pattern: '{name}'
-                branches:
-                  - branch-compare-type: 'ANT'
-                    branch-pattern: '**/{branch}'
+                - project-compare-type: 'ANT'
+                  project-pattern: '{name}'
+                  branches:
+                      - branch-compare-type: 'ANT'
+                        branch-pattern: '**/{branch}'
             skip-vote:
                 successful: true
                 failed: true

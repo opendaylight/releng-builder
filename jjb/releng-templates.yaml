@@ -151,27 +151,11 @@
             build-timeout: '{build-timeout}'
 
     triggers:
-        - gerrit:
-            server-name: '{server-name}'
-            trigger-on:
-                - patchset-created-event:
-                    exclude-drafts: 'true'
-                    exclude-trivial-rebase: 'false'
-                    exclude-no-code-change: 'true'
-                - draft-published-event
-                - comment-added-contains-event:
-                    comment-contains-value: 'recheck'
-                - comment-added-contains-event:
-                    comment-contains-value: 'retox'
-            projects:
-              - project-compare-type: 'ANT'
-                project-pattern: '{project}'
-                branches:
-                  - branch-compare-type: 'ANT'
-                    branch-pattern: '**/{branch}'
-                file-paths:
-                    - compare-type: ANT
-                      pattern: '{toxdir}/**'
+        - gerrit-trigger-patch-submitted:
+            server: '{server-name}'
+            project: '{project}'
+            branch: '{branch}'
+            files: '{toxdir}/**'
 
     builders:
         - shell: |
@@ -244,10 +228,11 @@
             build-timeout: '{build-timeout}'
 
     triggers:
-        - gerrit-trigger-patch-merged:
-            server-name: '{server-name}'
-            name: '{project}'
+        - gerrit-trigger-patch-submitted:
+            server: '{server-name}'
+            project: '{project}'
             branch: '{branch}'
+            files: '**'
 
     builders:
         - shell: |
@@ -310,27 +295,11 @@
             build-timeout: '{build-timeout}'
 
     triggers:
-        - gerrit:
-            server-name: '{server-name}'
-            trigger-on:
-                - patchset-created-event:
-                    exclude-drafts: 'true'
-                    exclude-trivial-rebase: 'false'
-                    exclude-no-code-change: 'true'
-                - draft-published-event
-                - comment-added-contains-event:
-                    comment-contains-value: 'recheck'
-                - comment-added-contains-event:
-                    comment-contains-value: 'renode'
-            projects:
-              - project-compare-type: 'ANT'
-                project-pattern: '{project}'
-                branches:
-                  - branch-compare-type: 'ANT'
-                    branch-pattern: '**/{branch}'
-                file-paths:
-                    - compare-type: ANT
-                      pattern: '{nodedir}/**'
+        - gerrit-trigger-patch-submitted:
+            server: '{server-name}'
+            project: '{project}'
+            branch: '{branch}'
+            files: '{nodedir}/**'
 
     builders:
         - shell: |

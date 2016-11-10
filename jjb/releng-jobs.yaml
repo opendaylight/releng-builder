@@ -41,8 +41,11 @@
 
     project-type: freestyle
     archive-artifacts: '**/*.log'
-    project: 'releng/builder'
     build-timeout: '60'
+    # The following two values are only specified here
+    # so that code blocks look similar to other projects.
+    project: 'releng/builder'
+    branch: 'master'
 
 - job-template:
     name: builder-verify-jjb
@@ -70,27 +73,11 @@
             build-timeout: '{build-timeout}'
 
     triggers:
-        - gerrit:
-            server-name: '{server-name}'
-            trigger-on:
-                - patchset-created-event:
-                    exclude-drafts: 'true'
-                    exclude-trivial-rebase: 'false'
-                    exclude-no-code-change: 'true'
-                - draft-published-event
-                - comment-added-contains-event:
-                    comment-contains-value: 'recheck'
-            projects:
-              - project-compare-type: 'ANT'
-                project-pattern: 'releng/builder'
-                branches:
-                  - branch-compare-type: 'ANT'
-                    branch-pattern: '**/master'
-                file-paths:
-                    - compare-type: ANT
-                      pattern: jjb/**
-                    - compare-type: ANT
-                      pattern: jjb-templates/**
+        - gerrit-trigger-patch-submitted:
+            server: '{server-name}'
+            project: '{project}'
+            branch: '{branch}'
+            files: 'jjb/**'
 
     builders:
         - shell: |
@@ -133,26 +120,11 @@
             build-timeout: '{build-timeout}'
 
     triggers:
-        - gerrit:
-            server-name: '{server-name}'
-            trigger-on:
-                - patchset-created-event:
-                    exclude-drafts: 'true'
-                    exclude-trivial-rebase: 'false'
-                    exclude-no-code-change: 'true'
-                - draft-published-event
-                - comment-added-contains-event:
-                    comment-contains-value: 'recheck'
-            projects:
-              - project-compare-type: 'ANT'
-                project-pattern: 'releng/builder'
-                branches:
-                  - branch-compare-type: 'ANT'
-                    branch-pattern: '**/master'
-                file-paths:
-                    - compare-type: ANT
-                      pattern: scripts/**
-
+        - gerrit-trigger-patch-submitted:
+            server: '{server-name}'
+            project: '{project}'
+            branch: '{branch}'
+            files: 'scripts/**'
 
     builders:
         - shell: |
@@ -215,8 +187,6 @@
                 file-paths:
                     - compare-type: ANT
                       pattern: jjb/**
-                    - compare-type: ANT
-                      pattern: jjb-templates/**
 
     builders:
         - shell: |
@@ -336,27 +306,11 @@
             build-timeout: '{build-timeout}'
 
     triggers:
-        - gerrit:
-            server-name: '{server-name}'
-            trigger-on:
-                - patchset-created-event:
-                    exclude-drafts: 'true'
-                    exclude-trivial-rebase: 'false'
-                    exclude-no-code-change: 'true'
-                - draft-published-event
-                - comment-added-contains-event:
-                    comment-contains-value: 'recheck'
-                - comment-added-contains-event:
-                    comment-contains-value: 'reverify'
-            projects:
-              - project-compare-type: 'ANT'
-                project-pattern: '{project}'
-                branches:
-                  - branch-compare-type: 'ANT'
-                    branch-pattern: '**/{branch}'
-                file-paths:
-                    - compare-type: ANT
-                      pattern: 'packer/**'
+        - gerrit-trigger-patch-submitted:
+            server: '{server-name}'
+            project: '{project}'
+            branch: '{branch}'
+            files: 'packer/**'
 
     builders:
         - packer-validate:
