@@ -79,10 +79,10 @@
 
     triggers:
         - integration-trigger-patch-submitted:
-            server-name: '{server-name}'
-            name: 'integration/test'
+            server: '{server-name}'
+            project: 'integration/test'
             branch: 'master'
-            pattern: 'csit/suites/{project}/**'
+            files: 'csit/suites/{project}/**'
 
     builders:
         - integration-copy-ssh-keys
@@ -492,10 +492,10 @@
 
     triggers:
         - integration-trigger-patch-submitted:
-            server-name: '{server-name}'
-            name: 'integration/test'
+            server: '{server-name}'
+            project: 'integration/test'
             branch: 'master'
-            pattern: 'csit/suites/{project}/**'
+            files: 'csit/suites/{project}/**'
 
     builders:
         - integration-copy-ssh-keys
