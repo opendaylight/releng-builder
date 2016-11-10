@@ -16,6 +16,24 @@
       "revId": "40024bcde042e073320d8418fae4b76208cf42e8",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_04a150f8",
+        "filename": "jjb/integration/include-raw-integration-deploy-openstack-run-test.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2016-11-10T00:49:45Z",
+      "side": 1,
+      "message": "The post-config has to be after all the config expected in the local section otherwise the vars are included in the post-config (or something like that). the current code is making the ODL_MGR_IP get ignored in the control node.\n\nso I think this is the right place to add this service_plugins, but maybe it needs that conditional for odl_l3 to be around it - if that matters.\n\nCan we go ahead and merge this patch as it is? This would get us back to before. The v2 jobs might start failing since the odll3 would be enabled but we can fix that in another patch.",
+      "parentUuid": "3a65312a_4426a8b8",
+      "revId": "40024bcde042e073320d8418fae4b76208cf42e8",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
