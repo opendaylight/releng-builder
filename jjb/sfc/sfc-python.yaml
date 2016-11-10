@@ -53,27 +53,11 @@
             build-timeout: '{build-timeout}'
 
     triggers:
-        - gerrit:
+        - gerrit-trigger-patch-submitted:
             server-name: '{server-name}'
-            trigger-on:
-                - patchset-created-event:
-                    exclude-drafts: 'true'
-                    exclude-trivial-rebase: 'false'
-                    exclude-no-code-change: 'true'
-                - draft-published-event
-                - comment-added-contains-event:
-                    comment-contains-value: 'recheck'
-                - comment-added-contains-event:
-                    comment-contains-value: 'reverify'
-            projects:
-              - project-compare-type: 'ANT'
-                project-pattern: 'sfc'
-                branches:
-                  - branch-compare-type: 'ANT'
-                    branch-pattern: '**/{branch}'
-                file-paths:
-                    - compare-type: ANT
-                      pattern: sfc-py/**
+            name: '{project}'
+            branch: '{branch}'
+            pattern: 'sfc-py/**'
 
     builders:
         - shell: |

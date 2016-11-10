@@ -58,8 +58,9 @@
     triggers:
         - gerrit-trigger-patch-submitted:
             server-name: '{server-name}'
-            name: 'integration/distribution'
+            name: '{project}'
             branch: '{branch}'
+            pattern: '{trigger-pattern}'
 
     prebuilders:
         - integration-get-bundle-url-root

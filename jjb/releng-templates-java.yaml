@@ -173,29 +173,11 @@
             build-timeout: '60'
 
     triggers:
-        - gerrit:
+        - gerrit-trigger-patch-submitted:
             server-name: '{server-name}'
-            trigger-on:
-                - patchset-created-event:
-                    exclude-drafts: 'true'
-                    exclude-trivial-rebase: 'false'
-                    exclude-no-code-change: 'true'
-                - draft-published-event
-                - comment-added-contains-event:
-                    comment-contains-value: 'redistcheck'
-                - comment-added-contains-event:
-                    comment-contains-value: 'recheck'
-            projects:
-              - project-compare-type: 'ANT'
-                project-pattern: '{project}'
-                branches:
-                  - branch-compare-type: 'ANT'
-                    branch-pattern: '**/{branch}'
-            skip-vote:
-                successful: false
-                failed: false
-                unstable: false
-                notbuilt: false
+            name: '{project}'
+            branch: '{branch}'
+            pattern: '{trigger-pattern}'
 
     builders:
         - maven-target:
@@ -598,27 +580,11 @@
             build-timeout: '{build-timeout}'
 
     triggers:
-        - gerrit:
+        - gerrit-trigger-patch-submitted:
             server-name: '{server-name}'
-            trigger-on:
-                - patchset-created-event:
-                    exclude-drafts: 'true'
-                    exclude-trivial-rebase: 'false'
-                    exclude-no-code-change: 'true'
-                - draft-published-event
-                - comment-added-contains-event:
-                    comment-contains-value: 'recheck'
-                - comment-added-contains-event:
-                    comment-contains-value: 'revalidate'
-            projects:
-              - project-compare-type: 'ANT'
-                project-pattern: '{project}'
-                branches:
-                  - branch-compare-type: 'ANT'
-                    branch-pattern: '**/{branch}'
-                file-paths:
-                    - compare-type: ANT
-                      pattern: '**/*.xml'
+            name: '{project}'
+            branch: '{branch}'
+            pattern: '**/*.xml'
 
     builders:
         - jacoco-nojava-workaround
@@ -693,6 +659,7 @@
             server-name: '{server-name}'
             name: '{project}'
             branch: '{branch}'
+            pattern: '{trigger-pattern}'
 
     builders:
         - jacoco-nojava-workaround

@@ -3,8 +3,6 @@
     jobs:
         - 'opflex-verify-{stream}'
         - 'opflex-merge-{stream}'
-#        - 'opflex-daily-{stream}'
-#        - 'opflex-distribution-{stream}'
 
     stream:
         - carbon:
@@ -73,8 +71,9 @@
     triggers:
         - gerrit-trigger-patch-submitted:
             server-name: '{server-name}'
-            name: 'opflex'
+            name: '{project}'
             branch: '{branch}'
+            pattern: '{trigger-pattern}'
 
     builders:
         - opflex-build:

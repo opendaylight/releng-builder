@@ -121,6 +121,7 @@
 
 # Macro: integration-trigger-patch-submitted
 # Operation: this macro sets a trigger for patch submitted on a path pattern
+#            contrary to gerrit-trigger-patch-submitted, this votes +1 also on unstable runs.
 # Used by: {project}-verify-csit-* job templates
 
 - trigger:
@@ -136,8 +137,6 @@
                 - draft-published-event
                 - comment-added-contains-event:
                     comment-contains-value: 'recheck'
-                - comment-added-contains-event:
-                    comment-contains-value: 'reverify'
             override-votes: true
             gerrit-build-unstable-verified-value: +1
             gerrit-build-unstable-codereview-value: 0

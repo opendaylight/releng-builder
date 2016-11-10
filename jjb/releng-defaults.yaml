@@ -19,12 +19,15 @@
     archive-artifacts: ''
     branch: master
 
-   # CSIT images configuration
+    # CSIT images configuration
     controller-image: 'centos7-java-builder-2c-4g'
     openstack-image: 'centos7-devstack-2c-8g'
     mininet-image: 'ubuntu-trusty-mininet-2c-2g'
     mininet-vms: 1
     docker-image: 'centos7-docker-2c-4g'
+
+    # Default configuration for gerrit triggers: react to edit in any file.
+    trigger-pattern: '**/*'
 
     # In case a CSIT job is merged without Java version specified
     jdk: 'openjdk8'

@@ -126,7 +126,7 @@
             timeout: 360
             fail: true
 
-# Used only by opflex-verify-{stream} and {project-name}-verify-{stream}-{maven}-{jdks}
+# Arguments, each having value in releng-defaults: server-name, name, branch, pattern.
 - trigger:
     name: gerrit-trigger-patch-submitted
     triggers:
@@ -140,14 +140,15 @@
                 - draft-published-event
                 - comment-added-contains-event:
                     comment-contains-value: 'recheck'
-                - comment-added-contains-event:
-                    comment-contains-value: 'reverify'
             projects:
-              - project-compare-type: 'ANT'
-                project-pattern: '{name}'
-                branches:
-                  - branch-compare-type: 'ANT'
-                    branch-pattern: '**/{branch}'
+                - project-compare-type: 'ANT'
+                  project-pattern: '{name}'
+                  branches:
+                      - branch-compare-type: 'ANT'
+                        branch-pattern: '**/{branch}'
+                    file-paths:
+                        - compare-type: ANT
+                          pattern: '{pattern}'
 
 - trigger:
     name: gerrit-trigger-patch-merged
