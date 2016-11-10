@@ -80,7 +80,7 @@ Next we will create <new-project>.yaml as follows:
 Replace all instances of <new-project> with the name of your project. This will
 create the jobs with the default job types we recommend for Java projects. If
 your project is participating in the simultanious-release and ultimately will
-be included in the final distribution. We recommend adding the following job
+be included in the final distribution, it is required to add the following job
 types into the job list for the release you are participating.
 
 
@@ -184,7 +184,7 @@ executed Jenkins will finally attach the minion as an actual minion and start
 handling jobs on it.
 
 Pool: ODLRPC
-^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^
 
 .. raw:: html
 
@@ -441,6 +441,9 @@ To validate that JJB was successfully installed you can run this command:
 
     (jjb)$ jenkins-jobs --version
 
+TODO: Explain that only the currently merged jjb/requirements.txt is supported,
+other options described below are for troubleshooting only.
+
 To change the version of JJB specified by `builder/jjb/requirements.txt
 <odl-jjb-requirements.txt_>`_
 to install from the latest commit to the master branch of JJB's git repository:
@@ -547,52 +550,35 @@ patch you wish to trigger against.
 All jobs have a default build-timeout value of 360 minutes (6 hrs) but can be
 overrided via the opendaylight-infra-wrappers' build-timeout property.
 
+TODO: Group jobs into categories: every-patch, after-merge, on-demand, etc.
+TODO: Reiterate that "remerge" triggers all every-patch jobs at once,
+because when only a subset of jobs is triggered, Gerrit forgets valid -1 from jobs outside the subset.
+TODO: Document that only drafts and commit-message-only edits do not trigger every-patch jobs.
+TODO: Document test-{project}-{feature} and test-{project}-all.
+
 .. raw:: html
 
     <table class="table table-bordered">
       <tr class="warning">
         <td><b>Job Template</b><br/>{project}-distribution-{stream}</td>
-        <td><b>Gerrit Trigger</b><br/>test-distribution</td>
       </tr>
       <tr>
         <td colspan="2">
-          This job builds a distrbution against your patch, tiggers distribution sanity CSIT jobs
-          and reports back the results to Gerrit. Leave a comment with trigger keyword above
-          to activate it for a particular patch.
-
-          This job is maintained by the <a href="https://wiki.opendaylight.org/view/Integration/Test">Integration/Test</a>
-          project.
-
-          <div class="admonition note">
-            <p class="first admonition-title">Note</p>
-            <p>
-              Running the "test-distribution" trigger will cause Jenkins to
-              remove it's existing vote if it's already -1 or +1'd a comment.
-              You will need to re-run your verify jobs (recheck) after running
-              this to get Jenkins to put back the correct vote.
-            </p>
-          </div>
+          This job builds a snapshot distribution. This is triggered by successful merge job,
+          so the distribution contains newest project artifacts.
+          This job then triggers subset of sanity CSIT jobs relevant for the project.
         </td>
       </tr>
 
       <tr class="warning">
         <td><b>Job Template</b><br/>{project}-distribution-check-{stream}</td>
-        <td><b>Gerrit Trigger</b><br/>recheck | redistcheck</td>
+        <td><b>Gerrit Trigger</b><br/>recheck</td>
       </tr>
       <tr>
         <td colspan="2">
           This job runs the PROJECT-distribution-check-BRANCH job which is
           building also integration/distribution project in order to run SingleFeatureTest.
-
-          The <b>redistcheck</b> trigger is useful in cases where a project's
-          other jobs passed, however this job failed due to infra problems or
-          intermittent issues. It will retrigger just this job to save time.
-
-          BEWARE: If there were other failed jobs, redistcheck could lead
-          to false Verified+1 vote, risking a merge which breaks other projetcs.
-          Redistcheck is only for committers who are familiar with the risks involved.
-          If in doubt, use the safe trigger word: recheck.
-          Recheck triggers every job involved in verifying latest patch set in the Change.
+          It also performs other check in order to prevent the change to break autorelease.
         </td>
       </tr>
 
@@ -624,11 +610,8 @@ overrided via the opendaylight-infra-wrappers' build-timeout property.
           Artifacts are uploaded to OpenDaylight's
           <a href="https://nexus.opendaylight.org">Nexus</a> on completion.
 
-          Running the "remerge" trigger is possible before a Change is merged,
-          in which case it will cause Jenkins to remove it's existing vote
-          if it's already -1 or +1'd a comment.
-          You will need to re-run your verify jobs (recheck) after running
-          this to get Jenkins to put back the correct vote.
+          Running the "remerge" trigger is possible before a Change is merged.
+          This job should not alter Gerrit votes.
         </td>
       </tr>
 
@@ -660,50 +643,31 @@ overrided via the opendaylight-infra-wrappers' build-timeout property.
 
       <tr class="warning">
         <td><b>Job Template</b><br/>{project}-validate-autorelease-{stream}</td>
-        <td><b>Gerrit Trigger</b><br/>recheck | revalidate</td>
+        <td><b>Gerrit Trigger</b><br/>recheck</td>
       </tr>
       <tr>
         <td colspan="2">
           This job runs the PROJECT-validate-autorelease-BRANCH job which is
           used as a quick sanity test to ensure that a patch does not depend on
           features that do not exist in the current release.
-
-          The <b>revalidate</b> trigger is useful in cases where a project's
-          other job passed, however this job failed due to infra problems or
-          intermittent issues. It will retrigger just this job to save time.
-
-          BEWARE: If there were other failed jobs, revalidate could lead
-          to false Verified+1 vote, risking a merge which breaks other projetcs.
-          Revalidate is only for committers who are familiar with the risks involved.
-          If in doubt, use the safe trigger word: recheck.
         </td>
       </tr>
 
       <tr class="warning">
         <td><b>Job Template</b><br/>{project}-verify-{stream}-{maven}-{jdks}</td>
-        <td><b>Gerrit Trigger</b><br/>recheck | reverify</td>
+        <td><b>Gerrit Trigger</b><br/>recheck</td>
       </tr>
       <tr>
         <td colspan="2">
           The Verify job template creates a Gerrit Trigger job that will
           trigger when a new patch is submitted to Gerrit.
           The job only builds the project code (including unit and integration tests).
-
-          The <b>reverify</b> trigger is useful in cases where a project's
-          other jobs passed however this job failed due to infra problems or
-          intermittent issues. It will retrigger just this job to save time.
-
-          BEWARE: If there were other failed jobs, reverify could lead
-          to false Verified+1 vote, risking a merge which breaks other projetcs.
-          Reverify is only for committers who are familiar with the risks involved.
-          If in doubt, use the safe trigger word: recheck.
-          Recheck triggers every job involved in verifying latest patch set in the Change.
         </td>
       </tr>
 
       <tr class="warning">
         <td><b>Job Template</b><br/>{project}-verify-node-{stream}</td>
-        <td><b>Gerrit Trigger</b><br/>recheck | renode</td>
+        <td><b>Gerrit Trigger</b><br/>recheck</td>
       </tr>
       <tr>
         <td colspan="2">
@@ -715,22 +679,12 @@ overrided via the opendaylight-infra-wrappers' build-timeout property.
           {nodever} containing the directory relative to the project root
           containing the nodejs package.json and version of node you wish to
           run tests with.
-
-          The <b>renode</b> trigger is useful in cases where a project's
-          other jobs passed, however this job failed due to infra problems or
-          intermittent issues. It will retrigger just this job to save time.
-
-          BEWARE: If there were other failed jobs, renode could lead
-          to false Verified+1 vote, risking a merge which breaks other projetcs.
-          Renode is only for committers who are familiar with the risks involved.
-          If in doubt, use the safe trigger word: recheck.
-          Recheck triggers every job involved in verifying latest patch set in the Change.
         </td>
       </tr>
 
       <tr class="warning">
         <td><b>Job Template</b><br/>{project}-verify-python-{stream} | {project}-verify-tox-{stream}</td>
-        <td><b>Gerrit Trigger</b><br/>recheck | retox</td>
+        <td><b>Gerrit Trigger</b><br/>recheck</td>
       </tr>
       <tr>
         <td colspan="2">
@@ -743,16 +697,6 @@ overrided via the opendaylight-infra-wrappers' build-timeout property.
           The 2 template names verify-python & verify-tox are identical and are
           aliases to each other. This allows the project to use the naming that
           is most reasonable for them.
-
-          The <b>retox</b> trigger is useful in cases where a project's
-          other verify jobs passed, however this job failed due to infra problems or
-          intermittent issues. It will retrigger just this job to save time.
-
-          BEWARE: If there were other failed jobs, retox could lead
-          to false Verified+1 vote, risking a merge which breaks other projetcs.
-          Retox is only for committers who are familiar with the risks involved.
-          If in doubt, use the safe trigger word: recheck.
-          Recheck triggers every job involved in verifying latest patch set in the Change.
         </td>
       </tr>
 
@@ -762,25 +706,21 @@ overrided via the opendaylight-infra-wrappers' build-timeout property.
       </tr>
       <tr>
         <td colspan="2">
-          This job runs a full integration test suite against your patch and
-          reports back the results to Gerrit. Leave a comment with trigger
-          keyword above to activate it for a particular patch.
+        </td>
+      </tr>
 
-          It then spawns the list of jobs in csit-list defined
+      <tr class="warning">
+        <td><b>Job Template</b><br/>integration-patch-test-{stream}</td>
+        <td><b>Gerrit Trigger</b><br/>test-integration</td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          This job builds a distribution against your Java patch and tiggers distribution sanity CSIT jobs.
+          Leave a comment with trigger keyword above to activate it for a particular patch.
+          This job should not alter Gerrit votes for a given patch.
+
+          The list of CSIT jobs to trigger is defined in csit-list
           <a href="https://git.opendaylight.org/gerrit/gitweb?p=releng/builder.git;a=blob;f=jjb/integration/integration-test-jobs.yaml">here</a>.
-
-          This job is maintained by the <a href="https://wiki.opendaylight.org/view/Integration/Test">Integration/Test</a>
-          project.
-
-          <div class="admonition note">
-            <p class="first admonition-title">Note</p>
-            <p>
-              Running the "test-integration" trigger will cause Jenkins to remove
-              it's existing vote if it's already -1 or +1'd a comment. You will need
-              to re-run your verify job (recheck) after running this to get Jenkins
-              to put back the correct vote.
-            </p>
-          </div>
 
           Some considerations when using this job:
           <ul>
