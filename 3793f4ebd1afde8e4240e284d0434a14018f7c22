@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a65312a_c5dbcf19",
+        "filename": "jjb/integration/integration-test-jobs.yaml",
+        "patchSetId": 9
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2016-11-11T10:54:00Z",
+      "side": 1,
+      "message": "Sandbox run [0] shows this is not blocking. That means users only sees compilation has succeed. Console output contains list of triggered jobs, but not their run numbers (of course, as the number is defined only when the job is actually started as opposed to merely queued), which makes it hard for users to figure out what the test results are.\n\nI think it would be better to block here until the triggered jobs are finished.\n\n[0] https://jenkins.opendaylight.org/sandbox/job/integration-multipatch-test-carbon/1/",
+      "range": {
+        "startLine": 476,
+        "startChar": 10,
+        "endLine": 476,
+        "endChar": 17
+      },
+      "revId": "3793f4ebd1afde8e4240e284d0434a14018f7c22",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
