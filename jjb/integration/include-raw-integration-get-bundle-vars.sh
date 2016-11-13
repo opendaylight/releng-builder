@@ -4,10 +4,11 @@ echo "#################################################"
 
 NEXUSURL_PREFIX=${ODLNEXUSPROXY:-https://nexus.opendaylight.org}
 ODL_NEXUS_REPO=${ODL_NEXUS_REPO:-content/repositories/opendaylight.snapshot}
+GERRIT_PATH=${GERRIT_PATH:-git.opendaylight.org/gerrit}
 
 if [ ${BUNDLEURL} == 'last' ]; then
     # Obtain current pom.xml of integration/distribution, correct branch.
-    wget "http://git.opendaylight.org/gerrit/gitweb?p=integration/distribution.git;a=blob_plain;f=pom.xml;hb=refs/heads/$BRANCH" -O "pom.xml"
+    wget "http://${GERRIT_PATH}/gitweb?p=integration/distribution.git;a=blob_plain;f=pom.xml;hb=refs/heads/$BRANCH" -O "pom.xml"
     # Extract the BUNDLEVERSION from the pom.xml
     BUNDLEVERSION=`xpath pom.xml '/project/version/text()' 2> /dev/null`
     echo "Bundle version is ${BUNDLEVERSION}"
