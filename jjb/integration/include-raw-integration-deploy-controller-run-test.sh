@@ -82,11 +82,17 @@ echo "Java binary pointed at by JAVA_HOME: \${JAVA_RESOLVED}"
 
 EOF
 
+KARAF_LOGDIR="/tmp/${BUNDLEFOLDER}/data/log"
+
 # Create the startup script to be run on controller.
 cat > ${WORKSPACE}/startup-script.sh <<EOF
 
+echo "ODL disk situation"
+df -h
+
 echo "Redirecting karaf console output to karaf_console.log"
-export KARAF_REDIRECT="/tmp/${BUNDLEFOLDER}/data/log/karaf_console.log"
+mkdir -p "${KARAF_LOGDIR}"
+export KARAF_REDIRECT="${KARAF_LOGDIR}/karaf_console.log"
 
 echo "Starting controller..."
 /tmp/${BUNDLEFOLDER}/bin/start
@@ -121,6 +127,10 @@ sleep ${COOLDOWN_PERIOD}
 echo "Listing all open ports on controller system..."
 netstat -natu
 
+echo "cat console output'
+ls -lAn "/tmp/${BUNDLEFOLDER}/data/log"
+cat "/tmp/${BUNDLEFOLDER}/data/log/karaf_console.log"
+
 function exit_on_log_file_message {
     echo "looking for \"\$1\" in log file"
     if grep --quiet "\$1" /tmp/${BUNDLEFOLDER}/data/log/karaf.log; then
@@ -148,7 +158,7 @@ if [ -f ${WORKSPACE}/test/csit/configplans/${TESTPLAN} ]; then
     echo "Reading the configplan:"
     cat ${WORKSPACE}/test/csit/configplans/${TESTPLAN} | sed "s:integration:${WORKSPACE}:" > configplan.txt
     cat configplan.txt
-    for line in $( egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' configplan.txt ); do
+    for line in `egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' configplan.txt`; do
         echo "Executing ${line}..."
         source ${line}
     done
@@ -176,7 +186,7 @@ fi
 echo "Changing the testplan path..."
 cat "${testplan_filepath}" | sed "s:integration:${WORKSPACE}:" > testplan.txt
 cat testplan.txt
-SUITES=$( egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' testplan.txt | tr '\012' ' ' )
+SUITES=`egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' testplan.txt | tr '\012' ' ' `
 
 echo "Starting Robot test suites ${SUITES} ..."
 pybot -N ${TESTPLAN} --removekeywords wuks -c critical -e exclude -v BUNDLEFOLDER:${BUNDLEFOLDER} -v WORKSPACE:/tmp \
@@ -195,6 +205,8 @@ echo "Lets's take the karaf thread dump again"
 KARAF_PID=$(ssh ${ODL_SYSTEM_IP} "ps aux | grep 'distribution-karaf' | grep -v grep | tr -s ' ' | cut -f2 -d' '")
 ssh ${ODL_SYSTEM_IP} "jstack $KARAF_PID"> ${WORKSPACE}/karaf_threads_after.log || true
 
+echo "ODL disk situation"
+ssh "${ODL_SYSTEM_IP}" bash -c 'df -h'
 echo "Killing ODL"
 set +e  # We do not want to create red dot just because something went wrong while fetching logs.
 ssh "${ODL_SYSTEM_IP}" bash -c 'ps axf | grep karaf | grep -v grep | awk '"'"'{print "kill -9 " $1}'"'"' | sh'
@@ -205,6 +217,9 @@ echo "Fetching compressed karaf.log"
 scp "${ODL_SYSTEM_IP}:/tmp/${BUNDLEFOLDER}/data/log/karaf.log.gz" .
 # TODO: Should we compress the output log file as well?
 scp "${ODL_SYSTEM_IP}:/tmp/${BUNDLEFOLDER}/data/log/karaf_console.log" .
+echo "ODL disk situation"
+ssh "${ODL_SYSTEM_IP}" bash -c 'df -h'
+
 true  # perhaps Jenkins is testing last exit code
 
 # vim: ts=4 sw=4 sts=4 et ft=sh :

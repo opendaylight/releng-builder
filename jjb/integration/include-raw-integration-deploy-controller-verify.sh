@@ -32,9 +32,6 @@ cat ${MEMCONF}
 echo "Listing all open ports on controller system"
 netstat -natu
 
-echo "redirected karaf console output to karaf_console.log"
-export KARAF_REDIRECT=${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log
-
 if [ ${JDKVERSION} == 'openjdk8' ]; then
     echo "Setting the JRE Version to 8"
     # dynamic_verify does not allow sudo, JAVA_HOME should be enough for karaf start.
@@ -51,7 +48,9 @@ echo "Default JDK Version, JAVA_HOME should override"
 java -version
 
 echo "Redirecting karaf console output to karaf_console.log"
-export KARAF_REDIRECT="${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log"
+KARAF_LOGDIR="${WORKSPACE}/${BUNDLEFOLDER}/data/log"
+mkdir -p "${KARAF_LOGDIR}"
+export KARAF_REDIRECT="${KARAF_LOGDIR}/karaf_console.log"
 
 echo "Starting controller..."
 ${WORKSPACE}/${BUNDLEFOLDER}/bin/start
