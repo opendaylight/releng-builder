@@ -52,7 +52,9 @@ echo "Default JDK Version, JAVA_HOME should override"
 java -version
 
 echo "Redirecting karaf console output to karaf_console.log"
-export KARAF_REDIRECT="${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log"
+KARAF_LOGDIR="/tmp/${BUNDLEFOLDER}/data/log"
+mkdir -p "${KARAF_LOGDIR}"
+export KARAF_REDIRECT="${KARAF_LOGDIR}/karaf_console.log"
 
 echo "Starting controller..."
 ${WORKSPACE}/${BUNDLEFOLDER}/bin/start
