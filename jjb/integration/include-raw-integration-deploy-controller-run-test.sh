@@ -82,11 +82,14 @@ echo "Java binary pointed at by JAVA_HOME: \${JAVA_RESOLVED}"
 
 EOF
 
+KARAF_LOGDIR="/tmp/${BUNDLEFOLDER}/data/log"
+
 # Create the startup script to be run on controller.
 cat > ${WORKSPACE}/startup-script.sh <<EOF
 
 echo "Redirecting karaf console output to karaf_console.log"
-export KARAF_REDIRECT="/tmp/${BUNDLEFOLDER}/data/log/karaf_console.log"
+mkdir -p "${KARAF_LOGDIR}"
+export KARAF_REDIRECT="${KARAF_LOGDIR}/karaf_console.log"
 
 echo "Starting controller..."
 /tmp/${BUNDLEFOLDER}/bin/start
@@ -167,6 +170,9 @@ echo "Lets's take the karaf thread dump"
 KARAF_PID=$(ssh ${ODL_SYSTEM_IP} "ps aux | grep 'distribution-karaf' | grep -v grep | tr -s ' ' | cut -f2 -d' '")
 ssh ${ODL_SYSTEM_IP} "jstack $KARAF_PID"> ${WORKSPACE}/karaf_threads_before.log || true
 
+echo "Disk situation"
+df -h
+
 echo "Locating test plan to use..."
 testplan_filepath="${WORKSPACE}/test/csit/testplans/${STREAMTESTPLAN}"
 if [ ! -f "${testplan_filepath}" ]; then
@@ -191,6 +197,9 @@ pybot -N ${TESTPLAN} --removekeywords wuks -c critical -e exclude -v BUNDLEFOLDE
 -v MININET_USER:${USER} -v USER_HOME:${HOME} ${TESTOPTIONS} ${SUITES} || true
 # FIXME: Sort (at least -v) options alphabetically.
 
+echo "Disk situation"
+df -h
+
 echo "Lets's take the karaf thread dump again"
 KARAF_PID=$(ssh ${ODL_SYSTEM_IP} "ps aux | grep 'distribution-karaf' | grep -v grep | tr -s ' ' | cut -f2 -d' '")
 ssh ${ODL_SYSTEM_IP} "jstack $KARAF_PID"> ${WORKSPACE}/karaf_threads_after.log || true
@@ -205,6 +214,10 @@ echo "Fetching compressed karaf.log"
 scp "${ODL_SYSTEM_IP}:/tmp/${BUNDLEFOLDER}/data/log/karaf.log.gz" .
 # TODO: Should we compress the output log file as well?
 scp "${ODL_SYSTEM_IP}:/tmp/${BUNDLEFOLDER}/data/log/karaf_console.log" .
+
+echo "Disk situation"
+df -h
+
 true  # perhaps Jenkins is testing last exit code
 
 # vim: ts=4 sw=4 sts=4 et ft=sh :
