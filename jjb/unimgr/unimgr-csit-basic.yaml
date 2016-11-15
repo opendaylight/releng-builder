@@ -1,5 +1,5 @@
 - project:
-    name: unimgr-csit
+    name: unimgr-csit-basic
     jobs:
         - '{project}-csit-1node-{functionality}-{install}-{stream}'
         - '{project}-csit-verify-1node-{functionality}'
@@ -8,13 +8,9 @@
     project: 'unimgr'
 
     # The functionality under test
-    functionality:
-        - basic:
-            functionality: 'basic'
-        - legato:
-            functionality: 'legato'
+    functionality: 'basic'
 
-    #  Project branches
+    # Project branches
     stream:
         - carbon:
             branch: 'master'
@@ -36,7 +32,7 @@
     mininet-vms: 2
 
     # Features to install
-    install-features: 'odl-unimgr-ui,odl-unimgr-netvirt'
+    install-features: 'odl-unimgr-ui'
 
     # Robot custom options
     robot-options: ''
