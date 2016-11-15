@@ -1,5 +1,5 @@
 - project:
-    name: unimgr-csit-basic
+    name: unimgr-csit-legato
     jobs:
         - '{project}-csit-1node-{functionality}-{install}-{stream}'
         - '{project}-csit-verify-1node-{functionality}'
@@ -8,7 +8,7 @@
     project: 'unimgr'
 
     # The functionality under test
-    functionality: 'basic'
+    functionality: 'legato'
 
     # Project branches
     stream:
@@ -18,9 +18,6 @@
         - boron:
             branch: 'stable/boron'
             jre: 'openjdk8'
-        - beryllium:
-            branch: 'stable/beryllium'
-            jre: 'openjdk7'
 
     install:
         - only:
@@ -32,10 +29,10 @@
     mininet-vms: 2
 
     # Features to install
-    install-features: 'odl-unimgr-ui'
+    install-features: 'odl-unimgr-ui,odl-unimgr-netvirt'
 
     # Robot custom options
     robot-options: ''
 
     # Trigger jobs (upstream dependencies)
-    trigger-jobs: 'ovsdb-distribution-{stream},unimgr-distribution-{stream}'
+    trigger-jobs: 'ovsdb-distribution-{stream},unimgr-distribution-{stream},netvirt-distribution-{stream},genius-distribution-{stream}'
