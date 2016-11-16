@@ -2,6 +2,91 @@
   "comments": [
     {
       "key": {
+        "uuid": "3a65312a_77e6dfb5",
+        "filename": "jjb/integration/include-raw-integration-deploy-openstack-run-test.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2016-11-16T13:52:57Z",
+      "side": 1,
+      "message": "why is the \\ needed?",
+      "revId": "28a1b8bd4018ef9e36061c6211c979197fdf8268",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_17fe8b38",
+        "filename": "jjb/integration/include-raw-integration-deploy-openstack-run-test.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2016-11-16T13:52:57Z",
+      "side": 1,
+      "message": "why no sudo?",
+      "revId": "28a1b8bd4018ef9e36061c6211c979197fdf8268",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_b796b7ee",
+        "filename": "jjb/integration/include-raw-integration-deploy-openstack-run-test.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2016-11-16T13:52:57Z",
+      "side": 1,
+      "message": "you can combine the two statements to be: sudo ovs-vsctl add-br $PUBLIC_BRIDGE -- set bridge $PUBLIC_BRIDGE other_config:disable-in-band\u003dtrue\n\nThis would save the ssh logins.",
+      "revId": "28a1b8bd4018ef9e36061c6211c979197fdf8268",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_77ab7f1d",
+        "filename": "jjb/integration/include-raw-integration-deploy-openstack-run-test.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2016-11-16T13:52:57Z",
+      "side": 1,
+      "message": "should also set the mac for the bridge so it is known: add the following to the add-br command: -- set bridge $PUBLIC_BRIDGE other_config:hwaddr\u003df6:00:00:ff:01:00",
+      "revId": "28a1b8bd4018ef9e36061c6211c979197fdf8268",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_b74b5786",
+        "filename": "jjb/integration/include-raw-integration-deploy-openstack-run-test.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2016-11-16T13:52:57Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be needed on br-ex. The br-ex port is reachable the same way that that br-int is reachable. When adding the vxlan dst_port, that is how br-ex vteps will be found.\n\nWhat is needed for this subnet 10.10.10.250/24 should be in the namespace port. Unless you are dropping the namespace and trying to use the br-ex port itself.",
+      "revId": "28a1b8bd4018ef9e36061c6211c979197fdf8268",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a65312a_37b10790",
         "filename": "jjb/integration/include-raw-integration-deploy-openstack-run-test.sh",
         "patchSetId": 2
@@ -13,6 +98,29 @@
       "writtenOn": "2016-11-16T13:41:01Z",
       "side": 1,
       "message": "There is a rather small limitation as to the length of a port name therefor it\u0027s usually better to put the unique part first.",
+      "revId": "28a1b8bd4018ef9e36061c6211c979197fdf8268",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_17216bb4",
+        "filename": "jjb/integration/include-raw-integration-deploy-openstack-run-test.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2016-11-16T13:52:57Z",
+      "side": 1,
+      "message": "we should fix the key so we always know what the vnid will be, though I guess it doesn\u0027t matter unless you are using tcpdump. But, that might be something we should add to these tests later. That would be cool to have an actual dump of the packets.",
+      "range": {
+        "startLine": 478,
+        "startChar": 196,
+        "endLine": 478,
+        "endChar": 200
+      },
       "revId": "28a1b8bd4018ef9e36061c6211c979197fdf8268",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
