@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3a65312a_f2103d03",
+        "filename": "jjb/integration/include-raw-integration-deploy-openstack-run-test.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 670
+      },
+      "writtenOn": "2016-11-16T14:48:50Z",
+      "side": 1,
+      "message": "all theoretical here since sandbox didnt run yet - but because PUBLIC_PHYSICAL_NETWORK isn\u0027t set in our env, but it will be in local.conf - so to prevent it being parsed as an empty string",
+      "parentUuid": "3a65312a_77e6dfb5",
+      "revId": "28a1b8bd4018ef9e36061c6211c979197fdf8268",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a65312a_17fe8b38",
         "filename": "jjb/integration/include-raw-integration-deploy-openstack-run-test.sh",
         "patchSetId": 2
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "3a65312a_72042dc0",
+        "filename": "jjb/integration/include-raw-integration-deploy-openstack-run-test.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 670
+      },
+      "writtenOn": "2016-11-16T14:48:50Z",
+      "side": 1,
+      "message": "fixed thanks",
+      "parentUuid": "3a65312a_b796b7ee",
+      "revId": "28a1b8bd4018ef9e36061c6211c979197fdf8268",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a65312a_77ab7f1d",
         "filename": "jjb/integration/include-raw-integration-deploy-openstack-run-test.sh",
         "patchSetId": 2
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "3a65312a_d22a612b",
+        "filename": "jjb/integration/include-raw-integration-deploy-openstack-run-test.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 670
+      },
+      "writtenOn": "2016-11-16T14:48:50Z",
+      "side": 1,
+      "message": "good idea, added",
+      "parentUuid": "3a65312a_77ab7f1d",
+      "revId": "28a1b8bd4018ef9e36061c6211c979197fdf8268",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a65312a_b74b5786",
         "filename": "jjb/integration/include-raw-integration-deploy-openstack-run-test.sh",
         "patchSetId": 2
@@ -81,6 +135,24 @@
       "writtenOn": "2016-11-16T13:52:57Z",
       "side": 1,
       "message": "This shouldn\u0027t be needed on br-ex. The br-ex port is reachable the same way that that br-int is reachable. When adding the vxlan dst_port, that is how br-ex vteps will be found.\n\nWhat is needed for this subnet 10.10.10.250/24 should be in the namespace port. Unless you are dropping the namespace and trying to use the br-ex port itself.",
+      "revId": "28a1b8bd4018ef9e36061c6211c979197fdf8268",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_3221154e",
+        "filename": "jjb/integration/include-raw-integration-deploy-openstack-run-test.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 670
+      },
+      "writtenOn": "2016-11-16T14:48:50Z",
+      "side": 1,
+      "message": "yeah I\u0027m trying without a namespace at all.\nseems more straightforward and tempest is supposed to run from the control node, not the namespace, so I *think* this might get it to work",
+      "parentUuid": "3a65312a_b74b5786",
       "revId": "28a1b8bd4018ef9e36061c6211c979197fdf8268",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -122,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "3a65312a_121cd912",
+        "filename": "jjb/integration/include-raw-integration-deploy-openstack-run-test.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 670
+      },
+      "writtenOn": "2016-11-16T14:48:50Z",
+      "side": 1,
+      "message": "${remote_ip}_vx it is",
+      "parentUuid": "3a65312a_b227e5b5",
+      "revId": "28a1b8bd4018ef9e36061c6211c979197fdf8268",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a65312a_17216bb4",
         "filename": "jjb/integration/include-raw-integration-deploy-openstack-run-test.sh",
         "patchSetId": 2
@@ -157,6 +247,30 @@
       "side": 1,
       "message": "I used a unique port instead of a unique key. Either way but this should be easily tcpdump\u0027able based on port.",
       "parentUuid": "3a65312a_17216bb4",
+      "range": {
+        "startLine": 478,
+        "startChar": 196,
+        "endLine": 478,
+        "endChar": 200
+      },
+      "revId": "28a1b8bd4018ef9e36061c6211c979197fdf8268",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_521651f2",
+        "filename": "jjb/integration/include-raw-integration-deploy-openstack-run-test.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 670
+      },
+      "writtenOn": "2016-11-16T14:48:50Z",
+      "side": 1,
+      "message": "just throwing this here\nhttps://git.opendaylight.org/gerrit/#/c/45441/",
+      "parentUuid": "3a65312a_b24ec56d",
       "range": {
         "startLine": 478,
         "startChar": 196,
