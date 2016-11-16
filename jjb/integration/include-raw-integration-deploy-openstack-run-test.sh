@@ -105,15 +105,14 @@ fi
 
 if [ "${ODL_ENABLE_L3_FWD}" == "yes" ]; then
 cat >> ${local_conf_file_name} << EOF
-
 PUBLIC_BRIDGE=${PUBLIC_BRIDGE}
-ODL_PROVIDER_MAPPINGS=${PUBLIC_BRIDGE}:br100
+PUBLIC_PHYSICAL_NETWORK=physnet1 # FIXME this should be a parameter
+ODL_PROVIDER_MAPPINGS=\${PUBLIC_PHYSICAL_NETWORK}:${PUBLIC_BRIDGE}
 
 disable_service q-l3
 Q_L3_ENABLED=True
 ODL_L3=${ODL_L3}
 PUBLIC_INTERFACE=br100
-
 EOF
 
 if [ "${ODL_ML2_BRANCH}" == "stable/mitaka" ]; then
@@ -185,8 +184,6 @@ enable_plugin networking-odl ${ODL_ML2_DRIVER_REPO} ${ODL_ML2_BRANCH}
 ODL_MODE=compute
 LIBVIRT_TYPE=qemu
 
-EOF
-
 if [ "${NUM_ODL_SYSTEM}" -gt 1 ]; then
 odl_list=${ODL_SYSTEM_1_IP}
 for i in `seq 2 ${NUM_ODL_SYSTEM}`
@@ -216,7 +213,12 @@ cat >> ${local_conf_file_name} << EOF
 # Uncomment lines below if odl-compute is to be used for l3 forwarding
 Q_L3_ENABLED=True
 ODL_L3=${ODL_L3}
-PUBLIC_INTERFACE=br100
+PUBLIC_INTERFACE=br100 # FIXME do we use br100 at all?
+PUBLIC_BRIDGE=${PUBLIC_BRIDGE}
+PUBLIC_PHYSICAL_NETWORK=physnet1 # FIXME this should be a parameter
+ODL_PROVIDER_MAPPINGS=\${PUBLIC_PHYSICAL_NETWORK}:${PUBLIC_BRIDGE}
+EOF
+
 EOF
 fi
 echo "local.conf Created...."
@@ -447,6 +449,32 @@ done
 ${SSH} ${OPENSTACK_CONTROL_NODE_IP} "sudo pip install --upgrade pip"
 ${SSH} ${OPENSTACK_CONTROL_NODE_IP} "sudo pip install urllib3 --upgrade"
 ${SSH} ${OPENSTACK_CONTROL_NODE_IP} "sudo pip install httplib2 --upgrade"
+
+DEVSTACK_IPS[0]=${OPENSTACK_CONTROL_NODE_IP}
+for i in `seq 1 $((NUM_OPENSTACK_SYSTEM - 1))`
+do
+    DEVSTACK_IPS[$i]=OPENSTACK_COMPUTE_NODE_${i}_IP
+done
+
+# External Network
+echo "prepare external networks by adding vxlan tunnels between all nodes on a separate bridge..."
+for ip in ${DEVSTACK_IPS[*]}
+do
+    # FIXME - Workaround, ODL currently adds br-ex as a port in br-int since it doesn't see such a bridge existing when we stack
+    ${SSH} $ip "sudo ovs-vsctl --if-exists del-port br-int $PUBLIC_BRIDGE"
+    ${SSH} $ip "sudo ovs-vsctl add-br $PUBLIC_BRIDGE -- set bridge $PUBLIC_BRIDGE other-config:disable-in-band=true other_config:hwaddr=f6:00:00:ff:01:00"
+    # Control node br-ex will act as the external router
+    if [ "$ip" == "${OPENSTACK_CONTROL_NODE_IP}"]; then
+        ${SSH} $ip "sudo ifconfig br-ex up 10.10.10.250/24" # FIXME this should be a parameter
+    fi
+    for remote_ip in ${DEVSTACK_IPS[*]}
+    do
+        if [ "$ip" != "$remote_ip" ]; then
+            PORT_NAME=${remote_ip}_vx
+            ${SSH} $ip "ovs-vsctl add-port $PUBLIC_BRIDGE $PORT_NAME -- set interface $PORT_NAME type=vxlan options:local_ip="$ip" options:remote_ip="$remote_ip" options:dst_port=9876 options:key=flow"
+        fi
+    done
+done
 
 echo "Locating test plan to use..."
 testplan_filepath="${WORKSPACE}/test/csit/testplans/${STREAMTESTPLAN}"
