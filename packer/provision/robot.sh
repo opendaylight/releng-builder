@@ -17,6 +17,8 @@ yum install -y -q libpng-devel freetype-devel python-matplotlib
 # install crudini command line tool for editing config files
 yum install -y -q crudini
 
+# Install dependency for postgres database used in storing performance plot results
+yum -y install postgresql-devel
 
 ################################
 # LISPFLOWMAPPING REQUIREMENTS #
