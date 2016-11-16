@@ -22,9 +22,6 @@
         - boron:
             branch: 'stable/boron'
             jre: 'openjdk8'
-        - beryllium:
-            branch: 'stable/beryllium'
-            jre: 'openjdk7'
 
     install:
         - only:
@@ -42,4 +39,4 @@
     robot-options: ''
 
     # Trigger jobs (upstream dependencies)
-    trigger-jobs: 'ovsdb-distribution-{stream},unimgr-distribution-{stream}'
+    trigger-jobs: 'ovsdb-distribution-{stream},unimgr-distribution-{stream},netvirt-distribution-{stream}'
