@@ -319,6 +319,7 @@ scp "${OPENSTACK_CONTROL_NODE_IP}:/tmp/control_node_openstack_logs.tgz" control_
 scp extra_debug.sh ${OPENSTACK_CONTROL_NODE_IP}:/tmp
 ${SSH} ${OPENSTACK_CONTROL_NODE_IP} "bash /tmp/extra_debug.sh"
 scp "${OPENSTACK_CONTROL_NODE_IP}:/tmp/extra_debug.log" extra_debug_control.log
+scp ${OPENSTACK_CONTROL_NODE_IP}:/var/log/openvswitch/ovs-vswitchd.log "control_ovs-vswitchd.log"
 for i in `seq 1 $((NUM_OPENSTACK_SYSTEM - 1))`
 do
     OSIP=OPENSTACK_COMPUTE_NODE_${i}_IP
@@ -328,6 +329,7 @@ do
     scp "extra_debug.sh" "${!OSIP}:/tmp"
     ${SSH} "${!OSIP}" "bash /tmp/extra_debug.sh"
     scp "${!OSIP}:/tmp/extra_debug.log" "extra_debug_compute_${i}.log"
+    scp "${!OSIP}:/var/log/openvswitch/ovs-vswitchd.log" "compute_${i}_ovs-vswitchd.log"
 done
 
 ls local.conf* | xargs -I % mv % %.log
