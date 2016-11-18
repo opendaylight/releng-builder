@@ -317,6 +317,12 @@ do
 done
 
 cp local.conf* $WORKSPACE/archives
+
+# capture extra debug
+touch $WORKSPACE/archives/extra_debug.txt
+{{
+    echo -e "/usr/sbin/lsmod | /usr/bin/grep openvswitch\n `/usr/sbin/lsmod | /usr/bin/grep openvswitch` \n"
+}} 2>&1 | tee -a $WORKSPACE/archives/extra_debug.txt
 }
 
 cat > ${WORKSPACE}/disable_firewall.sh << EOF
