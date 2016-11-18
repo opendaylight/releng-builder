@@ -315,6 +315,8 @@ do
     ${SSH} "${!OSIP}" "tar -cf /tmp/compute_node_${i}_openstack_logs.tgz  /opt/stack/logs/*"
     scp "${!OSIP}:/tmp/compute_node_${i}_openstack_logs.tgz"  "compute_node_${i}_openstack_logs.tgz"
 done
+
+cp local.conf* $WORKSPACE/archives
 }
 
 cat > ${WORKSPACE}/disable_firewall.sh << EOF
