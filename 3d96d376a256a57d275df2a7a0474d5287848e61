@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a65312a_a290304f",
+        "filename": "jjb/integration/include-raw-integration-deploy-openstack-run-test.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2016-11-18T22:58:55Z",
+      "side": 1,
+      "message": "is this right?\n\ndon\u0027t you want this up in the above do loop?  so:\n\nscp \"${!OSIP}:/opt/stack/devstack/local.conf $WORKSPACE/archives/compute_1_local.conf\n\nalso would want it from control node too right?\n\nbut, btw, this info is there in the console output of the job.  check line 223 above",
+      "range": {
+        "startLine": 319,
+        "startChar": 0,
+        "endLine": 319,
+        "endChar": 34
+      },
+      "revId": "3d96d376a256a57d275df2a7a0474d5287848e61",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
