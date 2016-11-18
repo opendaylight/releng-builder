@@ -308,12 +308,16 @@ done
 scp ${OPENSTACK_CONTROL_NODE_IP}:/opt/stack/devstack/nohup.out "openstack_control_stack.log"
 ${SSH} ${OPENSTACK_CONTROL_NODE_IP} "tar -cf /tmp/control_node_openstack_logs.tgz  /opt/stack/logs/*"
 scp "${OPENSTACK_CONTROL_NODE_IP}:/tmp/control_node_openstack_logs.tgz" control_node_openstack_logs.tgz
+scp ${OPENSTACK_CONTROL_NODE_IP}:/var/log/openvswitch/ovs-vswitchd.log "ovs-vswitchd_control.log"
+rm control_ovs-vswitchd.log
 for i in `seq 1 $((NUM_OPENSTACK_SYSTEM - 1))`
 do
     OSIP=OPENSTACK_COMPUTE_NODE_${i}_IP
     scp "${!OSIP}:/opt/stack/devstack/nohup.out" "openstack_compute_stack_${i}.log"
     ${SSH} "${!OSIP}" "tar -cf /tmp/compute_node_${i}_openstack_logs.tgz  /opt/stack/logs/*"
     scp "${!OSIP}:/tmp/compute_node_${i}_openstack_logs.tgz"  "compute_node_${i}_openstack_logs.tgz"
+    scp "${!OSIP}:/var/log/openvswitch/ovs-vswitchd.log" "ovs-vswitchd_compute_${i}.log"
+    rm compute_${1}_ovs-vswitchd.log
 done
 }
 
