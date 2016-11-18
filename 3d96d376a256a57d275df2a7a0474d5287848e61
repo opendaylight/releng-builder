@@ -22,6 +22,30 @@
       "revId": "3d96d376a256a57d275df2a7a0474d5287848e61",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_42b79cd8",
+        "filename": "jjb/integration/include-raw-integration-deploy-openstack-run-test.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2016-11-18T23:38:39Z",
+      "side": 1,
+      "message": "No those loops are for copying file from the nodes, but the local.conf_* files were made locally and then scp\u0027d to the nodes, so they are still here. What I don\u0027t know is where I am in the path right now. Some how the files scp\u0027d over to here end up in the archives directory. So maybe I need to add $WORKSPACE to get the path to the original files.\n\nYes, the files are catted in the console, but I always have to go grep it, so I thought it would be cleaner if they were separate.\n\nThere is a job running: https://jenkins.opendaylight.org/sandbox/job/netvirt-csit-1node-openstack-mitaka-upstream-transparent-carbon-shague/1/",
+      "parentUuid": "3a65312a_a290304f",
+      "range": {
+        "startLine": 319,
+        "startChar": 0,
+        "endLine": 319,
+        "endChar": 34
+      },
+      "revId": "3d96d376a256a57d275df2a7a0474d5287848e61",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
