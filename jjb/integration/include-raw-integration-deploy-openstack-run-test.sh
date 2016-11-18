@@ -293,6 +293,13 @@ do
     ${SSH} "${!CONTROLLERIP}" bash -c 'ps axf | grep karaf | grep -v grep | awk '"'"'{print "kill -9 " $1}'"'"' | sh'
 done
 
+cat > extra_debug.sh << EOF
+echo -e "/usr/sbin/lsmod | /usr/bin/grep openvswitch"
+/usr/sbin/lsmod | /usr/bin/grep openvswitch
+echo -e "grep ct_ /var/log/openvswitch/ovs-vswitchd.log"
+grep ct_ /var/log/openvswitch/ovs-vswitchd.log
+EOF
+
 sleep 5
 # FIXME: Do not create .tar and gzip before copying.
 for i in `seq 1 ${NUM_ODL_SYSTEM}`
@@ -308,12 +315,18 @@ done
 scp ${OPENSTACK_CONTROL_NODE_IP}:/opt/stack/devstack/nohup.out "openstack_control_stack.log"
 ${SSH} ${OPENSTACK_CONTROL_NODE_IP} "tar -cf /tmp/control_node_openstack_logs.tgz  /opt/stack/logs/*"
 scp "${OPENSTACK_CONTROL_NODE_IP}:/tmp/control_node_openstack_logs.tgz" control_node_openstack_logs.tgz
+scp extra_debug.sh ${OPENSTACK_CONTROL_NODE_IP}:/tmp
+${SSH} ${OPENSTACK_CONTROL_NODE_IP} "bash /tmp/extra_debug.sh > extra_debug.log"
+scp "${OPENSTACK_CONTROL_NODE_IP}:/tmp/extra_debug.log" extra_debug_control.log
 for i in `seq 1 $((NUM_OPENSTACK_SYSTEM - 1))`
 do
     OSIP=OPENSTACK_COMPUTE_NODE_${i}_IP
     scp "${!OSIP}:/opt/stack/devstack/nohup.out" "openstack_compute_stack_${i}.log"
     ${SSH} "${!OSIP}" "tar -cf /tmp/compute_node_${i}_openstack_logs.tgz  /opt/stack/logs/*"
     scp "${!OSIP}:/tmp/compute_node_${i}_openstack_logs.tgz"  "compute_node_${i}_openstack_logs.tgz"
+    scp "extra_debug.sh" "${!OSIP}:/tmp"
+    ${SSH} "${!OSIP}" "bash /tmp/extra_debug.sh > extra_debug.log"
+    scp "${!OSIP}:/tmp/extra_debug.log" "extra_debug_compute_${i}.log"
 done
 
 ls local.conf* | xargs -I % mv % %.log
