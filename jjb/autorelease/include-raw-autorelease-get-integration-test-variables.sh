@@ -8,8 +8,9 @@
 # which accompanies this distribution, and is available at
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
+[ "$ODLNEXUS_STAGING_URL" ] || ODLNEXUS_STAGING_URL=${ODLNEXUSPROXY:-https://nexus.opendaylight.org/}
 
-NEXUSURL=https://nexus.opendaylight.org/content/repositories/
+NEXUSURL=${ODLNEXUS_STAGING_URL}/content/repositories/
 VERSION=`grep -m2 '<version>' ${WORKSPACE}/integration/distribution/distribution-karaf/pom.xml | tail -n1 | awk -F'[<|>]' '/version/ { printf $3 }'`
 echo "VERSION: ${VERSION}"
 REPOID=`grep "Created staging repository with ID" $WORKSPACE/deploy-staged-repository.log | cut -d '"' -f2`
