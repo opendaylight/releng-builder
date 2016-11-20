@@ -154,7 +154,8 @@
             branch: '{branch}'
             refspec: 'refs/heads/{branch}'
             artifacts: '{archive-artifacts} **/dependency_tree.txt **/target/surefire-reports/*-output.txt'
-        - integration-distribution-git-url
+        - integration-distribution-git-url:
+            git-url: '{git-url}'
 
     scm:
         - integration-gerrit-scm:
@@ -578,7 +579,7 @@
             release-branch: '{branch}'
         - string:
             name: CLONE_URL
-            default: 'ssh://jenkins-$SILO@git.opendaylight.org:29418/releng/autorelease'
+            default: 'ssh://{git-url}:29418/releng/autorelease'
             description: "Autorelease clone URL"
 
     scm:
