@@ -13,6 +13,10 @@
 cd hide/from/pom/files
 mkdir -p m2repo/org/opendaylight/
 
+NEXUS_STAGING_URL=${ODLNEXUS_STAGING_URL:-$ODLNEXUSPROXY}
+NEXUS_STAGING_PROFILE=${ODLNEXUS_STAGING_PROFILE:-425e43800fea70}
+NEXUS_STAGING_SERVER_ID=${ODLNEXUS_STAGING_SERVER_ID:-"opendaylight.staging"}
+
 rsync -avz --exclude 'maven-metadata*' \
            --exclude '_remote.repositories' \
            --exclude 'resolver-status.properties' \
@@ -20,8 +24,8 @@ rsync -avz --exclude 'maven-metadata*' \
 
 "$MVN" -V -B org.sonatype.plugins:nexus-staging-maven-plugin:1.6.2:deploy-staged-repository \
     -DrepositoryDirectory="`pwd`/m2repo" \
-    -DnexusUrl=https://nexus.opendaylight.org/ \
-    -DstagingProfileId="425e43800fea70" \
-    -DserverId="opendaylight.staging" \
+    -DnexusUrl=$NEXUS_STAGING_URL \
+    -DstagingProfileId="$NEXUS_STAGING_PROFILE" \
+    -DserverId="$NEXUS_STAGING_SERVER_ID" \
     -s $SETTINGS_FILE \
     -gs $GLOBAL_SETTINGS_FILE | tee $WORKSPACE/deploy-staged-repository.log
