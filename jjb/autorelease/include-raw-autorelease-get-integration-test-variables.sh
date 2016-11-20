@@ -8,12 +8,15 @@
 # which accompanies this distribution, and is available at
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
+NEXUS_STAGING_URL=${ODLNEXUS_STAGING_URL:-$ODLNEXUSPROXY}
 
-NEXUSURL=https://nexus.opendaylight.org/content/repositories/
+NEXUSURL=${NEXUS_STAGING_URL}/content/repositories/
 VERSION=`grep -m2 '<version>' ${WORKSPACE}/integration/distribution/distribution-karaf/pom.xml | tail -n1 | awk -F'[<|>]' '/version/ { printf $3 }'`
 echo "VERSION: ${VERSION}"
-REPOID=`grep "Created staging repository with ID" $WORKSPACE/deploy-staged-repository.log | cut -d '"' -f2`
-echo BUNDLEURL=${NEXUSURL}/${REPOID}/org/opendaylight/integration/distribution-karaf/${VERSION}/distribution-karaf-${VERSION}.zip > $WORKSPACE/variables.prop
+STAGING_REPO_ID=`grep "Created staging repository with ID" $WORKSPACE/deploy-staged-repository.log | cut -d '"' -f2`
+BUNDLEURL=${NEXUSURL}/${STAGING_REPO_ID}/org/opendaylight/integration/distribution-karaf/${VERSION}/distribution-karaf-${VERSION}.zip
+echo STAGING_REPO_ID=$STAGING_REPO_ID >> $WORKSPACE/variables.prop
+echo BUNDLEURL=$BUNDLEURL >> $WORKSPACE/variables.prop
 echo "BUNDLEURL: ${BUNDLEURL}"
 
 # Copy variables.prop to variables.jenkins-trigger so that the end of build
