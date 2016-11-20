@@ -336,7 +336,8 @@
             artifacts: '{archive-artifacts} **/dependency_tree.txt'
         - integration-branch:
             branch: '{branch}'
-        - integration-distribution-git-url
+        - integration-distribution-git-url:
+            git-url: '{git-url}'
 
     scm:
         - integration-gerrit-scm:
