@@ -9,11 +9,20 @@
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
 
-NEXUSURL=https://nexus.opendaylight.org/content/repositories/
+# ODLNEXUSPROXY is used to define the location of the Nexus server used by the CI system.
+# by default it should be set to https://nexus.opendaylight.org
+# in cases where an internal ci system is using multiple NEXUS systems one for artifacts and another for staging,
+# we can override using ODLNEXUS_STAGING_URL to route the staging build to the 2nd server.
+# (most CI setups where a single Nexus server is used, ODLNEXUS_STAGING_URL should be left unset)
+NEXUS_STAGING_URL=${ODLNEXUS_STAGING_URL:-$ODLNEXUSPROXY}
+
+NEXUSURL=${NEXUS_STAGING_URL}/content/repositories/
 VERSION=`grep -m2 '<version>' ${WORKSPACE}/integration/distribution/distribution-karaf/pom.xml | tail -n1 | awk -F'[<|>]' '/version/ { printf $3 }'`
 echo "VERSION: ${VERSION}"
-REPOID=`grep "Created staging repository with ID" $WORKSPACE/deploy-staged-repository.log | cut -d '"' -f2`
-echo BUNDLEURL=${NEXUSURL}/${REPOID}/org/opendaylight/integration/distribution-karaf/${VERSION}/distribution-karaf-${VERSION}.zip > $WORKSPACE/variables.prop
+STAGING_REPO_ID=`grep "Created staging repository with ID" $WORKSPACE/deploy-staged-repository.log | cut -d '"' -f2`
+BUNDLEURL=${NEXUSURL}/${STAGING_REPO_ID}/org/opendaylight/integration/distribution-karaf/${VERSION}/distribution-karaf-${VERSION}.zip
+echo STAGING_REPO_ID=$STAGING_REPO_ID >> $WORKSPACE/variables.prop
+echo BUNDLEURL=$BUNDLEURL >> $WORKSPACE/variables.prop
 echo "BUNDLEURL: ${BUNDLEURL}"
 
 # Copy variables.prop to variables.jenkins-trigger so that the end of build
