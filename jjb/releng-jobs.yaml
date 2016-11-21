@@ -85,7 +85,7 @@
                 project-pattern: 'releng/builder'
                 branches:
                   - branch-compare-type: 'ANT'
-                    branch-pattern: '**/master'
+                    branch-pattern: '**/branch}'
                 file-paths:
                     - compare-type: ANT
                       pattern: jjb/**
@@ -148,7 +148,7 @@
                 project-pattern: 'releng/builder'
                 branches:
                   - branch-compare-type: 'ANT'
-                    branch-pattern: '**/master'
+                    branch-pattern: '**/{branch}'
                 file-paths:
                     - compare-type: ANT
                       pattern: scripts/**
@@ -211,7 +211,7 @@
                 project-pattern: 'releng/builder'
                 branches:
                     - branch-compare-type: 'ANT'
-                      branch-pattern: '**/master'
+                      branch-pattern: '**/{branch}'
                 file-paths:
                     - compare-type: ANT
                       pattern: jjb/**
@@ -408,7 +408,7 @@
                 project-pattern: 'releng/builder'
                 branches:
                     - branch-compare-type: 'ANT'
-                      branch-pattern: '**/master'
+                      branch-pattern: '**/{branch}'
                 file-paths:
                     - compare-type: ANT
                       pattern: 'packer/**'
