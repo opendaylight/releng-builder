@@ -319,6 +319,8 @@ do
     scp "${!OSIP}:/var/log/openvswitch/ovs-vswitchd.log" "ovs-vswitchd_compute_${i}.log"
     rm compute_${1}_ovs-vswitchd.log
 done
+
+ls local.conf* | xargs -I % mv % %.log
 }
 
 cat > ${WORKSPACE}/disable_firewall.sh << EOF
