@@ -119,7 +119,7 @@ echo "Cool down for ${COOLDOWN_PERIOD} seconds :)..."
 sleep ${COOLDOWN_PERIOD}
 
 echo "Listing all open ports on controller system..."
-netstat -natu
+netstat -pnatu
 
 function exit_on_log_file_message {
     echo "looking for \"\$1\" in log file"
