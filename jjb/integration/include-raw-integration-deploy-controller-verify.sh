@@ -30,7 +30,7 @@ sed -ie "s/2048m/${CONTROLLERMEM}/g" ${MEMCONF}
 cat ${MEMCONF}
 
 echo "Listing all open ports on controller system"
-netstat -natu
+netstat -pnatu
 
 echo "redirected karaf console output to karaf_console.log"
 export KARAF_REDIRECT=${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log
@@ -69,7 +69,7 @@ while true; do
         echo "Dumping Karaf log..."
         cat ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log
         echo "Listing all open ports on controller system"
-        netstat -natu
+        netstat -pnatu
         exit 1
     else
         COUNT=$(( ${COUNT} + 5 ))
@@ -86,7 +86,7 @@ echo "Checking OSGi bundles..."
 # sshpass -p karaf ${WORKSPACE}/${BUNDLEFOLDER}/bin/client -u karaf 'bundle:list'
 
 echo "Listing all open ports on controller system"
-netstat -natu
+netstat -pnatu
 
 function exit_on_log_file_message {
     echo "looking for \"$1\" in karaf.log file"

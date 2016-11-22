@@ -66,7 +66,7 @@ sed -ie 's/JAVA_MAX_MEM="2048m"/JAVA_MAX_MEM="${CONTROLLERMEM}"/g' \${MEMCONF}
 cat \${MEMCONF}
 
 echo "Listing all open ports on controller system..."
-netstat -natu
+netstat -pnatu
 
 echo "Set Java version"
 sudo /usr/sbin/alternatives --install /usr/bin/java java ${JAVA_HOME}/bin/java 1
@@ -106,7 +106,7 @@ while true; do
         echo "Dumping last 500K bytes of karaf log..."
         tail --bytes=500K "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
         echo "Listing all open ports on controller system"
-        netstat -natu
+        netstat -pnatu
         exit 1
     else
         COUNT=\$(( \${COUNT} + 5 ))
@@ -119,7 +119,7 @@ echo "Cool down for ${COOLDOWN_PERIOD} seconds :)..."
 sleep ${COOLDOWN_PERIOD}
 
 echo "Listing all open ports on controller system..."
-netstat -natu
+netstat -pnatu
 
 function exit_on_log_file_message {
     echo "looking for \"\$1\" in log file"

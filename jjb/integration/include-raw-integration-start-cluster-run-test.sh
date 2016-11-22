@@ -30,7 +30,7 @@ while true; do
         echo "Dumping last 500K bytes of karaf log..."
         tail --bytes=500K "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
         echo "Listing all open ports on controller system"
-        netstat -natu
+        netstat -pnatu
         exit 1
     else
         COUNT=\$(( \${COUNT} + 5 ))
@@ -40,7 +40,7 @@ while true; do
 done
 
 echo "Listing all open ports on controller system.."
-netstat -natu
+netstat -pnatu
 
 function exit_on_log_file_message {
     echo "looking for \"\$1\" in log file"
