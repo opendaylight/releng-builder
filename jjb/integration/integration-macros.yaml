@@ -506,7 +506,7 @@
             builders:
                 - shell: |
                     #!/bin/bash
-                    mkdir $WORKSPACE/archives
+                    mkdir -p $WORKSPACE/archives
                     curl --output robot-plugin.zip "$BUILD_URL/robot/report/*zip*/robot-plugin.zip"
                     unzip -d $WORKSPACE/archives robot-plugin.zip
                     mv *log* *.log *.log.gz *.csv *.png $WORKSPACE/archives || true  # Don't fail if file missing
