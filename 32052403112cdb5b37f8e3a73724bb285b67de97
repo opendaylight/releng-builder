@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a65312a_297b59f6",
+        "filename": "jjb/integration/include-raw-integration-distribution-check.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2016-11-24T10:25:20Z",
+      "side": 1,
+      "message": "If $COUNT is an assumed to be in seconds, the  above line should be:\nCOUNT\u003d$(( ${COUNT} - 10 ))\nor you would sleep in the loop for 10 mins instead of 5.",
+      "range": {
+        "startLine": 93,
+        "startChar": 4,
+        "endLine": 93,
+        "endChar": 29
+      },
+      "revId": "32052403112cdb5b37f8e3a73724bb285b67de97",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
