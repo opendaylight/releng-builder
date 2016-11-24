@@ -333,25 +333,36 @@ do
     rm ${WORKSPACE}/odl${i}_karaf.log.tar
 done
 
-scp ${OPENSTACK_CONTROL_NODE_IP}:/opt/stack/devstack/nohup.out "openstack_control_stack.log"
-${SSH} ${OPENSTACK_CONTROL_NODE_IP} "tar -cf /tmp/control_node_openstack_logs.tgz  /opt/stack/logs/*"
-scp "${OPENSTACK_CONTROL_NODE_IP}:/tmp/control_node_openstack_logs.tgz" control_node_openstack_logs.tgz
-scp ${OPENSTACK_CONTROL_NODE_IP}:/var/log/openvswitch/ovs-vswitchd.log "ovs-vswitchd_control.log"
-rm control_ovs-vswitchd.log
+# Dummy Folder - Voodoo
+# FIXME For some reason this folder does not show up in archives, but if
+# we don't create it then the next folder (control) won't show up in archives.
+mkdir -p dummy
+mv dummy ${WORKSPACE}/archives/
+
+# Control Node
+OS_CTRL_FOLDER="control"
+mkdir -p ${OS_CTRL_FOLDER}
+scp ${OPENSTACK_CONTROL_NODE_IP}:/opt/stack/devstack/nohup.out ${OS_CTRL_FOLDER}/stack.log
+scp ${OPENSTACK_CONTROL_NODE_IP}:/var/log/openvswitch/ovs-vswitchd.log ${OS_CTRL_FOLDER}/ovs-vswitchd.log
+rsync -avhe ssh ${OPENSTACK_CONTROL_NODE_IP}:/opt/stack/logs/* ${OS_CTRL_FOLDER} # rsync to prevent copying of symbolic links
 scp extra_debug.sh ${OPENSTACK_CONTROL_NODE_IP}:/tmp
 ${SSH} ${OPENSTACK_CONTROL_NODE_IP} "bash /tmp/extra_debug.sh > /tmp/extra_debug.log"
-scp "${OPENSTACK_CONTROL_NODE_IP}:/tmp/extra_debug.log" extra_debug_control.log
+scp "${OPENSTACK_CONTROL_NODE_IP}:/tmp/extra_debug.log" ${OS_CTRL_FOLDER}/extra_debug.log
+mv ${OS_CTRL_FOLDER} ${WORKSPACE}/archives/
+
+# Compute Nodes
 for i in `seq 1 $((NUM_OPENSTACK_SYSTEM - 1))`
 do
     OSIP=OPENSTACK_COMPUTE_NODE_${i}_IP
-    scp "${!OSIP}:/opt/stack/devstack/nohup.out" "openstack_compute_stack_${i}.log"
-    ${SSH} "${!OSIP}" "tar -cf /tmp/compute_node_${i}_openstack_logs.tgz  /opt/stack/logs/*"
-    scp "${!OSIP}:/tmp/compute_node_${i}_openstack_logs.tgz"  "compute_node_${i}_openstack_logs.tgz"
-    scp "${!OSIP}:/var/log/openvswitch/ovs-vswitchd.log" "ovs-vswitchd_compute_${i}.log"
-    rm compute_${1}_ovs-vswitchd.log
-    scp "extra_debug.sh" "${!OSIP}:/tmp"
-    ${SSH} "${!OSIP}" "bash /tmp/extra_debug.sh > /tmp/extra_debug.log"
-    scp "${!OSIP}:/tmp/extra_debug.log" "extra_debug_compute_${i}.log"
+    OS_COMPUTE_FOLDER="compute_${i}"
+    mkdir -p ${OS_COMPUTE_FOLDER}
+    scp ${!OSIP}:/opt/stack/devstack/nohup.out "${OS_COMPUTE_FOLDER}/stack.log"
+    scp ${!OSIP}:/var/log/openvswitch/ovs-vswitchd.log "${OS_COMPUTE_FOLDER}/ovs-vswitchd.log"
+    rsync -avhe ssh ${!OSIP}:/opt/stack/logs/* ${OS_COMPUTE_FOLDER} # rsync to prevent copying of symbolic links
+    scp extra_debug.sh "${!OSIP}:/tmp"
+    ${SSH} ${!OSIP} "bash /tmp/extra_debug.sh > /tmp/extra_debug.log"
+    scp "${!OSIP}:/tmp/extra_debug.log" "${OS_COMPUTE_FOLDER}/extra_debug.log"
+    mv ${OS_COMPUTE_FOLDER} ${WORKSPACE}/archives/
 done
 
 ls local.conf* | xargs -I % mv % %.log
