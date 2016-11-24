@@ -83,9 +83,17 @@ while true; do
 done
 
 echo "loading many features at once.  Need to allow time for problems to show up in logs.  cool down for 5 min ..."
-sleep 300
+COUNT="300"
+while true; do
+    if (( "${COUNT}" <= "0" )); then
+        break
+    fi
+    echo "${COUNT} seconds yet to wait..."
+    sleep 10
+    COUNT=$(( ${COUNT} - 10 ))
+done
 
-echo "Checking OSGi bundles..."
+# echo "Checking OSGi bundles..."
 # sshpass seems to fail with new karaf version
 # sshpass -p karaf ${WORKSPACE}/${BUNDLEFOLDER}/bin/client -u karaf 'bundle:list'
 
