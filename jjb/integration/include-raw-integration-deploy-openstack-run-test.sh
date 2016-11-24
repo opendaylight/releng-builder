@@ -288,6 +288,20 @@ cat >> ${WORKSPACE}/haproxy.cfg << EOF
 EOF
 done
 
+cat >> ${WORKSPACE}/haproxy.cfg << EOF
+listen opendaylight_rest
+  bind ${ha_proxy_ip}:8181
+  balance source
+EOF
+
+for i in `seq 1 ${NUM_ODL_SYSTEM}`
+do
+odlip=ODL_SYSTEM_${i}_IP
+cat >> ${WORKSPACE}/haproxy.cfg << EOF
+  server controller-rest-$i ${!odlip}:8181 check fall 5 inter 2000 rise 2
+EOF
+done
+
 cat > ${WORKSPACE}/deploy_ha_proxy.sh<< EOF
 sudo chown haproxy:haproxy /tmp/haproxy.cfg
 sudo sed -i 's/\\/etc\\/haproxy\\/haproxy.cfg/\\/tmp\\/haproxy.cfg/g' /usr/lib/systemd/system/haproxy.service
@@ -519,6 +533,13 @@ do
     ${SSH} ${compute_ip} "sudo ovs-vsctl add-port $PUBLIC_BRIDGE $PORT_NAME -- set interface $PORT_NAME type=vxlan options:local_ip="$compute_ip" options:remote_ip="${OPENSTACK_CONTROL_NODE_IP}" options:dst_port=9876 options:key=flow"
 done
 
+if [ "${NUM_ODL_SYSTEM}" -gt 1 ]; then
+  HA_PROXY_INDEX=${NUM_OPENSTACK_SYSTEM}
+  odlmgrip=OPENSTACK_COMPUTE_NODE_${HA_PROXY_INDEX}_IP
+  HA_PROXY_IP=${!odlmgrip}
+else
+  HA_PROXY_IP=${ODL_SYSTEM_IP}
+fi
 echo "Locating test plan to use..."
 testplan_filepath="${WORKSPACE}/test/csit/testplans/${STREAMTESTPLAN}"
 if [ ! -f "${testplan_filepath}" ]; then
@@ -538,6 +559,7 @@ pybot -N ${TESTPLAN} --removekeywords wuks -c critical -e exclude -v BUNDLEFOLDE
 -v ODL_SYSTEM_3_IP:${ODL_SYSTEM_3_IP} -v NUM_ODL_SYSTEM:${NUM_ODL_SYSTEM} -v CONTROLLER_USER:${USER} -v OS_USER:${USER} \
 -v NUM_OS_SYSTEM:${NUM_OPENSTACK_SYSTEM} -v OS_CONTROL_NODE_IP:${OPENSTACK_CONTROL_NODE_IP} \
 -v OS_COMPUTE_1_IP:${OPENSTACK_COMPUTE_NODE_1_IP} -v OS_COMPUTE_2_IP:${OPENSTACK_COMPUTE_NODE_2_IP} \
+-v HA_PROXY_IP:${HA_PROXY_IP} \
 -v DEVSTACK_DEPLOY_PATH:/opt/stack/devstack -v USER_HOME:${HOME} ${TESTOPTIONS} ${SUITES} || true
 
 echo "Tests Executed"
