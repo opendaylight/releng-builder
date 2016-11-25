@@ -1,7 +1,7 @@
 - project:
     name: groupbasedpolicy-csit-clustering
     jobs:
-        - '{project}-csit-3node-{functionality}-{install}-{stream}'
+        - '{project}-csit-1node-{functionality}-{install}-{stream}'
 
 
     # The project name
@@ -28,15 +28,18 @@
         - all:
             scope: 'all'
 
+    #JCloud VMs for VPP deployment
+    mininet-image: 'centos7-docker-2c-4g'
+    mininet-vms: 3
+    
     # Features to install
-    install-features: 'odl-groupbasedpolicy-ofoverlay,odl-groupbasedpolicy-ui,odl-restconf-all'
+    install-features: 'odl-groupbasedpolicy-neutron-vpp-mapper,odl-vbd-ui,odl-restconf'
 
     # Robot custom options
     robot-options: '-v ODL_VERSION:{stream}'
 
     # Trigger jobs (upstream dependencies)
     trigger-jobs: 'neutron-distribution-{stream},
-                   ovsdb-distribution-{stream},
-                   openflowplugin-distribution-{stream},
-                   sfc-distribution-{stream},
-                   dlux-distribution-{stream}'
+                   vbd-distribution,
+                   netconf-distribution,
+                   sfc-distribution-{stream}'
