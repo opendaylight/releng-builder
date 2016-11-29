@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1a622d24_dc12bc57",
+        "filename": "jjb/autorelease/include-raw-autorelease-get-integration-test-variables.sh",
+        "patchSetId": 9
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 4039
+      },
+      "writtenOn": "2016-11-29T16:45:02Z",
+      "side": 1,
+      "message": "This is meant to cover a case where the nexus repository pro server is not the same as ODLNEXUSPROXY. In the case this property is undefined, the fallback will use the main nexus server.\nDoes that make sense?",
+      "parentUuid": "1a622d24_c80b1b2a",
+      "revId": "358743490ddd12e1a52a9742e58da6fb2afbe6da",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a622d24_8812c360",
         "filename": "jjb/autorelease/include-raw-autorelease-maven-deploy.sh",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2016-11-29T16:31:54Z",
       "side": 1,
       "message": "So the syntax for defaults in a variable is\n\nVAR\u003d${VAR:-default_value}\n\nI think adding:\n\n [ \"$ODLNEXUS_STAGING_URL\" ] || \n\nis unnecessary. Can we just use the standard bash variable defaults to set defaults instead?",
+      "revId": "358743490ddd12e1a52a9742e58da6fb2afbe6da",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a622d24_bc0f002e",
+        "filename": "jjb/autorelease/include-raw-autorelease-maven-deploy.sh",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 4039
+      },
+      "writtenOn": "2016-11-29T16:45:02Z",
+      "side": 1,
+      "message": "we can for the last two variables.",
+      "parentUuid": "1a622d24_8812c360",
       "revId": "358743490ddd12e1a52a9742e58da6fb2afbe6da",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
