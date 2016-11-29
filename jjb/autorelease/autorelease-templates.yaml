@@ -28,9 +28,10 @@
         - git:
             credentials-id: 'opendaylight-jenkins-ssh'
             url: '$GIT_BASE'
-            refspec: ''
+            refspec: '$GERRIT_REFSPEC'
             branches:
-                - 'origin/{branch}'
+                - '$GERRIT_BRANCH'
+            choosing-strategy: 'gerrit'
             skip-tag: true
             submodule:
                 recursive: true
@@ -123,9 +124,10 @@
         - git:
             credentials-id: 'opendaylight-jenkins-ssh'
             url: '$GIT_BASE'
-            refspec: ''
+            refspec: '$GERRIT_REFSPEC'
             branches:
-                - 'origin/{branch}'
+                - '$GERRIT_BRANCH'
+            choosing-strategy: 'gerrit'
             skip-tag: true
             submodule:
                 recursive: true
