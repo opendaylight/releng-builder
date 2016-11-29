@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "1a622d24_bc3d40be",
+        "filename": "jjb/autorelease/include-raw-autorelease-get-integration-test-variables.sh",
+        "patchSetId": 9
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2016-11-29T17:07:00Z",
+      "side": 1,
+      "message": "Yes fallback to the ODL nexus repo if it\u0027s not defined is correct. This fallback should never happen though because ODLNEXUSPROXY is a global Jenkins variable configured in your Jenkins Global configuration so if you\u0027re running from an internal CI you should already have a ODLNEXUSPROXY defined pointing to your internal Jenkins.",
+      "parentUuid": "1a622d24_dc12bc57",
+      "revId": "358743490ddd12e1a52a9742e58da6fb2afbe6da",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a622d24_8812c360",
         "filename": "jjb/autorelease/include-raw-autorelease-maven-deploy.sh",
         "patchSetId": 9
