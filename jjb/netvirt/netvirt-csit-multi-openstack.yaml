@@ -1,9 +1,23 @@
 - project:
-    name: netvirt-3node-csit-openstack-integration
+    name: netvirt-csit-openstack-integration
     jobs:
-        - '{project}-csit-3node-openstack-{openstack}-{functionality}-{stream}'
+        - '{project}-csit-{topology}-openstack-{openstack}-{functionality}-{stream}'
 
     project: 'netvirt'
+
+    topology:
+        - 1node:
+            openstack-vms: 3
+            controller-vms: 1
+            enable-haproxy: 'no'
+            install-features: 'odl-netvirt-openstack'
+        - 3node:
+            openstack-vms: 4
+            controller-vms: 3
+            enable-haproxy: 'yes'
+            install-features: 'odl-jolokia,odl-netvirt-openstack'
+
+    testplan: '{project}-{topology}-openstack.txt'
 
     functionality:
         - upstream-transparent:
@@ -18,6 +32,17 @@
         - gate-transparent:
             schedule: ''
             sg-mode: 'transparent'
+        - gate-minimal-transparent:
+            schedule: ''
+            sg-mode: 'transparent'
+            testplan: '{project}-{topology}-minimal-openstack.txt'
+        - gate-tempest-transparent:
+            schedule: ''
+            sg-mode: 'transparent'
+            testplan: '{project}-{topology}-tempest-openstack.txt'
+        - gate-learn:
+            schedule: ''
+            sg-mode: 'learn'
 
     stream:
         - carbon:
@@ -44,13 +69,8 @@
             odl-ml2-driver-version: 'v2'
             openstack-image: 'centos7-devstack-newton-2c-8g'
 
-    openstack-vms: 4
-
-    install-features: 'odl-netvirt-openstack'
 
     odl-enable-l3: 'yes'
-
-    enable-haproxy: 'yes'
 
     public-bridge: 'br-physnet1'
 
