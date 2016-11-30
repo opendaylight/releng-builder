@@ -1,10 +1,23 @@
 - project:
     name: netvirt-csit-openstack-integration
     jobs:
-        - '{project}-csit-1node-openstack-{openstack}-{functionality}-{stream}'
+        - '{project}-csit-{topology}-openstack-{openstack}-{functionality}-{stream}'
 
     project: 'netvirt'
-    testplan: '{project}-1node-openstack.txt'
+
+    topology:
+        - 1node:
+            openstack_system_count: 3
+            odl_system_count: 1
+            enable-haproxy: 'no'
+            install-features: 'odl-netvirt-openstack'
+        - 3node:
+            openstack_system_count: 4
+            odl_system_count: 3
+            enable-haproxy: 'yes'
+            install-features: 'odl-jolokia,odl-netvirt-openstack'
+
+    testplan: '{project}-{topology}-openstack.txt'
 
     functionality:
         - upstream-transparent:
@@ -22,11 +35,11 @@
         - gate-minimal-transparent:
             schedule: ''
             sg-mode: 'transparent'
-            testplan: '{project}-1node-minimal-openstack.txt'
+            testplan: '{project}-{topology}-minimal-openstack.txt'
         - gate-tempest-transparent:
             schedule: ''
             sg-mode: 'transparent'
-            testplan: '{project}-1node-tempest-openstack.txt'
+            testplan: '{project}-{topology}-tempest-openstack.txt'
         - gate-learn:
             schedule: ''
             sg-mode: 'learn'
@@ -55,10 +68,6 @@
             odl-ml2-branch: 'stable/newton'
             odl-ml2-driver-version: 'v2'
             openstack_system_image: 'CentOS 7 - devstack - newton - 20170106-2237'
-
-    openstack_system_count: 3
-
-    install-features: 'odl-netvirt-openstack'
 
     odl-enable-l3: 'yes'
 
