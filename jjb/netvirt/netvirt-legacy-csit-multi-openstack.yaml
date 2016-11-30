@@ -1,10 +1,22 @@
 - project:
     name: netvirt-legacy-csit-openstack-integration
     jobs:
-        - '{project}-csit-1node-openstack-{openstack}-{functionality}-{stream}'
+        - '{project}-csit-{topology}-openstack-{openstack}-{functionality}-{stream}'
 
     # The project name
     project: 'netvirt-legacy'
+
+    topology:
+        - 1node:
+            openstack-vms: 3
+            controller-vms: 1
+            enable-haproxy: 'no'
+            install-features: 'odl-ovsdb-openstack,decanter-collector-jmx,decanter-appender-elasticsearch'
+        - 3node:
+            openstack-vms: 4
+            controller-vms: 3
+            enable-haproxy: 'yes'
+            install-features: 'odl-jolokia,odl-ovsdb-openstack,decanter-collector-jmx,decanter-appender-elasticsearch'
 
     # The project name
     functionality:
@@ -37,10 +49,6 @@
             openstack-branch: 'stable/newton'
             odl-ml2-branch: 'stable/newton'
             odl-ml2-driver-version: 'v2'
-
-    openstack-vms: 3
-
-    install-features: 'odl-ovsdb-openstack,decanter-collector-jmx,decanter-appender-elasticsearch'
 
     odl-enable-l3: 'yes'
 
