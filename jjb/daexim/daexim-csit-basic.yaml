@@ -1,0 +1,33 @@
+- project:
+    name: daexim-csit-basic
+    jobs:
+        - '{project}-csit-1node-{functionality}-{install}-{stream}'
+
+    # The project name
+    project: 'daexim'
+
+    # The functionality under test
+    functionality: 'basic'
+
+    # Project branches
+    stream:
+        - carbon:
+            branch: 'master'
+            jre: 'openjdk8'
+
+    install:
+        - only:
+            scope: 'only'
+
+    # no mininet required
+    mininet-vms: 0
+
+    # Features to install
+    install-features: 'odl-daexim-all,odl-netconf-topology'
+
+    # Robot custom options
+    robot-options: ''
+
+    # Trigger jobs (upstream dependencies)
+    trigger-jobs: ''
+
