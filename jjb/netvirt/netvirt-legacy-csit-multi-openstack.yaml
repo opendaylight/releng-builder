@@ -1,10 +1,24 @@
 - project:
-    name: netvirt-legacy-3node-csit-openstack-integration
+    name: netvirt-legacy-csit-openstack-integration
     jobs:
-        - '{project}-csit-3node-openstack-{openstack}-{functionality}-{stream}'
+        - '{project}-csit-{topology}-openstack-{openstack}-{functionality}-{stream}'
 
     # The project name
     project: 'netvirt-legacy'
+
+    topology:
+        - 1node:
+            openstack_system_count: 3
+            odl_system_count: 1
+            enable-haproxy: 'no'
+            install-features: 'odl-ovsdb-openstack,decanter-collector-jmx,decanter-appender-elasticsearch'
+        - 3node:
+            openstack_system_count: 4
+            odl_system_count: 3
+            enable-haproxy: 'yes'
+            install-features: 'odl-jolokia,odl-ovsdb-openstack,decanter-collector-jmx,decanter-appender-elasticsearch'
+
+    testplan: '{project}-{topology}-openstack.txt'
 
     # The project name
     functionality:
@@ -29,25 +43,19 @@
             openstack-branch: 'stable/mitaka'
             odl-ml2-branch: 'stable/mitaka'
             odl-ml2-driver-version: 'v1'
-            openstack_system_image: 'CentOS 7 - devstack - mitaka - 20170106-2237'
+            openstack-image: 'centos7-devstack-mitaka-2c-8g'
         - newton:
             openstack-branch: 'stable/newton'
             odl-ml2-branch: 'stable/newton'
             odl-ml2-driver-version: 'v1'
-            openstack_system_image: 'CentOS 7 - devstack - newton - 20170106-2237'
+            openstack-image: 'centos7-devstack-newton-2c-8g'
         - newton-nodl-v2:
             openstack-branch: 'stable/newton'
             odl-ml2-branch: 'stable/newton'
             odl-ml2-driver-version: 'v2'
-            openstack_system_image: 'CentOS 7 - devstack - newton - 20170106-2237'
-
-    openstack_system_count: 4
-
-    install-features: 'odl-ovsdb-openstack,decanter-collector-jmx,decanter-appender-elasticsearch'
+            openstack-image: 'centos7-devstack-newton-2c-8g'
 
     odl-enable-l3: 'yes'
-
-    enable-haproxy: 'yes'
 
     public-bridge: 'br-ex'
 
