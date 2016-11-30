@@ -6,6 +6,20 @@ source ${ROBOT_VENV}/bin/activate
 
 CONTROLLERMEM="2048m"
 
+if [ "${ENABLE_HAPROXY_FOR_NEUTRON}" == "yes" ]; then
+    echo "Configure cluster"
+    AKKACONF=/tmp/${BUNDLEFOLDER}/configuration/initial/akka.conf
+    MODULESCONF=/tmp/${BUNDLEFOLDER}/configuration/initial/modules.conf
+    MODULESHARDSCONF=/tmp/${BUNDLEFOLDER}/configuration/initial/module-shards.conf
+    # Create the string for odl nodes
+    odl_node_list="${ODL_SYSTEM_1_IP}"
+    for i in `seq 2 ${NUM_ODL_SYSTEM}` ; do
+        CONTROLLERIP=ODL_SYSTEM_${i}_IP
+        odl_node_list="${odl_node_list} ${!CONTROLLERIP}"
+    done
+    echo ${odl_node_list}
+fi
+
 if [ ${CONTROLLERSCOPE} == 'all' ]; then
     ACTUALFEATURES="odl-integration-compatible-with-all,${CONTROLLERFEATURES}"
     CONTROLLERMEM="3072m"
@@ -14,11 +28,12 @@ else
     ACTUALFEATURES="${CONTROLLERFEATURES}"
     COOLDOWN_PERIOD="60"
 fi
+
 # Some versions of jenkins job builder result in feature list containing spaces
 # and ending in newline. Remove all that.
 ACTUALFEATURES=`echo "${ACTUALFEATURES}" | tr -d '\n \r'`
 
-if [ -f ${WORKSPACE}/test/csit/scriptplans/${TESTPLAN} ]; then
+if [ -f "${WORKSPACE}/test/csit/scriptplans/${TESTPLAN}" ]; then
     echo "scriptplan exists!!!"
     echo "Changing the scriptplan path..."
     cat ${WORKSPACE}/test/csit/scriptplans/${TESTPLAN} | sed "s:integration:${WORKSPACE}:" > scriptplan.txt
@@ -48,7 +63,8 @@ sed -ie "s%mvn:org.opendaylight.integration/features-integration-index/${BUNDLEV
 cat \${FEATURESCONF}
 
 if [ "${ODL_ENABLE_L3_FWD}" == "yes" ]; then
-  echo "ovsdb.l3.fwd.enabled=yes" >> \${CUSTOMPROP}
+    echo "Enable the l3.fwd in custom.properties..."
+    echo "ovsdb.l3.fwd.enabled=yes" >> \${CUSTOMPROP}
 fi
 cat \${CUSTOMPROP}
 
@@ -71,14 +87,36 @@ netstat -pnatu
 echo "Set Java version"
 sudo /usr/sbin/alternatives --install /usr/bin/java java ${JAVA_HOME}/bin/java 1
 sudo /usr/sbin/alternatives --set java ${JAVA_HOME}/bin/java
-echo "JDK default version ..."
+echo "JDK default version..."
 java -version
 
 echo "Set JAVA_HOME"
-export JAVA_HOME="$JAVA_HOME"
+export JAVA_HOME="${JAVA_HOME}"
 # Did you know that in HERE documents, single quote is an ordinary character, but backticks are still executing?
 JAVA_RESOLVED=\`readlink -e "\${JAVA_HOME}/bin/java"\`
 echo "Java binary pointed at by JAVA_HOME: \${JAVA_RESOLVED}"
+
+if [ "${ENABLE_HAPROXY_FOR_NEUTRON}" == "yes" ]; then
+
+    # Copy shard file if exists
+    if [ -f /tmp/custom_shard_config.txt ]; then
+        echo "Custom shard config exists!!!"
+        echo "Copying the shard config..."
+        cp /tmp/custom_shard_config.txt /tmp/${BUNDLEFOLDER}/bin/
+    fi
+
+    echo "Configuring cluster"
+    /tmp/${BUNDLEFOLDER}/bin/configure_cluster.sh \$1 ${odl_node_list}
+
+    echo "Dump akka.conf"
+    cat ${AKKACONF}
+
+    echo "Dump modules.conf"
+    cat ${MODULESCONF}
+
+     echo "Dump module-shards.conf"
+     cat ${MODULESHARDSCONF}
+fi
 
 EOF
 
@@ -91,12 +129,20 @@ export KARAF_REDIRECT="/tmp/${BUNDLEFOLDER}/data/log/karaf_console.log"
 echo "Starting controller..."
 /tmp/${BUNDLEFOLDER}/bin/start
 
+EOF
+
+cat > ${WORKSPACE}/post-startup-script.sh <<EOF
+
 echo "Waiting for controller to come up..."
 COUNT="0"
 while true; do
     RESP="\$( curl --user admin:admin -sL -w "%{http_code} %{url_effective}\\n" http://localhost:8181/restconf/modules -o /dev/null )"
     echo \$RESP
-    if [[ \$RESP == *"200"* ]]; then
+    if [ "${ENABLE_HAPROXY_FOR_NEUTRON}" == "yes" ]; then
+        SHARD="\$( curl --user admin:admin -sL -w "%{http_code} %{url_effective}\\n" http://localhost:8181/jolokia/read/org.opendaylight.controller:Category=Shards,name=\member-\$1-shard-inventory-config,type=DistributedConfigDatastore)"
+        echo \$SHARD
+    fi
+    if ([[ \$RESP == *"200"* ]] && ([[ "${ENABLE_HAPROXY_FOR_NEUTRON}" != "yes" ]] || [[ \$SHARD  == *'"status":200'* ]])); then
         echo Controller is UP
         break
     elif (( "\$COUNT" > "600" )); then
@@ -115,15 +161,12 @@ while true; do
     fi
 done
 
-echo "Cool down for ${COOLDOWN_PERIOD} seconds :)..."
-sleep ${COOLDOWN_PERIOD}
-
 echo "Listing all open ports on controller system..."
 netstat -pnatu
 
 function exit_on_log_file_message {
     echo "looking for \"\$1\" in log file"
-    if grep --quiet "\$1" /tmp/${BUNDLEFOLDER}/data/log/karaf.log; then
+    if grep --quiet "\$1" "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"; then
         echo ABORTING: found "\$1"
         echo "Dumping first 500K bytes of karaf log..."
         head --bytes=500K "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
@@ -138,15 +181,25 @@ exit_on_log_file_message 'server is unhealthy'
 
 EOF
 
-# Execute the configuration script on controller.
-scp ${WORKSPACE}/configuration-script.sh ${ODL_SYSTEM_IP}:/tmp
-ssh ${ODL_SYSTEM_IP} 'bash /tmp/configuration-script.sh'
+# Copy over the config script to controller and execute it.
+for i in `seq 1 ${NUM_ODL_SYSTEM}`
+do
+    CONTROLLERIP=ODL_SYSTEM_${i}_IP
+    echo "Execute the configuration script on controller ${!CONTROLLERIP}"
+    scp ${WORKSPACE}/configuration-script.sh ${!CONTROLLERIP}:/tmp
+    ssh ${!CONTROLLERIP} "bash /tmp/configuration-script.sh ${i}"
+done
 
-# Run config plan in case it exists
-if [ -f ${WORKSPACE}/test/csit/configplans/${TESTPLAN} ]; then
+echo "Locating config plan to use..."
+configplan_filepath="${WORKSPACE}/test/csit/configplans/${STREAMTESTPLAN}"
+if [ ! -f "${configplan_filepath}" ]; then
+    configplan_filepath="${WORKSPACE}/test/csit/configplans/${TESTPLAN}"
+fi
+
+if [ -f "${configplan_filepath}" ]; then
     echo "configplan exists!!!"
-    echo "Reading the configplan:"
-    cat ${WORKSPACE}/test/csit/configplans/${TESTPLAN} | sed "s:integration:${WORKSPACE}:" > configplan.txt
+    echo "Changing the configplan path..."
+    cat ${configplan_filepath} | sed "s:integration:${WORKSPACE}:" > configplan.txt
     cat configplan.txt
     for line in $( egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' configplan.txt ); do
         echo "Executing ${line}..."
@@ -155,17 +208,46 @@ if [ -f ${WORKSPACE}/test/csit/configplans/${TESTPLAN} ]; then
 fi
 
 # Copy over the startup script to controller and execute it.
-scp ${WORKSPACE}/startup-script.sh ${ODL_SYSTEM_IP}:/tmp
-ssh ${ODL_SYSTEM_IP} 'bash /tmp/startup-script.sh'
+for i in `seq 1 ${NUM_ODL_SYSTEM}`
+do
+    CONTROLLERIP=ODL_SYSTEM_${i}_IP
+    echo "Execute the startup script on controller ${!CONTROLLERIP}"
+    scp ${WORKSPACE}/startup-script.sh ${!CONTROLLERIP}:/tmp
+    ssh ${!CONTROLLERIP} "bash /tmp/startup-script.sh"
+done
+
+for i in `seq 1 ${NUM_ODL_SYSTEM}`
+do
+    CONTROLLERIP=ODL_SYSTEM_${i}_IP
+    echo "Execute the post startup script on controller ${!CONTROLLERIP}"
+    scp ${WORKSPACE}/post-startup-script.sh ${!CONTROLLERIP}:/tmp
+    ssh ${!CONTROLLERIP} "bash /tmp/post-startup-script.sh ${i}"
+done
 
 if [ ${NUM_OPENSTACK_SYSTEM} -gt 0 ]; then
    echo "Exiting without running tests to deploy openstack for testing"
    exit
 fi
 
-echo "Lets's take the karaf thread dump"
-KARAF_PID=$(ssh ${ODL_SYSTEM_IP} "ps aux | grep 'distribution-karaf' | grep -v grep | tr -s ' ' | cut -f2 -d' '")
-ssh ${ODL_SYSTEM_IP} "jstack $KARAF_PID"> ${WORKSPACE}/karaf_threads_before.log || true
+echo "Cool down for ${COOLDOWN_PERIOD} seconds :)..."
+sleep ${COOLDOWN_PERIOD}
+
+echo "Generating controller variables..."
+for i in `seq 1 ${NUM_ODL_SYSTEM}`
+do
+    CONTROLLERIP=ODL_SYSTEM_${i}_IP
+    odl_variables=${odl_variables}" -v ${CONTROLLERIP}:${!CONTROLLERIP}"
+    echo "Lets's take the karaf thread dump"
+    KARAF_PID=$(ssh ${!CONTROLLERIP} "ps aux | grep 'distribution-karaf' | grep -v grep | tr -s ' ' | cut -f2 -d' '")
+    ssh ${!CONTROLLERIP} "jstack $KARAF_PID"> ${WORKSPACE}/karaf_${i}_threads_before.log || true
+done
+
+echo "Generating mininet variables..."
+for i in `seq 1 ${NUM_TOOLS_SYSTEM}`
+do
+    MININETIP=TOOLS_SYSTEM_${i}_IP
+    tools_variables=${tools_variables}" -v ${MININETIP}:${!MININETIP}"
+done
 
 echo "Locating test plan to use..."
 testplan_filepath="${WORKSPACE}/test/csit/testplans/${STREAMTESTPLAN}"
@@ -181,30 +263,40 @@ SUITES=$( egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' testplan.txt | tr '\012' ' 
 echo "Starting Robot test suites ${SUITES} ..."
 pybot -N ${TESTPLAN} --removekeywords wuks -c critical -e exclude -v BUNDLEFOLDER:${BUNDLEFOLDER} -v WORKSPACE:/tmp \
 -v JAVA_HOME:${JAVA_HOME} -v BUNDLE_URL:${ACTUALBUNDLEURL} -v NEXUSURL_PREFIX:${NEXUSURL_PREFIX} \
--v CONTROLLER:${ODL_SYSTEM_IP} -v ODL_SYSTEM_IP:${ODL_SYSTEM_IP} -v ODL_SYSTEM_1_IP:${ODL_SYSTEM_IP} \
--v CONTROLLER_USER:${USER} -v ODL_SYSTEM_USER:${USER} \
--v TOOLS_SYSTEM_IP:${TOOLS_SYSTEM_IP} -v TOOLS_SYSTEM_2_IP:${TOOLS_SYSTEM_2_IP} -v TOOLS_SYSTEM_3_IP:${TOOLS_SYSTEM_3_IP} \
+-v CONTROLLER:${ODL_SYSTEM_1_IP} -v CONTROLLER1:${ODL_SYSTEM_2_IP} -v CONTROLLER2:${ODL_SYSTEM_3_IP} \
+-v ODL_SYSTEM_IP:${ODL_SYSTEM_1_IP} ${odl_variables} -v ODL_SYSTEM_1_IP:${ODL_SYSTEM_1_IP} \
+-v CONTROLLER_USER:${USER} -v ODL_SYSTEM_USER:${USER} -v NUM_ODL_SYSTEM:${NUM_ODL_SYSTEM} \
+-v TOOLS_SYSTEM_IP:${TOOLS_SYSTEM_1_IP} ${tools_variables} -v TOOLS_SYSTEM_2_IP:${TOOLS_SYSTEM_2_IP} -v TOOLS_SYSTEM_3_IP:${TOOLS_SYSTEM_3_IP} \
 -v TOOLS_SYSTEM_4_IP:${TOOLS_SYSTEM_4_IP} -v TOOLS_SYSTEM_5_IP:${TOOLS_SYSTEM_5_IP} -v TOOLS_SYSTEM_6_IP:${TOOLS_SYSTEM_6_IP} \
--v TOOLS_SYSTEM_USER:${USER} -v JDKVERSION:${JDKVERSION} -v ODL_STREAM:${DISTROSTREAM} -v NUM_ODL_SYSTEM:${NUM_ODL_SYSTEM} \
--v MININET:${TOOLS_SYSTEM_IP} -v MININET1:${TOOLS_SYSTEM_2_IP} -v MININET2:${TOOLS_SYSTEM_3_IP} \
+-v TOOLS_SYSTEM_USER:${USER} -v NUM_TOOLS_SYSTEM:${NUM_TOOLS_SYSTEM} -v JDKVERSION:${JDKVERSION} -v ODL_STREAM:${DISTROSTREAM} \
+-v MININET:${TOOLS_SYSTEM_1_IP} -v MININET1:${TOOLS_SYSTEM_2_IP} -v MININET2:${TOOLS_SYSTEM_3_IP} \
 -v MININET3:${TOOLS_SYSTEM_4_IP} -v MININET4:${TOOLS_SYSTEM_5_IP} -v MININET5:${TOOLS_SYSTEM_6_IP} \
 -v MININET_USER:${USER} -v USER_HOME:${HOME} ${TESTOPTIONS} ${SUITES} || true
 # FIXME: Sort (at least -v) options alphabetically.
 
-echo "Lets's take the karaf thread dump again"
-KARAF_PID=$(ssh ${ODL_SYSTEM_IP} "ps aux | grep 'distribution-karaf' | grep -v grep | tr -s ' ' | cut -f2 -d' '")
-ssh ${ODL_SYSTEM_IP} "jstack $KARAF_PID"> ${WORKSPACE}/karaf_threads_after.log || true
+for i in `seq 1 ${NUM_ODL_SYSTEM}`
+do
+    CONTROLLERIP=ODL_SYSTEM_${i}_IP
+    echo "Lets's take the karaf thread dump again..."
+    KARAF_PID=$(ssh ${!CONTROLLERIP} "ps aux | grep 'distribution-karaf' | grep -v grep | tr -s ' ' | cut -f2 -d' '")
+    ssh ${!CONTROLLERIP} "jstack $KARAF_PID"> ${WORKSPACE}/karaf_${i}_threads_after.log || true
+    echo "Killing ODL"
+    set +e  # We do not want to create red dot just because something went wrong while fetching logs.
+    ssh "${!CONTROLLERIP}" bash -c 'ps axf | grep karaf | grep -v grep | awk '"'"'{print "kill -9 " $1}'"'"' | sh'
+done
 
-echo "Killing ODL"
-set +e  # We do not want to create red dot just because something went wrong while fetching logs.
-ssh "${ODL_SYSTEM_IP}" bash -c 'ps axf | grep karaf | grep -v grep | awk '"'"'{print "kill -9 " $1}'"'"' | sh'
 sleep 5
-echo "Compressing karaf.log"
-ssh ${ODL_SYSTEM_IP} gzip --best "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
-echo "Fetching compressed karaf.log"
-scp "${ODL_SYSTEM_IP}:/tmp/${BUNDLEFOLDER}/data/log/karaf.log.gz" .
-# TODO: Should we compress the output log file as well?
-scp "${ODL_SYSTEM_IP}:/tmp/${BUNDLEFOLDER}/data/log/karaf_console.log" .
+for i in `seq 1 ${NUM_ODL_SYSTEM}`
+do
+    CONTROLLERIP=ODL_SYSTEM_${i}_IP
+    echo "Compressing karaf.log ${i}"
+    ssh ${!CONTROLLERIP} gzip --best /tmp/${BUNDLEFOLDER}/data/log/karaf.log
+    echo "Fetching compressed karaf.log ${i}"
+    scp "${!CONTROLLERIP}:/tmp/${BUNDLEFOLDER}/data/log/karaf.log.gz" "odl${i}_karaf.log.gz"
+    # TODO: Should we compress the output log file as well?
+    scp "${!CONTROLLERIP}:/tmp/${BUNDLEFOLDER}/data/log/karaf_console.log" "odl${i}_karaf_console.log"
+done
+
 true  # perhaps Jenkins is testing last exit code
 
 # vim: ts=4 sw=4 sts=4 et ft=sh :

@@ -1,10 +1,16 @@
 - project:
     name: groupbasedpolicy-csit-openstack-integration
     jobs:
-        - '{project}-csit-1node-openstack-{openstack}-{functionality}-{stream}'
+        - '{project}-csit-{topology}-openstack-{openstack}-{functionality}-{stream}'
 
     # The project name
     project: 'groupbasedpolicy'
+
+    topology:
+        - 1node:
+            openstack-vms: 1
+            controller-vms: 1
+            enable-haproxy: 'no'
 
     # The project name
     functionality: 'openstack'
@@ -32,8 +38,6 @@
             openstack-branch: 'stable/liberty'
             odl-ml2-branch: 'stable/liberty'
             odl-ml2-driver-version: 'v1'
-
-    openstack-vms: 1
 
     schedule: 'H H * * *'
 

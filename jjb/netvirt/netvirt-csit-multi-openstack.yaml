@@ -1,9 +1,21 @@
 - project:
     name: netvirt-csit-openstack-integration
     jobs:
-        - '{project}-csit-1node-openstack-{openstack}-{functionality}-{stream}'
+        - '{project}-csit-{topology}-openstack-{openstack}-{functionality}-{stream}'
 
     project: 'netvirt'
+
+    topology:
+        - 1node:
+            openstack-vms: 3
+            controller-vms: 1
+            enable-haproxy: 'no'
+            install-features: 'odl-netvirt-openstack'
+        - 3node:
+            openstack-vms: 4
+            controller-vms: 3
+            enable-haproxy: 'yes'
+            install-features: 'odl-jolokia,odl-netvirt-openstack'
 
     functionality:
         - upstream-transparent:
@@ -44,9 +56,6 @@
             odl-ml2-branch: 'stable/newton'
             odl-ml2-driver-version: 'v2'
 
-    openstack-vms: 3
-
-    install-features: 'odl-netvirt-openstack'
 
     odl-enable-l3: 'yes'
 
