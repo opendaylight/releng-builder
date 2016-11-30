@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a622d24_356823f5",
+        "filename": "jjb/autorelease/include-raw-autorelease-get-integration-test-variables.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2016-11-30T16:04:12Z",
+      "side": 1,
+      "message": "This line should be:\n\n NEXUSURL\u003d${ODLNEXUSPROXY:-https://nexus.opendaylight.org/content/repositories/}",
+      "revId": "8e75beb5806df2fb8874254c5cb49acf87516226",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a622d24_956db707",
+        "filename": "jjb/autorelease/include-raw-autorelease-get-integration-test-variables.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2016-11-30T16:04:12Z",
+      "side": 1,
+      "message": "If you update the above line. this line is no longer needed.",
+      "revId": "8e75beb5806df2fb8874254c5cb49acf87516226",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a622d24_554aff83",
+        "filename": "jjb/autorelease/include-raw-autorelease-maven-deploy.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2016-11-30T16:04:12Z",
+      "side": 1,
+      "message": "I think this line should be:\n\n NEXUS_STAGING_URL\u003d${ODLNEXUSPROXY:-https://nexus.opendaylight.org/",
+      "revId": "8e75beb5806df2fb8874254c5cb49acf87516226",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a622d24_b55a734e",
+        "filename": "jjb/autorelease/include-raw-autorelease-maven-deploy.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2016-11-30T16:04:12Z",
+      "side": 1,
+      "message": "NEXUS_STAGING_PROFILE\u003d${ODLNEXUS_STAGING_PROFILE:-425e43800fea70}",
+      "revId": "8e75beb5806df2fb8874254c5cb49acf87516226",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a622d24_15588755",
+        "filename": "jjb/autorelease/include-raw-autorelease-maven-deploy.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2016-11-30T16:04:12Z",
+      "side": 1,
+      "message": "Although I\u0027m not sure if double quotes works in here? can you confirm?\n\n NEXUS_STAGING_SERVER_ID\u003d${ODLNEXUS_STAGING_SERVER_ID:-\"opendaylight.staging\"}",
+      "revId": "8e75beb5806df2fb8874254c5cb49acf87516226",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a622d24_f554eb22",
+        "filename": "jjb/autorelease/include-raw-autorelease-maven-deploy.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2016-11-30T16:04:12Z",
+      "side": 1,
+      "message": "Let\u0027s remove the prefixed ODL from the 3 variables here.",
+      "revId": "8e75beb5806df2fb8874254c5cb49acf87516226",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
