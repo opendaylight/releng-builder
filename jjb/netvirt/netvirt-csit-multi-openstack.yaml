@@ -1,17 +1,35 @@
 - project:
-    name: netvirt-legacy-3node-csit-openstack-integration
+    name: netvirt-csit-openstack-integration
     jobs:
-        - '{project}-csit-3node-openstack-{openstack}-{functionality}-{stream}'
+        - '{project}-csit-{topology}-openstack-{openstack}-{functionality}-{stream}'
 
-    # The project name
-    project: 'netvirt-legacy'
+    project: 'netvirt'
 
-    # The project name
+    topology:
+        - 1node:
+            openstack-vms: 3
+            controller-vms: 1
+            enable-haproxy: 'no'
+            install-features: 'odl-netvirt-openstack'
+        - 3node:
+            openstack-vms: 4
+            controller-vms: 3
+            enable-haproxy: 'yes'
+            install-features: 'odl-jolokia,odl-netvirt-openstack'
+
     functionality:
-        - upstream:
+        - upstream-transparent:
             schedule: 'H H * * *'
-        - gate:
+            sg-mode: 'transparent'
+        - upstream-stateful:
+            schedule: 'H H * * *'
+            sg-mode: 'stateful'
+        - upstream-learn:
+            schedule: 'H H * * *'
+            sg-mode: 'learn'
+        - gate-transparent:
             schedule: ''
+            sg-mode: 'transparent'
 
     stream:
         - carbon:
@@ -20,9 +38,6 @@
         - boron:
             branch: 'stable/boron'
             jre: 'openjdk8'
-        - beryllium:
-            branch: 'stable/beryllium'
-            jre: 'openjdk7'
 
     openstack:
         - mitaka:
@@ -38,15 +53,10 @@
             odl-ml2-branch: 'stable/newton'
             odl-ml2-driver-version: 'v2'
 
-    openstack-vms: 4
-
-    install-features: 'odl-ovsdb-openstack,decanter-collector-jmx,decanter-appender-elasticsearch'
 
     odl-enable-l3: 'yes'
 
-    enable-haproxy: 'yes'
-
-    public-bridge: 'br-ex'
+    public-bridge: 'br-physnet1'
 
     enable-openstack-services: 'q-svc,q-dhcp,q-meta,n-cauth,tempest'
 
@@ -54,4 +64,4 @@
 
     tenant-network-type: 'vxlan'
 
-    security-group-mode: 'none'
+    security-group-mode: '{sg-mode}'

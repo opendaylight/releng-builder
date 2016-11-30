@@ -1,10 +1,17 @@
 - project:
     name: vtn-manager-csit-openstack-integration
     jobs:
-        - '{project}-csit-1node-openstack-{openstack}-{functionality}-{stream}'
+        - '{project}-csit-{topology}-openstack-{openstack}-{functionality}-{stream}'
 
     # The project name
     project: 'vtn'
+
+    topology:
+        - 1node:
+            openstack-vms: 1
+            controller-vms: 1
+            enable-haproxy: 'no'
+            install-features: 'odl-vtn-manager-neutron,odl-restconf-all'
 
     # The project name
     functionality: 'neutron'
@@ -29,10 +36,6 @@
             openstack-branch: 'stable/newton'
             odl-ml2-branch: 'master'
             odl-ml2-driver-version: 'v1'
-
-    openstack-vms: 1
-
-    install-features: 'odl-vtn-manager-neutron,odl-restconf-all'
 
     schedule: 'H H * * *'
 
