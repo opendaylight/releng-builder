@@ -65,6 +65,7 @@
             maven-version: 'mvn33'
 
 - job-template:
+    # FIXME: Describe this job in docs/jenkins.rst
     name: 'docs-verify-rtd-{stream}'
     node: centos7-java-builder-2c-8g
 
@@ -89,28 +90,11 @@
             build-timeout: '{build-timeout}'
 
     triggers:
-        - gerrit:
-            server-name: '{server-name}'
-            trigger-on:
-                - patchset-created-event:
-                    exclude-drafts: 'true'
-                    exclude-trivial-rebase: 'false'
-                    exclude-no-code-change: 'true'
-                - draft-published-event
-                - comment-added-contains-event:
-                    comment-contains-value: 'recheck'
-                - comment-added-contains-event:
-                    comment-contains-value: 'redocs'
-                    # FIXME: Describe this job in docs/jenkins.rst including the BEWARE section.
-            projects:
-              - project-compare-type: 'ANT'
-                project-pattern: '**'
-                branches:
-                  - branch-compare-type: 'ANT'
-                    branch-pattern: '**/{branch}'
-                file-paths:
-                    - compare-type: ANT
-                      pattern: docs/**/*.rst
+        - gerrit-trigger-patch-submitted:
+            server: '{server-name}'
+            project: '{project}'
+            branch: '{branch}'
+            files: 'docs/**/*.rst'
         - timed: 'H H * * *'
 
     builders:
