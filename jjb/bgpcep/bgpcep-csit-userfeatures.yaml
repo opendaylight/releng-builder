@@ -33,7 +33,7 @@
     install-features: 'odl-restconf,odl-bgpcep-pcep-all,odl-bgpcep-bgp-all,odl-bgpcep-bgp,odl-bgpcep-pcep,odl-netconf-connector-all,odl-bgpcep-bmp,odl-jolokia'
 
     # Robot custom options
-    robot-options: ''
+    robot-options: '-v USE_NETCONF_CONNECTOR:True'
 
     # Trigger jobs (upstream dependencies)
     # Netconf is there for run-time re-configuration.
