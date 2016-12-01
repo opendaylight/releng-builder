@@ -31,7 +31,7 @@
     install-features: 'odl-restconf,odl-clustering-test-app,odl-netconf-mdsal,odl-netconf-connector-all,odl-netconf-topology'
 
     # Robot custom options
-    robot-options: ''
+    robot-options: '-v USE_NETCONF_CONNECTOR:True'
 
     # This scaling test can take several hours to finish,
     # so the job is defined to run once a day.

@@ -32,7 +32,7 @@
     install-features: 'odl-restconf,odl-netconf-mdsal,odl-clustering-test-app,odl-netconf-connector-all,odl-netconf-topology'
 
     # Robot custom options
-    robot-options: '-v NETOPEER_USER:root'
+    robot-options: '-v NETOPEER_USER:root -v USE_NETCONF_CONNECTOR:True'
 
     # Trigger jobs (upstream dependencies)
     trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream},mdsal-distribution-{stream}'

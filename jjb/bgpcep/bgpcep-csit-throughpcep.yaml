@@ -34,7 +34,7 @@
     # The other options are workarounds for Sandbox not being as performant
     # as the private lab where this suite was developed.
     # Robot custom options:
-    robot-options: '-v PCEP_READY_VERIFY_TIMEOUT:5 -v RESTCONF_REUSE:False -v UPDATER_TIMEOUT:600'
+    robot-options: '-v USE_NETCONF_CONNECTOR:True -v PCEP_READY_VERIFY_TIMEOUT:5 -v RESTCONF_REUSE:False -v UPDATER_TIMEOUT:600'
 
     # This performance test can take up to one hour to finish,
     # so the job is defined to run once a day.

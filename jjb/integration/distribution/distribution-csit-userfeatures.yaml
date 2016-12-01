@@ -33,7 +33,7 @@
     install-features: 'odl-restconf,odl-distribution-version,odl-netconf-connector-all,odl-jolokia'
 
     # Robot custom options
-    robot-options: ''
+    robot-options: '-v USE_NETCONF_CONNECTOR:True'
 
     # Trigger jobs (upstream dependencies)
     trigger-jobs: >
