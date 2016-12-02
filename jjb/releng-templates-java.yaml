@@ -173,29 +173,11 @@
             build-timeout: '60'
 
     triggers:
-        - gerrit:
-            server-name: '{server-name}'
-            trigger-on:
-                - patchset-created-event:
-                    exclude-drafts: 'true'
-                    exclude-trivial-rebase: 'false'
-                    exclude-no-code-change: 'true'
-                - draft-published-event
-                - comment-added-contains-event:
-                    comment-contains-value: 'redistcheck'
-                - comment-added-contains-event:
-                    comment-contains-value: 'recheck'
-            projects:
-              - project-compare-type: 'ANT'
-                project-pattern: '{project}'
-                branches:
-                  - branch-compare-type: 'ANT'
-                    branch-pattern: '**/{branch}'
-            skip-vote:
-                successful: false
-                failed: false
-                unstable: false
-                notbuilt: false
+        - gerrit-trigger-patch-submitted:
+            server: '{server-name}'
+            project: '{project}'
+            branch: '{branch}'
+            files: '**'
 
     builders:
         - maven-target:
@@ -517,6 +499,7 @@
         - gerrit-trigger-patch-sonar:
             server-name: '{server-name}'
             name: '{project}'
+            # FIXME: Make sure this does not alter Gerrit votes, then update docs.
 
     builders:
         - jacoco-nojava-workaround
@@ -598,27 +581,11 @@
             build-timeout: '{build-timeout}'
 
     triggers:
-        - gerrit:
-            server-name: '{server-name}'
-            trigger-on:
-                - patchset-created-event:
-                    exclude-drafts: 'true'
-                    exclude-trivial-rebase: 'false'
-                    exclude-no-code-change: 'true'
-                - draft-published-event
-                - comment-added-contains-event:
-                    comment-contains-value: 'recheck'
-                - comment-added-contains-event:
-                    comment-contains-value: 'revalidate'
-            projects:
-              - project-compare-type: 'ANT'
-                project-pattern: '{project}'
-                branches:
-                  - branch-compare-type: 'ANT'
-                    branch-pattern: '**/{branch}'
-                file-paths:
-                    - compare-type: ANT
-                      pattern: '**/*.xml'
+        - gerrit-trigger-patch-submitted:
+            server: '{server-name}'
+            project: '{project}'
+            branch: '{branch}'
+            files: '**/*.xml'
 
     builders:
         - jacoco-nojava-workaround
@@ -690,9 +657,10 @@
 
     triggers:
         - gerrit-trigger-patch-submitted:
-            server-name: '{server-name}'
-            name: '{project}'
+            server: '{server-name}'
+            project: '{project}'
             branch: '{branch}'
+            files: '**'
 
     builders:
         - jacoco-nojava-workaround
