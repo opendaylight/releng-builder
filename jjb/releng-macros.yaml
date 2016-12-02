@@ -419,3 +419,11 @@
                         packer.io build -var-file=$CLOUDENV \
                          -var-file=../packer/vars/{platform}.json \
                          ../packer/templates/{template}.json
+
+- builder:
+    # TODO: Verify signature after downloading users public key from a locally created
+    # repository instead of the public keymesh. This requires a process in place to get ODL
+    # developers public keys into a local repository without increasing the job thoughput.
+    name: verify-gpg-signature
+    builders:
+        - shell: !include-raw: include-raw-verify-gpg-signatures.sh
