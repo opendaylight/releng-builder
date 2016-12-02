@@ -1,0 +1,31 @@
+- project:
+    name: groupbasedpolicy-csit-sxp
+    jobs:
+        - '{project}-csit-1node-{functionality}-{install}-{stream}'
+   # The project name
+    project: 'groupbasedpolicy'
+
+    # The functionality under test
+    functionality: 'sxp'
+
+    # Project branches
+    stream:
+        - carbon:
+            branch: 'master'
+            jre: 'openjdk8'
+
+    install:
+        - only:
+            scope: 'only'
+
+    # Mininet configuration (TOOLS)
+    mininet-vms: 2
+
+    # Features to install
+    install-features: 'odl-restconf,odl-groupbasedpolicy-sxp-ise-adapter,odl-groupbasedpolicy-ne-location-provider,odl-groupbasedpolicy-ios-xe,odl-sfc-ios-xe-renderer'
+
+    # Robot custom options
+    robot-options: ''
+
+    # Trigger jobs (upstream dependencies)
+    trigger-jobs: 'sfc-distribution-{stream},groupbasedpolicy-distribution-{stream},sxp-distribution-{stream}'
