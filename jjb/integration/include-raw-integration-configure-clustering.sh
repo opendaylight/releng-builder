@@ -115,6 +115,8 @@ if [ -f /tmp/custom_shard_config.txt ]; then
 fi
 
 echo "Configuring cluster"
+sed -ie "s/module_shards_string=\"module-shards.*/module_shards_string=\"module-shards = [\"/g" /tmp/${BUNDLEFOLDER}/bin/configure_cluster.sh
+sed -ie "s/module_shards_string=\"\${module_shards_string},/module_shards_string=\"\${module_shards_string}/g" /tmp/${BUNDLEFOLDER}/bin/configure_cluster.sh
 /tmp/${BUNDLEFOLDER}/bin/configure_cluster.sh \$1 ${nodes_list}
 
 echo "Dump akka.conf"
