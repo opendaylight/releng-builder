@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "1a622d24_248909cb",
+        "filename": "jjb/autorelease/include-raw-autorelease-get-integration-test-variables.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2016-12-05T17:00:42Z",
+      "side": 1,
+      "message": "It\u0027s a hardcoded \"default\" you override it by setting ODLNEXUS_STAGING_URL in your job parameters. I think a hardcoded default is fine as it works as an example of what value we are expecting that field to contain. The jobs will override that value anyway and so in theory the default should never be hit. Does that make sense?\n\nOn this topic might be good to add a comment above this line to describe how ODLNEXUS_STAGING_URL is expected to be passed in via Jenkins job parameter.",
+      "parentUuid": "1a622d24_da5aaf4f",
+      "revId": "8e75beb5806df2fb8874254c5cb49acf87516226",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a622d24_956db707",
         "filename": "jjb/autorelease/include-raw-autorelease-get-integration-test-variables.sh",
         "patchSetId": 10
