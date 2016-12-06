@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo '---> Installing non-baseline requirements'
-yum install -q -y deltarpm python{,-{crypto,devel,lxml,setuptools}} \
+yum install -y deltarpm python{,-{crypto,devel,lxml,setuptools}} \
     @development {lib{xml2,xslt,ffi},openssl}-devel
 
 echo '---> Updating net link setup'
