@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "1a622d24_f3f4f188",
+        "filename": "jjb/autorelease/include-raw-autorelease-get-integration-test-variables.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 4039
+      },
+      "writtenOn": "2016-12-06T16:25:14Z",
+      "side": 1,
+      "message": "I\u0027m sorry Thanh but I think we have a miscommunication here. I want to support the following case:\nODLNEXUSPROXY is defined with downstream server url\nODLNEXUS_STAGING_URL is defined with *another* downstream server url\nand also, the nominal case when ODLNEXUSPROXY is defined with upstream server URL or not defined at all.\nIn order support these cases I can\u0027t use your suggestion:\nNEXUSURL\u003d${ODLNEXUSPROXY:-https://nexus.opendaylight.org/content/repositories/}\nwhich ignores ODLNEXUS_STAGING_URL.\nI can\u0027t use the following too:\nNEXUSURL\u003d${ODLNEXUS_STAGING_URL:-https://nexus.opendaylight.org/content/repositories/}\nas it won\u0027t support fallback to the downstream nexus server url\nAm I missing something here?",
+      "parentUuid": "1a622d24_248909cb",
+      "revId": "8e75beb5806df2fb8874254c5cb49acf87516226",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a622d24_956db707",
         "filename": "jjb/autorelease/include-raw-autorelease-get-integration-test-variables.sh",
         "patchSetId": 10
