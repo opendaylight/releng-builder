@@ -90,7 +90,11 @@ touch $ARCHIVES_DIR/_sys-info.txt
 # Magic string used to trim console logs at the appropriate level during wget
 echo "-----END_OF_BUILD-----"
 wget -O $ARCHIVES_DIR/console.log ${{BUILD_URL}}consoleText
+wget -O $ARCHIVES_DIR/timestamps.log ${{BUILD_URL}}/timestamps?time=HH:mm:ss
+paste $ARCHIVES_DIR/timestamps.log $ARCHIVES_DIR/console.log > $ARCHIVES_DIR/timestamped_console.log
+rm $ARCHIVES_DIR/timestamps.log
 sed -i '/^-----END_OF_BUILD-----$/,$d' $ARCHIVES_DIR/console.log
+sed -i '/^.*-----END_OF_BUILD-----$/,$d' $ARCHIVES_DIR/timestamped_console.log
 
 gzip $ARCHIVES_DIR/*.txt $ARCHIVES_DIR/*.log
 # find and gzip any 'text' files
