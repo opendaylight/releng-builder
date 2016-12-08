@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "1a622d24_76760540",
+        "filename": "jjb/packaging/include-raw-build-deb.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-12-08T16:49:01Z",
+      "side": 1,
+      "message": "While I generally suggest using ${} bash variables, because of JJB it gets problematic.\n\nIf you want to use the ${} syntax for scripts that are raw-include scripts you have to do ${{}} (double the braces). Which when we at some point add shell script linting will cause different types of problems :-/",
+      "parentUuid": "1a622d24_b65edde7",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 10
+      },
+      "revId": "df07d32ad514c80d3dd3555fa9fb2ef4621337ee",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a622d24_761d6566",
         "filename": "jjb/packaging/packaging.yaml",
         "patchSetId": 1
