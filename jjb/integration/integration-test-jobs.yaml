@@ -203,7 +203,7 @@
         - integration-distribution-stream:
             stream: 'boron'
         - integration-bundleurl:
-            bundleurl: 'last'
+            bundleurl: '{bundleurl}'
         - integration-controller-scope:
             controller-scope: 'only'
         - integration-controller-features:
@@ -291,7 +291,7 @@
 
     parameters:
         - integration-bundleurl:
-            bundleurl: 'last'
+            bundleurl: '{bundleurl}'
         - integration-jdk-version:
             jdkversion: '{jre}'
 

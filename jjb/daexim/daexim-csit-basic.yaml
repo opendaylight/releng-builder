@@ -14,6 +14,7 @@
         - carbon:
             branch: 'master'
             jre: 'openjdk8'
+            bundleurl: 'https://jenkins.opendaylight.org/releng/view/daexim/job/daexim-merge-carbon/lastSuccessfulBuild/org.opendaylight.daexim$daexim-karaf/artifact/org.opendaylight.daexim/daexim-karaf/1.0.0-SNAPSHOT/daexim-karaf-1.0.0-SNAPSHOT.zip'
 
     install:
         - only:
@@ -29,5 +30,5 @@
     robot-options: ''
 
     # Trigger jobs (upstream dependencies)
-    trigger-jobs: ''
+    trigger-jobs: 'daexim-merge-{stream}'
 
