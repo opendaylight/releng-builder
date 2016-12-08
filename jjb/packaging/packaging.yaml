@@ -5,6 +5,7 @@
     jobs:
         - '{project-name}-verify-python-{stream}'
         - '{project-name}-build-rpm-{stream}'
+        - '{project-name}-build-deb-{stream}'
 
     project: 'integration/packaging'
 
@@ -76,3 +77,76 @@
     publishers:
     - archive-artifacts:
         artifacts: '**/*.rpm'
+
+- job-template:
+    name: '{project-name}-build-deb-{stream}'
+
+    node: dynamic_verify
+
+    parameters:
+        - opendaylight-infra-parameters:
+            project: '{project}'
+            branch: '{branch}'
+            refspec: 'refs/heads/{branch}'
+            artifacts: '{archive-artifacts}'
+        - string:
+            name: VERSION_MAJOR
+            default: '5'
+            description: 'OpenDaylight major (element) version number to build'
+        - string:
+            name: VERSION_MINOR
+            default: '0'
+            description: 'OpenDaylight minor (SR) version number to build'
+        - string:
+            name: VERSION_PATCH
+            default: '0'
+            description: 'OpenDaylight patch version to build'
+        - string:
+            name: PKG_VERSION
+            default: '1'
+            description: 'Deb version for the given ODL major.minor.patch'
+        - string:
+            name: SYSD_COMMIT
+            default: '07f7c83b0ef46ad3809e5be03e09a77fe554eeae'
+            description: 'Version of ODL systemd unitfile to download and package in ODL .deb'
+        - string:
+            name: CODENAME
+            default: 'Boron'
+            description: 'Elemental codename for the ODL release, including SR if applicable'
+        - string:
+            name: DOWNLOAD_URL
+            default: 'https://nexus.opendaylight.org/content/repositories/public/org/opendaylight/integration/distribution-karaf/0.5.0-Boron/distribution-karaf-0.5.0-Boron.tar.gz'
+            description: 'URL to ODL tarball artifact to repackage into .deb'
+        - string:
+            name: JAVA_VERSION
+            default: '8'
+            description: Java dependency for the ODL release
+        - string:
+            name: CHANGELOG_DATE
+            default: 'Mon, 1 Aug 2016'
+            description: 'Date this .deb was defined'
+        - string:
+            name: CHANGELOG_TIME
+            default: '17:48:42 +0530'
+            description: 'Time this .deb was defined'
+        - string:
+            name: CHANGELOG_NAME
+            default: 'Jenkins'
+            description: 'Name of person who defined .deb'
+        - string:
+            name: CHANGELOG_EMAIL
+            default: 'jenkins-donotreply@opendaylight.org'
+            description: 'Email of person who defined .deb'
+
+    scm:
+        - integration-gerrit-scm:
+            basedir: 'packaging'
+            refspec: '$GERRIT_REFSPEC'
+            branch: 'master'
+
+    builders:
+        - shell: !include-raw: include-raw-build-deb.sh
+
+    publishers:
+    - archive-artifacts:
+        artifacts: '**/*.deb'
