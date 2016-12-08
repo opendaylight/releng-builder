@@ -92,7 +92,7 @@
     triggers:
         - gerrit-trigger-patch-submitted:
             server: '{server-name}'
-            project: '{project}'
+            project: '**'
             branch: '{branch}'
             files: 'docs/**/*.rst'
         - timed: 'H H * * *'
