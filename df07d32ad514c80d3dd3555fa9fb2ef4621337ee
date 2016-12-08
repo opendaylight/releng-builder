@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "1a622d24_b65edde7",
+        "filename": "jjb/packaging/include-raw-build-deb.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 6047
+      },
+      "writtenOn": "2016-12-08T16:33:17Z",
+      "side": 1,
+      "message": "I tried changing it to ${WORKSPACE}, but I get the error:\n\njenkins_jobs.errors.JenkinsJobsException: WORKSPACE parameter missing to format #!/bin/bash",
+      "parentUuid": "1a622d24_033cb5e1",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 10
+      },
+      "revId": "df07d32ad514c80d3dd3555fa9fb2ef4621337ee",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a622d24_761d6566",
         "filename": "jjb/packaging/packaging.yaml",
         "patchSetId": 1
@@ -107,6 +131,30 @@
       "writtenOn": "2016-12-08T15:35:35Z",
       "side": 1,
       "message": "I guess this needs to be ubuntu_mininet to get allocated to an Ubuntu box http://docs.opendaylight.org/en/latest/submodules/releng/builder/docs/jenkins.html#pool-odlrpc",
+      "range": {
+        "startLine": 84,
+        "startChar": 10,
+        "endLine": 84,
+        "endChar": 24
+      },
+      "revId": "df07d32ad514c80d3dd3555fa9fb2ef4621337ee",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a622d24_36200d49",
+        "filename": "jjb/packaging/packaging.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 6047
+      },
+      "writtenOn": "2016-12-08T16:33:17Z",
+      "side": 1,
+      "message": "Oh right! My bad! Fixed.",
+      "parentUuid": "1a622d24_761d6566",
       "range": {
         "startLine": 84,
         "startChar": 10,
