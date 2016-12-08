@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1a622d24_a336a101",
+        "filename": "jjb/packaging/include-raw-build-deb.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2016-12-08T15:25:02Z",
+      "side": 1,
+      "message": "They should only get installed for build-deb jobs, not every job. Those will be fairly infrequent. I\u0027m okay with baking them into Packer, but imho better to see it working here then maybe move to Packer. The build-rpm job follows this model, could move it\u0027s installs to Packer at the same time.",
+      "parentUuid": "1a622d24_4c86dfba",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 25
+      },
+      "revId": "df07d32ad514c80d3dd3555fa9fb2ef4621337ee",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a622d24_8ca7574f",
         "filename": "jjb/packaging/include-raw-build-deb.sh",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2016-12-08T09:32:40Z",
       "side": 1,
       "message": "It would be a better to use ${WORKSPACE}, assuming file path could contain blank spaces.",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 10
+      },
+      "revId": "df07d32ad514c80d3dd3555fa9fb2ef4621337ee",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a622d24_033cb5e1",
+        "filename": "jjb/packaging/include-raw-build-deb.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2016-12-08T15:25:02Z",
+      "side": 1,
+      "message": "+1 I guess, but the path doesn\u0027t contain spaces so not a big deal in practice. The RPM does this style I think.",
+      "parentUuid": "1a622d24_8ca7574f",
       "range": {
         "startLine": 20,
         "startChar": 0,
