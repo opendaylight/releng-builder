@@ -16,6 +16,24 @@
       "revId": "159452bf8cc69297dc7a92d7d3a33254298ce4ed",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a622d24_a93afbca",
+        "filename": "jjb/packaging/packaging.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 6047
+      },
+      "writtenOn": "2016-12-09T19:47:16Z",
+      "side": 1,
+      "message": "According to the `build.py` logic, the .deb is originally created in the `deb/opendaylight` directory which is then cached by copying this .deb to the `deb/cache` directory. The `opendaylight-build-deps_5.0.0-1_all.deb` is the deb file of all the dependencies.\n\nI have changed the artificats path to `deb/opendaylight`.",
+      "parentUuid": "1a622d24_25ff3136",
+      "revId": "159452bf8cc69297dc7a92d7d3a33254298ce4ed",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
