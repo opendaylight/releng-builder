@@ -86,6 +86,7 @@
             gzip archives/job_output/*
 
         - releng-check-unicode
+        - verify-gpg-signature
 
     publishers:
         - email-notification:
@@ -129,6 +130,7 @@
             files: 'scripts/**'
 
     builders:
+        - verify-gpg-signature
         - shell: |
             virtualenv $WORKSPACE/venv
             source $WORKSPACE/venv/bin/activate
