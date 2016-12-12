@@ -14,12 +14,12 @@ echo 'PS1="[\u@\h \W]> "' >> /etc/skel/.bashrc
 
 echo '---> Install OpenVSwitch 2.3.1'
 add-apt-repository -y ppa:vshn/openvswitch
-apt-get update -y --force-yes -qq
-apt-get install -y --force-yes -qq openvswitch-switch
+apt-get update -y --force-yes
+apt-get install -y --force-yes openvswitch-switch
 
 echo '---> Installing CPqD and dependencies'
-apt-get install -y --force-yes -qq build-essential cmake flex
-apt-get install -y --force-yes -qq libpcre++-dev libxerces-c-dev libpcap-dev libboost-all-dev
+apt-get install -y --force-yes build-essential cmake flex
+apt-get install -y --force-yes libpcre++-dev libxerces-c-dev libpcap-dev libboost-all-dev
 
 cd /tmp
 wget -nc http://de.archive.ubuntu.com/ubuntu/pool/main/b/bison/bison_2.5.dfsg-2.1_amd64.deb \
@@ -57,7 +57,7 @@ echo '---> Installing cbench for openflow performance tests'
 OF_DIR=$HOME/openflow  # Directory that contains OpenFlow code
 OFLOPS_DIR=$HOME/oflops  # Directory that contains oflops repo
 
-apt-get install -y --force-yes -qq libsnmp-dev libpcap-dev libconfig-dev
+apt-get install -y --force-yes libsnmp-dev libpcap-dev libconfig-dev
 
 git clone git://gitosis.stanford.edu/openflow.git $OF_DIR
 git clone https://github.com/andi-bigswitch/oflops.git $OFLOPS_DIR
@@ -69,7 +69,7 @@ make
 make install
 
 echo '---> Installing exabgp'
-apt-get install -y --force-yes -qq exabgp
+apt-get install -y --force-yes exabgp
 
 echo '---> All Python package installation should happen in virtualenv'
-apt-get install -y --force-yes -qq python-virtualenv python-pip
+apt-get install -y --force-yes python-virtualenv python-pip

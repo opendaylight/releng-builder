@@ -49,8 +49,8 @@ cd ./util
 ./install.sh -nfv
 
 echo '---> Install CPqD and dependencies'
-apt-get install -y --force-yes -qq build-essential cmake flex
-apt-get install -y --force-yes -qq libpcre++-dev libxerces-c-dev libpcap-dev libboost-all-dev
+apt-get install -y --force-yes build-essential cmake flex
+apt-get install -y --force-yes libpcre++-dev libxerces-c-dev libpcap-dev libboost-all-dev
 
 cd /tmp
 wget -nc http://de.archive.ubuntu.com/ubuntu/pool/main/b/bison/bison_2.5.dfsg-2.1_amd64.deb \
@@ -81,7 +81,7 @@ echo '---> Installing cbench installation for running openflow performance tests
 OF_DIR=$HOME/openflow  # Directory that contains OpenFlow code
 OFLOPS_DIR=$HOME/oflops  # Directory that contains oflops repo
 
-apt-get install -y --force-yes -qq libsnmp-dev libpcap-dev libconfig-dev
+apt-get install -y --force-yes libsnmp-dev libpcap-dev libconfig-dev
 
 git clone git://gitosis.stanford.edu/openflow.git $OF_DIR
 git clone https://github.com/andi-bigswitch/oflops.git $OFLOPS_DIR
@@ -93,7 +93,7 @@ make
 make install
 
 echo '---> Installing vlan for vlan based tests in VTN suites'
-apt-get install -y --force-yes -qq vlan
+apt-get install -y --force-yes vlan
 
 echo '---> All Python package installation should happen in virtualenv'
-apt-get install -y --force-yes -qq python-virtualenv python-pip
+apt-get install -y --force-yes python-virtualenv python-pip

@@ -45,24 +45,24 @@ jenkins ALL = NOPASSWD: /usr/sbin/alternatives
 EOF
 
     echo "---> Updating operating system"
-    yum clean all -q
-    yum install -y -q deltarpm
-    yum update -y -q
+    yum clean all
+    yum install -y deltarpm
+    yum update -y
 
     # add in components we need or want on systems
     echo "---> Installing base packages"
-    yum install -y -q @base https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+    yum install -y @base https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
     # separate group installs from package installs since a non-existing
     # group with dnf based systems (F21+) will fail the install if such
     # a group does not exist
-    yum install -y -q unzip xz puppet git perl-XML-XPath
+    yum install -y unzip xz puppet git perl-XML-XPath
 
     # All of our systems require Java (because of Jenkins)
     # Install all versions of the OpenJDK devel but force 1.7.0 to be the
     # default
 
     echo "---> Configuring OpenJDK"
-    yum install -y -q 'java-*-openjdk-devel'
+    yum install -y 'java-*-openjdk-devel'
 
     FACTER_OS=$(/usr/bin/facter operatingsystem)
     FACTER_OSVER=$(/usr/bin/facter operatingsystemrelease)
@@ -154,7 +154,7 @@ all_systems() {
             else
                 echo "---> CentOS 6"
                 echo "Installing ODL YUM repo"
-                yum install -q -y https://nexus.opendaylight.org/content/repositories/opendaylight-yum-epel-6-x86_64/rpm/opendaylight-release/0.1.0-1.el6.noarch/opendaylight-release-0.1.0-1.el6.noarch.rpm
+                yum install -y https://nexus.opendaylight.org/content/repositories/opendaylight-yum-epel-6-x86_64/rpm/opendaylight-release/0.1.0-1.el6.noarch/opendaylight-release-0.1.0-1.el6.noarch.rpm
             fi
         ;;
         *)

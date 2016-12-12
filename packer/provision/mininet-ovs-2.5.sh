@@ -14,8 +14,8 @@ echo 'PS1="[\u@\h \W]> "' >> /etc/skel/.bashrc
 
 echo '---> Install OpenVSwitch 2.5.0'
 add-apt-repository -y ppa:sgauthier/openvswitch-dpdk
-apt-get update -y --force-yes -qq
-apt-get install -y --force-yes -qq openvswitch-switch
+apt-get update -y --force-yes
+apt-get install -y --force-yes openvswitch-switch
 
 echo '---> Installing mininet 2.2.2'
 git clone git://github.com/mininet/mininet
@@ -25,14 +25,14 @@ cd ..
 mininet/util/install.sh -nf
 
 echo '---> Installing MT-Cbench'
-apt-get install -y --force-yes -qq build-essential snmp libsnmp-dev snmpd libpcap-dev \
+apt-get install -y --force-yes build-essential snmp libsnmp-dev snmpd libpcap-dev \
 autoconf make automake libtool libconfig-dev libssl-dev libffi-dev libssl-doc pkg-config
 git clone https://github.com/intracom-telecom-sdn/mtcbench.git
 mtcbench/build_mtcbench.sh
 cp mtcbench/oflops/cbench/cbench /usr/local/bin/
 
 echo '---> Installing exabgp'
-apt-get install -y --force-yes -qq exabgp
+apt-get install -y --force-yes exabgp
 
 echo '---> All Python package installation should happen in virtualenv'
-apt-get install -y --force-yes -qq python-virtualenv python-pip
+apt-get install -y --force-yes python-virtualenv python-pip
