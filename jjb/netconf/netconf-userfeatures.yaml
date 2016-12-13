@@ -18,9 +18,13 @@
         - boron:
             branch: 'stable/boron'
             jre: 'openjdk8'
+            install-features: 'odl-restconf,odl-netconf-mdsal,odl-clustering-test-app,odl-netconf-connector-all,odl-netconf-topology'
+            robot-options: '-v NETOPEER_USER:root -v USE_NETCONF_CONNECTOR:True'
         - beryllium:
             branch: 'stable/beryllium'
             jre: 'openjdk7'
+            install-features: 'odl-restconf,odl-netconf-mdsal,odl-clustering-test-app,odl-netconf-connector-all,odl-netconf-topology'
+            robot-options: '-v NETOPEER_USER:root -v USE_NETCONF_CONNECTOR:True'
 
     install:
         - only:
@@ -29,10 +33,10 @@
             scope: 'all'
 
     # Features to install
-    install-features: 'odl-restconf,odl-netconf-mdsal,odl-clustering-test-app,odl-netconf-connector-all,odl-netconf-topology'
+    install-features: 'odl-restconf,odl-netconf-mdsal,odl-clustering-test-app,odl-netconf-topology'
 
     # Robot custom options
-    robot-options: '-v NETOPEER_USER:root -v USE_NETCONF_CONNECTOR:True'
+    robot-options: '-v NETOPEER_USER:root -v USE_NETCONF_CONNECTOR:False'
 
     # Trigger jobs (upstream dependencies)
     trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream},mdsal-distribution-{stream}'
