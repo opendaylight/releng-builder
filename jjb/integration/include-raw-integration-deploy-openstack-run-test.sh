@@ -10,14 +10,21 @@ echo "#################################################"
 
 
 SSH="ssh -t -t"
+
 function create_control_node_local_conf {
 local_conf_file_name=${WORKSPACE}/local.conf_control
+#Needs to be removed
+if [ "${ODL_ML2_BRANCH}" == "stable/mitaka" ]; then
+   RECLONE=no
+else
+   RECLONE=yes
+fi
 cat > ${local_conf_file_name} << EOF
 [[local|localrc]]
 LOGFILE=stack.sh.log
 SCREEN_LOGDIR=/opt/stack/data/log
 LOG_COLOR=False
-RECLONE=yes
+RECLONE=${RECLONE}
 EOF
 
 IFS=,
@@ -65,6 +72,7 @@ ODL_MODE=externalodl
 LIBVIRT_TYPE=qemu
 
 EOF
+
 
 if [ "${ODL_ML2_DRIVER_VERSION}" == "v2" ]; then
     echo "ODL_V2DRIVER=True" >> ${local_conf_file_name}
@@ -158,13 +166,19 @@ cat ${local_conf_file_name}
 
 function create_compute_node_local_conf {
 HOSTIP=$1
+#Needs to be removed
+if [ "${ODL_ML2_BRANCH}" == "stable/mitaka" ]; then
+   RECLONE=no
+else
+   RECLONE=yes
+fi
 local_conf_file_name=${WORKSPACE}/local.conf_compute_${HOSTIP}
 cat > ${local_conf_file_name} << EOF
 [[local|localrc]]
 LOGFILE=stack.sh.log
 LOG_COLOR=False
 SCREEN_LOGDIR=/opt/stack/data/log
-RECLONE=yes
+RECLONE=${RECLONE}
 
 NOVA_VNC_ENABLED=True
 MULTI_HOST=1
@@ -409,6 +423,12 @@ scp ${WORKSPACE}/get_devstack.sh ${OPENSTACK_CONTROL_NODE_IP}:/tmp
 ${SSH} ${OPENSTACK_CONTROL_NODE_IP} "bash /tmp/get_devstack.sh"
 create_control_node_local_conf
 scp ${WORKSPACE}/local.conf_control ${OPENSTACK_CONTROL_NODE_IP}:/opt/stack/devstack/local.conf
+
+if [ "${ODL_ML2_BRANCH}" == "stable/mitaka" ]; then
+ssh ${OPENSTACK_CONTROL_NODE_IP} "cd /opt/stack; git clone https://git.openstack.org/openstack/requirements; cd requirements; git checkout stable/mitaka; sed -i /openstacksdk/d upper-constraints.txt; sed -i /libvirt-python/d upper-constraints.txt"
+ssh ${OPENSTACK_CONTROL_NODE_IP} "cd /opt/stack; git clone https://github.com/openstack/python-openstacksdk; cd python-openstacksdk; sudo python setup.py install" 
+fi
+
 ssh ${OPENSTACK_CONTROL_NODE_IP} "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
 ssh ${OPENSTACK_CONTROL_NODE_IP} "ps -ef | grep stack.sh"
 ssh ${OPENSTACK_CONTROL_NODE_IP} "ls -lrt /opt/stack/devstack/nohup.out"
@@ -422,6 +442,9 @@ do
     ${SSH} ${!COMPUTEIP} "bash /tmp/get_devstack.sh"
     create_compute_node_local_conf ${!COMPUTEIP}
     scp ${WORKSPACE}/local.conf_compute_${!COMPUTEIP} ${!COMPUTEIP}:/opt/stack/devstack/local.conf
+    if [ "${ODL_ML2_BRANCH}" == "stable/mitaka" ]; then
+       ssh ${!COMPUTEIP} "cd /opt/stack; git clone https://git.openstack.org/openstack/requirements; cd requirements; git checkout stable/mitaka; sed -i /libvirt-python/d upper-constraints.txt"
+    fi
     ssh ${!COMPUTEIP} "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
     ssh ${!COMPUTEIP} "ps -ef | grep stack.sh"
     os_node_list+=(${!COMPUTEIP})
