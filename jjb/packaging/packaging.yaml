@@ -73,6 +73,10 @@
             refspec: '$GERRIT_REFSPEC'
             branch: 'master'
 
+    wrappers:
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
+
     builders:
         - shell: !include-raw: include-raw-build-rpm.sh
 
