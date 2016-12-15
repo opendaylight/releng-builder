@@ -215,7 +215,7 @@
                 odl-bgpcep-bgp,
                 odl-netconf-connector-all
         - integration-test-options:
-            test-options: '-v TIMEOUT_BUG_4220:10s'
+            test-options: '-v TIMEOUT_BUG_4220:10s -v USE_NETCONF_CONNECTOR:True'
         - integration-stream-test-plan:
             stream-test-plan: 'test-libraries-boron.txt'
         - integration-test-plan:
