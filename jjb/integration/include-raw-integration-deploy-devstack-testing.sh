@@ -13,14 +13,16 @@ SUITES=$( egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' testplan.txt | tr '\012' ' 
 echo "Starting Robot test suites ${SUITES} ..."
 
 pybot --removekeywords wuks -e exclude \
--v WORKSPACE:$WORKSPACE -v USER_HOME:$HOME -L TRACE \
--v DEVSTACK_SYSTEM_USER:$USER \
--v DEVSTACK_SYSTEM_IP:$OPENSTACK_CONTROL_NODE_IP \
--v DEFAULT_LINUX_PROMPT:\]\> \
--v OPENSTACK_BRANCH:$OPENSTACK_BRANCH \
--v ODL_VERSION:$ODL_VERSION \
--v DEVSTACK_DEPLOY_PATH:/opt/stack/new/devstack \
--v TEMPEST_REGEX:$TEMPEST_REGEX ${SUITES} || true
+    -L TRACE \
+    -v DEFAULT_LINUX_PROMPT:\]\> \
+    -v DEVSTACK_DEPLOY_PATH:/opt/stack/new/devstack \
+    -v DEVSTACK_SYSTEM_USER:$USER \
+    -v DEVSTACK_SYSTEM_IP:$OPENSTACK_CONTROL_NODE_IP \
+    -v ODL_VERSION:$ODL_VERSION \
+    -v OPENSTACK_BRANCH:$OPENSTACK_BRANCH \
+    -v TEMPEST_REGEX:$TEMPEST_REGEX ${SUITES} \
+    -v WORKSPACE:$WORKSPACE \
+    -v USER_HOME:$HOME || true
 
 scp $OPENSTACK_CONTROL_NODE_IP:/opt/stack/logs/devstacklog.txt $WORKSPACE/
 scp -r $OPENSTACK_CONTROL_NODE_IP:/opt/stack/logs/*karaf* $WORKSPACE/
