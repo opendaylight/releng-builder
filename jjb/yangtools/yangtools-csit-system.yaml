@@ -1,0 +1,43 @@
+- project:
+    name: yangtools-csit-system
+    jobs:
+        - '{project}-csit-1node-periodic-{functionality}-{install}-{stream}'
+
+    # The project name
+    project: 'yangtools'
+
+    # The functionality under test
+    functionality: 'system'
+
+    # Project branches. Boron for actual testing, Beryllium for sanity.
+    stream:
+        - carbon:
+            branch: 'master'
+            jre: 'openjdk8'
+        - boron:
+            branch: 'stable/boron'
+            jre: 'openjdk8'
+        - beryllium:
+            branch: 'stable/beryllium'
+            jre: 'openjdk7'
+
+    install:
+        - only:
+            scope: 'only'
+
+    # No tools system VMs needed, but ODL system needs RAM and benefits from CPUs.
+    mininet-vms: 0
+    controller-image: 'centos7-java-builder-4c-8g'
+
+    # Features to install
+    install-features: 'odl-restconf'
+
+    # Robot custom options:
+    robot-options: ''
+
+    # Additional patterns to archive
+    archive-artifacts: ''
+    # FIXME: Delete if no patterns.
+
+    # Trigger jobs (daily)
+    schedule: 'H H * * *'
