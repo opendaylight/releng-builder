@@ -198,6 +198,8 @@
             branch: '{branch}'
             refspec: 'refs/heads/{branch}'
             artifacts: '{archive-artifacts}'
+        # when upgrading to carbon you should replace odl-netconf-connector-all with odl-netconf-topology from
+        # controller-features and change USE_NETCONF_CONNECTOR to False in test-options
         - integration-branch:
             branch: 'stable/boron'
         - integration-distribution-stream:
@@ -215,7 +217,7 @@
                 odl-bgpcep-bgp,
                 odl-netconf-connector-all
         - integration-test-options:
-            test-options: '-v TIMEOUT_BUG_4220:10s'
+            test-options: '-v TIMEOUT_BUG_4220:10s -v USE_NETCONF_CONNECTOR:True'
         - integration-stream-test-plan:
             stream-test-plan: 'test-libraries-boron.txt'
         - integration-test-plan:
