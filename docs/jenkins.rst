@@ -57,7 +57,7 @@ Next we will create <new-project>.yaml as follows:
             - openjdk8
         maven:
             - mvn33:
-                mvn-version: '{mvn33}'
+                mvn-version: 'mvn33'
         mvn-settings: '<NEW_PROJECT>-settings'
         mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
         mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
