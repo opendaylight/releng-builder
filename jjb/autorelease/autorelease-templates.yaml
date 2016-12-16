@@ -7,9 +7,9 @@
     node: centos7-autorelease-4c-16g
     jdk: '{jdk}'
 
-    logrotate:
-        daysToKeep: '{build-days-to-keep}'
-        artifactDaysToKeep: '14'
+    properties:
+        - opendaylight-infra-properties:
+            build-days-to-keep: '30'
 
     parameters:
         - maven-exec:
@@ -103,11 +103,9 @@
     project-type: freestyle
     node: centos7-java-builder-2c-8g
 
-    logrotate:
-        daysToKeep: '{build-days-to-keep}'
-        numToKeep: '{build-num-to-keep}'
-        artifactDaysToKeep: '{build-artifact-days-to-keep}'
-        artifactNumToKeep: '{build-artifact-num-to-keep}'
+    properties:
+        - opendaylight-infra-properties:
+            build-days-to-keep: '{build-days-to-keep}'
 
     parameters:
         - opendaylight-infra-parameters:

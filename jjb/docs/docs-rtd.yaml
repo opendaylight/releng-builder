@@ -22,8 +22,9 @@
 
     project-type: freestyle
 
-    logrotate:
-        daysToKeep: 14
+    properties:
+        - opendaylight-infra-properties:
+            build-days-to-keep: 14
 
     parameters:
         - opendaylight-infra-parameters:
@@ -71,8 +72,9 @@
 
     project-type: freestyle
 
-    logrotate:
-        daysToKeep: 14
+    properties:
+        - opendaylight-infra-properties:
+            build-days-to-keep: 14
 
     parameters:
         - opendaylight-infra-parameters:

@@ -25,9 +25,9 @@
     node: dynamic_verify
     concurrent: false
 
-    logrotate:
-        daysToKeep: '{build-days-to-keep}'
-        numToKeep: '{build-num-to-keep}'
+    properties:
+        - opendaylight-infra-properties:
+            build-days-to-keep: '{build-days-to-keep}'
 
     wrappers:
         - build-timeout

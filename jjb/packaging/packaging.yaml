@@ -17,8 +17,9 @@
 
     node: dynamic_verify
 
-    logrotate:
-        daysToKeep: '7'
+    properties:
+        - opendaylight-infra-properties:
+            build-days-to-keep: 7
 
     parameters:
         - opendaylight-infra-parameters:
