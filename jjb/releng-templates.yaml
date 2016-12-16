@@ -8,8 +8,9 @@
     node: '{build-node}'
     jdk: '{jdk}'
 
-    logrotate:
-        daysToKeep: '30'
+    properties:
+        - opendaylight-infra-properties:
+            build-days-to-keep: 30
 
     parameters:
         - opendaylight-infra-parameters:
@@ -125,8 +126,9 @@
     node: '{build-node}'
     concurrent: true
 
-    logrotate:
-        daysToKeep: '7'
+    properties:
+        - opendaylight-infra-properties:
+            build-days-to-keep: 7
 
     parameters:
         - opendaylight-infra-parameters:
@@ -265,11 +267,9 @@
     node: '{build-node}'
     concurrent: true
 
-    logrotate:
-        daysToKeep: '7'
-        numToKeep: '-1'
-        artifactDaysToKeep: '-1'
-        artifactNumToKeep: '-1'
+    properties:
+        - opendaylight-infra-properties:
+            build-days-to-keep: 7
 
     parameters:
         - opendaylight-infra-parameters:

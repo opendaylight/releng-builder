@@ -12,9 +12,9 @@
     node: '{build-node}'
     jdk: '{jdk}'
 
-    logrotate:
-        daysToKeep: '{build-days-to-keep}'
-        numToKeep: '{build-num-to-keep}'
+    properties:
+        - opendaylight-infra-properties:
+            build-days-to-keep: '{build-days-to-keep}'
 
     parameters:
         - opendaylight-infra-parameters:
@@ -75,11 +75,9 @@
     node: '{build-node}'
     jdk: '{jdk}'
 
-    logrotate:
-        daysToKeep: '{build-days-to-keep}'
-        numToKeep: '{build-num-to-keep}'
-        artifactDaysToKeep: '{build-artifact-days-to-keep}'
-        artifactNumToKeep: '{build-artifact-num-to-keep}'
+    properties:
+        - opendaylight-infra-properties:
+            build-days-to-keep: '{build-days-to-keep}'
 
     parameters:
         - opendaylight-infra-parameters:
@@ -142,11 +140,9 @@
     concurrent: true
     jdk: '{jdk}'
 
-    logrotate:
-        daysToKeep: '{build-days-to-keep}'
-        numToKeep: '{build-num-to-keep}'
-        artifactDaysToKeep: '{build-artifact-days-to-keep}'
-        artifactNumToKeep: '{build-artifact-num-to-keep}'
+    properties:
+        - opendaylight-infra-properties:
+            build-days-to-keep: '{build-days-to-keep}'
 
     parameters:
         - opendaylight-infra-parameters:
@@ -238,11 +234,9 @@
     node: '{build-node}'
     jdk: '{jdk}'
 
-    logrotate:
-        daysToKeep: '{build-days-to-keep}'
-        numToKeep: '{build-num-to-keep}'
-        artifactDaysToKeep: '{build-artifact-days-to-keep}'
-        artifactNumToKeep: '{build-artifact-num-to-keep}'
+    properties:
+        - opendaylight-infra-properties:
+            build-days-to-keep: '{build-days-to-keep}'
 
     parameters:
         - opendaylight-infra-parameters:
@@ -309,11 +303,9 @@
     node: '{build-node}'
     jdk: '{jdk}'
 
-    logrotate:
-        daysToKeep: '14'
-        numToKeep: '10'
-        artifactDaysToKeep: '{build-artifact-days-to-keep}'
-        artifactNumToKeep: '{build-artifact-num-to-keep}'
+    properties:
+        - opendaylight-infra-properties:
+            build-days-to-keep: 14
 
     parameters:
         - opendaylight-infra-parameters:
@@ -419,8 +411,9 @@
     node: '{build-node}'
     jdk: '{jdk}'
 
-    logrotate:
-        daysToKeep: '14'
+    properties:
+        - opendaylight-infra-properties:
+            build-days-to-keep: 14
 
     parameters:
         - opendaylight-infra-parameters:
@@ -473,11 +466,9 @@
     node: '{build-node}'
     jdk: 'openjdk8'
 
-    logrotate:
-        daysToKeep: '7'
-        numToKeep: '10'
-        artifactDaysToKeep: '1'
-        artifactNumToKeep: '1'
+    properties:
+        - opendaylight-infra-properties:
+            build-days-to-keep: 7
 
     parameters:
         - opendaylight-infra-parameters:
@@ -547,8 +538,9 @@
     concurrent: true
     jdk: '{jdk}'
 
-    logrotate:
-        daysToKeep: '7'
+    properties:
+        - opendaylight-infra-properties:
+            build-days-to-keep: 7
 
     parameters:
         - opendaylight-infra-parameters:
@@ -637,8 +629,9 @@
     concurrent: true
     jdk: '{jdks}'
 
-    logrotate:
-        daysToKeep: '7'
+    properties:
+        - opendaylight-infra-properties:
+            build-days-to-keep: 7
 
     parameters:
         - opendaylight-infra-parameters:
