@@ -8,6 +8,10 @@ yum install -y @development perl-{Digest-SHA,ExtUtils-MakeMaker} \
     ant {boost,gtest,json-c,libcurl,libxml2,libvirt,openssl}-devel \
     {readline,unixODBC}-devel yum-utils
 
+#Install python3 and dependencies
+yum install -y python34
+yum install -y python34-{devel,virtualenv,setuptools,pip}
+
 # Install python dependencies
 yum install -y python-{devel,virtualenv,setuptools,pip}
 
