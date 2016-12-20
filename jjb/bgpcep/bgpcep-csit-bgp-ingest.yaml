@@ -58,9 +58,13 @@
         - boron:
             branch: 'stable/boron'
             jre: 'openjdk8'
+            install-features: 'odl-restconf,odl-bgpcep-bgp-all,odl-bgpcep-bgp,odl-bgpcep-data-change-counter,odl-netconf-connector-all'
+            robot-options: '-v USE_NETCONF_CONNECTOR:True -v COUNT:1000000 -v INSERT:10 -v WITHDRAW:9 -v PREFILL:10 -v UPDATE:single -v TEST_DURATION_MULTIPLIER:4'
         - beryllium:
             branch: 'stable/beryllium'
             jre: 'openjdk7'
+            install-features: 'odl-restconf,odl-bgpcep-bgp-all,odl-bgpcep-bgp,odl-bgpcep-data-change-counter,odl-netconf-connector-all'
+            robot-options: '-v USE_NETCONF_CONNECTOR:True -v COUNT:1000000 -v INSERT:10 -v WITHDRAW:9 -v PREFILL:10 -v UPDATE:single -v TEST_DURATION_MULTIPLIER:4'
 
     install:
         - only:
@@ -69,11 +73,11 @@
             scope: 'all'
 
     # Features to install
-    install-features: 'odl-restconf,odl-bgpcep-bgp-all,odl-bgpcep-bgp,odl-bgpcep-data-change-counter,odl-netconf-connector-all'
+    install-features: 'odl-restconf,odl-bgpcep-bgp-all,odl-bgpcep-bgp,odl-bgpcep-data-change-counter,odl-netconf-topology'
 
     # Robot custom options
     # Increase the TEST_DURATION_MULTIPLIER if the test runs in slower test environment or more complex scenario is chosen
-    robot-options: '-v USE_NETCONF_CONNECTOR:True -v COUNT:1000000 -v INSERT:10 -v WITHDRAW:9 -v PREFILL:10 -v UPDATE:single -v TEST_DURATION_MULTIPLIER:4'
+    robot-options: '-v USE_NETCONF_CONNECTOR:False -v COUNT:1000000 -v INSERT:10 -v WITHDRAW:9 -v PREFILL:10 -v UPDATE:single -v TEST_DURATION_MULTIPLIER:4'
 
     # Trigger jobs (daily)
     schedule: 'H H * * *'
