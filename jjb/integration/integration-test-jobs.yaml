@@ -186,11 +186,9 @@
     project-type: freestyle
     node: centos7-robot-2c-2g
 
-    logrotate:
-        daysToKeep: '{build-days-to-keep}'
-        numToKeep: '{build-num-to-keep}'
-        artifactDaysToKeep: '{build-artifact-days-to-keep}'
-        artifactNumToKeep: '{build-artifact-num-to-keep}'
+    properties:
+        - opendaylight-infra-properties:
+            build-days-to-keep: '{build-days-to-keep}'
 
     parameters:
         - opendaylight-infra-parameters:
@@ -285,11 +283,9 @@
     project-type: freestyle
     node: centos7-java-builder-2c-8g
 
-    logrotate:
-        daysToKeep: '{build-days-to-keep}'
-        numToKeep: '{build-num-to-keep}'
-        artifactDaysToKeep: '{build-artifact-days-to-keep}'
-        artifactNumToKeep: '{build-artifact-num-to-keep}'
+    properties:
+        - opendaylight-infra-properties:
+            build-days-to-keep: '{build-days-to-keep}'
 
     parameters:
         - integration-bundleurl:
@@ -324,11 +320,9 @@
     node: centos7-java-builder-2c-8g
     jdk: '{jdk}'
 
-    logrotate:
-        daysToKeep: '{build-days-to-keep}'
-        numToKeep: '{build-num-to-keep}'
-        artifactDaysToKeep: '{build-artifact-days-to-keep}'
-        artifactNumToKeep: '{build-artifact-num-to-keep}'
+    properties:
+        - opendaylight-infra-properties:
+            build-days-to-keep: '{build-days-to-keep}'
 
     parameters:
         - opendaylight-infra-parameters:
@@ -430,11 +424,9 @@
     node: centos7-java-builder-8c-8g
     jdk: '{jdk}'
 
-    logrotate:
-        daysToKeep: '{build-days-to-keep}'
-        numToKeep: '{build-num-to-keep}'
-        artifactDaysToKeep: '{build-artifact-days-to-keep}'
-        artifactNumToKeep: '{build-artifact-num-to-keep}'
+    properties:
+        - opendaylight-infra-properties:
+            build-days-to-keep: '{build-days-to-keep}'
 
     parameters:
         - patches-to-build-parameter:
