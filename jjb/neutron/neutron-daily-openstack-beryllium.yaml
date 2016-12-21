@@ -14,8 +14,9 @@
     description: 'Jenkins job to run Tempest tests for the ODL ML2 MechanismDriver on Neutron dummy provider. '
     concurrent: true
 
-    logrotate:
-        daysToKeep: '198'
+    properties:
+        - opendaylight-infra-properties:
+            build-days-to-keep: '198'
 
     parameters:
         - opendaylight-infra-parameters:

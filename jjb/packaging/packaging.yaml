@@ -22,8 +22,9 @@
     logrotate:
         daysToKeep: '7'
 
-    logrotate:
-        daysToKeep: '7'
+    properties:
+        - opendaylight-infra-properties:
+            build-days-to-keep: 7
 
     parameters:
         - opendaylight-infra-parameters:
