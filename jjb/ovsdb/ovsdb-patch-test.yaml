@@ -6,30 +6,26 @@
     # The project name
     project: 'ovsdb'
 
-    feature: 'all'
-
-    # Project branches
     stream:
         - carbon:
             branch: 'master'
             jdk: 'openjdk8'
-            csit-list: >
-                ovsdb-csit-1node-southbound-only-{stream},
-                ovsdb-csit-1node-southbound-all-{stream},
-                ovsdb-csit-3node-clustering-only-{stream}
-
         - boron:
             branch: 'stable/boron'
             jdk: 'openjdk8'
+
+    feature:
+        - genius:
+            csit-list: >
+                genius-csit-1node-genius-only-{stream}
+
+        - netvirt:
+            csit-list: >
+                netvirt-csit-1node-openstack-mitaka-gate-transparent-{stream}
+
+        - plugins:
             csit-list: >
                 ovsdb-csit-1node-southbound-only-{stream},
                 ovsdb-csit-1node-southbound-all-{stream},
                 ovsdb-csit-3node-clustering-only-{stream}
 
-        - beryllium:
-            branch: 'stable/beryllium'
-            jdk: 'openjdk7'
-            csit-list: >
-                ovsdb-csit-1node-southbound-only-{stream},
-                ovsdb-csit-1node-southbound-all-{stream},
-                ovsdb-csit-3node-clustering-only-{stream}
