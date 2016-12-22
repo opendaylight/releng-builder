@@ -19,8 +19,7 @@
 
     node: dynamic_verify
 
-    logrotate:
-        daysToKeep: '7'
+    project-type: freestyle
 
     properties:
         - opendaylight-infra-properties:
@@ -95,8 +94,11 @@
 
     node: dynamic_verify
 
-    logrotate:
-        daysToKeep: '7'
+    project-type: freestyle
+
+    properties:
+        - opendaylight-infra-properties:
+            build-days-to-keep: 7
 
     parameters:
         - opendaylight-infra-parameters:
@@ -155,8 +157,11 @@
 
     node: ubuntu_mininet
 
-    logrotate:
-        daysToKeep: '7'
+    project-type: freestyle
+
+    properties:
+        - opendaylight-infra-properties:
+            build-days-to-keep: 7
 
     parameters:
         - opendaylight-infra-parameters:
