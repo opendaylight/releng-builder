@@ -4,6 +4,7 @@
         - '{project}-csit-1node-openstack-{openstack}-{functionality}-{stream}'
 
     project: 'netvirt'
+    testplan: '{project}-csit-1node-openstack.txt'
 
     functionality:
         - upstream-transparent:
@@ -18,6 +19,14 @@
         - gate-transparent:
             schedule: ''
             sg-mode: 'transparent'
+        - gate-minimal-transparent:
+            schedule: ''
+            sg-mode: 'transparent'
+            testplan: '{project}-1node-minimal-openstack.txt'
+        - gate-tempest-transparent:
+            schedule: ''
+            sg-mode: 'transparent'
+            testplan: '{project}-1node-tempest-openstack.txt'
         - gate-learn:
             schedule: ''
             sg-mode: 'learn'
