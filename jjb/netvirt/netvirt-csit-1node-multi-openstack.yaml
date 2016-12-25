@@ -6,18 +6,26 @@
     project: 'netvirt'
 
     functionality:
-        - upstream-transparent:
+        - upstream-transparent-alonko:
             schedule: 'H H * * *'
             sg-mode: 'transparent'
         - upstream-stateful:
             schedule: 'H H * * *'
             sg-mode: 'stateful'
-        - upstream-learn:
+        - upstream-learn-alonko:
             schedule: 'H H * * *'
             sg-mode: 'learn'
         - gate-transparent:
             schedule: ''
             sg-mode: 'transparent'
+        - gate-minimal-transparent:
+            schedule: ''
+            sg-mode: 'transparent'
+            test-plan: '{project}-1node-minimal-openstack.txt'
+        - gate-tempest-transparent:
+            schedule: ''
+            sg-mode: 'transparent'
+            test-plan: '{project}-1node-tempest-openstack.txt'
         - gate-learn:
             schedule: ''
             sg-mode: 'learn'
