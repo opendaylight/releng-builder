@@ -521,6 +521,13 @@ ${SSH} ${OPENSTACK_CONTROL_NODE_IP} "sudo bash /tmp/disable_firewall.sh"
 echo "sleep for a minute and print hypervisor-list"
 sleep 60
 ${SSH} ${OPENSTACK_CONTROL_NODE_IP} "cd /opt/stack/devstack; source openrc admin admin; nova hypervisor-list"
+expected_num_hypervisors=$((NUM_OPENSTACK_SYSTEM - 1))
+num_hypervisors=$(${SSH} ${OPENSTACK_CONTROL_NODE_IP} "cd /opt/stack/devstack; source openrc admin admin; openstack hypervisor list -f value | wc -l" | tail -1 | tr -d "\r")
+if [ ${num_hypervisors} -ne ${expected_num_hypervisors} ]; then
+  echo "Error: Only $num_hypervisors hypervisors detected, expected $expected_num_hypervisors"
+  collect_logs_and_exit
+  exit 1
+fi
 
 #Need to disable firewalld and iptables in compute nodes as well
 for i in `seq 1 $((NUM_OPENSTACK_SYSTEM - 1))`
