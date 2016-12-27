@@ -34,33 +34,13 @@
             refspec: 'refs/heads/{branch}'
             artifacts: '{archive-artifacts}'
         - string:
-            name: VERSION_MAJOR
-            default: '5'
-            description: 'OpenDaylight major (element) version number to build'
-        - string:
-            name: VERSION_MINOR
-            default: '0'
-            description: 'OpenDaylight minor (SR) version number to build'
-        - string:
-            name: VERSION_PATCH
-            default: '0'
-            description: 'OpenDaylight patch version to build'
-        - string:
-            name: RPM_RELEASE
-            default: '1'
-            description: 'RPM version for the given ODL major.minor.patch'
+           name: DOWNLOAD_URL
+           default: 'https://nexus.opendaylight.org/content/repositories/public/org/opendaylight/integration/distribution-karaf/0.5.0-Boron/distribution-karaf-0.5.0-Boron.tar.gz'
+           description: 'URL to ODL tarball artifact to repackage into RPM'
         - string:
             name: SYSD_COMMIT
             default: '07f7c83b0ef46ad3809e5be03e09a77fe554eeae'
             description: 'Version of ODL systemd unitfile to download and package in ODL RPM'
-        - string:
-            name: CODENAME
-            default: 'Boron'
-            description: 'Elemental codename for the ODL release, including SR if applicable'
-        - string:
-            name: DOWNLOAD_URL
-            default: 'https://nexus.opendaylight.org/content/repositories/public/org/opendaylight/integration/distribution-karaf/0.5.0-Boron/distribution-karaf-0.5.0-Boron.tar.gz'
-            description: 'URL to ODL tarball artifact to repackage into RPM'
         - string:
             name: CHANGELOG_DATE
             default: 'Sun Aug 25 1991'
@@ -113,14 +93,6 @@
             name: VERSION_MINOR
             default: '2'
             description: 'OpenDaylight minor (SR) version number to build'
-        - string:
-            name: VERSION_PATCH
-            default: '0'
-            description: 'OpenDaylight patch version to build'
-        - string:
-            name: RPM_RELEASE
-            default: '0.1.20161212snap531'
-            description: 'RPM version for the given ODL major.minor.patch'
         - string:
             name: SYSD_COMMIT
             default: '07f7c83b0ef46ad3809e5be03e09a77fe554eeae'
