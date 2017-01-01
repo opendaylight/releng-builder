@@ -125,6 +125,7 @@ if [ "${ODL_ENABLE_L3_FWD}" == "yes" ]; then
 cat >> ${local_conf_file_name} << EOF
 PUBLIC_BRIDGE=${PUBLIC_BRIDGE}
 PUBLIC_PHYSICAL_NETWORK=physnet1 # FIXME this should be a parameter
+ML2_VLAN_RANGES=physnet1
 ODL_PROVIDER_MAPPINGS=${ODL_PROVIDER_MAPPINGS}
 
 disable_service q-l3
