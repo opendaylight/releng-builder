@@ -166,6 +166,9 @@
             pip install --upgrade pip
             pip install --upgrade tox argparse
             pip freeze
+            ls -lAn $WORKSPACE || true
+            ls -lAn $WORKSPACE/repo || true
+            ls -lAn $WORKSPACE/repo/{toxdir} || true
             cd $WORKSPACE/repo/{toxdir}
             tox
 
