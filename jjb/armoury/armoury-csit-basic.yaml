@@ -29,10 +29,14 @@
             scope: 'all'
 
     # Features to install
-    install-features: 'odl-armoury-workloadmanager'
+    install-features: >
+        odl-restconf,
+        odl-armoury-workloadmanager
 
     # Robot custom options
     robot-options: ''
 
     # Trigger jobs (upstream dependencies)
-    trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream},mdsal-distribution-{stream},armoury-distribution-{stream}'
+    trigger-jobs: >
+        netconf-distribution-{stream},
+        armoury-distribution-{stream}
