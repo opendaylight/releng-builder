@@ -45,7 +45,6 @@ Next we will create <new-project>.yaml as follows:
             - '{project-name}-distribution-{stream}'
             - '{project-name}-integration-{stream}'
             - '{project-name}-merge-{stream}'
-            - '{project-name}-periodic-{stream}'
             - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
         project: '<NEW_PROJECT>'
