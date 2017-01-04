@@ -48,7 +48,7 @@
        - shell: |
           # TODO: Remove this condition once stable/beryllium is no longer
           #       officially maintained.
-          if [ "$RELEASE_BRANCH" != "stable/beryllium" ]; then
+          if [ "$GERRIT_BRANCH" != "stable/beryllium" ]; then
               virtualenv --system-site-packages $WORKSPACE/venv
               source $WORKSPACE/venv/bin/activate
               pip install --upgrade pip
