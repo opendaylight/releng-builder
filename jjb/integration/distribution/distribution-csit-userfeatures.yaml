@@ -17,9 +17,13 @@
         - boron:
             branch: 'stable/boron'
             jre: 'openjdk8'
+            install-features: 'odl-restconf,odl-distribution-version,odl-netconf-connector-all,odl-jolokia'
+            robot-options: '-v USE_NETCONF_CONNECTOR:True'
         - beryllium:
             branch: 'stable/beryllium'
             jre: 'openjdk7'
+            install-features: 'odl-restconf,odl-distribution-version,odl-netconf-connector-all,odl-jolokia'
+            robot-options: '-v USE_NETCONF_CONNECTOR:True'
 
     # TODO: Add Beryllium when everything is backported there.
 
@@ -30,10 +34,10 @@
             scope: 'all'
 
     # Features to install
-    install-features: 'odl-restconf,odl-distribution-version,odl-netconf-connector-all,odl-jolokia'
+    install-features: 'odl-restconf,odl-distribution-version,odl-netconf-topology,odl-jolokia'
 
     # Robot custom options
-    robot-options: '-v USE_NETCONF_CONNECTOR:True'
+    robot-options: '-v USE_NETCONF_CONNECTOR:False'
 
     # Trigger jobs (upstream dependencies)
     trigger-jobs: >
