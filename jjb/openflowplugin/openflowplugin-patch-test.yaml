@@ -6,24 +6,17 @@
     # The project name
     project: 'openflowplugin'
 
-    feature: 'all'
-
     # Project branches
     stream:
         - carbon:
             branch: 'master'
             jdk: 'openjdk8'
-            csit-list: >
-                openflowplugin-csit-1node-flow-services-only-{stream},
-                openflowplugin-csit-1node-flow-services-all-{stream},
-                openflowplugin-csit-1node-scalability-only-{stream},
-                openflowplugin-csit-1node-cbench-performance-only-{stream},
-                openflowplugin-csit-1node-config-performance-only-{stream},
-                openflowplugin-csit-3node-clustering-only-{stream}
-
         - boron:
             branch: 'stable/boron'
             jdk: 'openjdk8'
+
+    feature:
+        - all:
             csit-list: >
                 openflowplugin-csit-1node-flow-services-only-{stream},
                 openflowplugin-csit-1node-flow-services-all-{stream},
@@ -32,14 +25,10 @@
                 openflowplugin-csit-1node-config-performance-only-{stream},
                 openflowplugin-csit-3node-clustering-only-{stream}
 
-        - beryllium:
-            branch: 'stable/beryllium'
-            jdk: 'openjdk7'
+        - netvirt-basic:
             csit-list: >
-                openflowplugin-csit-1node-flow-services-only-{stream},
-                openflowplugin-csit-1node-flow-services-all-{stream},
-                openflowplugin-csit-1node-scalability-only-{stream},
-                openflowplugin-csit-1node-cbench-performance-only-{stream},
-                openflowplugin-csit-1node-config-performance-only-{stream},
-                openflowplugin-csit-3node-clustering-only-{stream}
+                netvirt-csit-1node-openstack-newton-gate-learn-{stream}
+        - netvirt-cluster:
+            csit-list: >
+                netvirt-csit-3node-openstack-newton-gate-learn-{stream}
 
