@@ -207,6 +207,24 @@
               template-name: '{mininet-image}'
               count: '{mininet-vms}'
 
+# Macro: integration-jclouds-controller-devstack-mininet
+# Operation: this macro will spin the controller,devstack and mininet vms
+# Used by: {project}-csit-1node-tor-dcgw-openstack and {project}-csit-3node-tor-dcgw-openstack job templates
+- wrapper:
+    name: integration-jclouds-controller-devstack-mininet
+    wrappers:
+      - jclouds:
+          instances:
+            - '{controller-image}':
+                cloud-name: 'ODLPUB'
+                count: '{controller-vms}'
+            - '{openstack-image}':
+                cloud-name: 'ODLPUB'
+                count: '{openstack-vms}'
+            - '{mininet-image}':
+                cloud-name: 'ODLPUB'
+                count: '{mininet-vms}'
+
 # Macro: integration-jclouds-controller-devstack
 # Operation: this macro will spin the controller and devstack vms
 # Used by: {project}-csit-openstack job templates
