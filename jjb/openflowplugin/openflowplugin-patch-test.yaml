@@ -13,17 +13,15 @@
         - carbon:
             branch: 'master'
             jdk: 'openjdk8'
-            csit-list: >
-                openflowplugin-csit-1node-flow-services-only-{stream},
-                openflowplugin-csit-1node-flow-services-all-{stream},
-                openflowplugin-csit-1node-scalability-only-{stream},
-                openflowplugin-csit-1node-cbench-performance-only-{stream},
-                openflowplugin-csit-1node-config-performance-only-{stream},
-                openflowplugin-csit-3node-clustering-only-{stream}
-
         - boron:
             branch: 'stable/boron'
             jdk: 'openjdk8'
+        - beryllium:
+            branch: 'stable/beryllium'
+            jdk: 'openjdk7'
+
+    feature:
+        - all:
             csit-list: >
                 openflowplugin-csit-1node-flow-services-only-{stream},
                 openflowplugin-csit-1node-flow-services-all-{stream},
@@ -32,14 +30,7 @@
                 openflowplugin-csit-1node-config-performance-only-{stream},
                 openflowplugin-csit-3node-clustering-only-{stream}
 
-        - beryllium:
-            branch: 'stable/beryllium'
-            jdk: 'openjdk7'
+        - netvirt-cluster:
             csit-list: >
-                openflowplugin-csit-1node-flow-services-only-{stream},
-                openflowplugin-csit-1node-flow-services-all-{stream},
-                openflowplugin-csit-1node-scalability-only-{stream},
-                openflowplugin-csit-1node-cbench-performance-only-{stream},
-                openflowplugin-csit-1node-config-performance-only-{stream},
-                openflowplugin-csit-3node-clustering-only-{stream}
+                netvirt-csit-3node-openstack-newton-nodl-v2-gate-learn-{stream}
 
