@@ -14,9 +14,6 @@
         - boron:
             branch: 'stable/boron'
             jdk: 'openjdk8'
-        - beryllium:
-            branch: 'stable/beryllium'
-            jdk: 'openjdk7'
 
     feature:
         - core:
@@ -27,3 +24,12 @@
                 openflowplugin-csit-1node-cbench-performance-only-{stream},
                 openflowplugin-csit-1node-config-performance-only-{stream},
                 openflowplugin-csit-3node-clustering-only-{stream}
+
+        - netvirt:
+            csit-list: >
+                netvirt-csit-1node-openstack-mitaka-gate-transparent-{stream}
+        
+        - cluster-netvirt:
+            csit-list: >
+                netvirt-csit-3node-openstack-mitaka-gate-transparent-{stream}
+
