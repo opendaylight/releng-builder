@@ -79,17 +79,6 @@
             node -v
             npm -v
 
-            echo "---> Ensure mongo is running"
-            ps -A | grep -q '[m]ongod'
-            if [ ! "$?" -eq "0" ]; then
-                echo "The mongod server DOWN", restarting...
-                if [ ! -d mongo ]; then
-                    mkdir mongo
-                fi
-                echo "---> Starting mongo"
-                mongod --dbpath ~/mongo &
-            fi
-
             echo "---> Restart spectrometer-api"
             pkill gunicorn
             sleep 5  # Sleep 5 seconds for cooldown
