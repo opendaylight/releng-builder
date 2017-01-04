@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1a622d24_e99dc65a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-01-04T16:53:48Z",
+      "side": 1,
+      "message": "Unstable builds was a feature of the Maven project type.\n\nIn freestyle jobs if shell returns a non-zero exit code it always results in failure.\n\nOne potential way is to use yet another plugin such as the text finder plugin [0] and make it search for a keyword which you purposely print in shell to downgrade the build to UNSTABLE. But I don\u0027t think it\u0027s worth the complexity to add to a branch we\u0027re not actively maintaining and in our active branches we want the build to fail on cycles so I think that\u0027s a good thing.\n\n[0] https://wiki.jenkins-ci.org/display/JENKINS/Text-finder+Plugin",
+      "parentUuid": "1a622d24_ced45022",
+      "range": {
+        "startLine": 9,
+        "startChar": 54,
+        "endLine": 10,
+        "endChar": 4
+      },
+      "revId": "51be6514ae7aec383fd9670b408348828a7cd685",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a622d24_cea290ad",
         "filename": "jjb/autorelease/autorelease-macros.yaml",
         "patchSetId": 1
