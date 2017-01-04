@@ -103,6 +103,30 @@
       "revId": "838846fa606888593888f45d0569e4d85a5071a3",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a622d24_9d5610d1",
+        "filename": "jjb/packaging/packaging.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2017-01-04T00:36:49Z",
+      "side": 1,
+      "message": "Logically its correct! just makes the code more readable with `project-name` variable substitution is not required here IMHO since all jobs are starting with `packaging-*`. Similar to `builder-*` jobs in https://github.com/opendaylight/releng-builder/blob/master/jjb/releng-jobs.yaml \nThis is optional!",
+      "parentUuid": "1a622d24_3dc09c7b",
+      "range": {
+        "startLine": 19,
+        "startChar": 11,
+        "endLine": 19,
+        "endChar": 25
+      },
+      "revId": "838846fa606888593888f45d0569e4d85a5071a3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
