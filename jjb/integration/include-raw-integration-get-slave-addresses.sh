@@ -3,6 +3,7 @@
 ODL_SYSTEM=()
 TOOLS_SYSTEM=()
 OPENSTACK_SYSTEM=()
+[ "$NUM_OPENSTACK_SITES" ] || NUM_OPENSTACK_SITES=1
 
 echo "JCLOUDS IPS are ${JCLOUDS_IPS}"
 
@@ -28,7 +29,7 @@ echo "NUM_ODL_SYSTEM=${#ODL_SYSTEM[@]}" >> slave_addresses.txt
 echo "NUM_TOOLS_SYSTEM=${#TOOLS_SYSTEM[@]}" >> slave_addresses.txt
 #if HA Proxy is requested the last devstack node will be configured as haproxy
 if [ "${ENABLE_HAPROXY_FOR_NEUTRON}" == "yes" ]; then
-   echo "NUM_OPENSTACK_SYSTEM=$(( ${#OPENSTACK_SYSTEM[@]} - 1 ))" >> slave_addresses.txt
+   echo "NUM_OPENSTACK_SYSTEM=$(( ${#OPENSTACK_SYSTEM[@]} - ${NUM_OPENSTACK_SITES} ))" >> slave_addresses.txt
 else
    echo "NUM_OPENSTACK_SYSTEM=${#OPENSTACK_SYSTEM[@]}" >> slave_addresses.txt
 fi
@@ -48,9 +49,15 @@ do
 done
 
 echo "OPENSTACK_CONTROL_NODE_IP=${OPENSTACK_SYSTEM[0]}" >> slave_addresses.txt
-for i in `seq 1 $(( ${#OPENSTACK_SYSTEM[@]} - 1 ))`
+# Assuming number of opesntack controller equal number of openstack sites
+for i in `seq 0 $(( NUM_OPENSTACK_SITES - 1 ))`
 do
-    echo "OPENSTACK_COMPUTE_NODE_$((i))_IP=${OPENSTACK_SYSTEM[${i}]}" >> slave_addresses.txt
+    echo "OPENSTACK_CONTROL_NODE_$((i+1))_IP=${OPENSTACK_SYSTEM[${i}]}" >> slave_addresses.txt
+done
+
+for i in `seq 1 $(( ${#OPENSTACK_SYSTEM[@]} - ${NUM_OPENSTACK_SITES} ))`
+do
+    echo "OPENSTACK_COMPUTE_NODE_${i}_IP=${OPENSTACK_SYSTEM[$((i+NUM_OPENSTACK_SITES-1))]}" >> slave_addresses.txt
 done
 # vim: sw=4 ts=4 sts=4 et ft=sh :
 
