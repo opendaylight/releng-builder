@@ -1,0 +1,43 @@
+heat_template_version: 2016-04-08
+
+parameters:
+  job_name:
+    type: string
+    description: Name of job running this template
+
+resources:
+  controller_group:
+    type: "OS::Heat::ResourceGroup"
+    properties:
+      count: 2
+      resource_def:
+        type: generic-server.yaml
+        properties:
+          job_name: { get_param: job_name }
+          ssh_key: sandbox
+          index: "%index%"
+          vm_flavor: 1 GB General Purpose v1
+          vm_image: CentOS 7 - java-builder - 20161031-0802
+          vm_type: java-builder
+
+  mininet_group:
+    type: "OS::Heat::ResourceGroup"
+    properties:
+      count: 1
+      resource_def:
+        type: generic-server.yaml
+        properties:
+          job_name: { get_param: job_name }
+          ssh_key: sandbox
+          index: "%index%"
+          vm_flavor: 1 GB General Purpose v1
+          vm_image: Ubuntu 14.04 - mininet - 20161031-0803
+          vm_type: mininet
+
+outputs:
+  controller_ips:
+    description: IP addresses of the controllers
+    value: { get_attr: [controller_group, ip] }
+  mininet_ips:
+    description: IP addresses of the mininets
+    value: { get_attr: [mininet_group, ip] }
