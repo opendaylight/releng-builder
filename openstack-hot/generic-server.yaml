@@ -1,0 +1,48 @@
+heat_template_version: 2016-04-08
+
+parameters:
+    job_name:
+        type: string
+        description: Name of job running this template
+    ssh_key:
+        type: string
+        description: SSH Key name to use (Public key must exist in OpenStack)
+    index:
+        type: number
+    vm_flavor:
+        type: string
+        default: 1 GB General Purpose v1
+        description: OpenStack Flavor to use
+    vm_image:
+        type: string
+        description: VM Image to spin up
+
+resources:
+    instance:
+        type: "OS::Nova::Server"
+        properties:
+            flavor: { get_param: vm_flavor }
+            image: { get_param: vm_image }
+            name:
+                str_replace:
+                    template: JOB_NAME-VM_TYPE-INDEX
+                    params:
+                        "JOB_NAME": { get_param: job_name }
+                        "VM_TYPE":
+                            str_split:
+                                - ' - '
+                                - { get_param: vm_image }
+                                - 1
+                        "INDEX": { get_param: index }
+            networks:
+                - network: RC-ODL
+            key_name: { get_param: ssh_key }
+            user_data: |
+                #!/bin/bash
+                git clone https://git.opendaylight.org/gerrit/releng/builder /builder
+                /builder/jenkins-scripts/jenkins-init-script.sh
+
+outputs:
+    ip:
+        description: IP address of the instance
+        value: { get_attr: [instance, networks, RC-ODL, 0] }
