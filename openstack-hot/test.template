@@ -1,0 +1,52 @@
+heat_template_version: 2016-04-08
+
+parameters:
+  job_name:
+    type: string
+    default: job
+    description: Name of job running this template
+
+resources:
+  controller:
+    type: "OS::Nova::Server"
+    properties:
+      flavor: 4 GB General Purpose v1
+      image: CentOS 7 - java-builder - 20161031-0802
+      name:
+        str_replace:
+          template: JOB_NAME-java-builder
+          params:
+            "JOB_NAME": { get_param: job_name }
+      networks:
+        - network: RC-ODL
+      key_name: sandbox
+      user_data: |
+        #!/bin/bash
+        git clone https://git.opendaylight.org/gerrit/releng/builder /builder
+        /builder/jenkins-scripts/jenkins-init-script.sh
+
+  mininet:
+    type: "OS::Nova::Server"
+    properties:
+      flavor: 2 GB General Purpose v1
+      image: Ubuntu 14.04 - mininet - 20161031-0803
+      name:
+        str_replace:
+          template: JOB_NAME-mininet
+          params:
+            "JOB_NAME": { get_param: job_name }
+      networks:
+        - network: RC-ODL
+      key_name: sandbox
+      user_data: |
+        #!/bin/bash
+        git clone https://git.opendaylight.org/gerrit/releng/builder /builder
+        /builder/jenkins-scripts/jenkins-init-script.sh
+
+outputs:
+  controller_ip:
+    description: IP address of the controller instance
+    value: { get_attr: [controller, networks, RC-ODL, 0] }
+  mininet_ip:
+    description: IP address of the mininet instance
+    value: { get_attr: [mininet, networks, RC-ODL, 0] }
