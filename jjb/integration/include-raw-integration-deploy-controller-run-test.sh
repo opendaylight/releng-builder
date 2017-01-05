@@ -13,9 +13,11 @@ if [ "${ENABLE_HAPROXY_FOR_NEUTRON}" == "yes" ]; then
     MODULESHARDSCONF=/tmp/${BUNDLEFOLDER}/configuration/initial/module-shards.conf
     # Create the string for odl nodes
     odl_node_list="${ODL_SYSTEM_1_IP}"
+    odl_mgr_ip="${ODL_SYSTEM_1_IP}"
     for i in `seq 2 ${NUM_ODL_SYSTEM}` ; do
         CONTROLLERIP=ODL_SYSTEM_${i}_IP
         odl_node_list="${odl_node_list} ${!CONTROLLERIP}"
+        odl_mgr_ip="${OPENSTACK_COMPUTE_NODE_3_IP}"
     done
     echo ${odl_node_list}
 fi
@@ -120,6 +122,15 @@ fi
 
 EOF
 
+cat > ${WORKSPACE}/rabbit-client-script.sh << EOF
+echo "Configuring rabbit broker for ODL ..."
+SERVICECONF=\$(find "/tmp/${BUNDLEFOLDER}/" -name "federation-service-impl-*config.xml")
+sed -ie "s/<site-ip>127.0.0.1/<site-ip>\$2/g" \${SERVICECONF}
+sed -ie "s/127.0.0.1/\$1/g" \${SERVICECONF}
+sed -ie "s/guest/federation/g" \${SERVICECONF}
+cat \${SERVICECONF}
+EOF
+
 # Create the startup script to be run on controller.
 cat > ${WORKSPACE}/startup-script.sh <<EOF
 
@@ -188,6 +199,10 @@ do
     echo "Execute the configuration script on controller ${!CONTROLLERIP}"
     scp ${WORKSPACE}/configuration-script.sh ${!CONTROLLERIP}:/tmp
     ssh ${!CONTROLLERIP} "bash /tmp/configuration-script.sh ${i}"
+    if [[ ${CONTROLLERFEATURES} == *federation* ]]; then
+        scp ${WORKSPACE}/rabbit-client-script.sh ${!CONTROLLERIP}:/tmp
+        ssh ${!CONTROLLERIP} "bash /tmp/rabbit-client-script.sh ${OPENSTACK_CONTROL_NODE_IP} ${odl_mgr_ip}"
+    fi
 done
 
 echo "Locating config plan to use..."
