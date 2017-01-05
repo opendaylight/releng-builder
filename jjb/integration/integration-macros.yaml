@@ -259,6 +259,8 @@
 # Macro: integration-copy-ssh-keys
 # Operation: Copy ssh public key used as authentication for robot
 # Used by: {project}-csit-* job templates
+#
+# TODO: Remove this macro. This code is moved into the new macro opendaylight-infra-stack
 
 - builder:
     name: integration-copy-ssh-keys
