@@ -1203,6 +1203,10 @@
           name: DISABLE_ODL_L3_PLUGIN
           default: '{disable-odl-l3-service-plugin}'
           description: 'Disable odl l3 service plugin'
+      - string:
+          name: NUM_OPENSTACK_SITES
+          default: '{num-openstack-sites}'
+          description: 'Number of openstack sites'
 
     scm:
       - integration-gerrit-scm:
