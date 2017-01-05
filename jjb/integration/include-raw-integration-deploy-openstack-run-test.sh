@@ -480,6 +480,12 @@ elif [ \${ret} -eq 0 ]; then
 fi
 EOF
 
+cat > ${WORKSPACE}/rabbit-server-script.sh << EOF
+echo "Add federation user to rabbit server ..."
+sudo /usr/sbin/rabbitmqctl add_user federation federation
+sudo rabbitmqctl set_permissions -p / federation ".*" ".*" ".*"
+EOF
+
 #the checking is repeated for an hour
 iteration=0
 in_progress=1
@@ -521,6 +527,10 @@ ${SSH} ${OPENSTACK_CONTROL_NODE_IP} "sudo bash /tmp/disable_firewall.sh"
 echo "sleep for a minute and print hypervisor-list"
 sleep 60
 ${SSH} ${OPENSTACK_CONTROL_NODE_IP} "cd /opt/stack/devstack; source openrc admin admin; nova hypervisor-list"
+if [[ ${CONTROLLERFEATURES} == *federation* ]]; then
+    scp ${WORKSPACE}/rabbit-server-script.sh ${OPENSTACK_CONTROL_NODE_IP}:/tmp
+    ssh ${OPENSTACK_CONTROL_NODE_IP} "sudo bash /tmp/rabbit-server-script.sh"
+fi
 
 #Need to disable firewalld and iptables in compute nodes as well
 for i in `seq 1 $((NUM_OPENSTACK_SYSTEM - 1))`
