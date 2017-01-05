@@ -1,0 +1,41 @@
+heat_template_version: 2014-10-16
+
+parameters:
+  job_name:
+    type: string
+    default: job
+    description: Name of job running this template
+
+resources:
+  compute_instance:
+    type: "OS::Nova::Server"
+    properties:
+      flavor: 1 GB General Purpose v1
+      image: Ubuntu 14.04 - devstack - 20170101-1002
+      name:
+        str_replace:
+          template: $job_name-devstack-test
+          params:
+            "$job_name": { get_param: job_name }
+      networks:
+        - network: RC-ODL
+  mininet_instance:
+    type: "OS::Nova::Server"
+    properties:
+      flavor: 1 GB General Purpose v1
+      image: Ubuntu 14.04 - devstack - 20170101-1002
+      name: 
+        str_replace:
+          template: $job_name-mininet-test
+          params:
+            "$job_name": { get_param: job_name }
+      networks:
+        - network: RC-ODL
+
+outputs:
+  public_ip:
+    description: public IP address of the deployed compute instance
+    value: { get_attr: [compute_instance, networks, RC-ODL, 0] }
+  another_ip:
+    description: public IP address of the deployed compute instance
+    value: { get_attr: [mininet_instance, networks, RC-ODL, 0] }
