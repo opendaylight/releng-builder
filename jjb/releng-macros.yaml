@@ -29,6 +29,10 @@
             name: GERRIT_REFSPEC
             default: '{refspec}'
             description: "GERRIT_REFSPEC parameter if not given by trigger"
+        - string:
+            name: STACK_NAME
+            default: '$JOB_NAME-$BUILD_NUMBER'
+            description: "Used by Heat to generate a unique stack & vm name"
 
 - parameter:
     name: build-tag
@@ -276,6 +280,15 @@
     publishers:
         - postbuildscript:
             builders:
+                - shell: |
+                    if [ -d "$WORKSPACE/.venv-openstack" ]; then
+                        # TODO: Remove the condition once we are no longer using
+                        #       JClouds plugin.
+                        if [ -z "$JCLOUDS_IPS" ]; then
+                            source $WORKSPACE/.venv-openstack/bin/activate
+                            openstack --os-cloud rackspace stack delete --yes $STACK_NAME
+                        fi
+                    fi
                 - shell: !include-raw: include-raw-deploy-archives.sh
                 - maven-target:
                         maven-version: '{maven-version}'
@@ -298,6 +311,26 @@
               # properties file as input for triggering another build.
               - '**/*.jenkins-trigger'
             fail-build: false
+
+- builder:
+    name: opendaylight-infra-stack
+    builders:
+        - shell: |
+            #!/bin/bash
+            git clone https://git.opendaylight.org/gerrit/releng/builder $WORKSPACE/.infra-scripts
+
+            virtualenv $WORKSPACE/.venv-openstack
+            source $WORKSPACE/.venv-openstack/bin/activate
+            pip install --upgrade pip
+            pip install --upgrade python-openstackclient python-heatclient
+            pip freeze
+
+            cd $WORKSPACE/.infra-scripts/openstack-hot
+
+            JOB_SUM=`echo $JOB_NAME | sum | awk '{ print $1 }'`
+            VM_NAME="$JOB_SUM-$BUILD_NUMBER"
+            openstack --os-cloud rackspace stack create --wait -t csit-2-instance-type.yaml -e $WORKSPACE/opendaylight-infra-environment.yaml --parameter "job_name=$VM_NAME" --parameter "silo=$SILO" $STACK_NAME
+        - shell: !include-raw: opendaylight-infra-copy-ssh-keys.sh
 
 - builder:
     name: wipe-org-opendaylight-repo
@@ -386,6 +419,11 @@
     # needed by OpenDaylight infra.
     name: opendaylight-infra-wrappers
     wrappers:
+        - mask-passwords
+        - config-file-provider:
+            files:
+                - file-id: rackspace-heat
+                  target: '$HOME/.config/openstack/clouds.yaml'
         - timeout:
             type: absolute
             timeout: '{build-timeout}'
