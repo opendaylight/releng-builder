@@ -17,6 +17,32 @@
           odl_system_count: 3
           enable-haproxy: 'yes'
           install-features: 'odl-jolokia,odl-netvirt-openstack'
+      - 2site-1node:
+          openstack_system_count: 6
+          odl_system_count: 2
+          enable-haproxy: 'no'
+          install-features: 'odl-netvirt-openstack,odl-netvirt-federation'
+          num-openstack-sites: 2
+          testplan: '{project}-1node-openstack.txt'
+# Commented out to keep number of jobs limited until we figure out how to limit functionalities
+#      - 2site-3node:
+#          openstack_system_count: 8
+#          odl_system_count: 6
+#          enable-haproxy: 'yes'
+#          install-features: 'odl-jolokia,odl-netvirt-openstack,odl-netvirt-federation'
+#          num-openstack-sites: 2
+#      - 3site-1node:
+#          openstack_system_count: 9
+#          odl_system_count: 3
+#          enable-haproxy: 'no'
+#          install-features: 'odl-netvirt-openstack,odl-netvirt-federation'
+#          num-openstack-sites: 3
+#      - 3site-3node:
+#          openstack_system_count: 12
+#          odl_system_count: 9
+#          enable-haproxy: 'yes'
+#          install-features: 'odl-jolokia,odl-netvirt-openstack,odl-netvirt-federation'
+#          num-openstack-sites: 3
 
     testplan: '{project}-{topology}-openstack.txt'
 
