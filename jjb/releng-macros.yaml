@@ -29,6 +29,10 @@
             name: GERRIT_REFSPEC
             default: '{refspec}'
             description: "GERRIT_REFSPEC parameter if not given by trigger"
+        - string:
+            name: STACK_NAME
+            default: '$JOB_NAME-$BUILD_NUMBER'
+            description: "Used by Heat to generate a unique stack & vm name"
 
 - parameter:
     name: build-tag
@@ -276,6 +280,15 @@
     publishers:
         - postbuildscript:
             builders:
+                - shell: |
+                    if [ -d "$WORKSPACE/.venv-openstack" ]; then
+                        # TODO: Remove the condition once we are no longer using
+                        #       JClouds plugin.
+                        if [ -z "$JCLOUDS_IPS" ]; then
+                            source $WORKSPACE/.venv-openstack/bin/activate
+                            openstack --os-cloud rackspace stack delete --yes $STACK_NAME
+                        fi
+                    fi
                 - shell: !include-raw: include-raw-deploy-archives.sh
                 - maven-target:
                         maven-version: '{maven-version}'
@@ -298,6 +311,75 @@
               # properties file as input for triggering another build.
               - '**/*.jenkins-trigger'
             fail-build: false
+
+- builder:
+    name: opendaylight-infra-stack
+    builders:
+        - shell: |
+            virtualenv $WORKSPACE/.venv-openstack
+            source $WORKSPACE/.venv-openstack/bin/activate
+            pip install --upgrade pip
+            pip install --upgrade python-openstackclient python-heatclient
+            pip freeze
+
+            cat > test.template << EOF
+            heat_template_version: 2016-04-08
+
+            parameters:
+              job_name:
+                type: string
+                default: job
+                description: Name of job running this template
+
+            resources:
+              controller:
+                type: "OS::Nova::Server"
+                properties:
+                  flavor: 4 GB General Purpose v1
+                  image: CentOS 7 - java-builder - 20161031-0802
+                  name:
+                    str_replace:
+                      template: JOB_NAME-java-builder
+                      params:
+                        "JOB_NAME": { get_param: job_name }
+                  networks:
+                    - network: RC-ODL
+                  key_name: sandbox
+                  user_data: |
+                    #!/bin/bash
+                    git clone https://git.opendaylight.org/gerrit/releng/builder /builder
+                    /builder/jenkins-scripts/jenkins-init-script.sh
+              mininet:
+                type: "OS::Nova::Server"
+                properties:
+                  flavor: 2 GB General Purpose v1
+                  image: Ubuntu 14.04 - mininet - 20161031-0803
+                  name:
+                    str_replace:
+                      template: JOB_NAME-mininet
+                      params:
+                        "JOB_NAME": { get_param: job_name }
+                  networks:
+                    - network: RC-ODL
+                  key_name: sandbox
+                  user_data: |
+                    #!/bin/bash
+                    git clone https://git.opendaylight.org/gerrit/releng/builder /builder
+                    /builder/jenkins-scripts/jenkins-init-script.sh
+
+            outputs:
+              controller_ip:
+                description: IP address of the controller instance
+                value: { get_attr: [controller, networks, RC-ODL, 0] }
+              mininet_ip:
+                description: IP address of the mininet instance
+                value: { get_attr: [mininet, networks, RC-ODL, 0] }
+            EOF
+
+            JOB_SUM=`echo $JOB_NAME | sum | awk '{ print $1 }'`
+            VM_NAME="$JOB_SUM-$BUILD_NUMBER"
+            openstack --os-cloud rackspace stack create --wait -t test.template --parameter "job_name=$VM_NAME" $STACK_NAME
+        - shell: !include-raw: opendaylight-infra-copy-ssh-keys.sh
 
 - builder:
     name: wipe-org-opendaylight-repo
@@ -386,6 +468,11 @@
     # needed by OpenDaylight infra.
     name: opendaylight-infra-wrappers
     wrappers:
+        - mask-passwords
+        - config-file-provider:
+            files:
+                - file-id: rackspace-heat
+                  target: '$HOME/.config/openstack/clouds.yaml'
         - timeout:
             type: absolute
             timeout: '{build-timeout}'

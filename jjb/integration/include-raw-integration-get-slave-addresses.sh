@@ -4,9 +4,19 @@ ODL_SYSTEM=()
 TOOLS_SYSTEM=()
 OPENSTACK_SYSTEM=()
 
-echo "JCLOUDS IPS are ${JCLOUDS_IPS}"
-
-IFS=',' read -ra ADDR <<< "${JCLOUDS_IPS}"
+# TODO: Remove condition when we no longer use JClouds plugin
+if [ -z "$JCLOUDS_IPS" ]; then
+    # If JCLOUDS_IPS is not set then we will spawn instances with
+    # OpenStack Heat.
+    sudo yum install -y jq
+    source $WORKSPACE/.venv-openstack/bin/activate
+    CONTROLLER_IP=`openstack --os-cloud rackspace stack show -f json -c outputs $STACK_NAME | jq -r '.outputs[] | select(.output_key=="controller_ip") | .output_value'`
+    MININET_IP=`openstack --os-cloud rackspace stack show -f json -c outputs $STACK_NAME | jq -r '.outputs[] | select(.output_key=="mininet_ip") | .output_value'`
+    ADDR=("$CONTROLLER_IP" "$MININET_IP")
+else
+    echo "OpenStack IPS are ${JCLOUDS_IPS}"
+    IFS=',' read -ra ADDR <<< "${JCLOUDS_IPS}"
+fi
 
 for i in "${ADDR[@]}"
 do
@@ -53,4 +63,3 @@ do
     echo "OPENSTACK_COMPUTE_NODE_$((i))_IP=${OPENSTACK_SYSTEM[${i}]}" >> slave_addresses.txt
 done
 # vim: sw=4 ts=4 sts=4 et ft=sh :
-
