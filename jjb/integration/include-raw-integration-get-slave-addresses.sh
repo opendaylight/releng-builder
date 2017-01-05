@@ -28,29 +28,31 @@ echo "NUM_ODL_SYSTEM=${#ODL_SYSTEM[@]}" >> slave_addresses.txt
 echo "NUM_TOOLS_SYSTEM=${#TOOLS_SYSTEM[@]}" >> slave_addresses.txt
 #if HA Proxy is requested the last devstack node will be configured as haproxy
 if [ "${ENABLE_HAPROXY_FOR_NEUTRON}" == "yes" ]; then
-   echo "NUM_OPENSTACK_SYSTEM=$(( ${#OPENSTACK_SYSTEM[@]} - 1 ))" >> slave_addresses.txt
+   echo "NUM_OPENSTACK_SYSTEM=$(( ${#OPENSTACK_SYSTEM[@]} - ${NUM_OPENSTACK_SITES} ))" >> slave_addresses.txt
 else
    echo "NUM_OPENSTACK_SYSTEM=${#OPENSTACK_SYSTEM[@]}" >> slave_addresses.txt
 fi
 
-# Add alias for ODL_SYSTEM_1_IP as ODL_SYSTEM_IP
-echo "ODL_SYSTEM_IP=${ODL_SYSTEM[0]}" >> slave_addresses.txt
-for i in `seq 0 $(( ${#ODL_SYSTEM[@]} - 1 ))`
+for j in `seq 0 $(( ${NUM_OPENSTACK_SITES} - 1 ))`
 do
-    echo "ODL_SYSTEM_$((i+1))_IP=${ODL_SYSTEM[${i}]}" >> slave_addresses.txt
-done
 
-# Add alias for TOOLS_SYSTEM_1_IP as TOOLS_SYSTEM_IP
-echo "TOOLS_SYSTEM_IP=${TOOLS_SYSTEM[0]}" >> slave_addresses.txt
-for i in `seq 0 $(( ${#TOOLS_SYSTEM[@]} - 1 ))`
-do
-    echo "TOOLS_SYSTEM_$((i+1))_IP=${TOOLS_SYSTEM[${i}]}" >> slave_addresses.txt
-done
+    for i in `seq 1 $(( ${#ODL_SYSTEM[@]} / ${NUM_OPENSTACK_SITES} ))`
+    do
+        echo "SITE_$((j+1))_ODL_SYSTEM_${i}_IP=${ODL_SYSTEM[$((j+i-1))]}" >> slave_addresses.txt
+    done
 
-echo "OPENSTACK_CONTROL_NODE_IP=${OPENSTACK_SYSTEM[0]}" >> slave_addresses.txt
-for i in `seq 1 $(( ${#OPENSTACK_SYSTEM[@]} - 1 ))`
-do
-    echo "OPENSTACK_COMPUTE_NODE_$((i))_IP=${OPENSTACK_SYSTEM[${i}]}" >> slave_addresses.txt
+
+    for i in `seq 1 $(( ${#TOOLS_SYSTEM[@]} / ${NUM_OPENSTACK_SITES} ))`
+    do
+        echo "SITE_$((j+1))_TOOLS_SYSTEM_${i}_IP=${TOOLS_SYSTEM[$((j+i-1))]}" >> slave_addresses.txt
+    done
+
+    for i in `seq 1 $(( ${#OPENSTACK_SYSTEM[@]} / ${NUM_OPENSTACK_SITES} ))`
+    do
+        if [ $(( $i % (${#OPENSTACK_SYSTEM[@]} / ${NUM_OPENSTACK_SITES}) )) == 1 ]; then
+            echo "SITE_$((j+1))_OPENSTACK_CONTROL_NODE_1_IP=${OPENSTACK_SYSTEM[$((j+i-1))]}" >> slave_addresses.txt
+        fi
+        echo "SITE_$((j+1))_OPENSTACK_COMPUTE_NODE_${i}_IP=${OPENSTACK_SYSTEM[$((j+i))]}" >> slave_addresses.txt
+    done
 done
 # vim: sw=4 ts=4 sts=4 et ft=sh :
-
