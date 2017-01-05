@@ -12,12 +12,6 @@ if [ "${ENABLE_HAPROXY_FOR_NEUTRON}" == "yes" ]; then
     MODULESCONF=/tmp/${BUNDLEFOLDER}/configuration/initial/modules.conf
     MODULESHARDSCONF=/tmp/${BUNDLEFOLDER}/configuration/initial/module-shards.conf
     # Create the string for odl nodes
-    odl_node_list="${ODL_SYSTEM_1_IP}"
-    for i in `seq 2 ${NUM_ODL_SYSTEM}` ; do
-        CONTROLLERIP=ODL_SYSTEM_${i}_IP
-        odl_node_list="${odl_node_list} ${!CONTROLLERIP}"
-    done
-    echo ${odl_node_list}
 fi
 
 if [ ${CONTROLLERSCOPE} == 'all' ]; then
@@ -106,7 +100,7 @@ if [ "${ENABLE_HAPROXY_FOR_NEUTRON}" == "yes" ]; then
     fi
 
     echo "Configuring cluster"
-    /tmp/${BUNDLEFOLDER}/bin/configure_cluster.sh \$1 ${odl_node_list}
+    /tmp/${BUNDLEFOLDER}/bin/configure_cluster.sh \$1 \$2
 
     echo "Dump akka.conf"
     cat ${AKKACONF}
@@ -181,13 +175,30 @@ exit_on_log_file_message 'server is unhealthy'
 
 EOF
 
-# Copy over the config script to controller and execute it.
+odl_index=1
 for i in `seq 1 ${NUM_ODL_SYSTEM}`
 do
     CONTROLLERIP=ODL_SYSTEM_${i}_IP
+    if [$i == $odl_index ]; then
+        odl_node_list=${!CONTROLLERIP}
+    fi
+    if [ $(( $odl_index % (${NUM_ODL_SYSTEM} / ${NUM_OPENSTACK_SITES}) )) == 1 ]; then
+        while [ $odl_index -le ${NUM_ODL_SYSTEM} ]
+        do
+            if [ $(( (odl_index+1) % (${NUM_ODL_SYSTEM} / ${NUM_OPENSTACK_SITES}) )) == 1 ]; then
+                break
+            fi
+            odl_ip=ODL_SYSTEM_$(( ++odl_index ))_IP
+            odl_node_list="${odl_node_list} ${!odl_ip}"
+        done
+    fi
+    odl_index=$((odl_index+1))
+    echo ${odl_node_list}
+    # Copy over the config script to controller and execute it.
     echo "Execute the configuration script on controller ${!CONTROLLERIP}"
     scp ${WORKSPACE}/configuration-script.sh ${!CONTROLLERIP}:/tmp
-    ssh ${!CONTROLLERIP} "bash /tmp/configuration-script.sh ${i}"
+    # FIXME sandra - i will be different in all sites is it ok?
+    ssh ${!CONTROLLERIP} "bash /tmp/configuration-script.sh ${i} '${odl_node_list}'"
 done
 
 echo "Locating config plan to use..."
