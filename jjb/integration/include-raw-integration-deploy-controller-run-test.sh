@@ -12,12 +12,6 @@ if [ "${ENABLE_HAPROXY_FOR_NEUTRON}" == "yes" ]; then
     MODULESCONF=/tmp/${BUNDLEFOLDER}/configuration/initial/modules.conf
     MODULESHARDSCONF=/tmp/${BUNDLEFOLDER}/configuration/initial/module-shards.conf
     # Create the string for odl nodes
-    odl_node_list="${ODL_SYSTEM_1_IP}"
-    for i in `seq 2 ${NUM_ODL_SYSTEM}` ; do
-        CONTROLLERIP=ODL_SYSTEM_${i}_IP
-        odl_node_list="${odl_node_list} ${!CONTROLLERIP}"
-    done
-    echo ${odl_node_list}
 fi
 
 if [ ${CONTROLLERSCOPE} == 'all' ]; then
@@ -187,7 +181,17 @@ do
     CONTROLLERIP=ODL_SYSTEM_${i}_IP
     echo "Execute the configuration script on controller ${!CONTROLLERIP}"
     scp ${WORKSPACE}/configuration-script.sh ${!CONTROLLERIP}:/tmp
-    ssh ${!CONTROLLERIP} "bash /tmp/configuration-script.sh ${i}"
+    if [ $(( $i % (${NUM_ODL_SYSTEM} / ${NUM_OPENSTACK_SITES}) )) == 1 ]; then
+        odl_node_list="${CONTROLLERIP}"
+        odl_index=$(( $i + 1 ))
+        while [ $odl_index -le $(( ${NUM_ODL_SYSTEM} / ${NUM_OPENSTACK_SITES} )) ]
+        do
+            odl_ip=ODL_SYSTEM_$(( odl_index++ ))_IP
+            odl_node_list="${odl_node_list} ${!odl_ip}"
+        done
+        echo ${odl_node_list}
+    fi
+    ssh ${!CONTROLLERIP} "bash /tmp/configuration-script.sh ${i} '${odl_node_list}'"
 done
 
 echo "Locating config plan to use..."
