@@ -480,6 +480,12 @@ elif [ \${ret} -eq 0 ]; then
 fi
 EOF
 
+cat > ${WORKSPACE}/rabbit-server-script.sh << EOF
+echo "Add federation user to rabbit server ..."
+sudo /usr/sbin/rabbitmqctl add_user federation federation
+sudo rabbitmqctl set_permissions -p / federation ".*" ".*" ".*"
+EOF
+
 #the checking is repeated for an hour
 iteration=0
 in_progress=1
@@ -527,6 +533,9 @@ if ! [ "${num_hypervisors}" ] || ! [ ${num_hypervisors} -eq ${expected_num_hyper
   echo "Error: Only $num_hypervisors hypervisors detected, expected $expected_num_hypervisors"
   collect_logs_and_exit
   exit 1
+if [[ ${CONTROLLERFEATURES} == *federation* ]]; then
+    scp ${WORKSPACE}/rabbit-server-script.sh ${OPENSTACK_CONTROL_NODE_IP}:/tmp
+    ssh ${OPENSTACK_CONTROL_NODE_IP} "sudo bash /tmp/rabbit-server-script.sh"
 fi
 
 #Need to disable firewalld and iptables in compute nodes as well
