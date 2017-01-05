@@ -11,13 +11,6 @@ if [ "${ENABLE_HAPROXY_FOR_NEUTRON}" == "yes" ]; then
     AKKACONF=/tmp/${BUNDLEFOLDER}/configuration/initial/akka.conf
     MODULESCONF=/tmp/${BUNDLEFOLDER}/configuration/initial/modules.conf
     MODULESHARDSCONF=/tmp/${BUNDLEFOLDER}/configuration/initial/module-shards.conf
-    # Create the string for odl nodes
-    odl_node_list="${ODL_SYSTEM_1_IP}"
-    for i in `seq 2 ${NUM_ODL_SYSTEM}` ; do
-        CONTROLLERIP=ODL_SYSTEM_${i}_IP
-        odl_node_list="${odl_node_list} ${!CONTROLLERIP}"
-    done
-    echo ${odl_node_list}
 fi
 
 if [ ${CONTROLLERSCOPE} == 'all' ]; then
@@ -107,7 +100,7 @@ if [ "${ENABLE_HAPROXY_FOR_NEUTRON}" == "yes" ]; then
     fi
 
     echo "Configuring cluster"
-    /tmp/${BUNDLEFOLDER}/bin/configure_cluster.sh \$1 ${odl_node_list}
+    /tmp/${BUNDLEFOLDER}/bin/configure_cluster.sh \$1 \$2
 
     echo "Dump akka.conf"
     cat ${AKKACONF}
@@ -182,13 +175,25 @@ exit_on_log_file_message 'server is unhealthy'
 
 EOF
 
-# Copy over the config script to controller and execute it.
-for i in `seq 1 ${NUM_ODL_SYSTEM}`
+NUM_ODLS_PER_SITE=$((NUM_ODL_SYSTEM / NUM_OPENSTACK_SITES))
+for i in `seq 1 ${NUM_OPENSTACK_SITES}`
 do
-    CONTROLLERIP=ODL_SYSTEM_${i}_IP
-    echo "Execute the configuration script on controller ${!CONTROLLERIP}"
-    scp ${WORKSPACE}/configuration-script.sh ${!CONTROLLERIP}:/tmp
-    ssh ${!CONTROLLERIP} "bash /tmp/configuration-script.sh ${i}"
+    # Get full list of ODL nodes for this site
+    odl_node_list=
+    for j in `seq 1 ${NUM_ODLS_PER_SITE}`
+    do
+        odl_ip=ODL_SYSTEM_$(((i - 1) * NUM_ODLS_PER_SITE + j))_IP
+        odl_node_list="${odl_node_list} ${!odl_ip}"
+    done
+
+    for j in `seq 1 ${NUM_ODLS_PER_SITE}`
+    do
+        odl_ip=ODL_SYSTEM_$(((i - 1) * NUM_ODLS_PER_SITE + j))_IP
+        # Copy over the config script to controller and execute it (parameters are used only for cluster)
+        echo "Execute the configuration script on controller ${!odl_ip} for index $j with node list ${odl_node_list}"
+        scp ${WORKSPACE}/configuration-script.sh ${!odl_ip}:/tmp
+        ssh ${!odl_ip} "bash /tmp/configuration-script.sh ${j} '${odl_node_list}'"
+    done
 done
 
 echo "Locating config plan to use..."
@@ -217,12 +222,16 @@ do
     ssh ${!CONTROLLERIP} "bash /tmp/startup-script.sh"
 done
 
+seed_index=1
 for i in `seq 1 ${NUM_ODL_SYSTEM}`
 do
     CONTROLLERIP=ODL_SYSTEM_${i}_IP
     echo "Execute the post startup script on controller ${!CONTROLLERIP}"
     scp ${WORKSPACE}/post-startup-script.sh ${!CONTROLLERIP}:/tmp
-    ssh ${!CONTROLLERIP} "bash /tmp/post-startup-script.sh ${i}"
+    ssh ${!CONTROLLERIP} "bash /tmp/post-startup-script.sh $(( seed_index++ ))"
+    if [ $(( $i % (${NUM_ODL_SYSTEM} / ${NUM_OPENSTACK_SITES}) )) == 0 ]; then
+        seed_index=1
+    fi
 done
 
 echo "Cool down for ${COOLDOWN_PERIOD} seconds :)..."
