@@ -155,17 +155,13 @@
     wrappers:
         - opendaylight-infra-wrappers:
             build-timeout: '{build-timeout}'
-        - integration-jclouds-controller-mininet:
-            controller-image: '{controller-image}'
-            controller-vms: 1
-            mininet-image: '{mininet-image}'
-            mininet-vms: '{mininet-vms}'
 
     triggers:
         - integration-csit-{install}:
             jobs: '{trigger-jobs}'
 
     builders:
+        - opendaylight-infra-stack
         - integration-copy-ssh-keys
         - integration-cleanup-workspace
         - integration-install-robotframework
