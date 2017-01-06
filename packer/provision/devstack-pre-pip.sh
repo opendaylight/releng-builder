@@ -32,6 +32,11 @@ do
     pip install -c requirements/upper-constraints.txt -r ${proj}/test-requirements.txt
 done
 
+echo '---> Installing openvswitch from openstack repo'
+# the newton release has ovs 2.5.0
+yum install -y http://rdoproject.org/repos/openstack-newton/rdo-release-newton.rpm
+yum install -y --nogpgcheck openvswitch
+
 cd $OLDPWD
 rm -fr tmp
 
