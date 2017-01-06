@@ -83,6 +83,7 @@
             pkill gunicorn
             sleep 5  # Sleep 5 seconds for cooldown
             nohup gunicorn -b 0.0.0.0:5000 'spectrometer:run_app()' --timeout 600 -k gevent >> ~/gunicorn.out &
+            sleep 120  # Sleep 2 minutes to allow Spectrometer to initialize
 
             echo "---> Restart spectrometer-web"
             pkill node
