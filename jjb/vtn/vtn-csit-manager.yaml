@@ -21,7 +21,7 @@
         - beryllium:
             branch: 'stable/beryllium'
             jre: 'openjdk7'
-            mininet-image: 'ubuntu-trusty-mininet-2c-2g'
+            tools_system_image: Ubuntu 14.04 - mininet - 20161031-0803
 
     install:
         - only:
@@ -35,7 +35,7 @@
     # Robot custom options
     robot-options: ''
 
-    mininet-image: 'ubuntu-trusty-mininet-ovs-25-2c-2g'
+    tools_system_image: Ubuntu 14.04 - mininet-ovs-2.5 - 20161031-0804
 
     # Trigger jobs (upstream dependencies)
     trigger-jobs: 'openflowjava-distribution-{stream},openflowplugin-distribution-{stream},vtn-distribution-{stream}'
