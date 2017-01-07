@@ -21,7 +21,7 @@
             scope: 'only'
 
     # no mininet required
-    mininet-vms: 0
+    tools_system_count: 0
 
     # Features to install
     install-features: 'odl-daexim-all,odl-netconf-topology,odl-jolokia'
@@ -31,4 +31,3 @@
 
     # Trigger jobs (upstream dependencies)
     trigger-jobs: 'daexim-merge-{stream}'
-
