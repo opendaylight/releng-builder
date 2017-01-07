@@ -155,19 +155,16 @@
     wrappers:
         - opendaylight-infra-wrappers:
             build-timeout: '{build-timeout}'
-        - integration-jclouds-controller-mininet:
-            controller-image: '{controller-image}'
-            controller-vms: 1
-            mininet-image: '{mininet-image}'
-            mininet-vms: '{mininet-vms}'
 
     triggers:
         - integration-csit-{install}:
             jobs: '{trigger-jobs}'
 
     builders:
-        - integration-copy-ssh-keys
+        # Cleanup scripts need to run first otherwise they break the infra
+        # scripts that run.
         - integration-cleanup-workspace
+        - opendaylight-infra-stack
         - integration-install-robotframework
         - inject:
             properties-file: 'env.properties'
