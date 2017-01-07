@@ -38,4 +38,7 @@
     trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream},aaa-distribution-{stream}'
 
     # Don't spin up mininet vms as aaa-csit-authn jobs don't need them
+    # TODO: Remove mininet-vms as it is deprecated in favor of vm_1_count for
+    #       Heat deployments
     mininet-vms: 0
+    vm_1_count: 0
