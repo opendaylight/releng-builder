@@ -30,7 +30,9 @@
     robot-options: '-v ODL_OF_PLUGIN:lithium'
 
     # mininet image
+    # TODO: Remove mininet-image as it's deprecated in favor of vm_1_image
     mininet-image: 'ubuntu-trusty-mininet-ovs-25-2c-2g'
+    vm_1_image: 'Ubuntu 14.04 - mininet-ovs-2.5 - 20161031-0804'
 
     # Trigger jobs (upstream dependencies)
     trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream},openflowjava-distribution-{stream},openflowplugin-distribution-{stream}'
