@@ -1,0 +1,34 @@
+- project:
+    name: dluxapps-csit-yangman
+    jobs:
+        - '{project}-csit-1node-{functionality}-{install}-{stream}'
+        - '{project}-csit-verify-1node-{functionality}'
+
+    # The project name
+    project: 'dluxapps'
+
+    # The functionality under test
+    functionality: 'yangman'
+
+    # Project branches
+    stream:
+         - carbon:
+             branch: 'master'
+             jre: 'openjdk8'
+
+    install:
+        - only:
+            scope: 'only'
+        - all:
+            scope: 'all'
+
+    # Features to install
+    install-features: 'odl-dluxapps-yangman'
+
+    # Robot custom options
+    robot-options: ''
+
+    # Trigger jobs (upstream dependencies)
+    trigger-jobs: >
+        aaa-distribution-{stream},
+        dluxapps-distribution-{stream}
