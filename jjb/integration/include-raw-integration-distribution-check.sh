@@ -60,6 +60,9 @@ export KARAF_REDIRECT="${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log"
 echo "Starting controller..."
 ${WORKSPACE}/${BUNDLEFOLDER}/bin/start
 
+# No need for verbose printing during repeating operations.
+set +x
+
 echo "Waiting for controller to come up..."
 COUNT=0
 while true; do
@@ -92,6 +95,9 @@ while true; do
     sleep 10
     COUNT=$(( ${COUNT} - 10 ))
 done
+
+# End of repeating operations, enable verbose printing.
+set -x
 
 # echo "Checking OSGi bundles..."
 # sshpass seems to fail with new karaf version
