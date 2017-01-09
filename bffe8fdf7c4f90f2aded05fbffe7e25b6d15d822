@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "1a622d24_110bf77d",
+        "filename": "jjb/genius/genius-patch-test.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2017-01-09T21:47:35Z",
+      "side": 1,
+      "message": "no, I think this is just going to create confusing situations which already happened to the netvirt folks and took us a while to un-confuse ourselves. so we ended up re-doing it like this:\n\nhttps://github.com/opendaylight/releng-builder/blob/master/jjb/netvirt/netvirt-patch-test.yaml\n\nwhat\u0027s best though?\n\ntest-genius-core\ntest-genius-cluster-core\ntest-genius-netvirt\ntest-genius-cluster-netvirt\n\n???\n\nif someone wanted to run the 1node AND 3node jobs, the could just use both speicfic keywords. btw, test-genius-all would \nrun *every* job in this file.",
+      "parentUuid": "1a622d24_6cfedaaf",
+      "revId": "bffe8fdf7c4f90f2aded05fbffe7e25b6d15d822",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a622d24_2656c85c",
         "filename": "jjb/genius/genius-patch-test.yaml",
         "patchSetId": 1
