@@ -21,7 +21,8 @@ for i in "autorelease,autorelease" \
          "ubuntu-trusty-gbp,ubuntu-docker-ovs" \
          "matrix,matrix" \
          "robot,robot" \
-         "ubuntu-trusty-mininet,mininet-ubuntu"
+         "ubuntu-trusty-mininet,mininet-ubuntu" \
+         "mininet,mininet-ubuntu"
 do set -- $i
     if [[ $HOST == *"$1"* ]]; then
         SYSTEM_TYPE="$2"
