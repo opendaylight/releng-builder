@@ -785,18 +785,31 @@
     wrappers:
         - opendaylight-infra-wrappers:
             build-timeout: '{build-timeout}'
-        - integration-jclouds-controller-mininet:
-            controller-image: '{controller-image}'
-            controller-vms: 3
-            mininet-image: '{mininet-image}'
-            mininet-vms: '{mininet-vms}'
 
     triggers:
         - timed: '{schedule}'
 
     builders:
-        - integration-copy-ssh-keys
+        # Cleanup scripts need to run first otherwise they break the infra
+        # scripts that run.
         - integration-cleanup-workspace
+        - shell: |
+              #!/bin/bash
+              # Setup openstack envirnoment file for use by
+              # the opendaylight-infra-stack macro
+              cat > $WORKSPACE/opendaylight-infra-environment.yaml << EOF
+              parameters:
+                  vm_0_count: 3
+                  vm_0_flavor: {vm_0_flavor}
+                  vm_0_image: {vm_0_image}
+                  vm_1_count: {vm_1_count}
+                  vm_1_flavor: {vm_1_flavor}
+                  vm_1_image: {vm_1_image}
+              EOF
+              echo "Contents of opendaylight-infra-environment.yaml ..."
+              cat $WORKSPACE/opendaylight-infra-environment.yaml
+        - opendaylight-infra-stack:
+            stack-template: '{stack-template}'
         - integration-install-robotframework
         - inject:
             properties-file: 'env.properties'
