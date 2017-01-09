@@ -9,6 +9,10 @@ EOF
 yum clean all
 yum install -y -q python-netaddr
 
+##  TODO: Remove this, temporary until we can rebuild and deploy Robot
+##        successfully with packer. JQ is needed by our Heat deployment scripts.
+yum install -y -q jq
+
 ## Install docker-py
 yum install -y -q python-docker-py
 
