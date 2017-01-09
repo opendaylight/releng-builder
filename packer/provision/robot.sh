@@ -7,6 +7,10 @@
 # inside project jobs using a virtualenv setup.
 yum install -y python-{devel,setuptools,virtualenv} @development
 
+# Needed to parse OpenStack commands used by opendaylight-infra stack commands
+# to initialize Heat template based systems.
+sudo yum install -y jq
+
 # Install dependencies for robotframework and robotframework-sshlibrary
 # installed elsewhere
 yum install -y yum-utils unzip sshuttle nc libffi-devel openssl-devel
