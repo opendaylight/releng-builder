@@ -166,7 +166,8 @@
             jobs: '{trigger-jobs}'
 
     builders:
-        - integration-copy-ssh-keys
+        - integration-infra-stack:
+            stack-template: integration-infra
         - integration-cleanup-workspace
         - integration-install-robotframework
         - inject:
