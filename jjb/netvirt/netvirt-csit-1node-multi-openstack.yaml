@@ -44,19 +44,19 @@
             openstack-branch: 'stable/mitaka'
             odl-ml2-branch: 'stable/mitaka'
             odl-ml2-driver-version: 'v1'
-            openstack-image: 'centos7-devstack-mitaka-2c-8g'
+            openstack_system_image: 'CentOS 7 - devstack - mitaka - 20170106-2237'
         - newton:
             openstack-branch: 'stable/newton'
             odl-ml2-branch: 'stable/newton'
             odl-ml2-driver-version: 'v1'
-            openstack-image: 'centos7-devstack-newton-2c-8g'
+            openstack_system_image: 'CentOS 7 - devstack - newton - 20170106-2237'
         - newton-nodl-v2:
             openstack-branch: 'stable/newton'
             odl-ml2-branch: 'stable/newton'
             odl-ml2-driver-version: 'v2'
-            openstack-image: 'centos7-devstack-newton-2c-8g'
+            openstack_system_image: 'CentOS 7 - devstack - newton - 20170106-2237'
 
-    openstack-vms: 3
+    openstack_system_count: 3
 
     install-features: 'odl-netvirt-openstack'
 
