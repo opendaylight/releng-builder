@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1a622d24_290e87e5",
+        "filename": "jjb/integration/integration-templates.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-01-10T14:28:03Z",
+      "side": 1,
+      "message": "Interestingly... It appears you can use macros inside of macros so yes this is possible. I\u0027ll create a separate patch for this that we can  review independently from this patch.",
+      "parentUuid": "1a622d24_7b7965c7",
+      "range": {
+        "startLine": 796,
+        "startChar": 8,
+        "endLine": 796,
+        "endChar": 15
+      },
+      "revId": "d2caedb5b225f664c24baf1ddbdaf1208d2793d8",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a622d24_bb7f7daa",
         "filename": "jjb/integration/integration-templates.yaml",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-01-10T12:25:47Z",
       "side": 1,
       "message": "We can name the variables (on the right side) as we want, right? The for this prefix I would prefer odl_system ...",
+      "range": {
+        "startLine": 803,
+        "startChar": 32,
+        "endLine": 803,
+        "endChar": 36
+      },
+      "revId": "d2caedb5b225f664c24baf1ddbdaf1208d2793d8",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a622d24_69e99fe5",
+        "filename": "jjb/integration/integration-templates.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 803,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-01-10T14:28:03Z",
+      "side": 1,
+      "message": "Yes we can name them anyway we want. I wanted to name them generically as I wasn\u0027t sure what categories controller/devstack/mininet etc... were all considered. But if we prefer I can change this to:\n\nodl_system_count\nodl_system_flavor\nodl_system_image\ntools_system_count\ntools_system_flavor\ntools_system_image\n\nIf that makes things more understandable to people.",
+      "parentUuid": "1a622d24_bb7f7daa",
       "range": {
         "startLine": 803,
         "startChar": 32,
