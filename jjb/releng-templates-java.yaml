@@ -521,6 +521,11 @@
         - jacoco-nojava-workaround
         - autorelease-checkout-gerrit-patch
         - autorelease-generate-release-patches
+        # In a perfect world projects should be releasing separately and we consume them
+        # via a project that pulls the release bits from each project from Nexus.
+        # Keep the patches compatible with that ideal, but apply an edit
+        # to enable building in a single maven reactor afterwards.
+        - autorelease-fix-relative-paths
         - maven-target:
             maven-version: 'mvn33'
             pom: validate-pom.xml
