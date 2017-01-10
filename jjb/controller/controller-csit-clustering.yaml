@@ -29,7 +29,9 @@
             scope: 'all'
 
     # No tools system VMs needed in JCloud configuration
+    # TODO: Remove mininet-vms as it's deprecated in favor of vm_1_count
     mininet-vms: 0
+    tools_system_count: 0
 
     # Features to install
     install-features: 'odl-restconf,odl-clustering-test-app'
