@@ -132,3 +132,10 @@
     - shell:
         !include-raw:
             - include-raw-generate-project-report.sh
+
+- builder:
+    name: autorelease-fix-relative-paths
+    builders:
+        - shell: |
+            ./scripts/fix-relativepaths.sh
+
