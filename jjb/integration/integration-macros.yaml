@@ -256,6 +256,28 @@
 # Shell Scripts #
 #################
 
+- builder:
+    name: integration-infra-stack
+    builders:
+        - integration-cleanup-workspace
+        - shell: |
+            #!/bin/bash
+            # Setup openstack envirnoment file for use by
+            # the opendaylight-infra-stack macro
+            cat > $WORKSPACE/opendaylight-infra-environment.yaml << EOF
+            parameters:
+                vm_0_count: {vm_0_count}
+                vm_0_flavor: {vm_0_flavor}
+                vm_0_image: {vm_0_image}
+                vm_1_count: {vm_1_count}
+                vm_1_flavor: {vm_1_flavor}
+                vm_1_image: {vm_1_image}
+            EOF
+            echo "Contents of opendaylight-infra-environment.yaml ..."
+            cat $WORKSPACE/opendaylight-infra-environment.yaml
+        - opendaylight-infra-stack:
+            stack-template: '{stack-template}'
+
 # Macro: integration-copy-ssh-keys
 # Operation: Copy ssh public key used as authentication for robot
 # Used by: {project}-csit-* job templates
