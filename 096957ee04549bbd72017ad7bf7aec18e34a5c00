@@ -22,6 +22,30 @@
       "revId": "096957ee04549bbd72017ad7bf7aec18e34a5c00",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a622d24_877a1a75",
+        "filename": "jjb/releng-templates-java.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-01-11T16:43:36Z",
+      "side": 1,
+      "message": "Yes. This step is what causes validate-autorelease to change all the version numbers so that when it builds it does not fallback to downloading SNAPSHOTS from Nexus. This is how we are able to detect that a project depends on a version of another project that is not in the current release.",
+      "parentUuid": "1a622d24_e88000c2",
+      "range": {
+        "startLine": 523,
+        "startChar": 39,
+        "endLine": 523,
+        "endChar": 46
+      },
+      "revId": "096957ee04549bbd72017ad7bf7aec18e34a5c00",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
