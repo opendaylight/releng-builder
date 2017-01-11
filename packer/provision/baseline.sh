@@ -117,7 +117,7 @@ EOF
 
     # add in stuff we know we need
     echo "---> Installing base packages"
-    apt-get install unzip xz-utils puppet git libxml-xpath-perl
+    apt-get install unzip xz-utils puppet git git-review libxml-xpath-perl
 
     # install Java 7
     echo "---> Configuring OpenJDK"
