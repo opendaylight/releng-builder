@@ -30,8 +30,8 @@
             scope: 'only'
 
     # No tools system VMs needed, but ODL system needs RAM and benefits from CPUs.
-    mininet-vms: 0
-    controller-image: 'centos7-java-builder-4c-8g'
+    tools_system_count: 0
+    odl_system_flavor: 8 GB General Purpose v1
 
     # Features to install
     install-features: 'odl-restconf'
