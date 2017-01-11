@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1a622d24_aacf1b55",
+        "filename": "jjb/integration/include-raw-integration-deploy-controller-run-test.sh",
+        "patchSetId": 12
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2017-01-11T21:20:24Z",
+      "side": 1,
+      "message": "good point. I don\u0027t think anything in this block would break\nthe 1node test (well, we know it doesn\u0027t from sandbox), but\nit would be confusing to read a message in the log about\n\"Configure cluster\" in a 1node job.",
+      "parentUuid": "1a622d24_4abc87dc",
+      "revId": "81bce33c484758530fc349de679cfcf342a0e6ef",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a622d24_2ac14b54",
         "filename": "jjb/integration/include-raw-integration-deploy-controller-run-test.sh",
         "patchSetId": 12
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "1a622d24_0ad9ef21",
+        "filename": "jjb/integration/include-raw-integration-deploy-controller-run-test.sh",
+        "patchSetId": 12
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2017-01-11T21:20:24Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "1a622d24_2ac14b54",
+      "revId": "81bce33c484758530fc349de679cfcf342a0e6ef",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a622d24_0a9d6f66",
         "filename": "jjb/integration/include-raw-integration-deploy-controller-run-test.sh",
         "patchSetId": 12
@@ -47,6 +83,24 @@
       "writtenOn": "2017-01-11T20:16:59Z",
       "side": 1,
       "message": "the below pybot is not executed by the openstak job, I think if we modify those variables we may need to test regular jobs also before merge",
+      "revId": "81bce33c484758530fc349de679cfcf342a0e6ef",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a622d24_ead593e5",
+        "filename": "jjb/integration/include-raw-integration-deploy-controller-run-test.sh",
+        "patchSetId": 12
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2017-01-11T21:20:24Z",
+      "side": 1,
+      "message": "right. we better not change this, or if we do we need to validate some other non openstack jobs with this patch.",
+      "parentUuid": "1a622d24_0a9d6f66",
       "revId": "81bce33c484758530fc349de679cfcf342a0e6ef",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
