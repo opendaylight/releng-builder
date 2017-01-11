@@ -521,7 +521,15 @@ ${SSH} ${OPENSTACK_CONTROL_NODE_IP} "sudo bash /tmp/disable_firewall.sh"
 echo "sleep for a minute and print hypervisor-list"
 sleep 60
 ${SSH} ${OPENSTACK_CONTROL_NODE_IP} "cd /opt/stack/devstack; source openrc admin admin; nova hypervisor-list"
-expected_num_hypervisors=$((NUM_OPENSTACK_SYSTEM - 1))
+# in the case that we are doing openstack (control + compute) all in one node, then the number of hypervisors
+# will be the same as the number of openstack systems. However, if we are doing multinode openstack then the
+# assumption is we have a single control node and the rest are compute nodes, so the number of expected hypervisors
+# is one less than the total number of openstack systems
+if [ "${NUM_OPENSTACK_SYSTEM}" -eq 1 ]; then
+  expected_num_hypervisors=1
+else
+  expected_num_hypervisors=$((NUM_OPENSTACK_SYSTEM - 1))
+fi
 num_hypervisors=$(${SSH} ${OPENSTACK_CONTROL_NODE_IP} "cd /opt/stack/devstack; source openrc admin admin; openstack hypervisor list -f value | wc -l" | tail -1 | tr -d "\r")
 if ! [ "${num_hypervisors}" ] || ! [ ${num_hypervisors} -eq ${expected_num_hypervisors} ]; then
   echo "Error: Only $num_hypervisors hypervisors detected, expected $expected_num_hypervisors"
