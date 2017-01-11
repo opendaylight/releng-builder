@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1a622d24_0749ea5f",
+        "filename": "jjb/integration/integration-test-jobs.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-01-11T16:39:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a622d24_cd49d661",
+      "range": {
+        "startLine": 176,
+        "startChar": 6,
+        "endLine": 176,
+        "endChar": 13
+      },
+      "revId": "123bb88f641a213fdca8216d96d141027ddcbd38",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a622d24_ad5d7a17",
         "filename": "jjb/integration/integration-test-jobs.yaml",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-01-11T11:43:38Z",
       "side": 1,
       "message": "This is already defined in releng-defaults.yaml so having it also here is confusing.\nI think removing 176-177 should be fine, but I am not sure, as there might be a reason why mininet-image was defined here.",
+      "range": {
+        "startLine": 177,
+        "startChar": 4,
+        "endLine": 177,
+        "endChar": 22
+      },
+      "revId": "123bb88f641a213fdca8216d96d141027ddcbd38",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a622d24_c742523d",
+        "filename": "jjb/integration/integration-test-jobs.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-01-11T16:39:46Z",
+      "side": 1,
+      "message": "Mininet image is defined here because it\u0027s different than the default. Default mininet is \"Ubuntu 14.04 - mininet - 20161031-0803\" while the one here specifies the ovs-2.5 version of mininet.",
+      "parentUuid": "1a622d24_ad5d7a17",
       "range": {
         "startLine": 177,
         "startChar": 4,
