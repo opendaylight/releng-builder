@@ -35,7 +35,7 @@
 
     stream:
     - carbon:
-        next-release-tag: Carbon
+        next-release-tag: Guava21-Testing
         branch: 'master'
         jdk: 'openjdk8'
         integration-test: carbon
@@ -85,7 +85,22 @@
             build-timeout: '1440'
 
     triggers:
-        - timed: 'H 0 * * *'
+        - gerrit:
+            server-name: '{server-name}'
+            trigger-on:
+                - comment-added-contains-event:
+                    comment-contains-value: 'test-guava21-patches'
+            projects:
+              - project-compare-type: 'ANT'
+                project-pattern: '{project}'
+                branches:
+                  - branch-compare-type: 'ANT'
+                    branch-pattern: '**/{branch}'
+            skip-vote:
+                successful: true
+                failed: true
+                unstable: true
+                notbuilt: true
 
     builders:
         - shell: |
