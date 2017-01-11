@@ -676,19 +676,20 @@
     wrappers:
         - opendaylight-infra-wrappers:
             build-timeout: '{build-timeout}'
-        - integration-jclouds-controller-docker:
-            controller-image: '{controller-image}'
-            controller-vms: 3
-            docker-image: '{docker-image}'
-            docker-vms: 1
 
     triggers:
         - integration-csit-{install}:
             jobs: '{trigger-jobs}'
 
     builders:
-        - integration-copy-ssh-keys
-        - integration-cleanup-workspace
+        - integration-infra-stack:
+            stack-template: '{stack-template}'
+            vm_0_count: '3'
+            vm_0_flavor: '{odl_system_flavor}'
+            vm_0_image: '{odl_system_image}'
+            vm_1_count: '{docker_system_count}'
+            vm_1_flavor: '{docker_system_flavor}'
+            vm_1_image: '{docker_system_image}'
         - integration-install-robotframework
         - inject:
             properties-file: 'env.properties'
