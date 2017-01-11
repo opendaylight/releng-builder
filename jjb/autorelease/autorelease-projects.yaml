@@ -91,51 +91,51 @@
         - shell: |
             #!/bin/bash
             cd bgpcep
-            git remote add gerrit ssh://jenkins-sandbox@git.opendaylight.org:29418/bgpcep
+            git remote add gerrit ssh://jenkins-$SILO@git.opendaylight.org:29418/bgpcep
             git review -d 50184
             cd ..
             cd centinel
-            git remote add gerrit ssh://jenkins-sandbox@git.opendaylight.org:29418/centinel
+            git remote add gerrit ssh://jenkins-$SILO@git.opendaylight.org:29418/centinel
             git review -d 50185
             cd ..
             cd controller
-            git remote add gerrit ssh://jenkins-sandbox@git.opendaylight.org:29418/controller
+            git remote add gerrit ssh://jenkins-$SILO@git.opendaylight.org:29418/controller
             git review -d 50176
             cd ..
             cd didm
-            git remote add gerrit ssh://jenkins-sandbox@git.opendaylight.org:29418/didm
+            git remote add gerrit ssh://jenkins-$SILO@git.opendaylight.org:29418/didm
             git review -d 50187
             cd ..
             cd faas
-            git remote add gerrit ssh://jenkins-sandbox@git.opendaylight.org:29418/faas
+            git remote add gerrit ssh://jenkins-$SILO@git.opendaylight.org:29418/faas
             git review -d 50190
             cd ..
             cd genius
-            git remote add gerrit ssh://jenkins-sandbox@git.opendaylight.org:29418/genius
+            git remote add gerrit ssh://jenkins-$SILO@git.opendaylight.org:29418/genius
             git review -d 50192
             cd ..
             cd groupbasedpolicy
-            git remote add gerrit ssh://jenkins-sandbox@git.opendaylight.org:29418/groupbasedpolicy
+            git remote add gerrit ssh://jenkins-$SILO@git.opendaylight.org:29418/groupbasedpolicy
             git review -d 50200
             cd ..
             cd netvirt
-            git remote add gerrit ssh://jenkins-sandbox@git.opendaylight.org:29418/netvirt
+            git remote add gerrit ssh://jenkins-$SILO@git.opendaylight.org:29418/netvirt
             git review -d 50215
             cd ..
             cd odlparent
-            git remote add gerrit ssh://jenkins-sandbox@git.opendaylight.org:29418/odlparent
+            git remote add gerrit ssh://jenkins-$SILO@git.opendaylight.org:29418/odlparent
             git review -d 49820
             cd ..
             cd openflowplugin
-            git remote add gerrit ssh://jenkins-sandbox@git.opendaylight.org:29418/openflowplugin
+            git remote add gerrit ssh://jenkins-$SILO@git.opendaylight.org:29418/openflowplugin
             git review -d 50183
             cd ..
             cd ovsdb
-            git remote add gerrit ssh://jenkins-sandbox@git.opendaylight.org:29418/ovsdb
+            git remote add gerrit ssh://jenkins-$SILO@git.opendaylight.org:29418/ovsdb
             git review -d 50191
             cd ..
             cd yangtools
-            git remote add gerrit ssh://jenkins-sandbox@git.opendaylight.org:29418/yangtools
+            git remote add gerrit ssh://jenkins-$SILO@git.opendaylight.org:29418/yangtools
             git review -d 50173
             cd ..
         # force jenkins install of maven version before any shell scripts use it
