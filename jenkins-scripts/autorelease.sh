@@ -1,5 +1,7 @@
 #!/bin/bash
 
+yum install -y git-review
+
 # Format and mount rackspace data disk
 mkfs -t ext3 /dev/xvde1
 mkdir /w/workspace
