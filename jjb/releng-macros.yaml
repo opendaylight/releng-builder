@@ -282,12 +282,8 @@
             builders:
                 - shell: |
                     if [ -d "$WORKSPACE/.venv-openstack" ]; then
-                        # TODO: Remove the condition once we are no longer using
-                        #       JClouds plugin.
-                        if [ -z "$JCLOUDS_IPS" ]; then
-                            source $WORKSPACE/.venv-openstack/bin/activate
-                            openstack --os-cloud rackspace stack delete --yes $STACK_NAME
-                        fi
+                        source $WORKSPACE/.venv-openstack/bin/activate
+                        openstack --os-cloud rackspace stack delete --yes $STACK_NAME
                     fi
                 - shell: !include-raw: include-raw-deploy-archives.sh
                 - maven-target:
@@ -421,8 +417,6 @@
         - ssh-agent-credentials:
             users:
                 - 'opendaylight-jenkins-ssh'
-        - jclouds:
-            single-use: True
         - openstack:
             single-use: True
 
