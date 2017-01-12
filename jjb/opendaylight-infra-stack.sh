@@ -1,13 +1,11 @@
 #!/bin/bash
-git clone --depth 1 https://git.opendaylight.org/gerrit/releng/builder $WORKSPACE/.infra-scripts
-
 virtualenv $WORKSPACE/.venv-openstack
 source $WORKSPACE/.venv-openstack/bin/activate
 pip install --upgrade pip
 pip install --upgrade python-openstackclient python-heatclient
 pip freeze
 
-cd $WORKSPACE/.infra-scripts/openstack-hot
+cd /builder/openstack-hot
 
 JOB_SUM=`echo $JOB_NAME | sum | awk '{{ print $1 }}'`
 VM_NAME="$JOB_SUM-$BUILD_NUMBER"
