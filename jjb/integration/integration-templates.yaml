@@ -267,18 +267,19 @@
     wrappers:
         - opendaylight-infra-wrappers:
             build-timeout: '{build-timeout}'
-        - integration-jclouds-controller-mininet:
-            controller-image: '{controller-image}'
-            controller-vms: 1
-            mininet-image: '{mininet-image}'
-            mininet-vms: '{mininet-vms}'
 
     triggers:
         - timed: '{schedule}'
 
     builders:
-        - integration-copy-ssh-keys
-        - integration-cleanup-workspace
+        - integration-infra-stack:
+            stack-template: '{stack-template}'
+            vm_0_count: '1'
+            vm_0_flavor: '{odl_system_flavor}'
+            vm_0_image: '{odl_system_image}'
+            vm_1_count: '{tools_system_count}'
+            vm_1_flavor: '{tools_system_flavor}'
+            vm_1_image: '{tools_system_image}'
         - integration-install-robotframework
         - inject:
             properties-file: 'env.properties'
