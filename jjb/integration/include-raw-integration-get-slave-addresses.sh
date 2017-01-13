@@ -11,7 +11,8 @@ if [ -z "$JCLOUDS_IPS" ]; then
     source $WORKSPACE/.venv-openstack/bin/activate
     CONTROLLER_IPS=`openstack --os-cloud rackspace stack show -f json -c outputs $STACK_NAME | jq -r '.outputs[] | select(.output_key=="vm_0_ips") | .output_value[]'`
     MININET_IPS=`openstack --os-cloud rackspace stack show -f json -c outputs $STACK_NAME | jq -r '.outputs[] | select(.output_key=="vm_1_ips") | .output_value[]'`
-    ADDR=($CONTROLLER_IPS $MININET_IPS)
+    TOOLS_IPS=`openstack --os-cloud rackspace stack show -f json -c outputs $STACK_NAME | jq -r '.outputs[] | select(.output_key=="vm_2_ips") | .output_value[]'`
+    ADDR=($CONTROLLER_IPS $MININET_IPS $TOOLS_IPS)
 else
     echo "OpenStack IPS are ${JCLOUDS_IPS}"
     IFS=',' read -ra ADDR <<< "${JCLOUDS_IPS}"
