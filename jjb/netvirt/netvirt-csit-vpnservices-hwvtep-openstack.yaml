@@ -1,0 +1,87 @@
+- project:
+    name: netvirt-csit-vpnservices-hwvtep-openstack-integration
+    jobs:
+        - '{project}-csit-vpnservices-hwvtep-{topology}-openstack-{openstack}-{functionality}-{stream}'
+
+    project: 'netvirt'
+
+    topology:
+        - 1node:
+            openstack_system_count: 3
+            odl_system_count: 1
+            enable-haproxy: 'no'
+            install-features: 'odl-netvirt-openstack'
+        - 3node:
+            openstack_system_count: 4
+            odl_system_count: 3
+            enable-haproxy: 'yes'
+            install-features: 'odl-jolokia,odl-netvirt-openstack'
+
+    testplan: '{project}-{topology}-openstack.txt'
+
+    functionality:
+        - upstream-transparent:
+            schedule: 'H H/4 * * *'
+            sg-mode: 'transparent'
+        - upstream-stateful:
+            schedule: 'H H * * *'
+            sg-mode: 'stateful'
+        - upstream-learn:
+            schedule: 'H H * * *'
+            sg-mode: 'learn'
+        - gate-learn:
+            schedule: ''
+            sg-mode: 'learn'
+        - gate-transparent:
+            schedule: ''
+            sg-mode: 'transparent'
+        - gate-stateful:
+            schedule: ''
+            sg-mode: 'stateful'
+        - gate-minimal-transparent:
+            schedule: ''
+            sg-mode: 'transparent'
+            testplan: '{project}-{topology}-minimal-openstack.txt'
+        - gate-tempest-transparent:
+            schedule: ''
+            sg-mode: 'transparent'
+            testplan: '{project}-{topology}-tempest-openstack.txt'
+
+    stream:
+        - carbon:
+            branch: 'master'
+            jre: 'openjdk8'
+        - boron:
+            branch: 'stable/boron'
+            jre: 'openjdk8'
+
+    openstack:
+        - mitaka:
+            openstack-branch: 'stable/mitaka'
+            odl-ml2-branch: 'stable/mitaka'
+            odl-ml2-driver-version: 'v1'
+            openstack_system_image: 'CentOS 7 - devstack - mitaka - 20170106-2237'
+        - newton:
+            openstack-branch: 'stable/newton'
+            odl-ml2-branch: 'stable/newton'
+            odl-ml2-driver-version: 'v1'
+            openstack_system_image: 'CentOS 7 - devstack - newton - 20170106-2237'
+        - newton-nodl-v2:
+            openstack-branch: 'stable/newton'
+            odl-ml2-branch: 'stable/newton'
+            odl-ml2-driver-version: 'v2'
+            openstack_system_image: 'CentOS 7 - devstack - newton - 20170106-2237'
+
+    odl-enable-l3: 'yes'
+
+    public-bridge: 'br-physnet1'
+
+    enable-openstack-services: 'q-svc,q-dhcp,q-meta,n-cauth,tempest'
+
+    disable-openstack-services: 'swift,cinder,n-net,q-vpn,n-cpu'
+
+    tenant-network-type: 'vxlan'
+
+    security-group-mode: '{sg-mode}'
+
+    robot-options: ''
