@@ -22,6 +22,30 @@
       "revId": "a514f8682c21a83232dc73836c73c656d829cecd",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a622d24_82515638",
+        "filename": "packer/provision/baseline.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2017-01-16T21:14:12Z",
+      "side": 1,
+      "message": "you\u0027re right. chkconfig still works, but I\u0027ll get a systemctl update now:\n\n[centos@jamo-c703 ~]$ cat /etc/centos-release\nCentOS Linux release 7.3.1611 (Core) \n[centos@jamo-c703 ~]$ sudo chkconfig haveged on\nNote: Forwarding request to \u0027systemctl enable haveged.service\u0027.\n[centos@jamo-c703 ~]$ sudo systemctl enable haveged.service\n[centos@jamo-c703 ~]$",
+      "parentUuid": "1a622d24_627fdaab",
+      "range": {
+        "startLine": 87,
+        "startChar": 4,
+        "endLine": 87,
+        "endChar": 13
+      },
+      "revId": "a514f8682c21a83232dc73836c73c656d829cecd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
