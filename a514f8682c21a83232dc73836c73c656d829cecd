@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a622d24_627fdaab",
+        "filename": "packer/provision/baseline.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-01-16T21:07:11Z",
+      "side": 1,
+      "message": "Is chkconfig still valid in Cent OS 7? I think it should be a call to systemd (if I\u0027m not incorrect):\n\n systemctl enable haveged\n systemctl start haveged",
+      "range": {
+        "startLine": 87,
+        "startChar": 4,
+        "endLine": 87,
+        "endChar": 13
+      },
+      "revId": "a514f8682c21a83232dc73836c73c656d829cecd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
