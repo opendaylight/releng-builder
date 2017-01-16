@@ -16,6 +16,24 @@
       "revId": "b1cfe25d271c6bfbce4b781218310deeda11da71",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a622d24_1f791dc8",
+        "filename": "jjb/netvirt/netvirt-patch-test.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 5492
+      },
+      "writtenOn": "2017-01-16T16:32:28Z",
+      "side": 1,
+      "message": "Alon,\n\n+1, I agree we should not have all the three modes tested every review, every PS.\n\nBut stateful is the default for the ODL Controller, would we not want to make that just the default gate for Stable/Boron SR3?\n\nOr is there any limitation in our stateful implementation in ODL for security groups which limits us to stick with default of \u0027transparent\u0027 mode for ACL ?\n\nAlso I am not sure if having \u0027learn\u0027 mode in gate helps at all.",
+      "parentUuid": "1a622d24_1ae490df",
+      "revId": "b1cfe25d271c6bfbce4b781218310deeda11da71",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
