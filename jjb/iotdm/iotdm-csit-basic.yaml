@@ -12,15 +12,13 @@
 
     # Project branches
     stream:
+        # Removed jobs testing Beryllium and Boron branches due to
+        # backward incompatible changes in test suites for Carbon
+        # TODO: Create test suites for specific release before
+        # Carbon if needed.
         - carbon:
             branch: 'master'
             jre: 'openjdk8'
-        - boron:
-            branch: 'stable/boron'
-            jre: 'openjdk8'
-        - beryllium:
-            branch: 'stable/beryllium'
-            jre: 'openjdk7'
 
     install:
         - only:
