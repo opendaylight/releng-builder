@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a622d24_6e8061c0",
+        "filename": "jjb/integration/integration-macros.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-01-17T14:42:12Z",
+      "side": 1,
+      "message": "I\u0027m not entirely a fan of this macro name. I think we can make it more generic since this is not a macro specific to hwvtep it can be reused by other csit jobs. Maybe with-3-vm-types or something?",
+      "range": {
+        "startLine": 246,
+        "startChar": 34,
+        "endLine": 246,
+        "endChar": 45
+      },
+      "revId": "7c12a53d82f1528a053456d5fd67109714475604",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a622d24_ce0a5578",
+        "filename": "openstack-hot/csit-2-instance-type.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-01-17T14:42:12Z",
+      "side": 1,
+      "message": "Please create a new file called csit-3-instance-type.yaml instead. Otherwise this change breaks existing jobs that depend on the csit-2-instance-type scenario.",
+      "revId": "7c12a53d82f1528a053456d5fd67109714475604",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a622d24_ce58958c",
+        "filename": "packer/provision/mininet-ovs-2.5.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-01-17T14:42:12Z",
+      "side": 1,
+      "message": "Packer changes should be split out into it\u0027s own patch, you can make this patch depend on the packer patch so that we merge things in the right order. Since this jobs depend on this additional dependency existing first we cannot update the images and have the job successfully pass in one step.",
+      "revId": "7c12a53d82f1528a053456d5fd67109714475604",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
