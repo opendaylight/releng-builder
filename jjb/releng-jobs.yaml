@@ -214,7 +214,7 @@
 
 - job-template:
     name: 'builder-weekly'
-    disabled: true
+    disabled: false
     node: jjbuilder
 
     # builder-weekly job to run JJB update weekly
@@ -248,7 +248,7 @@
 
     builders:
         - shell: |
-            jenkins-jobs --flush-cache update --recursive jjb/
+            jenkins-jobs --flush-cache update --recursive --workers 4 jjb/
 
     publishers:
         - email-notification:
