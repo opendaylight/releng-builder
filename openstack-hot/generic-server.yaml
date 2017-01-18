@@ -4,6 +4,17 @@ parameters:
     job_name:
         type: string
         description: Name of job running this template
+    silo:
+        type: string
+        default: vm
+        description: |
+            String to identify a Jenkins Master
+
+            Useful in scenarios where multiple Jenkins Masters might be
+            creating VMs in the same cloud to uniquely distinguish them.
+
+            TODO we should move to using tags once OpenStack Ocata which is
+            available to us with support for server tags properties.
     ssh_key:
         type: string
         description: SSH Key name to use (Public key must exist in OpenStack)
@@ -25,8 +36,9 @@ resources:
             image: { get_param: vm_image }
             name:
                 str_replace:
-                    template: JOB_NAME-VM_TYPE-INDEX
+                    template: SILO-JOB_NAME-VM_TYPE-INDEX
                     params:
+                        "SILO": { get_param: silo }
                         "JOB_NAME": { get_param: job_name }
                         "VM_TYPE":
                             str_split:

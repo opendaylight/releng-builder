@@ -37,6 +37,7 @@ resources:
                 type: generic-server.yaml
                 properties:
                     job_name: { get_param: job_name }
+                    silo: { get_param: silo }
                     ssh_key: { get_param: silo }
                     index: "%index%"
                     vm_flavor: { get_param: vm_0_flavor }
@@ -50,6 +51,7 @@ resources:
                 type: generic-server.yaml
                 properties:
                     job_name: { get_param: job_name }
+                    silo: { get_param: silo }
                     ssh_key: { get_param: silo }
                     index: "%index%"
                     vm_flavor: { get_param: vm_1_flavor }
