@@ -8,6 +8,7 @@
         - 'builder-check-poms'
         - 'builder-verify-packer'
         - 'builder-merge-packer-{platforms}-{templates}'
+        - 'builder-delete-stale-stacks'
 
     platforms:
         - centos
@@ -285,6 +286,32 @@
         - shell:
             !include-raw-escape:
                 - include-raw-check-poms.sh
+
+    publishers:
+        - email-notification:
+            email-recipients: '{email-recipients}'
+            email-prefix: '[releng]'
+        - opendaylight-infra-shiplogs:
+            maven-version: 'mvn33'
+
+- job-template:
+    name: 'builder-delete-stale-stacks'
+    project-type: freestyle
+    node: centos7-java-builder-2c-4g
+
+    properties:
+        - opendaylight-infra-properties:
+            build-days-to-keep: 7
+
+    wrappers:
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
+
+    triggers:
+        - timed: 'H H/4 * * *'
+
+    builders:
+        - shell: !include-raw-escape: opendaylight-infra-cleanup-stale-stacks.sh
 
     publishers:
         - email-notification:
