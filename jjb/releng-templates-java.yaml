@@ -104,6 +104,8 @@
         - provide-maven-settings:
             global-settings-file: 'odl-global-settings'
             settings-file: '{mvn-settings}'
+        - distribute-job-url:
+            path: 'distribution-karaf/src/main/assembly'
 
     maven:
         maven-name: 'mvn33'

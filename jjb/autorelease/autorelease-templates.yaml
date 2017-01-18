@@ -62,6 +62,8 @@
             odl-global-settings: 'odl-global-settings'
         - autorelease-generate-taglist
         - autorelease-distribute-taglist
+        - distribute-job-url:
+            path: 'integration/distribution/distribution-karaf/src/main/assembly'
         - autorelease-generate-release-patches
         # In a perfect world projects should be releasing separately and we consume them
         # via a project that pulls the release bits from each project from Nexus.
