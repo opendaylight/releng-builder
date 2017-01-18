@@ -52,6 +52,24 @@
       "revId": "b1cfe25d271c6bfbce4b781218310deeda11da71",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a622d24_1b8be868",
+        "filename": "jjb/netvirt/netvirt-patch-test.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2017-01-18T00:54:42Z",
+      "side": 1,
+      "message": "maybe we just want to get rid of this non-specific test-netvirt-current altogether? I mean, if we leave the\nother changes in this patch then people can trigger exactly\nwhat they want with test-netvirt-$sg-current\n\nthe only reason I can see for keeping test-netvirt-current\nwas that it\u0027s probably habit for some at this point. My\nthinking was that \"test-netvirt-current\" would start to \nhold *all* of the csit we wanted to test for the current\nimpl.\n\nanyway, let me know your opinion and I\u0027ll go with the\nconsensus.",
+      "parentUuid": "1a622d24_9f1a4d7b",
+      "revId": "b1cfe25d271c6bfbce4b781218310deeda11da71",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
