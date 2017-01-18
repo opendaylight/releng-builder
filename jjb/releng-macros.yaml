@@ -317,6 +317,12 @@
         - shell: !include-raw-escape: opendaylight-infra-copy-ssh-keys.sh
 
 - builder:
+    name: distribute-build-url
+    # Place URL of the current run of a build job to a file at given path.
+    builders:
+        - shell: 'echo "$BUILD_URL" > {path}/build.url'
+
+- builder:
     name: wipe-org-opendaylight-repo
     builders:
         - shell: 'if [ -d /tmp/r/org/opendaylight ]; then rm -rf /tmp/r/org/opendaylight; fi'
