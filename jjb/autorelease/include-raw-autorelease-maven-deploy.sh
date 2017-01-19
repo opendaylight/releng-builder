@@ -22,7 +22,8 @@ NEXUS_STAGING_URL=${ODLNEXUS_STAGING_URL:-$ODLNEXUSPROXY}
 NEXUS_STAGING_PROFILE=${ODLNEXUS_STAGING_PROFILE:-425e43800fea70}
 NEXUS_STAGING_SERVER_ID=${ODLNEXUS_STAGING_SERVER_ID:-"opendaylight.staging"}
 
-rsync -avz --exclude 'maven-metadata*' \
+rsync -avz --remove-source-files \
+           --exclude 'maven-metadata*' \
            --exclude '_remote.repositories' \
            --exclude 'resolver-status.properties' \
            "stage/org/opendaylight" m2repo/org/
