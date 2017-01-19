@@ -82,6 +82,10 @@ EOF
         ;;
     esac
 
+    # Needed to parse OpenStack commands used by opendaylight-infra stack commands
+    # to initialize Heat template based systems.
+    yum install -y jq
+
     # install haveged to avoid low entropy rejecting ssh connections
     yum install -y haveged
     systemctl enable haveged.service
@@ -137,6 +141,10 @@ EOF
     # make sure that we still default to openjdk 7
     update-alternatives --set java /usr/lib/jvm/java-7-openjdk-amd64/jre/bin/java
     update-alternatives --set javac /usr/lib/jvm/java-7-openjdk-amd64/bin/javac
+
+    # Needed to parse OpenStack commands used by opendaylight-infra stack commands
+    # to initialize Heat template based systems.
+    apt-get install jq
 
     # install haveged to avoid low entropy rejecting ssh connections
     apt-get install haveged
