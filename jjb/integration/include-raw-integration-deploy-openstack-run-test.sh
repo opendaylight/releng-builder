@@ -125,6 +125,7 @@ if [ "${ODL_ENABLE_L3_FWD}" == "yes" ]; then
 cat >> ${local_conf_file_name} << EOF
 PUBLIC_BRIDGE=${PUBLIC_BRIDGE}
 PUBLIC_PHYSICAL_NETWORK=physnet1 # FIXME this should be a parameter
+ML2_VLAN_RANGES=physnet1
 ODL_PROVIDER_MAPPINGS=${ODL_PROVIDER_MAPPINGS}
 
 disable_service q-l3
@@ -148,6 +149,11 @@ cat >> ${local_conf_file_name} << EOF
 [[post-config|/etc/neutron/plugins/ml2/ml2_conf.ini]]
 [agent]
 minimize_polling=True
+
+[ml2]
+# Needed for VLAN provider tests - because our provider networks are always encapsulated in VXLAN (br-physnet1)
+# MTU(1440) + VXLAN(50) + VLAN(4) = 1494 < MTU eth0/br-phynset1(1500)
+physical_network_mtus = physnet1:1440
 
 [[post-config|/etc/neutron/dhcp_agent.ini]]
 [DEFAULT]
