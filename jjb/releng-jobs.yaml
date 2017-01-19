@@ -6,7 +6,7 @@
         - 'builder-merge'
         - 'builder-weekly'
         - 'builder-check-poms'
-        - 'builder-verify-packer-{platforms}-{templates}'
+        - 'builder-verify-packer'
         - 'builder-merge-packer-{platforms}-{templates}'
 
     platforms:
@@ -294,7 +294,7 @@
             maven-version: 'mvn33'
 
 - job-template:
-    name: 'builder-verify-packer-{platforms}-{templates}'
+    name: 'builder-verify-packer'
     project-type: freestyle
     node: centos7-java-builder-2c-8g
     concurrent: true
