@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "1a622d24_c5da2616",
+        "filename": "jjb/netvirt/netvirt-csit-1node-multi-openstack.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2017-01-19T18:52:58Z",
+      "side": 1,
+      "message": "must... put... in.. order...",
+      "revId": "b1cfe25d271c6bfbce4b781218310deeda11da71",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a622d24_1ae490df",
         "filename": "jjb/netvirt/netvirt-patch-test.yaml",
         "patchSetId": 3
@@ -85,6 +102,24 @@
       "side": 1,
       "message": "Sam WDYT?\n\nI think we need a short keyword for convenience. Usually SG type is of no interest to most commits, and we\u0027ll just default to stateful soon enough.\nAnything works for me, prefer not to confuse people with name changes all the time though, we\u0027ve gotten used to \u0027test-netvirt-current\u0027",
       "parentUuid": "1a622d24_1b8be868",
+      "revId": "b1cfe25d271c6bfbce4b781218310deeda11da71",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a622d24_a5d56ae6",
+        "filename": "jjb/netvirt/netvirt-patch-test.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2017-01-19T18:52:58Z",
+      "side": 1,
+      "message": "Yeah, keep test-netvirt-current to make it easy for others. And behind the scenes we change it to run stateful. Later we can also change it to something else - like the trimmed down suite or go the other way and include more suites.",
+      "parentUuid": "1a622d24_8c0fc087",
       "revId": "b1cfe25d271c6bfbce4b781218310deeda11da71",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
