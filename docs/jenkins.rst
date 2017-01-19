@@ -310,6 +310,24 @@ Pool: ODLRPC
       </tr>
     </table>
 
+  Pool: ODLPUB - HOT (Heat Orchestration Templates)
+  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  HOT integration enables to spin up integration labs servers for CSIT jobs
+  using heat, rathar than using jclouds (deprecated). Image names are updated
+  on the project specific job templates using the variable
+  `{old,docker,openstack,tools}_system_image` followed by image name, in the
+  format `<platform> - <template> - <date-stamp>`.
+
+    .. code-block:: yaml
+
+        CentOS 7 - docker - 20161031-0802
+
+    .. toctree::
+        :glob:
+
+        cloud-images.rst
+
 Creating Jenkins Jobs
 ---------------------
 
@@ -957,4 +975,3 @@ If `using Docker <JJB Docker image_>`_:
 .. _spinup-scripts: https://git.opendaylight.org/gerrit/gitweb?p=releng/builder.git;a=tree;f=jenkins-scripts
 .. _spinup-scripts-basic_settings.sh: https://git.opendaylight.org/gerrit/gitweb?p=releng/builder.git;a=blob;f=jenkins-scripts/basic_settings.sh
 .. _spinup-scripts-controller.sh: https://git.opendaylight.org/gerrit/gitweb?p=releng/builder.git;a=blob;f=jenkins-scripts/controller.sh
-
