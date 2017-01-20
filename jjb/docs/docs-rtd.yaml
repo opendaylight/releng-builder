@@ -55,8 +55,7 @@
                       pattern: docs/**/*.rst
 
     builders:
-        - shell: |
-            curl -X POST https://readthedocs.org/build/{rtdproject}
+        - shell: !include-raw-escape: docs-post-rtd.sh
 
     publishers:
         - email-notification:
