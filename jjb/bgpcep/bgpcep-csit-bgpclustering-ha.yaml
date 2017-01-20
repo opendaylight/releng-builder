@@ -17,13 +17,14 @@
         - boron:
             branch: 'stable/boron'
             jre: 'openjdk8'
+            install-features: 'odl-restconf,odl-bgpcep-bgp-all,odl-bgpcep-bgp,odl-netconf-clustered-topology'
 
     install:
         - only:
             scope: 'only'
 
     # Features to install
-    install-features: 'odl-restconf,odl-bgpcep-bgp-all,odl-bgpcep-bgp,odl-netconf-clustered-topology'
+    install-features: 'odl-restconf,odl-bgpcep-bgp'
 
     # Robot custom options:
     robot-options: '-v USE_NETCONF_CONNECTOR:False'
