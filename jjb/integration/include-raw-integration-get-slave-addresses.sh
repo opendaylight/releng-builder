@@ -5,9 +5,10 @@ TOOLS_SYSTEM=()
 OPENSTACK_SYSTEM=()
 
 source $WORKSPACE/.venv-openstack/bin/activate
-CONTROLLER_IPS=`openstack --os-cloud rackspace stack show -f json -c outputs $STACK_NAME | jq -r '.outputs[] | select(.output_key=="vm_0_ips") | .output_value[]'`
-MININET_IPS=`openstack --os-cloud rackspace stack show -f json -c outputs $STACK_NAME | jq -r '.outputs[] | select(.output_key=="vm_1_ips") | .output_value[]'`
-ADDR=($CONTROLLER_IPS $MININET_IPS)
+ADDR=(`openstack --os-cloud rackspace stack show -f json -c outputs $STACK_NAME | \
+       jq -r '.outputs[] | \
+              select(.output_key | match("^vm_[0-9]+_ips$")) | \
+              .output_value | .[]'`)
 
 for i in "${ADDR[@]}"
 do
