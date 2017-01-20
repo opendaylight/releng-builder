@@ -55,7 +55,7 @@
                       pattern: docs/**/*.rst
 
     builders:
-        - shell: !include-raw-escape: docs-post-rtd.sh
+        - shell: !include-raw: docs-post-rtd.sh
 
     publishers:
         - email-notification:
