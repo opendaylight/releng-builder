@@ -17,9 +17,11 @@
         - boron:
             branch: 'stable/boron'
             jre: 'openjdk8'
+            install-features: 'odl-restconf,odl-bgpcep-bgp-all,odl-bgpcep-bgp,odl-netconf-clustered-topology'
         - beryllium:
             branch: 'stable/beryllium'
             jre: 'openjdk7'
+            install-features: 'odl-restconf,odl-bgpcep-bgp-all,odl-bgpcep-bgp,odl-netconf-clustered-topology'
 
     install:
         - only:
@@ -28,7 +30,7 @@
             scope: 'all'
 
     # Features to install
-    install-features: 'odl-restconf,odl-bgpcep-bgp-all,odl-bgpcep-bgp,odl-netconf-clustered-topology'
+    install-features: 'odl-restconf,odl-bgpcep-bgp,odl-netconf-clustered-topology'
 
     # Robot custom options:
     robot-options: '-v USE_NETCONF_CONNECTOR:False'
