@@ -149,6 +149,11 @@ EOF
     # install haveged to avoid low entropy rejecting ssh connections
     apt-get install haveged
     update-rc.d haveged defaults
+
+    # disable unattended upgrades & daily updates
+    echo '---> Disabling automatic daily upgrades'
+    sed -ine 's/"1"/"0"/g' /etc/apt/apt.conf.d/10periodic
+    echo 'APT::Periodic::Unattended-Upgrade "0";' >> /etc/apt/apt.conf.d/10periodic
 }
 
 all_systems() {
