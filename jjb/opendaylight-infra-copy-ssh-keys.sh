@@ -1,4 +1,6 @@
 #!/bin/bash
+source $WORKSPACE/.venv-openstack/bin/activate
+
 function copy-ssh-keys-to-slave() {
     RETRIES=60
     for j in $(seq 1 $RETRIES); do
@@ -16,11 +18,7 @@ function copy-ssh-keys-to-slave() {
     done
 }
 
-source $WORKSPACE/.venv-openstack/bin/activate
-CONTROLLER_IPS=`openstack --os-cloud rackspace stack show -f json -c outputs $STACK_NAME | jq -r '.outputs[] | select(.output_key=="vm_0_ips") | .output_value[]'`
-MININET_IPS=`openstack --os-cloud rackspace stack show -f json -c outputs $STACK_NAME | jq -r '.outputs[] | select(.output_key=="vm_1_ips") | .output_value[]'`
-ADDR=($CONTROLLER_IPS $MININET_IPS)
-
+ADDR=(`openstack --os-cloud rackspace stack show -f json -c outputs $STACK_NAME | jq -r '.outputs[] | select(.output_key | match("^vm_\\w+_ips$")) | .output_value | .[]'`)
 pids=""
 for i in "${ADDR[@]}"; do
     ( copy-ssh-keys-to-slave ) &
