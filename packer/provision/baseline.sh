@@ -49,6 +49,11 @@ EOF
     yum install -y deltarpm
     yum update -y
 
+    # TODO: temporary fix for kernel panic cause with version kernel-3.10.0-514.6.1.el7
+    # https://bugs.centos.org/view.php?id=12598
+    yum install {kernel,kernel-headers,kernel-devel}-3.10.0-514.2.2.el7 -y
+    yum remove {kernel,kernel-headers,kernel-devel}-3.10.0-514.6.1.el7 -y
+
     # add in components we need or want on systems
     echo "---> Installing base packages"
     yum install -y @base https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
