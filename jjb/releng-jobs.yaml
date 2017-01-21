@@ -8,7 +8,9 @@
         - 'builder-check-poms'
         - 'builder-verify-packer'
         - 'builder-merge-packer-{platforms}-{templates}'
+        # OpenStack Related
         - 'builder-delete-stale-stacks'
+        - 'builder-update-image-list'
 
     platforms:
         - centos
@@ -312,6 +314,33 @@
 
     builders:
         - shell: !include-raw-escape: opendaylight-infra-cleanup-stale-stacks.sh
+
+    publishers:
+        - email-notification:
+            email-recipients: '{email-recipients}'
+            email-prefix: '[releng]'
+        - opendaylight-infra-shiplogs:
+            maven-version: 'mvn33'
+
+- job-template:
+    name: 'builder-update-image-list'
+    project-type: freestyle
+    node: centos7-java-builder-2c-4g
+
+    properties:
+        - opendaylight-infra-properties:
+            build-days-to-keep: 7
+
+    wrappers:
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
+
+    triggers:
+        # Update image list every Monday to Friday at 11:00 UTC
+        - timed: '0 11 * * 1-5'
+
+    builders:
+        - shell: !include-raw-escape: opendaylight-infra-update-image-list.sh
 
     publishers:
         - email-notification:
