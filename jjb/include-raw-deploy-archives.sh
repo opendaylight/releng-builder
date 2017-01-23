@@ -1,6 +1,9 @@
 #!/bin/bash
 
 set +e  # Do not affect the build result if some part of archiving fails.
+# Configure wget to not print download status when we download logs or when
+# Jenkins is installing Maven.
+echo "verbose=off" > ~/.wgetrc
 
 ARCHIVES_DIR="$JENKINS_HOSTNAME/$JOB_NAME/$BUILD_NUMBER"
 [ "$LOGS_SERVER" ] || LOGS_SERVER="https://logs.opendaylight.org"
