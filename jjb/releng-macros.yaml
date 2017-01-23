@@ -289,7 +289,10 @@
                 - maven-target:
                         maven-version: '{maven-version}'
                         pom: '.archives/deploy-archives.xml'
-                        goals: 'clean deploy -V -B -q -Dmaven.repo.local=/tmp/r'
+                        goals: >
+                            clean deploy -V -B -q
+                            -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
+                            -Dmaven.repo.local=/tmp/r
                         settings: 'jenkins-log-archives-settings'
                         settings-type: cfp
                         global-settings: 'odl-global-settings'
