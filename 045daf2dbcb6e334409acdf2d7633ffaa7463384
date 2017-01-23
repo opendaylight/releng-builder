@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fafc7978_26048e14",
+        "filename": "jjb/integration/include-raw-integration-deploy-openstack-run-test.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2017-01-23T12:35:53Z",
+      "side": 1,
+      "message": "Looks like urllib3 is installed only as a dependency for elasticsearch, which even in the most recent version requires urllib3\u003c2.0\n\nNow that changes.py is in integration/test, we should be able to make it use requests instead (which I think uses some version of urllib3 internally).",
+      "range": {
+        "startLine": 9,
+        "startChar": 22,
+        "endLine": 9,
+        "endChar": 29
+      },
+      "revId": "045daf2dbcb6e334409acdf2d7633ffaa7463384",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
