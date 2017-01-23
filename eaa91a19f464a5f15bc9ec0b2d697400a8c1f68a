@@ -22,6 +22,30 @@
       "revId": "eaa91a19f464a5f15bc9ec0b2d697400a8c1f68a",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_6149608b",
+        "filename": "openstack-hot/generic-server.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-01-23T16:10:18Z",
+      "side": 1,
+      "message": "$SILO is a runtime variable.\n\nWe do not have a {silo} JJB defaults variable which is what would be needed here. I\u0027m not sure how we can implement such a variable though we won\u0027t know which silo at the time the user calls jenkins-jobs command.",
+      "parentUuid": "fafc7978_9b503760",
+      "range": {
+        "startLine": 41,
+        "startChar": 32,
+        "endLine": 41,
+        "endChar": 51
+      },
+      "revId": "eaa91a19f464a5f15bc9ec0b2d697400a8c1f68a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
