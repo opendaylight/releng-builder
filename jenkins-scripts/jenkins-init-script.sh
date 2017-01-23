@@ -20,3 +20,6 @@ source /tmp/system_type.sh
 # Create the jenkins user last so that hopefully we don't have to deal with
 # guard files
 ./create_jenkins_user.sh
+
+## add local environment changes post scrips 
+./local_env_post.sh
