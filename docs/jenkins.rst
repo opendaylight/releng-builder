@@ -577,7 +577,7 @@ TODO: Document test-{project}-{feature} and test-{project}-all.
         <td colspan="2">
           This job runs the PROJECT-distribution-check-BRANCH job which is
           building also integration/distribution project in order to run SingleFeatureTest.
-          It also performs other check in order to prevent the change to break autorelease.
+          It also performs various other checks in order to prevent the change to break autorelease.
         </td>
       </tr>
 
