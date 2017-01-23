@@ -32,6 +32,10 @@ rm -rf /var/lib/cloud/*
 # clean-up any manual packer uploads
 rm -rf /tmp/packer
 
+# add local script for remote environments
+
+./system_reseal_local_env.sh
+
 # Force a system sync and sleep to get around any SSD issues
 echo "Forcing sync and sleep for 10sec"
 sync
