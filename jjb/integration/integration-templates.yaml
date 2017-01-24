@@ -42,9 +42,9 @@
             refspec: 'refs/heads/{branch}'
             artifacts: '{archive-artifacts}'
         - integration-branch:
-            branch: 'stable/boron'
+            branch: '{verify-branch}'
         - integration-distribution-stream:
-            stream: 'boron'
+            stream: '{verify-stream}'
         - integration-bundleurl:
             bundleurl: '{bundleurl}'
         - integration-controller-scope:
@@ -54,11 +54,11 @@
         - integration-test-options:
             test-options: '{robot-options}'
         - integration-stream-test-plan:
-            stream-test-plan: '{project}-{functionality}-boron.txt'
+            stream-test-plan: '{project}-{functionality}-{verify-stream}.txt'
         - integration-test-plan:
             test-plan: '{project}-{functionality}.txt'
         - integration-jdk-version:
-            jdkversion: 'openjdk8'
+            jdkversion: '{verify-jdkversion}'
 
     scm:
         - integration-gerrit-scm:
@@ -452,9 +452,9 @@
             refspec: 'refs/heads/{branch}'
             artifacts: '{archive-artifacts}'
         - integration-branch:
-            branch: 'stable/boron'
+            branch: '{verify-branch}'
         - integration-distribution-stream:
-            stream: 'boron'
+            stream: '{verify-stream}'
         - integration-bundleurl:
             bundleurl: '{bundleurl}'
         - integration-controller-scope:
@@ -464,11 +464,11 @@
         - integration-test-options:
             test-options: '{robot-options}'
         - integration-stream-test-plan:
-            stream-test-plan: '{project}-{functionality}-boron.txt'
+            stream-test-plan: '{project}-{functionality}-{verify-stream}.txt'
         - integration-test-plan:
             test-plan: '{project}-{functionality}.txt'
         - integration-jdk-version:
-            jdkversion: 'openjdk8'
+            jdkversion: '{verify-jdkversion}'
 
     scm:
         - integration-gerrit-scm:

@@ -36,8 +36,15 @@
     tools_system_flavor: 2 GB General Purpose v1
     tools_system_image: Ubuntu 14.04 - mininet - 20170117-0003
 
-    # Robot
+    # Default Robot framework options
     robot-options: ''
+
+    # Data for csit-verify jobs
+    # Branch for "last" version detection
+    verify-branch: 'stable/boron'
+    # Value for ODL_STREAM
+    verify-stream: 'boron'
+    verify-jdkversion: 'openjdk8'
 
     # In case a CSIT job is merged without Java version specified
     jdk: 'openjdk8'
