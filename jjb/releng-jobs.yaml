@@ -434,7 +434,9 @@
 
     scm:
         - gerrit-trigger-scm:
-            refspec: ''
+            refspec: '$GERRIT_REFSPEC'
+            branches:
+                - '$GERRIT_BRANCH'
             choosing-strategy: 'default'
 
     wrappers:
@@ -457,7 +459,17 @@
                       branch-pattern: '**/{branch}'
                 file-paths:
                     - compare-type: ANT
-                      pattern: 'packer/**'
+                      pattern: 'packer/vars/{platforms}.json'
+                    - compare-type: ANT
+                      pattern: 'packer/template/{templates}.json'
+                    - compare-type: ANT
+                      pattern: 'packer/provision/{templates}.sh'
+                    - compare-type: ANT
+                      pattern: 'packer/provision/system_reseal.sh'
+                    - compare-type: ANT
+                      pattern: 'packer/provision/rh-user_data.sh'
+                    - compare-type: ANT
+                      pattern: 'packer/provision/devstack-pre-pip.sh'
 
     builders:
         - packer-validate:

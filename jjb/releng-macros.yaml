@@ -483,9 +483,14 @@
                 /bin/bash -n $p > provision-validate-${p##*/}.log 2>&1
             done
 
+
 - builder:
     name: packer-build
     builders:
+        - config-file-provider:
+            files:
+                - file-id: 'packer-cloud-env'
+                  variable: 'CLOUDENV'
         - shell: |
             cd packer
             export PACKER_LOG="yes" && \
