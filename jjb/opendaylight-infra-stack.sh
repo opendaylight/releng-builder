@@ -6,6 +6,18 @@ pip install --upgrade python-openstackclient python-heatclient
 pip freeze
 
 cd /builder/openstack-hot
+echo "Inside the builder script"
+sudo wget https://git.opendaylight.org/gerrit/cat/50647%2C2%2Copenstack-hot/csit-3-instance-type.yaml
+sudo unzip csit-3-instance-type.yaml
+sudo rm csit-3-instance-type.yaml
+sudo mv csit-3-instance-type_new*.yaml csit-3-instance-type.yaml
+ls -lrt
+echo "Cat csit-3-instance-type.yaml"
+cat csit-3-instance-type.yaml
+echo "Environment file"
+cat $WORKSPACE/opendaylight-infra-environment.yaml
+echo "Echo Over"
+
 
 JOB_SUM=`echo $JOB_NAME | sum | awk '{{ print $1 }}'`
 VM_NAME="$JOB_SUM-$BUILD_NUMBER"
