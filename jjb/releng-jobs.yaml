@@ -382,7 +382,9 @@
 
     scm:
         - gerrit-trigger-scm:
-            refspec: ''
+            refspec: '$GERRIT_REFSPEC'
+            branches:
+                - '$GERRIT_BRANCH'
             choosing-strategy: 'default'
 
     wrappers:
