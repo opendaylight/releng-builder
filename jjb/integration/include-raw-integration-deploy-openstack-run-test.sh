@@ -4,6 +4,7 @@
 # script.
 source ${ROBOT_VENV}/bin/activate
 
+
 # TODO: remove this work to run changes.py if/when it's moved higher up to be visible at the Robot level
 echo "showing recent changes that made it in to the distribution used by this job"
 pip install --upgrade urllib3
@@ -620,6 +621,8 @@ pybot -N ${TESTPLAN} --removekeywords wuks -c critical -e exclude -v BUNDLEFOLDE
 -v BUNDLE_URL:${ACTUALBUNDLEURL} -v NEXUSURL_PREFIX:${NEXUSURL_PREFIX} -v JDKVERSION:${JDKVERSION} -v ODL_STREAM:${DISTROSTREAM} \
 -v ODL_SYSTEM_IP:${ODL_SYSTEM_IP} -v ODL_SYSTEM_1_IP:${ODL_SYSTEM_1_IP} -v ODL_SYSTEM_2_IP:${ODL_SYSTEM_2_IP} \
 -v ODL_SYSTEM_3_IP:${ODL_SYSTEM_3_IP} -v NUM_ODL_SYSTEM:${NUM_ODL_SYSTEM} -v CONTROLLER_USER:${USER} -v OS_USER:${USER} \
+-v TOOLS_SYSTEM_IP:${TOOLS_SYSTEM_1_IP} -v NUM_TOOLS_SYSTEM:${NUM_TOOLS_SYSTEM} \
+-v TOOLS_SYSTEM_1_IP:${TOOLS_SYSTEM_1_IP} -v TOOLS_SYSTEM_2_IP:${TOOLS_SYSTEM_2_IP} \
 -v NUM_OS_SYSTEM:${NUM_OPENSTACK_SYSTEM} -v OS_CONTROL_NODE_IP:${OPENSTACK_CONTROL_NODE_IP} \
 -v OS_COMPUTE_1_IP:${OPENSTACK_COMPUTE_NODE_1_IP} -v OS_COMPUTE_2_IP:${OPENSTACK_COMPUTE_NODE_2_IP} \
 -v HA_PROXY_IP:${HA_PROXY_IP} \
