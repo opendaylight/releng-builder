@@ -18,7 +18,6 @@ for i in "java-builder,builder" \
          "devstack,devstack" \
          "docker,docker" \
          "gbp,ubuntu-docker-ovs" \
-         "matrix,matrix" \
          "robot,robot" \
          "ubuntu-trusty-mininet,mininet-ubuntu" \
          "mininet,mininet-ubuntu"
