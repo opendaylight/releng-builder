@@ -20,6 +20,11 @@
             branch: 'master'
             jre: 'openjdk8'
 
+    verify-stream: 'carbon'
+    # TODO: Remove when carbon becomes the default scit-verify stream.
+    verify-branch: 'master'
+    # TODO: Update when stable/carbos is created.
+
     install:
         - only:
             scope: 'only'
