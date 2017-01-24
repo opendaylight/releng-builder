@@ -14,8 +14,7 @@ HOST=$(/bin/hostname)
 SYSTEM_TYPE=''
 
 IFS=','
-for i in "autorelease,autorelease" \
-         "java-builder,builder" \
+for i in "java-builder,builder" \
          "devstack,devstack" \
          "docker,docker" \
          "gbp,ubuntu-docker-ovs" \
