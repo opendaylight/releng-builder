@@ -457,13 +457,36 @@
 - builder:
     name: packer-build
     builders:
+        - config-file-provider:
+            files:
+                - file-id: 'packer-cloud-env'
+                  variable: 'CLOUDENV'
         - shell: |
             cd packer
-            export PACKER_LOG="yes" && \
-            export PACKER_LOG_PATH="packer-build.log" && \
-                        packer.io build -var-file=$CLOUDENV \
-                         -var-file=../packer/vars/{platform}.json \
-                         ../packer/templates/{template}.json
+            git fetch origin $GERRIT_REFSPEC && git checkout FETCH_HEAD
+            files=`git log --name-only --pretty=format: -n 1`
+            bflag=false
+            for f in $files; do
+                fpath=${{f%/*}}
+                fname=${{f##*/}}
+                fname_=${{fname%.*}}
+                # rh-user_data.sh - called only for centos platform
+                # baseline.sh,system_reseal.sh called in all templates
+                # devstack-pre-pip.sh - called in mitaka and newton templates
+                if [[ ( "$fname_" =~ ^(rh-user_data)$ && {platform} =~ ^(centos)$ ) ||
+                      ( "$fname_" =~ ^(devstack-pre-pip)$ && {template} =~ ^(devstack-pre-pip.*)$ ) ||
+                      ( "$fname_" =~ ^(baseline|system_reseal|{template}|{platform})$ ) ]]; then
+                    echo "Build image for $fname_: ('{template}' or '{platform}')"
+                    export PACKER_LOG="yes" && \
+                    export PACKER_LOG_PATH="packer-build.log" && \
+                                packer.io build -var-file=$CLOUDENV \
+                                 -var-file=../packer/vars/{platform}.json \
+                                 ../packer/templates/{template}.json
+                    break
+                else
+                    echo "Change to '$fname' does not match ('{template}' or '{platform}')"
+                fi
+            done
 
 - builder:
     # TODO: Verify signature after downloading users public key from a locally created
