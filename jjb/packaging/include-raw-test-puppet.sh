@@ -39,4 +39,4 @@ bundle install
 bundle update
 
 # Quick+important tests: Linting, rspec and Beaker on CentOS container tests
-bundle exec rake sanity
+bundle exec rake $RAKE_TASK

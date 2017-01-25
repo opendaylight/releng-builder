@@ -33,6 +33,10 @@
             branch: '{branch}'
             refspec: 'refs/heads/{branch}'
             artifacts: '{archive-artifacts}'
+        - string:
+            name: TEST_SUITE
+            default: 'sanity'
+            description: 'Set of tests to run, should be a rake task in puppet-opendaylight'
 
     scm:
         - integration-gerrit-scm:
@@ -48,7 +52,9 @@
         - shell: !include-raw: include-raw-test-puppet.sh
 
     triggers:
-        - timed: '@daily'
+        - parameterized-timer: |
+              @daily % TEST_SUITE=sanity
+              @weekly % TEST_SUITE=acceptance_dock
 
 - job-template:
     name: '{project-name}-build-rpm-{stream}'
