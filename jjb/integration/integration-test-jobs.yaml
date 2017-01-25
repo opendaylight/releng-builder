@@ -15,6 +15,7 @@
             branch: 'master'
             jdk: 'openjdk8'
             jre: 'openjdk8'
+            schedule: 'H H * * *'
             csit-list: >
                 controller-csit-3node-clustering-only-{stream},
                 controller-csit-3node-clustering-all-{stream},
@@ -72,6 +73,7 @@
             branch: 'stable/boron'
             jdk: 'openjdk8'
             jre: 'openjdk8'
+            schedule: 'H H * * *'
             csit-list: >
                 controller-csit-3node-clustering-only-{stream},
                 controller-csit-3node-clustering-all-{stream},
@@ -127,6 +129,7 @@
             branch: 'stable/beryllium'
             jdk: 'openjdk7'
             jre: 'openjdk7'
+            schedule: 'H H * * 6'
             csit-list: >
                 aaa-csit-1node-authn-only-{stream},
                 aaa-csit-1node-authn-all-{stream},
@@ -295,7 +298,7 @@
             jdkversion: '{jre}'
 
     triggers:
-        - timed: 'H H * * 6'
+        - timed: 'H H * * *'
 
     builders:
         - trigger-builds:
