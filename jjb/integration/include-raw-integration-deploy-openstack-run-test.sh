@@ -644,6 +644,10 @@ pybot -N ${TESTPLAN} --removekeywords wuks -c critical -e exclude \
     -v WORKSPACE:/tmp \
     ${TESTOPTIONS} ${SUITES} || true
 
+echo "Examining the files in data/log and checking filesize"
+ssh ${ODL_SYSTEM_IP} "ls -altr /tmp/${BUNDLEFOLDER}/data/log/"
+ssh ${ODL_SYSTEM_IP} "du -hs /tmp/${BUNDLEFOLDER}/data/log/*"
+
 echo "Tests Executed"
 DEVSTACK_TEMPEST_DIR="/opt/stack/tempest"
 if $(ssh ${OPENSTACK_CONTROL_NODE_IP} "sudo sh -c '[ -f ${DEVSTACK_TEMPEST_DIR}/.testrepository/0 ]'"); then # if Tempest results exist
