@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fafc7978_63a67ac3",
+        "filename": "jjb/integration/include-raw-integration-deploy-openstack-run-test.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 670
+      },
+      "writtenOn": "2017-01-25T09:38:37Z",
+      "side": 1,
+      "message": "I was thinking to do the du -sh on all the workspace files, that we are going to upload.\n\nThough the tail might be useful for this case, I think no need to output 750K of karaf.log mess into the console log.\n\nMaybe create a smaller truncated file in this case?\nIf we placed the tail output in archives we would probably get it by the way, even if the upload to log server failed.\n\nSide note: it seems these two files have a lot in common and should be refactored",
+      "revId": "bf09b3ed6bc48534479973fa6c1edd6f5e816235",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
