@@ -287,15 +287,7 @@
     publishers:
         - postbuildscript:
             builders:
-                - shell: |
-                    #!/bin/bash
-                    if [ -d "$WORKSPACE/.venv-openstack" ]; then
-                        source $WORKSPACE/.venv-openstack/bin/activate
-                        OS_STATUS=`openstack --os-cloud rackspace stack show -f json -c stack_status $STACK_NAME | jq -r '.stack_status'`
-                        if [ "$OS_STATUS" != "CREATE_IN_PROGRESS" ] && [ "$OS_STATUS" != "DELETE_IN_PROGRESS" ]; then
-                            openstack --os-cloud rackspace stack delete --yes $STACK_NAME
-                        fi
-                    fi
+                - shell: !include-raw: include-raw-stack-delete.sh
                 - shell: !include-raw: include-raw-deploy-archives.sh
                 - maven-target:
                         maven-version: '{maven-version}'
