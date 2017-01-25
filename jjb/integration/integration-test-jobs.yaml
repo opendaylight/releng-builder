@@ -17,18 +17,21 @@
             jdk: 'openjdk8'
             jre: 'openjdk8'
             csit-list: {csit-list-carbon}
+            schedule: 'H H * * *'
 
         - boron:
             branch: 'stable/boron'
             jdk: 'openjdk8'
             jre: 'openjdk8'
             csit-list: {csit-list-boron}
+            schedule: 'H H * * *'
 
         - beryllium:
             branch: 'stable/beryllium'
             jdk: 'openjdk7'
             jre: 'openjdk7'
             csit-list: {csit-list-beryllium}
+            schedule: 'H H * * 6'
 
     # tools system image
     tools_system_image: Ubuntu 14.04 - mininet-ovs-2.5 - 20170117-0004
@@ -152,7 +155,7 @@
             jdkversion: '{jre}'
 
     triggers:
-        - timed: 'H H * * 6'
+        - timed: 'H H * * *'
 
     builders:
         - trigger-builds:
