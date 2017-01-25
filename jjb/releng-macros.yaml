@@ -317,6 +317,23 @@
         - shell: !include-raw-escape: opendaylight-infra-copy-ssh-keys.sh
 
 - builder:
+    name: opendaylight-infra-push-gerrit-patch
+    # opendaylight-infra-push-gerrit-patch.sh allows a job to push a patch to
+    # Gerrit in an automated fashion. This is meant for tasks that creates
+    # the same patch regularly and needs the ability to detect if an unreviewed
+    # patch already exists. In which case it will update the existing patch.
+    #
+    # Note: This patch assumes the $WORKSPACE contains the project repo with
+    #       the files changed already "git add" and waiting for a "git commit" call.
+    #
+    # This script requires the following JJB variables to be passed in:
+    #     {project}       Gerrit project-name
+    #     {gerrit-topic}  Gerrit topic, please make a unique topic.
+    #     {gerrit-commit-message}  Commit message to assign to commit.
+    builders:
+        - shell: !include-raw: opendaylight-infra-push-gerrit-patch.sh
+
+- builder:
     name: distribute-build-url
     # Place URL of the current run of a build job to a file at given path.
     builders:
