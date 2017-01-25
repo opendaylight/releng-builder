@@ -625,6 +625,11 @@ pybot -N ${TESTPLAN} --removekeywords wuks -c critical -e exclude -v BUNDLEFOLDE
 -v HA_PROXY_IP:${HA_PROXY_IP} \
 -v DEVSTACK_DEPLOY_PATH:/opt/stack/devstack -v USER_HOME:${HOME} ${TESTOPTIONS} ${SUITES} || true
 
+echo "Examining the files in data/log and checking the last 750k bytes from karaf.log"
+ssh ${ODL_SYSTEM_IP} "ls -altr /tmp/${BUNDLEFOLDER}/data/log/"
+ssh ${ODL_SYSTEM_IP} "du -hs /tmp/${BUNDLEFOLDER}/data/log/*"
+ssh ${ODL_SYSTEM_IP} "tail --bytes=750K /tmp/${BUNDLEFOLDER}/data/log/karaf.log"
+
 echo "Tests Executed"
 DEVSTACK_TEMPEST_DIR="/opt/stack/tempest"
 if $(ssh ${OPENSTACK_CONTROL_NODE_IP} "sudo sh -c '[ -f ${DEVSTACK_TEMPEST_DIR}/.testrepository/0 ]'"); then # if Tempest results exist

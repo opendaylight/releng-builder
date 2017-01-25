@@ -273,6 +273,11 @@ pybot -N ${TESTPLAN} --removekeywords wuks -c critical -e exclude -v BUNDLEFOLDE
 -v MININET_USER:${USER} -v USER_HOME:${HOME} ${TESTOPTIONS} ${SUITES} || true
 # FIXME: Sort (at least -v) options alphabetically.
 
+echo "Examining the files in data/log and checking the last 750k bytes from karaf.log"
+ssh ${ODL_SYSTEM_IP} "ls -altr /tmp/${BUNDLEFOLDER}/data/log/"
+ssh ${ODL_SYSTEM_IP} "du -hs /tmp/${BUNDLEFOLDER}/data/log/*"
+ssh ${ODL_SYSTEM_IP} "tail --bytes=750K /tmp/${BUNDLEFOLDER}/data/log/karaf.log"
+
 for i in `seq 1 ${NUM_ODL_SYSTEM}`
 do
     CONTROLLERIP=ODL_SYSTEM_${i}_IP
