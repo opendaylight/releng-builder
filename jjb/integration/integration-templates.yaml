@@ -158,10 +158,6 @@
         - opendaylight-infra-wrappers:
             build-timeout: '{build-timeout}'
 
-    triggers:
-        - integration-csit-{install}:
-            jobs: '{trigger-jobs}'
-
     builders:
         - integration-infra-stack:
             stack-template: '{stack-template}'
@@ -268,9 +264,6 @@
     wrappers:
         - opendaylight-infra-wrappers:
             build-timeout: '{build-timeout}'
-
-    triggers:
-        - timed: '{schedule}'
 
     builders:
         - integration-infra-stack:
@@ -569,10 +562,6 @@
         - opendaylight-infra-wrappers:
             build-timeout: '{build-timeout}'
 
-    triggers:
-        - integration-csit-{install}:
-            jobs: '{trigger-jobs}'
-
     builders:
         - integration-infra-stack:
             stack-template: '{stack-template}'
@@ -681,10 +670,6 @@
         - opendaylight-infra-wrappers:
             build-timeout: '{build-timeout}'
 
-    triggers:
-        - integration-csit-{install}:
-            jobs: '{trigger-jobs}'
-
     builders:
         - integration-infra-stack:
             stack-template: '{stack-template}'
@@ -792,9 +777,6 @@
     wrappers:
         - opendaylight-infra-wrappers:
             build-timeout: '{build-timeout}'
-
-    triggers:
-        - timed: '{schedule}'
 
     builders:
         - integration-infra-stack:
