@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# add in a test copr repo
+wget http://copr.fedoraproject.org/coprs/tykeal/odl-updates/repo/epel-7/tykeal-odl-updates-epel-7.repo -O /etc/yum.repos.d/tykeal-odl-updates-epel-7.repo
+# Install xpath
+yum install -y perl-XML-XPath python-pip python-six
+
+# install crudini command line tool for editing config files
+yum install -y crudini
+
 echo '---> Installing non-baseline requirements'
 yum install -y deltarpm python{,-{crypto,devel,lxml,setuptools}} \
     @development {lib{xml2,xslt,ffi},openssl}-devel

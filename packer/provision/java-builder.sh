@@ -6,7 +6,8 @@
 # needed by enough to make them useful everywhere
 yum install -y @development perl-{Digest-SHA,ExtUtils-MakeMaker} \
     ant {boost,gtest,json-c,libcurl,libxml2,libvirt,openssl}-devel \
-    {readline,unixODBC}-devel yum-utils
+    {readline,unixODBC}-devel yum-utils fedora-packager \
+    libxslt-devel crudini
 
 #Install python3 and dependencies
 yum install -y python34

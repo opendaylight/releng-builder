@@ -35,6 +35,9 @@ cd udpreplay
 ./configure
 make &> /dev/null && cp udpreplay /usr/local/bin
 
+## Install docker-py and netaddr
+yum install -y -q python-docker-py python-netaddr
+
 #####################
 # DLUX requirements #
 #####################
