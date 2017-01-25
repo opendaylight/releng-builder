@@ -29,7 +29,7 @@
       "password": "{{user `public_pass`}}",
       "region": "DFW",
       "ssh_username": "{{user `public_cloud_user`}}",
-      "image_name": "{{user `distro`}} - devstack - newton - {{isotime \"20060102-1504\"}}",
+      "image_name": "{{user `distro`}} - devstack_newton - {{isotime \"20060102-1504\"}}",
       "source_image_name": "{{user `public_base_image`}}",
       "flavor": "general1-1",
       "networks": [
@@ -45,7 +45,7 @@
       "username": "{{user `private_user`}}",
       "password": "{{user `private_pass`}}",
       "ssh_username": "{{user `private_cloud_user`}}",
-      "image_name": "{{user `distro`}} - devstack - newton - {{isotime \"20060102-1504\"}}",
+      "image_name": "{{user `distro`}} - devstack-newton - {{isotime \"20060102-1504\"}}",
       "source_image_name": "{{user `private_base_image`}}",
       "flavor": "general1-1",
       "networks": [
