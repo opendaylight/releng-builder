@@ -120,6 +120,14 @@ TOOLS_SYSTEM_IP:${TOOLS_SYSTEM_IP} ${tools_variables} -v NUM_TOOLS_SYSTEM:${NUM_
 -v USER_HOME:${HOME} ${TESTOPTIONS} ${SUITES} || true
 # FIXME: Sort (at least -v) options alphabetically.
 
+echo "Examining the files in data/log and checking filesize"
+ssh ${ODL_SYSTEM_IP} "ls -altr /tmp/${BUNDLEFOLDER}/data/log/"
+ssh ${ODL_SYSTEM_IP} "du -hs /tmp/${BUNDLEFOLDER}/data/log/*"
+ssh ${ODL_SYSTEM_1_IP} "ls -altr /tmp/${BUNDLEFOLDER}/data/log/"
+ssh ${ODL_SYSTEM_1_IP} "du -hs /tmp/${BUNDLEFOLDER}/data/log/*"
+ssh ${ODL_SYSTEM_2_IP} "ls -altr /tmp/${BUNDLEFOLDER}/data/log/"
+ssh ${ODL_SYSTEM_2_IP} "du -hs /tmp/${BUNDLEFOLDER}/data/log/*"
+
 set +e  # We do not want to create red dot just because something went wrong while fetching logs.
 for i in `seq 1 ${NUM_ODL_SYSTEM}`
 do
