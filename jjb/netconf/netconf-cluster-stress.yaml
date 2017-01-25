@@ -34,9 +34,3 @@
 
     # Robot custom options
     robot-options: '-v USE_NETCONF_CONNECTOR:False'
-
-    # Trigger jobs (upstream dependencies)
-    trigger-jobs:
-        controller-distribution-{stream},
-        netconf-distribution-{stream},
-        integration-distribution-merge-{stream}

@@ -2,7 +2,6 @@
     name: vpnservice-carbon
     jobs:
         - '{project-name}-clm-{stream}'
-        - '{project-name}-distribution-{stream}'
         - '{project-name}-integration-{stream}'
         - '{project-name}-merge-{stream}'
         - '{project-name}-verify-{stream}-{maven}-{jdks}'
@@ -28,7 +27,6 @@
     name: vpnservice-boron
     jobs:
         - '{project-name}-clm-{stream}'
-        - '{project-name}-distribution-{stream}'
         - '{project-name}-integration-{stream}'
         - '{project-name}-merge-{stream}'
         - '{project-name}-verify-{stream}-{maven}-{jdks}'
@@ -54,7 +52,6 @@
     name: vpnservice-beryllium
     jobs:
         - '{project-name}-clm-{stream}'
-        - '{project-name}-distribution-{stream}'
         - '{project-name}-distribution-check-{stream}'
         - '{project-name}-integration-{stream}'
         - '{project-name}-merge-{stream}'

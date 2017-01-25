@@ -2,7 +2,6 @@
     name: persistence-carbon
     jobs:
         - '{project-name}-clm-{stream}'
-        - '{project-name}-distribution-{stream}'
         - '{project-name}-integration-{stream}'
         - '{project-name}-merge-{stream}'
         - '{project-name}-verify-{stream}-{maven}-{jdks}'
@@ -29,7 +28,6 @@
     name: persistence-boron
     jobs:
         - '{project-name}-clm-{stream}'
-        - '{project-name}-distribution-{stream}'
         - '{project-name}-integration-{stream}'
         - '{project-name}-merge-{stream}'
         - '{project-name}-verify-{stream}-{maven}-{jdks}'
@@ -56,7 +54,6 @@
     name: persistence-beryllium
     jobs:
         - '{project-name}-clm-{stream}'
-        - '{project-name}-distribution-{stream}'
         - '{project-name}-integration-{stream}'
         - '{project-name}-merge-{stream}'
         - '{project-name}-verify-{stream}-{maven}-{jdks}'

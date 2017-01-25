@@ -25,9 +25,6 @@
     # Robot custom options
     robot-options: '-v throughput_threshold:20000 -v latency_threshold:5000'
 
-    # Trigger jobs (upstream dependencies)
-    trigger-jobs: 'yangtools-distribution-{stream},controller-distribution-{stream},openflowjava-distribution-{stream},openflowplugin-distribution-{stream}'
-
     # Plot Info
     01-plot-title: 'Throughput Mode'
     01-plot-yaxis: 'flow_mods/sec'
