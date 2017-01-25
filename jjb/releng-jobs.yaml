@@ -352,6 +352,10 @@
 
     builders:
         - shell: !include-raw-escape: opendaylight-infra-update-image-list.sh
+        - opendaylight-infra-push-gerrit-patch:
+            project: '{project}'
+            gerrit-topic: 'releng-update-cloud-image-list'
+            gerrit-commit-message: 'Update cloud image list docs'
 
     publishers:
         - email-notification:
