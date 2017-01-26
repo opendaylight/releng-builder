@@ -491,6 +491,9 @@
                 global-settings: 'odl-global-settings'
                 global-settings-type: cfp
 
+        - trigger-builds:
+            - project: 'distribution-merge-{stream}'
+
     reporters:
         - findbugs
 
