@@ -17,4 +17,4 @@ git remote add gerrit ssh://jenkins-$SILO@git.opendaylight.org:29418/releng/buil
 
 # Don't fail the build if this command fails because it's possible that there
 # is no changes since last update.
-git review --yes -t {gerrit-topic} || true
+git push ssh://jenkins-$SILO@git.opendaylight.org:29418/releng/builder HEAD:refs/for/master%topic={gerrit-topic} || true
