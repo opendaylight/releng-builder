@@ -505,6 +505,9 @@
         - jacoco-report
         - opendaylight-infra-shiplogs:
             maven-version: 'mvn33'
+        - trigger:
+            project: 'distribution-merge-{stream}'
+            threshold: SUCCESS
 
 - job-template:
     name: '{project-name}-sonar'
