@@ -44,6 +44,29 @@ yum-config-manager -y --add-repo http://download.mono-project.com/repo/centos/
 yum -y install mono-complete nuget
 #end changes for vsemprovider in VTN
 
+
+# TSDR dependencies
+echo "Installing the Hbase Server..."
+mkdir /tmp/Hbase
+cd /tmp/Hbase
+wget --no-verbose http://apache.osuosl.org/hbase/hbase-0.94.27/hbase-0.94.27.tar.gz
+tar -xvf hbase-0.94.27.tar.gz
+
+echo "Installing the Cassandra Server..."
+mkdir /tmp/cassandra
+cd /tmp/cassandra
+wget --no-verbose http://apache.osuosl.org/cassandra/2.1.16/apache-cassandra-2.1.16-bin.tar.gz
+tar -xvf apache-cassandra-2.1.16-bin.tar.gz
+
+
+# Generally useful for all projects
+echo "Installing the Elasticsearch node..."
+mkdir /tmp/elasticsearch
+cd /tmp/elasticsearch
+wget --no-verbose https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.7.5.tar.gz
+tar -xvzf elasticsearch-1.7.5.tar.gz
+
+
 # The following installs hashicorp's packer binary which is required  for
 # the {verify,merge}-packer jobs
 mkdir /tmp/packer
