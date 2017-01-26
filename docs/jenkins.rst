@@ -42,7 +42,6 @@ Next we will create <new-project>.yaml as follows:
         name: <NEW_PROJECT>-carbon
         jobs:
             - '{project-name}-clm-{stream}'
-            - '{project-name}-distribution-{stream}'
             - '{project-name}-integration-{stream}'
             - '{project-name}-merge-{stream}'
             - '{project-name}-verify-{stream}-{maven}-{jdks}'
