@@ -408,6 +408,25 @@
         - shell:
             !include-raw:
                 - include-raw-integration-deploy-openstack-run-test.sh
+
+# Macro: integration-list-jobs
+# Operation: queries Jenkins jobs from jenkins.opendaylight.org and
+#   writes a list of the jobs corresponding to the search terms to a file.
+# Used by: builder-merge job template
+#
+# This script requires the following JJB variables to be passed in:
+#   {search_string}     Job type to act as a primary filter (e.g. csit)
+#   {blacklist}         List of sub-projects to filter out (e.g. longevity)
+#   {stream}            Development release name (e.g. boron)
+#   {jobs-filename}     Filename to write list into (e.g. carbon-jobs.lst)
+
+- builder:
+    name: integration-list-jobs
+    builders:
+        - shell:
+            !include-raw:
+                - include-raw-integration-list-jobs.sh
+
 ##############
 # Publishers #
 ##############
