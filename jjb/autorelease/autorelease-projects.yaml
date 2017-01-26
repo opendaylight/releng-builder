@@ -24,6 +24,10 @@
     project: 'releng/autorelease'
     archive-artifacts: '**/*.prop **/*.log **/patches/*.bundle **/patches/*.patch all-bundles.tar.gz'
 
+    publishers:
+      - archive:
+          artifacts: 'dependecies.log'
+
 ###
 # TODO: Remove this job once guava21 testing is complete
 ###
