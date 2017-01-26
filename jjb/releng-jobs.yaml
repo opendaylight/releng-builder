@@ -202,6 +202,47 @@
 
     builders:
         - shell: |
+            git checkout -b auto-update-csit-jobs
+        - integration-list-jobs:
+            blacklist: "longevity gate"
+            search_string: "csit"
+            stream: "carbon"
+            jobs-filename: "csit_jobs_carbon.lst"
+        - integration-list-jobs:
+            blacklist: "longevity gate"
+            search_string: "csit"
+            stream: "boron"
+            jobs-filename: "csit_jobs_boron.lst"
+        - integration-list-jobs:
+            blacklist: "longevity gate"
+            search_string: "csit"
+            stream: "beryllium"
+            jobs-filename: "csit_jobs_beryllium.lst"
+        - integration-replace-block-text:
+            starting-regex: 'csit-list-carbon: >'
+            ending-regex: 'csit-list-boron: >'
+            file-with-changes-to-insert: "csit_jobs_carbon.lst"
+            file-to-change: "jjb/releng-defaults.yaml"
+        - integration-replace-block-text:
+            starting-regex: 'csit-list-boron: >'
+            ending-regex: 'csit-list-beryllium: >'
+            file-with-changes-to-insert: "csit_jobs_boron.lst"
+            file-to-change: "jjb/releng-defaults.yaml"
+        - integration-replace-block-text:
+            starting-regex: 'csit-list-beryllium: >'
+            ending-regex: '# CSIT TESTS END SED MARKER'
+            file-with-changes-to-insert: "csit_jobs_beryllium.lst"
+            file-to-change: "jjb/releng-defaults.yaml"
+        - shell: |
+            git status
+            git add -A
+        - opendaylight-infra-push-gerrit-patch:
+            project: "releng/builder"
+            gerrit-topic: "auto-update-csit-jobs"
+            gerrit-commit-message: "Auto Update CSIT Jobs to run"
+        - shell: |
+            git checkout master
+        - shell: |
             pip freeze
             jenkins-jobs --version
             jenkins-jobs update --recursive --delete-old --workers 4 jjb/
