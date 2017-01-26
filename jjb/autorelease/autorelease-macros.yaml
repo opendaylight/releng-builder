@@ -139,3 +139,12 @@
         - shell: |
             ./scripts/fix-relativepaths.sh
 
+- publisher:
+    # opendaylight-notify-build-failure.sh searches console log for failures
+    # and emails the status to the release mailing list.
+    name: opendaylight-infra-notify-status
+    publishers:
+        - postbuildscript:
+            builders:
+                - shell: !include-raw: autorelease-notify-build-failure.sh
+            script-only-if-succeeded: False
