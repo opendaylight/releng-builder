@@ -427,6 +427,25 @@
             !include-raw:
                 - include-raw-integration-list-jobs.sh
 
+# Macro: integration-replace-block-text
+# Operation: using starting and ending regex to
+# replace a block of text in a file with the text in
+# another file. Regex should be basic and work with sed
+# Used by: builder-merge job template
+#
+# This script requires the following JJB variables to be passed in:
+#   {starting-regex}
+#   {ending-regex}
+#   {file-with-changes-to-insert}
+#   {file-to-change}
+
+- builder:
+    name: integration-replace-block-text
+    builders:
+        - shell:
+            !include-raw:
+                - include-raw-integration-replace-block-text.sh
+
 ##############
 # Publishers #
 ##############
