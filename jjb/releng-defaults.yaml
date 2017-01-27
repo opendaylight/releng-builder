@@ -110,7 +110,11 @@
     10-inclusion-flag: 'off'
     10-exclude-value: ''
 
-    # CSIT Test Lists
+    ### CSIT Test List Variables
+    # Space seperated strings to exclude from CSIT lists
+    csit-list-blacklist: 'longevity gate'
+    # Auto Generated CSIT job lists used
+    # in integration-distribution-test jobs
     csit-list-carbon: >
         controller-csit-3node-clustering-only-carbon,
         controller-csit-3node-clustering-all-carbon,

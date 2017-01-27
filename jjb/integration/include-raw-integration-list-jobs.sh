@@ -2,22 +2,11 @@
 # Script to filter Jenkins jobs against a blacklist
 # output: newline & comma-separated list
 
-system=releng
+system="releng"
 search_string="{search_string}"
-if [ -n "$search_string" ] ; then
-    search_string=csit
-fi
-
 blacklist_in="{blacklist}"
-if [ -n "$blacklist_in" ] ; then
-    blacklist_in="longevity gate"
-fi
 blacklist=( $(echo ${{blacklist_in}}) )
-
 stream="{stream}"
-if [ -n "$stream" ] ; then
-    stream=carbon
-fi
 
 wget --quiet -O jenkins-jobs.xml https://jenkins.opendaylight.org/$system/api/xml
 jobs=$(xmlstarlet sel -t -m '//hudson/job' \
