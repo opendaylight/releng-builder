@@ -329,7 +329,8 @@
     # This script requires the following JJB variables to be passed in:
     #     {project}       Gerrit project-name
     #     {gerrit-topic}  Gerrit topic, please make a unique topic.
-    #     {gerrit-commit-message}  Commit message to assign to commit.
+    #     {gerrit-commit-message} Commit message to assign to commit.
+    # NOTE: Requires git review to be installed on node.
     builders:
         - shell: !include-raw: opendaylight-infra-push-gerrit-patch.sh
 
