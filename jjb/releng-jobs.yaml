@@ -9,6 +9,7 @@
         - 'builder-verify-packer'
         - 'builder-merge-packer-{platforms}-{templates}'
         - 'builder-delete-stale-stacks'
+        - 'builder-update-csit-tests'
 
     platforms:
         - centos
@@ -201,47 +202,6 @@
                       pattern: jjb/**
 
     builders:
-        - shell: |
-            git checkout -b auto-update-csit-jobs
-        - integration-list-jobs:
-            blacklist: "longevity gate"
-            search_string: "csit"
-            stream: "carbon"
-            jobs-filename: "csit_jobs_carbon.lst"
-        - integration-list-jobs:
-            blacklist: "longevity gate"
-            search_string: "csit"
-            stream: "boron"
-            jobs-filename: "csit_jobs_boron.lst"
-        - integration-list-jobs:
-            blacklist: "longevity gate"
-            search_string: "csit"
-            stream: "beryllium"
-            jobs-filename: "csit_jobs_beryllium.lst"
-        - integration-replace-block-text:
-            starting-regex: "'csit-list-carbon: >'"
-            ending-regex: "'csit-list-boron: >'"
-            file-with-changes-to-insert: "'csit_jobs_carbon.lst'"
-            file-to-change: "'jjb/releng-defaults.yaml'"
-        - integration-replace-block-text:
-            starting-regex: "'csit-list-boron: >'"
-            ending-regex: "'csit-list-beryllium: >'"
-            file-with-changes-to-insert: "'csit_jobs_boron.lst'"
-            file-to-change: "'jjb/releng-defaults.yaml'"
-        - integration-replace-block-text:
-            starting-regex: "'csit-list-beryllium: >'"
-            ending-regex: "'# CSIT TESTS END SED MARKER'"
-            file-with-changes-to-insert: "'csit_jobs_beryllium.lst'"
-            file-to-change: "'jjb/releng-defaults.yaml'"
-        - shell: |
-            git status
-            git add jjb/releng-defaults.yaml
-        - opendaylight-infra-push-gerrit-patch:
-            project: "releng/builder"
-            gerrit-topic: "auto-update-csit-jobs"
-            gerrit-commit-message: "Auto Update CSIT Jobs to run"
-        - shell: |
-            git checkout master
         - shell: |
             pip freeze
             jenkins-jobs --version
@@ -458,5 +418,90 @@
         - email-notification:
             email-recipients: '{email-recipients}'
             email-prefix: '[{project}]'
+        - opendaylight-infra-shiplogs:
+            maven-version: 'mvn33'
+
+- job-template:
+    name: 'builder-update-csit-tests'
+    node: centos7-java-builder-2c-8g
+
+    # builder-update-csit-tests job
+    #
+    # This job's purpose is to update csit
+    # tests to run in integration-distribution-test-{stream}
+    # by updating releng-defaults variables: csit-list-carbon,
+    # csit-list-boron, csit-list-beryllium
+
+    project-type: freestyle
+
+    properties:
+        - opendaylight-infra-properties:
+            build-days-to-keep: 14
+
+    parameters:
+        - opendaylight-infra-parameters:
+            project: '{project}'
+            branch: '{branch}'
+            refspec: 'refs/heads/{branch}'
+            artifacts: '{archive-artifacts}'
+
+    scm:
+        - gerrit-trigger-scm:
+            refspec: ''
+            choosing-strategy: 'default'
+
+    wrappers:
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
+
+    triggers:
+        - reverse:
+               jobs: 'build-merge'
+
+    builders:
+        - shell: |
+            git checkout -b auto-update-csit-jobs
+        - integration-list-jobs:
+            blacklist: {csit-list-blacklist}
+            search_string: "csit"
+            stream: "carbon"
+            jobs-filename: "csit_jobs_carbon.lst"
+        - integration-list-jobs:
+            blacklist: {csit-list-blacklist}
+            search_string: "csit"
+            stream: "boron"
+            jobs-filename: "csit_jobs_boron.lst"
+        - integration-list-jobs:
+            blacklist: {csit-list-blacklist}
+            search_string: "csit"
+            stream: "beryllium"
+            jobs-filename: "csit_jobs_beryllium.lst"
+        - integration-replace-block-text:
+            starting-regex: "'csit-list-carbon: >'"
+            ending-regex: "'csit-list-boron: >'"
+            file-with-changes-to-insert: "'csit_jobs_carbon.lst'"
+            file-to-change: "'jjb/releng-defaults.yaml'"
+        - integration-replace-block-text:
+            starting-regex: "'csit-list-boron: >'"
+            ending-regex: "'csit-list-beryllium: >'"
+            file-with-changes-to-insert: "'csit_jobs_boron.lst'"
+            file-to-change: "'jjb/releng-defaults.yaml'"
+        - integration-replace-block-text:
+            starting-regex: "'csit-list-beryllium: >'"
+            ending-regex: "'# CSIT TESTS END SED MARKER'"
+            file-with-changes-to-insert: "'csit_jobs_beryllium.lst'"
+            file-to-change: "'jjb/releng-defaults.yaml'"
+        - shell: |
+            git status
+            git add jjb/releng-defaults.yaml
+        - opendaylight-infra-push-gerrit-patch:
+            project: "releng/builder"
+            gerrit-topic: "auto-update-csit-jobs"
+            gerrit-commit-message: "Auto Update CSIT Jobs to run"
+
+    publishers:
+        - email-notification:
+            email-recipients: '{email-recipients}'
+            email-prefix: '[releng]'
         - opendaylight-infra-shiplogs:
             maven-version: 'mvn33'
