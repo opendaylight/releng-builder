@@ -4,11 +4,11 @@
 
     jobs:
         - '{project-name}-verify-python-{stream}'
-        - '{project-name}-build-rpm-{stream}'
-        - '{project-name}-build-rpm-snap-{stream}'
-        - '{project-name}-build-deb-{stream}'
-        - '{project-name}-test-rpm-{stream}'
-        - '{project-name}-test-puppet-{stream}'
+        - 'packaging-build-rpm-{stream}'
+        - 'packaging-build-rpm-snap-{stream}'
+        - 'packaging-build-deb-{stream}'
+        - 'packaging-test-rpm-{stream}'
+        - 'packaging-test-puppet-{stream}'
 
     project: 'integration/packaging'
 
@@ -17,7 +17,7 @@
             branch: 'master'
 
 - job-template:
-    name: '{project-name}-test-puppet-{stream}'
+    name: 'packaging-test-puppet-{stream}'
 
     node: centos7-docker-2c-4g
 
@@ -51,7 +51,7 @@
         - timed: '@daily'
 
 - job-template:
-    name: '{project-name}-build-rpm-{stream}'
+    name: 'packaging-build-rpm-{stream}'
 
     node: dynamic_verify
 
@@ -106,7 +106,7 @@
         artifacts: '**/*.rpm'
 
 - job-template:
-    name: '{project-name}-build-rpm-snap-{stream}'
+    name: 'packaging-build-rpm-snap-{stream}'
 
     node: dynamic_verify
 
@@ -161,7 +161,7 @@
          artifacts: '**/*.rpm'
 
 - job-template:
-    name: '{project-name}-test-rpm-{stream}'
+    name: 'packaging-test-rpm-{stream}'
 
     node: dynamic_verify
 
@@ -199,7 +199,7 @@
          artifacts: '**'
 
 - job-template:
-    name: '{project-name}-build-deb-{stream}'
+    name: 'packaging-build-deb-{stream}'
 
     node: ubuntu_mininet
 
