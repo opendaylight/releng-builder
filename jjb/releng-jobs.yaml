@@ -105,7 +105,7 @@
 #        as there are zero python files (aside docs/conf.py) in releng/builder.
 - job-template:
     name: builder-verify-python
-    node: centos7-java-builder-2c-8g
+    node: centos7-java-builder-2c-4g
 
     project-type: freestyle
 
@@ -301,7 +301,7 @@
 
 - job-template:
     name: builder-check-poms
-    node: centos7-java-builder-2c-8g
+    node: centos7-java-builder-2c-4g
 
     project-type: freestyle
 
@@ -364,7 +364,7 @@
 - job-template:
     name: 'builder-verify-packer'
     project-type: freestyle
-    node: centos7-java-builder-2c-8g
+    node: centos7-java-builder-2c-4g
     concurrent: true
 
     properties:
@@ -407,7 +407,7 @@
 - job-template:
     name: 'builder-merge-packer-{platforms}-{templates}'
     project-type: freestyle
-    node: centos7-java-builder-2c-8g
+    node: centos7-java-builder-2c-4g
     concurrent: true
 
     properties:
