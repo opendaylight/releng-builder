@@ -460,7 +460,7 @@
 
     builders:
         - shell: |
-            git checkout -b auto-update-csit-jobs
+            git review -d auto-update-csit-jobs
         - integration-list-jobs:
             blacklist: '{csit-list-blacklist}'
             search_string: "csit"
