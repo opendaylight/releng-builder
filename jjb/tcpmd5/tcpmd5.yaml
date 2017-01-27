@@ -2,7 +2,6 @@
     name: tcpmd5-carbon
     jobs:
         - '{project-name}-clm-{stream}'
-        - '{project-name}-distribution-{stream}'
         - '{project-name}-integration-{stream}'
         - '{project-name}-merge-{stream}'
         - '{project-name}-verify-{stream}-{maven}-{jdks}'
@@ -29,7 +28,6 @@
     name: tcpmd5-boron
     jobs:
         - '{project-name}-clm-{stream}'
-        - '{project-name}-distribution-{stream}'
         - '{project-name}-integration-{stream}'
         - '{project-name}-merge-{stream}'
         - '{project-name}-verify-{stream}-{maven}-{jdks}'
@@ -56,7 +54,6 @@
     name: tcpmd5-beryllium
     jobs:
         - '{project-name}-clm-{stream}'
-        - '{project-name}-distribution-{stream}'
         - '{project-name}-distribution-check-{stream}'
         - '{project-name}-integration-{stream}'
         - '{project-name}-merge-{stream}'
