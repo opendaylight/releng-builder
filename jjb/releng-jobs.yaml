@@ -438,6 +438,18 @@
         - opendaylight-infra-properties:
             build-days-to-keep: 14
 
+    parameters:
+        - opendaylight-infra-parameters:
+            project: '{project}'
+            branch: '{branch}'
+            refspec: 'refs/heads/{branch}'
+            artifacts: '{archive-artifacts}'
+
+    scm:
+        - gerrit-trigger-scm:
+            refspec: ''
+            choosing-strategy: 'default'
+
     wrappers:
         - opendaylight-infra-wrappers:
             build-timeout: '{build-timeout}'
