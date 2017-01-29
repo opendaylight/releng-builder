@@ -9,7 +9,7 @@ echo "showing recent changes that made it in to the distribution used by this jo
 pip install --upgrade urllib3
 python ${WORKSPACE}/test/tools/distchanges/changes.py -d /tmp/distribution_folder \
                   -u ${ACTUALBUNDLEURL} \
-                  -r ssh://jenkins-${SILO}@git.opendaylight.org:29418
+                  -r ssh://jenkins-${SILO}@git.opendaylight.org:29418 || true
 
 echo "#################################################"
 echo "##         Deploy Openstack 3-node             ##"
