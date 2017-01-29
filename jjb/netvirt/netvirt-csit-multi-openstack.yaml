@@ -24,10 +24,10 @@
             schedule: 'H H/4 * * *'
             sg-mode: 'transparent'
         - upstream-stateful:
-            schedule: ''
+            schedule: 'H H * * *'
             sg-mode: 'stateful'
         - upstream-learn:
-            schedule: ''
+            schedule: 'H H * * *'
             sg-mode: 'learn'
         - gate-learn:
             schedule: ''
