@@ -93,6 +93,8 @@
             cp *.log *.prop $_
 
     publishers:
+        - archive:
+            artifacts: 'dependecies.log'
         - email-notification:
             email-recipients: '{email-recipients}'
             email-prefix: '[autorelease]'
