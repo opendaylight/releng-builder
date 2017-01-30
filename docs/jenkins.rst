@@ -573,17 +573,6 @@ TODO: Document test-{project}-{feature} and test-{project}-all.
 
     <table class="table table-bordered">
       <tr class="warning">
-        <td><b>Job Template</b><br/>{project}-distribution-{stream}</td>
-      </tr>
-      <tr>
-        <td colspan="2">
-          This job builds a snapshot distribution. This is triggered by successful merge job,
-          so the distribution contains newest project artifacts.
-          This job then triggers subset of sanity CSIT jobs relevant for the project.
-        </td>
-      </tr>
-
-      <tr class="warning">
         <td><b>Job Template</b><br/>{project}-distribution-check-{stream}</td>
         <td><b>Gerrit Trigger</b><br/>recheck</td>
       </tr>
@@ -622,6 +611,9 @@ TODO: Document test-{project}-{feature} and test-{project}-all.
           <b>source:jar</b> and <b>javadoc:jar</b>.
           Artifacts are uploaded to OpenDaylight's
           <a href="https://nexus.opendaylight.org">Nexus</a> on completion.
+
+          A distribution-merge-{stream} job is triggered to add the new artifacts to the
+          integration distribution.
 
           Running the "remerge" trigger is possible before a Change is merged,
           it would still build the actual HEAD. This job does not alter Gerrit votes.
