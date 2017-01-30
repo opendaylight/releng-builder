@@ -2,7 +2,9 @@
 
 set +e  # Do not affect the build result if some part of archiving fails.
 # Configure wget to not print download status when we download logs or when
-# Jenkins is installing Maven.
+# Jenkins is installing Maven (To be clear this is the Jenkins Maven plugin
+# using a shell script itself that we are unable to modify directly to affect
+# wget).
 echo "verbose=off" > ~/.wgetrc
 
 ARCHIVES_DIR="$JENKINS_HOSTNAME/$JOB_NAME/$BUILD_NUMBER"
