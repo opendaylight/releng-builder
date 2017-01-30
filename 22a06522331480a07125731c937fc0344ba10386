@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fafc7978_887447fe",
+        "filename": "jjb/autorelease/autorelease-projects.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2017-01-30T14:32:54Z",
+      "side": 1,
+      "message": "Why here and not in the templates?",
+      "range": {
+        "startLine": 27,
+        "startChar": 4,
+        "endLine": 27,
+        "endChar": 15
+      },
+      "revId": "22a06522331480a07125731c937fc0344ba10386",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_884ba7af",
+        "filename": "jjb/autorelease/autorelease-projects.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2017-01-30T14:32:54Z",
+      "side": 1,
+      "message": "Commit message hints that we want this to be available near the Jenkins URL (as opposed to logs.opendaylight.org), so that is why we do not simply add the artifact name to line 25.\n\nThat is fine, but is should be added as a comment into the code. Otherwise, people could \"improve\" this by moving the artifact name to line 25, and thus breaking downstream tooling.",
+      "range": {
+        "startLine": 28,
+        "startChar": 8,
+        "endLine": 28,
+        "endChar": 16
+      },
+      "revId": "22a06522331480a07125731c937fc0344ba10386",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
