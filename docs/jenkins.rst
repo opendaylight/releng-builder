@@ -188,11 +188,12 @@ Pool: ODLRPC
 
     <table class="table table-bordered">
       <tr class="warning">
-        <td><b>Jenkins Labels</b><br/> dynamic_controller, dynamic_verify,
-          dynamic_merge, centos7-java-builder-2c-4g, centos7-java-builder-2c-8g,
-          centos7-java-builder-4c-8g</td>
+        <td><b>Jenkins Labels</b><br/> dynamic_verify, dynamic_merge, centos7-java-builder-2c-8g,
+          dynamic_java, dynamic_controller, centos7-java-builder-2c-4g,
+          dynamic_verify_4c, dynamic_merge_4c, dynamic_java_8g, centos7-java-builder-4c-8g,
+          dynamic_verify_8c, dynamic_merge_8c, centos7-java-builder-8c-8g</td>
         <td><b>Minion Template names</b><br/> centos7-java-builder-2c-4g,
-          centos7-java-builder-2c-8g, centos7-java-builder-2c-8g,
+          centos7-java-builder-2c-4g, centos7-java-builder-2c-8g,
           centos7-java-builder-4c-8g, centos7-java-builder-8c-8g</td>
         <td><b>Packer Template</b><br/>
         releng/builder/packer/templates/java-builder.json</td>
@@ -201,7 +202,7 @@ Pool: ODLRPC
       </tr>
       <tr>
         <td colspan="4">
-          A CentOS 7 huild minion. This system has OpenJDK 1.7 (Java7) and OpenJDK
+          A CentOS 7 build minion. This system has OpenJDK 1.7 (Java7) and OpenJDK
           1.8 (Java8) installed on it along with all the other components and
           libraries needed for building any current OpenDaylight project. This is
           the label that is used for all basic verify, merge and daily builds for
