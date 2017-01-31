@@ -15,7 +15,7 @@
     rtdproject: 'opendaylight-spectrometer'
     toxdir: server
     nodedir: web
-    nodever: 4.4.6
+    nodever: 6.9.4
     staging-server: spectrometer03.dfw.opendaylight.org
 
 - job-template:
@@ -57,13 +57,17 @@
             echo "---> Setup Python"
             if [ -e venv-python34/bin/activate ]; then
                 echo "---> Updating Python dependencies"
+                source venv-python34/bin/activate
             else
                 echo "---> virtualenv not found. Setting up new virtualenv."
-                pyvenv venv-python34
+                pyvenv venv-python34 --without-pip
+                source venv-python34/bin/activate
+                wget https://bootstrap.pypa.io/get-pip.py
+                python get-pip.py
                 pip install -e spectrometer/server
             fi
-            source venv-python34/bin/activate
             pip install --upgrade -r spectrometer/server/requirements.txt
+            pip install --upgrade gunicorn gevent
             pip install --upgrade nodeenv
             pip freeze
 
@@ -75,7 +79,6 @@
                 nodeenv --node={nodever} --prebuilt venv-nodejs
             fi
             source venv-nodejs/bin/activate
-            npm install -g spectrometer/web
             node -v
             npm -v
 
@@ -89,6 +92,7 @@
             pkill node
             sleep 5  # Sleep 5 seconds for cooldown
             cd spectrometer/web
+            npm install
             nohup npm start >> ~/node.out &
 
             EOF
