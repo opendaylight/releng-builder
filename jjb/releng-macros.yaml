@@ -283,7 +283,10 @@
                 - shell: |
                     if [ -d "$WORKSPACE/.venv-openstack" ]; then
                         source $WORKSPACE/.venv-openstack/bin/activate
-                        openstack --os-cloud rackspace stack delete --yes $STACK_NAME
+                        source "$WORKSPACE/openstack_env.sh"
+                        if [ "$OS_STATUS" != "CREATE_IN_PROGRESS" ]; then
+                            openstack --os-cloud rackspace stack delete --yes $STACK_NAME
+                        fi
                     fi
                 - shell: !include-raw: include-raw-deploy-archives.sh
                 - maven-target:
