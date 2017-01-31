@@ -28,8 +28,12 @@
         - all:
             scope: 'all'
 
+    #JCloud VMs for VPP deployment
+    mininet-image: 'CentOS 7 - docker - 20170120-1434'
+    mininet-vms: 3
+
     # Features to install
-    install-features: 'odl-groupbasedpolicy-ofoverlay,odl-groupbasedpolicy-ui,odl-restconf-all'
+    install-features: 'odl-groupbasedpolicy-neutron-vpp-mapper,odl-vbd,odl-restconf'
 
     # Robot custom options
     robot-options: ''
