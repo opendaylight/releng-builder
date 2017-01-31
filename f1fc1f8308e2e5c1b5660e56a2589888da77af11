@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fafc7978_bcbb470d",
+        "filename": "jjb/opendaylight-infra-stack.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2017-01-31T22:55:19Z",
+      "side": 1,
+      "message": "would we get stuck when the wait_time\u003d\u003dmax_wait if the status remains CREATE_IN_PROGRESS (or anything that doesn\u0027t exit)?",
+      "revId": "f1fc1f8308e2e5c1b5660e56a2589888da77af11",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_dcbe0bff",
+        "filename": "jjb/opendaylight-infra-stack.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2017-01-31T22:55:19Z",
+      "side": 1,
+      "message": "doesn\u0027t this mean you wait 0+1+2+3+4+5 and not a total 5s?",
+      "revId": "f1fc1f8308e2e5c1b5660e56a2589888da77af11",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
