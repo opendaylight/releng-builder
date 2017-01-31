@@ -9,9 +9,23 @@ cd /builder/openstack-hot
 
 JOB_SUM=`echo $JOB_NAME | sum | awk '{{ print $1 }}'`
 VM_NAME="$JOB_SUM-$BUILD_NUMBER"
-openstack --os-cloud rackspace stack create --wait --timeout 15 -t {stack-template} -e $WORKSPACE/opendaylight-infra-environment.yaml --parameter "job_name=$VM_NAME" --parameter "silo=$SILO" $STACK_NAME
-OS_STATUS=`openstack --os-cloud rackspace stack show -f json -c stack_status $STACK_NAME | jq -r '.stack_status'`
-if [ "$OS_STATUS" != "CREATE_COMPLETE" ]; then
-    echo "Failed to initialize infrastructure. Quitting..."
-    exit 1
-fi
+openstack --os-cloud rackspace stack create -t {stack-template} -e $WORKSPACE/opendaylight-infra-environment.yaml --parameter "job_name=$VM_NAME" --parameter "silo=$SILO" $STACK_NAME
+
+# seq X refers to waiting for X minutes for Rackspace to return
+# a status that is not CREATE_IN_PROGRESS before giving up.
+for i in `seq 15`; do
+    sleep 60
+    OS_STATUS=`openstack --os-cloud rackspace stack show -f json -c stack_status $STACK_NAME | jq -r '.stack_status'`
+    if [ "$OS_STATUS" == "CREATE_COMPLETE" ]; then
+        echo "Stack initialized on infrastructure successful."
+        break
+    elif [ "$OS_STATUS" == "CREATE_FAILED" ]; then
+        echo "ERROR: Failed to initialize infrastructure. Quitting..."
+        exit 1
+    elif [ "$OS_STATUS" == "CREATE_IN_PROGRESS" ]; then
+        echo "Waiting to initialize infrastructure."
+        continue
+    else
+        echo "Unexpected status: $OS_STATUS"
+    fi
+done
