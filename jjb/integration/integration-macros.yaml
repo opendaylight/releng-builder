@@ -252,7 +252,7 @@
 
 # Macro: integration-deploy-controller-verify
 # Operation: this macro deploys the controller with all fetures
-# Used by: integration-distribution-deploy-{stream} job template
+# Used by: distribution-deploy-{stream} job template
 
 - builder:
     name: integration-deploy-controller-verify
@@ -318,7 +318,7 @@
 
 # Macro: integration-get-bundle-url-root
 # Operation: this macro gets the job generated distribution URL from root pom.xml
-# Used by: integration-distribution-verify-{stream} job template
+# Used by: distribution-verify-{stream} job template
 
 - builder:
     name: integration-get-bundle-url-root
