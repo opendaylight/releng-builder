@@ -309,7 +309,8 @@
             build-timeout: '{build-timeout}'
 
     triggers:
-        - timed: 'H H/6 * * *'
+        # Attempt to clear up stacks every hour in case we have orphaned stacks
+        - timed: '0 * * * *'
 
     builders:
         - shell: !include-raw-escape: opendaylight-infra-cleanup-stale-stacks.sh
