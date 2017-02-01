@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_30601632",
+        "filename": "jjb/opendaylight-infra-stack.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-02-01T15:31:31Z",
+      "side": 1,
+      "message": "Sounds good I\u0027ll add an echo just before the loop.",
+      "parentUuid": "fafc7978_f07e8ee3",
+      "revId": "58a0e689eeac75747389a747fe749eccf293e609",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_5084bad3",
         "filename": "jjb/opendaylight-infra-stack.sh",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-02-01T15:29:18Z",
       "side": 1,
       "message": "is this intended that we want to wait an initial 60s before the first check?",
+      "revId": "58a0e689eeac75747389a747fe749eccf293e609",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_10619239",
+        "filename": "jjb/opendaylight-infra-stack.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-02-01T15:31:31Z",
+      "side": 1,
+      "message": "Yes we want to wait 60s before every check including the first check because creating a vm does not take 0 seconds. It also makes this for loop logic more simple. Wait 60 seconds before each check and then if it\u0027s the last check it simply drops out of the loop.",
+      "parentUuid": "fafc7978_5084bad3",
       "revId": "58a0e689eeac75747389a747fe749eccf293e609",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
