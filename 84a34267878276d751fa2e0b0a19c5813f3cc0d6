@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fafc7978_fc178fa1",
+        "filename": "jjb/opendaylight-infra-stack.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-02-01T03:59:23Z",
+      "side": 1,
+      "message": "I think we don\u0027t need these variables if we just use a simple for loop.",
+      "revId": "84a34267878276d751fa2e0b0a19c5813f3cc0d6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_5c0dfb8f",
+        "filename": "jjb/opendaylight-infra-stack.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-02-01T03:59:23Z",
+      "side": 1,
+      "message": "# Retry for seq X minutes (sleep 60 inside loop)\nfor i in `seq 15`;",
+      "revId": "84a34267878276d751fa2e0b0a19c5813f3cc0d6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_3c12b7b1",
+        "filename": "jjb/opendaylight-infra-stack.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-02-01T03:59:23Z",
+      "side": 1,
+      "message": "No need to increment this if we\u0027re using a for loop.\n\nAlso I think we should have a sleep 60 here. Checking every 60 seconds is alright in my opinion. Servers don\u0027t come up online that fast so a 60 second wait is fine. This makes our variable in the for loop also represent minutes. which means if we do seq 15 it will mean wait for 15 minutes.",
+      "revId": "84a34267878276d751fa2e0b0a19c5813f3cc0d6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_9c264315",
+        "filename": "jjb/opendaylight-infra-stack.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-02-01T03:59:23Z",
+      "side": 1,
+      "message": "Personally I don\u0027t like exit 0 inside a loop. I rather exit the loop. It makes the code more maintainable in case we need to do additional processing after the loop finishes.",
+      "revId": "84a34267878276d751fa2e0b0a19c5813f3cc0d6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_7c239f05",
+        "filename": "jjb/opendaylight-infra-stack.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-02-01T03:59:23Z",
+      "side": 1,
+      "message": "It\u0027s unclear to me what tmp_stack_create_status represents. What does putting a 0, or 1 in there mean?\n\n\nWe could probably just check if OS_STATUS is still CREATE_IN_PROGRESS here and assume the top loop didn\u0027t complete with a CREATE_COMPLETE or CREATE_FAILED.",
+      "revId": "84a34267878276d751fa2e0b0a19c5813f3cc0d6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
