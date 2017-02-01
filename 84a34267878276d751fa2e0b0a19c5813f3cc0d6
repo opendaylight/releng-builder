@@ -84,6 +84,46 @@
       "revId": "84a34267878276d751fa2e0b0a19c5813f3cc0d6",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_1c7a53f1",
+        "filename": "jjb/releng-macros.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-02-01T04:03:55Z",
+      "side": 1,
+      "message": "This filename is kind of long. Maybe we can call it something simple like \"openstack_env.sh\" or something and source it.",
+      "range": {
+        "startLine": 287,
+        "startChar": 46,
+        "endLine": 287,
+        "endChar": 69
+      },
+      "revId": "84a34267878276d751fa2e0b0a19c5813f3cc0d6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_bc1d07c0",
+        "filename": "jjb/releng-macros.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-02-01T04:03:55Z",
+      "side": 1,
+      "message": "If we store tmp_stack_create_status as a script instead with contents like:\n\n OS_STATUS\u003dCREATE_IN_PROGRESS\n\nThen we can simply:\n\n source tmp_stack_create_status\n\nto get the variable.",
+      "revId": "84a34267878276d751fa2e0b0a19c5813f3cc0d6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
