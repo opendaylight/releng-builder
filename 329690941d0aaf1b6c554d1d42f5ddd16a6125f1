@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_162d0a47",
+        "filename": "jjb/opendaylight-infra-cleanup-stale-stacks.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-02-01T19:56:05Z",
+      "side": 1,
+      "message": "I\u0027m playing it safe just in case Jenkins blows up when it\u0027s expecting to see these stacks still available in Rackspace.\n\nRegardless I think if a stack is DELETE_FAILED or CREATE_FAILED then Jenkins has probably already given up on it and it\u0027s most likely no longer attached to a Jenkins job. This patch makes the script run every hour so it should hopefully clear everything up in a reasonable amount of time. I guess we won\u0027t know for sure until this is merged and we watch things for awhile.",
+      "parentUuid": "fafc7978_36476e21",
+      "range": {
+        "startLine": 32,
+        "startChar": 13,
+        "endLine": 34,
+        "endChar": 51
+      },
+      "revId": "329690941d0aaf1b6c554d1d42f5ddd16a6125f1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_d66c229f",
         "filename": "jjb/releng-macros.yaml",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-02-01T19:50:51Z",
       "side": 1,
       "message": "not following this, just by reading. the publisher is to\nsihplogs, but we are doing some stack delete step too.\n\nbut, I don\u0027t understand the delete either. we dont want to\ndo a delete when the status is *_IN_PROGRESS? why not delete\n*always*?",
+      "range": {
+        "startLine": 270,
+        "startChar": 0,
+        "endLine": 290,
+        "endChar": 26
+      },
+      "revId": "329690941d0aaf1b6c554d1d42f5ddd16a6125f1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_f6d84655",
+        "filename": "jjb/releng-macros.yaml",
+        "patchSetId": 7
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-02-01T19:56:05Z",
+      "side": 1,
+      "message": "The previous code was delete always and is what has been causing us to have orphaned systems in the system. Rackspace has requested that we do not delete any *_IN_PROGRESS because it leaves OpenStack in a funky status that prevents us from being able to delete them even manually.\n\nApparently deleting things in *_IN_PROGRESS is not a situation that openstack currently handles gracefully. At least that\u0027s what Rackspace is telling us.",
+      "parentUuid": "fafc7978_d66c229f",
       "range": {
         "startLine": 270,
         "startChar": 0,
