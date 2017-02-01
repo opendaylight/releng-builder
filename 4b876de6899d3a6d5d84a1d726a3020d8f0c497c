@@ -70,6 +70,30 @@
       "revId": "4b876de6899d3a6d5d84a1d726a3020d8f0c497c",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_7651f661",
+        "filename": "jjb/releng-macros.yaml",
+        "patchSetId": 9
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-02-01T21:25:25Z",
+      "side": 1,
+      "message": "If you go in the webui you will notice that it only allows us to declare the \"posstbuildscript\" publisher exactly once.\n\nIt\u0027s not possible to declare 2 postbuildscript publishers. I\u0027m not sure how to merge 2 JJB publisher definitions into a single one so that we only declare one.\n\nIf we declare postbuildscript 2 times in JJB though Jenkins WebUI will render it and accept it as a valid configuration even though the WebUI itself won\u0027t let you do that. So I\u0027m worried that maybe this is an unsupported feature that JJB somehow lets use use even though Jenkins doesn\u0027t.",
+      "parentUuid": "fafc7978_565b1287",
+      "range": {
+        "startLine": 269,
+        "startChar": 0,
+        "endLine": 290,
+        "endChar": 26
+      },
+      "revId": "4b876de6899d3a6d5d84a1d726a3020d8f0c497c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
