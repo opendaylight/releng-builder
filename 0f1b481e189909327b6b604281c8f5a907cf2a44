@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fafc7978_3cd757c3",
+        "filename": "jjb/opendaylight-infra-stack.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-02-01T05:00:43Z",
+      "side": 1,
+      "message": "Would be nice to have a comment at the top of this loop to explain that seq X means to wait for X minutes for Rackspace to return a status that is not CREATE_IN_PROGRESS before giving up.",
+      "revId": "0f1b481e189909327b6b604281c8f5a907cf2a44",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_fcccaf37",
+        "filename": "jjb/opendaylight-infra-stack.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-02-01T05:00:43Z",
+      "side": 1,
+      "message": "I think in this case it\u0027s ok to exit 1. We want to fail the build immediately on CREATE_FAILED and cleanup.",
+      "range": {
+        "startLine": 21,
+        "startChar": 8,
+        "endLine": 21,
+        "endChar": 13
+      },
+      "revId": "0f1b481e189909327b6b604281c8f5a907cf2a44",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_5cd21bd3",
+        "filename": "jjb/opendaylight-infra-stack.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-02-01T05:00:43Z",
+      "side": 1,
+      "message": "I think we should be waiting 60 seconds before the first openstack call as it does not take 0 seconds for a stack to come online. Can we move the sleep to the top of the loop?",
+      "range": {
+        "startLine": 24,
+        "startChar": 8,
+        "endLine": 24,
+        "endChar": 16
+      },
+      "revId": "0f1b481e189909327b6b604281c8f5a907cf2a44",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_9cdbe3ec",
+        "filename": "jjb/opendaylight-infra-stack.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-02-01T05:00:43Z",
+      "side": 1,
+      "message": "I think we don\u0027t need this file now that I think about it more. The publisher macro can do it\u0027s own call to OS_STATUS to get the information. This will make the code more simple.",
+      "revId": "0f1b481e189909327b6b604281c8f5a907cf2a44",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_7cd8bfef",
+        "filename": "jjb/releng-macros.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-02-01T05:00:43Z",
+      "side": 1,
+      "message": "Instead of sourcing the file we can do our own call to OS_STATUS\u003d`openstack ...` just like we do in the other file. This makes the code a bit more simple as we have one less file to remember imo.",
+      "revId": "0f1b481e189909327b6b604281c8f5a907cf2a44",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
