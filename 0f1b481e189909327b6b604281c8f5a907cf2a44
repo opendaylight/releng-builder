@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "fafc7978_fc9aef12",
+        "filename": "jjb/opendaylight-infra-stack.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2017-02-01T05:18:44Z",
+      "side": 1,
+      "message": "this is not address the case when this command comes back immediately with a response of None, is it?\n\nthat would still abort our jobs I think. What if we don\u0027t use the --wait option and then build in our 15 min poll below which is already what\u0027s happening.\n\nunless i got it wrong, this patch (currently) could see the stack create --wait for 15 min, but be stuck in CREAT_IN_PROGRESS for another 15 min before we bail. maybe\nthat\u0027s ok, but if all we want is a max 15m then maybe removing --wait here would work. Then you can put a || true at the end and we might be able to skip aborts on that None response.",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 9
+      },
+      "revId": "0f1b481e189909327b6b604281c8f5a907cf2a44",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_3cd757c3",
         "filename": "jjb/opendaylight-infra-stack.sh",
         "patchSetId": 3
