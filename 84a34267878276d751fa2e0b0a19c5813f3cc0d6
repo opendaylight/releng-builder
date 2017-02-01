@@ -87,6 +87,29 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_5c84dbd3",
+        "filename": "jjb/releng-macros.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-02-01T04:05:21Z",
+      "side": 1,
+      "message": "We need to delete on CREATE_FAILED too.\n\nCREATE_COMPLETE and CREATE_FAILED are final statuses for a stack. It is safe to delete stacks in this status. We only want to make sure we don\u0027t delete stacks in CREATE_IN_PROGRESS status.",
+      "range": {
+        "startLine": 286,
+        "startChar": 47,
+        "endLine": 286,
+        "endChar": 60
+      },
+      "revId": "84a34267878276d751fa2e0b0a19c5813f3cc0d6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_1c7a53f1",
         "filename": "jjb/releng-macros.yaml",
         "patchSetId": 2
