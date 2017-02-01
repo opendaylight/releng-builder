@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_3ca59753",
+        "filename": "jjb/opendaylight-infra-stack.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-02-01T05:21:15Z",
+      "side": 1,
+      "message": "Agreed. I think we should get rid of both --wait and --timeout 15 actually. They aren\u0027t needed since we have the loop below which will handle the waiting for us up to a max of whatever we set the sequence to.",
+      "parentUuid": "fafc7978_fc9aef12",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 9
+      },
+      "revId": "0f1b481e189909327b6b604281c8f5a907cf2a44",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_3cd757c3",
         "filename": "jjb/opendaylight-infra-stack.sh",
         "patchSetId": 3
