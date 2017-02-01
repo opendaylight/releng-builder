@@ -80,6 +80,11 @@ LIBVIRT_TYPE=qemu
 
 EOF
 
+if [ "${ENABLE_NETWORKING_L2GW}" == "yes" ]; then
+   echo "enable_plugin networking-l2gw ${NETWORKING_L2GW_DRIVER} ${ODL_ML2_BRANCH}" >> ${local_conf_file_name}
+   echo "NETWORKING_L2GW_SERVICE_DRIVER=L2GW:OpenDaylight:networking_odl.l2gateway.driver.OpenDaylightL2gwDriver:default" >> ${local_conf_file_name}
+   echo "ENABLED_SERVICES+=,neutron,q-svc,n-novnc,n-cpu,nova,q-meta" >> ${local_conf_file_name}
+fi
 
 if [ "${ODL_ML2_DRIVER_VERSION}" == "v2" ]; then
     echo "ODL_V2DRIVER=True" >> ${local_conf_file_name}
@@ -221,6 +226,12 @@ enable_plugin networking-odl ${ODL_ML2_DRIVER_REPO} ${ODL_ML2_BRANCH}
 ODL_MODE=compute
 LIBVIRT_TYPE=qemu
 EOF
+
+if [ "${ENABLE_NETWORKING_L2GW}" == "yes" ]; then
+   echo "enable_plugin networking-l2gw ${NETWORKING_L2GW_DRIVER} ${ODL_ML2_BRANCH}" >> ${local_conf_file_name}
+   echo "NETWORKING_L2GW_SERVICE_DRIVER=L2GW:OpenDaylight:networking_odl.l2gateway.driver.OpenDaylightL2gwDriver:default" >> ${local_conf_file_name}
+   echo "ENABLED_SERVICES+=,neutron,q-svc,n-novnc,n-cpu,nova,q-meta" >> ${local_conf_file_name}
+fi
 
 if [ "${NUM_ODL_SYSTEM}" -gt 1 ]; then
 odl_list=${ODL_SYSTEM_1_IP}

@@ -78,9 +78,11 @@
 
     odl-enable-l3: 'yes'
 
+    enable-networking-l2gw: 'yes'
+
     public-bridge: 'br-physnet1'
 
-    enable-openstack-services: 'q-svc,q-dhcp,q-meta,n-cauth,tempest'
+    enable-openstack-services: 'q-svc,q-dhcp,q-meta,n-cauth,tempest,l2gw-plugin'
 
     disable-openstack-services: 'swift,cinder,n-net,q-vpn,n-cpu'
 
