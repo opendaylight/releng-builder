@@ -19,33 +19,36 @@
     feature:
         - legacy:
             csit-list: >
-                netvirt-legacy-csit-1node-openstack-mitaka-gate-{stream},
+                netvirt-legacy-csit-1node-openstack-newton-nodl-v2-gate-{stream},
                 netvirt-legacy-csit-1node-openstack-basic-only-{stream}
         - current:
             csit-list: >
-                netvirt-csit-1node-openstack-mitaka-gate-transparent-{stream}
+                netvirt-csit-1node-openstack-newton-nodl-v2-gate-transparent-{stream}
         - minimal-current:
             csit-list: >
-                netvirt-csit-1node-openstack-mitaka-gate-minimal-transparent-{stream}
+                netvirt-csit-1node-openstack-newton-nodl-v2-gate-minimal-transparent-{stream}
         - tempest-current:
             csit-list: >
-                netvirt-csit-1node-openstack-mitaka-gate-tempest-transparent-{stream}
+                netvirt-csit-1node-openstack-newton-nodl-v2-gate-tempest-transparent-{stream}
         - cluster-legacy:
             csit-list: >
-                netvirt-legacy-csit-3node-openstack-mitaka-gate-{stream},
+                netvirt-legacy-csit-3node-openstack-newton-nodl-v2-gate-{stream},
                 netvirt-legacy-csit-3node-clustering-only-{stream}
         - cluster-current:
             csit-list: >
-                netvirt-csit-3node-openstack-mitaka-gate-transparent-{stream}
-        - newton-current:
+                netvirt-csit-3node-openstack-newton-nodl-v2-gate-transparent-{stream}
+        - mitaka-current:
+            csit-list: >
+                netvirt-csit-1node-openstack-mitaka-gate-transparent-{stream}
+        - nodl-v1-current:
             csit-list: >
                 netvirt-csit-1node-openstack-newton-gate-transparent-{stream}
         - learn-current:
             csit-list: >
-                netvirt-csit-1node-openstack-mitaka-gate-learn-{stream}
+                netvirt-csit-1node-openstack-newton-nodl-v2-gate-learn-{stream}
         - stateful-current:
             csit-list: >
-                netvirt-csit-1node-openstack-mitaka-gate-stateful-{stream}
+                netvirt-csit-1node-openstack-newton-nodl-v2-gate-stateful-{stream}
         - transparent-current:
             csit-list: >
-                netvirt-csit-1node-openstack-mitaka-gate-transparent-{stream}
+                netvirt-csit-1node-openstack-newton-nodl-v2-gate-transparent-{stream}
