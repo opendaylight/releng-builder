@@ -73,6 +73,9 @@ SERVICE_PASSWORD=admin
 ADMIN_PASSWORD=admin
 
 enable_plugin networking-odl ${ODL_ML2_DRIVER_REPO} ${ODL_ML2_BRANCH}
+if [ "${ENABLE_NETWORKING_L2GW}" == "yes" ]; then
+enable_plugin networking-l2gw ${NETWORKING_L2GW_DRIVER} ${ODL_ML2_BRANCH}
+fi
 
 ODL_PORT=8080
 ODL_MODE=externalodl
@@ -218,6 +221,9 @@ SERVICE_PASSWORD=admin
 ADMIN_PASSWORD=admin
 
 enable_plugin networking-odl ${ODL_ML2_DRIVER_REPO} ${ODL_ML2_BRANCH}
+if [ "${ENABLE_NETWORKING_L2GW}" == "yes" ]; then
+enable_plugin networking-l2gw ${NETWORKING_L2GW_DRIVER} ${ODL_ML2_BRANCH}
+fi
 ODL_MODE=compute
 LIBVIRT_TYPE=qemu
 EOF
