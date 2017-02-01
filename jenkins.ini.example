@@ -5,8 +5,7 @@ include_path=.:scripts:~/git/
 recursive=True
 
 [jenkins]
-#user=jenkins
-#password=1234567890abcdef1234567890abcdef
-url=http://localhost:8080
+user=#odl_username#
+password=#api_token#
+url=https://jenkins.opendaylight.org/sandbox
 query_plugins_info=False
-
