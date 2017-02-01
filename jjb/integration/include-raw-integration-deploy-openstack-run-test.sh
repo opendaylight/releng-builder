@@ -80,9 +80,24 @@ LIBVIRT_TYPE=qemu
 
 EOF
 
+if [ "${ENABLE_NETWORKING_L2GW}" == "yes" ]; then
+cat >> ${local_conf_file_name} << EOF
+enable_plugin networking-l2gw ${NETWORKING_L2GW_DRIVER} ${ODL_ML2_BRANCH}
+NETWORKING_L2GW_SERVICE_DRIVER=L2GW:OpenDaylight:networking_odl.l2gateway.driver.OpenDaylightL2gwDriver:default
+ENABLED_SERVICES+=,neutron,q-svc,n-novnc,nova,q-meta,n-cpu
+EOF
+fi
 
 if [ "${ODL_ML2_DRIVER_VERSION}" == "v2" ]; then
     echo "ODL_V2DRIVER=True" >> ${local_conf_file_name}
+fi
+
+if [ "${ENABLE_NETWORKING_BGPVPN}" == "yes" ]; then
+cat >> ${local_conf_file_name} << EOF
+enable_plugin networking-bgpvpn ${NETWORKING_BGPVPN_DRIVER} ${ODL_ML2_BRANCH}
+Q_PLUGIN_EXTRA_CONF_PATH=etc/neutron
+Q_PLUGIN_EXTRA_CONF_FILES=(networking_bgpvpn.conf)
+EOF
 fi
 
 if [ "${NUM_ODL_SYSTEM}" -gt 1 ]; then
@@ -172,6 +187,15 @@ enable_isolated_metadata = True
 force_config_drive = False
 
 EOF
+
+if [ "${ENABLE_NETWORKING_BGPVPN}" == "yes" ]; then
+cat >> ${local_conf_file_name} << EOF
+[[post-config|$NETWORKING_BGPVPN_CONF]]
+[service_providers]
+service_provider=BGPVPN:OpenDaylight:networking_bgpvpn.neutron.services.service_drivers.opendaylight.odl.OpenDaylightBgpvpnDriver:default
+
+EOF
+fi
 
 echo "local.conf Created...."
 cat ${local_conf_file_name}

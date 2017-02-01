@@ -1020,6 +1020,22 @@
             name: SECURITY_GROUP_MODE
             default: '{security-group-mode}'
             description: 'Security Group Mode to be used in netvirt aclservice config'
+        - string:
+            name: ENABLE_NETWORKING_L2GW
+            default: '{enable-networking-l2gw}'
+            description: 'Enable networking L2gw'
+        - string:
+            name: NETWORKING_L2GW_DRIVER
+            default: '{networking-l2gw-repo}'
+            description: 'URL to fetch networking-l2gw driver'
+        - string:
+            name: ENABLE_NETWORKING_BGPVPN
+            default: '{enable-networking-bgpvpn}'
+            description: 'Enable networking BGPVPN'
+        - string:
+            name: NETWORKING_BGPVPN_DRIVER
+            default: '{networking-bgpvpn-repo}'
+            description: 'URL to fetch networking-bgpvpn driver'
     scm:
         - integration-gerrit-scm:
             basedir: 'test'
