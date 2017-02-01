@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_3f5e29e7",
+        "filename": "jjb/opendaylight-infra-stack.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2017-02-01T07:47:19Z",
+      "side": 1,
+      "message": "+1 Agreed on --wait and --timeout! \n\nDoes OS_STATUS return \u0027Error: None\u0027 ? If yes we can add another condition checking for that string and exit the job. I looked at some of the earlier jobs which shows error none, but not sure if this is returned in OS_STATUS.\n\n02:58:03 ERROR: None\n02:58:03 2017-01-31 02:57:37 [netvirt-csit-1node-openstack-mitaka-upstream-learn-carbon-113]: CREATE_IN_PROGRESS  Stack CREATE started\n02:58:03 2017-01-31 02:57:37 [netvirt-csit-1node-openstack-mitaka-upstream-learn-carbon-113.vm_0_group]: CREATE_IN_PROGRESS  state changed\n02:58:03 2017-01-31 02:57:41 [netvirt-csit-1node-openstack-mitaka-upstream-learn-carbon-113.vm_1_group]: CREATE_IN_PROGRESS  state changed\n02:58:04 ERROR: None \n\nhttps://jenkins.opendaylight.org/releng/view/netvirt-csit/job/netvirt-csit-1node-openstack-mitaka-upstream-learn-carbon/113/console",
+      "parentUuid": "fafc7978_fc9aef12",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 9
+      },
+      "revId": "0f1b481e189909327b6b604281c8f5a907cf2a44",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_3cd757c3",
         "filename": "jjb/opendaylight-infra-stack.sh",
         "patchSetId": 3
@@ -140,6 +164,24 @@
       "writtenOn": "2017-02-01T05:00:43Z",
       "side": 1,
       "message": "I think we don\u0027t need this file now that I think about it more. The publisher macro can do it\u0027s own call to OS_STATUS to get the information. This will make the code more simple.",
+      "revId": "0f1b481e189909327b6b604281c8f5a907cf2a44",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_7f6f1193",
+        "filename": "jjb/opendaylight-infra-stack.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2017-02-01T07:47:19Z",
+      "side": 1,
+      "message": "Yes, much cleaner to call stack show directly than passing this file",
+      "parentUuid": "fafc7978_9cdbe3ec",
       "revId": "0f1b481e189909327b6b604281c8f5a907cf2a44",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
