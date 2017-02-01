@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "fafc7978_b6735e4c",
+        "filename": "jjb/opendaylight-infra-cleanup-stale-stacks.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2017-02-01T20:25:22Z",
+      "side": 1,
+      "message": "make this a constant?",
+      "revId": "329690941d0aaf1b6c554d1d42f5ddd16a6125f1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_f694c638",
+        "filename": "jjb/opendaylight-infra-cleanup-stale-stacks.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2017-02-01T20:25:22Z",
+      "side": 1,
+      "message": "could throw this into a loop since the only field different is the releng/sandbox. or add a function?",
+      "revId": "329690941d0aaf1b6c554d1d42f5ddd16a6125f1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_36476e21",
         "filename": "jjb/opendaylight-infra-cleanup-stale-stacks.sh",
         "patchSetId": 7
@@ -43,6 +77,40 @@
         "endLine": 34,
         "endChar": 51
       },
+      "revId": "329690941d0aaf1b6c554d1d42f5ddd16a6125f1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_96a3ba9d",
+        "filename": "jjb/opendaylight-infra-stack.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2017-02-01T20:25:22Z",
+      "side": 1,
+      "message": "does this log come out in a place where it is clear that the stacking is happening? Or should we add \"Waiting 15 minutes max to create $STACK_NAME\"",
+      "revId": "329690941d0aaf1b6c554d1d42f5ddd16a6125f1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_76a0d690",
+        "filename": "jjb/releng-jobs.yaml",
+        "patchSetId": 7
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2017-02-01T20:25:22Z",
+      "side": 1,
+      "message": "is it possible to run the cleanup script as part of the stack steps so it runs every time we try to allocate a vm? Or is that too heavy?",
       "revId": "329690941d0aaf1b6c554d1d42f5ddd16a6125f1",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
