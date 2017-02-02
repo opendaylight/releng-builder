@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "fafc7978_8626e514",
+        "filename": "jjb/opendaylight-infra-cleanup-stale-stacks.sh",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2017-02-02T11:02:51Z",
+      "side": 1,
+      "message": "I think it would be safer to initialize this variable before figuring out active builds, to avoid messing up jobs started during line 16.\n\nIn that reverse order we might attempt to delete stacks which are already being deleted (the job finished in the meantime), but that seems less disruptive.",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 9
+      },
+      "revId": "4b876de6899d3a6d5d84a1d726a3020d8f0c497c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_96261a15",
         "filename": "jjb/releng-macros.yaml",
         "patchSetId": 9
