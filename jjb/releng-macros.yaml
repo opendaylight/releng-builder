@@ -15,7 +15,7 @@
             description: 'Parameter to identify an ODL Gerrit project'
         - string:
             name: ARCHIVE_ARTIFACTS
-            default: '{artifacts} **/target/surefire-reports/*-output.txt'
+            default: '{artifacts} **/target/surefire-reports/*-output.txt **/hs_err_*.log'
             description: 'Space separated glob patterns for artifacts to archive into logs.opendaylight.org'
         - string:
             name: GERRIT_PROJECT
