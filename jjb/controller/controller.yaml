@@ -24,6 +24,8 @@
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},aaa-merge-{stream}'
     email-upstream: '[controller] [odlparent] [yangtools] [aaa]'
     archive-artifacts: ''
+    # Temporary workaround for SFT failure with karaf4-features
+    build-node: centos7-java-builder-4c-8g
 
 - project:
     name: controller-boron
