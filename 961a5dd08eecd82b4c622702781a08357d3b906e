@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fafc7978_b7db551a",
+        "filename": "jjb/packaging/include-raw-test-ansible-deb.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2017-02-02T17:49:19Z",
+      "side": 1,
+      "message": "Not sure if we want to do this via vagrant-opendaylight or not. Definitely an option, but could also install ansible-opendaylight via direct call to `ansible-galaxy` (vs using requirements.yml via cloned repo). Would then need to create a playbook and invoke ansible-odl to install ODL with it. Really not sure what the best route is. Kinda nice to have pristine, isolated VM for ODL install, but kinda nice to not stand up an additional VM.",
+      "revId": "961a5dd08eecd82b4c622702781a08357d3b906e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
