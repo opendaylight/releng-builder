@@ -243,7 +243,14 @@
             body: |
                 $PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:
 
-                Check console output at $BUILD_URL to view the results.
+                Please refer to the logs server URL for console logs when possible
+                and use the Jenkins Build URL as a last resort.
+
+                Console Logs URL:
+                https://logs.opendaylight.org/$SILO/$JENKINS_HOSTNAME/$JOB_NAME/$BUILD_NUMBER
+
+                Jenkins Build URL:
+                $BUILD_URL
             unstable: true
             fixed: true
             send-to:
