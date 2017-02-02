@@ -28,8 +28,13 @@
         - all:
             scope: 'all'
 
+    #JCloud VMs for VPP deployment
+    tools_system_image: CentOS 7 - docker - 20170120-1434
+    tools_system_flavor: 4 GB General Purpose v1
+    tools_system_count: 3
+
     # Features to install
-    install-features: 'odl-groupbasedpolicy-ofoverlay,odl-groupbasedpolicy-ui,odl-restconf-all'
+    install-features: 'odl-groupbasedpolicy-neutron-vpp-mapper,odl-vbd,odl-restconf'
 
     # Robot custom options
     robot-options: ''
