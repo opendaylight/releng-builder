@@ -9,11 +9,11 @@ cd /builder/openstack-hot
 
 JOB_SUM=`echo $JOB_NAME | sum | awk '{{ print $1 }}'`
 VM_NAME="$JOB_SUM-$BUILD_NUMBER"
-openstack --os-cloud rackspace stack create -t {stack-template} -e $WORKSPACE/opendaylight-infra-environment.yaml --parameter "job_name=$VM_NAME" --parameter "silo=$SILO" $STACK_NAME
 
 # seq X refers to waiting for X minutes for OpenStack to return
 # a status that is not CREATE_IN_PROGRESS before giving up.
 OS_TIMEOUT=15  # Minutes to wait for OpenStack VM to come online
+openstack --os-cloud rackspace stack create --timeout $OS_TIMEOUT -t {stack-template} -e $WORKSPACE/opendaylight-infra-environment.yaml --parameter "job_name=$VM_NAME" --parameter "silo=$SILO" $STACK_NAME
 echo "Waiting for $OS_TIMEOUT minutes to create $STACK_NAME."
 for i in `seq $OS_TIMEOUT`; do
     sleep 60
