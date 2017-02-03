@@ -8,6 +8,15 @@ pip freeze
 #########################
 ## FETCH ACTIVE BUILDS ##
 #########################
+# Fetch stack list before fetching active builds to minimize race condition
+# where we might be try to delete stacks while jobs are trying to start
+OS_STACKS=(`openstack --os-cloud rackspace stack list \
+            -f json -c "Stack Name" -c "Stack Status" \
+            --property "stack_status=CREATE_COMPLETE" \
+            --property "stack_status=DELETE_FAILED" \
+            --property "stack_status=CREATE_FAILED" \
+            | jq -r '.[] | ."Stack Name"'`)
+
 # Make sure we fetch active builds on both the releng and sandbox silos
 ACTIVE_BUILDS=()
 for silo in releng sandbox; do
@@ -24,12 +33,6 @@ done
 ##########################
 # Search for stacks taht are not in use by either releng or sandbox silos and
 # delete them.
-OS_STACKS=(`openstack --os-cloud rackspace stack list \
-            -f json -c "Stack Name" -c "Stack Status" \
-            --property "stack_status=CREATE_COMPLETE" \
-            --property "stack_status=DELETE_FAILED" \
-            --property "stack_status=CREATE_FAILED" \
-            | jq -r '.[] | ."Stack Name"'`)
 for stack in ${OS_STACKS[@]}; do
     if [[ "${ACTIVE_BUILDS[@]}" =~ $stack ]]; then
         # No need to delete stacks if there exists an active build for them
