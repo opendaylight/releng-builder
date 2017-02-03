@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fafc7978_f03a00cc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-02-03T15:02:28Z",
+      "side": 1,
+      "message": "The very first line in a commit message is a summary of a change. Think of it like a subject line in an email. The reader should be able to get a general idea of what the change is about by just looking at the summary line (See example below). Commit messages are extremely helpful when we need to debug why something is failing or broken but they can only be helpful if the message itself provides sufficient details to be useful. I recommend reading this blog post which explains the importance of a good commit message:\n\nhttp://chris.beams.io/posts/git-commit/\n\nI do not want to hold up this patch just because of a commit message but I want to stress how much more useful the commit message could be if we provided a bit more detail than just \"testing yaml file\". When I look at the git log in short form format like below I cannot tell what this patch is doing.\n\nI think a message such as \"Add gbp-neutron-vpp-mapper and odl-vbd features to cluster test\" would be a much more useful summary of the change than a simple \"testing yaml file\" which provides zero useful information.\n\nI hope this is helpful in constructing future commit messages.\n\n git log --pretty\u003dformat:\"%h %s\" --graph\n\n * de860b08 testing yaml file\n *   ee6c672e Merge \"Make orphaned stacks cleanup script run every 30 minutes\"\n |\\  \n | * 906f475c Make orphaned stacks cleanup script run every 30 minutes\n * | 8df364a0 Set timeout parameter back in openstack command\n |/  \n * 4b876de6 Improve Heat implementation error handling\n *   eaf85a12 Merge \"Enhance Hwvtep templates for integration project to use the image \u0027Ubuntu 14.04 - mininet-ovs-25 - 20170130-0414\u0027\"\n |\\  \n | * f357866d Enhance Hwvtep templates for integration project to use the image \u0027Ubuntu 14.04 - mininet-ovs-25 - 20170130-0414\u0027\n * | 86d4ce39 Update jenkins.ini.example\n |/  \n * 7bd1b5b5 Fix typo in dependecies.log\n * de23008b Add COE jobs to jenkins\n *   35dd7a64 Merge \"make upstream jobs run daily\"",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 17
+      },
+      "revId": "de860b086e5067a4163df2e9af09d62da32f3280",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
