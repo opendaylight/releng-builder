@@ -46,6 +46,30 @@
       "revId": "86d4ce39de6f59d1b1f49da6cf1ce7759075455d",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_cda648c1",
+        "filename": "jenkins.ini.example",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-02-03T02:59:19Z",
+      "side": 1,
+      "message": "According to JJB execution docs [0]. It\u0027s a list of paths that Jenkins will look for files when we call tags such as !include, !include-raw, and !include-raw-escape.\n\nWe\u0027ve never really used this feature but that\u0027s interesting. As Anil says it\u0027s just copied from the docs example.\n\n[0] http://docs.openstack.org/infra/jenkins-job-builder/execution.html",
+      "parentUuid": "fafc7978_a6b6893b",
+      "range": {
+        "startLine": 4,
+        "startChar": 13,
+        "endLine": 4,
+        "endChar": 29
+      },
+      "revId": "86d4ce39de6f59d1b1f49da6cf1ce7759075455d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
