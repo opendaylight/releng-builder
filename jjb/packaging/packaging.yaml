@@ -53,7 +53,7 @@
 - job-template:
     name: 'packaging-build-rpm-{stream}'
 
-    node: dynamic_verify
+    node: centos7-java-builder-2c-4g
 
     project-type: freestyle
 
@@ -108,7 +108,7 @@
 - job-template:
     name: 'packaging-build-rpm-snap-{stream}'
 
-    node: dynamic_verify
+    node: centos7-java-builder-2c-4g
 
     project-type: freestyle
 
@@ -163,7 +163,7 @@
 - job-template:
     name: 'packaging-test-rpm-{stream}'
 
-    node: dynamic_verify
+    node: centos7-java-builder-2c-4g
 
     parameters:
         - opendaylight-infra-parameters:
