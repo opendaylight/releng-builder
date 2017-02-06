@@ -74,13 +74,19 @@
 
     tools_system_count: 2
 
-    tools_system_image: 'Ubuntu 14.04 - mininet-ovs-25 - 20170130-0414'
+    tools_system_image: 'Ubuntu 14.04 - mininet-ovs-25 - 20170210-0300'
 
     odl-enable-l3: 'yes'
 
+    enable-networking-l2gw: 'yes'
+
+    disable-odl-l3-service-plugin: 'yes'
+
     public-bridge: 'br-physnet1'
 
-    enable-openstack-services: 'q-svc,q-dhcp,q-meta,n-cauth,tempest'
+    public-physical-network: 'physnet1'
+
+    enable-openstack-services: 'q-svc,q-dhcp,q-meta,n-cauth,tempest,l2gw-plugin'
 
     disable-openstack-services: 'swift,cinder,n-net,q-vpn,n-cpu'
 

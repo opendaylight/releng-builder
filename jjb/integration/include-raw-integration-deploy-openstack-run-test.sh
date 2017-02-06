@@ -8,7 +8,7 @@ source ${ROBOT_VENV}/bin/activate
 echo "showing recent changes that made it in to the distribution used by this job"
 pip install --upgrade urllib3
 python ${WORKSPACE}/test/tools/distchanges/changes.py -d /tmp/distribution_folder \
-                  -u ${ACTUALBUNDLEURL} \
+                  -u ${ACTUALBUNDLEURL} -b ${BRANCH} \
                   -r ssh://jenkins-${SILO}@git.opendaylight.org:29418 || true
 
 echo "#################################################"
@@ -80,6 +80,15 @@ LIBVIRT_TYPE=qemu
 
 EOF
 
+if [ "${ENABLE_NETWORKING_L2GW}" == "yes" ]; then
+cat >> ${local_conf_file_name} << EOF
+
+enable_plugin networking-l2gw ${NETWORKING_L2GW_DRIVER} ${ODL_ML2_BRANCH}
+NETWORKING_L2GW_SERVICE_DRIVER=L2GW:OpenDaylight:networking_odl.l2gateway.driver.OpenDaylightL2gwDriver:default
+ENABLED_SERVICES+=,neutron,q-svc,nova,q-meta
+
+EOF
+fi
 
 if [ "${ODL_ML2_DRIVER_VERSION}" == "v2" ]; then
     echo "ODL_V2DRIVER=True" >> ${local_conf_file_name}
@@ -136,19 +145,21 @@ ML2_VLAN_RANGES=physnet1
 ODL_PROVIDER_MAPPINGS=${ODL_PROVIDER_MAPPINGS}
 
 disable_service q-l3
-Q_L3_ENABLED=True
-ODL_L3=${ODL_L3}
 PUBLIC_INTERFACE=br100
 EOF
 
+if [ -z ${DISABLE_ODL_L3_PLUGIN} ] || [ "${DISABLE_ODL_L3_PLUGIN}" == "no" ]; then
 if [ "${ODL_ML2_BRANCH}" == "stable/mitaka" ]; then
 cat >> ${local_conf_file_name} << EOF
+Q_L3_ENABLED=True
+ODL_L3=${ODL_L3}
 [[post-config|\$NEUTRON_CONF]]
 [DEFAULT]
 service_plugins = networking_odl.l3.l3_odl.OpenDaylightL3RouterPlugin
 
 EOF
 fi #check for ODL_ML2_BRANCH
+fi
 
 fi #ODL_ENABLE_L3_FWD check
 
@@ -616,16 +627,35 @@ cat testplan.txt
 SUITES=`egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' testplan.txt | tr '\012' ' '`
 
 echo "Starting Robot test suites ${SUITES} ..."
-pybot -N ${TESTPLAN} --removekeywords wuks -c critical -e exclude -v BUNDLEFOLDER:${BUNDLEFOLDER} -v WORKSPACE:/tmp \
--v BUNDLE_URL:${ACTUALBUNDLEURL} -v NEXUSURL_PREFIX:${NEXUSURL_PREFIX} -v JDKVERSION:${JDKVERSION} -v ODL_STREAM:${DISTROSTREAM} \
--v ODL_SYSTEM_IP:${ODL_SYSTEM_IP} -v ODL_SYSTEM_1_IP:${ODL_SYSTEM_1_IP} -v ODL_SYSTEM_2_IP:${ODL_SYSTEM_2_IP} \
--v ODL_SYSTEM_3_IP:${ODL_SYSTEM_3_IP} -v NUM_ODL_SYSTEM:${NUM_ODL_SYSTEM} -v CONTROLLER_USER:${USER} -v OS_USER:${USER} \
--v TOOLS_SYSTEM_IP:${TOOLS_SYSTEM_1_IP} -v TOOLS_SYSTEM_1_IP:${TOOLS_SYSTEM_1_IP} \
--v TOOLS_SYSTEM_2_IP:${TOOLS_SYSTEM_2_IP} -v NUM_TOOLS_SYSTEM:${NUM_TOOLS_SYSTEM} \
--v NUM_OS_SYSTEM:${NUM_OPENSTACK_SYSTEM} -v OS_CONTROL_NODE_IP:${OPENSTACK_CONTROL_NODE_IP} \
--v OS_COMPUTE_1_IP:${OPENSTACK_COMPUTE_NODE_1_IP} -v OS_COMPUTE_2_IP:${OPENSTACK_COMPUTE_NODE_2_IP} \
--v HA_PROXY_IP:${HA_PROXY_IP} \
--v DEVSTACK_DEPLOY_PATH:/opt/stack/devstack -v USER_HOME:${HOME} ${TESTOPTIONS} ${SUITES} || true
+# please add pybot -v arguments on a single line and alphabetized
+pybot -N ${TESTPLAN} --removekeywords wuks -c critical -e exclude \
+    -v BUNDLEFOLDER:${BUNDLEFOLDER} \
+    -v BUNDLE_URL:${ACTUALBUNDLEURL} \
+    -v CONTROLLER_USER:${USER} \
+    -v DEVSTACK_DEPLOY_PATH:/opt/stack/devstack \
+    -v HA_PROXY_IP:${HA_PROXY_IP} \
+    -v JDKVERSION:${JDKVERSION} \
+    -v NEXUSURL_PREFIX:${NEXUSURL_PREFIX} \
+    -v NUM_ODL_SYSTEM:${NUM_ODL_SYSTEM} \
+    -v NUM_OS_SYSTEM:${NUM_OPENSTACK_SYSTEM} \
+    -v NUM_TOOLS_SYSTEM:${NUM_TOOLS_SYSTEM} \
+    -v ODL_STREAM:${DISTROSTREAM} \
+    -v ODL_SYSTEM_IP:${ODL_SYSTEM_IP} \
+    -v ODL_SYSTEM_1_IP:${ODL_SYSTEM_1_IP} \
+    -v ODL_SYSTEM_2_IP:${ODL_SYSTEM_2_IP} \
+    -v ODL_SYSTEM_3_IP:${ODL_SYSTEM_3_IP} \
+    -v OS_CONTROL_NODE_IP:${OPENSTACK_CONTROL_NODE_IP} \
+    -v OPENSTACK_BRANCH:${OPENSTACK_BRANCH} \
+    -v OS_COMPUTE_1_IP:${OPENSTACK_COMPUTE_NODE_1_IP} \
+    -v OS_COMPUTE_2_IP:${OPENSTACK_COMPUTE_NODE_2_IP} \
+    -v OS_USER:${USER} \
+    -v PUBLIC_PHYSICAL_NETWORK:${PUBLIC_PHYSICAL_NETWORK} \
+    -v TOOLS_SYSTEM_IP:${TOOLS_SYSTEM_1_IP} \
+    -v TOOLS_SYSTEM_1_IP:${TOOLS_SYSTEM_1_IP} \
+    -v TOOLS_SYSTEM_2_IP:${TOOLS_SYSTEM_2_IP} \
+    -v USER_HOME:${HOME} \
+    -v WORKSPACE:/tmp \
+    ${TESTOPTIONS} ${SUITES} || true
 
 echo "Tests Executed"
 DEVSTACK_TEMPEST_DIR="/opt/stack/tempest"
