@@ -71,7 +71,7 @@ tar -xvzf elasticsearch-1.7.5.tar.gz
 # the {verify,merge}-packer jobs
 mkdir /tmp/packer
 cd /tmp/packer
-wget https://releases.hashicorp.com/packer/0.10.1/packer_0.10.1_linux_amd64.zip
-unzip packer_0.10.1_linux_amd64.zip -d /usr/local/bin/
+wget https://releases.hashicorp.com/packer/0.12.2/packer_0.12.2_linux_amd64.zip
+unzip packer_0.12.2_linux_amd64.zip -d /usr/local/bin/
 # rename packer to avoid conflict with binary in cracklib
 mv /usr/local/bin/packer /usr/local/bin/packer.io
