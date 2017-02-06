@@ -80,6 +80,16 @@ LIBVIRT_TYPE=qemu
 
 EOF
 
+if [ "${ENABLE_NETWORKING_L2GW}" == "yes" ]; then
+cat >> ${local_conf_file_name} << EOF
+
+enable_plugin networking-l2gw ${NETWORKING_L2GW_DRIVER} ${ODL_ML2_BRANCH}
+NETWORKING_L2GW_SERVICE_DRIVER=L2GW:OpenDaylight:networking_odl.l2gateway.driver.OpenDaylightL2gwDriver:default
+ENABLED_SERVICES+=,neutron,q-svc,nova,q-meta
+
+EOF
+fi
+
 
 if [ "${ODL_ML2_DRIVER_VERSION}" == "v2" ]; then
     echo "ODL_V2DRIVER=True" >> ${local_conf_file_name}
@@ -136,11 +146,14 @@ ML2_VLAN_RANGES=physnet1
 ODL_PROVIDER_MAPPINGS=${ODL_PROVIDER_MAPPINGS}
 
 disable_service q-l3
+if [ -z ${DISABLE_ODL_L3_PLUGIN} ] || [ "${DISABLE_ODL_L3_PLUGIN}" == "no" ]; then
 Q_L3_ENABLED=True
 ODL_L3=${ODL_L3}
+fi
 PUBLIC_INTERFACE=br100
 EOF
 
+if [ -z ${DISABLE_ODL_L3_PLUGIN} ] || [ "${DISABLE_ODL_L3_PLUGIN}" == "no" ]; then
 if [ "${ODL_ML2_BRANCH}" == "stable/mitaka" ]; then
 cat >> ${local_conf_file_name} << EOF
 [[post-config|\$NEUTRON_CONF]]
@@ -149,6 +162,7 @@ service_plugins = networking_odl.l3.l3_odl.OpenDaylightL3RouterPlugin
 
 EOF
 fi #check for ODL_ML2_BRANCH
+fi
 
 fi #ODL_ENABLE_L3_FWD check
 
