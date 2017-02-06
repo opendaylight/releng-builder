@@ -80,6 +80,14 @@ LIBVIRT_TYPE=qemu
 
 EOF
 
+if [ "${ENABLE_NETWORKING_L2GW}" == "yes" ]; then
+cat >> ${local_conf_file_name} << EOF
+enable_plugin networking-l2gw ${NETWORKING_L2GW_DRIVER} ${ODL_ML2_BRANCH}
+NETWORKING_L2GW_SERVICE_DRIVER=L2GW:OpenDaylight:networking_odl.l2gateway.driver.OpenDaylightL2gwDriver:default
+ENABLED_SERVICES+=,neutron,q-svc,nova,q-meta
+EOF
+fi
+
 
 if [ "${ODL_ML2_DRIVER_VERSION}" == "v2" ]; then
     echo "ODL_V2DRIVER=True" >> ${local_conf_file_name}
