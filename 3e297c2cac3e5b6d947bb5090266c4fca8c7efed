@@ -68,6 +68,23 @@
       "revId": "3e297c2cac3e5b6d947bb5090266c4fca8c7efed",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_f8fc9b40",
+        "filename": "jjb/autorelease/autorelease-templates.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-02-07T20:09:23Z",
+      "side": 1,
+      "message": "Let\u0027s not make this a publisher. Can you make this a regular build step as a last step?\n\nThis is because technically Jenkins only allows a single postbuildscript step and defining 2 here even though JJB allows it might be an undocumented / unsupported feature of Jenkins.",
+      "revId": "3e297c2cac3e5b6d947bb5090266c4fca8c7efed",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
