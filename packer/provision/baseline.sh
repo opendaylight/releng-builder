@@ -2,6 +2,9 @@
 
 # vim: ts=4 sw=4 sts=4 et tw=72 :
 
+# force any errors to cause the script and job to end in failure
+set -xeu -o pipefile
+
 rh_systems() {
     # Handle the occurance where SELINUX is actually disabled
     SELINUX=$(grep -E '^SELINUX=(disabled|permissive|enforcing)$' /etc/selinux/config)
