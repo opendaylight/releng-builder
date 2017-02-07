@@ -2,6 +2,9 @@
 
 # vim: ts=4 sw=4 sts=4 et tw=72 :
 
+# force any errors to cause the script and job to end in failure
+set -xeu -o pipefile
+
 rh_systems() {
     # Handle the occurance where SELINUX is actually disabled
     SELINUX=$(grep -E '^SELINUX=(disabled|permissive|enforcing)$' /etc/selinux/config)
@@ -69,6 +72,15 @@ EOF
     case "$FACTER_OS" in
         Fedora)
             if [ "$FACTER_OSVER" -ge "21" ]
+            then
+                echo "---> not modifying java alternatives as OpenJDK 1.7.0 does not exist"
+            else
+                alternatives --set java /usr/lib/jvm/jre-1.7.0-openjdk.x86_64/bin/java
+                alternatives --set java_sdk_openjdk /usr/lib/jvm/java-1.7.0-openjdk.x86_64
+            fi
+        ;;
+        RedHat,CentOS)
+            if [ "$(echo $FACTER_OSVER | cut -d'.' -f1)" -ge "7" ]
             then
                 echo "---> not modifying java alternatives as OpenJDK 1.7.0 does not exist"
             else

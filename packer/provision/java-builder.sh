@@ -2,6 +2,9 @@
 
 # vim: sw=4 ts=4 sts=4 et tw=72 :
 
+# force any errors to cause the script and job to end in failure
+set -xeu -o pipefile
+
 # The following packages are not needed by all projects, but they are
 # needed by enough to make them useful everywhere
 yum install -y @development perl-{Digest-SHA,ExtUtils-MakeMaker} \

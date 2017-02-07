@@ -2,6 +2,9 @@
 
 # vim: sw=4 ts=4 sts=4 et tw=72 :
 
+# force any errors to cause the script and job to end in failure
+set -xeu -o pipefile
+
 # Ensure that necessary variables are set to enable noninteractive mode in
 # commands.
 export DEBIAN_FRONTEND=noninteractive
