@@ -269,6 +269,17 @@
             !include-raw:
                 - include-raw-integration-get-bundle-vars.sh
 
+# Macro: integration-get-last-distribution
+# Operation: this macro gets the most recent distribution posted to nexus
+# Used by: distribution-merge-* job templates
+
+- builder:
+    name: integration-get-last-distribution
+    builders:
+        - shell:
+            !include-raw:
+                - include-raw-integration-get-last-distribution.sh
+
 # Macro: integration-distribution-check
 # Operation: this macro deploys the controller with all fetures
 # Used by: {project}-distribution-check-{stream} job template
