@@ -616,6 +616,7 @@ cat testplan.txt
 SUITES=`egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' testplan.txt | tr '\012' ' '`
 
 echo "Starting Robot test suites ${SUITES} ..."
+# please add pybot -v arguments on a single line and alphabetized
 pybot -N ${TESTPLAN} --removekeywords wuks -c critical -e exclude \
     -v BUNDLEFOLDER:${BUNDLEFOLDER} \
     -v BUNDLE_URL:${ACTUALBUNDLEURL} \
@@ -637,6 +638,7 @@ pybot -N ${TESTPLAN} --removekeywords wuks -c critical -e exclude \
     -v OS_COMPUTE_1_IP:${OPENSTACK_COMPUTE_NODE_1_IP} \
     -v OS_COMPUTE_2_IP:${OPENSTACK_COMPUTE_NODE_2_IP} \
     -v OS_USER:${USER} \
+    -v PUBLIC_PHYSICAL_NETWORK:${PUBLIC_PHYSICAL_NETWORK} \
     -v TOOLS_SYSTEM_IP:${TOOLS_SYSTEM_1_IP} \
     -v TOOLS_SYSTEM_1_IP:${TOOLS_SYSTEM_1_IP} \
     -v TOOLS_SYSTEM_2_IP:${TOOLS_SYSTEM_2_IP} \
