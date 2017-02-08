@@ -31,5 +31,6 @@ for i in `seq $OS_TIMEOUT`; do
         continue
     else
         echo "Unexpected status: $OS_STATUS"
+        exit 1
     fi
 done
