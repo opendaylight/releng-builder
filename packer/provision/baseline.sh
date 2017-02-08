@@ -131,19 +131,16 @@ EOF
     echo "---> Installing base packages"
     apt-get install unzip xz-utils puppet git git-review libxml-xpath-perl
 
-    # install Java 7
+    # install Java 7 & 8
     echo "---> Configuring OpenJDK"
-    apt-get install openjdk-7-jdk
-
-    # make jdk8 available
-    add-apt-repository -y ppa:openjdk-r/ppa
+    add-apt-repository ppa:openjdk-r/ppa
     apt-get update
-    # We need to force openjdk-8-jdk to install
+    apt-get install openjdk-7-jdk
     apt-get install openjdk-8-jdk
 
-    # make sure that we still default to openjdk 7
-    update-alternatives --set java /usr/lib/jvm/java-7-openjdk-amd64/jre/bin/java
-    update-alternatives --set javac /usr/lib/jvm/java-7-openjdk-amd64/bin/javac
+    # default to openjdk 8
+    update-alternatives --set java /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
+    update-alternatives --set javac /usr/lib/jvm/java-8-openjdk-amd64/bin/javac
 
     # Needed to parse OpenStack commands used by opendaylight-infra stack commands
     # to initialize Heat template based systems.
