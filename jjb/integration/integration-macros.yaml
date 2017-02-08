@@ -457,6 +457,24 @@
             !include-raw:
                 - include-raw-integration-replace-block-text.sh
 
+# Macro: integration-compare-distributions
+# Operation: will compare an already created distribtion (probably last
+# published to nexus) to the current distribution being created.
+# The comparison is done to find the list of patches that are new to the
+# current distribtion.
+# Used by: builder-merge job template
+#
+# This script requires the bundle vars that are created by the
+# get-bundle-vars macro script
+
+
+- builder:
+    name: integration-compare-distributions
+    builders:
+        - shell:
+            !include-raw:
+                - include-raw-integration-compare-distributions.sh
+
 ##############
 # Publishers #
 ##############

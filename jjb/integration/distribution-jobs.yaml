@@ -122,7 +122,8 @@
             branch: '{branch}'
             refspec: 'refs/heads/{branch}'
             artifacts: '{archive-artifacts} **/dependency_tree.txt **/*.hprof **/target/surefire-reports/*-output.txt'
-
+        - integration-bundleurl:
+            bundleurl: 'last'
     scm:
         - gerrit-trigger-scm:
             refspec: ''
@@ -141,6 +142,9 @@
     prebuilders:
         - wipe-org-opendaylight-repo
         - jacoco-nojava-workaround
+        - integration-get-bundle-vars
+        - inject:
+            properties-file: 'bundle_vars.txt'
         - provide-maven-settings:
             global-settings-file: 'odl-global-settings'
             settings-file: 'integration-settings'
@@ -190,6 +194,10 @@
                 settings-type: cfp
                 global-settings: 'odl-global-settings'
                 global-settings-type: cfp
+        - integration-compare-distributions
+        # TODO: the output of the above command is not *friendly* for the reader because the most important info
+        # is listed last. This is fine/best for command line output, but for keeping in a file it would be better
+        # to put the summary at the beginning of the file. Some bash magic can be done here to make that happen.
 
     reporters:
         - findbugs
