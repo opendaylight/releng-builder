@@ -3,7 +3,7 @@
 # vim: sw=4 ts=4 sts=4 et :
 
 # force any errors to cause the script and job to end in failure
-set -xeu -o pipefile
+set -xeu -o pipefail
 
 rh_changes() {
     echo "---> RH changes"
