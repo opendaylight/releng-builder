@@ -1,6 +1,15 @@
 #!/bin/bash
 
 set +e  # Do not affect the build result if some part of archiving fails.
+
+# Print out git status at the end of the build before we archive if $WORKSPACE
+# is a git repo.
+if [ -d $WORKSPACE/.git ]; then
+    echo "----------> Git Status Report"
+    git status
+fi
+
+echo "----------> Archiving build to logs server"
 # Configure wget to not print download status when we download logs or when
 # Jenkins is installing Maven (To be clear this is the Jenkins Maven plugin
 # using a shell script itself that we are unable to modify directly to affect
