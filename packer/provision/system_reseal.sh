@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # vim: sw=2 ts=2 sts=2 et :
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 rm -rf /etc/Pegasus/*.cnf /etc/Pegasus/*.crt /etc/Pegasus/*.csr \
   /etc/Pegasus/*.pem /etc/Pegasus/*.srl /root/anaconda-ks.cfg \
@@ -33,8 +34,7 @@ rm -rf /var/lib/cloud/*
 rm -rf /tmp/packer
 
 # add local script for remote environments
-
-./system_reseal_local_env.sh
+$SCRIPT_DIR/system_reseal_local_env.sh
 
 # Force a system sync and sleep to get around any SSD issues
 echo "Forcing sync and sleep for 10sec"
