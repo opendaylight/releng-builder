@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_adddab72",
+        "filename": "jjb/packaging/include-raw-test-ansible-deb.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2017-02-08T23:42:49Z",
+      "side": 1,
+      "message": "Okay, thanks. PR is merged. You\u0027ll need to clone the ansible repo to run linting and other tests, so good to have an example requirements.yml there already. Can refactor this to clone ansible-opendaylight, install the role and install ODL. Also would be good to run linting via tox. Will need to change the venv name and install into it via ansible-opendaylight/requirements.txt. This feedback applies to the RPM as well.",
+      "parentUuid": "fafc7978_dee09f98",
+      "revId": "961a5dd08eecd82b4c622702781a08357d3b906e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_5ed5cfb7",
         "filename": "jjb/packaging/packaging.yaml",
         "patchSetId": 1
@@ -48,6 +66,30 @@
       "writtenOn": "2017-02-08T07:52:36Z",
       "side": 1,
       "message": "we don\u0027t use dynamic_verify label anymore this has to be changed to appropriate label which gives details of the platform-cpus-memory.",
+      "range": {
+        "startLine": 206,
+        "startChar": 10,
+        "endLine": 206,
+        "endChar": 24
+      },
+      "revId": "961a5dd08eecd82b4c622702781a08357d3b906e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_2dea5b0f",
+        "filename": "jjb/packaging/packaging.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2017-02-08T23:42:49Z",
+      "side": 1,
+      "message": "We (Int/Pack) have other instances of this we need to update. Do you have some docs on the new format we can use to refactor our other jobs?https://trello.com/c/kTmGxLfL/445-update-jjb-node-labels-to-new-style",
+      "parentUuid": "fafc7978_5ed5cfb7",
       "range": {
         "startLine": 206,
         "startChar": 10,
