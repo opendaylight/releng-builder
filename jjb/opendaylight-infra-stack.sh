@@ -20,17 +20,23 @@ echo "Waiting for $OS_TIMEOUT minutes to create $STACK_NAME."
 for i in `seq $OS_TIMEOUT`; do
     sleep 60
     OS_STATUS=`openstack --os-cloud rackspace stack show -f json -c stack_status $STACK_NAME | jq -r '.stack_status'`
-    if [ "$OS_STATUS" == "CREATE_COMPLETE" ]; then
-        echo "Stack initialized on infrastructure successful."
-        break
-    elif [ "$OS_STATUS" == "CREATE_FAILED" ]; then
-        echo "ERROR: Failed to initialize infrastructure. Quitting..."
-        exit 1
-    elif [ "$OS_STATUS" == "CREATE_IN_PROGRESS" ]; then
-        echo "Waiting to initialize infrastructure."
-        continue
-    else
-        echo "Unexpected status: $OS_STATUS"
-        exit 1
-    fi
+
+    case "$OS_STATUS" in
+        CREATE_COMPLETE)
+            echo "Stack initialized on infrastructure successful."
+            break
+        ;;
+        CREATE_FAILED)
+            echo "ERROR: Failed to initialize infrastructure. Quitting..."
+            exit 1
+        ;;
+        CREATE_IN_PROGRESS)
+            echo "Waiting to initialize infrastructure."
+            continue
+        ;;
+        *)
+            echo "Unexpected status: $OS_STATUS"
+            exit 1
+        ;;
+    esac
 done
