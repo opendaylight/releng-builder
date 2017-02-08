@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fafc7978_2c90a142",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-02-08T14:17:05Z",
+      "side": 1,
+      "message": "Update the author to Anil Belur.",
+      "revId": "dc87fd6f6fbeceaf30d47c7ad9450678929f47ce",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_0c931d50",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-02-08T14:17:05Z",
+      "side": 1,
+      "message": "Update the Also-by to be Thanh Ha.",
+      "range": {
+        "startLine": 15,
+        "startChar": 9,
+        "endLine": 15,
+        "endChar": 13
+      },
+      "revId": "dc87fd6f6fbeceaf30d47c7ad9450678929f47ce",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_6c9aa964",
+        "filename": "jjb/autorelease/autorelease-macros.yaml",
+        "patchSetId": 6
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-02-08T14:17:05Z",
+      "side": 1,
+      "message": "Have you actually tested this macro? I believe it won\u0027t work because autorelease-notify-build-failure.sh does not exist in the job. It only exists in releng/builder which isn\u0027t cloned during the build. This should be changed to !include-raw: autorelease-notify-build-failure.sh",
+      "revId": "dc87fd6f6fbeceaf30d47c7ad9450678929f47ce",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_4c9d2559",
+        "filename": "jjb/autorelease/autorelease-notify-build-failure.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-02-08T14:17:05Z",
+      "side": 1,
+      "message": "$CONSOLE_LOG",
+      "range": {
+        "startLine": 28,
+        "startChar": 8,
+        "endLine": 28,
+        "endChar": 34
+      },
+      "revId": "dc87fd6f6fbeceaf30d47c7ad9450678929f47ce",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_8c9eed52",
+        "filename": "jjb/autorelease/autorelease-notify-build-failure.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-02-08T14:17:05Z",
+      "side": 1,
+      "message": "We need to handle BOTH formats in the same script. We cannot wait until all projects switch because there will likely always be projects that have the bad format so the script should be able to detect which format and send the email as appropriate.",
+      "range": {
+        "startLine": 41,
+        "startChar": 6,
+        "endLine": 41,
+        "endChar": 10
+      },
+      "revId": "dc87fd6f6fbeceaf30d47c7ad9450678929f47ce",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
