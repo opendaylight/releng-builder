@@ -5,6 +5,7 @@ echo "#################################################"
 NEXUSURL_PREFIX=${ODLNEXUSPROXY:-https://nexus.opendaylight.org}
 ODL_NEXUS_REPO=${ODL_NEXUS_REPO:-content/repositories/opendaylight.snapshot}
 GERRIT_PATH=${GERRIT_PATH:-git.opendaylight.org/gerrit}
+BRANCH=${GERRIT_BRANCH:-BRANCH}
 
 if [ ${BUNDLEURL} == 'last' ]; then
     # Obtain current pom.xml of integration/distribution, correct branch.
