@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "fafc7978_7e27f364",
+        "filename": "packer/provision/baseline.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2017-02-08T06:06:37Z",
+      "side": 1,
+      "message": "This should be a | character",
+      "range": {
+        "startLine": 82,
+        "startChar": 14,
+        "endLine": 82,
+        "endChar": 15
+      },
+      "revId": "88bb268e8041a4a9cc6802f4f539a54a1be50f65",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_bb896dcc",
         "filename": "packer/provision/baseline.sh",
         "patchSetId": 1
@@ -13,6 +36,30 @@
       "writtenOn": "2017-02-08T04:04:30Z",
       "side": 1,
       "message": "I don\u0027t get this change. Is this related to the patch?\n\nIf not please submit a separate patch for it. I like to keep things 1 topic at a time.",
+      "range": {
+        "startLine": 82,
+        "startChar": 7,
+        "endLine": 90,
+        "endChar": 10
+      },
+      "revId": "88bb268e8041a4a9cc6802f4f539a54a1be50f65",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_be203b4a",
+        "filename": "packer/provision/baseline.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2017-02-08T06:06:37Z",
+      "side": 1,
+      "message": "Why did this section get removed? Without it the job _will_ fail on CentOS7 with our original configuration as OpenJDK7 does not exist on C7!",
+      "parentUuid": "fafc7978_bb896dcc",
       "range": {
         "startLine": 82,
         "startChar": 7,
