@@ -640,6 +640,7 @@ pybot -N ${TESTPLAN} --removekeywords wuks -c critical -e exclude \
     -v TOOLS_SYSTEM_IP:${TOOLS_SYSTEM_1_IP} \
     -v TOOLS_SYSTEM_1_IP:${TOOLS_SYSTEM_1_IP} \
     -v TOOLS_SYSTEM_2_IP:${TOOLS_SYSTEM_2_IP} \
+    -v EXTERNAL_PHYSICAL_NETWORK:${PUBLIC_PHYSICAL_NETWORK} \
     -v USER_HOME:${HOME} \
     -v WORKSPACE:/tmp \
     ${TESTOPTIONS} ${SUITES} || true
