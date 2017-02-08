@@ -79,6 +79,15 @@ EOF
                 alternatives --set java_sdk_openjdk /usr/lib/jvm/java-1.7.0-openjdk.x86_64
             fi
         ;;
+        RedHat|CentOS)
+            if [ "$(echo $FACTER_OSVER | cut -d'.' -f1)" -ge "7" ]
+            then
+                echo "---> not modifying java alternatives as OpenJDK 1.7.0 does not exist"
+            else
+                alternatives --set java /usr/lib/jvm/jre-1.7.0-openjdk.x86_64/bin/java
+                alternatives --set java_sdk_openjdk /usr/lib/jvm/java-1.7.0-openjdk.x86_64
+            fi
+        ;;
         *)
             alternatives --set java /usr/lib/jvm/jre-1.7.0-openjdk.x86_64/bin/java
             alternatives --set java_sdk_openjdk /usr/lib/jvm/java-1.7.0-openjdk.x86_64
@@ -144,6 +153,30 @@ EOF
     # make sure that we still default to openjdk 7
     update-alternatives --set java /usr/lib/jvm/java-7-openjdk-amd64/jre/bin/java
     update-alternatives --set javac /usr/lib/jvm/java-7-openjdk-amd64/bin/javac
+
+    # install Java 7
+    echo "---> Configuring OpenJDK"
+    FACTER_OSVER=$(/usr/bin/facter operatingsystemrelease)
+    case "$FACTER_OSVER" in
+        14.04)
+            apt-get install openjdk-7-jdk
+            # make jdk8 available
+            add-apt-repository -y ppa:openjdk-r/ppa
+            apt-get update
+            # We need to force openjdk-8-jdk to install
+            apt-get install openjdk-8-jdk
+            # make sure that we still default to openjdk 7
+            update-alternatives --set java /usr/lib/jvm/java-7-openjdk-amd64/jre/bin/java
+            update-alternatives --set javac /usr/lib/jvm/java-7-openjdk-amd64/bin/javac
+        ;;
+        16.04)
+            apt-get install openjdk-8-jdk
+        ;;
+        *)
+            echo "---> Unknown Ubuntu version $FACTER_OSVER"
+            exit 1
+        ;;
+    esac
 
     # Needed to parse OpenStack commands used by opendaylight-infra stack commands
     # to initialize Heat template based systems.
