@@ -8,7 +8,7 @@ source ${ROBOT_VENV}/bin/activate
 echo "showing recent changes that made it in to the distribution used by this job"
 pip install --upgrade urllib3
 python ${WORKSPACE}/test/tools/distchanges/changes.py -d /tmp/distribution_folder \
-                  -u ${ACTUALBUNDLEURL} \
+                  -u ${ACTUALBUNDLEURL} -b ${BRANCH} \
                   -r ssh://jenkins-${SILO}@git.opendaylight.org:29418 || true
 
 echo "#################################################"
