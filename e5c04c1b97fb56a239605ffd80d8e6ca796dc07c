@@ -46,6 +46,30 @@
       "revId": "e5c04c1b97fb56a239605ffd80d8e6ca796dc07c",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_f5a5b947",
+        "filename": "packer/provision/baseline.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2017-02-09T13:54:05Z",
+      "side": 1,
+      "message": "I know Netconf and Pcep uses Java 7 tools (could be compatible with java 8 but who knows) to test Beryllium. This is unrelated to OVS version important for Openflowplugin, Ovsdb and similar.\nI am suggesting to install also openjdk-7-jdk (the default alternative can be java8) on 16.04 with a comment to remove once Beryllium jobs are gone.",
+      "parentUuid": "fafc7978_350901de",
+      "range": {
+        "startLine": 159,
+        "startChar": 36,
+        "endLine": 159,
+        "endChar": 37
+      },
+      "revId": "e5c04c1b97fb56a239605ffd80d8e6ca796dc07c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
