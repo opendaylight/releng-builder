@@ -229,7 +229,7 @@ Pool: ODLRPC
       </tr>
 
       <tr class="warning">
-        <td><b>Jenkins Labels</b><br/> ubuntu_mininet, ubuntu-trusty-mininet-2c-2g</td>
+        <td><b>Jenkins Labels</b><br/> ubuntu-trusty-mininet-2c-2g</td>
         <td><b>Minion Template names</b><br/> ubuntu-trusty-mininet-2c-2g</td>
         <td><b>Packer Template</b><br/>
         releng/builder/packer/teamplates/mininet.json</td>
@@ -242,8 +242,7 @@ Pool: ODLRPC
       </tr>
 
       <tr class="warning">
-        <td><b>Jenkins Labels</b><br/> ubuntu_mininet_ovs_23,
-          ubuntu-trusty-mininet-ovs-23-2c-2g</td>
+        <td><b>Jenkins Labels</b><br/> ubuntu-trusty-mininet-ovs-23-2c-2g</td>
         <td><b>Minion Template names</b><br/> ubuntu-trusty-mininet-ovs-23-2c-2g</td>
         <td><b>Packer Template</b><br/> releng/builder/packer/templates/mininet-ovs-2.3.json</td>
         <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/mininet-ubuntu.sh</td>
@@ -255,8 +254,7 @@ Pool: ODLRPC
       </tr>
 
       <tr class="warning">
-        <td><b>Jenkins Labels</b><br/> ubuntu_mininet_ovs_25,
-          ubuntu-trusty-mininet-ovs-25-2c-2g</td>
+        <td><b>Jenkins Labels</b><br/> ubuntu-trusty-mininet-ovs-25-2c-2g</td>
         <td><b>Minion Template names</b><br/> ubuntu-trusty-mininet-ovs-25-2c-2g</td>
         <td><b>Packer Template</b><br/> releng/builder/packer/templates/mininet-ovs-2.5.json</td>
         <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/mininet-ubuntu.sh</td>
@@ -298,7 +296,7 @@ Pool: ODLRPC
       </tr>
 
       <tr class="warning">
-        <td><b>Jenkins Labels</b><br/> gbp_trusty, ubuntu-trusty-gbp-2c-2g</td>
+        <td><b>Jenkins Labels</b><br/> ubuntu-trusty-gbp-2c-2g</td>
         <td><b>Minion Template names</b><br/> ubuntu-trusty-gbp-2c-2g</td>
         <td><b>Packer Template</b><br/> releng/builder/packer/templates/gbp.json</td>
         <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/ubuntu-docker-ovs.sh</td>
