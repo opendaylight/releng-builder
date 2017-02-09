@@ -60,7 +60,7 @@
 
 - job-template:
     name: builder-verify-jjb
-    node: jjbuilder
+    node: centos7-java-builder-2c-4g
 
     project-type: freestyle
 
@@ -92,11 +92,18 @@
             files: 'jjb/**'
 
     builders:
+        - config-file-provider:
+              files:
+                - file-id: 'jjbini'
+                  target: '$HOME/.config/jenkins_jobs/jenkins_jobs.ini'
         - shell: |
+            virtualenv $WORKSPACE/venv
+            source $WORKSPACE/venv/bin/activate
+            pip install --upgrade pip
             pip freeze
+            pip install jenkins-job-builder
             jenkins-jobs -l DEBUG test --recursive -o archives/job_output jjb/
             gzip archives/job_output/*
-
         - releng-check-unicode
         - verify-gpg-signature
 
@@ -161,7 +168,7 @@
 
 - job-template:
     name: 'builder-merge'
-    node: jjbuilder
+    node: centos7-java-builder-2c-4g
 
     # builder-merge job to run JJB update
     #
@@ -207,8 +214,16 @@
                       pattern: jjb/**
 
     builders:
+        - config-file-provider:
+              files:
+                - file-id: 'jjbini'
+                  target: '$HOME/.config/jenkins_jobs/jenkins_jobs.ini'
         - shell: |
+            virtualenv $WORKSPACE/venv
+            source $WORKSPACE/venv/bin/activate
+            pip install --upgrade pip
             pip freeze
+            pip install jenkins-job-builder
             jenkins-jobs --version
             jenkins-jobs update --recursive --delete-old --workers 4 jjb/
 
@@ -222,7 +237,7 @@
 - job-template:
     name: 'builder-weekly'
     disabled: false
-    node: jjbuilder
+    node: centos7-java-builder-2c-4g
 
     # builder-weekly job to run JJB update weekly
     #
@@ -254,7 +269,16 @@
         - timed: 'H H * * 0'
 
     builders:
+        - config-file-provider:
+              files:
+                - file-id: 'jjbini'
+                  target: '$HOME/.config/jenkins_jobs/jenkins_jobs.ini'
         - shell: |
+            virtualenv $WORKSPACE/venv
+            source $WORKSPACE/venv/bin/activate
+            pip install --upgrade pip
+            pip freeze
+            pip install jenkins-job-builder
             jenkins-jobs --flush-cache update --recursive --workers 4 jjb/
 
     publishers:
