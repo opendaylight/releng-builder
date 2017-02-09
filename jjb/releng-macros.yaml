@@ -498,3 +498,11 @@
     name: verify-gpg-signature
     builders:
         - shell: !include-raw: include-raw-verify-gpg-signatures.sh
+
+- builder:
+    name: opendaylight-infra-jjbini
+    builders:
+    - config-file-provider:
+          files:
+            - file-id: 'jjbini'
+              target: '$HOME/.config/jenkins_jobs/jenkins_jobs.ini'
