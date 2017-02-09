@@ -461,7 +461,7 @@
                     - compare-type: ANT
                       pattern: 'packer/vars/{platforms}.json'
                     - compare-type: ANT
-                      pattern: 'packer/template/{templates}.json'
+                      pattern: 'packer/templates/{templates}.json'
                     - compare-type: ANT
                       pattern: 'packer/provision/{templates}.sh'
                     - compare-type: ANT
@@ -470,6 +470,8 @@
                       pattern: 'packer/provision/rh-user_data.sh'
                     - compare-type: ANT
                       pattern: 'packer/provision/devstack-pre-pip.sh'
+                    - compare-type: ANT
+                      pattern: 'packer/provision/baseline.sh'
 
     builders:
         - packer-validate:
