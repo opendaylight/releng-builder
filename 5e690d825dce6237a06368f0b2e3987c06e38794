@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_737281ae",
+        "filename": "jjb/integration/include-raw-integration-start-cluster-run-test.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2017-02-09T16:24:05Z",
+      "side": 1,
+      "message": "ugh...  I always hated how we ended up like this.\n\nthere is no _1_.  there is just ODL_SYSTEM_IP for the 1st\ncontroller.\n\nthe 2nd controller which we call CONTROLLER1 in the test\nsuites is using ODL_SYSTEM_1_IP. Then our 3rd, using CONTROLLER2 is ODL_SYSTEM_2_IP\n\nright?\n\nnew patch set should reflect this.",
+      "parentUuid": "fafc7978_02ff61ab",
+      "range": {
+        "startLine": 124,
+        "startChar": 16,
+        "endLine": 124,
+        "endChar": 17
+      },
+      "revId": "5e690d825dce6237a06368f0b2e3987c06e38794",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_622d8d46",
         "filename": "jjb/integration/include-raw-integration-start-cluster-run-test.sh",
         "patchSetId": 3
