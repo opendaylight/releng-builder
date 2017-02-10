@@ -21,7 +21,7 @@ apt-get update -y --force-yes
 apt-get install -y --force-yes openvswitch-switch
 
 echo '---> Installing CPqD and dependencies'
-apt-get install -y --force-yes build-essential cmake flex
+apt-get install -y --force-yes build-essential cmake flex dh-autoreconf
 apt-get install -y --force-yes libpcre++-dev libxerces-c-dev libpcap-dev libboost-all-dev
 
 cd /tmp
