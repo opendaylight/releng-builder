@@ -1,15 +1,5 @@
 #!/bin/bash
 
-# add in a test copr repo
-wget http://copr.fedoraproject.org/coprs/tykeal/odl-updates/repo/epel-7/tykeal-odl-updates-epel-7.repo -O /etc/yum.repos.d/tykeal-odl-updates-epel-7.repo
-
-yum clean all
-
-# Install xpath
-yum install -y perl-XML-XPath python-pip
-
-yum update -y python-six
-
 # It looks like the devstack gate is stomping on our dnsmasq setup which
 # therefore kills our ability to do proper lookups of some resources.
 # Let's capture the 3 nexus IPs into /etc/hosts
@@ -27,8 +17,5 @@ cat <<EOF >/etc/sudoers.d/89-jenkins-user-defaults
 Defaults:jenkins !requiretty
 jenkins     ALL = NOPASSWD: ALL
 EOF
-
-# install crudini command line tool for editing config files
-yum install -y crudini
 
 # vim: sw=2 ts=2 sts=2 et :
