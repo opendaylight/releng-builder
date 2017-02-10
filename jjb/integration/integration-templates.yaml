@@ -1024,6 +1024,18 @@
             name: PUBLIC_PHYSICAL_NETWORK
             default: '{public-physical-network}'
             description: 'provider physical network used for flat/vlan networks'
+        - string:
+            name: ENABLE_NETWORKING_L2GW
+            default: '{enable-networking-l2gw}'
+            description: 'Enable networking L2gw'
+        - string:
+            name: NETWORKING_L2GW_DRIVER
+            default: '{networking-l2gw-repo}'
+            description: 'URL to fetch networking-l2gw driver'
+        - string:
+            name: DISABLE_ODL_L3_PLUGIN
+            default: '{disable-odl-l3-service-plugin}'
+            description: 'Disable odl l3 service plugin'
     scm:
         - integration-gerrit-scm:
             basedir: 'test'
