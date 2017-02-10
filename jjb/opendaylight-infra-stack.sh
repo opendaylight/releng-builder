@@ -40,3 +40,6 @@ for i in `seq $OS_TIMEOUT`; do
         ;;
     esac
 done
+
+# capture stack info in console logs
+openstack --os-cloud rackspace stack show $STACK_NAME
