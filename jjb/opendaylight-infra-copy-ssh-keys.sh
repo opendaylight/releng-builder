@@ -1,9 +1,14 @@
 #!/bin/bash
+echo "----------> Copy ssh public keys to csit lab"
+
 source $WORKSPACE/.venv-openstack/bin/activate
 
 function copy-ssh-keys-to-slave() {
     RETRIES=60
     for j in $(seq 1 $RETRIES); do
+        # ping test to see if connectivity is available
+        ping -c1 ${i}
+
         if `ssh-copy-id -i /home/jenkins/.ssh/id_rsa.pub "jenkins@${i}" > /dev/null 2>&1`; then
             ssh jenkins@${i} 'echo "$(facter ipaddress_eth0) $(/bin/hostname)" | sudo tee -a /etc/hosts'
             echo "Successfully copied public keys to slave ${i}"
@@ -17,6 +22,10 @@ function copy-ssh-keys-to-slave() {
         fi
     done
 }
+
+# Print the Stack outputs parameters so that we can identify which IPs belong
+# to which VM types.
+openstack --os-cloud rackspace stack show -c outputs $STACK_NAME
 
 ADDR=(`openstack --os-cloud rackspace stack show -f json -c outputs $STACK_NAME | \
        jq -r '.outputs[] | \
