@@ -19,7 +19,6 @@ for i in "java-builder,builder" \
          "docker,docker" \
          "gbp,ubuntu-docker-ovs" \
          "robot,robot" \
-         "ubuntu-trusty-mininet,mininet-ubuntu" \
          "mininet,mininet-ubuntu"
 do set -- $i
     if [[ $HOST == *"$1"* ]]; then
