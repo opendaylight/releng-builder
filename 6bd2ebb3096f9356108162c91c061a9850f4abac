@@ -70,6 +70,30 @@
       "revId": "6bd2ebb3096f9356108162c91c061a9850f4abac",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_c941fc3a",
+        "filename": "jenkins-scripts/mininet-ubuntu.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-02-10T04:16:36Z",
+      "side": 0,
+      "message": "That\u0027s right. Every time Jenkins rebuilds the image it always runs apt-get update at the beginning so we will be up to date up until the date of the image build. If we need newer we just force rebuild and update the jobs.",
+      "parentUuid": "fafc7978_494eac70",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 33
+      },
+      "revId": "6bd2ebb3096f9356108162c91c061a9850f4abac",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
