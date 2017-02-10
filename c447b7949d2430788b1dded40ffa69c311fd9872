@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "fafc7978_c9dc5915",
+        "filename": "jjb/opendaylight-infra-stack.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2017-02-10T22:20:02Z",
+      "side": 1,
+      "message": "Thanh told me he\u0027s seen some stacks take almost this\nlong. but now with 3 retries I wanted to trim this down\nto help mitigate our worst case scenario (which is now\n30m) of spinning our wheels.",
+      "range": {
+        "startLine": 13,
+        "startChar": 11,
+        "endLine": 13,
+        "endChar": 13
+      },
+      "revId": "c447b7949d2430788b1dded40ffa69c311fd9872",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_69cd6d5d",
+        "filename": "jjb/opendaylight-infra-stack.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2017-02-10T22:20:02Z",
+      "side": 1,
+      "message": "will it be a problem that we are going to re-use the same \nname when doing a retry? \n\none case could be that the current stack is IN_PROGRESS for\nlonger than our OS_TIMEOUT so we give up and then try to\ncreate a new stack with the same name.\n\nI know we were told to *not* delete stacks with *PROGRESS*\nstatus, so we can\u0027t do that.",
+      "range": {
+        "startLine": 26,
+        "startChar": 85,
+        "endLine": 26,
+        "endChar": 96
+      },
+      "revId": "c447b7949d2430788b1dded40ffa69c311fd9872",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_e9e15dd1",
         "filename": "jjb/opendaylight-infra-stack.sh",
         "patchSetId": 1
