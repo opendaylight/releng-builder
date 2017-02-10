@@ -39,3 +39,9 @@ apt-get install -y --force-yes exabgp
 
 echo '---> All Python package installation should happen in virtualenv'
 apt-get install -y --force-yes python-virtualenv python-pip
+
+# Install vlan for vlan based tests in VTN suites
+apt-get install -y --force-yes -qq vlan
+
+# Install netaddr package which is needed by some custom mininet topologies
+apt-get install -y --force-yes -qq python-netaddr
