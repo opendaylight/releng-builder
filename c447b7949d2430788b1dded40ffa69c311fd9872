@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_c94a99c4",
+        "filename": "jjb/opendaylight-infra-stack.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2017-02-10T22:57:27Z",
+      "side": 1,
+      "message": "I think `OS_RETRIES` and `OS_TIMEOUT` are essential the same. Could we not do with increasing the OS_TIMEOUT to 30 instead ? \nMaybe 1-minute polling  is not very efficient, since its take longer. Would increase the sleep to 90s or 120s help ?",
+      "parentUuid": "fafc7978_c9dc5915",
+      "range": {
+        "startLine": 13,
+        "startChar": 11,
+        "endLine": 13,
+        "endChar": 13
+      },
+      "revId": "c447b7949d2430788b1dded40ffa69c311fd9872",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_69cd6d5d",
         "filename": "jjb/opendaylight-infra-stack.sh",
         "patchSetId": 1
@@ -83,6 +107,30 @@
       "writtenOn": "2017-02-10T22:17:09Z",
       "side": 1,
       "message": "here is the only exit, but notice the only way to be \nsuccessful is to flip the STACK_SUCCESSFUL bool up in\nline 31",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 2
+      },
+      "revId": "c447b7949d2430788b1dded40ffa69c311fd9872",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_a94595b4",
+        "filename": "jjb/opendaylight-infra-stack.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2017-02-10T22:57:27Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "fafc7978_e9e15dd1",
       "range": {
         "startLine": 56,
         "startChar": 0,
