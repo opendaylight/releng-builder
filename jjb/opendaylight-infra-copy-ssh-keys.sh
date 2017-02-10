@@ -1,4 +1,6 @@
 #!/bin/bash
+echo "----------> Copy ssh public keys to csit lab"
+
 source $WORKSPACE/.venv-openstack/bin/activate
 
 function copy-ssh-keys-to-slave() {
@@ -15,8 +17,15 @@ function copy-ssh-keys-to-slave() {
             echo "SSH not responding on ${i}. Retrying in 10 seconds..."
             sleep 10
         fi
+
+        # ping test to see if connectivity is available
+        ping -c1 ${i}
     done
 }
+
+# Print the Stack outputs parameters so that we can identify which IPs belong
+# to which VM types.
+openstack --os-cloud rackspace stack show -c outputs $STACK_NAME
 
 ADDR=(`openstack --os-cloud rackspace stack show -f json -c outputs $STACK_NAME | \
        jq -r '.outputs[] | \
