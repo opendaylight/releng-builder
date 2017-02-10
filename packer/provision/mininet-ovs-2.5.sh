@@ -20,10 +20,10 @@ add-apt-repository -y ppa:sgauthier/openvswitch-dpdk
 apt-get update -y --force-yes
 apt-get install -y --force-yes openvswitch-switch openvswitch-vtep
 
-echo '---> Installing mininet 2.2.2'
+echo '---> Installing mininet 2.2.1'
 git clone git://github.com/mininet/mininet
 cd mininet
-git checkout -b 2.2.2 2.2.2
+git checkout -b 2.2.1 2.2.1
 cd ..
 mininet/util/install.sh -nf
 
