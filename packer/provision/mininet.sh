@@ -100,3 +100,6 @@ apt-get install -y --force-yes vlan
 
 echo '---> All Python package installation should happen in virtualenv'
 apt-get install -y --force-yes python-virtualenv python-pip
+
+# Install netaddr package which is needed by some custom mininet topologies
+apt-get install -y --force-yes -qq python-netaddr
