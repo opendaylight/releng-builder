@@ -19,7 +19,11 @@ function copy-ssh-keys-to-slave() {
         fi
 
         # ping test to see if connectivity is available
-        ping -c1 ${i}
+        if ping -c1 ${i} &> /dev/null; then
+            echo "Ping to ${i} successful."
+        else
+            echo "Ping to ${i} failed."
+        fi
     done
 }
 
