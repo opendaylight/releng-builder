@@ -137,6 +137,30 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_cc78e7f4",
+        "filename": "jjb/opendaylight-infra-stack.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-02-11T05:02:27Z",
+      "side": 1,
+      "message": "Yes, reusing the same name is problematic. However if the the state is CREATE_FAILED than it is safe to run a delete and then restart.\n\nI spent a lot of time investigating our failed builds today and believe the the most common failure case by far is not actually timeouts. It\u0027s CREATE_FAILED.\n\nSo I think there\u0027s 2 retry scenarios we need to handle and the CREATE_FAILED on is the easiest to handle and also our most common one. I say we can split this task into 2 parts.\n\n1) Handle CREATE_FAILED by retrying and deleting\n\n2) Handle timeout by retrying but somehow being able to track a different STACK_NAME, need to think more about this one\n\nAs for Unexpected status I think we should just fail because we don\u0027t know what to do with this status since we are unsure what the state of the stack is in. If we do run into this then we can investigate why and perhaps add a new known status handler if we can understand it.",
+      "parentUuid": "fafc7978_a9ee35b2",
+      "range": {
+        "startLine": 26,
+        "startChar": 85,
+        "endLine": 26,
+        "endChar": 96
+      },
+      "revId": "c447b7949d2430788b1dded40ffa69c311fd9872",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_e9e15dd1",
         "filename": "jjb/opendaylight-infra-stack.sh",
         "patchSetId": 1
