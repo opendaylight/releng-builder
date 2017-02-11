@@ -6,12 +6,6 @@ Defaults:jenkins !requiretty
 jenkins     ALL = NOPASSWD: ALL
 EOF
 
-yum clean all
-yum install -y -q python-netaddr
-
-## Install docker-py
-yum install -y -q python-docker-py
-
 # make sure the firewall is stopped
 service iptables stop
 
