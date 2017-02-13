@@ -22,6 +22,30 @@
       "revId": "d2c39c989639a1a89498ffcf4adc3cdb8214ecd3",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_b0305102",
+        "filename": "jjb/integration/include-raw-integration-compare-distributions.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2017-02-13T21:23:03Z",
+      "side": 1,
+      "message": "yeah, -l or -v is better than actually extracting I guess.\n\nOther thoughts are extra to /tmp/somedir/. Then just read the dir in somedir as the EXTRACTED_FOLDER. This way you only extract once, though the -l -v is close also.\n\n Or find a a certain file and then grab just the first part of the prefix as the dir. Similar to what we do when we find a jar and then look for a file in it.\n\nOr pipe output of zip to file and then grep creating in there.",
+      "parentUuid": "fafc7978_70cb8953",
+      "range": {
+        "startLine": 19,
+        "startChar": 19,
+        "endLine": 19,
+        "endChar": 25
+      },
+      "revId": "d2c39c989639a1a89498ffcf4adc3cdb8214ecd3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
