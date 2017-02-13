@@ -4,15 +4,16 @@ Following are the list of published images available to be used with Jenkins job
 * CentOS 7 (cloudimg 1510)
 * CentOS 7 - devstack - 20170117-0003
 * CentOS 7 - devstack - 20170120-1710
+* CentOS 7 - devstack - 20170210-1356
 * CentOS 7 - devstack - newton - 20170117-0005
 * CentOS 7 - devstack-mitaka - 20170130-0523
 * CentOS 7 - devstack-newton - 20170130-0426
 * CentOS 7 - docker - 20170117-0003
 * CentOS 7 - docker - 20170120-1434
 * CentOS 7 - java-builder - 20170117-0004
-* CentOS 7 - java-builder - 20170120-1817
 * CentOS 7 - java-builder - 20170126-0058
 * CentOS 7 - robot - 20170117-0004
+* CentOS 7 - robot - 20170210-1803
 * Fedora 23 (20151030 cloud)
 * Ubuntu 14.04 - devstack - 20170117-0004
 * Ubuntu 14.04 - docker - 20170117-0003
