@@ -15,8 +15,13 @@ NEW_DISTRO=$(find $WORKSPACE -name distribution-karaf*.zip)
 NEW_DISTRO_BASENAME=$(basename $NEW_DISTRO)
 cp $NEW_DISTRO /tmp/
 cd /tmp/
-# the following extracts the .zip and learns the name of the folder extracted to
+# the following partially extracts the .zip and learns the name of the folder extracted to
 EXTRACTED_FOLDER=$(unzip $NEW_DISTRO_BASENAME | grep -m1 'creating:' | cut -d' ' -f5-)
+# it's unknown why the above step only partially unzips the .zip contents, but there is something causing
+# it when using the pipe to grep. Because of this, a workaround to remove the partial contents and unzip
+# again is next
+rm -rf $EXTRACTED_FOLDER
+unzip -q $NEW_DISTRO_BASENAME
 mv $EXTRACTED_FOLDER distro_new
 
 git clone https://git.opendaylight.org/gerrit/p/integration/test.git
