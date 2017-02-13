@@ -15,8 +15,12 @@ NEW_DISTRO=$(find $WORKSPACE -name distribution-karaf*.zip)
 NEW_DISTRO_BASENAME=$(basename $NEW_DISTRO)
 cp $NEW_DISTRO /tmp/
 cd /tmp/
-# the following extracts the .zip and learns the name of the folder extracted to
-EXTRACTED_FOLDER=$(unzip $NEW_DISTRO_BASENAME | grep -m1 'creating:' | cut -d' ' -f5-)
+# get the name of the folder which will be extracted to
+EXTRACTED_FOLDER=$(unzip -l $NEW_DISTRO_BASENAME | grep '[0-9][0-9]\-[0-9][0-9]\-[0-9][0-9][0-9][0-9]' | head -n1 | awk '{print $NF}')
+# there is a problem with the above command when trying to fully extract all the files and piping to
+# grep. Not all of the contents are extracted. So, instead it's just listing the contents (-l) to get
+# the folder name, and next we will do the real unzip
+unzip -q $NEW_DISTRO_BASENAME
 mv $EXTRACTED_FOLDER distro_new
 
 git clone https://git.opendaylight.org/gerrit/p/integration/test.git
