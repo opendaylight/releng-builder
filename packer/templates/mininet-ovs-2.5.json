@@ -60,6 +60,7 @@
       "scripts": [
         "provision/baseline.sh",
         "provision/mininet-ovs-2.5.sh",
+        "provision/system_reseal_local_env.sh",
         "provision/system_reseal.sh"
       ],
       "execute_command": "chmod +x {{ .Path }}; if [ \"$UID\" == \"0\" ]; then {{ .Vars }} '{{ .Path }}'; else {{ .Vars }} sudo -E '{{ .Path }}'; fi"
