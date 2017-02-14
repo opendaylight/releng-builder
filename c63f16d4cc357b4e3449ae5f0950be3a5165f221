@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fafc7978_1c5df6e9",
+        "filename": "jjb/integration/include-raw-integration-compare-distributions.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2017-02-14T12:59:29Z",
+      "side": 0,
+      "message": "grep \u0027crating:\u0027 | grep -v \u0027/.\u0027\n\n\"grep -m1\" causes grep to close its input stream when one line is processed, thus consequent outputs from unzip cannot be piped anywhere. On my system, bash returns error code 141 (with set -o pipefail).\n\nThe same issue with closed streams happens if \"head -n1\" is present in pipeline.\n\n\"grep -v \u0027/.\u0027\" filters-out sub-folders, so pipeline creates just one line, without closing any stream.",
+      "range": {
+        "startLine": 19,
+        "startChar": 48,
+        "endLine": 19,
+        "endChar": 68
+      },
+      "revId": "c63f16d4cc357b4e3449ae5f0950be3a5165f221",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
