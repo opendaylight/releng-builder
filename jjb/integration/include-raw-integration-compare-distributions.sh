@@ -15,8 +15,8 @@ NEW_DISTRO=$(find $WORKSPACE -name distribution-karaf*.zip)
 NEW_DISTRO_BASENAME=$(basename $NEW_DISTRO)
 cp $NEW_DISTRO /tmp/
 cd /tmp/
-# the following extracts the .zip and learns the name of the folder extracted to
-EXTRACTED_FOLDER=$(unzip $NEW_DISTRO_BASENAME | grep -m1 'creating:' | cut -d' ' -f5-)
+# get the name of the folder which will be extracted to
+EXTRACTED_FOLDER=$(unzip $NEW_DISTRO_BASENAME | grep 'creating:' | grep -v '/.' | cut -d' ' -f5-)
 mv $EXTRACTED_FOLDER distro_new
 
 git clone https://git.opendaylight.org/gerrit/p/integration/test.git
