@@ -47,13 +47,28 @@ cat >> ${local_conf_file_name} << EOF
 enable_service ${service_name}
 EOF
 done
+for plugin_name in ${ENABLE_OS_PLUGINS}
+do
+if [ "$plugin_name" == "networking-odl" ]; then
+    ENABLE_PLUGIN_ARGS="${ODL_ML2_DRIVER_REPO} ${ODL_ML2_BRANCH}"
+elif [ "$plugin_name" == "kuryr-kubernetes" ]; then
+    ENABLE_PLUGIN_ARGS="${DEVSTACK_KUBERNETES_PLUGIN_REPO} ${OPENSTACK_BRANCH}" # note: kuryr-kubernetes only exists since Ocata
+elif [ "$plugin_name" == "neutron-lbaas" ]; then
+    ENABLE_PLUGIN_ARGS="${DEVSTACK_LBAAS_PLUGIN_REPO} ${OPENSTACK_BRANCH}"
+else
+    echo "Error: Invalid plugin $plugin_name, unsupported"
+    continue
+fi
+cat >> ${local_conf_file_name} << EOF
+enable_plugin ${plugin_name} ${ENABLE_PLUGIN_ARGS}
+EOF
+done
 unset IFS
-
 cat >> ${local_conf_file_name} << EOF
 HOST_IP=$OPENSTACK_CONTROL_NODE_IP
 SERVICE_HOST=\$HOST_IP
 
-NEUTRON_CREATE_INITIAL_NETWORKS=False
+NEUTRON_CREATE_INITIAL_NETWORKS=${CREATE_INITIAL_NETWORKS}
 Q_PLUGIN=ml2
 Q_ML2_TENANT_NETWORK_TYPE=${TENANT_NETWORK_TYPE}
 Q_OVS_USE_VETH=True
@@ -72,14 +87,14 @@ SERVICE_TOKEN=service
 SERVICE_PASSWORD=admin
 ADMIN_PASSWORD=admin
 
-enable_plugin networking-odl ${ODL_ML2_DRIVER_REPO} ${ODL_ML2_BRANCH}
-
 ODL_PORT=8080
 ODL_MODE=externalodl
+ODL_PORT_BINDING_CONTROLLER=${ODL_ML2_PORT_BINDING}
+
 LIBVIRT_TYPE=qemu
 
+NEUTRON_LBAAS_SERVICE_PROVIDERV2=${LBAAS_SERVICE_PROVIDER} # Only relevant if neutron-lbaas plugin is enabled
 EOF
-
 
 if [ "${ODL_ML2_DRIVER_VERSION}" == "v2" ]; then
     echo "ODL_V2DRIVER=True" >> ${local_conf_file_name}
@@ -131,8 +146,8 @@ fi
 if [ "${ODL_ENABLE_L3_FWD}" == "yes" ]; then
 cat >> ${local_conf_file_name} << EOF
 PUBLIC_BRIDGE=${PUBLIC_BRIDGE}
-PUBLIC_PHYSICAL_NETWORK=physnet1 # FIXME this should be a parameter
-ML2_VLAN_RANGES=physnet1
+PUBLIC_PHYSICAL_NETWORK=${PUBLIC_PHYSICAL_NETWORK}
+ML2_VLAN_RANGES=${PUBLIC_PHYSICAL_NETWORK}
 ODL_PROVIDER_MAPPINGS=${ODL_PROVIDER_MAPPINGS}
 
 disable_service q-l3
@@ -159,8 +174,8 @@ minimize_polling=True
 
 [ml2]
 # Needed for VLAN provider tests - because our provider networks are always encapsulated in VXLAN (br-physnet1)
-# MTU(1440) + VXLAN(50) + VLAN(4) = 1494 < MTU eth0/br-phynset1(1500)
-physical_network_mtus = physnet1:1440
+# MTU(1440) + VXLAN(50) + VLAN(4) = 1494 < MTU eth0/br-physnet1(1500)
+physical_network_mtus = ${PUBLIC_PHYSICAL_NETWORK}:1440
 
 [[post-config|/etc/neutron/dhcp_agent.ini]]
 [DEFAULT]
@@ -185,6 +200,13 @@ if [ "${ODL_ML2_BRANCH}" == "stable/mitaka" ]; then
 else
    RECLONE=yes
 fi
+if [ "${OPENSTACK_BRANCH}" == "master" ]; then # Ocata
+    # placement is mandatory for nova since Ocata, note that this requires controller to already be up
+    ENABLED_SERVICES="n-cpu,placement-api"
+else
+    ENABLED_SERVICES="n-cpu"
+fi
+
 local_conf_file_name=${WORKSPACE}/local.conf_compute_${HOSTIP}
 cat > ${local_conf_file_name} << EOF
 [[local|localrc]]
@@ -195,8 +217,7 @@ RECLONE=${RECLONE}
 
 NOVA_VNC_ENABLED=True
 MULTI_HOST=1
-ENABLED_SERVICES=n-cpu
-
+ENABLED_SERVICES=${ENABLED_SERVICES}
 HOST_IP=${HOSTIP}
 SERVICE_HOST=${OPENSTACK_CONTROL_NODE_IP}
 
@@ -217,10 +238,16 @@ SERVICE_TOKEN=service
 SERVICE_PASSWORD=admin
 ADMIN_PASSWORD=admin
 
-enable_plugin networking-odl ${ODL_ML2_DRIVER_REPO} ${ODL_ML2_BRANCH}
 ODL_MODE=compute
+ODL_PORT_BINDING_CONTROLLER=${ODL_ML2_PORT_BINDING}
 LIBVIRT_TYPE=qemu
 EOF
+
+if [[ "${ENABLE_OS_PLUGINS}" =~ networking-odl ]]; then
+cat >> ${local_conf_file_name} << EOF
+enable_plugin networking-odl ${ODL_ML2_DRIVER_REPO} ${ODL_ML2_BRANCH}
+EOF
+fi
 
 if [ "${NUM_ODL_SYSTEM}" -gt 1 ]; then
 odl_list=${ODL_SYSTEM_1_IP}
@@ -263,7 +290,7 @@ Q_L3_ENABLED=True
 ODL_L3=${ODL_L3}
 PUBLIC_INTERFACE=br100 # FIXME do we use br100 at all?
 PUBLIC_BRIDGE=${PUBLIC_BRIDGE}
-PUBLIC_PHYSICAL_NETWORK=physnet1 # FIXME this should be a parameter
+PUBLIC_PHYSICAL_NETWORK=${PUBLIC_PHYSICAL_NETWORK}
 ODL_PROVIDER_MAPPINGS=${ODL_PROVIDER_MAPPINGS}
 EOF
 fi
@@ -384,6 +411,7 @@ OS_CTRL_FOLDER="control"
 mkdir -p ${OS_CTRL_FOLDER}
 scp ${OPENSTACK_CONTROL_NODE_IP}:/opt/stack/devstack/nohup.out ${OS_CTRL_FOLDER}/stack.log
 scp ${OPENSTACK_CONTROL_NODE_IP}:/var/log/openvswitch/ovs-vswitchd.log ${OS_CTRL_FOLDER}/ovs-vswitchd.log
+scp ${OPENSTACK_CONTROL_NODE_IP}:/etc/neutron/neutron.conf ${OS_CTRL_FOLDER}/neutron.conf
 rsync -avhe ssh ${OPENSTACK_CONTROL_NODE_IP}:/opt/stack/logs/* ${OS_CTRL_FOLDER} # rsync to prevent copying of symbolic links
 scp extra_debug.sh ${OPENSTACK_CONTROL_NODE_IP}:/tmp
 ${SSH} ${OPENSTACK_CONTROL_NODE_IP} "bash /tmp/extra_debug.sh > /tmp/extra_debug.log"
@@ -399,6 +427,7 @@ do
     mkdir -p ${OS_COMPUTE_FOLDER}
     scp ${!OSIP}:/opt/stack/devstack/nohup.out ${OS_COMPUTE_FOLDER}/stack.log
     scp ${!OSIP}:/var/log/openvswitch/ovs-vswitchd.log ${OS_COMPUTE_FOLDER}/ovs-vswitchd.log
+    scp ${!OSIP}:/etc/nova/nova.conf ${OS_COMPUTE_FOLDER}/nova.conf
     rsync -avhe ssh ${!OSIP}:/opt/stack/logs/* ${OS_COMPUTE_FOLDER} # rsync to prevent copying of symbolic links
     scp extra_debug.sh ${!OSIP}:/tmp
     ${SSH} ${!OSIP} "bash /tmp/extra_debug.sh > /tmp/extra_debug.log"
@@ -456,11 +485,16 @@ ssh ${OPENSTACK_CONTROL_NODE_IP} "cd /opt/stack; git clone https://git.openstack
 ssh ${OPENSTACK_CONTROL_NODE_IP} "cd /opt/stack; git clone https://github.com/openstack/python-openstacksdk; cd python-openstacksdk; sudo python setup.py install"
 fi
 
-ssh ${OPENSTACK_CONTROL_NODE_IP} "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
-ssh ${OPENSTACK_CONTROL_NODE_IP} "ps -ef | grep stack.sh"
+if [ "${OPENSTACK_BRANCH}" == "master" ]; then # Ocata
+    # FIXME This is horrible - but since Ocata computes need to load after control is stacked, due to placement-api, so don't send to background
+    echo "Stacking..."
+    ssh ${OPENSTACK_CONTROL_NODE_IP} "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1"
+else
+    ssh ${OPENSTACK_CONTROL_NODE_IP} "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
+    ssh ${OPENSTACK_CONTROL_NODE_IP} "ps -ef | grep stack.sh"
+fi
 ssh ${OPENSTACK_CONTROL_NODE_IP} "ls -lrt /opt/stack/devstack/nohup.out"
 os_node_list+=(${OPENSTACK_CONTROL_NODE_IP})
-
 
 for i in `seq 1 $((NUM_OPENSTACK_SYSTEM - 1))`
 do
@@ -472,8 +506,10 @@ do
     if [ "${ODL_ML2_BRANCH}" == "stable/mitaka" ]; then
        ssh ${!COMPUTEIP} "cd /opt/stack; git clone https://git.openstack.org/openstack/requirements; cd requirements; git checkout stable/mitaka; sed -i /libvirt-python/d upper-constraints.txt"
     fi
-    ssh ${!COMPUTEIP} "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
+    ssh ${!COMPUTEIP} "cd /opt/stack/devstack; export no_proxy='localhost,127.0.0.1,${!COMPUTEIP}' ; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
     ssh ${!COMPUTEIP} "ps -ef | grep stack.sh"
+    ssh ${!COMPUTEIP} "ping -c 4 ${OPENSTACK_CONTROL_NODE_IP} || true" # Verify connectivity to control node via ping
+    ssh ${!COMPUTEIP} "curl http://${OPENSTACK_CONTROL_NODE_IP}:5000/v2.0/ || true" # Verify connectivity to control node keystone API
     os_node_list+=(${!COMPUTEIP})
 done
 
