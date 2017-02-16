@@ -22,7 +22,7 @@ git commit -am "Release $RELEASE_TAG"
 
 mkdir patches
 mv taglist.log $PATCH_DIR
-modules=`xmlstarlet sel -N x=http://maven.apache.org/POM/4.0.0 -t -m '//x:modules' -v '//x:module' pom.xml`
+modules=`xmlstarlet sel -N x=http://maven.apache.org/POM/4.0.0 -t -m '//x:modules' -v '//x:module' $POM`
 for module in $modules; do
     pushd $module
     git format-patch --stdout origin/$RELEASE_BRANCH > $PATCH_DIR/${module//\//-}.patch
