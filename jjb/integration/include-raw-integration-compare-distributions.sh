@@ -9,6 +9,7 @@ wget --progress=dot:mega $ACTUALBUNDLEURL
 echo "Extracting the last distribution found on nexus..."
 unzip -q $BUNDLE
 mv $BUNDLEFOLDER /tmp/distro_old
+rm $BUNDLE
 
 echo "Extracting the distribution just created by this job..."
 NEW_DISTRO=$(find $WORKSPACE -name distribution-karaf*.zip)
