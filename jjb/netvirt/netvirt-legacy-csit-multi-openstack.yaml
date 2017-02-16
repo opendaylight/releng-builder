@@ -43,16 +43,19 @@
             openstack-branch: 'stable/mitaka'
             odl-ml2-branch: 'stable/mitaka'
             odl-ml2-driver-version: 'v1'
+            odl-ml2-port-binding: 'network-topology'
             openstack_system_image: CentOS 7 - devstack-mitaka - 20170210-1356
         - newton:
             openstack-branch: 'stable/newton'
             odl-ml2-branch: 'stable/newton'
             odl-ml2-driver-version: 'v1'
+            odl-ml2-port-binding: 'network-topology'
             openstack_system_image: CentOS 7 - devstack-newton - 20170210-1344
         - newton-nodl-v2:
             openstack-branch: 'stable/newton'
             odl-ml2-branch: 'stable/newton'
             odl-ml2-driver-version: 'v2'
+            odl-ml2-port-binding: 'network-topology'
             openstack_system_image: CentOS 7 - devstack-newton - 20170210-1344
 
     odl-enable-l3: 'yes'
@@ -65,6 +68,10 @@
 
     disable-odl-l3-service-plugin: 'no'
 
+    create-initial-networks: 'False'
+
+    enable-openstack-plugins: 'networking-odl'
+
     enable-openstack-services: 'q-svc,q-dhcp,q-meta,n-cauth,tempest'
 
     disable-openstack-services: 'swift,cinder,n-net,q-vpn,n-cpu'
@@ -72,5 +79,7 @@
     tenant-network-type: 'vxlan'
 
     security-group-mode: 'none'
+
+    lbaas-service-provider: ''
 
     robot-options: ''
