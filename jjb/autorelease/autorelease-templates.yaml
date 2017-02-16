@@ -24,6 +24,8 @@
           release-tag: '{next-release-tag}'
       - autorelease-release-branch:
           release-branch: '{branch}'
+      - pom:
+          pom: '{pom}'
 
     scm:
       - git:
@@ -73,7 +75,7 @@
       - autorelease-fix-relative-paths
       - maven-target:
           maven-version: 'mvn33'
-          pom: 'pom.xml'
+          pom: '$POM'
           goals: >
               clean deploy -V -B -Pintegrationtests,docs,repoBuild -Djenkins
               -Dcheckstyle.skip=true
