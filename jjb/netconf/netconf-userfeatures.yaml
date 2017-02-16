@@ -18,7 +18,7 @@
         - boron:
             branch: 'stable/boron'
             jre: 'openjdk8'
-            install-features: 'odl-restconf,odl-netconf-mdsal,odl-clustering-test-app,odl-netconf-connector-all,odl-netconf-topology'
+            install-features: 'odl-restconf,odl-netconf-mdsal,odl-clustering-test-app,odl-netconf-connector-all,odl-netconf-topology,odl-vbd'
             robot-options: '-v NETOPEER_USER:root -v USE_NETCONF_CONNECTOR:True'
         - beryllium:
             branch: 'stable/beryllium'
@@ -33,7 +33,10 @@
             scope: 'all'
 
     # Features to install
-    install-features: 'odl-restconf,odl-netconf-mdsal,odl-clustering-test-app,odl-netconf-topology'
+    install-features: 'odl-restconf,odl-netconf-mdsal,odl-netconf-topology,odl-clustering-test-app,odl-vbd'
+    # Currently, odl-vbd (for testing Bug 7791) pulls in odl-netconf-clustered-topology,
+    # which is incompatible with odl-netconf-topology.
+    # Hopefully that would not affect 1node tests.
 
     # Robot custom options
     robot-options: '-v NETOPEER_USER:root -v USE_NETCONF_CONNECTOR:False'
