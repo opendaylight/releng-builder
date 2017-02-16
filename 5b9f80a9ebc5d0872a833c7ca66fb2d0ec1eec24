@@ -70,6 +70,30 @@
       "revId": "5b9f80a9ebc5d0872a833c7ca66fb2d0ec1eec24",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_deceb8b3",
+        "filename": "jjb/integration/include-raw-integration-deploy-openstack-run-test.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 670
+      },
+      "writtenOn": "2017-02-16T10:54:23Z",
+      "side": 1,
+      "message": "Do we really need to install python-pip? I think we can just add the pip install here.\n\nThis is from the sandbox output run:\n\n01:39:04 + ssh 10.29.12.225 \u0027sudo yum -y install python-pip\u0027\n01:39:04 Warning: Permanently added \u002710.29.12.225\u0027 (ECDSA) to the list of known hosts.\n01:39:06 Loaded plugins: fastestmirror, langpacks\n01:39:06 Loading mirror speeds from cached hostfile\n01:39:06  * base: mirror.rackspace.com\n01:39:06  * epel: pubmirror1.math.uh.edu\n01:39:06  * extras: repo.us.bigstepcloud.com\n01:39:06  * updates: mirrors.cat.pdx.edu\n01:39:08 Package python-pip-8.1.2-1.el7.noarch is obsoleted by python2-pip-8.1.2-5.el7.noarch which is already installed",
+      "parentUuid": "fafc7978_5b2bfa93",
+      "range": {
+        "startLine": 456,
+        "startChar": 32,
+        "endLine": 456,
+        "endChar": 65
+      },
+      "revId": "5b9f80a9ebc5d0872a833c7ca66fb2d0ec1eec24",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
