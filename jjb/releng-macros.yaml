@@ -90,6 +90,14 @@
           default: '/w/tools/hudson.tasks.Maven_MavenInstallation/{maven-version}/bin/mvn'
           description: 'Maven selector to be used by shell scripts'
 
+- parameter:
+    name: pom
+    parameters:
+      - string:
+          name: POM
+          default: '{pom}'
+          description: 'POM to use for autorelease build'
+
 - scm:
     name: git-scm
     scm:
