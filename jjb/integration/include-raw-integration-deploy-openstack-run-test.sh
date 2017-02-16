@@ -47,13 +47,28 @@ cat >> ${local_conf_file_name} << EOF
 enable_service ${service_name}
 EOF
 done
+for plugin_name in ${ENABLE_OS_PLUGINS}
+do
+if [ "$plugin_name" == "networking-odl" ]; then
+    ENABLE_PLUGIN_ARGS="${ODL_ML2_DRIVER_REPO} ${ODL_ML2_BRANCH}"
+elif [ "$plugin_name" == "kuryr-kubernetes" ]; then
+    ENABLE_PLUGIN_ARGS="${DEVSTACK_KUBERNETES_PLUGIN_REPO} ${OPENSTACK_BRANCH}" # note: kuryr-kubernetes only exists since Ocata
+elif [ "$plugin_name" == "neutron-lbaas" ]; then
+    ENABLE_PLUGIN_ARGS="${DEVSTACK_LBAAS_PLUGIN_REPO} ${OPENSTACK_BRANCH}"
+else
+    echo "Error: Invalid plugin $plugin_name, unsupported"
+    continue
+fi
+cat >> ${local_conf_file_name} << EOF
+enable_plugin ${plugin_name} ${ENABLE_PLUGIN_ARGS}
+EOF
+done
 unset IFS
-
 cat >> ${local_conf_file_name} << EOF
 HOST_IP=$OPENSTACK_CONTROL_NODE_IP
 SERVICE_HOST=\$HOST_IP
 
-NEUTRON_CREATE_INITIAL_NETWORKS=False
+NEUTRON_CREATE_INITIAL_NETWORKS=${CREATE_INITIAL_NETWORKS}
 Q_PLUGIN=ml2
 Q_ML2_TENANT_NETWORK_TYPE=${TENANT_NETWORK_TYPE}
 Q_OVS_USE_VETH=True
@@ -72,14 +87,14 @@ SERVICE_TOKEN=service
 SERVICE_PASSWORD=admin
 ADMIN_PASSWORD=admin
 
-enable_plugin networking-odl ${ODL_ML2_DRIVER_REPO} ${ODL_ML2_BRANCH}
-
 ODL_PORT=8080
 ODL_MODE=externalodl
+ODL_PORT_BINDING_CONTROLLER=${ODL_ML2_PORT_BINDING}
+
 LIBVIRT_TYPE=qemu
 
+NEUTRON_LBAAS_SERVICE_PROVIDERV2=${LBAAS_SERVICE_PROVIDER} # Only relevant if neutron-lbaas plugin is enabled
 EOF
-
 
 if [ "${ODL_ML2_DRIVER_VERSION}" == "v2" ]; then
     echo "ODL_V2DRIVER=True" >> ${local_conf_file_name}
@@ -131,8 +146,8 @@ fi
 if [ "${ODL_ENABLE_L3_FWD}" == "yes" ]; then
 cat >> ${local_conf_file_name} << EOF
 PUBLIC_BRIDGE=${PUBLIC_BRIDGE}
-PUBLIC_PHYSICAL_NETWORK=physnet1 # FIXME this should be a parameter
-ML2_VLAN_RANGES=physnet1
+PUBLIC_PHYSICAL_NETWORK=${PUBLIC_PHYSICAL_NETWORK}
+ML2_VLAN_RANGES=${PUBLIC_PHYSICAL_NETWORK}
 ODL_PROVIDER_MAPPINGS=${ODL_PROVIDER_MAPPINGS}
 
 disable_service q-l3
@@ -160,7 +175,7 @@ minimize_polling=True
 [ml2]
 # Needed for VLAN provider tests - because our provider networks are always encapsulated in VXLAN (br-physnet1)
 # MTU(1440) + VXLAN(50) + VLAN(4) = 1494 < MTU eth0/br-phynset1(1500)
-physical_network_mtus = physnet1:1440
+physical_network_mtus = ${PUBLIC_PHYSICAL_NETWORK}:1440
 
 [[post-config|/etc/neutron/dhcp_agent.ini]]
 [DEFAULT]
@@ -217,10 +232,16 @@ SERVICE_TOKEN=service
 SERVICE_PASSWORD=admin
 ADMIN_PASSWORD=admin
 
-enable_plugin networking-odl ${ODL_ML2_DRIVER_REPO} ${ODL_ML2_BRANCH}
 ODL_MODE=compute
+ODL_PORT_BINDING_CONTROLLER=${ODL_ML2_PORT_BINDING}
 LIBVIRT_TYPE=qemu
 EOF
+
+if [[ "${ENABLE_OS_PLUGINS}" =~ networking-odl ]]; then
+cat >> ${local_conf_file_name} << EOF
+enable_plugin networking-odl ${ODL_ML2_DRIVER_REPO} ${ODL_ML2_BRANCH}
+EOF
+fi
 
 if [ "${NUM_ODL_SYSTEM}" -gt 1 ]; then
 odl_list=${ODL_SYSTEM_1_IP}
@@ -263,7 +284,7 @@ Q_L3_ENABLED=True
 ODL_L3=${ODL_L3}
 PUBLIC_INTERFACE=br100 # FIXME do we use br100 at all?
 PUBLIC_BRIDGE=${PUBLIC_BRIDGE}
-PUBLIC_PHYSICAL_NETWORK=physnet1 # FIXME this should be a parameter
+PUBLIC_PHYSICAL_NETWORK=${PUBLIC_PHYSICAL_NETWORK}
 ODL_PROVIDER_MAPPINGS=${ODL_PROVIDER_MAPPINGS}
 EOF
 fi

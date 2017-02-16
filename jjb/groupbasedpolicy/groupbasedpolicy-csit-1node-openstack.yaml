@@ -36,10 +36,12 @@
             openstack-branch: 'stable/mitaka'
             odl-ml2-branch: 'stable/mitaka'
             odl-ml2-driver-version: 'v1'
+            odl-ml2-port-binding: 'network-topology'
         - liberty:
             openstack-branch: 'stable/liberty'
             odl-ml2-branch: 'stable/liberty'
             odl-ml2-driver-version: 'v1'
+            odl-ml2-port-binding: 'network-topology'
 
     schedule: 'H H * * *'
 
@@ -49,6 +51,10 @@
 
     public-physical-network: 'physnet1'
 
+    create-initial-networks: 'False'
+
+    enable-openstack-plugins: 'networking-odl'
+
     enable-openstack-services: 'q-svc,q-dhcp,q-meta,n-cauth,tempest'
 
     disable-openstack-services: 'swift,cinder,n-net,q-vpn,n-cpu'
@@ -56,5 +62,7 @@
     tenant-network-type: 'vxlan'
 
     security-group-mode: 'none'
+
+    lbaas-service-provider: ''
 
     robot-options: ''
