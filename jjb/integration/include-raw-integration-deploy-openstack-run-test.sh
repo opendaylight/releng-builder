@@ -453,6 +453,7 @@ scp ${WORKSPACE}/local.conf_control ${OPENSTACK_CONTROL_NODE_IP}:/opt/stack/devs
 
 if [ "${ODL_ML2_BRANCH}" == "stable/mitaka" ]; then
 ssh ${OPENSTACK_CONTROL_NODE_IP} "cd /opt/stack; git clone https://git.openstack.org/openstack/requirements; cd requirements; git checkout stable/mitaka; sed -i /openstacksdk/d upper-constraints.txt; sed -i /libvirt-python/d upper-constraints.txt"
+ssh ${OPENSTACK_CONTROL_NODE_IP} "sudo pip install deprecation"
 ssh ${OPENSTACK_CONTROL_NODE_IP} "cd /opt/stack; git clone https://github.com/openstack/python-openstacksdk; cd python-openstacksdk; sudo python setup.py install"
 fi
 
