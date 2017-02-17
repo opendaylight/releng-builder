@@ -24,7 +24,9 @@ git clone https://git.opendaylight.org/gerrit/p/integration/test.git
 cd test/tools/distchanges
 mkdir -p $WORKSPACE/archives
 
-python distcompare.py -r ssh://jenkins-$SILO@git.opendaylight.org:29418 | tee $WORKSPACE/archives/dist_diff.txt
-# TODO: the output of the above command is not *friendly* for the reader because the most important info
-# is listed last. This is fine/best for command line output, but for keeping in a file it would be better
-# to put the summary at the beginning of the file. Some bash magic can be done here to make that happen.
+# Full output of compare tool will be in temp file /tmp/dist_diff.txt
+# The file/report to be archived will only list the distribution in the comparison and the patches that
+# are different.
+python distcompare.py -r ssh://jenkins-$SILO@git.opendaylight.org:29418 | tee /tmp/dist_diff.txt
+echo -e "Patch differences listed are in comparison to:\n\t$ACTUALBUNDLEURL\n\n" > $WORKSPACE/archives/distribution_differences.txt
+sed -ne '/Patch differences/,$ p' /tmp/dist_diff.txt >> $WORKSPACE/archives/distribution_differences.txt
