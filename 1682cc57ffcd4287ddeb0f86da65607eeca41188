@@ -46,6 +46,30 @@
       "revId": "1682cc57ffcd4287ddeb0f86da65607eeca41188",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_281fbf09",
+        "filename": "openstack-hot/generic-server.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2017-02-18T02:29:26Z",
+      "side": 1,
+      "message": "ok, I understand. just for reference, this user_data script\nis running in the background and our ssh key copy job will\nbe attempting to copy keys around this time. So, while this\nuser_data script spins on the ping -c1 and maybe never \nsucceeding (e.g. network error) the ssh key copy would \neventually fail like we do currently. But, in the good case,\nthis ping will eventually succeed and we can then do the\ngit clone and finally the ssh key copy script would work.",
+      "parentUuid": "fafc7978_e8293738",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 132
+      },
+      "revId": "1682cc57ffcd4287ddeb0f86da65607eeca41188",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
