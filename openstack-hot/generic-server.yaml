@@ -51,6 +51,7 @@ resources:
             key_name: { get_param: ssh_key }
             user_data: |
                 #!/bin/bash
+                until ping -c1 git.opendaylight.org &>/dev/null; do echo "Waiting until git.opendaylight.org is resolvable..."; done
                 git clone https://git.opendaylight.org/gerrit/releng/builder /builder
                 /builder/jenkins-scripts/jenkins-init-script.sh
 
