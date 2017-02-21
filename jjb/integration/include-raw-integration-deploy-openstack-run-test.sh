@@ -565,6 +565,7 @@ done
 ${SSH} ${OPENSTACK_CONTROL_NODE_IP} "sudo pip install --upgrade pip"
 ${SSH} ${OPENSTACK_CONTROL_NODE_IP} "sudo pip install urllib3 --upgrade"
 ${SSH} ${OPENSTACK_CONTROL_NODE_IP} "sudo pip install httplib2 --upgrade"
+${SSH} ${OPENSTACK_CONTROL_NODE_IP} "sudo pip install pycrypto==2.6"
 
 for i in `seq 1 $((NUM_OPENSTACK_SYSTEM - 1))`
 do
