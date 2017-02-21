@@ -451,10 +451,19 @@ ${SSH} ${OPENSTACK_CONTROL_NODE_IP} "bash /tmp/get_devstack.sh"
 create_control_node_local_conf
 scp ${WORKSPACE}/local.conf_control ${OPENSTACK_CONTROL_NODE_IP}:/opt/stack/devstack/local.conf
 
+
+# Workworund for successful stacking with  Mitaka
 if [ "${ODL_ML2_BRANCH}" == "stable/mitaka" ]; then
-ssh ${OPENSTACK_CONTROL_NODE_IP} "cd /opt/stack; git clone https://git.openstack.org/openstack/requirements; cd requirements; git checkout stable/mitaka; sed -i /openstacksdk/d upper-constraints.txt; sed -i /libvirt-python/d upper-constraints.txt"
-ssh ${OPENSTACK_CONTROL_NODE_IP} "sudo pip install deprecation"
-ssh ${OPENSTACK_CONTROL_NODE_IP} "cd /opt/stack; git clone https://github.com/openstack/python-openstacksdk; cd python-openstacksdk; sudo python setup.py install"
+
+  # Workaround for problems with latest versions/specified versions in requirements of openstack
+  # Openstacksdk,libvirt-python -> the current version does not work with  Mitaka diue to some requirements
+  # conflict and breaks when trying to stack
+  # paramiko -> Problems with tempest tests due to paramiko incompatibility with pycrypto.
+  # the problem has been solved with  version 1.17. If the latest version of paramiko is used, it causes
+  # other timeout problems 
+  ssh ${OPENSTACK_CONTROL_NODE_IP} "cd /opt/stack; git clone https://git.openstack.org/openstack/requirements; cd requirements; git checkout stable/mitaka; sed -i /openstacksdk/d upper-constraints.txt; sed -i /libvirt-python/d upper-constraints.txt; sed -i s/paramiko===1.16/paramiko===1.17/g upper-constraints.txt"
+  ssh ${OPENSTACK_CONTROL_NODE_IP} "sudo pip install deprecation"
+  ssh ${OPENSTACK_CONTROL_NODE_IP} "cd /opt/stack; git clone https://github.com/openstack/python-openstacksdk; cd python-openstacksdk; sudo python setup.py install"
 fi
 
 ssh ${OPENSTACK_CONTROL_NODE_IP} "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
@@ -565,7 +574,6 @@ done
 ${SSH} ${OPENSTACK_CONTROL_NODE_IP} "sudo pip install --upgrade pip"
 ${SSH} ${OPENSTACK_CONTROL_NODE_IP} "sudo pip install urllib3 --upgrade"
 ${SSH} ${OPENSTACK_CONTROL_NODE_IP} "sudo pip install httplib2 --upgrade"
-${SSH} ${OPENSTACK_CONTROL_NODE_IP} "sudo pip install pycrypto==2.6"
 
 for i in `seq 1 $((NUM_OPENSTACK_SYSTEM - 1))`
 do
