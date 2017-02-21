@@ -50,6 +50,10 @@ EOF
     echo "---> Updating operating system"
     yum clean all
     yum install -y deltarpm
+
+    # Workaround for kernel panic issue that appears sometimes after kernel update
+    #     https://www.centos.org/forums/viewtopic.php?t=22425
+    yum remove -y kernel
     yum update -y
 
     # add in components we need or want on systems
