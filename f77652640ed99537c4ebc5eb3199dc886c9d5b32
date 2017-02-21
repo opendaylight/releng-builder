@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fafc7978_2e1fbc5c",
+        "filename": "packer/provision/baseline.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2017-02-21T20:38:10Z",
+      "side": 1,
+      "message": "Removing the kernel is not a recommended practice unless you have multiple versions of the kernel installed. It might be better to yum downgrade to the specific version of the kernel. \n\nWe are hitting the kernel panic only on images where the  packer build are shows a mkinitrd errors, caused by bad mirrors.",
+      "range": {
+        "startLine": 56,
+        "startChar": 3,
+        "endLine": 56,
+        "endChar": 24
+      },
+      "revId": "f77652640ed99537c4ebc5eb3199dc886c9d5b32",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
