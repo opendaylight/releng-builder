@@ -28,7 +28,7 @@ wget -O $CONSOLE_LOG ${BUILD_URL}consoleText
 
 # get the failed project or artifactid
 TEMP=`awk '/Reactor Summary:/{flag=1;next} \
-           /Final Memory:/{flag=0}flag' $CONSOLE_LOGS \
+           /Final Memory:/{flag=0}flag' $CONSOLE_LOG \
            | grep '. FAILURE \[' | awk -F'[].]' '{gsub(/ /, "", $2); print $2 }'`
 
 # check for project format
