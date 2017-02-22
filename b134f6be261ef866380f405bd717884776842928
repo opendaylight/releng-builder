@@ -22,6 +22,30 @@
       "revId": "b134f6be261ef866380f405bd717884776842928",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_6471e075",
+        "filename": "jjb/autorelease/include-raw-autorelease-notify-build-failure.sh",
+        "patchSetId": 9
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-02-22T17:19:09Z",
+      "side": 1,
+      "message": "These aren\u0027t patterns per se. The 2nd format is the currently existing format that we want to move away from (it\u0027s the default maven format that only prints artifact id).\n\nWe want to move to the 1st format because it provides all the details we need. $PROJECT is actually $PROJECT_SHORTNAME already. We just have the extra ODL bit to allow us to differentiate non-odl artifacts which some projects have from 3rd parties.",
+      "parentUuid": "fafc7978_b9e2d52c",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 5
+      },
+      "revId": "b134f6be261ef866380f405bd717884776842928",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
