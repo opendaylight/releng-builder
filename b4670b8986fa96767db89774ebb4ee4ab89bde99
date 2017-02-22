@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_73124c58",
+        "filename": "jjb/autorelease/autorelease-macros.yaml",
+        "patchSetId": 8
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2017-02-22T09:17:48Z",
+      "side": 1,
+      "message": "Confirmed through testing!\n \n!include-raw-escape: escapes or replaces any `{_}` with \u0027{{_}}\u0027 even if they are used around shell variables and no parameters are passed into the job. \n!include-raw: its the developer responsibility to handle escapes. If no params are passed from the job, there is nothing to escape.\n\nSince we are not passing any params we should use `!include-raw` here or all the shell vars get replaced with extra pair of braces failing the job. I will make the change to the scripts!",
+      "parentUuid": "fafc7978_330919de",
+      "range": {
+        "startLine": 148,
+        "startChar": 13,
+        "endLine": 148,
+        "endChar": 24
+      },
+      "revId": "b4670b8986fa96767db89774ebb4ee4ab89bde99",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_13e8550f",
         "filename": "jjb/autorelease/autorelease-macros.yaml",
         "patchSetId": 8
@@ -88,6 +112,30 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_3380c445",
+        "filename": "jjb/autorelease/include-raw-autorelease-notify-build-failure.sh",
+        "patchSetId": 8
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2017-02-22T09:17:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fafc7978_f3e2f12d",
+      "range": {
+        "startLine": 42,
+        "startChar": 3,
+        "endLine": 42,
+        "endChar": 18
+      },
+      "revId": "b4670b8986fa96767db89774ebb4ee4ab89bde99",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_d3724d7b",
         "filename": "jjb/autorelease/include-raw-autorelease-notify-build-failure.sh",
         "patchSetId": 8
@@ -99,6 +147,30 @@
       "writtenOn": "2017-02-09T16:42:57Z",
       "side": 1,
       "message": "I\u0027d prefer not to call things \"new\" and \"old\" in docs. I\u0027ve seen far too many cases where something\u0027s been \"new\" for decades :)\n\nAlso we can save 2 lines by writing it this way:\n\n 1. Full format:    ODL :: $PROJECT :: $ARTIFACTID\n 2. Partial format: Building $ARTIFACTID",
+      "range": {
+        "startLine": 57,
+        "startChar": 4,
+        "endLine": 60,
+        "endChar": 31
+      },
+      "revId": "b4670b8986fa96767db89774ebb4ee4ab89bde99",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_6ece16b6",
+        "filename": "jjb/autorelease/include-raw-autorelease-notify-build-failure.sh",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2017-02-22T09:17:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fafc7978_d3724d7b",
       "range": {
         "startLine": 57,
         "startChar": 4,
@@ -157,6 +229,30 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_f3891c76",
+        "filename": "jjb/autorelease/include-raw-autorelease-notify-build-failure.sh",
+        "patchSetId": 8
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2017-02-22T09:17:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fafc7978_f36791b5",
+      "range": {
+        "startLine": 61,
+        "startChar": 45,
+        "endLine": 61,
+        "endChar": 65
+      },
+      "revId": "b4670b8986fa96767db89774ebb4ee4ab89bde99",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_535f7de5",
         "filename": "jjb/autorelease/include-raw-autorelease-notify-build-failure.sh",
         "patchSetId": 8
@@ -168,6 +264,24 @@
       "writtenOn": "2017-02-09T16:42:57Z",
       "side": 1,
       "message": "If we only have ARTIFACTID then we should send email to only the RELEASE_LIST. However if we have a PROJECT then we should send email to both the RELEASE and the PROJECT-dev mailing list.",
+      "revId": "b4670b8986fa96767db89774ebb4ee4ab89bde99",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_ce4bc229",
+        "filename": "jjb/autorelease/include-raw-autorelease-notify-build-failure.sh",
+        "patchSetId": 8
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2017-02-22T09:17:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fafc7978_535f7de5",
       "revId": "b4670b8986fa96767db89774ebb4ee4ab89bde99",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
