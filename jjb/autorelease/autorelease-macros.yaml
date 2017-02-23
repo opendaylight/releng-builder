@@ -139,10 +139,14 @@
         - shell: |
             ./scripts/fix-relativepaths.sh
 
-- builder:
+- publisher:
     # include-raw-autorelease-notify-build-failure.sh searches console log for
     # failures and emails the status to the release mailing list.
     name: opendaylight-infra-notify-status
-    builders:
-        - shell:
-            !include-raw: include-raw-autorelease-notify-build-failure.sh
+    publishers:
+      - postbuildscript:
+          builders:
+              - shell:
+                  !include-raw: include-raw-autorelease-notify-build-failure.sh
+          script-only-if-succeeded: False
+          script-only-if-failed: True

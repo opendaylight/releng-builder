@@ -88,7 +88,6 @@
             global-settings: 'odl-global-settings'
         - autorelease-maven-sources-post-process
         - autorelease-sys-stats
-        - opendaylight-infra-notify-status
         - shell: |
             mkdir -p archives/
             cp *.log *.prop $_
@@ -114,6 +113,8 @@
               fail-on-missing: true
         - opendaylight-infra-shiplogs:
             maven-version: 'mvn33'
+        - opendaylight-infra-notify-status
+
 
 - job-template:
     name: 'autorelease-project-report-{stream}'
