@@ -27,19 +27,28 @@ $BUILD_URL"
 # get console logs
 wget -O $CONSOLE_LOG ${BUILD_URL}consoleText
 
-# get the failed project or artifactid
-TEMP=`awk '/Reactor Summary:/{flag=1;next} \
-           /Final Memory:/{flag=0}flag' $CONSOLE_LOG \
-           | grep '. FAILURE \[' | awk -F'[].]' '{gsub(/ /, "", $2); print $2 }'`
+# extract the failing project or artifactid
+TEMP=`awk '/Reactor Summary:/ { flag=1 }
+          flag {
+             if ( sub(/^\[(INFO)\]/,"") && sub(/FAILURE \[.*/,"") ) {
+                 gsub(/[[:space:]]*::[[:space:]]*/,"::")
+                 gsub(/^[[:space:]]+|[[:space:]]+$|[.]/,"")
+                 print
+             }
+          }
+          /Final Memory:/ { flag=0 }' $CONSOLE_LOG`
 
 # check for project format
 if [[ ${TEMP} =~ .*::*.*::*. ]]; then
     # extract project and artifactid from full format
-	  PROJECT=`echo ${TEMP} | awk -F'::' '{ print $2 }'`
-	  ARTIFACTID=`echo ${TEMP} |awk -F'::' '{ print $3 }'`
+    ODL=`echo ${TEMP} | awk -F'::' '{ gsub(/^[ \t]+|[ \t]+$/, "", $1); print $1 }'`
+    PROJECT=`echo ${TEMP} | awk -F'::' '{ gsub(/^[ \t]+|[ \t]+$/, "", $2); print $2 }'`
+    ARTIFACTID=`echo ${TEMP} | awk -F'::' '{ gsub(/^[ \t]+|[ \t]+$/, "", $3); print $3 }'`
 else
-	  # set ARTIFACTID to partial format
-	  ARTIFACTID=${TEMP}
+    # set ARTIFACTID to partial format
+    ODL=""
+    PROJECT=""
+    ARTIFACTID=`echo ${TEMP} | awk '{ gsub(/^[ \t]+|[ \t]+$/, ""); print }'`
 fi
 
 # check if remote staging is complete successfully
@@ -51,8 +60,8 @@ if [ ! -z "${ARTIFACTID}" ] && [[ "${BUILD_STATUS}" != "SUCCESS" ]]; then
     # project search pattern should handle both scenarios
     # 1. Full format:    ODL :: $PROJECT :: $ARTIFACTID
     # 2. Partial format: Building $ARTIFACTID
-    awk "/\[INFO\] Building ${ARTIFACTID} / || /ODL :: ${PROJECT} :: ${ARTIFACTID} /{flag=1;next} \
-          /Reactor Summary:/{flag=0}flag" $CONSOLE_LOG > /tmp/error_msg
+    sed -e "/\[INFO\] Building \(${ARTIFACTID} \|${ODL} :: ${PROJECT} :: ${ARTIFACTID} \)/,/Reactor Summary:/!d;//d" \
+          $CONSOLE_LOG > /tmp/error_msg
 
     if [ -z "${PROJECT}" ]; then
         PROJECT=${ARTIFACTID}
@@ -62,7 +71,7 @@ if [ ! -z "${ARTIFACTID}" ] && [[ "${BUILD_STATUS}" != "SUCCESS" ]]; then
 
     SUBJECT="[release] Autorelease ${STREAM} build failure: ${PROJECT}"
 
-    echo "${BODY}" | mail -A /tmp/error_msg -s "${SUBJECT}" "${RELEASE_EMAIL}"
+    echo "${BODY}" | mail -a /tmp/error_msg -s "${SUBJECT}" "${RELEASE_EMAIL}"
 fi
 
 rm $CONSOLE_LOG
