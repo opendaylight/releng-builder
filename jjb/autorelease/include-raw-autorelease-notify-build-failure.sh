@@ -13,6 +13,7 @@
 RELEASE_EMAIL="abelur@linuxfoundation.org, thanh.ha@linuxfoundation.org"
 ARCHIVES_DIR="$JENKINS_HOSTNAME/$JOB_NAME/$BUILD_NUMBER"
 CONSOLE_LOG="/tmp/autorelease-build.log"
+STREAM=${JOB_NAME#*-*e-}
 
 BODY="Please refer to the logs server URL for console logs when possible
 and use the Jenkins Build URL as a last resort.
@@ -28,7 +29,7 @@ wget -O $CONSOLE_LOG ${BUILD_URL}consoleText
 
 # get the failed project or artifactid
 TEMP=`awk '/Reactor Summary:/{flag=1;next} \
-           /Final Memory:/{flag=0}flag' $CONSOLE_LOGS \
+           /Final Memory:/{flag=0}flag' $CONSOLE_LOG \
            | grep '. FAILURE \[' | awk -F'[].]' '{gsub(/ /, "", $2); print $2 }'`
 
 # check for project format
@@ -59,7 +60,7 @@ if [ ! -z "${ARTIFACTID}" ] && [[ "${BUILD_STATUS}" != "SUCCESS" ]]; then
         # RELEASE_EMAIL = "${RELEASE_EMAIL}, ${PROJECT}-dev@opendaylight.org"
     fi
 
-    SUBJECT="[release] Autorelease build failure: ${PROJECT}"
+    SUBJECT="[release] Autorelease ${STREAM} build failure: ${PROJECT}"
 
     echo "${BODY}" | mail -A /tmp/error_msg -s "${SUBJECT}" "${RELEASE_EMAIL}"
 fi
