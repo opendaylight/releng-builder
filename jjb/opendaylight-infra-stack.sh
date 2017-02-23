@@ -19,7 +19,7 @@ openstack --os-cloud rackspace limits show --absolute
 openstack --os-cloud rackspace limits show --rate
 echo "Trying up to $STACK_RETRIES times to create $STACK_NAME."
 for try in `seq $STACK_RETRIES`; do
-    openstack --os-cloud rackspace stack create --timeout $OS_TIMEOUT -t csit-2-instance-type.yaml -e $WORKSPACE/opendaylight-infra-environment.yaml --parameter "job_name=$VM_NAME" --parameter "silo=$SILO" $STACK_NAME
+    openstack --os-cloud rackspace stack create --timeout $OS_TIMEOUT -t csit-3-instance-type.yaml -e $WORKSPACE/opendaylight-infra-environment.yaml --parameter "job_name=$VM_NAME" --parameter "silo=$SILO" $STACK_NAME
     openstack --os-cloud rackspace stack list
     echo "Waiting for $OS_TIMEOUT minutes to create $STACK_NAME."
     for i in `seq $OS_TIMEOUT`; do
