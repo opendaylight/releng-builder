@@ -21,7 +21,7 @@ SSH="ssh -t -t"
 function create_control_node_local_conf {
 local_conf_file_name=${WORKSPACE}/local.conf_control
 #Needs to be removed
-if [ "${ODL_ML2_BRANCH}" == "stable/mitaka" ]; then
+if [ "${ODL_ML2_BRANCH}" != "stable/ocata" ]; then
    RECLONE=no
 else
    RECLONE=yes
@@ -191,7 +191,7 @@ cat ${local_conf_file_name}
 function create_compute_node_local_conf {
 HOSTIP=$1
 #Needs to be removed
-if [ "${ODL_ML2_BRANCH}" == "stable/mitaka" ]; then
+if [ "${ODL_ML2_BRANCH}" != "stable/ocata" ]; then
    RECLONE=no
 else
    RECLONE=yes
@@ -482,6 +482,11 @@ ssh ${OPENSTACK_CONTROL_NODE_IP} "cd /opt/stack/devstack; nohup ./stack.sh > /op
 ssh ${OPENSTACK_CONTROL_NODE_IP} "ps -ef | grep stack.sh"
 ssh ${OPENSTACK_CONTROL_NODE_IP} "ls -lrt /opt/stack/devstack/nohup.out"
 os_node_list+=(${OPENSTACK_CONTROL_NODE_IP})
+
+#Workaround for stable/newton jobs
+if [ "${ODL_ML2_BRANCH}" == "stable/newton" ]; then
+  ssh ${OPENSTACK_CONTROL_NODE_IP} "cd /opt/stack; git clone https://git.openstack.org/openstack/requirements; cd requirements; git checkout stable/newton; sed -i /appdirs/d upper-constraints.txt"
+fi
 
 
 for i in `seq 1 $((NUM_OPENSTACK_SYSTEM - 1))`
