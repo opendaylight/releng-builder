@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_5cc90cab",
+        "filename": "jjb/packaging/include-raw-test-ansible-deb.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2017-02-24T18:39:19Z",
+      "side": 1,
+      "message": "Humm, I haven\u0027t seen this before.\n\nThis seems to happen when there isn\u0027t an /etc/ansible/hosts, which would be true in our case I guess.\n\nhttps://github.com/ansible/ansible/issues/6442\n\nI guess we need to pass an inventory of the hosts we care about (localhost?) to Ansible via an inventory file to -i (or directly to -i, skipping file?).\n\nhttp://docs.ansible.com/ansible/intro_inventory.html\n\nhttps://groups.google.com/forum/#!msg/ansible-project/G_9JRGp5jGE/PTBZdgDb5OEJ",
+      "parentUuid": "fafc7978_eb8e3878",
+      "revId": "961a5dd08eecd82b4c622702781a08357d3b906e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_5ed5cfb7",
         "filename": "jjb/packaging/packaging.yaml",
         "patchSetId": 1
