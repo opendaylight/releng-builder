@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_de21714e",
+        "filename": "jjb/packaging/include-raw-test-ansible-deb.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 6047
+      },
+      "writtenOn": "2017-02-25T15:18:23Z",
+      "side": 1,
+      "message": "As you said, there are two methods - adding a hosts file or using -i. We can add a `hosts` file in ansible-opendaylight with the content:\n\n  [base]\n  localhost ansible_connection\u003dlocal\n\nand execute:\n\n  $ sudo ansible-playbook -i hosts examples/odl_4_testing_playbook.yml\n\nor directly pass the localhost:\n\n  $ sudo ansible-playbook -i \"localhost,\" -c local examples/odl_4_testing_playbook.yml\n\nI tested for the latter. Which do you prefer?\n\nThe jenkins job `packaging-test-ansible-rpm-master` is successful (https://jenkins.opendaylight.org/sandbox/job/packaging-test-ansible-rpm-master/1/console). \n\nHowever, for `packaging-test-ansible-deb-master`, one of the tasks fails:\n\n\n  TASK [opendaylight : Open ODL NB REST port via FirewallD]\n  fatal: [localhost]: FAILED! \u003d\u003e {\"failed\": true, \"msg\": \"The conditional check \u0027in_container.rc \u003d\u003d 1 and firewalld_status.stdout \u003d\u003d \u0027active\u0027\u0027 failed. The error was: error while evaluating conditional (in_container.rc \u003d\u003d 1 and firewalld_status.stdout \u003d\u003d \u0027active\u0027): \u0027dict object\u0027 has no attribute \u0027stdout\u0027\\n\\nThe error appears to have been in \u0027/etc/ansible/roles/opendaylight/tasks/open_nb_rest_port.yml\u0027: line 11, column 3, but may\\nbe elsewhere in the file depending on the exact syntax problem.\\n\\nThe offending line appears to be:\\n\\n\\n- name: Open ODL NB REST port via FirewallD\\n  ^ here\\n\"}\n  to retry, use: --limit @/w/workspace/packaging-test-ansible-deb-master/ansible-opendaylight/examples/deb_repo_install_playbook.retry\n\nThis is similar to https://github.com/ansible/ansible/issues/21233.\n\nI see no error in my Ubuntu xenial 64 VM:\n\n  $ ansible --version\n  ansible 2.2.1.0\n    config file \u003d /etc/ansible/ansible.cfg\n    configured module search path \u003d Default w/o overrides",
+      "parentUuid": "fafc7978_5cc90cab",
+      "revId": "961a5dd08eecd82b4c622702781a08357d3b906e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_7cafb02a",
         "filename": "jjb/packaging/include-raw-test-ansible-rpm.sh",
         "patchSetId": 1
@@ -238,6 +256,47 @@
       "writtenOn": "2017-02-25T03:40:51Z",
       "side": 1,
       "message": "same comment, but you could have a single template with variable distro for rpm or deb choices.",
+      "revId": "961a5dd08eecd82b4c622702781a08357d3b906e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_be1e2d0a",
+        "filename": "jjb/packaging/packaging.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 6047
+      },
+      "writtenOn": "2017-02-25T15:18:23Z",
+      "side": 1,
+      "message": "We can have a single job template, say `\u0027packaging-test-ansible-deb-{stream}` that uses a script say `include-raw-test-ansible.sh` which checks the OS and uses either `apt-get` or `yum`.\n\nhttps://jenkins.opendaylight.org/sandbox/job/packaging-test-ansible-master/",
+      "parentUuid": "fafc7978_dca85c22",
+      "revId": "961a5dd08eecd82b4c622702781a08357d3b906e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_fe1435ea",
+        "filename": "jjb/packaging/packaging.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 6047
+      },
+      "writtenOn": "2017-02-25T15:18:23Z",
+      "side": 1,
+      "message": "Is it possible to run a single job on two nodes (in this case: `ubuntu-trusty-mininet-2c-2g` and `centos7-java-builder-2c-4g`)?\n\nI went through the documentation: https://docs.openstack.org/infra/jenkins-job-builder/definition.html?highlight\u003dnode#job\nand it seems that we can have multiple nodes but it\u0027s an \u0027or\u0027:\n\n  node: centos7-java-builder-2c-4g || ubuntu-trusty-mininet-2c-2g\n\nI guess we want \u0027\u0026\u0026\u0027. How can we do this?",
+      "range": {
+        "startLine": 324,
+        "startChar": 4,
+        "endLine": 324,
+        "endChar": 37
+      },
       "revId": "961a5dd08eecd82b4c622702781a08357d3b906e",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
