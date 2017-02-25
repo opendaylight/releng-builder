@@ -91,6 +91,23 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_7cafb02a",
+        "filename": "jjb/packaging/include-raw-test-ansible-rpm.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2017-02-25T03:40:51Z",
+      "side": 1,
+      "message": "what is the convention for deb vs rpm scripts - make comparable scripts or try to use the same for both distros? These two files are exactly the same except yum or apt-get.",
+      "revId": "961a5dd08eecd82b4c622702781a08357d3b906e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_5ed5cfb7",
         "filename": "jjb/packaging/packaging.yaml",
         "patchSetId": 1
@@ -204,6 +221,23 @@
         "endLine": 206,
         "endChar": 24
       },
+      "revId": "961a5dd08eecd82b4c622702781a08357d3b906e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_dca85c22",
+        "filename": "jjb/packaging/packaging.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2017-02-25T03:40:51Z",
+      "side": 1,
+      "message": "same comment, but you could have a single template with variable distro for rpm or deb choices.",
       "revId": "961a5dd08eecd82b4c622702781a08357d3b906e",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
