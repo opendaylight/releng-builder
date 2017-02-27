@@ -481,6 +481,13 @@ cd devstack
 git checkout $OPENSTACK_BRANCH
 EOF
 
+cat > "${WORKSPACE}/setup_host_cell_mapping.sh" << EOF
+sudo nova-manage cell_v2 map_cell0
+sudo nova-manage cell_v2 simple_cell_setup
+sudo nova-manage db sync
+sudo nova-manage cell_v2 discover_hosts
+EOF
+
 [ "$NUM_OPENSTACK_SITES" ] || NUM_OPENSTACK_SITES=1
 compute_index=1
 odl_index=1
@@ -632,6 +639,14 @@ do
         echo "Error: Only $num_hypervisors hypervisors detected, expected $expected_num_hypervisors"
         collect_logs_and_exit
         exit 1
+    fi
+
+    # For Ocata, if we do not enable the n-cpu in control node
+    # We need to discover hosts manually and ensure that they are mapped to cells.
+    # reference: https://ask.openstack.org/en/question/102256/how-to-configure-placement-service-for-compute-node-on-ocata/
+    if [ "${OPENSTACK_BRANCH}" == "stable/ocata" ]; then
+        scp ${WORKSPACE}/setup_host_cell_mapping.sh  ${!CONTROLIP}:/tmp
+        ${SSH} ${!CONTROLIP} "sudo bash /tmp/setup_host_cell_mapping.sh"
     fi
 
     # upgrading pip, urllib3 and httplib2 so that tempest tests can be run on openstack control node
