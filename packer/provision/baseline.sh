@@ -138,8 +138,22 @@ Dpkg::Options {
 EOF
 
     echo "---> Updating operating system"
+
+    # add additional repositories
+    sudo add-apt-repository "deb http://us.archive.ubuntu.com/ubuntu $(lsb_release -sc) main universe restricted multiverse"
+    sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu $(lsb_release -sc) main universe restricted multiverse"
+
     apt-get update
+    apt-get clean
     apt-get upgrade
+
+    # todo: added to debug "E: Unable to locate package" issue
+    # list of all available repositories.
+    apt-cache policy
+    # list the repositories the package is available
+    apt-cache policy git-review
+    apt-cache policy puppet
+    apt-cache policy libxml-xpath-perl
 
     # add in stuff we know we need
     echo "---> Installing base packages"
