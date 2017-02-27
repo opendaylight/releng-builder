@@ -1,0 +1,47 @@
+- project:
+    name: coe-csit-openstack-integration
+    jobs:
+        - '{project}-csit-{topology}-openstack-{openstack}-{functionality}-{stream}'
+
+    project: 'coe'
+
+    topology:
+        - 1node:
+            openstack_system_count: 3
+            odl_system_count: 1
+            enable-haproxy: 'no'
+            install-features: 'odl-netvirt-openstack'
+        - 3node:
+            openstack_system_count: 4
+            odl_system_count: 3
+            enable-haproxy: 'yes'
+            install-features: 'odl-jolokia,odl-netvirt-openstack'
+
+    testplan: '{project}-{topology}-openstack.txt'
+
+    functionality:
+        - kubernetes:
+            schedule: ''
+
+    stream:
+        - carbon:
+            branch: 'master'
+            jre: 'openjdk8'
+        - boron:
+            branch: 'stable/boron'
+            jre: 'openjdk8'
+
+    openstack:
+        - ocata:
+            openstack-branch: 'stable/ocata'
+            odl-ml2-branch: 'stable/ocata'
+            odl-ml2-driver-version: 'v2'
+            openstack_system_image: 'CentOS 7 - devstack-newton - 20170314-2256'
+
+    create-initial-networks: 'True'
+
+    enable-openstack-plugins: 'networking-odl,kuryr-kubernetes,neutron-lbaas'
+
+    enable-openstack-services: 'q-svc,q-dhcp,q-meta,q-lbaasv2,n-cauth,docker,etcd,kubernetes-api,kubernetes-controller-manager,kubernetes-scheduler,kubelet,kuryr-kubernetes,tempest'
+
+    lbaas-service-provider: 'LOADBALANCERV2:Haproxy:neutron_lbaas.drivers.haproxy.plugin_driver.HaproxyOnHostPluginDriver:default'
