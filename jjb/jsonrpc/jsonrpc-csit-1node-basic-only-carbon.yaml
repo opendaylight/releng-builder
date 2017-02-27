@@ -1,5 +1,5 @@
 - project:
-    name: jsonrpc-csit-basic
+    name: jsonrpc-csit-1node-basic-only-carbon
     jobs:
         - '{project}-csit-1node-{functionality}-{install}-{stream}'
 
@@ -24,7 +24,7 @@
     tools_system_count: 0
 
     # Features to install
-    install-features: 'odl-mdsal-apidocs,odl-jsonrpc'
+    install-features: 'odl-jsonrpc'
 
     # Robot custom options
     robot-options: ''
