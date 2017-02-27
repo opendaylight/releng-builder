@@ -16,6 +16,24 @@
       "revId": "d25e96b692100d3b98e9ee869b5061f4d01d693e",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_45280586",
+        "filename": "packer/provision/baseline.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2017-02-27T21:04:03Z",
+      "side": 1,
+      "message": "Isn\u0027t there already a 127.0.0.1 line typically in a hosts file and an ipv6 line such that simply appending the line isn\u0027t perfect? What you really want to do is find and existing 127.0.0.1 line and add your hostname to it.\n\nWould you want something more like: sed -n \"/127.0.0.1/s/$/ `hostname`/p\" /etc/hosts\n\nFind 127.0.0.1 line and append hostname to it.\n\n127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4\n::1         localhost localhost.localdomain localhost6 localhost6.localdomain6",
+      "parentUuid": "fafc7978_78c97525",
+      "revId": "d25e96b692100d3b98e9ee869b5061f4d01d693e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
