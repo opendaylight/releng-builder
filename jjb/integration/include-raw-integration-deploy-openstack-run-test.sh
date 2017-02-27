@@ -549,6 +549,11 @@ if [ "${ODL_ML2_BRANCH}" == "stable/newton" ]; then
   ssh ${OPENSTACK_CONTROL_NODE_IP} "cd /opt/stack; git clone https://git.openstack.org/openstack/requirements; cd requirements; git checkout stable/newton; sed -i /appdirs/d upper-constraints.txt"
 fi
 
+#Workaround for stable/ocata jobs
+if [ "${ODL_ML2_BRANCH}" == "stable/ocata" ]; then
+  ssh ${OPENSTACK_CONTROL_NODE_IP} "cd /opt/stack; git clone https://git.openstack.org/openstack/requirements; cd requirements; git checkout stable/ocata; sed -i /pyparsing/d upper-constraints.txt"
+fi
+
 for i in `seq 1 $((NUM_OPENSTACK_SYSTEM - 1))`
 do
     COMPUTEIP=OPENSTACK_COMPUTE_NODE_${i}_IP
