@@ -382,6 +382,8 @@ do
     ${SSH} "${!CONTROLLERIP}"  "tar -cf /tmp/odl${i}_karaf.log.tar /tmp/odl_log/*"
     scp "${!CONTROLLERIP}:/tmp/odl${i}_karaf.log.tar" "${WORKSPACE}/odl${i}_karaf.log.tar"
     tar -xvf ${WORKSPACE}/odl${i}_karaf.log.tar -C . --strip-components 2 --transform s/karaf/odl${i}_karaf/g
+    grep "ROBOT MESSAGE\| ERROR " odl1_karaf.log > odl${i}_err.log
+    grep "ROBOT MESSAGE\| ERROR \| WARN " odl1_karaf.log > odl${i}_err_warn.log
     rm ${WORKSPACE}/odl${i}_karaf.log.tar
 done
 
