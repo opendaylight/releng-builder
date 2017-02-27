@@ -140,6 +140,9 @@ EOF
     echo "---> Updating operating system"
     apt-get update
     apt-get upgrade
+    apt-cache policy git-review
+    apt-cache policy puppet
+    apt-cache policy libxml-xpath-perl
 
     # add in stuff we know we need
     echo "---> Installing base packages"
