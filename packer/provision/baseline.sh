@@ -137,6 +137,9 @@ Dpkg::Options {
 
 EOF
 
+    # Add hostname to /etc/hosts to fix 'unable to resolve host' issue with sudo
+    sed -i "/127.0.0.1/s/$/ `hostname`/" /etc/hosts
+
     echo "---> Updating operating system"
 
     # add additional repositories
