@@ -68,11 +68,13 @@
             controller-scope: 'only'
         - integration-controller-features:
             controller-features: >
-                odl-clustering-test-app,
+                odl-restconf,
                 odl-openflowplugin-flow-services-ui,
                 odl-openflowplugin-app-table-miss-enforcer,
-                odl-bgpcep-pcep,
                 odl-bgpcep-bgp,
+                odl-bgpcep-pcep,
+                odl-clustering-test-app,
+                odl-jolokia,
                 odl-netconf-connector-all
         - integration-test-options:
             test-options: '-v TIMEOUT_BUG_4220:10s -v USE_NETCONF_CONNECTOR:True'
