@@ -1,3 +1,4 @@
+---
 heat_template_version: 2016-04-08
 
 parameters:
@@ -32,23 +33,23 @@ resources:
     instance:
         type: "OS::Nova::Server"
         properties:
-            flavor: { get_param: vm_flavor }
-            image: { get_param: vm_image }
+            flavor: {get_param: vm_flavor}
+            image: {get_param: vm_image}
             name:
                 str_replace:
                     template: SILO-JOB_NAME-VM_TYPE-INDEX
                     params:
-                        "SILO": { get_param: silo }
-                        "JOB_NAME": { get_param: job_name }
+                        "SILO": {get_param: silo}
+                        "JOB_NAME": {get_param: job_name}
                         "VM_TYPE":
                             str_split:
                                 - ' - '
-                                - { get_param: vm_image }
+                                - {get_param: vm_image}
                                 - 1
-                        "INDEX": { get_param: index }
+                        "INDEX": {get_param: index}
             networks:
                 - network: RC-ODL
-            key_name: { get_param: ssh_key }
+            key_name: {get_param: ssh_key}
             user_data: |
                 #!/bin/bash
                 until ping -c1 git.opendaylight.org &>/dev/null; do echo "Waiting until git.opendaylight.org is resolvable..."; done
@@ -58,4 +59,4 @@ resources:
 outputs:
     ip:
         description: IP address of the instance
-        value: { get_attr: [instance, networks, RC-ODL, 0] }
+        value: {get_attr: [instance, networks, RC-ODL, 0]}
