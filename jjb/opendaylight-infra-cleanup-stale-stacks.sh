@@ -10,7 +10,7 @@ pip freeze
 #########################
 # Fetch stack list before fetching active builds to minimize race condition
 # where we might be try to delete stacks while jobs are trying to start
-OS_STACKS=(`openstack --os-cloud rackspace stack list \
+OS_STACKS=(`openstack --os-cloud ${CLOUD_NAME} stack list \
             -f json -c "Stack Name" -c "Stack Status" \
             --property "stack_status=CREATE_COMPLETE" \
             --property "stack_status=DELETE_FAILED" \
@@ -39,6 +39,6 @@ for stack in ${OS_STACKS[@]}; do
         continue
     else
         echo "Deleting orphaned stack: $stack"
-        openstack --os-cloud rackspace stack delete --yes $stack
+        openstack --os-cloud ${CLOUD_NAME} stack delete --yes $stack
     fi
 done
