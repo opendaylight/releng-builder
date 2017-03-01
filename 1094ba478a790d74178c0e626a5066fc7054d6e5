@@ -80,6 +80,29 @@
       "revId": "1094ba478a790d74178c0e626a5066fc7054d6e5",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_0fda93e7",
+        "filename": "packer/provision/baseline.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 7139
+      },
+      "writtenOn": "2017-03-01T01:15:31Z",
+      "side": 1,
+      "message": "for pkg in unzip xz-utils puppet git git-review libxml-xpath-perl\ndo\n  apt-cache show $pkg | grep -e \u0027^\\(Package\\|Version\\|Filename\\)\u0027\n  echo\n  apt-cache policy $pkg\n  echo\ndone",
+      "range": {
+        "startLine": 157,
+        "startChar": 0,
+        "endLine": 159,
+        "endChar": 38
+      },
+      "revId": "1094ba478a790d74178c0e626a5066fc7054d6e5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
