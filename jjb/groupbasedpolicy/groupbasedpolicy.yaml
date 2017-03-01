@@ -1,12 +1,13 @@
+---
 - project:
     name: groupbasedpolicy-carbon
     jobs:
-        - '{project-name}-clm-{stream}'
-        - '{project-name}-distribution-check-{stream}'
-        - '{project-name}-integration-{stream}'
-        - '{project-name}-merge-{stream}'
-        - '{project-name}-validate-autorelease-{stream}'
-        - '{project-name}-verify-{stream}-{maven}-{jdks}'
+      - '{project-name}-clm-{stream}'
+      - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-integration-{stream}'
+      - '{project-name}-merge-{stream}'
+      - '{project-name}-validate-autorelease-{stream}'
+      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: carbon
     project: 'groupbasedpolicy'
@@ -14,26 +15,31 @@
     branch: 'master'
     jdk: openjdk8
     jdks:
-        - openjdk8
+      - openjdk8
     maven:
-        - mvn33:
-            mvn-version: 'mvn33'
+      - mvn33:
+          mvn-version: 'mvn33'
     mvn-settings: 'groupbasedpolicy-settings'
     mvn-goals: '-U clean install findbugs:findbugs'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: 'openflowjava-merge-{stream},openflowplugin-merge-{stream},neutron-merge-{stream},sfc-merge-{stream},ovsdb-merge-{stream}'
+    dependencies: >
+        openflowjava-merge-{stream},
+        openflowplugin-merge-{stream},
+        neutron-merge-{stream},
+        sfc-merge-{stream},
+        ovsdb-merge-{stream}
     email-upstream: '[groupbasedpolicy] [openflowjava] [openflowplugin] [neutron] [sfc] [ovsdb]'
     archive-artifacts: ''
 
 - project:
     name: groupbasedpolicy-boron
     jobs:
-        - '{project-name}-clm-{stream}'
-        - '{project-name}-distribution-check-{stream}'
-        - '{project-name}-integration-{stream}'
-        - '{project-name}-merge-{stream}'
-        - '{project-name}-validate-autorelease-{stream}'
-        - '{project-name}-verify-{stream}-{maven}-{jdks}'
+      - '{project-name}-clm-{stream}'
+      - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-integration-{stream}'
+      - '{project-name}-merge-{stream}'
+      - '{project-name}-validate-autorelease-{stream}'
+      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: boron
     project: 'groupbasedpolicy'
@@ -41,26 +47,31 @@
     branch: 'stable/boron'
     jdk: openjdk8
     jdks:
-        - openjdk8
+      - openjdk8
     maven:
-        - mvn33:
-            mvn-version: 'mvn33'
+      - mvn33:
+          mvn-version: 'mvn33'
     mvn-settings: 'groupbasedpolicy-settings'
     mvn-goals: '-U clean install findbugs:findbugs'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: 'openflowjava-merge-{stream},openflowplugin-merge-{stream},neutron-merge-{stream},sfc-merge-{stream},ovsdb-merge-{stream}'
+    dependencies: >
+        openflowjava-merge-{stream},
+        openflowplugin-merge-{stream},
+        neutron-merge-{stream},
+        sfc-merge-{stream},
+        ovsdb-merge-{stream}
     email-upstream: '[groupbasedpolicy] [openflowjava] [openflowplugin] [neutron] [sfc] [ovsdb]'
     archive-artifacts: ''
 
 - project:
     name: groupbasedpolicy-beryllium
     jobs:
-        - '{project-name}-clm-{stream}'
-        - '{project-name}-distribution-check-{stream}'
-        - '{project-name}-integration-{stream}'
-        - '{project-name}-merge-{stream}'
-        - '{project-name}-validate-autorelease-{stream}'
-        - '{project-name}-verify-{stream}-{maven}-{jdks}'
+      - '{project-name}-clm-{stream}'
+      - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-integration-{stream}'
+      - '{project-name}-merge-{stream}'
+      - '{project-name}-validate-autorelease-{stream}'
+      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: beryllium
     project: 'groupbasedpolicy'
@@ -68,22 +79,27 @@
     branch: 'stable/beryllium'
     jdk: openjdk7
     jdks:
-        - openjdk7
-        - openjdk8
+      - openjdk7
+      - openjdk8
     maven:
-        - mvn33:
-            mvn-version: 'mvn33'
+      - mvn33:
+          mvn-version: 'mvn33'
     mvn-settings: 'groupbasedpolicy-settings'
     mvn-goals: '-U clean install findbugs:findbugs'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: 'openflowjava-merge-{stream},openflowplugin-merge-{stream},neutron-merge-{stream},sfc-merge-{stream},ovsdb-merge-{stream}'
+    dependencies: >
+        openflowjava-merge-{stream},
+        openflowplugin-merge-{stream},
+        neutron-merge-{stream},
+        sfc-merge-{stream},
+        ovsdb-merge-{stream}
     email-upstream: '[groupbasedpolicy] [openflowjava] [openflowplugin] [neutron] [sfc] [ovsdb]'
     archive-artifacts: ''
 
 - project:
     name: groupbasedpolicy-sonar
     jobs:
-        - '{project-name}-sonar'
+      - '{project-name}-sonar'
     project: 'groupbasedpolicy'
     project-name: 'groupbasedpolicy'
     branch: 'master'

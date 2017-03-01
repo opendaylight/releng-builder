@@ -1,16 +1,17 @@
+---
 - project:
     name: groupbasedpolicy-csit-openstack-integration
     jobs:
-        - '{project}-csit-{topology}-openstack-{openstack}-{functionality}-{stream}'
+      - '{project}-csit-{topology}-openstack-{openstack}-{functionality}-{stream}'
 
     # The project name
     project: 'groupbasedpolicy'
 
     topology:
-        - 1node:
-            openstack_system_count: 1
-            odl_system_count: 1
-            enable-haproxy: 'no'
+      - 1node:
+          openstack_system_count: 1
+          odl_system_count: 1
+          enable-haproxy: 'no'
 
     testplan: '{project}-{topology}-openstack.txt'
 
@@ -18,28 +19,28 @@
     functionality: 'openstack'
 
     stream:
-        - carbon:
-            branch: 'master'
-            jre: 'openjdk8'
-            install-features: 'odl-groupbasedpolicy-neutron-and-ofoverlay,odl-restconf'
-        - boron:
-            branch: 'stable/boron'
-            jre: 'openjdk8'
-            install-features: 'odl-groupbasedpolicy-neutron-and-ofoverlay,odl-restconf'
-        - beryllium:
-            branch: 'stable/beryllium'
-            jre: 'openjdk7'
-            install-features: 'odl-groupbasedpolicy-neutronmapper,odl-restconf'
+      - carbon:
+          branch: 'master'
+          jre: 'openjdk8'
+          install-features: 'odl-groupbasedpolicy-neutron-and-ofoverlay,odl-restconf'
+      - boron:
+          branch: 'stable/boron'
+          jre: 'openjdk8'
+          install-features: 'odl-groupbasedpolicy-neutron-and-ofoverlay,odl-restconf'
+      - beryllium:
+          branch: 'stable/beryllium'
+          jre: 'openjdk7'
+          install-features: 'odl-groupbasedpolicy-neutronmapper,odl-restconf'
 
     openstack:
-        - mitaka:
-            openstack-branch: 'stable/mitaka'
-            odl-ml2-branch: 'stable/mitaka'
-            odl-ml2-driver-version: 'v1'
-        - liberty:
-            openstack-branch: 'stable/liberty'
-            odl-ml2-branch: 'stable/liberty'
-            odl-ml2-driver-version: 'v1'
+      - mitaka:
+          openstack-branch: 'stable/mitaka'
+          odl-ml2-branch: 'stable/mitaka'
+          odl-ml2-driver-version: 'v1'
+      - liberty:
+          openstack-branch: 'stable/liberty'
+          odl-ml2-branch: 'stable/liberty'
+          odl-ml2-driver-version: 'v1'
 
     schedule: 'H H * * *'
 
