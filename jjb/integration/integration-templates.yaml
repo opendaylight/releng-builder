@@ -13,7 +13,7 @@
 #
 # opendaylight-infra-parameters: main project integration/test ($PROJECT)
 # jre: (openjdk7 or openjdk8) Java runtime environment to use when launching ODL
-# integration-branch: distribution branch ($BRANCH)
+# integration-distribution-branch: distribution branch ($DISTROBRANCH)
 # integration-controller-bundleurl: distribution URL ($BUNDLEURL)
 # integration-controller-scope: only or all features ($CONTROLLERSCOPE)
 # integration-controller-features: features under test ($CONTROLLER FEATURES)
@@ -42,7 +42,7 @@
             branch: '{branch}'
             refspec: 'refs/heads/{branch}'
             artifacts: '{archive-artifacts}'
-        - integration-branch:
+        - integration-distribution-branch:
             branch: '{verify-branch}'
         - integration-distribution-stream:
             stream: '{verify-stream}'
@@ -127,7 +127,7 @@
             branch: '{branch}'
             refspec: 'refs/heads/{branch}'
             artifacts: '{archive-artifacts}'
-        - integration-branch:
+        - integration-distribution-branch:
             branch: '{branch}'
         - integration-distribution-stream:
             stream: '{stream}'
@@ -234,7 +234,7 @@
             branch: '{branch}'
             refspec: 'refs/heads/{branch}'
             artifacts: '{archive-artifacts}'
-        - integration-branch:
+        - integration-distribution-branch:
             branch: '{branch}'
         - integration-distribution-stream:
             stream: '{stream}'
@@ -445,7 +445,7 @@
             branch: '{branch}'
             refspec: 'refs/heads/{branch}'
             artifacts: '{archive-artifacts}'
-        - integration-branch:
+        - integration-distribution-branch:
             branch: '{verify-branch}'
         - integration-distribution-stream:
             stream: '{verify-stream}'
@@ -531,7 +531,7 @@
             branch: '{branch}'
             refspec: 'refs/heads/{branch}'
             artifacts: '{archive-artifacts}'
-        - integration-branch:
+        - integration-distribution-branch:
             branch: '{branch}'
         - integration-distribution-stream:
             stream: '{stream}'
@@ -639,7 +639,7 @@
             branch: '{branch}'
             refspec: 'refs/heads/{branch}'
             artifacts: '{archive-artifacts}'
-        - integration-branch:
+        - integration-distribution-branch:
             branch: '{branch}'
         - integration-distribution-stream:
             stream: '{stream}'
@@ -747,7 +747,7 @@
             branch: '{branch}'
             refspec: 'refs/heads/{branch}'
             artifacts: '{archive-artifacts}'
-        - integration-branch:
+        - integration-distribution-branch:
             branch: '{branch}'
         - integration-distribution-stream:
             stream: '{stream}'
@@ -960,7 +960,7 @@
             branch: '{branch}'
             refspec: 'refs/heads/{branch}'
             artifacts: '{archive-artifacts}'
-        - integration-branch:
+        - integration-distribution-branch:
             branch: '{branch}'
         - integration-distribution-stream:
             stream: '{stream}'
@@ -1102,7 +1102,7 @@
             branch: '{branch}'
             refspec: 'refs/heads/{branch}'
             artifacts: '{archive-artifacts}'
-        - integration-branch:
+        - integration-distribution-branch:
             branch: '{branch}'
         - integration-distribution-stream:
             stream: '{stream}'
@@ -1247,7 +1247,7 @@
             branch: '{branch}'
             refspec: '$GERRIT_REFSPEC'
             artifacts: '{archive-artifacts}'
-        - integration-branch:
+        - integration-distribution-branch:
             branch: '{branch}'
         - integration-distribution-git-url:
             git-url: '{git-url}'

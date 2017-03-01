@@ -1,8 +1,11 @@
+# TODO: Make all bash constants more readable.
+# e.g.: DISTRIBUTION_BRANCH instead of DISTROBRANCH.
+
 - parameter:
-    name: integration-branch
+    name: integration-distribution-branch
     parameters:
         - string:
-            name: BRANCH
+            name: DISTROBRANCH
             default: '{branch}'
             description: 'Distribution GIT branch'
 
@@ -402,7 +405,7 @@
                 - include-raw-integration-cleanup-workspace.sh
 
 # Macro: integration-rebase-patch
-# Operation: For cloned project, rebase checked-out Gerrit patch onto $BRANCH.
+# Operation: For cloned project, rebase checked-out Gerrit patch onto $DISTROBRANCH.
 # Used by: integration-patch-distribution-* job template
 
 - builder:
