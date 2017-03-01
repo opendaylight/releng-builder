@@ -1,12 +1,13 @@
+---
 - project:
     name: atrium-carbon
     jobs:
-        - '{project-name}-clm-{stream}'
-        - '{project-name}-distribution-check-{stream}'
-        - '{project-name}-integration-{stream}'
-        - '{project-name}-merge-{stream}'
-        - '{project-name}-validate-autorelease-{stream}'
-        - '{project-name}-verify-{stream}-{maven}-{jdks}'
+      - '{project-name}-clm-{stream}'
+      - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-integration-{stream}'
+      - '{project-name}-merge-{stream}'
+      - '{project-name}-validate-autorelease-{stream}'
+      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: carbon
     project: 'atrium'
@@ -14,10 +15,10 @@
     branch: 'master'
     jdk: openjdk8
     jdks:
-        - openjdk8
+      - openjdk8
     maven:
-        - mvn33:
-            mvn-version: 'mvn33'
+      - mvn33:
+          mvn-version: 'mvn33'
     mvn-settings: 'atrium-settings'
     mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
@@ -28,12 +29,12 @@
 - project:
     name: atrium-boron
     jobs:
-        - '{project-name}-clm-{stream}'
-        - '{project-name}-distribution-check-{stream}'
-        - '{project-name}-integration-{stream}'
-        - '{project-name}-merge-{stream}'
-        - '{project-name}-validate-autorelease-{stream}'
-        - '{project-name}-verify-{stream}-{maven}-{jdks}'
+      - '{project-name}-clm-{stream}'
+      - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-integration-{stream}'
+      - '{project-name}-merge-{stream}'
+      - '{project-name}-validate-autorelease-{stream}'
+      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: boron
     project: 'atrium'
@@ -41,10 +42,10 @@
     branch: 'stable/boron'
     jdk: openjdk8
     jdks:
-        - openjdk8
+      - openjdk8
     maven:
-        - mvn33:
-            mvn-version: 'mvn33'
+      - mvn33:
+          mvn-version: 'mvn33'
     mvn-settings: 'atrium-settings'
     mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
@@ -55,7 +56,7 @@
 - project:
     name: atrium-sonar
     jobs:
-        - '{project-name}-sonar'
+      - '{project-name}-sonar'
     project: 'atrium'
     project-name: 'atrium'
     branch: 'master'
