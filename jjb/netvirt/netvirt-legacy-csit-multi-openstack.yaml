@@ -1,59 +1,60 @@
+---
 - project:
     name: netvirt-legacy-csit-openstack-integration
     jobs:
-        - '{project}-csit-{topology}-openstack-{openstack}-{functionality}-{stream}'
+      - '{project}-csit-{topology}-openstack-{openstack}-{functionality}-{stream}'
 
     # The project name
     project: 'netvirt-legacy'
 
     topology:
-        - 1node:
-            openstack_system_count: 3
-            odl_system_count: 1
-            enable-haproxy: 'no'
-            install-features: 'odl-ovsdb-openstack,decanter-collector-jmx,decanter-appender-elasticsearch'
-        - 3node:
-            openstack_system_count: 4
-            odl_system_count: 3
-            enable-haproxy: 'yes'
-            install-features: 'odl-jolokia,odl-ovsdb-openstack,decanter-collector-jmx,decanter-appender-elasticsearch'
+      - 1node:
+          openstack_system_count: 3
+          odl_system_count: 1
+          enable-haproxy: 'no'
+          install-features: 'odl-ovsdb-openstack,decanter-collector-jmx,decanter-appender-elasticsearch'
+      - 3node:
+          openstack_system_count: 4
+          odl_system_count: 3
+          enable-haproxy: 'yes'
+          install-features: 'odl-jolokia,odl-ovsdb-openstack,decanter-collector-jmx,decanter-appender-elasticsearch'
 
     testplan: '{project}-{topology}-openstack.txt'
 
     # The project name
     functionality:
-        - upstream:
-            schedule: ''
-        - gate:
-            schedule: ''
+      - upstream:
+          schedule: ''
+      - gate:
+          schedule: ''
 
     stream:
-        - carbon:
-            branch: 'master'
-            jre: 'openjdk8'
-        - boron:
-            branch: 'stable/boron'
-            jre: 'openjdk8'
-        - beryllium:
-            branch: 'stable/beryllium'
-            jre: 'openjdk7'
+      - carbon:
+          branch: 'master'
+          jre: 'openjdk8'
+      - boron:
+          branch: 'stable/boron'
+          jre: 'openjdk8'
+      - beryllium:
+          branch: 'stable/beryllium'
+          jre: 'openjdk7'
 
     openstack:
-        - mitaka:
-            openstack-branch: 'stable/mitaka'
-            odl-ml2-branch: 'stable/mitaka'
-            odl-ml2-driver-version: 'v1'
-            openstack_system_image: CentOS 7 - devstack-mitaka - 20170210-1356
-        - newton:
-            openstack-branch: 'stable/newton'
-            odl-ml2-branch: 'stable/newton'
-            odl-ml2-driver-version: 'v1'
-            openstack_system_image: CentOS 7 - devstack-newton - 20170210-1344
-        - newton-nodl-v2:
-            openstack-branch: 'stable/newton'
-            odl-ml2-branch: 'stable/newton'
-            odl-ml2-driver-version: 'v2'
-            openstack_system_image: CentOS 7 - devstack-newton - 20170210-1344
+      - mitaka:
+          openstack-branch: 'stable/mitaka'
+          odl-ml2-branch: 'stable/mitaka'
+          odl-ml2-driver-version: 'v1'
+          openstack_system_image: CentOS 7 - devstack-mitaka - 20170210-1356
+      - newton:
+          openstack-branch: 'stable/newton'
+          odl-ml2-branch: 'stable/newton'
+          odl-ml2-driver-version: 'v1'
+          openstack_system_image: CentOS 7 - devstack-newton - 20170210-1344
+      - newton-nodl-v2:
+          openstack-branch: 'stable/newton'
+          odl-ml2-branch: 'stable/newton'
+          odl-ml2-driver-version: 'v2'
+          openstack_system_image: CentOS 7 - devstack-newton - 20170210-1344
 
     odl-enable-l3: 'yes'
 
