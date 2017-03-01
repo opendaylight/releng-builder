@@ -14,15 +14,6 @@ ARCHIVES_DIR="$JENKINS_HOSTNAME/$JOB_NAME/$BUILD_NUMBER"
 CONSOLE_LOG="/tmp/autorelease-build.log"
 STREAM=${JOB_NAME#*-*e-}
 
-BODY="Please refer to the logs server URL for console logs when possible
-and use the Jenkins Build URL as a last resort.
-
-Console Logs URL:
-https://logs.opendaylight.org/$SILO/$ARCHIVES_DIR
-
-Jenkins Build URL:
-$BUILD_URL"
-
 # get console logs
 wget -O $CONSOLE_LOG ${BUILD_URL}consoleText
 
@@ -50,6 +41,24 @@ else
     ARTIFACTID=`echo ${REACTOR_INFO} | awk '{ gsub(/^[ \t]+|[ \t]+$/, ""); print }'`
 fi
 
+BODY="Attention $PROJECT
+
+Autorelease $STREAM failed to build $ARTIFACTID from $PROJECT in
+$BUILD_NUMBER. Attached is a snippet of the error message related to the
+failure that we were able to automatically parse.
+
+Console Logs:
+https://logs.opendaylight.org/$SILO/$ARCHIVES_DIR
+
+Jenkins Build:
+$BUILD_URL
+
+Please review and provide an ETA on when a fix will be available.
+
+Thanks,
+ODL releng/autorelease team
+"
+
 # check if remote staging is complete successfully
 BUILD_STATUS=`awk '/\[INFO\] Remote staging finished/{flag=1;next} \
                    /Total time:/{flag=0}flag' $CONSOLE_LOG \
@@ -62,13 +71,11 @@ if [ ! -z "${ARTIFACTID}" ] && [[ "${BUILD_STATUS}" != "SUCCESS" ]]; then
     sed -e "/\[INFO\] Building \(${ARTIFACTID} \|${ODL} :: ${PROJECT} :: ${ARTIFACTID} \)/,/Reactor Summary:/!d;//d" \
           $CONSOLE_LOG > /tmp/error_msg
 
-    if [ -z "${PROJECT}" ]; then
-        PROJECT=${ARTIFACTID}
-    else
+    if [ -n "${PROJECT}" ]; then
         RELEASE_EMAIL="${RELEASE_EMAIL}, ${PROJECT}-dev@opendaylight.org"
     fi
 
-    SUBJECT="[release] Autorelease ${STREAM} build failure: ${PROJECT}"
+    SUBJECT="[release] Autorelease ${STREAM} build failure: ${PROJECT} ${ARTIFACTID}"
 
     echo "${BODY}" | mail -a /tmp/error_msg -s "${SUBJECT}" "${RELEASE_EMAIL}"
 fi
