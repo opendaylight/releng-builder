@@ -78,7 +78,9 @@ if [ ! -z "${ARTIFACTID}" ] && [[ "${BUILD_STATUS}" != "SUCCESS" ]]; then
         RELEASE_EMAIL="${RELEASE_EMAIL}, ${PROJECT}-dev@opendaylight.org"
     fi
 
-    echo "${BODY}" | mail -a /tmp/error_msg -s "${SUBJECT}" "${RELEASE_EMAIL}"
+    echo "${BODY}" | mail -a /tmp/error_msg \
+        -Sfrom="Jenkins <jenkins-dontreply@opendaylight.org>" \
+        -s "${SUBJECT}" "${RELEASE_EMAIL}"
 fi
 
 rm $CONSOLE_LOG
