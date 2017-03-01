@@ -1,7 +1,8 @@
+---
 - project:
     name: bgpcep-csit-bgpclustering-ha
     jobs:
-        - '{project}-csit-3node-periodic-{functionality}-{install}-{stream}'
+      - '{project}-csit-3node-periodic-{functionality}-{install}-{stream}'
 
     # The project name
     project: 'bgpcep'
@@ -11,17 +12,21 @@
 
     # Project branches
     stream:
-        - carbon:
-            branch: 'master'
-            jre: 'openjdk8'
-        - boron:
-            branch: 'stable/boron'
-            jre: 'openjdk8'
-            install-features: 'odl-restconf,odl-bgpcep-bgp-all,odl-bgpcep-bgp,odl-netconf-clustered-topology'
+      - carbon:
+          branch: 'master'
+          jre: 'openjdk8'
+      - boron:
+          branch: 'stable/boron'
+          jre: 'openjdk8'
+          install-features: >
+              odl-restconf,
+              odl-bgpcep-bgp-all,
+              odl-bgpcep-bgp,
+              odl-netconf-clustered-topology
 
     install:
-        - only:
-            scope: 'only'
+      - only:
+          scope: 'only'
 
     # Features to install
     install-features: 'odl-restconf,odl-bgpcep-bgp'
