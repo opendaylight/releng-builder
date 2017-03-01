@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fafc7978_736505b4",
+        "filename": "jjb/integration/include-raw-integration-get-bundle-vars.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2017-03-01T15:46:50Z",
+      "side": 1,
+      "message": "This breaks csit-verify jobs, where GERRIT_BRANCH is int/test branch (thus \u0027master\u0027), but we want to test against Boron distribution (BRANCH\u003d\u0027stable/boron\u0027).\n\nWill be fixed in https://git.opendaylight.org/gerrit/52392",
+      "range": {
+        "startLine": 8,
+        "startChar": 9,
+        "endLine": 8,
+        "endChar": 22
+      },
+      "revId": "76242cf96cfdc2e0d3c193445f5607be9f3e0013",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
