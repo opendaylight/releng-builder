@@ -73,9 +73,10 @@
                 odl-openflowplugin-app-table-miss-enforcer,
                 odl-bgpcep-pcep,
                 odl-bgpcep-bgp,
-                odl-netconf-connector-all
+                odl-netconf-topology
         - integration-test-options:
-            test-options: '-v TIMEOUT_BUG_4220:10s -v USE_NETCONF_CONNECTOR:True'
+            test-options: '-v TIMEOUT_BUG_4220:10s -v USE_NETCONF_CONNECTOR:False'
+            # TODO: USE_NETCONF_CONNECTOR can be omitted when the stream is later than boron.
         - integration-stream-test-plan:
             stream-test-plan: 'test-libraries-boron.txt'
         - integration-test-plan:
