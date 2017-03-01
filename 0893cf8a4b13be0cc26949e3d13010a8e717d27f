@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fafc7978_32e9bee6",
+        "filename": "jjb/autorelease/include-raw-autorelease-notify-build-failure.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2017-03-01T03:52:13Z",
+      "side": 1,
+      "message": "Removing the above check will print the subject and badly formatted body, very inconsistently \n\nwhen $PROJECT is empty\n\"[release] Autorelease boron build failure:   feature-test-aaa\"\n\nwhen $PROJECT is not empyty with the new format\n\"[release] Autorelease boron build failure: aaa feature-test-aaa\"",
+      "range": {
+        "startLine": 78,
+        "startChar": 12,
+        "endLine": 78,
+        "endChar": 85
+      },
+      "revId": "0893cf8a4b13be0cc26949e3d13010a8e717d27f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
