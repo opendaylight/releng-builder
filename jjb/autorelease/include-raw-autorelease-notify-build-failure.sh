@@ -9,8 +9,7 @@
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
 
-#RELEASE_EMAIL="release@lists.opendaylight.org"
-RELEASE_EMAIL="abelur@linuxfoundation.org, thanh.ha@linuxfoundation.org"
+RELEASE_EMAIL="release@lists.opendaylight.org"
 ARCHIVES_DIR="$JENKINS_HOSTNAME/$JOB_NAME/$BUILD_NUMBER"
 CONSOLE_LOG="/tmp/autorelease-build.log"
 STREAM=${JOB_NAME#*-*e-}
@@ -65,8 +64,9 @@ if [ ! -z "${ARTIFACTID}" ] && [[ "${BUILD_STATUS}" != "SUCCESS" ]]; then
 
     if [ -z "${PROJECT}" ]; then
         PROJECT=${ARTIFACTID}
-        # TODO: unset the below line when ready to deploy to real lists
-        # RELEASE_EMAIL = "${RELEASE_EMAIL}, ${PROJECT}-dev@opendaylight.org"
+    else
+        # add project mailing list only for new format
+        RELEASE_EMAIL = "${RELEASE_EMAIL}, ${PROJECT}-dev@opendaylight.org"
     fi
 
     SUBJECT="[release] Autorelease ${STREAM} build failure: ${PROJECT}"
