@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fafc7978_6f019fae",
+        "filename": "packer/provision/baseline.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 7139
+      },
+      "writtenOn": "2017-03-01T00:14:49Z",
+      "side": 1,
+      "message": "try\nperl -pi -e \u0027$h\u003d`hostname`; s/^((127.0.0.1\\s+).+$/$1 $h/\u0027 /etc/hosts",
+      "revId": "1094ba478a790d74178c0e626a5066fc7054d6e5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_cf29ab38",
+        "filename": "packer/provision/baseline.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 7139
+      },
+      "writtenOn": "2017-03-01T00:14:49Z",
+      "side": 1,
+      "message": "This duplicates the previous line, except that it doesn\u0027t use DNS localization to pick a closer mirror.  You\u0027re just confusing the package management system by adding the second line.",
+      "range": {
+        "startLine": 147,
+        "startChar": 0,
+        "endLine": 147,
+        "endChar": 121
+      },
+      "revId": "1094ba478a790d74178c0e626a5066fc7054d6e5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_efa90f91",
+        "filename": "packer/provision/baseline.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 7139
+      },
+      "writtenOn": "2017-03-01T00:14:49Z",
+      "side": 1,
+      "message": "while you\u0027re at it, you might want to add\n\napt-get dist-upgrade\n\nto bring the packages up to the latest point release.",
+      "revId": "1094ba478a790d74178c0e626a5066fc7054d6e5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
