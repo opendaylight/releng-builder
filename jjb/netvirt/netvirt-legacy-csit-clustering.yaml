@@ -1,8 +1,9 @@
+---
 - project:
     name: netvirt-legacy-csit-clustering
     jobs:
-        - '{project}-csit-3node-{functionality}-{install}-{stream}'
-        - '{project}-csit-verify-3node-{functionality}'
+      - '{project}-csit-3node-{functionality}-{install}-{stream}'
+      - '{project}-csit-verify-3node-{functionality}'
 
     # The project name
     project: 'netvirt-legacy'
@@ -12,19 +13,19 @@
 
     # Project branches
     stream:
-        - carbon:
-            branch: 'master'
-            jre: 'openjdk8'
-        - boron:
-            branch: 'stable/boron'
-            jre: 'openjdk8'
-        - beryllium:
-            branch: 'stable/beryllium'
-            jre: 'openjdk7'
+      - carbon:
+          branch: 'master'
+          jre: 'openjdk8'
+      - boron:
+          branch: 'stable/boron'
+          jre: 'openjdk8'
+      - beryllium:
+          branch: 'stable/beryllium'
+          jre: 'openjdk7'
 
     install:
-        - only:
-            scope: 'only'
+      - only:
+          scope: 'only'
 
     # Features to install
     install-features: 'odl-ovsdb-openstack,decanter-collector-jmx,decanter-appender-elasticsearch'
