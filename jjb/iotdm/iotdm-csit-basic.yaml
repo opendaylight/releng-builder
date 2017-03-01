@@ -1,8 +1,9 @@
+---
 - project:
     name: iotdm-csit-basic
     jobs:
-        - '{project}-csit-1node-{functionality}-{install}-{stream}'
-        - '{project}-csit-verify-1node-{functionality}'
+      - '{project}-csit-1node-{functionality}-{install}-{stream}'
+      - '{project}-csit-verify-1node-{functionality}'
 
     # The project name
     project: 'iotdm'
@@ -12,13 +13,13 @@
 
     # Project branches
     stream:
-        # Removed jobs testing Beryllium and Boron branches due to
-        # backward incompatible changes in test suites for Carbon
-        # TODO: Create test suites for specific release before
-        # Carbon if needed.
-        - carbon:
-            branch: 'master'
-            jre: 'openjdk8'
+      # Removed jobs testing Beryllium and Boron branches due to
+      # backward incompatible changes in test suites for Carbon
+      # TODO: Create test suites for specific release before
+      # Carbon if needed.
+      - carbon:
+          branch: 'master'
+          jre: 'openjdk8'
 
     # TODO: Delete the following if suites are compatible with Boron again.
     verify-stream: 'carbon'
@@ -27,10 +28,10 @@
     # TODO: Update the line above when stable/carbon is created.
 
     install:
-        - only:
-            scope: 'only'
-        - all:
-            scope: 'all'
+      - only:
+          scope: 'only'
+      - all:
+          scope: 'all'
 
     # Features to install
     install-features: 'odl-onem2mall-iotdm'
