@@ -138,7 +138,7 @@
         - shell: |
             mkdir -p /tmp/t/org/opendaylight/$GERRIT_PROJECT
             mv /tmp/n/org/opendaylight/$GERRIT_PROJECT/* /tmp/t/org/opendaylight/$GERRIT_PROJECT/
-            test -z `find /tmp/n/ -type f`
+            test `find /tmp/n/ -type f | wc -l` -eq 0
             rm -rf /tmp/n
             mv /tmp/t /tmp/n
         # Step three: Online build of integration distribution.
