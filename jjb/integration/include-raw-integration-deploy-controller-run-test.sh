@@ -202,7 +202,7 @@ if [ -f "${configplan_filepath}" ]; then
     echo "Changing the configplan path..."
     cat ${configplan_filepath} | sed "s:integration:${WORKSPACE}:" > configplan.txt
     cat configplan.txt
-    for line in $( egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' configplan.txt ); do
+    egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' configplan.txt | while read line; do
         echo "Executing ${line}..."
         source ${line}
     done
