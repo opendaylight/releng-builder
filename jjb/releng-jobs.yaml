@@ -63,6 +63,7 @@
 - job-template:
     name: builder-verify-jjb
     node: centos7-java-builder-2c-4g
+    concurrent: true
 
     project-type: freestyle
 
@@ -118,6 +119,7 @@
 - job-template:
     name: builder-verify-python
     node: centos7-java-builder-2c-4g
+    concurrent: true
 
     project-type: freestyle
 
