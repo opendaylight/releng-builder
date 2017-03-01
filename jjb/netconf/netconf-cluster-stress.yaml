@@ -1,7 +1,8 @@
+---
 - project:
     name: netconf-csit-cluster-stress
     jobs:
-        - '{project}-csit-3node-{functionality}-{install}-{stream}'
+      - '{project}-csit-3node-{functionality}-{install}-{stream}'
 
     # The project name
     project: 'netconf'
@@ -11,21 +12,21 @@
 
     # Project branches
     stream:
-        - carbon:
-            branch: 'master'
-            jre: 'openjdk8'
-        - boron:
-            branch: 'stable/boron'
-            jre: 'openjdk8'
-        - beryllium:
-            branch: 'stable/beryllium'
-            jre: 'openjdk7'
+      - carbon:
+          branch: 'master'
+          jre: 'openjdk8'
+      - boron:
+          branch: 'stable/boron'
+          jre: 'openjdk8'
+      - beryllium:
+          branch: 'stable/beryllium'
+          jre: 'openjdk7'
 
     install:
-        - only:
-            scope: 'only'
-        - all:
-            scope: 'all'
+      - only:
+          scope: 'only'
+      - all:
+          scope: 'all'
 
     # Features to install
     # odl-jolokia is added automatically just because this is a 3node job.
