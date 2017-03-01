@@ -22,6 +22,30 @@
       "revId": "c4276faab1a1126701b5fa3512c5c522b8040c46",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_ac01ca6b",
+        "filename": "jjb/jsonrpc/jsonrpc.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-03-01T21:18:03Z",
+      "side": 1,
+      "message": "yaml spec uses --- as a indicator of document start. While JJB can parse regardless of this yamllint will throw a warning if it\u0027s missing. This is because YAML allows you to stick multiple YAML documents into a single file. Without --- it won\u0027t know when the next document starts.\n\nhttp://yaml.org/spec/1.2/spec.html#id2760395",
+      "parentUuid": "fafc7978_6ce402e1",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 3
+      },
+      "revId": "c4276faab1a1126701b5fa3512c5c522b8040c46",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
