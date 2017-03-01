@@ -1,22 +1,23 @@
+---
 - project:
     name: aaa-patch-test
     jobs:
-        - '{project}-patch-test-{feature}-{stream}'
+      - '{project}-patch-test-{feature}-{stream}'
 
     # The project name
     project: 'aaa'
 
     # Project branches
     stream:
-        - carbon:
-            branch: 'master'
-            jdk: 'openjdk8'
+      - carbon:
+          branch: 'master'
+          jdk: 'openjdk8'
 
     feature:
-        - authn:
-            csit-list: >
-                aaa-csit-1node-authn-all-{stream}
+      - authn:
+          csit-list: >
+              aaa-csit-1node-authn-all-{stream}
 
-        - keystone:
-            csit-list: >
-                aaa-csit-1node-keystone-all-{stream}
+      - keystone:
+          csit-list: >
+              aaa-csit-1node-keystone-all-{stream}
