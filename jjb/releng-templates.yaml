@@ -1,6 +1,6 @@
 ---
 - job-template:
-    name: '{project-name}-release-java'
+      name: '{project-name}-release-java'
 
     # Job template for producing a release candidate by creating a staging repo
     # in Nexus.
@@ -64,7 +64,7 @@
 
 
 - job-template:
-    name: '{project-name}-publish-p2repo'
+      name: '{project-name}-publish-p2repo'
 
     # Job template for publishing a p2 repo given a URL to a zipped p2repo.
 
@@ -178,7 +178,7 @@
             maven-version: 'mvn33'
 
 - job-template:
-    name: '{project-name}-verify-tox-{stream}'
+      name: '{project-name}-verify-tox-{stream}'
 
     # Job template for verify jobs executing tox envlist
     #
@@ -193,10 +193,10 @@
 
     <<: *tox_builder_verify
 
-# Python (pep8) specific, project should migrate to {project-name}-verify-tox-{stream}
+      # Python (pep8) specific, project should migrate to {project-name}-verify-tox-{stream}
 
 - job-template:
-    name: '{project-name}-verify-python-{stream}'
+      name: '{project-name}-verify-python-{stream}'
 
     # Job template for python verify jobs
     #
@@ -212,7 +212,7 @@
     <<: *tox_builder_verify
 
 - job-template:
-    name: '{project-name}-merge-rtd-{stream}'
+      name: '{project-name}-merge-rtd-{stream}'
     # Template for ReadTheDocs triggering
 
     project-type: freestyle
@@ -250,7 +250,7 @@
 # Node related
 
 - job-template:
-    name: '{project-name}-verify-node-{stream}'
+      name: '{project-name}-verify-node-{stream}'
 
     # Job template for python verify jobs
     #

@@ -2,10 +2,10 @@
 - project:
     name: transportpce-carbon
     jobs:
-        - '{project-name}-clm-{stream}'
-        - '{project-name}-integration-{stream}'
-        - '{project-name}-merge-{stream}'
-        - '{project-name}-verify-{stream}-{maven}-{jdks}'
+      - '{project-name}-clm-{stream}'
+      - '{project-name}-integration-{stream}'
+      - '{project-name}-merge-{stream}'
+      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     project: 'transportpce'
     project-name: 'transportpce'
@@ -27,7 +27,7 @@
 - project:
     name: transportpce-sonar
     jobs:
-        - '{project-name}-sonar'
+      - '{project-name}-sonar'
 
     project: 'transportpce'
     project-name: 'transportpce'

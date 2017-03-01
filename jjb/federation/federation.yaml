@@ -2,10 +2,10 @@
 - project:
     name: federation-carbon
     jobs:
-        - '{project-name}-clm-{stream}'
-        - '{project-name}-integration-{stream}'
-        - '{project-name}-merge-{stream}'
-        - '{project-name}-verify-{stream}-{maven}-{jdks}'
+      - '{project-name}-clm-{stream}'
+      - '{project-name}-integration-{stream}'
+      - '{project-name}-merge-{stream}'
+      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     project: 'federation'
     project-name: 'federation'
@@ -27,7 +27,7 @@
 - project:
     name: federation-sonar
     jobs:
-        - '{project-name}-sonar'
+      - '{project-name}-sonar'
 
     project: 'federation'
     project-name: 'federation'

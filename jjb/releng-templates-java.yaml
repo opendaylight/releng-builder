@@ -7,7 +7,7 @@
     #   {mvn-settings} - Project maven settings file
     #   {stream}
     #   {jdk}
-    name: '{project-name}-clm-{stream}'
+      name: '{project-name}-clm-{stream}'
 
     project-type: freestyle
     node: '{build-node}'
@@ -52,23 +52,23 @@
             global-settings-type: cfp
         - shell: 'find . -regex ".*karaf/target" | xargs rm -rf'
         - check-clm:
-            application-name: '{project-name}'
+      application-name: '{project-name}'
 
     publishers:
         - email-notification:
             email-recipients: '{email-recipients}'
-            email-prefix: '[{project-name}]'
+      email-prefix: '[{project-name}]'
         - opendaylight-infra-shiplogs:
             maven-version: 'mvn33'
 
 - job-template:
-    # Template: {project-name}-distribution-check-{stream}
+      # Template: {project-name}-distribution-check-{stream}
     # Goal: Build a patch and make sure the distribution can deploy with this change.
     # Operation: This job template builds a patch, creates a distribution containing
     #            the patch (making sure dependencies are specified),
     #            and performs the distribution deploy test.
 
-    name: '{project-name}-distribution-check-{stream}'
+      name: '{project-name}-distribution-check-{stream}'
     disabled: false
 
     project-type: freestyle
@@ -245,7 +245,7 @@
     publishers:
         - email-notification:
             email-recipients: '{email-recipients}'
-            email-prefix: '[{project-name}]'
+      email-prefix: '[{project-name}]'
         - postbuildscript:
             builders:
                 - shell: |
@@ -261,7 +261,7 @@
             maven-version: 'mvn33'
 
 - job-template:
-    name: '{project-name}-integration-{stream}'
+      name: '{project-name}-integration-{stream}'
 
     # Job template for ODL integration verify jobs
     #
@@ -327,7 +327,7 @@
             maven-version: 'mvn33'
 
 - job-template:
-    name: '{project-name}-merge-{stream}'
+      name: '{project-name}-merge-{stream}'
 
     # Job template for ODL merge jobs
     #
@@ -430,7 +430,7 @@
     publishers:
         - email-notification:
             email-recipients: '{email-recipients}'
-            email-prefix: '[{project-name}]'
+      email-prefix: '[{project-name}]'
         - maven-deploy:
             id: ''
             unique-version: true
@@ -443,7 +443,7 @@
             threshold: SUCCESS
 
 - job-template:
-    name: '{project-name}-sonar'
+      name: '{project-name}-sonar'
     disabled: false
 
     project-type: freestyle
@@ -507,14 +507,14 @@
     publishers:
         - email-notification:
             email-recipients: '{email-recipients}'
-            email-prefix: '[{project-name}]'
+      email-prefix: '[{project-name}]'
         - jacoco-report
         - findbugs
         - opendaylight-infra-shiplogs:
             maven-version: 'mvn33'
 
 - job-template:
-    name: '{project-name}-validate-autorelease-{stream}'
+      name: '{project-name}-validate-autorelease-{stream}'
     disabled: false
 
     project-type: freestyle
@@ -598,12 +598,12 @@
     publishers:
         - email-notification:
             email-recipients: '{email-recipients}'
-            email-prefix: '[autorelease] [{project-name}]'
+      email-prefix: '[autorelease] [{project-name}]'
         - opendaylight-infra-shiplogs:
             maven-version: 'mvn33'
 
 - job-template:
-    name: '{project-name}-verify-{stream}-{maven}-{jdks}'
+      name: '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     # Job template for ODL verify jobs
     #
@@ -664,7 +664,7 @@
         - findbugs
         - email-notification:
             email-recipients: '{email-recipients}'
-            email-prefix: '[{project-name}]'
+      email-prefix: '[{project-name}]'
         - jacoco-report
         - opendaylight-infra-shiplogs:
             maven-version: '{mvn-version}'

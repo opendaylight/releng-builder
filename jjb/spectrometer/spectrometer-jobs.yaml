@@ -2,9 +2,9 @@
 - project:
     name: spectrometer
     jobs:
-        - '{project-name}-merge-rtd-{stream}'
-        - '{project-name}-verify-node-{stream}'
-        - '{project-name}-verify-python-{stream}'
+      - '{project-name}-merge-rtd-{stream}'
+      - '{project-name}-verify-node-{stream}'
+      - '{project-name}-verify-python-{stream}'
         - 'spectrometer-deploy-webapp-master'
 
     stream:

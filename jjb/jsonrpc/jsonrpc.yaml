@@ -2,10 +2,10 @@
 - project:
     name: jsonrpc-carbon
     jobs:
-        - '{project-name}-clm-{stream}'
-        - '{project-name}-integration-{stream}'
-        - '{project-name}-merge-{stream}'
-        - '{project-name}-verify-{stream}-{maven}-{jdks}'
+      - '{project-name}-clm-{stream}'
+      - '{project-name}-integration-{stream}'
+      - '{project-name}-merge-{stream}'
+      - '{project-name}-verify-{stream}-{maven}-{jdks}'
     project: 'jsonrpc'
     project-name: 'jsonrpc'
     stream: carbon
@@ -26,7 +26,7 @@
 - project:
     name: jsonrpc-sonar
     jobs:
-        - '{project-name}-sonar'
+      - '{project-name}-sonar'
 
     project: 'jsonrpc'
     project-name: 'jsonrpc'
