@@ -144,19 +144,23 @@ EOF
 
     # add additional repositories
     sudo add-apt-repository "deb http://us.archive.ubuntu.com/ubuntu $(lsb_release -sc) main universe restricted multiverse"
-    sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu $(lsb_release -sc) main universe restricted multiverse"
 
     apt-get update
     apt-get clean
     apt-get upgrade
+    apt-get dist-upgrade
 
     # todo: added to debug "E: Unable to locate package" issue
     # list of all available repositories.
-    apt-cache policy
     # list the repositories the package is available
-    apt-cache policy git-review
-    apt-cache policy puppet
-    apt-cache policy libxml-xpath-perl
+    apt-cache policy
+    for pkg in unzip xz-utils puppet git git-review libxml-xpath-perl
+    do
+      apt-cache show $pkg | grep -e '^\(Package\|Version\|Filename\)'
+      echo
+      apt-cache policy $pkg
+      echo
+    done
 
     # add in stuff we know we need
     echo "---> Installing base packages"
