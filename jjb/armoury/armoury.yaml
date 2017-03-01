@@ -1,10 +1,11 @@
+---
 - project:
     name: armoury-carbon
     jobs:
-        - '{project-name}-clm-{stream}'
-        - '{project-name}-integration-{stream}'
-        - '{project-name}-merge-{stream}'
-        - '{project-name}-verify-{stream}-{maven}-{jdks}'
+      - '{project-name}-clm-{stream}'
+      - '{project-name}-integration-{stream}'
+      - '{project-name}-merge-{stream}'
+      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: carbon
     project: 'armoury'
@@ -12,11 +13,11 @@
     branch: 'master'
     jdk: openjdk8
     jdks:
-        - openjdk7
-        - openjdk8
+      - openjdk7
+      - openjdk8
     maven:
-        - mvn33:
-            mvn-version: 'mvn33'
+      - mvn33:
+          mvn-version: 'mvn33'
     mvn-settings: 'armoury-settings'
     mvn-goals: 'clean install'
     mvn-opts: '-Xmx2048m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
@@ -27,10 +28,10 @@
 - project:
     name: armoury-boron
     jobs:
-        - '{project-name}-clm-{stream}'
-        - '{project-name}-integration-{stream}'
-        - '{project-name}-merge-{stream}'
-        - '{project-name}-verify-{stream}-{maven}-{jdks}'
+      - '{project-name}-clm-{stream}'
+      - '{project-name}-integration-{stream}'
+      - '{project-name}-merge-{stream}'
+      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: boron
     project: 'armoury'
@@ -38,11 +39,11 @@
     branch: 'stable/boron'
     jdk: openjdk8
     jdks:
-        - openjdk7
-        - openjdk8
+      - openjdk7
+      - openjdk8
     maven:
-        - mvn33:
-            mvn-version: 'mvn33'
+      - mvn33:
+          mvn-version: 'mvn33'
     mvn-settings: 'armoury-settings'
     mvn-goals: 'clean install'
     mvn-opts: '-Xmx2048m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
@@ -53,10 +54,10 @@
 - project:
     name: armoury-beryllium
     jobs:
-        - '{project-name}-clm-{stream}'
-        - '{project-name}-integration-{stream}'
-        - '{project-name}-merge-{stream}'
-        - '{project-name}-verify-{stream}-{maven}-{jdks}'
+      - '{project-name}-clm-{stream}'
+      - '{project-name}-integration-{stream}'
+      - '{project-name}-merge-{stream}'
+      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: beryllium
     project: 'armoury'
@@ -64,11 +65,11 @@
     branch: 'stable/beryllium'
     jdk: openjdk7
     jdks:
-        - openjdk7
-        - openjdk8
+      - openjdk7
+      - openjdk8
     maven:
-        - mvn33:
-            mvn-version: 'mvn33'
+      - mvn33:
+          mvn-version: 'mvn33'
     mvn-settings: 'armoury-settings'
     mvn-goals: 'clean install'
     mvn-opts: '-Xmx2048m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
@@ -79,7 +80,7 @@
 - project:
     name: armoury-sonar
     jobs:
-        - '{project-name}-sonar'
+      - '{project-name}-sonar'
 
     project: 'armoury'
     project-name: 'armoury'
