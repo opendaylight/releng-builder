@@ -1,12 +1,13 @@
+---
 - project:
     name: genius-carbon
     jobs:
-        - '{project-name}-clm-{stream}'
-        - '{project-name}-distribution-check-{stream}'
-        - '{project-name}-integration-{stream}'
-        - '{project-name}-merge-{stream}'
-        - '{project-name}-validate-autorelease-{stream}'
-        - '{project-name}-verify-{stream}-{maven}-{jdks}'
+      - '{project-name}-clm-{stream}'
+      - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-integration-{stream}'
+      - '{project-name}-merge-{stream}'
+      - '{project-name}-validate-autorelease-{stream}'
+      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: carbon
     project: 'genius'
@@ -14,26 +15,31 @@
     branch: 'master'
     jdk: openjdk8
     jdks:
-        - openjdk8
+      - openjdk8
     maven:
-        - mvn33:
-            mvn-version: 'mvn33'
+      - mvn33:
+          mvn-version: 'mvn33'
     mvn-settings: 'genius-settings'
     mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: 'controller-merge-{stream},yangtools-merge-{stream},odlparent-merge-{stream},openflowplugin-merge-{stream},neutron-merge-{stream}'
+    dependencies: >
+        controller-merge-{stream},
+        yangtools-merge-{stream},
+        odlparent-merge-{stream},
+        openflowplugin-merge-{stream},
+        neutron-merge-{stream}
     email-upstream: '[genius] [controller] [yangtools] [odlparent] [openflowplugin] [neutron]'
     archive-artifacts: ''
 
 - project:
     name: genius-boron
     jobs:
-        - '{project-name}-clm-{stream}'
-        - '{project-name}-distribution-check-{stream}'
-        - '{project-name}-integration-{stream}'
-        - '{project-name}-merge-{stream}'
-        - '{project-name}-validate-autorelease-{stream}'
-        - '{project-name}-verify-{stream}-{maven}-{jdks}'
+      - '{project-name}-clm-{stream}'
+      - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-integration-{stream}'
+      - '{project-name}-merge-{stream}'
+      - '{project-name}-validate-autorelease-{stream}'
+      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: boron
     project: 'genius'
@@ -41,21 +47,26 @@
     branch: 'stable/boron'
     jdk: openjdk8
     jdks:
-        - openjdk8
+      - openjdk8
     maven:
-        - mvn33:
-            mvn-version: 'mvn33'
+      - mvn33:
+          mvn-version: 'mvn33'
     mvn-settings: 'genius-settings'
     mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: 'controller-merge-{stream},yangtools-merge-{stream},odlparent-merge-{stream},openflowplugin-merge-{stream},neutron-merge-{stream}'
+    dependencies: >
+        controller-merge-{stream},
+        yangtools-merge-{stream},
+        odlparent-merge-{stream},
+        openflowplugin-merge-{stream},
+        neutron-merge-{stream}
     email-upstream: '[genius] [controller] [yangtools] [odlparent] [openflowplugin] [neutron]'
     archive-artifacts: ''
 
 - project:
     name: genius-sonar
     jobs:
-        - '{project-name}-sonar'
+      - '{project-name}-sonar'
     project: 'genius'
     project-name: 'genius'
     branch: 'master'

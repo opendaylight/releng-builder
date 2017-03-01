@@ -1,30 +1,31 @@
+---
 - project:
     name: genius-patch-test
     jobs:
-        - '{project}-patch-test-{feature}-{stream}'
+      - '{project}-patch-test-{feature}-{stream}'
 
     # The project name
     project: 'genius'
 
     # Project branches
     stream:
-        - carbon:
-            branch: 'master'
-            jdk: 'openjdk8'
-        - boron:
-            branch: 'stable/boron'
-            jdk: 'openjdk8'
+      - carbon:
+          branch: 'master'
+          jdk: 'openjdk8'
+      - boron:
+          branch: 'stable/boron'
+          jdk: 'openjdk8'
 
     feature:
-        - netvirt:
-            csit-list: >
-                netvirt-csit-1node-openstack-newton-nodl-v2-gate-stateful-{stream}
+      - netvirt:
+          csit-list: >
+              netvirt-csit-1node-openstack-newton-nodl-v2-gate-stateful-{stream}
 
-        - cluster-netvirt:
-            csit-list: >
-                netvirt-csit-3node-openstack-newton-nodl-v2-gate-stateful-{stream}
+      - cluster-netvirt:
+          csit-list: >
+              netvirt-csit-3node-openstack-newton-nodl-v2-gate-stateful-{stream}
 
-        - genius:
-            csit-list: >
-                genius-csit-1node-genius-only-{stream},
-                genius-csit-1node-genius-all-{stream}
+      - genius:
+          csit-list: >
+              genius-csit-1node-genius-only-{stream},
+              genius-csit-1node-genius-all-{stream}
