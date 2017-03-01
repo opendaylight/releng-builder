@@ -144,24 +144,23 @@ EOF
 
     # add additional repositories
     sudo add-apt-repository "deb http://us.archive.ubuntu.com/ubuntu $(lsb_release -sc) main universe restricted multiverse"
-    sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu $(lsb_release -sc) main universe restricted multiverse"
 
-    apt-get update
-    apt-get clean
-    apt-get upgrade
-
-    # todo: added to debug "E: Unable to locate package" issue
-    # list of all available repositories.
-    apt-cache policy
-    # list the repositories the package is available
-    apt-cache policy git-review
-    apt-cache policy puppet
-    apt-cache policy libxml-xpath-perl
-
-    # add in stuff we know we need
     echo "---> Installing base packages"
-    apt-get install unzip xz-utils puppet git git-review libxml-xpath-perl \
-                    shellcheck
+    # Use retry loop to install packages for failing mirrors
+    for i in {0..5}
+    do
+        apt-get clean
+        apt-get update -m
+        apt-get upgrade -m
+        apt-get dist-upgrade -m
+
+        for pkg in unzip xz-utils puppet git git-review libxml-xpath-perl
+        do
+            if [ $(dpkg-query -W -f='${Status}' $pkg 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+              apt-get install $pkg;
+            fi
+        done
+    done
 
     # install Java 7
     echo "---> Configuring OpenJDK"
