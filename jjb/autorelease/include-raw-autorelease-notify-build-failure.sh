@@ -14,15 +14,6 @@ ARCHIVES_DIR="$JENKINS_HOSTNAME/$JOB_NAME/$BUILD_NUMBER"
 CONSOLE_LOG="/tmp/autorelease-build.log"
 STREAM=${JOB_NAME#*-*e-}
 
-BODY="Please refer to the logs server URL for console logs when possible
-and use the Jenkins Build URL as a last resort.
-
-Console Logs URL:
-https://logs.opendaylight.org/$SILO/$ARCHIVES_DIR
-
-Jenkins Build URL:
-$BUILD_URL"
-
 # get console logs
 wget -O $CONSOLE_LOG ${BUILD_URL}consoleText
 
@@ -43,12 +34,34 @@ if [[ ${REACTOR_INFO} =~ .*::*.*::*. ]]; then
     ODL=`echo ${REACTOR_INFO} | awk -F'::' '{ gsub(/^[ \t]+|[ \t]+$/, "", $1); print $1 }'`
     PROJECT=`echo ${REACTOR_INFO} | awk -F'::' '{ gsub(/^[ \t]+|[ \t]+$/, "", $2); print $2 }'`
     ARTIFACTID=`echo ${REACTOR_INFO} | awk -F'::' '{ gsub(/^[ \t]+|[ \t]+$/, "", $3); print $3 }'`
+    PROJECT_STRING=" $PROJECT from $ARTIFACTID"
 else
     # set ARTIFACTID to partial format
     ODL=""
     PROJECT=""
     ARTIFACTID=`echo ${REACTOR_INFO} | awk '{ gsub(/^[ \t]+|[ \t]+$/, ""); print }'`
+    PROJECT_STRING=${PROJECT:=" $ARTIFACTID"}
 fi
+
+# Construct email subject & body
+SUBJECT="[release] Autorelease $STREAM failed to build $PROJECT_STRING"
+BODY="Attention$PROJECT_STRING,
+
+Autorelease $STREAM failed to build $PROJECT_STRING in build number
+$BUILD_NUMBER. Attached is a snippet of the error message related to the
+failure that we were able to automatically parse.
+
+Console Logs:
+https://logs.opendaylight.org/$SILO/$ARCHIVES_DIR
+
+Jenkins Build:
+$BUILD_URL
+
+Please review and provide an ETA on when a fix will be available.
+
+Thanks,
+ODL releng/autorelease team
+"
 
 # check if remote staging is complete successfully
 BUILD_STATUS=`awk '/\[INFO\] Remote staging finished/{flag=1;next} \
@@ -62,13 +75,9 @@ if [ ! -z "${ARTIFACTID}" ] && [[ "${BUILD_STATUS}" != "SUCCESS" ]]; then
     sed -e "/\[INFO\] Building \(${ARTIFACTID} \|${ODL} :: ${PROJECT} :: ${ARTIFACTID} \)/,/Reactor Summary:/!d;//d" \
           $CONSOLE_LOG > /tmp/error_msg
 
-    if [ -z "${PROJECT}" ]; then
-        PROJECT=${ARTIFACTID}
-    else
+    if [ -n "${PROJECT}" ]; then
         RELEASE_EMAIL="${RELEASE_EMAIL}, ${PROJECT}-dev@opendaylight.org"
     fi
-
-    SUBJECT="[release] Autorelease ${STREAM} build failure: ${PROJECT}"
 
     echo "${BODY}" | mail -a /tmp/error_msg -s "${SUBJECT}" "${RELEASE_EMAIL}"
 fi
