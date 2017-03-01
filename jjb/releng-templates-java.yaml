@@ -138,7 +138,7 @@
         - shell: |
             mkdir -p /tmp/t/org/opendaylight/$GERRIT_PROJECT
             mv /tmp/n/org/opendaylight/$GERRIT_PROJECT/* /tmp/t/org/opendaylight/$GERRIT_PROJECT/
-            test `find /tmp/n/ -type f | wc -l` -eq 0
+            test `find /tmp/n/ -type f | wc -l` -eq 0 || ( echo "ERROR: Mismatched groupId detected (see above), failing the job." && false )
             rm -rf /tmp/n
             mv /tmp/t /tmp/n
         # Step three: Online build of integration distribution.
@@ -163,7 +163,7 @@
             find /tmp/r/org/opendaylight/$GERRIT_PROJECT/ -path *-SNAPSHOT* -delete
             find /tmp/r/ -regex '.*/_remote.repositories\|.*/maven-metadata-local\.xml\|.*/maven-metadata-fake-nexus\.xml\|.*/resolver-status\.properties' -delete
             find /tmp/r/ -type d -empty -delete
-            echo "# INFO: A listing of project related files left in local repository follows."
+            echo "INFO: A listing of project related files left in local repository follows."
             find /tmp/r/org/opendaylight/$GERRIT_PROJECT/
             true  # To prevent the possibly non-zero return code from failing the job.
         # Now the ugly part. It seems that the only way to tell Maven 2+
