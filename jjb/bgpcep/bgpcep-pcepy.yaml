@@ -1,14 +1,15 @@
+---
 - project:
     name: bgpcep-pcepy
     jobs:
-        - '{project-name}-verify-python-{stream}'
+      - '{project-name}-verify-python-{stream}'
 
     stream:
-        # Pcepy was removed in Carbon.
-        - boron:
-            branch: 'stable/boron'
-        - beryllium:
-            branch: 'stable/beryllium'
+      # Pcepy was removed in Carbon.
+      - boron:
+          branch: 'stable/boron'
+      - beryllium:
+          branch: 'stable/beryllium'
 
     toxdir: 'pcep/pcepy'
     project: 'bgpcep'
