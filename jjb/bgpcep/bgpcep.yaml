@@ -1,12 +1,13 @@
+---
 - project:
     name: bgpcep-carbon
     jobs:
-        - '{project-name}-clm-{stream}'
-        - '{project-name}-distribution-check-{stream}'
-        - '{project-name}-integration-{stream}'
-        - '{project-name}-merge-{stream}'
-        - '{project-name}-validate-autorelease-{stream}'
-        - '{project-name}-verify-{stream}-{maven}-{jdks}'
+      - '{project-name}-clm-{stream}'
+      - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-integration-{stream}'
+      - '{project-name}-merge-{stream}'
+      - '{project-name}-validate-autorelease-{stream}'
+      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: carbon
     project: 'bgpcep'
@@ -15,26 +16,31 @@
     branch: 'master'
     jdk: openjdk8
     jdks:
-        - openjdk8
+      - openjdk8
     maven:
-        - mvn33:
-            mvn-version: 'mvn33'
+      - mvn33:
+          mvn-version: 'mvn33'
     mvn-settings: 'bgpcep-settings'
     mvn-goals: 'clean -DrepoBuild install javadoc:aggregate'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream},mdsal-merge-{stream},tcpmd5-merge-{stream}'
+    dependencies: >
+        odlparent-merge-{stream},
+        yangtools-merge-{stream},
+        controller-merge-{stream},
+        mdsal-merge-{stream},
+        tcpmd5-merge-{stream}
     email-upstream: '[bgpcep] [odlparent] [yangtools] [controller] [mdsal] [tcpmd5]'
     archive-artifacts: ''
 
 - project:
     name: bgpcep-boron
     jobs:
-        - '{project-name}-clm-{stream}'
-        - '{project-name}-distribution-check-{stream}'
-        - '{project-name}-integration-{stream}'
-        - '{project-name}-merge-{stream}'
-        - '{project-name}-validate-autorelease-{stream}'
-        - '{project-name}-verify-{stream}-{maven}-{jdks}'
+      - '{project-name}-clm-{stream}'
+      - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-integration-{stream}'
+      - '{project-name}-merge-{stream}'
+      - '{project-name}-validate-autorelease-{stream}'
+      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: boron
     project: 'bgpcep'
@@ -43,14 +49,19 @@
     branch: 'stable/boron'
     jdk: openjdk8
     jdks:
-        - openjdk8
+      - openjdk8
     maven:
-        - mvn33:
-            mvn-version: 'mvn33'
+      - mvn33:
+          mvn-version: 'mvn33'
     mvn-settings: 'bgpcep-settings'
     mvn-goals: 'clean -DrepoBuild install javadoc:aggregate'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream},mdsal-merge-{stream},tcpmd5-merge-{stream}'
+    dependencies: >
+        odlparent-merge-{stream},
+        yangtools-merge-{stream},
+        controller-merge-{stream},
+        mdsal-merge-{stream},
+        tcpmd5-merge-{stream}
     email-upstream: '[bgpcep] [odlparent] [yangtools] [controller] [mdsal] [tcpmd5]'
     archive-artifacts: ''
 
@@ -58,12 +69,12 @@
 - project:
     name: bgpcep-beryllium
     jobs:
-        - '{project-name}-clm-{stream}'
-        - '{project-name}-distribution-check-{stream}'
-        - '{project-name}-integration-{stream}'
-        - '{project-name}-merge-{stream}'
-        - '{project-name}-validate-autorelease-{stream}'
-        - '{project-name}-verify-{stream}-{maven}-{jdks}'
+      - '{project-name}-clm-{stream}'
+      - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-integration-{stream}'
+      - '{project-name}-merge-{stream}'
+      - '{project-name}-validate-autorelease-{stream}'
+      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: beryllium
     project: 'bgpcep'
@@ -71,15 +82,20 @@
     branch: 'stable/beryllium'
     jdk: openjdk7
     jdks:
-        - openjdk7
-        - openjdk8
+      - openjdk7
+      - openjdk8
     maven:
-        - mvn33:
-            mvn-version: 'mvn33'
+      - mvn33:
+          mvn-version: 'mvn33'
     mvn-settings: 'bgpcep-settings'
     mvn-goals: 'clean -DrepoBuild install javadoc:aggregate'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream},mdsal-merge-{stream},tcpmd5-merge-{stream}'
+    dependencies: >
+        odlparent-merge-{stream},
+        yangtools-merge-{stream},
+        controller-merge-{stream},
+        mdsal-merge-{stream},
+        tcpmd5-merge-{stream}
     email-upstream: '[bgpcep] [odlparent] [yangtools] [controller] [mdsal] [tcpmd5]'
     archive-artifacts: ''
     build-node: centos7-java-builder-4c-8g
@@ -87,7 +103,7 @@
 - project:
     name: bgpcep-sonar
     jobs:
-        - '{project-name}-sonar'
+      - '{project-name}-sonar'
 
     project: 'bgpcep'
     project-name: 'bgpcep'
