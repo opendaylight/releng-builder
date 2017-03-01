@@ -1,14 +1,13 @@
 - project:
     name: integration-test
+    project: integration/test
+    project-name: integration-test
     jobs:
         - '{project-name}-verify-tox-{stream}'
         - 'integration-csit-verify-1node-library'
         - 'integration-distribution-test-{stream}'
         - 'integration-patch-test-{stream}'
         - 'integration-multipatch-test-{stream}'
-
-    project: integration/test
-    project-name: integration-test
 
     # CSIT Lists in releng-defaults.yaml
     stream:
@@ -46,26 +45,33 @@
     project-type: freestyle
     node: centos7-robot-2c-2g
 
+    # {stream} is already defined as a composite object, it cannot be overriden.
+    dist-stream: boron
+    # This is not a template, so define branch, scope and jre for distribution to test with.
+    branch: stable/boron
+    scope: only
+    jre: openjdk8
+    # Integration/Test branch remains hardcoded to 'master' as int/test does not have any other branch.
+    test-branch: master
+
     properties:
         - opendaylight-infra-properties:
             build-days-to-keep: '{build-days-to-keep}'
 
     parameters:
         - opendaylight-infra-parameters:
-            project: 'integration/test'
-            branch: '{branch}'
-            refspec: 'refs/heads/{branch}'
+            project: '{project}'
+            branch: '{test-branch}'
+            refspec: 'refs/heads/{test-branch}'
             artifacts: '{archive-artifacts}'
-        # when upgrading to carbon you should replace odl-netconf-connector-all with odl-netconf-topology from
-        # controller-features and change USE_NETCONF_CONNECTOR to False in test-options
-        - integration-branch:
-            branch: 'stable/boron'
+        - integration-distribution-branch:
+            branch: '{branch}'
         - integration-distribution-stream:
-            stream: 'boron'
+            stream: '{dist-stream}'
         - integration-bundleurl:
             bundleurl: '{bundleurl}'
         - integration-controller-scope:
-            controller-scope: 'only'
+            controller-scope: '{scope}'
         - integration-controller-features:
             controller-features: >
                 odl-clustering-test-app,
@@ -74,22 +80,24 @@
                 odl-bgpcep-pcep,
                 odl-bgpcep-bgp,
                 odl-netconf-connector-all
+        # when upgrading to carbon you should replace odl-netconf-connector-all with odl-netconf-topology
+        # and change USE_NETCONF_CONNECTOR to False in test-options
         - integration-test-options:
             test-options: '-v TIMEOUT_BUG_4220:10s -v USE_NETCONF_CONNECTOR:True'
         - integration-stream-test-plan:
-            stream-test-plan: 'test-libraries-boron.txt'
+            stream-test-plan: 'test-libraries-{dist-stream}.txt'
         - integration-test-plan:
             test-plan: 'test-libraries.txt'
         - integration-patch-refspec:
             branch: '$GERRIT_REFSPEC'
         - integration-jdk-version:
-            jdkversion: 'openjdk8'
+            jdkversion: '{jre}'
 
     scm:
         - integration-gerrit-scm:
             basedir: 'test'
             refspec: '$PATCHREFSPEC'
-            branch: 'master'
+            branch: '{test-branch}'
 
     wrappers:
         - opendaylight-infra-wrappers:
@@ -99,7 +107,7 @@
         - integration-trigger-patch-submitted:
             server: '{server-name}'
             project: '{project}'
-            branch: 'master'
+            branch: '{test-branch}'
             files: 'csit/libraries/*'
 
     builders:
@@ -191,7 +199,7 @@
             branch: '{branch}'
             refspec: '$GERRIT_REFSPEC'
             artifacts: '{archive-artifacts} **/dependency_tree.txt'
-        - integration-branch:
+        - integration-distribution-branch:
             branch: '{branch}'
         - integration-distribution-git-url:
             git-url: '{git-url}'
@@ -292,7 +300,7 @@
     parameters:
         - patches-to-build-parameter:
             patches_to_build: '$PATCHES_TO_BUILD'
-        - integration-branch:
+        - integration-distribution-branch:
             branch: '{branch}'
         - opendaylight-infra-parameters:
             project: 'integration/distribution'
