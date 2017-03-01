@@ -1,7 +1,8 @@
+---
 - project:
     name: yangtools-csit-system
     jobs:
-        - '{project}-csit-1node-periodic-{functionality}-{install}-{stream}'
+      - '{project}-csit-1node-periodic-{functionality}-{install}-{stream}'
 
     # The project name
     project: 'yangtools'
@@ -11,14 +12,14 @@
 
     # Project branches.
     stream:
-        - carbon:
-            branch: 'master'
-            jre: 'openjdk8'
-        # The tested component was only introduced in Carbon.
+      - carbon:
+          branch: 'master'
+          jre: 'openjdk8'
+      # The tested component was only introduced in Carbon.
 
     install:
-        - only:
-            scope: 'only'
+      - only:
+          scope: 'only'
 
     # No tools system VMs needed, but ODL system needs RAM and benefits from CPUs.
     tools_system_count: 0
