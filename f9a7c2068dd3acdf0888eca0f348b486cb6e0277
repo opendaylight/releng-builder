@@ -22,6 +22,30 @@
       "revId": "f9a7c2068dd3acdf0888eca0f348b486cb6e0277",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_20d0441e",
+        "filename": "jjb/autorelease/include-raw-autorelease-notify-build-failure.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2017-03-01T09:28:56Z",
+      "side": 1,
+      "message": "I think this line should fix the issue:\nPROJECT_STRING\u003d${$PROJECT:\u003d\" from $PROJECT\"}\n\n \n$ unset VAR2\n$ echo $VAR2\n\n// using a default with \u0027:\u003d\u0027 value WORKS\n$ echo \"${VAR2:\u003d\" from $VAR1 here\"}\"\n from var1 here\n$ unset VAR2\n$ VAR2\u003d\"something\"\n$ echo \"${VAR2:\u003d\" from $VAR1 here\"}\"\nsomething\n\n// using an alternative value with \":+\" does not work as per docs :(\n$ unset VAR2\n$ echo \"${VAR2:+\" from $VAR1 here\"}\"  \u003d\u003d\u003e alt-value expected here but nothing printed",
+      "parentUuid": "fafc7978_b51ab87a",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 44
+      },
+      "revId": "f9a7c2068dd3acdf0888eca0f348b486cb6e0277",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
