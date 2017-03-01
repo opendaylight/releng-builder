@@ -1,12 +1,13 @@
+---
 - project:
     name: didm-carbon
     jobs:
-        - '{project-name}-clm-{stream}'
-        - '{project-name}-distribution-check-{stream}'
-        - '{project-name}-integration-{stream}'
-        - '{project-name}-merge-{stream}'
-        - '{project-name}-validate-autorelease-{stream}'
-        - '{project-name}-verify-{stream}-{maven}-{jdks}'
+      - '{project-name}-clm-{stream}'
+      - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-integration-{stream}'
+      - '{project-name}-merge-{stream}'
+      - '{project-name}-validate-autorelease-{stream}'
+      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: carbon
     project: 'didm'
@@ -14,10 +15,10 @@
     branch: 'master'
     jdk: openjdk8
     jdks:
-        - openjdk8
+      - openjdk8
     maven:
-        - mvn33:
-            mvn-version: 'mvn33'
+      - mvn33:
+          mvn-version: 'mvn33'
     mvn-settings: 'didm-settings'
     mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
@@ -28,12 +29,12 @@
 - project:
     name: didm-boron
     jobs:
-        - '{project-name}-clm-{stream}'
-        - '{project-name}-distribution-check-{stream}'
-        - '{project-name}-integration-{stream}'
-        - '{project-name}-merge-{stream}'
-        - '{project-name}-validate-autorelease-{stream}'
-        - '{project-name}-verify-{stream}-{maven}-{jdks}'
+      - '{project-name}-clm-{stream}'
+      - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-integration-{stream}'
+      - '{project-name}-merge-{stream}'
+      - '{project-name}-validate-autorelease-{stream}'
+      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: boron
     project: 'didm'
@@ -41,10 +42,10 @@
     branch: 'stable/boron'
     jdk: openjdk8
     jdks:
-        - openjdk8
+      - openjdk8
     maven:
-        - mvn33:
-            mvn-version: 'mvn33'
+      - mvn33:
+          mvn-version: 'mvn33'
     mvn-settings: 'didm-settings'
     mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
@@ -55,12 +56,12 @@
 - project:
     name: didm-beryllium
     jobs:
-        - '{project-name}-clm-{stream}'
-        - '{project-name}-distribution-check-{stream}'
-        - '{project-name}-integration-{stream}'
-        - '{project-name}-merge-{stream}'
-        - '{project-name}-validate-autorelease-{stream}'
-        - '{project-name}-verify-{stream}-{maven}-{jdks}'
+      - '{project-name}-clm-{stream}'
+      - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-integration-{stream}'
+      - '{project-name}-merge-{stream}'
+      - '{project-name}-validate-autorelease-{stream}'
+      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: beryllium
     project: 'didm'
@@ -68,11 +69,11 @@
     branch: 'stable/beryllium'
     jdk: openjdk7
     jdks:
-        - openjdk7
-        - openjdk8
+      - openjdk7
+      - openjdk8
     maven:
-        - mvn33:
-            mvn-version: 'mvn33'
+      - mvn33:
+          mvn-version: 'mvn33'
     mvn-settings: 'didm-settings'
     mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
@@ -83,7 +84,7 @@
 - project:
     name: didm-sonar
     jobs:
-        - '{project-name}-sonar'
+      - '{project-name}-sonar'
     project: 'didm'
     project-name: 'didm'
     branch: 'master'
