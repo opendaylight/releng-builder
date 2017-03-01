@@ -38,13 +38,14 @@ Next we will create <new-project>.yaml as follows:
 
 .. code-block:: yaml
 
+    ---
     - project:
         name: <NEW_PROJECT>-carbon
         jobs:
-            - '{project-name}-clm-{stream}'
-            - '{project-name}-integration-{stream}'
-            - '{project-name}-merge-{stream}'
-            - '{project-name}-verify-{stream}-{maven}-{jdks}'
+          - '{project-name}-clm-{stream}'
+          - '{project-name}-integration-{stream}'
+          - '{project-name}-merge-{stream}'
+          - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
         project: '<NEW_PROJECT>'
         project-name: '<NEW_PROJECT>'
@@ -52,10 +53,10 @@ Next we will create <new-project>.yaml as follows:
         branch: 'master'
         jdk: openjdk8
         jdks:
-            - openjdk8
+          - openjdk8
         maven:
-            - mvn33:
-                mvn-version: 'mvn33'
+          - mvn33:
+              mvn-version: 'mvn33'
         mvn-settings: '<NEW_PROJECT>-settings'
         mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
         mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
@@ -66,7 +67,7 @@ Next we will create <new-project>.yaml as follows:
     - project:
         name: <NEW_PROJECT>-sonar
         jobs:
-            - '{project-name}-sonar'
+          - '{project-name}-sonar'
 
         project: '<NEW_PROJECT>'
         project-name: '<NEW_PROJECT>'
