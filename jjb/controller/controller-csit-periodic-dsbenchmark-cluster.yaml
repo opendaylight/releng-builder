@@ -29,7 +29,9 @@
           scope: 'all'
 
     # Features to install
-    install-features: 'odl-restconf,odl-mdsal-benchmark,odl-jolokia'
+    install-features: >
+        odl-restconf,
+        odl-mdsal-benchmark
 
     # Robot custom options
     robot-options: '--exclude singlenode_setup'
