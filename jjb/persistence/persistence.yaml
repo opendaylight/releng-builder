@@ -1,10 +1,11 @@
+---
 - project:
     name: persistence-carbon
     jobs:
-        - '{project-name}-clm-{stream}'
-        - '{project-name}-integration-{stream}'
-        - '{project-name}-merge-{stream}'
-        - '{project-name}-verify-{stream}-{maven}-{jdks}'
+      - '{project-name}-clm-{stream}'
+      - '{project-name}-integration-{stream}'
+      - '{project-name}-merge-{stream}'
+      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: carbon
     project: 'persistence'
@@ -12,11 +13,11 @@
     branch: 'master'
     jdk: openjdk7
     jdks:
-        - openjdk7
-        - openjdk8
+      - openjdk7
+      - openjdk8
     maven:
-        - mvn33:
-            mvn-version: 'mvn33'
+      - mvn33:
+          mvn-version: 'mvn33'
     mvn-settings: 'persistence-settings'
     mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
@@ -27,10 +28,10 @@
 - project:
     name: persistence-boron
     jobs:
-        - '{project-name}-clm-{stream}'
-        - '{project-name}-integration-{stream}'
-        - '{project-name}-merge-{stream}'
-        - '{project-name}-verify-{stream}-{maven}-{jdks}'
+      - '{project-name}-clm-{stream}'
+      - '{project-name}-integration-{stream}'
+      - '{project-name}-merge-{stream}'
+      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: boron
     project: 'persistence'
@@ -38,11 +39,11 @@
     branch: 'stable/boron'
     jdk: openjdk7
     jdks:
-        - openjdk7
-        - openjdk8
+      - openjdk7
+      - openjdk8
     maven:
-        - mvn33:
-            mvn-version: 'mvn33'
+      - mvn33:
+          mvn-version: 'mvn33'
     mvn-settings: 'persistence-settings'
     mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
@@ -53,10 +54,10 @@
 - project:
     name: persistence-beryllium
     jobs:
-        - '{project-name}-clm-{stream}'
-        - '{project-name}-integration-{stream}'
-        - '{project-name}-merge-{stream}'
-        - '{project-name}-verify-{stream}-{maven}-{jdks}'
+      - '{project-name}-clm-{stream}'
+      - '{project-name}-integration-{stream}'
+      - '{project-name}-merge-{stream}'
+      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: beryllium
     project: 'persistence'
@@ -64,11 +65,11 @@
     branch: 'stable/beryllium'
     jdk: openjdk7
     jdks:
-        - openjdk7
-        - openjdk8
+      - openjdk7
+      - openjdk8
     maven:
-        - mvn33:
-            mvn-version: 'mvn33'
+      - mvn33:
+          mvn-version: 'mvn33'
     mvn-settings: 'persistence-settings'
     mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
@@ -79,7 +80,7 @@
 - project:
     name: persistence-sonar
     jobs:
-        - '{project-name}-sonar'
+      - '{project-name}-sonar'
     project: 'persistence'
     project-name: 'persistence'
     branch: 'master'
