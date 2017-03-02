@@ -1,7 +1,8 @@
+---
 - project:
     name: openflowplugin-csit-longevity-old
     jobs:
-        - '{project}-csit-1node-periodic-{functionality}-{install}-{stream}'
+      - '{project}-csit-1node-periodic-{functionality}-{install}-{stream}'
 
     # The project name
     project: 'openflowplugin'
@@ -12,13 +13,13 @@
 
     # Project branches
     stream:
-        - beryllium:
-            branch: 'stable/beryllium'
-            jre: 'openjdk7'
+      - beryllium:
+          branch: 'stable/beryllium'
+          jre: 'openjdk7'
 
     install:
-        - only:
-            scope: 'only'
+      - only:
+          scope: 'only'
 
     # Features to install
     install-features: 'odl-openflowplugin-flow-services-ui,decanter-collector-jmx,decanter-appender-elasticsearch'
