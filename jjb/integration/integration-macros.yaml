@@ -1,93 +1,94 @@
+---
 # TODO: Make all bash constants more readable.
 # e.g.: DISTRIBUTION_BRANCH instead of DISTROBRANCH.
 
 - parameter:
     name: integration-distribution-branch
     parameters:
-        - string:
-            name: DISTROBRANCH
-            default: '{branch}'
-            description: 'Distribution GIT branch'
+      - string:
+          name: DISTROBRANCH
+          default: '{branch}'
+          description: 'Distribution GIT branch'
 
 - parameter:
     name: integration-bundleurl
     parameters:
-        - string:
-            name: BUNDLEURL
-            default: '{bundleurl}'
-            description: 'URL to karaf distribution zip'
+      - string:
+          name: BUNDLEURL
+          default: '{bundleurl}'
+          description: 'URL to karaf distribution zip'
 
 - parameter:
     name: integration-jdk-version
     parameters:
-        - string:
-            name: JDKVERSION
-            default: '{jdkversion}'
-            description: 'Parameter to indicate JAVA Version'
+      - string:
+          name: JDKVERSION
+          default: '{jdkversion}'
+          description: 'Parameter to indicate JAVA Version'
 
 - parameter:
     name: integration-controller-scope
     parameters:
-        - string:
-            name: CONTROLLERSCOPE
-            default: '{controller-scope}'
-            description: 'Feature Only or Feature All test'
+      - string:
+          name: CONTROLLERSCOPE
+          default: '{controller-scope}'
+          description: 'Feature Only or Feature All test'
 
 - parameter:
     name: integration-controller-features
     parameters:
-        - string:
-            name: CONTROLLERFEATURES
-            default: '{controller-features}'
-            description: 'Features to install in the controller separated by comma'
+      - string:
+          name: CONTROLLERFEATURES
+          default: '{controller-features}'
+          description: 'Features to install in the controller separated by comma'
 
 - parameter:
     name: integration-distribution-stream
     parameters:
-        - string:
-            name: DISTROSTREAM
-            default: '{stream}'
-            description: 'Distribution stream string, for suites to know which behavior to expect'
+      - string:
+          name: DISTROSTREAM
+          default: '{stream}'
+          description: 'Distribution stream string, for suites to know which behavior to expect'
 
 - parameter:
     name: integration-stream-test-plan
     parameters:
-        - string:
-            name: STREAMTESTPLAN
-            default: '{stream-test-plan}'
-            description: 'Stream-specific test plan we will run'
+      - string:
+          name: STREAMTESTPLAN
+          default: '{stream-test-plan}'
+          description: 'Stream-specific test plan we will run'
 
 - parameter:
     name: integration-test-plan
     parameters:
-        - string:
-            name: TESTPLAN
-            default: '{test-plan}'
-            description: 'General test plan we will run unless stream-specific one is found'
+      - string:
+          name: TESTPLAN
+          default: '{test-plan}'
+          description: 'General test plan we will run unless stream-specific one is found'
 
 - parameter:
     name: integration-test-options
     parameters:
-        - string:
-            name: TESTOPTIONS
-            default: '{test-options}'
-            description: 'Robot command options'
+      - string:
+          name: TESTOPTIONS
+          default: '{test-options}'
+          description: 'Robot command options'
 
 - parameter:
     name: integration-distribution-git-url
     parameters:
-        - string:
-            name: DISTROGITURL
-            default: '{git-url}/integration/distribution'
-            description: 'Distribution GIT URL (do not modify)'
+      - string:
+          name: DISTROGITURL
+          default: '{git-url}/integration/distribution'
+          description: 'Distribution GIT URL (do not modify)'
 
 - parameter:
     name: integration-patch-refspec
     parameters:
-        - string:
-            name: PATCHREFSPEC
-            default: '{branch}'
-            description: 'Integration Patch Refspec'
+      - string:
+          name: PATCHREFSPEC
+          default: '{branch}'
+          description: 'Integration Patch Refspec'
 
 # Macro: integration-gerrit-scm
 # Operation: this macro downloads a project gerrit
@@ -96,15 +97,15 @@
 - scm:
     name: integration-gerrit-scm
     scm:
-        - git:
-            credentials-id: 'opendaylight-jenkins-ssh'
-            url: '$GIT_BASE'
-            basedir: '{basedir}'
-            refspec: '{refspec}'
-            branches:
-                - 'origin/{branch}'
-            skip-tag: true
-            choosing-strategy: 'gerrit'
+      - git:
+          credentials-id: 'opendaylight-jenkins-ssh'
+          url: '$GIT_BASE'
+          basedir: '{basedir}'
+          refspec: '{refspec}'
+          branches:
+            - 'origin/{branch}'
+          skip-tag: true
+          choosing-strategy: 'gerrit'
 
 # Macro: integration-distribution-scm
 # Operation: this macro downloads the integration/distribution repo using distribution as basedir
@@ -113,14 +114,14 @@
 - scm:
     name: integration-distribution-scm
     scm:
-        - git:
-            credentials-id: 'opendaylight-jenkins-ssh'
-            basedir: 'distribution'
-            url: '$DISTROGITURL'
-            refspec: ''
-            branches:
-                - 'origin/{branch}'
-            skip-tag: true
+      - git:
+          credentials-id: 'opendaylight-jenkins-ssh'
+          basedir: 'distribution'
+          url: '$DISTROGITURL'
+          refspec: ''
+          branches:
+            - 'origin/{branch}'
+          skip-tag: true
 
 # Macro: integration-trigger-patch-submitted
 # This is a single macro to use for all csit jobs who vote on every (relevant) patch set.
@@ -135,28 +136,28 @@
 - trigger:
     name: integration-trigger-patch-submitted
     triggers:
-        - gerrit:
-            server-name: '{server}'
-            trigger-on:
-                - patchset-created-event:
-                    exclude-drafts: 'true'
-                    exclude-trivial-rebase: 'false'
-                    exclude-no-code-change: 'true'
-                - draft-published-event
-                - comment-added-contains-event:
-                    comment-contains-value: 'recheck'
-            override-votes: true
-            gerrit-build-unstable-verified-value: +1
-            gerrit-build-unstable-codereview-value: 0
-            projects:
-                - project-compare-type: 'ANT'
-                  project-pattern: '{project}'
-                  branches:
-                      - branch-compare-type: 'ANT'
-                        branch-pattern: '**/{branch}'
-                  file-paths:
-                      - compare-type: 'ANT'
-                        pattern: '{files}'
+      - gerrit:
+          server-name: '{server}'
+          trigger-on:
+            - patchset-created-event:
+                exclude-drafts: 'true'
+                exclude-trivial-rebase: 'false'
+                exclude-no-code-change: 'true'
+            - draft-published-event
+            - comment-added-contains-event:
+                comment-contains-value: 'recheck'
+          override-votes: true
+          gerrit-build-unstable-verified-value: +1
+          gerrit-build-unstable-codereview-value: 0
+          projects:
+            - project-compare-type: 'ANT'
+              project-pattern: '{project}'
+              branches:
+                - branch-compare-type: 'ANT'
+                  branch-pattern: '**/{branch}'
+              file-paths:
+                - compare-type: 'ANT'
+                  pattern: '{files}'
 
 # Macro: integration-openstack-controller-mininet
 # Operation: this macro will spin the controller and mininet vms
@@ -201,24 +202,24 @@
 - builder:
     name: integration-infra-stack
     builders:
-        - integration-cleanup-workspace
-        - shell: |
-            #!/bin/bash
-            # Setup openstack envirnoment file for use by
-            # the opendaylight-infra-stack macro
-            cat > $WORKSPACE/opendaylight-infra-environment.yaml << EOF
-            parameters:
-                vm_0_count: {vm_0_count}
-                vm_0_flavor: {vm_0_flavor}
-                vm_0_image: {vm_0_image}
-                vm_1_count: {vm_1_count}
-                vm_1_flavor: {vm_1_flavor}
-                vm_1_image: {vm_1_image}
-            EOF
-            echo "Contents of opendaylight-infra-environment.yaml ..."
-            cat $WORKSPACE/opendaylight-infra-environment.yaml
-        - opendaylight-infra-stack:
-            stack-template: '{stack-template}'
+      - integration-cleanup-workspace
+      - shell: |
+          #!/bin/bash
+          # Setup openstack envirnoment file for use by
+          # the opendaylight-infra-stack macro
+          cat > $WORKSPACE/opendaylight-infra-environment.yaml << EOF
+          parameters:
+              vm_0_count: {vm_0_count}
+              vm_0_flavor: {vm_0_flavor}
+              vm_0_image: {vm_0_image}
+              vm_1_count: {vm_1_count}
+              vm_1_flavor: {vm_1_flavor}
+              vm_1_image: {vm_1_image}
+          EOF
+          echo "Contents of opendaylight-infra-environment.yaml ..."
+          cat $WORKSPACE/opendaylight-infra-environment.yaml
+      - opendaylight-infra-stack:
+          stack-template: '{stack-template}'
 
 # Macro: integration-infra-stack-3-type
 # Operation: Sets environment and then calls opendaylight-infra-stack to spin
@@ -228,27 +229,27 @@
 - builder:
     name: integration-infra-stack-3-type
     builders:
-        - integration-cleanup-workspace
-        - shell: |
-            #!/bin/bash
-            # Setup openstack envirnoment file for use by
-            # the opendaylight-infra-stack macro
-            cat > $WORKSPACE/opendaylight-infra-environment.yaml << EOF
-            parameters:
-                vm_0_count: {vm_0_count}
-                vm_0_flavor: {vm_0_flavor}
-                vm_0_image: {vm_0_image}
-                vm_1_count: {vm_1_count}
-                vm_1_flavor: {vm_1_flavor}
-                vm_1_image: {vm_1_image}
-                vm_2_count: {vm_2_count}
-                vm_2_flavor: {vm_2_flavor}
-                vm_2_image: {vm_2_image}
-            EOF
-            echo "Contents of opendaylight-infra-environment.yaml ..."
-            cat $WORKSPACE/opendaylight-infra-environment.yaml
-        - opendaylight-infra-stack:
-            stack-template: 'csit-3-instance-type.yaml'
+      - integration-cleanup-workspace
+      - shell: |
+          #!/bin/bash
+          # Setup openstack envirnoment file for use by
+          # the opendaylight-infra-stack macro
+          cat > $WORKSPACE/opendaylight-infra-environment.yaml << EOF
+          parameters:
+              vm_0_count: {vm_0_count}
+              vm_0_flavor: {vm_0_flavor}
+              vm_0_image: {vm_0_image}
+              vm_1_count: {vm_1_count}
+              vm_1_flavor: {vm_1_flavor}
+              vm_1_image: {vm_1_image}
+              vm_2_count: {vm_2_count}
+              vm_2_flavor: {vm_2_flavor}
+              vm_2_image: {vm_2_image}
+          EOF
+          echo "Contents of opendaylight-infra-environment.yaml ..."
+          cat $WORKSPACE/opendaylight-infra-environment.yaml
+      - opendaylight-infra-stack:
+          stack-template: 'csit-3-instance-type.yaml'
 
 # Macro: integration-get-slave-addresses
 # Operation: this macro gets the IP addresses of the dynamic vms
@@ -257,9 +258,7 @@
 - builder:
     name: integration-get-slave-addresses
     builders:
-        - shell:
-            !include-raw:
-                - include-raw-integration-get-slave-addresses.sh
+      - shell: !include-raw: include-raw-integration-get-slave-addresses.sh
 
 # Macro: integration-get-bundle-vars
 # Operation: this macro gets all bundle related variables
@@ -268,9 +267,7 @@
 - builder:
     name: integration-get-bundle-vars
     builders:
-        - shell:
-            !include-raw:
-                - include-raw-integration-get-bundle-vars.sh
+      - shell: !include-raw: include-raw-integration-get-bundle-vars.sh
 
 # Macro: integration-distribution-check
 # Operation: this macro deploys the controller with all fetures
@@ -279,9 +276,7 @@
 - builder:
     name: integration-distribution-check
     builders:
-        - shell:
-            !include-raw:
-                - include-raw-integration-distribution-check.sh
+      - shell: !include-raw: include-raw-integration-distribution-check.sh
 
 # Macro: integration-deploy-controller-verify
 # Operation: this macro deploys the controller with all fetures
@@ -290,9 +285,7 @@
 - builder:
     name: integration-deploy-controller-verify
     builders:
-        - shell:
-            !include-raw:
-                - include-raw-integration-deploy-controller-verify.sh
+      - shell: !include-raw: include-raw-integration-deploy-controller-verify.sh
 
 # Macro: integration-deploy-controller-offline
 # Operation: this macro deploys the controller with no external repo configuration
@@ -301,9 +294,7 @@
 - builder:
     name: integration-deploy-controller-offline
     builders:
-        - shell:
-            !include-raw:
-                - include-raw-integration-deploy-controller-offline.sh
+      - shell: !include-raw: include-raw-integration-deploy-controller-offline.sh
 
 # Macro: integration-deply-controller-run-test
 # Operation: this macro deploys single contoller and runs test
@@ -312,9 +303,7 @@
 - builder:
     name: integration-deploy-controller-run-test
     builders:
-        - shell:
-            !include-raw:
-                - include-raw-integration-deploy-controller-run-test.sh
+      - shell: !include-raw: include-raw-integration-deploy-controller-run-test.sh
 
 # Macro: integration-configure-clustering
 # Operation: this macro configures the clustering
@@ -323,9 +312,7 @@
 - builder:
     name: integration-configure-clustering
     builders:
-        - shell:
-            !include-raw:
-                - include-raw-integration-configure-clustering.sh
+      - shell: !include-raw: include-raw-integration-configure-clustering.sh
 
 # Macro: integration-start-cluster-run-test
 # Operation: this macro starts the 3-node cluster and runs test
@@ -334,9 +321,7 @@
 - builder:
     name: integration-start-cluster-run-test
     builders:
-        - shell:
-            !include-raw:
-                - include-raw-integration-start-cluster-run-test.sh
+      - shell: !include-raw: include-raw-integration-start-cluster-run-test.sh
 
 # Macro: integration-get-bundle-url
 # Operation: this macro gets the job generated distribution URL from distribution pom.xml
@@ -345,9 +330,7 @@
 - builder:
     name: integration-get-bundle-url
     builders:
-        - shell:
-            !include-raw:
-                - include-raw-integration-get-bundle-url.sh
+      - shell: !include-raw: include-raw-integration-get-bundle-url.sh
 
 # Macro: integration-get-bundle-url-root
 # Operation: this macro gets the job generated distribution URL from root pom.xml
@@ -356,9 +339,7 @@
 - builder:
     name: integration-get-bundle-url-root
     builders:
-        - shell:
-            !include-raw:
-                - include-raw-integration-get-bundle-url-root.sh
+      - shell: !include-raw: include-raw-integration-get-bundle-url-root.sh
 
 # Macro: integration-install-robotframework
 # Operation: Installs robotframework using pip to a virtualenv
@@ -367,9 +348,7 @@
 - builder:
     name: integration-install-robotframework
     builders:
-        - shell:
-            !include-raw:
-                - include-raw-integration-install-robotframework.sh
+      - shell: !include-raw: include-raw-integration-install-robotframework.sh
 
 # Macro: integration-cleanup-tmp
 # Operation: Cleans up temporary files created by build
@@ -378,9 +357,7 @@
 - builder:
     name: integration-cleanup-tmp
     builders:
-        - shell:
-            !include-raw:
-                - include-raw-integration-cleanup-tmp.sh
+      - shell: !include-raw: include-raw-integration-cleanup-tmp.sh
 
 # Macro: integration-multipatch-builder
 # Operation: checks out multiple patches and builds custom distribution
@@ -389,9 +366,7 @@
 - builder:
     name: integration-multipatch-builder
     builders:
-        - shell:
-            !include-raw:
-                - include-raw-integration-multipatch-distribution-test.sh
+      - shell: !include-raw: include-raw-integration-multipatch-distribution-test.sh
 
 # Macro: integration-cleanup-workspace
 # Operation: Cleans up files possibly left there by the previous build
@@ -400,9 +375,7 @@
 - builder:
     name: integration-cleanup-workspace
     builders:
-        - shell:
-            !include-raw:
-                - include-raw-integration-cleanup-workspace.sh
+      - shell: !include-raw: include-raw-integration-cleanup-workspace.sh
 
 # Macro: integration-rebase-patch
 # Operation: For cloned project, rebase checked-out Gerrit patch onto $DISTROBRANCH.
@@ -411,16 +384,12 @@
 - builder:
     name: integration-rebase-gerrit-patch
     builders:
-        - shell:
-            !include-raw:
-                - include-raw-integration-rebase-gerrit-patch.sh
+      - shell: !include-raw: include-raw-integration-rebase-gerrit-patch.sh
 
 - builder:
     name: integration-deploy-openstack-run-test
     builders:
-        - shell:
-            !include-raw:
-                - include-raw-integration-deploy-openstack-run-test.sh
+      - shell: !include-raw: include-raw-integration-deploy-openstack-run-test.sh
 
 # Macro: integration-list-jobs
 # Operation: queries Jenkins jobs from jenkins.opendaylight.org and
@@ -437,9 +406,7 @@
 - builder:
     name: integration-list-jobs
     builders:
-        - shell:
-            !include-raw:
-                - include-raw-integration-list-jobs.sh
+      - shell: !include-raw: include-raw-integration-list-jobs.sh
 
 # Macro: integration-replace-block-text
 # Operation: using starting and ending regex to
@@ -456,9 +423,7 @@
 - builder:
     name: integration-replace-block-text
     builders:
-        - shell:
-            !include-raw:
-                - include-raw-integration-replace-block-text.sh
+      - shell: !include-raw: include-raw-integration-replace-block-text.sh
 
 # Macro: integration-compare-distributions
 # Operation: will compare an already created distribtion (probably last
@@ -474,9 +439,7 @@
 - builder:
     name: integration-compare-distributions
     builders:
-        - shell:
-            !include-raw:
-                - include-raw-integration-compare-distributions.sh
+      - shell: !include-raw: include-raw-integration-compare-distributions.sh
 
 ##############
 # Publishers #
@@ -489,35 +452,35 @@
 - publisher:
     name: integration-robot
     publishers:
-        - robot:
-            output-path: ''
-            other-files: ''
-            unstable-threshold: '{unstable-if}'
-            pass-threshold: '{pass-if}'
-            only-critical: false
+      - robot:
+          output-path: ''
+          other-files: ''
+          unstable-threshold: '{unstable-if}'
+          pass-threshold: '{pass-if}'
+          only-critical: false
 
 - publisher:
     name: integration-robot-tempest
     publishers:
-        - robot:
-            output-path: ''
-            other-files:
-                - tempest_results.html
-            unstable-threshold: '{unstable-if}'
-            pass-threshold: '{pass-if}'
-            only-critical: false
+      - robot:
+          output-path: ''
+          other-files:
+            - tempest_results.html
+          unstable-threshold: '{unstable-if}'
+          pass-threshold: '{pass-if}'
+          only-critical: false
 
 - publisher:
     name: integration-csit-archive-build
     publishers:
-        - postbuildscript:
-            builders:
-                - shell: |
-                    #!/bin/bash
-                    mkdir -p $WORKSPACE/archives
-                    curl --output robot-plugin.zip "$BUILD_URL/robot/report/*zip*/robot-plugin.zip"
-                    unzip -d $WORKSPACE/archives robot-plugin.zip
-                    mv *log* *.log *.log.gz *.csv *.png $WORKSPACE/archives || true  # Don't fail if file missing
-            script-only-if-succeeded: False
-            script-only-if-failed: False
-            mark-unstable-if-failed: True
+      - postbuildscript:
+          builders:
+            - shell: |
+                #!/bin/bash
+                mkdir -p $WORKSPACE/archives
+                curl --output robot-plugin.zip "$BUILD_URL/robot/report/*zip*/robot-plugin.zip"
+                unzip -d $WORKSPACE/archives robot-plugin.zip
+                mv *log* *.log *.log.gz *.csv *.png $WORKSPACE/archives || true  # Don't fail if file missing
+          script-only-if-succeeded: 'False'
+          script-only-if-failed: 'False'
+          mark-unstable-if-failed: 'True'
