@@ -1,28 +1,29 @@
+---
 # ODL Releng build templates
 - project:
     name: distribution
     jobs:
-        - '{project-name}-clm-{stream}'
-        - '{project-name}-sonar'
-        - '{project-name}-validate-autorelease-{stream}'
+      - '{project-name}-clm-{stream}'
+      - '{project-name}-sonar'
+      - '{project-name}-validate-autorelease-{stream}'
 
     stream:
-        - carbon:
-            branch: 'master'
-            jdk: openjdk8
-            jdks:
-                - openjdk8
-        - boron:
-            branch: 'stable/boron'
-            jdk: openjdk8
-            jdks:
-                - openjdk8
-        - beryllium:
-            branch: 'stable/beryllium'
-            jdk: openjdk8
-            jdks:
-                - openjdk8
-                - openjdk7
+      - carbon:
+          branch: 'master'
+          jdk: openjdk8
+          jdks:
+            - openjdk8
+      - boron:
+          branch: 'stable/boron'
+          jdk: openjdk8
+          jdks:
+            - openjdk8
+      - beryllium:
+          branch: 'stable/beryllium'
+          jdk: openjdk8
+          jdks:
+            - openjdk8
+            - openjdk7
 
     project: 'integration/distribution'
     project-name: 'distribution'
