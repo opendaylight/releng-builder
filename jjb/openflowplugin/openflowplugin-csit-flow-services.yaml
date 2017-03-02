@@ -1,8 +1,9 @@
+---
 - project:
     name: openflowplugin-csit-flow-services
     jobs:
-        - '{project}-csit-1node-{functionality}-{install}-{stream}'
-        - '{project}-csit-verify-1node-{functionality}'
+      - '{project}-csit-1node-{functionality}-{install}-{stream}'
+      - '{project}-csit-verify-1node-{functionality}'
 
     # The project name
     project: 'openflowplugin'
@@ -12,18 +13,18 @@
 
     # Project branches
     stream:
-        - carbon:
-            branch: 'master'
-            jre: 'openjdk8'
-        - boron:
-            branch: 'stable/boron'
-            jre: 'openjdk8'
+      - carbon:
+          branch: 'master'
+          jre: 'openjdk8'
+      - boron:
+          branch: 'stable/boron'
+          jre: 'openjdk8'
 
     install:
-        - only:
-            scope: 'only'
-        - all:
-            scope: 'all'
+      - only:
+          scope: 'only'
+      - all:
+          scope: 'all'
 
     # Features to install
     install-features: 'odl-openflowplugin-flow-services-ui,odl-openflowplugin-app-table-miss-enforcer'

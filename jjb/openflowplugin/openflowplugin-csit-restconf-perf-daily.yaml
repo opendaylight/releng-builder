@@ -1,7 +1,8 @@
+---
 - project:
     name: openflowplugin-csit-restconf-perf-daily
     jobs:
-        - '{project}-csit-1node-periodic-{functionality}-{install}-{stream}'
+      - '{project}-csit-1node-periodic-{functionality}-{install}-{stream}'
 
     # The project name
     project: 'openflowplugin'
@@ -11,23 +12,28 @@
 
     # Project branches
     stream:
-        - carbon:
-            branch: 'master'
-            jre: 'openjdk8'
-        - boron:
-            branch: 'stable/boron'
-            jre: 'openjdk8'
+      - carbon:
+          branch: 'master'
+          jre: 'openjdk8'
+      - boron:
+          branch: 'stable/boron'
+          jre: 'openjdk8'
 
     install:
-        - only:
-            scope: 'only'
+      - only:
+          scope: 'only'
 
     # Job images
     odl_system_flavor: '8 GB General Purpose v1'
     tools_system_image: 'Ubuntu 14.04 - mininet-ovs-25 - 20170210-0300'
 
     # Features to install
-    install-features: 'odl-openflowplugin-flow-services-ui,odl-jolokia,decanter-collector-jmx,decanter-appender-elasticsearch'
+    # yamllint disable-line rule:line-length
+    install-features: >
+        odl-openflowplugin-flow-services-ui,
+        odl-jolokia,
+        decanter-collector-jmx,
+        decanter-appender-elasticsearch
 
     # Robot custom options
     robot-options: '-v ODL_OF_PLUGIN:lithium -v switch_count:32 -v flow_count:64000'

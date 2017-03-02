@@ -1,8 +1,9 @@
+---
 - project:
     name: openflowplugin-csit-clustering
     jobs:
-        - '{project}-csit-3node-{functionality}-{install}-{stream}'
-        - '{project}-csit-verify-3node-{functionality}'
+      - '{project}-csit-3node-{functionality}-{install}-{stream}'
+      - '{project}-csit-verify-3node-{functionality}'
 
     # The project name
     project: 'openflowplugin'
@@ -12,16 +13,16 @@
 
     # Project branches
     stream:
-        - carbon:
-            branch: 'master'
-            jre: 'openjdk8'
-        - boron:
-            branch: 'stable/boron'
-            jre: 'openjdk8'
+      - carbon:
+          branch: 'master'
+          jre: 'openjdk8'
+      - boron:
+          branch: 'stable/boron'
+          jre: 'openjdk8'
 
     install:
-        - only:
-            scope: 'only'
+      - only:
+          scope: 'only'
 
     # Features to install
     install-features: 'odl-openflowplugin-flow-services-ui,odl-openflowplugin-app-table-miss-enforcer'
