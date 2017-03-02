@@ -78,7 +78,7 @@ if [ ! -z "${ARTIFACTID}" ] && [[ "${BUILD_STATUS}" != "SUCCESS" ]]; then
     fi
 
     echo "${BODY}" | mail -a /tmp/error_msg \
-        -S "from=Jenkins <jenkins-dontreply@opendaylight.org>" \
+        -r "Jenkins <jenkins-dontreply@opendaylight.org>" \
         -s "${SUBJECT}" "${RELEASE_EMAIL}"
 fi
 
