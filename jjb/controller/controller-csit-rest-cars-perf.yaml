@@ -1,7 +1,8 @@
+---
 - project:
     name: controller-csit-rest-cars-perf
     jobs:
-        - '{project}-csit-1node-{functionality}-{install}-{stream}'
+      - '{project}-csit-1node-{functionality}-{install}-{stream}'
 
     # The project name
     project: 'controller'
@@ -11,21 +12,21 @@
 
     # Project branches
     stream:
-        - carbon:
-            branch: 'master'
-            jre: 'openjdk8'
-        - boron:
-            branch: 'stable/boron'
-            jre: 'openjdk8'
-        - beryllium:
-            branch: 'stable/beryllium'
-            jre: 'openjdk7'
+      - carbon:
+          branch: 'master'
+          jre: 'openjdk8'
+      - boron:
+          branch: 'stable/boron'
+          jre: 'openjdk8'
+      - beryllium:
+          branch: 'stable/beryllium'
+          jre: 'openjdk7'
 
     install:
-        - only:
-            scope: 'only'
-        - all:
-            scope: 'all'
+      - only:
+          scope: 'only'
+      - all:
+          scope: 'all'
 
     # Features to install
     install-features: 'odl-restconf,odl-clustering-test-app'
