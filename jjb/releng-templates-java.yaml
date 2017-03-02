@@ -273,9 +273,9 @@
                 #!/bin/bash
                 mkdir -p $WORKSPACE/archives
                 cp karaf*.log $WORKSPACE/archives
-          script-only-if-succeeded: False
-          script-only-if-failed: False
-          mark-unstable-if-failed: True
+          script-only-if-succeeded: false
+          script-only-if-failed: false
+          mark-unstable-if-failed: true
       - archive:
           artifacts: '*.zip'
       - opendaylight-infra-shiplogs:

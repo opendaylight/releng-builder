@@ -301,9 +301,9 @@
                 regexp: '^Build logs: .*'
             # Cleanup after ourselves
             - wipe-org-opendaylight-repo
-          script-only-if-succeeded: False
-          script-only-if-failed: False
-          mark-unstable-if-failed: True
+          script-only-if-succeeded: false
+          script-only-if-failed: false
+          mark-unstable-if-failed: true
       - workspace-cleanup:
           exclude:
             # Do not clean up *.jenkins-trigger files for jobs that use a
@@ -450,7 +450,7 @@
           users:
             - 'opendaylight-jenkins-ssh'
       - openstack:
-          single-use: True
+          single-use: true
 
 - builder:
     name: packer-validate
