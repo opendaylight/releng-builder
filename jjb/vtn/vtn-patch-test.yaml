@@ -1,7 +1,8 @@
+---
 - project:
     name: vtn-patch-test
     jobs:
-        - '{project}-patch-test-{feature}-{stream}'
+      - '{project}-patch-test-{feature}-{stream}'
 
     # The project name
     project: 'vtn'
@@ -10,16 +11,16 @@
 
     # Project branches
     stream:
-        - carbon:
-            branch: 'master'
-            jdk: 'openjdk8'
-            csit-list: >
+      - carbon:
+          branch: 'master'
+          jdk: 'openjdk8'
+          csit-list: >
                vtn-csit-1node-manager-only-{stream},
                vtn-csit-3node-manager-only-{stream}
 
-        - boron:
-            branch: 'stable/boron'
-            jdk: 'openjdk8'
-            csit-list: >
+      - boron:
+          branch: 'stable/boron'
+          jdk: 'openjdk8'
+          csit-list: >
                vtn-csit-1node-manager-only-{stream},
                vtn-csit-3node-manager-only-{stream}

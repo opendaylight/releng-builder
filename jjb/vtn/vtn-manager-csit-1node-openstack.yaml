@@ -1,17 +1,18 @@
+---
 - project:
     name: vtn-manager-csit-openstack-integration
     jobs:
-        - '{project}-csit-{topology}-openstack-{openstack}-{functionality}-{stream}'
+      - '{project}-csit-{topology}-openstack-{openstack}-{functionality}-{stream}'
 
     # The project name
     project: 'vtn'
 
     topology:
-        - 1node:
-            openstack_system_count: 1
-            odl_system_count: 1
-            enable-haproxy: 'no'
-            install-features: 'odl-vtn-manager-neutron,odl-restconf-all'
+      - 1node:
+          openstack_system_count: 1
+          odl_system_count: 1
+          enable-haproxy: 'no'
+          install-features: 'odl-vtn-manager-neutron,odl-restconf-all'
 
     testplan: '{project}-{topology}-openstack.txt'
 
@@ -19,27 +20,27 @@
     functionality: 'neutron'
 
     stream:
-        - carbon:
-            branch: 'master'
-            jre: 'openjdk8'
-        - boron:
-            branch: 'stable/boron'
-            jre: 'openjdk8'
-        - beryllium:
-            branch: 'stable/beryllium'
-            jre: 'openjdk7'
+      - carbon:
+          branch: 'master'
+          jre: 'openjdk8'
+      - boron:
+          branch: 'stable/boron'
+          jre: 'openjdk8'
+      - beryllium:
+          branch: 'stable/beryllium'
+          jre: 'openjdk7'
 
     openstack:
-        - mitaka:
-            openstack-branch: 'stable/mitaka'
-            odl-ml2-branch: 'stable/mitaka'
-            odl-ml2-driver-version: 'v1'
-            openstack_system_image: 'CentOS 7 - devstack-mitaka - 20170210-1356'
-        - newton:
-            openstack-branch: 'stable/newton'
-            odl-ml2-branch: 'stable/newton'
-            odl-ml2-driver-version: 'v1'
-            openstack_system_image: 'CentOS 7 - devstack-newton - 20170210-1344'
+      - mitaka:
+          openstack-branch: 'stable/mitaka'
+          odl-ml2-branch: 'stable/mitaka'
+          odl-ml2-driver-version: 'v1'
+          openstack_system_image: 'CentOS 7 - devstack-mitaka - 20170210-1356'
+      - newton:
+          openstack-branch: 'stable/newton'
+          odl-ml2-branch: 'stable/newton'
+          odl-ml2-driver-version: 'v1'
+          openstack_system_image: 'CentOS 7 - devstack-newton - 20170210-1344'
 
     schedule: ''
 
