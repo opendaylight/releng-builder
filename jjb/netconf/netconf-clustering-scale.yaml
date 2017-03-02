@@ -29,7 +29,9 @@
           scope: 'all'
 
     # Features to install
-    install-features: 'odl-restconf,odl-netconf-clustered-topology'
+    install-features: >
+        odl-restconf,
+        odl-netconf-clustered-topology
 
     # Robot custom options
     robot-options: '-v USE_NETCONF_CONNECTOR:False'
