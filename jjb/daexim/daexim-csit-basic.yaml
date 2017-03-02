@@ -1,7 +1,8 @@
+---
 - project:
     name: daexim-csit-basic
     jobs:
-        - '{project}-csit-1node-{functionality}-{install}-{stream}'
+      - '{project}-csit-1node-{functionality}-{install}-{stream}'
 
     # The project name
     project: 'daexim'
@@ -11,14 +12,15 @@
 
     # Project branches
     stream:
-        - carbon:
-            branch: 'master'
-            jre: 'openjdk8'
-            bundleurl: 'https://jenkins.opendaylight.org/releng/view/daexim/job/daexim-merge-carbon/lastSuccessfulBuild/org.opendaylight.daexim$daexim-karaf/artifact/org.opendaylight.daexim/daexim-karaf/1.0.0-SNAPSHOT/daexim-karaf-1.0.0-SNAPSHOT.zip'
+      - carbon:
+          branch: 'master'
+          jre: 'openjdk8'
+          # yamllint disable-line rule:line-length
+          bundleurl: 'https://jenkins.opendaylight.org/releng/view/daexim/job/daexim-merge-carbon/lastSuccessfulBuild/org.opendaylight.daexim$daexim-karaf/artifact/org.opendaylight.daexim/daexim-karaf/1.0.0-SNAPSHOT/daexim-karaf-1.0.0-SNAPSHOT.zip'
 
     install:
-        - only:
-            scope: 'only'
+      - only:
+          scope: 'only'
 
     # no mininet required
     tools_system_count: 0
