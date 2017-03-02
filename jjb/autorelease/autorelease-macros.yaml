@@ -1,51 +1,52 @@
+---
 # Macros for the AutoRelease project
 - parameter:
     name: autorelease-release-tag
     parameters:
-        - string:
-            name: RELEASE_TAG
-            default: '{release-tag}'
-            description: "The Release train tag to use eg. Beryllium-SR1"
+      - string:
+          name: RELEASE_TAG
+          default: '{release-tag}'
+          description: "The Release train tag to use eg. Beryllium-SR1"
 
 - parameter:
     name: autorelease-release-branch
     parameters:
-        - string:
-            name: RELEASE_BRANCH
-            default: '{release-branch}'
-            description: "The Release train branch to base build off eg. stable/beryllium"
+      - string:
+          name: RELEASE_BRANCH
+          default: '{release-branch}'
+          description: "The Release train branch to base build off eg. stable/beryllium"
 
 - wrapper:
     name: autorelease-build-timeout
     wrappers:
-        - timeout:
-            type: absolute
-            timeout: 1440
-            fail: true
+      - timeout:
+          type: absolute
+          timeout: 1440
+          fail: true
 
 - builder:
     name: autorelease-checkout-gerrit-patch
     builders:
-        - shell: |
-            cd ${GERRIT_PROJECT}
-            echo "Checking out ${GERRIT_PROJECT} patch ${GERRIT_REFSPEC}..."
-            git fetch origin ${GERRIT_REFSPEC} && git checkout FETCH_HEAD
-            cd ..
+      - shell: |
+          cd ${GERRIT_PROJECT}
+          echo "Checking out ${GERRIT_PROJECT} patch ${GERRIT_REFSPEC}..."
+          git fetch origin ${GERRIT_REFSPEC} && git checkout FETCH_HEAD
+          cd ..
 
 - builder:
     name: autorelease-cfp
     builders:
-        - config-file-provider:
-            files:
-                - file-id: 'autorelease-settings'
-                  variable: 'SETTINGS_FILE'
-                - file-id: 'odl-global-settings'
-                  variable: 'GLOBAL_SETTINGS_FILE'
+      - config-file-provider:
+          files:
+            - file-id: 'autorelease-settings'
+              variable: 'SETTINGS_FILE'
+            - file-id: 'odl-global-settings'
+              variable: 'GLOBAL_SETTINGS_FILE'
 
 - builder:
     name: autorelease-determine-merge-order
     builders:
-       - shell: |
+      - shell: |
           # TODO: Remove this condition once stable/beryllium is no longer
           #       officially maintained.
           if [ "$GERRIT_BRANCH" != "stable/beryllium" ]; then
@@ -62,82 +63,80 @@
 - builder:
     name: autorelease-maven-deploy
     builders:
-        - shell:
-            !include-raw:
-                - include-raw-autorelease-maven-deploy.sh
+      - shell: !include-raw: include-raw-autorelease-maven-deploy.sh
 
 - builder:
     name: autorelease-maven-sources
     builders:
-        - maven-target:
-            maven-version: '{maven-version}'
-            pom: 'pom.xml'
-            goals: '--quiet dependency:sources -DoutputFile=$WORKSPACE/sources.log -DappendOutput -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
-            java-opts:
-                - '-Xmx4096m -XX:MaxPermSize=1024m'
-            settings: '{settings}'
-            settings-type: cfp
-            global-settings: '{global-settings}'
-            global-settings-type: cfp
+      - maven-target:
+          maven-version: '{maven-version}'
+          pom: 'pom.xml'
+          goals: >
+              --quiet dependency:sources
+              -DoutputFile=$WORKSPACE/sources.log
+              -DappendOutput
+              -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r
+          java-opts:
+            - '-Xmx4096m -XX:MaxPermSize=1024m'
+          settings: '{settings}'
+          settings-type: cfp
+          global-settings: '{global-settings}'
+          global-settings-type: cfp
 
 - builder:
     name: autorelease-maven-sources-post-process
     builders:
-        - shell: |
-            awk '/The following files have NOT been resolved:/,/^$/' sources.log > missing-sources.log
+      - shell: |
+          awk '/The following files have NOT been resolved:/,/^$/' sources.log > missing-sources.log
 
 - builder:
     name: autorelease-generate-taglist
     builders:
-        - shell: |
-            echo autorelease `git rev-parse --verify HEAD` ${RELEASE_TAG} | tee -a $WORKSPACE/taglist.log
-            git submodule foreach 'echo $path `git rev-parse --verify HEAD` ${RELEASE_TAG} | tee -a $WORKSPACE/taglist.log'
+      - shell: |
+          echo autorelease `git rev-parse --verify HEAD` ${RELEASE_TAG} \
+              | tee -a $WORKSPACE/taglist.log
+          git submodule foreach 'echo $path `git rev-parse --verify HEAD` ${RELEASE_TAG} \
+              | tee -a $WORKSPACE/taglist.log'
 
 - builder:
     name: autorelease-distribute-taglist
     builders:
-        - shell: |
-            if [ -d "integration/distribution/distributions" ]; then
-                cp -vf "$WORKSPACE/taglist.log" "integration/distribution/distributions/karaf/src/main/assembly/"
-            else
-                cp -vf "$WORKSPACE/taglist.log" "integration/distribution/distribution-karaf/src/main/assembly/"
-            fi
+      - shell: |
+          if [ -d "integration/distribution/distributions" ]; then
+              cp -vf "$WORKSPACE/taglist.log" "integration/distribution/distributions/karaf/src/main/assembly/"
+          else
+              cp -vf "$WORKSPACE/taglist.log" "integration/distribution/distribution-karaf/src/main/assembly/"
+          fi
 
 - builder:
     name: autorelease-generate-release-patches
     builders:
-    - shell:
-        !include-raw:
-            - include-raw-autorelease-release-versions.sh
+      - shell: !include-raw: include-raw-autorelease-release-versions.sh
 
 - builder:
     name: autorelease-sys-stats
     builders:
-        - shell: |
-            uname -a
-            df -h
+      - shell: |
+          uname -a
+          df -h
 
 - builder:
     name: autorelease-get-integration-test-variables
     builders:
-    - shell:
-        !include-raw:
-            - include-raw-autorelease-get-integration-test-variables.sh
-    - inject:
-        properties-file: variables.prop
+      - shell: !include-raw: include-raw-autorelease-get-integration-test-variables.sh
+      - inject:
+          properties-file: variables.prop
 
 - builder:
     name: autorelease-generate-project-report
     builders:
-    - shell:
-        !include-raw:
-            - include-raw-generate-project-report.sh
+      - shell: !include-raw: include-raw-generate-project-report.sh
 
 - builder:
     name: autorelease-fix-relative-paths
     builders:
-        - shell: |
-            ./scripts/fix-relativepaths.sh
+      - shell: |
+          ./scripts/fix-relativepaths.sh
 
 - publisher:
     # include-raw-autorelease-notify-build-failure.sh searches console log for
@@ -146,7 +145,6 @@
     publishers:
       - postbuildscript:
           builders:
-              - shell:
-                  !include-raw: include-raw-autorelease-notify-build-failure.sh
-          script-only-if-succeeded: False
-          script-only-if-failed: True
+            - shell: !include-raw: include-raw-autorelease-notify-build-failure.sh
+          script-only-if-succeeded: 'False'
+          script-only-if-failed: 'True'
