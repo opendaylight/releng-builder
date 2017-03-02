@@ -44,7 +44,7 @@ fi
 # Construct email subject & body
 PROJECT_STRING=${PROJECT:+" from $PROJECT"}
 SUBJECT="[release] Autorelease $STREAM failed to build $ARTIFACTID$PROJECT_STRING"
-BODY="Attention$PROJECT_STRING,
+BODY="Attention ${PROJECT:-"OpenDaylight"}-devs,
 
 Autorelease $STREAM failed to build $ARTIFACTID$PROJECT_STRING in build
 $BUILD_NUMBER. Attached is a snippet of the error message related to the
