@@ -1,31 +1,30 @@
+---
 - project:
     name: ovsdb-patch-test
     jobs:
-        - '{project}-patch-test-{feature}-{stream}'
+      - '{project}-patch-test-{feature}-{stream}'
 
     # The project name
     project: 'ovsdb'
 
     stream:
-        - carbon:
-            branch: 'master'
-            jdk: 'openjdk8'
-        - boron:
-            branch: 'stable/boron'
-            jdk: 'openjdk8'
+      - carbon:
+          branch: 'master'
+          jdk: 'openjdk8'
+      - boron:
+          branch: 'stable/boron'
+          jdk: 'openjdk8'
 
     feature:
-        - genius:
-            csit-list: >
-                genius-csit-1node-genius-only-{stream}
+      - genius:
+          csit-list: >
+              genius-csit-1node-genius-only-{stream}
+      - netvirt:
+          csit-list: >
+              netvirt-csit-1node-openstack-newton-nodl-v2-gate-stateful-{stream}
 
-        - netvirt:
-            csit-list: >
-                netvirt-csit-1node-openstack-newton-nodl-v2-gate-stateful-{stream}
-
-        - core:
-            csit-list: >
-                ovsdb-csit-1node-southbound-only-{stream},
-                ovsdb-csit-1node-southbound-all-{stream},
-                ovsdb-csit-3node-clustering-only-{stream}
-
+      - core:
+          csit-list: >
+              ovsdb-csit-1node-southbound-only-{stream},
+              ovsdb-csit-1node-southbound-all-{stream},
+              ovsdb-csit-3node-clustering-only-{stream}
