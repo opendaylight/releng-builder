@@ -1,86 +1,86 @@
 # OLD Releng macros
-
+---
 - property:
     name: opendaylight-infra-properties
     properties:
-        - build-discarder:
-            days-to-keep: '{build-days-to-keep}'
+      - build-discarder:
+          days-to-keep: '{build-days-to-keep}'
 
 - parameter:
     name: opendaylight-infra-parameters
     parameters:
-        - string:
-            name: PROJECT
-            default: '{project}'
-            description: 'Parameter to identify an ODL Gerrit project'
-        - string:
-            name: ARCHIVE_ARTIFACTS
-            default: '{artifacts} **/target/surefire-reports/*-output.txt **/hs_err_*.log **/target/feature/feature.xml'
-            description: 'Space separated glob patterns for artifacts to archive into logs.opendaylight.org'
-        - string:
-            name: GERRIT_PROJECT
-            default: '{project}'
-            description: "GERRIT_PROJECT parameter if not given by trigger"
-        - string:
-            name: GERRIT_BRANCH
-            default: '{branch}'
-            description: "JJB configured GERRIT_BRANCH parameter"
-        - string:
-            name: GERRIT_REFSPEC
-            default: '{refspec}'
-            description: "GERRIT_REFSPEC parameter if not given by trigger"
-        - string:
-            name: STACK_NAME
-            default: '$JOB_NAME-$BUILD_NUMBER'
-            description: "Used by Heat to generate a unique stack & vm name"
+      - string:
+          name: PROJECT
+          default: '{project}'
+          description: 'Parameter to identify an ODL Gerrit project'
+      - string:
+          name: ARCHIVE_ARTIFACTS
+          default: '{artifacts} **/target/surefire-reports/*-output.txt **/hs_err_*.log **/target/feature/feature.xml'
+          description: 'Space separated glob patterns for artifacts to archive into logs.opendaylight.org'
+      - string:
+          name: GERRIT_PROJECT
+          default: '{project}'
+          description: "GERRIT_PROJECT parameter if not given by trigger"
+      - string:
+          name: GERRIT_BRANCH
+          default: '{branch}'
+          description: "JJB configured GERRIT_BRANCH parameter"
+      - string:
+          name: GERRIT_REFSPEC
+          default: '{refspec}'
+          description: "GERRIT_REFSPEC parameter if not given by trigger"
+      - string:
+          name: STACK_NAME
+          default: '$JOB_NAME-$BUILD_NUMBER'
+          description: "Used by Heat to generate a unique stack & vm name"
 
 - parameter:
     name: build-tag
     parameters:
-        - string:
-            name: BUILD_TAG
-            default: ''
-            description: 'Tag in Git to checkout'
+      - string:
+          name: BUILD_TAG
+          default: ''
+          description: 'Tag in Git to checkout'
 
 - parameter:
     name: controller-version-parameter
     parameters:
-        - string:
-            name: ODL_VERSION
-            default: '{odl_version}'
-            description: 'Controller version (for use with openstacks networking_odl project)'
+      - string:
+          name: ODL_VERSION
+          default: '{odl_version}'
+          description: 'Controller version (for use with openstacks networking_odl project)'
 
 - parameter:
     name: patches-to-build-parameter
     parameters:
-        - string:
-            name: PATCHES_TO_BUILD
-            default: ''
-            description: 'csv list of patches in project:changeset format to build distribution with'
+      - string:
+          name: PATCHES_TO_BUILD
+          default: ''
+          description: 'csv list of patches in project:changeset format to build distribution with'
 
 - parameter:
     name: distribution-branch-to-build-parameter
     parameters:
-        - string:
-            name: DISTRIBUTION_BRANCH_TO_BUILD
-            default: 'master'
-            description: 'distribution repo branch to build with'
+      - string:
+          name: DISTRIBUTION_BRANCH_TO_BUILD
+          default: 'master'
+          description: 'distribution repo branch to build with'
 
 - parameter:
     name: p2zip-parameter
     parameters:
-        - string:
-            name: P2ZIP_URL
-            default: ''
-            description: 'Nexus staging profile id'
+      - string:
+          name: P2ZIP_URL
+          default: ''
+          description: 'Nexus staging profile id'
 
 - parameter:
     name: stage-id-parameter
     parameters:
-        - string:
-            name: STAGING_PROFILE_ID
-            default: '{stage-id}'
-            description: 'Nexus staging profile id'
+      - string:
+          name: STAGING_PROFILE_ID
+          default: '{stage-id}'
+          description: 'Nexus staging profile id'
 
 - parameter:
     name: maven-exec
@@ -93,48 +93,48 @@
 - scm:
     name: git-scm
     scm:
-        - git:
-            credentials-id: 'opendaylight-jenkins-ssh'
-            url: '$GIT_BASE'
-            refspec: ''
-            branches:
-                - 'origin/{branch}'
-            skip-tag: true
-            wipe-workspace: true
+      - git:
+          credentials-id: 'opendaylight-jenkins-ssh'
+          url: '$GIT_BASE'
+          refspec: ''
+          branches:
+            - 'origin/{branch}'
+          skip-tag: true
+          wipe-workspace: true
 
 - scm:
     name: git-scm-with-submodules
     scm:
-        - git:
-            credentials-id: 'opendaylight-jenkins-ssh'
-            url: '$GIT_BASE'
-            refspec: ''
-            branches:
-                - 'refs/heads/{branch}'
-            skip-tag: true
-            wipe-workspace: true
-            submodule:
-                recursive: true
+      - git:
+          credentials-id: 'opendaylight-jenkins-ssh'
+          url: '$GIT_BASE'
+          refspec: ''
+          branches:
+            - 'refs/heads/{branch}'
+          skip-tag: true
+          wipe-workspace: true
+          submodule:
+            recursive: true
 
 - scm:
     name: gerrit-trigger-scm
     scm:
-        - git:
-            credentials-id: 'opendaylight-jenkins-ssh'
-            url: '$GIT_BASE'
-            refspec: '{refspec}'
-            branches:
-                - 'origin/$GERRIT_BRANCH'
-            skip-tag: true
-            choosing-strategy: '{choosing-strategy}'
+      - git:
+          credentials-id: 'opendaylight-jenkins-ssh'
+          url: '$GIT_BASE'
+          refspec: '{refspec}'
+          branches:
+            - 'origin/$GERRIT_BRANCH'
+          skip-tag: true
+          choosing-strategy: '{choosing-strategy}'
 
 - wrapper:
     name: build-timeout
     wrappers:
-        - timeout:
-            type: absolute
-            timeout: 360
-            fail: true
+      - timeout:
+          type: absolute
+          timeout: 360
+          fail: true
 
 # This is a single macro to use for all jobs who vote on every (relevant) patch set.
 # Only 'recheck' trigger word is supported, it always triggers the full set of relevant jobs,
@@ -147,131 +147,131 @@
 - trigger:
     name: gerrit-trigger-patch-submitted
     triggers:
-        - gerrit:
-            server-name: '{server}'
-            trigger-on:
-                - patchset-created-event:
-                    exclude-drafts: 'true'
-                    exclude-trivial-rebase: 'false'
-                    exclude-no-code-change: 'true'
-                - draft-published-event
-                - comment-added-contains-event:
-                    comment-contains-value: 'recheck'
-            projects:
-                - project-compare-type: 'ANT'
-                  project-pattern: '{project}'
-                  branches:
-                      - branch-compare-type: 'ANT'
-                        branch-pattern: '**/{branch}'
-                  file-paths:
-                      - compare-type: 'ANT'
-                        pattern: '{files}'
+      - gerrit:
+          server-name: '{server}'
+          trigger-on:
+            - patchset-created-event:
+                exclude-drafts: 'true'
+                exclude-trivial-rebase: 'false'
+                exclude-no-code-change: 'true'
+            - draft-published-event
+            - comment-added-contains-event:
+                comment-contains-value: 'recheck'
+          projects:
+            - project-compare-type: 'ANT'
+              project-pattern: '{project}'
+              branches:
+                - branch-compare-type: 'ANT'
+                  branch-pattern: '**/{branch}'
+              file-paths:
+                - compare-type: 'ANT'
+                  pattern: '{files}'
 
 # TODO: Unify argument names across gerrit-trigger-* macros.
 - trigger:
     name: gerrit-trigger-patch-merged
     triggers:
-        - gerrit:
-            server-name: '{server-name}'
-            trigger-on:
-                - change-merged-event
-                - comment-added-contains-event:
-                    comment-contains-value: 'remerge'
-            projects:
-                - project-compare-type: 'ANT'
-                  project-pattern: '{name}'
-                  branches:
-                      - branch-compare-type: 'ANT'
-                        branch-pattern: '**/{branch}'
-            skip-vote:
-                successful: true
-                failed: true
-                unstable: true
-                notbuilt: true
-            # Force Jenkins always vote the values it should already have voted
-            # during the prior verify phase
-            override-votes: true
-            gerrit-build-started-verified-value: 1
-            gerrit-build-successful-verified-value: 1
-            gerrit-build-failed-verified-value: 1
-            gerrit-build-unstable-verified-value: 1
-            gerrit-build-notbuilt-verified-value: 1
-            gerrit-build-started-codereview-value: 0
-            gerrit-build-successful-codereview-value: 0
-            gerrit-build-failed-codereview-value: 0
-            gerrit-build-unstable-codereview-value: 0
-            gerrit-build-notbuilt-codereview-value: 0
+      - gerrit:
+          server-name: '{server-name}'
+          trigger-on:
+            - change-merged-event
+            - comment-added-contains-event:
+                comment-contains-value: 'remerge'
+          projects:
+            - project-compare-type: 'ANT'
+              project-pattern: '{name}'
+              branches:
+                - branch-compare-type: 'ANT'
+                  branch-pattern: '**/{branch}'
+          skip-vote:
+            successful: true
+            failed: true
+            unstable: true
+            notbuilt: true
+          # Force Jenkins always vote the values it should already have voted
+          # during the prior verify phase
+          override-votes: true
+          gerrit-build-started-verified-value: 1
+          gerrit-build-successful-verified-value: 1
+          gerrit-build-failed-verified-value: 1
+          gerrit-build-unstable-verified-value: 1
+          gerrit-build-notbuilt-verified-value: 1
+          gerrit-build-started-codereview-value: 0
+          gerrit-build-successful-codereview-value: 0
+          gerrit-build-failed-codereview-value: 0
+          gerrit-build-unstable-codereview-value: 0
+          gerrit-build-notbuilt-codereview-value: 0
 
 # TODO: Unify argument names across gerrit-trigger-* macros.
 - trigger:
     name: gerrit-trigger-patch-sonar
     triggers:
-        - gerrit:
-            server-name: '{server-name}'
-            trigger-on:
-                - comment-added-contains-event:
-                    comment-contains-value: 'run-sonar'
-            projects:
-              - project-compare-type: 'ANT'
-                project-pattern: '{name}'
-                branches:
-                  - branch-compare-type: 'ANT'
-                    branch-pattern: '**/master'
-            skip-vote:
-                successful: true
-                failed: true
-                unstable: true
-                notbuilt: true
+      - gerrit:
+          server-name: '{server-name}'
+          trigger-on:
+            - comment-added-contains-event:
+                comment-contains-value: 'run-sonar'
+          projects:
+            - project-compare-type: 'ANT'
+              project-pattern: '{name}'
+              branches:
+                - branch-compare-type: 'ANT'
+                  branch-pattern: '**/master'
+          skip-vote:
+            successful: true
+            failed: true
+            unstable: true
+            notbuilt: true
 
 - publisher:
     name: archive-artifacts
     publishers:
-        - archive:
-            artifacts: '{artifacts}'
-            allow-empty: true
-            fingerprint: true
-            latest-only: true
+      - archive:
+          artifacts: '{artifacts}'
+          allow-empty: true
+          fingerprint: true
+          latest-only: true
 
 - publisher:
     name: email-notification
     publishers:
-        - email-ext:
-            recipients: '{email-recipients}'
-            reply-to: ''
-            content-type: default
-            subject: '{email-prefix} $PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!'
-            body: |
-                $PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:
+      - email-ext:
+          recipients: '{email-recipients}'
+          reply-to: ''
+          content-type: default
+          subject: '{email-prefix} $PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!'
+          body: |
+              $PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:
 
-                Please refer to the logs server URL for console logs when possible
-                and use the Jenkins Build URL as a last resort.
+              Please refer to the logs server URL for console logs when possible
+              and use the Jenkins Build URL as a last resort.
 
-                Console Logs URL:
-                https://logs.opendaylight.org/$SILO/$JENKINS_HOSTNAME/$JOB_NAME/$BUILD_NUMBER
+              Console Logs URL:
+              https://logs.opendaylight.org/$SILO/$JENKINS_HOSTNAME/$JOB_NAME/$BUILD_NUMBER
 
-                Jenkins Build URL:
-                $BUILD_URL
-            unstable: true
-            fixed: true
-            send-to:
-                - recipients
+              Jenkins Build URL:
+              $BUILD_URL
+          unstable: true
+          fixed: true
+          send-to:
+            - recipients
 
 - publisher:
-        name: jacoco-report
-        publishers:
-            - jacoco:
-                exec-pattern: "**/**.exec"
-                class-pattern: "**/classes"
-                source-pattern: "**/src/main/java"
-                exclusion-pattern: "**/gen/**,**/generated-sources/**,**/yang-gen**,**/pax/**"
-                status-update: true
-                targets:
-                  - branch:
-                      healthy: 10
-                      unhealthy: 20
-                  - method:
-                      healthy: 50
-                      unhealthy: 40
+    name: jacoco-report
+    publishers:
+      - jacoco:
+          exec-pattern: "**/**.exec"
+          class-pattern: "**/classes"
+          source-pattern: "**/src/main/java"
+          exclusion-pattern: "**/gen/**,**/generated-sources/**,**/yang-gen**,**/pax/**"
+          status-update: true
+          targets:
+            - branch:
+                healthy: 10
+                unhealthy: 20
+            - method:
+                healthy: 50
+                unhealthy: 40
 
 - publisher:
     name: opendaylight-infra-shiplogs
@@ -285,39 +285,39 @@
     #
     # Also ensure that the workspace is cleaned up at the end of the build.
     publishers:
-        - postbuildscript:
-            builders:
-                - shell: !include-raw: include-raw-stack-delete.sh
-                - shell: !include-raw: include-raw-deploy-archives.sh
-                - maven-target:
-                        maven-version: '{maven-version}'
-                        pom: '.archives/deploy-archives.xml'
-                        goals: 'clean deploy -V -B -q -Dmaven.repo.local=/tmp/r'
-                        settings: 'jenkins-log-archives-settings'
-                        settings-type: cfp
-                        global-settings: 'odl-global-settings'
-                        global-settings-type: cfp
-                - description-setter:
-                    regexp: '^Build logs: .*'
-                # Cleanup after ourselves
-                - wipe-org-opendaylight-repo
-            script-only-if-succeeded: False
-            script-only-if-failed: False
-            mark-unstable-if-failed: True
-        - workspace-cleanup:
-            exclude:
-              # Do not clean up *.jenkins-trigger files for jobs that use a
-              # properties file as input for triggering another build.
-              - '**/*.jenkins-trigger'
-            fail-build: false
+      - postbuildscript:
+          builders:
+            - shell: !include-raw: include-raw-stack-delete.sh
+            - shell: !include-raw: include-raw-deploy-archives.sh
+            - maven-target:
+                maven-version: '{maven-version}'
+                pom: '.archives/deploy-archives.xml'
+                goals: 'clean deploy -V -B -q -Dmaven.repo.local=/tmp/r'
+                settings: 'jenkins-log-archives-settings'
+                settings-type: cfp
+                global-settings: 'odl-global-settings'
+                global-settings-type: cfp
+            - description-setter:
+                regexp: '^Build logs: .*'
+            # Cleanup after ourselves
+            - wipe-org-opendaylight-repo
+          script-only-if-succeeded: False
+          script-only-if-failed: False
+          mark-unstable-if-failed: True
+      - workspace-cleanup:
+          exclude:
+            # Do not clean up *.jenkins-trigger files for jobs that use a
+            # properties file as input for triggering another build.
+            - '**/*.jenkins-trigger'
+          fail-build: false
 
 - builder:
     name: opendaylight-infra-stack
     # opendaylight-infra-stack.sh has a required variable {stack-template} that
     # must be passed into this macro.
     builders:
-        - shell: !include-raw: opendaylight-infra-stack.sh
-        - shell: !include-raw-escape: opendaylight-infra-copy-ssh-keys.sh
+      - shell: !include-raw: opendaylight-infra-stack.sh
+      - shell: !include-raw-escape: opendaylight-infra-copy-ssh-keys.sh
 
 - builder:
     name: opendaylight-infra-push-gerrit-patch
@@ -335,84 +335,89 @@
     #     {gerrit-commit-message} Commit message to assign to commit.
     # NOTE: Requires git review to be installed on node.
     builders:
-        - shell: !include-raw: opendaylight-infra-push-gerrit-patch.sh
+      - shell: !include-raw: opendaylight-infra-push-gerrit-patch.sh
 
 - builder:
     name: distribute-build-url
     # Place URL of the current run of a build job to a file at given path.
     builders:
-        - shell: 'echo "$BUILD_URL" > {path}/build.url'
+      - shell: 'echo "$BUILD_URL" > {path}/build.url'
 
 - builder:
     name: wipe-org-opendaylight-repo
     builders:
-        - shell: 'if [ -d /tmp/r/org/opendaylight ]; then rm -rf /tmp/r/org/opendaylight; fi'
+      - shell: 'if [ -d /tmp/r/org/opendaylight ]; then rm -rf /tmp/r/org/opendaylight; fi'
 
 - builder:
     name: wipe-local-maven-repo
     builders:
-        - shell: 'if [ -d /tmp/r ]; then rm -rf /tmp/r; fi'
+      - shell: 'if [ -d /tmp/r ]; then rm -rf /tmp/r; fi'
 
 - builder:
     name: jacoco-nojava-workaround
     builders:
-        - shell: 'mkdir -p $WORKSPACE/target/classes $WORKSPACE/jacoco/classes'
+      - shell: 'mkdir -p $WORKSPACE/target/classes $WORKSPACE/jacoco/classes'
 
 - builder:
     name: check-clm
     builders:
-        - sonatype-clm:
-            application-name: '{application-name}'
+      - sonatype-clm:
+          application-name: '{application-name}'
 
 - builder:
     name: releng-check-unicode
     builders:
-        - shell: |
-            $WORKSPACE/scripts/check-unicode.sh jjb/
+      - shell: |
+          $WORKSPACE/scripts/check-unicode.sh jjb/
 
 - builder:
     name: provide-maven-settings
     builders:
-    - config-file-provider:
-        files:
-        - file-id: '{global-settings-file}'
-          variable: 'GLOBAL_SETTINGS_FILE'
-        - file-id: '{settings-file}'
-          variable: 'SETTINGS_FILE'
+      - config-file-provider:
+          files:
+            - file-id: '{global-settings-file}'
+              variable: 'GLOBAL_SETTINGS_FILE'
+            - file-id: '{settings-file}'
+              variable: 'SETTINGS_FILE'
 
 - builder:
     name: releng-fetch-p2zip-if-necessary
     builders:
-    - shell: |
-        # Cleanup any existing zips and metadata before we download the new update site
-        rm -f *.zip *.xml
-    - conditional-step:
-        condition-kind: strings-match
-        condition-string1: '$P2ZIP_URL'
-        condition-string2: ''
-        condition-basedir: workspace
-        steps:
+      - shell: |
+          # Cleanup any existing zips and metadata before we download the new update site
+          rm -f *.zip *.xml
+      - conditional-step:
+          condition-kind: strings-match
+          condition-string1: '$P2ZIP_URL'
+          condition-string2: ''
+          condition-basedir: workspace
+          steps:
             # TODO: Figure out latest snapshot version number to pull rather than hardcoding 1.1.1-SNAPSHOT
             - maven-target:
                 maven-version: '{maven-version}'
-                goals: 'org.apache.maven.plugins:maven-dependency-plugin:get org.apache.maven.plugins:maven-dependency-plugin:copy -V -B -Dartifact=org.opendaylight.yangide:org.opendaylight.yangide.update-site:1.1.1-SNAPSHOT:zip -DoutputDirectory=$WORKSPACE'
+                goals: >
+                    org.apache.maven.plugins:maven-dependency-plugin:get
+                    org.apache.maven.plugins:maven-dependency-plugin:copy
+                    -V -B
+                    -Dartifact=org.opendaylight.yangide:org.opendaylight.yangide.update-site:1.1.1-SNAPSHOT:zip
+                    -DoutputDirectory=$WORKSPACE
                 settings: '{settings}'
                 global-settings: '{global-settings}'
 
 - builder:
     name: releng-generate-p2pom
     builders:
-        - shell: !include-raw: include-raw-generate-p2pom.sh
+      - shell: !include-raw: include-raw-generate-p2pom.sh
 
 - builder:
     name: releng-update-p2composite-metadata
     builders:
-    - shell: !include-raw: include-raw-update-p2composite-metadata.sh
-    - conditional-step:
-        condition-kind: file-exists
-        condition-filename: deploy-composite-repo.xml
-        condition-basedir: workspace
-        steps:
+      - shell: !include-raw: include-raw-update-p2composite-metadata.sh
+      - conditional-step:
+          condition-kind: file-exists
+          condition-filename: deploy-composite-repo.xml
+          condition-basedir: workspace
+          steps:
             - maven-target:
                 maven-version: '{maven-version}'
                 pom: 'deploy-composite-repo.xml'
@@ -423,73 +428,73 @@
 - builder:
     name: releng-stage-release
     builders:
-        - shell: !include-raw: include-raw-stage-release.sh
+      - shell: !include-raw: include-raw-stage-release.sh
 
 - wrapper:
     # This wrapper is required for all jobs as it configures the wrappers
     # needed by OpenDaylight infra.
     name: opendaylight-infra-wrappers
     wrappers:
-        - mask-passwords
-        - config-file-provider:
-            files:
-                - file-id: rackspace-heat
-                  target: '$HOME/.config/openstack/clouds.yaml'
-        - timeout:
-            type: absolute
-            timeout: '{build-timeout}'
-            timeout-var: 'BUILD_TIMEOUT'
-            fail: true
-        - timestamps
-        - ssh-agent-credentials:
-            users:
-                - 'opendaylight-jenkins-ssh'
-        - openstack:
-            single-use: True
+      - mask-passwords
+      - config-file-provider:
+          files:
+            - file-id: rackspace-heat
+              target: '$HOME/.config/openstack/clouds.yaml'
+      - timeout:
+          type: absolute
+          timeout: '{build-timeout}'
+          timeout-var: 'BUILD_TIMEOUT'
+          fail: true
+      - timestamps
+      - ssh-agent-credentials:
+          users:
+            - 'opendaylight-jenkins-ssh'
+      - openstack:
+          single-use: True
 
 - builder:
     name: packer-validate
     builders:
-        - config-file-provider:
-            files:
-                - file-id: 'packer-cloud-env'
-                  variable: 'CLOUDENV'
-        - shell: |
-            cd packer
-            varfiles="../packer/vars/*"
-            templates="../packer/templates/*"
-            provision="../packer/provision/*.sh"
-            for v in $varfiles; do
-                [[ "${v##*/}" =~ ^(cloud-env.*)$ ]] && continue
-                for t in $templates; do
-                    export PACKER_LOG="yes" && \
-                    export PACKER_LOG_PATH="packer-validate-${v##*/}-${t##*/}.log" && \
-                                packer.io validate -var-file=$CLOUDENV \
-                                -var-file=$v $t
-                    if [ $? -ne 0 ]; then
-                        break
-                    fi
-                done
-            done
-            for p in $provision; do
-                /bin/bash -n $p > provision-validate-${p##*/}.log 2>&1
-            done
+      - config-file-provider:
+          files:
+            - file-id: 'packer-cloud-env'
+              variable: 'CLOUDENV'
+      - shell: |
+          cd packer
+          varfiles="../packer/vars/*"
+          templates="../packer/templates/*"
+          provision="../packer/provision/*.sh"
+          for v in $varfiles; do
+              [[ "${v##*/}" =~ ^(cloud-env.*)$ ]] && continue
+              for t in $templates; do
+                  export PACKER_LOG="yes" && \
+                  export PACKER_LOG_PATH="packer-validate-${v##*/}-${t##*/}.log" && \
+                              packer.io validate -var-file=$CLOUDENV \
+                              -var-file=$v $t
+                  if [ $? -ne 0 ]; then
+                      break
+                  fi
+              done
+          done
+          for p in $provision; do
+              /bin/bash -n $p > provision-validate-${p##*/}.log 2>&1
+          done
 
 
 - builder:
     name: packer-build
     builders:
-        - config-file-provider:
-            files:
-                - file-id: 'packer-cloud-env'
-                  variable: 'CLOUDENV'
-        - shell: |
-            cd packer
-            export PACKER_LOG="yes" && \
-            export PACKER_LOG_PATH="packer-build.log" && \
-                        packer.io build -var-file=$CLOUDENV \
-                         -var-file=../packer/vars/{platform}.json \
-                         ../packer/templates/{template}.json
+      - config-file-provider:
+          files:
+            - file-id: 'packer-cloud-env'
+              variable: 'CLOUDENV'
+      - shell: |
+          cd packer
+          export PACKER_LOG="yes" && \
+          export PACKER_LOG_PATH="packer-build.log" && \
+                      packer.io build -var-file=$CLOUDENV \
+                       -var-file=../packer/vars/{platform}.json \
+                       ../packer/templates/{template}.json
 
 - builder:
     # TODO: Verify signature after downloading users public key from a locally created
@@ -497,12 +502,12 @@
     # developers public keys into a local repository without increasing the job thoughput.
     name: verify-gpg-signature
     builders:
-        - shell: !include-raw: include-raw-verify-gpg-signatures.sh
+      - shell: !include-raw: include-raw-verify-gpg-signatures.sh
 
 - builder:
     name: opendaylight-infra-jjbini
     builders:
-    - config-file-provider:
+      - config-file-provider:
           files:
             - file-id: 'jjbini'
               target: '$HOME/.config/jenkins_jobs/jenkins_jobs.ini'
