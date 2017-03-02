@@ -31,7 +31,9 @@
     # Features to install
     # odl-jolokia is added automatically just because this is a 3node job.
     # Netconf clustered feature is installed at runtime.
-    install-features: 'odl-netconf-ssh,odl-restconf'
+    install-features: >
+        odl-restconf,
+        odl-netconf-ssh
 
     # Robot custom options
     robot-options: '-v USE_NETCONF_CONNECTOR:False'
