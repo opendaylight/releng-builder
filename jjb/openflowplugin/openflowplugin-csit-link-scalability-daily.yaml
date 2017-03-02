@@ -1,7 +1,8 @@
+---
 - project:
     name: openflowplugin-csit-link-scalability-daily
     jobs:
-        - '{project}-csit-1node-periodic-{functionality}-{install}-{stream}'
+      - '{project}-csit-1node-periodic-{functionality}-{install}-{stream}'
 
     # The project name
     project: 'openflowplugin'
@@ -11,19 +12,23 @@
 
     # Project branches
     stream:
-        - carbon:
-            branch: 'master'
-            jre: 'openjdk8'
-        - boron:
-            branch: 'stable/boron'
-            jre: 'openjdk8'
+      - carbon:
+          branch: 'master'
+          jre: 'openjdk8'
+      - boron:
+          branch: 'stable/boron'
+          jre: 'openjdk8'
 
     install:
-        - only:
-            scope: 'only'
+      - only:
+          scope: 'only'
 
     # Features to install
-    install-features: 'odl-openflowplugin-flow-services-ui,odl-openflowplugin-app-table-miss-enforcer,decanter-collector-jmx,decanter-appender-elasticsearch'
+    install-features: >
+        odl-openflowplugin-flow-services-ui,
+        odl-openflowplugin-app-table-miss-enforcer,
+        decanter-collector-jmx,
+        decanter-appender-elasticsearch
 
     # Robot custom options
     robot-options: ''

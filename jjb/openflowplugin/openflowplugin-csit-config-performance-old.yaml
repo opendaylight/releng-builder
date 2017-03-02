@@ -1,7 +1,8 @@
+---
 - project:
     name: openflowplugin-csit-config-performance-old
     jobs:
-        - '{project}-csit-1node-{functionality}-{install}-{stream}'
+      - '{project}-csit-1node-{functionality}-{install}-{stream}'
 
     # The project name
     project: 'openflowplugin'
@@ -11,13 +12,13 @@
 
     # Project branches
     stream:
-        - beryllium:
-            branch: 'stable/beryllium'
-            jre: 'openjdk7'
+      - beryllium:
+          branch: 'stable/beryllium'
+          jre: 'openjdk7'
 
     install:
-        - only:
-            scope: 'only'
+      - only:
+          scope: 'only'
 
     # Features to install
     install-features: 'odl-openflowplugin-flow-services-ui'
