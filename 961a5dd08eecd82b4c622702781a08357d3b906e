@@ -109,6 +109,24 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_67389bef",
+        "filename": "jjb/packaging/include-raw-test-ansible-deb.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2017-03-02T00:35:42Z",
+      "side": 1,
+      "message": "\u003e Which do you prefer?\n\nI think I prefer passing localhost directly in the call for now, seems simpler. Good job laying out the details.\n\n\u003e The jenkins job `packaging-test-ansible-rpm-master` is successful\n\nVery good!\n\n\u003e However, for `packaging-test-ansible-deb-master`, one of the tasks fails:\n\nI think this is the key bit:\n\n\u003e error while evaluating conditional (in_container.rc \u003d\u003d 1 and firewalld_status.stdout \u003d\u003d \u0027active\u0027): \u0027dict object\u0027 has no attribute \u0027stdout\u0027\n\nThat seems like firewalld_status is a dict unexpectedly. The box this is running on is ubuntu-trusty-mininet-2c-2g. 14.04 wouldn\u0027t have firewalld (or systemd), which is likely the difference from your 16.04. We decided on puppet-opendaylight #131 PR to just support Ubuntu 16.04, not 14.04. We should add an explicit failure to the Ansible role for \u003c16.04 OSs (I think, or maybe explicitly !\u003d16.04).\n\nI don\u0027t see any Jenkins labels for 16.04 in the docs, but I do see it listed under \"published images available to be used with Jenkins jobs\".\n\nHow can we use Ubuntu 16.04, Thanh, Anil et al?",
+      "parentUuid": "fafc7978_de21714e",
+      "revId": "961a5dd08eecd82b4c622702781a08357d3b906e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_7cafb02a",
         "filename": "jjb/packaging/include-raw-test-ansible-rpm.sh",
         "patchSetId": 1
@@ -280,6 +298,24 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_e723ebba",
+        "filename": "jjb/packaging/packaging.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2017-03-02T00:35:42Z",
+      "side": 1,
+      "message": "Yes Akshita, very good, I think that addresses both of Sam\u0027s reviews along these lines.",
+      "parentUuid": "fafc7978_be1e2d0a",
+      "revId": "961a5dd08eecd82b4c622702781a08357d3b906e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_fe1435ea",
         "filename": "jjb/packaging/packaging.yaml",
         "patchSetId": 1
@@ -291,6 +327,30 @@
       "writtenOn": "2017-02-25T15:18:23Z",
       "side": 1,
       "message": "Is it possible to run a single job on two nodes (in this case: `ubuntu-trusty-mininet-2c-2g` and `centos7-java-builder-2c-4g`)?\n\nI went through the documentation: https://docs.openstack.org/infra/jenkins-job-builder/definition.html?highlight\u003dnode#job\nand it seems that we can have multiple nodes but it\u0027s an \u0027or\u0027:\n\n  node: centos7-java-builder-2c-4g || ubuntu-trusty-mininet-2c-2g\n\nI guess we want \u0027\u0026\u0026\u0027. How can we do this?",
+      "range": {
+        "startLine": 324,
+        "startChar": 4,
+        "endLine": 324,
+        "endChar": 37
+      },
+      "revId": "961a5dd08eecd82b4c622702781a08357d3b906e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_272a1390",
+        "filename": "jjb/packaging/packaging.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2017-03-02T00:35:42Z",
+      "side": 1,
+      "message": "I have no idea, sorry. Thanh/Andy?",
+      "parentUuid": "fafc7978_fe1435ea",
       "range": {
         "startLine": 324,
         "startChar": 4,
