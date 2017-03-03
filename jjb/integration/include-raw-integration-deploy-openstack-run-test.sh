@@ -489,7 +489,8 @@ if [ "${ODL_ML2_BRANCH}" == "stable/mitaka" ]; then
   # other timeout problems
   ssh ${OPENSTACK_CONTROL_NODE_IP} "cd /opt/stack; git clone https://git.openstack.org/openstack/requirements; cd requirements; git checkout stable/mitaka; sed -i /openstacksdk/d upper-constraints.txt; sed -i /libvirt-python/d upper-constraints.txt; sed -i /paramiko/d upper-constraints.txt"
   ssh ${OPENSTACK_CONTROL_NODE_IP} "sudo pip install deprecation"
-  ssh ${OPENSTACK_CONTROL_NODE_IP} "cd /opt/stack; git clone https://github.com/openstack/python-openstacksdk; cd python-openstacksdk; sudo python setup.py install"
+  #Fix for recent requirements update  in the  master branch of the sdk.The seciotn must be replaced with a  better  fix.
+  ssh ${OPENSTACK_CONTROL_NODE_IP} "cd /opt/stack; git clone https://github.com/openstack/python-openstacksdk; cd python-openstacksdk; git checkout 0.9.14; sudo python setup.py install"
   ssh ${OPENSTACK_CONTROL_NODE_IP} "cd /opt/stack; git clone https://github.com/paramiko/paramiko; cd paramiko; git checkout 1.17; sudo python setup.py install"
 fi
 
