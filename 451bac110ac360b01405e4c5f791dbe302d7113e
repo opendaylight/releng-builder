@@ -16,6 +16,29 @@
       "revId": "451bac110ac360b01405e4c5f791dbe302d7113e",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_a6755365",
+        "filename": "jjb/integration/include-raw-integration-deploy-openstack-run-test.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-03-03T20:50:02Z",
+      "side": 1,
+      "message": "SC2086: Double quote to prevent globbing and word splitting.\n\nhttps://github.com/koalaman/shellcheck/wiki/SC2086\n\n(We\u0027re going to start running ShellCheck against new code so we might as well make new additions pass ShellCheck)",
+      "range": {
+        "startLine": 493,
+        "startChar": 6,
+        "endLine": 493,
+        "endChar": 34
+      },
+      "revId": "451bac110ac360b01405e4c5f791dbe302d7113e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
