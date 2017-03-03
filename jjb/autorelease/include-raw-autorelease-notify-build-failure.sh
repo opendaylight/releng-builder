@@ -71,13 +71,13 @@ if [ ! -z "${ARTIFACTID}" ] && [[ "${BUILD_STATUS}" != "SUCCESS" ]]; then
     # 1. Full format:    ODL :: $PROJECT :: $ARTIFACTID
     # 2. Partial format: Building $ARTIFACTID
     sed -e "/\[INFO\] Building \(${ARTIFACTID} \|${ODL} :: ${PROJECT} :: ${ARTIFACTID} \)/,/Reactor Summary:/!d;//d" \
-          $CONSOLE_LOG > /tmp/error_msg
+          $CONSOLE_LOG > /tmp/error.txt
 
     if [ -n "${PROJECT}" ]; then
         RELEASE_EMAIL="${RELEASE_EMAIL}, ${PROJECT}-dev@opendaylight.org"
     fi
 
-    echo "${BODY}" | mail -a /tmp/error_msg \
+    echo "${BODY}" | mail -a /tmp/error.txt \
         -r "Jenkins <jenkins-dontreply@opendaylight.org>" \
         -s "${SUBJECT}" "${RELEASE_EMAIL}"
 fi
