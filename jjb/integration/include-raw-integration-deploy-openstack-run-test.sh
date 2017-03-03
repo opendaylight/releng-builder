@@ -477,6 +477,15 @@ ${SSH} ${OPENSTACK_CONTROL_NODE_IP} "bash /tmp/get_devstack.sh"
 create_control_node_local_conf
 scp ${WORKSPACE}/local.conf_control ${OPENSTACK_CONTROL_NODE_IP}:/opt/stack/devstack/local.conf
 
+cat > "${WORKSPACE}/manual_install_package.sh" << EOF
+cd /opt/stack
+git clone "\$1"
+cd "\$2"
+git checkout "\$3"
+sudo python setup.py install
+
+EOF
+
 
 # Workworund for successful stacking with  Mitaka
 if [ "${ODL_ML2_BRANCH}" == "stable/mitaka" ]; then
@@ -488,9 +497,11 @@ if [ "${ODL_ML2_BRANCH}" == "stable/mitaka" ]; then
   # the problem has been solved with  version 1.17. If the latest version of paramiko is used, it causes
   # other timeout problems
   ssh ${OPENSTACK_CONTROL_NODE_IP} "cd /opt/stack; git clone https://git.openstack.org/openstack/requirements; cd requirements; git checkout stable/mitaka; sed -i /openstacksdk/d upper-constraints.txt; sed -i /libvirt-python/d upper-constraints.txt; sed -i /paramiko/d upper-constraints.txt"
+  scp "${WORKSPACE}/manual_install_package.sh"  "${OPENSTACK_CONTROL_NODE_IP}:/tmp"
   ssh ${OPENSTACK_CONTROL_NODE_IP} "sudo pip install deprecation"
-  ssh ${OPENSTACK_CONTROL_NODE_IP} "cd /opt/stack; git clone https://github.com/openstack/python-openstacksdk; cd python-openstacksdk; sudo python setup.py install"
-  ssh ${OPENSTACK_CONTROL_NODE_IP} "cd /opt/stack; git clone https://github.com/paramiko/paramiko; cd paramiko; git checkout 1.17; sudo python setup.py install"
+  #Fix for recent requirements update  in the  master branch of the sdk.The section must be replaced with a better fix.
+  ssh "${OPENSTACK_CONTROL_NODE_IP}" "/tmp/manual_install_package.sh https://github.com/openstack/python-openstacksdk python-openstacksdk 0.9.14"
+  ssh "${OPENSTACK_CONTROL_NODE_IP}" "/tmp/manual_install_package.sh https://github.com/paramiko/paramiko paramiko 1.17"
 fi
 
 ssh ${OPENSTACK_CONTROL_NODE_IP} "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
