@@ -13,10 +13,7 @@
 #   Thanh Ha (The Linux Foundation) - Initial implementation
 ##############################################################################
 
-directory="."
-if [ ! -z "$1" ]; then
-    directory="$1"
-fi
+directory=${1:-"."}
 
 echo "Scanning $directory"
 while IFS= read -r -d '' x
