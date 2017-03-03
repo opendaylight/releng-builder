@@ -113,7 +113,7 @@
             fail-on-missing: true
           - project: 'packaging-build-rpm-master'
             condition: UNSTABLE_OR_BETTER
-            predefined-parameters: DOWNLOAD_URL=$BUNDLEURL
+            predefined-parameters: DOWNLOAD_URL=$BUNDLETARURL
             property-file: variables.jenkins-trigger
             fail-on-missing: true
       - opendaylight-infra-shiplogs:

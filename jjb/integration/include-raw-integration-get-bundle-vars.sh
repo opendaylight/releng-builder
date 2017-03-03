@@ -21,9 +21,12 @@ if [ ${BUNDLEURL} == 'last' ]; then
     echo "Nexus timestamp is ${TIMESTAMP}"
     BUNDLEFOLDER="distribution-karaf-${BUNDLEVERSION}"
     BUNDLE="distribution-karaf-${TIMESTAMP}.zip"
+    BUNDLETAR="distribution-karaf-${TIMESTAMP}.tar.gz"
     ACTUALBUNDLEURL="${NEXUSPATH}/${BUNDLEVERSION}/${BUNDLE}"
+    ACTUALBUNDLETARURL="${NEXUSPATH}/${BUNDLEVERSION}/${BUNDLETAR}"
 else
     ACTUALBUNDLEURL="${BUNDLEURL}"
+    ACTUALBUNDLETARURL="${BUNDLETARURL}"
     BUNDLE="${BUNDLEURL##*/}"
     BUNDLEFOLDER="${BUNDLE//.zip}"
     BUNDLEVERSION="${BUNDLEFOLDER//distribution-karaf-}"
