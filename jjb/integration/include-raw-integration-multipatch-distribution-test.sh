@@ -32,19 +32,32 @@ export GIT_COMMITTER_NAME="Multipatch Job"
 # TODO: Is "patches" still the correct word?
 IFS=',' read -ra PATCHES <<< "${PATCHES_TO_BUILD}"
 
-# For each patch, clone the project.
-# Optionally checkout a specific patch set.
-# Also optionally, cherry-pick series of patch sets.
-# Each patch is found in the ${PATCHES_TO_BUILD} variable
-# as a comma separated list of project[=checkout][:cherry-pick]* values
+# For each patch:
+# * Clone the project.
+# * Optionally, checkout a specific (typically unmerged) Gerrit patch. If none,
+#   default to Integration/Distribution branch via {branch} JJB param.
+# * Also optionally, cherry-pick series of patchs on top of the checkout.
 #
-# Example:  PATCHES_TO_BUILD='odlparent=45/30045/2,yangtools:53/26853/25,mdsal,controller=61/29761/5:45/29645/6,bgpcep:39/30239/1:59/30059/2'
+# Each patch is found in the ${PATCHES_TO_BUILD} variable as a comma separated
+# list of project[=checkout][:cherry-pick]* values.
 #
+# Checkout a (typically unmerged) Gerrit patch on top of odlparent's git clone:
+#
+# PATCHES_TO_BUILD='odlparent=45/30045/2'
+#
+# Checkout patchs for both odlparent and yangtools.
+#
+# PATCHES_TO_BUILD='odlparent=45/30045/2,yangtools:53/26853/25'
+#
+# Checkout a patch for controller, cherry-pick another patch on top of it.
+#
+# PATCHES_TO_BUILD='controller=61/29761/5:45/29645/6'
 distribution_status="not_included"
-for patch_code in "${PATCHES[@]}"
+for patch in "${PATCHES[@]}"
 do
-    echo "working on ${patch_code}"
-    PROJECT=`echo ${patch_code} | cut -d\: -f 1 | cut -d\= -f 1`
+    echo "working on ${patch}"
+    # For patch=controller=61/29761/5:45/29645/6, this gives controller
+    PROJECT=`echo ${patch} | cut -d\: -f 1 | cut -d\= -f 1`
     if [ "${PROJECT}" == "integration/distribution" ]; then
         distribution_status="included"
     fi
@@ -53,7 +66,8 @@ do
     git clone "https://git.opendaylight.org/gerrit/p/${PROJECT}"
     echo "<module>${PROJECT_SHORTNAME}</module>" >> ${POM_FILE}
     cd ${PROJECT_SHORTNAME}
-    CHECKOUT=`echo ${patch_code} | cut -d\= -s -f 2 | cut -d\: -f 1`
+    # For patch=controller=61/29761/5:45/29645/6, this gives 61/29761/5
+    CHECKOUT=`echo ${patch} | cut -d\= -s -f 2 | cut -d\: -f 1`
     if [ "x${CHECKOUT}" != "x" ]; then
         echo "checking out ${CHECKOUT}"
         git fetch "https://git.opendaylight.org/gerrit/${PROJECT}" "refs/changes/$CHECKOUT"
@@ -62,7 +76,8 @@ do
         echo "checking out ${DISTRIBUTION_BRANCH_TO_BUILD}"
         git checkout "${DISTRIBUTION_BRANCH_TO_BUILD}"
     fi
-    PICK_SEGMENT=`echo "${patch_code}" | cut -d\: -s -f 2-`
+    # For patch=controller=61/29761/5:45/29645/6, this gives 45/29645/6
+    PICK_SEGMENT=`echo "${patch}" | cut -d\: -s -f 2-`
     IFS=':' read -ra PICKS <<< "${PICK_SEGMENT}"
     for pick in "${PICKS[@]}"
     do
