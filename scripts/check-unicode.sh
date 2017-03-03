@@ -19,11 +19,12 @@ if [ ! -z "$1" ]; then
 fi
 
 echo "Scanning $directory"
-for x in $(find $directory -type f); do
+while IFS= read -r -d '' x
+do
     if LC_ALL=C grep -q '[^[:print:][:space:]]' "$x"; then
-        echo "file "$x" contains non-ascii characters"
+        echo "file $x contains non-ascii characters"
         exit 1
     fi
-done
+done < <(find "$directory" -type f -print0)
 
 echo "All files are ASCII only"
