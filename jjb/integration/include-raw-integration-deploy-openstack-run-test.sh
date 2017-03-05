@@ -383,7 +383,7 @@ do
     scp "${!CONTROLLERIP}:/tmp/odl${i}_karaf.log.tar" "${WORKSPACE}/odl${i}_karaf.log.tar"
     tar -xvf ${WORKSPACE}/odl${i}_karaf.log.tar -C . --strip-components 2 --transform s/karaf/odl${i}_karaf/g
     grep "ROBOT MESSAGE\| ERROR " odl${i}_karaf.log > odl${i}_err.log
-    grep "ROBOT MESSAGE\| Exception " odl${i}_karaf.log > odl${i}_exception.log
+    grep "ROBOT MESSAGE\|Exception" odl${i}_karaf.log > odl${i}_exception.log
     grep "ROBOT MESSAGE\| ERROR \| WARN \|Exception" odl${i}_karaf.log > odl${i}_err_warn_exception.log
     rm ${WORKSPACE}/odl${i}_karaf.log.tar
 done
