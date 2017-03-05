@@ -12,11 +12,22 @@
 # RELEASE_TAG=Beryllium-SR1  # Example
 # RELEASE_BRANCH=stable/beryllium  # Example
 
+LFTOOLS_DIR="$WORKSPACE/.venv-lftools"
+if [ ! -d "$LFTOOLS_DIR" ]
+then
+    virtualenv $LFTOOLS_DIR
+    source $LFTOOLS_DIR/bin/activate
+    pip install --upgrade pip
+    pip freeze
+    pip install lftools
+fi
+source "$LFTOOLS_DIR/bin/activate"
+
 # Directory to put git format-patches
 PATCH_DIR=`pwd`/patches
 
 echo $RELEASE_TAG
-./scripts/version.sh release $RELEASE_TAG
+lftools version release $RELEASE_TAG
 git submodule foreach "git commit -am \"Release $RELEASE_TAG\" || true"
 git commit -am "Release $RELEASE_TAG"
 
@@ -35,4 +46,3 @@ tar cvzf all-bundles.tar.gz `find $PATCH_DIR -type f -print0 \
                                 | egrep -e ':.*Git bundle.*' \
                                 | cut -d: -f1`
 rm $PATCH_DIR/*.bundle
-
