@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fafc7978_12d453bb",
+        "filename": "jjb/packaging/include-raw-build-rpm.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2017-03-06T19:46:52Z",
+      "side": 1,
+      "message": "yeah, when jjb runs on this patch it gets mad at this line:\n\nfrom the verify job:\n17:31:12 jenkins_jobs.errors.JenkinsJobsException: DOWNLOAD_URL//zip/tar parameter missing to format #!/bin/bash\n\nI\u0027m not sure what the fix is, but you can probably just run\nsome jjb *test* command on your local CLI to figure out.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 42
+      },
+      "revId": "324fb244926e3c567bb1d3c009b53b06af7c838d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
