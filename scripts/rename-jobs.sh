@@ -13,22 +13,22 @@ search_string=$1
 replace_string=$2
 
 echo -n "Enter system (sandbox|releng): "
-read system
+read -r system
 echo -n "Enter username: "
-read username
+read -r username
 echo -n "Enter api_token: "
-read password
+read -r password
 
-echo $username:$password
+echo "$username:$password"
 
-wget -O jenkins-jobs.xml https://jenkins.opendaylight.org/$system/api/xml
+wget -O jenkins-jobs.xml "https://jenkins.opendaylight.org/$system/api/xml"
 
-jobs=`xmlstarlet sel -t -m '//hudson/job' \
+jobs=$(xmlstarlet sel -t -m '//hudson/job' \
                      -n -v 'name' jenkins-jobs.xml | \
-      grep ${search_string}`
+      grep "$search_string")
 
-for job in `echo $jobs | tr "\n" " "`; do
-    new_job=`echo $job | sed -e "s/${search_string}/${replace_string}/"`
+for job in $(echo "$jobs" | tr "\n" " "); do
+    new_job="${job//$search_string/$replace_string}"
     echo "Renaming $job to $new_job"
-    curl --data "newName=${new_job}" "https://$username:$password@jenkins.opendaylight.org/$system/job/${job}/doRename"
+    #curl --data "newName=${new_job}" "https://$username:$password@jenkins.opendaylight.org/$system/job/${job}/doRename"
 done

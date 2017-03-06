@@ -11,21 +11,21 @@
 search_string=$1
 
 echo -n "Enter system (sandbox|releng): "
-read system
+read -r system
 echo -n "Enter username: "
-read username
+read -r username
 echo -n "Enter api_token: "
-read password
+read -r password
 
-echo $username:$password
+echo "$username:$password"
 
-wget -O jenkins-jobs.xml https://jenkins.opendaylight.org/$system/api/xml
+wget -O jenkins-jobs.xml "https://jenkins.opendaylight.org/$system/api/xml"
 
-jobs=`xmlstarlet sel -t -m '//hudson/job' \
+jobs=$(xmlstarlet sel -t -m '//hudson/job' \
                      -n -v 'name' jenkins-jobs.xml | \
-      grep ${search_string}`
+      grep "$search_string")
 
-for job in `echo $jobs | tr "\n" " "`; do
+for job in $(echo "$jobs" | tr "\n" " "); do
     echo "Deleting $job"
     curl -X POST "https://$username:$password@jenkins.opendaylight.org/$system/job/${job}/doDelete"
 done
