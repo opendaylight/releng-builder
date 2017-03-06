@@ -44,8 +44,8 @@ do
 done
 
 echo '---> Installing openvswitch from openstack repo'
-# the newton release has ovs 2.5.0
-yum install -y http://rdoproject.org/repos/openstack-newton/rdo-release-newton.rpm
+# the ocata release has ovs 2.6.1
+yum install -y http://rdoproject.org/repos/openstack-ocata/rdo-release-ocata.rpm
 yum install -y --nogpgcheck openvswitch
 
 cd $OLDPWD
