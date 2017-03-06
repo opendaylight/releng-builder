@@ -4,7 +4,7 @@ set +e  # Do not affect the build result if some part of archiving fails.
 
 # Print out git status at the end of the build before we archive if $WORKSPACE
 # is a git repo.
-if [ -d $WORKSPACE/.git ]; then
+if [ -d "$WORKSPACE/.git" ]; then
     echo ""
     echo "----------> Git Status Report"
     git status
@@ -25,7 +25,7 @@ ARCHIVES_DIR="$JENKINS_HOSTNAME/$JOB_NAME/$BUILD_NUMBER"
 echo "Build logs: <a href=\"$LOGS_SERVER/$SILO/$ARCHIVES_DIR\">$LOGS_SERVER/$SILO/$ARCHIVES_DIR</a>"
 
 mkdir .archives
-cd .archives/
+cd .archives/ || exit 404
 
 cat > deploy-archives.xml <<EOF
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -88,36 +88,36 @@ fi
 
 
 # Ignore logging if archives doesn't exist
-mv $WORKSPACE/archives/ $ARCHIVES_DIR > /dev/null 2>&1
-touch $ARCHIVES_DIR/_build-details.txt
-echo "build-url: ${{BUILD_URL}}" >> $ARCHIVES_DIR/_build-details.txt
-env | grep -v PASSWORD > $ARCHIVES_DIR/_build-enviroment-variables.txt
+mv "$WORKSPACE/archives/" "$ARCHIVES_DIR" > /dev/null 2>&1
+touch "$ARCHIVES_DIR/_build-details.txt"
+echo "build-url: ${{BUILD_URL}}" >> "$ARCHIVES_DIR/_build-details.txt"
+env | grep -v PASSWORD > "$ARCHIVES_DIR/_build-enviroment-variables.txt"
 
 # capture system info
-touch $ARCHIVES_DIR/_sys-info.txt
-{{
-    echo -e "uname -a:\n `uname -a` \n"
-    echo -e "df -h:\n `df -h` \n"
-    echo -e "free -m:\n `free -m` \n"
-    echo -e "nproc:\n `nproc` \n"
-    echo -e "lscpu:\n `lscpu` \n"
-    echo -e "ip addr:\n  `/sbin/ip addr` \n"
-}} 2>&1 | tee -a $ARCHIVES_DIR/_sys-info.txt
+touch "$ARCHIVES_DIR/_sys-info.txt"
+{
+    echo -e "uname -a:\n $(uname -a) \n"
+    echo -e "df -h:\n $(df -h) \n"
+    echo -e "free -m:\n $(free -m) \n"
+    echo -e "nproc:\n $(nproc) \n"
+    echo -e "lscpu:\n $(lscpu) \n"
+    echo -e "ip addr:\n  $(/sbin/ip addr) \n"
+} 2>&1 | tee -a "$ARCHIVES_DIR/_sys-info.txt"
 
 # Magic string used to trim console logs at the appropriate level during wget
 echo "-----END_OF_BUILD-----"
-wget -O $ARCHIVES_DIR/console.log ${{BUILD_URL}}consoleText
-wget -O $ARCHIVES_DIR/console-timestamp.log "${{BUILD_URL}}/timestamps?time=HH:mm:ss&appendLog"
-sed -i '/^-----END_OF_BUILD-----$/,$d' $ARCHIVES_DIR/console.log
-sed -i '/^.*-----END_OF_BUILD-----$/,$d' $ARCHIVES_DIR/console-timestamp.log
+wget -O "$ARCHIVES_DIR/console.log" "${BUILD_URL}consoleText"
+wget -O "$ARCHIVES_DIR/console-timestamp.log" "$BUILD_URL/timestamps?time=HH:mm:ss&appendLog"
+sed -i '/^-----END_OF_BUILD-----$/,$d' "$ARCHIVES_DIR/console.log"
+sed -i '/^.*-----END_OF_BUILD-----$/,$d' "$ARCHIVES_DIR/console-timestamp.log"
 
-gzip $ARCHIVES_DIR/*.txt $ARCHIVES_DIR/*.log
+gzip "$ARCHIVES_DIR"/*.txt "$ARCHIVES_DIR"/*.log
 # find and gzip any 'text' files
-find $ARCHIVES_DIR -type f -print0 \
+find "$ARCHIVES_DIR" -type f -print0 \
                 | xargs -0r file \
                 | egrep -e ':.*text.*' \
                 | cut -d: -f1 \
                 | xargs -d'\n' -r gzip
 
-zip -r archives.zip $JENKINS_HOSTNAME/ > $ARCHIVES_DIR/_archives-zip.log
+zip -r archives.zip "$JENKINS_HOSTNAME/" > "$ARCHIVES_DIR/_archives-zip.log"
 du -sh archives.zip
