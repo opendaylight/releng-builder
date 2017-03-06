@@ -1035,6 +1035,10 @@
           default: '{odl-enable-l3}'
           description: 'Enable L3 FWD in ODL for createing br-ex'
       - string:
+          name: IPSEC_VXLAN_TUNNELS_ENABLED
+          default: '{ipsec-vxlan-tunnels-enabled}'
+          description: 'Enable ipsec over vxlan support for all controllers and computes'
+      - string:
           name: PUBLIC_BRIDGE
           default: '{public-bridge}'
           description: 'Specifies public bridge for provider and external networking'
@@ -1202,6 +1206,10 @@
           name: ODL_ENABLE_L3_FWD
           default: '{odl-enable-l3}'
           description: 'Enable L3 FWD in ODL for createing br-ex'
+      - string:
+          name: IPSEC_VXLAN_TUNNELS_ENABLED
+          default: '{ipsec-vxlan-tunnels-enabled}'
+          description: 'Enable ipsec over vxlan support for all controllers and computes'
       - string:
           name: PUBLIC_BRIDGE
           default: '{public-bridge}'

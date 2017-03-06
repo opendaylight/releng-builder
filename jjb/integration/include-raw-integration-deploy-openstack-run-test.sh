@@ -669,6 +669,38 @@ do
     ${SSH} $ip "sudo ovs-vsctl --may-exist add-br $PUBLIC_BRIDGE -- set bridge $PUBLIC_BRIDGE other-config:disable-in-band=true other_config:hwaddr=f6:00:00:ff:01:0$((devstack_index++))"
 done
 
+# ipsec support
+if [ "${IPSEC_VXLAN_TUNNELS_ENABLED}" == "yes" ]; then
+    ALL_NODES=(${OPENSTACK_CONTROL_NODE_IP} ${COMPUTE_IPS[*]})
+    for ((inx_ip1=0; inx_ip1<$((${#ALL_NODES[@]} - 1)); inx_ip1++))
+    do
+        for ((inx_ip2=$((inx_ip1 + 1)); inx_ip2<${#ALL_NODES[@]}; inx_ip2++))
+        do
+            KEY1=0x$(dd if=/dev/urandom count=32 bs=1 2> /dev/null| xxd -p -c 64)
+            KEY2=0x$(dd if=/dev/urandom count=32 bs=1 2> /dev/null| xxd -p -c 64)
+            ID=0x$(dd if=/dev/urandom count=4 bs=1 2> /dev/null| xxd -p -c 8)
+            ip1=${ALL_NODES[$inx_ip1]}
+            ip2=${ALL_NODES[$inx_ip2]}
+            ${SSH} $ip1 "sudo ip xfrm state add src $ip1 dst $ip2 proto esp spi $ID reqid $ID mode transport auth sha256 $KEY1 enc aes $KEY2"
+            ${SSH} $ip1 "sudo ip xfrm state add src $ip2 dst $ip1 proto esp spi $ID reqid $ID mode transport auth sha256 $KEY1 enc aes $KEY2"
+            ${SSH} $ip1 "sudo ip xfrm policy add src $ip1 dst $ip2 proto udp dir out tmpl src $ip1 dst $ip2 proto esp reqid $ID mode transport"
+            ${SSH} $ip1 "sudo ip xfrm policy add src $ip2 dst $ip1 proto udp dir in tmpl src $ip2 dst $ip1 proto esp reqid $ID mode transport"
+
+            ${SSH} $ip2 "sudo ip xfrm state add src $ip2 dst $ip1 proto esp spi $ID reqid $ID mode transport auth sha256 $KEY1 enc aes $KEY2"
+            ${SSH} $ip2 "sudo ip xfrm state add src $ip1 dst $ip2 proto esp spi $ID reqid $ID mode transport auth sha256 $KEY1 enc aes $KEY2"
+            ${SSH} $ip2 "sudo ip xfrm policy add src $ip2 dst $ip1 proto udp dir out tmpl src $ip2 dst $ip1 proto esp reqid $ID mode transport"
+            ${SSH} $ip2 "sudo ip xfrm policy add src $ip1 dst $ip2 proto udp dir in tmpl src $ip1 dst $ip2 proto esp reqid $ID mode transport"
+        done
+    done
+
+    for ip in ${OPENSTACK_CONTROL_NODE_IP} ${COMPUTE_IPS[*]}
+    do
+        echo "ip xfrm configuration for node $ip:"
+        ${SSH} $ip "sudo ip xfrm policy list"
+        ${SSH} $ip "sudo ip xfrm state list"
+    done
+fi
+
 # Control Node - PUBLIC_BRIDGE will act as the external router
 GATEWAY_IP="10.10.10.250" # FIXME this should be a parameter, also shared with integration-test
 ${SSH} ${OPENSTACK_CONTROL_NODE_IP} "sudo ip link add link ${PUBLIC_BRIDGE} name  ${PUBLIC_BRIDGE}.167 type vlan id 167"
