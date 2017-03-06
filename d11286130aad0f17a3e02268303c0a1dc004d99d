@@ -22,6 +22,30 @@
       "revId": "d11286130aad0f17a3e02268303c0a1dc004d99d",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_5249bb2f",
+        "filename": "jjb/packaging/include-raw-build-rpm.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2017-03-06T17:31:28Z",
+      "side": 1,
+      "message": "Yes, it should be DOWNLOAD_URL, thanks for the catch. It\u0027s BUNDLEURL on the calling end, but Int/Pack\u0027s JJB param calls it DOWNLOAD_URL to match build.py naming. Fixed in the next patchset.",
+      "parentUuid": "fafc7978_41ea99ac",
+      "range": {
+        "startLine": 16,
+        "startChar": 13,
+        "endLine": 16,
+        "endChar": 40
+      },
+      "revId": "d11286130aad0f17a3e02268303c0a1dc004d99d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
