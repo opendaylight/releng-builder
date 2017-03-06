@@ -1,0 +1,13 @@
+[default]
+bears = SpaceConsistencyBear,GitCommitBear
+files = scripts/*
+allow_trailing_whitespace = False
+enforce_newline_at_EOF = True
+indent_size = 4
+use_spaces = yeah
+
+[YAML]
+bears = YAMLLintBear
+files = jjb/**/*.yaml,openstack-hot/**/*.yaml
+document_start = True
+yamllint_config = yamllint.conf
