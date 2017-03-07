@@ -123,10 +123,10 @@
     name: tox_builder_verify
 
     # Required Variables:
-    #     stream:    release stream (eg. boron or carbon)
     #     branch:    git branch (eg. stable/boron or master)
     #     toxdir:    directory containing the project's tox.ini relative to
     #                the workspace. Empty works if tox.ini is at project root.
+    # Note that stream value is not needed.
 
     project-type: freestyle
     node: '{build-node}'
@@ -195,6 +195,26 @@
     #     branch:    git branch (eg. stable/lithium or master)
     #     toxdir:    directory containing the project's tox.ini relative to
     #                the workspace. Empty works if tox.ini is at project root.
+
+    <<: *tox_builder_verify
+
+# Specification for projects outside release cycle, to avoid referring a stream.
+# This is useful mailny for integration-test-jobs, which defines streams for Integration/Distribution,
+# but the tox job is related to Integration/Test only.
+
+- job-template:
+    name: '{project-name}-verify-tox-master'
+
+    # Job template for verify jobs executing tox envlist
+    #
+    # The purpose of this job template is to run tox for projects using this
+    # template.
+    #
+    # Required Variables:
+    #     toxdir:    directory containing the project's tox.ini relative to
+    #                the workspace. Empty works if tox.ini is at project root.
+
+    branch: master
 
     <<: *tox_builder_verify
 
