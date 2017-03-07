@@ -1,0 +1,34 @@
+---
+- project:
+    name: aaa-csit-keystone
+    jobs:
+      - '{project}-csit-1node-{functionality}-{install}-{stream}'
+      - '{project}-csit-verify-1node-{functionality}'
+
+    # The project name
+    project: 'aaa'
+
+    # The functionality under test
+    functionality: 'keystone'
+
+    # Project branches
+    stream:
+      - carbon:
+          branch: 'master'
+          jre: 'openjdk8'
+
+    install:
+      - only:
+          scope: 'only'
+      - all:
+          scope: 'all'
+
+    # Features to install
+    install-features: 'odl-restconf-all'
+
+    tools_system_count: '1'
+    tools_system_flavor: '4 GB General Purpose v1'
+    tools_system_image: 'CentOS 7 - docker - 20170120-1434'
+
+    # Robot custom options
+    robot-options: ''
