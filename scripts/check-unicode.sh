@@ -16,12 +16,10 @@
 directory=${1:-"."}
 
 echo "Scanning $directory"
-while IFS= read -r -d '' x
-do
-    if LC_ALL=C grep -q '[^[:print:][:space:]]' "$x"; then
-        echo "file $x contains non-ascii characters"
-        exit 1
-    fi
-done < <(find "$directory" -type f -print0)
+if LC_ALL=C grep -r '[^[:print:][:space:]]' "$directory"; then
+    echo "Found files containing non-ascii characters."
+    exit 1
+fi
 
 echo "All files are ASCII only"
+
