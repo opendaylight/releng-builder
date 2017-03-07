@@ -127,6 +127,24 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_f9289234",
+        "filename": "jjb/packaging/include-raw-test-ansible-deb.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 6047
+      },
+      "writtenOn": "2017-03-07T11:34:36Z",
+      "side": 1,
+      "message": "\u003e We should add an explicit failure to the Ansible role for \u003c16.04 OSs (I think, or maybe explicitly !\u003d16.04)\n\nSent a patch: https://github.com/dfarrell07/ansible-opendaylight/pull/34\n\n\u003e How can we use Ubuntu 16.04\n\nI think all Ubuntu nodes are being upgraded to Ubuntu 16.04  (https://lists.opendaylight.org/pipermail/integration-dev/2017-March/009235.html).",
+      "parentUuid": "fafc7978_67389bef",
+      "revId": "961a5dd08eecd82b4c622702781a08357d3b906e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_7cafb02a",
         "filename": "jjb/packaging/include-raw-test-ansible-rpm.sh",
         "patchSetId": 1
@@ -351,6 +369,30 @@
       "side": 1,
       "message": "I have no idea, sorry. Thanh/Andy?",
       "parentUuid": "fafc7978_fe1435ea",
+      "range": {
+        "startLine": 324,
+        "startChar": 4,
+        "endLine": 324,
+        "endChar": 37
+      },
+      "revId": "961a5dd08eecd82b4c622702781a08357d3b906e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_1999166e",
+        "filename": "jjb/packaging/packaging.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 6047
+      },
+      "writtenOn": "2017-03-07T11:34:36Z",
+      "side": 1,
+      "message": "I have added a trello card for this: https://trello.com/c/hHsuJ8IG/471-have-a-single-jenkins-job-template-for-both-rpm-and-debs\n\nMaybe we can do this in future?",
+      "parentUuid": "fafc7978_272a1390",
       "range": {
         "startLine": 324,
         "startChar": 4,
