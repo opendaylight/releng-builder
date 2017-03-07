@@ -3,8 +3,9 @@
     name: integration-test
     project: integration/test
     project-name: integration-test
+    test-branch: master
     jobs:
-      - '{project-name}-verify-tox-{stream}'
+      - '{project-name}-verify-tox-master'
       - 'integration-csit-verify-1node-library'
       - 'integration-distribution-test-{stream}'
       - 'integration-patch-test-{stream}'
@@ -52,8 +53,6 @@
     branch: stable/boron
     scope: only
     jre: openjdk8
-    # Integration/Test branch remains hardcoded to 'master' as int/test does not have any other branch.
-    test-branch: master
 
     properties:
       - opendaylight-infra-properties:
