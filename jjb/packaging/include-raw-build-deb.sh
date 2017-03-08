@@ -17,7 +17,7 @@ sudo apt-get install -y --force-yes \
                     gdebi
 
 # Build release specified by build params
-$WORKSPACE/packaging/deb/build.py --major "$VERSION_MAJOR" \
+"$WORKSPACE/packaging/deb/build.py" --major "$VERSION_MAJOR" \
                                   --minor "$VERSION_MINOR" \
                                   --patch "$VERSION_PATCH" \
                                   --deb "$PKG_VERSION" \

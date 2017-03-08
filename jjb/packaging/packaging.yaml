@@ -195,7 +195,7 @@
 
     builders:
       - shell: !include-raw: include-raw-test-rpm.sh
-      - shell: !include-raw: include-raw-test-karaf.sh
+      - shell: !include-raw: include-raw-test-karaf.expect
 
     publishers:
       - archive-artifacts:
