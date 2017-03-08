@@ -12,22 +12,22 @@
 # If we detect a snapshot build then there is no need to run this script.
 # YangIDE has indicated that the only want the latest snapshot released to
 # the snapshot directory.
-if echo $P2ZIP_URL | grep opendaylight.snapshot; then
+if echo "$P2ZIP_URL" | grep opendaylight.snapshot; then
     exit 0
 fi
 if [[ "$P2ZIP_URL" == "" ]]; then
     exit 0
 fi
 
-EPOCH_DATE=`date +%s%3N`
-MVN_METADATA=`echo $P2ZIP_URL | sed 's,/*[^/]\+/*$,,' | sed 's,/*[^/]\+/*$,,'`/maven-metadata.xml
+EPOCH_DATE=$(date +%s%3N)
+MVN_METADATA=$(echo "$P2ZIP_URL" | sed 's,/*[^/]\+/*$,,' | sed 's,/*[^/]\+/*$,,')/maven-metadata.xml
 P2_COMPOSITE_ARTIFACTS=compositeArtifacts.xml
 P2_COMPOSITE_CONTENT=compositeContent.xml
 
-wget $MVN_METADATA -O maven-metadata.xml
+wget "$MVN_METADATA" -O maven-metadata.xml
 
-VERSIONS=`xmlstarlet sel -t -m "/metadata/versioning/versions" -v "version" maven-metadata.xml`
-NUM_VERSIONS=`echo $VERSIONS | wc -w`
+VERSIONS=$(xmlstarlet sel -t -m "/metadata/versioning/versions" -v "version" maven-metadata.xml)
+NUM_VERSIONS=$(echo "$VERSIONS" | wc -w)
 
 
 ##
