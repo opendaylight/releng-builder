@@ -1,0 +1,32 @@
+---
+- project:
+    name: jsonrpc-csit-basic
+    jobs:
+      - '{project}-csit-1node-{functionality}-{install}-{stream}'
+
+    # The project name
+    project: 'jsonrpc'
+
+    # The functionality under test
+    functionality: 'basic'
+
+    # Project branches
+    stream:
+      - carbon:
+          branch: 'master'
+          jre: 'openjdk8'
+          # yamllint disable-line rule:line-length
+          bundleurl: 'https://jenkins.opendaylight.org/releng/view/jsonrpc/job/jsonrpc-merge-carbon/4/org.opendaylight.jsonrpc$jsonrpc-karaf/artifact/org.opendaylight.jsonrpc/jsonrpc-karaf/1.0.0-SNAPSHOT/jsonrpc-karaf-1.0.0-SNAPSHOT.zip'
+
+    install:
+      - only:
+          scope: 'only'
+
+    # no mininet required
+    tools_system_count: 0
+
+    # Features to install
+    install-features: 'odl-jsonrpc'
+
+    # Robot custom options
+    robot-options: ''
