@@ -9,13 +9,14 @@
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
 
-cd /builder/jenkins-scripts
-chmod +x *.sh
+cd /builder/jenkins-scripts || exit 404
+chmod +x -- *.sh
 ./system_type.sh
 
+# shellcheck disable=SC1091
 source /tmp/system_type.sh
 ./basic_settings.sh
-./${SYSTEM_TYPE}.sh
+"./${SYSTEM_TYPE}.sh"
 
 # Create the jenkins user last so that hopefully we don't have to deal with
 # guard files

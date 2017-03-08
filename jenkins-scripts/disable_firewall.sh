@@ -1,13 +1,13 @@
 #!/bin/bash
 
-OS=`facter operatingsystem`
+OS=$(facter operatingsystem)
 
 case "$OS" in
     Fedora)
         systemctl stop firewalld
     ;;
     CentOS|RedHat)
-        if [ `facter operatingsystemrelease | cut -d '.' -f1` -lt "7" ]; then
+        if [ "$(facter operatingsystemrelease | cut -d '.' -f1)" -lt "7" ]; then
             service iptables stop
         else
             systemctl stop firewalld
