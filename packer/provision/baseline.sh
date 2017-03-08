@@ -85,7 +85,7 @@ EOF
             fi
         ;;
         RedHat|CentOS)
-            if [ "$(echo $FACTER_OSVER | cut -d'.' -f1)" -ge "7" ]
+            if [ "$(echo "$FACTER_OSVER" | cut -d'.' -f1)" -ge "7" ]
             then
                 echo "---> not modifying java alternatives as OpenJDK 1.7.0 does not exist"
             else
@@ -138,7 +138,7 @@ Dpkg::Options {
 EOF
 
     # Add hostname to /etc/hosts to fix 'unable to resolve host' issue with sudo
-    sed -i "/127.0.0.1/s/$/ `hostname`/" /etc/hosts
+    sed -i "/127.0.0.1/s/$/ $(hostname)/" /etc/hosts
 
     echo "---> Updating operating system"
 
@@ -149,6 +149,7 @@ EOF
     # Use retry loop to install packages for failing mirrors
     for i in {0..5}
     do
+        echo "Attempt $i of installing base packages..."
         apt-get clean
         apt-get update -m
         apt-get upgrade -m
@@ -156,7 +157,7 @@ EOF
 
         for pkg in unzip xz-utils puppet git git-review libxml-xpath-perl
         do
-            if [ $(dpkg-query -W -f='${Status}' $pkg 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+            if [ "$(dpkg-query -W -f='${Status}' $pkg 2>/dev/null | grep -c "ok installed")" -eq 0 ]; then
               apt-get install $pkg;
             fi
         done
