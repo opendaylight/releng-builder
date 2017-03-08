@@ -1,0 +1,50 @@
+---
+- project:
+    name: jsonrpc-csit-basic
+    jobs:
+      - '{project}-csit-1node-{functionality}-{install}-{stream}'
+
+    # The project name
+    project: 'jsonrpc'
+
+    # The functionality under test
+    functionality: 'basic'
+
+    # Set trigger
+    trigger-jobs: '{project}-merge-{stream}'
+
+    # Project branches
+    stream:
+      - nitrogen:
+          branch: 'master'
+          jre: 'openjdk8'
+          karaf-version: karaf3
+          # yamllint disable-line rule:line-length
+          bundleurl: 'https://jenkins.opendaylight.org/releng/view/jsonrpc/job/jsonrpc-merge-carbon/lastSuccessfulBuild/org.opendaylight.jsonrpc$jsonrpc-karaf/artifact/org.opendaylight.jsonrpc/jsonrpc-karaf/1.1.0-SNAPSHOT/jsonrpc-karaf-1.1.0-SNAPSHOT.zip'
+
+      - carbon:
+          branch: 'stable/carbon'
+          jre: 'openjdk8'
+          karaf-version: karaf3
+          # yamllint disable-line rule:line-length
+          bundleurl: 'https://jenkins.opendaylight.org/releng/view/jsonrpc/job/jsonrpc-merge-carbon/lastSuccessfulBuild/org.opendaylight.jsonrpc$jsonrpc-karaf/artifact/org.opendaylight.jsonrpc/jsonrpc-karaf/1.0.0-SNAPSHOT/jsonrpc-karaf-1.0.0-SNAPSHOT.zip'
+
+      - boron:
+          branch: 'stable/boron'
+          jre: 'openjdk8'
+          karaf-version: karaf3
+          # yamllint disable-line rule:line-length
+          bundleurl: 'https://jenkins.opendaylight.org/releng/view/jsonrpc/job/jsonrpc-merge-carbon/lastSuccessfulBuild/org.opendaylight.jsonrpc$jsonrpc-karaf/artifact/org.opendaylight.jsonrpc/jsonrpc-karaf/1.0.0-SNAPSHOT/jsonrpc-karaf-1.0.0-SNAPSHOT.zip'
+
+    install:
+      - only:
+          scope: 'only'
+
+    # no mininet required
+    tools_system_count: 0
+
+    # Features to install
+    install-features: 'odl-jsonrpc'
+
+    # Robot custom options
+    robot-options: ''
