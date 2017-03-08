@@ -17,18 +17,18 @@ sudo chown -R jenkins:jenkins /opt/stack/new
 sudo bash -c 'echo "stack ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers'
 
 # We need to install some scripts from openstack-infra/project-config
-cd ~
+cd ~ || exit 404
 echo "Setting up infra scripts"
 sudo mkdir -p /usr/local/jenkins/slave_scripts
 git clone https://git.openstack.org/openstack-infra/project-config
-cd project-config
+cd project-config || exit 404
 sudo cp jenkins/scripts/subunit2html.py /usr/local/jenkins/slave_scripts
 
 # Save existing WORKSPACE
 SAVED_WORKSPACE=$WORKSPACE
 export WORKSPACE=~/workspace
 mkdir -p $WORKSPACE
-cd $WORKSPACE
+cd $WORKSPACE || exit 404
 
 # This is the job which checks out devstack-gate
 if [[ ! -e devstack-gate ]]; then
@@ -36,7 +36,7 @@ if [[ ! -e devstack-gate ]]; then
     git clone https://git.openstack.org/openstack-infra/devstack-gate
 else
     echo "Fixing devstack-gate git remotes"
-    cd devstack-gate
+    cd devstack-gate || exit 404
     git remote set-url origin https://git.openstack.org/openstack-infra/devstack-gate
     git remote update
     git reset --hard
@@ -55,11 +55,11 @@ fi
 
 # Set the pieces we want to test
 if [ "$GERRIT_PROJECT" == "openstack/neutron" ]; then
-    ZUUL_PROJECT=$GERRIT_PROJECT
-    ZUUL_BRANCH=$GERRIT_REFSPEC
+    export ZUUL_PROJECT=$GERRIT_PROJECT
+    export ZUUL_BRANCH=$GERRIT_REFSPEC
 elif [ "$GERRIT_PROJECT" == "openstack-dev/devstack" ]; then
-    ZUUL_PROJECT=$GERRIT_PROJECT
-    ZUUL_BRANCH=$GERRIT_REFSPEC
+    export ZUUL_PROJECT=$GERRIT_PROJECT
+    export ZUUL_BRANCH=$GERRIT_REFSPEC
 fi
 
 echo "Setting environment variables"
@@ -72,7 +72,7 @@ DEVSTACK_LOCAL_CONFIG+="ODL_JAVA_MAX_MEM=784m;"
 DEVSTACK_LOCAL_CONFIG+="ODL_JAVA_MAX_PERM_MEM=784m;"
 
 # Set ODL_URL_PREFIX if "nexus proxy" is provided
-URL_PREFIX=${ODLNEXUSPROXY:-https://nexus.opendaylight.org}
+export URL_PREFIX="${ODLNEXUSPROXY:-https://nexus.opendaylight.org}"
 if [ -n "$ODLNEXUSPROXY" ] ; then
     DEVSTACK_LOCAL_CONFIG+="ODL_URL_PREFIX=$ODLNEXUSPROXY;"
 fi
@@ -138,11 +138,11 @@ OS_WORKSPACE=$WORKSPACE
 export WORKSPACE=$SAVED_WORKSPACE
 
 # Copy all the logs
-cp -r $OS_WORKSPACE/logs $WORKSPACE
-cp -a /opt/stack/new/logs/q-odl-karaf* $WORKSPACE/logs
-mkdir -p $WORKSPACE/logs/opendaylight
-cp -a /opt/stack/new/opendaylight/distribution*/etc $WORKSPACE/logs/opendaylight
+cp -r "$OS_WORKSPACE/logs" "$WORKSPACE"
+cp -a /opt/stack/new/logs/q-odl-karaf* "$WORKSPACE/logs"
+mkdir -p "$WORKSPACE/logs/opendaylight"
+cp -a /opt/stack/new/opendaylight/distribution*/etc "$WORKSPACE/logs/opendaylight"
 # Unzip the logs to make them easier to view
-gunzip $WORKSPACE/logs/*.gz
+gunzip "$WORKSPACE"/logs/*.gz
 
 exit $DGRET
