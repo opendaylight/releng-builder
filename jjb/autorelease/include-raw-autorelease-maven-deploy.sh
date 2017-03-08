@@ -10,7 +10,7 @@
 ##############################################################################
 
 # Assuming that mvn deploy created the hide/from/pom/files/stage directory.
-cd hide/from/pom/files
+cd hide/from/pom/files || exit 404
 mkdir -p m2repo/org/opendaylight/
 
 # ODLNEXUSPROXY is used to define the location of the Nexus server used by the CI system.
@@ -29,9 +29,9 @@ rsync -avz --remove-source-files \
            "stage/org/opendaylight" m2repo/org/
 
 "$MVN" -V -B org.sonatype.plugins:nexus-staging-maven-plugin:1.6.2:deploy-staged-repository \
-    -DrepositoryDirectory="`pwd`/m2repo" \
-    -DnexusUrl=$NEXUS_STAGING_URL \
+    -DrepositoryDirectory="$(pwd)/m2repo" \
+    -DnexusUrl="$NEXUS_STAGING_URL" \
     -DstagingProfileId="$NEXUS_STAGING_PROFILE" \
     -DserverId="$NEXUS_STAGING_SERVER_ID" \
-    -s $SETTINGS_FILE \
-    -gs $GLOBAL_SETTINGS_FILE | tee $WORKSPACE/deploy-staged-repository.log
+    -s "$SETTINGS_FILE" \
+    -gs "$GLOBAL_SETTINGS_FILE" | tee "$WORKSPACE/deploy-staged-repository.log"
