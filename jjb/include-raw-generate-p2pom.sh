@@ -9,25 +9,25 @@
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
 
-if [[ $P2ZIP_URL == "" ]]; then
+if [[ "$P2ZIP_URL" == "" ]]; then
     P2ZIP_URL=opendaylight.snapshot/$(find . -name "*.zip" -type f -exec ls "{}" + | head -1)
-    FILE_NAME=`echo $P2ZIP_URL | awk -F'/' '{ print $NF }'`
+    FILE_NAME=$(echo "$P2ZIP_URL" | awk -F'/' '{ print $NF }')
     RELEASE_PATH="snapshot"
 else
-    FILE_NAME=`echo $P2ZIP_URL | awk -F'/' '{ print $NF }'`
-    VERSION=`echo $P2ZIP_URL | awk -F'/' '{ print $(NF-1) }'`
+    FILE_NAME=$(echo "$P2ZIP_URL" | awk -F'/' '{ print $NF }')
+    VERSION=$(echo "$P2ZIP_URL" | awk -F'/' '{ print $(NF-1) }')
     RELEASE_PATH="release/$VERSION"
-    wget --quiet $P2ZIP_URL -O $FILE_NAME
+    wget --quiet "$P2ZIP_URL" -O "$FILE_NAME"
 fi
 
 # If we detect a snapshot build then release to a snapshot repo
 # YangIDE has indicated that the only want the latest snapshot released to
 # the snapshot directory.
-if echo $P2ZIP_URL | grep opendaylight.snapshot; then
+if echo "$P2ZIP_URL" | grep opendaylight.snapshot; then
     RELEASE_PATH="snapshot"
 fi
 
-cat > ${WORKSPACE}/pom.xml <<EOF
+cat > "${WORKSPACE}/pom.xml" <<EOF
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.opendaylight.$PROJECT</groupId>

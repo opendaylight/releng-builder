@@ -10,18 +10,18 @@
 ##############################################################################
 
 # Assuming that mvn deploy created the hide/from/pom/files/stage directory.
-cd hide/from/pom/files
+cd hide/from/pom/files || exit 404
 mkdir -p m2repo/org/opendaylight/
 
 rsync -avz --exclude 'maven-metadata*' \
            --exclude '_remote.repositories' \
            --exclude 'resolver-status.properties' \
-           "stage/org/opendaylight/$m" m2repo/org/opendaylight/
+           "stage/org/opendaylight/$PROJECT" m2repo/org/opendaylight/
 
 mvn org.sonatype.plugins:nexus-staging-maven-plugin:1.6.2:deploy-staged-repository \
-    -DrepositoryDirectory="`pwd`/m2repo" \
+    -DrepositoryDirectory="$(pwd)/m2repo" \
     -DnexusUrl=https://nexus.opendaylight.org/ \
     -DstagingProfileId="$STAGING_PROFILE_ID" \
     -DserverId="opendaylight-staging" \
-    -s $SETTINGS_FILE \
-    -gs $GLOBAL_SETTINGS_FILE | tee $WORKSPACE/deploy-staged-repository.log
+    -s "$SETTINGS_FILE" \
+    -gs "$GLOBAL_SETTINGS_FILE" | tee "$WORKSPACE/deploy-staged-repository.log"

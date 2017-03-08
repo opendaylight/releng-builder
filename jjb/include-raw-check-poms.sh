@@ -14,10 +14,10 @@
 ##############################################################################
 
 # Clear workspace
-rm -rf *
+rm -rf -- "${WORKSPACE:?}"/*
 
 # Create python script to parse json
-cat > ${WORKSPACE}/parse_json.py << EOF
+cat > "${WORKSPACE}/parse_json.py" << EOF
 import json
 import sys
 
@@ -30,8 +30,8 @@ EOF
 # Clone all ODL projects
 curl -s --header "Accept: application/json" \
     https://git.opendaylight.org/gerrit/projects/ | \
-    tail -n +2 > ${WORKSPACE}/projects.json
-for p in `cat ${WORKSPACE}/projects.json | python ${WORKSPACE}/parse_json.py`
+    tail -n +2 > "${WORKSPACE}/projects.json"
+for p in $(python "${WORKSPACE}/parse_json.py" < "${WORKSPACE}/projects.json")
 do
     # Ignore non-projects and archived projects
     if [ "$p" == "All-Users" ] || \
@@ -45,14 +45,14 @@ do
     then
         continue
     fi
-    mkdir -p `dirname "$p"`
+    mkdir -p "$(dirname "$p")"
     git clone "https://git.opendaylight.org/gerrit/$p.git" "$p"
 done
 
 # Check pom.xml for <repositories> and <pluginRepositories>
 FILE=repos.txt
 
-find . -name pom.xml | xargs grep -i '<repositories>\|<pluginRepositories>' > $FILE
+find . -name pom.xml -print0 | xargs -0 grep -i '<repositories>\|<pluginRepositories>' > "$FILE"
 [[ $(tr -d "\r\n" < $FILE|wc -c) -eq 0 ]] && rm $FILE
 
 if [ -a $FILE ]
