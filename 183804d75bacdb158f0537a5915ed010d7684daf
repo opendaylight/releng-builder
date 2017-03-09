@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fafc7978_67cd0931",
+        "filename": "jjb/opendaylight-infra-copy-ssh-keys.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2017-03-09T06:38:53Z",
+      "side": 1,
+      "message": "this line need to change to\n\nif [ $(ssh-copy-id -i /home/jenkins/.ssh/id_rsa.pub \"jenkins@${i}\" \u003e /dev/null 2\u003e\u00261) ]; then",
+      "range": {
+        "startLine": 10,
+        "startChar": 8,
+        "endLine": 10,
+        "endChar": 93
+      },
+      "revId": "183804d75bacdb158f0537a5915ed010d7684daf",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
