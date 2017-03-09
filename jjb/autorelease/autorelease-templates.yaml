@@ -6,6 +6,7 @@
     project-type: freestyle
     node: centos7-autorelease-4c-16g
     jdk: '{jdk}'
+    cron: 'H 0 * * *'
 
     properties:
       - opendaylight-infra-properties:
@@ -42,7 +43,7 @@
           build-timeout: '1440'
 
     triggers:
-      - timed: 'H 0 * * *'
+      - timed: '{cron}'
 
     builders:
       # force jenkins install of maven version before any shell scripts use it
