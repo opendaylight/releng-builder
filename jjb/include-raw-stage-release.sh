@@ -10,7 +10,7 @@
 ##############################################################################
 
 # Assuming that mvn deploy created the hide/from/pom/files/stage directory.
-cd hide/from/pom/files || exit 404
+cd hide/from/pom/files || exit 1
 mkdir -p m2repo/org/opendaylight/
 
 rsync -avz --exclude 'maven-metadata*' \

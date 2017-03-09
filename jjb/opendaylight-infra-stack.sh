@@ -6,7 +6,7 @@ pip install --upgrade pip
 pip install --upgrade python-openstackclient python-heatclient
 pip freeze
 
-cd /builder/openstack-hot || exit 404
+cd /builder/openstack-hot || exit 1
 
 JOB_SUM=$(echo "$JOB_NAME" | sum | awk '{{ print $1 }}')
 VM_NAME="$JOB_SUM-$BUILD_NUMBER"
