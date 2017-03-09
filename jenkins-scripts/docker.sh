@@ -8,8 +8,8 @@ EOF
 
 # make sure jenkins is part of the docker only if jenkins has already been
 # created
-grep -q jenkins /etc/passwd
-if [ "$?" == '0' ]
+
+if grep -q jenkins /etc/passwd
 then
   /usr/sbin/usermod -a -G docker jenkins
 fi
