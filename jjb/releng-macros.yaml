@@ -5,6 +5,9 @@
     properties:
       - build-discarder:
           days-to-keep: '{build-days-to-keep}'
+          num-to-keep: 40
+          artifact-days-to-keep: -1
+          artifact-num-to-keep: 5
 
 - parameter:
     name: opendaylight-infra-parameters
