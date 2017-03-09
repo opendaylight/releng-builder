@@ -203,10 +203,10 @@ Pool: ODLRPC
       </tr>
       <tr>
         <td colspan="4">
-          A CentOS 7 build minion. This system has OpenJDK 1.7 (Java7) and OpenJDK
-          1.8 (Java8) installed on it along with all the other components and
-          libraries needed for building any current OpenDaylight project. This is
-          the label that is used for all basic verify, merge and daily builds for
+          CentOS 7 build minion configured with OpenJDK 1.7 (Java7) and OpenJDK
+          1.8 (Java8) along with all the other components and libraries needed
+          for building any current OpenDaylight project. This is the label that
+          is used for all basic verify, merge and daily builds for
           projects.
         </td>
       </tr>
@@ -220,7 +220,7 @@ Pool: ODLRPC
       </tr>
       <tr>
         <td colspan="4">
-          A CentOS 7 minion that is configured with OpenJDK 1.7 (Java7), OpenJDK
+          CentOS 7 minion configured with OpenJDK 1.7 (Java7), OpenJDK
           1.8 (Java8) and all the current packages used by the integration
           project for doing robot driven jobs. If you are executing robot
           framework jobs then your job should be using this as the minion that
@@ -238,7 +238,7 @@ Pool: ODLRPC
       </tr>
       <tr>
         <td colspan="4">
-          Basic Ubuntu system with ovs 2.0.2 and mininet 2.1.0
+          Basic Ubuntu 14.04 (Trusty) system with ovs 2.0.2 and mininet 2.1.0
         </td>
       </tr>
 
@@ -250,7 +250,7 @@ Pool: ODLRPC
       </tr>
       <tr>
         <td colspan="4">
-          Basic Ubuntu system with ovs 2.3 and mininet 2.2.1
+          Ubuntu 14.04 (Trusty) system with ovs 2.3 and mininet 2.2.1
         </td>
       </tr>
 
@@ -262,7 +262,19 @@ Pool: ODLRPC
       </tr>
       <tr>
         <td colspan="4">
-          Basic Ubuntu system with ovs 2.5 and mininet 2.2.2
+          Ubuntu 14.04 (Trusty) system with ovs 2.5 and mininet 2.2.2
+        </td>
+      </tr>
+
+      <tr class="warning">
+        <td><b>Jenkins Labels</b><br/> ubuntu1604-mininet-ovs-25-2c-4g</td>
+        <td><b>Minion Template names</b><br/> ubuntu1604-mininet-ovs-25-2c-4g</td>
+        <td><b>Packer Template</b><br/> releng/builder/packer/templates/mininet-ovs-2.5.json</td>
+        <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/mininet-ubuntu.sh</td>
+      </tr>
+      <tr>
+        <td colspan="4">
+          Ubuntu 16.04 (Xenial) system with ovs 2.5 and mininet 2.2.1
         </td>
       </tr>
 
@@ -274,7 +286,7 @@ Pool: ODLRPC
       </tr>
       <tr>
         <td colspan="4">
-          A CentOS 7 system purpose built for doing OpenStack testing using
+          CentOS 7 system purpose built for doing OpenStack testing using
           DevStack. This minion is primarily targeted at the needs of the OVSDB
           project. It has OpenJDK 1.7 (aka Java7) and OpenJDK 1.8 (Java8) and
           other basic DevStack related bits installed.
@@ -289,7 +301,7 @@ Pool: ODLRPC
       </tr>
       <tr>
         <td colspan="4">
-          A CentOS 7 system that is configured with OpenJDK 1.7 (aka Java7),
+          CentOS 7 system configured with OpenJDK 1.7 (aka Java7),
           OpenJDK 1.8 (Java8) and Docker. This system was originally custom
           built for the test needs of the OVSDB project but other projects have
           expressed interest in using it.
@@ -304,9 +316,22 @@ Pool: ODLRPC
       </tr>
       <tr>
         <td colspan="4">
-          A basic Ubuntu node with latest OVS and docker installed. Used by Group Based Policy.
+          Ubuntu 14.04 (Trusty) node with latest OVS and docker installed. Used by Group Based Policy.
         </td>
       </tr>
+
+      <tr class="warning">
+        <td><b>Jenkins Labels</b><br/> ubuntu1604-gbp-2c-4g</td>
+        <td><b>Minion Template names</b><br/> ubuntu1604-gbp-2c-4g</td>
+        <td><b>Packer Template</b><br/> releng/builder/packer/templates/gbp.json</td>
+        <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/ubuntu-docker-ovs.sh</td>
+      </tr>
+      <tr>
+        <td colspan="4">
+          Ubuntu 16.04 (Xenial) node with latest OVS and docker installed. Used by Group Based Policy.
+        </td>
+      </tr>
+
     </table>
 
 Pool: ODLPUB - HOT (Heat Orchestration Templates)
