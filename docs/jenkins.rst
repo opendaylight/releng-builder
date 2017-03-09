@@ -238,7 +238,7 @@ Pool: ODLRPC
       </tr>
       <tr>
         <td colspan="4">
-          Basic Ubuntu system with ovs 2.0.2 and mininet 2.1.0
+          Basic Ubuntu 14.04 (Trusty) system with ovs 2.0.2 and mininet 2.1.0
         </td>
       </tr>
 
@@ -250,7 +250,7 @@ Pool: ODLRPC
       </tr>
       <tr>
         <td colspan="4">
-          Basic Ubuntu system with ovs 2.3 and mininet 2.2.1
+          Basic Ubuntu 14.04 (Trusty) system with ovs 2.3 and mininet 2.2.1
         </td>
       </tr>
 
@@ -262,7 +262,19 @@ Pool: ODLRPC
       </tr>
       <tr>
         <td colspan="4">
-          Basic Ubuntu system with ovs 2.5 and mininet 2.2.2
+          Basic Ubuntu 14.04 (Trusty) system with ovs 2.5 and mininet 2.2.2
+        </td>
+      </tr>
+
+      <tr class="warning">
+        <td><b>Jenkins Labels</b><br/> ubuntu-xenial-mininet-ovs-25-2c-4g</td>
+        <td><b>Minion Template names</b><br/> ubuntu-xenial-mininet-ovs-25-2c-4g</td>
+        <td><b>Packer Template</b><br/> releng/builder/packer/templates/mininet-ovs-2.5.json</td>
+        <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/mininet-ubuntu.sh</td>
+      </tr>
+      <tr>
+        <td colspan="4">
+          Basic Ubuntu 16.04 (Xenial) system with ovs 2.5 and mininet 2.2.1
         </td>
       </tr>
 
@@ -304,9 +316,22 @@ Pool: ODLRPC
       </tr>
       <tr>
         <td colspan="4">
-          A basic Ubuntu node with latest OVS and docker installed. Used by Group Based Policy.
+          A basic Ubuntu 14.04 (Trusty) node with latest OVS and docker installed. Used by Group Based Policy.
         </td>
       </tr>
+
+      <tr class="warning">
+        <td><b>Jenkins Labels</b><br/> ubuntu-xenial-gbp-2c-4g</td>
+        <td><b>Minion Template names</b><br/> ubuntu-xenial-gbp-2c-4g</td>
+        <td><b>Packer Template</b><br/> releng/builder/packer/templates/mininet-ovs-2.5.json</td>
+        <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/mininet-ubuntu.sh</td>
+      </tr>
+      <tr>
+        <td colspan="4">
+          Basic Ubuntu 16.04 (Xenial) with latest OVS and docker installed. Used by Group Based Policy.
+        </td>
+      </tr>
+
     </table>
 
 Pool: ODLPUB - HOT (Heat Orchestration Templates)
