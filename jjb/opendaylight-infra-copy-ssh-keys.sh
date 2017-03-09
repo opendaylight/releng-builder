@@ -6,12 +6,12 @@ source "$WORKSPACE/.venv-openstack/bin/activate"
 
 function copy-ssh-keys-to-slave() {
     RETRIES=60
-    for j in $(seq 1 $RETRIES); do
+    for i in $(seq 1 $RETRIES); do
         if ssh-copy-id -i /home/jenkins/.ssh/id_rsa.pub "jenkins@${i}" > /dev/null 2>&1; then
             ssh "jenkins@${i}" 'echo "$(facter ipaddress_eth0) $(/bin/hostname)" | sudo tee -a /etc/hosts'
             echo "Successfully copied public keys to slave ${i}"
             break
-        elif [ "$j" -eq $RETRIES ]; then
+        elif [ "$i" -eq $RETRIES ]; then
             echo "SSH not responding on ${i} after $RETIRES tries. Giving up."
             exit 1
         else
