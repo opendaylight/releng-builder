@@ -11,12 +11,12 @@ pip freeze
 #########################
 # Fetch stack list before fetching active builds to minimize race condition
 # where we might be try to delete stacks while jobs are trying to start
-OS_STACKS=$(openstack --os-cloud rackspace stack list \
+OS_STACKS=($(openstack --os-cloud rackspace stack list \
             -f json -c "Stack Name" -c "Stack Status" \
             --property "stack_status=CREATE_COMPLETE" \
             --property "stack_status=DELETE_FAILED" \
             --property "stack_status=CREATE_FAILED" \
-            | jq -r '.[] | ."Stack Name"')
+            | jq -r '.[] | ."Stack Name"'))
 
 # Make sure we fetch active builds on both the releng and sandbox silos
 ACTIVE_BUILDS=()
@@ -25,7 +25,7 @@ for silo in releng sandbox; do
     wget --no-verbose -O "${silo}_builds.json" "$JENKINS_URL"
     sleep 1  # Need to sleep for 1 second otherwise next line causes script to stall
     ACTIVE_BUILDS=(${ACTIVE_BUILDS[@]} $( \
-        jq -r '.computer[].executors[].currentExecutable.url' "$silo_builds.json" \
+        jq -r '.computer[].executors[].currentExecutable.url' "${silo}_builds.json" \
         | grep -v null | awk -F'/' '{print $6 "-" $7}'))
 done
 
