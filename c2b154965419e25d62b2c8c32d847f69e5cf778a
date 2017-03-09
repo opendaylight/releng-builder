@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fafc7978_4cf0ecc8",
+        "filename": "jjb/neutron/include-raw-openstack-ci.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2017-03-09T03:14:20Z",
+      "side": 1,
+      "message": "This is documented here:\n\nhttps://github.com/koalaman/shellcheck/wiki/SC2164\n\nYou can avoid having these by setting -e to exit on failures.\n\n# Options:\n#   -x: Echo commands\n#   -e: Fail on errors\n#   -o pipefail: Fail on errors in scripts this calls, give stacktrace\nset -ex -o pipefail",
+      "range": {
+        "startLine": 20,
+        "startChar": 5,
+        "endLine": 20,
+        "endChar": 16
+      },
+      "revId": "c2b154965419e25d62b2c8c32d847f69e5cf778a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
