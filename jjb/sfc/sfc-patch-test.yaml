@@ -1,0 +1,23 @@
+---
+- project:
+    name: sfc-patch-test
+    jobs:
+      - '{project}-patch-test-{feature}-{stream}'
+
+    # The project name
+    project: 'sfc'
+
+    # Project branches
+    stream:
+      - carbon:
+          branch: 'master'
+          jdk: 'openjdk8'
+
+    feature:
+      - basic:
+          csit-list: >
+              sfc-csit-3node-rest-basic-all-{stream}
+
+      - full:
+          csit-list: >
+              sfc-csit-3node-docker-full-deploy-all-{stream}
