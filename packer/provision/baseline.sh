@@ -157,7 +157,8 @@ EOF
 
         for pkg in unzip xz-utils puppet git git-review libxml-xpath-perl
         do
-            if dpkg-query -W -f='${Status}' $pkg 2>/dev/null | grep -c "ok installed"; then
+            # shellcheck disable=SC2046
+            if [ $(dpkg-query -W -f='${Status}' $pkg 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
                 apt-get install $pkg
             fi
         done
