@@ -26,7 +26,7 @@ fi
 source "$LFTOOLS_DIR/bin/activate"
 
 # Directory to put git format-patches
-PATCH_DIR="$(pwd)/patches"
+PATCH_DIR="$WORKSPACE/patches"
 
 echo "$RELEASE_TAG"
 lftools version release "$RELEASE_TAG"
@@ -43,8 +43,5 @@ for module in $modules; do
     popd
 done
 
-tar cvzf all-bundles.tar.gz "$(find "$PATCH_DIR" -type f -print0 \
-                                | xargs -0r file             \
-                                | egrep -e ':.*Git bundle.*' \
-                                | cut -d: -f1)"
+tar cvzf patches.tar.gz -C "$WORKSPACE" patches
 rm "$PATCH_DIR"/*.bundle
