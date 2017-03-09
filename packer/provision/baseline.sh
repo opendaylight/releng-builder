@@ -5,6 +5,26 @@
 # force any errors to cause the script and job to end in failure
 set -xeu -o pipefail
 
+ensure_kernel_install() {
+    # Workaround for mkinitrd failing on occassion.
+    # On CentOS 7 it seems like the kernel install can fail it's mkinitrd
+    # run quietly, so we may not notice the failure. This script retries for a
+    # few times before giving up.
+    initramfs_ver=$(rpm -q kernel | tail -1 | sed "s/kernel-/initramfs-/")
+    for i in $(seq 3); do
+        if grep "$initramfs_ver" /boot/grub/grub.conf; then
+            break
+        fi
+        echo "Kernel initrd missing. Retrying to install kernel..."
+        yum reinstall -y kernel
+    done
+    if ! grep "$initramfs_ver" /boot/grub/grub.conf; then
+        cat /boot/grub/grub.conf
+        echo "ERROR: Failed to install kernel."
+        exit 1
+    fi
+}
+
 rh_systems() {
     # Handle the occurance where SELINUX is actually disabled
     SELINUX=$(grep -E '^SELINUX=(disabled|permissive|enforcing)$' /etc/selinux/config)
@@ -50,12 +70,9 @@ EOF
     echo "---> Updating operating system"
     yum clean all
     yum install -y deltarpm
-
-    # Workaround for kernel panic issue that appears sometimes after kernel update
-    #     https://www.centos.org/forums/viewtopic.php?t=22425
-    yum remove -y kernel
     yum update -y
-    yum install -y kernel
+
+    ensure_kernel_install
 
     # add in components we need or want on systems
     echo "---> Installing base packages"
