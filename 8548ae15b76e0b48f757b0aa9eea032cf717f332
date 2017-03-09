@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_eccba06f",
+        "filename": "jjb/opendaylight-infra-stack.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2017-03-09T03:15:16Z",
+      "side": 1,
+      "message": "This is documented here:\n\nhttps://github.com/koalaman/shellcheck/wiki/SC2164\n\nYou can avoid having these by setting -e to exit on failures.\n# Options:\n#   -x: Echo commands\n#   -e: Fail on errors\n#   -o pipefail: Fail on errors in scripts this calls, give stacktrace\nset -ex -o pipefail",
+      "parentUuid": "fafc7978_ac5a38ef",
+      "range": {
+        "startLine": 9,
+        "startChar": 26,
+        "endLine": 9,
+        "endChar": 37
+      },
+      "revId": "8548ae15b76e0b48f757b0aa9eea032cf717f332",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_2c6648bb",
         "filename": "jjb/opendaylight-infra-stack.sh",
         "patchSetId": 1
