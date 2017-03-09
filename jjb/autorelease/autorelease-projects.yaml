@@ -23,7 +23,12 @@
           integration-test: beryllium
 
     project: 'releng/autorelease'
-    archive-artifacts: '**/*.prop **/*.log **/patches/*.bundle **/patches/*.patch all-bundles.tar.gz'
+    archive-artifacts: >
+        **/*.prop
+        **/*.log
+        **/patches/*.bundle
+        **/patches/*.patch
+        patches.tar.gz
 
 ###
 # TODO: Remove this job once guava21 testing is complete
