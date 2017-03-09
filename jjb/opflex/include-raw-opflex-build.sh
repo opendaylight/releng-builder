@@ -28,7 +28,7 @@ pushd libopflex
 ./autogen.sh
 ./configure --prefix="$ROOT" \
     --with-buildversion=$BUILD_NUMBER \
-    CPPFLAGS="-isystem $ROOT/include"
+    CPPFLAGS="-isystem $ROOT/include" \
     CXXFLAGS="-Wall"
 make -j8
 if ! make check; then find . -name test-suite.log -exec cat {} \; && false; fi
