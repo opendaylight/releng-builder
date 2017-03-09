@@ -7,7 +7,7 @@ source "$WORKSPACE/.venv-openstack/bin/activate"
 function copy-ssh-keys-to-slave() {
     RETRIES=60
     for j in $(seq 1 $RETRIES); do
-        if ssh-copy-id -i /home/jenkins/.ssh/id_rsa.pub "jenkins@${i}" > /dev/null 2>&1; then
+        if $(ssh-copy-id -i /home/jenkins/.ssh/id_rsa.pub "jenkins@${i}"); then
             ssh "jenkins@${i}" 'echo "$(facter ipaddress_eth0) $(/bin/hostname)" | sudo tee -a /etc/hosts'
             echo "Successfully copied public keys to slave ${i}"
             break
@@ -32,10 +32,10 @@ function copy-ssh-keys-to-slave() {
 # to which VM types.
 openstack --os-cloud rackspace stack show -c outputs "$STACK_NAME"
 
-ADDR=$(openstack --os-cloud rackspace stack show -f json -c outputs "$STACK_NAME" | \
+ADDR=($(openstack --os-cloud rackspace stack show -f json -c outputs "$STACK_NAME" | \
        jq -r '.outputs[] |
               select(.output_key | match("^vm_[0-9]+_ips\$")) |
-              .output_value | .[]')
+              .output_value | .[]'))
 pids=""
 for i in "${ADDR[@]}"; do
     ( copy-ssh-keys-to-slave ) &
