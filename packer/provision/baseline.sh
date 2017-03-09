@@ -11,14 +11,21 @@ ensure_kernel_install() {
     # run quietly, so we may not notice the failure. This script retries for a
     # few times before giving up.
     initramfs_ver=$(rpm -q kernel | tail -1 | sed "s/kernel-/initramfs-/")
+    grub_conf="/boot/grub/grub.conf"
+    # Public cloud does not use /boot/grub/grub.conf and uses grub2 instead.
+    if [ ! -e "$grub_conf" ]; then
+        echo "$grub_conf not found. Using Grub 2 conf instead."
+        grub_conf="/boot/grub2/grub.cfg"
+    fi
+
     for i in $(seq 3); do
-        if grep "$initramfs_ver" /boot/grub/grub.conf; then
+        if grep "$initramfs_ver" "$grub_conf"; then
             break
         fi
         echo "Kernel initrd missing. Retrying to install kernel..."
         yum reinstall -y kernel
     done
-    if ! grep "$initramfs_ver" /boot/grub/grub.conf; then
+    if ! grep "$initramfs_ver" "$grub_conf"; then
         cat /boot/grub/grub.conf
         echo "ERROR: Failed to install kernel."
         exit 1
