@@ -9,7 +9,7 @@
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
 
-cd /builder/jenkins-scripts || exit 404
+cd /builder/jenkins-scripts || exit 1
 chmod +x -- *.sh
 ./system_type.sh
 

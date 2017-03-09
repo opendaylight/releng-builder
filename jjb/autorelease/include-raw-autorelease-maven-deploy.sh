@@ -10,7 +10,7 @@
 ##############################################################################
 
 # Assuming that mvn deploy created the hide/from/pom/files/stage directory.
-cd hide/from/pom/files || exit 404
+cd hide/from/pom/files || exit 1
 mkdir -p m2repo/org/opendaylight/
 
 # ODLNEXUSPROXY is used to define the location of the Nexus server used by the CI system.

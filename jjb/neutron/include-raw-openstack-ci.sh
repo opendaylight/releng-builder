@@ -17,18 +17,18 @@ sudo chown -R jenkins:jenkins /opt/stack/new
 sudo bash -c 'echo "stack ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers'
 
 # We need to install some scripts from openstack-infra/project-config
-cd ~ || exit 404
+cd ~ || exit 1
 echo "Setting up infra scripts"
 sudo mkdir -p /usr/local/jenkins/slave_scripts
 git clone https://git.openstack.org/openstack-infra/project-config
-cd project-config || exit 404
+cd project-config || exit 1
 sudo cp jenkins/scripts/subunit2html.py /usr/local/jenkins/slave_scripts
 
 # Save existing WORKSPACE
 SAVED_WORKSPACE=$WORKSPACE
 export WORKSPACE=~/workspace
 mkdir -p $WORKSPACE
-cd $WORKSPACE || exit 404
+cd $WORKSPACE || exit 1
 
 # This is the job which checks out devstack-gate
 if [[ ! -e devstack-gate ]]; then
@@ -36,7 +36,7 @@ if [[ ! -e devstack-gate ]]; then
     git clone https://git.openstack.org/openstack-infra/devstack-gate
 else
     echo "Fixing devstack-gate git remotes"
-    cd devstack-gate || exit 404
+    cd devstack-gate || exit 1
     git remote set-url origin https://git.openstack.org/openstack-infra/devstack-gate
     git remote update
     git reset --hard
