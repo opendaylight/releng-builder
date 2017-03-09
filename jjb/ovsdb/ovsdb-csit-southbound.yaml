@@ -8,7 +8,9 @@
     project: 'ovsdb'
 
     # The functionality under test
-    functionality: 'southbound'
+    functionality:
+      - 'upstream-southbound'
+      - 'gate-southbound'
 
     # Project branches
     stream:

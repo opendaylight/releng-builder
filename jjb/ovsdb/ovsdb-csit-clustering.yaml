@@ -8,7 +8,9 @@
     project: 'ovsdb'
 
     # The functionality under test
-    functionality: 'clustering'
+    functionality:
+      - 'upstream-southbound'
+      - 'gate-southbound'
 
     # Project branches
     stream:
