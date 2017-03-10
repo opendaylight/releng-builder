@@ -17,5 +17,6 @@ bears = ShellCheckBear
 files = jenkins-scripts/**/*.sh,
     jjb/**/*.sh,
     scripts/**/*.sh
-ignore = jjb/integration/*.sh
+ignore = jenkins-scripts/*-local-env.sh
+    jjb/integration/*.sh
 shell = bash
