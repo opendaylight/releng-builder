@@ -495,7 +495,7 @@
           cd packer
           export PACKER_LOG="yes" && \
           export PACKER_LOG_PATH="packer-build.log" && \
-                      packer.io build -var-file=$CLOUDENV \
+                      packer.io build -color=false -var-file=$CLOUDENV \
                        -var-file=../packer/vars/{platform}.json \
                        ../packer/templates/{template}.json
 
