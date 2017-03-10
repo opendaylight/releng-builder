@@ -1,0 +1,32 @@
+---
+- project:
+    name: mdsal-csit-longevity-clustering-singleton-partition-and-heal
+    jobs:
+      - '{project}-csit-1node-longevity-{functionality}-{install}-{stream}'
+
+    # The project name
+    project: 'controller'
+
+    # The functionality under test
+    functionality: 'partition-and-heal'
+
+    # Project branches
+    stream:
+      - carbon:
+          branch: 'master'
+          jre: 'openjdk8'
+
+    install:
+      - only:
+          scope: 'only'
+
+    # Schedule once a week
+    schedule: '0 0 12 ? * FRI *'
+
+    # Features to install
+    install-features: >
+        odl-restconf,
+        odl-clustering-test-app
+
+    # Robot custom options
+    robot-options: ''
