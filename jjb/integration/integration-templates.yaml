@@ -122,8 +122,6 @@
       - opendaylight-infra-properties:
           build-days-to-keep: '{build-days-to-keep}'
 
-    testplan: '{project}-{functionality}.txt'
-
     parameters:
       - opendaylight-infra-parameters:
           project: 'integration/test'
@@ -145,7 +143,7 @@
       - integration-stream-test-plan:
           stream-test-plan: '{project}-{functionality}-{stream}.txt'
       - integration-test-plan:
-          test-plan: '{testplan}'
+          test-plan: '{project}-{functionality}.txt'
       - integration-patch-refspec:
           branch: 'master'
       - integration-jdk-version:
@@ -540,8 +538,6 @@
       - opendaylight-infra-properties:
           build-days-to-keep: '{build-days-to-keep}'
 
-    testplan: '{project}-{functionality}.txt'
-
     parameters:
       - opendaylight-infra-parameters:
           project: 'integration/test'
@@ -563,7 +559,7 @@
       - integration-stream-test-plan:
           stream-test-plan: '{project}-{functionality}-{stream}.txt'
       - integration-test-plan:
-          test-plan: '{testplan}'
+          test-plan: '{project}-{functionality}.txt'
       - integration-patch-refspec:
           branch: 'master'
       - integration-jdk-version:
