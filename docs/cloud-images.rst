@@ -13,6 +13,7 @@ Following are the list of published images available to be used with Jenkins job
 * CentOS 7 - docker - 20170120-1434
 * CentOS 7 - java-builder - 20170117-0004
 * CentOS 7 - java-builder - 20170126-0058
+* CentOS 7 - java-builder - 20170309-2355
 * CentOS 7 - robot - 20170117-0004
 * CentOS 7 - robot - 20170210-1803
 * Fedora 23 (20151030 cloud)
@@ -33,4 +34,6 @@ Following are the list of published images available to be used with Jenkins job
 * Ubuntu 14.04 - mininet-ovs-25 - 20170130-0425
 * Ubuntu 14.04 - mininet-ovs-25 - 20170210-0300
 * Ubuntu 14.04 LTS Trusty Tahr (cloudimg)
+* Ubuntu 16.04 - gbp - 20170308-0321
+* Ubuntu 16.04 - mininet-ovs-25 - 20170308-0230
 * Ubuntu 16.04 LTS (2016-05-03 cloudimg)
