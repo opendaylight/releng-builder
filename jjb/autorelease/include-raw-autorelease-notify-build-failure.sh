@@ -17,29 +17,13 @@ STREAM=${JOB_NAME#*-*e-}
 # get console logs
 wget -O "$CONSOLE_LOG" "${BUILD_URL}consoleText"
 
-# extract the failing project or artifactid
-REACTOR_INFO=$(awk '/Reactor Summary:/ { flag=1 }
-          flag {
-             if ( sub(/^\[(INFO)\]/,"") && sub(/FAILURE \[.*/,"") ) {
-                 gsub(/[[:space:]]*::[[:space:]]*/,"::")
-                 gsub(/^[[:space:]]+|[[:space:]]+$|[.]/,"")
-                 print
-             }
-          }
-          /Final Memory:/ { flag=0 }' $CONSOLE_LOG)
+# determine artifactId
+ARTIFACTID=$(awk -F: '/\[ERROR\].*mvn <goals> -rf :/ { print $2}' $CONSOLE_LOG)
 
-# check for project format
-if [[ ${REACTOR_INFO} =~ .*::*.*::*. ]]; then
-    # extract project and artifactid from full format
-    ODL=$(echo "${REACTOR_INFO}" | awk -F'::' '{ gsub(/^[ \t]+|[ \t]+$/, "", $1); print $1 }')
-    PROJECT=$(echo "${REACTOR_INFO}" | awk -F'::' '{ gsub(/^[ \t]+|[ \t]+$/, "", $2); print $2 }')
-    ARTIFACTID=$(echo "${REACTOR_INFO}" | awk -F'::' '{ gsub(/^[ \t]+|[ \t]+$/, "", $3); print $3 }')
-else
-    # set ARTIFACTID to partial format
-    ODL=""
-    PROJECT=""
-    ARTIFACTID=$(echo "${REACTOR_INFO}" | awk '{ gsub(/^[ \t]+|[ \t]+$/, ""); print }')
-fi
+# get project mailing list from the artifactId
+GROUP=$($MVN help:evaluate -gs "$GLOBAL_SETTINGS_FILE" -Dexpression="project.groupId" -f $(find . -type d -name $ARTIFACTID) | grep -v Download | grep -e '^[^[]')
+
+PROJECT=$(echo "$GROUP" | awk -F'.' { print $3 })
 
 # Construct email subject & body
 PROJECT_STRING=${PROJECT:+" from $PROJECT"}
@@ -70,7 +54,7 @@ if [ ! -z "${ARTIFACTID}" ] && [[ "${BUILD_STATUS}" != "SUCCESS" ]]; then
     # project search pattern should handle both scenarios
     # 1. Full format:    ODL :: $PROJECT :: $ARTIFACTID
     # 2. Partial format: Building $ARTIFACTID
-    sed -e "/\[INFO\] Building \(${ARTIFACTID} \|${ODL} :: ${PROJECT} :: ${ARTIFACTID} \)/,/Reactor Summary:/!d;//d" \
+    sed -e "/\[INFO\] Building \(${ARTIFACTID} \|ODL :: ${PROJECT} :: ${ARTIFACTID} \)/,/Reactor Summary:/!d;//d" \
           $CONSOLE_LOG > /tmp/error.txt
 
     if [ -n "${PROJECT}" ]; then
