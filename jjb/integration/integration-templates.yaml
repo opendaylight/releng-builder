@@ -143,11 +143,13 @@
       - integration-stream-test-plan:
           stream-test-plan: '{project}-{functionality}-{stream}.txt'
       - integration-test-plan:
-          test-plan: '{project}-{functionality}.txt'
+          test-plan: '{testplan}'
       - integration-patch-refspec:
           branch: 'master'
       - integration-jdk-version:
           jdkversion: '{jre}'
+
+    testplan: '{project}-{functionality}.txt'
 
     scm:
       - integration-gerrit-scm:
@@ -559,11 +561,13 @@
       - integration-stream-test-plan:
           stream-test-plan: '{project}-{functionality}-{stream}.txt'
       - integration-test-plan:
-          test-plan: '{project}-{functionality}.txt'
+          test-plan: '{testplan}'
       - integration-patch-refspec:
           branch: 'master'
       - integration-jdk-version:
           jdkversion: '{jre}'
+
+    testplan: '{project}-{functionality}.txt'
 
     scm:
       - integration-gerrit-scm:
