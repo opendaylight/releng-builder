@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fafc7978_391841d2",
+        "filename": "jjb/controller/controller-csit-longevity-cs-partitionandheal.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2017-03-10T11:31:59Z",
+      "side": 1,
+      "message": "In order to spare Sandbox resources, I would prefer the timed trigger to be defined in a separate job, which would contain list of csit jobs (from usual templates) to trigger. Similarly to what integration-distribution-test-{stream} does.\n\nThe point is that Sandbox users would not need the triggering job there, so no job would be started on Sandbox by cron.\n\nThe triggering job should have \u0027weekly\u0027 in its name (instead of \u0027longevity\u0027) and start over weekend (for example Saturday 20:00 UTC).",
+      "range": {
+        "startLine": 24,
+        "startChar": 14,
+        "endLine": 24,
+        "endChar": 32
+      },
+      "revId": "2fa1e9e6dabd28cd5c58740a7e4e46a749b13eb2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_191f3db8",
+        "filename": "jjb/integration/integration-templates.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2017-03-10T11:31:59Z",
+      "side": 1,
+      "message": "I believe the \"longevity\" in {csit-blacklist} would avoid adding jobc to csit-list even when \"longevity\" is part of {functionality}, so no need for a separate template (see earlier comments about timed triggers).",
+      "range": {
+        "startLine": 447,
+        "startChar": 32,
+        "endLine": 447,
+        "endChar": 41
+      },
+      "revId": "2fa1e9e6dabd28cd5c58740a7e4e46a749b13eb2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
