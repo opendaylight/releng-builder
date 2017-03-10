@@ -140,6 +140,13 @@
     publishers:
       - postbuildscript:
           builders:
+            - maven-target:
+                maven-version: 'mvn33'
+                goals: '-version'
+                settings: 'autorelease-settings'
+                settings-type: cfp
+                global-settings: 'odl-global-settings'
+                global-settings-type: cfp
             - shell: !include-raw: include-raw-autorelease-notify-build-failure.sh
           script-only-if-succeeded: 'False'
           script-only-if-failed: 'True'
