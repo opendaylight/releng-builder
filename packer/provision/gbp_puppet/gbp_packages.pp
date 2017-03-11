@@ -6,6 +6,7 @@ package { [
   'git-core',
   'git',
   'curl',
-  'bridge-utils']:
+  'bridge-utils',
+  'python-ipaddr']:
   ensure => present,
 }
