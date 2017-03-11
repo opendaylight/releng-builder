@@ -9,14 +9,30 @@ set -xeu -o pipefail
 # commands.
 export DEBIAN_FRONTEND=noninteractive
 
+# additional kernel packages required for docker to fix
+# aufs failed: driver not supported
+echo "---> Installing Additional kernel packages required for docker"
+apt-get update
+apt-get install linux-image-extra-$(uname -r) linux-image-extra-virtual
+modprobe aufs
+
 # we need garethr-docker in our puppet manifest to install docker
 # cleanly
-puppet module install garethr-docker --version 4.1.1
+#puppet module install garethr-docker --version 5.3.0
 
 # do the package install via puppet so that we know it actually installs
 # properly and it also makes it quieter but with better error reporting
 echo "---> Installing Group Based Policy requirements"
 puppet apply /tmp/packer/gbp_packages.pp
+
+# docker
+echo "---> Installing docker"
+#puppet apply /tmp/packer/docker_setup.pp
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+apt-get update
+apt-cache policy docker-ce
+apt-get install -y docker-ce
 
 # configure docker networking so that it does not conflict with LF internal networks
 # configure docker daemon to listen on port 5555 enabling remote managment
@@ -27,15 +43,15 @@ cat <<EOL > /etc/default/docker
 DOCKER_OPTS='-H unix:///var/run/docker.sock -H tcp://0.0.0.0:5555 --bip=10.250.0.254/24'
 EOL
 
-# docker
-echo "---> Installing docker"
-puppet apply /tmp/packer/docker_setup.pp
+systemctl status docker
 
 echo "---> stopping docker"
-puppet apply -e "service { 'docker': ensure => stopped }"
+#puppet apply -e "service { 'docker': ensure => stopped }"
 
 echo "---> cleaning docker configs that break after snapshotting"
 rm -f /var/lib/docker/repositories-aufs /etc/docker/key.json
+
+systemctl restart docker
 
 # OVS
 echo "---> Installing ovs"
