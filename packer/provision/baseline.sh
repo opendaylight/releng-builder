@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 
 # vim: ts=4 sw=4 sts=4 et tw=72 :
 
@@ -169,6 +169,15 @@ EOF
     # add additional repositories
     sudo add-apt-repository "deb http://us.archive.ubuntu.com/ubuntu $(lsb_release -sc) main universe restricted multiverse"
 
+    # facter is not installed by default on the base image and facter package
+    # gets removed when installing puppet4, since puppet4 includes facter
+    # installed in the path /opt/puppetlabs/puppet/bin.
+    apt-get install facter
+
+    # Default facter binary get removed when puppet4 is installed
+    # ensure facter is available in $PATH avoid failures in retry loop
+    export PATH=/opt/puppetlabs/bin/:$PATH
+
     echo "---> Installing base packages"
     # Use retry loop to install packages for failing mirrors
     for i in {0..5}
@@ -181,16 +190,42 @@ EOF
 
         for pkg in unzip xz-utils puppet git git-review libxml-xpath-perl
         do
-            # shellcheck disable=SC2046
-            if [ $(dpkg-query -W -f='${Status}' $pkg 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
-                apt-get install $pkg
-            fi
+            set +e
+            PKG_STATE="$(dpkg-query -W -f="${Status}" $pkg 2>/dev/null | grep -c "ok installed")"
+            set -e
+            FACTER_OSVER=$(facter operatingsystemrelease)
+            case "$FACTER_OSVER" in
+                14.04)
+                    if [ "$PKG_STATE" -eq 0 ]; then
+                        apt-get install "$pkg"
+                    fi
+                ;;
+                16.04)
+                    # Update puppet4 to use systemd as default service provider
+                    if [[ "$pkg" =~ "puppet" ]] && [ "$PKG_STATE" -eq 0 ]; then
+                        echo "---> Configuring puppet"
+                        apt-get purge puppet puppet-common
+                        wget https://apt.puppetlabs.com/puppetlabs-release-pc1-xenial.deb
+                        dpkg -i puppetlabs-release-pc1-xenial.deb
+                        apt-get update -m
+                        apt-get install puppet-agent
+                        ln -sf /opt/puppetlabs/bin/facter /usr/local/bin/facter
+                        continue
+                    elif [[ "$pkg" != "puppet" ]] && [ "$PKG_STATE" -eq 0 ]; then
+                        apt-get install "$pkg"
+                    fi
+                ;;
+                *)
+                    echo "---> Unknown Ubuntu version $FACTER_OSVER"
+                    exit 1
+                ;;
+            esac
         done
     done
 
     # install Java 7
     echo "---> Configuring OpenJDK"
-    FACTER_OSVER=$(/usr/bin/facter operatingsystemrelease)
+    FACTER_OSVER=$(facter operatingsystemrelease)
     case "$FACTER_OSVER" in
         14.04)
             apt-get install openjdk-7-jdk
@@ -235,7 +270,7 @@ all_systems() {
 
     # Do any Distro specific installations here
     echo "Checking distribution"
-    FACTER_OS=$(/usr/bin/facter operatingsystem)
+    FACTER_OS=$(facter operatingsystem)
     case "$FACTER_OS" in
         RedHat|CentOS)
             if [ "$(/usr/bin/facter operatingsystemrelease | /bin/cut -d '.' -f1)" = "7" ]; then
