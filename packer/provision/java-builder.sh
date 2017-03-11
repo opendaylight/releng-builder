@@ -22,6 +22,9 @@ yum install -y python-{devel,virtualenv,setuptools,pip}
 # Needed by autorelease scripts
 yum install -y xmlstarlet
 
+# Needed by docs project
+yum install -y graphviz
+
 # sshpass for the current deploy test to be runable immediatelly after
 # build
 yum install -y sshpass
