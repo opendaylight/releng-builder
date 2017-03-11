@@ -9,14 +9,20 @@ set -xeu -o pipefail
 # commands.
 export DEBIAN_FRONTEND=noninteractive
 
+# additional kernel packages required for docker to fix aufs failed: driver
+# not supported
+apt-get update
+apt-get install linux-image-extra-$(uname -r) linux-image-extra-virtual
+modprobe aufs
+
 # we need garethr-docker in our puppet manifest to install docker
 # cleanly
-puppet module install garethr-docker --version 4.1.1
+/opt/puppetlabs/puppet/bin/puppet module install garethr-docker --version 5.3.0
 
 # do the package install via puppet so that we know it actually installs
 # properly and it also makes it quieter but with better error reporting
 echo "---> Installing Group Based Policy requirements"
-puppet apply /tmp/packer/gbp_packages.pp
+/opt/puppetlabs/puppet/bin/puppet apply /tmp/packer/gbp_packages.pp
 
 # configure docker networking so that it does not conflict with LF internal networks
 # configure docker daemon to listen on port 5555 enabling remote managment
@@ -29,18 +35,19 @@ EOL
 
 # docker
 echo "---> Installing docker"
-puppet apply /tmp/packer/docker_setup.pp
+/opt/puppetlabs/puppet/bin/puppet --version
+/opt/puppetlabs/puppet/bin/puppet apply /tmp/packer/docker_setup.pp
 
 echo "---> stopping docker"
-puppet apply -e "service { 'docker': ensure => stopped }"
+/opt/puppetlabs/puppet/bin/puppet apply -e "service { 'docker': ensure => stopped }"
 
 echo "---> cleaning docker configs that break after snapshotting"
 rm -f /var/lib/docker/repositories-aufs /etc/docker/key.json
 
 # OVS
 echo "---> Installing ovs"
-puppet module install puppetlabs-vcsrepo
-puppet apply /tmp/packer/ovs_setup.pp
+/opt/puppetlabs/puppet/bin/puppet module install puppetlabs-vcsrepo
+/opt/puppetlabs/puppet/bin/puppet apply /tmp/packer/ovs_setup.pp
 
 pushd /root/ovs
 DEB_BUILD_OPTIONS='parallel=8 nocheck' fakeroot debian/rules binary | \
