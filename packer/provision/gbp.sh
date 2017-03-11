@@ -16,9 +16,8 @@ apt-get update
 apt-get install "linux-image-extra-$(uname -r)" linux-image-extra-virtual
 modprobe aufs
 
-# we need garethr-docker in our puppet manifest to install docker
-# cleanly
-puppet module install garethr-docker --version 5.3.0
+# Install puppetlabs docker which has support for Ubuntu 16.04
+puppet module install puppetlabs-docker_platform --version 2.2.1
 
 # do the package install via puppet so that we know it actually installs
 # properly and it also makes it quieter but with better error reporting
