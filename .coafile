@@ -6,6 +6,11 @@ ignore_length_regex = Signed-off-by,
     http://,
     https://
 
+[JSON]
+bears = JSONFormatBear
+files = **/*.json
+ignore = .*/**
+indent_size = 2
 
 [YAML]
 bears = YAMLLintBear
