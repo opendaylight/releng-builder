@@ -10,6 +10,7 @@
       - 'builder-verify-packer'
       - 'builder-merge-packer-{platforms}-{templates}'
       # OpenStack Related
+      - 'builder-cleanup-old-images'
       - 'builder-delete-stale-stacks'
       # Automation for docs and jobs
       - 'builder-update-csit-tests'
@@ -287,6 +288,49 @@
 
     builders:
       - shell: !include-raw-escape: opendaylight-infra-cleanup-stale-stacks.sh
+
+    publishers:
+      - email-notification:
+          email-recipients: '{email-recipients}'
+          email-prefix: '[releng]'
+      - opendaylight-infra-shiplogs:
+          maven-version: 'mvn33'
+
+- job-template:
+    name: 'builder-cleanup-old-images'
+    project-type: freestyle
+    node: centos7-java-builder-2c-4g
+
+    properties:
+      - opendaylight-infra-properties:
+          build-days-to-keep: 7
+
+    parameters:
+      - opendaylight-infra-parameters:
+          project: '{project}'
+          branch: '{branch}'
+          refspec: 'refs/heads/{branch}'
+          artifacts: '{archive-artifacts}'
+
+    scm:
+      - git-scm:
+          branch: '{branch}'
+
+    wrappers:
+      - opendaylight-infra-wrappers:
+          build-timeout: '{build-timeout}'
+      # Listed after to override openstack-infra-wrappers clouds.yaml definition
+      - config-file-provider:
+          files:
+            - file-id: opendaylight-private-clouds-yaml
+              target: '$HOME/.config/openstack/clouds.yaml'
+
+    triggers:
+      # Cleanup images on a weekly schedule
+      - timed: '@weekly'
+
+    builders:
+      - shell: !include-raw-escape: opendaylight-infra-cleanup-old-images.sh
 
     publishers:
       - email-notification:
