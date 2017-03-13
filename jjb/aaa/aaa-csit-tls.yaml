@@ -1,0 +1,32 @@
+---
+- project:
+    name: aaa-csit-tls
+    jobs:
+      - '{project}-csit-1node-{functionality}-{install}-{stream}'
+
+    # The project name
+    project: 'aaa'
+
+    # The functionality under test
+    functionality: 'tls'
+
+    # Project branches
+    stream:
+      - carbon:
+          branch: 'master'
+          jre: 'openjdk8'
+
+    install:
+      - only:
+          scope: 'only'
+
+    # Features to install
+    install-features: odl-restconf,
+        odl-netconf-all,
+        http
+
+    # Robot custom options
+    robot-options: ''
+
+    # Don't spin up mininet vms as aaa-csit-authn jobs don't need them
+    tools_system_count: 0
