@@ -128,11 +128,6 @@
           properties-file: variables.prop
 
 - builder:
-    name: autorelease-generate-project-report
-    builders:
-      - shell: !include-raw: include-raw-generate-project-report.sh
-
-- builder:
     name: autorelease-fix-relative-paths
     builders:
       - shell: |
