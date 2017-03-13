@@ -9,16 +9,16 @@ ignore_length_regex = Signed-off-by,
 
 [YAML]
 bears = YAMLLintBear
-files = jjb/**/*.yaml,openstack-hot/**/*.yaml
+files = **/*.yaml
+ignore = .*/**
 document_start = True
 yamllint_config = yamllint.conf
 
 [ShellCheck]
 bears = ShellCheckBear,SpaceConsistencyBear
-files = jenkins-scripts/**/*.sh,
-    jjb/**/*.sh,
-    scripts/**/*.sh
-ignore = jenkins-scripts/*-local-env.sh,
+files = **/*.sh
+ignore = .*/**
+    jenkins-scripts/*-local-env.sh,
     jjb/integration/*.sh
 shell = bash
 indent_size = 4

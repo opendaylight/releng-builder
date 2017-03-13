@@ -22,6 +22,7 @@ fi
 
 echo '---> Pre-installing yum and pip packages'
 projs="requirements keystone glance cinder neutron nova horizon"
+# shellcheck disable=SC2154
 branch=${os_branch}
 
 wget https://bootstrap.pypa.io/get-pip.py
