@@ -41,6 +41,10 @@
           name: STACK_NAME
           default: '$JOB_NAME-$BUILD_NUMBER'
           description: "Used by Heat to generate a unique stack & vm name"
+      - string:
+          name: CLOUDS_NAME
+          default: '{os-cloud-name}'
+          description: "Stands for cloud name to support mutiple clouds, by default rackspace"
 
 - parameter:
     name: build-tag
