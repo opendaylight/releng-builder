@@ -5,7 +5,7 @@ TOOLS_SYSTEM=()
 OPENSTACK_SYSTEM=()
 
 source $WORKSPACE/.venv-openstack/bin/activate
-ADDR=(`openstack --os-cloud rackspace stack show -f json -c outputs $STACK_NAME | \
+ADDR=(`openstack stack show -f json -c outputs $STACK_NAME | \
        jq -r '.outputs[] | \
               select(.output_key | match("^vm_[0-9]+_ips$")) | \
               .output_value | .[]'`)

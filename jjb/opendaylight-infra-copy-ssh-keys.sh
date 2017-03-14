@@ -31,10 +31,10 @@ function copy-ssh-keys-to-slave() {
 
 # Print the Stack outputs parameters so that we can identify which IPs belong
 # to which VM types.
-openstack --os-cloud rackspace stack show -c outputs "$STACK_NAME"
+openstack stack show -c outputs "$STACK_NAME"
 
 # shellcheck disable=SC2006
-ADDR=(`openstack --os-cloud rackspace stack show -f json -c outputs "$STACK_NAME" | \
+ADDR=(`openstack stack show -f json -c outputs "$STACK_NAME" | \
        jq -r '.outputs[] | \
               select(.output_key | match("^vm_[0-9]+_ips\$")) | \
               .output_value | .[]'`)

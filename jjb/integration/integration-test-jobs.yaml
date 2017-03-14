@@ -67,6 +67,7 @@
 
     parameters:
       - opendaylight-infra-parameters:
+          os-cloud: '{os-cloud}'
           project: '{project}'
           branch: '{test-branch}'
           refspec: 'refs/heads/{test-branch}'
@@ -202,6 +203,7 @@
 
     parameters:
       - opendaylight-infra-parameters:
+          os-cloud: '{os-cloud}'
           project: '$GERRIT_PROJECT'
           branch: '{branch}'
           refspec: '$GERRIT_REFSPEC'
@@ -317,6 +319,7 @@
       - integration-distribution-branch:
           branch: '{branch}'
       - opendaylight-infra-parameters:
+          os-cloud: '{os-cloud}'
           project: 'integration/distribution'
           branch: '{branch}'
           refspec: 'refs/heads/{branch}'
