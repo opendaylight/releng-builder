@@ -649,6 +649,11 @@ do
     ${SSH} ${compute_ip} "sudo ovs-vsctl add-port $PUBLIC_BRIDGE $PORT_NAME -- set interface $PORT_NAME type=vxlan options:local_ip="$compute_ip" options:remote_ip="${OPENSTACK_CONTROL_NODE_IP}" options:dst_port=9876 options:key=flow"
 done
 
+${SSH} ${OPENSTACK_CONTROL_NODE_IP}  "sed -i '200 s/^/#/' /opt/stack/tempest/tempest/scenario/test_network_v6.py"
+${SSH} ${OPENSTACK_CONTROL_NODE_IP}  "sed -i '201 s/^/#/' /opt/stack/tempest/tempest/scenario/test_network_v6.py"
+${SSH} ${OPENSTACK_CONTROL_NODE_IP}  "sed -i '204 s/^/#/' /opt/stack/tempest/tempest/scenario/test_network_v6.py"
+${SSH} ${OPENSTACK_CONTROL_NODE_IP}  "sed -i '205 s/^/#/' /opt/stack/tempest/tempest/scenario/test_network_v6.py"
+
 if [ "${NUM_ODL_SYSTEM}" -gt 1 ]; then
   HA_PROXY_INDEX=${NUM_OPENSTACK_SYSTEM}
   odlmgrip=OPENSTACK_COMPUTE_NODE_${HA_PROXY_INDEX}_IP
