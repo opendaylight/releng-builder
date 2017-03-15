@@ -39,6 +39,12 @@ pip install pyangbind
 # Module for iso8601 datetime format
 pip install isodate
 
+# Modules for tornado and jsonpointer used by client libraries of IoTDM project
+# Note: Could be removed when client running on tools VM is used instead
+#       of client libraries only.
+pip install tornado
+pip install jsonpointer
+
 # Print installed versions.
 pip freeze
 
