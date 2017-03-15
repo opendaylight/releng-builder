@@ -77,9 +77,20 @@ if [ ! -z "${ARTIFACTID}" ] && [[ "${BUILD_STATUS}" != "SUCCESS" ]]; then
         RELEASE_EMAIL="${RELEASE_EMAIL}, ${PROJECT}-dev@opendaylight.org"
     fi
 
-    echo "${BODY}" | mail -a /tmp/error.txt \
-        -r "Jenkins <jenkins-dontreply@opendaylight.org>" \
-        -s "${SUBJECT}" "${RELEASE_EMAIL}"
+    # Only send emails in production (releng), not testing (sandbox)
+    if [ "${SILO}" == "releng" ]; then
+        # TODO: Uncomment this before committing, don't want to email during testing
+        echo "Would actually email here, skipping for testing"
+        #echo "${BODY}" | mail -a /tmp/error.txt \
+        #    -r "Jenkins <jenkins-dontreply@opendaylight.org>" \
+        #    -s "${SUBJECT}" "${RELEASE_EMAIL}"
+    elif [ "${SILO}" == "sandbox" ]; then
+        echo "Running in sandbox, not actually sending notification emails"
+        echo "Subject: ${SUBJECT}"
+        echo "Body: ${BODY}"
+    else
+        echo "Not sure how to notify in \"${SILO}\" Jenkins silo"
+    fi
 fi
 
 rm $CONSOLE_LOG
