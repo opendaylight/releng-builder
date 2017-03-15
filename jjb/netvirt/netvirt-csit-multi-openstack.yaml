@@ -27,7 +27,7 @@
       - upstream-stateful:
           schedule: 'H H/4 * * *'
           sg-mode: 'stateful'
-      - upstream-learn:
+      - upstream-learn-revital2:
           schedule: 'H H * * *'
           sg-mode: 'learn'
       - gate-learn:
@@ -75,9 +75,9 @@
 
     odl-enable-l3: 'yes'
 
-    public-bridge: 'br-physnet1'
+    public-bridge: 'br-phys1'
 
-    public-physical-network: 'physnet1'
+    public-physical-network: 'phys1'
 
     enable-networking-l2gw: 'no'
 
