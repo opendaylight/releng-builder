@@ -438,6 +438,80 @@
     builders:
       - shell: !include-raw: include-raw-stage-release.sh
 
+- builder:
+    # Create file ./fake_remotes.xml containing maven setting
+    # to be used when local maven artifacts hide bugs visible by using remote repositories.
+    # /tmp/n is repository for snapshots only, /tmp/r is for poth snapshot and release versions.
+    name: create-fake-remotes-setting
+    builders:
+      - shell: |
+          echo '
+          <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+            https://maven.apache.org/xsd/settings-1.0.0.xsd">
+            <profiles>
+              <profile>
+                <id>files</id>
+                <repositories>
+                  <repository>
+                    <id>n-snapshots</id>
+                    <name>file</name>
+                    <url>file:///tmp/n/</url>
+                    <releases><enabled>false</enabled></releases>
+                  </repository>
+                  <repository>
+                    <id>r</id>
+                    <name>file</name>
+                    <url>file:///tmp/r/</url>
+                    <releases><enabled>true</enabled></releases>
+                  </repository>
+                </repositories>
+                <pluginRepositories>
+                  <pluginRepository>
+                    <id>n-plugin-snapshots</id>
+                    <name>file-plugin</name>
+                    <url>file:///tmp/n/</url>
+                    <releases><enabled>false</enabled></releases>
+                  </pluginRepository>
+                  <pluginRepository>
+                    <id>r-plugin</id>
+                    <name>file</name>
+                    <url>file:///tmp/r/</url>
+                    <releases><enabled>true</enabled></releases>
+                  </pluginRepository>
+                </pluginRepositories>
+              </profile>
+            </profiles>
+            <activeProfiles>
+              <activeProfile>files</activeProfile>
+            </activeProfiles>
+          </settings>
+          ' > fake_remotes.xml
+
+- builder:
+    # Execute maven build using ./fake_remotes.xml as maven settings.
+    # Most maven targets use /tmp/r as a local repository, this uses /tmp/t instead,
+    # while /tmp/r is used as remote file:// reporitory for both snapshots and release atrifacts.
+    # Maven goal is still "install", as "verify" does not work with SingleFeatureTest.
+    # Arguments:
+    #     add-mvn-opts: Maven options to add (e.g. -Dstream).
+    #     pom: Path to root pomfile.
+    name: maven-install-with-fake-remotes
+    builders:
+      - maven-target:
+          maven-version: 'mvn33'
+          pom: '{pom}'
+          java-opts:
+            - '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
+          goals: >
+              clean install dependency:tree
+              -DoutputFile=dependency_tree.txt -s fake_remotes.xml
+              -V -B -Djenkins
+              -Dmaven.repo.local=/tmp/t
+              -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/t
+              {add-mvn-opts}
+
 - wrapper:
     # This wrapper is required for all jobs as it configures the wrappers
     # needed by OpenDaylight infra.
@@ -487,7 +561,6 @@
           for p in $provision; do
               /bin/bash -n $p > provision-validate-${p##*/}.log 2>&1
           done
-
 
 - builder:
     name: packer-build
