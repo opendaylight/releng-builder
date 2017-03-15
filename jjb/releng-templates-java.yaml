@@ -71,6 +71,7 @@
     # Goal: Build a patch and make sure the distribution can deploy with this change.
     # Operation: This job template builds a patch, creates a distribution containing
     #            the patch (making sure dependencies are specified),
+    #            re-builds the distribution with internal artifacts appearing remote,
     #            and performs the distribution deploy test.
 
     name: '{project-name}-distribution-check-{stream}'
@@ -260,7 +261,25 @@
               -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r
           java-opts:
             - '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
-      # Step six: Run Karaf and verify no critical failures are present.
+      # Step six: Quick offline build.
+      # Bug 7947 only happens when accessing local artifacts,
+      # so this is needed for Odlparent project to detect breakages of 7947 kind.
+      # (Artifacts previously in /tmp/n should have been copied to local repository in step five.)
+      - maven-target:
+          maven-version: 'mvn33'
+          pom: 'distribution/pom.xml'
+          goals: >
+              clean install dependency:tree
+              --offline
+              -DoutputFile=dependency_tree.txt -s fake_remotes.xml
+              -V -B -Pq
+              -Djenkins
+              -Dstream={stream}
+              -Dmaven.repo.local=/tmp/r
+              -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r
+          java-opts:
+            - '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
+      # Step seven: Run Karaf and verify no critical failures are present.
       - integration-distribution-check
 
     publishers:
