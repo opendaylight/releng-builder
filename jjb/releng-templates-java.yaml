@@ -191,49 +191,39 @@
             https://maven.apache.org/xsd/settings-1.0.0.xsd">
             <profiles>
               <profile>
-                <id>opendaylight-release</id>
+                <id>files</id>
                 <repositories>
                   <repository>
-                    <id>opendaylight-mirror</id>
-                    <name>opendaylight</name>
-                    <url>https://nexus.opendaylight.org/content/repositories/public/</url>
-                    <releases><updatePolicy>never</updatePolicy></releases>
-                    <snapshots><enabled>false</enabled></snapshots>
-                  </repository>
-                </repositories>
-                <pluginRepositories>
-                  <pluginRepository>
-                    <id>opendaylight-plugin-mirror</id>
-                    <name>opendaylight-plugin</name>
-                    <url>https://nexus.opendaylight.org/content/repositories/public/</url>
-                    <releases><updatePolicy>never</updatePolicy></releases>
-                    <snapshots><enabled>false</enabled></snapshots>
-                  </pluginRepository>
-                </pluginRepositories>
-              </profile>
-              <profile>
-                <id>file-snapshots</id>
-                <repositories>
-                  <repository>
-                    <id>file-snapshots</id>
+                    <id>n-snapshots</id>
                     <name>file</name>
                     <url>file:///tmp/n/</url>
                     <releases><enabled>false</enabled></releases>
                   </repository>
+                  <repository>
+                    <id>r</id>
+                    <name>file</name>
+                    <url>file:///tmp/r/</url>
+                    <releases><enabled>true</enabled></releases>
+                  </repository>
                 </repositories>
                 <pluginRepositories>
                   <pluginRepository>
-                    <id>file-plugin-snapshots</id>
+                    <id>n-plugin-snapshots</id>
                     <name>file-plugin</name>
                     <url>file:///tmp/n/</url>
                     <releases><enabled>false</enabled></releases>
+                  </pluginRepository>
+                  <pluginRepository>
+                    <id>r-plugin</id>
+                    <name>file</name>
+                    <url>file:///tmp/r/</url>
+                    <releases><enabled>true</enabled></releases>
                   </pluginRepository>
                 </pluginRepositories>
               </profile>
             </profiles>
             <activeProfiles>
-              <activeProfile>file-snapshots</activeProfile>
-              <activeProfile>opendaylight-release</activeProfile>
+              <activeProfile>files</activeProfile>
             </activeProfiles>
           </settings>
           ' > fake_remotes.xml
@@ -256,8 +246,8 @@
               -DskipTests=false
               -Djenkins
               -Dstream={stream}
-              -Dmaven.repo.local=/tmp/r
-              -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r
+              -Dmaven.repo.local=/tmp/t
+              -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/t
           java-opts:
             - '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
       # Step six: Run Karaf and verify no critical failures are present.
