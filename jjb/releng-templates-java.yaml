@@ -134,7 +134,7 @@
           goals: >
               clean deploy dependency:tree
               -DoutputFile=dependency_tree.txt
-              -V -B -Pq
+              -V -B -Pq -Dmaven.gitcommitid.skip=false
               -Djenkins
               -Dstream={stream}
               -DaltDeploymentRepository=fake-nexus::default::file:///tmp/n/
