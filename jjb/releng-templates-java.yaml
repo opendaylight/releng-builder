@@ -135,6 +135,7 @@
               clean deploy dependency:tree
               -DoutputFile=dependency_tree.txt
               -V -B -Pq
+              -Dgitid.skip=false
               -Djenkins
               -Dstream={stream}
               -DaltDeploymentRepository=fake-nexus::default::file:///tmp/n/
@@ -165,6 +166,7 @@
               clean install dependency:tree
               -DoutputFile=dependency_tree.txt
               -V -B -Pq
+              -Dgitid.skip=false
               -Djenkins
               -Dstream={stream}
               -Dmaven.repo.local=/tmp/r
