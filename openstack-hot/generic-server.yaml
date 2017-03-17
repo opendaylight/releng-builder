@@ -51,7 +51,7 @@ resources:
                 - network: RC-ODL
             key_name: {get_param: ssh_key}
             user_data: |
-                #!/bin/bash
+                #!/bin/bash -x
                 until ping -c1 git.opendaylight.org &>/dev/null
                 do
                     echo "Waiting until git.opendaylight.org is resolvable..."

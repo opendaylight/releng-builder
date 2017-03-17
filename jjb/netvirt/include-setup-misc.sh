@@ -1,5 +1,17 @@
 #!/bin/bash
 
+# Default facter binary get removed when puppet4 is installed
+# This requires us to source puppet-agent.sh to use the version
+# of facter shipped with puppet4
+if [ -f "/etc/profile.d/puppet-agent.sh" ]; then
+    source "/etc/profile.d/puppet-agent.sh"
+fi
+
+# Add puppetlabs bin to $PATH
+if [ -f "/etc/profile.d/puppet-agent.sh" ]; then
+    source "/etc/profile.d/puppet-agent.sh"
+fi
+
 set -e
 
 echo "---> Setting up controller IP"
