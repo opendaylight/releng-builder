@@ -74,7 +74,7 @@ if [ ! -z "${ARTIFACTID}" ] && [[ "${BUILD_STATUS}" != "SUCCESS" ]]; then
           $CONSOLE_LOG > /tmp/error.txt
 
     if [ -n "${PROJECT}" ]; then
-        RELEASE_EMAIL="${RELEASE_EMAIL}, ${PROJECT}-dev@opendaylight.org"
+        RELEASE_EMAIL="${RELEASE_EMAIL}, ${PROJECT}-dev@lists.opendaylight.org"
     fi
 
     echo "${BODY}" | mail -a /tmp/error.txt \
