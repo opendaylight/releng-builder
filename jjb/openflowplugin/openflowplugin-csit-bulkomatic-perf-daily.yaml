@@ -49,3 +49,68 @@
     02-plot-yaxis: 'seconds'
     02-plot-group: 'Java Performance'
     02-plot-data-file: 'time.csv'
+
+- project:
+    name: openflowplugin-csit-3node-bulkomatic-perf-daily
+    jobs:
+      - '{project}-csit-3node-periodic-{functionality}-{install}-{stream}'
+
+    # The project name
+    project: 'openflowplugin'
+
+    # The functionality under test
+    functionality:
+      - small-bulkomatic-perf-daily:
+          robot-options: >
+                -v flow_count_per_switch:10000
+                -v switch_count:1
+                -v flow_count_after_add:10000
+                -v operation_timeout:500s
+      - medium-bulkomatic-perf-daily:
+          robot-options: >
+                -v flow_count_per_switch:10000
+                -v switch_count:15
+                -v flow_count_after_add:150000
+                -v operation_timeout:500s
+      - large-bulkomatic-perf-daily:
+          robot-options: >
+                -v flow_count_per_switch:10000
+                -v switch_count:100
+                -v flow_count_after_add:1000000
+                -v operation_timeout:500s
+                -v DEFAULT_TIMEOUT:50s
+
+    # Project branches
+    stream:
+      - carbon:
+          branch: 'master'
+          jre: 'openjdk8'
+      - boron:
+          branch: 'stable/boron'
+          jre: 'openjdk8'
+
+    install:
+      - only:
+          scope: 'only'
+
+    # Job images
+    odl_system_flavor: 8 GB General Purpose v1
+    tools_system_image: Ubuntu 14.04 - mininet-ovs-25 - 20170210-0300
+
+    # Features to install
+    install-features: >
+        odl-openflowplugin-flow-services-ui,
+        odl-openflowplugin-app-bulk-o-matic,
+        odl-jolokia,
+        decanter-collector-jmx,
+        decanter-appender-elasticsearch
+
+    # Plot Info
+    01-plot-title: 'Flow Add rate'
+    01-plot-yaxis: 'flow_mods/sec'
+    01-plot-group: 'Java Performance'
+    01-plot-data-file: 'rate.csv'
+    02-plot-title: 'Flow Add time'
+    02-plot-yaxis: 'seconds'
+    02-plot-group: 'Java Performance'
+    02-plot-data-file: 'time.csv'
