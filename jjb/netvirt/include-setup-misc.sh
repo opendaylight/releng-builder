@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Add puppetlabs bin to $PATH
+if [ -f "/etc/profile.d/puppet-agent.sh" ]; then
+    source "/etc/profile.d/puppet-agent.sh"
+fi
+
 set -e
 
 echo "---> Setting up controller IP"

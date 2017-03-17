@@ -51,12 +51,21 @@ resources:
                 - network: RC-ODL
             key_name: {get_param: ssh_key}
             user_data: |
-                #!/bin/bash
+                #!/bin/bash -x
                 until ping -c1 git.opendaylight.org &>/dev/null
                 do
                     echo "Waiting until git.opendaylight.org is resolvable..."
                 done
                 git clone https://git.opendaylight.org/gerrit/releng/builder /builder
+
+                cd /builder
+                git remote add gerrit ssh://jenkins-$SILO@git.opendaylight.org:29418/releng/builder
+                git review -d 53437
+
+                # Add puppetlabs bin to $PATH and make it available for all users
+                if [ -f /etc/profile.d/puppet-agent.sh ]; then
+                    source /etc/profile.d/puppet-agent.sh
+                fi
                 /builder/jenkins-scripts/jenkins-init-script.sh
 
 outputs:
