@@ -8,7 +8,13 @@
     project: 'openflowplugin'
 
     # The functionality under test
-    functionality: 'bulkomatic-perf-daily'
+    functionality: 
+      - small-bulkomatic-perf-daily:
+              robot-options: '-v flow_count_per_switch:10000 -v switch_count:1 -v flow_count_after_add:10000 -v operation_timeout:500s'
+      - medium-bulkomatic-perf-daily:
+              robot-options: '-v flow_count_per_switch:10000 -v switch_count:15 -v flow_count_after_add:150000 -v operation_timeout:500s'
+      - large-bulkomatic-perf-daily:
+              robot-options: '-v flow_count_per_switch:10000 -v switch_count:100 -v flow_count_after_add:1000000 -v operation_timeout:500s'
 
     # Project branches
     stream:
