@@ -2,6 +2,11 @@
 
 set -e
 
+# Add puppetlabs bin to $PATH
+if [ -f "/etc/profile.d/puppet-agent.sh" ]; then
+    source "/etc/profile.d/puppet-agent.sh"
+fi
+
 OVS_VERSION="${OVS_VERSION:-2.5.0}"
 
 echo "---> Cleaning up existing Docker processes and images"

@@ -4,6 +4,14 @@
 # Create Jenkins User #
 #######################
 
+# adding debug info for testing
+echo "PATH: $PATH"
+
+# Add puppetlabs bin to $PATH
+if [ -f "/etc/profile.d/puppet-agent.sh" ]; then
+    source "/etc/profile.d/puppet-agent.sh"
+fi
+
 OS=$(facter operatingsystem | tr '[:upper:]' '[:lower:]')
 
 useradd -m -s /bin/bash jenkins
