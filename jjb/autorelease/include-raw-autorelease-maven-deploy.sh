@@ -28,7 +28,7 @@ rsync -avz --remove-source-files \
            --exclude 'resolver-status.properties' \
            "stage/org/opendaylight" m2repo/org/
 
-"$MVN" -V -B org.sonatype.plugins:nexus-staging-maven-plugin:1.6.2:deploy-staged-repository \
+"$MVN" -V -B org.sonatype.plugins:nexus-staging-maven-plugin:1.6.8:deploy-staged-repository \
     -DrepositoryDirectory="$(pwd)/m2repo" \
     -DnexusUrl="$NEXUS_STAGING_URL" \
     -DstagingProfileId="$NEXUS_STAGING_PROFILE" \
