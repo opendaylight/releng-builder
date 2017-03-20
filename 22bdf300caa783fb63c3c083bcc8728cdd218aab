@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fafc7978_ce5e5476",
+        "filename": "jjb/autorelease/include-raw-autorelease-notify-build-failure.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-03-20T15:45:55Z",
+      "side": 1,
+      "message": "Call it ARTIFACT_ID as it makes it more readable.",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 10
+      },
+      "revId": "22bdf300caa783fb63c3c083bcc8728cdd218aab",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_8ecbac1d",
+        "filename": "jjb/autorelease/include-raw-autorelease-notify-build-failure.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-03-20T15:45:55Z",
+      "side": 1,
+      "message": "So a situation that might occur is there might be more than 1 project that uses the same name for it\u0027s ARTIFACT_ID. For example many projects have an ARTIFACT_ID called \"distribution-karaf\". In which case we still don\u0027t know project is the cause.\n\nI think an improved solution is to:\n\n1) Run the for loop and find all pom.xml that has project.artifactId\n\n2) Check if there is only 1 pom.xml containing ARTIFACT_ID. If there is then proceed to discover the group and email their dev and release mailing lists as appropriate.\n\n3) If there is more than 1 pom.xml matching ARTIFACT_ID, then discover the groups of all matching pom.xmls and email only the release mailing list with a list of groups that have artifact IDs matching as a human will need to determine which project is failing. (Alternatively we could email all groups-dev mailing lists with matching ARTIFACT_IDs again including the full list of groups involved in hopes that they will deduplicate in the future.",
+      "range": {
+        "startLine": 31,
+        "startChar": 3,
+        "endLine": 34,
+        "endChar": 27
+      },
+      "revId": "22bdf300caa783fb63c3c083bcc8728cdd218aab",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
