@@ -118,6 +118,8 @@ find "$ARCHIVES_DIR" -type f -print0 \
                 | egrep -e ':.*text.*' \
                 | cut -d: -f1 \
                 | xargs -d'\n' -r gzip
+# Compress Java heap dumps using xz
+find "$ARCHIVES_DIR" -type -f -name \*.hprof | xargs xz
 
 zip -r archives.zip "$JENKINS_HOSTNAME/" > "$ARCHIVES_DIR/_archives-zip.log"
 du -sh archives.zip
