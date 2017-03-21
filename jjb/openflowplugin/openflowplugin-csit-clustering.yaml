@@ -3,13 +3,14 @@
     name: openflowplugin-csit-clustering
     jobs:
       - '{project}-csit-3node-{functionality}-{install}-{stream}'
-      - '{project}-csit-verify-3node-{functionality}'
 
     # The project name
     project: 'openflowplugin'
 
     # The functionality under test
-    functionality: 'clustering'
+    functionality:
+      - clustering
+      - gate-clustering
 
     # Project branches
     stream:
