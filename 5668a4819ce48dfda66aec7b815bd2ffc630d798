@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fafc7978_5012fa62",
+        "filename": "jjb/integration/include-raw-integration-deploy-controller-run-test.sh",
+        "patchSetId": 39
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2017-03-21T23:54:40Z",
+      "side": 1,
+      "message": "so what naming format is this going to create? I didn\u0027t \nwant to figure out trying it locally.\n\nis it going to be backward compatible with our current\nexpectation of ODL_SYSTEM_1_IP, etc?",
+      "range": {
+        "startLine": 185,
+        "startChar": 8,
+        "endLine": 185,
+        "endChar": 65
+      },
+      "revId": "5668a4819ce48dfda66aec7b815bd2ffc630d798",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_7008de2d",
+        "filename": "jjb/integration/include-raw-integration-deploy-openstack-run-test.sh",
+        "patchSetId": 39
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2017-03-21T23:54:40Z",
+      "side": 1,
+      "message": "dare I ask for a local bash function to do this work, and\nwe can remove the duplication below by using it? There are\nprobably a lot of opportunities for that, but this was easy\nto see.",
+      "range": {
+        "startLine": 400,
+        "startChar": 0,
+        "endLine": 411,
+        "endChar": 47
+      },
+      "revId": "5668a4819ce48dfda66aec7b815bd2ffc630d798",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_d0054a15",
+        "filename": "jjb/integration/include-raw-integration-deploy-openstack-run-test.sh",
+        "patchSetId": 39
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2017-03-21T23:54:40Z",
+      "side": 1,
+      "message": "why did we need this? did we lose the generic OPENSTACK_CONTROL_NODE_IP variable now? If so, is that\ngoing to need some changes elsewhere? (csit, etc)",
+      "range": {
+        "startLine": 435,
+        "startChar": 34,
+        "endLine": 435,
+        "endChar": 36
+      },
+      "revId": "5668a4819ce48dfda66aec7b815bd2ffc630d798",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_2b0ee734",
+        "filename": "jjb/integration/include-raw-integration-get-slave-addresses.sh",
+        "patchSetId": 39
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2017-03-21T23:54:40Z",
+      "side": 1,
+      "message": "I need to re-learn about federation, but there is no \nchance of a \"cluster\" of control nodes in a single\nopenstack site?",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 56,
+        "endChar": 77
+      },
+      "revId": "5668a4819ce48dfda66aec7b815bd2ffc630d798",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_8b127356",
+        "filename": "jjb/netvirt/netvirt-csit-multi-openstack.yaml",
+        "patchSetId": 39
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2017-03-21T23:54:40Z",
+      "side": 1,
+      "message": "can we start smaller than this? like the bare min, then add\nthe others when we know things are ok.\n\n2site-1node?",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 32
+      },
+      "revId": "5668a4819ce48dfda66aec7b815bd2ffc630d798",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
