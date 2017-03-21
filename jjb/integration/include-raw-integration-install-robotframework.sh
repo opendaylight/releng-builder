@@ -45,6 +45,9 @@ pip install isodate
 #       of client libraries only.
 pip install --upgrade tornado jsonpointer
 
+# Module for TemplatedRequests.robot library
+pip install --upgrade jmespath
+
 # Print installed versions.
 pip freeze
 
