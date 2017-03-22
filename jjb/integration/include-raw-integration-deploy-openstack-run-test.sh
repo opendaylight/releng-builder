@@ -409,6 +409,7 @@ do
     scp extra_debug.sh ${!OS_CTRL_IP}:/tmp
     ${SSH} ${!OS_CTRL_IP} "bash /tmp/extra_debug.sh > /tmp/extra_debug.log"
     scp ${!OS_CTRL_IP}:/tmp/extra_debug.log ${OS_CTRL_FOLDER}/extra_debug.log
+    scp ${!OS_CTRL_IP}:/tmp/*.xz ${OS_CTRL_FOLDER}/
     mv local.conf_control_${!OS_CTRL_IP} ${OS_CTRL_FOLDER}/local.conf
     mv ${OS_CTRL_FOLDER} ${WORKSPACE}/archives/
 done
@@ -426,6 +427,7 @@ do
     scp extra_debug.sh ${!OSIP}:/tmp
     ${SSH} ${!OSIP} "bash /tmp/extra_debug.sh > /tmp/extra_debug.log"
     scp ${!OSIP}:/tmp/extra_debug.log ${OS_COMPUTE_FOLDER}/extra_debug.log
+    scp ${!OSIP}:/tmp/*.xz ${OS_COMPUTE_FOLDER}/
     mv local.conf_compute_${!OSIP} ${OS_COMPUTE_FOLDER}/local.conf
     mv ${OS_COMPUTE_FOLDER} ${WORKSPACE}/archives/
 done
