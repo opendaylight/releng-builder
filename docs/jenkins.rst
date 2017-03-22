@@ -230,8 +230,8 @@ Pool: ODLRPC
       </tr>
 
       <tr class="warning">
-        <td><b>Jenkins Labels</b><br/> ubuntu-trusty-mininet-2c-2g</td>
-        <td><b>Minion Template names</b><br/> ubuntu-trusty-mininet-2c-2g</td>
+        <td><b>Jenkins Labels</b><br/> ubuntu1404-mininet-2c-2g</td>
+        <td><b>Minion Template names</b><br/> ubuntu1404-mininet-2c-2g</td>
         <td><b>Packer Template</b><br/>
         releng/builder/packer/teamplates/mininet.json</td>
         <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/mininet-ubuntu.sh</td>
@@ -243,8 +243,8 @@ Pool: ODLRPC
       </tr>
 
       <tr class="warning">
-        <td><b>Jenkins Labels</b><br/> ubuntu-trusty-mininet-ovs-23-2c-2g</td>
-        <td><b>Minion Template names</b><br/> ubuntu-trusty-mininet-ovs-23-2c-2g</td>
+        <td><b>Jenkins Labels</b><br/> ubuntu1404-mininet-ovs-23-2c-2g</td>
+        <td><b>Minion Template names</b><br/> ubuntu1404-mininet-ovs-23-2c-2g</td>
         <td><b>Packer Template</b><br/> releng/builder/packer/templates/mininet-ovs-2.3.json</td>
         <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/mininet-ubuntu.sh</td>
       </tr>
@@ -255,8 +255,8 @@ Pool: ODLRPC
       </tr>
 
       <tr class="warning">
-        <td><b>Jenkins Labels</b><br/> ubuntu-trusty-mininet-ovs-25-2c-2g</td>
-        <td><b>Minion Template names</b><br/> ubuntu-trusty-mininet-ovs-25-2c-2g</td>
+        <td><b>Jenkins Labels</b><br/> ubuntu1404-mininet-ovs-25-2c-2g</td>
+        <td><b>Minion Template names</b><br/> ubuntu1404-mininet-ovs-25-2c-2g</td>
         <td><b>Packer Template</b><br/> releng/builder/packer/templates/mininet-ovs-2.5.json</td>
         <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/mininet-ubuntu.sh</td>
       </tr>
@@ -297,8 +297,8 @@ Pool: ODLRPC
       </tr>
 
       <tr class="warning">
-        <td><b>Jenkins Labels</b><br/> ubuntu-trusty-gbp-2c-2g</td>
-        <td><b>Minion Template names</b><br/> ubuntu-trusty-gbp-2c-2g</td>
+        <td><b>Jenkins Labels</b><br/> ubuntu1404-gbp-2c-2g</td>
+        <td><b>Minion Template names</b><br/> ubuntu1404-gbp-2c-2g</td>
         <td><b>Packer Template</b><br/> releng/builder/packer/templates/gbp.json</td>
         <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/ubuntu-docker-ovs.sh</td>
       </tr>
