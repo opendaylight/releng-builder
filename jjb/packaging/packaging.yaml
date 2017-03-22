@@ -76,10 +76,6 @@
           default: 'https://nexus.opendaylight.org/content/repositories/public/org/opendaylight/integration/distribution-karaf/0.5.2-Boron/distribution-karaf-0.5.2-Boron.tar.gz'
           description: 'URL to ODL tarball artifact to repackage into RPM'
       - string:
-          name: SYSD_COMMIT
-          default: 'ba1f409c1a46efd068b16ced6ddc8b32a412b03a'
-          description: 'Version of ODL systemd unitfile to download and package in ODL RPM'
-      - string:
           name: CHANGELOG_DATE
           default: 'Sun Aug 25 1991'
           description: 'Date this RPM was defined'
@@ -134,10 +130,6 @@
           name: VERSION_MINOR
           default: '0'
           description: 'OpenDaylight minor (SR) version number to build'
-      - string:
-          name: SYSD_COMMIT
-          default: 'ba1f409c1a46efd068b16ced6ddc8b32a412b03a'
-          description: 'Version of ODL systemd unitfile to download and package in ODL RPM'
       - string:
           name: CHANGELOG_NAME
           default: 'Jenkins'
