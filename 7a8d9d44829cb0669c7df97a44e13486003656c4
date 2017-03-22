@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fafc7978_667301e8",
+        "filename": "jjb/autorelease/include-raw-autorelease-notify-build-failure.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-03-22T14:53:32Z",
+      "side": 1,
+      "message": "I think we can simplify further and remove the need for the if-statement below and only having a single call to xmlstarlet that sets GROUP appropriately.\n\n xmlstarlet sel \n     -N x\u003dhttp://maven.apache.org/POM/4.0.0 \n     -t -m \"/x:project[x:artifactId\u003d\u0027$ARTIFACT_ID\u0027]\" \n     --if \"/x:project/x:groupId\" \n         -v \"/x:project/x:groupId\" \n     --elif \"/x:project/x:parent/x:groupId\" \n         -v \"/x:project/x:parent/x:groupId\" \n     --else \n         -o \"\" pom.xml\n\nThe else Condition should never occur but if parent and group are not available returns an empty string.",
+      "revId": "7a8d9d44829cb0669c7df97a44e13486003656c4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_c6e62d44",
+        "filename": "jjb/autorelease/include-raw-autorelease-notify-build-failure.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-03-22T14:53:32Z",
+      "side": 1,
+      "message": "Tab",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 1
+      },
+      "revId": "7a8d9d44829cb0669c7df97a44e13486003656c4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
