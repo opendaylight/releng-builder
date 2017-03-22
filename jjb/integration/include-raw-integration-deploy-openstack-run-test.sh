@@ -436,6 +436,7 @@ rsync -avhe ssh ${OPENSTACK_CONTROL_NODE_IP}:/opt/stack/logs/* ${OS_CTRL_FOLDER}
 scp extra_debug.sh ${OPENSTACK_CONTROL_NODE_IP}:/tmp
 ${SSH} ${OPENSTACK_CONTROL_NODE_IP} "bash /tmp/extra_debug.sh > /tmp/extra_debug.log"
 scp ${OPENSTACK_CONTROL_NODE_IP}:/tmp/extra_debug.log ${OS_CTRL_FOLDER}/extra_debug.log
+scp ${OPENSTACK_CONTROL_NODE_IP}:/tmp/*.pcap ${OS_CTRL_FOLDER}/
 mv local.conf_control ${OS_CTRL_FOLDER}/local.conf
 mv ${OS_CTRL_FOLDER} ${WORKSPACE}/archives/
 
@@ -452,6 +453,7 @@ do
     scp extra_debug.sh ${!OSIP}:/tmp
     ${SSH} ${!OSIP} "bash /tmp/extra_debug.sh > /tmp/extra_debug.log"
     scp ${!OSIP}:/tmp/extra_debug.log ${OS_COMPUTE_FOLDER}/extra_debug.log
+    scp ${!OSIP}:/tmp/*.pcap ${OS_COMPUTE_FOLDER}/
     mv local.conf_compute_${!OSIP} ${OS_COMPUTE_FOLDER}/local.conf
     mv ${OS_COMPUTE_FOLDER} ${WORKSPACE}/archives/
 done
