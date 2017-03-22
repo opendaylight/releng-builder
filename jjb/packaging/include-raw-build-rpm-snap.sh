@@ -17,6 +17,5 @@ pip install -r "$WORKSPACE/packaging/rpm/requirements.txt"
 "$WORKSPACE/packaging/rpm/build.py" --build-latest-snap \
                                   --major "$VERSION_MAJOR" \
                                   --minor "$VERSION_MINOR" \
-                                  --sysd_commit "$SYSD_COMMIT" \
                                   --changelog_name "$CHANGELOG_NAME" \
                                   --changelog_email "$CHANGELOG_EMAIL"
