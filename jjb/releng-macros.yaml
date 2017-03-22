@@ -519,3 +519,180 @@
           files:
             - file-id: 'jjbini'
               target: '$HOME/.config/jenkins_jobs/jenkins_jobs.ini'
+
+- builder:
+    name: distribution-check-wipe
+    # Step zero: Wipe file repositories up front.
+    builders:
+      - shell: |
+          echo "wipe r: the local Maven repository"
+          rm -rfv /tmp/r
+          echo "wipe n: the fake remote (Nexus) repository"
+          rm -rfv /tmp/n
+          echo "wipe t: the transient repository used in some manipulations"
+          rm -rfv /tmp/t
+
+- builder:
+    name: distribution-check-build-project
+    # Step one: Online build of the project, using local repository /tmp/r/ and deploying artifacts to /tmp/n/.
+    # Ordinary SingleFeatureTest failures are detected in the verify job, so we can use "q" profile here.
+    # Arguments:
+    #   pom: Relative path to pom file to use. Typically '$GERRIT_PROJECT/pom.xml'.
+    builders:
+      - maven-target:
+          maven-version: 'mvn33'
+          pom: '{pom}'
+          goals: >
+              clean deploy dependency:tree
+              -DoutputFile=dependency_tree.txt
+              -V -B -Pq
+              -Djenkins
+              -DaltDeploymentRepository=fake-nexus::default::file:///tmp/n/
+              -Dmaven.repo.local=/tmp/r
+              -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r
+          java-opts:
+            - '-Xmx4096m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
+          settings: 'integration-settings'
+          settings-type: cfp
+          global-settings: 'odl-global-settings'
+          global-settings-type: cfp
+
+- builder:
+    name: distribution-check-verify-groupid
+    # Step two: Verify all deployed artifacts belong to the project's groupId.
+    # This is done by moving the allowed directories out of /tmp/n and checking no files remained there.
+    # The correct directory is derived from $GERRIT_PROJECT.
+    # TODO: Verify all deployed artifacts are snapshots.
+    # Arguments:
+    #   gerrit-project: Project name as nexus URI part. Typically '$GERRIT_PROJECT'.
+    builders:
+      - shell: |
+          mkdir -p /tmp/t/org/opendaylight/{gerrit-project}
+          mv /tmp/n/org/opendaylight/{gerrit-project}/* /tmp/t/org/opendaylight/{gerrit-project}/
+          test -z "`find /tmp/n/ -type f`" || ( echo "ERROR: Mismatched groupId detected (see above)." && false )
+          rm -rf /tmp/n
+          mv /tmp/t /tmp/n
+
+- builder:
+    name: distribution-check-download-deps
+    # Step three: Online build of integration distribution.
+    # This step is mainly used for downloading other project artifacts.
+    # Running SingleFeaturesTest here does not seem to be required, so -Pq is used again.
+    # Arguments:
+    #   dist-pom: Relative path to pom file to use. 'distribution/pom.xml' is recommended.
+    builders:
+      - maven-target:
+          maven-version: 'mvn33'
+          pom: '{dist-pom}'
+          goals: >
+              clean install dependency:tree
+              -DoutputFile=dependency_tree.txt
+              -V -B -Pq
+              -Djenkins
+              -Dmaven.repo.local=/tmp/r
+              -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r
+          java-opts:
+            - '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
+          settings: 'integration-settings'
+          settings-type: cfp
+          global-settings: 'odl-global-settings'
+          global-settings-type: cfp
+
+- builder:
+    name: distribution-check-delete-snapshots
+    # Step four: Delete snapshot artifacts from the local repository.
+    # This is critical to detect orphaned artifacts or missing project-internal dependency declarations.
+    # Also other files related to maven repository resolution are removed,
+    # and then empty directories are removed, in order to simplify debugging.
+    builders:
+      - shell: !include-raw-escape: integration-distribution-delete-snaphot-artifacts.sh
+
+- builder:
+    name: distribution-check-configure-remotes
+    # Now the ugly part. It seems that the only way to tell Maven 2+
+    # which remote repositories to use is via settings.xml file.
+    # So we create such a file here, but it needs most of odlparent:settings.xml
+    builders:
+      - shell: |
+          echo '
+          <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+            https://maven.apache.org/xsd/settings-1.0.0.xsd">
+            <profiles>
+              <profile>
+                <id>opendaylight-release</id>
+                <repositories>
+                  <repository>
+                    <id>opendaylight-mirror</id>
+                    <name>opendaylight</name>
+                    <url>https://nexus.opendaylight.org/content/repositories/public/</url>
+                    <releases><updatePolicy>never</updatePolicy></releases>
+                    <snapshots><enabled>false</enabled></snapshots>
+                  </repository>
+                </repositories>
+                <pluginRepositories>
+                  <pluginRepository>
+                    <id>opendaylight-plugin-mirror</id>
+                    <name>opendaylight-plugin</name>
+                    <url>https://nexus.opendaylight.org/content/repositories/public/</url>
+                    <releases><updatePolicy>never</updatePolicy></releases>
+                    <snapshots><enabled>false</enabled></snapshots>
+                  </pluginRepository>
+                </pluginRepositories>
+              </profile>
+              <profile>
+                <id>file-snapshots</id>
+                <repositories>
+                  <repository>
+                    <id>file-snapshots</id>
+                    <name>file</name>
+                    <url>file:///tmp/n/</url>
+                    <releases><enabled>false</enabled></releases>
+                  </repository>
+                </repositories>
+                <pluginRepositories>
+                  <pluginRepository>
+                    <id>file-plugin-snapshots</id>
+                    <name>file-plugin</name>
+                    <url>file:///tmp/n/</url>
+                    <releases><enabled>false</enabled></releases>
+                  </pluginRepository>
+                </pluginRepositories>
+              </profile>
+            </profiles>
+            <activeProfiles>
+              <activeProfile>file-snapshots</activeProfile>
+              <activeProfile>opendaylight-release</activeProfile>
+            </activeProfiles>
+          </settings>
+          ' > fake_remotes.xml
+          # Notes: The settings are minimal in order to detect breakage scenarios,
+          # while allowing for the following quirks:
+          # * Some plugins seem to have hardcoded repos, for example check-license looks at repository.apache.org
+          # * Some plugin artifacts (related to surefire) are not downloaded when tests are skipped.
+          # * populate-local-repo looks at oss.sonatype.org and does not store things (like guava) to /tmp/r
+
+- builder:
+    name: distribution-check-repeat-build
+    # Step five: Repeat the distribution build but with the new settings.
+    # Here, only the project snapshot artifacts deployed to /tmp/n are available,
+    # which faithfully reproduces conditions in later verify-like job runs.
+    # We cannot use --offline, because: "Cannot access file (file:///tmp/n) in offline mode"
+    # This is where SingleFeatureTest is not skipped.
+    # Arguments:
+    #   dist-pom: Relative path to pom file to use. 'distribution/pom.xml' is recommended.
+    builders:
+      - maven-target:
+          maven-version: 'mvn33'
+          pom: '{dist-pom}'
+          goals: >
+              clean install dependency:tree
+              -DoutputFile=dependency_tree.txt -s fake_remotes.xml
+              -V -B -Pq
+              -DskipTests=false
+              -Djenkins
+              -Dmaven.repo.local=/tmp/r
+              -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r
+          java-opts:
+            - '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
