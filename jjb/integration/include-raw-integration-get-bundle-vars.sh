@@ -22,6 +22,11 @@ if [ ${BUNDLEURL} == 'last' ]; then
     BUNDLEFOLDER="distribution-karaf-${BUNDLEVERSION}"
     BUNDLE="distribution-karaf-${TIMESTAMP}.zip"
     ACTUALBUNDLEURL="${NEXUSPATH}/${BUNDLEVERSION}/${BUNDLE}"
+elif [ ${BUNDLEURL} == *"distribution-check"* ]]; then
+    ACTUALBUNDLEURL="${BUNDLEURL}"
+    BUNDLE="${BUNDLEURL##*/}"
+    BUNDLEFOLDER="${BUNDLE//.zip}"
+    BUNDLEVERSION="${BUNDLEFOLDER//distribution-karaf-}"
 else
     ACTUALBUNDLEURL="${BUNDLEURL}"
     BUNDLE="${BUNDLEURL##*/}"
