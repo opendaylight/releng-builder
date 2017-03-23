@@ -9,6 +9,7 @@
       - 'packaging-build-rpm-snap-{stream}'
       - 'packaging-build-deb-{stream}'
       - 'packaging-test-rpm-{stream}'
+      - 'packaging-test-deb-{stream}'
       - 'packaging-test-puppet-{stream}'
       - 'packaging-test-ansible-rpm-{stream}'
       - 'packaging-test-ansible-deb-{stream}'
@@ -189,6 +190,45 @@
 
     builders:
       - shell: !include-raw: include-raw-test-rpm.sh
+      - shell: !include-raw: include-raw-test-karaf.expect
+
+    publishers:
+      - archive-artifacts:
+          artifacts: '**'
+
+- job-template:
+    name: 'packaging-test-deb-{stream}'
+
+    node: ubuntu1604-mininet-ovs-25-2c-4g
+
+    parameters:
+      - opendaylight-infra-parameters:
+          project: '{project}'
+          branch: '{branch}'
+          refspec: 'refs/heads/{branch}'
+          artifacts: '{archive-artifacts}'
+      - string:
+          name: URL
+          # default: 'http://download.opensuse.org/repositories/home:/akshitajha/xUbuntu_16.04/'
+          default: 'http://download.opensuse.org/repositories/home:/akshitajha/xUbuntu_16.04/all/opendaylight_5.0.0-1_all.deb'
+          description: 'Link to .deb file'
+      - string:
+          name: REPO_FILE
+          default: 'ppa:odl-team/boron'
+          description: 'Name of the PPA repository'
+
+    scm:
+      - integration-gerrit-scm:
+          basedir: 'packaging'
+          refspec: '$GERRIT_REFSPEC'
+          branch: 'master'
+
+    wrappers:
+      - opendaylight-infra-wrappers:
+          build-timeout: '{build-timeout}'
+
+    builders:
+      - shell: !include-raw: include-raw-test-deb.sh
       - shell: !include-raw: include-raw-test-karaf.expect
 
     publishers:
