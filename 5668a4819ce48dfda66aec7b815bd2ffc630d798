@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_f7eddd8f",
+        "filename": "jjb/integration/include-raw-integration-deploy-controller-run-test.sh",
+        "patchSetId": 39
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 6528
+      },
+      "writtenOn": "2017-03-23T07:07:39Z",
+      "side": 1,
+      "message": "Hi Jamo,\n\nthe current known naming will be relevant after this change because we use the current naming to count the multiple sites, and you can see in the jobs that there are still using the current names.",
+      "parentUuid": "fafc7978_5012fa62",
+      "range": {
+        "startLine": 185,
+        "startChar": 8,
+        "endLine": 185,
+        "endChar": 65
+      },
+      "revId": "5668a4819ce48dfda66aec7b815bd2ffc630d798",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_7008de2d",
         "filename": "jjb/integration/include-raw-integration-deploy-openstack-run-test.sh",
         "patchSetId": 39
@@ -94,6 +118,30 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_97e1f19c",
+        "filename": "jjb/integration/include-raw-integration-get-slave-addresses.sh",
+        "patchSetId": 39
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 6528
+      },
+      "writtenOn": "2017-03-23T07:07:39Z",
+      "side": 1,
+      "message": "Hi Jamo,\n\nthis was an assumption due to current jobs that has only 1 controller in 1node and 3node\n\nthus we use this logic - federation supports multiple clustered openstack controllers in same site.",
+      "parentUuid": "fafc7978_2b0ee734",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 56,
+        "endChar": 77
+      },
+      "revId": "5668a4819ce48dfda66aec7b815bd2ffc630d798",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_8b127356",
         "filename": "jjb/netvirt/netvirt-csit-multi-openstack.yaml",
         "patchSetId": 39
@@ -105,6 +153,30 @@
       "writtenOn": "2017-03-21T23:54:40Z",
       "side": 1,
       "message": "can we start smaller than this? like the bare min, then add\nthe others when we know things are ok.\n\n2site-1node?",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 32
+      },
+      "revId": "5668a4819ce48dfda66aec7b815bd2ffc630d798",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_57d789bf",
+        "filename": "jjb/netvirt/netvirt-csit-multi-openstack.yaml",
+        "patchSetId": 39
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 6528
+      },
+      "writtenOn": "2017-03-23T07:07:39Z",
+      "side": 1,
+      "message": "Hi Jamo, sure we can add the minimum here\n\ncurrently we test 2site-1node in SANDBOX Jenkins server and we see it run.",
+      "parentUuid": "fafc7978_8b127356",
       "range": {
         "startLine": 20,
         "startChar": 0,
