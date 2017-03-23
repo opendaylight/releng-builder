@@ -193,6 +193,7 @@ minimize_polling=True
 # Needed for VLAN provider tests - because our provider networks are always encapsulated in VXLAN (br-phys1)
 # MTU(1440) + VXLAN(50) + VLAN(4) = 1494 < MTU eth0/br-phys1(1500)
 physical_network_mtus = ${PUBLIC_PHYSICAL_NETWORK}:1440
+path_mtu = 1490
 
 [[post-config|/etc/neutron/dhcp_agent.ini]]
 [DEFAULT]
