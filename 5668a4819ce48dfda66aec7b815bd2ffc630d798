@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_4d6418e5",
+        "filename": "jjb/integration/include-raw-integration-deploy-controller-run-test.sh",
+        "patchSetId": 39
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 670
+      },
+      "writtenOn": "2017-03-23T10:14:08Z",
+      "side": 1,
+      "message": "A single site with 1node/3node will stay as it is today.\n\n1node, 2site: ODL_SYSTEM_1_IP, ODL_SYSTEM_2_IP\n3node, 2site: ODL_SYSTEM_1_IP, ODL_SYSTEM_2_IP, ODL_SYSTEM_3_IP, ODL_SYSTEM_4_IP, ODL_SYSTEM_5_IP, ODL_SYSTEM_6_IP",
+      "parentUuid": "fafc7978_5012fa62",
+      "range": {
+        "startLine": 185,
+        "startChar": 8,
+        "endLine": 185,
+        "endChar": 65
+      },
+      "revId": "5668a4819ce48dfda66aec7b815bd2ffc630d798",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_7008de2d",
         "filename": "jjb/integration/include-raw-integration-deploy-openstack-run-test.sh",
         "patchSetId": 39
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_8d47204b",
+        "filename": "jjb/integration/include-raw-integration-deploy-openstack-run-test.sh",
+        "patchSetId": 39
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 670
+      },
+      "writtenOn": "2017-03-23T10:14:08Z",
+      "side": 1,
+      "message": "You really want to add some more refactoring into this monster?\nI could, but there would be some differences between a compute and a control node.",
+      "parentUuid": "fafc7978_7008de2d",
+      "range": {
+        "startLine": 400,
+        "startChar": 0,
+        "endLine": 411,
+        "endChar": 47
+      },
+      "revId": "5668a4819ce48dfda66aec7b815bd2ffc630d798",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_d0054a15",
         "filename": "jjb/integration/include-raw-integration-deploy-openstack-run-test.sh",
         "patchSetId": 39
@@ -83,6 +131,30 @@
       "writtenOn": "2017-03-21T23:54:40Z",
       "side": 1,
       "message": "why did we need this? did we lose the generic OPENSTACK_CONTROL_NODE_IP variable now? If so, is that\ngoing to need some changes elsewhere? (csit, etc)",
+      "range": {
+        "startLine": 435,
+        "startChar": 34,
+        "endLine": 435,
+        "endChar": 36
+      },
+      "revId": "5668a4819ce48dfda66aec7b815bd2ffc630d798",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_2da55404",
+        "filename": "jjb/integration/include-raw-integration-deploy-openstack-run-test.sh",
+        "patchSetId": 39
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 670
+      },
+      "writtenOn": "2017-03-23T10:14:08Z",
+      "side": 1,
+      "message": "I didn\u0027t remove OS_CONTROL_NODE_IP and HA_PROXY_IP exactly for this reason - but technically we could remove it and refer to _1_ in all places.\nI think its convenient to have it pointing to the first 1 for now, in case we miss any changes, we can do it gradually.",
+      "parentUuid": "fafc7978_d0054a15",
       "range": {
         "startLine": 435,
         "startChar": 34,
@@ -142,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_6dae3ce9",
+        "filename": "jjb/integration/include-raw-integration-get-slave-addresses.sh",
+        "patchSetId": 39
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 670
+      },
+      "writtenOn": "2017-03-23T10:14:08Z",
+      "side": 1,
+      "message": "Yeah - this would be a separate enhancement regardless of federation - we don\u0027t support multi openstack control nodes on a site today. (devstack doesn\u0027t give us that easily)",
+      "parentUuid": "fafc7978_97e1f19c",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 56,
+        "endChar": 77
+      },
+      "revId": "5668a4819ce48dfda66aec7b815bd2ffc630d798",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_8b127356",
         "filename": "jjb/netvirt/netvirt-csit-multi-openstack.yaml",
         "patchSetId": 39
@@ -176,6 +272,30 @@
       "writtenOn": "2017-03-23T07:07:39Z",
       "side": 1,
       "message": "Hi Jamo, sure we can add the minimum here\n\ncurrently we test 2site-1node in SANDBOX Jenkins server and we see it run.",
+      "parentUuid": "fafc7978_8b127356",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 32
+      },
+      "revId": "5668a4819ce48dfda66aec7b815bd2ffc630d798",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_ede86c18",
+        "filename": "jjb/netvirt/netvirt-csit-multi-openstack.yaml",
+        "patchSetId": 39
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 670
+      },
+      "writtenOn": "2017-03-23T10:14:08Z",
+      "side": 1,
+      "message": "sure, though I\u0027d like to check clustered logic as well, I can remove 3site though\n\nalso as we discussed - if we can limit these runs to only partial implementations (just SG learn for example, just newton etc.) - we could do that so this doesn\u0027t add too much jobs",
       "parentUuid": "fafc7978_8b127356",
       "range": {
         "startLine": 20,
