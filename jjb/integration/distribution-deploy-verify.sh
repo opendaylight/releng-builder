@@ -122,7 +122,7 @@ cp ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log .
 echo "Kill controller"
 ps axf | grep karaf | grep -v grep | awk '{print "kill -9 " $1}' | sh
 
-echo "Detecting misplaced config files"
+echo "Bug 4628: Detecting misplaced config files"
 pushd "${WORKSPACE}/${BUNDLEFOLDER}"
 XMLS_FOUND=`echo *.xml`
 popd
