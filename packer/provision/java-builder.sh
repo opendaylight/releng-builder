@@ -10,7 +10,7 @@ set -xeu -o pipefail
 yum install -y @development perl-{Digest-SHA,ExtUtils-MakeMaker} \
     ant {boost,gtest,json-c,libcurl,libxml2,libvirt,openssl}-devel \
     {readline,unixODBC}-devel yum-utils fedora-packager \
-    libxslt-devel crudini
+    libxslt-devel crudini npm
 
 # Install python3 and dependencies, needed for Coala linting at least
 yum install -y python34
