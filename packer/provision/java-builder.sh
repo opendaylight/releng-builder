@@ -2,7 +2,7 @@
 
 # vim: sw=4 ts=4 sts=4 et tw=72 :
 
-# force any errors to cause the script and job to end in failure
+# Force any errors to cause the script and job to end in failure
 set -xeu -o pipefail
 
 # The following packages are not needed by all projects, but they are
@@ -12,11 +12,11 @@ yum install -y @development perl-{Digest-SHA,ExtUtils-MakeMaker} \
     {readline,unixODBC}-devel yum-utils fedora-packager \
     libxslt-devel crudini
 
-#Install python3 and dependencies
+# Install python3 and dependencies, needed for Coala linting at least
 yum install -y python34
 yum install -y python34-{devel,virtualenv,setuptools,pip}
 
-# Install python dependencies
+# Install python dependencies, useful generally
 yum install -y python-{devel,virtualenv,setuptools,pip}
 
 # Needed by autorelease scripts
@@ -25,8 +25,7 @@ yum install -y xmlstarlet
 # Needed by docs project
 yum install -y graphviz
 
-# sshpass for the current deploy test to be runable immediatelly after
-# build
+# Needed by deploy test
 yum install -y sshpass
 
 # tcpmd5 is wanting to do 32bit ARM cross-compilation and is specifically
@@ -35,35 +34,29 @@ yum install -y sshpass
 # x86_64 packages for them
 yum install -y glibc-devel.i686 kernel-headers
 
-# The following is needed by opendove, if this is to be perfomed against
-# an EL6 system some of these packages are not availalble (or at the
-# wrong version) in publically available repositories as such this
-# should only really be done on an EL7 (or F18+) system
+# Needed by opendove
 yum install -y {jansson,libevent,libnl,libuuid}-devel
 
-#The following is needed for the vsemprovider build in vtn project.
-#these packages will enable C# compilation.
+# Needed for vsemprovider build in vtn project to enable C# compilation.
 rpm --import "http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF"
-#Added the mono tools repository
+# Add the mono tools repository
 yum-config-manager -y --add-repo http://download.mono-project.com/repo/centos/
-#install the mono toolchain and nuget
+# Install the mono toolchain and nuget
 yum -y install mono-complete nuget
-#end changes for vsemprovider in VTN
 
-
-# TSDR dependencies
+# Needed by TSDR
 echo "Installing the Hbase Server..."
 mkdir /tmp/Hbase
 cd /tmp/Hbase
 wget --no-verbose http://apache.osuosl.org/hbase/hbase-0.94.27/hbase-0.94.27.tar.gz
 tar -xvf hbase-0.94.27.tar.gz
 
+# Needed by TSDR
 echo "Installing the Cassandra Server..."
 mkdir /tmp/cassandra
 cd /tmp/cassandra
 wget --no-verbose http://apache.osuosl.org/cassandra/2.1.16/apache-cassandra-2.1.16-bin.tar.gz
 tar -xvf apache-cassandra-2.1.16-bin.tar.gz
-
 
 # Generally useful for all projects
 echo "Installing the Elasticsearch node..."
@@ -72,12 +65,13 @@ cd /tmp/elasticsearch
 wget --no-verbose https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.7.5.tar.gz
 tar -xvzf elasticsearch-1.7.5.tar.gz
 
-
-# The following installs hashicorp's packer binary which is required  for
-# the {verify,merge}-packer jobs
+# Installs Hashicorp's Packer binary, required for {verify,merge}-packer jobs
 mkdir /tmp/packer
 cd /tmp/packer
 wget https://releases.hashicorp.com/packer/0.12.2/packer_0.12.2_linux_amd64.zip
 unzip packer_0.12.2_linux_amd64.zip -d /usr/local/bin/
 # rename packer to avoid conflict with binary in cracklib
 mv /usr/local/bin/packer /usr/local/bin/packer.io
+
+# Needed for Coala linting, Markdown and Dockerfile bears in particular
+npm install remark-cli dockerfile_lint
