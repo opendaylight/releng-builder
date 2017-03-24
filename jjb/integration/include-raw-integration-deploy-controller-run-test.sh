@@ -58,7 +58,7 @@ unzip -q ${BUNDLE}
 echo "Configuring the startup features..."
 FEATURESCONF=/tmp/${BUNDLEFOLDER}/etc/org.apache.karaf.features.cfg
 CUSTOMPROP=/tmp/${BUNDLEFOLDER}/etc/custom.properties
-sed -ie "s/featuresBoot=.*/featuresBoot=config,standard,region,package,kar,ssh,management,${ACTUALFEATURES}/g" \${FEATURESCONF}
+sed -ie "s/featuresBoot.*=/featuresBoot = ${ACTUALFEATURES},/g" \${FEATURESCONF}
 sed -ie "s%mvn:org.opendaylight.integration/features-integration-index/${BUNDLEVERSION}/xml/features%mvn:org.opendaylight.integration/features-integration-index/${BUNDLEVERSION}/xml/features,mvn:org.opendaylight.integration/features-integration-test/${BUNDLEVERSION}/xml/features,mvn:org.apache.karaf.decanter/apache-karaf-decanter/1.0.0/xml/features%g" \${FEATURESCONF}
 cat \${FEATURESCONF}
 
