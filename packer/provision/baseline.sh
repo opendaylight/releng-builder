@@ -183,6 +183,7 @@ EOF
         do
             # shellcheck disable=SC2046
             if [ $(dpkg-query -W -f='${Status}' $pkg 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+                apt-cache policy $pkg
                 apt-get install $pkg
             fi
         done
