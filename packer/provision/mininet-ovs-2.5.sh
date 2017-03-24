@@ -15,16 +15,15 @@ export DEBIAN_FRONTEND=noninteractive
 # ups
 echo 'PS1="[\u@\h \W]> "' >> /etc/skel/.bashrc
 
-# remove all force-yes with --allow*
 echo '---> Install OpenVSwitch 2.5.0'
-apt-get update -y --force-yes
-apt-get install -y --force-yes openvswitch-switch openvswitch-vtep
+apt-get update -m
+apt-get install openvswitch-switch openvswitch-vtep
 
 echo '---> Installing mininet'
-apt-get install -y --force-yes mininet
+apt-get install mininet
 
 echo '---> Installing build pre-requisites'
-apt-get install -y --force-yes build-essential snmp libsnmp-dev snmpd libpcap-dev \
+apt-get install build-essential snmp libsnmp-dev snmpd libpcap-dev \
 autoconf make automake libtool libconfig-dev libssl-dev libffi-dev libssl-doc pkg-config
 
 git clone https://github.com/intracom-telecom-sdn/mtcbench.git
@@ -38,13 +37,13 @@ make
 cp cbench /usr/local/bin/
 
 echo '---> Installing exabgp'
-apt-get install -y --force-yes exabgp
+apt-get install exabgp
 
 echo '---> All Python package installation should happen in virtualenv'
-apt-get install -y --force-yes python-virtualenv python-pip
+apt-get install python-virtualenv python-pip
 
 # Install vlan for vlan based tests in VTN suites
-apt-get install -y --force-yes -qq vlan
+apt-get install vlan
 
 # Install netaddr package which is needed by some custom mininet topologies
-apt-get install -y --force-yes -qq python-netaddr
+apt-get install python-netaddr
