@@ -19,6 +19,7 @@
     platforms:
       - centos
       - ubuntu-14.04
+      - ubuntu-16.04
 
     templates:
       - devstack
@@ -53,6 +54,25 @@
         templates: devstack
       - platforms: ubuntu-14.04
         templates: docker
+      - platforms: ubuntu-16.04
+        templates: java-builder
+      - platforms: ubuntu-16.04
+        templates: robot
+      - platforms: ubuntu-16.04
+        templates: devstack-pre-pip-mitaka
+      - platforms: ubuntu-16.04
+        templates: devstack-pre-pip-newton
+      - platforms: ubuntu-16.04
+        templates: devstack
+      - platforms: ubuntu-16.04
+        templates: docker
+      - platforms: ubuntu-16.04
+        templates: mininet
+      - platforms: ubuntu-16.04
+        templates: mininet-ovs-2.3
+      - platforms: ubuntu-14.04
+        templates: mininet-ovs-2.5
+
 
     project-type: freestyle
     archive-artifacts: '**/*.log'

@@ -15,24 +15,27 @@ export DEBIAN_FRONTEND=noninteractive
 # ups
 echo 'PS1="[\u@\h \W]> "' >> /etc/skel/.bashrc
 
+# remove all force-yes with --allow*
 echo '---> Install OpenVSwitch 2.5.0'
-add-apt-repository -y ppa:sgauthier/openvswitch-dpdk
 apt-get update -y --force-yes
 apt-get install -y --force-yes openvswitch-switch openvswitch-vtep
 
-echo '---> Installing mininet 2.2.1'
-git clone git://github.com/mininet/mininet
-cd mininet
-git checkout -b 2.2.1 2.2.1
-cd ..
-mininet/util/install.sh -nf
+echo '---> Installing mininet'
+apt-get install -y --force-yes mininet
 
-echo '---> Installing MT-Cbench'
+echo '---> Installing build pre-requisites'
 apt-get install -y --force-yes build-essential snmp libsnmp-dev snmpd libpcap-dev \
 autoconf make automake libtool libconfig-dev libssl-dev libffi-dev libssl-doc pkg-config
+
 git clone https://github.com/intracom-telecom-sdn/mtcbench.git
-mtcbench/build_mtcbench.sh
-cp mtcbench/oflops/cbench/cbench /usr/local/bin/
+mtcbench/deploy/docker/provision.sh
+# TODO: remove workaround for build issue with mtcbench
+# when mtcbench dependency build correctly
+# https://github.com/intracom-telecom-sdn/mtcbench/issues/10
+mtcbench/build_mtcbench.sh || true
+cd mtcbench/oflops/cbench
+make
+cp cbench /usr/local/bin/
 
 echo '---> Installing exabgp'
 apt-get install -y --force-yes exabgp
