@@ -43,12 +43,10 @@
       - maven-target:
           maven-version: 'mvn33'
           pom: 'pom.xml'
-          goals: >
+          goals: |
               clean install dependency:tree com.sonatype.clm:clm-maven-plugin:index
-              -V -B -Pq
-              -Djenkins
-              -Dmaven.repo.local=/tmp/r
-              -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r
+              -Pq
+              {mvn-releng-opts}
           java-opts:
             - '-Xmx4096m -XX:MaxPermSize=512m'
           settings: '{mvn-settings}'
@@ -198,7 +196,9 @@
           settings-file: '{mvn-settings}'
       - maven-target:
           maven-version: 'mvn33'
-          goals: '{mvn-goals} -V -B -Djenkins -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+          goals: |
+              {mvn-goals}
+              {mvn-releng-opts}
           java-opts:
             - '{mvn-opts}'
           settings: '{mvn-settings}'
@@ -271,14 +271,11 @@
     # TODO: Do we want to apply sophisticated checks as in *-distribution-check-*?
     maven:
       maven-name: 'mvn33'
-      goals: >
+      goals: |
           {mvn-goals}
-          -V -B
-          -Djenkins
           -Dmerge
           -Dstream={stream}
-          -Dmaven.repo.local=/tmp/r
-          -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r
+          {mvn-releng-opts}
       maven-opts: '{mvn-opts}'
       settings: '{mvn-settings}'
       settings-type: cfp
@@ -380,13 +377,10 @@
           settings-file: '{mvn-settings}'
       - maven-target:
           maven-version: 'mvn33'
-          goals: >
+          goals: |
               {mvn-goals}
-              -V -B
-              -Djenkins
               -Dsonar
-              -Dmaven.repo.local=/tmp/r
-              -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r
+              {mvn-releng-opts}
           maven-opts:
             - '{mvn-opts}'
           settings: '{mvn-settings}'
@@ -398,13 +392,11 @@
           # We should switch to the recommended configuration of sonar once
           # JJB adds support for configurating the Sonar wrapper:
           #    http://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner+for+Jenkins
-          goals: >
+          goals: |
               sonar:sonar
-              -V -B -Djenkins
               -Dsonar
               -Dsonar.host.url=https://sonar.opendaylight.org
-              -Dmaven.repo.local=/tmp/r
-              -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r
+              {mvn-releng-opts}
           maven-opts:
             - '{mvn-opts}'
           settings: '{mvn-settings}'
@@ -484,12 +476,11 @@
       - maven-target:
           maven-version: 'mvn33'
           pom: validate-pom.xml
-          goals: >
+          goals: |
               clean install dependency:tree
-              -V -B -T1.5C -Pq
-              -Djenkins
-              -Dmaven.repo.local=/tmp/r
-              -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r
+              -T1.5C
+              -Pq
+              {mvn-releng-opts}
           java-opts:
             - '-Xmx8g'
           settings: 'autorelease-settings'
@@ -499,12 +490,10 @@
       - maven-target:
           maven-version: 'mvn33'
           pom: 'pom.xml'
-          goals: >
+          goals: |
               clean validate
-              -V -B -Pq
-              -Djenkins
-              -Dmaven.repo.local=/tmp/r
-              -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r
+              -Pq
+              {mvn-releng-opts}
           java-opts:
             - '-Xmx8g -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
           settings: 'autorelease-settings'
@@ -570,12 +559,10 @@
           settings-file: '{mvn-settings}'
       - maven-target:
           maven-version: '{mvn-version}'
-          goals: >
-              {mvn-goals} -V -B
-              -Djenkins
+          goals: |
+              {mvn-goals}
               -Dstream={stream}
-              -Dmaven.repo.local=/tmp/r
-              -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r
+              {mvn-releng-opts}
           java-opts:
             - '{mvn-opts}'
           settings: '{mvn-settings}'
