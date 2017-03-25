@@ -24,7 +24,23 @@ files = jenkins-scripts/**/*.sh,
     jjb/**/*.sh,
     scripts/**/*.sh
 ignore = jenkins-scripts/*-local-env.sh,
-    jjb/integration/*.sh
+    jjb/integration/include-raw-integration-compare-distributions.sh,
+    jjb/integration/include-raw-integration-configure-clustering.sh,
+    jjb/integration/include-raw-integration-deploy-controller-offline.sh,
+    jjb/integration/include-raw-integration-deploy-controller-run-test.sh,
+    jjb/integration/include-raw-integration-deploy-controller-verify.sh,
+    jjb/integration/include-raw-integration-deploy-openstack-run-test.sh,
+    jjb/integration/include-raw-integration-distribution-check.sh,
+    jjb/integration/include-raw-integration-get-bundle-url-root.sh,
+    jjb/integration/include-raw-integration-get-bundle-url.sh,
+    jjb/integration/include-raw-integration-get-bundle-vars.sh,
+    jjb/integration/include-raw-integration-get-slave-addresses.sh,
+    jjb/integration/include-raw-integration-list-jobs.sh,
+    jjb/integration/include-raw-integration-multipatch-distribution-test.sh,
+    jjb/integration/include-raw-integration-replace-block-text.sh,
+    jjb/integration/include-raw-integration-start-cluster-run-test.sh,
+    jjb/integration/include-raw-integration-replace-block-text.sh,
+    jjb/integration/include-raw-integration-start-cluster-run-test.sh
 shell = bash
 indent_size = 4
 use_spaces = yeah

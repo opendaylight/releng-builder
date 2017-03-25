@@ -10,14 +10,15 @@
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
 
-ROBOT_VENV=`mktemp -d --suffix=robot_venv`
-echo ROBOT_VENV=${ROBOT_VENV} >> ${WORKSPACE}/env.properties
+ROBOT_VENV=$(mktemp -d --suffix=robot_venv)
+echo ROBOT_VENV="${ROBOT_VENV}" >> "${WORKSPACE}/env.properties"
 
 # The --system-site-packages parameter allows us to pick up system level
 # installed packages. This allows us to bake matplotlib which takes very long
 # to install into the image.
-virtualenv --system-site-packages ${ROBOT_VENV}
-source ${ROBOT_VENV}/bin/activate
+virtualenv --system-site-packages "${ROBOT_VENV}"
+# shellcheck disable=SC1090
+source "${ROBOT_VENV}/bin/activate"
 
 set -exu
 
