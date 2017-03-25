@@ -127,8 +127,8 @@
           virtualenv $WORKSPACE/venv
           source $WORKSPACE/venv/bin/activate
           pip install --upgrade pip
-          pip freeze
           pip install jenkins-job-builder
+          pip freeze
           jenkins-jobs -l DEBUG test --recursive -o archives/job_output jjb/
           gzip archives/job_output/*
       - releng-check-unicode
@@ -194,8 +194,8 @@
           virtualenv $WORKSPACE/venv
           source $WORKSPACE/venv/bin/activate
           pip install --upgrade pip
-          pip freeze
           pip install jenkins-job-builder
+          pip freeze
           jenkins-jobs --version
           jenkins-jobs update --recursive --delete-old --workers 4 jjb/
 
@@ -246,8 +246,8 @@
           virtualenv $WORKSPACE/venv
           source $WORKSPACE/venv/bin/activate
           pip install --upgrade pip
-          pip freeze
           pip install jenkins-job-builder
+          pip freeze
           jenkins-jobs --flush-cache update --recursive --workers 4 jjb/
 
     publishers:
