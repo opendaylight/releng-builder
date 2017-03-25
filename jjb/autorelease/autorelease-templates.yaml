@@ -74,11 +74,12 @@
       - maven-target:
           maven-version: 'mvn33'
           pom: 'pom.xml'
-          goals: >
-              clean deploy -V -B -Pintegrationtests,docs,repoBuild -Djenkins
+          goals: |
+              clean deploy
+              -Pintegrationtests,docs,repoBuild
               -Dcheckstyle.skip=true
-              -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r
               -DaltDeploymentRepository=staging::default::file:hide/from/pom/files/stage
+              {opendaylight-infra-mvn-opts}
           java-opts:
             - '-Xmx10g -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
           settings: 'autorelease-settings'
@@ -88,6 +89,7 @@
       - autorelease-maven-deploy
       - autorelease-get-integration-test-variables
       - autorelease-maven-sources:
+          opendaylight-infra-mvn-opts: '{opendaylight-infra-mvn-opts}'
           maven-version: 'mvn33'
           settings: 'autorelease-settings'
           global-settings: 'odl-global-settings'
@@ -119,4 +121,3 @@
             fail-on-missing: true
       - opendaylight-infra-shiplogs:
           maven-version: 'mvn33'
-
