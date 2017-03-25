@@ -1,3 +1,4 @@
+#!/bin/bash
 # Make sure changes merged after patch creation are applied.
 
 set -exu

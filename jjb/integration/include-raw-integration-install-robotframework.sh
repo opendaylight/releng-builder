@@ -10,14 +10,15 @@
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
 
-ROBOT_VENV=`mktemp -d --suffix=robot_venv`
-echo ROBOT_VENV=${ROBOT_VENV} >> ${WORKSPACE}/env.properties
+ROBOT_VENV=$(mktemp -d --suffix=robot_venv)
+echo ROBOT_VENV="${ROBOT_VENV}" >> "${WORKSPACE}/env.properties"
 
 # The --system-site-packages parameter allows us to pick up system level
 # installed packages. This allows us to bake matplotlib which takes very long
 # to install into the image.
-virtualenv --system-site-packages ${ROBOT_VENV}
-source ${ROBOT_VENV}/bin/activate
+virtualenv --system-site-packages "${ROBOT_VENV}"
+# shellcheck disable=SC1090
+source "${ROBOT_VENV}/bin/activate"
 
 set -exu
 
@@ -25,8 +26,11 @@ set -exu
 pip install --upgrade pip
 
 pip install --upgrade docker-py importlib requests scapy netifaces netaddr ipaddr pyhocon
-pip install --upgrade robotframework{,-{httplibrary,requests,sshlibrary,selenium2library}}
-pip install --upgrade robotframework-pycurllibrary
+pip install --upgrade robotframework-httplibrary \
+    robotframework-requests \
+    robotframework-sshlibrary \
+    robotframework-selenium2library \
+    robotframework-pycurllibrary
 
 # Module jsonpath is needed by current AAA idmlite suite.
 pip install --upgrade jsonpath-rw
