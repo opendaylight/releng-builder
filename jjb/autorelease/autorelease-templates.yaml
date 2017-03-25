@@ -104,9 +104,6 @@
           # way for downstream jobs to pull the latest version of this file
           # in their builds.
           artifacts: 'dependencies.log'
-      - email-notification:
-          email-recipients: '{email-recipients}'
-          email-prefix: '[autorelease]'
       - trigger-parameterized-builds:
           - project: 'integration-distribution-test-{integration-test}'
             condition: UNSTABLE_OR_BETTER
@@ -119,4 +116,3 @@
             fail-on-missing: true
       - opendaylight-infra-shiplogs:
           maven-version: 'mvn33'
-
