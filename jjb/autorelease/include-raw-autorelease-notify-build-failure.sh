@@ -9,10 +9,12 @@
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
 
+NEWLINE=$'\n'
 RELEASE_EMAIL="release@lists.opendaylight.org"
 ARCHIVES_DIR="$JENKINS_HOSTNAME/$JOB_NAME/$BUILD_NUMBER"
 CONSOLE_LOG="/tmp/autorelease-build.log"
 STREAM=${JOB_NAME#*-*e-}
+ERROR_LOG="$WORKSPACE/error.log.gz"
 
 # get console logs
 wget -O "$CONSOLE_LOG" "${BUILD_URL}consoleText"
@@ -37,12 +39,11 @@ if [[ ${REACTOR_INFO} =~ .*::*.*::*. ]]; then
     PROJECT_=$(echo "${REACTOR_INFO}" | awk -F'::' '{ gsub(/^[ \t]+|[ \t]+$/, "", $2); print $2 }')
     NAME=$(echo "${REACTOR_INFO}" | awk -F'::' '{ gsub(/^[ \t]+|[ \t]+$/, "", $3); print $3 }')
 else
-    # set ARTIFACTID to partial format
+    # set project from partial format
     ODL=""
     PROJECT_=""
     NAME=$(echo "${REACTOR_INFO}" | awk '{ gsub(/^[ \t]+|[ \t]+$/, ""); print }')
 fi
-
 
 # determine ARTIFACT_ID for project mailing list
 ARTIFACT_ID=$(awk -F: '/\[ERROR\].*mvn <goals> -rf :/ { print $2}' $CONSOLE_LOG)
@@ -86,12 +87,18 @@ fi
 # Construct email subject & body
 PROJECT_STRING=${PROJECT:+" from $PROJECT"}
 SUBJECT="[release] Autorelease $STREAM failed to build $ARTIFACT_ID$PROJECT_STRING"
+# shellcheck disable=SC2034
+ATTACHMENT_INCLUDE="Attached is a snippet of the error message related to the
+failure that we were able to automatically parse as well as console logs."
+# shellcheck disable=SC2034
+ATTACHMENT_EXCLUDE="Unable to attach error message snippet related to the failure
+since this exceeds the mail server attachment size limit. Please
+refer $ERROR_LOG in archives directory."
+ATTACHMENT=ATTACHMENT_INCLUDE  # default behaviour
 BODY="Attention ${PROJECT:-"OpenDaylight"}-devs,
 
 Autorelease $STREAM failed to build $ARTIFACT_ID$PROJECT_STRING in build
-$BUILD_NUMBER. Attached is a snippet of the error message related to the
-failure that we were able to automatically parse as well as console logs.
-${PROJECT:+"$GROUPLIST"}
+$BUILD_NUMBER. \${!ATTACHMENT} ${PROJECT:+${NEWLINE}${GROUPLIST}}
 
 Console Logs:
 https://logs.opendaylight.org/$SILO/$ARCHIVES_DIR
@@ -114,7 +121,13 @@ if ([ ! -z "${NAME}" ] || [ ! -z "${ARTIFACT_ID}" ]) && [[ "${BUILD_STATUS}" != 
     # 1. Full format:    ODL :: $PROJECT :: $ARTIFACT_ID
     # 2. Partial format: Building $ARTIFACT_ID
     sed -e "/\[INFO\] Building \(${NAME} \|${ARTIFACT_ID} \|${ODL} :: ${PROJECT_} :: ${NAME} \)/,/Reactor Summary:/!d;//d" \
-          $CONSOLE_LOG > /tmp/error.txt
+          $CONSOLE_LOG | gzip > "$ERROR_LOG"
+
+    file_size=$(du -k "$ERROR_LOG" | cut -f1)
+    if [[ "$file_size" -gt 100 ]]; then
+        # shellcheck disable=SC2034
+        ATTACHMENT=ATTACHMENT_EXCLUDE
+    fi
 
     if [ -n "${PROJECT}" ]; then
         RELEASE_EMAIL="${RELEASE_EMAIL}, ${PROJECT}-dev@lists.opendaylight.org"
@@ -122,13 +135,16 @@ if ([ ! -z "${NAME}" ] || [ ! -z "${ARTIFACT_ID}" ]) && [[ "${BUILD_STATUS}" != 
 
     # Only send emails in production (releng), not testing (sandbox)
     if [ "${SILO}" == "releng" ]; then
-        echo "${BODY}" | mail -a /tmp/error.txt \
-            -r "Jenkins <jenkins-dontreply@opendaylight.org>" \
-            -s "${SUBJECT}" "${RELEASE_EMAIL}"
+        MAIL_PARAMS=" -r Jenkins <jenkins-dontreply@opendaylight.org>"
+        MAIL_PARAMS+=" -s \"$SUBJECT\""
+        if [[ "$file_size" -gt 100 ]]; then
+            MAIL_PARAMS+=" -a \"$ERROR_LOG\""
+        fi
+        eval echo \""${BODY}"\" | mail "$MAIL_PARAMS" "$RELEASE_EMAIL"
     elif [ "${SILO}" == "sandbox" ]; then
         echo "Running in sandbox, not actually sending notification emails"
         echo "Subject: ${SUBJECT}"
-        echo "Body: ${BODY}"
+        eval echo \""Body: ${BODY}"\"
     else
         echo "Not sure how to notify in \"${SILO}\" Jenkins silo"
     fi
