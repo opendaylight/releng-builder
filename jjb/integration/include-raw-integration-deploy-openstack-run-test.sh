@@ -180,8 +180,8 @@ cat >> ${local_conf_file_name} << EOF
 minimize_polling=True
 
 [ml2]
-# Needed for VLAN provider tests - because our provider networks are always encapsulated in VXLAN (br-phys1)
-# MTU(1440) + VXLAN(50) + VLAN(4) = 1494 < MTU eth0/br-phys1(1500)
+# Needed for VLAN provider tests - because our provider networks are always encapsulated in VXLAN (br-physnet1)
+# MTU(1440) + VXLAN(50) + VLAN(4) = 1494 < MTU eth0/br-physnet1(1500)
 physical_network_mtus = ${PUBLIC_PHYSICAL_NETWORK}:1440
 path_mtu = 1490
 
@@ -707,31 +707,23 @@ do
     EXTNET_VLAN_ID=167
     EXTNET_INTERNET_IP="10.9.9.9"
     EXTNET_PNF_IP="10.10.10.253"
-    if [[ ${CONTROLLERFEATURES} == *"odl-ovsdb-openstack"* ]]; then
-        ${SSH} ${!CONTROLIP} "sudo ifconfig ${PUBLIC_BRIDGE} up ${EXTNET_GATEWAY_IP}/24"
-    else
-        ${SSH} ${!CONTROLIP} "sudo ip link add link ${PUBLIC_BRIDGE} name ${PUBLIC_BRIDGE}.${EXTNET_VLAN_ID} type vlan id ${EXTNET_VLAN_ID}"
-        ${SSH} ${!CONTROLIP} "sudo ifconfig ${PUBLIC_BRIDGE} up"
-        ${SSH} ${!CONTROLIP} "sudo ifconfig ${PUBLIC_BRIDGE}.${EXTNET_VLAN_ID} up ${EXTNET_GATEWAY_IP}/24"
+    ${SSH} ${!CONTROLIP} "sudo ifconfig ${PUBLIC_BRIDGE} up ${EXTNET_GATEWAY_IP}/24"
 
-        # Control Node - external net PNF simulation
-        ${SSH} ${!CONTROLIP} "
-            sudo ip netns add pnf_ns;
-            sudo ip link add pnf_veth0 type veth peer name pnf_veth1;
-            sudo ip link set pnf_veth1 netns pnf_ns;
-            sudo ip link set pnf_veth0 up;
-            sudo ip netns exec pnf_ns ifconfig pnf_veth1 up;
-            sudo ip netns exec pnf_ns ip link add link pnf_veth1 name pnf_veth1.${EXTNET_VLAN_ID} type vlan id ${EXTNET_VLAN_ID};
-            sudo ip netns exec pnf_ns ifconfig pnf_veth1.${EXTNET_VLAN_ID} up ${EXTNET_PNF_IP}/24;
-            sudo ovs-vsctl add-port ${PUBLIC_BRIDGE} pnf_veth0;
-        "
+    # Control Node - external net PNF simulation
+    ${SSH} ${!CONTROLIP} "
+        sudo ip netns add pnf_ns;
+        sudo ip link add pnf_veth0 type veth peer name pnf_veth1;
+        sudo ip link set pnf_veth1 netns pnf_ns;
+        sudo ip link set pnf_veth0 up;
+        sudo ip netns exec pnf_ns ifconfig pnf_veth1 up ${EXTNET_PNF_IP}/24;
+        sudo ovs-vsctl add-port ${PUBLIC_BRIDGE} pnf_veth0;
+    "
 
-        # Control Node - external net internet address simulation
-        ${SSH} ${!CONTROLIP} "
-            sudo ip tuntap add dev internet_tap mode tap;
-            sudo ifconfig internet_tap up ${EXTNET_INTERNET_IP}/24;
-        "
-    fi
+    # Control Node - external net internet address simulation
+    ${SSH} ${!CONTROLIP} "
+        sudo ip tuntap add dev internet_tap mode tap;
+        sudo ifconfig internet_tap up ${EXTNET_INTERNET_IP}/24;
+    "
 
     # Computes
     compute_index=1
