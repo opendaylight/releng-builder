@@ -190,8 +190,8 @@ cat >> ${local_conf_file_name} << EOF
 minimize_polling=True
 
 [ml2]
-# Needed for VLAN provider tests - because our provider networks are always encapsulated in VXLAN (br-phys1)
-# MTU(1440) + VXLAN(50) + VLAN(4) = 1494 < MTU eth0/br-phys1(1500)
+# Needed for VLAN provider tests - because our provider networks are always encapsulated in VXLAN (br-physnet1)
+# MTU(1440) + VXLAN(50) + VLAN(4) = 1494 < MTU eth0/br-physnet1(1500)
 physical_network_mtus = ${PUBLIC_PHYSICAL_NETWORK}:1440
 
 [[post-config|/etc/neutron/dhcp_agent.ini]]
@@ -670,9 +670,7 @@ done
 
 # Control Node - PUBLIC_BRIDGE will act as the external router
 GATEWAY_IP="10.10.10.250" # FIXME this should be a parameter, also shared with integration-test
-${SSH} ${OPENSTACK_CONTROL_NODE_IP} "sudo ip link add link ${PUBLIC_BRIDGE} name  ${PUBLIC_BRIDGE}.167 type vlan id 167"
-${SSH} ${OPENSTACK_CONTROL_NODE_IP} "sudo ifconfig  ${PUBLIC_BRIDGE} up"
-${SSH} ${OPENSTACK_CONTROL_NODE_IP} "sudo ifconfig   ${PUBLIC_BRIDGE}.167 up ${GATEWAY_IP}/24"
+${SSH} ${OPENSTACK_CONTROL_NODE_IP} "sudo ifconfig $PUBLIC_BRIDGE up ${GATEWAY_IP}/24"
 compute_index=1
 for compute_ip in ${COMPUTE_IPS[*]}
 do
