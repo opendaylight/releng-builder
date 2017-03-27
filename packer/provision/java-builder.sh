@@ -73,5 +73,3 @@ unzip packer_0.12.2_linux_amd64.zip -d /usr/local/bin/
 # rename packer to avoid conflict with binary in cracklib
 mv /usr/local/bin/packer /usr/local/bin/packer.io
 
-# Needed for Coala linting, Markdown and Dockerfile bears in particular
-npm install remark-cli dockerfile_lint
