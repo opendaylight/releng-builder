@@ -11,7 +11,7 @@ set -xeu -o pipefail
 yum install -y @development \
     python-devel \
     python-setuptools \
-    virtualenv
+    python-virtualenv
 
 # TODO: Move docker-py and netaddr to virtualenv in the csit jobs.
 yum install -y python-docker-py \
