@@ -25,13 +25,12 @@
     install:
       - only:
           scope: 'only'
+          robot-options: '-v USE_NETCONF_CONNECTOR:False'
       - all:
           scope: 'all'
+          robot-options: '-v USE_NETCONF_CONNECTOR:False -v DEVICE_CHECK_TIMEOUT:300s'
 
     # Features to install
     install-features: >
         odl-restconf,
         odl-netconf-clustered-topology
-
-    # Robot custom options
-    robot-options: '-v USE_NETCONF_CONNECTOR:False'
