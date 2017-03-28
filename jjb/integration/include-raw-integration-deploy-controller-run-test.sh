@@ -213,6 +213,11 @@ if [ -f "${configplan_filepath}" ]; then
         source ${line}
     done
 fi
+if [ "${ODL_DHCP_SERVICE_ENABLED}" == "true" ]; then
+    odl_dhcp_script="${WORKSPACE}/test/csit/scripts/set_dhcp_mode.sh"
+    echo "Executing ${odl_dhcp_script}..."
+    source ${odl_dhcp_script}
+fi
 
 # Copy over the startup script to controller and execute it.
 for i in `seq 1 ${NUM_ODL_SYSTEM}`

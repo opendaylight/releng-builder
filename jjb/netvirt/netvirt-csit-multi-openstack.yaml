@@ -30,6 +30,18 @@
       - upstream-learn:
           schedule: 'H H * * *'
           sg-mode: 'learn'
+      - upstream-transparent-dhcp:
+          schedule: 'H H * * H'
+          sg-mode: 'transparent'
+          odl-dhcp: 'true'
+      - upstream-learn-dhcp:
+          schedule: 'H H * * H'
+          sg-mode: 'learn'
+          odl-dhcp: 'true'
+      - upstream-stateful-dhcp:
+          schedule: 'H H * * H'
+          sg-mode: 'stateful'
+          odl-dhcp: 'true'
       - gate-learn:
           schedule: ''
           sg-mode: 'learn'
@@ -72,6 +84,8 @@
           openstack_system_image: 'CentOS 7 - devstack-newton - 20170314-2256'
 
     security-group-mode: '{sg-mode}'
+
+    odl_dhcp_service_enabled: '{odl-dhcp}'
 
 - project:
     name: netvirt-csit-multi-site-openstack-integration
