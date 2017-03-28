@@ -30,6 +30,18 @@
       - upstream-learn:
           schedule: ''
           sg-mode: 'learn'
+      - upstream-transparent-dhcp:
+          schedule: 'H H * * H'
+          sg-mode: 'transparent'
+          odl_dhcp_service_enabled: 'true'
+      - upstream-learn-dhcp:
+          schedule: 'H H * * H'
+          sg-mode: 'learn'
+          odl_dhcp_service_enabled: 'true'
+      - upstream-stateful-dhcp:
+          schedule: 'H H * * H'
+          sg-mode: 'stateful'
+          odl_dhcp_service_enabled: 'true'
       - gate-learn:
           schedule: ''
           sg-mode: 'learn'
