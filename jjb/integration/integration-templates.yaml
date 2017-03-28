@@ -1079,6 +1079,10 @@
           default: '{security-group-mode}'
           description: 'Security Group Mode to be used in netvirt aclservice config'
       - string:
+          name: ODL_DHCP_SERVICE_ENABLED
+          default: '{odl-dhcp-service-enabled}'
+          description: 'Use ODL based DHCP server instead of OpenStack DHCP'
+      - string:
           name: PUBLIC_PHYSICAL_NETWORK
           default: '{public-physical-network}'
           description: 'provider physical network used for flat/vlan networks'
@@ -1251,6 +1255,10 @@
           name: SECURITY_GROUP_MODE
           default: '{security-group-mode}'
           description: 'Security Group Mode to be used in netvirt aclservice config'
+      - string:
+          name: ODL_DHCP_SERVICE_ENABLED
+          default: '{odl-dhcp-service-enabled}'
+          description: 'Use ODL based DHCP server instead of OpenStack DHCP'
       - string:
           name: PUBLIC_PHYSICAL_NETWORK
           default: '{public-physical-network}'
