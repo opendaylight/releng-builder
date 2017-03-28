@@ -1063,6 +1063,10 @@
           default: '{security-group-mode}'
           description: 'Security Group Mode to be used in netvirt aclservice config'
       - string:
+          name: ODL_DHCP_MODE
+          default: '{odl-dhcp-mode}'
+          description: 'Odl dhcp mode to be used while installing devstack, if true run set_dhcp_mode.sh'
+      - string:
           name: PUBLIC_PHYSICAL_NETWORK
           default: '{public-physical-network}'
           description: 'provider physical network used for flat/vlan networks'
