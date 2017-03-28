@@ -24,29 +24,49 @@
       - upstream-transparent:
           schedule: 'H H * * *'
           sg-mode: 'transparent'
+          odl-dhcp: 'false'
       - upstream-stateful:
           schedule: 'H H/4 * * *'
           sg-mode: 'stateful'
-      - upstream-learn:
+          odl-dhcp: 'false'
+      - upstream-learn-mor:
           schedule: 'H H * * *'
           sg-mode: 'learn'
+          odl-dhcp: 'false'
+      - upstream-transparent-dhcp:
+          schedule: 'H 12 * * 0'
+          sg-mode: 'transparent'
+          odl-dhcp: 'true'
+      - upstream-learn-dhcp:
+          schedule: 'H 12 * * 0'
+          sg-mode: 'learn'
+          odl-dhcp: 'true'
+      - upstream-stateful-dhcp:
+          schedule: 'H 12 * * 0'
+          sg-mode: 'stateful'
+          odl-dhcp: 'true'
       - gate-learn:
           schedule: ''
           sg-mode: 'learn'
+          odl-dhcp: 'false'
       - gate-transparent:
           schedule: ''
           sg-mode: 'transparent'
+          odl-dhcp: 'false'
       - gate-stateful:
           schedule: ''
           sg-mode: 'stateful'
+          odl-dhcp: 'false'
       - gate-minimal-transparent:
           schedule: ''
           sg-mode: 'transparent'
           testplan: '{project}-{topology}-minimal-openstack.txt'
+          odl-dhcp: 'false'
       - gate-tempest-transparent:
           schedule: ''
           sg-mode: 'transparent'
           testplan: '{project}-{topology}-tempest-openstack.txt'
+          odl-dhcp: 'false'
 
     stream:
       - carbon:
@@ -72,3 +92,5 @@
           openstack_system_image: 'CentOS 7 - devstack-newton - 20170314-2256'
 
     security-group-mode: '{sg-mode}'
+    
+    odl_dhcp_service_enabled: '{odl-dhcp}'
