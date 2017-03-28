@@ -20,35 +20,6 @@ add-apt-repository -y ppa:vshn/openvswitch
 apt-get update -y --force-yes
 apt-get install -y --force-yes openvswitch-switch
 
-echo '---> Installing CPqD and dependencies'
-apt-get install -y --force-yes build-essential cmake flex dh-autoreconf pkg-config
-apt-get install -y --force-yes libpcre++-dev libxerces-c-dev libpcap-dev libboost-all-dev
-
-cd /tmp
-wget -nc http://de.archive.ubuntu.com/ubuntu/pool/main/b/bison/bison_2.5.dfsg-2.1_amd64.deb \
-         http://de.archive.ubuntu.com/ubuntu/pool/main/b/bison/libbison-dev_2.5.dfsg-2.1_amd64.deb
-
-dpkg -i bison_2.5.dfsg-2.1_amd64.deb libbison-dev_2.5.dfsg-2.1_amd64.deb
-rm bison_2.5.dfsg-2.1_amd64.deb libbison-dev_2.5.dfsg-2.1_amd64.deb
-
-wget -nc http://www.nbee.org/download/nbeesrc-jan-10-2013.zip
-unzip nbeesrc-jan-10-2013.zip
-cd nbeesrc-jan-10-2013/src
-cmake .
-make
-cp ../bin/libn*.so /usr/local/lib
-ldconfig
-cp -R ../include/* /usr/include/
-cd ../..
-
-git clone https://github.com/CPqD/ofsoftswitch13.git
-cd ofsoftswitch13
-./boot.sh
-./configure
-make
-make install
-cd ..
-
 echo '---> Installing mininet 2.2.1'
 git clone git://github.com/mininet/mininet
 cd mininet
@@ -62,7 +33,6 @@ OFLOPS_DIR=$HOME/oflops  # Directory that contains oflops repo
 
 apt-get install -y --force-yes libsnmp-dev libpcap-dev libconfig-dev
 
-git clone git://gitosis.stanford.edu/openflow.git $OF_DIR
 git clone https://github.com/andi-bigswitch/oflops.git $OFLOPS_DIR
 
 cd $OFLOPS_DIR
