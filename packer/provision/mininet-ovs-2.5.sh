@@ -47,3 +47,13 @@ apt-get install vlan
 
 # Install netaddr package which is needed by some custom mininet topologies
 apt-get install python-netaddr
+
+#Check out, compile and install quagga for EVPN functionalities
+echo "Installing the Quagga..."
+mkdir -p /tmp/build_quagga
+cd /tmp/build_quagga
+git clone https://github.com/6WIND/zrpcd.git
+cd zrpcd
+git checkout 20170330
+chmod 777 /tmp/build_quagga/zrpcd/pkgsrc/dev_compile_script.sh
+/tmp/build_quagga/zrpcd/pkgsrc/dev_compile_script.sh -d -b -t
