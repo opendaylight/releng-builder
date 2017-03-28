@@ -1,0 +1,30 @@
+---
+- project:
+    name: bier-csit-basic
+    jobs:
+      - '{project}-csit-1node-{functionality}-{install}-{stream}'
+      - '{project}-csit-verify-1node-{functionality}'
+
+    # The project name
+    project: 'bier'
+
+    # The functionality under test
+    functionality: 'basic'
+
+    # Project branches
+    stream:
+      - carbon:
+          branch: 'master'
+          jre: 'openjdk8'
+
+    install:
+      - only:
+          scope: 'only'
+      - all:
+          scope: 'all'
+
+    # Features to install
+    install-features: 'odl-bier-all'
+
+    # Robot custom options
+    robot-options: ''
