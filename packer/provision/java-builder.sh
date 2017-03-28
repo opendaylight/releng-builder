@@ -73,3 +73,12 @@ unzip packer_0.12.2_linux_amd64.zip -d /usr/local/bin/
 # rename packer to avoid conflict with binary in cracklib
 mv /usr/local/bin/packer /usr/local/bin/packer.io
 
+#Check out 6Wind quagga with tag name '20170330', compile and install for router functionalities
+echo "Installing the Quagga..."
+mkdir -p /tmp/build_quagga
+cd /tmp/build_quagga
+git clone https://github.com/6WIND/zrpcd.git
+cd zrpcd
+git checkout 20170330
+chmod 777 /tmp/build_quagga/zrpcd/pkgsrc/dev_compile_script.sh
+/tmp/build_quagga/zrpcd/pkgsrc/dev_compile_script.sh -d -b -t
