@@ -24,29 +24,37 @@
       - upstream-transparent:
           schedule: 'H H * * *'
           sg-mode: 'transparent'
+          odl-dhcp: 'false'
       - upstream-stateful:
           schedule: 'H H * * *'
           sg-mode: 'stateful'
+          odl-dhcp: 'false'
       - upstream-learn:
           schedule: 'H H * * *'
           sg-mode: 'learn'
+          odl-dhcp: 'false'
       - gate-learn:
           schedule: ''
           sg-mode: 'learn'
+          odl-dhcp: 'false'
       - gate-transparent:
           schedule: ''
           sg-mode: 'transparent'
+          odl-dhcp: 'false'
       - gate-stateful:
           schedule: ''
           sg-mode: 'stateful'
+          odl-dhcp: 'false'
       - gate-minimal-transparent:
           schedule: ''
           sg-mode: 'transparent'
           testplan: '{project}-{topology}-minimal-openstack.txt'
+          odl-dhcp: 'false'
       - gate-tempest-transparent:
           schedule: ''
           sg-mode: 'transparent'
           testplan: '{project}-{topology}-tempest-openstack.txt'
+          odl-dhcp: 'false'
 
     stream:
       - carbon:
@@ -81,4 +89,6 @@
 
     enable-openstack-services: 'q-svc,q-dhcp,q-meta,n-cauth,tempest,l2gw-plugin'
 
-    security-group-mode: '{sg-mode}'
+    ecurity-group-mode: '{sg-mode}'
+  
+    odl-dhcp-mode: '{odl-dhcp}'

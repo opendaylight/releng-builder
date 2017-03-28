@@ -203,9 +203,15 @@ if [ -f "${configplan_filepath}" ]; then
     cat ${configplan_filepath} | sed "s:integration:${WORKSPACE}:" > configplan.txt
     cat configplan.txt
     for line in $( egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' configplan.txt ); do
-        echo "Executing ${line}..."
-        source ${line}
+           echo "Executing ${line}..."
+           source ${line}
     done
+fi
+
+if [ "{ODL_DHCP_SERVICE_ENABLED}" == "true" ]; then
+    odl_dhcp_script="${WORKSPACE}/test/csit/scripts/set_dhcp_mode.sh"
+    echo "Executing ${odl_dhcp_script}..."
+    source ${odl_dhcp_script}
 fi
 
 # Copy over the startup script to controller and execute it.
