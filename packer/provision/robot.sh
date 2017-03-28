@@ -8,7 +8,7 @@ set -xeu -o pipefail
 # Install minimal python requirements to get virtualenv going
 # Additional python dependencies should be installed via JJB configuration
 # inside project jobs using a virtualenv setup.
-yum install -y python-{devel,setuptools,virtualenv} @development
+yum install -y python-{devel,setuptools,virtualenv,netaddr} @development
 
 # Install dependencies for robotframework and robotframework-sshlibrary
 # installed elsewhere
