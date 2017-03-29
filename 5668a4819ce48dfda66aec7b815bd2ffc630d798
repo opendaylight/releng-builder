@@ -426,6 +426,30 @@
       "revId": "5668a4819ce48dfda66aec7b815bd2ffc630d798",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_2939a541",
+        "filename": "jjb/netvirt/netvirt-csit-multi-openstack.yaml",
+        "patchSetId": 39
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2017-03-29T17:24:33Z",
+      "side": 1,
+      "message": "I\u0027m not saying a new template, but a new jjb project:\n\nso above, line 2 is \"netvirt-csit-openstack-integration\", but\nnow you make a new line below with something like\n\"netvirt-csit-multi-site-openstack-integration\" and it will\nhave the same template under -jobs, and then only add the\ndetails that we want for multi-site. the duplication I was\nreferring to is that you will still need to define the \nfunctionality and project, testplan, etc stuff. But it\u0027s\nnot too bad.\n\nhonestly, that\u0027s how I understand it would work. I\u0027ve never\ntried it.\n\nlet me know if I\u0027m being confusing, as it feels like it :)",
+      "parentUuid": "fafc7978_0efcaa3d",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 32
+      },
+      "revId": "5668a4819ce48dfda66aec7b815bd2ffc630d798",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
