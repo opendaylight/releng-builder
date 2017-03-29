@@ -433,6 +433,7 @@ mkdir -p ${OS_CTRL_FOLDER}
 scp ${OPENSTACK_CONTROL_NODE_IP}:/opt/stack/devstack/nohup.out ${OS_CTRL_FOLDER}/stack.log
 scp ${OPENSTACK_CONTROL_NODE_IP}:/var/log/openvswitch/ovs-vswitchd.log ${OS_CTRL_FOLDER}/ovs-vswitchd.log
 scp ${OPENSTACK_CONTROL_NODE_IP}:/etc/neutron/neutron.conf ${OS_CTRL_FOLDER}/neutron.conf
+scp ${OPENSTACK_CONTROL_NODE_IP}:/etc/nova/nova.conf ${OS_CTRL_FOLDER}/nova.conf
 rsync -avhe ssh ${OPENSTACK_CONTROL_NODE_IP}:/opt/stack/logs/* ${OS_CTRL_FOLDER} # rsync to prevent copying of symbolic links
 scp extra_debug.sh ${OPENSTACK_CONTROL_NODE_IP}:/tmp
 ${SSH} ${OPENSTACK_CONTROL_NODE_IP} "bash /tmp/extra_debug.sh > /tmp/extra_debug.log"
