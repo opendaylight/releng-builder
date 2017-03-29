@@ -20,7 +20,6 @@
           jre: 'openjdk8'
           csit-list: '{csit-list-carbon}'
           csit-weekly-list: '{csit-weekly-list-carbon}'
-          schedule: 'H H * * 0-4'
           schedule-weekly: 'H 12 * * 0'
 
       - boron:
@@ -29,7 +28,6 @@
           jre: 'openjdk8'
           csit-list: '{csit-list-boron}'
           csit-weekly-list: ''
-          schedule: 'H H * * 0-4'
           schedule-weekly: 'H 12 * * 0'
 
       - beryllium:
@@ -38,7 +36,6 @@
           jre: 'openjdk7'
           csit-list: '{csit-list-beryllium}'
           csit-weekly-list: ''
-          schedule: 'H H * * 6'
           schedule-weekly: 'H 12 * * 0'
 
     # tools system image
@@ -168,9 +165,6 @@
           bundleurl: '{bundleurl}'
       - integration-jdk-version:
           jdkversion: '{jre}'
-
-    triggers:
-      - timed: '{schedule}'
 
     builders:
       - trigger-builds:
