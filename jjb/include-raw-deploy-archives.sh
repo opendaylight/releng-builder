@@ -77,7 +77,7 @@ if [ ! -z "$ARCHIVE_ARTIFACTS" ]; then
     shopt -s globstar  # Enable globstar to copy archives
     for f in $ARCHIVE_ARTIFACTS; do
         [[ -e $f ]] || continue  # handle the case of no files to archive
-        echo "Archiving $f" >> "$ARCHIVES_DIR/_archives.log"
+        echo "Archiving $f" >> "$ARCHIVES_DIR/_archives.log" > /dev/null 2>&1
         dir=$(dirname "$f")
         mkdir -p "$WORKSPACE/archives/$dir"
         mv "$f" "$WORKSPACE/archives/$f"
