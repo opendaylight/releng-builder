@@ -77,7 +77,7 @@ if [ ! -z "$ARCHIVE_ARTIFACTS" ]; then
     shopt -s globstar  # Enable globstar to copy archives
     for f in $ARCHIVE_ARTIFACTS; do
         [[ -e $f ]] || continue  # handle the case of no files to archive
-        echo "Archiving $f"
+        echo "Archiving $f" >> "$ARCHIVES_DIR/_archives.log"
         dir=$(dirname "$f")
         mkdir -p "$WORKSPACE/archives/$dir"
         mv "$f" "$WORKSPACE/archives/$f"
@@ -121,5 +121,5 @@ find "$ARCHIVES_DIR" -type f -print0 \
 # Compress Java heap dumps using xz
 find "$ARCHIVES_DIR" -type f -name \*.hprof -print0 | xargs -0 xz
 
-zip -r archives.zip "$JENKINS_HOSTNAME/" > "$ARCHIVES_DIR/_archives-zip.log"
+zip -r archives.zip "$JENKINS_HOSTNAME/" >> "$ARCHIVES_DIR/_archives.log"
 du -sh archives.zip
