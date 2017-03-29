@@ -20,19 +20,21 @@
       - only:
           scope: 'only'
 
+    # Job images
+    odl_system_flavor: '8 GB General Purpose v1'
+
     # Features to install
     install-features: 'odl-openflowplugin-flow-services-ui'
 
     # Robot custom options
-    robot-options: '-v flnr:50000'
+    robot-options: '-v flnr:64000 -v swnr:32 -v fpr:200'
 
     # Plot Info
-    01-plot-title: 'Flows (100k) Setup Time'
-    01-plot-yaxis: '[s]'
-    01-plot-group: 'Config Performance'
-    01-plot-data-file: 'flows_setup_time.csv'
-
-    02-plot-title: 'REST setup rate (for 100k flows)'
-    02-plot-yaxis: 'setup time[s], req[flows/s]'
-    02-plot-group: 'Performance Rate'
-    02-plot-data-file: 'flows_install_rate.csv'
+    01-plot-title: 'Stats Collection Rate'
+    01-plot-yaxis: 'flow_mods/sec'
+    01-plot-group: 'Stats Collection Performance'
+    01-plot-data-file: 'stats_rate.csv'
+    02-plot-title: 'Stats Collection Time'
+    02-plot-yaxis: 'seconds'
+    02-plot-group: 'Stats Collection Performance'
+    02-plot-data-file: 'stats_time.csv'
