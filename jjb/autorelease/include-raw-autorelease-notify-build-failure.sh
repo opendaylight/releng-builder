@@ -54,26 +54,32 @@ ARTIFACT_ID=$(awk -F: '/\[ERROR\].*mvn <goals> -rf :/ { print $2}' $CONSOLE_LOG)
 #     project.groupId is not set but IS inherited from project.parent.groupId
 # else
 #     exclude project mailing list
-grouplist=()
-while IFS="" read -r p; do
-    GROUP=$(xmlstarlet sel\
-          -N "x=http://maven.apache.org/POM/4.0.0"\
-          -t -m "/x:project[x:artifactId='$ARTIFACT_ID']"\
-          --if "/x:project/x:groupId"\
-          -v "/x:project/x:groupId"\
-          --elif "/x:project/x:parent/x:groupId"\
-          -v "/x:project/x:parent/x:groupId"\
-          --else -o ""\
-          "$p" 2>/dev/null)
-    if [ ! -z "${GROUP}" ]; then
-        grouplist+=($(echo "${GROUP}" | awk -F'.' '{ print $3 }'))
-    fi
-done < <(find . -name "pom.xml")
+if [ ! -z "$ARTIFACT_ID" ]; then
+    grouplist=()
+    while IFS="" read -r p; do
+        GROUP=$(xmlstarlet sel\
+              -N "x=http://maven.apache.org/POM/4.0.0"\
+              -t -m "/x:project[x:artifactId='$ARTIFACT_ID']"\
+              --if "/x:project/x:groupId"\
+              -v "/x:project/x:groupId"\
+              --elif "/x:project/x:parent/x:groupId"\
+              -v "/x:project/x:parent/x:groupId"\
+              --else -o ""\
+              "$p" 2>/dev/null)
+        if [ ! -z "${GROUP}" ]; then
+            grouplist+=($(echo "${GROUP}" | awk -F'.' '{ print $3 }'))
+        fi
+    done < <(find . -name "pom.xml")
 
-if [ "${#grouplist[@]}" -eq 1 ]; then
-    PROJECT="${grouplist[0]}"
+    if [ "${#grouplist[@]}" -eq 1 ]; then
+        PROJECT="${grouplist[0]}"
+    elif [ "${#grouplist[@]}" -gt 1 ]; then
+        GROUPLIST="NOTE: The artifactId: $ARTIFACT_ID matches multiple groups: ${grouplist[*]}"
+    else
+        echo "Failed to determine project.groupId using xpaths"
+    fi
 else
-    GROUPLIST="NOTE: The artifactId: $ARTIFACT_ID matches multiple groups: ${grouplist[*]}"
+    echo "Failed to determine ARTIFACT_ID"
 fi
 
 # Construct email subject & body
