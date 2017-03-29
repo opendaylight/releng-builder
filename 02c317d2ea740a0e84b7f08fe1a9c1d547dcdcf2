@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fafc7978_2f16c555",
+        "filename": "jjb/include-raw-deploy-archives.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2017-03-29T22:16:48Z",
+      "side": 1,
+      "message": "So we may still need to redirect unwanted output at the end of the line.\n\n\u0027$f\u0027 can be file or dir, and when its a dir which get moved (along with the files) then file list is not updated from the list runtime, therefore this still would output \"no such file or dir\" to log.",
+      "range": {
+        "startLine": 80,
+        "startChar": 32,
+        "endLine": 80,
+        "endChar": 80
+      },
+      "revId": "02c317d2ea740a0e84b7f08fe1a9c1d547dcdcf2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
