@@ -156,6 +156,8 @@
             - 'origin/$GERRIT_BRANCH'
           skip-tag: true
           choosing-strategy: 'gerrit'
+          submodule:
+            recursive: true
 
     wrappers:
       - opendaylight-infra-wrappers:
