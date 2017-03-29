@@ -4,6 +4,7 @@
     jobs:
       - 'docs-merge-rtd-{stream}'
       - 'docs-verify-rtd-{stream}'
+      - '{project-name}-verify-tox-{stream}'
 
     stream:
       - carbon:
@@ -13,8 +14,9 @@
       - beryllium:
           branch: 'stable/beryllium'
 
-    project: 'docs'
-    rtdproject: 'opendaylight'
+    project: docs
+    project-name: docs
+    rtdproject: opendaylight
     archive-artifacts: 'docs/_build/html/**'
 
 - job-template:
