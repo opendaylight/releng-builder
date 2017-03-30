@@ -51,35 +51,6 @@ git apply -p0 < ../newOptions.patch
 cd ./util
 ./install.sh -nfv
 
-echo '---> Install CPqD and dependencies'
-apt-get install -y --force-yes build-essential cmake flex
-apt-get install -y --force-yes libpcre++-dev libxerces-c-dev libpcap-dev libboost-all-dev
-
-cd /tmp
-wget -nc http://de.archive.ubuntu.com/ubuntu/pool/main/b/bison/bison_2.5.dfsg-2.1_amd64.deb \
-         http://de.archive.ubuntu.com/ubuntu/pool/main/b/bison/libbison-dev_2.5.dfsg-2.1_amd64.deb
-
-dpkg -i bison_2.5.dfsg-2.1_amd64.deb libbison-dev_2.5.dfsg-2.1_amd64.deb
-rm bison_2.5.dfsg-2.1_amd64.deb libbison-dev_2.5.dfsg-2.1_amd64.deb
-
-wget -nc http://www.nbee.org/download/nbeesrc-jan-10-2013.zip
-unzip nbeesrc-jan-10-2013.zip
-cd nbeesrc-jan-10-2013/src
-cmake .
-make
-cp ../bin/libn*.so /usr/local/lib
-ldconfig
-cp -R ../include/* /usr/include/
-cd ../..
-
-git clone https://github.com/CPqD/ofsoftswitch13.git
-cd ofsoftswitch13
-./boot.sh
-./configure
-make
-make install
-cd ..
-
 echo '---> Installing cbench installation for running openflow performance tests'
 OF_DIR=$HOME/openflow  # Directory that contains OpenFlow code
 OFLOPS_DIR=$HOME/oflops  # Directory that contains oflops repo
