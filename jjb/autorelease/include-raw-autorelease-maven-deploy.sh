@@ -29,6 +29,7 @@ rsync -avz --remove-source-files \
            "stage/org/opendaylight" m2repo/org/
 
 "$MVN" -V -B org.sonatype.plugins:nexus-staging-maven-plugin:1.6.8:deploy-staged-repository \
+    -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn \
     -DrepositoryDirectory="$(pwd)/m2repo" \
     -DnexusUrl="$NEXUS_STAGING_URL" \
     -DstagingProfileId="$NEXUS_STAGING_PROFILE" \
