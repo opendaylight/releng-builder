@@ -29,7 +29,6 @@
       - gbp
       - java-builder
       - mininet
-      - mininet-ovs-2.3
       - mininet-ovs-2.5
       - robot
 
@@ -39,8 +38,6 @@
       - platforms: centos
         templates: mininet
       - platforms: centos
-        templates: mininet-ovs-2.3
-      - platforms: centos
         templates: mininet-ovs-2.5
       - platforms: ubuntu-14.04
         templates: java-builder
@@ -54,6 +51,8 @@
         templates: devstack
       - platforms: ubuntu-14.04
         templates: docker
+      - platforms: ubuntu-14.04
+        templates: mininet-ovs-2.5
       - platforms: ubuntu-16.04
         templates: java-builder
       - platforms: ubuntu-16.04
@@ -69,11 +68,7 @@
       - platforms: ubuntu-16.04
         templates: mininet
       - platforms: ubuntu-16.04
-        templates: mininet-ovs-2.3
-      - platforms: ubuntu-16.04
         templates: gbp
-      - platforms: ubuntu-14.04
-        templates: mininet-ovs-2.5
 
 
     project-type: freestyle
