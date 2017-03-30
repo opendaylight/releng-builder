@@ -10,6 +10,9 @@
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
 
+# Force any errors to cause the script to end with failure
+set -eu -o pipefail
+
 function print_usage {
     echo "Usage: $0 <staging-repo>"
     echo ""
@@ -39,7 +42,8 @@ if [ -d "$SIGNATURES_DIR" ]; then
 fi
 mkdir $SIGNATURES_DIR
 
-mvn org.sonatype.plugins:nexus-staging-maven-plugin:1.6.7:deploy-staged-repository \
+mvn org.sonatype.plugins:nexus-staging-maven-plugin:1.6.8:deploy-staged-repository \
+    -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn \
     -DskipStagingRepositoryClose=true \
     -DrepositoryDirectory="$SIGNATURES_DIR" \
     -DnexusUrl=https://nexus.opendaylight.org/ \
@@ -47,7 +51,7 @@ mvn org.sonatype.plugins:nexus-staging-maven-plugin:1.6.7:deploy-staged-reposito
     -DserverId="opendaylight.staging" | tee /tmp/deploy-staged-repository.log
 
 STAGED_REPO_ID=`grep 'Created staging repository with ID' /tmp/deploy-staged-repository.log | sed -e 's/.*ID "//' -e 's/".*//'`
-echo "Staged Repo: $STAGED_REPO"
+echo "Staged Repo: $STAGED_REPO_ID"
 
 #
 # Finally retrieve and sign artifacts.
@@ -57,7 +61,8 @@ for i in $PROJECTS
 do
     echo "Signing $i"
     ./odlrelease sign http://nexus.opendaylight.org/content/repositories/$SIGNREPO/org/opendaylight/$i/
-    mvn org.sonatype.plugins:nexus-staging-maven-plugin:1.6.7:deploy-staged-repository \
+    mvn org.sonatype.plugins:nexus-staging-maven-plugin:1.6.8:deploy-staged-repository \
+        -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn \
         -DskipStagingRepositoryClose=true \
         -DstagingRepositoryId=$STAGED_REPO_ID \
         -DrepositoryDirectory="$SIGNATURES_DIR" \
