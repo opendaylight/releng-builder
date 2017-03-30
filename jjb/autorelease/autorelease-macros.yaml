@@ -71,11 +71,12 @@
       - maven-target:
           maven-version: '{maven-version}'
           pom: 'pom.xml'
-          goals: >
-              --quiet dependency:sources
+          goals: |
+              dependency:sources
+              --quiet
               -DoutputFile=$WORKSPACE/sources.log
               -DappendOutput
-              -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r
+              {opendaylight-infra-mvn-opts}
           java-opts:
             - '-Xmx4096m -XX:MaxPermSize=1024m'
           settings: '{settings}'

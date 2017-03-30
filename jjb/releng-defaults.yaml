@@ -66,8 +66,15 @@
     verify-stream: 'boron'
     verify-jdkversion: 'openjdk8'
 
-    # In case a CSIT job is merged without Java version specified
+    # Maven / Java
     jdk: 'openjdk8'
+    opendaylight-infra-mvn-opts: |
+        --show-version
+        --batch-mode
+        -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
+        -Djenkins
+        -Dmaven.repo.local=/tmp/r
+        -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r
 
     # Python
     toxdir: ''
