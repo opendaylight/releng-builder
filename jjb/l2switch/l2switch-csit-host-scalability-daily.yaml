@@ -27,13 +27,17 @@
           scope: 'only'
 
     # Features to install
-    install-features: 'odl-l2switch-all,odl-l2switch-switch-rest'
+    install-features: 'odl-l2switch-switch-ui'
 
     # Robot custom options
     robot-options: ''
 
     # Plot Info
-    01-plot-title: 'Max number of Hosts'
-    01-plot-yaxis: 'Network Hosts'
-    01-plot-group: 'Inventory Host Scalability'
+    01-plot-title: 'Maximum Hosts Single Switch'
+    01-plot-yaxis: 'Hosts'
+    01-plot-group: 'Host Scalability'
     01-plot-data-file: 'hosts.csv'
+    02-plot-title: 'Host Discover Time'
+    02-plot-yaxis: 'Seconds'
+    02-plot-group: 'Host Scalability'
+    02-plot-data-file: 'time.csv'
