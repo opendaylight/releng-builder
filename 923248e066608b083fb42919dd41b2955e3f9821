@@ -16,6 +16,24 @@
       "revId": "923248e066608b083fb42919dd41b2955e3f9821",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_9d1d5d69",
+        "filename": "jjb/netvirt/netvirt-csit-multi-openstack.yaml",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2017-03-31T21:06:21Z",
+      "side": 1,
+      "message": "this name is not used in the job name. the job name is\nderived from the template below on line 79.\n\nthe problem is from the email [0] for netvirt to try and\nreduce the frequency of some of the jobs. Alon\u0027s thought\nwas just to have stateful/nodlv2 run every 4 hours, not\n*every* stateful job. So, I broke it out in to it\u0027s\nown project.\n\nstill, nodlv2 is still up in the main project above, but\nit has no 4 hour timer. That will still trigger the same\njobs this project is creating, but only nightly (5 times\na week). the other project is also where 3node stayed.\n\nin the end we\u0027d get 4 times a day PLUS nightly for this\n1node nodlv2 stateful job. this will be our only job to\ngive us high frequency for better regression detection.",
+      "parentUuid": "fafc7978_fd0c693d",
+      "revId": "923248e066608b083fb42919dd41b2955e3f9821",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
