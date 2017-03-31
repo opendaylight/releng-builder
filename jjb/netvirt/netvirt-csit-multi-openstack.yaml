@@ -22,10 +22,10 @@
 
     functionality:
       - upstream-transparent:
-          schedule: 'H H * * *'
+          schedule: ''
           sg-mode: 'transparent'
       - upstream-stateful:
-          schedule: 'H H/4 * * *'
+          schedule: 'H H * * *'
           sg-mode: 'stateful'
       - upstream-learn:
           schedule: 'H H * * *'
@@ -65,6 +65,44 @@
           openstack-branch: 'stable/newton'
           odl-ml2-branch: 'stable/newton'
           openstack_system_image: 'CentOS 7 - devstack-newton - 20170314-2256'
+      - newton-nodl-v2:
+          openstack-branch: 'stable/newton'
+          odl-ml2-branch: 'stable/newton'
+          odl-ml2-driver-version: 'v2'
+          openstack_system_image: 'CentOS 7 - devstack-newton - 20170314-2256'
+
+    security-group-mode: '{sg-mode}'
+
+- project:
+    name: netvirt-csit-openstack-upstream-stateful
+    jobs:
+      - '{project}-csit-{topology}-openstack-{openstack}-{functionality}-{stream}'
+
+    project: 'netvirt'
+
+    topology:
+      - 1node:
+          openstack_system_count: 3
+          odl_system_count: 1
+          enable-haproxy: 'no'
+          install-features: 'odl-netvirt-openstack'
+
+    testplan: '{project}-{topology}-openstack.txt'
+
+    functionality:
+      - upstream-stateful-high-freq:
+          schedule: 'H H/4 * * *'
+          sg-mode: 'stateful'
+
+    stream:
+      - carbon:
+          branch: 'master'
+          jre: 'openjdk8'
+      - boron:
+          branch: 'stable/boron'
+          jre: 'openjdk8'
+
+    openstack:
       - newton-nodl-v2:
           openstack-branch: 'stable/newton'
           odl-ml2-branch: 'stable/newton'
