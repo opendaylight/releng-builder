@@ -6,8 +6,11 @@
       - build-discarder:
           days-to-keep: '{build-days-to-keep}'
           num-to-keep: 40
-          artifact-days-to-keep: -1
-          artifact-num-to-keep: 5
+          # Need to keep artifacts for at least 1 day as some projects need to
+          # be able to validate their artifacts and only allowing limited
+          # number of artifacts could make fast moving jobs lost their
+          # artifacts before the developers can test it.
+          artifact-days-to-keep: 1
 
 - parameter:
     name: opendaylight-infra-parameters
