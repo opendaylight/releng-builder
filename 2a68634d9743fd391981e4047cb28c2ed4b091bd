@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "fafc7978_9d4b9d58",
+        "filename": "jjb/netvirt/netvirt-csit-multi-openstack.yaml",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2017-03-31T21:54:45Z",
+      "side": 1,
+      "message": "yeah, I realize the name ends up in the job template, but for the sake of making it easy to relate I like to keep the project name close to the final job name. just makes it more readable.",
+      "revId": "2a68634d9743fd391981e4047cb28c2ed4b091bd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_fd23c9a4",
         "filename": "jjb/netvirt/netvirt-csit-multi-openstack.yaml",
         "patchSetId": 6
@@ -19,6 +36,47 @@
         "endLine": 93,
         "endChar": 35
       },
+      "revId": "2a68634d9743fd391981e4047cb28c2ed4b091bd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_7d46b950",
+        "filename": "jjb/netvirt/netvirt-csit-multi-openstack.yaml",
+        "patchSetId": 6
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2017-03-31T21:54:45Z",
+      "side": 1,
+      "message": "I think for the short term we only need the 1node job running at high-frequency.\n\nif this is running every four hours why do we need the other nightly job? if we don\u0027t need that jobm then I would remove high-frequency from the title - again, so many names for jobs that all do the same thing makes it confusing since you think they should be doing different things. They aren\u0027t though - they are all doing the same thing.",
+      "parentUuid": "fafc7978_fd23c9a4",
+      "range": {
+        "startLine": 93,
+        "startChar": 25,
+        "endLine": 93,
+        "endChar": 35
+      },
+      "revId": "2a68634d9743fd391981e4047cb28c2ed4b091bd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_dd74059e",
+        "filename": "jjb/netvirt/netvirt-csit-multi-openstack.yaml",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2017-03-31T21:54:45Z",
+      "side": 1,
+      "message": "does boron need high frequency? we gate everything there so other than this week when the branch opens, we will have many patches but after that it should slow and alwyas have a gate ran on it. Then the nightly could catch others.\n\nWhen the stable/carbon is pulled we will have carbon and master running 4 times a day creating many jobs.",
       "revId": "2a68634d9743fd391981e4047cb28c2ed4b091bd",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
