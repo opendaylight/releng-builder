@@ -8,6 +8,7 @@
       - '{project-name}-verify-tox-master'
       - 'integration-csit-verify-1node-library'
       - 'integration-distribution-test-{stream}'
+      - 'integration-sanity-test-{stream}'
       - 'integration-patch-test-{stream}'
       - 'integration-multipatch-test-{stream}'
       - 'integration-distribution-weekly-test-trigger-{stream}'
@@ -19,6 +20,7 @@
           jdk: 'openjdk8'
           jre: 'openjdk8'
           csit-list: '{csit-list-carbon}'
+          csit-sanity-list: '{csit-sanity-list-carbon}'
           csit-weekly-list: '{csit-weekly-list-carbon}'
           schedule-weekly: 'H 12 * * 0'
 
@@ -27,7 +29,8 @@
           jdk: 'openjdk8'
           jre: 'openjdk8'
           csit-list: '{csit-list-boron}'
-          csit-weekly-list: ''
+          csit-sanity-list: '{csit-sanity-list-boron}'
+          csit-weekly-list: '{csit-weekly-list-boron}'
           schedule-weekly: 'H 12 * * 0'
 
       - beryllium:
@@ -35,6 +38,7 @@
           jdk: 'openjdk7'
           jre: 'openjdk7'
           csit-list: '{csit-list-beryllium}'
+          csit-sanity-list: ''
           csit-weekly-list: ''
           schedule-weekly: 'H 12 * * 0'
 
@@ -149,7 +153,7 @@
 
 # Template: integration-distribution-test-{stream}
 # Goal: Verify a distribution through all system test available
-# Operation: This daily job template takes a distribution and passes all available system test
+# Operation: This template takes a distribution and passes all available system test
 
 - job-template:
     name: 'integration-distribution-test-{stream}'
@@ -170,6 +174,38 @@
     builders:
       - trigger-builds:
           - project: '{csit-list}'
+            block: true
+            predefined-parameters:
+              BUNDLEURL=$BUNDLEURL
+
+    publishers:
+      - email-notification:
+          email-recipients: '{email-recipients}'
+          email-prefix: '[integration]'
+
+# Template: integration-sanity-test-{stream}
+# Goal: Verify a distribution through sanity test
+# Operation: This template takes a distribution and passes sanity test
+
+- job-template:
+    name: 'integration-sanity-test-{stream}'
+
+    project-type: freestyle
+    node: centos7-robot-2c-2g
+
+    properties:
+      - opendaylight-infra-properties:
+          build-days-to-keep: '{build-days-to-keep}'
+
+    parameters:
+      - integration-bundleurl:
+          bundleurl: '{bundleurl}'
+      - integration-jdk-version:
+          jdkversion: '{jre}'
+
+    builders:
+      - trigger-builds:
+          - project: '{csit-sanity-list}'
             block: true
             predefined-parameters:
               BUNDLEURL=$BUNDLEURL
