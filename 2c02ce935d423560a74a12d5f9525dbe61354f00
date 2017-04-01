@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da01753e_515d14e9",
+        "filename": "jjb/netvirt/netvirt-csit-hwvtep-openstack.yaml",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 670
+      },
+      "writtenOn": "2017-04-01T09:00:04Z",
+      "side": 1,
+      "message": "Still not clear why this isn\u0027t just another topology in the regular template - but as long as it isn\u0027t, at least lets cut most of the unrequired permutations",
+      "revId": "2c02ce935d423560a74a12d5f9525dbe61354f00",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da01753e_715818fb",
+        "filename": "jjb/netvirt/netvirt-csit-hwvtep-openstack.yaml",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 670
+      },
+      "writtenOn": "2017-04-01T09:00:04Z",
+      "side": 1,
+      "message": "can we get rid of transparent here?",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 32
+      },
+      "revId": "2c02ce935d423560a74a12d5f9525dbe61354f00",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da01753e_315e90ea",
+        "filename": "jjb/netvirt/netvirt-csit-hwvtep-openstack.yaml",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 670
+      },
+      "writtenOn": "2017-04-01T09:00:04Z",
+      "side": 1,
+      "message": "we don\u0027t really need gate jobs for hwvtep",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 64
+      },
+      "revId": "2c02ce935d423560a74a12d5f9525dbe61354f00",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da01753e_11638cb2",
+        "filename": "jjb/netvirt/netvirt-csit-hwvtep-openstack.yaml",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 670
+      },
+      "writtenOn": "2017-04-01T09:00:04Z",
+      "side": 1,
+      "message": "do we need these for hwvtep?",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 78
+      },
+      "revId": "2c02ce935d423560a74a12d5f9525dbe61354f00",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da01753e_916e5c95",
+        "filename": "jjb/netvirt/netvirt-csit-multi-openstack.yaml",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 670
+      },
+      "writtenOn": "2017-04-01T09:00:04Z",
+      "side": 1,
+      "message": "this being a new job kind of sucks, but I don\u0027t see any way around it - even if you move 3node into here, you need to keep the other nodl-v2 combinations lower frequency\n\nit seems we are more limited than we should be playing around with these combos",
+      "range": {
+        "startLine": 93,
+        "startChar": 8,
+        "endLine": 93,
+        "endChar": 35
+      },
+      "revId": "2c02ce935d423560a74a12d5f9525dbe61354f00",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
