@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "da01753e_910f7c2e",
+        "filename": "jjb/netvirt/netvirt-csit-multi-openstack.yaml",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2017-04-01T05:11:07Z",
+      "side": 1,
+      "message": "new patch set uses netvirt-csit-openstack-upstream-stateful\nfor the project name. we can name it jim-bob-roy for as \nfar as I care :)\n\nas for high-freq, it was my first effort to give a unique\nname to this duplicate job. the way all these combos work\nmake it (I think) impossible to just remove the\n1node-nodlv2-stateful-master job in the above project.\n\nwe can remove all of nodlv2 above, but that would remove \nstateful/learn/transp. as well as boron/master and 3node\n1node.\n\nso we have to make up for it in this project. and this \nproject I was just trying to be focused on our one\njob combo that we want to be our regression canary.\n\ndoes it make sense? if you remove any one of the elements\nin the above project (e.g. upstream-stateful, carbon, 3node)\nthen you lose all of it\u0027s combos too. So I can\u0027t remove\nanything above without adding all of it\u0027s combos in\nthis project.",
+      "parentUuid": "fafc7978_5dddb56f",
+      "revId": "2a68634d9743fd391981e4047cb28c2ed4b091bd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_fd23c9a4",
         "filename": "jjb/netvirt/netvirt-csit-multi-openstack.yaml",
         "patchSetId": 6
@@ -161,6 +179,30 @@
       "writtenOn": "2017-04-01T00:47:23Z",
       "side": 1,
       "message": "3node focus is after we fix 1node so I don\u0027t see much value running 3node that frequently until we plan to really look at it. Could be next week if 1node starts passing and we can enable 3node more often, but now I don\u0027t see much value.",
+      "parentUuid": "fafc7978_7db4f934",
+      "range": {
+        "startLine": 93,
+        "startChar": 25,
+        "endLine": 93,
+        "endChar": 35
+      },
+      "revId": "2a68634d9743fd391981e4047cb28c2ed4b091bd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da01753e_f11c086d",
+        "filename": "jjb/netvirt/netvirt-csit-multi-openstack.yaml",
+        "patchSetId": 6
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2017-04-01T05:11:07Z",
+      "side": 1,
+      "message": "Luis, for the sanity idea we can just add \"sanity\" to\nthis job here right? no need for a new template. we just\nneed to end up with a job with \"sanity\" in it\u0027s name.\n\nnot that we are ready for that, but this job is probably\nour best bet. hopefully soon.",
       "parentUuid": "fafc7978_7db4f934",
       "range": {
         "startLine": 93,
