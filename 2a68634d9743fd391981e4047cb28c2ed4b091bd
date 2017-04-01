@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_5dddb56f",
+        "filename": "jjb/netvirt/netvirt-csit-multi-openstack.yaml",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2017-04-01T00:47:23Z",
+      "side": 1,
+      "message": "oh, I understand now why you had that: netvirt-csit-openstack-integration...\n\njust something closer to the actual job would be good but then that is inconsistent with the above job: netvirt-csit-openstack-newton-nodl-v2-upstream-stateful-carbon\n\nso netvirt-csit-openstack-upstream-stateful? Keeping the front side the same leads me to believe the jobs are similar.\n\nStill have question about the name high-freq which is what will pop up in the releng list. Why do we need that? Why not just remove the daily upstream job and let this 4 times a day one be the job. The fact it is high-frequency doesn\u0027t add much value to have it in the name - it is still just the openstack job.",
+      "parentUuid": "fafc7978_1d6fadc6",
+      "revId": "2a68634d9743fd391981e4047cb28c2ed4b091bd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_fd23c9a4",
         "filename": "jjb/netvirt/netvirt-csit-multi-openstack.yaml",
         "patchSetId": 6
@@ -120,6 +138,30 @@
       "side": 1,
       "message": "Why do not create a totally separated template for sanity job and also call it sanity so that we can use it in future to gate upstream patches.",
       "parentUuid": "fafc7978_fd7109a9",
+      "range": {
+        "startLine": 93,
+        "startChar": 25,
+        "endLine": 93,
+        "endChar": 35
+      },
+      "revId": "2a68634d9743fd391981e4047cb28c2ed4b091bd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_fdf629f8",
+        "filename": "jjb/netvirt/netvirt-csit-multi-openstack.yaml",
+        "patchSetId": 6
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2017-04-01T00:47:23Z",
+      "side": 1,
+      "message": "3node focus is after we fix 1node so I don\u0027t see much value running 3node that frequently until we plan to really look at it. Could be next week if 1node starts passing and we can enable 3node more often, but now I don\u0027t see much value.",
+      "parentUuid": "fafc7978_7db4f934",
       "range": {
         "startLine": 93,
         "startChar": 25,
