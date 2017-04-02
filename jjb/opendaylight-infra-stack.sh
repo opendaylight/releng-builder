@@ -22,7 +22,6 @@ echo "Trying up to $STACK_RETRIES times to create $STACK_NAME."
 for try in $(seq $STACK_RETRIES); do
     # shellcheck disable=SC1083
     openstack stack create --timeout "$OS_TIMEOUT" -t {stack-template} -e "$WORKSPACE/opendaylight-infra-environment.yaml" --parameter "job_name=$VM_NAME" --parameter "silo=$SILO" "$STACK_NAME"
-    openstack stack list
     echo "$try: Waiting for $OS_TIMEOUT minutes to create $STACK_NAME."
     for i in $(seq $OS_TIMEOUT); do
         sleep 60
@@ -37,7 +36,6 @@ for try in $(seq $STACK_RETRIES); do
             ;;
             CREATE_FAILED)
                 echo "ERROR: Failed to initialize infrastructure. Deleting stack and possibly retrying to create..."
-                openstack stack list
                 openstack stack delete --yes "$STACK_NAME"
                 openstack stack show "$STACK_NAME"
                 # after stack delete, poll for 10m to know when stack is fully removed
