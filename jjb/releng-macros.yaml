@@ -42,7 +42,7 @@
           description: "GERRIT_REFSPEC parameter if not given by trigger"
       - string:
           name: STACK_NAME
-          default: '$JOB_NAME-$BUILD_NUMBER'
+          default: '$SILO-$JOB_NAME-$BUILD_NUMBER'
           description: "Used by Heat to generate a unique stack & vm name"
       - string:
           name: OS_CLOUD
