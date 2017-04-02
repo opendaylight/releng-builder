@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "da01753e_34d31e3a",
+        "filename": "jjb/netvirt/netvirt-csit-hwvtep-openstack.yaml",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 670
+      },
+      "writtenOn": "2017-04-02T07:07:57Z",
+      "side": 1,
+      "message": "Yes but can\u0027t we parameterize this in topology? Like 1node and 3node uses a diff number of machines - so they can both have num_tools_vm: 0 and hwvtep would have num_tools_vm: 1?\n\nThought for future to remove template params duplication.",
+      "parentUuid": "da01753e_d173c413",
+      "revId": "2c02ce935d423560a74a12d5f9525dbe61354f00",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da01753e_715818fb",
         "filename": "jjb/netvirt/netvirt-csit-hwvtep-openstack.yaml",
         "patchSetId": 7
@@ -202,6 +220,30 @@
     },
     {
       "key": {
+        "uuid": "da01753e_d41612f1",
+        "filename": "jjb/netvirt/netvirt-csit-hwvtep-openstack.yaml",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 670
+      },
+      "writtenOn": "2017-04-02T07:07:57Z",
+      "side": 1,
+      "message": "Yeah, Luis complained about the number of jobs - I understand cutting the frequency of our important jobs is a solution, but I think a ton of uninteresting combinations (such as newton-v1-hwvtep) can be skipped. We\u0027re going to run into the same question for a lot of optional features such as config flags.\n\nI think we need an \u0027extra features\u0027 section which can run things like hwvtep, different config flags etc but in a limited number of combinations",
+      "parentUuid": "da01753e_3474be9b",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 78
+      },
+      "revId": "2c02ce935d423560a74a12d5f9525dbe61354f00",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da01753e_1109cc95",
         "filename": "jjb/netvirt/netvirt-csit-multi-openstack.yaml",
         "patchSetId": 7
@@ -332,6 +374,30 @@
       "side": 1,
       "message": "sanity is a special case now. We don\u0027t want any job named\nsanity unless it\u0027s passing 100% test cases 100% of the time.",
       "parentUuid": "da01753e_7199386e",
+      "range": {
+        "startLine": 93,
+        "startChar": 8,
+        "endLine": 93,
+        "endChar": 35
+      },
+      "revId": "2c02ce935d423560a74a12d5f9525dbe61354f00",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da01753e_14d89a52",
+        "filename": "jjb/netvirt/netvirt-csit-multi-openstack.yaml",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 670
+      },
+      "writtenOn": "2017-04-02T07:07:57Z",
+      "side": 1,
+      "message": "Yeah well that\u0027s the idea - we currently have some regression. Do you want to rename the job each time its unstable? ;)\n\nIn any case, can call it upstream-high-freq - the point I\u0027m making is that we can change its content in the future",
+      "parentUuid": "da01753e_91501c60",
       "range": {
         "startLine": 93,
         "startChar": 8,
