@@ -562,14 +562,12 @@
       - maven-target:
           maven-version: 'mvn33'
           pom: '{pom}'
-          goals: >
+          goals: |
               clean deploy dependency:tree
               -DoutputFile=dependency_tree.txt
-              -V -B -Pq
-              -Djenkins
+              -Pq
               -DaltDeploymentRepository=fake-nexus::default::file:///tmp/n/
-              -Dmaven.repo.local=/tmp/r
-              -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r
+              {mvn-opts}
           java-opts:
             - '-Xmx4096m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
           settings: 'integration-settings'
@@ -604,13 +602,11 @@
       - maven-target:
           maven-version: 'mvn33'
           pom: '{dist-pom}'
-          goals: >
+          goals: |
               clean install dependency:tree
               -DoutputFile=dependency_tree.txt
-              -V -B -Pq
-              -Djenkins
-              -Dmaven.repo.local=/tmp/r
-              -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r
+              -Pq
+              {mvn-opts}
           java-opts:
             - '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
           settings: 'integration-settings'
@@ -706,13 +702,33 @@
       - maven-target:
           maven-version: 'mvn33'
           pom: '{dist-pom}'
-          goals: >
+          goals: |
               clean install dependency:tree
               -DoutputFile=dependency_tree.txt -s fake_remotes.xml
-              -V -B -Pq
+              -Pq
               -DskipTests=false
-              -Djenkins
-              -Dmaven.repo.local=/tmp/r
-              -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r
+              {mvn-opts}
           java-opts:
             - '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
+
+- builder:
+    name: distribution-check-deploy-distribution
+    # Deploy distribution-karaf zip to Nexus SNAPSHOT repo for testing.
+    # Arguments:
+    #   {settings-file} to use for opendaylight-snapshot credentials
+    builders:
+      - inject:
+          properties-content: BUNDLE_POM={dist-pom}
+      - shell: !include-raw-escape: deploy-distribution-get-vars.sh
+      - inject:
+          properties-file: deploy-distribution.env
+      - config-file-provider:
+          files:
+            - file-id: odl-global-settings
+              variable: GLOBAL_SETTINGS_FILE
+            - file-id: integration-settings
+              variable: SETTINGS_FILE
+      - shell: !include-raw-escape: deploy-distribution.sh
+      # Re-inject BUNDLE_URL so that downstream projects can use it.
+      - inject:
+          properties-file: deploy-distribution.env
