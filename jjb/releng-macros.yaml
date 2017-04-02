@@ -705,3 +705,27 @@
               -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r
           java-opts:
             - '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
+
+
+- builder:
+    name: distribution-check-deploy-distribution
+    # Deploy distribution-karaf zip to Nexus SNAPSHOT repo for testing.
+    # Arguments:
+    #   {group-id}: Maven Group ID to upload distribution to.
+    builders:
+      - maven-target:
+          maven-version: 'mvn33'
+          pom: '{dist-pom}'
+          goals: >
+              deploy:deploy-file
+              --log-file deploy-karaf-distribution.log
+              -Dfile=$BUNDLEFOLDER
+              -DrepositoryId=opendaylight.snapshot
+              -Durl=https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/
+              -DgroupId={group-id}
+              -DartifactId=distribution-karaf
+              -Dversion=$BUNDLEVERSION
+              -Dpackaging=zip
+      - shell: |
+          #!/bin/bash
+          grep 'Uploaded.*distribution-karaf/0.5.3-SNAPSHOT.*.zip' deploy-karaf-distribution.log
