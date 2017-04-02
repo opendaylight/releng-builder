@@ -1,9 +1,10 @@
 CONTROLLERMEM="3072m"
 ACTUALFEATURES="odl-integration-all"
-BUNDLEVERSION=`xpath distribution/pom.xml '/project/version/text()' 2> /dev/null`
-BUNDLEFOLDER="distribution-karaf-${BUNDLEVERSION}"
-BUNDLE="${BUNDLEFOLDER}.zip"
-BUNDLEURL="/tmp/r/org/opendaylight/integration/distribution-karaf/${BUNDLEVERSION}/${BUNDLE}"
+export BUNDLEVERSION=$(xpath distribution/pom.xml '/project/version/text()' 2> /dev/null)
+export BUNDLEFOLDER="distribution-karaf-${BUNDLEVERSION}"
+export BUNDLE="${BUNDLEFOLDER}.zip"
+export BUNDLEURL="/tmp/r/org/opendaylight/integration/distribution-karaf/${BUNDLEVERSION}/${BUNDLE}"
+env | grep BUNDLE | tee -a /tmp/distribution-check-karaf-bundle.env
 
 echo "Kill any controller running"
 ps axf | grep karaf | grep -v grep | awk '{print "kill -9 " $1}' | sh
