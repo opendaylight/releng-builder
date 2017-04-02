@@ -93,6 +93,8 @@
           artifacts: '{archive-artifacts} **/dependency_tree.txt **/target/surefire-reports/*-output.txt'
       - integration-distribution-git-url:
           git-url: '{git-url}'
+      - maven-exec:
+          maven-version: mvn33
 
     scm:
       - integration-gerrit-scm:
@@ -130,6 +132,10 @@
       - distribution-check-repeat-build:
           dist-pom: 'distribution/pom.xml'
       - integration-distribution-check
+      - distribution-check-deploy-distribution:
+          dist-pom: distribution/pom.xml
+          project: '{project}'
+          settings-file: '{mvn-settings}'
 
     publishers:
       - email-notification:
@@ -144,8 +150,6 @@
           script-only-if-succeeded: false
           script-only-if-failed: false
           mark-unstable-if-failed: true
-      - archive:
-          artifacts: '*.zip'
       - opendaylight-infra-shiplogs:
           maven-version: 'mvn33'
 
