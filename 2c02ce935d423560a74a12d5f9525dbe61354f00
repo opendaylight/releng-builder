@@ -178,6 +178,30 @@
     },
     {
       "key": {
+        "uuid": "da01753e_3474be9b",
+        "filename": "jjb/netvirt/netvirt-csit-hwvtep-openstack.yaml",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2017-04-02T00:56:15Z",
+      "side": 1,
+      "message": "I think Alon mean why do we need mitaka and newton v1 runs. Just use the last newton v2.",
+      "parentUuid": "da01753e_515fd472",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 78
+      },
+      "revId": "2c02ce935d423560a74a12d5f9525dbe61354f00",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da01753e_1109cc95",
         "filename": "jjb/netvirt/netvirt-csit-multi-openstack.yaml",
         "patchSetId": 7
@@ -225,6 +249,24 @@
       "side": 1,
       "message": "I have no idea how to do it at this point. if you remove\nupstream-transparent from the functionality section above\nthen we lose the 3node combination and the mitaka\ncombination.",
       "parentUuid": "da01753e_51035473",
+      "revId": "2c02ce935d423560a74a12d5f9525dbe61354f00",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da01753e_1479ba93",
+        "filename": "jjb/netvirt/netvirt-csit-multi-openstack.yaml",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2017-04-02T00:56:15Z",
+      "side": 1,
+      "message": "ok that\u0027s fine. My goal was just to have a single job per functionality - upstream, gate, high-frequency. Guess gate can be outside that since they are patches. But the upstream are really a single job so to keep things clean just hae one job. But if not possible, then no biggie.",
+      "parentUuid": "da01753e_f14d28c6",
       "revId": "2c02ce935d423560a74a12d5f9525dbe61354f00",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
