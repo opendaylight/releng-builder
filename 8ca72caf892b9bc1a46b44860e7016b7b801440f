@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da01753e_f4a99625",
+        "filename": "jjb/groupbasedpolicy/groupbasedpolicy-csit-1node-openstack.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 670
+      },
+      "writtenOn": "2017-04-02T12:33:23Z",
+      "side": 1,
+      "message": "no need for this change since you put it in releng-defaults - only define it where you actually want it to be \u0027true\u0027",
+      "range": {
+        "startLine": 50,
+        "startChar": 1,
+        "endLine": 51,
+        "endChar": 37
+      },
+      "revId": "8ca72caf892b9bc1a46b44860e7016b7b801440f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da01753e_d4a61253",
+        "filename": "jjb/integration/include-raw-integration-deploy-controller-run-test.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 670
+      },
+      "writtenOn": "2017-04-02T12:33:23Z",
+      "side": 1,
+      "message": "revert indentation",
+      "range": {
+        "startLine": 206,
+        "startChar": 2,
+        "endLine": 207,
+        "endChar": 25
+      },
+      "revId": "8ca72caf892b9bc1a46b44860e7016b7b801440f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da01753e_34631e1c",
+        "filename": "jjb/integration/include-raw-integration-deploy-controller-run-test.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 670
+      },
+      "writtenOn": "2017-04-02T12:33:23Z",
+      "side": 1,
+      "message": "I can\u0027t see sandbox run since it expired from last week - but I don\u0027t think you need this - I thought scripts were executed automatically",
+      "range": {
+        "startLine": 210,
+        "startChar": 0,
+        "endLine": 214,
+        "endChar": 2
+      },
+      "revId": "8ca72caf892b9bc1a46b44860e7016b7b801440f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da01753e_14689af4",
+        "filename": "jjb/integration/integration-templates.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 1068,
+      "author": {
+        "id": 670
+      },
+      "writtenOn": "2017-04-02T12:33:23Z",
+      "side": 1,
+      "message": "Use ODL based DHCP server instead of OpenStack DHCP",
+      "range": {
+        "startLine": 1068,
+        "startChar": 24,
+        "endLine": 1068,
+        "endChar": 104
+      },
+      "revId": "8ca72caf892b9bc1a46b44860e7016b7b801440f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da01753e_746da604",
+        "filename": "jjb/netvirt/netvirt-csit-hwvtep-openstack.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 670
+      },
+      "writtenOn": "2017-04-02T12:33:23Z",
+      "side": 1,
+      "message": "again no need for all these",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 27
+      },
+      "revId": "8ca72caf892b9bc1a46b44860e7016b7b801440f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da01753e_547222e6",
+        "filename": "jjb/netvirt/netvirt-csit-multi-openstack.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 670
+      },
+      "writtenOn": "2017-04-02T12:33:23Z",
+      "side": 1,
+      "message": "This is all that\u0027s required in the diff - I think we should run it once a week - you should do \u0027H H * * H\u0027 to randomize.\n\nWe can also consider not multiplying all combinations for this job - e.g. only run newton-nodl-v2 - but for that you need to define it below in a separate \u0027project\u0027",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 28
+      },
+      "revId": "8ca72caf892b9bc1a46b44860e7016b7b801440f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
