@@ -64,7 +64,7 @@ echo "Changing to /tmp"
 cd /tmp
 
 echo "Downloading the distribution from ${ACTUALBUNDLEURL}"
-wget --non-verbose --show-progress --progress=dot:giga '${ACTUALBUNDLEURL}'
+wget --progress=dot:mega  '${ACTUALBUNDLEURL}'
 
 echo "Extracting the new controller..."
 unzip -q ${BUNDLE}

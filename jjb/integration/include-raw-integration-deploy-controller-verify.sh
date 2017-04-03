@@ -8,7 +8,7 @@ echo "Clean workspace"
 rm -rf *
 
 echo "Downloading the distribution..."
-wget --non-verbose --show-progress --progress=dot:giga ${ACTUALBUNDLEURL}
+wget --progress=dot:mega  ${ACTUALBUNDLEURL}
 
 echo "Extracting the new controller..."
 unzip -q ${BUNDLE}
