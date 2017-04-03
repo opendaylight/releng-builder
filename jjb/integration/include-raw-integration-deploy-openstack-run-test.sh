@@ -409,7 +409,7 @@ do
     scp extra_debug.sh ${!OS_CTRL_IP}:/tmp
     ${SSH} ${!OS_CTRL_IP} "bash /tmp/extra_debug.sh > /tmp/extra_debug.log"
     scp ${!OS_CTRL_IP}:/tmp/extra_debug.log ${OS_CTRL_FOLDER}/extra_debug.log
-    scp ${!OS_CTRL_IP}:/opt/stack/devstack/local.conf ${OS_CTRL_FOLDER}/local.conf
+    mv local.conf_control_${!OS_CTRL_IP} ${OS_CTRL_FOLDER}/local.conf
     mv ${OS_CTRL_FOLDER} ${WORKSPACE}/archives/
 done
 
