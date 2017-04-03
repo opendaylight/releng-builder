@@ -5,7 +5,7 @@
 # Do not fail the build if there is trouble trying to collect distribution patch diffs
 set +e
 
-wget --progress=dot:mega $ACTUALBUNDLEURL
+wget --no-verbose --show-progress --progress=dot:giga $ACTUALBUNDLEURL
 echo "Extracting the last distribution found on nexus..."
 unzip -q $BUNDLE
 mv $BUNDLEFOLDER /tmp/distro_old
