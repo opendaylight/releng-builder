@@ -201,6 +201,8 @@
     #     toxdir:    directory containing the project's tox.ini relative to
     #                the workspace. Empty works if tox.ini is at project root.
 
+    build-node: centos7-java-builder-2c-4g
+
     <<: *tox_builder_verify
 
 # Specification for projects outside release cycle, to avoid referring a stream.
@@ -219,6 +221,7 @@
     #     toxdir:    directory containing the project's tox.ini relative to
     #                the workspace. Empty works if tox.ini is at project root.
 
+    build-node: centos7-java-builder-2c-4g
     branch: master
 
     <<: *tox_builder_verify
@@ -238,6 +241,8 @@
     #     branch:    git branch (eg. stable/lithium or master)
     #     toxdir:    directory containing the project's tox.ini relative to
     #                the workspace. Empty works if tox.ini is at project root.
+
+    build-node: centos7-java-builder-2c-4g
 
     <<: *tox_builder_verify
 
