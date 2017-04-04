@@ -711,9 +711,13 @@ do
     # Control Node - PUBLIC_BRIDGE will act as the external router
     GATEWAY_IP="10.10.10.250" # FIXME this should be a parameter, also shared with integration-test
     GATEWAY_VLAN_ID=167
-    ${SSH} ${!CONTROLIP} "sudo ip link add link ${PUBLIC_BRIDGE} name ${PUBLIC_BRIDGE}.${GATEWAY_VLAN_ID} type vlan id ${GATEWAY_VLAN_ID}"
-    ${SSH} ${!CONTROLIP} "sudo ifconfig ${PUBLIC_BRIDGE} up"
-    ${SSH} ${!CONTROLIP} "sudo ifconfig ${PUBLIC_BRIDGE}.${GATEWAY_VLAN_ID} up ${GATEWAY_IP}/24"
+    if [[ ${CONTROLLERFEATURES} == *"odl-ovsdb-openstack"* ]]; then
+        ${SSH} ${!CONTROLIP} "sudo ifconfig ${PUBLIC_BRIDGE} up ${GATEWAY_IP}/24"
+    else
+        ${SSH} ${!CONTROLIP} "sudo ip link add link ${PUBLIC_BRIDGE} name ${PUBLIC_BRIDGE}.${GATEWAY_VLAN_ID} type vlan id ${GATEWAY_VLAN_ID}"
+        ${SSH} ${!CONTROLIP} "sudo ifconfig ${PUBLIC_BRIDGE} up"
+        ${SSH} ${!CONTROLIP} "sudo ifconfig ${PUBLIC_BRIDGE}.${GATEWAY_VLAN_ID} up ${GATEWAY_IP}/24"
+    fi
 
     # Computes
     compute_index=1
