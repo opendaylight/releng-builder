@@ -58,6 +58,8 @@ elif [ "$plugin_name" == "kuryr-kubernetes" ]; then
     ENABLE_PLUGIN_ARGS="${DEVSTACK_KUBERNETES_PLUGIN_REPO} master" # note: kuryr-kubernetes only exists in master at the moment
 elif [ "$plugin_name" == "neutron-lbaas" ]; then
     ENABLE_PLUGIN_ARGS="${DEVSTACK_LBAAS_PLUGIN_REPO} ${OPENSTACK_BRANCH}"
+elif [ "$plugin_name" == "networking-sfc" ]; then
+    ENABLE_PLUGIN_ARGS="${DEVSTACK_NETWORKING_SFC_PLUGIN_REPO} ${OPENSTACK_BRANCH}"
 else
     echo "Error: Invalid plugin $plugin_name, unsupported"
     continue
