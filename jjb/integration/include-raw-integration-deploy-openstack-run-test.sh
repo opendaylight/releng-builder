@@ -709,14 +709,35 @@ do
     fi
 
     # Control Node - PUBLIC_BRIDGE will act as the external router
-    GATEWAY_IP="10.10.10.250" # FIXME this should be a parameter, also shared with integration-test
-    GATEWAY_VLAN_ID=167
+    # Parameter values below are used in integration/test - changing them requires updates in intergration/test as well
+    EXTNET_GATEWAY_IP="10.10.10.250"
+    EXTNET_VLAN_ID=167
+    EXTNET_INTERNET_IP="10.9.9.9"
+    EXTNET_PNF_IP="10.10.10.253"
     if [[ ${CONTROLLERFEATURES} == *"odl-ovsdb-openstack"* ]]; then
-        ${SSH} ${!CONTROLIP} "sudo ifconfig ${PUBLIC_BRIDGE} up ${GATEWAY_IP}/24"
+        ${SSH} ${!CONTROLIP} "sudo ifconfig ${PUBLIC_BRIDGE} up ${EXTNET_GATEWAY_IP}/24"
     else
-        ${SSH} ${!CONTROLIP} "sudo ip link add link ${PUBLIC_BRIDGE} name ${PUBLIC_BRIDGE}.${GATEWAY_VLAN_ID} type vlan id ${GATEWAY_VLAN_ID}"
+        ${SSH} ${!CONTROLIP} "sudo ip link add link ${PUBLIC_BRIDGE} name ${PUBLIC_BRIDGE}.${EXTNET_VLAN_ID} type vlan id ${EXTNET_VLAN_ID}"
         ${SSH} ${!CONTROLIP} "sudo ifconfig ${PUBLIC_BRIDGE} up"
-        ${SSH} ${!CONTROLIP} "sudo ifconfig ${PUBLIC_BRIDGE}.${GATEWAY_VLAN_ID} up ${GATEWAY_IP}/24"
+        ${SSH} ${!CONTROLIP} "sudo ifconfig ${PUBLIC_BRIDGE}.${EXTNET_VLAN_ID} up ${EXTNET_GATEWAY_IP}/24"
+
+        # Control Node - external net PNF simulation
+        ${SSH} ${!CONTROLIP} "
+            sudo ip netns add pnf_ns;
+            sudo ip link add pnf_veth0 type veth peer name pnf_veth1;
+            sudo ip link set pnf_veth1 netns pnf_ns;
+            sudo ip link set pnf_veth0 up;
+            sudo ip netns exec pnf_ns ifconfig pnf_veth1 up;
+            sudo ip netns exec pnf_ns ip link add link pnf_veth1 name pnf_veth1.${EXTNET_VLAN_ID} type vlan id ${EXTNET_VLAN_ID};
+            sudo ip netns exec pnf_ns ifconfig pnf_veth1.${EXTNET_VLAN_ID} up ${EXTNET_PNF_IP}/24;
+            sudo ovs-vsctl add-port br-physnet1 pnf_veth0;
+        "
+
+        # Control Node - external net internet address simulation
+        ${SSH} ${!CONTROLIP} "
+            sudo ip tuntap add dev internet_tap mode tap;
+            sudo ifconfig internet_tap up ${EXTNET_INTERNET_IP}/24;
+        "
     fi
 
     # Computes
