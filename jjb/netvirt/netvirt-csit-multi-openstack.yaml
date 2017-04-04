@@ -120,3 +120,42 @@
           openstack_system_image: 'CentOS 7 - devstack-newton - 20170314-2256'
 
     security-group-mode: '{sg-mode}'
+
+- project:
+    name: netvirt-csit-extensions-site-openstack-integration
+    jobs:
+      - '{project}-csit-{topology}-openstack-{openstack}-{functionality}-{stream}'
+
+    project: 'netvirt'
+
+    topology:
+      - 1node:
+          openstack_system_count: 3
+          odl_system_count: 1
+          enable-haproxy: 'no'
+          install-features: 'odl-netvirt-openstack'
+
+    functionality:
+      - extensions-sfc:
+          schedule: ''
+          enable-openstack-plugins: 'networking-odl,networking-sfc'
+          testplan: '{project}-extensions-sfc.txt'
+
+    stream:
+      - carbon:
+          branch: 'master'
+          jre: 'openjdk8'
+
+    openstack:
+      - newton-nodl-v2:
+          openstack-branch: 'stable/newton'
+          odl-ml2-branch: 'stable/newton'
+          odl-ml2-driver-version: 'v2'
+          openstack_system_image: 'CentOS 7 - devstack-newton - 20170314-2256'
+      - newton:
+          openstack-branch: 'stable/newton'
+          odl-ml2-branch: 'stable/newton'
+          odl-ml2-driver-version: 'v1'
+          openstack_system_image: 'CentOS 7 - devstack-newton - 20170314-2256'
+
+    security-group-mode: 'stateful'
