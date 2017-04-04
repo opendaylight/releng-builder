@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da01753e_8e5f4a72",
+        "filename": "jjb/releng-defaults.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2017-04-04T14:16:08Z",
+      "side": 1,
+      "message": "We should definitely create a -verify- version of builder-update-csit-tests.\n\nWe can call it builder-verify-update-csit-tests-COMMITTERS-PLEASE-MAKE-SURE-THE-UPDATED-LISTS-ARE-OK.\n\nThe verify job should trigger on any change affecting releng-jobs.yaml or releng-defaults.yaml\n\nIn other words, this has caused the automatic updates to fail verify: https://git.opendaylight.org/gerrit/54198\n\nAlso, it would be safer to include sed marker (as in line) after every list, to make builder-update-csit-tests job definition easier to read.",
+      "revId": "e0a9eae0ba0a2a1aabd2d0f357fb562251979403",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
