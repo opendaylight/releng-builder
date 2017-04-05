@@ -83,6 +83,12 @@ sed -ie 's/log4j.appender.out.maxBackupIndex=10/log4j.appender.out.maxBackupInde
 sed -ie 's/log4j.appender.out.maxFileSize=1MB/log4j.appender.out.maxFileSize=30GB/g' \${LOGCONF}
 cat \${LOGCONF}
 
+
+echo "Configuring use-tell-based-protocol..."
+DATASTORE_CFG=/tmp/${BUNDLEFOLDER}/system/org/opendaylight/controller/sal-clustering-config/1.5.0-SNAPSHOT/sal-clustering-config-1.5.0-SNAPSHOT-datastore.cfg
+sed -ie "s/#use-tell-based-protocol=/use-tell-based-protocol=/g" \${DATASTORE_CFG}
+cat \${DATASTORE_CFG}
+
 if [ "${ODL_ENABLE_L3_FWD}" == "yes" ]; then
   echo "Enable the l3.fwd in custom.properties.."
   echo "ovsdb.l3.fwd.enabled=yes" >> \${CUSTOMPROP}
