@@ -16,6 +16,24 @@
       "revId": "7de83ffe527b38bed064199cbb0dfede3aeea5ef",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da01753e_bf41990d",
+        "filename": "jjb/integration/include-raw-integration-deploy-openstack-run-test.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 5779
+      },
+      "writtenOn": "2017-04-05T09:10:08Z",
+      "side": 1,
+      "message": "Hi Vishal,\n\nThe L3 flag is now removed (which was earlier added by path https://git.opendaylight.org/gerrit/#/c/51460/) since l2gw feature enable used to overwrite the service_plugins only with l2gw (CSIT-3-Instance type jobs used to run only l2gw at that time)\n\nThe current patch is tested and made sure that both works together, so the previous patch is not required, hence reverted the flag for disabling ODL_L3 (CSIT-3-Instance type jobs would start running the non-l2gw suites aswell in future)\n\nI shall update the commit message also.\n\nHope I have clarified.",
+      "parentUuid": "da01753e_7fd0d153",
+      "revId": "7de83ffe527b38bed064199cbb0dfede3aeea5ef",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
