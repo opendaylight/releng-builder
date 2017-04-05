@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da01753e_7fd0d153",
+        "filename": "jjb/integration/include-raw-integration-deploy-openstack-run-test.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 3276
+      },
+      "writtenOn": "2017-04-05T08:54:17Z",
+      "side": 1,
+      "message": "This doesn\u0027t look correct. If L3 is disabled but L2 is enabled service_plugin should only be l2gw, not L3. You should probably use a local variable SERVICE_PLUGINS, set it up based on if conditions and then add it to service_plugins in neutron.conf",
+      "revId": "7de83ffe527b38bed064199cbb0dfede3aeea5ef",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
