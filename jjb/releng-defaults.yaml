@@ -140,11 +140,26 @@
     10-inclusion-flag: 'off'
     10-exclude-value: ''
 
+    # Manual CSIT job lists used by sanity
+    # and weekly distribution test jobs
+    csit-sanity-list-carbon: >
+        openflowplugin-csit-1node-sanity-only-carbon
+    csit-sanity-list-boron: >
+        openflowplugin-csit-1node-sanity-only-boron
+    csit-weekly-list-carbon: >
+        controller-csit-1node-notifications-longevity-only-carbon,
+        openflowplugin-csit-1node-periodic-longevity-only-carbon
+    csit-weekly-list-boron: >
+        openflowplugin-csit-1node-periodic-longevity-only-boron
+
     # CSIT Test List Variables
-    # Space seperated strings to exclude from CSIT lists
+    # Space seperated strings to exclude from
+    # auto generated CSIT job lists
     csit-list-blacklist: 'longevity gate sanity'
+
     # Auto Generated CSIT job lists used
-    # in integration-distribution-test jobs
+    # in regular distribution test jobs
+    # DO NOT EDIT NEXT LINES MANUALLY
     csit-list-carbon: >
         aaa-csit-1node-authn-all-carbon,
         aaa-csit-1node-authn-only-carbon,
@@ -356,11 +371,6 @@
         vtn-csit-3node-manager-all-carbon,
         vtn-csit-3node-manager-only-carbon,
         yangtools-csit-1node-periodic-system-only-carbon
-    csit-sanity-list-carbon: >
-        openflowplugin-csit-1node-sanity-only-carbon
-    csit-weekly-list-carbon: >
-        controller-csit-1node-notifications-longevity-only-carbon,
-        openflowplugin-csit-1node-periodic-longevity-only-carbon
     csit-list-boron: >
         aaa-csit-1node-authn-all-boron,
         aaa-csit-1node-authn-only-boron,
@@ -557,10 +567,6 @@
         vtn-csit-1node-openstack-newton-neutron-boron,
         vtn-csit-3node-manager-all-boron,
         vtn-csit-3node-manager-only-boron
-    csit-sanity-list-boron: >
-        openflowplugin-csit-1node-sanity-only-boron
-    csit-weekly-list-boron: >
-        openflowplugin-csit-1node-periodic-longevity-only-boron
     csit-list-beryllium: >
         aaa-csit-1node-authn-all-beryllium,
         aaa-csit-1node-authn-only-beryllium,
