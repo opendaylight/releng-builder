@@ -1,0 +1,29 @@
+---
+- project:
+    name: mdsal-csit-dom-data-broker-precedence-longevity
+    jobs:
+      - '{project}-csit-3node-{functionality}-{install}-{stream}'
+
+    # The project name
+    project: 'controller'
+
+    # The functionality under test
+    functionality: 'ddb-precedence-longevity'
+
+    # Project branches
+    stream:
+      - carbon:
+          branch: 'master'
+          jre: 'openjdk8'
+
+    install:
+      - only:
+          scope: 'only'
+
+    # Features to install
+    install-features: >
+        odl-restconf,
+        odl-clustering-test-app
+
+    # Built timeout
+    build-timeout: '1500'
