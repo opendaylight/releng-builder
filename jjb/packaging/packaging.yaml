@@ -76,7 +76,7 @@
       - string:
           name: DOWNLOAD_URL
           # yamllint disable-line rule:line-length
-          default: 'https://nexus.opendaylight.org/content/repositories/public/org/opendaylight/integration/distribution-karaf/0.5.2-Boron/distribution-karaf-0.5.2-Boron.tar.gz'
+          default: 'https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/integration/distribution-karaf/0.5.3-Boron-SR3/distribution-karaf-0.5.3-Boron-SR3.tar.gz'
           description: 'URL to ODL tarball artifact to repackage into RPM'
       - string:
           name: CHANGELOG_DATE
@@ -300,7 +300,7 @@
           description: 'OpenDaylight major (element) version number to build'
       - string:
           name: VERSION_MINOR
-          default: '2'
+          default: '3'
           description: 'OpenDaylight minor (SR) version number to build'
       - string:
           name: VERSION_PATCH
@@ -316,12 +316,12 @@
           description: 'Version of ODL systemd unitfile to download and package in ODL .deb'
       - string:
           name: CODENAME
-          default: 'Boron-SR2'
+          default: 'Boron-SR3'
           description: 'Elemental codename for the ODL release, including SR if applicable'
       - string:
           name: DOWNLOAD_URL
           # yamllint disable-line rule:line-length
-          default: 'https://nexus.opendaylight.org/content/repositories/public/org/opendaylight/integration/distribution-karaf/0.5.2-Boron/distribution-karaf-0.5.2-Boron.tar.gz'
+          default: 'https://nexus.opendaylight.org/content/repositories/public/org/opendaylight/integration/distribution-karaf/0.5.2-Boron-SR2/distribution-karaf-0.5.2-Boron-SR2.tar.gz'
           description: 'URL to ODL tarball artifact to repackage into .deb'
       - string:
           name: JAVA_VERSION
