@@ -9,7 +9,6 @@
     # Timeout in minutes
     build-timeout: 360
     build-node: centos7-java-builder-2c-8g
-    num-openstack-sites: 1
 
     email-recipients: 'jenkins@lists.opendaylight.org'
     odl-ml2-driver-repo: 'https://github.com/openstack/networking-odl'
@@ -18,22 +17,24 @@
     devstack-lbaas-plugin-repo: 'https://github.com/openstack/neutron-lbaas'
     server-name: 'OpenDaylight'
     git-url: 'ssh://jenkins-$SILO@git.opendaylight.org:29418'
-    ipsec-vxlan-tunnels-enabled: 'no'
 
-    public-bridge: 'br-physnet1'
-    public-physical-network: 'physnet1'
-    odl-enable-l3: 'yes'
+    # defaults for parameters installing openstack for csit jobs
+    create-initial-networks: 'False'
     disable-odl-l3-service-plugin: 'no'
-    odl-ml2-driver-version: 'v1'
-    odl-ml2-port-binding: 'network-topology'
-    enable-openstack-plugins: 'networking-odl'
-    enable-openstack-services: 'q-svc,q-dhcp,q-meta,n-cauth,tempest'
     disable-openstack-services: 'swift,cinder,n-net,q-vpn,n-cpu'
     enable-networking-l2gw: 'no'
+    enable-openstack-plugins: 'networking-odl'
+    enable-openstack-services: 'q-svc,q-dhcp,q-meta,n-cauth,tempest'
+    ipsec-vxlan-tunnels-enabled: 'no'
     lbaas-service-provider: ''
-    create-initial-networks: 'False'
-    tenant-network-type: 'vxlan'
+    num-openstack-sites: 1
+    odl-enable-l3: 'yes'
+    odl-ml2-driver-version: 'v1'
+    odl-ml2-port-binding: 'network-topology'
+    public-bridge: 'br-physnet1'
+    public-physical-network: 'physnet1'
     security-group-mode: 'none'
+    tenant-network-type: 'vxlan'
 
     # openstack-infra-parameters defaults
     archive-artifacts: ''
