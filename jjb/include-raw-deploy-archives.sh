@@ -91,7 +91,7 @@ fi
 mv "$WORKSPACE/archives/" "$ARCHIVES_DIR" > /dev/null 2>&1
 touch "$ARCHIVES_DIR/_build-details.txt"
 echo "build-url: ${BUILD_URL}" >> "$ARCHIVES_DIR/_build-details.txt"
-env | grep -v PASSWORD > "$ARCHIVES_DIR/_build-enviroment-variables.txt"
+env | grep -v PASSWORD | sort > "$ARCHIVES_DIR/_build-enviroment-variables.txt"
 
 # capture system info
 touch "$ARCHIVES_DIR/_sys-info.txt"
