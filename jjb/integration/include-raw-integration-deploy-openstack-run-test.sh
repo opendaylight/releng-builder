@@ -151,18 +151,28 @@ disable_service q-l3
 PUBLIC_INTERFACE=br100
 EOF
 
-if [ -z ${DISABLE_ODL_L3_PLUGIN} ] || [ "${DISABLE_ODL_L3_PLUGIN}" == "no" ]; then
 if [ "${ODL_ML2_BRANCH}" == "stable/mitaka" ]; then
 cat >> ${local_conf_file_name} << EOF
 Q_L3_ENABLED=True
 ODL_L3=${ODL_L3}
+
+EOF
+if [ "${ENABLE_NETWORKING_L2GW}" == "yes" ]; then
+cat >> ${local_conf_file_name} << EOF
+[[post-config|\$NEUTRON_CONF]]
+[DEFAULT]
+service_plugins = networking_odl.l3.l3_odl.OpenDaylightL3RouterPlugin, networking_l2gw.services.l2gateway.plugin.L2GatewayPlugin
+
+EOF
+else
+cat >> ${local_conf_file_name} << EOF
 [[post-config|\$NEUTRON_CONF]]
 [DEFAULT]
 service_plugins = networking_odl.l3.l3_odl.OpenDaylightL3RouterPlugin
-
 EOF
+fi #check for ENABLE_NETWORKING_L2GW
+
 fi #check for ODL_ML2_BRANCH
-fi #check for DISABLE_ODL_L3_PLUGIN
 
 fi #ODL_ENABLE_L3_FWD check
 
