@@ -18,7 +18,9 @@ then
   sudo yum install -y "$URL"
 elif [[ $URL == *.repo ]]
 then
-  sudo curl --silent -o "$REPO_FILE" "$URL"
+  # shellcheck disable=SC2154
+  repo_file="${{URL##*/}}"
+  sudo curl --silent -o /etc/yum.repos.d/"$repo_file" "$URL"
   sudo yum install -y opendaylight
 else
   echo "URL is not a link to .rpm or .repo"

@@ -177,10 +177,6 @@
           # yamllint disable-line rule:line-length
           default: 'https://raw.githubusercontent.com/opendaylight/integration-packaging/master/rpm/example_repo_configs/opendaylight-52-release.repo'
           description: 'Link to .repo or .rpm file'
-      - string:
-          name: REPO_FILE
-          default: '/etc/yum.repos.d/opendaylight-52-release.repo'
-          description: 'Name of the .repo file'
 
     scm:
       - integration-gerrit-scm:
