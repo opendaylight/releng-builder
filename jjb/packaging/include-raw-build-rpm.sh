@@ -19,6 +19,5 @@ download_url="${{DOWNLOAD_URL//zip/tar.gz}}"
 
 # Build release specified by build params
 "$WORKSPACE/packaging/rpm/build.py" --download_url "$download_url" \
-                                  --changelog_date "$CHANGELOG_DATE" \
                                   --changelog_name "$CHANGELOG_NAME" \
                                   --changelog_email "$CHANGELOG_EMAIL"
