@@ -76,6 +76,14 @@
           description: 'csv list of patches in project:changeset format to build distribution with'
 
 - parameter:
+    name: run-test-parameter
+    parameters:
+      - string:
+          name: RUNTEST
+          default: '{run-test}'
+          description: 'Set true to run test after build'
+
+- parameter:
     name: distribution-branch-to-build-parameter
     parameters:
       - string:
