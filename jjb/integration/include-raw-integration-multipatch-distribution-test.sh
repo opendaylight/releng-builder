@@ -9,7 +9,7 @@
 # create a fresh empty place to build this custom distribution
 BUILD_DIR=${WORKSPACE}/patch_tester
 POM_FILE=${WORKSPACE}/patch_tester/pom.xml
-DISTRIBUTION_BRANCH_TO_BUILD=$BRANCH  #renaming variable for clarity
+DISTRIBUTION_BRANCH_TO_BUILD=$DISTROBRANCH  #renaming variable for clarity
 
 rm -rf $BUILD_DIR
 mkdir -p $BUILD_DIR
