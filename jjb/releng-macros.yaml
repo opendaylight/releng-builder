@@ -68,6 +68,14 @@
           description: 'Controller version (for use with openstacks networking_odl project)'
 
 - parameter:
+    name: run-test-parameter
+    parameters:
+      - string:
+          name: RUNTEST
+          default: '{run-test}'
+          description: 'Set to false to skip csit test'
+
+- parameter:
     name: patches-to-build-parameter
     parameters:
       - string:
