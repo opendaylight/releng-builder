@@ -15,8 +15,16 @@
 
     # CSIT Lists in releng-defaults.yaml
     stream:
-      - carbon:
+      - nitrogen:
           branch: 'master'
+          jre: 'openjdk8'
+          jre: 'openjdk8'
+          csit-list: '{csit-list-nitrogen}'
+          csit-sanity-list: '{csit-sanity-list-nitrogen}'
+          csit-weekly-list: '{csit-weekly-list-nitrogen}'
+          schedule-weekly: 'H 12 * * 0'
+      - carbon:
+          branch: 'stable/carbon'
           jdk: 'openjdk8'
           jre: 'openjdk8'
           csit-list: '{csit-list-carbon}'

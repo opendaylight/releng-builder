@@ -13,8 +13,11 @@
 
     # Project branches
     stream:
-      - carbon:
+      - nitrogen:
           branch: 'master'
+          jre: 'openjdk8'
+      - carbon:
+          branch: 'stable/carbon'
           jre: 'openjdk8'
           tools_system_image: Ubuntu 14.04 - mininet-ovs-25 - 20170210-0300
       - boron:

@@ -5,9 +5,14 @@
       - 'autorelease-release-{stream}'
 
     stream:
+      - nitrogen:
+          next-release-tag: Nitrogen
+          branch: 'master'
+          jdk: 'openjdk8'
+          integration-test: nitrogen
       - carbon:
           next-release-tag: Carbon
-          branch: 'master'
+          branch: 'stable/carbon'
           jdk: 'openjdk8'
           integration-test: carbon
       - boron:
