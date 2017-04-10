@@ -1,5 +1,32 @@
 ---
 - project:
+    name: yang-push-nitrogen
+    jobs:
+      - '{project-name}-clm-{stream}'
+      - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-integration-{stream}'
+      - '{project-name}-merge-{stream}'
+      - '{project-name}-validate-autorelease-{stream}'
+      - '{project-name}-verify-{stream}-{maven}-{jdks}'
+
+    stream: nitrogen
+    project: 'yang-push'
+    project-name: 'yang-push'
+    branch: 'master'
+    jdk: openjdk8
+    jdks:
+      - openjdk8
+    maven:
+      - mvn33:
+          mvn-version: 'mvn33'
+    mvn-settings: 'yang-push-settings'
+    mvn-goals: 'clean install'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: ''
+    email-upstream: '[yang-push]'
+    archive-artifacts: ''
+
+- project:
     name: yang-push-carbon
     jobs:
       - '{project-name}-clm-{stream}'
@@ -12,7 +39,7 @@
     stream: carbon
     project: 'yang-push'
     project-name: 'yang-push'
-    branch: 'master'
+    branch: 'stable/carbon'
     jdk: openjdk8
     jdks:
       - openjdk8

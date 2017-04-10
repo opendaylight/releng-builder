@@ -1,5 +1,38 @@
 ---
 - project:
+    name: bgpcep-nitrogen
+    jobs:
+      - '{project-name}-clm-{stream}'
+      - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-integration-{stream}'
+      - '{project-name}-merge-{stream}'
+      - '{project-name}-validate-autorelease-{stream}'
+      - '{project-name}-verify-{stream}-{maven}-{jdks}'
+
+    stream: nitrogen
+    project: 'bgpcep'
+    project-name: 'bgpcep'
+    build-node: centos7-java-builder-4c-8g
+    branch: 'master'
+    jdk: openjdk8
+    jdks:
+      - openjdk8
+    maven:
+      - mvn33:
+          mvn-version: 'mvn33'
+    mvn-settings: 'bgpcep-settings'
+    mvn-goals: 'clean -DrepoBuild install javadoc:aggregate'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: >
+        odlparent-merge-{stream},
+        yangtools-merge-{stream},
+        controller-merge-{stream},
+        mdsal-merge-{stream},
+        tcpmd5-merge-{stream}
+    email-upstream: '[bgpcep] [odlparent] [yangtools] [controller] [mdsal] [tcpmd5]'
+    archive-artifacts: ''
+
+- project:
     name: bgpcep-carbon
     jobs:
       - '{project-name}-clm-{stream}'
@@ -13,7 +46,7 @@
     project: 'bgpcep'
     project-name: 'bgpcep'
     build-node: centos7-java-builder-4c-8g
-    branch: 'master'
+    branch: 'stable/carbon'
     jdk: openjdk8
     jdks:
       - openjdk8

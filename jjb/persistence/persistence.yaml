@@ -1,5 +1,31 @@
 ---
 - project:
+    name: persistence-nitrogen
+    jobs:
+      - '{project-name}-clm-{stream}'
+      - '{project-name}-integration-{stream}'
+      - '{project-name}-merge-{stream}'
+      - '{project-name}-verify-{stream}-{maven}-{jdks}'
+
+    stream: nitrogen
+    project: 'persistence'
+    project-name: 'persistence'
+    branch: 'master'
+    jdk: openjdk7
+    jdks:
+      - openjdk7
+      - openjdk8
+    maven:
+      - mvn33:
+          mvn-version: 'mvn33'
+    mvn-settings: 'persistence-settings'
+    mvn-goals: 'clean install'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: ''
+    email-upstream: '[persistence]'
+    archive-artifacts: ''
+
+- project:
     name: persistence-carbon
     jobs:
       - '{project-name}-clm-{stream}'
@@ -10,7 +36,7 @@
     stream: carbon
     project: 'persistence'
     project-name: 'persistence'
-    branch: 'master'
+    branch: 'stable/carbon'
     jdk: openjdk7
     jdks:
       - openjdk7

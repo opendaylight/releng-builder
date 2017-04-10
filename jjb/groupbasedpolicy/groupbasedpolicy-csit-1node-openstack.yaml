@@ -19,8 +19,11 @@
     functionality: 'openstack'
 
     stream:
-      - carbon:
+      - nitrogen:
           branch: 'master'
+          jre: 'openjdk8'
+      - carbon:
+          branch: 'stable/carbon'
           jre: 'openjdk8'
           install-features: 'odl-groupbasedpolicy-neutron-and-ofoverlay,odl-restconf'
       - boron:

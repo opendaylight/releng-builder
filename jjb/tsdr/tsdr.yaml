@@ -1,5 +1,32 @@
 ---
 - project:
+    name: tsdr-nitrogen
+    jobs:
+      - '{project-name}-clm-{stream}'
+      - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-integration-{stream}'
+      - '{project-name}-merge-{stream}'
+      - '{project-name}-validate-autorelease-{stream}'
+      - '{project-name}-verify-{stream}-{maven}-{jdks}'
+
+    stream: nitrogen
+    project: 'tsdr'
+    project-name: 'tsdr'
+    branch: 'master'
+    jdk: openjdk8
+    jdks:
+      - openjdk8
+    maven:
+      - mvn33:
+          mvn-version: 'mvn33'
+    mvn-settings: 'tsdr-settings'
+    mvn-goals: 'clean install javadoc:aggregate -DrepoBuild'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: ''
+    email-upstream: '[tsdr]'
+    archive-artifacts: ''
+
+- project:
     name: tsdr-carbon
     jobs:
       - '{project-name}-clm-{stream}'
@@ -12,7 +39,7 @@
     stream: carbon
     project: 'tsdr'
     project-name: 'tsdr'
-    branch: 'master'
+    branch: 'stable/carbon'
     jdk: openjdk8
     jdks:
       - openjdk8

@@ -9,8 +9,11 @@
       - distribution-check-{stream}
 
     stream:
-      - carbon:
+      - nitrogen:
           branch: 'master'
+          jre: 'openjdk8'
+      - carbon:
+          branch: 'stable/carbon'
           jdk: openjdk8
           jdks:
             - openjdk8
