@@ -147,14 +147,9 @@
     prebuilders:
       - wipe-org-opendaylight-repo
       - jacoco-nojava-workaround
-      - integration-get-bundle-vars
-      - inject:
-          properties-file: 'bundle_vars.txt'
       - provide-maven-settings:
           global-settings-file: 'odl-global-settings'
           settings-file: 'integration-settings'
-      - distribute-build-url:
-          path: 'distribution-karaf/src/main/assembly'
 
     maven:
       maven-name: 'mvn33'
@@ -202,7 +197,6 @@
                 settings-type: cfp
                 global-settings: 'odl-global-settings'
                 global-settings-type: cfp
-      - integration-compare-distributions
     # TODO: the output of the above command is not *friendly* for the reader because the most important info
     # is listed last. This is fine/best for command line output, but for keeping in a file it would be better
     # to put the summary at the beginning of the file. Some bash magic can be done here to make that happen.
@@ -215,6 +209,15 @@
           id: ''
           unique-version: true
           deploy-unstable: false
+      # TODO: Use post-tasks or postbuildscript to execute the following block of builders here.
+      # The block has to come after maven-deploy, because integration-get-bundle-vars tries to download
+      # snapshot metadata from Nexus, but the metadata migt be missing due to long breakage or recent version bump.
+      # - integration-get-bundle-vars
+      # - inject:
+      #     properties-file: 'bundle_vars.txt'
+      # - distribute-build-url:
+      #     path: 'distribution-karaf/src/main/assembly'
+      # - integration-compare-distributions
       - jacoco-report
       - opendaylight-infra-shiplogs:
           maven-version: 'mvn33'
