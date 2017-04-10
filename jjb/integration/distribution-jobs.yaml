@@ -127,8 +127,6 @@
           branch: '{branch}'
           refspec: 'refs/heads/{branch}'
           artifacts: '{archive-artifacts} **/dependency_tree.txt **/*.hprof **/target/surefire-reports/*-output.txt'
-      - integration-bundleurl:
-          bundleurl: 'last'
     scm:
       - gerrit-trigger-scm:
           refspec: ''
@@ -147,9 +145,6 @@
     prebuilders:
       - wipe-org-opendaylight-repo
       - jacoco-nojava-workaround
-      - integration-get-bundle-vars
-      - inject:
-          properties-file: 'bundle_vars.txt'
       - provide-maven-settings:
           global-settings-file: 'odl-global-settings'
           settings-file: 'integration-settings'
