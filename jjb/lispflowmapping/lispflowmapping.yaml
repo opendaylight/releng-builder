@@ -1,5 +1,33 @@
 ---
 - project:
+    name: lispflowmapping-nitrogen
+    jobs:
+      - '{project-name}-clm-{stream}'
+      - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-integration-{stream}'
+      - '{project-name}-merge-{stream}'
+      - '{project-name}-validate-autorelease-{stream}'
+      - '{project-name}-verify-{stream}-{maven}-{jdks}'
+
+    stream: nitrogen
+    project: 'lispflowmapping'
+    project-name: 'lispflowmapping'
+    branch: 'master'
+    jdk: openjdk8
+    jdks:
+      - openjdk8
+    maven:
+      - mvn33:
+          mvn-version: 'mvn33'
+    mvn-settings: 'lispflowmapping-settings'
+    mvn-goals: 'clean install findbugs:findbugs javadoc:aggregate -DrepoBuild'
+    mvn-opts: '-Xmx2048m -XX:MaxPermSize=512m -Dmaven.compile.fork=true'
+    dependencies: 'controller-merge-{stream},odlparent-merge-{stream},yangtools-merge-{stream},neutron-merge-{stream}'
+    email-upstream: '[lispflowmapping] [controller] [odlparent] [yangtools] [neutron]'
+    archive-artifacts: ''
+    build-node: centos7-java-builder-4c-8g
+
+- project:
     name: lispflowmapping-carbon
     jobs:
       - '{project-name}-clm-{stream}'
@@ -12,7 +40,7 @@
     stream: carbon
     project: 'lispflowmapping'
     project-name: 'lispflowmapping'
-    branch: 'master'
+    branch: 'stable/carbon'
     jdk: openjdk8
     jdks:
       - openjdk8

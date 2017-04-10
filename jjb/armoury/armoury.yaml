@@ -1,5 +1,31 @@
 ---
 - project:
+    name: armoury-nitrogen
+    jobs:
+      - '{project-name}-clm-{stream}'
+      - '{project-name}-integration-{stream}'
+      - '{project-name}-merge-{stream}'
+      - '{project-name}-verify-{stream}-{maven}-{jdks}'
+
+    stream: nitrogen
+    project: 'armoury'
+    project-name: 'armoury'
+    branch: 'master'
+    jdk: openjdk8
+    jdks:
+      - openjdk7
+      - openjdk8
+    maven:
+      - mvn33:
+          mvn-version: 'mvn33'
+    mvn-settings: 'armoury-settings'
+    mvn-goals: 'clean install'
+    mvn-opts: '-Xmx2048m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
+    dependencies: ''
+    email-upstream: '[armoury]'
+    archive-artifacts: ''
+
+- project:
     name: armoury-carbon
     jobs:
       - '{project-name}-clm-{stream}'
@@ -10,7 +36,7 @@
     stream: carbon
     project: 'armoury'
     project-name: 'armoury'
-    branch: 'master'
+    branch: 'stable/carbon'
     jdk: openjdk8
     jdks:
       - openjdk7

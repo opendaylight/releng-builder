@@ -7,8 +7,11 @@
     # stream:    release stream (eg. stable-boron or beryllium)
     # branch:    git branch (eg. stable/boron or master)
     stream:
-      - carbon:
+      - nitrogen:
           branch: 'master'
+          jre: 'openjdk8'
+      - carbon:
+          branch: 'stable/carbon'
       - boron:
           branch: 'stable/boron'
       - beryllium:

@@ -1,5 +1,30 @@
 ---
 - project:
+    name: coretutorials-nitrogen
+    jobs:
+      - '{project-name}-clm-{stream}'
+      - '{project-name}-integration-{stream}'
+      - '{project-name}-merge-{stream}'
+      - '{project-name}-verify-{stream}-{maven}-{jdks}'
+
+    stream: nitrogen
+    project: 'coretutorials'
+    project-name: 'coretutorials'
+    branch: 'master'
+    jdk: openjdk8
+    jdks:
+      - openjdk8
+    maven:
+      - mvn33:
+          mvn-version: 'mvn33'
+    mvn-settings: 'coretutorials-settings'
+    mvn-goals: 'clean install'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: ''
+    email-upstream: '[coretutorials]'
+    archive-artifacts: ''
+
+- project:
     name: coretutorials-carbon
     jobs:
       - '{project-name}-clm-{stream}'
@@ -10,7 +35,7 @@
     stream: carbon
     project: 'coretutorials'
     project-name: 'coretutorials'
-    branch: 'master'
+    branch: 'stable/carbon'
     jdk: openjdk8
     jdks:
       - openjdk8
