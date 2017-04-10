@@ -12,8 +12,11 @@
 
     # Project branches. Boron for actual testing, Beryllium for sanity.
     stream:
-      - carbon:
+      - nitrogen:
           branch: 'master'
+          jre: 'openjdk8'
+      - carbon:
+          branch: 'stable/carbon'
           jre: 'openjdk8'
       - boron:
           branch: 'stable/boron'

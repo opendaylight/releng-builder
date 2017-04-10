@@ -1,5 +1,30 @@
 ---
 - project:
+    name: coe-nitrogen
+    jobs:
+      - '{project-name}-clm-{stream}'
+      - '{project-name}-integration-{stream}'
+      - '{project-name}-merge-{stream}'
+      - '{project-name}-verify-{stream}-{maven}-{jdks}'
+
+    project: 'coe'
+    project-name: 'coe'
+    stream: nitrogen
+    branch: 'master'
+    jdk: openjdk8
+    jdks:
+      - openjdk8
+    maven:
+      - mvn33:
+          mvn-version: 'mvn33'
+    mvn-settings: 'coe-settings'
+    mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
+    email-upstream: '[coe] [odlparent] [yangtools] [controller]'
+    archive-artifacts: ''
+
+- project:
     name: coe-carbon
     jobs:
       - '{project-name}-clm-{stream}'
@@ -10,7 +35,7 @@
     project: 'coe'
     project-name: 'coe'
     stream: carbon
-    branch: 'master'
+    branch: 'stable/carbon'
     jdk: openjdk8
     jdks:
       - openjdk8

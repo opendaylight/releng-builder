@@ -142,10 +142,17 @@
 
     # Manual CSIT job lists used by sanity
     # and weekly distribution test jobs
+    csit-sanity-list-nitrogen: >
+        openflowplugin-csit-1node-sanity-only-nitrogen
     csit-sanity-list-carbon: >
         openflowplugin-csit-1node-sanity-only-carbon
     csit-sanity-list-boron: >
         openflowplugin-csit-1node-sanity-only-boron
+    csit-weekly-list-nitrogen: >
+        controller-csit-1node-notifications-longevity-only-nitrogen,
+        controller-csit-3node-drb-partnheal-longevity-only-nitrogen,
+        controller-csit-3node-drb-precedence-longevity-only-nitrogen,
+        openflowplugin-csit-1node-periodic-longevity-only-nitrogen
     csit-weekly-list-carbon: >
         controller-csit-1node-notifications-longevity-only-carbon,
         controller-csit-3node-drb-partnheal-longevity-only-carbon,

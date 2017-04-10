@@ -1,5 +1,33 @@
 ---
 - project:
+    name: neutron-nitrogen
+    jobs:
+      - '{project-name}-clm-{stream}'
+      - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-integration-{stream}'
+      - '{project-name}-merge-{stream}'
+      - '{project-name}-validate-autorelease-{stream}'
+      - '{project-name}-verify-{stream}-{maven}-{jdks}'
+
+    stream: nitrogen
+    project: 'neutron'
+    project-name: 'neutron'
+    build-timeout: 60
+    branch: 'master'
+    jdk: openjdk8
+    jdks:
+      - openjdk8
+    maven:
+      - mvn33:
+          mvn-version: 'mvn33'
+    mvn-settings: 'neutron-settings'
+    mvn-goals: 'clean install'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: 'odlparent-merge-{stream},aaa-merge-{stream}'
+    email-upstream: '[neutron] [odlparent] [aaa]'
+    archive-artifacts: ''
+
+- project:
     name: neutron-carbon
     jobs:
       - '{project-name}-clm-{stream}'
@@ -13,7 +41,7 @@
     project: 'neutron'
     project-name: 'neutron'
     build-timeout: 60
-    branch: 'master'
+    branch: 'stable/carbon'
     jdk: openjdk8
     jdks:
       - openjdk8

@@ -1,5 +1,36 @@
 ---
 - project:
+    name: vtn-nitrogen
+    jobs:
+      - '{project-name}-clm-{stream}'
+      - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-integration-{stream}'
+      - '{project-name}-merge-{stream}'
+      - '{project-name}-validate-autorelease-{stream}'
+      - '{project-name}-verify-{stream}-{maven}-{jdks}'
+
+    stream: nitrogen
+    project: 'vtn'
+    project-name: 'vtn'
+    branch: 'master'
+    jdk: openjdk8
+    jdks:
+      - openjdk8
+    maven:
+      - mvn33:
+          mvn-version: 'mvn33'
+    mvn-settings: 'vtn-settings'
+    mvn-goals: 'clean install -V -Pintegrationtests,strictcheck,docs -Dvtn.build.jobs=2'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: 'neutron-merge-{stream},openflowplugin-merge-{stream},ovsdb-merge-{stream}'
+    email-upstream: '[vtn] [neutron] [openflowplugin] [ovsdb]'
+
+    # Please do not archive maven sites!!!
+    # Maven sites are published to Nexus at:
+    # https://nexus.opendaylight.org/content/sites/site/
+    archive-artifacts: 'manager/dist/*/target/*.zip coordinator/dist/target/*.bz2'
+
+- project:
     name: vtn-carbon
     jobs:
       - '{project-name}-clm-{stream}'
@@ -12,7 +43,7 @@
     stream: carbon
     project: 'vtn'
     project-name: 'vtn'
-    branch: 'master'
+    branch: 'stable/carbon'
     jdk: openjdk8
     jdks:
       - openjdk8

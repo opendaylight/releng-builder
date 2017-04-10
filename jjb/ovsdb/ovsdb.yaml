@@ -1,5 +1,32 @@
 ---
 - project:
+    name: ovsdb-nitrogen
+    jobs:
+      - '{project-name}-clm-{stream}'
+      - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-integration-{stream}'
+      - '{project-name}-merge-{stream}'
+      - '{project-name}-validate-autorelease-{stream}'
+      - '{project-name}-verify-{stream}-{maven}-{jdks}'
+
+    stream: nitrogen
+    project: 'ovsdb'
+    project-name: 'ovsdb'
+    branch: 'master'
+    jdk: openjdk8
+    jdks:
+      - openjdk8
+    maven:
+      - mvn33:
+          mvn-version: 'mvn33'
+    mvn-settings: 'ovsdb-settings'
+    mvn-goals: 'clean install'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: 'odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream}'
+    email-upstream: '[ovsdb] [odlparent] [controller] [yangtools]'
+    archive-artifacts: ''
+
+- project:
     name: ovsdb-carbon
     jobs:
       - '{project-name}-clm-{stream}'
@@ -12,7 +39,7 @@
     stream: carbon
     project: 'ovsdb'
     project-name: 'ovsdb'
-    branch: 'master'
+    branch: 'stable/carbon'
     jdk: openjdk8
     jdks:
       - openjdk8

@@ -1,5 +1,37 @@
 ---
 - project:
+    name: groupbasedpolicy-nitrogen
+    jobs:
+      - '{project-name}-clm-{stream}'
+      - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-integration-{stream}'
+      - '{project-name}-merge-{stream}'
+      - '{project-name}-validate-autorelease-{stream}'
+      - '{project-name}-verify-{stream}-{maven}-{jdks}'
+
+    stream: nitrogen
+    project: 'groupbasedpolicy'
+    project-name: 'groupbasedpolicy'
+    branch: 'master'
+    jdk: openjdk8
+    jdks:
+      - openjdk8
+    maven:
+      - mvn33:
+          mvn-version: 'mvn33'
+    mvn-settings: 'groupbasedpolicy-settings'
+    mvn-goals: '-U clean install findbugs:findbugs'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: >
+        openflowjava-merge-{stream},
+        openflowplugin-merge-{stream},
+        neutron-merge-{stream},
+        sfc-merge-{stream},
+        ovsdb-merge-{stream}
+    email-upstream: '[groupbasedpolicy] [openflowjava] [openflowplugin] [neutron] [sfc] [ovsdb]'
+    archive-artifacts: ''
+
+- project:
     name: groupbasedpolicy-carbon
     jobs:
       - '{project-name}-clm-{stream}'
@@ -12,7 +44,7 @@
     stream: carbon
     project: 'groupbasedpolicy'
     project-name: 'groupbasedpolicy'
-    branch: 'master'
+    branch: 'stable/carbon'
     jdk: openjdk8
     jdks:
       - openjdk8
