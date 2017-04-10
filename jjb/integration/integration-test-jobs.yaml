@@ -326,14 +326,30 @@
           email-recipients: '{email-recipients}'
           email-prefix: '[$GERRIT_PROJECT]'
 
-# Template: integration-multipatch-test-{stream}
-# Goal: Build one or more patches and run all available system test on a distribution containing the change
-# Operation: This job template checks out and builds each patch provided in job parameters, creates a distribution
-# containing these patches, and triggers the distribution test job which includes most (if not all) available
-# CSIT jobs
 
 - job-template:
     name: 'integration-multipatch-test-{stream}'
+    # Goal: Build one or more patches and run all available system test on a distribution containing the change.
+    # Operation: This job template checks out and builds each patch provided in job parameters, creates a distribution
+    # containing these patches, and triggers the distribution test job which includes most (if not all) available
+    # CSIT jobs
+    # TODO: Move the following to appropriate readthedocs document.
+    # Recommended Sandbox usage:
+    # 0. Create this job and a CSIT job you want to run on the new .zip in Sandbox (disable timed triggers).
+    # 1. Copy the csit job name to clipboard.
+    # 2. Navigate to Sandbox page of this job.
+    # 3. Click "Configure".
+    # 4. Locate "Trigger/call builds on other projects" (under "Post Steps" tab).
+    # 5. Delete the long value of "Projects to build" field and paste the job name from clipboard (ctrl+a, ctrl+v).
+    # 6. Click "Save" button.
+    # 7. Click "Build with Parameters".
+    # 8. Start the job with your parameters, see https://wiki.opendaylight.org/view/Integration/Test/Running_System_Tests#Running_System_Tests_Using_Custom_Distribution_Built_From_Multiple_Patches
+    # 9. The multipatch job waits for the csit job to finish, so abort csit if you see something went wrong.
+    # 10. Navigate to Sandbox page of the csit job, click the run triggered from multipatch.
+    # 11. Click Parameters and copy the long value of BUNDLEURL field to clipboard.
+    # 12. Run the same csit job woth different patchset or test options, or other csit jobs, with this BUNDLEURL value
+    #     so you do not have to wait for multipatch build. Repeat step 12.
+    # 13. Currently, the .zip lasts 24 hours (?) so you may need to jump to step 2 (or 0) after some time.
 
     project-type: maven
     node: centos7-java-builder-8c-8g
