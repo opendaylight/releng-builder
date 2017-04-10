@@ -250,30 +250,6 @@ Pool: ODLRPC
       </tr>
       <tr>
         <td colspan="4">
-          Ubuntu 14.04 (Trusty) system with ovs 2.3 and mininet 2.2.1
-        </td>
-      </tr>
-
-      <tr class="warning">
-        <td><b>Jenkins Labels</b><br/> ubuntu1404-mininet-ovs-25-2c-2g</td>
-        <td><b>Minion Template names</b><br/> ubuntu1404-mininet-ovs-25-2c-2g</td>
-        <td><b>Packer Template</b><br/> releng/builder/packer/templates/mininet-ovs-2.5.json</td>
-        <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/mininet-ubuntu.sh</td>
-      </tr>
-      <tr>
-        <td colspan="4">
-          Ubuntu 14.04 (Trusty) system with ovs 2.5 and mininet 2.2.2
-        </td>
-      </tr>
-
-      <tr class="warning">
-        <td><b>Jenkins Labels</b><br/> ubuntu1604-mininet-ovs-25-2c-4g</td>
-        <td><b>Minion Template names</b><br/> ubuntu1604-mininet-ovs-25-2c-4g</td>
-        <td><b>Packer Template</b><br/> releng/builder/packer/templates/mininet-ovs-2.5.json</td>
-        <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/mininet-ubuntu.sh</td>
-      </tr>
-      <tr>
-        <td colspan="4">
           Ubuntu 16.04 (Xenial) system with ovs 2.5 and mininet 2.2.1
         </td>
       </tr>
