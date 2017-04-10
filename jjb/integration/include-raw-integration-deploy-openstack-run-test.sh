@@ -742,7 +742,7 @@ do
             sudo ip netns exec pnf_ns ifconfig pnf_veth1 up;
             sudo ip netns exec pnf_ns ip link add link pnf_veth1 name pnf_veth1.${EXTNET_VLAN_ID} type vlan id ${EXTNET_VLAN_ID};
             sudo ip netns exec pnf_ns ifconfig pnf_veth1.${EXTNET_VLAN_ID} up ${EXTNET_PNF_IP}/24;
-            sudo ovs-vsctl add-port br-physnet1 pnf_veth0;
+            sudo ovs-vsctl add-port ${PUBLIC_BRIDGE} pnf_veth0;
         "
 
         # Control Node - external net internet address simulation
