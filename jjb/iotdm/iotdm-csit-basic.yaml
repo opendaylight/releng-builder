@@ -17,8 +17,11 @@
       # backward incompatible changes in test suites for Carbon
       # TODO: Create test suites for specific release before
       # Carbon if needed.
-      - carbon:
+      - nitrogen:
           branch: 'master'
+          jre: 'openjdk8'
+      - carbon:
+          branch: 'stable/carbon'
           jre: 'openjdk8'
 
     # TODO: Delete the following if suites are compatible with Boron again.

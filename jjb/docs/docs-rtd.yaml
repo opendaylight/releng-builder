@@ -7,8 +7,11 @@
       - '{project-name}-verify-tox-{stream}'
 
     stream:
-      - carbon:
+      - nitrogen:
           branch: 'master'
+          jre: 'openjdk8'
+      - carbon:
+          branch: 'stable/carbon'
       - boron:
           branch: 'stable/boron'
       - beryllium:

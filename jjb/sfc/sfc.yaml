@@ -1,5 +1,32 @@
 ---
 - project:
+    name: sfc-nitrogen
+    jobs:
+      - '{project-name}-clm-{stream}'
+      - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-integration-{stream}'
+      - '{project-name}-merge-{stream}'
+      - '{project-name}-validate-autorelease-{stream}'
+      - '{project-name}-verify-{stream}-{maven}-{jdks}'
+
+    stream: nitrogen
+    project: 'sfc'
+    project-name: 'sfc'
+    branch: 'master'
+    jdk: openjdk8
+    jdks:
+      - openjdk8
+    maven:
+      - mvn33:
+          mvn-version: 'mvn33'
+    mvn-settings: 'sfc-settings'
+    mvn-goals: 'clean install'
+    mvn-opts: '-Xmx2048m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
+    dependencies: 'openflowplugin-merge-{stream},ovsdb-merge-{stream},lispflowmapping-merge-{stream}'
+    email-upstream: '[sfc] [openflowplugin] [ovsdb] [lispflowmapping]'
+    archive-artifacts: ''
+
+- project:
     name: sfc-carbon
     jobs:
       - '{project-name}-clm-{stream}'
@@ -12,7 +39,7 @@
     stream: carbon
     project: 'sfc'
     project-name: 'sfc'
-    branch: 'master'
+    branch: 'stable/carbon'
     jdk: openjdk8
     jdks:
       - openjdk8

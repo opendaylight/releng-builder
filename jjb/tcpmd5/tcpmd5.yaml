@@ -1,5 +1,31 @@
 ---
 - project:
+    name: tcpmd5-nitrogen
+    jobs:
+      - '{project-name}-clm-{stream}'
+      - '{project-name}-integration-{stream}'
+      - '{project-name}-merge-{stream}'
+      - '{project-name}-verify-{stream}-{maven}-{jdks}'
+
+    stream: nitrogen
+    project: 'tcpmd5'
+    project-name: 'tcpmd5'
+    branch: 'master'
+    jdk: openjdk8
+    jdks:
+      - openjdk8
+
+    maven:
+      - mvn33:
+          mvn-version: 'mvn33'
+    mvn-settings: 'tcpmd5-settings'
+    mvn-goals: 'clean -DrepoBuild install javadoc:aggregate'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
+    email-upstream: '[tcpmd5] [odlparent] [yangtools] [controller]'
+    archive-artifacts: ''
+
+- project:
     name: tcpmd5-carbon
     jobs:
       - '{project-name}-clm-{stream}'
@@ -10,7 +36,7 @@
     stream: carbon
     project: 'tcpmd5'
     project-name: 'tcpmd5'
-    branch: 'master'
+    branch: 'stable/carbon'
     jdk: openjdk8
     jdks:
       - openjdk8

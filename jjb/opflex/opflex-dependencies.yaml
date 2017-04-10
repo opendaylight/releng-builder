@@ -7,8 +7,16 @@
       - 'opflex-openvswitch_tgz-{stream}'
 
     stream:
-      - carbon:
+      - nitrogen:
           branch: 'master'
+          libuv-build: v1
+          libuv-scm: v2
+          rapidjson-build: v1
+          rapidjson-scm: v2
+          openvswitch-build: v2
+          openvswitch-scm: v2
+      - carbon:
+          branch: 'stable/carbon'
           libuv-build: v1
           libuv-scm: v2
           rapidjson-build: v1

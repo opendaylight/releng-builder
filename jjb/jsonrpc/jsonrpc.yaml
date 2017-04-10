@@ -1,5 +1,29 @@
 ---
 - project:
+    name: jsonrpc-nitrogen
+    jobs:
+      - '{project-name}-clm-{stream}'
+      - '{project-name}-integration-{stream}'
+      - '{project-name}-merge-{stream}'
+      - '{project-name}-verify-{stream}-{maven}-{jdks}'
+    project: 'jsonrpc'
+    project-name: 'jsonrpc'
+    stream: nitrogen
+    branch: 'master'
+    jdk: openjdk8
+    jdks:
+      - openjdk8
+    maven:
+      - mvn33:
+          mvn-version: 'mvn33'
+    mvn-settings: 'jsonrpc-settings'
+    mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream},mdsal-merge-{stream}'
+    email-upstream: '[jsonrpc] [odlparent] [yangtools] [controller] [mdsal]'
+    archive-artifacts: ''
+
+- project:
     name: jsonrpc-carbon
     jobs:
       - '{project-name}-clm-{stream}'
@@ -9,7 +33,7 @@
     project: 'jsonrpc'
     project-name: 'jsonrpc'
     stream: carbon
-    branch: 'master'
+    branch: 'stable/carbon'
     jdk: openjdk8
     jdks:
       - openjdk8
