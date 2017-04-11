@@ -1,0 +1,122 @@
+---
+- project:
+    name: distribution-karaf3-jobs
+    # Jobs specific to Karaf 3, for streams with a different default.
+    # Currently only for Carbon.
+    jobs:
+      - 'distribution-karaf3-deploy-{stream}'
+      - 'distribution-karaf3-offline-{stream}'
+
+    project: integration/distribution
+    project-name: distribution
+
+    stream:
+      - carbon:
+          branch: stable/carbon
+          jre: openjdk8
+
+# TODO: Is there a way to de-duplicate with non-3 template parts?
+
+- job-template:
+    name: 'distribution-karaf3-deploy-{stream}'
+    # Goal: Verify distribution starts with no issues when all features are loaded
+    # Operation: This job deploys the controller installing odl-integration-all
+    # FIXME: List required variables.
+
+    project-type: freestyle
+    node: centos7-java-builder-2c-8g
+    concurrent: false
+
+    properties:
+      - opendaylight-infra-properties:
+          build-days-to-keep: '{build-days-to-keep}'
+
+    parameters:
+      - opendaylight-infra-parameters:
+          os-cloud: '{os-cloud}'
+          project: '{project}'
+          branch: '{branch}'
+          refspec: 'refs/heads/{branch}'
+          artifacts: '{archive-artifacts} **/*.hprof'
+      - integration-distribution-branch:
+          branch: '{branch}'
+      - integration-bundleurl:
+          bundleurl: '{bundleurl}'
+      - integration-jdk-version:
+          jdkversion: '{jre}'
+      - distribution-karaf-version:
+          karaf-version: 'karaf3'
+
+    wrappers:
+      - opendaylight-infra-wrappers:
+          build-timeout: '{build-timeout}'
+
+    triggers:
+      - timed: ''
+      # FIXME: Trigger from distribution-weekly-trigger instead.
+
+    builders:
+      - integration-get-bundle-vars
+      - inject:
+          properties-file: 'bundle_vars.txt'
+      - distribution-deploy-verify
+
+    publishers:
+      - email-notification:
+          email-recipients: '{email-recipients}'
+          email-prefix: '[int/dist]'
+      - integration-csit-archive-build
+      - opendaylight-infra-shiplogs:
+          maven-version: 'mvn33'
+
+- job-template:
+    name: 'distribution-karaf3-offline-{stream}'
+    # Goal: Verify distribution can start with no internet connection
+    # Operation: This job deploys the controller removing any external repository definition
+    # FIXME: List required variables.
+
+    project-type: freestyle
+    node: centos7-java-builder-2c-8g
+    concurrent: false
+
+    properties:
+      - opendaylight-infra-properties:
+          build-days-to-keep: '{build-days-to-keep}'
+
+    parameters:
+      - opendaylight-infra-parameters:
+          os-cloud: '{os-cloud}'
+          project: '{project}'
+          branch: '{branch}'
+          refspec: 'refs/heads/{branch}'
+          artifacts: '{archive-artifacts} **/*.hprof'
+      - integration-distribution-branch:
+          branch: '{branch}'
+      - integration-bundleurl:
+          bundleurl: '{bundleurl}'
+      - integration-jdk-version:
+          jdkversion: '{jre}'
+      - distribution-karaf-version:
+          karaf-version: 'karaf3'
+
+    wrappers:
+      - opendaylight-infra-wrappers:
+          build-timeout: '{build-timeout}'
+
+    triggers:
+      - timed: ''
+      # FIXME: Trigger from distribution-weekly-trigger instead.
+
+    builders:
+      - integration-get-bundle-vars
+      - inject:
+          properties-file: 'bundle_vars.txt'
+      - distribution-deploy-offline
+
+    publishers:
+      - email-notification:
+          email-recipients: '{email-recipients}'
+          email-prefix: '[int/dist]'
+      - integration-csit-archive-build
+      - opendaylight-infra-shiplogs:
+          maven-version: 'mvn33'

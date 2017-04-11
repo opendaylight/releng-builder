@@ -15,7 +15,11 @@ unzip -q ${BUNDLE}
 
 echo "Configuring the startup features..."
 FEATURESCONF=${WORKSPACE}/${BUNDLEFOLDER}/etc/org.apache.karaf.features.cfg
+# Add test feature repo if Karaf 4.
+sed -ie "s%mvn:org.opendaylight.integration/features-index/${BUNDLEVERSION}/xml/features%mvn:org.opendaylight.integration/features-index/${BUNDLEVERSION}/xml/features,mvn:org.opendaylight.integration/features-test/${BUNDLEVERSION}/xml/features%g" ${FEATURESCONF}
+# Add test feature repo if Karaf 3.
 sed -ie "s%mvn:org.opendaylight.integration/features-integration-index/${BUNDLEVERSION}/xml/features%mvn:org.opendaylight.integration/features-integration-index/${BUNDLEVERSION}/xml/features,mvn:org.opendaylight.integration/features-integration-test/${BUNDLEVERSION}/xml/features%g" ${FEATURESCONF}
+# Feature is instaled later.
 cat ${FEATURESCONF}
 
 echo "Configuring the log..."
