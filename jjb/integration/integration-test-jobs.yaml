@@ -12,6 +12,7 @@
       - 'integration-patch-test-{stream}'
       - 'integration-multipatch-test-{stream}'
       - 'integration-distribution-weekly-test-trigger-{stream}'
+      - 'integration-distribution-high-frequency-test-trigger-{stream}'
 
     # CSIT Lists in releng-defaults.yaml
     stream:
@@ -22,6 +23,9 @@
           csit-sanity-list: '{csit-sanity-list-nitrogen}'
           csit-weekly-list: '{csit-weekly-list-nitrogen}'
           schedule-weekly: 'H 12 * * 0'
+          csit-high-frequency-list: ''
+          schedule-high-frequency: ''
+
       - carbon:
           branch: 'stable/carbon'
           jdk: 'openjdk8'
@@ -30,6 +34,8 @@
           csit-sanity-list: '{csit-sanity-list-carbon}'
           csit-weekly-list: '{csit-weekly-list-carbon}'
           schedule-weekly: 'H 12 * * 0'
+          csit-high-frequency-list: '{csit-high-frequency-list-carbon}'
+          schedule-high-frequency: 'H H/4 * * *'
 
       - boron:
           branch: 'stable/boron'
@@ -39,6 +45,8 @@
           csit-sanity-list: '{csit-sanity-list-boron}'
           csit-weekly-list: '{csit-weekly-list-boron}'
           schedule-weekly: 'H 12 * * 0'
+          csit-high-frequency-list: ''
+          schedule-high-frequency: ''
 
       - beryllium:
           branch: 'stable/beryllium'
@@ -48,6 +56,8 @@
           csit-sanity-list: ''
           csit-weekly-list: ''
           schedule-weekly: 'H 12 * * 0'
+          csit-high-frequency-list: ''
+          schedule-high-frequency: ''
 
     # tools system image
     tools_system_image: Ubuntu 14.04 - mininet-ovs-25 - 20170210-0300
@@ -427,6 +437,37 @@
     builders:
       - trigger-builds:
           - project: '{csit-weekly-list}'
+            block: true
+            predefined-parameters:
+              BUNDLEURL=$BUNDLEURL
+
+    publishers:
+      - email-notification:
+          email-recipients: '{email-recipients}'
+          email-prefix: '[integration]'
+
+- job-template:
+    name: 'integration-distribution-high-frequency-test-trigger-{stream}'
+
+    project-type: freestyle
+    node: centos7-robot-2c-2g
+
+    properties:
+      - opendaylight-infra-properties:
+          build-days-to-keep: '{build-days-to-keep}'
+
+    parameters:
+      - integration-bundleurl:
+          bundleurl: '{bundleurl}'
+      - integration-jdk-version:
+          jdkversion: '{jre}'
+
+    triggers:
+      - timed: '{schedule-high-frequency}'
+
+    builders:
+      - trigger-builds:
+          - project: '{csit-high-frequency-list}'
             block: true
             predefined-parameters:
               BUNDLEURL=$BUNDLEURL

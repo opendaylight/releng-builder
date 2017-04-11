@@ -140,8 +140,9 @@
     10-inclusion-flag: 'off'
     10-exclude-value: ''
 
-    # Manual CSIT job lists used by sanity
-    # and weekly distribution test jobs
+    # Manual CSIT job lists used by sanity or periodic in nature.
+    csit-high-frequency-list-carbon: >
+        netvirt-csit-1node-openstack-newton-nodl-v2-upstream-stateful-carbon
     csit-sanity-list-nitrogen: >
         openflowplugin-csit-1node-sanity-only-nitrogen
     csit-sanity-list-carbon: >
