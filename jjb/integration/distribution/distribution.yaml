@@ -11,7 +11,9 @@
     stream:
       - nitrogen:
           branch: 'master'
-          jre: 'openjdk8'
+          jdk: openjdk8
+          jdks:
+            - openjdk8
       - carbon:
           branch: 'stable/carbon'
           jdk: openjdk8

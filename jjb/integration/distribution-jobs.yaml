@@ -12,9 +12,11 @@
     project-name: distribution
 
     stream:
-      - nitrogen:
-          branch: 'master'
-          jre: 'openjdk8'
+      # Nitrogen disabled fow now
+      # TODO: Re-enable when Nitrogen distribution only builds Karaf 4 with correct versions.
+      # - nitrogen:
+      #     branch: 'master'
+      #     jre: 'openjdk8'
       - carbon:
           branch: 'stable/carbon'
           jre: 'openjdk8'
