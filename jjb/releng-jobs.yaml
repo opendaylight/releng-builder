@@ -568,6 +568,11 @@
       - integration-list-jobs:
           blacklist: '{csit-list-blacklist}'
           search_string: "csit"
+          stream: "nitrogen"
+          jobs-filename: "csit_jobs_nitrogen.lst"
+      - integration-list-jobs:
+          blacklist: '{csit-list-blacklist}'
+          search_string: "csit"
           stream: "carbon"
           jobs-filename: "csit_jobs_carbon.lst"
       - integration-list-jobs:
