@@ -10,6 +10,14 @@
           description: 'Distribution GIT branch'
 
 - parameter:
+    name: distribution-karaf-version
+    parameters:
+      - string:
+          name: KARAF_VERSION
+          default: '{karaf-version}'
+          description: 'karaf3 or karaf4, affects ODL deploy scripts'
+
+- parameter:
     name: integration-bundleurl
     parameters:
       - string:
@@ -259,14 +267,12 @@
     builders:
       - shell: !include-raw: include-raw-integration-get-slave-addresses.sh
 
-# Macro: integration-get-bundle-vars
-# Operation: this macro gets all bundle related variables
-# Used by: {project}-csit-3node-* job templates
 
 - builder:
     name: integration-get-bundle-vars
+    # Operation: this macro gets all bundle related variables
     builders:
-      - shell: !include-raw: include-raw-integration-get-bundle-vars.sh
+      - shell: !include-raw: distribution-bundle-variables.sh
 
 # Macro: integration-distribution-check
 # Operation: this macro deploys the controller with all fetures
@@ -277,23 +283,22 @@
     builders:
       - shell: !include-raw: include-raw-integration-distribution-check.sh
 
-# Macro: integration-deploy-controller-verify
-# Operation: this macro deploys the controller with all fetures
-# Used by: distribution-deploy-{stream} job template
+- builder:
+    name: distribution-deploy-verify
+    # Operation: this macro deploys the controller with all fetures
+    # Required bash variables:
+    #   KARAF_VERSION: 'karaf4' or 'karaf3'. Use distribution-karaf-version macro.
+    builders:
+      - shell: !include-raw: distribution-deploy-verify.sh
+
 
 - builder:
-    name: integration-deploy-controller-verify
+    name: distribution-deploy-offline
+    # Operation: this macro deploys ODL on the current system, with no external repo configuration
+    # Required bash variables:
+    #   KARAF_VERSION: 'karaf4' or 'karaf3'. Use distribution-karaf-version macro.
     builders:
-      - shell: !include-raw: include-raw-integration-deploy-controller-verify.sh
-
-# Macro: integration-deploy-controller-offline
-# Operation: this macro deploys the controller with no external repo configuration
-# Used by: integration-distrbution-offline-{stream} job template
-
-- builder:
-    name: integration-deploy-controller-offline
-    builders:
-      - shell: !include-raw: include-raw-integration-deploy-controller-offline.sh
+      - shell: !include-raw: distribution-deploy-offline.sh
 
 # Macro: integration-deply-controller-run-test
 # Operation: this macro deploys single contoller and runs test

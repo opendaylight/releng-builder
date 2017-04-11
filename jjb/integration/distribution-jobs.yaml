@@ -1,6 +1,7 @@
 ---
 - project:
     name: distribution-jobs
+    # Jobs common to both Karaf 3 and 4.
     jobs:
       - '{project-name}-verify-python-{stream}'
       - 'distribution-verify-{stream}'
@@ -13,18 +14,19 @@
 
     stream:
       - nitrogen:
-          branch: 'master'
-          jre: 'openjdk8'
+          branch: master
+          jre: openjdk8
       - carbon:
-          branch: 'stable/carbon'
-          jre: 'openjdk8'
+          branch: stable/carbon
+          jre: openjdk8
       - boron:
-          branch: 'stable/boron'
-          jre: 'openjdk8'
+          branch: stable/boron
+          jre: openjdk8
+          karaf-version: karaf3
       - beryllium:
-          branch: 'stable/beryllium'
-          jre: 'openjdk7'
-
+          branch: stable/beryllium
+          jre: openjdk7
+          karaf-version: karaf3
 
 - job-template:
     name: 'distribution-verify-{stream}'
@@ -225,16 +227,16 @@
           email-recipients: '{email-recipients}'
           email-prefix: '[int/dist]'
 
-# Template: distribution-deploy-{stream}
-# Goal: Verify distribution starts with no issues when all features are loaded
-# Operation: This job deploys the controller installing odl-integration-all
 
 - job-template:
     name: 'distribution-deploy-{stream}'
+    # Goal: Verify distribution starts with no issues when all features are loaded.
+    # Operation: This job deploys the controller installing odl-integration-all.
+    # FIXME: List required variables.
 
     project-type: freestyle
     node: centos7-java-builder-2c-8g
-    concurrent: true
+    concurrent: false
 
     properties:
       - opendaylight-infra-properties:
@@ -253,19 +255,22 @@
           bundleurl: '{bundleurl}'
       - integration-jdk-version:
           jdkversion: '{jre}'
+      - distribution-karaf-version:
+          karaf-version: '{karaf-version}'
 
     wrappers:
       - opendaylight-infra-wrappers:
           build-timeout: '{build-timeout}'
 
     triggers:
-      - timed: 'H H * * *'
+      - timed: ''
+      # FIXME: Trigger from distribution-weekly-trigger instead.
 
     builders:
       - integration-get-bundle-vars
       - inject:
           properties-file: 'bundle_vars.txt'
-      - integration-deploy-controller-verify
+      - distribution-deploy-verify
 
     publishers:
       - email-notification:
@@ -275,15 +280,15 @@
       - opendaylight-infra-shiplogs:
           maven-version: 'mvn33'
 
-# Template: distribution-offline-{stream}
-# Goal: Verify distribution can start with no internet connection
-# Operation: This job deploys the controller removing any external repository definition
-
 - job-template:
     name: 'distribution-offline-{stream}'
+    # Goal: Verify distribution can start with no internet connection.
+    # Operation: This job deploys the controller removing any external repository definition.
+    # FIXME: List required variables.
 
     project-type: freestyle
     node: centos7-java-builder-2c-8g
+    concurrent: false
 
     properties:
       - opendaylight-infra-properties:
@@ -302,19 +307,22 @@
           bundleurl: '{bundleurl}'
       - integration-jdk-version:
           jdkversion: '{jre}'
+      - distribution-karaf-version:
+          karaf-version: '{karaf-version}'
 
     wrappers:
       - opendaylight-infra-wrappers:
           build-timeout: '{build-timeout}'
 
     triggers:
-      - timed: 'H H * * *'
+      - timed: ''
+      # FIXME: Trigger from distribution-weekly-trigger instead.
 
     builders:
       - integration-get-bundle-vars
       - inject:
           properties-file: 'bundle_vars.txt'
-      - integration-deploy-controller-offline
+      - distribution-deploy-offline
 
     publishers:
       - email-notification:
