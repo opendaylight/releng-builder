@@ -24,24 +24,25 @@
           schedule-weekly: 'H 12 * * 0'
       - carbon:
           branch: 'stable/carbon'
+          karaf-version: karaf3
           jdk: 'openjdk8'
           jre: 'openjdk8'
           csit-list: '{csit-list-carbon}'
           csit-sanity-list: '{csit-sanity-list-carbon}'
           csit-weekly-list: '{csit-weekly-list-carbon}'
           schedule-weekly: 'H 12 * * 0'
-
       - boron:
           branch: 'stable/boron'
+          karaf-version: karaf3
           jdk: 'openjdk8'
           jre: 'openjdk8'
           csit-list: '{csit-list-boron}'
           csit-sanity-list: '{csit-sanity-list-boron}'
           csit-weekly-list: '{csit-weekly-list-boron}'
           schedule-weekly: 'H 12 * * 0'
-
       - beryllium:
           branch: 'stable/beryllium'
+          karaf-version: karaf3
           jdk: 'openjdk7'
           jre: 'openjdk7'
           csit-list: '{csit-list-beryllium}'

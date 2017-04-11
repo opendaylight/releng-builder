@@ -15,8 +15,12 @@ unzip -q ${BUNDLE}
 
 echo "Configuring the startup features..."
 FEATURESCONF=${WORKSPACE}/${BUNDLEFOLDER}/etc/org.apache.karaf.features.cfg
-sed -ie "s/\(featuresBoot=\|featuresBoot =\)/featuresBoot = ${ACTUALFEATURES},/g" ${FEATURESCONF}
+# Add test feature repo if Karaf 4.
+sed -ie "s%mvn:org.opendaylight.integration/features-index/${BUNDLEVERSION}/xml/features%mvn:org.opendaylight.integration/features-index/${BUNDLEVERSION}/xml/features,mvn:org.opendaylight.integration/features-test/${BUNDLEVERSION}/xml/features%g" ${FEATURESCONF}
+# Add test feature repo if Karaf 3.
 sed -ie "s%mvn:org.opendaylight.integration/features-integration-index/${BUNDLEVERSION}/xml/features%mvn:org.opendaylight.integration/features-integration-index/${BUNDLEVERSION}/xml/features,mvn:org.opendaylight.integration/features-integration-test/${BUNDLEVERSION}/xml/features%g" ${FEATURESCONF}
+# Add actual boot features.
+sed -ie "s/\(featuresBoot=\|featuresBoot =\)/featuresBoot = ${ACTUALFEATURES},/g" ${FEATURESCONF}
 cat ${FEATURESCONF}
 
 echo "Configuring the log..."
@@ -122,7 +126,7 @@ cp ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log .
 echo "Kill controller"
 ps axf | grep karaf | grep -v grep | awk '{print "kill -9 " $1}' | sh
 
-echo "Detecting misplaced config files"
+echo "Bug 4628: Detecting misplaced config files"
 pushd "${WORKSPACE}/${BUNDLEFOLDER}"
 XMLS_FOUND=`echo *.xml`
 popd
