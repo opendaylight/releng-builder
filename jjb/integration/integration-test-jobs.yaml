@@ -353,6 +353,8 @@
     parameters:
       - patches-to-build-parameter:
           patches_to_build: '$PATCHES_TO_BUILD'
+      - run-test-parameter:
+          run-test: 'false'
       - integration-distribution-branch:
           branch: '{branch}'
       - opendaylight-infra-parameters:
@@ -392,11 +394,15 @@
       post-step-run-condition: 'SUCCESS'
 
     postbuilders:
-      - trigger-builds:
-          - project: '{csit-list}'
-            block: true
-            predefined-parameters:
-              BUNDLEURL=$BUNDLEURL
+      - conditional-step:
+          condition-kind: boolean-expression
+          condition-expression: $RUNTEST
+          steps:
+            - trigger-builds:
+                - project: '{csit-list}'
+                  block: true
+                  predefined-parameters:
+                    BUNDLEURL=$BUNDLEURL
 
     publishers:
       - opendaylight-infra-shiplogs:
