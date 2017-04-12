@@ -65,9 +65,8 @@
           files: '**'
 
     prebuilders:
-      - integration-get-bundle-url-root
-      - inject:
-          properties-file: 'bundle.txt'
+      - integration-get-bundle-url:
+          bundle-pom: pom.xml
       - wipe-org-opendaylight-repo
       - provide-maven-settings:
           global-settings-file: 'odl-global-settings'
@@ -93,7 +92,7 @@
           - project: 'distribution-deploy-{stream}'
             block: true
             predefined-parameters:
-              BUNDLEURL=$BUNDLEURL
+              BUNDLEURL=$BUNDLE_URL
 
     reporters:
       - findbugs
