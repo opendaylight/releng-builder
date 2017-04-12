@@ -11,13 +11,13 @@ if [ ${BUNDLEURL} == 'last' ]; then
     # Obtain current pom.xml of integration/distribution, correct branch.
     wget "http://${GERRIT_PATH}/gitweb?p=integration/distribution.git;a=blob_plain;f=pom.xml;hb=refs/heads/$DISTROBRANCH" -O "pom.xml"
     # Extract the BUNDLEVERSION from the pom.xml
-    BUNDLEVERSION=`xpath pom.xml '/project/version/text()' 2> /dev/null`
+    BUNDLEVERSION=$(xpath pom.xml '/project/version/text()' 2> /dev/null)
     echo "Bundle version is ${BUNDLEVERSION}"
     # Acquire the timestamp information from maven-metadata.xml
     NEXUSPATH="${NEXUSURL_PREFIX}/${ODL_NEXUS_REPO}/org/opendaylight/integration/distribution-karaf"
     wget ${NEXUSPATH}/${BUNDLEVERSION}/maven-metadata.xml
     less maven-metadata.xml
-    TIMESTAMP=`xpath maven-metadata.xml "//snapshotVersion[extension='zip'][1]/value/text()" 2>/dev/null`
+    TIMESTAMP=$(xpath maven-metadata.xml "//snapshotVersion[extension='zip'][1]/value/text()" 2>/dev/null)
     echo "Nexus timestamp is ${TIMESTAMP}"
     BUNDLEFOLDER="distribution-karaf-${BUNDLEVERSION}"
     BUNDLE="distribution-karaf-${TIMESTAMP}.zip"
