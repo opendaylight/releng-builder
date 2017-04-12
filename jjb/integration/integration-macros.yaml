@@ -329,7 +329,11 @@
 - builder:
     name: integration-get-bundle-url
     builders:
-      - shell: !include-raw: include-raw-integration-get-bundle-url.sh
+      - inject:
+          properties-content: BUNDLE_POM={bundle-pom}
+      - shell: !include-raw-escape: include-raw-integration-get-bundle-url.sh
+      - inject:
+          properties-file: bundle.txt
 
 # Macro: integration-get-bundle-url-root
 # Operation: this macro gets the job generated distribution URL from root pom.xml
