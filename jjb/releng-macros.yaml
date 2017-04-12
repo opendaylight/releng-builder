@@ -48,7 +48,10 @@
           name: OS_CLOUD
           default: '{os-cloud}'
           description: |
-              The name of a cloud configuration in clouds.yaml.
+              The name of a cloud configuration in clouds.yaml. OS_CLOUD is a
+              variable name that is significant to openstack client as a
+              environment variable. Please refer to the documentation for
+              further details.
               https://docs.openstack.org/developer/python-openstackclient/
 
 - parameter:
