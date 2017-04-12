@@ -282,9 +282,8 @@
 
     prebuilders:
       - integration-rebase-gerrit-patch
-      - integration-get-bundle-url
-      - inject:
-          properties-file: 'bundle.txt'
+      - integration-get-bundle-url:
+          bundle-pom: distribution/pom.xml
       - wipe-org-opendaylight-repo
       - provide-maven-settings:
           global-settings-file: 'odl-global-settings'
@@ -324,7 +323,7 @@
           - project: '{csit-list}'
             block: true
             predefined-parameters:
-              BUNDLEURL=$BUNDLEURL
+              BUNDLEURL=$BUNDLE_URL
 
     publishers:
       - opendaylight-infra-shiplogs:
