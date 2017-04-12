@@ -1345,7 +1345,7 @@
           os-cloud: '{os-cloud}'
           project: '{project}'
           branch: '{branch}'
-          refspec: '$GERRIT_REFSPEC'
+          refspec: 'refs/heads/{branch}'
           artifacts: '{archive-artifacts}'
       - integration-distribution-branch:
           branch: '{branch}'
