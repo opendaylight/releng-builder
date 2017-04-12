@@ -22,11 +22,6 @@ if [ ${BUNDLEURL} == 'last' ]; then
     BUNDLEFOLDER="distribution-karaf-${BUNDLEVERSION}"
     BUNDLE="distribution-karaf-${TIMESTAMP}.zip"
     ACTUALBUNDLEURL="${NEXUSPATH}/${BUNDLEVERSION}/${BUNDLE}"
-elif [[ ${BUNDLEURL} == *"distribution-check"* ]]; then
-    ACTUALBUNDLEURL="${BUNDLEURL}"
-    BUNDLE="${BUNDLEURL##*/}"
-    BUNDLEFOLDER="${BUNDLE//.zip}"
-    BUNDLEVERSION="${BUNDLEFOLDER//distribution-karaf-}"
 else
     ACTUALBUNDLEURL="${BUNDLEURL}"
     BUNDLE="${BUNDLEURL##*/}"
@@ -59,4 +54,3 @@ JAVA_HOME=${JAVA_HOME}
 EOF
 
 # vim: ts=4 sw=4 sts=4 et ft=sh :
-
