@@ -24,24 +24,25 @@
           schedule-weekly: 'H 12 * * 0'
       - carbon:
           branch: 'stable/carbon'
+          karaf-version: karaf3
           jdk: 'openjdk8'
           jre: 'openjdk8'
           csit-list: '{csit-list-carbon}'
           csit-sanity-list: '{csit-sanity-list-carbon}'
           csit-weekly-list: '{csit-weekly-list-carbon}'
           schedule-weekly: 'H 12 * * 0'
-
       - boron:
           branch: 'stable/boron'
+          karaf-version: karaf3
           jdk: 'openjdk8'
           jre: 'openjdk8'
           csit-list: '{csit-list-boron}'
           csit-sanity-list: '{csit-sanity-list-boron}'
           csit-weekly-list: '{csit-weekly-list-boron}'
           schedule-weekly: 'H 12 * * 0'
-
       - beryllium:
           branch: 'stable/beryllium'
+          karaf-version: karaf3
           jdk: 'openjdk7'
           jre: 'openjdk7'
           csit-list: '{csit-list-beryllium}'
@@ -108,6 +109,8 @@
           branch: '$GERRIT_REFSPEC'
       - integration-jdk-version:
           jdkversion: '{jre}'
+      - distribution-karaf-version:
+          karaf-version: '{karaf-version}'
 
     scm:
       - integration-gerrit-scm:
@@ -175,8 +178,6 @@
     parameters:
       - integration-bundleurl:
           bundleurl: '{bundleurl}'
-      - integration-jdk-version:
-          jdkversion: '{jre}'
 
     builders:
       - trigger-builds:
@@ -207,8 +208,6 @@
     parameters:
       - integration-bundleurl:
           bundleurl: '{bundleurl}'
-      - integration-jdk-version:
-          jdkversion: '{jre}'
 
     builders:
       - trigger-builds:
@@ -232,7 +231,6 @@
 
     project-type: maven
     node: centos7-java-builder-2c-8g
-    jdk: '{jdk}'
 
     properties:
       - opendaylight-infra-properties:
@@ -247,6 +245,8 @@
           artifacts: '{archive-artifacts} **/dependency_tree.txt'
       - integration-distribution-branch:
           branch: '{branch}'
+      - distribution-karaf-version:
+          karaf-version: '{karaf-version}'
       - integration-distribution-git-url:
           git-url: '{git-url}'
 
@@ -424,8 +424,6 @@
     parameters:
       - integration-bundleurl:
           bundleurl: '{bundleurl}'
-      - integration-jdk-version:
-          jdkversion: '{jre}'
 
     triggers:
       - timed: '{schedule-weekly}'
