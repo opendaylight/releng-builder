@@ -1,0 +1,47 @@
+---
+- project:
+    name: groupbasedpolicy-csit-openstack-clustering-integration
+    jobs:
+      - '{project}-csit-{topology}-openstack-{openstack}-{functionality}-{stream}'
+
+    project: 'groupbasedpolicy'
+
+    topology:
+      - 5node:
+          openstack_system_count: 6
+          odl_system_count: 5
+      - 3node:
+          openstack_system_count: 4
+          odl_system_count: 3
+
+   functionality:
+      - clustering-split_rejoin
+      - clustering-cluster_scale
+      - clustering-vpp_mounting
+
+    install-features: 'odl-jolokia,odl-groupbasedpolicy-neutron-and-ofoverlay, odl-groupbasedpolicy-neutron-vpp-mapper, odl-restconf'
+    enable-haproxy: 'yes'
+    schedule: ''
+    
+    stream:
+      - nitrogen:
+          branch: 'master'
+          jre: 'openjdk8'
+      - carbon:
+          branch: 'stable/carbon'
+          jre: 'openjdk8'
+
+    openstack:
+      - newton:
+          openstack-branch: 'stable/newton'
+          odl-ml2-branch: 'stable/newton'
+          odl-ml2-driver-version: 'v2'
+          openstack_system_image: 'CentOS 7 - devstack-newton - 20170314-2256'
+
+    testplan: '{project}-{functionality}.txt'
+
+    odl-enable-l3: 'yes'
+
+    disable-odl-l3-service-plugin: 'yes'
+
+    security-group-mode: 'transparent'
