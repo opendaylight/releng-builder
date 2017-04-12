@@ -647,7 +647,7 @@ do
     # will be the same as the number of openstack systems. However, if we are doing multinode openstack then the
     # assumption is we have a single control node and the rest are compute nodes, so the number of expected hypervisors
     # is one less than the total number of openstack systems
-    if [ $((NUM_OPENSTACK_SYSTEM / NUM_OPENSTACK_SITES - 1)) -eq 1 ]; then
+    if [ $((NUM_OPENSTACK_SYSTEM / NUM_OPENSTACK_SITES)) -eq 1 ]; then
         expected_num_hypervisors=1
     else
         expected_num_hypervisors=${NUM_COMPUTES_PER_SITE}
