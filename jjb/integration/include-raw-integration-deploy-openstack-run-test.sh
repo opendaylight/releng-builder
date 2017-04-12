@@ -12,7 +12,7 @@ python ${WORKSPACE}/test/tools/distchanges/changes.py -d /tmp/distribution_folde
                   -r ssh://jenkins-${SILO}@git.opendaylight.org:29418 || true
 
 echo "#################################################"
-echo "##         Deploy Openstack 3-node             ##"
+echo "##         Deploy Openstack up to 5 nodes      ##"
 echo "#################################################"
 
 
@@ -109,6 +109,33 @@ NEUTRON_SFC_DRIVERS=${ODL_SFC_DRIVER} # Only relevant if networking-sfc plugin i
 NEUTRON_FLOWCLASSIFIER_DRIVERS=${ODL_SFC_DRIVER} # Only relevant if networking-sfc plugin is enabled
 EOF
 
+
+if [ "${ODL_ML2_BRANCH}" == "stable/newton" ] && [[ "${TESTPLAN}" == *"groupbasedpolicy-clustering"* ]]; then
+echo "PATCHING NEWTON FOR GBP clustering jobs"
+cat >> ${local_conf_file_name} << EOF
+
+NEUTRON_REPO=https://github.com/michal-cmarada/neutron.git
+NEUTRON_BRANCH=NSDriver
+
+[[post-config|/etc/neutron/plugins/ml2/ml2_conf.ini]]
+[ml2_odl]
+minimize_polling=True
+port_binding_controller=pseudo-agentdb-binding
+ODL_HOSTCONF_URI=restconf/operational/neutron:neutron/hostconfigs
+
+[[post-config|/etc/neutron/dhcp_agent.ini]]
+[DEFAULT]
+interface_driver = neutron.agent.linux.interface.NSDriver
+
+[[post-config|/etc/neutron/l3_agent.ini]]
+[DEFAULT]
+interface_driver = neutron.agent.linux.interface.NSDriver
+
+EOF
+fi
+
+
+
 if [ "${ENABLE_NETWORKING_L2GW}" == "yes" ]; then
 cat >> ${local_conf_file_name} << EOF
 
@@ -201,7 +228,7 @@ enable_isolated_metadata = True
 force_config_drive = False
 
 EOF
-
+10.29.12.131
 echo "local.conf Created...."
 cat ${local_conf_file_name}
 }
@@ -414,6 +441,7 @@ for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`
 do
     OS_CTRL_IP=OPENSTACK_CONTROL_NODE_${i}_IP
     OS_CTRL_FOLDER="control_${i}"
+    echo "************* Collecting logs from ${OS_CTRL_FOLDER}"
     mkdir -p ${OS_CTRL_FOLDER}
     scp ${!OS_CTRL_IP}:/opt/stack/devstack/nohup.out ${OS_CTRL_FOLDER}/stack.log
     scp ${!OS_CTRL_IP}:/var/log/openvswitch/ovs-vswitchd.log ${OS_CTRL_FOLDER}/ovs-vswitchd.log
@@ -433,6 +461,7 @@ for i in `seq 1 ${NUM_OPENSTACK_COMPUTE_NODES}`
 do
     OSIP=OPENSTACK_COMPUTE_NODE_${i}_IP
     OS_COMPUTE_FOLDER="compute_${i}"
+    echo "************* Collecting logs from ${OS_COMPUTE_FOLDER}"
     mkdir -p ${OS_COMPUTE_FOLDER}
     scp ${!OSIP}:/opt/stack/devstack/nohup.out ${OS_COMPUTE_FOLDER}/stack.log
     scp ${!OSIP}:/var/log/openvswitch/ovs-vswitchd.log ${OS_COMPUTE_FOLDER}/ovs-vswitchd.log
@@ -690,7 +719,7 @@ do
         # FIXME - Workaround, ODL (new netvirt) currently adds PUBLIC_BRIDGE as a port in br-int since it doesn't see such a bridge existing when we stack
         ${SSH} $ip "sudo ovs-vsctl --if-exists del-port br-int $PUBLIC_BRIDGE"
         ${SSH} $ip "sudo ovs-vsctl --may-exist add-br $PUBLIC_BRIDGE -- set bridge $PUBLIC_BRIDGE other-config:disable-in-band=true other_config:hwaddr=f6:00:00:ff:01:0$((devstack_index++))"
-    done
+    doneHA_PROXY_IP
 
     # ipsec support
     if [ "${IPSEC_VXLAN_TUNNELS_ENABLED}" == "yes" ]; then
@@ -842,6 +871,9 @@ pybot -N ${TESTPLAN} --removekeywords wuks -c critical -e exclude \
     -v TOOLS_SYSTEM_IP:${TOOLS_SYSTEM_1_IP} \
     -v TOOLS_SYSTEM_1_IP:${TOOLS_SYSTEM_1_IP} \
     -v TOOLS_SYSTEM_2_IP:${TOOLS_SYSTEM_2_IP} \
+    -v TOOLS_SYSTEM_3_IP:${TOOLS_SYSTEM_3_IP} \
+    -v TOOLS_SYSTEM_4_IP:${TOOLS_SYSTEM_4_IP} \
+    -v TOOLS_SYSTEM_5_IP:${TOOLS_SYSTEM_5_IP} \
     -v USER_HOME:${HOME} \
     -v WORKSPACE:/tmp \
     ${TESTOPTIONS} ${SUITES} || true
