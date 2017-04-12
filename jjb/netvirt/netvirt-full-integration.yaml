@@ -176,7 +176,6 @@
           build-timeout: '{build-timeout}'
 
     triggers:
-      - timed: '@midnight'
       - gerrit:
           server-name: '{server-name}'
           trigger-on:
