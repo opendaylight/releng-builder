@@ -1,6 +1,6 @@
 ---
 - project:
-    name: bier-nirtogen
+    name: bier-nitrogen
     jobs:
       - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
@@ -40,6 +40,7 @@
     project: 'bier'
     project-name: 'bier'
     branch: 'stable/carbon'
+    karaf-version: karaf3
     jdk: openjdk8
     jdks:
       - openjdk8

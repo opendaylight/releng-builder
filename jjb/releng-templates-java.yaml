@@ -93,6 +93,8 @@
           artifacts: '{archive-artifacts} **/dependency_tree.txt **/target/surefire-reports/*-output.txt'
       - integration-distribution-git-url:
           git-url: '{git-url}'
+      - distribution-karaf-version:
+          karaf-version: '{karaf-version}'
 
     scm:
       - integration-gerrit-scm:
