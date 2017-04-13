@@ -18,15 +18,17 @@
       - carbon:
           branch: 'stable/carbon'
           jre: 'openjdk8'
+          karaf-version: karaf3
           robot-options: '-v JAVA_OPTIONS:-Xmx6656m'
       - boron:
           branch: 'stable/boron'
           jre: 'openjdk8'
+          karaf-version: karaf3
           robot-options: '-v JAVA_OPTIONS:-Xmx6656m'
-
       - beryllium:
           branch: 'stable/beryllium'
           jre: 'openjdk7'
+          karaf-version: karaf3
           robot-options: '-v JAVA_7_OPTIONS:-Xmx6144m@-XX:MaxPermSize=512m --escape space:@'
 
     install:
