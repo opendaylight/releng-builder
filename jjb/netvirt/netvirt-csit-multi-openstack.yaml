@@ -22,13 +22,13 @@
 
     functionality:
       - upstream-transparent:
-          schedule: 'H H * * *'
+          schedule: ''
           sg-mode: 'transparent'
       - upstream-stateful:
-          schedule: 'H H/4 * * *'
+          schedule: ''
           sg-mode: 'stateful'
       - upstream-learn:
-          schedule: 'H H * * *'
+          schedule: ''
           sg-mode: 'learn'
       - gate-learn:
           schedule: ''
@@ -101,10 +101,10 @@
 
     functionality:
       - upstream-stateful:
-          schedule: 'H H * * *'
+          schedule: ''
           sg-mode: 'stateful'
       - upstream-learn:
-          schedule: 'H H * * *'
+          schedule: ''
           sg-mode: 'learn'
 
     stream:
