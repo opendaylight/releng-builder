@@ -86,14 +86,3 @@ fi
 # finish pom file
 echo "</modules>" >> ${POM_FILE}
 echo "</project>" >> ${POM_FILE}
-
-# Extract the BUNDLEVERSION from the distribution pom.xml
-BUNDLEVERSION=`xpath $BUILD_DIR/distribution/pom.xml '/project/version/text()' 2> /dev/null`
-echo "Bundle version is ${BUNDLEVERSION}"
-
-BUNDLEURL=${BUILD_URL}org.opendaylight.integration\$distribution-karaf/artifact/org.opendaylight.integration/distribution-karaf/${BUNDLEVERSION}/distribution-karaf-${BUNDLEVERSION}.zip
-echo "Bundle url is ${BUNDLEURL}"
-
-# Set BUNDLEVERSION & BUNDLEURL
-echo BUNDLEVERSION=${BUNDLEVERSION} > ${WORKSPACE}/bundle.txt
-echo BUNDLEURL=${BUNDLEURL} >> ${WORKSPACE}/bundle.txt
