@@ -1331,7 +1331,7 @@
 - job-template:
     name: '{project}-patch-test-{feature}-{stream}'
 
-    project-type: maven
+    project-type: freestyle
     node: centos7-java-builder-2c-8g
     concurrent: true
     jdk: '{jdk}'
@@ -1355,6 +1355,8 @@
           name: feature
           default: 'all'
           description: 'Specific feature test for patch'
+      - maven-exec:
+          maven-version: mvn33
 
     scm:
       - integration-gerrit-scm:
@@ -1388,50 +1390,41 @@
             unstable: true
             notbuilt: true
 
-    prebuilders:
+    builders:
       - integration-rebase-gerrit-patch
-      - integration-get-bundle-url:
-          bundle-pom: distribution/pom.xml
       - wipe-org-opendaylight-repo
-      - provide-maven-settings:
-          global-settings-file: 'odl-global-settings'
-          settings-file: 'integration-settings'
       - maven-target:
-          maven-version: 'mvn33'
+          maven-version: mvn33
           pom: '{project}/pom.xml'
-          goals: >
+          goals: |
               clean install dependency:tree
-              -V -B -Pq
+              -Pq
               -Dgitid.skip=false
-              -Djenkins
               -DgenerateReports=false
-              -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r
               -Dstream={stream}
+              {opendaylight-infra-mvn-opts}
           java-opts:
             - '-Xmx4096m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
-          settings: 'integration-settings'
+          settings: integration-settings
           settings-type: cfp
-          global-settings: 'odl-global-settings'
+          global-settings: odl-global-settings
           global-settings-type: cfp
-
-    maven:
-      maven-name: 'mvn33'
-      root-pom: 'distribution/pom.xml'
-      goals: >
-          clean install dependency:tree
-          -V -B -Pq
-          -Dgitid.skip=false
-          -Djenkins
-          -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r
-      maven-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
-      settings: 'integration-settings'
-      settings-type: cfp
-      global-settings: 'odl-global-settings'
-      global-settings-type: cfp
-      ignore-upstream-changes: true
-      post-step-run-condition: 'SUCCESS'
-
-    postbuilders:
+      - maven-target:
+          maven-version: mvn33
+          pom: distribution/pom.xml
+          goals: |
+              clean install dependency:tree
+              -Pq
+              -Dgitid.skip=false
+              {opendaylight-infra-mvn-opts}
+          java-opts:
+            - '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
+          settings: integration-settings
+          settings-type: cfp
+          global-settings: odl-global-settings
+          global-settings-type: cfp
+      - distribution-check-deploy-distribution:
+          dist-pom: distribution/pom.xml
       - trigger-builds:
           - project: '{csit-list}'
             block: true
