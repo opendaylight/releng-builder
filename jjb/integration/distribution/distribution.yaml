@@ -3,37 +3,48 @@
 - project:
     name: distribution
     jobs:
+      # {project-name}- is generic template, distribtion- is taylored.
       - '{project-name}-clm-{stream}'
       - '{project-name}-sonar'
       - '{project-name}-validate-autorelease-{stream}'
-      - distribution-check-{stream}
+      - '{project-name}-verify-tox-{stream}'
+      - 'distribution-merge-{stream}'
+      - 'distribution-verify-{stream}'
+      - 'distribution-deploy-{stream}'
+      - 'distribution-offline-{stream}'
+      - 'distribution-check-{stream}'
+      - 'distribution4-deploy-carbon'
+      - 'distribution4-offline-carbon'
+      - 'distribution4-check-carbon'
+
+    project: integration/distribution
+    project-name: distribution
+    mvn-settings: integration-distribution-settings
+    dependencies: ''
+    email-upstream: '[int/dist]'
 
     stream:
       - nitrogen:
-          branch: 'master'
-          jre: 'openjdk8'
+          branch: master
+          jdk: openjdk8
+          jdks:
+            - openjdk8
       - carbon:
-          branch: 'stable/carbon'
+          branch: stable/carbon
           jdk: openjdk8
           jdks:
             - openjdk8
+          karaf-version: karaf3
       - boron:
-          branch: 'stable/boron'
+          branch: stable/boron
           jdk: openjdk8
           jdks:
             - openjdk8
+          karaf-version: karaf3
       - beryllium:
-          branch: 'stable/beryllium'
+          branch: stable/beryllium
           jdk: openjdk8
           jdks:
             - openjdk8
             - openjdk7
-
-    project: 'integration/distribution'
-    project-name: 'distribution'
-    mvn-settings: 'integration-distribution-settings'
-    mvn-goals: 'clean install dependency:tree -DoutputFile=dependency_tree.txt'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: 'odlparent-merge-{stream}'
-    email-upstream: '[int/dist]'
-    archive-artifacts: '**/dependency_tree.txt'
+          karaf-version: karaf3

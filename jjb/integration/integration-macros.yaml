@@ -10,6 +10,16 @@
           description: 'Distribution GIT branch'
 
 - parameter:
+    name: distribution-karaf-version
+    # Arguments:
+    #   karaf-version: Provide, otherwise releng-defaults value is used.
+    parameters:
+      - string:
+          name: KARAF_VERSION
+          default: '{karaf-version}'
+          description: 'karaf3 or karaf4, affects ODL deploy scripts'
+
+- parameter:
     name: integration-bundleurl
     parameters:
       - string:
@@ -259,41 +269,35 @@
     builders:
       - shell: !include-raw: include-raw-integration-get-slave-addresses.sh
 
-# Macro: integration-get-bundle-vars
-# Operation: this macro gets all bundle related variables
-# Used by: {project}-csit-3node-* job templates
 
 - builder:
     name: integration-get-bundle-vars
+    # Operation: Construct and export all bundle related variables into bundle_vars.txt
+    # Required bash variables:
+    #   KARAF_VERSION: 'karaf4' or 'karaf3'. Use distribution-karaf-version macro to set.
     builders:
-      - shell: !include-raw: include-raw-integration-get-bundle-vars.sh
-
-# Macro: integration-distribution-check
-# Operation: this macro deploys the controller with all fetures
-# Used by: {project}-distribution-check-{stream} job template
+      - shell: !include-raw: distribution-bundle-variables.sh
 
 - builder:
     name: integration-distribution-check
+    # Operation: Locally deploy ODL with all fetures, check it is not broken.
+    # Required bash variables:
+    #   KARAF_VERSION: 'karaf4' or 'karaf3'. Use distribution-karaf-version macro to set.
     builders:
-      - shell: !include-raw: include-raw-integration-distribution-check.sh
-
-# Macro: integration-deploy-controller-verify
-# Operation: this macro deploys the controller with all fetures
-# Used by: distribution-deploy-{stream} job template
+      - shell: !include-raw: integration-distribution-check.sh
 
 - builder:
-    name: integration-deploy-controller-verify
+    name: distribution-deploy-verify
+    # Operation: Deploy ODL with all fetures and check it is not broken.
     builders:
-      - shell: !include-raw: include-raw-integration-deploy-controller-verify.sh
+      - shell: !include-raw: distribution-deploy-verify.sh
 
-# Macro: integration-deploy-controller-offline
-# Operation: this macro deploys the controller with no external repo configuration
-# Used by: integration-distrbution-offline-{stream} job template
 
 - builder:
-    name: integration-deploy-controller-offline
+    name: distribution-deploy-offline
+    # Operation: Deploys ODL on the current system, with no external repo configuration, check it works.
     builders:
-      - shell: !include-raw: include-raw-integration-deploy-controller-offline.sh
+      - shell: !include-raw: distribution-deploy-offline.sh
 
 # Macro: integration-deply-controller-run-test
 # Operation: this macro deploys single contoller and runs test
