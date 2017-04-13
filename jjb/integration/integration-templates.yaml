@@ -62,6 +62,8 @@
           test-plan: '{project}-{functionality}.txt'
       - integration-jdk-version:
           jdkversion: '{verify-jdkversion}'
+      - distribution-karaf-version:
+          karaf-version: '{verify-karaf-version}'
 
     scm:
       - integration-gerrit-scm:
@@ -150,6 +152,8 @@
           branch: 'master'
       - integration-jdk-version:
           jdkversion: '{jre}'
+      - distribution-karaf-version:
+          karaf-version: '{karaf-version}'
 
     scm:
       - integration-gerrit-scm:
@@ -260,6 +264,8 @@
           branch: 'master'
       - integration-jdk-version:
           jdkversion: '{jre}'
+      - distribution-karaf-version:
+          karaf-version: '{karaf-version}'
 
     scm:
       - integration-gerrit-scm:
@@ -480,6 +486,8 @@
           test-plan: '{project}-{functionality}.txt'
       - integration-jdk-version:
           jdkversion: '{verify-jdkversion}'
+      - distribution-karaf-version:
+          karaf-version: '{verify-karaf-version}'
 
     scm:
       - integration-gerrit-scm:
@@ -569,6 +577,8 @@
           branch: 'master'
       - integration-jdk-version:
           jdkversion: '{jre}'
+      - distribution-karaf-version:
+          karaf-version: '{karaf-version}'
 
     scm:
       - integration-gerrit-scm:
@@ -678,6 +688,8 @@
           branch: 'master'
       - integration-jdk-version:
           jdkversion: '{jre}'
+      - distribution-karaf-version:
+          karaf-version: '{karaf-version}'
 
     scm:
       - integration-gerrit-scm:
@@ -789,6 +801,8 @@
           branch: 'master'
       - integration-jdk-version:
           jdkversion: '{jre}'
+      - distribution-karaf-version:
+          karaf-version: '{karaf-version}'
 
     scm:
       - integration-gerrit-scm:
@@ -1009,6 +1023,8 @@
           branch: 'master'
       - integration-jdk-version:
           jdkversion: '{jre}'
+      - distribution-karaf-version:
+          karaf-version: '{karaf-version}'
       - string:
           name: OPENSTACK_BRANCH
           default: '{openstack-branch}'
@@ -1182,6 +1198,8 @@
           branch: 'master'
       - integration-jdk-version:
           jdkversion: '{jre}'
+      - distribution-karaf-version:
+          karaf-version: '{karaf-version}'
       - string:
           name: OPENSTACK_BRANCH
           default: '{openstack-branch}'
@@ -1349,6 +1367,8 @@
           artifacts: '{archive-artifacts}'
       - integration-distribution-branch:
           branch: '{branch}'
+      - distribution-karaf-version:
+          karaf-version: '{karaf-version}'
       - integration-distribution-git-url:
           git-url: '{git-url}'
       - string:

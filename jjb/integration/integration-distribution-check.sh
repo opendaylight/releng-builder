@@ -1,9 +1,15 @@
+if [[ "$KARAF_VERSION" == "karaf3" ]]; then
+    ARTIFACT="distribution-karaf"
+else
+    ARTIFACT="karaf"
+fi
+
 CONTROLLERMEM="3072m"
 ACTUALFEATURES="odl-integration-all"
-BUNDLEVERSION=`xpath distribution/pom.xml '/project/version/text()' 2> /dev/null`
-BUNDLEFOLDER="distribution-karaf-${BUNDLEVERSION}"
+BUNDLEVERSION="$(xpath distribution/pom.xml '/project/version/text()' 2> /dev/null)"
+BUNDLEFOLDER="${ARTIFACT}-${BUNDLEVERSION}"
 BUNDLE="${BUNDLEFOLDER}.zip"
-BUNDLEURL="/tmp/r/org/opendaylight/integration/distribution-karaf/${BUNDLEVERSION}/${BUNDLE}"
+BUNDLEURL="/tmp/r/org/opendaylight/integration/${ARTIFACT}/${BUNDLEVERSION}/${BUNDLE}"
 
 echo "Kill any controller running"
 ps axf | grep karaf | grep -v grep | awk '{print "kill -9 " $1}' | sh
@@ -12,43 +18,47 @@ echo "Clean workspace"
 rm -rf *
 
 echo "Copying the distribution..."
-cp  ${BUNDLEURL} .
+cp "${BUNDLEURL}" .
 
 echo "Extracting the new controller..."
-unzip -q ${BUNDLE}
+unzip -q "${BUNDLE}"
 
 echo "Configuring the startup features..."
-FEATURESCONF=${WORKSPACE}/${BUNDLEFOLDER}/etc/org.apache.karaf.features.cfg
-sed -ie "s/\(featuresBoot=\|featuresBoot =\)/featuresBoot = ${ACTUALFEATURES},/g" ${FEATURESCONF}
-sed -ie "s%mvn:org.opendaylight.integration/features-integration-index/${BUNDLEVERSION}/xml/features%mvn:org.opendaylight.integration/features-integration-index/${BUNDLEVERSION}/xml/features,mvn:org.opendaylight.integration/features-integration-test/${BUNDLEVERSION}/xml/features%g" ${FEATURESCONF}
-cat ${FEATURESCONF}
+FEATURESCONF="${WORKSPACE}/${BUNDLEFOLDER}/etc/org.apache.karaf.features.cfg"
+# Add test feature repo if Karaf 4.
+sed -ie "s%mvn:org.opendaylight.integration/features-index/${BUNDLEVERSION}/xml/features%mvn:org.opendaylight.integration/features-index/${BUNDLEVERSION}/xml/features,mvn:org.opendaylight.integration/features-test/${BUNDLEVERSION}/xml/features%g" "${FEATURESCONF}"
+# Add test feature repo if Karaf 3.
+sed -ie "s%mvn:org.opendaylight.integration/features-integration-index/${BUNDLEVERSION}/xml/features%mvn:org.opendaylight.integration/features-integration-index/${BUNDLEVERSION}/xml/features,mvn:org.opendaylight.integration/features-integration-test/${BUNDLEVERSION}/xml/features%g" "${FEATURESCONF}"
+# Add actual boot features.
+sed -ie "s/\(featuresBoot=\|featuresBoot =\)/featuresBoot = ${ACTUALFEATURES},/g" "${FEATURESCONF}"
+cat "${FEATURESCONF}"
 
 echo "Configuring the log..."
-LOGCONF=${WORKSPACE}/${BUNDLEFOLDER}/etc/org.ops4j.pax.logging.cfg
-sed -ie 's/log4j.appender.out.maxFileSize=1MB/log4j.appender.out.maxFileSize=20MB/g' ${LOGCONF}
-cat ${LOGCONF}
+LOGCONF="${WORKSPACE}/${BUNDLEFOLDER}/etc/org.ops4j.pax.logging.cfg"
+sed -ie 's/log4j.appender.out.maxFileSize=1MB/log4j.appender.out.maxFileSize=20MB/g' "${LOGCONF}"
+cat "${LOGCONF}"
 
 echo "Configure max memory..."
-MEMCONF=${WORKSPACE}/${BUNDLEFOLDER}/bin/setenv
-sed -ie "s/2048m/${CONTROLLERMEM}/g" ${MEMCONF}
-cat ${MEMCONF}
+MEMCONF="${WORKSPACE}/${BUNDLEFOLDER}/bin/setenv"
+sed -ie "s/2048m/${CONTROLLERMEM}/g" "${MEMCONF}"
+cat "${MEMCONF}"
 
 echo "Listing all open ports on controller system"
 netstat -pnatu
 
 echo "redirected karaf console output to karaf_console.log"
-export KARAF_REDIRECT=${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log
+export KARAF_REDIRECT="${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log"
 
-if [ ${JDKVERSION} == 'openjdk8' ]; then
+if [ "${JDKVERSION}" == 'openjdk8' ]; then
     echo "Setting the JRE Version to 8"
     # dynamic_verify does not allow sudo, JAVA_HOME should be enough for karaf start.
     # sudo /usr/sbin/alternatives --set java /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.60-2.b27.el7_1.x86_64/jre/bin/java
-    export JAVA_HOME=/usr/lib/jvm/java-1.8.0
-elif [ ${JDKVERSION} == 'openjdk7' ]; then
+    export JAVA_HOME='/usr/lib/jvm/java-1.8.0'
+elif [ "${JDKVERSION}" == 'openjdk7' ]; then
     echo "Setting the JRE Version to 7"
     # dynamic_verify does not allow sudo, JAVA_HOME should be enough for karaf start.
     # sudo /usr/sbin/alternatives --set java /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.85-2.6.1.2.el7_1.x86_64/jre/bin/java
-    export JAVA_HOME=/usr/lib/jvm/java-1.7.0
+    export JAVA_HOME='/usr/lib/jvm/java-1.7.0'
 fi
 readlink -e "${JAVA_HOME}/bin/java"
 echo "JDK Version should be overriden by JAVA_HOME"
@@ -66,22 +76,22 @@ set +x
 echo "Waiting for controller to come up..."
 COUNT=0
 while true; do
-    RESP="$( curl --user admin:admin -sL -w "%{http_code} %{url_effective}\\n" http://localhost:8181/restconf/modules -o /dev/null || true )"
-    echo ${RESP}
-    if [[ ${RESP} == *"200"* ]]; then
+    RESP="$(curl --user admin:admin -sL -w "%{http_code} %{url_effective}\\n" http://localhost:8181/restconf/modules -o /dev/null || true)"
+    echo "${RESP}"
+    if [[ "${RESP}" == *"200"* ]]; then
         echo Controller is UP
         break
-    elif (( ${COUNT} > 600 )); then
+    elif (( "${COUNT}" > 600 )); then
         echo Timeout Controller DOWN
         echo "Dumping Karaf log..."
-        cat ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log
+        cat "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log"
         echo "Listing all open ports on controller system"
         netstat -pnatu
         exit 1
     else
-        COUNT=$(( ${COUNT} + 5 ))
+        COUNT="$(( ${COUNT} + 5 ))"
         sleep 5
-        echo waiting ${COUNT} secs...
+        echo waiting "${COUNT}" secs...
     fi
 done
 
@@ -93,7 +103,7 @@ while true; do
     fi
     echo "${COUNT} seconds yet to wait..."
     sleep 10
-    COUNT=$(( ${COUNT} - 10 ))
+    COUNT="$(( ${COUNT} - 10 ))"
 done
 
 # End of repeating operations, enable verbose printing.
@@ -108,26 +118,26 @@ netstat -pnatu
 
 function exit_on_log_file_message {
     echo "looking for \"$1\" in karaf.log file"
-    if grep --quiet "$1" ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log; then
+    if grep --quiet "$1" "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log"; then
         echo ABORTING: found "$1"
         echo "Dumping first 500K bytes of karaf log..."
-        head --bytes=500K  ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log
+        head --bytes=500K "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log"
         echo "Dumping last 500K bytes of karaf log..."
-        tail --bytes=500K  ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log
-        cp ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log .
-        cp ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log .
+        tail --bytes=500K "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log"
+        cp "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log" .
+        cp "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log" .
         exit 1
     fi
 
     echo "looking for \"$1\" in karaf_console.log file"
-    if grep --quiet "$1" ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log; then
+    if grep --quiet "$1" "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log"; then
         echo ABORTING: found "$1"
         echo "Dumping first 500K bytes of karaf log..."
-        head --bytes=500K  ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log
+        head --bytes=500K "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log"
         echo "Dumping last 500K bytes of karaf log..."
-        tail --bytes=500K  ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log
-        cp ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log .
-        cp ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log .
+        tail --bytes=500K "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log"
+        cp "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log" .
+        cp "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log" .
         exit 1
     fi
 }
@@ -137,15 +147,15 @@ exit_on_log_file_message 'server is unhealthy'
 
 echo "Fetching Karaf logs"
 # TODO: Move instead of copy? Gzip?
-cp ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log .
-cp ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log .
+cp "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log" .
+cp "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log" .
 
 echo "Kill controller"
 ps axf | grep karaf | grep -v grep | awk '{print "kill -9 " $1}' | sh
 
-echo "Detecting misplaced config files"
+echo "Bug 4628: Detecting misplaced config files"
 pushd "${WORKSPACE}/${BUNDLEFOLDER}"
-XMLS_FOUND=`echo *.xml`
+XMLS_FOUND="$(echo *.xml)"
 popd
 if [ "$XMLS_FOUND" != "*.xml" ]; then
     echo "Bug 4628 confirmed."
