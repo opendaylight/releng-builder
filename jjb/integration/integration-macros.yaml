@@ -322,19 +322,6 @@
     builders:
       - shell: !include-raw: include-raw-integration-start-cluster-run-test.sh
 
-# Macro: integration-get-bundle-url
-# Operation: this macro gets the job generated distribution URL from distribution pom.xml
-# Used by: integration-patch-test-{stream} job template
-
-- builder:
-    name: integration-get-bundle-url
-    builders:
-      - inject:
-          properties-content: BUNDLE_POM={bundle-pom}
-      - shell: !include-raw-escape: include-raw-integration-get-bundle-url.sh
-      - inject:
-          properties-file: bundle.txt
-
 # Macro: integration-install-robotframework
 # Operation: Installs robotframework using pip to a virtualenv
 # Used by: {project}-csit-* job templates
