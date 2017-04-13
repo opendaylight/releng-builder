@@ -62,6 +62,8 @@
           test-plan: '{project}-{functionality}.txt'
       - integration-jdk-version:
           jdkversion: '{verify-jdkversion}'
+      - distribution-karaf-version:
+          karaf-version: '{verify-karaf-version}'
 
     scm:
       - integration-gerrit-scm:
@@ -95,9 +97,7 @@
       - integration-get-slave-addresses
       - inject:
           properties-file: 'slave_addresses.txt'
-      - integration-get-bundle-vars
-      - inject:
-          properties-file: 'bundle_vars.txt'
+      - integration-detect-variables
       - integration-deploy-controller-run-test
       - integration-cleanup-tmp
 
@@ -150,6 +150,8 @@
           branch: 'master'
       - integration-jdk-version:
           jdkversion: '{jre}'
+      - distribution-karaf-version:
+          karaf-version: '{karaf-version}'
 
     scm:
       - integration-gerrit-scm:
@@ -176,9 +178,7 @@
       - integration-get-slave-addresses
       - inject:
           properties-file: 'slave_addresses.txt'
-      - integration-get-bundle-vars
-      - inject:
-          properties-file: 'bundle_vars.txt'
+      - integration-detect-variables
       - integration-deploy-controller-run-test
       - integration-cleanup-tmp
 
@@ -260,6 +260,8 @@
           branch: 'master'
       - integration-jdk-version:
           jdkversion: '{jre}'
+      - distribution-karaf-version:
+          karaf-version: '{karaf-version}'
 
     scm:
       - integration-gerrit-scm:
@@ -286,9 +288,7 @@
       - integration-get-slave-addresses
       - inject:
           properties-file: 'slave_addresses.txt'
-      - integration-get-bundle-vars
-      - inject:
-          properties-file: 'bundle_vars.txt'
+      - integration-detect-variabless
       - integration-deploy-controller-run-test
       - integration-cleanup-tmp
 
@@ -480,6 +480,8 @@
           test-plan: '{project}-{functionality}.txt'
       - integration-jdk-version:
           jdkversion: '{verify-jdkversion}'
+      - distribution-karaf-version:
+          karaf-version: '{verify-karaf-version}'
 
     scm:
       - integration-gerrit-scm:
@@ -513,9 +515,7 @@
       - integration-get-slave-addresses
       - inject:
           properties-file: 'slave_addresses.txt'
-      - integration-get-bundle-vars
-      - inject:
-          properties-file: 'bundle_vars.txt'
+      - integration-detect-variables
       - integration-configure-clustering
       - integration-start-cluster-run-test
       - integration-cleanup-tmp
@@ -569,6 +569,8 @@
           branch: 'master'
       - integration-jdk-version:
           jdkversion: '{jre}'
+      - distribution-karaf-version:
+          karaf-version: '{karaf-version}'
 
     scm:
       - integration-gerrit-scm:
@@ -595,9 +597,7 @@
       - integration-get-slave-addresses
       - inject:
           properties-file: 'slave_addresses.txt'
-      - integration-get-bundle-vars
-      - inject:
-          properties-file: 'bundle_vars.txt'
+      - integration-detect-variables
       - integration-configure-clustering
       - integration-start-cluster-run-test
       - integration-cleanup-tmp
@@ -678,6 +678,8 @@
           branch: 'master'
       - integration-jdk-version:
           jdkversion: '{jre}'
+      - distribution-karaf-version:
+          karaf-version: '{karaf-version}'
 
     scm:
       - integration-gerrit-scm:
@@ -704,9 +706,7 @@
       - integration-get-slave-addresses
       - inject:
           properties-file: 'slave_addresses.txt'
-      - integration-get-bundle-vars
-      - inject:
-          properties-file: 'bundle_vars.txt'
+      - integration-detect-variables
       - integration-configure-clustering
       - integration-start-cluster-run-test
       - integration-cleanup-tmp
@@ -789,6 +789,8 @@
           branch: 'master'
       - integration-jdk-version:
           jdkversion: '{jre}'
+      - distribution-karaf-version:
+          karaf-version: '{karaf-version}'
 
     scm:
       - integration-gerrit-scm:
@@ -815,9 +817,7 @@
       - integration-get-slave-addresses
       - inject:
           properties-file: 'slave_addresses.txt'
-      - integration-get-bundle-vars
-      - inject:
-          properties-file: 'bundle_vars.txt'
+      - integration-detect-variables
       - integration-configure-clustering
       - integration-start-cluster-run-test
       - integration-cleanup-tmp
@@ -1009,6 +1009,8 @@
           branch: 'master'
       - integration-jdk-version:
           jdkversion: '{jre}'
+      - distribution-karaf-version:
+          karaf-version: '{karaf-version}'
       - string:
           name: OPENSTACK_BRANCH
           default: '{openstack-branch}'
@@ -1129,9 +1131,7 @@
       - integration-get-slave-addresses
       - inject:
           properties-file: 'slave_addresses.txt'
-      - integration-get-bundle-vars
-      - inject:
-          properties-file: 'bundle_vars.txt'
+      - integration-detect-variables
       - integration-deploy-controller-run-test
       - integration-deploy-openstack-run-test
       - integration-cleanup-tmp
@@ -1182,6 +1182,8 @@
           branch: 'master'
       - integration-jdk-version:
           jdkversion: '{jre}'
+      - distribution-karaf-version:
+          karaf-version: '{karaf-version}'
       - string:
           name: OPENSTACK_BRANCH
           default: '{openstack-branch}'
@@ -1305,9 +1307,7 @@
       - integration-get-slave-addresses
       - inject:
           properties-file: 'slave_addresses.txt'
-      - integration-get-bundle-vars
-      - inject:
-          properties-file: 'bundle_vars.txt'
+      - integration-detect-variables
       - integration-deploy-controller-run-test
       - integration-deploy-openstack-run-test
       - integration-cleanup-tmp
@@ -1349,6 +1349,8 @@
           artifacts: '{archive-artifacts}'
       - integration-distribution-branch:
           branch: '{branch}'
+      - distribution-karaf-version:
+          karaf-version: '{karaf-version}'
       - integration-distribution-git-url:
           git-url: '{git-url}'
       - string:
@@ -1391,8 +1393,6 @@
     prebuilders:
       - integration-rebase-gerrit-patch
       - integration-get-bundle-url
-      - inject:
-          properties-file: 'bundle.txt'
       - wipe-org-opendaylight-repo
       - provide-maven-settings:
           global-settings-file: 'odl-global-settings'
@@ -1438,6 +1438,7 @@
             block: true
             predefined-parameters:
               BUNDLEURL=$BUNDLEURL
+              KARAF_VERSION=$KARAF_VERSION
 
     publishers:
       - email-notification:
