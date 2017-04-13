@@ -1,13 +1,12 @@
-# Extract the BUNDLEVERSION from the pom.xml
-BUNDLEVERSION=`xpath distribution/pom.xml '/project/version/text()' 2> /dev/null`
-echo "Bundle version is ${BUNDLEVERSION}"
+#!/bin/bash
+# Extract the BUNDLE_VERSION from the pom.xml
+export BUNDLE_URL
+export BUNDLE_VERSION
+BUNDLE_VERSION=$(xpath "$BUNDLE_POM" '/project/version/text()' 2> /dev/null)
+BUNDLE_URL=${BUILD_URL}org.opendaylight.integration\$distribution-karaf/artifact/org.opendaylight.integration/distribution-karaf/${BUNDLE_VERSION}/distribution-karaf-${BUNDLE_VERSION}.zip
 
-BUNDLEURL=${BUILD_URL}org.opendaylight.integration\$distribution-karaf/artifact/org.opendaylight.integration/distribution-karaf/${BUNDLEVERSION}/distribution-karaf-${BUNDLEVERSION}.zip
-echo "Bundle url is ${BUNDLEURL}"
+echo "Bundle variables"
+env | grep BUNDLE_ | sort | tee -a bundle.txt
 
-# Set BUNDLEVERSION & BUNDLEURL
-echo BUNDLEVERSION=${BUNDLEVERSION} > bundle.txt
-echo BUNDLEURL=${BUNDLEURL} >> bundle.txt
-
-# NOTE: BUNDLEVERSION & BUNDLEURL will be re-imported back into the environment with the
+# NOTE: BUNDLE_VERSION & BUNDLE_URL will be re-imported back into the environment with the
 # Inject environment variables plugin (next step)
