@@ -1,8 +1,10 @@
+# See the macro which includes this file.
+
 # Extract the BUNDLEVERSION from the pom.xml
 BUNDLEVERSION=`xpath pom.xml '/project/version/text()' 2> /dev/null`
 echo "Bundle version is ${BUNDLEVERSION}"
 
-BUNDLEURL=${BUILD_URL}org.opendaylight.integration\$distribution-karaf/artifact/org.opendaylight.integration/distribution-karaf/${BUNDLEVERSION}/distribution-karaf-${BUNDLEVERSION}.zip
+BUNDLEURL=${BUILD_URL}org.opendaylight.integration\$${KARAF_ARTIFACT}/artifact/org.opendaylight.integration/${KARAF_ARTIFACT}/${BUNDLEVERSION}/${KARAF_ARTIFACT}-${BUNDLEVERSION}.zip
 echo "Bundle url is ${BUNDLEURL}"
 
 # Set BUNDLEVERSION & BUNDLEURL
