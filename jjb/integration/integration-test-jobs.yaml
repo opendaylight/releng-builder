@@ -28,6 +28,7 @@
 
       - carbon:
           branch: 'stable/carbon'
+          karaf-version: karaf3
           jdk: 'openjdk8'
           jre: 'openjdk8'
           csit-list: '{csit-list-carbon}'
@@ -39,6 +40,7 @@
 
       - boron:
           branch: 'stable/boron'
+          karaf-version: karaf3
           jdk: 'openjdk8'
           jre: 'openjdk8'
           csit-list: '{csit-list-boron}'
@@ -50,6 +52,7 @@
 
       - beryllium:
           branch: 'stable/beryllium'
+          karaf-version: karaf3
           jdk: 'openjdk7'
           jre: 'openjdk7'
           csit-list: '{csit-list-beryllium}'
@@ -118,6 +121,8 @@
           branch: '$GERRIT_REFSPEC'
       - integration-jdk-version:
           jdkversion: '{jre}'
+      - distribution-karaf-version:
+          karaf-version: '{karaf-version}'
 
     scm:
       - integration-gerrit-scm:
@@ -185,8 +190,6 @@
     parameters:
       - integration-bundleurl:
           bundleurl: '{bundleurl}'
-      - integration-jdk-version:
-          jdkversion: '{jre}'
 
     builders:
       - trigger-builds:
@@ -217,8 +220,6 @@
     parameters:
       - integration-bundleurl:
           bundleurl: '{bundleurl}'
-      - integration-jdk-version:
-          jdkversion: '{jre}'
 
     builders:
       - trigger-builds:
@@ -242,7 +243,6 @@
 
     project-type: freestyle
     node: centos7-java-builder-2c-8g
-    jdk: '{jdk}'
 
     properties:
       - opendaylight-infra-properties:
@@ -257,6 +257,8 @@
           artifacts: '{archive-artifacts} **/dependency_tree.txt'
       - integration-distribution-branch:
           branch: '{branch}'
+      - distribution-karaf-version:
+          karaf-version: '{karaf-version}'
       - integration-distribution-git-url:
           git-url: '{git-url}'
       - maven-exec:
@@ -446,8 +448,6 @@
     parameters:
       - integration-bundleurl:
           bundleurl: '{bundleurl}'
-      - integration-jdk-version:
-          jdkversion: '{jre}'
 
     triggers:
       - timed: '{schedule-weekly}'
