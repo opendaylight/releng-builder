@@ -15,11 +15,13 @@
           branch: 'stable/carbon'
           jdk: 'openjdk8'
           integration-test: carbon
+          karaf-version: karaf3
       - boron:
           next-release-tag: Boron-SR4
           branch: 'stable/boron'
           jdk: 'openjdk8'
           integration-test: boron
+          karaf-version: karaf3
       - beryllium:
           # Only run once a week since Beryllium is in maintenance mode
           cron: 'H H * * 0'
@@ -27,6 +29,7 @@
           branch: 'stable/beryllium'
           jdk: 'openjdk7'
           integration-test: beryllium
+          karaf-version: karaf3
 
     project: 'releng/autorelease'
     archive-artifacts: >
@@ -74,6 +77,8 @@
           branch: '{branch}'
           refspec: 'refs/heads/{branch}'
           artifacts: '{archive-artifacts}'
+      - integration-karaf-version:
+          karaf-version: '{karaf-version}'
       - autorelease-release-tag:
           release-tag: '{next-release-tag}'
       - autorelease-release-branch:

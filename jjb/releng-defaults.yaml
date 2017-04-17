@@ -4,6 +4,7 @@
 - defaults:
     name: global
 
+    karaf-version: karaf4
     build-days-to-keep: 30
 
     # Timeout in minutes
@@ -46,7 +47,7 @@
     os-cloud: rackspace
 
     # Distribution bundle URL
-    bundleurl: 'last'
+    bundle-url: 'last'
 
     # CSIT images configuration
     stack-template: csit-2-instance-type.yaml
@@ -68,10 +69,11 @@
 
     # Data for csit-verify jobs
     # Branch for "last" version detection
-    verify-branch: 'stable/boron'
+    verify-branch: stable/boron
     # Value for ODL_STREAM
-    verify-stream: 'boron'
-    verify-jdkversion: 'openjdk8'
+    verify-stream: boron
+    verify-karaf-version: karaf3
+    verify-jdkversion: openjdk8
 
     # Maven / Java
     jdk: 'openjdk8'
