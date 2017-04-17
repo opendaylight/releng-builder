@@ -43,7 +43,7 @@ echo "Changing to /tmp"
 cd /tmp
 
 echo "Downloading the distribution..."
-wget --progress=dot:mega '${ACTUALBUNDLEURL}'
+wget --progress=dot:mega '${ACTUAL_BUNDLE_URL}'
 
 echo "Extracting the new controller..."
 unzip -q ${BUNDLE}
@@ -273,7 +273,7 @@ SUITES=$( egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' testplan.txt | tr '\012' ' 
 
 echo "Starting Robot test suites ${SUITES} ..."
 pybot -N ${TESTPLAN} --removekeywords wuks -c critical -e exclude -v BUNDLEFOLDER:${BUNDLEFOLDER} -v WORKSPACE:/tmp \
--v JAVA_HOME:${JAVA_HOME} -v BUNDLE_URL:${ACTUALBUNDLEURL} -v NEXUSURL_PREFIX:${NEXUSURL_PREFIX} \
+-v JAVA_HOME:${JAVA_HOME} -v BUNDLE_URL:${ACTUAL_BUNDLE_URL} -v NEXUSURL_PREFIX:${NEXUSURL_PREFIX} \
 -v CONTROLLER:${ODL_SYSTEM_IP} -v ODL_SYSTEM_IP:${ODL_SYSTEM_IP} -v ODL_SYSTEM_1_IP:${ODL_SYSTEM_IP} \
 -v CONTROLLER_USER:${USER} -v ODL_SYSTEM_USER:${USER} \
 -v TOOLS_SYSTEM_IP:${TOOLS_SYSTEM_IP} -v TOOLS_SYSTEM_2_IP:${TOOLS_SYSTEM_2_IP} -v TOOLS_SYSTEM_3_IP:${TOOLS_SYSTEM_3_IP} \
