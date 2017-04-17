@@ -466,6 +466,8 @@
       - mask-passwords
       - config-file-provider:
           files:
+            - file-id: npmrc
+              target: '$HOME/.npmrc'
             - file-id: rackspace-heat
               target: '$HOME/.config/openstack/clouds.yaml'
       - timeout:
