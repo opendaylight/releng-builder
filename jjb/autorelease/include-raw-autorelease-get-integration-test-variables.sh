@@ -20,10 +20,10 @@ NEXUSURL=${NEXUS_STAGING_URL}/content/repositories/
 VERSION=$(grep -m2 '<version>' "${WORKSPACE}/integration/distribution/distribution-karaf/pom.xml" | tail -n1 | awk -F'[<|>]' '/version/ { printf $3 }')
 echo "VERSION: ${VERSION}"
 STAGING_REPO_ID=$(grep "Created staging repository with ID" "$WORKSPACE/deploy-staged-repository.log" | cut -d '"' -f2)
-BUNDLEURL="${NEXUSURL}/${STAGING_REPO_ID}/org/opendaylight/integration/distribution-karaf/${VERSION}/distribution-karaf-${VERSION}.zip"
+BUNDLE_URL="${NEXUSURL}/${STAGING_REPO_ID}/org/opendaylight/integration/distribution-karaf/${VERSION}/distribution-karaf-${VERSION}.zip"
 echo STAGING_REPO_ID="$STAGING_REPO_ID" >> "$WORKSPACE/variables.prop"
-echo BUNDLEURL="$BUNDLEURL" >> "$WORKSPACE/variables.prop"
-echo "BUNDLEURL: ${BUNDLEURL}"
+echo BUNDLE_URL="$BUNDLE_URL" >> "$WORKSPACE/variables.prop"
+echo "BUNDLE_URL: ${BUNDLE_URL}"
 
 # Copy variables.prop to variables.jenkins-trigger so that the end of build
 # trigger can pick up the file as input for triggering downstream jobs.

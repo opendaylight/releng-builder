@@ -20,12 +20,14 @@
       - carbon:
           branch: 'stable/carbon'
           jdk: 'openjdk8'
+          karaf-version: karaf3
           csit-list: >
              vtn-csit-1node-manager-only-{stream},
              vtn-csit-3node-manager-only-{stream}
       - boron:
           branch: 'stable/boron'
           jdk: 'openjdk8'
+          karaf-version: karaf3
           csit-list: >
              vtn-csit-1node-manager-only-{stream},
              vtn-csit-3node-manager-only-{stream}
