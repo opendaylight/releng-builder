@@ -1,0 +1,542 @@
+---
+- project:
+    name: distribution-jobs
+
+- job-template:
+    name: 'distribution-verify-{stream}'
+
+    project-type: maven
+    node: centos7-java-builder-2c-8g
+    concurrent: true
+    jdk: '{jre}'
+
+    properties:
+      - opendaylight-infra-properties:
+          build-days-to-keep: '{build-days-to-keep}'
+
+    parameters:
+      - opendaylight-infra-parameters:
+          os-cloud: '{os-cloud}'
+          project: '{project}'
+          branch: '{branch}'
+          refspec: 'refs/heads/{branch}'
+          artifacts: '{archive-artifacts} **/dependency_tree.txt **/*.hprof'
+      - integration-patch-refspec:
+          branch: '$GERRIT_REFSPEC'
+      - distribution-karaf-version:
+          karaf-version: '{karaf-version}'
+
+    scm:
+      - gerrit-trigger-scm:
+          refspec: '$PATCHREFSPEC'
+          choosing-strategy: 'gerrit'
+
+    wrappers:
+      - opendaylight-infra-wrappers:
+          build-timeout: '{build-timeout}'
+
+    triggers:
+      - gerrit-trigger-patch-submitted:
+          server: '{server-name}'
+          project: '{project}'
+          branch: '{branch}'
+          files: '**'
+
+    prebuilders:
+      - wipe-org-opendaylight-repo
+      - provide-maven-settings:
+          global-settings-file: 'odl-global-settings'
+          settings-file: 'integration-settings'
+
+    maven:
+      maven-name: 'mvn33'
+      root-pom: 'pom.xml'
+      goals: >
+          clean install dependency:tree -DoutputFile=dependency_tree.txt -V -B
+          -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r
+          -Djenkins -Dstream={stream}
+      maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+      settings: 'integration-settings'
+      settings-type: cfp
+      global-settings: 'odl-global-settings'
+      global-settings-type: cfp
+      ignore-upstream-changes: true
+      post-step-run-condition: 'SUCCESS'
+
+    reporters:
+      - findbugs
+
+    publishers:
+      - jacoco-report
+      - opendaylight-infra-shiplogs:
+          maven-version: 'mvn33'
+      - email-notification:
+          email-recipients: '{email-recipients}'
+          email-prefix: '[int/dist]'
+
+- job-template:
+    name: 'distribution-merge-{stream}'
+
+    # Need to keep jobs that deploy to Nexus at end of build as Maven
+    # projects. Maybe reconsider this once upstream moves deploy to a
+    # separate lifecycle:
+    #     https://issues.apache.org/jira/browse/MNG-5666
+
+    project-type: maven
+    node: '{build-node}'
+    jdk: '{jre}'
+
+    properties:
+      - opendaylight-infra-properties:
+          build-days-to-keep: '{build-days-to-keep}'
+
+    parameters:
+      - opendaylight-infra-parameters:
+          os-cloud: '{os-cloud}'
+          project: '{project}'
+          branch: '{branch}'
+          refspec: 'refs/heads/{branch}'
+          artifacts: '{archive-artifacts} **/dependency_tree.txt **/*.hprof **/target/surefire-reports/*-output.txt'
+      - distribution-karaf-version:
+          karaf-version: '{karaf-version}'
+
+    scm:
+      - gerrit-trigger-scm:
+          refspec: ''
+          choosing-strategy: 'default'
+
+    wrappers:
+      - opendaylight-infra-wrappers:
+          build-timeout: '{build-timeout}'
+
+    triggers:
+      - gerrit-trigger-patch-merged:
+          server-name: '{server-name}'
+          name: 'integration/distribution'
+          branch: '{branch}'
+
+    prebuilders:
+      - wipe-org-opendaylight-repo
+      - jacoco-nojava-workaround
+      - provide-maven-settings:
+          global-settings-file: 'odl-global-settings'
+          settings-file: 'integration-settings'
+      - integration-set-variables
+      - distribute-build-url:
+          path: '$KARAF_ARTIFACT/src/main/assembly'
+
+    maven:
+      maven-name: 'mvn33'
+      root-pom: 'pom.xml'
+      goals: >
+          clean install dependency:tree -DoutputFile=dependency_tree.txt -V -B
+          -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r
+          -Djenkins -Dmerge -Dstream={stream}
+      maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+      settings: 'integration-settings'
+      settings-type: cfp
+      global-settings: 'odl-global-settings'
+      global-settings-type: cfp
+
+    postbuilders:
+      - conditional-step:
+          condition-kind: file-exists
+          condition-filename: deploy-site.xml
+          condition-basedir: workspace
+
+          # The strategy here is intentional to run Maven site:deploy twice
+          # once using regular pom.xml to produce a staged-site which is
+          # then used by deploy-site.xml to push to Nexus. This is a
+          # workaround to Maven Site's default linking code which creates
+          # incorrect URLs for sites due to auto-detection assuming your
+          # project is configured in a certain way which ODL is not.
+          steps:
+            - maven-target:
+                maven-version: 'mvn33'
+                pom: pom.xml
+                goals: 'site:deploy -V -B -Dstream={stream}'
+                java-opts:
+                  - '-Xmx2g'
+                settings: 'integration-settings'
+                settings-type: cfp
+                global-settings: 'odl-global-settings'
+                global-settings-type: cfp
+            - maven-target:
+                maven-version: 'mvn33'
+                pom: deploy-site.xml
+                goals: 'site:deploy -V -B -Dstream={stream}'
+                java-opts:
+                  - '-Xmx2g'
+                settings: 'integration-settings'
+                settings-type: cfp
+                global-settings: 'odl-global-settings'
+                global-settings-type: cfp
+      - integration-compare-distributions
+    # TODO: the output of the above command is not *friendly* for the reader because the most important info
+    # is listed last. This is fine/best for command line output, but for keeping in a file it would be better
+    # to put the summary at the beginning of the file. Some bash magic can be done here to make that happen.
+
+    reporters:
+      - findbugs
+
+    publishers:
+      - maven-deploy:
+          id: ''
+          unique-version: true
+          deploy-unstable: false
+      - jacoco-report
+      - opendaylight-infra-shiplogs:
+          maven-version: 'mvn33'
+      - email-notification:
+          email-recipients: '{email-recipients}'
+          email-prefix: '[int/dist]'
+
+- job-template:
+    name: 'distribution-check-{stream}'
+    # Like a {project}-distribution-check, but one step less as there is no upstream project involved.
+    disabled: false
+
+    project-type: freestyle
+    node: '{build-node}'
+    concurrent: true
+    jdk: '{jdk}'
+
+    properties:
+      - opendaylight-infra-properties:
+          build-days-to-keep: '{build-days-to-keep}'
+
+    parameters:
+      - opendaylight-infra-parameters:
+          os-cloud: '{os-cloud}'
+          project: '{project}'
+          branch: '{branch}'
+          refspec: 'refs/heads/{branch}'
+          artifacts: '{archive-artifacts} **/dependency_tree.txt **/target/surefire-reports/*-output.txt'
+      - maven-exec:
+          maven-version: mvn33
+
+    scm:
+      - integration-gerrit-scm:
+          basedir: 'distribution'
+          refspec: '$GERRIT_REFSPEC'
+          branch: '{branch}'
+
+    wrappers:
+      - opendaylight-infra-wrappers:
+          # Distro-check jobs typically run within 10 - 30 minutes
+          # with 45 minutes being the occassional edge case.
+          # enforce a 60 minute limit to ensure stuck jobs get
+          # cleared up sooner.
+          build-timeout: '60'
+
+    triggers:
+      - gerrit-trigger-patch-submitted:
+          server: '{server-name}'
+          project: '{project}'
+          branch: '{branch}'
+          files: '**'
+
+    builders:
+      - distribution-check-wipe
+      - distribution-check-build-project:
+          pom: 'distribution/pom.xml'
+          mvn-opts: '{opendaylight-infra-mvn-opts}'
+      - distribution-check-verify-groupid:
+          gerrit-project: 'integration'
+      - distribution-check-delete-snapshots
+      - distribution-check-configure-remotes
+      - distribution-check-repeat-build:
+          dist-pom: 'distribution/pom.xml'
+          mvn-opts: '{opendaylight-infra-mvn-opts}'
+      - integraton-upload-distribution:
+          dist-pom: distribution/pom.xml
+      - integration-distribution-check
+
+    publishers:
+      - email-notification:
+          email-recipients: '{email-recipients}'
+          email-prefix: '[{project-name}]'
+      - postbuildscript:
+          builders:
+            - shell: |
+                #!/bin/bash
+                mkdir -p $WORKSPACE/archives
+                cp karaf*.log $WORKSPACE/archives
+          script-only-if-succeeded: false
+          script-only-if-failed: false
+          mark-unstable-if-failed: true
+      - opendaylight-infra-shiplogs:
+          maven-version: 'mvn33'
+
+- job-template:
+    name: 'distribution-deploy-{stream}'
+    # Goal: Verify distribution starts with no issues when all features are loaded.
+    # Operation: This job deploys the controller installing odl-integration-all.
+    # FIXME: List required variables.
+
+    project-type: freestyle
+    node: centos7-java-builder-2c-8g
+    concurrent: false
+
+    properties:
+      - opendaylight-infra-properties:
+          build-days-to-keep: '{build-days-to-keep}'
+
+    parameters:
+      - opendaylight-infra-parameters:
+          os-cloud: '{os-cloud}'
+          project: '{project}'
+          branch: '{branch}'
+          refspec: 'refs/heads/{branch}'
+          artifacts: '{archive-artifacts} **/*.hprof'
+      - integration-distribution-branch:
+          branch: '{branch}'
+      - integration-bundle-url:
+          bundle-url: '{bundle-url}'
+      - integration-jdk-version:
+          jdkversion: '{jre}'
+      - distribution-karaf-version:
+          karaf-version: '{karaf-version}'
+
+    wrappers:
+      - opendaylight-infra-wrappers:
+          build-timeout: '{build-timeout}'
+
+    triggers:
+      - timed: ''
+      # FIXME: Trigger from distribution-weekly-trigger instead.
+
+    builders:
+      - distribution-deploy-verify
+
+    publishers:
+      - email-notification:
+          email-recipients: '{email-recipients}'
+          email-prefix: '[int/dist]'
+      - integration-csit-archive-build
+      - opendaylight-infra-shiplogs:
+          maven-version: 'mvn33'
+
+- job-template:
+    name: 'distribution-offline-{stream}'
+    # Goal: Verify distribution can start with no internet connection.
+    # Operation: This job deploys the controller removing any external repository definition.
+    # FIXME: List required variables.
+
+    project-type: freestyle
+    node: centos7-java-builder-2c-8g
+    concurrent: false
+
+    properties:
+      - opendaylight-infra-properties:
+          build-days-to-keep: '{build-days-to-keep}'
+
+    parameters:
+      - opendaylight-infra-parameters:
+          os-cloud: '{os-cloud}'
+          project: '{project}'
+          branch: '{branch}'
+          refspec: 'refs/heads/{branch}'
+          artifacts: '{archive-artifacts} **/*.hprof'
+      - integration-distribution-branch:
+          branch: '{branch}'
+      - integration-bundle-url:
+          bundle-url: '{bundle-url}'
+      - integration-jdk-version:
+          jdkversion: '{jre}'
+      - distribution-karaf-version:
+          karaf-version: '{karaf-version}'
+
+    wrappers:
+      - opendaylight-infra-wrappers:
+          build-timeout: '{build-timeout}'
+
+    triggers:
+      - timed: ''
+      # FIXME: Trigger from distribution-weekly-trigger instead.
+
+    builders:
+      - distribution-deploy-offline
+
+    publishers:
+      - email-notification:
+          email-recipients: '{email-recipients}'
+          email-prefix: '[int/dist]'
+      - integration-csit-archive-build
+      - opendaylight-infra-shiplogs:
+          maven-version: 'mvn33'
+
+# Delete these when Karaf 4 becomes Carbon default.
+
+# TODO: Is there a way to de-duplicate with generic template parts?
+
+- job-template:
+    name: 'distribution4-check-carbon'
+    # Enable when Restconf works with Karaf 4.
+    disabled: true
+
+    project-type: freestyle
+    node: '{build-node}'
+    concurrent: true
+    jdk: '{jdk}'
+
+    properties:
+      - opendaylight-infra-properties:
+          build-days-to-keep: '{build-days-to-keep}'
+
+    parameters:
+      - opendaylight-infra-parameters:
+          os-cloud: '{os-cloud}'
+          project: '{project}'
+          branch: 'stable/carbon'
+          refspec: 'refs/heads/stable/carbon'
+          artifacts: '{archive-artifacts} **/dependency_tree.txt **/target/surefire-reports/*-output.txt'
+      - distribution-karaf-version:
+          karaf-version: 'karaf4'
+
+    scm:
+      - integration-gerrit-scm:
+          basedir: 'distribution'
+          refspec: '$GERRIT_REFSPEC'
+          branch: 'stable/carbon'
+
+    wrappers:
+      - opendaylight-infra-wrappers:
+          # Distro-check jobs typically run within 10 - 30 minutes
+          # with 45 minutes being the occassional edge case.
+          # enforce a 60 minute limit to ensure stuck jobs get
+          # cleared up sooner.
+          build-timeout: '60'
+
+    triggers:
+      - gerrit-trigger-patch-submitted:
+          server: '{server-name}'
+          project: '{project}'
+          branch: 'stable/carbon'
+          files: '**'
+
+    builders:
+      - distribution-check-wipe
+      - distribution-check-build-project:
+          pom: 'distribution/pom.xml'
+      - distribution-check-verify-groupid:
+          gerrit-project: 'integration'
+      - distribution-check-delete-snapshots
+      - distribution-check-configure-remotes
+      - distribution-check-repeat-build:
+          dist-pom: 'distribution/pom.xml'
+      - integration-distribution-check
+
+    publishers:
+      - email-notification:
+          email-recipients: '{email-recipients}'
+          email-prefix: '[{project-name}]'
+      - postbuildscript:
+          builders:
+            - shell: |
+                #!/bin/bash
+                mkdir -p $WORKSPACE/archives
+                cp karaf*.log $WORKSPACE/archives
+          script-only-if-succeeded: false
+          script-only-if-failed: false
+          mark-unstable-if-failed: true
+      - archive:
+          artifacts: '*.zip'
+      - opendaylight-infra-shiplogs:
+          maven-version: 'mvn33'
+
+- job-template:
+    name: 'distribution4-deploy-carbon'
+    # Enable when Restconf works with Karaf 4.
+    disabled: true
+
+    project-type: freestyle
+    node: centos7-java-builder-2c-8g
+    concurrent: false
+
+    properties:
+      - opendaylight-infra-properties:
+          build-days-to-keep: '{build-days-to-keep}'
+
+    parameters:
+      - opendaylight-infra-parameters:
+          os-cloud: '{os-cloud}'
+          project: '{project}'
+          branch: 'stable/carbon'
+          refspec: 'refs/heads/stable/carbon'
+          artifacts: '{archive-artifacts} **/*.hprof'
+      - integration-distribution-branch:
+          branch: 'stable/carbon'
+      - integration-bundle-url:
+          bundle-url: '{bundle-url}'
+      - integration-jdk-version:
+          jdkversion: '{jre}'
+      - distribution-karaf-version:
+          karaf-version: karaf4
+
+    wrappers:
+      - opendaylight-infra-wrappers:
+          build-timeout: '{build-timeout}'
+
+    triggers:
+      - timed: ''
+      # FIXME: Trigger from distribution-weekly-trigger instead.
+
+    builders:
+      - distribution-deploy-verify
+
+    publishers:
+      - email-notification:
+          email-recipients: '{email-recipients}'
+          email-prefix: '[int/dist]'
+      - integration-csit-archive-build
+      - opendaylight-infra-shiplogs:
+          maven-version: 'mvn33'
+
+- job-template:
+    name: 'distribution4-offline-carbon'
+    # Enable when Restconf works with Karaf 4.
+    disabled: true
+
+    project-type: freestyle
+    node: centos7-java-builder-2c-8g
+    concurrent: false
+
+    properties:
+      - opendaylight-infra-properties:
+          build-days-to-keep: '{build-days-to-keep}'
+
+    parameters:
+      - opendaylight-infra-parameters:
+          os-cloud: '{os-cloud}'
+          project: '{project}'
+          branch: 'stable/carbon'
+          refspec: 'refs/heads/stable/carbon'
+          artifacts: '{archive-artifacts} **/*.hprof'
+      - integration-distribution-branch:
+          branch: 'stable/carbon'
+      - integration-bundle-url:
+          bundle-url: '{bundle-url}'
+      - integration-jdk-version:
+          jdkversion: '{jre}'
+      - distribution-karaf-version:
+          karaf-version: karaf4
+
+    wrappers:
+      - opendaylight-infra-wrappers:
+          build-timeout: '{build-timeout}'
+
+    triggers:
+      - timed: ''
+      # FIXME: Trigger from distribution-weekly-trigger instead.
+
+    builders:
+      - distribution-deploy-offline
+
+    publishers:
+      - email-notification:
+          email-recipients: '{email-recipients}'
+          email-prefix: '[int/dist]'
+      - integration-csit-archive-build
+      - opendaylight-infra-shiplogs:
+          maven-version: 'mvn33'
