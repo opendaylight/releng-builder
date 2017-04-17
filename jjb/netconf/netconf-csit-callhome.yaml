@@ -1,0 +1,33 @@
+---
+- project:
+    name: netconf-csit-callhome
+    jobs:
+      - '{project}-csit-1node-{functionality}-{install}-{stream}'
+ 
+    # The project name
+    project: 'netconf'
+ 
+    # The functionality under test
+    functionality: 'callhome'
+ 
+    # Project branches
+    stream:
+      - nitrogen:
+          branch: 'master'
+          jre: 'openjdk8'
+      - carbon:
+          branch: 'stable/carbon'
+          jre: 'openjdk8'
+ 
+    install:
+      - only:
+          scope: 'only'
+ 
+    # no mininet required
+    tools_system_image: Ubuntu 14.04 - gbp - 20170210-0536
+
+    # Features to install
+    install-features: 'odl-netconf-callhome-ssh,odl-restconf'
+ 
+    # Robot custom options
+    robot-options: ''
