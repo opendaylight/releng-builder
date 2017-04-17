@@ -32,6 +32,7 @@
     jobs:
       - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-distribution4-check-carbon'
       - '{project-name}-integration-{stream}'
       - '{project-name}-merge-{stream}'
       - '{project-name}-validate-autorelease-{stream}'
@@ -42,6 +43,7 @@
     project: 'odlparent'
     project-name: 'odlparent'
     branch: 'stable/carbon'
+    karaf-version: karaf3
     jdk: openjdk8
     jdks:
       - openjdk8
@@ -69,6 +71,7 @@
     project: 'odlparent'
     project-name: 'odlparent'
     branch: 'stable/boron'
+    karaf-version: karaf3
     jdk: openjdk8
     jdks:
       - openjdk8
@@ -96,6 +99,7 @@
     project: 'odlparent'
     project-name: 'odlparent'
     branch: 'stable/beryllium'
+    karaf-version: karaf3
     jdk: openjdk7
     jdks:
       - openjdk7
