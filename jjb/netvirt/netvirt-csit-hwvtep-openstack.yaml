@@ -22,31 +22,14 @@
 
     functionality:
       - upstream-transparent:
-          schedule: 'H H * * *'
+          schedule: ''
           sg-mode: 'transparent'
       - upstream-stateful:
-          schedule: 'H H * * *'
+          schedule: ''
           sg-mode: 'stateful'
       - upstream-learn:
-          schedule: 'H H * * *'
-          sg-mode: 'learn'
-      - gate-learn:
           schedule: ''
           sg-mode: 'learn'
-      - gate-transparent:
-          schedule: ''
-          sg-mode: 'transparent'
-      - gate-stateful:
-          schedule: ''
-          sg-mode: 'stateful'
-      - gate-minimal-transparent:
-          schedule: ''
-          sg-mode: 'transparent'
-          testplan: '{project}-{topology}-minimal-openstack.txt'
-      - gate-tempest-transparent:
-          schedule: ''
-          sg-mode: 'transparent'
-          testplan: '{project}-{topology}-tempest-openstack.txt'
 
     stream:
       - nitrogen:
