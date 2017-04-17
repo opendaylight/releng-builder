@@ -17,7 +17,7 @@ STREAM=${JOB_NAME#*-*e-}
 ERROR_LOG="$WORKSPACE/error.log.gz"
 
 # get console logs
-wget -O "$CONSOLE_LOG" "${BUILD_URL}consoleText"
+wget --no-verbose -O "$CONSOLE_LOG" "${BUILD_URL}consoleText"
 
 # TODO: This section is still required since some of the projects use
 # description. Remove this section when the reactor info is more consistant.
