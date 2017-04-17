@@ -15,7 +15,7 @@
 # opendaylight-infra-parameters: main project integration/test ($PROJECT)
 # jre: (openjdk7 or openjdk8) Java runtime environment to use when launching ODL
 # integration-distribution-branch: distribution branch ($DISTROBRANCH)
-# integration-controller-bundleurl: distribution URL ($BUNDLEURL)
+# integration-controller-bundle-url: distribution URL ($BUNDLE_URL)
 # integration-controller-scope: only or all features ($CONTROLLERSCOPE)
 # integration-controller-features: features under test ($CONTROLLER FEATURES)
 # integration-test-options: robot options ($TESTOPTIONS)
@@ -48,8 +48,8 @@
           branch: '{verify-branch}'
       - integration-distribution-stream:
           stream: '{verify-stream}'
-      - integration-bundleurl:
-          bundleurl: '{bundleurl}'
+      - integration-bundle-url:
+          bundle-url: '{bundle-url}'
       - integration-controller-scope:
           controller-scope: 'only'
       - integration-controller-features:
@@ -62,6 +62,8 @@
           test-plan: '{project}-{functionality}.txt'
       - integration-jdk-version:
           jdkversion: '{verify-jdkversion}'
+      - distribution-karaf-version:
+          karaf-version: '{verify-karaf-version}'
 
     scm:
       - integration-gerrit-scm:
@@ -95,9 +97,7 @@
       - integration-get-slave-addresses
       - inject:
           properties-file: 'slave_addresses.txt'
-      - integration-get-bundle-vars
-      - inject:
-          properties-file: 'bundle_vars.txt'
+      - integration-detect-variables
       - integration-deploy-controller-run-test
       - integration-cleanup-tmp
 
@@ -134,8 +134,8 @@
           branch: '{branch}'
       - integration-distribution-stream:
           stream: '{stream}'
-      - integration-bundleurl:
-          bundleurl: '{bundleurl}'
+      - integration-bundle-url:
+          bundle-url: '{bundle-url}'
       - integration-controller-scope:
           controller-scope: '{scope}'
       - integration-controller-features:
@@ -150,6 +150,8 @@
           branch: 'master'
       - integration-jdk-version:
           jdkversion: '{jre}'
+      - distribution-karaf-version:
+          karaf-version: '{karaf-version}'
 
     scm:
       - integration-gerrit-scm:
@@ -176,9 +178,7 @@
       - integration-get-slave-addresses
       - inject:
           properties-file: 'slave_addresses.txt'
-      - integration-get-bundle-vars
-      - inject:
-          properties-file: 'bundle_vars.txt'
+      - integration-detect-variables
       - integration-deploy-controller-run-test
       - integration-cleanup-tmp
 
@@ -244,8 +244,8 @@
           branch: '{branch}'
       - integration-distribution-stream:
           stream: '{stream}'
-      - integration-bundleurl:
-          bundleurl: '{bundleurl}'
+      - integration-bundle-url:
+          bundle-url: '{bundle-url}'
       - integration-controller-scope:
           controller-scope: '{scope}'
       - integration-controller-features:
@@ -260,6 +260,8 @@
           branch: 'master'
       - integration-jdk-version:
           jdkversion: '{jre}'
+      - distribution-karaf-version:
+          karaf-version: '{karaf-version}'
 
     scm:
       - integration-gerrit-scm:
@@ -286,9 +288,7 @@
       - integration-get-slave-addresses
       - inject:
           properties-file: 'slave_addresses.txt'
-      - integration-get-bundle-vars
-      - inject:
-          properties-file: 'bundle_vars.txt'
+      - integration-detect-variabless
       - integration-deploy-controller-run-test
       - integration-cleanup-tmp
 
@@ -466,8 +466,8 @@
           branch: '{verify-branch}'
       - integration-distribution-stream:
           stream: '{verify-stream}'
-      - integration-bundleurl:
-          bundleurl: '{bundleurl}'
+      - integration-bundle-url:
+          bundle-url: '{bundle-url}'
       - integration-controller-scope:
           controller-scope: 'only'
       - integration-controller-features:
@@ -480,6 +480,8 @@
           test-plan: '{project}-{functionality}.txt'
       - integration-jdk-version:
           jdkversion: '{verify-jdkversion}'
+      - distribution-karaf-version:
+          karaf-version: '{verify-karaf-version}'
 
     scm:
       - integration-gerrit-scm:
@@ -513,9 +515,7 @@
       - integration-get-slave-addresses
       - inject:
           properties-file: 'slave_addresses.txt'
-      - integration-get-bundle-vars
-      - inject:
-          properties-file: 'bundle_vars.txt'
+      - integration-detect-variables
       - integration-configure-clustering
       - integration-start-cluster-run-test
       - integration-cleanup-tmp
@@ -553,8 +553,8 @@
           branch: '{branch}'
       - integration-distribution-stream:
           stream: '{stream}'
-      - integration-bundleurl:
-          bundleurl: '{bundleurl}'
+      - integration-bundle-url:
+          bundle-url: '{bundle-url}'
       - integration-controller-scope:
           controller-scope: '{scope}'
       - integration-controller-features:
@@ -569,6 +569,8 @@
           branch: 'master'
       - integration-jdk-version:
           jdkversion: '{jre}'
+      - distribution-karaf-version:
+          karaf-version: '{karaf-version}'
 
     scm:
       - integration-gerrit-scm:
@@ -595,9 +597,7 @@
       - integration-get-slave-addresses
       - inject:
           properties-file: 'slave_addresses.txt'
-      - integration-get-bundle-vars
-      - inject:
-          properties-file: 'bundle_vars.txt'
+      - integration-detect-variables
       - integration-configure-clustering
       - integration-start-cluster-run-test
       - integration-cleanup-tmp
@@ -662,8 +662,8 @@
           branch: '{branch}'
       - integration-distribution-stream:
           stream: '{stream}'
-      - integration-bundleurl:
-          bundleurl: '{bundleurl}'
+      - integration-bundle-url:
+          bundle-url: '{bundle-url}'
       - integration-controller-scope:
           controller-scope: '{scope}'
       - integration-controller-features:
@@ -678,6 +678,8 @@
           branch: 'master'
       - integration-jdk-version:
           jdkversion: '{jre}'
+      - distribution-karaf-version:
+          karaf-version: '{karaf-version}'
 
     scm:
       - integration-gerrit-scm:
@@ -704,9 +706,7 @@
       - integration-get-slave-addresses
       - inject:
           properties-file: 'slave_addresses.txt'
-      - integration-get-bundle-vars
-      - inject:
-          properties-file: 'bundle_vars.txt'
+      - integration-detect-variables
       - integration-configure-clustering
       - integration-start-cluster-run-test
       - integration-cleanup-tmp
@@ -773,8 +773,8 @@
           branch: '{branch}'
       - integration-distribution-stream:
           stream: '{stream}'
-      - integration-bundleurl:
-          bundleurl: '{bundleurl}'
+      - integration-bundle-url:
+          bundle-url: '{bundle-url}'
       - integration-controller-scope:
           controller-scope: '{scope}'
       - integration-controller-features:
@@ -789,6 +789,8 @@
           branch: 'master'
       - integration-jdk-version:
           jdkversion: '{jre}'
+      - distribution-karaf-version:
+          karaf-version: '{karaf-version}'
 
     scm:
       - integration-gerrit-scm:
@@ -815,9 +817,7 @@
       - integration-get-slave-addresses
       - inject:
           properties-file: 'slave_addresses.txt'
-      - integration-get-bundle-vars
-      - inject:
-          properties-file: 'bundle_vars.txt'
+      - integration-detect-variables
       - integration-configure-clustering
       - integration-start-cluster-run-test
       - integration-cleanup-tmp
@@ -997,8 +997,8 @@
           branch: '{branch}'
       - integration-distribution-stream:
           stream: '{stream}'
-      - integration-bundleurl:
-          bundleurl: '{bundleurl}'
+      - integration-bundle-url:
+          bundle-url: '{bundle-url}'
       - integration-controller-features:
           controller-features: '{install-features}'
       - integration-test-options:
@@ -1009,6 +1009,8 @@
           branch: 'master'
       - integration-jdk-version:
           jdkversion: '{jre}'
+      - distribution-karaf-version:
+          karaf-version: '{karaf-version}'
       - string:
           name: OPENSTACK_BRANCH
           default: '{openstack-branch}'
@@ -1129,9 +1131,7 @@
       - integration-get-slave-addresses
       - inject:
           properties-file: 'slave_addresses.txt'
-      - integration-get-bundle-vars
-      - inject:
-          properties-file: 'bundle_vars.txt'
+      - integration-detect-variables
       - integration-deploy-controller-run-test
       - integration-deploy-openstack-run-test
       - integration-cleanup-tmp
@@ -1170,8 +1170,8 @@
           branch: '{branch}'
       - integration-distribution-stream:
           stream: '{stream}'
-      - integration-bundleurl:
-          bundleurl: '{bundleurl}'
+      - integration-bundle-url:
+          bundle-url: '{bundle-url}'
       - integration-controller-features:
           controller-features: '{install-features}'
       - integration-test-options:
@@ -1182,6 +1182,8 @@
           branch: 'master'
       - integration-jdk-version:
           jdkversion: '{jre}'
+      - distribution-karaf-version:
+          karaf-version: '{karaf-version}'
       - string:
           name: OPENSTACK_BRANCH
           default: '{openstack-branch}'
@@ -1305,9 +1307,7 @@
       - integration-get-slave-addresses
       - inject:
           properties-file: 'slave_addresses.txt'
-      - integration-get-bundle-vars
-      - inject:
-          properties-file: 'bundle_vars.txt'
+      - integration-detect-variables
       - integration-deploy-controller-run-test
       - integration-deploy-openstack-run-test
       - integration-cleanup-tmp
@@ -1349,6 +1349,8 @@
           artifacts: '{archive-artifacts}'
       - integration-distribution-branch:
           branch: '{branch}'
+      - distribution-karaf-version:
+          karaf-version: '{karaf-version}'
       - integration-distribution-git-url:
           git-url: '{git-url}'
       - string:
@@ -1423,13 +1425,14 @@
           settings-type: cfp
           global-settings: odl-global-settings
           global-settings-type: cfp
-      - distribution-check-deploy-distribution:
+      - integration-upload-distribution:
           dist-pom: distribution/pom.xml
       - trigger-builds:
           - project: '{csit-list}'
             block: true
             predefined-parameters:
-              BUNDLEURL=$BUNDLE_URL
+              BUNDLE_URL=$BUNDLE_URL
+              KARAF_VERSION=$KARAF_VERSION
 
     publishers:
       - email-notification:

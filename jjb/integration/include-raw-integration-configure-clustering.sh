@@ -63,8 +63,8 @@ cat > ${WORKSPACE}/configuration-script.sh <<EOF
 echo "Changing to /tmp"
 cd /tmp
 
-echo "Downloading the distribution from ${ACTUALBUNDLEURL}"
-wget --progress=dot:mega  '${ACTUALBUNDLEURL}'
+echo "Downloading the distribution from ${ACTUAL_BUNDLE_URL}"
+wget --progress=dot:mega  '${ACTUAL_BUNDLE_URL}'
 
 echo "Extracting the new controller..."
 unzip -q ${BUNDLE}
