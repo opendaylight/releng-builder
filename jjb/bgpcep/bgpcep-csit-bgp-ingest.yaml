@@ -18,9 +18,11 @@
       - carbon:
           branch: 'stable/carbon'
           jre: 'openjdk8'
+          karaf-version: karaf3
       - boron:
           branch: 'stable/boron'
           jre: 'openjdk8'
+          karaf-version: karaf3
           install-features: >
               odl-restconf,
               odl-bgpcep-data-change-counter,
@@ -39,6 +41,7 @@
       - beryllium:
           branch: 'stable/beryllium'
           jre: 'openjdk7'
+          karaf-version: karaf3
           install-features: >
               odl-restconf,
               odl-bgpcep-data-change-counter,
@@ -99,11 +102,13 @@
           branch: 'master'
           jre: 'openjdk8'
       - carbon:
-          branch: 'satble/carbon'
+          branch: 'stable/carbon'
           jre: 'openjdk8'
+          karaf-version: karaf3
       - boron:
           branch: 'stable/boron'
           jre: 'openjdk8'
+          karaf-version: karaf3
           install-features: >
               odl-restconf,
               odl-bgpcep-bgp-all,
@@ -121,6 +126,7 @@
       - beryllium:
           branch: 'stable/beryllium'
           jre: 'openjdk7'
+          karaf-version: karaf3
           install-features: >
               odl-restconf,
               odl-bgpcep-bgp-all,
