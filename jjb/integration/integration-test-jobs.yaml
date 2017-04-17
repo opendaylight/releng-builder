@@ -28,6 +28,7 @@
 
       - carbon:
           branch: 'stable/carbon'
+          karaf-version: karaf3
           jdk: 'openjdk8'
           jre: 'openjdk8'
           csit-list: '{csit-list-carbon}'
@@ -39,6 +40,7 @@
 
       - boron:
           branch: 'stable/boron'
+          karaf-version: karaf3
           jdk: 'openjdk8'
           jre: 'openjdk8'
           csit-list: '{csit-list-boron}'
@@ -50,6 +52,7 @@
 
       - beryllium:
           branch: 'stable/beryllium'
+          karaf-version: karaf3
           jdk: 'openjdk7'
           jre: 'openjdk7'
           csit-list: '{csit-list-beryllium}'
@@ -94,8 +97,8 @@
           branch: '{branch}'
       - integration-distribution-stream:
           stream: '{dist-stream}'
-      - integration-bundleurl:
-          bundleurl: '{bundleurl}'
+      - integration-bundle-url:
+          bundle-url: '{bundle-url}'
       - integration-controller-scope:
           controller-scope: '{scope}'
       - integration-controller-features:
@@ -118,6 +121,8 @@
           branch: '$GERRIT_REFSPEC'
       - integration-jdk-version:
           jdkversion: '{jre}'
+      - distribution-karaf-version:
+          karaf-version: '{karaf-version}'
 
     scm:
       - integration-gerrit-scm:
@@ -183,17 +188,15 @@
           build-days-to-keep: '{build-days-to-keep}'
 
     parameters:
-      - integration-bundleurl:
-          bundleurl: '{bundleurl}'
-      - integration-jdk-version:
-          jdkversion: '{jre}'
+      - integration-bundle-url:
+          bundle-url: '{bundle-url}'
 
     builders:
       - trigger-builds:
           - project: '{csit-list}'
             block: true
             predefined-parameters:
-              BUNDLEURL=$BUNDLEURL
+              BUNDLE_URL=$BUNDLE_URL
 
     publishers:
       - email-notification:
@@ -215,17 +218,15 @@
           build-days-to-keep: '{build-days-to-keep}'
 
     parameters:
-      - integration-bundleurl:
-          bundleurl: '{bundleurl}'
-      - integration-jdk-version:
-          jdkversion: '{jre}'
+      - integration-bundle-url:
+          bundle-url: '{bundle-url}'
 
     builders:
       - trigger-builds:
           - project: '{csit-sanity-list}'
             block: true
             predefined-parameters:
-              BUNDLEURL=$BUNDLEURL
+              BUNDLE_URL=$BUNDLE_URL
 
     publishers:
       - email-notification:
@@ -242,7 +243,6 @@
 
     project-type: freestyle
     node: centos7-java-builder-2c-8g
-    jdk: '{jdk}'
 
     properties:
       - opendaylight-infra-properties:
@@ -257,6 +257,8 @@
           artifacts: '{archive-artifacts} **/dependency_tree.txt'
       - integration-distribution-branch:
           branch: '{branch}'
+      - distribution-karaf-version:
+          karaf-version: '{karaf-version}'
       - integration-distribution-git-url:
           git-url: '{git-url}'
       - maven-exec:
@@ -330,7 +332,7 @@
           - project: '{csit-list}'
             block: true
             predefined-parameters:
-              BUNDLEURL=$BUNDLE_URL
+              BUNDLE_URL=$BUNDLE_URL
 
     publishers:
       - opendaylight-infra-shiplogs:
@@ -360,8 +362,8 @@
     # 8. Start the job with your parameters, see https://wiki.opendaylight.org/view/Integration/Test/Running_System_Tests#Running_System_Tests_Using_Custom_Distribution_Built_From_Multiple_Patches
     # 9. The multipatch job waits for the csit job to finish, so abort csit if you see something went wrong.
     # 10. Navigate to Sandbox page of the csit job, click the run triggered from multipatch.
-    # 11. Click Parameters and copy the long value of BUNDLEURL field to clipboard.
-    # 12. Run the same csit job woth different patchset or test options, or other csit jobs, with this BUNDLEURL value
+    # 11. Click Parameters and copy the long value of BUNDLE_URL field to clipboard.
+    # 12. Run the same csit job woth different patchset or test options, or other csit jobs, with this BUNDLE_URL value
     #     so you do not have to wait for multipatch build. Repeat step 12.
     # 13. Currently, the .zip lasts 24 hours (?) so you may need to jump to step 2 (or 0) after some time.
 
@@ -424,7 +426,7 @@
                 - project: '{csit-list}'
                   block: true
                   predefined-parameters:
-                    BUNDLEURL=$BUNDLE_URL
+                    BUNDLE_URL=$BUNDLE_URL
 
     publishers:
       - opendaylight-infra-shiplogs:
@@ -444,10 +446,8 @@
           build-days-to-keep: '{build-days-to-keep}'
 
     parameters:
-      - integration-bundleurl:
-          bundleurl: '{bundleurl}'
-      - integration-jdk-version:
-          jdkversion: '{jre}'
+      - integration-bundle-url:
+          bundle-url: '{bundle-url}'
 
     triggers:
       - timed: '{schedule-weekly}'
@@ -457,7 +457,7 @@
           - project: '{csit-weekly-list}'
             block: true
             predefined-parameters:
-              BUNDLEURL=$BUNDLEURL
+              BUNDLE_URL=$BUNDLE_URL
 
     publishers:
       - email-notification:
@@ -475,8 +475,8 @@
           build-days-to-keep: '{build-days-to-keep}'
 
     parameters:
-      - integration-bundleurl:
-          bundleurl: '{bundleurl}'
+      - integration-bundle-url:
+          bundle-url: '{bundle-url}'
       - integration-jdk-version:
           jdkversion: '{jre}'
 
@@ -488,7 +488,7 @@
           - project: '{csit-high-frequency-list}'
             block: true
             predefined-parameters:
-              BUNDLEURL=$BUNDLEURL
+              BUNDLE_URL=$BUNDLE_URL
 
     publishers:
       - email-notification:

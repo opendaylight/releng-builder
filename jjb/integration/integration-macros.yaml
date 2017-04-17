@@ -10,11 +10,21 @@
           description: 'Distribution GIT branch'
 
 - parameter:
-    name: integration-bundleurl
+    name: distribution-karaf-version
+    # Arguments:
+    #   karaf-version: Provide, otherwise releng-defaults value is used.
     parameters:
       - string:
-          name: BUNDLEURL
-          default: '{bundleurl}'
+          name: KARAF_VERSION
+          default: '{karaf-version}'
+          description: 'karaf3 or karaf4, affects ODL deploy scripts'
+
+- parameter:
+    name: integration-bundle-url
+    parameters:
+      - string:
+          name: BUNDLE_URL
+          default: '{bundle-url}'
           description: 'URL to karaf distribution zip'
 
 - parameter:
@@ -259,41 +269,57 @@
     builders:
       - shell: !include-raw: include-raw-integration-get-slave-addresses.sh
 
-# Macro: integration-get-bundle-vars
-# Operation: this macro gets all bundle related variables
-# Used by: {project}-csit-3node-* job templates
+- builder:
+    name: integration-set-variables
+    # Operation: Construct variables not requiring online detection and export using set_variables.txt
+    # Required bash variables:
+    #   KARAF_VERSION: 'karaf4' or 'karaf3'. Use distribution-karaf-version macro to set.
+    builders:
+      - shell: !include-raw: integration-set-variables.sh
+      - inject:
+          properties-file: set_variables.txt
 
 - builder:
-    name: integration-get-bundle-vars
+    name: integration-detect-variables
+    # Operation: Construct variables including online detection and export using detect_variables.txt
+    #   This calls integration-set-variables internally.
+    # Required bash variables:
+    #   KARAF_VERSION: 'karaf4' or 'karaf3'. Use distribution-karaf-version macro to set.
     builders:
-      - shell: !include-raw: include-raw-integration-get-bundle-vars.sh
-
-# Macro: integration-distribution-check
-# Operation: this macro deploys the controller with all fetures
-# Used by: {project}-distribution-check-{stream} job template
+      - integration-set-variables
+      - shell: !include-raw: integration-detect-variables.sh
+      - inject:
+          properties-file: detect_variables.txt
 
 - builder:
     name: integration-distribution-check
+    # Operation: Locally deploy ODL with all fetures, check it is not broken.
+    # Required bash variables:
+    #   KARAF_VERSION: 'karaf4' or 'karaf3'.
+    #     Use distribution-karaf-version macro to customize.
     builders:
-      - shell: !include-raw: include-raw-integration-distribution-check.sh
-
-# Macro: integration-deploy-controller-verify
-# Operation: this macro deploys the controller with all fetures
-# Used by: distribution-deploy-{stream} job template
+      - integration-set-variables
+      - shell: !include-raw: integration-distribution-check.sh
 
 - builder:
-    name: integration-deploy-controller-verify
+    name: distribution-deploy-verify
+    # Operation: Deploy ODL with all fetures and check it is not broken.
+    # Required bash variables:
+    #   KARAF_VERSION: 'karaf4' or 'karaf3'.
+    #     Use distribution-karaf-version macro to customize.
     builders:
-      - shell: !include-raw: include-raw-integration-deploy-controller-verify.sh
-
-# Macro: integration-deploy-controller-offline
-# Operation: this macro deploys the controller with no external repo configuration
-# Used by: integration-distrbution-offline-{stream} job template
+      - integration-detect-variables
+      - shell: !include-raw: distribution-deploy-verify.sh
 
 - builder:
-    name: integration-deploy-controller-offline
+    name: distribution-deploy-offline
+    # Operation: Deploys ODL on the current system, with no external repo configuration, check it works.
+    # Required bash variables:
+    #   KARAF_VERSION: 'karaf4' or 'karaf3'.
+    #     Use distribution-karaf-version macro to customize.
     builders:
-      - shell: !include-raw: include-raw-integration-deploy-controller-offline.sh
+      - integration-detect-variables
+      - shell: !include-raw: distribution-deploy-offline.sh
 
 # Macro: integration-deply-controller-run-test
 # Operation: this macro deploys single contoller and runs test
@@ -321,6 +347,23 @@
     name: integration-start-cluster-run-test
     builders:
       - shell: !include-raw: include-raw-integration-start-cluster-run-test.sh
+
+- builder:
+    name: integration-get-bundle-url
+    # Operation: Compose BUNDLE_URL from distribution pom.xml and export it.
+    builders:
+      - shell: !include-raw: integration-get-bundle-url.sh
+      - inject:
+          properties-file: bundle.txt
+
+- builder:
+    name: integration-get-bundle-url-root
+    # Operation: Compose BUNDLE_URL from root pom.xml and export it.
+    # Depends on: integration-set-variables
+    builders:
+      - shell: !include-raw: integration-get-bundle-url-root.sh
+      - inject:
+          properties-file: bundle.txt
 
 # Macro: integration-install-robotframework
 # Operation: Installs robotframework using pip to a virtualenv
@@ -412,10 +455,6 @@
 # The comparison is done to find the list of patches that are new to the
 # current distribtion.
 # Used by: builder-merge job template
-#
-# This script requires the bundle vars that are created by the
-# get-bundle-vars macro script
-
 
 - builder:
     name: integration-compare-distributions
