@@ -814,6 +814,7 @@ pybot -N ${TESTPLAN} --removekeywords wuks -c critical -e exclude \
     -v NUM_OPENSTACK_SITES:${NUM_OPENSTACK_SITES} \
     -v NUM_OS_SYSTEM:${NUM_OPENSTACK_SYSTEM} \
     -v NUM_TOOLS_SYSTEM:${NUM_TOOLS_SYSTEM} \
+    -v ODL_SNAT_MODE:${ODL_SNAT_MODE} \
     -v ODL_STREAM:${DISTROSTREAM} \
     -v ODL_SYSTEM_IP:${ODL_SYSTEM_IP} \
     -v ODL_SYSTEM_1_IP:${ODL_SYSTEM_1_IP} \
