@@ -1099,6 +1099,10 @@
           default: '{lbaas-service-provider}'
           description: 'The NEUTRON_LBAAS_SERVICE_PROVIDERV2 value to be used in local.conf - only relevant when using
           neutron-lbaas'
+      - string:
+          name: ODL_SFC_DRIVER
+          default: '{odl-sfc-driver}'
+          description: 'The SFC driver to be used in local.conf - only relevant when using networking-sfc'
     scm:
       - integration-gerrit-scm:
           basedir: 'test'
@@ -1276,6 +1280,10 @@
           name: NUM_OPENSTACK_SITES
           default: '{num-openstack-sites}'
           description: 'Number of openstack sites'
+      - string:
+          name: ODL_SFC_DRIVER
+          default: '{odl-sfc-driver}'
+          description: 'The SFC driver to be used in local.conf - only relevant when using networking-sfc'
 
     scm:
       - integration-gerrit-scm:
