@@ -1099,6 +1099,10 @@
           default: '{lbaas-service-provider}'
           description: 'The NEUTRON_LBAAS_SERVICE_PROVIDERV2 value to be used in local.conf - only relevant when using
           neutron-lbaas'
+      - string:
+          name: ODL_SNAT_MODE
+          default: '{odl-snat-mode}'
+          description: 'The SNAT mode to be configured - options are conntrack/controller'
     scm:
       - integration-gerrit-scm:
           basedir: 'test'
@@ -1276,6 +1280,11 @@
           name: NUM_OPENSTACK_SITES
           default: '{num-openstack-sites}'
           description: 'Number of openstack sites'
+      - string:
+          name: ODL_SNAT_MODE
+          default: '{odl-snat-mode}'
+          description: 'The SNAT mode to be configured - options are conntrack/controller.
+          neutron-lbaas'
 
     scm:
       - integration-gerrit-scm:
