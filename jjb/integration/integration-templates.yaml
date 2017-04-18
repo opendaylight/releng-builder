@@ -1103,6 +1103,10 @@
           name: ODL_SFC_DRIVER
           default: '{odl-sfc-driver}'
           description: 'The SFC driver to be used in local.conf - only relevant when using networking-sfc'
+      - string:
+          name: ODL_SNAT_MODE
+          default: '{odl-snat-mode}'
+          description: 'The SNAT mode to be configured - options are conntrack/controller.'
     scm:
       - integration-gerrit-scm:
           basedir: 'test'
@@ -1284,6 +1288,10 @@
           name: ODL_SFC_DRIVER
           default: '{odl-sfc-driver}'
           description: 'The SFC driver to be used in local.conf - only relevant when using networking-sfc'
+      - string:
+          name: ODL_SNAT_MODE
+          default: '{odl-snat-mode}'
+          description: 'The SNAT mode to be configured - options are conntrack/controller.'
 
     scm:
       - integration-gerrit-scm:

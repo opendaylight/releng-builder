@@ -27,6 +27,10 @@
       - upstream-stateful:
           schedule: ''
           sg-mode: 'stateful'
+      - upstream-stateful-snat-conntrack:
+          schedule: ''
+          sg-mode: 'stateful'
+          odl-snat-mode: 'conntrack'
       - upstream-learn:
           schedule: ''
           sg-mode: 'learn'
