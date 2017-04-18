@@ -105,8 +105,8 @@ LIBVIRT_TYPE=qemu
 ODL_MGR_IP=${MGRIP}
 
 NEUTRON_LBAAS_SERVICE_PROVIDERV2=${LBAAS_SERVICE_PROVIDER} # Only relevant if neutron-lbaas plugin is enabled
-NEUTRON_SFC_DRIVERS=odl_v2 # Only relevant if networking-sfc plugin is enabled
-NEUTRON_FLOWCLASSIFIER_DRIVERS=odl_v2 # Only relevant if networking-sfc plugin is enabled
+NEUTRON_SFC_DRIVERS=${ODL_SFC_DRIVER} # Only relevant if networking-sfc plugin is enabled
+NEUTRON_FLOWCLASSIFIER_DRIVERS=${ODL_SFC_DRIVER} # Only relevant if networking-sfc plugin is enabled
 EOF
 
 if [ "${ENABLE_NETWORKING_L2GW}" == "yes" ]; then
