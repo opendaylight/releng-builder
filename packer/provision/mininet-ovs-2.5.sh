@@ -49,7 +49,7 @@ apt-get install vlan
 apt-get install python-netaddr
 
 #Check out 6Wind quagga with tag name '20170330', compile and install for router functionalities
-echo "Installing the 6Wind Quagga..."
+echo "---> Installing the 6Wind Quagga..."
 mkdir -p /tmp/build_quagga
 cd /tmp/build_quagga
 git clone https://github.com/6WIND/zrpcd.git

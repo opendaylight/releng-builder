@@ -45,21 +45,21 @@ yum-config-manager -y --add-repo http://download.mono-project.com/repo/centos/
 yum -y install mono-complete nuget
 
 # Needed by TSDR
-echo "Installing the Hbase Server..."
+echo "---> Installing the Hbase Server..."
 mkdir /tmp/Hbase
 cd /tmp/Hbase
 wget --no-verbose http://apache.osuosl.org/hbase/hbase-0.94.27/hbase-0.94.27.tar.gz
 tar -xvf hbase-0.94.27.tar.gz
 
 # Needed by TSDR
-echo "Installing the Cassandra Server..."
+echo "---> Installing the Cassandra Server..."
 mkdir /tmp/cassandra
 cd /tmp/cassandra
 wget --no-verbose http://apache.osuosl.org/cassandra/2.1.16/apache-cassandra-2.1.16-bin.tar.gz
 tar -xvf apache-cassandra-2.1.16-bin.tar.gz
 
 # Generally useful for all projects
-echo "Installing the Elasticsearch node..."
+echo "---> Installing the Elasticsearch node..."
 mkdir /tmp/elasticsearch
 cd /tmp/elasticsearch
 wget --no-verbose https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.7.5.tar.gz
@@ -74,7 +74,7 @@ unzip packer_0.12.2_linux_amd64.zip -d /usr/local/bin/
 mv /usr/local/bin/packer /usr/local/bin/packer.io
 
 #Check out 6Wind quagga with tag name '20170330', compile and install for router functionalities
-echo "Installing the Quagga..."
+echo "---> Installing the Quagga..."
 mkdir -p /tmp/build_quagga
 cd /tmp/build_quagga
 git clone https://github.com/6WIND/zrpcd.git
