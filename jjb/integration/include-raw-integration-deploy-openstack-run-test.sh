@@ -60,6 +60,8 @@ elif [ "$plugin_name" == "neutron-lbaas" ]; then
     ENABLE_PLUGIN_ARGS="${DEVSTACK_LBAAS_PLUGIN_REPO} ${OPENSTACK_BRANCH}"
 elif [ "$plugin_name" == "networking-sfc" ]; then
     ENABLE_PLUGIN_ARGS="${DEVSTACK_NETWORKING_SFC_PLUGIN_REPO} ${OPENSTACK_BRANCH}"
+elif [ "$plugin_name" == "rally" ]; then
+    ENABLE_PLUGIN_ARGS="${DEVSTACK_RALLY_PLUGIN_REPO} master" # note: Rally only has a master branch
 else
     echo "Error: Invalid plugin $plugin_name, unsupported"
     continue
@@ -458,6 +460,13 @@ if $(ssh ${OPENSTACK_CONTROL_NODE_1_IP} "sudo sh -c '[ -f ${DEVSTACK_TEMPEST_DIR
     scp ${OPENSTACK_CONTROL_NODE_1_IP}:${DEVSTACK_TEMPEST_DIR}/tempest_results.html ${TEMPEST_LOGS_DIR}
     scp ${OPENSTACK_CONTROL_NODE_1_IP}:${DEVSTACK_TEMPEST_DIR}/tempest.log ${TEMPEST_LOGS_DIR}
     mv ${WORKSPACE}/tempest_output* ${TEMPEST_LOGS_DIR}
+fi
+DEVSTACK_RALLY_DIR="/opt/stack/rally"
+if $(ssh ${OPENSTACK_CONTROL_NODE_1_IP} "sudo sh -c '[ -d ${DEVSTACK_RALLY_DIR} ]'"); then # if Rally folder exists
+    RALLY_LOGS_DIR=${WORKSPACE}/archives/rally
+    mkdir -p ${RALLY_LOGS_DIR}
+    scp ${OPENSTACK_CONTROL_NODE_1_IP}:${DEVSTACK_RALLY_DIR}/rally.html ${RALLY_LOGS_DIR}
+    mv ${WORKSPACE}/rally_*output* ${RALLY_LOGS_DIR}
 fi
 }
 
