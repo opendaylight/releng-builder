@@ -322,6 +322,35 @@
     builders:
       - shell: !include-raw: include-raw-integration-start-cluster-run-test.sh
 
+# Macro: integration-configure-start-cluster-run-test
+# Operation: this macro configures the clustering and starts the 3-node cluster and runs test
+# Used by: {project}-csit-3node-* job templates
+
+- builder:
+    name: integration-configure-start-cluster-run-test
+    builders:
+      - shell: !include-raw: include-raw-integration-configure-clustering.sh
+      - shell: !include-raw: include-raw-integration-start-cluster-run-test.sh
+
+
+# Macro: integration-get-bundle-url
+# Operation: this macro gets the job generated distribution URL from distribution pom.xml
+# Used by: integration-patch-test-{stream} job template
+
+- builder:
+    name: integration-get-bundle-url
+    builders:
+      - shell: !include-raw: include-raw-integration-get-bundle-url.sh
+
+# Macro: integration-get-bundle-url-root
+# Operation: this macro gets the job generated distribution URL from root pom.xml
+# Used by: distribution-verify-{stream} job template
+
+- builder:
+    name: integration-get-bundle-url-root
+    builders:
+      - shell: !include-raw: include-raw-integration-get-bundle-url-root.sh
+
 # Macro: integration-install-robotframework
 # Operation: Installs robotframework using pip to a virtualenv
 # Used by: {project}-csit-* job templates
