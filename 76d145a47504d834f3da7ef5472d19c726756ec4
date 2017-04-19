@@ -93,6 +93,30 @@
       "revId": "76d145a47504d834f3da7ef5472d19c726756ec4",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da01753e_f1f2f298",
+        "filename": "jjb/integration/include-raw-integration-compare-distributions.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2017-04-19T10:08:57Z",
+      "side": 1,
+      "message": "When you are using two column view on Gerrit (to highlight diffs), the right column shows (just under file name) \"Patch set 1 2 3\" (numbers are clickable), but the left column shows \"Patch Set Base 1 2 3\".\nSo, Base is the parent commit to the patch set selected on the right. Different patch sets can have different Base (for example when you rebase, you are changing which commit to use as Base).\nI can call that \"parent\" but I usually say \"parent Change\", so I call the specific commit Base.",
+      "parentUuid": "da01753e_6fac7bee",
+      "range": {
+        "startLine": 23,
+        "startChar": 25,
+        "endLine": 23,
+        "endChar": 37
+      },
+      "revId": "76d145a47504d834f3da7ef5472d19c726756ec4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
