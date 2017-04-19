@@ -150,6 +150,12 @@
           schedule: ''
           enable-openstack-plugins: 'networking-odl,networking-sfc'
           testplan: '{project}-extensions-sfc.txt'
+      - extensions-rally:
+          schedule: ''
+          enable-openstack-plugins: 'networking-odl,rally'
+          enable-openstack-services: 'q-svc,q-dhcp,q-meta,q-trunk,n-cauth'
+          testplan: '{project}-extensions-rally.txt'
+          create-initial-networks: 'True'
 
     stream:
       - nitrogen:
