@@ -134,8 +134,6 @@
 - project:
     name: netvirt-vpp
     jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-merge-{stream}'
       - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: vpp
@@ -152,12 +150,6 @@
     mvn-settings: 'netvirt-settings'
     mvn-goals: 'clean install'
     mvn-opts: '-Xmx2048m -XX:MaxPermSize=512m'
-    dependencies: >
-        genius-merge-{stream},
-        neutron-merge-{stream},
-        openflowjava-merge-{stream},
-        openflowplugin-merge-{stream},
-        ovsdb-merge-{stream},
-        sfc-merge-{stream}
-    email-upstream: '[genius] [netvirt] [neutron] [openflowjava] [openflowplugin] [ovsdb] [sfc]'
+    dependencies:
+    email-upstream: '[netvirt]'
     archive-artifacts: ''
