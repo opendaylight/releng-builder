@@ -150,6 +150,11 @@
           schedule: ''
           enable-openstack-plugins: 'networking-odl,networking-sfc'
           testplan: '{project}-extensions-sfc.txt'
+      - extensions-lbaas:
+          schedule: ''
+          enable-openstack-plugins: 'networking-odl,neutron-lbaas,octavia'
+          enable-openstack-services: 'q-svc,q-dhcp,q-meta,q-lbaasv2,n-cauth,octavia,o-cw,o-hk,o-hm,o-api,tempest'
+          testplan: '{project}-extensions-lbaas.txt'
 
     stream:
       - nitrogen:
