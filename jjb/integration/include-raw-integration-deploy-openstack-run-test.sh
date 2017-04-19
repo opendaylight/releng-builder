@@ -60,6 +60,8 @@ elif [ "$plugin_name" == "neutron-lbaas" ]; then
     ENABLE_PLUGIN_ARGS="${DEVSTACK_LBAAS_PLUGIN_REPO} ${OPENSTACK_BRANCH}"
 elif [ "$plugin_name" == "networking-sfc" ]; then
     ENABLE_PLUGIN_ARGS="${DEVSTACK_NETWORKING_SFC_PLUGIN_REPO} ${OPENSTACK_BRANCH}"
+elif [ "$plugin_name" == "rally" ]; then
+    ENABLE_PLUGIN_ARGS="${DEVSTACK_RALLY_PLUGIN_REPO} master" # note: Rally only has a master branch
 else
     echo "Error: Invalid plugin $plugin_name, unsupported"
     continue
