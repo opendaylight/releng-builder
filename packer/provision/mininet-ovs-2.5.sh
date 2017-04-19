@@ -48,22 +48,15 @@ apt-get install vlan
 # Install netaddr package which is needed by some custom mininet topologies
 apt-get install python-netaddr
 
-#Check out 6Wind quagga with tag name '20170330', compile and install for router functionalities
-echo "Installing the 6Wind Quagga..."
+#Check out 6Wind quagga with tag name '20170418', compile and install for router functionalities
+echo "Installing the Quagga..."
 mkdir -p /tmp/build_quagga
 cd /tmp/build_quagga
 git clone https://github.com/6WIND/zrpcd.git
 cd zrpcd
-git checkout 20170330
+git checkout 20170418
 chmod a+x /tmp/build_quagga/zrpcd/pkgsrc/dev_compile_script.sh
-
-# On Ubuntu 16.04, the 6Wind Quagga top level build script needs to be enhanced to use
-# the right libboost version for this git check-in tag name '20170330'.
-sed -e 's/libboost1.55-all-dev/libboost1.58-all-dev/' \
-pkgsrc/dev_compile_script.sh > pkgsrc/dev_compile_ubuntu16.04_script.sh
-chmod a+x /tmp/build_quagga/zrpcd/pkgsrc/dev_compile_ubuntu16.04_script.sh
-
-/tmp/build_quagga/zrpcd/pkgsrc/dev_compile_ubuntu16.04_script.sh -d -b -t
+/tmp/build_quagga/zrpcd/pkgsrc/dev_compile_script.sh -d -b -t -v 2
 
 # Removing the build_quagga folder
 rm -rf /tmp/build_quagga/
