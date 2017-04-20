@@ -2,10 +2,8 @@
 - project:
     name: builder-jobs
     jobs:
-      - 'builder-verify-jjb'
+      - '{project-name}-ci-jobs'
       - '{project-name}-verify-tox-{stream}'
-      - 'builder-merge'
-      - 'builder-weekly'
       - 'builder-check-poms'
       - 'builder-verify-packer'
       - 'builder-merge-packer-{platforms}-{templates}'
@@ -81,6 +79,7 @@
     project-name: builder
     stream: master
     branch: master
+    build-node: centos7-java-builder-2c-4g
 
 - job-template:
     name: builder-verify-jjb
