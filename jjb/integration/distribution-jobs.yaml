@@ -5,7 +5,7 @@
       - '{project-name}-verify-python-{stream}'
       - 'distribution-verify-{stream}'
       - 'distribution-merge-{stream}'
-      - 'distribution-deploy-{stream}'
+      - 'distribution-sanity-{stream}'
       - 'distribution-offline-{stream}'
 
     project: integration/distribution
@@ -87,7 +87,7 @@
       - distribution-check-deploy-distribution:
           dist-pom: pom.xml
       - trigger-builds:
-          - project: 'distribution-deploy-{stream}'
+          - project: 'distribution-sanity-{stream}'
             block: true
             predefined-parameters:
               BUNDLEURL=$BUNDLE_URL
@@ -215,12 +215,12 @@
           email-recipients: '{email-recipients}'
           email-prefix: '[int/dist]'
 
-# Template: distribution-deploy-{stream}
+# Template: distribution-sanity-{stream}
 # Goal: Verify distribution starts with no issues when all features are loaded
 # Operation: This job deploys the controller installing odl-integration-all
 
 - job-template:
-    name: 'distribution-deploy-{stream}'
+    name: 'distribution-sanity-{stream}'
 
     project-type: freestyle
     node: centos7-java-builder-2c-8g
@@ -247,9 +247,6 @@
     wrappers:
       - opendaylight-infra-wrappers:
           build-timeout: '{build-timeout}'
-
-    triggers:
-      - timed: 'H H * * *'
 
     builders:
       - integration-get-bundle-vars
