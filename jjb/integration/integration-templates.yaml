@@ -25,7 +25,6 @@
 
 
 # New templates
-
 - job-template:
     name: '{project}-csit-verify-1node-{functionality}'
     disabled: false
@@ -39,7 +38,6 @@
 
     parameters:
       - opendaylight-infra-parameters:
-          os-cloud: '{os-cloud}'
           project: 'integration/test'
           branch: '{branch}'
           refspec: 'refs/heads/{branch}'
@@ -125,7 +123,6 @@
 
     parameters:
       - opendaylight-infra-parameters:
-          os-cloud: '{os-cloud}'
           project: 'integration/test'
           branch: '{branch}'
           refspec: 'refs/heads/{branch}'
@@ -235,7 +232,6 @@
 
     parameters:
       - opendaylight-infra-parameters:
-          os-cloud: '{os-cloud}'
           project: 'integration/test'
           branch: '{branch}'
           refspec: 'refs/heads/{branch}'
@@ -457,7 +453,6 @@
 
     parameters:
       - opendaylight-infra-parameters:
-          os-cloud: '{os-cloud}'
           project: 'integration/test'
           branch: '{branch}'
           refspec: 'refs/heads/{branch}'
@@ -544,7 +539,6 @@
 
     parameters:
       - opendaylight-infra-parameters:
-          os-cloud: '{os-cloud}'
           project: 'integration/test'
           branch: '{branch}'
           refspec: 'refs/heads/{branch}'
@@ -601,6 +595,7 @@
       - integration-configure-clustering
       - integration-start-cluster-run-test
       - integration-cleanup-tmp
+      - 
 
     publishers:
       - integration-robot:
@@ -653,7 +648,6 @@
 
     parameters:
       - opendaylight-infra-parameters:
-          os-cloud: '{os-cloud}'
           project: 'integration/test'
           branch: '{branch}'
           refspec: 'refs/heads/{branch}'
@@ -764,7 +758,6 @@
 
     parameters:
       - opendaylight-infra-parameters:
-          os-cloud: '{os-cloud}'
           project: 'integration/test'
           branch: '{branch}'
           refspec: 'refs/heads/{branch}'
@@ -988,7 +981,6 @@
 
     parameters:
       - opendaylight-infra-parameters:
-          os-cloud: '{os-cloud}'
           project: 'integration/test'
           branch: '{branch}'
           refspec: 'refs/heads/{branch}'
@@ -1039,17 +1031,9 @@
           default: '{devstack-lbaas-plugin-repo}'
           description: 'URL to fetch neutron-lbaas devstack plugin'
       - string:
-          name: DEVSTACK_NETWORKING_SFC_PLUGIN_REPO
-          default: '{devstack-networking-sfc-plugin-repo}'
-          description: 'URL to fetch neutron-lbaas devstack plugin'
-      - string:
           name: ODL_ENABLE_L3_FWD
           default: '{odl-enable-l3}'
           description: 'Enable L3 FWD in ODL for createing br-ex'
-      - string:
-          name: IPSEC_VXLAN_TUNNELS_ENABLED
-          default: '{ipsec-vxlan-tunnels-enabled}'
-          description: 'Enable ipsec over vxlan support for all controllers and computes'
       - string:
           name: PUBLIC_BRIDGE
           default: '{public-bridge}'
@@ -1091,6 +1075,10 @@
           default: '{networking-l2gw-repo}'
           description: 'URL to fetch networking-l2gw driver'
       - string:
+          name: DISABLE_ODL_L3_PLUGIN
+          default: '{disable-odl-l3-service-plugin}'
+          description: 'Disable odl l3 service plugin'
+      - string:
           name: CREATE_INITIAL_NETWORKS
           default: '{create-initial-networks}'
           description: 'Toggles the option of letting devstack create initial networks (True/False)'
@@ -1099,14 +1087,6 @@
           default: '{lbaas-service-provider}'
           description: 'The NEUTRON_LBAAS_SERVICE_PROVIDERV2 value to be used in local.conf - only relevant when using
           neutron-lbaas'
-      - string:
-          name: ODL_SFC_DRIVER
-          default: '{odl-sfc-driver}'
-          description: 'The SFC driver to be used in local.conf - only relevant when using networking-sfc'
-      - string:
-          name: ODL_SNAT_MODE
-          default: '{odl-snat-mode}'
-          description: 'The SNAT mode to be configured - options are conntrack/controller.'
     scm:
       - integration-gerrit-scm:
           basedir: 'test'
@@ -1169,7 +1149,6 @@
 
     parameters:
       - opendaylight-infra-parameters:
-          os-cloud: '{os-cloud}'
           project: 'integration/test'
           branch: '{branch}'
           refspec: 'refs/heads/{branch}'
@@ -1220,17 +1199,9 @@
           default: '{devstack-lbaas-plugin-repo}'
           description: 'URL to fetch neutron-lbaas devstack plugin'
       - string:
-          name: DEVSTACK_NETWORKING_SFC_PLUGIN_REPO
-          default: '{devstack-networking-sfc-plugin-repo}'
-          description: 'URL to fetch neutron-lbaas devstack plugin'
-      - string:
           name: ODL_ENABLE_L3_FWD
           default: '{odl-enable-l3}'
           description: 'Enable L3 FWD in ODL for createing br-ex'
-      - string:
-          name: IPSEC_VXLAN_TUNNELS_ENABLED
-          default: '{ipsec-vxlan-tunnels-enabled}'
-          description: 'Enable ipsec over vxlan support for all controllers and computes'
       - string:
           name: PUBLIC_BRIDGE
           default: '{public-bridge}'
@@ -1272,6 +1243,10 @@
           default: '{networking-l2gw-repo}'
           description: 'URL to fetch networking-l2gw driver'
       - string:
+          name: DISABLE_ODL_L3_PLUGIN
+          default: '{disable-odl-l3-service-plugin}'
+          description: 'Disable odl l3 service plugin'
+      - string:
           name: CREATE_INITIAL_NETWORKS
           default: '{create-initial-networks}'
           description: 'Toggles the option of letting devstack create initial networks (True/False)'
@@ -1280,19 +1255,6 @@
           default: '{lbaas-service-provider}'
           description: 'The NEUTRON_LBAAS_SERVICE_PROVIDERV2 value to be used in local.conf - only relevant when using
           neutron-lbaas'
-      - string:
-          name: NUM_OPENSTACK_SITES
-          default: '{num-openstack-sites}'
-          description: 'Number of openstack sites'
-      - string:
-          name: ODL_SFC_DRIVER
-          default: '{odl-sfc-driver}'
-          description: 'The SFC driver to be used in local.conf - only relevant when using networking-sfc'
-      - string:
-          name: ODL_SNAT_MODE
-          default: '{odl-snat-mode}'
-          description: 'The SNAT mode to be configured - options are conntrack/controller.'
-
     scm:
       - integration-gerrit-scm:
           basedir: 'test'
@@ -1347,7 +1309,7 @@
 - job-template:
     name: '{project}-patch-test-{feature}-{stream}'
 
-    project-type: freestyle
+    project-type: maven
     node: centos7-java-builder-2c-8g
     concurrent: true
     jdk: '{jdk}'
@@ -1358,10 +1320,9 @@
 
     parameters:
       - opendaylight-infra-parameters:
-          os-cloud: '{os-cloud}'
           project: '{project}'
           branch: '{branch}'
-          refspec: 'refs/heads/{branch}'
+          refspec: '$GERRIT_REFSPEC'
           artifacts: '{archive-artifacts}'
       - integration-distribution-branch:
           branch: '{branch}'
@@ -1371,8 +1332,6 @@
           name: feature
           default: 'all'
           description: 'Specific feature test for patch'
-      - maven-exec:
-          maven-version: mvn33
 
     scm:
       - integration-gerrit-scm:
@@ -1406,48 +1365,169 @@
             unstable: true
             notbuilt: true
 
-    builders:
+    prebuilders:
       - integration-rebase-gerrit-patch
+      - integration-get-bundle-url
+      - inject:
+          properties-file: 'bundle.txt'
       - wipe-org-opendaylight-repo
+      - provide-maven-settings:
+          global-settings-file: 'odl-global-settings'
+          settings-file: 'integration-settings'
       - maven-target:
-          maven-version: mvn33
+          maven-version: 'mvn33'
           pom: '{project}/pom.xml'
-          goals: |
+          goals: >
               clean install dependency:tree
-              -Pq
+              -V -B -Pq
               -Dgitid.skip=false
+              -Djenkins
               -DgenerateReports=false
+              -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r
               -Dstream={stream}
-              {opendaylight-infra-mvn-opts}
           java-opts:
             - '-Xmx4096m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
-          settings: integration-settings
+          settings: 'integration-settings'
           settings-type: cfp
-          global-settings: odl-global-settings
+          global-settings: 'odl-global-settings'
           global-settings-type: cfp
-      - maven-target:
-          maven-version: mvn33
-          pom: distribution/pom.xml
-          goals: |
-              clean install dependency:tree
-              -Pq
-              -Dgitid.skip=false
-              {opendaylight-infra-mvn-opts}
-          java-opts:
-            - '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
-          settings: integration-settings
-          settings-type: cfp
-          global-settings: odl-global-settings
-          global-settings-type: cfp
-      - distribution-check-deploy-distribution:
-          dist-pom: distribution/pom.xml
+
+    maven:
+      maven-name: 'mvn33'
+      root-pom: 'distribution/pom.xml'
+      goals: >
+          clean install dependency:tree
+          -V -B -Pq
+          -Dgitid.skip=false
+          -Djenkins
+          -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r
+      maven-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
+      settings: 'integration-settings'
+      settings-type: cfp
+      global-settings: 'odl-global-settings'
+      global-settings-type: cfp
+      ignore-upstream-changes: true
+      post-step-run-condition: 'SUCCESS'
+
+    postbuilders:
       - trigger-builds:
           - project: '{csit-list}'
             block: true
             predefined-parameters:
-              BUNDLEURL=$BUNDLE_URL
+              BUNDLEURL=$BUNDLEURL
 
     publishers:
       - email-notification:
           email-recipients: '{email-recipients}'
           email-prefix: '[{project}]'
+
+
+
+- job-template:
+    name: '{project}-csit-{topology}-{functionality}-{install}-{stream}'
+    disabled: false
+
+    project-type: freestyle
+    node: centos7-robot-2c-2g
+
+    properties:
+      - opendaylight-infra-properties:
+          build-days-to-keep: '{build-days-to-keep}'
+
+    parameters:
+      - opendaylight-infra-parameters:
+          project: 'integration/test'
+          branch: '{branch}'
+          refspec: 'refs/heads/{branch}'
+          artifacts: '{archive-artifacts}'
+      - integration-distribution-branch:
+          branch: '{branch}'
+      - integration-distribution-stream:
+          stream: '{stream}'
+      - integration-bundleurl:
+          bundleurl: '{bundleurl}'
+      - integration-controller-scope:
+          controller-scope: '{scope}'
+      - integration-controller-features:
+          controller-features: '{install-features}'
+      - integration-test-options:
+          test-options: '{robot-options}'
+      - integration-stream-test-plan:
+          stream-test-plan: '{project}-{functionality}-{stream}.txt'
+      - integration-test-plan:
+          test-plan: '{project}-{functionality}.txt'
+      - integration-patch-refspec:
+          branch: 'master'
+      - integration-jdk-version:
+          jdkversion: '{jre}'
+
+    scm:
+      - integration-gerrit-scm:
+          basedir: 'test'
+          refspec: '$PATCHREFSPEC'
+          branch: 'master'
+
+    wrappers:
+      - opendaylight-infra-wrappers:
+          build-timeout: '{build-timeout}'
+
+    builders:
+      - integration-infra-stack:
+          stack-template: '{stack-template}'
+          vm_0_count: '{odl_system_count}'
+          vm_0_flavor: '{odl_system_flavor}'
+          vm_0_image: '{odl_system_image}'
+          vm_1_count: '{tools_system_count}'
+          vm_1_flavor: '{tools_system_flavor}'
+          vm_1_image: '{tools_system_image}'
+      - integration-install-robotframework
+      - inject:
+          properties-file: 'env.properties'
+      - integration-get-slave-addresses
+      - inject:
+          properties-file: 'slave_addresses.txt'
+      - integration-get-bundle-vars
+      - inject:
+          properties-file: 'bundle_vars.txt'
+      - '{start-test}'
+      - integration-cleanup-tmp
+
+    publishers:
+      - integration-robot:
+          unstable-if: 0.0
+          pass-if: 100.0
+      - email-notification:
+          email-recipients: '{email-recipients}'
+          email-prefix: '[{project}]'
+      - plot:
+          - title: '{01-plot-title}'
+            yaxis: '{01-plot-yaxis}'
+            group: '{01-plot-group}'
+            num-builds: '5400'
+            keep-records: true
+            style: line
+            use-description: false
+            # yamllint disable-line rule:line-length
+            csv-file-name: '{project}-csit-{topology}-{functionality}-{install}-{stream}-{01-plot-data-file}-history.csv'
+            series:
+              - file: '{01-plot-data-file}'
+                inclusion-flag: 'off'
+                display-table: true
+                format: csv
+          - title: '{02-plot-title}'
+            yaxis: '{02-plot-yaxis}'
+            group: '{02-plot-group}'
+            num-builds: '5400'
+            keep-records: true
+            style: line
+            use-description: false
+            # yamllint disable-line rule:line-length
+            csv-file-name: '{project}-csit-{topology}-{functionality}-{install}-{stream}-{02-plot-data-file}-history.csv'
+            series:
+              - file: '{02-plot-data-file}'
+                inclusion-flag: 'off'
+                display-table: true
+                format: csv
+      - integration-csit-archive-build
+      - opendaylight-infra-shiplogs:
+          maven-version: 'mvn33'
