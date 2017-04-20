@@ -33,7 +33,6 @@
       - '{project-name}-integration-{stream}'
       - '{project-name}-merge-{stream}'
       - '{project-name}-verify-{stream}-{maven}-{jdks}'
-      - '{project-name}-distribution4-check-carbon'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-validate-autorelease-{stream}'
 
@@ -41,7 +40,6 @@
     project-name: 'federation'
     stream: carbon
     branch: 'stable/carbon'
-    karaf-version: karaf3
     jdk: openjdk8
     jdks:
       - openjdk8

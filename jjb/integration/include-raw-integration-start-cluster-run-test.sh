@@ -86,7 +86,7 @@ do
     CONTROLLERIP=ODL_SYSTEM_${i}_IP
     odl_variables=${odl_variables}" -v ${CONTROLLERIP}:${!CONTROLLERIP}"
     echo "Lets's take the karaf thread dump"
-    KARAF_PID=$(ssh ${!CONTROLLERIP} "ps aux | grep ${KARAF_ARTIFACT} | grep -v grep | tr -s ' ' | cut -f2 -d' '")
+    KARAF_PID=$(ssh ${!CONTROLLERIP} "ps aux | grep 'distribution-karaf' | grep -v grep | tr -s ' ' | cut -f2 -d' '")
     ssh ${!CONTROLLERIP} "jstack $KARAF_PID"> ${WORKSPACE}/karaf_${i}_threads_before.log || true
 done
 
@@ -111,7 +111,7 @@ SUITES=`egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' testplan.txt | tr '\012' ' '`
 
 echo "Starting Robot test suites ${SUITES} ..."
 pybot -N ${TESTPLAN} --removekeywords wuks -c critical -e exclude -v BUNDLEFOLDER:${BUNDLEFOLDER} \
--v WORKSPACE:/tmp -v BUNDLE_URL:${ACTUAL_BUNDLE_URL} -v JAVA_HOME:${JAVA_HOME} \
+-v WORKSPACE:/tmp -v BUNDLE_URL:${ACTUALBUNDLEURL} -v JAVA_HOME:${JAVA_HOME} \
 -v NEXUSURL_PREFIX:${NEXUSURL_PREFIX} -v JDKVERSION:${JDKVERSION} -v ODL_STREAM:${DISTROSTREAM} \
 -v CONTROLLER:${ODL_SYSTEM_IP} -v CONTROLLER1:${ODL_SYSTEM_2_IP} -v CONTROLLER2:${ODL_SYSTEM_3_IP} -v ODL_SYSTEM_IP:${ODL_SYSTEM_IP} \
 ${odl_variables} -v NUM_ODL_SYSTEM:${NUM_ODL_SYSTEM} -v CONTROLLER_USER:${USER} -v ODL_SYSTEM_USER:${USER} -v \
@@ -133,7 +133,7 @@ for i in `seq 1 ${NUM_ODL_SYSTEM}`
 do
     CONTROLLERIP=ODL_SYSTEM_${i}_IP
     echo "Lets's take the karaf thread dump again"
-    KARAF_PID=$(ssh ${!CONTROLLERIP} "ps aux | grep ${KARAF_ARTIFACT} | grep -v grep | tr -s ' ' | cut -f2 -d' '")
+    KARAF_PID=$(ssh ${!CONTROLLERIP} "ps aux | grep 'distribution-karaf' | grep -v grep | tr -s ' ' | cut -f2 -d' '")
     ssh ${!CONTROLLERIP} "jstack $KARAF_PID"> ${WORKSPACE}/karaf_${i}_threads_after.log || true
     echo "killing karaf process..."
     ssh "${!CONTROLLERIP}" bash -c 'ps axf | grep karaf | grep -v grep | awk '"'"'{print "kill -9 " $1}'"'"' | sh'
