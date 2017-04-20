@@ -9,8 +9,14 @@
     cron: 'H 0 * * *'
 
     properties:
-      - opendaylight-infra-properties:
-          build-days-to-keep: '30'
+      - build-discarder:
+          days-to-keep: '30'
+          num-to-keep: 40
+          artifact-num-to-keep: 1
+    # Make sure we only archive the last artifact until we figure out why
+    # autorelease carbon is not generating a staging repo.
+    #   - opendaylight-infra-properties:
+    #       build-days-to-keep: '30'
 
     parameters:
       - maven-exec:
@@ -108,7 +114,9 @@
           # Need to archive dependencies.log in Jenkins to provide a simple
           # way for downstream jobs to pull the latest version of this file
           # in their builds.
-          artifacts: 'dependencies.log'
+          # TODO stop archiving **/*.zip once we figure out why artifacts are
+          #      not deploying to Nexus
+          artifacts: 'dependencies.log, **/*.zip'
       - trigger-parameterized-builds:
           - project: 'integration-distribution-test-{integration-test}'
             condition: UNSTABLE_OR_BETTER
