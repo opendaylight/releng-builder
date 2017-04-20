@@ -4,6 +4,7 @@
 - defaults:
     name: global
 
+    karaf-version: karaf4
     build-days-to-keep: 30
 
     # Timeout in minutes
@@ -51,7 +52,7 @@
     os-cloud: rackspace
 
     # Distribution bundle URL
-    bundleurl: 'last'
+    bundle-url: 'last'
 
     # CSIT images configuration
     stack-template: csit-2-instance-type.yaml
@@ -73,10 +74,11 @@
 
     # Data for csit-verify jobs
     # Branch for "last" version detection
-    verify-branch: 'stable/boron'
+    verify-branch: stable/boron
     # Value for ODL_STREAM
-    verify-stream: 'boron'
-    verify-jdkversion: 'openjdk8'
+    verify-stream: boron
+    verify-karaf-version: karaf3
+    verify-jdkversion: openjdk8
 
     # Maven / Java
     jdk: 'openjdk8'
@@ -162,13 +164,21 @@
         controller-csit-1node-notifications-longevity-only-nitrogen,
         controller-csit-3node-drb-partnheal-longevity-only-nitrogen,
         controller-csit-3node-drb-precedence-longevity-only-nitrogen,
+        distribution-deploy-nitrogen,
+        distribution-offline-nitrogen,
         openflowplugin-csit-1node-periodic-longevity-only-nitrogen
     csit-weekly-list-carbon: >
         controller-csit-1node-notifications-longevity-only-carbon,
         controller-csit-3node-drb-partnheal-longevity-only-carbon,
         controller-csit-3node-drb-precedence-longevity-only-carbon,
+        distribution-deploy-carbon,
+        distribution-offline-carbon,
+        distribution4-deploy-carbon,
+        distribution4-offline-carbon,
         openflowplugin-csit-1node-periodic-longevity-only-carbon
     csit-weekly-list-boron: >
+        distribution-deploy-boron,
+        distribution-offline-boron,
         openflowplugin-csit-1node-periodic-longevity-only-boron
 
     # CSIT Test List Variables
