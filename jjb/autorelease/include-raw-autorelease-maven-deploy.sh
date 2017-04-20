@@ -36,3 +36,13 @@ rsync -avz --remove-source-files \
     -DserverId="$NEXUS_STAGING_SERVER_ID" \
     -s "$SETTINGS_FILE" \
     -gs "$GLOBAL_SETTINGS_FILE" | tee "$WORKSPACE/deploy-staged-repository.log"
+
+# Log all files larger than 200 MB into large-files.log
+while IFS= read -r -d '' file
+do
+    FILE_SIZE=$(du --summarize --block-size 1 "$file" | awk '{print $1}')
+    # Check if file size is larger than 200 MB
+    if [[ $FILE_SIZE -gt 209715200 ]]; then
+        echo "$FILE_SIZE $file" >> "$WORKSPACE/large-files.log"
+    fi
+done <   <(find "$(pwd)/m2repo" -type f -print0)
