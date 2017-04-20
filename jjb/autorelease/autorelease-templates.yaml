@@ -21,6 +21,8 @@
           branch: '{branch}'
           refspec: 'refs/heads/{branch}'
           artifacts: '{archive-artifacts}'
+      - distribution-karaf-version:
+          karaf-version: '{karaf-version}'
       - autorelease-release-tag:
           release-tag: '{next-release-tag}'
       - autorelease-release-branch:
@@ -65,7 +67,7 @@
       - autorelease-generate-taglist
       - autorelease-distribute-taglist
       - distribute-build-url:
-          path: 'integration/distribution/distribution-karaf/src/main/assembly'
+          path: 'integration/distribution/$KARAF_ARTIFACT/src/main/assembly'
       - autorelease-generate-release-patches
       # In a perfect world projects should be releasing separately and we consume them
       # via a project that pulls the release bits from each project from Nexus.
@@ -122,7 +124,7 @@
             condition: FAILED
           - project: 'packaging-build-rpm-master'
             condition: UNSTABLE_OR_BETTER
-            predefined-parameters: DOWNLOAD_URL=$BUNDLEURL
+            predefined-parameters: DOWNLOAD_URL=$BUNDLE_URL
             property-file: variables.jenkins-trigger
             fail-on-missing: true
       - opendaylight-infra-shiplogs:

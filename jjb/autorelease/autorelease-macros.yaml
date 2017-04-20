@@ -102,11 +102,12 @@
 - builder:
     name: autorelease-distribute-taglist
     builders:
+      - integration-set-variables
       - shell: |
           if [ -d "integration/distribution/distributions" ]; then
               cp -vf "$WORKSPACE/taglist.log" "integration/distribution/distributions/karaf/src/main/assembly/"
           else
-              cp -vf "$WORKSPACE/taglist.log" "integration/distribution/distribution-karaf/src/main/assembly/"
+              cp -vf "$WORKSPACE/taglist.log" "integration/distribution/$KARAF_ARTIFACT/src/main/assembly/"
           fi
 
 - builder:
@@ -124,6 +125,7 @@
 - builder:
     name: autorelease-get-integration-test-variables
     builders:
+      - integration-set-variables
       - shell: !include-raw: include-raw-autorelease-get-integration-test-variables.sh
       - inject:
           properties-file: variables.prop

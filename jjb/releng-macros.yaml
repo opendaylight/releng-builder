@@ -712,25 +712,3 @@
               {mvn-opts}
           java-opts:
             - '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
-
-- builder:
-    name: distribution-check-deploy-distribution
-    # Deploy distribution-karaf zip to Nexus SNAPSHOT repo for testing.
-    # Arguments:
-    #   {settings-file} to use for opendaylight-snapshot credentials
-    builders:
-      - inject:
-          properties-content: BUNDLE_POM={dist-pom}
-      - shell: !include-raw-escape: deploy-distribution-get-vars.sh
-      - inject:
-          properties-file: deploy-distribution.env
-      - config-file-provider:
-          files:
-            - file-id: odl-global-settings
-              variable: GLOBAL_SETTINGS_FILE
-            - file-id: integration-settings
-              variable: SETTINGS_FILE
-      - shell: !include-raw-escape: deploy-distribution.sh
-      # Re-inject BUNDLE_URL so that downstream projects can use it.
-      - inject:
-          properties-file: deploy-distribution.env
