@@ -78,7 +78,7 @@ if [ ! -z "$ARCHIVE_ARTIFACTS" ]; then
     for f in $ARCHIVE_ARTIFACTS; do
         [[ -e $f ]] || continue  # handle the case of no files to archive
         echo "Archiving $f" >> "$WORKSPACE/.archives/$ARCHIVES_DIR/_archives.log"
-        dir="$(dirname "$f")"
+        dir=$(dirname "$f")
         mkdir -p "$WORKSPACE/archives/$dir"
         mv "$f" "$WORKSPACE/archives/$f"
     done

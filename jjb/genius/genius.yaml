@@ -36,7 +36,6 @@
     jobs:
       - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-distribution4-check-carbon'
       - '{project-name}-integration-{stream}'
       - '{project-name}-merge-{stream}'
       - '{project-name}-validate-autorelease-{stream}'
@@ -46,7 +45,6 @@
     project: 'genius'
     project-name: 'genius'
     branch: 'stable/carbon'
-    karaf-version: karaf3
     jdk: openjdk8
     jdks:
       - openjdk8
@@ -78,7 +76,6 @@
     stream: boron
     project: 'genius'
     project-name: 'genius'
-    karaf-version: karaf3
     branch: 'stable/boron'
     jdk: openjdk8
     jdks:

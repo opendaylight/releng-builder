@@ -37,7 +37,6 @@
     jobs:
       - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-distribution4-check-carbon'
       - '{project-name}-integration-{stream}'
       - '{project-name}-merge-{stream}'
       - '{project-name}-validate-autorelease-{stream}'
@@ -47,7 +46,6 @@
     project: 'netvirt'
     project-name: 'netvirt'
     branch: 'stable/carbon'
-    karaf-version: karaf3
     jdk: openjdk8
     jdks:
       - openjdk8
@@ -81,7 +79,6 @@
     project: 'netvirt'
     project-name: 'netvirt'
     branch: 'stable/boron'
-    karaf-version: karaf3
     jdk: openjdk8
     jdks:
       - openjdk8
@@ -115,7 +112,6 @@
     project: 'netvirt'
     project-name: 'netvirt'
     branch: 'stable/beryllium'
-    karaf-version: karaf3
     jdk: openjdk7
     jdks:
       - openjdk7
@@ -144,7 +140,6 @@
     project: 'netvirt'
     project-name: 'netvirt'
     branch: 'topic/vpp'
-    karaf-version: karaf3
     distribution_branch: 'master'
     jdk: openjdk8
     jdks:

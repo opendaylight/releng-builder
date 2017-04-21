@@ -37,7 +37,6 @@
     jobs:
       - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-distribution4-check-carbon'
       - '{project-name}-integration-{stream}'
       - '{project-name}-merge-{stream}'
       - '{project-name}-validate-autorelease-{stream}'
@@ -48,7 +47,6 @@
     project-name: 'bgpcep'
     build-node: centos7-java-builder-4c-8g
     branch: 'stable/carbon'
-    karaf-version: karaf3
     jdk: openjdk8
     jdks:
       - openjdk8
@@ -82,7 +80,6 @@
     project-name: 'bgpcep'
     build-node: centos7-java-builder-4c-8g
     branch: 'stable/boron'
-    karaf-version: karaf3
     jdk: openjdk8
     jdks:
       - openjdk8
@@ -116,7 +113,6 @@
     project: 'bgpcep'
     project-name: 'bgpcep'
     branch: 'stable/beryllium'
-    karaf-version: karaf3
     jdk: openjdk7
     jdks:
       - openjdk7

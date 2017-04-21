@@ -8,7 +8,7 @@ source ${ROBOT_VENV}/bin/activate
 echo "showing recent changes that made it in to the distribution used by this job"
 pip install --upgrade urllib3
 python ${WORKSPACE}/test/tools/distchanges/changes.py -d /tmp/distribution_folder \
-                  -u ${ACTUAL_BUNDLE_URL} -b ${DISTROBRANCH} \
+                  -u ${ACTUALBUNDLEURL} -b ${DISTROBRANCH} \
                   -r ssh://jenkins-${SILO}@git.opendaylight.org:29418 || true
 
 echo "#################################################"
@@ -801,7 +801,7 @@ echo "Starting Robot test suites ${SUITES} ..."
 # please add pybot -v arguments on a single line and alphabetized
 pybot -N ${TESTPLAN} --removekeywords wuks -c critical -e exclude \
     -v BUNDLEFOLDER:${BUNDLEFOLDER} \
-    -v BUNDLE_URL:${ACTUAL_BUNDLE_URL} \
+    -v BUNDLE_URL:${ACTUALBUNDLEURL} \
     -v CONTROLLER_USER:${USER} \
     -v DEVSTACK_DEPLOY_PATH:/opt/stack/devstack \
     -v HA_PROXY_IP:${HA_PROXY_IP} \
