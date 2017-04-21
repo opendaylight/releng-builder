@@ -1,6 +1,53 @@
 ---
 # Autorelease build jobs
 - job-template:
+    name: autorelease-branch-cut
+    project-type: freestyle
+    node: centos7-java-builder-2c-4g
+    disabled: true
+
+    properties:
+      - opendaylight-infra-properties:
+          build-days-to-keep: 7
+
+    parameters:
+      - lf-infra-parameters:
+          project: releng/autorelease
+          branch: master
+          refspec: refs/heads/master
+      - string:
+          name: RELEASE
+          description: |
+              Release name to branch cut.
+              Eg. Lithium, Beryllium, Boron, Carbon...
+      - bool:
+          name: DRY_RUN
+          default: true
+          description: |
+              If DRY_RUN is enabled modifications are not published to Gerrit.
+
+    scm:
+      - lf-infra-gerrit-scm:
+          branch: master
+          refspec: refs/heads/master
+          jenkins-ssh-credential: opendaylight-jenkins-ssh
+          submodule-recursive: true
+          choosing-strategy: default
+
+    wrappers:
+      - lf-infra-wrappers:
+          build-timeout: 10
+          jenkins-ssh-credential: opendaylight-jenkins-ssh
+
+    builders:
+      - shell: !include-raw-escape:
+          - ../global-jjb/shell/lftools-install.sh
+          - branch-cut.sh
+
+    publishers:
+      - lf-infra-publish
+
+- job-template:
     name: 'autorelease-release-{stream}'
 
     project-type: freestyle
