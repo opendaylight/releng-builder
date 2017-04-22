@@ -329,7 +329,7 @@
       - trigger-builds:
           - project: '{csit-list}'
             block: true
-            predefined-parameters:
+            predefined-parameters: |
               BUNDLE_URL=$BUNDLE_URL
               KARAF_VERSION=$KARAF_VERSION
 
@@ -426,7 +426,7 @@
             - trigger-builds:
                 - project: '{csit-list}'
                   block: true
-                  predefined-parameters:
+                  predefined-parameters: |
                     BUNDLE_URL=$BUNDLE_URL
                     KARAF_VERSION=$KARAF_VERSION
 
