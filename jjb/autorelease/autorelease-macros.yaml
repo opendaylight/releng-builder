@@ -129,6 +129,22 @@
       - shell: |
           ./scripts/fix-relativepaths.sh
 
+- builder:
+    name: autorelease-generate-release-notes
+    builders:
+      - shell: !include-raw: include-raw-generate-release-notes.sh
+
+- publisher:
+    name: opendaylight-infra-sysstats
+    publishers:
+      - postbuildscript:
+          builders:
+            - shell: |
+                # generate accounting summary
+                sudo LC_ALL=C /usr/lib64/sa/sa2 -A
+                mkdir -p archives/
+                cp /var/log/sa/* $_
+
 - publisher:
     # include-raw-autorelease-notify-build-failure.sh searches console log for
     # failures and emails the status to the release mailing list.
