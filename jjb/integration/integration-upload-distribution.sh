@@ -26,4 +26,6 @@ BUNDLE_URL=$(grep "Uploaded.*${KARAF_ARTIFACT}/${BUNDLE_VERSION}.*.zip" ${LOG_FI
 echo "Bundle uploaded to ${BUNDLE_URL}"
 
 # Re-inject the new BUNDLE_URL for downstream jobs to pull from Nexus
-env | grep BUNDLE_ | sort | tee integration-upload-distribution.env
+cat > "${WORKSPACE}/integration-upload-distribution.env" <<EOF
+BUNDLE_URL=${BUNDLE_URL}
+EOF
