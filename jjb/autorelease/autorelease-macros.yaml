@@ -121,6 +121,9 @@
       - shell: |
           uname -a
           df -h
+          # generate accounting summary
+          sudo LC_ALL=C /usr/lib64/sa/sa2 -A
+          sar -r
 
 - builder:
     name: autorelease-get-integration-test-variables
