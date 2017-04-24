@@ -106,7 +106,7 @@
       - autorelease-sys-stats
       - shell: |
           mkdir -p archives/
-          cp *.log *.prop $_
+          cp /var/log/sa/* *.log *.prop $_
 
     publishers:
       - opendaylight-infra-notify-status
