@@ -116,16 +116,6 @@
       - shell: !include-raw: include-raw-autorelease-release-versions.sh
 
 - builder:
-    name: autorelease-sys-stats
-    builders:
-      - shell: |
-          uname -a
-          df -h
-          # generate accounting summary
-          sudo LC_ALL=C /usr/lib64/sa/sa2 -A
-          sar -r
-
-- builder:
     name: autorelease-get-integration-test-variables
     builders:
       - integration-set-variables
@@ -149,3 +139,15 @@
             - shell: !include-raw: include-raw-autorelease-notify-build-failure.sh
           script-only-if-succeeded: 'False'
           script-only-if-failed: 'True'
+
+- publisher:
+    # generate sar accounting summary and copy sar data to archive
+    name: opendaylight-infra-sysstats
+    publishers:
+      - postbuildscript:
+          builders:
+            - shell: |
+                # generate accounting summary
+                sudo LC_ALL=C /usr/lib64/sa/sa2 -A
+                mkdir -p archives/
+                cp /var/log/sa/* $_

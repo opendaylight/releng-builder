@@ -103,13 +103,13 @@
           settings: 'autorelease-settings'
           global-settings: 'odl-global-settings'
       - autorelease-maven-sources-post-process
-      - autorelease-sys-stats
       - shell: |
           mkdir -p archives/
-          cp /var/log/sa/* *.log *.prop $_
+          cp *.log *.prop $_
 
     publishers:
       - opendaylight-infra-notify-status
+      - opendaylight-infra-sysstats
       - archive:
           # Need to archive dependencies.log in Jenkins to provide a simple
           # way for downstream jobs to pull the latest version of this file

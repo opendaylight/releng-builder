@@ -102,6 +102,7 @@ touch "$ARCHIVES_DIR/_sys-info.txt"
     echo -e "nproc:\n $(nproc) \n"
     echo -e "lscpu:\n $(lscpu) \n"
     echo -e "ip addr:\n  $(/sbin/ip addr) \n"
+    echo -e "sar -r:\n  $(sar -r) \n"
 } 2>&1 | tee -a "$ARCHIVES_DIR/_sys-info.txt"
 
 # Magic string used to trim console logs at the appropriate level during wget
