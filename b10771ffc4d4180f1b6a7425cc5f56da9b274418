@@ -22,6 +22,30 @@
       "revId": "b10771ffc4d4180f1b6a7425cc5f56da9b274418",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da01753e_e6a68d0f",
+        "filename": "jjb/integration/integration-distribution-check.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2017-04-25T14:41:31Z",
+      "side": 1,
+      "message": "First, there was only BUNDLE_URL (without the underscore).\nThen we added ACTUAL_BUNDLE_URL. The difference is that when BUNDLE_URL is set to \"last\", we set ACTUAL_BUNDLE_URL to the most recent zip file (of the given stream) present in Nexus.\n(If there is a Robot test to run, it gets that actual value as BUNDLE_URL Robot variable.)\n\nThis is neither. Perhaps BUNDLE_PATH would be a better name?",
+      "parentUuid": "da01753e_3c92739f",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 17
+      },
+      "revId": "b10771ffc4d4180f1b6a7425cc5f56da9b274418",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
