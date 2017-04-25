@@ -2,28 +2,34 @@
 - project:
     name: genius-csit-genius
     jobs:
-      - '{project}-csit-1node-{functionality}-{install}-{stream}'
+      - '{project}-csit-{topology}-{functionality}-{install}-{stream}'
       - '{project}-csit-verify-1node-{functionality}'
 
     # The project name
     project: 'genius'
+
+    # No of Nodes
+    topology:
+      - 3node:
+          odl_system_count: '3'
+          install-features: 'odl-jolokia,odl-genius-ui'
+          start-test: 'integration-configure-start-cluster-run-test'
+      - 1node:
+          odl_system_count: '1'
+          install-features: 'odl-genius-ui'
+          start-test: 'integration-deploy-controller-run-test'
 
     # The functionality under test
     functionality: 'genius'
 
     # Project branches
     stream:
-      - nitrogen:
+      - carbon:
           branch: 'master'
           jre: 'openjdk8'
-      - carbon:
-          branch: 'stable/carbon'
-          jre: 'openjdk8'
-          karaf-version: karaf3
       - boron:
           branch: 'stable/boron'
           jre: 'openjdk8'
-          karaf-version: karaf3
 
     install:
       - only:
@@ -33,10 +39,11 @@
 
     # Mininet configuration
     tools_system_count: 2
-    tools_system_image: Ubuntu 14.04 - mininet-ovs-25 - 20170210-0300
+    tools_system_image: Ubuntu 14.04 - mininet-ovs-23 - 20170210-0414
 
     # Features to install
     install-features: 'odl-genius-ui'
+
 
     # Robot custom options
     robot-options: ' '
