@@ -25,8 +25,9 @@
           jre: 'openjdk8'
           karaf-version: karaf3
           install-features: >
-              odl-restconf-all,
+              odl-restconf,
               odl-netconf-mdsal,
+              odl-mdsal-apidocs,
               odl-clustering-test-app,
               odl-netconf-connector-all,
               odl-netconf-topology
@@ -38,6 +39,7 @@
           install-features: >
               odl-restconf,
               odl-netconf-mdsal,
+              odl-mdsal-apidocs,
               odl-clustering-test-app,
               odl-netconf-connector-all,
               odl-netconf-topology
@@ -53,6 +55,7 @@
     install-features: >
         odl-restconf,
         odl-netconf-mdsal,
+        odl-mdsal-apidocs,
         odl-clustering-test-app,
         odl-netconf-topology
 
