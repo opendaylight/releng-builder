@@ -147,7 +147,9 @@
       - postbuildscript:
           builders:
             - shell: |
-                # generate accounting summary
-                sudo LC_ALL=C /usr/lib64/sa/sa2 -A
                 mkdir -p archives/
                 cp /var/log/sa/* $_
+                # convert sar data to ascii format
+                sar -A -f /var/log/sa/sa$(date +%d) > archives/sar$(date +%d)
+          script-only-if-succeeded: false
+          script-only-if-failed: false
