@@ -6,8 +6,7 @@
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
       - '{project-name}-merge-{stream}'
-      # TODO uncomment this line when IoTDM added to Carbon
-      # - '{project-name}-validate-autorelease-{stream}'
+      - '{project-name}-validate-autorelease-{stream}'
       - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: nitrogen
@@ -35,7 +34,8 @@
       - '{project-name}-distribution4-check-carbon'
       - '{project-name}-integration-{stream}'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-validate-autorelease-{stream}'
+      # TODO uncomment this line when IoTDM added to Carbon
+      # - '{project-name}-validate-autorelease-{stream}'
       - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: carbon
