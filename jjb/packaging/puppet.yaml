@@ -1,0 +1,13 @@
+---
+- project:
+    name: puppet
+    project-name: puppet
+
+    jobs:
+      - '{project-name}-verify-tox-{stream}'
+
+    project: 'integration/packaging/puppet-opendaylight'
+
+    stream:
+      - master:
+          branch: 'master'
