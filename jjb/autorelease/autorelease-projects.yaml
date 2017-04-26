@@ -230,3 +230,166 @@
             fail-on-missing: true
       - opendaylight-infra-shiplogs:
           maven-version: 'mvn33'
+
+
+###
+# TODO: Remove this job once carbon tests failures are resolved
+###
+
+- project:
+    name: autorelease-projects-notests
+    jobs:
+      - 'autorelease-release-notests-{stream}'
+
+    stream:
+      - carbon:
+          next-release-tag: Carbon
+          branch: 'stable/carbon'
+          jdk: 'openjdk8'
+          integration-test: carbon
+          karaf-version: karaf3
+
+
+    project: 'releng/autorelease'
+    archive-artifacts: '**/*.prop **/*.log **/patches/*.bundle **/patches/*.patch all-bundles.tar.gz'
+
+
+# Autorelease build jobs
+- job-template:
+    name: 'autorelease-release-notests-{stream}'
+
+    project-type: freestyle
+    node: centos7-autorelease-4c-16g
+    jdk: '{jdk}'
+    cron: 'H 0 * * *'
+
+    properties:
+      - build-discarder:
+          days-to-keep: '30'
+          num-to-keep: 40
+          artifact-num-to-keep: 1
+    # Make sure we only archive the last artifact until we figure out why
+    # autorelease carbon is not generating a staging repo.
+    #   - opendaylight-infra-properties:
+    #       build-days-to-keep: '30'
+
+    parameters:
+      - maven-exec:
+          maven-version: 'mvn33'
+      - opendaylight-infra-parameters:
+          os-cloud: '{os-cloud}'
+          project: '{project}'
+          branch: '{branch}'
+          refspec: 'refs/heads/{branch}'
+          artifacts: '{archive-artifacts}'
+      - distribution-karaf-version:
+          karaf-version: '{karaf-version}'
+      - autorelease-release-tag:
+          release-tag: '{next-release-tag}'
+      - autorelease-release-branch:
+          release-branch: '{branch}'
+
+    scm:
+      - git:
+          credentials-id: 'opendaylight-jenkins-ssh'
+          url: '$GIT_BASE'
+          refspec: '$GERRIT_REFSPEC'
+          branches:
+            - '$GERRIT_BRANCH'
+          choosing-strategy: 'gerrit'
+          skip-tag: true
+          submodule:
+            recursive: true
+            timeout: 60
+
+    wrappers:
+      - opendaylight-infra-wrappers:
+          build-timeout: '1440'
+
+    triggers:
+      - timed: '{cron}'
+
+    builders:
+      # force jenkins install of maven version before any shell scripts use it
+      - maven-target:
+          maven-version: 'mvn33'
+          goals: '-version'
+          settings: 'autorelease-settings'
+          settings-type: cfp
+          global-settings: 'odl-global-settings'
+          global-settings-type: cfp
+      - wipe-local-maven-repo
+      - jacoco-nojava-workaround
+      - shell: "./scripts/list-project-dependencies.sh"
+      - autorelease-determine-merge-order
+      - autorelease-cfp:
+          autorelease-settings: 'autorelease-settings'
+          odl-global-settings: 'odl-global-settings'
+      - autorelease-generate-taglist
+      - autorelease-distribute-taglist
+      - distribute-build-url:
+          path: 'integration/distribution/$KARAF_ARTIFACT/src/main/assembly'
+      - autorelease-generate-release-patches
+      # In a perfect world projects should be releasing separately and we consume them
+      # via a project that pulls the release bits from each project from Nexus.
+      # Keep the patches compatible with that ideal, but apply an edit
+      # to enable building in a single maven reactor afterwards.
+      - autorelease-fix-relative-paths
+      - maven-target:
+          maven-version: 'mvn33'
+          pom: 'pom.xml'
+          goals: |
+              clean deploy
+              -Pintegrationtests,docs,repoBuild
+              -Dcheckstyle.skip=true
+              -DskipTests=true
+              -DaltDeploymentRepository=staging::default::file:hide/from/pom/files/stage
+              {opendaylight-infra-mvn-opts}
+          java-opts:
+            - '-Xmx10g -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
+          settings: 'autorelease-settings'
+          settings-type: cfp
+          global-settings: 'odl-global-settings'
+          global-settings-type: cfp
+      - autorelease-maven-deploy
+      - autorelease-get-integration-test-variables
+      - autorelease-maven-sources:
+          opendaylight-infra-mvn-opts: '{opendaylight-infra-mvn-opts}'
+          maven-version: 'mvn33'
+          settings: 'autorelease-settings'
+          global-settings: 'odl-global-settings'
+      - autorelease-maven-sources-post-process
+      - shell: |
+          mkdir -p archives/
+          cp *.log *.prop $_
+
+    publishers:
+      - opendaylight-infra-notify-status
+      - opendaylight-infra-sysstats
+      - archive:
+          # Need to archive dependencies.log in Jenkins to provide a simple
+          # way for downstream jobs to pull the latest version of this file
+          # in their builds.
+          # TODO stop archiving **/*.zip once we figure out why artifacts are
+          #      not deploying to Nexus
+          artifacts: 'dependencies.log, **/*.zip, /var/log/sa/*'
+      - trigger-parameterized-builds:
+          - project: 'integration-distribution-test-{integration-test}'
+            condition: UNSTABLE_OR_BETTER
+            property-file: variables.jenkins-trigger
+            fail-on-missing: true
+          - project: 'integration-distribution-test-{integration-test}'
+            condition: FAILED
+          - project: 'integration-sanity-test-{integration-test}'
+            condition: UNSTABLE_OR_BETTER
+            property-file: variables.jenkins-trigger
+            fail-on-missing: true
+          - project: 'integration-sanity-test-{integration-test}'
+            condition: FAILED
+          - project: 'packaging-build-rpm-master'
+            condition: UNSTABLE_OR_BETTER
+            predefined-parameters: DOWNLOAD_URL=$BUNDLE_URL
+            property-file: variables.jenkins-trigger
+            fail-on-missing: true
+      - opendaylight-infra-shiplogs:
+          maven-version: 'mvn33'
