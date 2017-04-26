@@ -21,7 +21,6 @@
 
     templates:
       - devstack
-      - devstack-pre-pip-mitaka
       - devstack-pre-pip-newton
       - docker
       - gbp
@@ -42,8 +41,6 @@
       - platforms: ubuntu-14.04
         templates: robot
       - platforms: ubuntu-14.04
-        templates: devstack-pre-pip-mitaka
-      - platforms: ubuntu-14.04
         templates: devstack-pre-pip-newton
       - platforms: ubuntu-14.04
         templates: devstack
@@ -55,8 +52,6 @@
         templates: java-builder
       - platforms: ubuntu-16.04
         templates: robot
-      - platforms: ubuntu-16.04
-        templates: devstack-pre-pip-mitaka
       - platforms: ubuntu-16.04
         templates: devstack-pre-pip-newton
       - platforms: ubuntu-16.04
