@@ -4,7 +4,7 @@ ACTUALFEATURES="odl-integration-all"
 BUNDLEVERSION="$(xpath distribution/pom.xml '/project/version/text()' 2> /dev/null)"
 BUNDLEFOLDER="${KARAF_ARTIFACT}-${BUNDLEVERSION}"
 BUNDLE="${BUNDLEFOLDER}.zip"
-BUNDLE_URL="/tmp/r/org/opendaylight/integration/${KARAF_ARTIFACT}/${BUNDLEVERSION}/${BUNDLE}"
+BUNDLE_PATH="/tmp/r/org/opendaylight/integration/${KARAF_ARTIFACT}/${BUNDLEVERSION}/${BUNDLE}"
 
 echo "Kill any controller running"
 ps axf | grep karaf | grep -v grep | awk '{print "kill -9 " $1}' | sh
@@ -13,7 +13,7 @@ echo "Clean workspace"
 rm -rf *
 
 echo "Copying the distribution..."
-cp "${BUNDLE_URL}" .
+cp "${BUNDLE_PATH}" .
 
 echo "Extracting the new controller..."
 unzip -q "${BUNDLE}"
