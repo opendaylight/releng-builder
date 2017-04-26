@@ -4,7 +4,7 @@
     project-name: packaging
 
     jobs:
-      - '{project-name}-verify-python-{stream}'
+      - '{project-name}-verify-tox-{stream}'
       - 'packaging-build-rpm-{stream}'
       - 'packaging-build-rpm-snap-{stream}'
       - 'packaging-build-deb-{stream}'
