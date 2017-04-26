@@ -1,0 +1,95 @@
+---
+- project:
+    name: puppet
+    project-name: puppet
+
+    jobs:
+      - '{project-name}-verify-tox-{stream}'
+      - 'puppet-test-sanity-{stream}'
+      - 'puppet-test-acceptance-{stream}'
+
+    project: 'integration/packaging/puppet-opendaylight'
+
+    stream:
+      - master:
+          branch: 'master'
+
+- job-template:
+    name: 'puppet-test-sanity-{stream}'
+
+    node: centos7-docker-2c-4g
+
+    project-type: freestyle
+
+    properties:
+      - opendaylight-infra-properties:
+          build-days-to-keep: 7
+
+    parameters:
+      - opendaylight-infra-parameters:
+          os-cloud: '{os-cloud}'
+          project: '{project}'
+          branch: '{branch}'
+          refspec: 'refs/heads/{branch}'
+          artifacts: '{archive-artifacts}'
+
+    scm:
+      - integration-gerrit-scm:
+          basedir: 'packaging'
+          refspec: '$GERRIT_REFSPEC'
+          branch: 'master'
+
+    wrappers:
+      - opendaylight-infra-wrappers:
+          build-timeout: '{build-timeout}'
+
+    builders:
+      - shell: !include-raw: include-raw-puppet-config-deps.sh
+      - shell: |
+          #!/bin/bash
+          bundle exec rake sanity
+
+    triggers:
+      - gerrit-trigger-patch-submitted:
+          server: '{server-name}'
+          project: '{project}'
+          branch: '{branch}'
+          files: '**'
+
+- job-template:
+    name: 'puppet-test-acceptance-{stream}'
+
+    node: centos7-docker-2c-4g
+
+    project-type: freestyle
+
+    properties:
+      - opendaylight-infra-properties:
+          build-days-to-keep: 7
+
+    parameters:
+      - opendaylight-infra-parameters:
+          os-cloud: '{os-cloud}'
+          project: '{project}'
+          branch: '{branch}'
+          refspec: 'refs/heads/{branch}'
+          artifacts: '{archive-artifacts}'
+
+    scm:
+      - integration-gerrit-scm:
+          basedir: 'packaging'
+          refspec: '$GERRIT_REFSPEC'
+          branch: 'master'
+
+    wrappers:
+      - opendaylight-infra-wrappers:
+          build-timeout: '{build-timeout}'
+
+    builders:
+      - shell: !include-raw: include-raw-puppet-config-deps.sh
+      - shell: |
+          #!/bin/bash
+          bundle exec rake acceptance_dock
+
+    triggers:
+      - timed: '@daily'
