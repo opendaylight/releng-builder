@@ -223,8 +223,8 @@
           # with 45 minutes being the occassional edge case.
           # enforce a 60 minute limit to ensure stuck jobs get
           # cleared up sooner.
-          # Double that as Karaf 3+4 may take longer.
-          build-timeout: '120'
+          # Double that as Karaf 3+4 may take longer, and Bug 7900.
+          build-timeout: '240'
 
     triggers:
       - gerrit-trigger-patch-submitted:
@@ -400,8 +400,8 @@
           # with 45 minutes being the occassional edge case.
           # enforce a 60 minute limit to ensure stuck jobs get
           # cleared up sooner.
-          # Double that as Karaf 3+4 may take longer.
-          build-timeout: '120'
+          # Double that as Karaf 3+4 may take longer, and Bug 7900.
+          build-timeout: '240'
 
     triggers:
       - gerrit-trigger-patch-submitted:
