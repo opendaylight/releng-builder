@@ -1,0 +1,97 @@
+---
+- project:
+    name: puppet
+    project-name: puppet
+
+    jobs:
+      - '{project-name}-verify-tox-{stream}'
+      - 'puppet-test-sanity-{stream}'
+      - 'puppet-test-full-{stream}'
+
+    project: 'integration/packaging/puppet-opendaylight'
+
+    stream:
+      - master:
+          branch: 'master'
+
+- job-template:
+    name: 'puppet-test-sanity-{stream}'
+
+    node: centos7-docker-2c-4g
+
+    project-type: freestyle
+
+    properties:
+      - opendaylight-infra-properties:
+          build-days-to-keep: 7
+
+    parameters:
+      - opendaylight-infra-parameters:
+          os-cloud: '{os-cloud}'
+          project: '{project}'
+          branch: '{branch}'
+          refspec: 'refs/heads/{branch}'
+          artifacts: '{archive-artifacts}'
+      - string:
+          name: TEST_SUITE
+          default: 'sanity'
+          description: 'Set of tests to execute, Rakefile task'
+
+    scm:
+      - integration-gerrit-scm:
+          basedir: '{project-name}'
+          refspec: '$GERRIT_REFSPEC'
+          branch: '{branch}'
+
+    wrappers:
+      - opendaylight-infra-wrappers:
+          build-timeout: '{build-timeout}'
+
+    builders:
+      - shell: !include-raw: include-raw-test-puppet.sh
+
+    triggers:
+      - gerrit-trigger-patch-submitted:
+          server: '{server-name}'
+          project: '{project}'
+          branch: '{branch}'
+          files: '**'
+
+- job-template:
+    name: 'puppet-test-full-{stream}'
+
+    node: centos7-docker-2c-4g
+
+    project-type: freestyle
+
+    properties:
+      - opendaylight-infra-properties:
+          build-days-to-keep: 7
+
+    parameters:
+      - opendaylight-infra-parameters:
+          os-cloud: '{os-cloud}'
+          project: '{project}'
+          branch: '{branch}'
+          refspec: 'refs/heads/{branch}'
+          artifacts: '{archive-artifacts}'
+
+    scm:
+      - integration-gerrit-scm:
+          basedir: '{project-name}'
+          refspec: '$GERRIT_REFSPEC'
+          branch: '{branch}'
+      - string:
+          name: TEST_SUITE
+          default: 'acceptance_dock'
+          description: 'Set of tests to execute, Rakefile task'
+
+    wrappers:
+      - opendaylight-infra-wrappers:
+          build-timeout: '{build-timeout}'
+
+    builders:
+      - shell: !include-raw: include-raw-test-puppet.sh
+
+    triggers:
+      - timed: '@daily'

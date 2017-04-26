@@ -9,12 +9,8 @@ set -ex -o pipefail
 # Adapted from puppet-opendaylight/Vagrantfile
 # https://github.com/dfarrell07/puppet-opendaylight/blob/master/Vagrantfile
 
-# Update Int/Pack's puppet-opendaylight submodule to latest master
-pushd "$WORKSPACE/packaging"
-git submodule init
-git submodule update --remote
-
 # Install system-wide dependencies
+# TODO: Are all of these still needed?
 sudo yum install -y ruby-devel gcc-c++ zlib-devel patch redhat-rpm-config make rubygems
 
 # Install RVM to help build recent version of Ruby
@@ -35,9 +31,9 @@ ruby --version
 # Install gems dependencies of puppet-opendaylight via Bundler
 gem install bundler
 echo export PATH="\\$PATH:/usr/local/bin" >> "$HOME/.bashrc"
-pushd "$WORKSPACE/packaging/puppet/puppet-opendaylight"
+pushd "$WORKSPACE/puppet"
 bundle install
 bundle update
 
-# Quick+important tests: Linting, rspec and Beaker on CentOS container tests
-bundle exec rake sanity
+# Execute set of tests passed as param from job
+bundle exec rake "$TEST_SUITE"
