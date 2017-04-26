@@ -1,0 +1,112 @@
+---
+- job-template:
+    name: '{project}-csit4-1node-{functionality}-{install}-carbon'
+    # Keep synchronized with *-csit-* please.
+    disabled: false
+
+    project-type: freestyle
+    node: centos7-robot-2c-2g
+
+    properties:
+      - opendaylight-infra-properties:
+          build-days-to-keep: '{build-days-to-keep}'
+
+    parameters:
+      - opendaylight-infra-parameters:
+          os-cloud: '{os-cloud}'
+          project: 'integration/test'
+          branch: 'stable/carbon'
+          refspec: 'refs/heads/stable/carbon'
+          artifacts: '{archive-artifacts}'
+      - integration-distribution-branch:
+          branch: 'stable/carbon'
+      - integration-distribution-stream:
+          stream: 'carbon'
+      - integration-bundle-url:
+          bundle-url: '{bundle-url}'
+      - integration-controller-scope:
+          controller-scope: '{scope}'
+      - integration-controller-features:
+          controller-features: '{install-features}'
+      - integration-test-options:
+          test-options: '{robot-options}'
+      - integration-stream-test-plan:
+          stream-test-plan: '{project}-{functionality}-carbon.txt'
+      - integration-test-plan:
+          test-plan: '{project}-{functionality}.txt'
+      - integration-patch-refspec:
+          branch: 'master'
+      - integration-jdk-version:
+          jdkversion: 'openjdk8'
+      - distribution-karaf-version:
+          karaf-version: karaf4
+
+    scm:
+      - integration-gerrit-scm:
+          basedir: 'test'
+          refspec: '$PATCHREFSPEC'
+          branch: 'master'
+
+    wrappers:
+      - opendaylight-infra-wrappers:
+          build-timeout: '{build-timeout}'
+
+    builders:
+      - integration-infra-stack:
+          stack-template: '{stack-template}'
+          vm_0_count: '1'
+          vm_0_flavor: '{odl_system_flavor}'
+          vm_0_image: '{odl_system_image}'
+          vm_1_count: '{tools_system_count}'
+          vm_1_flavor: '{tools_system_flavor}'
+          vm_1_image: '{tools_system_image}'
+      - integration-install-robotframework
+      - inject:
+          properties-file: 'env.properties'
+      - integration-get-slave-addresses
+      - inject:
+          properties-file: 'slave_addresses.txt'
+      - integration-detect-variables
+      - integration-deploy-controller-run-test
+      - integration-cleanup-tmp
+
+    publishers:
+      - integration-robot:
+          unstable-if: 0.0
+          pass-if: 100.0
+      - email-notification:
+          email-recipients: '{email-recipients}'
+          email-prefix: '[{project}]'
+      - plot:
+          - title: '{01-plot-title}'
+            yaxis: '{01-plot-yaxis}'
+            group: '{01-plot-group}'
+            num-builds: '5400'
+            keep-records: true
+            style: line
+            use-description: false
+            # yamllint disable-line rule:line-length
+            csv-file-name: '{project}-csit4-1node-{functionality}-{install}-carbon-{01-plot-data-file}-history.csv'
+            series:
+              - file: '{01-plot-data-file}'
+                inclusion-flag: 'off'
+                display-table: true
+                format: csv
+          - title: '{02-plot-title}'
+            yaxis: '{02-plot-yaxis}'
+            group: '{02-plot-group}'
+            num-builds: '5400'
+            keep-records: true
+            style: line
+            use-description: false
+            # yamllint disable-line rule:line-length
+            csv-file-name: '{project}-csit4-1node-{functionality}-{install}-carbon-{02-plot-data-file}-history.csv'
+            series:
+              - file: '{02-plot-data-file}'
+                inclusion-flag: 'off'
+                display-table: true
+                format: csv
+      - integration-csit-archive-build
+      - opendaylight-infra-shiplogs:
+          maven-version: 'mvn33'
+
