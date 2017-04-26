@@ -20,7 +20,7 @@ if [ ${BUNDLE_URL} == 'last' ]; then
     BUNDLEFOLDER="${KARAF_ARTIFACT}-${BUNDLEVERSION}"
     BUNDLE="${KARAF_ARTIFACT}-${TIMESTAMP}.zip"
     ACTUAL_BUNDLE_URL="${NEXUSPATH}/${BUNDLEVERSION}/${BUNDLE}"
-elif [[ "${BUNDLE_URL}" == *"distribution-check"* ]]; then
+elif [[ "${BUNDLE_URL}" == *"jenkins"* ]]; then
     ACTUAL_BUNDLE_URL="${BUNDLE_URL}"
     BUNDLE="${BUNDLE_URL##*/}"
     BUNDLEFOLDER="${BUNDLE//.zip}"
