@@ -397,6 +397,8 @@ do
     ${SSH} "${!CONTROLLERIP}"  "cp -r /tmp/${BUNDLEFOLDER}/data/log /tmp/odl_log"
     ${SSH} "${!CONTROLLERIP}"  "tar -cf /tmp/odl${i}_karaf.log.tar /tmp/odl_log/*"
     scp "${!CONTROLLERIP}:/tmp/odl${i}_karaf.log.tar" "${WORKSPACE}/odl${i}_karaf.log.tar"
+    ${SSH} "${!CONTROLLERIP}"  "tar -cf /tmp/odl${i}_zrpcd.log.tar /tmp/zrpcd.init.log"
+    scp "${!CONTROLLERIP}:/tmp/odl${i}_zrpcd.log.tar" "${WORKSPACE}/odl${i}_zrpcd.log.tar"
     tar -xvf ${WORKSPACE}/odl${i}_karaf.log.tar -C . --strip-components 2 --transform s/karaf/odl${i}_karaf/g
     grep "ROBOT MESSAGE\| ERROR " odl${i}_karaf.log > odl${i}_err.log
     grep "ROBOT MESSAGE\|Exception" odl${i}_karaf.log > odl${i}_exception.log
