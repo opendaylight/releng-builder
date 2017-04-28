@@ -1,0 +1,33 @@
+---
+- project:
+    name: bgpcep-csit-bgpclustering-longevity
+    jobs:
+      - '{project}-csit-3node-{functionality}-{install}-{stream}'
+
+    # The project name
+    project: 'bgpcep'
+
+    # The functionality under test
+    functionality: 'bgpclustering-longevity'
+
+    # Project branches
+    stream:
+      - nitrogen:
+          branch: 'master'
+          jre: 'openjdk8'
+      - carbon:
+          branch: 'stable/carbon'
+          jre: 'openjdk8'
+          karaf-version: karaf3
+
+    install:
+      - only:
+          scope: 'only'
+
+    # Features to install
+    install-features: >
+        odl-restconf,
+        odl-bgpcep-bgp
+
+    # Built timeout
+    build-timeout: '1500'
