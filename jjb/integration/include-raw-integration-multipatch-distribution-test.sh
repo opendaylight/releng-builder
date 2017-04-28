@@ -65,7 +65,7 @@ do
     echo "cloning project ${PROJECT}"
     git clone "https://git.opendaylight.org/gerrit/p/${PROJECT}"
     echo "<module>${PROJECT_SHORTNAME}</module>" >> ${POM_FILE}
-    cd ${PROJECT_SHORTNAME}
+    pushd ${PROJECT_SHORTNAME}
     # For patch=controller=61/29761/5:45/29645/6, this gives 61/29761/5
     CHECKOUT=`echo ${patch} | cut -d\= -s -f 2 | cut -d\: -f 1`
     if [ "x${CHECKOUT}" != "x" ]; then
@@ -85,16 +85,16 @@ do
         git fetch "https://git.opendaylight.org/gerrit/${PROJECT}" "refs/changes/${pick}"
         git cherry-pick --ff --keep-redundant-commits FETCH_HEAD
     done
-    cd "${BUILD_DIR}"
+    popd
 done
 
 if [ "${distribution_status}" == "not_included" ]; then
     echo "adding integration/distribution"
     # clone distribution and add it as a module in root pom
     git clone "https://git.opendaylight.org/gerrit/p/integration/distribution"
-    cd distribution
+    pushd "distribution"
     git checkout "${DISTRIBUTION_BRANCH_TO_BUILD}"
-    cd "${BUILD_DIR}"
+    popd "${BUILD_DIR}"
     echo "<module>distribution</module>" >> ${POM_FILE}
 fi
 
