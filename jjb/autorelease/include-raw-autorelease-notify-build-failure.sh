@@ -93,7 +93,7 @@ failure that we were able to automatically parse as well as console logs."
 # shellcheck disable=SC2034
 ATTACHMENT_EXCLUDE="Unable to attach error message snippet related to the failure
 since this exceeds the mail server attachment size limit. Please
-refer $ERROR_LOG in archives directory."
+refer ${ERROR_LOG##*/} in archives directory."
 ATTACHMENT=ATTACHMENT_INCLUDE  # default behaviour
 BODY="Attention ${PROJECT:-"OpenDaylight"}-devs,
 
