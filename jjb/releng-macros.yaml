@@ -524,6 +524,7 @@
           export PACKER_LOG_PATH="packer-build.log" && \
                       packer.io build -color=false -var-file=$CLOUDENV \
                        -var-file=../packer/vars/{platform}.json \
+                       -parallel=false \
                        ../packer/templates/{template}.json
 
 - builder:
