@@ -11,6 +11,11 @@ virtualenv deb_build
 source deb_build/bin/activate
 pip install --upgrade pip
 
+# Wait for any background apt processes to finish
+# There seems to be a backgroud apt process that locks /var/lib/dpkg/lock
+# and causes our apt commands to fail.
+while pgrep apt > /dev/null; do sleep 1; done
+
 # Install latest ansible
 sudo apt-add-repository ppa:ansible/ansible
 sudo apt-get update

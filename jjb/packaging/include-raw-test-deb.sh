@@ -6,6 +6,11 @@
 #   -o pipefail: Fail on errors in scripts this calls, give stacktrace
 set -ex -o pipefail
 
+# Wait for any background apt processes to finish
+# There seems to be a backgroud apt process that locks /var/lib/dpkg/lock
+# and causes our apt commands to fail.
+while pgrep apt > /dev/null; do sleep 1; done
+
 # Install ODL from .deb link or .repo url
 if [[ $URL == *.deb ]]
 then
