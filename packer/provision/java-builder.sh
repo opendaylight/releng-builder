@@ -48,7 +48,7 @@ yum -y install mono-complete nuget
 echo "---> Installing the Hbase Server..."
 mkdir /tmp/Hbase
 cd /tmp/Hbase
-wget --no-verbose http://apache.osuosl.org/hbase/hbase-0.94.27/hbase-0.94.27.tar.gz
+wget --no-verbose https://archive.apache.org/dist/hbase/hbase-0.94.27/hbase-0.94.27.tar.gz
 tar -xvf hbase-0.94.27.tar.gz
 
 # Needed by TSDR
