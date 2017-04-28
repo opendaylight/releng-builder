@@ -170,8 +170,6 @@ service_plugins = networking_odl.l3.l3_odl.OpenDaylightL3RouterPlugin
 EOF
 fi #check for ENABLE_NETWORKING_L2GW
 
-fi #check for ODL_ML2_BRANCH
-
 fi #ODL_ENABLE_L3_FWD check
 
 cat >> ${local_conf_file_name} << EOF
