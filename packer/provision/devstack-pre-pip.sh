@@ -43,15 +43,9 @@ do
     pip install -c requirements/upper-constraints.txt -r ${proj}/test-requirements.txt
 done
 
-if [ "$branch" == "stable/mitaka" ] || [ "$branch" == "stable/liberty" ]; then
-    # the newton release has ovs 2.5.0
-    echo '---> Installing openvswitch from openstack Newton repo (2.5.0)'
-    yum install -y http://rdoproject.org/repos/openstack-newton/rdo-release-newton.rpm
-else
-    # the ocata release has ovs 2.6.1
-    echo '---> Installing openvswitch from openstack Ocata repo (2.6.1)'
-    yum install -y http://rdoproject.org/repos/openstack-ocata/rdo-release-ocata.rpm
-fi
+# the ocata release has ovs 2.6.1
+echo '---> Installing openvswitch from openstack Ocata repo (2.6.1)'
+yum install -y http://rdoproject.org/repos/openstack-ocata/rdo-release-ocata.rpm
 
 yum install -y --nogpgcheck openvswitch
 
