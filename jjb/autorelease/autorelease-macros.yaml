@@ -157,6 +157,9 @@
                 mkdir -p archives/
                 cp /var/log/sa/* $_
                 # convert sar data to ascii format
-                sar -A -f /var/log/sa/sa$(date +%d) > archives/sar$(date +%d)
+                while IFS="" read -r s
+                do
+                    [ -f "$s" ] && sar -A -f "$s" > archives/sar/sar${s//[!0-9]/}
+                done < <(find /var/log/{sa,sysstat} -name "sa[0-9]*")
           script-only-if-succeeded: false
           script-only-if-failed: false
