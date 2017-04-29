@@ -55,7 +55,7 @@ tar -xvf hbase-0.94.27.tar.gz
 echo "---> Installing the Cassandra Server..."
 mkdir /tmp/cassandra
 cd /tmp/cassandra
-wget --no-verbose http://apache.osuosl.org/cassandra/2.1.16/apache-cassandra-2.1.16-bin.tar.gz
+wget --no-verbose https://archive.apache.org/dist/cassandra/2.1.16/apache-cassandra-2.1.16-bin.tar.gz
 tar -xvf apache-cassandra-2.1.16-bin.tar.gz
 
 # Generally useful for all projects
