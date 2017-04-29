@@ -129,6 +129,13 @@
       - shell: |
           ./scripts/fix-relativepaths.sh
 
+- builder:
+    name: autorelease-generate-release-notes
+    builders:
+      - shell: |
+          cd $WORKSPACE/scripts/release_notes_management
+          java -jar target/autonotes.jar
+
 - publisher:
     # include-raw-autorelease-notify-build-failure.sh searches console log for
     # failures and emails the status to the release mailing list.
