@@ -377,24 +377,6 @@
           # TODO stop archiving **/*.zip once we figure out why artifacts are
           #      not deploying to Nexus
           artifacts: 'dependencies.log, **/*.zip, /var/log/sa/*'
-      - trigger-parameterized-builds:
-          - project: 'integration-distribution-test-{integration-test}'
-            condition: UNSTABLE_OR_BETTER
-            property-file: variables.jenkins-trigger
-            fail-on-missing: true
-          - project: 'integration-distribution-test-{integration-test}'
-            condition: FAILED
-          - project: 'integration-sanity-test-{integration-test}'
-            condition: UNSTABLE_OR_BETTER
-            property-file: variables.jenkins-trigger
-            fail-on-missing: true
-          - project: 'integration-sanity-test-{integration-test}'
-            condition: FAILED
-          - project: 'packaging-build-rpm-master'
-            condition: UNSTABLE_OR_BETTER
-            predefined-parameters: DOWNLOAD_URL=$BUNDLE_URL
-            property-file: variables.jenkins-trigger
-            fail-on-missing: true
       - opendaylight-infra-shiplogs:
           maven-version: 'mvn33'
 
@@ -541,23 +523,5 @@
           # TODO stop archiving **/*.zip once we figure out why artifacts are
           #      not deploying to Nexus
           artifacts: 'dependencies.log, **/*.zip, /var/log/sa/*'
-      - trigger-parameterized-builds:
-          - project: 'integration-distribution-test-{integration-test}'
-            condition: UNSTABLE_OR_BETTER
-            property-file: variables.jenkins-trigger
-            fail-on-missing: true
-          - project: 'integration-distribution-test-{integration-test}'
-            condition: FAILED
-          - project: 'integration-sanity-test-{integration-test}'
-            condition: UNSTABLE_OR_BETTER
-            property-file: variables.jenkins-trigger
-            fail-on-missing: true
-          - project: 'integration-sanity-test-{integration-test}'
-            condition: FAILED
-          - project: 'packaging-build-rpm-master'
-            condition: UNSTABLE_OR_BETTER
-            predefined-parameters: DOWNLOAD_URL=$BUNDLE_URL
-            property-file: variables.jenkins-trigger
-            fail-on-missing: true
       - opendaylight-infra-shiplogs:
           maven-version: 'mvn33'
