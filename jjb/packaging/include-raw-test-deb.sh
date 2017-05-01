@@ -12,12 +12,16 @@ set -ex -o pipefail
 while pgrep apt > /dev/null; do sleep 1; done
 
 # Install ODL from .deb link or .repo url
-if [[ $URL == *.deb ]]
+if [[ $PACKAGE == *.deb ]]
 then
-  sudo apt-get install -y "$URL"
-elif [[ $URL == ppa:* ]]
+  # shellcheck disable=SC2154
+  pkg_basename="${{PACKAGE##*/}}"
+  # NB: Apt can't install directly from URL, so need this intermediary file
+  curl -o "$pkg_basename" "$PACKAGE"
+  sudo dpkg --install ./"$pkg_basename"
+elif [[ $PACKAGE == ppa:* ]]
 then
-  sudo add-apt-repository "$REPO_FILE"
+  sudo add-apt-repository "$PACKAGE"
   sudo apt-get update
   sudo apt-get install -y opendaylight
 else

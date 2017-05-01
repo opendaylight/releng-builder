@@ -169,14 +169,10 @@
           refspec: 'refs/heads/{branch}'
           artifacts: '{archive-artifacts}'
       - string:
-          name: URL
+          name: PACKAGE
           # yamllint disable-line rule:line-length
           default: 'http://download.opensuse.org/repositories/home:/akshitajha/xUbuntu_16.04/all/opendaylight_5.0.0-1_all.deb'
-          description: 'Link to .deb file'
-      - string:
-          name: REPO_FILE
-          default: 'ppa:odl-team/boron'
-          description: 'Name of the PPA repository'
+          description: 'Link to .deb file or name of custom PPA repo'
 
     scm:
       - integration-gerrit-scm:
