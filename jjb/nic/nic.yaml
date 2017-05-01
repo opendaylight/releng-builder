@@ -6,7 +6,8 @@
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-validate-autorelease-{stream}'
+      # Uncomment this if NIC is added back to autorelease
+      # - '{project-name}-validate-autorelease-{stream}'
       - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: nitrogen
@@ -34,7 +35,8 @@
       - '{project-name}-distribution4-check-carbon'
       - '{project-name}-integration-{stream}'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-validate-autorelease-{stream}'
+      # Uncomment this if NIC is added back to autorelease
+      # - '{project-name}-validate-autorelease-{stream}'
       - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: carbon
