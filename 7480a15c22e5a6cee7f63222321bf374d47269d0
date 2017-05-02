@@ -22,6 +22,30 @@
       "revId": "7480a15c22e5a6cee7f63222321bf374d47269d0",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba068154_655fac73",
+        "filename": "jjb/packaging/include-raw-test-ansible-deb.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2017-05-02T22:13:42Z",
+      "side": 1,
+      "message": "Yeah, I stumbled on that too and tried to use it. It didn\u0027t work out because it\u0027s not installed already on the image, and we can\u0027t install it because of the original apt-already-running problem. We could bake it in to the base image I guess.",
+      "parentUuid": "da01753e_b8976a47",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 45
+      },
+      "revId": "7480a15c22e5a6cee7f63222321bf374d47269d0",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
