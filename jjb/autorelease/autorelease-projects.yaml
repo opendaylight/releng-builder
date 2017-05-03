@@ -493,6 +493,7 @@
               -Pintegrationtests,docs,repoBuild
               -Dcheckstyle.skip=true
               -DaltDeploymentRepository=staging::default::file:hide/from/pom/files/stage
+              -Dskip.karaf.featureTest=true
               -fn
               {opendaylight-infra-mvn-opts}
           java-opts:
