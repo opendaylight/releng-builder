@@ -19,4 +19,4 @@ git remote add gerrit "ssh://jenkins-$SILO@git.opendaylight.org:29418/releng/bui
 # Don't fail the build if this command fails because it's possible that there
 # is no changes since last update.
 # shellcheck disable=SC1083
-git review --yes -t {gerrit-topic} || true
+git review --yes -t {gerrit-topic} --reviewers jluhrsen@redhat.com || true
