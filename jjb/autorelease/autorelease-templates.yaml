@@ -128,14 +128,14 @@
             fail-on-missing: true
           - project: 'integration-distribution-test-{integration-test}'
             condition: FAILED
-            predefined-parameters: BUNDLE_URL=last
+            trigger-with-no-params: true
           - project: 'integration-sanity-test-{integration-test}'
             condition: UNSTABLE_OR_BETTER
             property-file: variables.jenkins-trigger
             fail-on-missing: true
           - project: 'integration-sanity-test-{integration-test}'
             condition: FAILED
-            predefined-parameters: BUNDLE_URL=last
+            trigger-with-no-params: true
           - project: 'packaging-build-rpm-master'
             condition: UNSTABLE_OR_BETTER
             predefined-parameters: DOWNLOAD_URL=$BUNDLE_URL
