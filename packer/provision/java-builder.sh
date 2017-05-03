@@ -19,6 +19,9 @@ yum install -y python34-{devel,virtualenv,setuptools,pip}
 # Install python dependencies, useful generally
 yum install -y python-{devel,virtualenv,setuptools,pip}
 
+# Use pip to install newer version of git-review
+pip install git-review --upgrade
+
 # Needed by autorelease scripts
 yum install -y xmlstarlet
 
