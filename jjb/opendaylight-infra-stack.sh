@@ -47,7 +47,15 @@ for try in $(seq $STACK_RETRIES); do
                     echo "$j: $STACK_SHOW"
                     if [[ $STACK_SHOW == *"DELETE_FAILED"* ]]; then
                         echo "stack delete failed. trying to stack abandon now"
-                        openstack stack abandon "$STACK_NAME"
+                        # stack abandon does not work on RS, therefore requires acquiring a token
+                        # and using http delete method to abondon DELETE_FAILED stacks
+                        # Todo: remove the change once RS fixes the issue upstream
+                        # openstack stack abandon "$STACK_NAME"
+                        STACK_ID=$(openstack stack show -f json -c "id" "$STACK_NAME" | jq -r '."id"')
+                        TOKEN=$(openstack token issue -f json -c id | jq -r '.id')
+                        curl -si -X DELETE -H "Content-Type: application/json" -H "Accept: application/json"\
+                            -H "x-auth-token: $TOKEN"\
+                            "https://dfw.orchestration.api.rackspacecloud.com/v1/904885/stacks/$STACK_NAME/$STACK_ID/abandon"
                         STACK_SHOW=$(openstack stack show "$STACK_NAME")
                         echo "$STACK_SHOW"
                     fi
