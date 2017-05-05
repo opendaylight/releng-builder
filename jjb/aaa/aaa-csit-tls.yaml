@@ -27,10 +27,11 @@
     # Features to install
     install-features: odl-restconf,
         odl-netconf-all,
-        http
+        http,
+        odl-ovsdb-southbound-impl-ui
 
     # Robot custom options
     robot-options: ''
 
-    # Don't spin up mininet vms as aaa-csit-authn jobs don't need them
-    tools_system_count: 0
+    # mininet image
+    tools_system_image: Ubuntu 14.04 - mininet-ovs-25 - 20170210-0300
