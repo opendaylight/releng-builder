@@ -138,6 +138,10 @@
           if [ "$GERRIT_BRANCH" != "stable/beryllium" ]; then
               cd $WORKSPACE/scripts/release_notes_management
               java -jar target/autonotes.jar
+              if [ -f  "$WORKSPACE/scripts/release_notes_management/projects/release-notes.rst" ]; then
+                  mkdir -p $WORKSPACE/archives
+                  cp -vf "$WORKSPACE/scripts/release_notes_management/projects/release-notes.rst" "$WORKSPACE/archives"
+              fi
           fi
 
 - publisher:
