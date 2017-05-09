@@ -9,10 +9,10 @@
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
 
-mkdir -p archives/
+mkdir -p archives/sar
 cp /var/log/sa/* $_
 # convert sar data to ascii format
 while IFS="" read -r s
 do
     [ -f "$s" ] && sar -A -f "$s" > archives/sar/sar${s//[!0-9]/}
-done < <(find /var/log/{sa,sysstat} -name "sa[0-9]*")
+done < <(find /var/log/sa -name "sa[0-9]*")
