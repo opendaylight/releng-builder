@@ -54,7 +54,6 @@ mkdir -p /tmp/build_quagga
 cd /tmp/build_quagga
 git clone https://github.com/6WIND/zrpcd.git
 cd zrpcd
-git checkout 20170418
 chmod a+x /tmp/build_quagga/zrpcd/pkgsrc/dev_compile_script.sh
 /tmp/build_quagga/zrpcd/pkgsrc/dev_compile_script.sh -d -b -t -v 2
 
