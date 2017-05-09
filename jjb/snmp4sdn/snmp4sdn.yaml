@@ -6,7 +6,8 @@
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-validate-autorelease-{stream}'
+      #remove nitrogen validate job until SNMP4SDN is back in nitrogen
+	  #- '{project-name}-validate-autorelease-{stream}'
       - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: nitrogen
