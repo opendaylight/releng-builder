@@ -157,13 +157,6 @@
     publishers:
       - postbuildscript:
           builders:
-            - shell: |
-                mkdir -p archives/
-                cp /var/log/sa/* $_
-                # convert sar data to ascii format
-                while IFS="" read -r s
-                do
-                    [ -f "$s" ] && sar -A -f "$s" > archives/sar/sar${s//[!0-9]/}
-                done < <(find /var/log/{sa,sysstat} -name "sa[0-9]*")
+            - shell: !include-raw: include-raw-autorelease-collect-sar.sh
           script-only-if-succeeded: false
           script-only-if-failed: false
