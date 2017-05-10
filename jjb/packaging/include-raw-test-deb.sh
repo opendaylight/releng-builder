@@ -17,7 +17,7 @@ then
   # shellcheck disable=SC2154
   pkg_basename="${{PACKAGE##*/}}"
   # NB: Apt can't install directly from URL, so need this intermediary file
-  curl -o "$pkg_basename" "$PACKAGE"
+  curl -L --silent -o "$pkg_basename" "$PACKAGE"
   sudo dpkg --install ./"$pkg_basename"
 elif [[ $PACKAGE == ppa:* ]]
 then
