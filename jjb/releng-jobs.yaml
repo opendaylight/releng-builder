@@ -120,6 +120,14 @@
       - opendaylight-infra-properties:
           build-days-to-keep: 7
 
+    parameters:
+      - opendaylight-infra-parameters:
+          os-cloud: '{os-cloud}'
+          project: '{project}'
+          branch: '{branch}'
+          refspec: 'refs/heads/{branch}'
+          artifacts: '{archive-artifacts}'
+
     wrappers:
       - opendaylight-infra-wrappers:
           build-timeout: '{build-timeout}'
