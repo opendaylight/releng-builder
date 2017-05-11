@@ -1,21 +1,48 @@
 ---
 - project:
-    name: puppet
+    name: puppet-nitrogen
     project-name: puppet
 
     jobs:
       - '{project-name}-verify-tox-{stream}'
-      - 'puppet-test-sanity-{stream}'
-      - 'puppet-test-full-{stream}'
+      - '{project-name}-test-sanity-{stream}'
+      - '{project-name}-test-full-{stream}'
 
     project: 'integration/packaging/puppet-opendaylight'
 
-    stream:
-      - master:
-          branch: 'master'
+    stream: nitrogen
+    branch: 'master'
+
+- project:
+    name: puppet-carbon
+    project-name: puppet
+
+    jobs:
+      - '{project-name}-verify-tox-{stream}'
+      - '{project-name}-test-sanity-{stream}'
+      - '{project-name}-test-full-{stream}'
+
+    project: 'integration/packaging/puppet-opendaylight'
+
+    stream: carbon
+    branch: 'stable/carbon'
+
+- project:
+    name: puppet-boron
+    project-name: puppet
+
+    jobs:
+      - '{project-name}-verify-tox-{stream}'
+      - '{project-name}-test-sanity-{stream}'
+      - '{project-name}-test-full-{stream}'
+
+    project: 'integration/packaging/puppet-opendaylight'
+
+    stream: boron
+    branch: 'stable/boron'
 
 - job-template:
-    name: 'puppet-test-sanity-{stream}'
+    name: '{project-name}-test-sanity-{stream}'
 
     node: centos7-docker-2c-4g
 
@@ -58,7 +85,7 @@
           files: '**'
 
 - job-template:
-    name: 'puppet-test-full-{stream}'
+    name: '{project-name}-test-full-{stream}'
 
     node: centos7-docker-2c-4g
 
