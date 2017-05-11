@@ -133,15 +133,11 @@
     name: autorelease-generate-release-notes
     builders:
       - shell: |
-          # TODO: Remove this condition once stable/beryllium is no longer
-          #       officially maintained.
-          if [ "$GERRIT_BRANCH" != "stable/beryllium" ]; then
-              cd $WORKSPACE/scripts/release_notes_management
-              java -jar target/autonotes.jar
-              if [ -f  "$WORKSPACE/scripts/release_notes_management/projects/release-notes.rst" ]; then
-                  mkdir -p $WORKSPACE/archives
-                  cp -vf "$WORKSPACE/scripts/release_notes_management/projects/release-notes.rst" "$WORKSPACE/archives"
-              fi
+          cd $WORKSPACE/scripts/release_notes_management
+          java -jar target/autonotes.jar
+          if [ -f  "$WORKSPACE/scripts/release_notes_management/projects/release-notes.rst" ]; then
+              mkdir -p $WORKSPACE/archives
+              cp -vf "$WORKSPACE/scripts/release_notes_management/projects/release-notes.rst" "$WORKSPACE/archives"
           fi
 
 - publisher:
