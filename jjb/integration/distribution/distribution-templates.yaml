@@ -91,12 +91,12 @@
       - opendaylight-infra-shiplogs:
           maven-version: 'mvn33'
 
-# Delete these when Karaf 4 becomes Carbon default.
+# Delete these when Karaf 4 becomes Nitrogen default.
 
 # TODO: Is there a way to de-duplicate with generic template parts?
 
 - job-template:
-    name: '{project-name}-distribution4-check-carbon'
+    name: '{project-name}-distribution3-check-nitrogen'
     disabled: false
 
     project-type: freestyle
@@ -112,13 +112,13 @@
       - opendaylight-infra-parameters:
           os-cloud: '{os-cloud}'
           project: '{project}'
-          branch: 'stable/carbon'
-          refspec: 'refs/heads/stable/carbon'
+          branch: 'master'
+          refspec: 'refs/heads/master'
           artifacts: '{archive-artifacts} **/dependency_tree.txt **/target/surefire-reports/*-output.txt'
       - integration-distribution-git-url:
           git-url: '{git-url}'
       - distribution-karaf-version:
-          karaf-version: karaf4
+          karaf-version: karaf3
       - maven-exec:
           maven-version: mvn33
 
@@ -128,7 +128,7 @@
           refspec: '$GERRIT_REFSPEC'
           branch: '$GERRIT_BRANCH'
       - integration-distribution-scm:
-          branch: 'stable/carbon'
+          branch: 'master'
 
     wrappers:
       - opendaylight-infra-wrappers:
@@ -143,7 +143,7 @@
       - gerrit-trigger-patch-submitted:
           server: '{server-name}'
           project: '{project}'
-          branch: 'stable/carbon'
+          branch: 'master'
           files: '**'
 
     builders:
