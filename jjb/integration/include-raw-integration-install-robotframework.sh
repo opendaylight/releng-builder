@@ -52,6 +52,9 @@ pip install --upgrade tornado jsonpointer
 # Module for TemplatedRequests.robot library
 pip install --upgrade jmespath
 
+# Module for backup-restore support library
+pip install jsonpatch
+
 # Print installed versions.
 pip freeze
 
