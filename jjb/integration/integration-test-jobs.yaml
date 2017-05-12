@@ -189,6 +189,8 @@
     parameters:
       - integration-bundle-url:
           bundle-url: '{bundle-url}'
+      - distribution-karaf-version:
+          karaf-version: '{karaf-version}'
 
     builders:
       - trigger-builds:
@@ -219,13 +221,16 @@
     parameters:
       - integration-bundle-url:
           bundle-url: '{bundle-url}'
+      - distribution-karaf-version:
+          karaf-version: '{karaf-version}'
 
     builders:
       - trigger-builds:
           - project: '{csit-sanity-list}'
             block: true
-            predefined-parameters:
+            predefined-parameters: |
               BUNDLE_URL=$BUNDLE_URL
+              KARAF_VERSION=$KARAF_VERSION
 
     publishers:
       - email-notification:
@@ -451,6 +456,8 @@
     parameters:
       - integration-bundle-url:
           bundle-url: '{bundle-url}'
+      - distribution-karaf-version:
+          karaf-version: '{karaf-version}'
 
     triggers:
       - timed: '{schedule-weekly}'
@@ -459,8 +466,9 @@
       - trigger-builds:
           - project: '{csit-weekly-list}'
             block: true
-            predefined-parameters:
+            predefined-parameters: |
               BUNDLE_URL=$BUNDLE_URL
+              KARAF_VERSION=$KARAF_VERSION
 
     publishers:
       - email-notification:
@@ -480,8 +488,8 @@
     parameters:
       - integration-bundle-url:
           bundle-url: '{bundle-url}'
-      - integration-jdk-version:
-          jdkversion: '{jre}'
+      - distribution-karaf-version:
+          karaf-version: '{karaf-version}'
 
     triggers:
       - timed: '{schedule-high-frequency}'
@@ -490,8 +498,9 @@
       - trigger-builds:
           - project: '{csit-high-frequency-list}'
             block: true
-            predefined-parameters:
+            predefined-parameters: |
               BUNDLE_URL=$BUNDLE_URL
+              KARAF_VERSION=$KARAF_VERSION
 
     publishers:
       - email-notification:

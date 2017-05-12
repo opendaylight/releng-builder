@@ -359,12 +359,12 @@
       - opendaylight-infra-shiplogs:
           maven-version: 'mvn33'
 
-# Delete these when Karaf 4 becomes Carbon default.
+# Delete these when Karaf 4 becomes Nitrogen default.
 
 # TODO: Is there a way to de-duplicate with generic template parts?
 
 - job-template:
-    name: 'distribution4-check-carbon'
+    name: 'distribution3-check-nitrogen'
     disabled: false
 
     project-type: freestyle
@@ -380,11 +380,11 @@
       - opendaylight-infra-parameters:
           os-cloud: '{os-cloud}'
           project: '{project}'
-          branch: stable/carbon
-          refspec: refs/heads/stable/carbon
+          branch: master
+          refspec: refs/heads/master
           artifacts: '{archive-artifacts} **/dependency_tree.txt **/target/surefire-reports/*-output.txt'
       - distribution-karaf-version:
-          karaf-version: karaf4
+          karaf-version: karaf3
       - maven-exec:
           maven-version: mvn33
 
@@ -392,7 +392,7 @@
       - integration-gerrit-scm:
           basedir: distribution
           refspec: '$GERRIT_REFSPEC'
-          branch: stable/carbon
+          branch: master
 
     wrappers:
       - opendaylight-infra-wrappers:
@@ -407,7 +407,7 @@
       - gerrit-trigger-patch-submitted:
           server: '{server-name}'
           project: '{project}'
-          branch: 'stable/carbon'
+          branch: 'master'
           files: '**'
 
     builders:
@@ -443,7 +443,7 @@
           maven-version: 'mvn33'
 
 - job-template:
-    name: 'distribution4-deploy-carbon'
+    name: 'distribution3-deploy-nitrogen'
     disabled: false
 
     project-type: freestyle
@@ -458,17 +458,17 @@
       - opendaylight-infra-parameters:
           os-cloud: '{os-cloud}'
           project: '{project}'
-          branch: 'stable/carbon'
-          refspec: 'refs/heads/stable/carbon'
+          branch: 'master'
+          refspec: 'refs/heads/master'
           artifacts: '{archive-artifacts} **/*.hprof'
       - integration-distribution-branch:
-          branch: 'stable/carbon'
+          branch: 'master'
       - integration-bundle-url:
           bundle-url: '{bundle-url}'
       - integration-jdk-version:
           jdkversion: '{jre}'
       - distribution-karaf-version:
-          karaf-version: karaf4
+          karaf-version: karaf3
 
     wrappers:
       - opendaylight-infra-wrappers:
@@ -488,7 +488,7 @@
           maven-version: 'mvn33'
 
 - job-template:
-    name: 'distribution4-offline-carbon'
+    name: 'distribution3-offline-nitrogen'
     disabled: false
 
     project-type: freestyle
@@ -503,17 +503,17 @@
       - opendaylight-infra-parameters:
           os-cloud: '{os-cloud}'
           project: '{project}'
-          branch: 'stable/carbon'
-          refspec: 'refs/heads/stable/carbon'
+          branch: 'master'
+          refspec: 'refs/heads/master'
           artifacts: '{archive-artifacts} **/*.hprof'
       - integration-distribution-branch:
-          branch: 'stable/carbon'
+          branch: 'master'
       - integration-bundle-url:
           bundle-url: '{bundle-url}'
       - integration-jdk-version:
           jdkversion: '{jre}'
       - distribution-karaf-version:
-          karaf-version: karaf4
+          karaf-version: karaf3
 
     wrappers:
       - opendaylight-infra-wrappers:
