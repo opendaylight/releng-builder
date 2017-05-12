@@ -12,6 +12,7 @@ AKKACONF=/tmp/${BUNDLEFOLDER}/configuration/initial/akka.conf
 MODULESCONF=/tmp/${BUNDLEFOLDER}/configuration/initial/modules.conf
 MODULESHARDSCONF=/tmp/${BUNDLEFOLDER}/configuration/initial/module-shards.conf
 CONTROLLERMEM="2048m"
+AKKAHBPAUSE=3
 
 if [ ${CONTROLLERSCOPE} == 'all' ]; then
     ACTUALFEATURES="odl-integration-compatible-with-all,${CONTROLLERFEATURES}"
@@ -125,6 +126,11 @@ cat ${MODULESCONF}
 
 echo "Dump module-shards.conf"
 cat ${MODULESHARDSCONF}
+
+echo "Set akka acceptable-heartbeat-pause"
+AKKAFACTORY=/tmp/${BUNDLEFOLDER}/system/org/opendaylight/controller/sal-clustering-config/*/sal-clustering-config-*-factoryakkaconf.xml
+sed -ie 's/failure-detector.acceptable-heartbeat-pause = .*/failure-detector.acceptable-heartbeat-pause = ${AKKAHBPAUSE} s/g' \${AKKAFACTORY}
+cat \${AKKAFACTORY}
 
 EOF
 
