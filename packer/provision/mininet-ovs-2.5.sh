@@ -47,15 +47,3 @@ apt-get install vlan
 
 # Install netaddr package which is needed by some custom mininet topologies
 apt-get install python-netaddr
-
-#Check out 6Wind quagga with tag name '20170418', compile and install for router functionalities
-echo "---> Installing the Quagga..."
-mkdir -p /tmp/build_quagga
-cd /tmp/build_quagga
-git clone https://github.com/6WIND/zrpcd.git
-cd zrpcd
-chmod a+x /tmp/build_quagga/zrpcd/pkgsrc/dev_compile_script.sh
-/tmp/build_quagga/zrpcd/pkgsrc/dev_compile_script.sh -d -b -t -v 2
-
-# Removing the build_quagga folder
-rm -rf /tmp/build_quagga/
