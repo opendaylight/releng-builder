@@ -238,11 +238,6 @@ done
 echo "Cool down for ${COOLDOWN_PERIOD} seconds :)..."
 sleep ${COOLDOWN_PERIOD}
 
-if [ ${NUM_OPENSTACK_SYSTEM} -gt 0 ]; then
-   echo "Exiting without running tests to deploy openstack for testing"
-   exit
-fi
-
 echo "Generating controller variables..."
 for i in `seq 1 ${NUM_ODL_SYSTEM}`
 do
@@ -252,6 +247,11 @@ do
     KARAF_PID=$(ssh ${!CONTROLLERIP} "ps aux | grep ${KARAF_ARTIFACT} | grep -v grep | tr -s ' ' | cut -f2 -d' '")
     ssh ${!CONTROLLERIP} "jstack $KARAF_PID"> ${WORKSPACE}/karaf_${i}_threads_before.log || true
 done
+
+if [ ${NUM_OPENSTACK_SYSTEM} -gt 0 ]; then
+   echo "Exiting without running tests to deploy openstack for testing"
+   exit
+fi
 
 echo "Generating mininet variables..."
 for i in `seq 1 ${NUM_TOOLS_SYSTEM}`
