@@ -39,21 +39,36 @@ for STACK_NAME in "${OS_STACKS[@]}"; do
     if [[ "${ACTIVE_BUILDS[@]}" =~ $STACK_NAME ]]; then
         # No need to delete stacks if there exists an active build for them
         continue
-    elif [[ "$STACK_STATUS" =~ DELETE_FAILED ]]; then
-        echo "Stack delete failed, trying to stack abandon now."
-        # stack abandon does not work on RS, therefore requires acquiring a token
-        # and using http delete method to abondon DELETE_FAILED stacks
-        # Todo: remove the change once RS fixes the issue upstream
-        # openstack stack abandon "$STACK_NAME"
-        STACK_ID=$(openstack stack show -f json -c "id" "$STACK_NAME" | jq -r '."id"')
-        TOKEN=$(openstack token issue -f json -c id | jq -r '.id')
-        curl -si -X DELETE -H "Content-Type: application/json" -H "Accept: application/json"\
-            -H "x-auth-token: $TOKEN"\
-            "https://dfw.orchestration.api.rackspacecloud.com/v1/904885/stacks/$STACK_NAME/$STACK_ID/abandon"
-        STACK_SHOW=$(openstack stack show "$STACK_NAME")
-        echo "$STACK_SHOW"
     else
-        echo "Deleting orphaned stack: $STACK_NAME"
-        openstack stack delete --yes "$STACK_NAME"
+        OS_STATUS=$(openstack stack show -f json -c stack_status "$stack" | jq -r '.stack_status')
+        case "$OS_STATUS" in
+            DELETE_IN_PROGRESS)
+                echo "skipping delete, $stack is already DELETE in progress."
+                continue
+            ;;
+            DELETE_FAILED)
+                echo "Stack delete failed, trying to stack abandon now."
+                # stack abandon does not work on RS, therefore requires acquiring a token
+                # and using http delete method to abondon DELETE_FAILED stacks
+                # Todo: remove the change once RS fixes the issue upstream
+                # openstack stack abandon "$STACK_NAME"
+                STACK_ID=$(openstack stack show -f json -c "id" "$STACK_NAME" | jq -r '."id"')
+                TOKEN=$(openstack token issue -f json -c id | jq -r '.id')
+                curl -si -X DELETE -H "Content-Type: application/json" -H "Accept: application/json"\
+                    -H "x-auth-token: $TOKEN"\
+                    "https://dfw.orchestration.api.rackspacecloud.com/v1/904885/stacks/$STACK_NAME/$STACK_ID/abandon"
+                STACK_SHOW=$(openstack stack show "$STACK_NAME")
+                echo "$STACK_SHOW"
+                continue
+            ;;
+            CREATE_COMPLETE|CREATE_FAILED)
+                echo "Deleting orphaned stack: $stack"
+                openstack stack delete --yes "$stack"
+                continue
+            ;;
+            *)
+                continue
+            ;;
+        esac
     fi
 done
