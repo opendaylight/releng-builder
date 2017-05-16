@@ -1,6 +1,6 @@
 ---
 - job-template:
-    name: '{project}-csit4-1node-{functionality}-{install}-carbon'
+    name: '{project}-csit4-1node-{functionality}-{install}-nitrogen'
     # Keep synchronized with *-csit-* please.
     disabled: false
 
@@ -12,16 +12,17 @@
           build-days-to-keep: '{build-days-to-keep}'
 
     parameters:
+      # Removing {kafka-version} will force this job to run in k4.
       - opendaylight-infra-parameters:
           os-cloud: '{os-cloud}'
           project: 'integration/test'
-          branch: 'stable/carbon'
-          refspec: 'refs/heads/stable/carbon'
+          branch: 'master'
+          refspec: 'refs/heads/master'
           artifacts: '{archive-artifacts}'
       - integration-distribution-branch:
-          branch: 'stable/carbon'
+          branch: 'master'
       - integration-distribution-stream:
-          stream: 'carbon'
+          stream: 'nitrogen'
       - integration-bundle-url:
           bundle-url: '{bundle-url}'
       - integration-controller-scope:
@@ -31,15 +32,13 @@
       - integration-test-options:
           test-options: '{robot-options}'
       - integration-stream-test-plan:
-          stream-test-plan: '{project}-{functionality}-carbon.txt'
+          stream-test-plan: '{project}-{functionality}-nitrogen.txt'
       - integration-test-plan:
           test-plan: '{project}-{functionality}.txt'
       - integration-patch-refspec:
           branch: 'master'
       - integration-jdk-version:
           jdkversion: 'openjdk8'
-      - distribution-karaf-version:
-          karaf-version: karaf4
 
     scm:
       - integration-gerrit-scm:
@@ -86,7 +85,7 @@
             style: line
             use-description: false
             # yamllint disable-line rule:line-length
-            csv-file-name: '{project}-csit4-1node-{functionality}-{install}-carbon-{01-plot-data-file}-history.csv'
+            csv-file-name: '{project}-csit4-1node-{functionality}-{install}-nitrogen-{01-plot-data-file}-history.csv'
             series:
               - file: '{01-plot-data-file}'
                 inclusion-flag: 'off'
@@ -100,7 +99,7 @@
             style: line
             use-description: false
             # yamllint disable-line rule:line-length
-            csv-file-name: '{project}-csit4-1node-{functionality}-{install}-carbon-{02-plot-data-file}-history.csv'
+            csv-file-name: '{project}-csit4-1node-{functionality}-{install}-nitrogen-{02-plot-data-file}-history.csv'
             series:
               - file: '{02-plot-data-file}'
                 inclusion-flag: 'off'
