@@ -26,7 +26,7 @@ for silo in releng sandbox; do
     sleep 1  # Need to sleep for 1 second otherwise next line causes script to stall
     ACTIVE_BUILDS=(${ACTIVE_BUILDS[@]} $( \
         jq -r '.computer[].executors[].currentExecutable.url' "${silo}_builds.json" \
-        | grep -v null | awk -F'/' '{print $6 "-" $7}'))
+        | grep -v null | awk -F'/' '{print $4 "-" $6 "-" $7}'))
 done
 
 ##########################
