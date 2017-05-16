@@ -181,7 +181,9 @@
       - timed: '@weekly'
 
     builders:
-      - shell: !include-raw-escape: opendaylight-infra-cleanup-old-images.sh
+      - shell: !include-raw-escape:
+          - global-jjb/shell/lftools-install.sh
+          - opendaylight-infra-cleanup-old-images.sh
 
     publishers:
       - email-notification:

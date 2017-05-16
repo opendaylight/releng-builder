@@ -12,18 +12,8 @@
 # RELEASE_TAG=Beryllium-SR1  # Example
 # RELEASE_BRANCH=stable/beryllium  # Example
 
-LFTOOLS_DIR="$WORKSPACE/.venv-lftools"
-if [ ! -d "$LFTOOLS_DIR" ]
-then
-    virtualenv "$LFTOOLS_DIR"
-    # shellcheck disable=SC1090
-    source "$LFTOOLS_DIR/bin/activate"
-    pip install --upgrade pip
-    pip freeze
-    pip install lftools
-fi
 # shellcheck disable=SC1090
-source "$LFTOOLS_DIR/bin/activate"
+source "$WORKSPACE/.virtualenvs/lftools/bin/activate"
 
 # Directory to put git format-patches
 PATCH_DIR="$WORKSPACE/patches"
