@@ -12,16 +12,8 @@
 # RELEASE_TAG=Beryllium-SR1  # Example
 # RELEASE_BRANCH=stable/beryllium  # Example
 
-LFTOOLS_DIR="$WORKSPACE/.venv-lftools"
-if [ ! -d "$LFTOOLS_DIR" ]
-then
-    virtualenv "$LFTOOLS_DIR"
-    # shellcheck disable=SC1090
-    source "$LFTOOLS_DIR/bin/activate"
-    pip install --upgrade pip
-    pip freeze
-    pip install lftools
-fi
+# install lftools from the script in global-jjb
+global-jjb/shell/lftools-install.sh
 # shellcheck disable=SC1090
 source "$LFTOOLS_DIR/bin/activate"
 
