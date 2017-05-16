@@ -3,7 +3,6 @@
     name: autorelease-projects
     jobs:
       - 'autorelease-release-{stream}'
-      - 'autorelease-generate-release-notes-{stream}'
 
     stream:
       - nitrogen:
@@ -40,6 +39,30 @@
         patches/**
         patches.tar.gz
         error.log.gz
+
+
+- project:
+    name: autorelease-release-notes
+    jobs:
+      - 'autorelease-generate-release-notes-{stream}'
+
+    stream:
+      - nitrogen:
+          branch: 'master'
+          jdk: 'openjdk8'
+      - carbon:
+          branch: 'stable/carbon'
+          jdk: 'openjdk8'
+      - boron:
+          branch: 'stable/boron'
+          jdk: 'openjdk8'
+
+    project: 'releng/autorelease'
+    archive-artifacts: >
+        **/*.prop
+        **/*.log
+        patches/**
+
 
 ###
 # TODO: Remove this job once guava21 testing is complete
