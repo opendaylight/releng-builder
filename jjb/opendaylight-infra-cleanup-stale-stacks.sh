@@ -39,7 +39,19 @@ for stack in "${OS_STACKS[@]}"; do
         # No need to delete stacks if there exists an active build for them
         continue
     else
-        echo "Deleting orphaned stack: $stack"
-        openstack stack delete --yes "$stack"
+        OS_STATUS=$(openstack stack show -f json -c stack_status "$stack" | jq -r '.stack_status')
+        case "$OS_STATUS" in
+            DELETE_IN_PROGRESS)
+                echo "skipping delete, $stack is already DELETE in progress."
+                continue
+            ;;
+            CREATE_COMPLETE|CREATE_FAILED|DELETE_FAILED)
+                echo "Deleting orphaned stack: $stack"
+                openstack stack delete --yes "$stack"
+            ;;
+            *)
+                continue
+            ;;
+        esac
     fi
 done
