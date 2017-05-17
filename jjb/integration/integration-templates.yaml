@@ -1416,7 +1416,7 @@
           maven-version: mvn33
           pom: '{project}/pom.xml'
           goals: |
-              clean install dependency:tree
+              clean install org.apache.maven.plugins:maven-dependency-plugin:3.0.1:tree
               -Pq
               -Dgitid.skip=false
               -DgenerateReports=false
@@ -1432,7 +1432,7 @@
           maven-version: mvn33
           pom: distribution/pom.xml
           goals: |
-              clean install dependency:tree
+              clean install org.apache.maven.plugins:maven-dependency-plugin:3.0.1:tree
               -Pq
               -Dgitid.skip=false
               {opendaylight-infra-mvn-opts}

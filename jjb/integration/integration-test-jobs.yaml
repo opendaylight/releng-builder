@@ -308,7 +308,7 @@
           maven-version: 'mvn33'
           pom: '$GERRIT_PROJECT/pom.xml'
           goals: |
-              clean install dependency:tree -DoutputFile=dependency_tree.txt
+              clean install org.apache.maven.plugins:maven-dependency-plugin:3.0.1:tree -DoutputFile=dependency_tree.txt
               -Pq
               -Dstream={stream}
               {opendaylight-infra-mvn-opts}
@@ -322,7 +322,7 @@
           maven-version: mvn33
           pom: distribution/pom.xml
           goals: |
-              clean install dependency:tree -DoutputFile=dependency_tree.txt
+              clean install org.apache.maven.plugins:maven-dependency-plugin:3.0.1:tree -DoutputFile=dependency_tree.txt
               {opendaylight-infra-mvn-opts}
           java-opts:
             - '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
@@ -413,7 +413,7 @@
           pom: patch_tester/pom.xml
           # TODO: Make Maven options configurable. Currently tests are not skipped, everything else is.
           goals: |
-              clean install dependency:tree -DoutputFile=dependency_tree.txt
+              clean install org.apache.maven.plugins:maven-dependency-plugin:3.0.1:tree -DoutputFile=dependency_tree.txt
               -Pq
               -Dstream={stream}
               {opendaylight-infra-mvn-opts}

@@ -201,7 +201,10 @@
       - maven-target:
           maven-version: 'mvn33'
           pom: 'pom.xml'
-          goals: '-V -B -l build.log clean install dependency:tree -Pq -Dmaven.compile.fork=true'
+          goals: |
+            -V -B -l build.log clean install
+            org.apache.maven.plugins:maven-dependency-plugin:3.0.1:tree
+            -Pq -Dmaven.compile.fork=true
           properties:
             - 'maven.repo.local=/tmp/r'
             - 'org.ops4j.pax.url.mvn.localRepository=/tmp/r'

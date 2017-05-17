@@ -45,7 +45,8 @@
           maven-version: 'mvn33'
           pom: 'pom.xml'
           goals: |
-              clean install dependency:tree com.sonatype.clm:clm-maven-plugin:index
+              clean install org.apache.maven.plugins:maven-dependency-plugin:3.0.1:tree
+              com.sonatype.clm:clm-maven-plugin:index
               -Pq
               {opendaylight-infra-mvn-opts}
           java-opts:
@@ -399,7 +400,7 @@
           maven-version: 'mvn33'
           pom: validate-pom.xml
           goals: |
-              clean install dependency:tree
+              clean install org.apache.maven.plugins:maven-dependency-plugin:3.0.1:tree
               -T1.5C
               -Pq
               {opendaylight-infra-mvn-opts}

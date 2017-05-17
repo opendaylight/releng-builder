@@ -49,7 +49,7 @@
           maven-version: mvn33
           pom: pom.xml
           goals: |
-              clean install dependency:tree -DoutputFile=dependency_tree.txt
+              clean install org.apache.maven.plugins:maven-dependency-plugin:3.0.1:tree -DoutputFile=dependency_tree.txt
               -Dstream={stream}
               {opendaylight-infra-mvn-opts}
           java-opts:
@@ -123,7 +123,8 @@
       maven-name: 'mvn33'
       root-pom: 'pom.xml'
       goals: >
-          clean install dependency:tree -DoutputFile=dependency_tree.txt -V -B
+          clean install org.apache.maven.plugins:maven-dependency-plugin:3.0.1:tree
+          -DoutputFile=dependency_tree.txt -V -B
           -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r
           -Djenkins -Dmerge -Dstream={stream}
       maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
