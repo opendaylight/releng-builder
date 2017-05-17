@@ -1,5 +1,10 @@
 #!/bin/bash
 # shellcheck disable=SC1083
+
+# upgrade git-review to a version that will have the --reviewers option. existing minion
+# image has a version that does not have it.
+pip install git-review --upgrade
+
 CHANGE_ID=$(ssh -p 29418 "jenkins-$SILO@git.opendaylight.org" gerrit query \
                limit:1 owner:self is:open project:{project} \
                message:'{gerrit-commit-message}' \
