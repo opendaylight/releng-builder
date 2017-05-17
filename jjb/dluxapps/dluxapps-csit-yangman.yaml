@@ -21,6 +21,10 @@
           jre: 'openjdk8'
           karaf-version: karaf3
 
+    # dluxapps started in Carbon project, so current verify with Boron is not working
+    verify-stream: 'carbon'
+    verify-branch: 'carbon'
+
     install:
       - only:
           scope: 'only'
