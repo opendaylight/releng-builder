@@ -18,9 +18,12 @@ sudo yum install -y ruby-devel gcc-c++ zlib-devel patch redhat-rpm-config make r
 gpg2 --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
 curl -L get.rvm.io | bash -s stable
 # Expected by RVM, seems required to make RVM functions (`rvm use`) available
+# Silence absurdly verbose rvm output by temporally not echoing commands
+set +x
 # shellcheck disable=SC1090
 source "$HOME/.rvm/scripts/rvm"
 rvm install 2.4.0
+set -x
 ruby --version
 # This has to be done as a login shell to get rvm fns
 # https://rvm.io/support/faq#what-shell-login-means-bash-l
@@ -31,7 +34,10 @@ ruby --version
 # Install gems dependencies of puppet-opendaylight via Bundler
 gem install bundler
 echo export PATH="\\$PATH:/usr/local/bin" >> "$HOME/.bashrc"
+# RVM's loaded functions print lots of output at this step, silence them
+set +x
 pushd "$WORKSPACE/puppet"
+set -x
 bundle install
 bundle update
 
