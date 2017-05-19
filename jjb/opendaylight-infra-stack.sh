@@ -78,7 +78,10 @@ for try in $(seq $STACK_RETRIES); do
             ;;
             *)
                 echo "Unexpected status: $OS_STATUS"
-                exit 1
+                # DO NOT exit on unexpected status. Rackspace sometimes returns unexpected status
+                # before returning an expected status. Just print the message and loop until we have
+                # a confirmed state or timeout.
+                # exit 1
             ;;
         esac
     done
