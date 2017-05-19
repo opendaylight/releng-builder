@@ -145,10 +145,18 @@ do
     echo "Compressing karaf.log ${i}"
     ssh ${!CONTROLLERIP} gzip --best /tmp/${BUNDLEFOLDER}/data/log/karaf.log
     echo "Fetching compressed karaf.log ${i}"
-    scp "${!CONTROLLERIP}:/tmp/${BUNDLEFOLDER}/data/log/karaf.log.gz" "odl${i}_karaf.log.gz"
-    # TODO: Gzip also these?
-    scp "${!CONTROLLERIP}:/tmp/${BUNDLEFOLDER}/data/log/karaf_console.log" "odl${i}_karaf_console.log"
+    scp "${!CONTROLLERIP}:/tmp/${BUNDLEFOLDER}/data/log/karaf.log.gz" "odl${i}_karaf.log.gz" && ssh ${!CONTROLLERIP} rm -f "/tmp/${BUNDLEFOLDER}/data/log/karaf.log.gz"
+    # TODO: Should we compress the output log file as well?
+    scp "${!CONTROLLERIP}:/tmp/${BUNDLEFOLDER}/data/log/karaf_console.log" "odl${i}_karaf_console.log" && ssh ${!CONTROLLERIP} rm -f "/tmp/${BUNDLEFOLDER}/data/log/karaf_console.log"
+    echo "Fetch GC logs"
+    # FIXME: Put member index in filename, instead of directory name.
+    mkdir -p "gclogs-${i}"
+    scp "${!CONTROLLERIP}:/tmp/${BUNDLEFOLDER}/data/log/*.log" "gclogs-${i}/" && ssh ${!CONTROLLERIP} rm -f "/tmp/${BUNDLEFOLDER}/data/log/*.log"
 done
+
+echo "Examine copied files"
+ls -lt
+
 true  # perhaps Jenkins is testing last exit code
 
 # vim: ts=4 sw=4 sts=4 et ft=sh :
