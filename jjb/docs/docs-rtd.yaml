@@ -75,6 +75,7 @@
     # FIXME: Describe this job in docs/jenkins.rst
     name: 'docs-verify-rtd-{stream}'
     node: centos7-java-builder-2c-8g
+    concurrent: true
 
     project-type: freestyle
 
