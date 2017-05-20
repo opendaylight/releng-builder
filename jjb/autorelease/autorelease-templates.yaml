@@ -151,6 +151,63 @@
       - opendaylight-infra-shiplogs:
           maven-version: 'mvn33'
 
+- job-template:
+    name: autorelease-version-bump-{stream}
+    project-type: freestyle
+    node: centos7-autorelease-4c-16g
+
+    properties:
+      - opendaylight-infra-properties:
+          build-days-to-keep: 7
+
+    parameters:
+      - lf-infra-parameters:
+          project: releng/autorelease
+          branch: '{branch}'
+          refspec: 'refs/heads/{branch}'
+      - string:
+          name: RELEASE_TAG
+          default: '{next-release-tag}'
+          description: |
+              Release that is being version bumped.
+              Eg. Lithium, Beryllium, Boron, Carbon, Carbon-SR1, Carbon-SR2...
+      - bool:
+          name: DRY_RUN
+          default: true
+          description: |
+              If DRY_RUN is enabled modifications are not published to Gerrit.
+      - maven-exec:
+          maven-version: mvn33
+
+    scm:
+      - lf-infra-gerrit-scm:
+          branch: '{branch}'
+          refspec: 'refs/heads/{branch}'
+          jenkins-ssh-credential: opendaylight-jenkins-ssh
+          submodule-recursive: true
+          choosing-strategy: default
+
+    wrappers:
+      - lf-infra-wrappers:
+          build-timeout: 240
+          jenkins-ssh-credential: opendaylight-jenkins-ssh
+
+    builders:
+      # force jenkins install of maven version before any shell scripts use it
+      - maven-target:
+          maven-version: mvn33
+          goals: '-version'
+          settings: autorelease-settings
+          settings-type: cfp
+          global-settings: odl-global-settings
+          global-settings-type: cfp
+      - autorelease-cfp
+      - shell: !include-raw-escape:
+          - ../global-jjb/shell/lftools-install.sh
+          - version-bump.sh
+
+    publishers:
+      - lf-infra-publish
 
 - job-template:
     name: 'autorelease-generate-release-notes-{stream}'
