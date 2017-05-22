@@ -67,6 +67,12 @@
     publishers:
       - archive-artifacts:
           artifacts: '**/*.rpm'
+      - trigger-parameterized-builds:
+        - project: 'packaging-test-rpm-{stream}'
+          condition: SUCCESS
+          predefined-parameters:
+            # yamllint disable-line rule:line-length
+            URL=https://jenkins.opendaylight.org/sandbox/job/packaging-build-rpm-master/lastSuccessfulBuild/artifact/packaging/rpm/cache/opendaylight-5.3.0-1.el7.noarch.rpm
 
 - job-template:
     name: 'packaging-build-rpm-snap-{stream}'
