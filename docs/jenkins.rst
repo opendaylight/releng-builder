@@ -27,9 +27,15 @@ in the jenkins-master_ silo and this can be achieved by simply creating a
 
 .. code-block:: bash
 
-    git clone https://git.opendaylight.org/gerrit/releng/builder
+    git clone --recursive https://git.opendaylight.org/gerrit/releng/builder
     cd builder
     mkdir jjb/<new-project>
+
+.. note:
+
+    releng/global-jjb is a submodule of releng/builder repository which
+    requires a git submodule update --init or using --recursive with git clone.
+    `releng-global-jjb`_
 
 Where <new-project> should be the same name as your project's git repo in
 Gerrit. So if your project is called "aaa" then create a new jjb/aaa directory.
@@ -432,7 +438,7 @@ First, clone the latest version of the `releng-builder-repo`_.
 
 .. code-block:: bash
 
-    $ git clone https://git.opendaylight.org/gerrit/p/releng/builder.git
+    $ git clone --recursive https://git.opendaylight.org/gerrit/p/releng/builder.git
 
 Before actually installing JJB and its dependencies, make sure you've `created
 and activated <Virtual Environments_>`_ a virtual environment for JJB.
@@ -802,7 +808,7 @@ example is provided by releng/builder at `example-jenkins.ini`_.
 .. code-block:: bash
 
     # If you don't have RelEng/Builder's repo, clone it
-    $ git clone https://git.opendaylight.org/gerrit/p/releng/builder.git
+    $ git clone --recursive https://git.opendaylight.org/gerrit/p/releng/builder.git
     # Make a copy of the example JJB config file (in the builder/ directory)
     $ cp jenkins.ini.example jenkins.ini
     # Edit jenkins.ini with your username, API token and ODL's sandbox URL
@@ -959,6 +965,7 @@ If `using Docker <JJB Docker image_>`_:
 .. _releng-wiki: https://wiki.opendaylight.org/view/RelEng:Main
 .. _releng-builder-gerrit: https://git.opendaylight.org/gerrit/#/admin/projects/releng/builder
 .. _releng-builder-repo: https://git.opendaylight.org/gerrit/gitweb?p=releng%2Fbuilder.git;a=summary
+.. _releng-global-jjb: https://gerrit.linuxfoundation.org/infra/#/q/project:releng/global-jjb
 .. _releng-builder-wiki: https://wiki.opendaylight.org/view/RelEng/Builder
 .. _streams-design-background: https://lists.opendaylight.org/pipermail/release/2015-July/003139.html
 .. _spinup-scripts: https://git.opendaylight.org/gerrit/gitweb?p=releng/builder.git;a=tree;f=jenkins-scripts
