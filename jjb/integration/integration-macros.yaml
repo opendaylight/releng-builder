@@ -168,6 +168,17 @@
                 - compare-type: ANT
                   pattern: '{files}'
 
+# Macro: integration-csit-only
+# Operation: this macro sets a trigger on reverse job list
+# Used by: csit -only- job templates
+
+- trigger:
+    name: integration-csit-trigger
+    triggers:
+      - reverse:
+          jobs: '{jobs}'
+          result: 'success'
+
 # Macro: integration-openstack-controller-mininet
 # Operation: this macro will spin the controller and mininet vms
 # Used by: {project}-csit-* job templates
