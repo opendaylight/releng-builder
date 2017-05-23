@@ -113,7 +113,9 @@
 - builder:
     name: autorelease-generate-release-patches
     builders:
-      - shell: !include-raw: include-raw-autorelease-release-versions.sh
+      - shell: !include-raw:
+          - ../global-jjb/shell/lftools-install.sh
+          - include-raw-autorelease-release-versions.sh
 
 - builder:
     name: autorelease-get-integration-test-variables
