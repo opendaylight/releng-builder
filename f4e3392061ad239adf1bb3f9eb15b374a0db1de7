@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7af0899e_d119067b",
+        "filename": "jjb/packaging/packaging.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2017-05-23T09:39:47Z",
+      "side": 1,
+      "message": "Cool, definitely triggering correctly.",
+      "parentUuid": "9a0b7d60_38baede1",
+      "range": {
+        "startLine": 70,
+        "startChar": 8,
+        "endLine": 70,
+        "endChar": 36
+      },
+      "revId": "f4e3392061ad239adf1bb3f9eb15b374a0db1de7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a0b7d60_f8f065cb",
         "filename": "jjb/packaging/packaging.yaml",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-05-22T20:14:09Z",
       "side": 1,
       "message": "Not sure how to pass a local path. I tried `$WORKSPACE/lastSuccessfulBuild/artifact/packaging/rpm/cache/opendaylight-5.3.0-1.el7.noarch.rpm` as the URL, but this path could not be found.",
+      "range": {
+        "startLine": 75,
+        "startChar": 12,
+        "endLine": 75,
+        "endChar": 15
+      },
+      "revId": "f4e3392061ad239adf1bb3f9eb15b374a0db1de7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7af0899e_910f7e2e",
+        "filename": "jjb/packaging/packaging.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2017-05-23T09:39:47Z",
+      "side": 1,
+      "message": "I think it can\u0027t be a local path because the worker will be different for the two jobs. I think the problem with this is that it will always build this same RPM, not the result of each build-rpm job. I guess we need more complex logic to find the name of the resulting RPM and build the correct URL. Another option is to have the build-rpm job always put the latest result in some known place in Nexus, then have the test-rpm job pull from that same known place. There are ways to have Nexus host package repos (basically just artifact storage with the metadata packaging tools expect, like we have on the CentOS CBS or your OpenSUSE/Ubuntu systems). If you go that route, I suggest sending an email to integration-dev to ask about configuring this - I think Thanh/Andy know something more about it. This second route would be nicer imho, but I guess harder.",
+      "parentUuid": "9a0b7d60_f8f065cb",
       "range": {
         "startLine": 75,
         "startChar": 12,
