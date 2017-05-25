@@ -62,6 +62,7 @@ then
     "$MVN" clean deploy -Pq \
     -s "$SETTINGS_FILE" \
     -gs "$GLOBAL_SETTINGS_FILE" \
+    -DaltDeploymentRepository="opendaylight-snapshot::default::https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot" \
     --show-version \
     --batch-mode \
     -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn \
