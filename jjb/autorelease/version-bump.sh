@@ -59,7 +59,7 @@ then
     # Run a build here! Should be safe to run mvn clean deploy as nothing should be
     # using the version bumped versions just yet.
     ./scripts/fix-relativepaths.sh
-    "$MVN" clean install -Pq \
+    "$MVN" clean deploy -Pq \
     -s "$SETTINGS_FILE" \
     -gs "$GLOBAL_SETTINGS_FILE" \
     --show-version \
