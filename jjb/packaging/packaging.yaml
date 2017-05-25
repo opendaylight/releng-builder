@@ -120,6 +120,9 @@
       - archive-artifacts:
           artifacts: '**/*.rpm'
 
+    triggers:
+      - timed: '@daily'
+
 - job-template:
     name: 'packaging-test-rpm-{stream}'
 
