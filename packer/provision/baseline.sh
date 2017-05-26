@@ -140,6 +140,8 @@ EOF
     yum install -y haveged
     systemctl enable haveged.service
 
+    # Install git-review
+    yum install -y git-review
 }
 
 ubuntu_systems() {
