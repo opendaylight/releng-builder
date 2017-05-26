@@ -23,6 +23,7 @@ STAGING_REPO_ID=$(grep "Created staging repository with ID" "$WORKSPACE/deploy-s
 BUNDLE_URL="${NEXUSURL}/${STAGING_REPO_ID}/org/opendaylight/integration/${KARAF_ARTIFACT}/${VERSION}/${KARAF_ARTIFACT}-${VERSION}.zip"
 echo STAGING_REPO_ID="$STAGING_REPO_ID" >> "$WORKSPACE/variables.prop"
 echo BUNDLE_URL="$BUNDLE_URL" >> "$WORKSPACE/variables.prop"
+echo KARAF_VERSION="$KARAF_VERSION" >> "$WORKSPACE/variables.prop"
 echo "BUNDLE_URL: ${BUNDLE_URL}"
 
 # Copy variables.prop to variables.jenkins-trigger so that the end of build
