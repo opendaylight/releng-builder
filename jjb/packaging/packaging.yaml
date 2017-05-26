@@ -10,8 +10,6 @@
       - 'packaging-build-deb-{stream}'
       - 'packaging-test-rpm-{stream}'
       - 'packaging-test-deb-{stream}'
-      - 'packaging-test-ansible-rpm-{stream}'
-      - 'packaging-test-ansible-deb-{stream}'
 
     project: 'integration/packaging'
 
@@ -196,42 +194,6 @@
           artifacts: '**'
 
 - job-template:
-    name: 'packaging-test-ansible-rpm-{stream}'
-
-    node: centos7-java-builder-2c-4g
-
-    project-type: freestyle
-
-    properties:
-      - opendaylight-infra-properties:
-          build-days-to-keep: 7
-
-    parameters:
-      - opendaylight-infra-parameters:
-          os-cloud: '{os-cloud}'
-          project: '{project}'
-          branch: '{branch}'
-          refspec: 'refs/heads/{branch}'
-          artifacts: '{archive-artifacts}'
-
-    scm:
-      - integration-gerrit-scm:
-          basedir: 'packaging'
-          refspec: '$GERRIT_REFSPEC'
-          branch: 'master'
-
-    wrappers:
-      - opendaylight-infra-wrappers:
-          build-timeout: '{build-timeout}'
-
-    builders:
-      - shell: !include-raw: include-raw-test-ansible-rpm.sh
-
-    triggers:
-      - timed: '@daily'
-
-
-- job-template:
     name: 'packaging-build-deb-{stream}'
 
     node: ubuntu1404-mininet-2c-2g
@@ -315,39 +277,3 @@
     publishers:
       - archive-artifacts:
           artifacts: 'packaging/deb/opendaylight/*.deb'
-
-
-- job-template:
-    name: 'packaging-test-ansible-deb-{stream}'
-
-    node: ubuntu1604-mininet-ovs-25-2c-4g
-
-    project-type: freestyle
-
-    properties:
-      - opendaylight-infra-properties:
-          build-days-to-keep: 7
-
-    parameters:
-      - opendaylight-infra-parameters:
-          os-cloud: '{os-cloud}'
-          project: '{project}'
-          branch: '{branch}'
-          refspec: 'refs/heads/{branch}'
-          artifacts: '{archive-artifacts}'
-
-    scm:
-      - integration-gerrit-scm:
-          basedir: 'packaging'
-          refspec: '$GERRIT_REFSPEC'
-          branch: 'master'
-
-    wrappers:
-      - opendaylight-infra-wrappers:
-          build-timeout: '{build-timeout}'
-
-    builders:
-      - shell: !include-raw: include-raw-test-ansible-deb.sh
-
-    triggers:
-      - timed: '@daily'
