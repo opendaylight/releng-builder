@@ -22,6 +22,11 @@ set -eu -o pipefail
 git checkout -b "${BRANCH,,}" "origin/${BRANCH,,}"
 git submodule foreach git checkout -b "${BRANCH,,}" "origin/${BRANCH,,}"
 
+# Setup Gerrit remove to ensure Change-Id gets set on commit.
+git config --global --add gitreview.username "jenkins-releng"
+git review -s
+git submodule foreach "git review -s"
+
 # Check if git state is clean
 git status
 
@@ -70,9 +75,12 @@ then
     -Dmaven.repo.local=/tmp/r \
     -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r
 
+    # Clear any changes caused by Maven build
+    git checkout -f
+    git submodule foreach git checkout -f
+
     # Push up patches last, as long as nothing failed.
-    git submodule foreach "git remote add gerrit '$GIT_URL/$PROJECT'"
-    git submodule foreach "git review --yes -t '${RELEASE_TAG}' || true"
+    git submodule foreach git review --yes -t "${RELEASE_TAG}"
 fi
 
 echo "Version bumping complete."
