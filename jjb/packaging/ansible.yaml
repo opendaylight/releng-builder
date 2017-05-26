@@ -1,0 +1,95 @@
+---
+- project:
+    name: ansible
+    project-name: ansible
+
+    jobs:
+      - '{project-name}-verify-tox-{stream}'
+      - '{project-name}-test-rpm-{stream}'
+      - '{project-name}-test-deb-{stream}'
+
+    project: 'integration/packaging/ansible-opendaylight'
+
+    stream:
+      - master:
+          branch: 'master'
+
+- job-template:
+    name: '{project-name}-test-rpm-{stream}'
+
+    node: centos7-java-builder-2c-4g
+
+    project-type: freestyle
+
+    properties:
+      - opendaylight-infra-properties:
+          build-days-to-keep: 7
+
+    parameters:
+      - opendaylight-infra-parameters:
+          os-cloud: '{os-cloud}'
+          project: '{project}'
+          branch: '{branch}'
+          refspec: 'refs/heads/{branch}'
+          artifacts: '{archive-artifacts}'
+
+    scm:
+      - integration-gerrit-scm:
+          basedir: '{project-name}'
+          refspec: '$GERRIT_REFSPEC'
+          branch: '{branch}'
+
+    wrappers:
+      - opendaylight-infra-wrappers:
+          build-timeout: '{build-timeout}'
+
+    builders:
+      - shell: !include-raw: include-raw-test-ansible-rpm.sh
+
+    triggers:
+      - timed: '@daily'
+      - gerrit-trigger-patch-submitted:
+          server: '{server-name}'
+          project: '{project}'
+          branch: '{branch}'
+          files: '**'
+
+- job-template:
+    name: '{project-name}-test-deb-{stream}'
+
+    node: ubuntu1604-mininet-ovs-25-2c-4g
+
+    project-type: freestyle
+
+    properties:
+      - opendaylight-infra-properties:
+          build-days-to-keep: 7
+
+    parameters:
+      - opendaylight-infra-parameters:
+          os-cloud: '{os-cloud}'
+          project: '{project}'
+          branch: '{branch}'
+          refspec: 'refs/heads/{branch}'
+          artifacts: '{archive-artifacts}'
+
+    scm:
+      - integration-gerrit-scm:
+          basedir: '{project-name}'
+          refspec: '$GERRIT_REFSPEC'
+          branch: '{branch}'
+
+    wrappers:
+      - opendaylight-infra-wrappers:
+          build-timeout: '{build-timeout}'
+
+    builders:
+      - shell: !include-raw: include-raw-test-ansible-deb.sh
+
+    triggers:
+      - timed: '@daily'
+      - gerrit-trigger-patch-submitted:
+          server: '{server-name}'
+          project: '{project}'
+          branch: '{branch}'
+          files: '**'
