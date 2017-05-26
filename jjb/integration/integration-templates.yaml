@@ -109,8 +109,7 @@
           email-recipients: '{email-recipients}'
           email-prefix: '[{project}]'
       - integration-csit-archive-build
-      - opendaylight-infra-shiplogs:
-          maven-version: 'mvn33'
+      - lf-infra-publish
 
 - job-template:
     name: '{project}-csit-1node-{functionality}-{install}-{stream}'
@@ -225,8 +224,7 @@
                 display-table: true
                 format: csv
       - integration-csit-archive-build
-      - opendaylight-infra-shiplogs:
-          maven-version: 'mvn33'
+      - lf-infra-publish
 
 - job-template:
     name: '{project}-csit-1node-periodic-{functionality}-{install}-{stream}'
@@ -447,8 +445,7 @@
                 exclude: '{10-exclude-value}'
                 format: csv
       - integration-csit-archive-build
-      - opendaylight-infra-shiplogs:
-          maven-version: 'mvn33'
+      - lf-infra-publish
 
 - job-template:
     name: '{project}-csit-verify-3node-{functionality}'
@@ -534,8 +531,7 @@
           email-recipients: '{email-recipients}'
           email-prefix: '[{project}]'
       - integration-csit-archive-build
-      - opendaylight-infra-shiplogs:
-          maven-version: 'mvn33'
+      - lf-infra-publish
 
 - job-template:
     name: '{project}-csit-3node-{functionality}-{install}-{stream}'
@@ -643,8 +639,7 @@
                 display-table: true
                 format: csv
       - integration-csit-archive-build
-      - opendaylight-infra-shiplogs:
-          maven-version: 'mvn33'
+      - lf-infra-publish
 
 - job-template:
     name: '{project}-csit-3node-docker-{functionality}-{install}-{stream}'
@@ -754,8 +749,7 @@
                 display-table: true
                 format: csv
       - integration-csit-archive-build
-      - opendaylight-infra-shiplogs:
-          maven-version: 'mvn33'
+      - lf-infra-publish
 
 - job-template:
     name: '{project}-csit-3node-periodic-{functionality}-{install}-{stream}'
@@ -977,8 +971,7 @@
                 exclude: '{10-exclude-value}'
                 format: csv
       - integration-csit-archive-build
-      - opendaylight-infra-shiplogs:
-          maven-version: 'mvn33'
+      - lf-infra-publish
 
 - job-template:
     name: '{project}-csit-hwvtep-{topology}-openstack-{openstack}-{functionality}-{stream}'
@@ -1158,8 +1151,7 @@
           email-recipients: '{email-recipients}'
           email-prefix: '[{project}]'
       - integration-csit-archive-build
-      - opendaylight-infra-shiplogs:
-          maven-version: 'mvn33'
+      - lf-infra-publish
 
 - job-template:
     name: '{project}-csit-{topology}-openstack-{openstack}-{functionality}-{stream}'
@@ -1342,8 +1334,7 @@
           email-recipients: '{email-recipients}'
           email-prefix: '[{project}]'
       - integration-csit-archive-build
-      - opendaylight-infra-shiplogs:
-          maven-version: 'mvn33'
+      - lf-infra-publish
 
 # Template: {project}-patch-test-{stream}
 # Goal: Build a patch and run project specific system test on a distribution containing the change
