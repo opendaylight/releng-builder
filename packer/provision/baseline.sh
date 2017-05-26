@@ -123,9 +123,18 @@ EOF
         ;;
     esac
 
+    ########################
+    # --- START LFTOOLS DEPS
+
     # Needed to parse OpenStack commands used by opendaylight-infra stack commands
     # to initialize Heat template based systems.
     yum install -y jq
+
+    # Used by lftools scripts to parse XML
+    yum install -y xmlstarlet
+
+    # --- END LFTOOLS DEPS
+    ######################
 
     # install haveged to avoid low entropy rejecting ssh connections
     yum install -y haveged
@@ -213,9 +222,18 @@ EOF
         ;;
     esac
 
+    ########################
+    # --- START LFTOOLS DEPS
+
     # Needed to parse OpenStack commands used by opendaylight-infra stack commands
     # to initialize Heat template based systems.
     apt-get install jq
+
+    # Used by lftools scripts to parse XML
+    apt-get install xmlstarlet
+
+    # --- END LFTOOLS DEPS
+    ######################
 
     # install haveged to avoid low entropy rejecting ssh connections
     apt-get install haveged
