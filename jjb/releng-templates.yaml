@@ -65,8 +65,7 @@
       - email-notification:
           email-recipients: '{email-recipients}'
           email-prefix: '[releng]'
-      - opendaylight-infra-shiplogs:
-          maven-version: 'mvn33'
+      - lf-infra-publish
 
 
 - job-template:
@@ -116,8 +115,7 @@
       - email-notification:
           email-recipients: '{email-recipients}'
           email-prefix: '[releng]'
-      - opendaylight-infra-shiplogs:
-          maven-version: 'mvn33'
+      - lf-infra-publish
 
 # Generic tox-based verify action
 
@@ -184,8 +182,7 @@
       - email-notification:
           email-recipients: '{email-recipients}'
           email-prefix: '[{project}]'
-      - opendaylight-infra-shiplogs:
-          maven-version: 'mvn33'
+      - lf-infra-publish
 
 - job-template:
     name: '{project-name}-verify-tox-{stream}'
@@ -280,8 +277,7 @@
       - email-notification:
           email-recipients: '{email-recipients}'
           email-prefix: '[{project}]'
-      - opendaylight-infra-shiplogs:
-          maven-version: 'mvn33'
+      - lf-infra-publish
 
 # Node related
 
@@ -359,5 +355,4 @@
       - email-notification:
           email-recipients: '{email-recipients}'
           email-prefix: '[{project}]'
-      - opendaylight-infra-shiplogs:
-          maven-version: 'mvn33'
+      - lf-infra-publish
