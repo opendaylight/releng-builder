@@ -62,8 +62,7 @@
       - email-notification:
           email-recipients: '{email-recipients}'
           email-prefix: '[{project-name}]'
-      - opendaylight-infra-shiplogs:
-          maven-version: 'mvn33'
+      - lf-infra-publish
 
 - job-template:
     name: '{project-name}-integration-{stream}'
@@ -131,8 +130,7 @@
           email-prefix: '{email-upstream}'
       - findbugs
       - jacoco-report
-      - opendaylight-infra-shiplogs:
-          maven-version: 'mvn33'
+      - lf-infra-publish
 
 - job-template:
     name: '{project-name}-merge-{stream}'
@@ -249,8 +247,7 @@
           unique-version: true
           deploy-unstable: false
       - jacoco-report
-      - opendaylight-infra-shiplogs:
-          maven-version: 'mvn33'
+      - lf-infra-publish
       - trigger:
           project: 'distribution-merge-{stream}'
           threshold: SUCCESS
@@ -331,8 +328,7 @@
           email-prefix: '[{project-name}]'
       - jacoco-report
       - findbugs
-      - opendaylight-infra-shiplogs:
-          maven-version: 'mvn33'
+      - lf-infra-publish
 
 - job-template:
     name: '{project-name}-validate-autorelease-{stream}'
@@ -427,8 +423,7 @@
       - email-notification:
           email-recipients: '{email-recipients}'
           email-prefix: '[autorelease] [{project-name}]'
-      - opendaylight-infra-shiplogs:
-          maven-version: 'mvn33'
+      - lf-infra-publish
 
 - job-template:
     name: '{project-name}-verify-{stream}-{maven}-{jdks}'
@@ -498,5 +493,4 @@
           email-recipients: '{email-recipients}'
           email-prefix: '[{project-name}]'
       - jacoco-report
-      - opendaylight-infra-shiplogs:
-          maven-version: '{mvn-version}'
+      - lf-infra-publish

@@ -110,8 +110,7 @@
       - email-notification:
           email-recipients: '{email-recipients}'
           email-prefix: '[releng]'
-      - opendaylight-infra-shiplogs:
-          maven-version: 'mvn33'
+      - lf-infra-publish
 
 
 - job-template:
@@ -157,8 +156,7 @@
       - email-notification:
           email-recipients: '{email-recipients}'
           email-prefix: '[releng]'
-      - opendaylight-infra-shiplogs:
-          maven-version: 'mvn33'
+      - lf-infra-publish
 
 
 - job-template:
@@ -195,8 +193,7 @@
       - email-notification:
           email-recipients: '{email-recipients}'
           email-prefix: '[releng]'
-      - opendaylight-infra-shiplogs:
-          maven-version: 'mvn33'
+      - lf-infra-publish
 
 
 - job-template:
@@ -231,8 +228,7 @@
       - email-notification:
           email-recipients: '{email-recipients}'
           email-prefix: '[releng]'
-      - opendaylight-infra-shiplogs:
-          maven-version: 'mvn33'
+      - lf-infra-publish
 
 
 - job-template:
@@ -280,8 +276,7 @@
       - email-notification:
           email-recipients: '{email-recipients}'
           email-prefix: '[releng]'
-      - opendaylight-infra-shiplogs:
-          maven-version: 'mvn33'
+      - lf-infra-publish
 
 - job-template:
     name: 'builder-verify-packer'
@@ -324,8 +319,7 @@
       - email-notification:
           email-recipients: '{email-recipients}'
           email-prefix: '[{project}]'
-      - opendaylight-infra-shiplogs:
-          maven-version: 'mvn33'
+      - lf-infra-publish
 
 - job-template:
     name: 'builder-merge-packer-{platforms}-{templates}'
@@ -395,8 +389,7 @@
       - email-notification:
           email-recipients: '{email-recipients}'
           email-prefix: '[{project}]'
-      - opendaylight-infra-shiplogs:
-          maven-version: 'mvn33'
+      - lf-infra-publish
 
 - job-template:
     name: 'builder-update-csit-tests'
@@ -491,5 +484,4 @@
       - email-notification:
           email-recipients: '{email-recipients}'
           email-prefix: '[releng]'
-      - opendaylight-infra-shiplogs:
-          maven-version: 'mvn33'
+      - lf-infra-publish
