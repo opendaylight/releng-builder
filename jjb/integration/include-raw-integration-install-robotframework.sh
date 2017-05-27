@@ -27,6 +27,7 @@ pip install --upgrade pip
 
 pip install --upgrade docker-py importlib requests scapy netifaces netaddr ipaddr pyhocon
 pip install --upgrade robotframework-httplibrary \
+    requests==2.15.1 \
     robotframework-requests \
     robotframework-sshlibrary \
     robotframework-selenium2library \
