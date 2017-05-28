@@ -1,8 +1,15 @@
 #!/bin/bash
 
-# upgrade git-review to a version that will have the --reviewers option. existing minion
-# image has a version that does not have it.
-sudo pip install git-review --upgrade
+# Install git-review using virtualenv to the latest version that supports
+# --reviewers option, available through pip install. Existing minion image has a
+# version that does not have it.
+virtualenv "$WORKSPACE/.virtualenvs/git-review"
+# shellcheck source=./.virtualenvs/git-review/bin/activate disable=SC1091
+source "$WORKSPACE/.virtualenvs/git-review/bin/activate"
+PYTHON="$WORKSPACE/.virtualenvs/git-review/bin/python"
+$PYTHON -m pip install --upgrade pip
+$PYTHON -m pip install --upgrade git-review
+$PYTHON -m pip freeze
 
 # shellcheck disable=SC1083
 CHANGE_ID=$(ssh -p 29418 "jenkins-$SILO@git.opendaylight.org" gerrit query \
