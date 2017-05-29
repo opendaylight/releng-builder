@@ -84,35 +84,6 @@
     archive-artifacts: ''
 
 - project:
-    name: netconf-beryllium
-    jobs:
-      - '{project-name}-clm-{stream}'
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-integration-{stream}'
-      - '{project-name}-merge-{stream}'
-      - '{project-name}-validate-autorelease-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
-
-    stream: beryllium
-    project: 'netconf'
-    project-name: 'netconf'
-    branch: 'stable/beryllium'
-    karaf-version: karaf3
-    jdk: openjdk7
-    jdks:
-      - openjdk7
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
-    mvn-settings: 'netconf-settings'
-    mvn-goals: 'clean install -Pintegrationtests'
-    mvn-opts: '-Xmx2048m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
-    dependencies: 'aaa-merge-{stream},controller-merge-{stream},odlparent-merge-{stream},yangtools-merge-{stream}'
-    email-upstream: '[netconf] [aaa] [controller] [odlparent] [yangtools]'
-    archive-artifacts: ''
-
-- project:
     name: netconf-sonar
     jobs:
       - '{project-name}-sonar'

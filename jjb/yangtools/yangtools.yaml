@@ -86,37 +86,6 @@
     archive-artifacts: ''
 
 - project:
-    name: yangtools-beryllium
-    jobs:
-      - '{project-name}-clm-{stream}'
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-integration-{stream}'
-      - '{project-name}-merge-{stream}'
-      - '{project-name}-validate-autorelease-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
-
-    stream: beryllium
-    project: 'yangtools'
-    project-name: 'yangtools'
-    branch: 'stable/beryllium'
-    karaf-version: karaf3
-    jdk: openjdk7
-    jdks:
-      - openjdk7
-      - openjdk8
-    maven:
-      - mvn32:
-          mvn-version: 'mvn32'
-      - mvn33:
-          mvn-version: 'mvn33'
-    mvn-settings: 'yangtools-settings'
-    mvn-goals: 'clean install'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: 'odlparent-merge-{stream}'
-    email-upstream: '[yangtools] [odlparent]'
-    archive-artifacts: ''
-
-- project:
     name: yangtools-sonar
     jobs:
       - '{project-name}-sonar'

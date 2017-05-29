@@ -84,34 +84,6 @@
     archive-artifacts: ''
 
 - project:
-    name: aaa-beryllium
-    jobs:
-      - '{project-name}-clm-{stream}'
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-integration-{stream}'
-      - '{project-name}-merge-{stream}'
-      - '{project-name}-validate-autorelease-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
-
-    stream: beryllium
-    project: 'aaa'
-    project-name: 'aaa'
-    branch: 'stable/beryllium'
-    karaf-version: karaf3
-    jdk: openjdk7
-    jdks:
-      - openjdk7
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
-    mvn-settings: 'aaa-settings'
-    mvn-goals: 'clean install'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
-    email-upstream: '[aaa] [odlparent] [yangtools] [controller]'
-    archive-artifacts: ''
-
-- project:
     name: aaa-sonar
     jobs:
       - '{project-name}-sonar'

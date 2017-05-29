@@ -102,40 +102,6 @@
     archive-artifacts: ''
 
 - project:
-    name: netvirt-beryllium
-    jobs:
-      - '{project-name}-clm-{stream}'
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-integration-{stream}'
-      - '{project-name}-merge-{stream}'
-      - '{project-name}-validate-autorelease-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
-
-    stream: beryllium
-    project: 'netvirt'
-    project-name: 'netvirt'
-    branch: 'stable/beryllium'
-    karaf-version: karaf3
-    jdk: openjdk7
-    jdks:
-      - openjdk7
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
-    mvn-settings: 'netvirt-settings'
-    mvn-goals: 'clean install'
-    mvn-opts: '-Xmx2048m -XX:MaxPermSize=512m'
-    dependencies: >
-        neutron-merge-{stream},
-        openflowjava-merge-{stream},
-        openflowplugin-merge-{stream},
-        ovsdb-merge-{stream},
-        sfc-merge-{stream}
-    email-upstream: '[netvirt] [neutron] [openflowjava] [openflowplugin] [ovsdb] [sfc]'
-    archive-artifacts: ''
-
-- project:
     name: netvirt-vpp
     jobs:
       - '{project-name}-verify-{stream}-{maven}-{jdks}'

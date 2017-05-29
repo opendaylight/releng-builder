@@ -84,35 +84,6 @@
     archive-artifacts: ''
 
 - project:
-    name: tsdr-beryllium
-    jobs:
-      - '{project-name}-clm-{stream}'
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-integration-{stream}'
-      - '{project-name}-merge-{stream}'
-      - '{project-name}-validate-autorelease-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
-
-    stream: beryllium
-    project: 'tsdr'
-    project-name: 'tsdr'
-    branch: 'stable/beryllium'
-    karaf-version: karaf3
-    jdk: openjdk7
-    jdks:
-      - openjdk7
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
-    mvn-settings: 'tsdr-settings'
-    mvn-goals: 'clean install javadoc:aggregate -DrepoBuild'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: ''
-    email-upstream: '[tsdr]'
-    archive-artifacts: ''
-
-- project:
     name: tsdr-sonar
     jobs:
       - '{project-name}-sonar'
