@@ -126,6 +126,9 @@ EOF
     ########################
     # --- START LFTOOLS DEPS
 
+    # Used by various scripts to push patches to Gerrit
+    yum install -y git-review
+
     # Needed to parse OpenStack commands used by opendaylight-infra stack commands
     # to initialize Heat template based systems.
     yum install -y jq
@@ -139,9 +142,6 @@ EOF
     # install haveged to avoid low entropy rejecting ssh connections
     yum install -y haveged
     systemctl enable haveged.service
-
-    # Install git-review
-    yum install -y git-review
 }
 
 ubuntu_systems() {
