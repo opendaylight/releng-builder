@@ -47,18 +47,14 @@
     name: autorelease-determine-merge-order
     builders:
       - shell: |
-          # TODO: Remove this condition once stable/beryllium is no longer
-          #       officially maintained.
-          if [ "$GERRIT_BRANCH" != "stable/beryllium" ]; then
-              virtualenv --system-site-packages $WORKSPACE/venv
-              source $WORKSPACE/venv/bin/activate
-              pip install --upgrade pip
-              pip install --upgrade networkx
-              pip freeze
-              ./scripts/determine-merge-order.py
-              deactivate
-              rm -rf $WORKSPACE/venv
-          fi
+          virtualenv --system-site-packages $WORKSPACE/venv
+          source $WORKSPACE/venv/bin/activate
+          pip install --upgrade pip
+          pip install --upgrade networkx
+          pip freeze
+          ./scripts/determine-merge-order.py
+          deactivate
+          rm -rf $WORKSPACE/venv
 
 - builder:
     name: autorelease-maven-deploy

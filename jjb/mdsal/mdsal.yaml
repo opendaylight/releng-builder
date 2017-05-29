@@ -84,35 +84,6 @@
     archive-artifacts: ''
 
 - project:
-    name: mdsal-beryllium
-    jobs:
-      - '{project-name}-clm-{stream}'
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-integration-{stream}'
-      - '{project-name}-merge-{stream}'
-      - '{project-name}-validate-autorelease-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
-
-    stream: beryllium
-    project: 'mdsal'
-    project-name: 'mdsal'
-    branch: 'stable/beryllium'
-    karaf-version: karaf3
-    jdk: openjdk7
-    jdks:
-      - openjdk7
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
-    mvn-settings: 'mdsal-settings'
-    mvn-goals: '-Dmaven.compile.fork=true clean install -Dintegrationtests'
-    mvn-opts: '-Xmx2048m -XX:MaxPermSize=1024m'
-    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream}'
-    email-upstream: '[mdsal] [odlparent] [yangtools]'
-    archive-artifacts: ''
-
-- project:
     name: mdsal-sonar
     jobs:
       - '{project-name}-sonar'

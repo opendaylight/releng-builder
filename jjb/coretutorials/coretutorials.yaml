@@ -77,32 +77,6 @@
     archive-artifacts: ''
 
 - project:
-    name: coretutorials-beryllium
-    jobs:
-      - '{project-name}-clm-{stream}'
-      - '{project-name}-integration-{stream}'
-      - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
-
-    stream: beryllium
-    project: 'coretutorials'
-    project-name: 'coretutorials'
-    branch: 'stable/beryllium'
-    karaf-version: karaf3
-    jdk: openjdk7
-    jdks:
-      - openjdk7
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
-    mvn-settings: 'coretutorials-settings'
-    mvn-goals: 'clean install'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: ''
-    email-upstream: '[coretutorials]'
-    archive-artifacts: ''
-
-- project:
     name: coretutorials-sonar
     jobs:
       - '{project-name}-sonar'

@@ -25,14 +25,6 @@
           jdk: 'openjdk8'
           integration-test: boron
           karaf-version: karaf3
-      - beryllium:
-          # Only run once a week since Beryllium is in maintenance mode
-          cron: 'H H * * 0'
-          next-release-tag: Beryllium-SR5
-          branch: 'stable/beryllium'
-          jdk: 'openjdk7'
-          integration-test: beryllium
-          karaf-version: karaf3
 
     project: 'releng/autorelease'
     archive-artifacts: >

@@ -38,25 +38,6 @@
               -v REPETITIONS_CHANGE_COUNT_MANY:10
               -v MULTIPLICITY_CHANGE_COUNT_MANY:600
               -v TEST_DURATION_MULTIPLIER_CHANGE_COUNT_MANY:8.0
-      - beryllium:
-          branch: 'stable/beryllium'
-          jre: 'openjdk7'
-          karaf-version: karaf3
-          install-features: >
-              odl-restconf,
-              odl-bgpcep-data-change-counter,
-              odl-bgpcep-bgp-all,
-              odl-bgpcep-bgp,
-              odl-netconf-connector-all
-          robot-options: >
-              -v USE_NETCONF_CONNECTOR:True
-              -v CHECK_PERIOD_PREFIX_COUNT_SINGLE:10
-              -v REPETITIONS_CHANGE_COUNT_SINGLE:3
-              -v CHECK_PERIOD_PREFIX_COUNT_MANY:10
-              -v TEST_DURATION_MULTIPLIER_PREFIX_COUNT_MANY:8.0
-              -v REPETITIONS_CHANGE_COUNT_MANY:10
-              -v MULTIPLICITY_CHANGE_COUNT_MANY:600
-              -v TEST_DURATION_MULTIPLIER_CHANGE_COUNT_MANY:8.0
 
     install:
       - only:
@@ -108,24 +89,6 @@
       - boron:
           branch: 'stable/boron'
           jre: 'openjdk8'
-          karaf-version: karaf3
-          install-features: >
-              odl-restconf,
-              odl-bgpcep-bgp-all,
-              odl-bgpcep-bgp,
-              odl-bgpcep-data-change-counter,
-              odl-netconf-connector-all
-          robot-options: >
-              -v USE_NETCONF_CONNECTOR:True
-              -v COUNT:1000000
-              -v INSERT:10
-              -v WITHDRAW:9
-              -v PREFILL:10
-              -v UPDATE:single
-              -v TEST_DURATION_MULTIPLIER:4
-      - beryllium:
-          branch: 'stable/beryllium'
-          jre: 'openjdk7'
           karaf-version: karaf3
           install-features: >
               odl-restconf,

@@ -75,32 +75,6 @@
     archive-artifacts: ''
 
 - project:
-    name: circuitsw-beryllium
-    jobs:
-      - '{project-name}-clm-{stream}'
-      - '{project-name}-integration-{stream}'
-      - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
-
-    stream: beryllium
-    project: 'ofextensions/circuitsw'
-    project-name: 'circuitsw'
-    branch: 'stable/beryllium'
-    jdk: openjdk7
-    jdks:
-      - openjdk7
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
-    mvn-settings: 'ofextensions-circuitsw-settings'
-    mvn-goals: 'clean install'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: ''
-    email-upstream: '[circuitsw]'
-    archive-artifacts: ''
-
-- project:
     name: circuitsw-sonar
     jobs:
       - '{project-name}-sonar'

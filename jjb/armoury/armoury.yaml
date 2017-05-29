@@ -80,33 +80,6 @@
     archive-artifacts: ''
 
 - project:
-    name: armoury-beryllium
-    jobs:
-      - '{project-name}-clm-{stream}'
-      - '{project-name}-integration-{stream}'
-      - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
-
-    stream: beryllium
-    project: 'armoury'
-    project-name: 'armoury'
-    branch: 'stable/beryllium'
-    karaf-version: karaf3
-    jdk: openjdk7
-    jdks:
-      - openjdk7
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
-    mvn-settings: 'armoury-settings'
-    mvn-goals: 'clean install'
-    mvn-opts: '-Xmx2048m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
-    dependencies: ''
-    email-upstream: '[armoury]'
-    archive-artifacts: ''
-
-- project:
     name: armoury-sonar
     jobs:
       - '{project-name}-sonar'

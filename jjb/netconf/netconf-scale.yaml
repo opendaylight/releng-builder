@@ -30,17 +30,6 @@
               odl-netconf-connector-all,
               odl-netconf-topology
           robot-options: '-v USE_NETCONF_CONNECTOR:True'
-      - beryllium:
-          branch: 'stable/beryllium'
-          jre: 'openjdk7'
-          karaf-version: karaf3
-          install-features: >
-              odl-restconf,
-              odl-clustering-test-app,
-              odl-netconf-mdsal,
-              odl-netconf-connector-all,
-              odl-netconf-topology
-          robot-options: '-v USE_NETCONF_CONNECTOR:True'
 
     install:
       - only:

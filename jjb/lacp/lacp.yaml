@@ -84,35 +84,6 @@
     archive-artifacts: ''
 
 - project:
-    name: lacp-beryllium
-    jobs:
-      - '{project-name}-clm-{stream}'
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-integration-{stream}'
-      - '{project-name}-merge-{stream}'
-      - '{project-name}-validate-autorelease-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
-
-    stream: beryllium
-    project: 'lacp'
-    project-name: 'lacp'
-    branch: 'stable/beryllium'
-    karaf-version: karaf3
-    jdk: openjdk7
-    jdks:
-      - openjdk7
-      - openjdk8
-    mvn-settings: 'lacp-settings'
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
-    mvn-goals: 'clean install javadoc:aggregate -DrepoBuild'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: 'openflowjava-merge-{stream},openflowplugin-merge-{stream}'
-    email-upstream: '[lacp] [openflowjava] [openflowplugin]'
-    archive-artifacts: ''
-
-- project:
     name: lacp-sonar
     jobs:
       - '{project-name}-sonar'

@@ -84,35 +84,6 @@
     archive-artifacts: ''
 
 - project:
-    name: sdninterfaceapp-beryllium
-    jobs:
-      - '{project-name}-clm-{stream}'
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-integration-{stream}'
-      - '{project-name}-merge-{stream}'
-      - '{project-name}-validate-autorelease-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
-
-    stream: beryllium
-    project: 'sdninterfaceapp'
-    project-name: 'sdninterfaceapp'
-    branch: 'stable/beryllium'
-    karaf-version: karaf3
-    jdk: openjdk7
-    jdks:
-      - openjdk7
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
-    mvn-settings: 'sdninterfaceapp-settings'
-    mvn-goals: 'clean install'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: 'bgpcep-merge-{stream}'
-    email-upstream: '[sdninterfaceapp] [bgpcep]'
-    archive-artifacts: ''
-
-- project:
     name: sdninterfaceapp-sonar
     jobs:
       - '{project-name}-sonar'
