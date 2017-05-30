@@ -88,8 +88,7 @@
           script-only-if-succeeded: false
           script-only-if-failed: false
           mark-unstable-if-failed: true
-      - opendaylight-infra-shiplogs:
-          maven-version: 'mvn33'
+      - lf-infra-publish
 
 # Delete these when Karaf 4 becomes Nitrogen default.
 
@@ -178,5 +177,4 @@
           script-only-if-succeeded: false
           script-only-if-failed: false
           mark-unstable-if-failed: true
-      - opendaylight-infra-shiplogs:
-          maven-version: 'mvn33'
+      - lf-infra-publish

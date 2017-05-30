@@ -62,8 +62,7 @@
     publishers:
       - findbugs
       - jacoco-report
-      - opendaylight-infra-shiplogs:
-          maven-version: 'mvn33'
+      - lf-infra-publish
       - email-notification:
           email-recipients: '{email-recipients}'
           email-prefix: '[int/dist]'
@@ -179,8 +178,7 @@
           unique-version: true
           deploy-unstable: false
       - jacoco-report
-      - opendaylight-infra-shiplogs:
-          maven-version: 'mvn33'
+      - lf-infra-publish
       - email-notification:
           email-recipients: '{email-recipients}'
           email-prefix: '[int/dist]'
@@ -262,8 +260,7 @@
           script-only-if-succeeded: false
           script-only-if-failed: false
           mark-unstable-if-failed: true
-      - opendaylight-infra-shiplogs:
-          maven-version: 'mvn33'
+      - lf-infra-publish
 
 - job-template:
     name: 'distribution-deploy-{stream}'
@@ -309,8 +306,7 @@
           email-recipients: '{email-recipients}'
           email-prefix: '[int/dist]'
       - integration-csit-archive-build
-      - opendaylight-infra-shiplogs:
-          maven-version: 'mvn33'
+      - lf-infra-publish
 
 - job-template:
     name: 'distribution-offline-{stream}'
@@ -356,8 +352,7 @@
           email-recipients: '{email-recipients}'
           email-prefix: '[int/dist]'
       - integration-csit-archive-build
-      - opendaylight-infra-shiplogs:
-          maven-version: 'mvn33'
+      - lf-infra-publish
 
 # Delete these when Karaf 4 becomes Nitrogen default.
 
@@ -439,8 +434,7 @@
           script-only-if-succeeded: false
           script-only-if-failed: false
           mark-unstable-if-failed: true
-      - opendaylight-infra-shiplogs:
-          maven-version: 'mvn33'
+      - lf-infra-publish
 
 - job-template:
     name: 'distribution3-deploy-nitrogen'
@@ -484,8 +478,7 @@
           email-recipients: '{email-recipients}'
           email-prefix: '[int/dist]'
       - integration-csit-archive-build
-      - opendaylight-infra-shiplogs:
-          maven-version: 'mvn33'
+      - lf-infra-publish
 
 - job-template:
     name: 'distribution3-offline-nitrogen'
@@ -529,5 +522,4 @@
           email-recipients: '{email-recipients}'
           email-prefix: '[int/dist]'
       - integration-csit-archive-build
-      - opendaylight-infra-shiplogs:
-          maven-version: 'mvn33'
+      - lf-infra-publish
