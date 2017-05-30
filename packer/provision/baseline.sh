@@ -227,6 +227,9 @@ EOF
     ########################
     # --- START LFTOOLS DEPS
 
+    # Used by various scripts to push patches to Gerrit
+    apt-get install git-review
+
     # Needed to parse OpenStack commands used by opendaylight-infra stack commands
     # to initialize Heat template based systems.
     apt-get install jq
