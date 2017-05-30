@@ -210,7 +210,7 @@ EOF
     apt-get upgrade -m
     apt-get dist-upgrade -m
 
-    ensure_ubuntu_install unzip xz-utils puppet git git-review libxml-xpath-perl
+    ensure_ubuntu_install unzip xz-utils puppet git libxml-xpath-perl
 
     # install Java 7
     echo "---> Configuring OpenJDK"
@@ -239,12 +239,15 @@ EOF
     ########################
     # --- START LFTOOLS DEPS
 
+    # Used by various scripts to push patches to Gerrit
+    ensure_ubuntu_install git-review
+
     # Needed to parse OpenStack commands used by opendaylight-infra stack commands
     # to initialize Heat template based systems.
-    apt-get install jq
+    ensure_ubuntu_install jq
 
     # Used by lftools scripts to parse XML
-    apt-get install xmlstarlet
+    ensure_ubuntu_install xmlstarlet
 
     # --- END LFTOOLS DEPS
     ######################
