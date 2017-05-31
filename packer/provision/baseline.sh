@@ -111,7 +111,7 @@ EOF
     # separate group installs from package installs since a non-existing
     # group with dnf based systems (F21+) will fail the install if such
     # a group does not exist
-    yum install -y unzip xz puppet git git-review perl-XML-XPath ShellCheck
+    yum install -y unzip xz puppet git git-review perl-XML-XPath
 
     # All of our systems require Java (because of Jenkins)
     # Install all versions of the OpenJDK devel but force 1.7.0 to be the
@@ -159,6 +159,17 @@ EOF
 
     # Used by lftools scripts to parse XML
     yum install -y xmlstarlet
+
+    # Haskel Packages
+    # Cabal update fails on a 1G system so workaround that with a swap file
+    dd if=/dev/zero of=/tmp/swap bs=1M count=1024
+    mkswap /tmp/swap
+    swapon /tmp/swap
+
+    yum install -y cabal-install
+    cabal update
+    cabal install "Cabal<1.18"  # Pull Cabal version that is capable of building shellcheck
+    cabal install --bindir=/usr/local/bin "shellcheck-0.4.6"  # Pin shellcheck version
 
     # --- END LFTOOLS DEPS
     ######################
@@ -248,6 +259,17 @@ EOF
 
     # Used by lftools scripts to parse XML
     ensure_ubuntu_install xmlstarlet
+
+    # Haskel Packages
+    # Cabal update fails on a 1G system so workaround that with a swap file
+    dd if=/dev/zero of=/tmp/swap bs=1M count=1024
+    mkswap /tmp/swap
+    swapon /tmp/swap
+
+    ensure_ubuntu_install cabal-install
+    cabal update
+    cabal install "Cabal<1.18"  # Pull Cabal version that is capable of building shellcheck
+    cabal install --bindir=/usr/local/bin "shellcheck-0.4.6"  # Pin shellcheck version
 
     # --- END LFTOOLS DEPS
     ######################
