@@ -47,3 +47,10 @@ apt-get install vlan
 
 # Install netaddr package which is needed by some custom mininet topologies
 apt-get install python-netaddr
+
+# Build shellcheck from git repo to update to most recent version
+apt-get install cabal-install
+git clone https://github.com/koalaman/shellcheck.git
+cabal update
+cd ./shellcheck
+cabal install --bindir=/usr/local/bin
