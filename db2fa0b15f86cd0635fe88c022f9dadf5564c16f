@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3afa9182_81e728e4",
+        "filename": "jjb/opendaylight-infra-push-gerrit-patch.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2017-05-31T00:18:44Z",
+      "side": 1,
+      "message": "looks like this line is failing tox:\n\n14:50:59 |   7| #·shellcheck·source\u003d./.virtualenvs/git-review/bin/activate·disable\u003dSC1091\n14:51:00 |    | [MAJOR] ShellCheckBear:\n14:51:00 |    | Couldn\u0027t parse this shellcheck annotation. [SC1073]\n\n\ndo we even need it as a comment or just remove entirely?",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 73
+      },
+      "revId": "db2fa0b15f86cd0635fe88c022f9dadf5564c16f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
