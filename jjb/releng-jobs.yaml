@@ -454,11 +454,6 @@
           search_string: "csit"
           stream: "boron"
           jobs-filename: "csit_jobs_boron.lst"
-      - integration-list-jobs:
-          blacklist: '{csit-list-blacklist}'
-          search_string: "csit"
-          stream: "beryllium"
-          jobs-filename: "csit_jobs_beryllium.lst"
       - integration-replace-block-text:
           starting-regex: "'csit-list-nitrogen: >'"
           ending-regex: "'csit-list-carbon: >'"
@@ -471,13 +466,8 @@
           file-to-change: "'jjb/releng-defaults.yaml'"
       - integration-replace-block-text:
           starting-regex: "'csit-list-boron: >'"
-          ending-regex: "'csit-list-beryllium: >'"
-          file-with-changes-to-insert: "'csit_jobs_boron.lst'"
-          file-to-change: "'jjb/releng-defaults.yaml'"
-      - integration-replace-block-text:
-          starting-regex: "'csit-list-beryllium: >'"
           ending-regex: "'# CSIT TESTS END SED MARKER'"
-          file-with-changes-to-insert: "'csit_jobs_beryllium.lst'"
+          file-with-changes-to-insert: "'csit_jobs_boron.lst'"
           file-to-change: "'jjb/releng-defaults.yaml'"
       - shell: |
           git status
