@@ -2,9 +2,10 @@
 virtualenv "$WORKSPACE/.venv"
 # shellcheck disable=SC1090
 source "$WORKSPACE/.venv/bin/activate"
-pip install --upgrade --quiet pip
-pip install --upgrade --quiet python-openstackclient python-heatclient
-pip freeze
+PYTHON="$WORKSPACE/.venv/bin/python"
+$PYTHON -m pip install --upgrade --quiet pip
+$PYTHON -m pip install --upgrade --quiet python-openstackclient python-heatclient
+$PYTHON -m pip freeze
 
 cat > "$WORKSPACE/docs/cloud-images.rst" << EOF
 Following are the list of published images available to be used with Jenkins jobs.

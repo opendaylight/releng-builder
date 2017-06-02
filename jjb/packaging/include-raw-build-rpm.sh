@@ -10,8 +10,9 @@ set -ex -o pipefail
 virtualenv rpm_build
 # shellcheck disable=SC1091
 source rpm_build/bin/activate
-pip install --upgrade pip
-pip install -r "$WORKSPACE/packaging/rpm/requirements.txt"
+PYTHON="rpm_build/bin/python"
+$PYTHON -m pip install --upgrade pip
+$PYTHON -m pip install -r "$WORKSPACE/packaging/rpm/requirements.txt"
 
 # Make a URL for the tarball artifact from DOWNLOAD_URL (a zip)
 # shellcheck disable=SC2154

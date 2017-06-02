@@ -19,14 +19,15 @@ echo ROBOT_VENV="${ROBOT_VENV}" >> "${WORKSPACE}/env.properties"
 virtualenv --system-site-packages "${ROBOT_VENV}"
 # shellcheck disable=SC1090
 source "${ROBOT_VENV}/bin/activate"
+PYTHON="${ROBOT_VENV}/bin/python"
 
 set -exu
 
 # Make sure pip itself us up-to-date.
-pip install --upgrade pip
+$PYTHON -m pip install --upgrade pip
 
-pip install --upgrade docker-py importlib requests scapy netifaces netaddr ipaddr pyhocon
-pip install --upgrade robotframework-httplibrary \
+$PYTHON -m pip install --upgrade docker-py importlib requests scapy netifaces netaddr ipaddr pyhocon
+$PYTHON -m pip install --upgrade robotframework-httplibrary \
     requests==2.15.1 \
     robotframework-requests \
     robotframework-sshlibrary \
@@ -34,29 +35,29 @@ pip install --upgrade robotframework-httplibrary \
     robotframework-pycurllibrary
 
 # Module jsonpath is needed by current AAA idmlite suite.
-pip install --upgrade jsonpath-rw
+$PYTHON -m pip install --upgrade jsonpath-rw
 
 # Modules for longevity framework robot library
-pip install --upgrade elasticsearch elasticsearch-dsl
+$PYTHON -m pip install --upgrade elasticsearch elasticsearch-dsl
 
 # Module for pyangbind used by lispflowmapping project
-pip install pyangbind
+$PYTHON -m pip install pyangbind
 
 # Module for iso8601 datetime format
-pip install isodate
+$PYTHON -m pip install isodate
 
 # Modules for tornado and jsonpointer used by client libraries of IoTDM project
 # Note: Could be removed when client running on tools VM is used instead
 #       of client libraries only.
-pip install --upgrade tornado jsonpointer
+$PYTHON -m pip install --upgrade tornado jsonpointer
 
 # Module for TemplatedRequests.robot library
-pip install --upgrade jmespath
+$PYTHON -m pip install --upgrade jmespath
 
 # Module for backup-restore support library
-pip install jsonpatch
+$PYTHON -m pip install jsonpatch
 
 # Print installed versions.
-pip freeze
+$PYTHON -m pip freeze
 
 # vim: sw=4 ts=4 sts=4 et ft=sh :

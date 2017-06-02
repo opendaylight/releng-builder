@@ -3,6 +3,8 @@ echo "----------> Copy ssh public keys to csit lab"
 
 # shellcheck disable=SC1090
 source "$WORKSPACE/.venv-openstack/bin/activate"
+PYTHON="$WORKSPACE/.venv-openstack/bin/python"
+OPENSTACK="$WORKSPACE/.venv-openstack/bin/openstack"
 
 function copy-ssh-keys-to-slave() {
     RETRIES=60
@@ -31,10 +33,10 @@ function copy-ssh-keys-to-slave() {
 
 # Print the Stack outputs parameters so that we can identify which IPs belong
 # to which VM types.
-openstack stack show -c outputs "$STACK_NAME"
+$PYTHON $OPENSTACK stack show -c outputs "$STACK_NAME"
 
 # shellcheck disable=SC2006
-ADDR=(`openstack stack show -f json -c outputs "$STACK_NAME" | \
+ADDR=(`$PYTHON $OPENSTACK stack show -f json -c outputs "$STACK_NAME" | \
        jq -r '.outputs[] | \
               select(.output_key | match("^vm_[0-9]+_ips\$")) | \
               .output_value | .[]'`)

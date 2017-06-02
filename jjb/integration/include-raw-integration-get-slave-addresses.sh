@@ -6,7 +6,10 @@ OPENSTACK_SYSTEM=()
 [ "$NUM_OPENSTACK_SITES" ] || NUM_OPENSTACK_SITES=1
 
 source $WORKSPACE/.venv-openstack/bin/activate
-ADDR=(`openstack stack show -f json -c outputs $STACK_NAME | \
+PYTHON="$WORKSPACE/.venv-openstack/bin/python"
+OPENSTACK="$WORKSPACE/.venv-openstack/bin/openstack"
+
+ADDR=(`$PYTHON $OPENSTACK stack show -f json -c outputs $STACK_NAME | \
        jq -r '.outputs[] | \
               select(.output_key | match("^vm_[0-9]+_ips$")) | \
               .output_value | .[]'`)

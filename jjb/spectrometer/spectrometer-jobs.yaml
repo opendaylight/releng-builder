@@ -59,18 +59,20 @@
           if [ -e venv-python34/bin/activate ]; then
               echo "---> Updating Python dependencies"
               source venv-python34/bin/activate
+              PYTHON="venv-python34/bin/python"
           else
               echo "---> virtualenv not found. Setting up new virtualenv."
               pyvenv venv-python34 --without-pip
               source venv-python34/bin/activate
+              PYTHON="venv-python34/bin/python"
               wget https://bootstrap.pypa.io/get-pip.py
               python get-pip.py
-              pip install -e spectrometer/server
+              $PYTHON -m pip install -e spectrometer/server
           fi
-          pip install --upgrade -r spectrometer/server/requirements.txt
-          pip install --upgrade gunicorn gevent
-          pip install --upgrade nodeenv
-          pip freeze
+          $PYTHON -m pip install --upgrade -r spectrometer/server/requirements.txt
+          $PYTHON -m pip install --upgrade gunicorn gevent
+          $PYTHON -m pip install --upgrade nodeenv
+          $PYTHON -m pip freeze
 
           echo "---> Setup NodeJS"
           if [ -e venv-nodejs/bin/activate ]; then
