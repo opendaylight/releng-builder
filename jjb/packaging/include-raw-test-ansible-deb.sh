@@ -9,7 +9,8 @@ set -ex -o pipefail
 # Install required packages
 virtualenv deb_build
 source deb_build/bin/activate
-pip install --upgrade pip
+PYTHON="deb_build/bin/python"
+$PYTHON -m pip install --upgrade pip
 
 # Wait for any background apt processes to finish
 # There seems to be a backgroud apt process that locks /var/lib/dpkg/lock

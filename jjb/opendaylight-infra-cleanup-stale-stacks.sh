@@ -2,9 +2,10 @@
 virtualenv "$WORKSPACE/.venv"
 # shellcheck disable=SC1090
 source "$WORKSPACE/.venv/bin/activate"
-pip install --upgrade pip
-pip install --upgrade python-openstackclient python-heatclient
-pip freeze
+PYTHON="$WORKSPACE/.venv/bin/python"
+$PYTHON -m pip install --upgrade pip
+$PYTHON -m pip install --upgrade python-openstackclient python-heatclient
+$PYTHON -m pip freeze
 
 #########################
 ## FETCH ACTIVE BUILDS ##

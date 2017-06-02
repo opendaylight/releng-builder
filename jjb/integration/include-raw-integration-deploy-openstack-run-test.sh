@@ -3,10 +3,11 @@
 # ${ROBOT_VENV} comes from the include-raw-integration-install-robotframework.sh
 # script.
 source ${ROBOT_VENV}/bin/activate
+PYTHON="${ROBOT_VENV}/bin/python"
 
 # TODO: remove this work to run changes.py if/when it's moved higher up to be visible at the Robot level
 echo "showing recent changes that made it in to the distribution used by this job"
-pip install --upgrade urllib3
+$PYTHON -m pip install --upgrade urllib3
 python ${WORKSPACE}/test/tools/distchanges/changes.py -d /tmp/distribution_folder \
                   -u ${ACTUAL_BUNDLE_URL} -b ${DISTROBRANCH} \
                   -r ssh://jenkins-${SILO}@git.opendaylight.org:29418 || true

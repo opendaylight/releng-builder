@@ -49,9 +49,10 @@
       - shell: |
           virtualenv --system-site-packages $WORKSPACE/venv
           source $WORKSPACE/venv/bin/activate
-          pip install --upgrade pip
-          pip install --upgrade networkx
-          pip freeze
+          PYTHON="$WORKSPACE/venv/bin/python"
+          $PYTHON -m pip install --upgrade pip
+          $PYTHON -m pip install --upgrade networkx
+          $PYTHON -m pip freeze
           ./scripts/determine-merge-order.py
           deactivate
           rm -rf $WORKSPACE/venv

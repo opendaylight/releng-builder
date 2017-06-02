@@ -109,8 +109,9 @@
       - shell: |
           virtualenv $WORKSPACE/venv
           source $WORKSPACE/venv/bin/activate
-          pip install --upgrade pip
-          pip install docker-compose
+          PYTHON="$WORKSPACE/venv/bin/python"
+          $PYTHON -m pip install --upgrade pip
+          $PYTHON -m pip install docker-compose
 
 
 - builder:
