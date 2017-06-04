@@ -36,6 +36,10 @@ rh_systems() {
     # Handle the occurance where SELINUX is actually disabled
     SELINUX=$(grep -E '^SELINUX=(disabled|permissive|enforcing)$' /etc/selinux/config)
     MODE=$(echo "$SELINUX" | cut -f 2 -d '=')
+    # TODO: Latest version of nova-agent changes selinux context for /etc/shadow causing
+    # cloud-init to fail during running the Jenkins init script on instance startup.
+    # set selinux to permessive and revert this change once issue is resolved on RS
+    MODE="enforcing"
     case "$MODE" in
         permissive)
             echo "************************************"
