@@ -66,8 +66,7 @@
       - email-notification:
           email-recipients: '{email-recipients}'
           email-prefix: '[docs]'
-      - opendaylight-infra-shiplogs:
-          maven-version: 'mvn33'
+      - lf-infra-publish
 
 - job-template:
     # FIXME: Describe this job in docs/jenkins.rst
@@ -126,5 +125,4 @@
       - email-notification:
           email-recipients: '{email-recipients}'
           email-prefix: '[docs]'
-      - opendaylight-infra-shiplogs:
-          maven-version: 'mvn33'
+      - lf-infra-publish
