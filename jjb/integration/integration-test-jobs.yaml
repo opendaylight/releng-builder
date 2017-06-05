@@ -157,8 +157,7 @@
           email-recipients: '{email-recipients}'
           email-prefix: '[integration]'
       - integration-csit-archive-build
-      - opendaylight-infra-shiplogs:
-          maven-version: 'mvn33'
+      - lf-infra-publish
 
 # Template: integration-distribution-test-{stream}
 # Goal: Verify a distribution through all system test available
@@ -329,8 +328,7 @@
               KARAF_VERSION=$KARAF_VERSION
 
     publishers:
-      - opendaylight-infra-shiplogs:
-          maven-version: 'mvn33'
+      - lf-infra-publish
       - email-notification:
           email-recipients: '{email-recipients}'
           email-prefix: '[$GERRIT_PROJECT]'
@@ -426,8 +424,7 @@
                     KARAF_VERSION=$KARAF_VERSION
 
     publishers:
-      - opendaylight-infra-shiplogs:
-          maven-version: 'mvn33'
+      - lf-infra-publish
       - email-notification:
           email-recipients: '{email-recipients}'
           email-prefix: '[int/dist]'
