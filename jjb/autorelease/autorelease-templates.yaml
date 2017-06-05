@@ -148,8 +148,7 @@
             predefined-parameters: DOWNLOAD_URL=$BUNDLE_URL
             property-file: variables.jenkins-trigger
             fail-on-missing: true
-      - opendaylight-infra-shiplogs:
-          maven-version: 'mvn33'
+      - lf-infra-publish
 
 - job-template:
     name: autorelease-version-bump-{stream}
@@ -273,5 +272,4 @@
 
     publishers:
       - opendaylight-infra-sysstats
-      - opendaylight-infra-shiplogs:
-          maven-version: 'mvn33'
+      - lf-infra-publish
