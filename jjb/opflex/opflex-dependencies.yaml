@@ -164,6 +164,11 @@
     builders:
       - shell: !include-raw: deps-inc-v2/include-raw-openvswitch_tgz-build.sh
 
+- builder:
+    name: 'builder-opflex-vpp-1704'
+    builders:
+      - shell: !include-raw: deps-inc-v2/include_vpp_1704.sh
+
 - job-template:
     name: 'opflex-openvswitch_tgz-{stream}'
 
@@ -184,6 +189,7 @@
 
     builders:
       - builder-opflex-openvswitch-{openvswitch-build}
+      - builder-opflex-vpp-1704
 
     publishers:
       - email-notification:

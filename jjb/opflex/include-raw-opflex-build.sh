@@ -53,8 +53,11 @@ pushd agent-ovs
 ./autogen.sh
 ./configure --prefix="$ROOT" \
     --with-buildversion=$BUILD_NUMBER \
+    --enable-renderer-vpp=yes \
+    --enable-renderer-ovs=yes \
     CPPFLAGS="-isystem $ROOT/include" \
     CXXFLAGS="-Wall"
+
 make -j8
 if ! make check; then find . -name test-suite.log -exec cat {} \; && false; fi
 make dist
