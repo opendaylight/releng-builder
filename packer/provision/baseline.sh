@@ -32,6 +32,30 @@ ensure_kernel_install() {
     fi
 }
 
+ensure_ubuntu_install() {
+    # Workaround for mirrors occassionally failing to install a package.
+    # On Ubuntu sometimes the mirrors fail to install a package. This wrapper
+    # checks that a package is successfully installed before moving on.
+
+    packages=($@)
+
+    for pkg in "${packages[@]}"
+    do
+        # Retry installing package 5 times if necessary
+        for i in {0..5}
+        do
+            if [ "$(dpkg-query -W -f='${Status}' "$pkg" 2>/dev/null | grep -c "ok installed")" -eq 0 ]; then
+                apt-cache policy "$pkg"
+                apt-get install "$pkg"
+                continue
+            else
+                echo "$pkg already installed."
+                break
+            fi
+        done
+    done
+}
+
 rh_systems() {
     # Handle the occurance where SELINUX is actually disabled
     SELINUX=$(grep -E '^SELINUX=(disabled|permissive|enforcing)$' /etc/selinux/config)
@@ -181,24 +205,12 @@ EOF
     sudo add-apt-repository "deb http://us.archive.ubuntu.com/ubuntu $(lsb_release -sc) main universe restricted multiverse"
 
     echo "---> Installing base packages"
-    # Use retry loop to install packages for failing mirrors
-    for i in {0..5}
-    do
-        echo "Attempt $i of installing base packages..."
-        apt-get clean
-        apt-get update -m
-        apt-get upgrade -m
-        apt-get dist-upgrade -m
+    apt-get clean
+    apt-get update -m
+    apt-get upgrade -m
+    apt-get dist-upgrade -m
 
-        for pkg in unzip xz-utils puppet git git-review libxml-xpath-perl
-        do
-            # shellcheck disable=SC2046
-            if [ $(dpkg-query -W -f='${Status}' $pkg 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
-                apt-cache policy $pkg
-                apt-get install $pkg
-            fi
-        done
-    done
+    ensure_ubuntu_install unzip xz-utils puppet git git-review libxml-xpath-perl
 
     # install Java 7
     echo "---> Configuring OpenJDK"
