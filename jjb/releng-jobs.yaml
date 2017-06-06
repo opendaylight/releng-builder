@@ -24,6 +24,7 @@
     templates:
       - devstack
       - devstack-pre-pip-newton
+      - devstack-pre-pip-ocata
       - docker
       - gbp
       - java-builder
@@ -45,6 +46,8 @@
       - platforms: ubuntu-14.04
         templates: devstack-pre-pip-newton
       - platforms: ubuntu-14.04
+        templates: devstack-pre-pip-ocata
+      - platforms: ubuntu-14.04
         templates: devstack
       - platforms: ubuntu-14.04
         templates: docker
@@ -56,6 +59,8 @@
         templates: robot
       - platforms: ubuntu-16.04
         templates: devstack-pre-pip-newton
+      - platforms: ubuntu-16.04
+        templates: devstack-pre-pip-ocata
       - platforms: ubuntu-16.04
         templates: devstack
       - platforms: ubuntu-16.04
