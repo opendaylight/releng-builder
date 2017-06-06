@@ -18,7 +18,7 @@
     project: docs
     project-name: docs
     rtdproject: opendaylight
-    archive-artifacts: 'docs/_build/html/**'
+    archive-artifacts: ''
 
 - job-template:
     name: 'docs-merge-rtd-{stream}'
@@ -120,6 +120,10 @@
           $PYTHON -m pip freeze
           $PYTHON -m pip install tox
           tox -edocs
+
+          # Archive generated docs
+          mkdir -p "$WORKSPACE/archives"
+          mv docs/_build/html archives/
 
     publishers:
       - email-notification:
