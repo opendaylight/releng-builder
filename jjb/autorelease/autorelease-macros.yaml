@@ -101,11 +101,17 @@
     builders:
       - integration-set-variables
       - shell: |
+          #!/bin/bash
+          set +e  # DO NOT fail build if copying fails.
+
           if [ -d "integration/distribution/distributions" ]; then
               cp -vf "$WORKSPACE/taglist.log" "integration/distribution/distributions/karaf/src/main/assembly/"
           else
               cp -vf "$WORKSPACE/taglist.log" "integration/distribution/$KARAF_ARTIFACT/src/main/assembly/"
           fi
+
+          # DO NOT fail the build if copying failed.
+          exit 0
 
 - builder:
     name: autorelease-generate-release-patches

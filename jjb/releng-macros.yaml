@@ -332,7 +332,14 @@
     name: distribute-build-url
     # Place URL of the current run of a build job to a file at given path.
     builders:
-      - shell: 'echo "$BUILD_URL" > {path}/build.url'
+      - shell: |
+          #!/bin/bash
+          set +e  # DO NOT fail script if command returns non-zero.
+
+          echo "$BUILD_URL" > {path}/build.url
+
+          # DO NOT fail the build if the echo failed.
+          exit 0
 
 - builder:
     name: wipe-org-opendaylight-repo
