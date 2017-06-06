@@ -28,7 +28,7 @@
       "region": "DFW",
       "ssh_username": "{{user `public_cloud_user`}}",
       "image_name": "{{user `distro`}} - java-builder - {{isotime \"20060102-1504\"}}",
-      "source_image_name": "{{user `public_base_image`}}",
+      "source_image": "{{user `public_base_image`}}",
       "flavor": "general1-1",
       "networks": [
         "{{user `public_network`}}"
