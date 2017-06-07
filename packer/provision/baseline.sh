@@ -268,7 +268,6 @@ EOF
 
     ensure_ubuntu_install cabal-install
     cabal update
-    cabal install "Cabal<1.18"  # Pull Cabal version that is capable of building shellcheck
     cabal install --bindir=/usr/local/bin "shellcheck-0.4.6"  # Pin shellcheck version
 
     # --- END LFTOOLS DEPS
