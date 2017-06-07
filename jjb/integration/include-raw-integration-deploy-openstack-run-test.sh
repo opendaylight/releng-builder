@@ -83,6 +83,7 @@ NEUTRON_CREATE_INITIAL_NETWORKS=${CREATE_INITIAL_NETWORKS}
 Q_PLUGIN=ml2
 Q_ML2_TENANT_NETWORK_TYPE=${TENANT_NETWORK_TYPE}
 Q_OVS_USE_VETH=True
+Q_ML2_PLUGIN_TYPE_DRIVERS=vxlan,flat,vlan,gre
 
 ENABLE_TENANT_TUNNELS=True
 
@@ -160,14 +161,8 @@ if [ "${ENABLE_NETWORKING_L2GW}" == "yes" ]; then
 cat >> ${local_conf_file_name} << EOF
 [[post-config|\$NEUTRON_CONF]]
 [DEFAULT]
-service_plugins = networking_odl.l3.l3_odl.OpenDaylightL3RouterPlugin, networking_l2gw.services.l2gateway.plugin.L2GatewayPlugin
+service_plugins = networking_l2gw.services.l2gateway.plugin.L2GatewayPlugin
 
-EOF
-else
-cat >> ${local_conf_file_name} << EOF
-[[post-config|\$NEUTRON_CONF]]
-[DEFAULT]
-service_plugins = networking_odl.l3.l3_odl.OpenDaylightL3RouterPlugin
 EOF
 fi #check for ENABLE_NETWORKING_L2GW
 
