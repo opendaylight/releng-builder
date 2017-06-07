@@ -65,6 +65,8 @@
     publishers:
       - archive-artifacts:
           artifacts: '**/*.rpm'
+      - lf-infra-publish
+
 
 - job-template:
     name: 'packaging-build-rpm-snap-{stream}'
@@ -114,12 +116,14 @@
     builders:
       - shell: !include-raw: include-raw-build-rpm-snap.sh
 
+    triggers:
+      - timed: '@daily'
+
     publishers:
       - archive-artifacts:
           artifacts: '**/*.rpm'
+      - lf-infra-publish
 
-    triggers:
-      - timed: '@daily'
 
 - job-template:
     name: 'packaging-test-rpm-{stream}'
@@ -154,8 +158,8 @@
       - shell: !include-raw: include-raw-test-karaf.expect
 
     publishers:
-      - archive-artifacts:
-          artifacts: '**'
+      - lf-infra-publish
+
 
 - job-template:
     name: 'packaging-test-deb-{stream}'
@@ -190,8 +194,7 @@
       - shell: !include-raw: include-raw-test-karaf.expect
 
     publishers:
-      - archive-artifacts:
-          artifacts: '**'
+      - lf-infra-publish
 
 - job-template:
     name: 'packaging-build-deb-{stream}'
@@ -277,3 +280,4 @@
     publishers:
       - archive-artifacts:
           artifacts: 'packaging/deb/opendaylight/*.deb'
+      - lf-infra-publish
