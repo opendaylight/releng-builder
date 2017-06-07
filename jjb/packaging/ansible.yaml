@@ -54,6 +54,9 @@
           branch: '{branch}'
           files: '**'
 
+    publishers:
+      - lf-infra-publish
+
 - job-template:
     name: '{project-name}-test-deb-{stream}'
 
@@ -93,3 +96,6 @@
           project: '{project}'
           branch: '{branch}'
           files: '**'
+
+    publishers:
+      - lf-infra-publish
