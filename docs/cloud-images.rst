@@ -16,6 +16,7 @@ Following are the list of published images available to be used with Jenkins job
 * CentOS 7 - devstack-ocata - 20170606-0821
 * CentOS 7 - docker - 20170117-0003
 * CentOS 7 - docker - 20170120-1434
+* CentOS 7 - docker - 20170607-0203
 * CentOS 7 - java-builder - 20170117-0004
 * CentOS 7 - java-builder - 20170126-0058
 * CentOS 7 - java-builder - 20170309-2355
