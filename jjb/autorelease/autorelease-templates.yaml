@@ -180,6 +180,7 @@
 
     scm:
       - lf-infra-gerrit-scm:
+          git-url: '$GIT_URL/$GERRIT_PROJECT'
           branch: '{branch}'
           refspec: 'refs/heads/{branch}'
           jenkins-ssh-credential: opendaylight-jenkins-ssh

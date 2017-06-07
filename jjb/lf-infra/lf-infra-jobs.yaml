@@ -1,0 +1,26 @@
+---
+- project:
+    name: lf-infra-global-jjb
+    jobs:
+      - '{project-name}-tox-verify-{stream}'
+
+    project-name: lf-infra-global-jjb
+    project: releng/global-jjb
+    build-node: centos7-java-builder-2c-4g
+    stream: master
+
+    git-url: https://gerrit.linuxfoundation.org/infra/$GERRIT_PROJECT
+    gerrit-server-name: LinuxFoundation
+
+- project:
+    name: lf-infra-lftools
+    jobs:
+      - '{project-name}-tox-verify-{stream}'
+
+    project-name: lf-infra-lftools
+    project: releng/lftools
+    build-node: centos7-java-builder-2c-4g
+    stream: master
+
+    git-url: https://gerrit.linuxfoundation.org/infra/$GERRIT_PROJECT
+    gerrit-server-name: LinuxFoundation
