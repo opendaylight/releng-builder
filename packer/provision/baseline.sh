@@ -5,6 +5,41 @@
 # force any errors to cause the script and job to end in failure
 set -xeu -o pipefail
 
+enable_service() {
+    # Enable services for Ubuntu instances
+    services=($@)
+
+    for service in "${services[@]}"; do
+        echo "---> Enable service: $service"
+        FACTER_OS=$(/usr/bin/facter operatingsystem)
+        FACTER_OSVER=$(/usr/bin/facter operatingsystemrelease)
+        if [ "$FACTOR_OS" == "CentOS" ]; then
+            systemctl enable "$service"
+            systemctl start "$service"
+            systemctl status "$service"
+        elif [ "$FACTOR_OS" == "Ubuntu" ]; then
+            case "$FACTER_OSVER" in
+                14.04)
+                    service "$service" start
+                    service "$service" status
+                ;;
+                16.04)
+                    systemctl enable "$service"
+                    systemctl start "$service"
+                    systemctl status "$service"
+                ;;
+                *)
+                    echo "---> Unknown Ubuntu version $FACTER_OSVER"
+                    exit 1
+                ;;
+            esac
+        else
+            echo "---> Unknown OS $FACTER_OS"
+            exit 1
+        fi
+    done
+}
+
 ensure_kernel_install() {
     # Workaround for mkinitrd failing on occassion.
     # On CentOS 7 it seems like the kernel install can fail it's mkinitrd
@@ -177,6 +212,10 @@ EOF
     # install haveged to avoid low entropy rejecting ssh connections
     yum install -y haveged
     systemctl enable haveged.service
+
+    # Install sysstat
+    yum install -y sysstat
+    enable_service sysstat
 }
 
 ubuntu_systems() {
@@ -272,6 +311,11 @@ EOF
 
     # --- END LFTOOLS DEPS
     ######################
+
+    # Install sysstat
+    ensure_ubuntu_install sysstat
+    sed -i 's/ENABLED="false"/ENABLED="true"/' /etc/default/sysstat
+    enable_service sysstat
 
     # install haveged to avoid low entropy rejecting ssh connections
     apt-get install haveged
