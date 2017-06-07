@@ -5,6 +5,31 @@
 # force any errors to cause the script and job to end in failure
 set -xeu -o pipefail
 
+enable_service_ubuntu() {
+    # Handle enabling and start services for Ubuntu
+    services=($@)
+
+    for service in "${services[@]}"; do
+        echo "---> Enable service: $service"
+        FACTER_OSVER=$(/usr/bin/facter operatingsystemrelease)
+        case "$FACTER_OSVER" in
+            14.04)
+                service start "$service"
+                service status "$service"
+            ;;
+            16.04)
+                systemctl enable "$service"
+                systemctl start "$service"
+                systemctl status "$service"
+            ;;
+            *)
+                echo "---> Unknown Ubuntu version $FACTER_OSVER"
+                exit 1
+            ;;
+        esac
+    done
+}
+
 ensure_kernel_install() {
     # Workaround for mkinitrd failing on occassion.
     # On CentOS 7 it seems like the kernel install can fail it's mkinitrd
@@ -272,6 +297,11 @@ EOF
 
     # --- END LFTOOLS DEPS
     ######################
+
+    # Install sysstat
+    ensure_ubuntu_install sysstat
+    sed -i 's/ENABLED="false"/ENABLED="true"/' /etc/default/sysstat
+    enable_service_ubuntu sysstat
 
     # install haveged to avoid low entropy rejecting ssh connections
     apt-get install haveged
