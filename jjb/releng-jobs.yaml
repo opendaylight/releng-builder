@@ -5,9 +5,6 @@
       - '{project-name}-ci-jobs'
       - '{project-name}-verify-tox-{stream}'
       - 'builder-check-poms'
-      # Packer jobs
-      - 'builder-verify-packer'
-      - 'builder-merge-packer-{platforms}-{templates}'
       # OpenStack Related
       - 'builder-cleanup-old-images'
       - 'builder-delete-stale-nodes'
@@ -15,6 +12,28 @@
       # Automation for docs and jobs
       - 'builder-update-csit-tests'
       - 'builder-update-image-list'
+
+    # The following values are only specified here
+    # so that code blocks look similar to other projects.
+    project: 'releng/builder'
+    project-name: builder
+    stream: master
+    branch: master
+    build-node: centos7-java-builder-2c-4g
+    archive-artifacts: '**/*.log'
+    build-timeout: 10
+
+- project:
+    name: builder-packer-jobs
+    jobs:
+      - 'builder-merge-packer-{platforms}-{templates}'
+      - 'builder-verify-packer'
+
+    project: 'releng/builder'
+    project-name: builder
+    branch: master
+    archive-artifacts: '**/*.log'
+    build-timeout: 90
 
     platforms:
       - centos
@@ -70,18 +89,6 @@
       - platforms: ubuntu-16.04
         templates: gbp
 
-
-    project-type: freestyle
-    archive-artifacts: '**/*.log'
-    build-timeout: '60'
-
-    # The following values are only specified here
-    # so that code blocks look similar to other projects.
-    project: 'releng/builder'
-    project-name: builder
-    stream: master
-    branch: master
-    build-node: centos7-java-builder-2c-4g
 
 - job-template:
     name: builder-check-poms
