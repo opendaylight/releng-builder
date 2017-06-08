@@ -28,6 +28,13 @@ yum install -y graphviz
 # Needed by deploy test
 yum install -y sshpass
 
+#########################
+# Integration/Packaging #
+#########################
+
+# Install software for building RPMs
+yum install -y fedora-packager
+
 # tcpmd5 is wanting to do 32bit ARM cross-compilation and is specifically
 # requesting the following be installed (note the kernel headers are
 # going to be the x86_64 package as there aren't separate 32bit and

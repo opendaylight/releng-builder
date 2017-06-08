@@ -3,13 +3,6 @@
 
 yum clean all
 
-#
-# Integration/Packaging
-#
-
-# Install software for building RPMs
-yum install -y fedora-packager
-
 # disable the firewall
 /bin/bash ./disable_firewall.sh
 
