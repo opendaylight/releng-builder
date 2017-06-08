@@ -538,6 +538,7 @@
               clean deploy dependency:tree
               -DoutputFile=dependency_tree.txt
               -Pq
+              -Dgitid.skip=false
               -DaltDeploymentRepository=fake-nexus::default::file:///tmp/n/
               {mvn-opts}
           java-opts:
@@ -578,6 +579,7 @@
               clean install dependency:tree
               -DoutputFile=dependency_tree.txt
               -Pq
+              -Dgitid.skip=false
               {mvn-opts}
           java-opts:
             - '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
@@ -678,6 +680,7 @@
               clean install dependency:tree
               -DoutputFile=dependency_tree.txt -s fake_remotes.xml
               -Pq
+              -Dgitid.skip=false
               -DskipTests=false
               {mvn-opts}
           java-opts:
