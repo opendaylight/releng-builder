@@ -22,6 +22,7 @@ Following are the list of published images available to be used with Jenkins job
 * CentOS 7 - java-builder - 20170309-2355
 * CentOS 7 - java-builder - 20170311-0517
 * CentOS 7 - java-builder - 20170606-0427
+* CentOS 7 - java-builder - 20170607-1706
 * CentOS 7 - robot - 20170117-0004
 * CentOS 7 - robot - 20170210-1803
 * CentOS 7 - robot - 20170328-0206
