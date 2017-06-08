@@ -35,15 +35,6 @@ yum install -y sshpass
 # Install software for building RPMs
 yum install -y fedora-packager
 
-# tcpmd5 is wanting to do 32bit ARM cross-compilation and is specifically
-# requesting the following be installed (note the kernel headers are
-# going to be the x86_64 package as there aren't separate 32bit and
-# x86_64 packages for them
-yum install -y glibc-devel.i686 kernel-headers
-
-# Needed by opendove
-yum install -y {jansson,libevent,libnl,libuuid}-devel
-
 # Needed for vsemprovider build in vtn project to enable C# compilation.
 rpm --import "http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF"
 # Add the mono tools repository
