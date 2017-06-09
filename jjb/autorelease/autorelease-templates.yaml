@@ -119,11 +119,6 @@
     publishers:
       - opendaylight-infra-notify-status
       - opendaylight-infra-sysstats
-      - archive:
-          # Need to archive dependencies.log in Jenkins to provide a simple
-          # way for downstream jobs to pull the latest version of this file
-          # in their builds.
-          artifacts: 'dependencies.log'
       - trigger-parameterized-builds:
           - project: 'autorelease-generate-release-notes-{stream}'
             condition: UNSTABLE_OR_BETTER
