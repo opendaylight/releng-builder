@@ -260,14 +260,22 @@
           - version-bump.sh
 
     publishers:
-      - trigger-parameterized-builds:
-          - project: 'autorelease-generate-release-notes-{stream}'
-            condition: UNSTABLE_OR_BETTER
-            trigger-with-no-params: true
       - lf-infra-publish
 
 - job-template:
     name: 'autorelease-generate-release-notes-{stream}'
+
+    ######################
+    # Default parameters #
+    ######################
+
+    gerrit_merge_triggers:
+      - comment-added-contains-event:
+          comment-contains-value: generate-release-notes$
+
+    #####################
+    # Job Configuration #
+    #####################
 
     project-type: freestyle
     node: centos7-java-builder-2c-4g
@@ -282,12 +290,15 @@
           branch: '{branch}'
           stream: '{stream}'
           lftools-version: '{lftools-version}'
+      - string:
+          name: RELEASE
+          description: Release to generate release notes for.
 
     scm:
       - lf-infra-gerrit-scm:
           git-url: '$GIT_URL/$GERRIT_PROJECT'
-          branch: '{branch}'
-          refspec: 'refs/heads/{branch}'
+          branch: '$GERRIT_BRANCH'
+          refspec: '$GERRIT_REFSPEC'
           jenkins-ssh-credential: opendaylight-jenkins-ssh
           submodule-recursive: true
           choosing-strategy: default
@@ -298,21 +309,17 @@
           jenkins-ssh-credential: opendaylight-jenkins-ssh
 
     triggers:
-      - timed: '0 0 * * 0'
+      - gerrit:
+          server-name: '{gerrit-server-name}'
+          trigger-on: '{obj:gerrit_merge_triggers}'
+          projects:
+            - project-compare-type: ANT
+              project-pattern: '{project}'
+              branches:
+                - branch-compare-type: ANT
+                  branch-pattern: '**/{branch}'
 
     builders:
-      - lf-maven-install:
-          mvn-version: mvn33
-      - maven-target:
-          maven-version: mvn33
-          pom: '$WORKSPACE/scripts/release_notes_management/pom.xml'
-          goals: |
-              clean package
-              {opendaylight-infra-mvn-opts}
-          settings: autorelease-settings
-          settings-type: cfp
-          global-settings: global-settings
-          global-settings-type: cfp
       - autorelease-generate-release-notes
 
     publishers:

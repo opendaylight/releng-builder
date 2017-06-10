@@ -143,13 +143,8 @@
 - builder:
     name: autorelease-generate-release-notes
     builders:
-      - shell: |
-          cd $WORKSPACE/scripts/release_notes_management
-          java -jar target/autonotes.jar
-          if [ -f  "$WORKSPACE/scripts/release_notes_management/projects/release-notes.rst" ]; then
-              mkdir -p $WORKSPACE/archives
-              cp -vf "$WORKSPACE/scripts/release_notes_management/projects/release-notes.rst" "$WORKSPACE/archives"
-          fi
+      - shell: !include-raw:
+          - generate-release-notes.sh
 
 - publisher:
     # Search console log for failures and email status to the release mailing list.
