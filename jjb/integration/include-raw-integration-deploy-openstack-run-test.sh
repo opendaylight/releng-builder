@@ -163,12 +163,6 @@ cat >> ${local_conf_file_name} << EOF
 service_plugins = networking_odl.l3.l3_odl.OpenDaylightL3RouterPlugin, networking_l2gw.services.l2gateway.plugin.L2GatewayPlugin
 
 EOF
-else
-cat >> ${local_conf_file_name} << EOF
-[[post-config|\$NEUTRON_CONF]]
-[DEFAULT]
-service_plugins = networking_odl.l3.l3_odl.OpenDaylightL3RouterPlugin
-EOF
 fi #check for ENABLE_NETWORKING_L2GW
 
 fi #ODL_ENABLE_L3_FWD check
@@ -489,8 +483,8 @@ EOF
 
 cat > "${WORKSPACE}/setup_host_cell_mapping.sh" << EOF
 sudo nova-manage cell_v2 map_cell0
-sudo nova-manage cell_v2 simple_cell_setup
-sudo nova-manage db sync
+sudo nova-manage cell_v2 create_cell --name=cell1 --verbose
+sleep 10
 sudo nova-manage cell_v2 discover_hosts
 EOF
 
