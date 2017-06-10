@@ -36,7 +36,7 @@ done
 # delete them.
 for STACK_NAME in "${OS_STACKS[@]}"; do
     STACK_STATUS=$(openstack stack show -f json -c "stack_status" "$STACK_NAME" | jq -r '."stack_status"')
-    if [[ "${ACTIVE_BUILDS[@]}" =~ $STACK_NAME ]]; then
+    if [[ "${ACTIVE_BUILDS[*]}" =~ $STACK_NAME ]]; then
         # No need to delete stacks if there exists an active build for them
         continue
     else
