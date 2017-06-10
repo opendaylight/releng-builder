@@ -41,6 +41,7 @@
           server-name: '{server-name}'
           name: 'spectrometer'
           branch: 'master'
+      - timed: 'H H * * 1'
 
     builders:
       - shell: |
