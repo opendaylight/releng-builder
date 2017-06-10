@@ -88,15 +88,6 @@
           awk '/The following files have NOT been resolved:/,/^$/' sources.log > missing-sources.log
 
 - builder:
-    name: autorelease-generate-taglist
-    builders:
-      - shell: |
-          echo autorelease `git rev-parse --verify HEAD` ${RELEASE_TAG} \
-              | tee -a $WORKSPACE/taglist.log
-          git submodule foreach 'echo $path `git rev-parse --verify HEAD` ${RELEASE_TAG} \
-              | tee -a $WORKSPACE/taglist.log'
-
-- builder:
     name: autorelease-distribute-taglist
     builders:
       - integration-set-variables
@@ -105,9 +96,11 @@
           set +e  # DO NOT fail build if copying fails.
 
           if [ -d "integration/distribution/distributions" ]; then
-              cp -vf "$WORKSPACE/taglist.log" "integration/distribution/distributions/karaf/src/main/assembly/"
+              cp -vf "$WORKSPACE/archives/patches/taglist.log" \
+                  "integration/distribution/distributions/karaf/src/main/assembly/"
           else
-              cp -vf "$WORKSPACE/taglist.log" "integration/distribution/$KARAF_ARTIFACT/src/main/assembly/"
+              cp -vf "$WORKSPACE/archives/patches/taglist.log" \
+                  "integration/distribution/$KARAF_ARTIFACT/src/main/assembly/"
           fi
 
           # DO NOT fail the build if copying failed.

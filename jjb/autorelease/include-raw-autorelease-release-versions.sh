@@ -13,16 +13,22 @@
 # RELEASE_BRANCH=stable/beryllium  # Example
 
 # Directory to put git format-patches
-PATCH_DIR="$WORKSPACE/patches"
+PATCH_DIR="$WORKSPACE/archives/patches"
+mkdir -p "$PATCH_DIR"
+
+# Get the current submodule commit hashes.
+echo autorelease "$(git rev-parse --verify HEAD)" "${RELEASE_TAG}" \
+    | tee -a "$PATCH_DIR/taglist.log"
+# Disable SC2154 because we want $path to be the submodule parameter not the shell.
+# shellcheck disable=SC2154
+git submodule foreach "echo \$path $(git rev-parse --verify HEAD) ${RELEASE_TAG} \
+    | tee -a $PATCH_DIR/taglist.log"
 
 echo "$RELEASE_TAG"
 lftools version release "$RELEASE_TAG"
 git submodule foreach "git commit -am \"Release $RELEASE_TAG\" || true"
 git commit -am "Release $RELEASE_TAG"
 
-mkdir patches
-# TODO: Fix this workaround so that scripts will ensure that taglist.log exists and archived.
-mv taglist.log "$PATCH_DIR" || true
 modules=$(xmlstarlet sel -N x=http://maven.apache.org/POM/4.0.0 -t -m '//x:modules' -v '//x:module' pom.xml)
 for module in $modules; do
     pushd "$module"
@@ -31,5 +37,5 @@ for module in $modules; do
     popd
 done
 
-tar cvzf patches.tar.gz -C "$WORKSPACE" patches
+tar cvzf "$WORKSPACE/archives/patches.tar.gz" -C "$WORKSPACE/archives/" "$PATCH_DIR"
 rm "$PATCH_DIR"/*.bundle

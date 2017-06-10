@@ -78,11 +78,10 @@
       - autorelease-cfp:
           autorelease-settings: 'autorelease-settings'
           odl-global-settings: 'odl-global-settings'
-      - autorelease-generate-taglist
+      - autorelease-generate-release-patches
       - autorelease-distribute-taglist
       - distribute-build-url:
           path: 'integration/distribution/$KARAF_ARTIFACT/src/main/assembly'
-      - autorelease-generate-release-patches
       # In a perfect world projects should be releasing separately and we consume them
       # via a project that pulls the release bits from each project from Nexus.
       # Keep the patches compatible with that ideal, but apply an edit
