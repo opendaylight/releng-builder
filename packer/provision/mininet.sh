@@ -66,11 +66,8 @@ cd $OFLOPS_DIR
 make
 make install
 
+# Install netaddr package which is needed by some custom mininet topologies
+apt-get install -y --force-yes python-netaddr
+
 echo '---> Installing vlan for vlan based tests in VTN suites'
 apt-get install -y --force-yes vlan
-
-echo '---> All Python package installation should happen in virtualenv'
-apt-get install -y --force-yes python-virtualenv python-pip
-
-# Install netaddr package which is needed by some custom mininet topologies
-apt-get install -y --force-yes -qq python-netaddr

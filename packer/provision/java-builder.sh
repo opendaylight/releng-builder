@@ -12,13 +12,6 @@ yum install -y @development perl-{Digest-SHA,ExtUtils-MakeMaker} \
     {readline,unixODBC}-devel yum-utils fedora-packager \
     libxslt-devel crudini
 
-# Install python3 and dependencies, needed for Coala linting at least
-yum install -y python34
-yum install -y python34-{devel,virtualenv,setuptools,pip}
-
-# Install python dependencies, useful generally
-yum install -y python-{devel,virtualenv,setuptools,pip}
-
 # Needed by autorelease scripts
 yum install -y xmlstarlet
 
