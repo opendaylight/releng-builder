@@ -260,7 +260,7 @@ EOF
     apt-get upgrade -m
     apt-get dist-upgrade -m
 
-    ensure_ubuntu_install unzip xz-utils puppet git libxml-xpath-perl
+    ensure_ubuntu_install unzip xz-utils puppet git libxml-xpath-perl python-dev
 
     # install Java 7
     echo "---> Configuring OpenJDK"
