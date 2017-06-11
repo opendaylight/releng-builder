@@ -216,6 +216,13 @@ EOF
     # Install sysstat
     yum install -y sysstat
     enable_service sysstat
+
+    # Install python3 and dependencies, needed for Coala linting at least
+    yum install -y python34
+    yum install -y python34-{devel,virtualenv,setuptools,pip}
+
+    # Install python dependencies, useful generally
+    yum install -y python-{devel,virtualenv,setuptools,pip}
 }
 
 ubuntu_systems() {
@@ -320,6 +327,12 @@ EOF
     # install haveged to avoid low entropy rejecting ssh connections
     apt-get install haveged
     update-rc.d haveged defaults
+
+    # Install python and dependencies
+    ensure_ubuntu_install python-dev python-virtualenv python-setuptools python-pip
+
+    # Install netaddr package which is needed by some custom mininet topologies
+    ensure_ubuntu_install python-netaddr
 
     # disable unattended upgrades & daily updates
     echo '---> Disabling automatic daily upgrades'
