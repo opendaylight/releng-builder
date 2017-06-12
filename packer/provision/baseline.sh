@@ -269,23 +269,40 @@ EOF
 
     ensure_ubuntu_install unzip xz-utils puppet git libxml-xpath-perl
 
-    # install Java 7
-    echo "---> Configuring OpenJDK"
+    # Install python3
+    ensure_ubuntu_install python3
+
+    # Install python and dependencies
+    ensure_ubuntu_install python-{dev,virtualenv,setuptools,pip}
+
     FACTER_OSVER=$(/usr/bin/facter operatingsystemrelease)
     case "$FACTER_OSVER" in
         14.04)
+            # install Java 7
+            echo "---> Installing OpenJDK"
             apt-get install openjdk-7-jdk
             # make jdk8 available
             add-apt-repository -y ppa:openjdk-r/ppa
             apt-get update
             # We need to force openjdk-8-jdk to install
             apt-get install openjdk-8-jdk
+            echo "---> Configuring OpenJDK"
             # make sure that we still default to openjdk 7
             update-alternatives --set java /usr/lib/jvm/java-7-openjdk-amd64/jre/bin/java
             update-alternatives --set javac /usr/lib/jvm/java-7-openjdk-amd64/bin/javac
+
+            echo "---> Installing python3 dependencies"
+            # Install python3 dependencies, needed for Coala linting
+            ensure_ubuntu_install python3-{dev,setuptools,pip}
         ;;
         16.04)
+            echo "---> Installing OpenJDK"
+            # install Java 7
             apt-get install openjdk-8-jdk
+
+            echo "---> Installing python3 dependencies"
+            # Install python3 dependencies, needed for Coala linting
+            ensure_ubuntu_install python3-{dev,virtualenv,setuptools,pip}
         ;;
         *)
             echo "---> Unknown Ubuntu version $FACTER_OSVER"
@@ -327,13 +344,6 @@ EOF
     # install haveged to avoid low entropy rejecting ssh connections
     apt-get install haveged
     update-rc.d haveged defaults
-
-    # Install python3 and dependencies, needed for Coala linting at least
-    ensure_ubuntu_install python3
-    ensure_ubuntu_install python3-{dev,virtualenv,setuptools,pip}
-
-    # Install python and dependencies
-    ensure_ubuntu_install python-{dev,virtualenv,setuptools,pip}
 
     # disable unattended upgrades & daily updates
     echo '---> Disabling automatic daily upgrades'
