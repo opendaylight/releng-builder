@@ -155,13 +155,3 @@
             - shell: !include-raw: include-raw-autorelease-notify-build-failure.sh
           script-only-if-succeeded: 'False'
           script-only-if-failed: 'True'
-
-- publisher:
-    # generate sar accounting summary and copy sar data to archive
-    name: opendaylight-infra-sysstats
-    publishers:
-      - postbuildscript:
-          builders:
-            - shell: !include-raw: include-raw-autorelease-collect-sar.sh
-          script-only-if-succeeded: false
-          script-only-if-failed: false
