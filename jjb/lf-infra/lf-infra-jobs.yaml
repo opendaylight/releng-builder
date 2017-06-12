@@ -2,7 +2,7 @@
 - project:
     name: lf-infra-global-jjb
     jobs:
-      - '{project-name}-tox-verify-{stream}'
+      - gerrit-tox-verify
 
     project-name: lf-infra-global-jjb
     project: releng/global-jjb
@@ -15,7 +15,7 @@
 - project:
     name: lf-infra-lftools
     jobs:
-      - '{project-name}-tox-verify-{stream}'
+      - gerrit-tox-verify
 
     project-name: lf-infra-lftools
     project: releng/lftools

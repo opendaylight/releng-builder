@@ -10,6 +10,7 @@
       - '{project-name}-validate-autorelease-{stream}'
       - '{project-name}-verify-{stream}-{maven}-{jdks}'
       - '{project-name}-verify-tox-{stream}'
+      - '{project-name}-maven-jobs'
 
     stream: nitrogen
     project: 'odlparent'
@@ -27,6 +28,10 @@
     dependencies: ''
     email-upstream: '[odlparent]'
     archive-artifacts: ''
+
+    # Used by the release job
+    settings-file: odlparent-settings
+    staging-profile-id: 880d5ac25eaa
 
 - project:
     name: odlparent-carbon
