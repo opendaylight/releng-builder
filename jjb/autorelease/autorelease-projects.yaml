@@ -21,6 +21,8 @@
           karaf-version: karaf3
           extra-mvn-opts: -Dskip.karaf.featureTest=true
       - boron:
+          # Only run once a week since Boron is in maintenance mode
+          cron: 'H H * * 0'
           next-release-tag: Boron-SR4
           branch: 'stable/boron'
           jdk: 'openjdk8'
