@@ -39,9 +39,6 @@ cp cbench /usr/local/bin/
 echo '---> Installing exabgp'
 apt-get install exabgp
 
-echo '---> All Python package installation should happen in virtualenv'
-apt-get install python-virtualenv python-pip
-
 # Install vlan for vlan based tests in VTN suites
 apt-get install vlan
 
