@@ -57,7 +57,7 @@
             - '-Xmx1024m -XX:MaxPermSize=256m'
           settings: 'ovsdb-settings'
           settings-type: cfp
-          global-settings: 'odl-global-settings'
+          global-settings: 'global-settings'
           global-settings-type: cfp
       - inject:
           properties-file: env.properties
@@ -75,7 +75,7 @@
             - 'ovsdb.userspace.enabled=yes'
           settings: 'ovsdb-settings'
           settings-type: cfp
-          global-settings: 'odl-global-settings'
+          global-settings: 'global-settings'
           global-settings-type: cfp
       - maven-target:
           maven-version: 'mvn33'
@@ -88,7 +88,7 @@
               -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r
           settings: 'ovsdb-settings'
           settings-type: cfp
-          global-settings: 'odl-global-settings'
+          global-settings: 'global-settings'
           global-settings-type: cfp
       - shell: !include-raw-escape: include-raw-cleanup-docker.sh
       - jacoco-nojava-workaround

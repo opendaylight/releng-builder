@@ -68,7 +68,7 @@
             - '-Xmx1024m -XX:MaxPermSize=256m'
           settings: 'netvirt-settings'
           settings-type: cfp
-          global-settings: 'odl-global-settings'
+          global-settings: 'global-settings'
           global-settings-type: cfp
       - inject:
           properties-file: env.properties
@@ -87,7 +87,7 @@
             - 'org.ops4j.pax.url.mvn.localRepository=/tmp/r'
           settings: 'netvirt-settings'
           settings-type: cfp
-          global-settings: 'odl-global-settings'
+          global-settings: 'global-settings'
           global-settings-type: cfp
       - maven-target:
           maven-version: 'mvn33'
@@ -104,7 +104,7 @@
             - 'org.ops4j.pax.url.mvn.localRepository=/tmp/r'
           settings: 'netvirt-settings'
           settings-type: cfp
-          global-settings: 'odl-global-settings'
+          global-settings: 'global-settings'
           global-settings-type: cfp
       - shell: !include-raw-escape: include-raw-setup-docker.sh
       - inject:
@@ -126,7 +126,7 @@
             - 'ovsdb.userspace.enabled=yes'
           settings: 'netvirt-settings'
           settings-type: cfp
-          global-settings: 'odl-global-settings'
+          global-settings: 'global-settings'
           global-settings-type: cfp
       - maven-target:
           maven-version: 'mvn33'
@@ -140,7 +140,7 @@
               -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r
           settings: 'netvirt-settings'
           settings-type: cfp
-          global-settings: 'odl-global-settings'
+          global-settings: 'global-settings'
           global-settings-type: cfp
       - shell: !include-raw-escape: include-raw-cleanup-docker.sh
       - jacoco-nojava-workaround

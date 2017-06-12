@@ -42,7 +42,7 @@
       - wipe-org-opendaylight-repo
       - jacoco-nojava-workaround
       - provide-maven-settings:
-          global-settings-file: 'odl-global-settings'
+          global-settings-file: 'global-settings'
           settings-file: 'autorelease-settings'
       - maven-target:
           maven-version: 'mvn33'
@@ -57,7 +57,7 @@
             - '-Xmx1024m -XX:MaxPermSize=256m'
           settings: 'autorelease-settings'
           settings-type: cfp
-          global-settings: 'odl-global-settings'
+          global-settings: 'global-settings'
           global-settings-type: cfp
       - releng-stage-release
 
@@ -96,7 +96,7 @@
       - releng-fetch-p2zip-if-necessary:
           maven-version: 'mvn33'
           settings: '{mvn-settings}'
-          global-settings: 'odl-global-settings'
+          global-settings: 'global-settings'
       - releng-generate-p2pom
       - maven-target:
           maven-version: 'mvn33'
@@ -104,12 +104,12 @@
           goals: 'clean deploy -V -B -Dmaven.repo.local=/tmp/r'
           settings: '{mvn-settings}'
           settings-type: cfp
-          global-settings: 'odl-global-settings'
+          global-settings: 'global-settings'
           global-settings-type: cfp
       - releng-update-p2composite-metadata:
           maven-version: 'mvn33'
           settings: '{mvn-settings}'
-          global-settings: 'odl-global-settings'
+          global-settings: 'global-settings'
 
     publishers:
       - email-notification:

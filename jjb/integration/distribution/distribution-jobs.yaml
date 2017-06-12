@@ -43,7 +43,7 @@
     builders:
       - wipe-org-opendaylight-repo
       - provide-maven-settings:
-          global-settings-file: 'odl-global-settings'
+          global-settings-file: 'global-settings'
           settings-file: 'integration-settings'
       - maven-target:
           maven-version: mvn33
@@ -56,7 +56,7 @@
             - '-Xmx1024m -XX:MaxPermSize=256m'
           settings: integration-settings
           settings-type: cfp
-          global-settings: odl-global-settings
+          global-settings: global-settings
           global-settings-type: cfp
 
     publishers:
@@ -112,7 +112,7 @@
       - wipe-org-opendaylight-repo
       - jacoco-nojava-workaround
       - provide-maven-settings:
-          global-settings-file: 'odl-global-settings'
+          global-settings-file: 'global-settings'
           settings-file: 'integration-settings'
       - integration-set-variables
       - distribute-build-url:
@@ -128,7 +128,7 @@
       maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
       settings: 'integration-settings'
       settings-type: cfp
-      global-settings: 'odl-global-settings'
+      global-settings: 'global-settings'
       global-settings-type: cfp
 
     postbuilders:
@@ -152,7 +152,7 @@
                   - '-Xmx2g'
                 settings: 'integration-settings'
                 settings-type: cfp
-                global-settings: 'odl-global-settings'
+                global-settings: 'global-settings'
                 global-settings-type: cfp
             - maven-target:
                 maven-version: 'mvn33'
@@ -162,7 +162,7 @@
                   - '-Xmx2g'
                 settings: 'integration-settings'
                 settings-type: cfp
-                global-settings: 'odl-global-settings'
+                global-settings: 'global-settings'
                 global-settings-type: cfp
       - integration-compare-distributions
     # TODO: the output of the above command is not *friendly* for the reader because the most important info

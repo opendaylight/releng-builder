@@ -175,7 +175,7 @@
           goals: '-version'
           settings: 'autorelease-settings'
           settings-type: cfp
-          global-settings: 'odl-global-settings'
+          global-settings: 'global-settings'
           global-settings-type: cfp
       - wipe-local-maven-repo
       - jacoco-nojava-workaround
@@ -183,7 +183,7 @@
       - autorelease-determine-merge-order
       - autorelease-cfp:
           autorelease-settings: 'autorelease-settings'
-          odl-global-settings: 'odl-global-settings'
+          global-settings: 'odl-global-settings'
       - autorelease-generate-taglist
       - autorelease-distribute-taglist
       - autorelease-generate-release-patches
@@ -204,7 +204,7 @@
             - '-Xmx10g -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
           settings: 'autorelease-settings'
           settings-type: cfp
-          global-settings: 'odl-global-settings'
+          global-settings: 'global-settings'
           global-settings-type: cfp
       - autorelease-maven-deploy
       - autorelease-get-integration-test-variables
@@ -212,7 +212,7 @@
           opendaylight-infra-mvn-opts: '{opendaylight-infra-mvn-opts}'
           maven-version: 'mvn33'
           settings: 'autorelease-settings'
-          global-settings: 'odl-global-settings'
+          global-settings: 'global-settings'
       - autorelease-maven-sources-post-process
       - shell: |
           mkdir -p archives/

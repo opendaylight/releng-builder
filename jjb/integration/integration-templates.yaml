@@ -1422,7 +1422,7 @@
             - '-Xmx4096m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
           settings: integration-settings
           settings-type: cfp
-          global-settings: odl-global-settings
+          global-settings: global-settings
           global-settings-type: cfp
       - maven-target:
           maven-version: mvn33
@@ -1436,7 +1436,7 @@
             - '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
           settings: integration-settings
           settings-type: cfp
-          global-settings: odl-global-settings
+          global-settings: global-settings
           global-settings-type: cfp
       - integration-upload-distribution:
           dist-pom: distribution/pom.xml

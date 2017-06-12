@@ -39,7 +39,7 @@
 
     builders:
       - provide-maven-settings:
-          global-settings-file: 'odl-global-settings'
+          global-settings-file: 'global-settings'
           settings-file: '{mvn-settings}'
       - maven-target:
           maven-version: 'mvn33'
@@ -52,7 +52,7 @@
             - '-Xmx4096m -XX:MaxPermSize=512m'
           settings: '{mvn-settings}'
           settings-type: cfp
-          global-settings: 'odl-global-settings'
+          global-settings: 'global-settings'
           global-settings-type: cfp
       - shell: 'find . -regex ".*karaf/target" | xargs rm -rf'
       - check-clm:
@@ -110,7 +110,7 @@
     builders:
       - jacoco-nojava-workaround
       - provide-maven-settings:
-          global-settings-file: 'odl-global-settings'
+          global-settings-file: 'global-settings'
           settings-file: '{mvn-settings}'
       - maven-target:
           maven-version: 'mvn33'
@@ -121,7 +121,7 @@
             - '{mvn-opts}'
           settings: '{mvn-settings}'
           settings-type: cfp
-          global-settings: 'odl-global-settings'
+          global-settings: 'global-settings'
           global-settings-type: cfp
 
     publishers:
@@ -183,7 +183,7 @@
     prebuilders:
       - jacoco-nojava-workaround
       - provide-maven-settings:
-          global-settings-file: 'odl-global-settings'
+          global-settings-file: 'global-settings'
           settings-file: '{mvn-settings}'
 
     # TODO: Do we want to apply sophisticated checks as in *-distribution-check-*?
@@ -197,7 +197,7 @@
       maven-opts: '{mvn-opts}'
       settings: '{mvn-settings}'
       settings-type: cfp
-      global-settings: 'odl-global-settings'
+      global-settings: 'global-settings'
       global-settings-type: cfp
       post-step-run-condition: UNSTABLE
 
@@ -222,7 +222,7 @@
                   - '-Xmx2g'
                 settings: '{mvn-settings}'
                 settings-type: cfp
-                global-settings: 'odl-global-settings'
+                global-settings: 'global-settings'
                 global-settings-type: cfp
             - maven-target:
                 maven-version: 'mvn33'
@@ -232,7 +232,7 @@
                   - '-Xmx2g'
                 settings: '{mvn-settings}'
                 settings-type: cfp
-                global-settings: 'odl-global-settings'
+                global-settings: 'global-settings'
                 global-settings-type: cfp
 
     reporters:
@@ -291,7 +291,7 @@
     builders:
       - jacoco-nojava-workaround
       - provide-maven-settings:
-          global-settings-file: 'odl-global-settings'
+          global-settings-file: 'global-settings'
           settings-file: '{mvn-settings}'
       - maven-target:
           maven-version: 'mvn33'
@@ -303,7 +303,7 @@
             - '{mvn-opts}'
           settings: '{mvn-settings}'
           settings-type: cfp
-          global-settings: 'odl-global-settings'
+          global-settings: 'global-settings'
           global-settings-type: cfp
       - maven-target:
           maven-version: 'mvn33'
@@ -319,7 +319,7 @@
             - '{mvn-opts}'
           settings: '{mvn-settings}'
           settings-type: cfp
-          global-settings: 'odl-global-settings'
+          global-settings: 'global-settings'
           global-settings-type: cfp
 
     publishers:
@@ -403,7 +403,7 @@
             - '-Xmx8g'
           settings: 'autorelease-settings'
           settings-type: cfp
-          global-settings: 'odl-global-settings'
+          global-settings: 'global-settings'
           global-settings-type: cfp
       - maven-target:
           maven-version: 'mvn33'
@@ -416,7 +416,7 @@
             - '-Xmx8g -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
           settings: 'autorelease-settings'
           settings-type: cfp
-          global-settings: 'odl-global-settings'
+          global-settings: 'global-settings'
           global-settings-type: cfp
 
     publishers:
@@ -472,7 +472,7 @@
     builders:
       - jacoco-nojava-workaround
       - provide-maven-settings:
-          global-settings-file: 'odl-global-settings'
+          global-settings-file: 'global-settings'
           settings-file: '{mvn-settings}'
       - maven-target:
           maven-version: '{mvn-version}'
@@ -484,7 +484,7 @@
             - '{mvn-opts}'
           settings: '{mvn-settings}'
           settings-type: cfp
-          global-settings: 'odl-global-settings'
+          global-settings: 'global-settings'
           global-settings-type: cfp
 
     publishers:

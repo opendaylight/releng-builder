@@ -45,7 +45,7 @@
             - '-Xmx1024m -XX:MaxPermSize=256m'
           settings: 'ovsdb-settings'
           settings-type: cfp
-          global-settings: 'odl-global-settings'
+          global-settings: 'global-settings'
           global-settings-type: cfp
 
 - builder:
@@ -163,7 +163,7 @@
             - '-Xmx1024m -XX:MaxPermSize=256m'
           settings: 'ovsdb-settings'
           settings-type: cfp
-          global-settings: 'odl-global-settings'
+          global-settings: 'global-settings'
           global-settings-type: cfp
       - run-ovsdb-it:
           maven-version: 'mvn33'
