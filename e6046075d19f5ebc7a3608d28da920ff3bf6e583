@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1af78d9a_8b9f4d50",
+        "filename": "packer/provision/baseline.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-06-12T06:46:25Z",
+      "side": 1,
+      "message": "# Install python3 and dependencies, needed for Coala linting at least\n ensure_ubuntu_install python3\n ensure_ubuntu_install python3-{devel,virtualenv,setuptools,pip}\n \n # Install python and dependencies\n ensure_ubuntu_install python-{dev,virtualenv,setuptools,pip}",
+      "range": {
+        "startLine": 331,
+        "startChar": 4,
+        "endLine": 333,
+        "endChar": 83
+      },
+      "revId": "e6046075d19f5ebc7a3608d28da920ff3bf6e583",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1af78d9a_ebac118f",
+        "filename": "packer/provision/mininet-ovs-2.5.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-06-12T06:46:25Z",
+      "side": 1,
+      "message": "Move this down to lines 48-49. That way git won\u0027t pick this up as a new change since these lines existed in the old file.",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 45
+      },
+      "revId": "e6046075d19f5ebc7a3608d28da920ff3bf6e583",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1af78d9a_cba9557d",
+        "filename": "packer/provision/mininet.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-06-12T06:46:25Z",
+      "side": 1,
+      "message": "Move this down to lines 72-73. That way git won\u0027t pick this up as a new change since these lines existed in the old file.",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 45
+      },
+      "revId": "e6046075d19f5ebc7a3608d28da920ff3bf6e583",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
