@@ -118,7 +118,6 @@
 
     publishers:
       - opendaylight-infra-notify-status
-      - opendaylight-infra-sysstats
       - archive:
           # Need to archive dependencies.log in Jenkins to provide a simple
           # way for downstream jobs to pull the latest version of this file
@@ -257,5 +256,4 @@
       - autorelease-generate-release-notes
 
     publishers:
-      - opendaylight-infra-sysstats
       - lf-infra-publish
