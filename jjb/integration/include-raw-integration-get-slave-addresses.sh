@@ -5,9 +5,10 @@ TOOLS_SYSTEM=()
 OPENSTACK_SYSTEM=()
 [ "$NUM_OPENSTACK_SITES" ] || NUM_OPENSTACK_SITES=1
 
-source $WORKSPACE/.venv-openstack/bin/activate
-PYTHON="$WORKSPACE/.venv-openstack/bin/python"
-OPENSTACK="$WORKSPACE/.venv-openstack/bin/openstack"
+OPENSTACK_VENV="/tmp/v/openstack"
+source $OPENSTACK_VENV/bin/activate
+PYTHON="$OPENSTACK_VENV/bin/python"
+OPENSTACK="$OPENSTACK_VENV/bin/openstack"
 
 ADDR=(`$PYTHON $OPENSTACK stack show -f json -c outputs $STACK_NAME | \
        jq -r '.outputs[] | \
