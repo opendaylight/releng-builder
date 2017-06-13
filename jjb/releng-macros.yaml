@@ -476,10 +476,6 @@
                   fi
               done
           done
-          for p in $provision; do
-              /bin/bash -n $p > provision-validate-${p##*/}.log 2>&1
-          done
-
 
 - builder:
     name: packer-build
