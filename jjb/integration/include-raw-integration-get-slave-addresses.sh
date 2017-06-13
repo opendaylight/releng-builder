@@ -7,10 +7,8 @@ OPENSTACK_SYSTEM=()
 
 OPENSTACK_VENV="/tmp/v/openstack"
 source $OPENSTACK_VENV/bin/activate
-PYTHON="$OPENSTACK_VENV/bin/python"
-OPENSTACK="$OPENSTACK_VENV/bin/openstack"
 
-ADDR=(`$PYTHON $OPENSTACK stack show -f json -c outputs $STACK_NAME | \
+ADDR=(`openstack stack show -f json -c outputs $STACK_NAME | \
        jq -r '.outputs[] | \
               select(.output_key | match("^vm_[0-9]+_ips$")) | \
               .output_value | .[]'`)
