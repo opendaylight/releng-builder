@@ -1,12 +1,10 @@
 #!/bin/bash
-virtualenv "$WORKSPACE/.venv-openstack"
-# shellcheck disable=SC1090
-source "$WORKSPACE/.venv-openstack/bin/activate"
-PYTHON="$WORKSPACE/.venv-openstack/bin/python"
-OPENSTACK="$WORKSPACE/.venv-openstack/bin/openstack"
-$PYTHON -m pip install --upgrade pip
-$PYTHON -m pip install --upgrade python-openstackclient python-heatclient
-$PYTHON -m pip freeze
+virtualenv "/tmp/v/openstack"
+# shellcheck source=/tmp/v/openstack/bin/activate disable=SC1091
+source "/tmp/v/openstack/bin/activate"
+pip install --upgrade pip
+pip install --upgrade python-openstackclient python-heatclient
+pip freeze
 
 cd /builder/openstack-hot || exit 1
 
@@ -18,16 +16,16 @@ STACK_RETRIES=3  # Number of times to retry creating a stack before fully giving
 STACK_SUCCESSFUL=false
 # seq X refers to waiting for X minutes for OpenStack to return
 # a status that is not CREATE_IN_PROGRESS before giving up.
-$PYTHON $OPENSTACK limits show --absolute
-$PYTHON $OPENSTACK limits show --rate
+openstack limits show --absolute
+openstack limits show --rate
 echo "Trying up to $STACK_RETRIES times to create $STACK_NAME."
 for try in $(seq $STACK_RETRIES); do
     # shellcheck disable=SC1083
-    $PYTHON $OPENSTACK stack create --timeout "$OS_TIMEOUT" -t {stack-template} -e "$WORKSPACE/opendaylight-infra-environment.yaml" --parameter "job_name=$VM_NAME" --parameter "silo=$SILO" "$STACK_NAME"
+    openstack stack create --timeout "$OS_TIMEOUT" -t {stack-template} -e "$WORKSPACE/opendaylight-infra-environment.yaml" --parameter "job_name=$VM_NAME" --parameter "silo=$SILO" "$STACK_NAME"
     echo "$try: Waiting for $OS_TIMEOUT minutes to create $STACK_NAME."
     for i in $(seq $OS_TIMEOUT); do
         sleep 60
-        OS_STATUS=$($PYTHON $OPENSTACK stack show -f json -c stack_status "$STACK_NAME" | jq -r '.stack_status')
+        OS_STATUS=$(openstack stack show -f json -c stack_status "$STACK_NAME" | jq -r '.stack_status')
         echo "$i: $OS_STATUS"
 
         case "$OS_STATUS" in
@@ -38,14 +36,14 @@ for try in $(seq $STACK_RETRIES); do
             ;;
             CREATE_FAILED)
                 echo "ERROR: Failed to initialize infrastructure. Deleting stack and possibly retrying to create..."
-                $PYTHON $OPENSTACK stack delete --yes "$STACK_NAME"
-                $PYTHON $OPENSTACK stack show "$STACK_NAME"
+                openstack stack delete --yes "$STACK_NAME"
+                openstack stack show "$STACK_NAME"
                 # after stack delete, poll for 10m to know when stack is fully removed
                 # the logic here is that when "stack show $STACK_NAME" does not contain $STACK_NAME
                 # we assume it's successfully deleted and we can break to retry
                 for j in $(seq 20); do
                     sleep 30;
-                    STACK_SHOW=$($PYTHON $OPENSTACK stack show "$STACK_NAME")
+                    STACK_SHOW=$(openstack stack show "$STACK_NAME")
                     echo "$j: $STACK_SHOW"
                     if [[ $STACK_SHOW == *"DELETE_FAILED"* ]]; then
                         echo "stack delete failed. trying to stack abandon now"
@@ -53,12 +51,12 @@ for try in $(seq $STACK_RETRIES); do
                         # and using http delete method to abondon DELETE_FAILED stacks
                         # Todo: remove the change once RS fixes the issue upstream
                         # openstack stack abandon "$STACK_NAME"
-                        STACK_ID=$($PYTHON $OPENSTACK stack show -f json -c "id" "$STACK_NAME" | jq -r '."id"')
-                        TOKEN=$($PYTHON $OPENSTACK token issue -f json -c id | jq -r '.id')
+                        STACK_ID=$(openstack stack show -f json -c "id" "$STACK_NAME" | jq -r '."id"')
+                        TOKEN=$(openstack token issue -f json -c id | jq -r '.id')
                         curl -si -X DELETE -H "Content-Type: application/json" -H "Accept: application/json"\
                             -H "x-auth-token: $TOKEN"\
                             "https://dfw.orchestration.api.rackspacecloud.com/v1/904885/stacks/$STACK_NAME/$STACK_ID/abandon"
-                        STACK_SHOW=$($PYTHON $OPENSTACK stack show "$STACK_NAME")
+                        STACK_SHOW=$(openstack stack show "$STACK_NAME")
                         echo "$STACK_SHOW"
                     fi
                     if [[ $STACK_SHOW != *"$STACK_NAME"* ]]; then
@@ -93,7 +91,7 @@ for try in $(seq $STACK_RETRIES); do
 done
 
 # capture stack info in console logs
-$PYTHON $OPENSTACK stack show "$STACK_NAME"
+openstack stack show "$STACK_NAME"
 
 if ! $STACK_SUCCESSFUL; then
     exit 1
