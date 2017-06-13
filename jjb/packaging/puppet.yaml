@@ -61,6 +61,9 @@
           branch: '{branch}'
           files: '**'
 
+    publishers:
+      - lf-infra-publish
+
 - job-template:
     name: '{project-name}-test-full-{stream}'
 
@@ -115,3 +118,6 @@
             failed: true
             unstable: true
             notbuilt: true
+
+    publishers:
+      - lf-infra-publish
