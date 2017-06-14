@@ -30,6 +30,8 @@
         sfc-merge-{stream}
     email-upstream: '[genius] [netvirt] [neutron] [openflowjava] [openflowplugin] [ovsdb] [sfc]'
     archive-artifacts: ''
+    merge-job-csit-list: 'netvirt-csit-1node-openstack-newton-upstream-stateful-{stream}'
+    merge-job-distribution-upload-script: !include-raw-escape: upload-vpnservice-distribution.sh
 
 - project:
     name: netvirt-carbon
