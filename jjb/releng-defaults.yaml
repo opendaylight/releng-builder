@@ -54,6 +54,10 @@
     # Distribution bundle URL
     bundle-url: 'last'
 
+    # variables to use for running CSIT with merge job distribution artifacts
+    merge-job-csit-list: ''
+    merge-job-distribution-upload-script: 'echo "unless defined by project this shell is a noop"'
+
     # CSIT images configuration
     stack-template: csit-2-instance-type.yaml
     docker_system_count: 1
