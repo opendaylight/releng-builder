@@ -202,6 +202,7 @@
       post-step-run-condition: UNSTABLE
 
     postbuilders:
+      - shell: '{merge-job-distribution-upload-script}'
       - conditional-step:
           condition-kind: file-exists
           condition-filename: deploy-site.xml
@@ -251,6 +252,12 @@
       - trigger:
           project: 'distribution-merge-{stream}'
           threshold: SUCCESS
+      - trigger-parameterized-builds:
+          - project: '{merge-job-csit-list}'
+            condition: UNSTABLE_OR_BETTER
+            predefined-parameters: |
+              BUNDLE_URL=$BUNDLE_URL
+              KARAF_VERSION=$KARAF_VERSION
 
 - job-template:
     name: '{project-name}-sonar'

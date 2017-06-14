@@ -80,6 +80,14 @@
             Patches to add to distro in CSV project:changeset format (genius:32/53632/9,netvirt:59/50259/47)
 
 - parameter:
+    name: merge-job-csit-list
+    parameters:
+      - string:
+          name: CSIT_LIST
+          default: '{merge-job-csit-list}'
+          description: 'List of CSIT jobs to trigger with merge job distribution artifacts'
+
+- parameter:
     name: run-test-parameter
     parameters:
       - string:
