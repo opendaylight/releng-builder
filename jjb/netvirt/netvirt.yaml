@@ -1,11 +1,39 @@
 ---
+- job:
+    name: netvirt-merge-nitrogen
+    branch: 'master'
+    jdk: openjdk8
+    jdks:
+      - openjdk8
+    maven:
+      - mvn33:
+          mvn-version: 'mvn33'
+    mvn-settings: 'netvirt-settings'
+    mvn-goals: 'clean install'
+    mvn-opts: '-Xmx2048m -XX:MaxPermSize=512m'
+    dependencies: >
+        genius-merge-nitrogen,
+        neutron-merge-nitrogen,
+        openflowjava-merge-nitrogen,
+        openflowplugin-merge-nitrogen,
+        ovsdb-merge-nitrogen,
+        sfc-merge-nitrogen
+    email-upstream: '[genius] [netvirt] [neutron] [openflowjava] [openflowplugin] [ovsdb] [sfc]'
+    archive-artifacts: ''
+    builders:
+      - trigger-builds:
+          - project: 'netvirt-csit-1node-openstack-newton-upstream-stateful-nitrogen'
+            block: true
+            predefined-parameters: |
+              BUNDLE_URL=$BUNDLE_URL
+              KARAF_VERSION=$KARAF_VERSION
+
 - project:
     name: netvirt-nitrogen
     jobs:
       - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
-      - '{project-name}-merge-{stream}'
       - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: nitrogen
