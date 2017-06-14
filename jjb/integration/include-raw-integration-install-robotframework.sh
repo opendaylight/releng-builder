@@ -56,6 +56,9 @@ pip install --upgrade jmespath
 # Module for backup-restore support library
 pip install --upgrade jsonpatch
 
+#Module OpenstackClient is needed for NEtvirt CSIT jobs
+pip install python-openstackclient
+
 # Print installed versions.
 pip freeze
 
