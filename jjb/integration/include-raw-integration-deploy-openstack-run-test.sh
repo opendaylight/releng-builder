@@ -784,6 +784,17 @@ cat testplan.txt
 
 SUITES=`egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' testplan.txt | tr '\012' ' '`
 
+cat > /tmp/os_client_rc << EOF
+export OS_USERNAME=admin
+export OS_PASSWORD=admin
+export OS_PROJECT_NAME=admin
+export OS_USER_DOMAIN_NAME=Default
+export OS_PROJECT_DOMAIN_NAME=Default
+export OS_AUTH_URL=http://${!CONTROLIP}:35357/v3
+export OS_IDENTITY_API_VERSION=3
+export OS_IMAGE_API_VERSION=2
+EOF
+
 #FIXME currently support only 1 site
 echo "Starting Robot test suites ${SUITES} ..."
 # please add pybot -v arguments on a single line and alphabetized
