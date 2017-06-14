@@ -251,6 +251,9 @@
       - trigger:
           project: 'distribution-merge-{stream}'
           threshold: SUCCESS
+      - trigger:
+          project: '{merge-job-csit-list}'
+          threshold: SUCCESS
 
 - job-template:
     name: '{project-name}-sonar'
