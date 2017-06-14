@@ -535,6 +535,7 @@
               -DoutputFile=dependency_tree.txt
               -Pq
               -DaltDeploymentRepository=fake-nexus::default::file:///tmp/n/
+              -T1.5C
               {mvn-opts}
           java-opts:
             - '-Xmx4096m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
@@ -571,9 +572,10 @@
           maven-version: 'mvn33'
           pom: '{dist-pom}'
           goals: |
-              clean install dependency:tree
+              dependency:resolve dependency:tree
               -DoutputFile=dependency_tree.txt
               -Pq
+              -T1.5C
               {mvn-opts}
           java-opts:
             - '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
@@ -675,6 +677,7 @@
               -DoutputFile=dependency_tree.txt -s fake_remotes.xml
               -Pq
               -DskipTests=false
+              -T1.5C
               {mvn-opts}
           java-opts:
             - '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
