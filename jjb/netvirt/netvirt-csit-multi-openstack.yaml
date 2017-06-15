@@ -1,4 +1,82 @@
 ---
+
+- project:
+    name: netvirt-csit-openstack-integration-nitrogen
+    jobs:
+      - '{project}-csit-{topology}-openstack-{openstack}-{functionality}-{stream}'
+
+    project: 'netvirt'
+
+    topology:
+      - 1node:
+          openstack_system_count: 3
+          odl_system_count: 1
+          enable-haproxy: 'no'
+          install-features: 'odl-netvirt-openstack'
+      - 3node:
+          openstack_system_count: 4
+          odl_system_count: 3
+          enable-haproxy: 'yes'
+          install-features: 'odl-jolokia,odl-netvirt-openstack'
+
+    testplan: '{project}-{topology}-openstack.txt'
+
+    functionality:
+      - upstream-transparent:
+          schedule: ''
+          sg-mode: 'transparent'
+      - upstream-stateful:
+          schedule: 'H * * * *'
+          sg-mode: 'stateful'
+      - upstream-stateful-snat-conntrack:
+          schedule: ''
+          sg-mode: 'stateful'
+          odl-snat-mode: 'conntrack'
+      - upstream-learn:
+          schedule: ''
+          sg-mode: 'learn'
+      - gate-learn:
+          schedule: ''
+          sg-mode: 'learn'
+      - gate-transparent:
+          schedule: ''
+          sg-mode: 'transparent'
+      - gate-stateful:
+          schedule: ''
+          sg-mode: 'stateful'
+      - gate-minimal-transparent:
+          schedule: ''
+          sg-mode: 'transparent'
+          testplan: '{project}-{topology}-minimal-openstack.txt'
+      - gate-tempest-transparent:
+          schedule: ''
+          sg-mode: 'transparent'
+          testplan: '{project}-{topology}-tempest-openstack.txt'
+
+    stream:
+      - nitrogen:
+          branch: 'master'
+          jre: 'openjdk8'
+          bundle-url: 'https://jenkins.opendaylight.org/releng/view/netvirt/job/netvirt-merge-nitrogen/lastSuccessfulBuild/org.opendaylight.netvirt$vpnservice-karaf/artifact/org.opendaylight.netvirt/vpnservice-karaf/0.5.0-SNAPSHOT/vpnservice-karaf-0.5.0-SNAPSHOT.zip'
+
+    openstack:
+      - newton:
+          openstack-branch: 'stable/newton'
+          odl-ml2-branch: 'stable/newton'
+          openstack_system_image: 'CentOS 7 - devstack-newton - 20170609-0220'
+      - newton-nodl-v2:
+          openstack-branch: 'stable/newton'
+          odl-ml2-branch: 'stable/newton'
+          odl-ml2-driver-version: 'v2'
+          openstack_system_image: 'CentOS 7 - devstack-newton - 20170609-0220'
+      - ocata:
+          openstack-branch: 'stable/ocata'
+          odl-ml2-branch: 'stable/ocata'
+          odl-ml2-driver-version: 'v2'
+          openstack_system_image: 'CentOS 7 - devstack-newton - 20170609-0220'
+
+    security-group-mode: '{sg-mode}'
+
 - project:
     name: netvirt-csit-openstack-integration
     jobs:
@@ -53,9 +131,6 @@
           testplan: '{project}-{topology}-tempest-openstack.txt'
 
     stream:
-      - nitrogen:
-          branch: 'master'
-          jre: 'openjdk8'
       - carbon:
           branch: 'stable/carbon'
           jre: 'openjdk8'
