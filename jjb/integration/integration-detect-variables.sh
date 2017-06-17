@@ -20,16 +20,12 @@ if [ ${BUNDLE_URL} == 'last' ]; then
     BUNDLEFOLDER="${KARAF_ARTIFACT}-${BUNDLEVERSION}"
     BUNDLE="${KARAF_ARTIFACT}-${TIMESTAMP}.zip"
     ACTUAL_BUNDLE_URL="${NEXUSPATH}/${BUNDLEVERSION}/${BUNDLE}"
-elif [[ "${BUNDLE_URL}" == *"jenkins"* ]]; then
-    ACTUAL_BUNDLE_URL="${BUNDLE_URL}"
-    BUNDLE="${BUNDLE_URL##*/}"
-    BUNDLEFOLDER="${BUNDLE//.zip}"
-    BUNDLEVERSION="${BUNDLEFOLDER//$KARAF_ARTIFACT-}"
 else
     ACTUAL_BUNDLE_URL="${BUNDLE_URL}"
     BUNDLE="${BUNDLE_URL##*/}"
+    ARTIFACT="$(basename "$(dirname "$(dirname "${BUNDLE_URL}")")")"
     BUNDLEVERSION="$(basename "$(dirname "${BUNDLE_URL}")")"
-    BUNDLEFOLDER="${KARAF_ARTIFACT}-${BUNDLEVERSION}"
+    BUNDLEFOLDER="${ARTIFACT}-${BUNDLEVERSION}"
 fi
 
 echo "Distribution bundle URL is ${ACTUAL_BUNDLE_URL}"
