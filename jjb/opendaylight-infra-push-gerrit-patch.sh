@@ -8,7 +8,8 @@ virtualenv "/tmp/v/git-review"
 source "/tmp/v/git-review/bin/activate"
 pip install --upgrade pip
 pip install --upgrade git-review
-pip freeze
+pip install --upgrade pipdeptree
+pipdeptree
 
 # shellcheck disable=SC1083
 CHANGE_ID=$(ssh -p 29418 "jenkins-$SILO@git.opendaylight.org" gerrit query \
