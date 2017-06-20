@@ -60,7 +60,16 @@
           build-timeout: '{build-timeout}'
 
     builders:
-      - shell: !include-raw: include-raw-build-rpm.sh
+      - shell: !include-raw:
+          - include-raw-build-rpm.sh
+      - lf-infra-deploy-maven-file:
+          global-settings-file: 'global-settings'
+          settings-file: 'packaging-settings'
+          mvn-version: 'mvn33'
+          url: '$NEXUS_URL'
+          repo-id: 'opendaylight-yum-epel-7-x86_64'
+          group-id: 'opendaylight-yum-epel-7-x86_64'
+          files-dir: '$WORKSPACE/archives/upload_files'
 
     publishers:
       - archive-artifacts:
