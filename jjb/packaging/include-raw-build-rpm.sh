@@ -22,3 +22,8 @@ download_url="${{DOWNLOAD_URL//zip/tar.gz}}"
 "$WORKSPACE/packaging/rpm/build.py" --download_url "$download_url" \
                                   --changelog_name "$CHANGELOG_NAME" \
                                   --changelog_email "$CHANGELOG_EMAIL"
+
+# Copy the rpm to be upload
+UPLOAD_FILES_PATH="$WORKSPACE/archives/upload_files"
+mkdir -p "$UPLOAD_FILES_PATH"
+cp "$HOME/rpmbuild/*.rpm" "$_" || true
