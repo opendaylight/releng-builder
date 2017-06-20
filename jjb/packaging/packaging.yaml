@@ -4,18 +4,20 @@
     project-name: packaging
 
     jobs:
-      - '{project-name}-verify-tox-{stream}'
+      - '{project-name}-verify-tox-master'
       - 'packaging-build-rpm-{stream}'
-      - 'packaging-build-rpm-snap-{stream}'
+      - 'packaging-build-rpm-snap-master'
       - 'packaging-build-deb-{stream}'
-      - 'packaging-test-rpm-{stream}'
-      - 'packaging-test-deb-{stream}'
+      - 'packaging-test-rpm-master'
+      - 'packaging-test-deb-master'
 
     project: 'integration/packaging'
 
     stream:
-      - master:
-          branch: 'master'
+      - boron
+      - carbon
+      - nitrogen
+    branch: 'master'
 
 - job-template:
     name: 'packaging-build-rpm-{stream}'
@@ -23,6 +25,10 @@
     node: centos7-java-builder-2c-4g
 
     project-type: freestyle
+
+    mvn-opts: ''
+    mvn-params: ''
+    mvn-version: mvn33
 
     properties:
       - opendaylight-infra-properties:
@@ -35,6 +41,11 @@
           branch: '{branch}'
           refspec: 'refs/heads/{branch}'
           artifacts: '{archive-artifacts}'
+      - lf-infra-maven-parameters:
+          mvn-opts: '{mvn-opts}'
+          mvn-params: '{mvn-params}'
+          mvn-version: '{mvn-version}'
+          staging-profile-id: ''
       - string:
           name: DOWNLOAD_URL
           # yamllint disable-line rule:line-length
@@ -61,6 +72,13 @@
 
     builders:
       - shell: !include-raw: include-raw-build-rpm.sh
+      - lf-infra-deploy-maven-file:
+          global-settings-file: 'global-settings'
+          settings-file: 'packaging-settings'
+          mvn-version: 'mvn33'
+          repo-id: 'opendaylight-{stream}-epel-7-x86_64-devel'
+          group-id: 'org.opendaylight.integration-packaging'
+          files-dir: '$WORKSPACE/upload_files'
 
     publishers:
       - archive-artifacts:
@@ -69,7 +87,7 @@
 
 
 - job-template:
-    name: 'packaging-build-rpm-snap-{stream}'
+    name: 'packaging-build-rpm-snap-master'
 
     node: centos7-java-builder-2c-4g
 
@@ -126,7 +144,7 @@
 
 
 - job-template:
-    name: 'packaging-test-rpm-{stream}'
+    name: 'packaging-test-rpm-master'
 
     node: centos7-java-builder-2c-4g
 
@@ -164,7 +182,7 @@
 
 
 - job-template:
-    name: 'packaging-test-deb-{stream}'
+    name: 'packaging-test-deb-master'
 
     node: ubuntu1604-mininet-ovs-25-2c-4g
 
