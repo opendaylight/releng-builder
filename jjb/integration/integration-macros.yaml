@@ -520,3 +520,31 @@
           script-only-if-succeeded: 'False'
           script-only-if-failed: 'False'
           mark-unstable-if-failed: 'True'
+
+- publisher:
+    name: integration-csit-run-postscript
+    publishers:
+      - postbuildscript:
+          builders:
+            - config-file-provider:
+                files:
+                  - file-id: 'odl-elastic-cloud'
+                    target: '~/.netrc'
+                    variable: 'NETRC'
+            - shell: |
+                #!/bin/bash
+                #The following script runs any configurable postplan stored in test/csit/postplans.
+                if [ -f "${WORKSPACE}/test/csit/postplans/${TESTPLAN}" ]; then
+                    echo "postplan exists!!!"
+                    echo "Changing the postplan path..."
+                    script_name=${WORKSPACE}/test/csit/postplans/${TESTPLAN}
+                    cat ${script_name} | sed "s:integration:${WORKSPACE}:" > postplan.txt
+                    cat postplan.txt
+                    for line in $( egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' postplan.txt ); do
+                        echo "Executing ${line}..."
+                        ${line}
+                    done
+                fi
+          script-only-if-succeeded: 'False'
+          script-only-if-failed: 'False'
+          mark-unstable-if-failed: 'True'
