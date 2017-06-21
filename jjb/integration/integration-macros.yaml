@@ -520,3 +520,27 @@
           script-only-if-succeeded: 'False'
           script-only-if-failed: 'False'
           mark-unstable-if-failed: 'True'
+
+- publisher:
+    name: integration-csit-ELK-data
+    publishers:
+      - postbuildscript:
+          builders:
+            - shell: |
+                #!/bin/bash
+                #The following script parses logs, constructs JSON BODY, and passes JSON BODY
+                #to another script which pushes JSON to ES DB.
+                if [ -f "${WORKSPACE}/test/csit/postplans/${TESTPLAN}" ]; then
+                    echo "scriptplan exists!!!"
+                    echo "Changing the scriptplan path..."
+                    script_name=${WORKSPACE}/test/csit/postplans/${TESTPLAN}
+                    cat ${script_name} | sed "s:integration:${WORKSPACE}:" > scriptplan.txt
+                    cat scriptplan.txt
+                    for line in $( egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' scriptplan.txt ); do
+                        echo "Executing ${line}..."
+                        ${line}
+                    done
+                fi
+          script-only-if-succeeded: 'False'
+          script-only-if-failed: 'False'
+          mark-unstable-if-failed: 'True'
