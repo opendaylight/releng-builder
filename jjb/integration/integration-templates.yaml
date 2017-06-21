@@ -109,6 +109,7 @@
           email-recipients: '{email-recipients}'
           email-prefix: '[{project}]'
       - integration-csit-archive-build
+      - integration-csit-ELK-data
       - lf-infra-publish
 
 - job-template:
@@ -224,6 +225,7 @@
                 display-table: true
                 format: csv
       - integration-csit-archive-build
+      - integration-csit-ELK-data
       - lf-infra-publish
 
 - job-template:
@@ -445,6 +447,7 @@
                 exclude: '{10-exclude-value}'
                 format: csv
       - integration-csit-archive-build
+      - integration-csit-ELK-data
       - lf-infra-publish
 
 - job-template:
@@ -531,6 +534,7 @@
           email-recipients: '{email-recipients}'
           email-prefix: '[{project}]'
       - integration-csit-archive-build
+      - integration-csit-ELK-data
       - lf-infra-publish
 
 - job-template:
@@ -639,6 +643,7 @@
                 display-table: true
                 format: csv
       - integration-csit-archive-build
+      - integration-csit-ELK-data
       - lf-infra-publish
 
 - job-template:
@@ -749,6 +754,7 @@
                 display-table: true
                 format: csv
       - integration-csit-archive-build
+      - integration-csit-ELK-data
       - lf-infra-publish
 
 - job-template:
@@ -971,6 +977,7 @@
                 exclude: '{10-exclude-value}'
                 format: csv
       - integration-csit-archive-build
+      - integration-csit-ELK-data
       - lf-infra-publish
 
 - job-template:
@@ -1151,6 +1158,7 @@
           email-recipients: '{email-recipients}'
           email-prefix: '[{project}]'
       - integration-csit-archive-build
+      - integration-csit-ELK-data
       - lf-infra-publish
 
 - job-template:
@@ -1334,6 +1342,7 @@
           email-recipients: '{email-recipients}'
           email-prefix: '[{project}]'
       - integration-csit-archive-build
+      - integration-csit-ELK-data
       - lf-infra-publish
 
 # Template: {project}-patch-test-{stream}
