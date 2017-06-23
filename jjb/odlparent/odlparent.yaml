@@ -1,29 +1,66 @@
 ---
 - project:
-    name: odlparent-nitrogen
+    name: odlparent-master
     jobs:
       - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-integration-{stream}'
       - '{project-name}-merge-{stream}'
       - '{project-name}-verify-{stream}-{maven}-{jdks}'
       - '{project-name}-verify-tox-{stream}'
       - '{project-name}-maven-jobs'
 
+    project: odlparent
+    project-name: odlparent
     stream: nitrogen
-    project: 'odlparent'
-    project-name: 'odlparent'
-    branch: 'master'
+    branch: master
+    distribution_branch: master
+
     jdk: openjdk8
     jdks:
       - openjdk8
     maven:
       - mvn33:
           mvn-version: mvn33
-    mvn-settings: 'odlparent-settings'
-    mvn-goals: 'clean install'
+    mvn-settings: odlparent-settings
+    mvn-goals: clean install
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     mvn-version: mvn33
+
+    dependencies: ''
+    email-upstream: '[odlparent]'
+    archive-artifacts: ''
+
+    # Used by the release job
+    settings-file: odlparent-settings
+    staging-profile-id: 880d5ac25eaa
+
+- project:
+    name: odlparent-2.0.x
+    jobs:
+      - '{project-name}-clm-{stream}'
+      - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-merge-{stream}'
+      - '{project-name}-verify-{stream}-{maven}-{jdks}'
+      - '{project-name}-verify-tox-{stream}'
+      - '{project-name}-maven-jobs'
+
+    project: odlparent
+    project-name: odlparent
+    stream: 2.0.x
+    branch: 2.0.x
+    distribution_branch: master
+
+    jdk: openjdk8
+    jdks:
+      - openjdk8
+    maven:
+      - mvn33:
+          mvn-version: mvn33
+    mvn-settings: odlparent-settings
+    mvn-goals: clean install
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    mvn-version: mvn33
+
     dependencies: ''
     email-upstream: '[odlparent]'
     archive-artifacts: ''
