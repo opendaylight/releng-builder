@@ -125,10 +125,6 @@
           # in their builds.
           artifacts: 'dependencies.log'
       - trigger-parameterized-builds:
-          - project: 'autorelease-generate-release-notes-{stream}'
-            condition: UNSTABLE_OR_BETTER
-            property-file: variables.jenkins-trigger
-            fail-on-missing: true
           - project: 'integration-distribution-test-{integration-test}'
             condition: UNSTABLE_OR_BETTER
             property-file: variables.jenkins-trigger
