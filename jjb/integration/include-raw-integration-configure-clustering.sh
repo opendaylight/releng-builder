@@ -81,6 +81,14 @@ LOGCONF=/tmp/${BUNDLEFOLDER}/etc/org.ops4j.pax.logging.cfg
 sed -ie 's/log4j.appender.out.maxBackupIndex=10/log4j.appender.out.maxBackupIndex=1/g' \${LOGCONF}
 # FIXME: Make log size limit configurable from build parameter.
 sed -ie 's/log4j.appender.out.maxFileSize=1MB/log4j.appender.out.maxFileSize=30GB/g' \${LOGCONF}
+echo "log4j.logger.org.opendaylight.controller.cluster.access.client=DEBUG" >> \${LOGCONF}
+echo "log4j.logger.org.opendaylight.controller.cluster.databroker.actors.dds=DEBUG" >> \${LOGCONF}
+echo "log4j.logger.org.opendaylight.mdsal.dom.broker=DEBUG" >> \${LOGCONF}
+echo "log4j.logger.org.opendaylight.controller.cluster.common.actor=DEBUG" >> \${LOGCONF}
+echo "log4j.logger.org.opendaylight.controller.clustering.it.provider=DEBUG" >> \${LOGCONF}
+#echo "log4j.logger.org.opendaylight.controller.clustering.it.provider.impl=TRACE" >> \${LOGCONF}
+echo "log4j.logger.akka.cluster=DEBUG" >> \${LOGCONF}
+#echo "log4j.logger.akka.remote=DEBUG" >> \${LOGCONF}
 cat \${LOGCONF}
 
 if [ "${ODL_ENABLE_L3_FWD}" == "yes" ]; then
