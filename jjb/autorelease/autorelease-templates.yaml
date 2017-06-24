@@ -200,6 +200,7 @@
       - trigger-parameterized-builds:
           - project: 'autorelease-generate-release-notes-{stream}'
             condition: UNSTABLE_OR_BETTER
+            trigger-with-no-params: true
       - lf-infra-publish
 
 - job-template:
