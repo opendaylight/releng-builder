@@ -11,6 +11,7 @@ export DEBIAN_FRONTEND=noninteractive
 
 # we need garethr-docker in our puppet manifest to install docker
 # cleanly
+puppet --version
 puppet module install garethr-docker --version 4.1.1
 
 # do the package install via puppet so that we know it actually installs
