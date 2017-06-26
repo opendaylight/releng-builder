@@ -9,9 +9,16 @@ set -xeu -o pipefail
 # commands.
 export DEBIAN_FRONTEND=noninteractive
 
+# additional kernel packages required for docker to fix
+# aufs failed: driver not supported
+echo "---> Installing Additional kernel packages required for docker"
+apt-get update
+apt-get install "linux-image-extra-$(uname -r)" linux-image-extra-virtual
+modprobe aufs
+
 # we need garethr-docker in our puppet manifest to install docker
 # cleanly
-puppet module install garethr-docker --version 4.1.1
+puppet module install garethr-docker --version 5.3.0
 
 # do the package install via puppet so that we know it actually installs
 # properly and it also makes it quieter but with better error reporting

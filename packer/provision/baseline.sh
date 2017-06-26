@@ -147,7 +147,23 @@ EOF
     # separate group installs from package installs since a non-existing
     # group with dnf based systems (F21+) will fail the install if such
     # a group does not exist
-    yum install -y unzip xz puppet git git-review perl-XML-XPath
+    yum install -y unzip xz git git-review perl-XML-XPath
+
+    # facter is not installed by default on the base image and facter package
+    # gets removed when puppet4 is updated. To fix this use version of facter
+    # shipped with puppet4.
+    yum install -y facter
+
+    # ensure facter is available in $PATH avoid failures in retry loop
+    export PATH="/opt/puppetlabs/bin/:$PATH"
+
+    # Install puppet4
+    rpm -ivh https://yum.puppetlabs.com/puppetlabs-release-pc1-el-7.noarch.rpm
+    yum -y install -y puppet-agent
+
+    # Create symlink for facter and puppet
+    ln -sf /opt/puppetlabs/bin/facter /usr/bin/facter
+    ln -sf /opt/puppetlabs/puppet/bin/puppet /usr/bin/puppet
 
     # All of our systems require Java (because of Jenkins)
     # Install all versions of the OpenJDK devel but force 1.7.0 to be the
@@ -262,13 +278,20 @@ EOF
     # add additional repositories
     sudo add-apt-repository "deb http://us.archive.ubuntu.com/ubuntu $(lsb_release -sc) main universe restricted multiverse"
 
+    # facter is not installed by default on the base image and facter package
+    # gets removed when puppet4 is updated. To fix this use version of facter
+    # shipped with puppet4.
+    ensure_ubuntu_install facter
+    # ensure facter is available in $PATH avoid failures in retry loop
+    export PATH="/opt/puppetlabs/bin/:$PATH"
+
     echo "---> Installing base packages"
     apt-get clean
     apt-get update -m
     apt-get upgrade -m
     apt-get dist-upgrade -m
 
-    ensure_ubuntu_install unzip xz-utils puppet git libxml-xpath-perl
+    ensure_ubuntu_install unzip xz-utils git libxml-xpath-perl
 
     # Install python3 and dependencies, needed for Coala linting
     ensure_ubuntu_install python3
@@ -277,7 +300,7 @@ EOF
     # Install python and dependencies
     ensure_ubuntu_install python-{dev,virtualenv,setuptools,pip}
 
-    FACTER_OSVER=$(/usr/bin/facter operatingsystemrelease)
+    FACTER_OSVER=$(facter operatingsystemrelease)
     case "$FACTER_OSVER" in
         14.04)
             echo "---> Installing OpenJDK"
@@ -291,10 +314,35 @@ EOF
             # make sure that we still default to openjdk 7
             update-alternatives --set java /usr/lib/jvm/java-7-openjdk-amd64/jre/bin/java
             update-alternatives --set javac /usr/lib/jvm/java-7-openjdk-amd64/bin/javac
+
+            echo "---> Install puppet repository for 14.04"
+            apt-get purge puppet puppet-common
+            wget https://apt.puppetlabs.com/puppetlabs-release-pc1-trusty.deb
+            dpkg -i puppetlabs-release-pc1-trusty.deb
+
+            echo "---> Installing puppet"
+            apt-get update -m
+            ensure_ubuntu_install puppet-agent
+            # Create symlink for facter and puppet
+            ln -sf /opt/puppetlabs/bin/facter /usr/bin/facter
+            ln -sf /opt/puppetlabs/puppet/bin/puppet /usr/bin/puppet
         ;;
         16.04)
             echo "---> Installing OpenJDK"
             apt-get install openjdk-8-jdk
+
+            echo "---> Install puppet4 repository for 16.04"
+            apt-get purge puppet puppet-common
+            wget https://apt.puppetlabs.com/puppetlabs-release-pc1-xenial.deb
+            dpkg -i puppetlabs-release-pc1-xenial.deb
+
+            echo "---> Installing puppet"
+            apt-get update -m
+            ensure_ubuntu_install puppet-agent
+
+            # Create symlink for facter and puppet
+            ln -sf /opt/puppetlabs/bin/facter /usr/bin/facter
+            ln -sf /opt/puppetlabs/puppet/bin/puppet /usr/bin/puppet
 
             echo "---> Installing python3 virtualenv"
             # python3-virtualenv is available starting with 16.04.
