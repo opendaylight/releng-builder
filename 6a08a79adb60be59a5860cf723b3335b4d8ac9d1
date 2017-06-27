@@ -46,6 +46,30 @@
       "revId": "6a08a79adb60be59a5860cf723b3335b4d8ac9d1",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2a55be_3e82dd52",
+        "filename": "jjb/packaging/include-raw-build-rpm-snap.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-06-27T17:15:26Z",
+      "side": 0,
+      "message": "Yes it\u0027s less of a problem here because packaging is the only project that uses these scripts and if it does fail you will know immediately. Just a suggestion to improve things. Personally I think putting stuff in /tmp/v is good practice moving forward regardless so that people copying existing scripts won\u0027t copy something that might break for them.",
+      "parentUuid": "da2a55be_7e6e15cb",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 11
+      },
+      "revId": "6a08a79adb60be59a5860cf723b3335b4d8ac9d1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
