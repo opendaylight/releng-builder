@@ -79,6 +79,7 @@ ensure_ubuntu_install() {
         # Retry installing package 5 times if necessary
         for i in {0..5}
         do
+            echo "$i: Installing $pkg"
             if [ "$(dpkg-query -W -f='${Status}' "$pkg" 2>/dev/null | grep -c "ok installed")" -eq 0 ]; then
                 apt-cache policy "$pkg"
                 apt-get install "$pkg"
