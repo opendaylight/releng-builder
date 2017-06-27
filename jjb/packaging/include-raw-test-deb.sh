@@ -26,10 +26,8 @@ then
   sudo apt-get install -y opendaylight
 else
   echo "URL is not a link to a PPA repo or .deb"
+  exit 1
 fi
-
-# Install expect to interact with karaf shell
-sudo apt-get install -y expect
 
 # Start OpenDaylight
 sudo systemctl start opendaylight
@@ -39,3 +37,6 @@ sudo systemctl status opendaylight
 
 # Get process id of Java
 pgrep java
+
+# Install expect to interact with karaf shell
+sudo apt-get install -y expect
