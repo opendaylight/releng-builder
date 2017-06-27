@@ -138,6 +138,11 @@
             predefined-parameters: DOWNLOAD_URL=$BUNDLE_URL
             property-file: variables.jenkins-trigger
             fail-on-missing: true
+          - project: 'packaging-build-deb-{stream}'
+            condition: UNSTABLE_OR_BETTER
+            predefined-parameters: DOWNLOAD_URL=$BUNDLE_URL
+            property-file: variables.jenkins-trigger
+            fail-on-missing: true
       - lf-infra-publish
 
 - job-template:
