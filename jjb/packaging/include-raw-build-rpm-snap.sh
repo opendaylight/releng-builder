@@ -10,12 +10,11 @@ set -ex -o pipefail
 virtualenv rpm_build
 # shellcheck disable=SC1091
 source rpm_build/bin/activate
-PYTHON="rpm_build/bin/python"
-$PYTHON -m pip install --upgrade pip
-$PYTHON -m pip install -r "$WORKSPACE/packaging/rpm/requirements.txt"
+pip install --upgrade pip
+pip install -r "$WORKSPACE/packaging/packages/requirements.txt"
 
 # Build the latest snapshot matching the given major minor version
-"$WORKSPACE/packaging/rpm/build.py" --build-latest-snap \
+"$WORKSPACE/packaging/packages/build.py" --rpm --build-latest-snap \
                                   --major "$VERSION_MAJOR" \
                                   --minor "$VERSION_MINOR" \
                                   --changelog_name "$CHANGELOG_NAME" \
