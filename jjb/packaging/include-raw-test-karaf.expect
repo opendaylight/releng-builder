@@ -7,10 +7,6 @@ set password "karaf"
 # Default prompt
 set prompt "opendaylight-user@root>"
 
-# OpenDaylight service requires some time after it starts for a successful
-# SSH connection
-sleep 10
-
 # SSH into Karaf shell
 spawn ssh -p 8101 -o StrictHostKeyChecking=no karaf@127.0.0.1
 expect "Password: "
@@ -18,7 +14,19 @@ send "$password\r"
 
 # Verify expected features
 expect "$prompt"
-send "feature:list | grep netvirt-openstack\r"
+send "feature:list | grep odl-netvirt-openstack\r"
+# TODO Should we be checking output?
+expect "$prompt"
+
+# Install feature
+expect "$prompt"
+send "feature:install odl-netvirt-openstack\r"
+expect "$prompt"
+
+# Verify installed feature is actually installed
+expect "$prompt"
+send "feature:list | grep odl-netvirt-openstack | grep \" x \"\r"
+# TODO Should we be checking output?
 expect "$prompt"
 
 # TODO Add further tests here
