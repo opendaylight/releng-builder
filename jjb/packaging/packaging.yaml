@@ -200,12 +200,20 @@
           artifacts: '**'
       - lf-infra-publish
 
+
 - job-template:
     name: 'packaging-build-deb-{stream}'
 
     node: ubuntu1604-mininet-ovs-25-2c-4g
 
     project-type: freestyle
+
+    ######################
+    # Default parameters #
+    ######################
+    mvn-opts: ''
+    mvn-params: ''
+    mvn-version: mvn33
 
     properties:
       - opendaylight-infra-properties:
@@ -218,6 +226,11 @@
           branch: '{branch}'
           refspec: 'refs/heads/{branch}'
           artifacts: '{archive-artifacts}'
+      - lf-infra-maven-parameters:
+          mvn-opts: '{mvn-opts}'
+          mvn-params: '{mvn-params}'
+          mvn-version: '{mvn-version}'
+          staging-profile-id: ''
       - string:
           name: VERSION_MAJOR
           default: '5'
@@ -280,6 +293,13 @@
 
     builders:
       - shell: !include-raw: include-raw-build-deb.sh
+      - lf-infra-deploy-maven-file:
+          global-settings-file: 'global-settings'
+          settings-file: 'packaging-settings'
+          mvn-version: '{mvn-version}'
+          repo-id: 'opendaylight-apt-ubuntu-1604-x86_64-snapshot-{stream}'
+          group-id: 'org.opendaylight.integration-packaging'
+          files-dir: '$WORKSPACE/upload_files'
 
     publishers:
       - archive-artifacts:
