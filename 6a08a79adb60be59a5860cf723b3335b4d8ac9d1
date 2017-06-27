@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da2a55be_23f3e674",
+        "filename": "jjb/packaging/include-raw-build-rpm-snap.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-06-27T15:55:12Z",
+      "side": 0,
+      "message": "So the reason this was done is it works around long job names that overflow the Linux kernel max commandline length due to extremely long shebangs which we\u0027ve run into for a few jobs.\n\nIf we don\u0027t want to do this then the alternative we\u0027ve started recommending projects do is to build their virutalenvs in /tmp/v for example:\n\nhttps://gerrit.linuxfoundation.org/infra/gitweb?p\u003dreleng/global-jjb.git;a\u003dblob;f\u003dshell/tox-install.sh;h\u003d2cffbd50cfda7440f97fc03c210800866d329c7b;hb\u003dHEAD\n\nIf this is not done then jobs that have too long a name will fail with a confusing message \"bad intepreter\".",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 11
+      },
+      "revId": "6a08a79adb60be59a5860cf723b3335b4d8ac9d1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
