@@ -18,8 +18,6 @@ files = **/*.sh
 ignore = .git/**,
     .tox/**,
     jenkins-scripts/*-local-env.sh,
-    jjb/integration/include-raw-integration-compare-distributions.sh,
-    jjb/integration/include-raw-integration-configure-clustering.sh,
     jjb/integration/include-raw-integration-deploy-controller-offline.sh,
     jjb/integration/include-raw-integration-deploy-controller-run-test.sh,
     jjb/integration/include-raw-integration-deploy-controller-verify.sh,
@@ -41,4 +39,3 @@ bears = YAMLLintBear
 files = jjb/**/*.yaml,openstack-hot/**/*.yaml
 document_start = True
 yamllint_config = yamllint.conf
-
