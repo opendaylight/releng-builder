@@ -12,12 +12,6 @@ files = **/*.json
 ignore = .*/**
 indent_size = 2
 
-[YAML]
-bears = YAMLLintBear
-files = jjb/**/*.yaml,openstack-hot/**/*.yaml
-document_start = True
-yamllint_config = yamllint.conf
-
 [ShellCheck]
 bears = ShellCheckBear,SpaceConsistencyBear
 files = jenkins-scripts/**/*.sh,
@@ -41,3 +35,10 @@ ignore = jenkins-scripts/*-local-env.sh,
 shell = bash
 indent_size = 4
 use_spaces = yeah
+
+[YAML]
+bears = YAMLLintBear
+files = jjb/**/*.yaml,openstack-hot/**/*.yaml
+document_start = True
+yamllint_config = yamllint.conf
+
