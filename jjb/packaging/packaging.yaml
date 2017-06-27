@@ -280,6 +280,13 @@
 
     builders:
       - shell: !include-raw: include-raw-build-deb.sh
+      - lf-infra-deploy-maven-file:
+          global-settings-file: 'global-settings'
+          settings-file: 'packaging-settings'
+          mvn-version: 'mvn33'
+          repo-id: 'opendaylight-apt-ubuntu-1604-x86_64-snapshot-{stream}'
+          group-id: 'org.opendaylight.integration-packaging'
+          files-dir: '$WORKSPACE/archives/upload_files'
 
     publishers:
       - archive-artifacts:
