@@ -2,6 +2,7 @@
 # Activate robotframework virtualenv
 # ${ROBOT_VENV} comes from the include-raw-integration-install-robotframework.sh
 # script.
+# shellcheck source=${ROBOT_VENV}/bin/activate disable=SC1091
 source ${ROBOT_VENV}/bin/activate
 
 echo "#################################################"
@@ -28,7 +29,7 @@ function join {
     delim=' '
     final=$1; shift
 
-    for str in $* ; do
+    for str in "$@" ; do
         final=${final}${delim}${str}
     done
 
@@ -41,7 +42,7 @@ for i in `seq 1 ${NUM_ODL_SYSTEM}` ; do
     nodes[$i]=${!CONTROLLERIP}
 done
 
-nodes_list=$(join ${nodes[@]})
+nodes_list=$(join "${nodes[@]}")
 
 echo ${nodes_list}
 

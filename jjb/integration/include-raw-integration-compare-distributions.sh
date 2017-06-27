@@ -38,16 +38,16 @@ mv $BUNDLEFOLDER /tmp/distro_old
 rm $BUNDLE
 
 echo "Extracting the distribution just created by this job..."
-NEW_DISTRO="$(find $WORKSPACE -name ${KARAF_ARTIFACT}*.zip)"
+NEW_DISTRO="$(find $WORKSPACE -name "${KARAF_ARTIFACT}*.zip")"
 NEW_DISTRO_BASENAME="$(basename "$NEW_DISTRO")"
 cp $NEW_DISTRO /tmp/
-cd /tmp/
+cd /tmp/ || exit
 # get the name of the folder which will be extracted to
 EXTRACTED_FOLDER=$(unzip $NEW_DISTRO_BASENAME | grep 'creating:' | grep -v '/.' | cut -d' ' -f5-)
 mv $EXTRACTED_FOLDER distro_new
 
 git clone https://git.opendaylight.org/gerrit/p/integration/test.git
-cd test/tools/distchanges
+cd test/tools/distchanges || exit
 mkdir -p $WORKSPACE/archives
 
 # Full output of compare tool will be in temp file /tmp/dist_diff.txt
