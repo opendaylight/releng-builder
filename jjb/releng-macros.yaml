@@ -303,6 +303,20 @@
                 unhealthy: 40
 
 - builder:
+    # Deploys a maven site to Nexus using lftools nexus-zip command
+    name: opendaylight-infra-deploy-maven-site
+    builders:
+      - lf-provide-maven-settings:
+          global-settings-file: global-settings
+          settings-file: '{settings-file}'
+      - lf-infra-create-netrc:
+          server-id: opendaylight-site
+      - shell: !include-raw-escape:
+          - global-jjb/shell/lftools-install.sh
+          - opendaylight-infra-deploy-maven-site.sh
+      - lf-provide-maven-settings-cleanup
+
+- builder:
     name: opendaylight-infra-stack
     # opendaylight-infra-stack.sh has a required variable {stack-template} that
     # must be passed into this macro.
