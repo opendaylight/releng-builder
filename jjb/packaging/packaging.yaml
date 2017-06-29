@@ -8,6 +8,7 @@
       - 'packaging-build-rpm-{stream}'
       - 'packaging-build-rpm-snap-{stream}'
       - 'packaging-build-deb-{stream}'
+      - 'packaging-build-packer-{stream}'
       - 'packaging-test-rpm-{stream}'
       - 'packaging-test-deb-{stream}'
 
@@ -16,6 +17,84 @@
     stream:
       - master:
           branch: 'master'
+
+- job-template:
+    name: 'packaging-build-packer-{stream}'
+
+    node: dynamic_verify
+
+    project-type: freestyle
+
+    properties:
+      - opendaylight-infra-properties:
+          build-days-to-keep: 7
+
+    parameters:
+      - opendaylight-infra-parameters:
+          os-cloud: '{os-cloud}'
+          project: '{project}'
+          branch: '{branch}'
+          refspec: 'refs/heads/{branch}'
+          artifacts: '{archive-artifacts}'
+      - string:
+          name: RPM_REPO_FILE
+          default: 'opendaylight-44-release.repo'
+          description: 'Opendaylight .repo file to be built'
+      - string:
+          name: RPM_REPO_URL
+          # yamllint disable-line rule:line-length
+          default: 'https://git.opendaylight.org/gerrit/gitweb?p=integration/packaging.git;a=blob_plain;f=rpm/example_repo_configs/opendaylight-44-release.repo'
+          description: 'URL of the Opendaylight .repo file to be built'
+      - string:
+          name: ODL_VERSION
+          default: '4.4.0'
+          description: 'Opendaylight version number to build'
+      - string:
+          name: OS_NAME
+          default: 'fedora'
+          description: 'Operating system used for the build'
+      - string:
+          name: OS_VERSION
+          default: '24'
+          description: 'Operating system version used for the build'
+      - string:
+          name: DOCKER_REPO
+          default: 'opendaylight/odl'
+          description: 'Docker repo where the artifact is stored'
+      - string:
+          name: GUEST_OS_TYPE
+          default: 'Fedora_24'
+          description: 'Guest OS used'
+      - string:
+          name: ISO_CHECKSUM
+          # yamllint disable-line rule:line-length
+          default: '1c0971d4c1a37bb06ec603ed3ded0af79e22069499443bb2d47e501c9ef42ae8'
+          description: 'ISO checksum used'
+      - string:
+          name: ISO_URLS
+          # yamllint disable-line rule:line-length
+          default: 'https://download.fedoraproject.org/pub/fedora/linux/releases/24/Server/x86_64/iso/Fedora-Server-dvd-x86_64-24-1.2.iso'
+          description: 'ISO URL used'
+
+    scm:
+        - integration-gerrit-scm:
+            basedir: 'packaging'
+            refspec: '$GERRIT_REFSPEC'
+            branch: 'master'
+
+    wrappers:
+        - opendaylight-infra-wrappers:
+            build-timeout: '{build-timeout}'
+
+    builders:
+        - shell: !include-raw: include-raw-build-packer-docker.sh
+        - shell: !include-raw: include-raw-build-packer-libvirt.sh
+        - shell: !include-raw: include-raw-build-packer-virtualbox.sh
+
+    publishers:
+        - archive-artifacts:
+            artifacts: '**'
+        - lf-infra-publish
 
 - job-template:
     name: 'packaging-build-rpm-{stream}'
