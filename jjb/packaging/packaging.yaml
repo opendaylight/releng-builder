@@ -219,46 +219,10 @@
           refspec: 'refs/heads/{branch}'
           artifacts: '{archive-artifacts}'
       - string:
-          name: VERSION_MAJOR
-          default: '5'
-          description: 'OpenDaylight major (element) version number to build'
-      - string:
-          name: VERSION_MINOR
-          default: '3'
-          description: 'OpenDaylight minor (SR) version number to build'
-      - string:
-          name: VERSION_PATCH
-          default: '0'
-          description: 'OpenDaylight patch version to build'
-      - string:
-          name: PKG_VERSION
-          default: '1'
-          description: 'Deb version for the given ODL major.minor.patch'
-      - string:
-          name: SYSD_COMMIT
-          default: 'ba1f409c1a46efd068b16ced6ddc8b32a412b03a'
-          description: 'Version of ODL systemd unitfile to download and package in ODL .deb'
-      - string:
-          name: CODENAME
-          default: 'Boron-SR3'
-          description: 'Elemental codename for the ODL release, including SR if applicable'
-      - string:
           name: DOWNLOAD_URL
           # yamllint disable-line rule:line-length
           default: 'https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/integration/distribution-karaf/0.5.3-Boron-SR3/distribution-karaf-0.5.3-Boron-SR3.tar.gz'
           description: 'URL to ODL tarball artifact to repackage into .deb'
-      - string:
-          name: JAVA_VERSION
-          default: '8'
-          description: Java dependency for the ODL release
-      - string:
-          name: CHANGELOG_DATE
-          default: 'Mon, 1 Aug 2016'
-          description: 'Date this .deb was defined'
-      - string:
-          name: CHANGELOG_TIME
-          default: '17:48:42 +0530'
-          description: 'Time this .deb was defined'
       - string:
           name: CHANGELOG_NAME
           default: 'Jenkins'
@@ -283,5 +247,5 @@
 
     publishers:
       - archive-artifacts:
-          artifacts: 'packaging/deb/opendaylight/*.deb'
+          artifacts: 'packaging/packages/deb/opendaylight/*.deb'
       - lf-infra-publish
