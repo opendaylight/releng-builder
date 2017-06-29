@@ -94,6 +94,30 @@
       "revId": "6a08a79adb60be59a5860cf723b3335b4d8ac9d1",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2a55be_1a171bef",
+        "filename": "jjb/packaging/include-raw-build-rpm-snap.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-06-29T17:04:06Z",
+      "side": 0,
+      "message": "Just a recommendation. Feel free to ignore if you don\u0027t want to change it but here\u0027s an explanation of why.\n\nSo when you install things into a virtualenv it set\u0027s that project\u0027s entry script\u0027s shebang line to be the full path to that project. For example here\u0027s what the shebang line looks like for JJB that\u0027s installed on my system:\n\n #!/home/zxiiro/.virtualenvs/jjb/bin/python3\n\nSo for a Jenkins job who\u0027s path is usually /w/\u003cjob-name\u003e if the job name is very long the shebang line will be very long.\n\nThe way commands are parsed inside virtualenvs is it uses full paths for all parameters so for example if we call JJB the CLI command that get\u0027s called will look like this:\n\n /home/zxiiro/.virtualenvs/jjb/bin/python3 /home/zxiiro/.virtualenvs/jjb/bin/jenkins-jobs ...\n\nThe Linux kernel itself has a limit on how long a single commandline can be called. So we\u0027ve hit issues that were hard to troubleshoot before where jobs that had long names caused this CLI to be over the Linux kernel\u0027s allowed length causing the build to fail with \"bad interpreter\".\n\nThe recommendation now is to install virtualenvs in /tmp/v/rpm_build for example just in case so that we don\u0027t get hit by this issue in case for some reason packaging ever has a job that has too long a job name.",
+      "parentUuid": "da2a55be_57ee8f8c",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 11
+      },
+      "revId": "6a08a79adb60be59a5860cf723b3335b4d8ac9d1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
