@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da2a55be_3a6c9f9c",
+        "filename": "jjb/releng-macros.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-06-29T16:54:57Z",
+      "side": 1,
+      "message": "Do want want to archive the full log too?",
+      "range": {
+        "startLine": 492,
+        "startChar": 34,
+        "endLine": 492,
+        "endChar": 50
+      },
+      "revId": "ac3587e82bcbd1855852383627c20899f1de7622",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2a55be_9a466b22",
+        "filename": "jjb/releng-macros.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-06-29T16:54:57Z",
+      "side": 1,
+      "message": "If we want these available in Jenkins we\u0027ll need to put it somewhere in $WORKSPACE/archive.\n\nMaybe $WORKSPACE/archive/packer/{public|private}.log ?",
+      "range": {
+        "startLine": 497,
+        "startChar": 52,
+        "endLine": 497,
+        "endChar": 81
+      },
+      "revId": "ac3587e82bcbd1855852383627c20899f1de7622",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2a55be_da6e2396",
+        "filename": "jjb/releng-macros.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-06-29T16:54:57Z",
+      "side": 1,
+      "message": "Doesn\u0027t seem like we need regex so we can simplify this to just:\n\n grep private_cloud\n\nSo that the shell doesn\u0027t have to do processing on regex expression and the quotes.",
+      "range": {
+        "startLine": 498,
+        "startChar": 15,
+        "endLine": 498,
+        "endChar": 33
+      },
+      "revId": "ac3587e82bcbd1855852383627c20899f1de7622",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
