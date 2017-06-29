@@ -460,6 +460,7 @@
             - file-id: 'packer-cloud-env'
               variable: 'CLOUDENV'
       - shell: |
+          #!/bin/bash
           cd packer
           varfiles="../packer/vars/*"
           templates="../packer/templates/*"
@@ -485,12 +486,16 @@
             - file-id: 'packer-cloud-env'
               variable: 'CLOUDENV'
       - shell: |
+          #!/bin/bash
           cd packer
           export PACKER_LOG="yes" && \
           export PACKER_LOG_PATH="packer-build.log" && \
                       packer.io build -color=false -var-file=$CLOUDENV \
                        -var-file=../packer/vars/{platform}.json \
                        ../packer/templates/{template}.json
+          # Split public and private cloud logs
+          grep -e 'public_cloud' packer-build.log > packer-build_public_cloud.log  2>&1
+          grep -e 'private_cloud' packer-build.log > packer-build_private_cloud.log 2>&1
 
 - builder:
     # TODO: Verify signature after downloading users public key from a locally created
