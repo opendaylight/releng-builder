@@ -2,6 +2,9 @@
 # This script starts the karaf shell and sends the password for SSH auth.
 # Further tests in karaf shell can be done here
 
+# Echo commands
+log_user 1
+
 # Default password
 set password "karaf"
 # Default prompt
@@ -13,12 +16,43 @@ sleep 10
 
 # SSH into Karaf shell
 spawn ssh -p 8101 -o StrictHostKeyChecking=no karaf@127.0.0.1
+expect "Password authentication"
 expect "Password: "
 send "$password\r"
 
 # Verify expected features
 expect "$prompt"
-send "feature:list | grep netvirt-openstack\r"
+send "feature:list | grep odl-netvirt-openstack\r"
+expect {{
+  timeout {{
+    send_user "\nTest feature not found"
+    exit 1
+  }}
+  "OpenDaylight :: NetVirt :: OpenStack" {{
+    send_user "\nTest feature available"
+  }}
+}}
+
+# Install feature
+send "feature:install odl-netvirt-openstack\r"
+expect {{
+  "Error executing command: Can't install feature" {{
+    send_user "\nFailed to install test feature"
+    exit 1
+  }}
+}}
+
+# Verify installed feature is actually installed
 expect "$prompt"
+send "feature:list | grep odl-netvirt-openstack\r"
+expect {{
+  timeout {{
+    send_user "\nTest feature not installed\n"
+    exit 1
+  }}
+  " x " {{
+    send_user "\nTest feature installed successfully\n"
+  }}
+}}
 
 # TODO Add further tests here
