@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da2a55be_5704cf7d",
+        "filename": "jjb/packaging/packaging.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2017-06-29T13:59:58Z",
+      "side": 1,
+      "message": "As you know, we\u0027re going to need to install some software on whatever node we use. Not totally sure which node would be best to start with, but maybe Anil\u0027s new baseline ones (although they don\u0027t seem to actually be pushed to Sandbox yet, see Trello card). We could also consider creating a node with the tooling we need pre-installed, as I suspect it will be a fairly large install (VBox, Docker, Packer at least).\n\nhttps://trello.com/c/nKLv5tHn/535-convert-int-pack-jobs-to-use-baseline-ubuntu-centos-images",
+      "range": {
+        "startLine": 24,
+        "startChar": 10,
+        "endLine": 24,
+        "endChar": 24
+      },
+      "revId": "faa18bee0485ac996c1ad47758d59a93a85578d9",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2a55be_772bd330",
+        "filename": "jjb/packaging/packaging.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2017-06-29T13:59:58Z",
+      "side": 1,
+      "message": "Use 60, Beryllium is deprecated\n\n(also in all places below)",
+      "range": {
+        "startLine": 41,
+        "startChar": 33,
+        "endLine": 41,
+        "endChar": 35
+      },
+      "revId": "faa18bee0485ac996c1ad47758d59a93a85578d9",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2a55be_37d83b53",
+        "filename": "jjb/packaging/packaging.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2017-06-29T13:59:58Z",
+      "side": 1,
+      "message": "25, also below",
+      "range": {
+        "startLine": 58,
+        "startChar": 20,
+        "endLine": 58,
+        "endChar": 22
+      },
+      "revId": "faa18bee0485ac996c1ad47758d59a93a85578d9",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2a55be_f7a9837c",
+        "filename": "jjb/packaging/packaging.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2017-06-29T13:59:58Z",
+      "side": 1,
+      "message": "These descriptions could be a bit better, but nbd. For example, I wouldn\u0027t end a sentence in \"used\" (should answer question \"in what?\"). Where it makes sense, an example is very helpful.",
+      "range": {
+        "startLine": 77,
+        "startChar": 24,
+        "endLine": 77,
+        "endChar": 36
+      },
+      "revId": "faa18bee0485ac996c1ad47758d59a93a85578d9",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2a55be_b79f0b50",
+        "filename": "jjb/packaging/packaging.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2017-06-29T13:59:58Z",
+      "side": 1,
+      "message": "Wondering if we should make this into three different jobs",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 92,
+        "endChar": 69
+      },
+      "revId": "faa18bee0485ac996c1ad47758d59a93a85578d9",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2a55be_3794bb36",
+        "filename": "jjb/packaging/packaging.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2017-06-29T13:59:58Z",
+      "side": 1,
+      "message": "I think this is not the right way to do this anymore, Anil has pushed some updates recently that use lftools, check out those examples",
+      "range": {
+        "startLine": 96,
+        "startChar": 12,
+        "endLine": 96,
+        "endChar": 27
+      },
+      "revId": "faa18bee0485ac996c1ad47758d59a93a85578d9",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
