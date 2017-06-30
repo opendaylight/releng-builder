@@ -345,6 +345,11 @@ EOF
     echo '---> Disabling automatic daily upgrades'
     sed -ine 's/"1"/"0"/g' /etc/apt/apt.conf.d/10periodic
     echo 'APT::Periodic::Unattended-Upgrade "0";' >> /etc/apt/apt.conf.d/10periodic
+
+    # Install packaging job dependencies for building debs
+    ensure_ubuntu_install  build-essential devscripts equivs dh-systemd python-yaml \
+                    python-jinja2 gdebi
+
 }
 
 all_systems() {
