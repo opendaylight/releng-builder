@@ -153,6 +153,7 @@
       - lf-infra-parameters:
           project: releng/autorelease
           branch: '{branch}'
+          stream: '{stream}'
           refspec: 'refs/heads/{branch}'
       - string:
           name: RELEASE_TAG
@@ -217,6 +218,7 @@
       - lf-infra-parameters:
           project: '{project}'
           branch: '{branch}'
+          stream: '{stream}'
 
     scm:
       - lf-infra-gerrit-scm:
