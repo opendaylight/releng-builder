@@ -23,7 +23,10 @@
           name: ARCHIVE_ARTIFACTS
           default: >
               {artifacts}
-              **/target/surefire-reports/*-output.txt
+              **/target/surefire-reports/*.txt
+              **/target/surefire-reports/*.xml
+              **/target/failsafe-reports/*.txt
+              **/target/failsafe-reports/*.xml
               **/hs_err_*.log
               **/target/feature/feature.xml
               **/*.hprof
