@@ -193,6 +193,10 @@ EOF
     # to initialize Heat template based systems.
     yum install -y jq
 
+    # Used py lftools to speend up some scripts
+    wget http://ftp.riken.jp/Linux/cern/centos/7/cern/x86_64/Packages/parallel-20150522-1.el7.cern.noarch.rpm
+    yum localinstall -y parallel-20150522-1.el7.cern.noarch.rpm
+
     # Used by lftools scripts to parse XML
     yum install -y xmlstarlet
 
@@ -315,6 +319,9 @@ EOF
     # Needed to parse OpenStack commands used by opendaylight-infra stack commands
     # to initialize Heat template based systems.
     ensure_ubuntu_install jq
+
+    # Used py lftools to speend up some scripts
+    ensure_ubuntu_install parallel
 
     # Used by lftools scripts to parse XML
     ensure_ubuntu_install xmlstarlet
