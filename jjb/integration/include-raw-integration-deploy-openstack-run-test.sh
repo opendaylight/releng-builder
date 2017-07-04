@@ -804,7 +804,7 @@ source /tmp/os_netvirt_client_rc
 #FIXME currently support only 1 site
 echo "Starting Robot test suites ${SUITES} ..."
 # please add pybot -v arguments on a single line and alphabetized
-pybot -N ${TESTPLAN} --removekeywords wuks -c critical -e exclude \
+pybot -N ${TESTPLAN} --removekeywords wuks -c critical -e exclude -e skip_if_${DISTROSTREAM} \
     -v BUNDLEFOLDER:${BUNDLEFOLDER} \
     -v BUNDLE_URL:${ACTUAL_BUNDLE_URL} \
     -v CONTROLLER_USER:${USER} \
