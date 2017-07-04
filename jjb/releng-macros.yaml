@@ -461,6 +461,8 @@
               variable: 'CLOUDENV'
       - shell: |
           #!/bin/bash
+          # Ensure we fail the job if any steps fail.
+          set -eu -o pipefail
           cd packer
           varfiles="../packer/vars/*"
           templates="../packer/templates/*"
@@ -487,6 +489,8 @@
               variable: 'CLOUDENV'
       - shell: |
           #!/bin/bash
+          # Ensure we fail the job if any steps fail.
+          set -eu -o pipefail
           cd packer
           export PACKER_LOG="yes" && \
           export PACKER_LOG_PATH="packer-build.log" && \
