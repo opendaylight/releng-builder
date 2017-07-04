@@ -2,9 +2,10 @@
 - project:
     name: autorelease-projects
     jobs:
+      - 'autorelease-generate-release-notes-{stream}'
       - 'autorelease-release-{stream}'
-      - autorelease-generate-release-notes-{stream}
-      - autorelease-version-bump-{stream}
+      - 'autorelease-version-bump-{stream}'
+      - '{project-name}-validate-autorelease-{stream}'
 
     stream:
       - nitrogen:
@@ -28,7 +29,8 @@
           integration-test: boron
           karaf-version: karaf3
 
-    project: 'releng/autorelease'
+    project: releng/autorelease
+    project-name: autorelease
     archive-artifacts: >
         **/*.prop
         **/*.log

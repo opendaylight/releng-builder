@@ -28,10 +28,15 @@
     name: autorelease-checkout-gerrit-patch
     builders:
       - shell: |
-          cd ${GERRIT_PROJECT}
+          #!/bin/bash
+          set -eu -o pipefail
+
+          # If the project is autorelease then we do not need to cd
+          if [ "$GERRIT_PROJECT" != "releng/autorelease" ]; then
+              cd "$WORKSPACE/$GERRIT_PROJECT"
+          fi
           echo "Checking out ${GERRIT_PROJECT} patch ${GERRIT_REFSPEC}..."
           git fetch origin ${GERRIT_REFSPEC} && git checkout FETCH_HEAD
-          cd ..
 
 - builder:
     name: autorelease-cfp
