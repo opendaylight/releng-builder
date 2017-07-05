@@ -272,7 +272,7 @@ cat testplan.txt
 SUITES=$( egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' testplan.txt | tr '\012' ' ' )
 
 echo "Starting Robot test suites ${SUITES} ..."
-pybot -N ${TESTPLAN} --removekeywords wuks -c critical -e exclude -v BUNDLEFOLDER:${BUNDLEFOLDER} -v WORKSPACE:/tmp \
+pybot -N ${TESTPLAN} --removekeywords wuks -c critical -e exclude -e skip_if_${DISTROSTREAM} -v BUNDLEFOLDER:${BUNDLEFOLDER} -v WORKSPACE:/tmp \
 -v JAVA_HOME:${JAVA_HOME} -v BUNDLE_URL:${ACTUAL_BUNDLE_URL} -v NEXUSURL_PREFIX:${NEXUSURL_PREFIX} \
 -v CONTROLLER:${ODL_SYSTEM_IP} -v ODL_SYSTEM_IP:${ODL_SYSTEM_IP} -v ODL_SYSTEM_1_IP:${ODL_SYSTEM_IP} \
 -v CONTROLLER_USER:${USER} -v ODL_SYSTEM_USER:${USER} \
