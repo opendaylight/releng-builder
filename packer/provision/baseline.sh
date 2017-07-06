@@ -227,6 +227,9 @@ EOF
     cabal install "Cabal<1.18"  # Pull Cabal version that is capable of building shellcheck
     cabal install --bindir=/usr/local/bin "shellcheck-0.4.6"  # Pin shellcheck version
 
+    # openldap dev headers are required for lftools
+    yum install -y openldap-devel
+
     # --- END LFTOOLS DEPS
     ######################
 
@@ -384,6 +387,9 @@ EOF
     cabal update
     cabal install --bindir=/usr/local/bin "shellcheck-0.4.6"  # Pin shellcheck version
 
+    # openldap dev headers are required for lftools
+    ensure_ubuntu_install libldap2-dev libssl-dev libsasl2-dev
+
     # --- END LFTOOLS DEPS
     ######################
 
@@ -392,11 +398,11 @@ EOF
     sed -i 's/ENABLED="false"/ENABLED="true"/' /etc/default/sysstat
     enable_service sysstat
 
-    # install haveged to avoid low entropy rejecting ssh connections
+    # Install haveged to avoid low entropy rejecting ssh connections
     apt-get install haveged
     update-rc.d haveged defaults
 
-    # disable unattended upgrades & daily updates
+    # Disable unattended upgrades & daily updates
     echo '---> Disabling automatic daily upgrades'
     sed -ine 's/"1"/"0"/g' /etc/apt/apt.conf.d/10periodic
     echo 'APT::Periodic::Unattended-Upgrade "0";' >> /etc/apt/apt.conf.d/10periodic
@@ -404,7 +410,6 @@ EOF
     # Install packaging job dependencies for building debs
     ensure_ubuntu_install  build-essential devscripts equivs dh-systemd python-yaml \
                     python-jinja2 gdebi
-
 }
 
 all_systems() {
