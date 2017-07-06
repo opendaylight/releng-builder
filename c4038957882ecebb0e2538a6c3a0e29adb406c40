@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da2a55be_94b90e31",
+        "filename": "jjb/packaging/include-raw-build-rpm.sh",
+        "patchSetId": 19
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-07-06T02:15:42Z",
+      "side": 1,
+      "message": "We should add a check to ensure that every RPM has an associated SRPM and if not fail.",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 50
+      },
+      "revId": "c4038957882ecebb0e2538a6c3a0e29adb406c40",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2a55be_74b61a3f",
+        "filename": "jjb/packaging/packaging.yaml",
+        "patchSetId": 19
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-07-06T02:15:42Z",
+      "side": 1,
+      "message": "If every branch is \"master\" then it is more efficient to write the YAML like this:\n\n stream:\n   - master\n   - nitrogen\n   - carbon\n   - boron\n branch: master",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 26
+      },
+      "revId": "c4038957882ecebb0e2538a6c3a0e29adb406c40",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
