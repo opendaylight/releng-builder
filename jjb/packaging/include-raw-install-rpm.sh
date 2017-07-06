@@ -6,6 +6,9 @@
 #   -o pipefail: Fail on errors in scripts this calls, give stacktrace
 set -ex -o pipefail
 
+# Update mirror list to avoid slow/hung one
+sudo yum update -y yum-plugin-fastestmirror
+
 # Install ODL from .rpm link or .repo url
 if [[ $URL == *.rpm ]]
 then
@@ -20,15 +23,3 @@ else
   echo "URL is not a link to .rpm or .repo"
   exit 1
 fi
-
-# Start OpenDaylight
-sudo systemctl start opendaylight
-
-# Check status of OpenDaylight
-sudo systemctl status opendaylight
-
-# Get process id of Java
-pgrep java
-
-# Install expect to interact with karaf shell
-sudo yum install -y expect
