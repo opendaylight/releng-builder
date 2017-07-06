@@ -244,6 +244,9 @@ EOF
 
     # Install python dependencies, useful generally
     yum install -y python-{devel,virtualenv,setuptools,pip}
+
+    # Install ldap dependencies
+    yum install -y openldap-devel
 }
 
 ubuntu_systems() {
@@ -392,11 +395,11 @@ EOF
     sed -i 's/ENABLED="false"/ENABLED="true"/' /etc/default/sysstat
     enable_service sysstat
 
-    # install haveged to avoid low entropy rejecting ssh connections
+    # Install haveged to avoid low entropy rejecting ssh connections
     apt-get install haveged
     update-rc.d haveged defaults
 
-    # disable unattended upgrades & daily updates
+    # Disable unattended upgrades & daily updates
     echo '---> Disabling automatic daily upgrades'
     sed -ine 's/"1"/"0"/g' /etc/apt/apt.conf.d/10periodic
     echo 'APT::Periodic::Unattended-Upgrade "0";' >> /etc/apt/apt.conf.d/10periodic
@@ -405,6 +408,8 @@ EOF
     ensure_ubuntu_install  build-essential devscripts equivs dh-systemd python-yaml \
                     python-jinja2 gdebi
 
+    # Install ldap dependencies
+    ensure_ubuntu_install libldap2-dev libssl-dev libsasl2-dev
 }
 
 all_systems() {
