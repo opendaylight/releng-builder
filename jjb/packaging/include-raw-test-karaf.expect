@@ -1,6 +1,6 @@
 #!/usr/bin/expect
-# This script starts the karaf shell and sends the password for SSH auth.
-# Further tests in karaf shell can be done here
+# This script starts the Karaf shell and sends the password for SSH auth.
+# Further tests in Karaf shell can be done here
 
 # Echo commands
 log_user 1
@@ -10,26 +10,32 @@ set password "karaf"
 # Default prompt
 set prompt "opendaylight-user@root>"
 
-# OpenDaylight service requires some time after it starts for a successful
-# SSH connection
-sleep 10
+# Wait for Karaf SSH server to come online
+sleep 20
 
 # SSH into Karaf shell
 spawn ssh -p 8101 -o StrictHostKeyChecking=no karaf@127.0.0.1
+
+# Wait for SSH connection
+sleep 5
+
+# Auth to Karaf shell
 expect "Password authentication"
 expect "Password: "
 send "$password\r"
 
-# Verify expected features
+# Verify that a major feature is present
 expect "$prompt"
 send "feature:list | grep odl-netvirt-openstack\r"
 expect {{
   timeout {{
-    send_user "\nTest feature not found"
+    send_user "\nTest feature not found\n"
+    # Show full list of features for debugging
+    send "feature:list\r"
     exit 1
   }}
   "OpenDaylight :: NetVirt :: OpenStack" {{
-    send_user "\nTest feature available"
+    send_user "\nTest feature available\n"
   }}
 }}
 
@@ -37,10 +43,13 @@ expect {{
 send "feature:install odl-netvirt-openstack\r"
 expect {{
   "Error executing command: Can't install feature" {{
-    send_user "\nFailed to install test feature"
+    send_user "\nFailed to install test feature\n"
     exit 1
   }}
 }}
+
+# Wait for test feature to be installed
+sleep 5
 
 # Verify installed feature is actually installed
 expect "$prompt"
@@ -54,5 +63,3 @@ expect {{
     send_user "\nTest feature installed successfully\n"
   }}
 }}
-
-# TODO Add further tests here
