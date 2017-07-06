@@ -141,6 +141,64 @@
       - lf-infra-publish
 
 - job-template:
+    name: autorelease-update-validate-jobs-{stream}
+    project-type: freestyle
+    node: centos7-java-builder-2c-4g
+
+    properties:
+      - lf-infra-properties:
+          build-days-to-keep: 7
+
+    parameters:
+      - lf-infra-parameters:
+          project: releng/builder
+          branch: '{branch}'
+          stream: '{stream}'
+
+    scm:
+      - lf-infra-gerrit-scm:
+          git-url: '$GIT_URL/releng/builder'
+          branch: master
+          refspec: 'refs/heads/master'
+          jenkins-ssh-credential: opendaylight-jenkins-ssh
+          submodule-recursive: true
+          choosing-strategy: default
+
+    triggers:
+      - gerrit:
+          server-name: '{gerrit-server-name}'
+          trigger-on:
+            - change-merged-event
+            - comment-added-contains-event:
+                comment-contains-value: remerge$
+          projects:
+            - project-compare-type: ANT
+              project-pattern: '{project}'
+              branches:
+                - branch-compare-type: ANT
+                  branch-pattern: '**/{branch}'
+              file-paths:
+                - compare-type: ANT
+                  pattern: pom.xml
+
+    wrappers:
+      - lf-infra-wrappers:
+          build-timeout: 10
+          jenkins-ssh-credential: opendaylight-jenkins-ssh
+
+    builders:
+      - shell: !include-raw-escape:
+          - update-validate-autorelease-projects.sh
+      - opendaylight-infra-push-gerrit-patch:
+          project: 'releng/builder'
+          gerrit-topic: 'autorelease-update-validate-jobs-{stream}'
+          gerrit-commit-message: |
+              Update validate autorelease projects for {stream}
+
+    publishers:
+      - lf-infra-publish
+
+- job-template:
     name: autorelease-version-bump-{stream}
     project-type: freestyle
     node: centos7-autorelease-4c-16g
