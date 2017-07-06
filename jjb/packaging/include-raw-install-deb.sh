@@ -28,15 +28,3 @@ else
   echo "URL is not a link to a PPA repo or .deb"
   exit 1
 fi
-
-# Start OpenDaylight
-sudo systemctl start opendaylight
-
-# Check status of OpenDaylight
-sudo systemctl status opendaylight
-
-# Get process id of Java
-pgrep java
-
-# Install expect to interact with karaf shell
-sudo apt-get install -y expect
