@@ -36,7 +36,7 @@ EOF
 
 for module in "${modules[@]}"; do
     echo "Include $module"
-    echo "      - $module:" >> "$YAML_FILE"
+    echo "      - ${module//\//-}:" >> "$YAML_FILE"
     echo "          project: $module" >> "$YAML_FILE"
 done
 
