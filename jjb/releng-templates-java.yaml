@@ -359,14 +359,13 @@
       - git:
           url: '$CLONE_URL'
           credentials-id: 'opendaylight-jenkins-ssh'
-          refspec: '$GERRIT_REFSPEC'
+          refspec: ''
           branches:
             - 'origin/{branch}'
           skip-tag: true
           submodule:
             recursive: true
             timeout: 60
-          choosing-strategy: gerrit
 
     wrappers:
       - opendaylight-infra-wrappers:
