@@ -61,4 +61,5 @@ Following are the list of published images available to be used with Jenkins job
 * Ubuntu 16.04 - mininet-ovs-25 - 20170516-0740
 * Ubuntu 16.04 - mininet-ovs-25 - 20170606-0534
 * Ubuntu 16.04 - mininet-ovs-25 - 20170609-0221
+* Ubuntu 16.04 - mininet-ovs-25 - 20170703-2150
 * Ubuntu 16.04 LTS (2016-05-03 cloudimg)
