@@ -17,6 +17,7 @@
       - master:
           branch: 'master'
 
+
 - job-template:
     name: 'packaging-build-rpm-{stream}'
 
@@ -177,9 +178,8 @@
           artifacts: '{archive-artifacts}'
       - string:
           name: PACKAGE
-          # yamllint disable-line rule:line-length
-          default: 'https://launchpad.net/~odl-team/+archive/ubuntu/carbon/+files/opendaylight_6.0.0-1_all.deb'
-          description: 'Link to .deb file or name of custom PPA repo (ppa:odl-team/carbon)'
+          default: 'ppa:odl-team/carbon
+          description: 'Link to .deb package or name of PPA repo'
 
     scm:
       - integration-gerrit-scm:
@@ -199,6 +199,7 @@
       - archive-artifacts:
           artifacts: '**'
       - lf-infra-publish
+
 
 - job-template:
     name: 'packaging-build-deb-{stream}'
