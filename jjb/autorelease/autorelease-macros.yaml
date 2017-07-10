@@ -35,8 +35,14 @@
           if [ "$GERRIT_PROJECT" != "releng/autorelease" ]; then
               cd "$WORKSPACE/$GERRIT_PROJECT"
           fi
+
           echo "Checking out ${GERRIT_PROJECT} patch ${GERRIT_REFSPEC}..."
           git fetch origin ${GERRIT_REFSPEC} && git checkout FETCH_HEAD
+
+          # If the project is autorelease then we need to init and update submodules
+          if [ "$GERRIT_PROJECT" != "releng/autorelease" ]; then
+              git submodule update --init
+          fi
 
 - builder:
     name: autorelease-cfp
