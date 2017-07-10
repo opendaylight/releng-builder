@@ -45,6 +45,30 @@
       "revId": "050cba192c397aaff36eafb52d0d0ffd03fc1f5b",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2a55be_f93155a3",
+        "filename": "jjb/packaging/packaging.yaml",
+        "patchSetId": 22
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-07-10T19:28:42Z",
+      "side": 1,
+      "message": "This is defaults and automatically fill in below if are not explicitly provided by the user of the template.\n\nIf we move this below then we\u0027d be hardcoding the values and then the user of the templates cannot override the variables.\n\nSince packaging is the only user of these templates it really does not matter either way but I think setting defaults and allow overrides makes it easier to do one off builds.",
+      "parentUuid": "da2a55be_566e7002",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 22
+      },
+      "revId": "050cba192c397aaff36eafb52d0d0ffd03fc1f5b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
