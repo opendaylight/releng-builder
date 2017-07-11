@@ -23,10 +23,9 @@
           name: ARCHIVE_ARTIFACTS
           default: >
               {artifacts}
-              **/target/surefire-reports/*.txt
-              **/target/surefire-reports/*.xml
-              **/target/failsafe-reports/*.txt
-              **/target/failsafe-reports/*.xml
+              # Before adding more here, beware of https://jira.linuxfoundation.org/browse/RELENG-280
+              **/target/surefire-reports/*-output.txt
+              **/target/failsafe-reports/failsafe-summary.xml
               **/hs_err_*.log
               **/target/feature/feature.xml
               **/*.hprof
