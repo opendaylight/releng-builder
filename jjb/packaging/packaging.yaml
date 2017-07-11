@@ -6,7 +6,7 @@
     jobs:
       - '{project-name}-verify-tox-master'
       - 'packaging-build-rpm-{stream}'
-      - 'packaging-build-rpm-snap-master'
+      - 'packaging-build-rpm-snap-{stream}'
       - 'packaging-build-deb-{stream}'
       - 'packaging-test-rpm-master'
       - 'packaging-test-deb-master'
@@ -88,11 +88,15 @@
 
 
 - job-template:
-    name: 'packaging-build-rpm-snap-master'
+    name: 'packaging-build-rpm-snap-{stream}'
 
     node: centos7-java-builder-2c-4g
 
     project-type: freestyle
+
+    mvn-opts: ''
+    mvn-params: ''
+    mvn-version: mvn33
 
     properties:
       - opendaylight-infra-properties:
@@ -105,6 +109,11 @@
           branch: '{branch}'
           refspec: 'refs/heads/{branch}'
           artifacts: '{archive-artifacts}'
+      - lf-infra-maven-parameters:
+          mvn-opts: '{mvn-opts}'
+          mvn-params: '{mvn-params}'
+          mvn-version: '{mvn-version}'
+          staging-profile-id: ''
       - string:
           name: VERSION_MAJOR
           default: '7'
@@ -134,6 +143,13 @@
 
     builders:
       - shell: !include-raw: include-raw-build-rpm-snap.sh
+      - lf-infra-deploy-maven-file:
+          global-settings-file: 'global-settings'
+          settings-file: 'packaging-settings'
+          mvn-version: 'mvn33'
+          repo-id: 'opendaylight-{stream}-epel-7-x86_64-devel'
+          group-id: 'org.opendaylight.integration-packaging'
+          files-dir: '$WORKSPACE/upload_files'
 
     triggers:
       - timed: '@daily'
