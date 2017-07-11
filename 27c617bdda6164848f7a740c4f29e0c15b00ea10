@@ -22,6 +22,30 @@
       "revId": "27c617bdda6164848f7a740c4f29e0c15b00ea10",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2a55be_adf9534f",
+        "filename": "jjb/packaging/include-raw-build-rpm.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2017-07-11T18:51:35Z",
+      "side": 1,
+      "message": "See comments on 59200\n\n1. There isn\u0027t a real difference between SRPMs and noarch RPMs in our case, they both wrap binary tarballs.\n2. This would fail if it didn\u0027t copy the SRPM because we\u0027re failing on errors and mv/cp like this returns non-zero when no matches are found.",
+      "parentUuid": "da2a55be_0d7a1ff1",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 42
+      },
+      "revId": "27c617bdda6164848f7a740c4f29e0c15b00ea10",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
