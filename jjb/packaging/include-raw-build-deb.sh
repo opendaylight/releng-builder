@@ -19,3 +19,10 @@ set -ex -o pipefail
                                   --changelog_time "$CHANGELOG_TIME" \
                                   --changelog_name "$CHANGELOG_NAME" \
                                   --changelog_email "$CHANGELOG_EMAIL"
+
+# Copy the debs to be upload
+UPLOAD_FILES_PATH="$WORKSPACE/upload_files"
+mkdir -p "$UPLOAD_FILES_PATH"
+# Note: no source packages are available, since the debs are not built
+# from the actual source
+mv "$WORKSPACE/packaging/deb/opendaylight/"*.deb "$_"
