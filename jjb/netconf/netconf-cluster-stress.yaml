@@ -1,4 +1,41 @@
 ---
+- project:
+    name: netconf-csit-cluster-stress
+    jobs:
+      - '{project}-csit-3node-{functionality}-{install}-{stream}'
 
-# Fix this [0] before git-reverting this job.
-# [0] https://trello.com/c/SbOodkUt/490-int-nest-repair-netconf-cluster-stress-suite
+    # The project name
+    project: 'netconf'
+
+    # The functionality under test
+    functionality: 'cluster-stress'
+
+    # Project branches
+    stream:
+      - nitrogen:
+          branch: 'master'
+          jre: 'openjdk8'
+      - carbon:
+          branch: 'stable/carbon'
+          jre: 'openjdk8'
+          karaf-version: karaf3
+      - boron:
+          branch: 'stable/boron'
+          jre: 'openjdk8'
+          karaf-version: karaf3
+
+    install:
+      - only:
+          scope: 'only'
+      - all:
+          scope: 'all'
+
+    # Features to install
+    install-features: >
+        odl-restconf,
+        odl-jolokia,
+        odl-netconf-clustered-topology
+
+    # Robot custom options
+    # TODO: Make sure every suite has this as default, then remove this value from here.
+    robot-options: '-v USE_NETCONF_CONNECTOR:False'
