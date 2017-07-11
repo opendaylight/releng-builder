@@ -55,6 +55,7 @@
       - shell: !include-raw: include-raw-test-puppet.sh
 
     triggers:
+      - timed: '@weekly'
       - gerrit-trigger-patch-submitted:
           server: '{server-name}'
           project: '{project}'
