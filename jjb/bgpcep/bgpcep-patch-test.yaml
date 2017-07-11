@@ -1,0 +1,33 @@
+---
+- project:
+    name: bgpcep-patch-test
+    jobs:
+      - '{project}-patch-test-{feature}-{stream}'
+
+    # The project name
+    project: 'bgpcep'
+
+    # Project branches
+    stream:
+      - nitrogen:
+          branch: 'master'
+          jdk: 'openjdk8'
+      - carbon:
+          branch: 'stable/carbon'
+          jdk: 'openjdk8'
+          karaf-version: karaf3
+      - boron:
+          branch: 'stable/boron'
+          jdk: 'openjdk8'
+          karaf-version: karaf3
+
+    feature:
+      - bgp:
+          csit-list: >
+              bgpcep-csit-1node-userfeatures-only-{stream},
+              bgpcep-csit-1node-periodic-bgp-ingest-mixed-only-{stream}
+
+      - pcep:
+          csit-list: >
+              bgpcep-csit-1node-userfeatures-only-{stream},
+              bgpcep-csit-1node-periodic-throughpcep-only-{stream}
