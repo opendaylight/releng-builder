@@ -20,3 +20,8 @@ $PYTHON -m pip install -r "$WORKSPACE/packaging/rpm/requirements.txt"
                                   --minor "$VERSION_MINOR" \
                                   --changelog_name "$CHANGELOG_NAME" \
                                   --changelog_email "$CHANGELOG_EMAIL"
+
+# Copy the rpm to be upload
+UPLOAD_FILES_PATH="$WORKSPACE/upload_files"
+mkdir -p "$UPLOAD_FILES_PATH"
+mv "/home/$USER/rpmbuild/RPMS/noarch/"*.rpm "$_"
