@@ -470,55 +470,6 @@
           single-use: true
 
 - builder:
-    name: packer-validate
-    builders:
-      - config-file-provider:
-          files:
-            - file-id: 'packer-cloud-env'
-              variable: 'CLOUDENV'
-      - shell: |
-          #!/bin/bash
-          # Ensure we fail the job if any steps fail.
-          set -eu -o pipefail
-          cd packer
-          varfiles="../packer/vars/*"
-          templates="../packer/templates/*"
-          provision="../packer/provision/*.sh"
-          for v in $varfiles; do
-              [[ "${v##*/}" =~ ^(cloud-env.*)$ ]] && continue
-              for t in $templates; do
-                  export PACKER_LOG="yes" && \
-                  export PACKER_LOG_PATH="packer-validate-${v##*/}-${t##*/}.log" && \
-                              packer.io validate -var-file=$CLOUDENV \
-                              -var-file=$v $t
-                  if [ $? -ne 0 ]; then
-                      break
-                  fi
-              done
-          done
-
-- builder:
-    name: packer-build
-    builders:
-      - config-file-provider:
-          files:
-            - file-id: 'packer-cloud-env'
-              variable: 'CLOUDENV'
-      - shell: |
-          #!/bin/bash
-          # Ensure we fail the job if any steps fail.
-          set -eu -o pipefail
-          cd packer
-          export PACKER_LOG="yes" && \
-          export PACKER_LOG_PATH="packer-build.log" && \
-                      packer.io build -color=false -var-file=$CLOUDENV \
-                       -var-file=../packer/vars/{platform}.json \
-                       ../packer/templates/{template}.json
-          # Split public and private cloud logs
-          grep -e 'public_cloud' packer-build.log > packer-build_public_cloud.log  2>&1
-          grep -e 'private_cloud' packer-build.log > packer-build_private_cloud.log 2>&1
-
-- builder:
     # TODO: Verify signature after downloading users public key from a locally created
     # repository instead of the public keymesh. This requires a process in place to get ODL
     # developers public keys into a local repository without increasing the job thoughput.

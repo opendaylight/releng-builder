@@ -23,17 +23,16 @@
     archive-artifacts: '**/*.log'
     build-timeout: 10
 
-- project:
-    name: builder-packer-jobs
-    jobs:
-      - 'builder-merge-packer-{platforms}-{templates}'
-      - 'builder-verify-packer'
 
+- project:
+    name: packer-ci-jobs
+    jobs:
+      - '{project-name}-ci-jobs'
     project: 'releng/builder'
-    project-name: builder
+    project-name: builder-packer
     branch: master
     archive-artifacts: '**/*.log'
-    build-timeout: 90
+    openstack-clouds: 'rackspace-heat'
 
     platforms:
       - centos
@@ -92,7 +91,6 @@
         templates: baseline
       - platforms: centos
         templates: baseline
-
 
 - job-template:
     name: builder-check-poms
@@ -292,119 +290,6 @@
       - email-notification:
           email-recipients: '{email-recipients}'
           email-prefix: '[releng]'
-      - lf-infra-publish
-
-- job-template:
-    name: 'builder-verify-packer'
-    project-type: freestyle
-    node: centos7-java-builder-2c-4g
-    concurrent: true
-
-    properties:
-      - opendaylight-infra-properties:
-          build-days-to-keep: 14
-
-    parameters:
-      - opendaylight-infra-parameters:
-          os-cloud: '{os-cloud}'
-          project: '{project}'
-          branch: '{branch}'
-          refspec: 'refs/heads/{branch}'
-          artifacts: '{archive-artifacts}'
-
-    scm:
-      - gerrit-trigger-scm:
-          refspec: '$GERRIT_REFSPEC'
-          choosing-strategy: 'gerrit'
-
-    wrappers:
-      - opendaylight-infra-wrappers:
-          build-timeout: '{build-timeout}'
-
-    triggers:
-      - gerrit-trigger-patch-submitted:
-          server: '{server-name}'
-          project: '{project}'
-          branch: '{branch}'
-          files: 'packer/**'
-
-    builders:
-      - packer-validate:
-
-    publishers:
-      - email-notification:
-          email-recipients: '{email-recipients}'
-          email-prefix: '[{project}]'
-      - lf-infra-publish
-
-- job-template:
-    name: 'builder-merge-packer-{platforms}-{templates}'
-    project-type: freestyle
-    node: centos7-java-builder-2c-4g
-
-    properties:
-      - opendaylight-infra-properties:
-          build-days-to-keep: 14
-
-    parameters:
-      - opendaylight-infra-parameters:
-          os-cloud: '{os-cloud}'
-          project: '{project}'
-          branch: '{branch}'
-          refspec: 'refs/heads/{branch}'
-          artifacts: '{archive-artifacts}'
-
-    scm:
-      - gerrit-trigger-scm:
-          refspec: '$GERRIT_REFSPEC'
-          branches:
-            - '$GERRIT_BRANCH'
-          choosing-strategy: 'default'
-
-    wrappers:
-      - opendaylight-infra-wrappers:
-          build-timeout: '{build-timeout}'
-
-    triggers:
-      - timed: '00 10 1 * *'
-      - gerrit:
-          server-name: '{server-name}'
-          trigger-on:
-            - change-merged-event
-            - comment-added-contains-event:
-                comment-contains-value: 'remerge'
-          projects:
-            - project-compare-type: 'ANT'
-              project-pattern: 'releng/builder'
-              branches:
-                - branch-compare-type: 'ANT'
-                  branch-pattern: '**/{branch}'
-              file-paths:
-                - compare-type: ANT
-                  pattern: 'packer/vars/{platforms}.json'
-                - compare-type: ANT
-                  pattern: 'packer/templates/{templates}.json'
-                - compare-type: ANT
-                  pattern: 'packer/provision/{templates}.sh'
-                - compare-type: ANT
-                  pattern: 'packer/provision/system_reseal.sh'
-                - compare-type: ANT
-                  pattern: 'packer/provision/rh-user_data.sh'
-                - compare-type: ANT
-                  pattern: 'packer/provision/devstack-pre-pip.sh'
-                - compare-type: ANT
-                  pattern: 'packer/provision/baseline.sh'
-
-    builders:
-      - packer-validate:
-      - packer-build:
-          platform: '{platforms}'
-          template: '{templates}'
-
-    publishers:
-      - email-notification:
-          email-recipients: '{email-recipients}'
-          email-prefix: '[{project}]'
       - lf-infra-publish
 
 - job-template:
