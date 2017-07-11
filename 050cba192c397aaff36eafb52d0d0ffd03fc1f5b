@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "da2a55be_6dd8fbef",
+        "filename": "jjb/packaging/include-raw-build-rpm.sh",
+        "patchSetId": 22
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2017-07-11T18:48:40Z",
+      "side": 1,
+      "message": "1. See SRPMs-aren\u0027t-real comments elsewhere.\n2. This will fail if it doesn\u0027t copy the SRPM, we\u0027re failing on errors and checking locally, mv/cp of this format returns non-zero exit code for not-there files.",
+      "parentUuid": "da2a55be_8d260f15",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 42
+      },
+      "revId": "050cba192c397aaff36eafb52d0d0ffd03fc1f5b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da2a55be_3673fcea",
         "filename": "jjb/packaging/packaging.yaml",
         "patchSetId": 22
