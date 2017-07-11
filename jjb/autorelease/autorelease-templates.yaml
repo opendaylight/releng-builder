@@ -133,7 +133,7 @@
           - project: 'integration-sanity-test-{integration-test}'
             condition: FAILED
             trigger-with-no-params: true
-          - project: 'packaging-build-rpm-master'
+          - project: 'packaging-build-rpm-{stream}'
             condition: UNSTABLE_OR_BETTER
             predefined-parameters: DOWNLOAD_URL=$BUNDLE_URL
             property-file: variables.jenkins-trigger
