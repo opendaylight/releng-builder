@@ -20,11 +20,11 @@ download_url="${{DOWNLOAD_URL//zip/tar.gz}}"
 
 # Build release specified by build params
 "$WORKSPACE/packaging/rpm/build.py" --download_url "$download_url" \
-                                  --changelog_name "$CHANGELOG_NAME" \
-                                  --changelog_email "$CHANGELOG_EMAIL"
+                                    --changelog_name "$CHANGELOG_NAME" \
+                                    --changelog_email "$CHANGELOG_EMAIL"
 
-# Copy the rpm to be upload
+# Move RPMs (SRPM and noarch) to dir of files that will be uploaded to Nexus
 UPLOAD_FILES_PATH="$WORKSPACE/upload_files"
 mkdir -p "$UPLOAD_FILES_PATH"
-cp "/home/$USER/rpmbuild/RPMS/noarch/"*.rpm "$_"
-cp "/home/$USER/rpmbuild/SRPMS/"*.rpm "$_"
+mv "/home/$USER/rpmbuild/RPMS/noarch/"*.rpm "$_"
+mv "/home/$USER/rpmbuild/SRPMS/"*.rpm "$_"
