@@ -1,0 +1,28 @@
+---
+- project:
+    name: netconf-patch-test
+    jobs:
+      - '{project}-patch-test-{feature}-{stream}'
+
+    # The project name
+    project: 'netconf'
+
+    # Project branches
+    stream:
+      - nitrogen:
+          branch: 'master'
+          jdk: 'openjdk8'
+      - carbon:
+          branch: 'stable/carbon'
+          jdk: 'openjdk8'
+          karaf-version: karaf3
+      - boron:
+          branch: 'stable/boron'
+          jdk: 'openjdk8'
+          karaf-version: karaf3
+
+    feature:
+      - core:
+          csit-list: >
+                netconf-csit-1node-userfeatures-only-{stream}
+                netconf-csit-1node-callhome-only-{stream}
