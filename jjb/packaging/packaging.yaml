@@ -82,8 +82,6 @@
           files-dir: '$WORKSPACE/upload_files'
 
     publishers:
-      - archive-artifacts:
-          artifacts: '**/*.rpm'
       - lf-infra-publish
 
 
@@ -139,8 +137,6 @@
       - timed: '@daily'
 
     publishers:
-      - archive-artifacts:
-          artifacts: '**/*.rpm'
       - lf-infra-publish
 
 
@@ -177,8 +173,6 @@
       - shell: !include-raw: include-raw-test-karaf.expect
 
     publishers:
-      - archive-artifacts:
-          artifacts: '**'
       - lf-infra-publish
 
 
@@ -214,8 +208,6 @@
       - shell: !include-raw: include-raw-test-karaf.expect
 
     publishers:
-      - archive-artifacts:
-          artifacts: '**'
       - lf-infra-publish
 
 
@@ -321,6 +313,4 @@
           files-dir: '$WORKSPACE/upload_files'
 
     publishers:
-      - archive-artifacts:
-          artifacts: 'packaging/deb/opendaylight/*.deb packaging/deb/opendaylight/*.dsc'
       - lf-infra-publish
