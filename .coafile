@@ -1,3 +1,9 @@
+[all]
+ignore = .tox/**, .git/**, .gitignore, .gitreview, .gitmodules,
+    node_modules/**, **.sw?, **.orig, docs/conf.py, **/.vagrant/**,
+    **.box, **packer_cache**, **.tar.gz, **.rpm, **.pyc
+
+
 [GitCommit]
 bears = GitCommitBear
 ignore_length_regex = Signed-off-by,
@@ -33,6 +39,13 @@ ignore = .git/**,
 shell = bash
 indent_size = 4
 use_spaces = yeah
+
+[language]
+bears = WriteGoodLintBear
+files = **/*.markdown,**/*.md,**/*.rst
+allow_so_beginning = False
+allo_there_is = False
+allow_cliche_phrases = False
 
 [YAML]
 bears = YAMLLintBear
