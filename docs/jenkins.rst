@@ -38,7 +38,7 @@ in the jenkins-master_ silo and this can be achieved by simply creating a
     `releng-global-jjb`_
 
 Where <new-project> should be the same name as your project's git repo in
-Gerrit. So if your project is called "aaa" then create a new jjb/aaa directory.
+Gerrit. If your project is called "aaa" then create a new jjb/aaa directory.
 
 Next we will create <new-project>.yaml as follows:
 
@@ -383,8 +383,7 @@ installs, we recommend using `Python Virtual Environments <python-virtualenv_>`_
 to manage JJB and its
 Python dependencies. The `python-virtualenvwrapper`_ tool can help you do so.
 
-There are good docs for installing `python-virtualenvwrapper`_. On Linux systems
-with pip (typical), they amount to:
+Documentation is available for installing `python-virtualenvwrapper`_. On Linux systems with pip (typical), they amount to:
 
 .. code-block:: bash
 
