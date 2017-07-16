@@ -34,6 +34,13 @@ shell = bash
 indent_size = 4
 use_spaces = yeah
 
+[language]
+bears = WriteGoodLintBear
+files = **/*.markdown,**/*.md,**/*.rst
+allow_so_beginning = False
+allo_there_is = False
+allow_cliche_phrases = False
+
 [YAML]
 bears = YAMLLintBear
 files = jjb/**/*.yaml,openstack-hot/**/*.yaml
