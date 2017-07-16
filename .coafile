@@ -1,4 +1,10 @@
-[GitCommit]
+[all]
+ignore = .tox/**, .git/**, .gitignore, .gitreview, .gitmodules,
+    node_modules/**, **.sw?, **.orig, docs/conf.py, **/.vagrant/**,
+    **.box, **packer_cache**, **.tar.gz, **.rpm, **.pyc
+
+
+[all.GitCommit]
 bears = GitCommitBear
 ignore_length_regex = Signed-off-by,
     Also-by,
@@ -6,13 +12,13 @@ ignore_length_regex = Signed-off-by,
     http://,
     https://
 
-[JSON]
+[all.JSON]
 bears = JSONFormatBear
 files = **/*.json
 ignore = .*/**
 indent_size = 2
 
-[ShellCheck]
+[all.ShellCheck]
 bears = ShellCheckBear,SpaceConsistencyBear
 files = **/*.sh
 ignore = .git/**,
@@ -34,7 +40,14 @@ shell = bash
 indent_size = 4
 use_spaces = yeah
 
-[YAML]
+[all.language]
+bears = WriteGoodLintBear
+files = **/*.markdown,**/*.md,**/*.rst
+allow_so_beginning = False
+allow_there_is = False
+allow_cliche_phrases = False
+
+[all.YAML]
 bears = YAMLLintBear
 files = jjb/**/*.yaml,openstack-hot/**/*.yaml
 document_start = True
