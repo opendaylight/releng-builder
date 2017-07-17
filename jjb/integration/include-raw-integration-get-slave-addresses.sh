@@ -3,7 +3,8 @@
 
 ODL_SYSTEM=()
 TOOLS_SYSTEM=()
-OPENSTACK_SYSTEM=()
+OPENSTACK_SYSTEM[0]="temp"
+OPENSTACK_SYSTEM2=("temp")
 [ "$NUM_OPENSTACK_SITES" ] || NUM_OPENSTACK_SITES=1
 
 OPENSTACK_VENV="/tmp/v/openstack"
@@ -13,6 +14,9 @@ source $OPENSTACK_VENV/bin/activate
 ADDR=($(openstack stack show -f json -c outputs "$STACK_NAME" | \
        jq -r '.outputs[] | select(.output_key | match("^vm_[0-9]+_ips$")) | .output_value | .[]'))
 
+echo "shague: ADDR = ${ADDR[*]}"
+echo "shague: OPENSTACK_SYSTEM = ${OPENSTACK_SYSTEM[*]}"
+echo "shague: OPENSTACK_SYSTEM2 = ${OPENSTACK_SYSTEM2[*]}"
 for i in "${ADDR[@]}"
 do
     REMHOST=$(ssh "${i}" hostname)
@@ -21,14 +25,26 @@ do
        ODL_SYSTEM=( "${ODL_SYSTEM[@]}" "${i}" )
        ;;
     *devstack*)
-       OPENSTACK_SYSTEM=( "${OPENSTACK_SYSTEM[@]}" "${i}" )
+       if [[ ${REMHOST} == *"controller"* ]]; then
+          echo "controller: REMHOST = $REMHOST"
+          OPENSTACK_SYSTEM[0]="${i}"
+          OPENSTACK_SYSTEM2[0]="${i}"
+       else
+          echo "compute: REMHOST = $REMHOST"
+          OPENSTACK_SYSTEM=( "${OPENSTACK_SYSTEM[@]}" "${i}" )
+          OPENSTACK_SYSTEM2+=("${i}")
+       fi
+       echo "shague 2: OPENSTACK_SYSTEM = ${OPENSTACK_SYSTEM[*]}"
+       echo "shague 2: OPENSTACK_SYSTEM2 = ${OPENSTACK_SYSTEM2[*]}"
        ;;
     *)
        TOOLS_SYSTEM=( "${TOOLS_SYSTEM[@]}" "${i}" )
        ;;
     esac
 done
-
+echo "shague: OPENSTACK_SYSTEM = ${OPENSTACK_SYSTEM[*]}"
+echo "shague: OPENSTACK_SYSTEM2 = ${OPENSTACK_SYSTEM2[*]}"
+echo $(pwd)
 echo "NUM_ODL_SYSTEM=${#ODL_SYSTEM[@]}" >> slave_addresses.txt
 echo "NUM_TOOLS_SYSTEM=${#TOOLS_SYSTEM[@]}" >> slave_addresses.txt
 #if HA Proxy is requested the last devstack node will be configured as haproxy
@@ -78,4 +94,5 @@ for i in $(seq 0 $((NUM_OPENSTACK_HAPROXY_NODES - 1)))
 do
     echo "OPENSTACK_HAPROXY_$((i+1))_IP=${OPENSTACK_SYSTEM[$((openstack_index++))]}" >> slave_addresses.txt
 done
+cat slave_addresses.txt
 # vim: sw=4 ts=4 sts=4 et ft=sh :

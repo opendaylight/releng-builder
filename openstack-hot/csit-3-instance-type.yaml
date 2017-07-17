@@ -58,7 +58,7 @@ resources:
         properties:
             count: {get_param: vm_1_count}
             resource_def:
-                type: generic-server.yaml
+                type: generic-server2.yaml
                 properties:
                     job_name: {get_param: job_name}
                     silo: {get_param: silo}
@@ -66,13 +66,14 @@ resources:
                     index: "%index%"
                     vm_flavor: {get_param: vm_1_flavor}
                     vm_image: {get_param: vm_1_image}
+                    os_type: "controller"
 
     vm_2_group:
         type: "OS::Heat::ResourceGroup"
         properties:
             count: {get_param: vm_2_count}
             resource_def:
-                type: generic-server.yaml
+                type: generic-server2.yaml
                 properties:
                     job_name: {get_param: job_name}
                     silo: {get_param: silo}
@@ -80,6 +81,7 @@ resources:
                     index: "%index%"
                     vm_flavor: {get_param: vm_2_flavor}
                     vm_image: {get_param: vm_2_image}
+                    os_type: "compute"
 
 outputs:
     vm_0_ips:

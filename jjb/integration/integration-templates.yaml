@@ -1307,14 +1307,18 @@
       - timed: '{schedule}'
 
     builders:
-      - integration-infra-stack:
+      #- integration-infra-stack:
+      - integration-infra-stack-3-type:
           stack-template: '{stack-template}'
-          vm_0_count: '{odl_system_count}'
-          vm_0_flavor: '{odl_system_flavor}'
+          vm_0_count: 1
+          vm_0_flavor: 4 GB General Purpose v1
           vm_0_image: '{odl_system_image}'
-          vm_1_count: '{openstack_system_count}'
-          vm_1_flavor: '{openstack_system_flavor}'
+          vm_1_count: 1
+          vm_1_flavor: 8 GB General Purpose v1
           vm_1_image: '{openstack_system_image}'
+          vm_2_count: 2
+          vm_2_flavor: 4 GB General Purpose v1
+          vm_2_image: '{openstack_system_image}'
       - integration-install-robotframework
       - inject:
           properties-file: 'env.properties'

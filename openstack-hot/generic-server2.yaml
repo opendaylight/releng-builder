@@ -5,10 +5,6 @@ parameters:
     job_name:
         type: string
         description: Name of job running this template
-    os_type:
-        type: string
-        default: compute
-        description: controller or compute openstack type
     silo:
         type: string
         default: vm
@@ -41,7 +37,7 @@ resources:
             image: {get_param: vm_image}
             name:
                 str_replace:
-                    template: SILO-JOB_NAME-VM_TYPE-INDEX
+                    template: SILO-JOB_NAME-VM_TYPE-OS_TYPE-INDEX
                     params:
                         "SILO": {get_param: silo}
                         "JOB_NAME": {get_param: job_name}
@@ -51,6 +47,7 @@ resources:
                                 - {get_param: vm_image}
                                 - 1
                         "INDEX": {get_param: index}
+                        "OS_TYPE": {get_param: os_type}
             networks:
                 - network: RC-ODL
             key_name: {get_param: ssh_key}

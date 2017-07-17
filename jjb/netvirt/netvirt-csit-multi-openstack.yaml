@@ -25,8 +25,8 @@
       - upstream-transparent:
           schedule: ''
           sg-mode: 'transparent'
-      - upstream-stateful:
-          schedule: '@daily'
+      - shague-upstream-stateful:
+          schedule: ''
           sg-mode: 'stateful'
           # yamllint disable-line rule:line-length
           bundle-url: 'https://jenkins.opendaylight.org/releng/view/netvirt/job/netvirt-merge-nitrogen/lastSuccessfulBuild/org.opendaylight.netvirt$vpnservice-karaf/artifact/org.opendaylight.netvirt/vpnservice-karaf/0.5.0-SNAPSHOT/vpnservice-karaf-0.5.0-SNAPSHOT.zip'
@@ -87,7 +87,7 @@
 
     topology:
       - 1node:
-          openstack_system_count: 3
+          openstack_system_count: 1
           odl_system_count: 1
           enable-haproxy: 'no'
           install-features: 'odl-netvirt-openstack'
@@ -103,7 +103,7 @@
       - upstream-transparent:
           schedule: ''
           sg-mode: 'transparent'
-      - upstream-stateful:
+      - shague5-upstream-stateful:
           schedule: ''
           sg-mode: 'stateful'
       - upstream-stateful-snat-conntrack:

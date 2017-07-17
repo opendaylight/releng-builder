@@ -406,6 +406,7 @@ done
 # creates the ${WORKSPACE}/archives dir, we have to do it here first.  The mkdir in the
 # archives build step will essentially be a noop.
 mkdir -p ${WORKSPACE}/archives
+cp slave_address.txt ${WORKSPACE}/archives
 
 # Control Node
 for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`
@@ -495,6 +496,7 @@ sudo nova-manage db sync
 sudo nova-manage cell_v2 discover_hosts
 EOF
 
+echo "shague NUM_OPENSTACK_SITES = $NUM_OPENSTACK_SITES"
 [ "$NUM_OPENSTACK_SITES" ] || NUM_OPENSTACK_SITES=1
 compute_index=1
 odl_index=1
