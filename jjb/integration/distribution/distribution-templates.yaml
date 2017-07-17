@@ -24,7 +24,7 @@
           project: '{project}'
           branch: '{branch}'
           refspec: 'refs/heads/{branch}'
-          artifacts: '{archive-artifacts} **/dependency_tree.txt **/target/surefire-reports/*-output.txt'
+          artifacts: '{archive-artifacts}'
       - integration-distribution-git-url:
           git-url: '{git-url}'
       - distribution-karaf-version:
@@ -79,13 +79,5 @@
       - email-notification:
           email-recipients: '{email-recipients}'
           email-prefix: '[{project-name}]'
-      - postbuildscript:
-          builders:
-            - shell: |
-                #!/bin/bash
-                mkdir -p $WORKSPACE/archives
-                cp karaf*.log $WORKSPACE/archives
-          script-only-if-succeeded: false
-          script-only-if-failed: false
-          mark-unstable-if-failed: true
+      - integration-csit-archive-build
       - lf-infra-publish

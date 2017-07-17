@@ -9,8 +9,8 @@ BUNDLE_PATH="/tmp/r/org/opendaylight/integration/${KARAF_ARTIFACT}/${BUNDLEVERSI
 echo "Kill any controller running"
 ps axf | grep karaf | grep -v grep | awk '{print "kill -9 " $1}' | sh
 
-echo "Clean workspace"
-rm -rf *
+echo "Clean Existing distribution"
+rm -rf ${BUNDLEFOLDER}
 
 echo "Copying the distribution..."
 cp "${BUNDLE_PATH}" .
