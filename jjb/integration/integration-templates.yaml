@@ -1307,7 +1307,7 @@
       - timed: '{schedule}'
 
     builders:
-      - integration-infra-stack:
+      - integration-infra-stack-3-type:
           stack-template: '{stack-template}'
           vm_0_count: '{odl_system_count}'
           vm_0_flavor: '{odl_system_flavor}'
@@ -1315,6 +1315,9 @@
           vm_1_count: '{openstack_system_count}'
           vm_1_flavor: '{openstack_system_flavor}'
           vm_1_image: '{openstack_system_image}'
+          vm_2_count: '{openstack_system2_count}'
+          vm_2_flavor: '{openstack_system2_flavor}'
+          vm_2_image: '{openstack_system2_image}'
       - integration-install-robotframework
       - inject:
           properties-file: 'env.properties'
