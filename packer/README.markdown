@@ -19,8 +19,7 @@ packer build -var-file=vars/cloud-env.json -var-file=vars/centos.json templates/
 ```
 
 **NOTE:** vars/cloud-env.json is a gitignored file as it contains private
-information. A vars/cloud-env.json.example file that may be used as a
-base for creating the one needed.
+information. A vars/cloud-env.json.example file is provided as an example.
 
 This would build bootable image in two different OpenStack clouds. In specific,
 Rackspace's Public cloud and a private OpenStack cloud.

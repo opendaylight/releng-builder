@@ -383,7 +383,8 @@ installs, we recommend using `Python Virtual Environments <python-virtualenv_>`_
 to manage JJB and its
 Python dependencies. The `python-virtualenvwrapper`_ tool can help you do so.
 
-Documentation is available for installing `python-virtualenvwrapper`_. On Linux systems with pip (typical), they amount to:
+Documentation is available for installing `python-virtualenvwrapper`_. On Linux
+systems with pip (typical), they amount to:
 
 .. code-block:: bash
 

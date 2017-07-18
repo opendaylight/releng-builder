@@ -3,9 +3,9 @@ ignore = .**
 
 [all.Documentation]
 bears = WriteGoodLintBear
-files = **/*.markdown,
-    **/*.md,
-    **/*.rst
+files = **.markdown,
+    **.md,
+    **.rst
 allow_so_beginning = False
 allow_there_is = False
 allow_cliche_phrases = False
@@ -20,14 +20,14 @@ ignore_length_regex = Signed-off-by,
 
 [all.JSON]
 bears = JSONFormatBear
-files = **/*.json
-ignore = .*/**
+files = **.json
+ignore = .**
 indent_size = 2
 
 [all.ShellCheck]
 bears = ShellCheckBear,
     SpaceConsistencyBear
-files = **/*.sh
+files = **.sh
 ignore = .git/**,
     .tox/**,
     jenkins-scripts/*-local-env.sh,
