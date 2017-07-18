@@ -1,9 +1,12 @@
 #!/bin/bash
 # Get the Controller and Tools VM slave addresses
 
+set -x
+
 ODL_SYSTEM=()
 TOOLS_SYSTEM=()
 OPENSTACK_SYSTEM=()
+OPENSTACK_CONTROLLERS=()
 [ "$NUM_OPENSTACK_SITES" ] || NUM_OPENSTACK_SITES=1
 
 OPENSTACK_VENV="/tmp/v/openstack"
@@ -21,6 +24,11 @@ do
        ODL_SYSTEM=( "${ODL_SYSTEM[@]}" "${i}" )
        ;;
     *devstack*)
+       # track potential controllers which would have -0 at the end
+       if [[ ${REMHOST: -2} == "-0" ]]; then
+          OPENSTACK_CONTROLLERS=( "${OPENSTACK_CONTROLLERS[@]}" "${i}" )
+       fi
+
        OPENSTACK_SYSTEM=( "${OPENSTACK_SYSTEM[@]}" "${i}" )
        ;;
     *)
@@ -39,6 +47,16 @@ else
    NUM_OPENSTACK_SYSTEM=${#OPENSTACK_SYSTEM[@]}
 fi
 echo "NUM_OPENSTACK_SYSTEM=${NUM_OPENSTACK_SYSTEM}" >> slave_addresses.txt
+
+# if you have two potential controllers, the second one is the real one so swap it into the first index
+# currently the last index is always the wanted controller
+if [ ${#OPENSTACK_CONTROLLERS[@]} -eq 2 ]; then
+    ctrl_index=${#OPENSTACK_SYSTEM[@]}
+    ctrl_index=$((ctrl_index -1))
+    tmp_addr=${OPENSTACK_SYSTEM[0]}
+    OPENSTACK_SYSTEM[0]=${OPENSTACK_SYSTEM[$ctrl_index]}
+    OPENSTACK_SYSTEM[$ctrl_index]=$tmp_addr
+fi
 
 # Add alias for ODL_SYSTEM_1_IP as ODL_SYSTEM_IP
 echo "ODL_SYSTEM_IP=${ODL_SYSTEM[0]}" >> slave_addresses.txt
@@ -78,4 +96,6 @@ for i in $(seq 0 $((NUM_OPENSTACK_HAPROXY_NODES - 1)))
 do
     echo "OPENSTACK_HAPROXY_$((i+1))_IP=${OPENSTACK_SYSTEM[$((openstack_index++))]}" >> slave_addresses.txt
 done
+echo "Contents of slave_addresses.txt:"
+cat slave_addresses.txt
 # vim: sw=4 ts=4 sts=4 et ft=sh :
