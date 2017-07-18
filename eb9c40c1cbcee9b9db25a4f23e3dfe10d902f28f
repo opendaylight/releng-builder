@@ -2,6 +2,69 @@
   "comments": [
     {
       "key": {
+        "uuid": "da2a55be_42904a43",
+        "filename": "jjb/packaging/include-raw-build-packer-docker.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2017-07-18T14:04:07Z",
+      "side": 1,
+      "message": "Need to actually do this",
+      "revId": "eb9c40c1cbcee9b9db25a4f23e3dfe10d902f28f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2a55be_e2717e45",
+        "filename": "jjb/packaging/include-raw-build-packer-docker.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2017-07-18T14:04:07Z",
+      "side": 1,
+      "message": "\"Execute Packer build described by job params\"",
+      "range": {
+        "startLine": 12,
+        "startChar": 2,
+        "endLine": 12,
+        "endChar": 41
+      },
+      "revId": "eb9c40c1cbcee9b9db25a4f23e3dfe10d902f28f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2a55be_0277723b",
+        "filename": "jjb/packaging/include-raw-build-packer-virtualbox.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2017-07-18T14:04:07Z",
+      "side": 1,
+      "message": "Don\u0027t need this for VBox\n\n(I see it\u0027s a param in the VBox template, but it\u0027s not actually used, that\u0027s an error)",
+      "range": {
+        "startLine": 13,
+        "startChar": 18,
+        "endLine": 13,
+        "endChar": 46
+      },
+      "revId": "eb9c40c1cbcee9b9db25a4f23e3dfe10d902f28f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da2a55be_84089392",
         "filename": "jjb/packaging/include-raw-build-packer-virtualbox.sh",
         "patchSetId": 1
@@ -18,6 +81,437 @@
         "startChar": 31,
         "endLine": 15,
         "endChar": 43
+      },
+      "revId": "eb9c40c1cbcee9b9db25a4f23e3dfe10d902f28f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2a55be_1fcb4d1f",
+        "filename": "jjb/packaging/packaging.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2017-07-18T14:04:07Z",
+      "side": 1,
+      "message": "I think we should pin to master for all of these, at least to start with.",
+      "range": {
+        "startLine": 11,
+        "startChar": 39,
+        "endLine": 11,
+        "endChar": 47
+      },
+      "revId": "eb9c40c1cbcee9b9db25a4f23e3dfe10d902f28f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2a55be_0263f2dc",
+        "filename": "jjb/packaging/packaging.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2017-07-18T14:04:07Z",
+      "side": 1,
+      "message": "It\u0027s annoying that we have to provide both, basically duplicating data, but that requires a change to ansible-odl to fix https://trello.com/c/Br0KGHYw/539-extract-rpmrepofile-from-rpmrepourl-in-ansible-opendaylight",
+      "revId": "eb9c40c1cbcee9b9db25a4f23e3dfe10d902f28f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2a55be_c2af1ae2",
+        "filename": "jjb/packaging/packaging.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2017-07-18T14:04:07Z",
+      "side": 1,
+      "message": "\"Filename of repo file at RPM_REPO_URL (\"opendaylight-6-testing.repo\")\"",
+      "range": {
+        "startLine": 46,
+        "startChar": 24,
+        "endLine": 46,
+        "endChar": 59
+      },
+      "revId": "eb9c40c1cbcee9b9db25a4f23e3dfe10d902f28f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2a55be_a2aae6cf",
+        "filename": "jjb/packaging/packaging.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2017-07-18T14:04:07Z",
+      "side": 1,
+      "message": "\"URL to .repo file specifying which ODL version to install in container\"",
+      "range": {
+        "startLine": 51,
+        "startChar": 24,
+        "endLine": 51,
+        "endChar": 70
+      },
+      "revId": "eb9c40c1cbcee9b9db25a4f23e3dfe10d902f28f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2a55be_9fd61dc2",
+        "filename": "jjb/packaging/packaging.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2017-07-18T14:04:07Z",
+      "side": 1,
+      "message": "\"Tag of resulting Docker image (\"6.0.0\", \"latest\")\"",
+      "range": {
+        "startLine": 55,
+        "startChar": 24,
+        "endLine": 55,
+        "endChar": 60
+      },
+      "revId": "eb9c40c1cbcee9b9db25a4f23e3dfe10d902f28f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2a55be_5fd5c5b7",
+        "filename": "jjb/packaging/packaging.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2017-07-18T14:04:07Z",
+      "side": 1,
+      "message": "\"Container operating system name (\"fedora\", \"centos\")\"",
+      "range": {
+        "startLine": 59,
+        "startChar": 24,
+        "endLine": 59,
+        "endChar": 59
+      },
+      "revId": "eb9c40c1cbcee9b9db25a4f23e3dfe10d902f28f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2a55be_bfdb21ec",
+        "filename": "jjb/packaging/packaging.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2017-07-18T14:04:07Z",
+      "side": 1,
+      "message": "\"Container operating system version (\"25\", \"7.3.1611\")\"",
+      "range": {
+        "startLine": 63,
+        "startChar": 24,
+        "endLine": 63,
+        "endChar": 67
+      },
+      "revId": "eb9c40c1cbcee9b9db25a4f23e3dfe10d902f28f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2a55be_7fd249d3",
+        "filename": "jjb/packaging/packaging.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2017-07-18T14:04:07Z",
+      "side": 1,
+      "message": "\"Repository name of resulting Docker image (\"opendaylight/odl\", \"opendaylight/fedora\")\"",
+      "range": {
+        "startLine": 67,
+        "startChar": 24,
+        "endLine": 67,
+        "endChar": 64
+      },
+      "revId": "eb9c40c1cbcee9b9db25a4f23e3dfe10d902f28f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2a55be_02bad222",
+        "filename": "jjb/packaging/packaging.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2017-07-18T14:04:07Z",
+      "side": 1,
+      "message": "Probably going to want to change this to publish to Nexus. Not sure if should do in this change or follow-up. Anil/Thanh?",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 85,
+        "endChar": 26
+      },
+      "revId": "eb9c40c1cbcee9b9db25a4f23e3dfe10d902f28f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2a55be_42d16a56",
+        "filename": "jjb/packaging/packaging.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2017-07-18T14:04:07Z",
+      "side": 1,
+      "message": "Similar to container description",
+      "range": {
+        "startLine": 108,
+        "startChar": 24,
+        "endLine": 108,
+        "endChar": 59
+      },
+      "revId": "eb9c40c1cbcee9b9db25a4f23e3dfe10d902f28f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2a55be_22d43646",
+        "filename": "jjb/packaging/packaging.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2017-07-18T14:04:07Z",
+      "side": 1,
+      "message": "Similar to container description",
+      "range": {
+        "startLine": 113,
+        "startChar": 24,
+        "endLine": 113,
+        "endChar": 70
+      },
+      "revId": "eb9c40c1cbcee9b9db25a4f23e3dfe10d902f28f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2a55be_02bf72fc",
+        "filename": "jjb/packaging/packaging.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2017-07-18T14:04:07Z",
+      "side": 1,
+      "message": "\"ODL version number in resulting .box file name (\"6.0.0\")\"",
+      "range": {
+        "startLine": 117,
+        "startChar": 24,
+        "endLine": 117,
+        "endChar": 60
+      },
+      "revId": "eb9c40c1cbcee9b9db25a4f23e3dfe10d902f28f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2a55be_8242420e",
+        "filename": "jjb/packaging/packaging.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2017-07-18T14:04:07Z",
+      "side": 1,
+      "message": "\"VM operating system name (\"fedora\", \"centos\")\"",
+      "range": {
+        "startLine": 121,
+        "startChar": 24,
+        "endLine": 121,
+        "endChar": 59
+      },
+      "revId": "eb9c40c1cbcee9b9db25a4f23e3dfe10d902f28f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2a55be_c24b9a29",
+        "filename": "jjb/packaging/packaging.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2017-07-18T14:04:07Z",
+      "side": 1,
+      "message": "\"VM operating system version (\"25\", \"7.3.1611\")\"",
+      "range": {
+        "startLine": 125,
+        "startChar": 24,
+        "endLine": 125,
+        "endChar": 67
+      },
+      "revId": "eb9c40c1cbcee9b9db25a4f23e3dfe10d902f28f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2a55be_226276ad",
+        "filename": "jjb/packaging/packaging.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2017-07-18T14:04:07Z",
+      "side": 1,
+      "message": "\"SHA256 checksum of base VM ISO image\"",
+      "range": {
+        "startLine": 130,
+        "startChar": 24,
+        "endLine": 130,
+        "endChar": 55
+      },
+      "revId": "eb9c40c1cbcee9b9db25a4f23e3dfe10d902f28f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2a55be_e215fee5",
+        "filename": "jjb/packaging/packaging.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2017-07-18T14:04:07Z",
+      "side": 1,
+      "message": "\"URL to base VM ISO image\"",
+      "range": {
+        "startLine": 135,
+        "startChar": 24,
+        "endLine": 135,
+        "endChar": 50
+      },
+      "revId": "eb9c40c1cbcee9b9db25a4f23e3dfe10d902f28f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2a55be_a277863a",
+        "filename": "jjb/packaging/packaging.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2017-07-18T14:04:07Z",
+      "side": 1,
+      "message": "Most of these descriptions can be taken from above",
+      "range": {
+        "startLine": 166,
+        "startChar": 4,
+        "endLine": 166,
+        "endChar": 14
+      },
+      "revId": "eb9c40c1cbcee9b9db25a4f23e3dfe10d902f28f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2a55be_a2e2e6fe",
+        "filename": "jjb/packaging/packaging.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2017-07-18T14:04:07Z",
+      "side": 1,
+      "message": "Shouldn\u0027t have this for VBox job",
+      "range": {
+        "startLine": 194,
+        "startChar": 0,
+        "endLine": 197,
+        "endChar": 65
+      },
+      "revId": "eb9c40c1cbcee9b9db25a4f23e3dfe10d902f28f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2a55be_228c3635",
+        "filename": "jjb/packaging/packaging.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2017-07-18T14:04:07Z",
+      "side": 1,
+      "message": "\"Hint to VBox about virtual HW to use (\"RedHat_64\", \"Fedora_64\")\"",
+      "range": {
+        "startLine": 201,
+        "startChar": 24,
+        "endLine": 201,
+        "endChar": 51
       },
       "revId": "eb9c40c1cbcee9b9db25a4f23e3dfe10d902f28f",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
