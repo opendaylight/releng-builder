@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da2a55be_994f55be",
+        "filename": "jjb/integration/integration-macros.yaml",
+        "patchSetId": 7
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-07-19T18:21:24Z",
+      "side": 1,
+      "message": "No need to set a variable since we know the exact path.",
+      "revId": "296a64cd28eb06c2a5ae6a1648f23816a1d8e70a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2a55be_39c8e921",
+        "filename": "jjb/integration/integration-macros.yaml",
+        "patchSetId": 7
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-07-19T18:21:24Z",
+      "side": 1,
+      "message": "Please add an additional shell step to remove the netrc file:\n\n - shell: |\n     #!/bin/bash\n     rm ~/.netrc\n\nWe want to ensure the credentials only exist for as long as necessary.",
+      "revId": "296a64cd28eb06c2a5ae6a1648f23816a1d8e70a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
