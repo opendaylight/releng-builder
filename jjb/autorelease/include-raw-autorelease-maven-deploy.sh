@@ -9,6 +9,8 @@
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
 
+STAGING_LOG="$WORKSPACE/deploy-staged-repository.log"
+
 # Assuming that mvn deploy created the hide/from/pom/files/stage directory.
 cd hide/from/pom/files || exit 1
 mkdir -p m2repo/org/opendaylight/
@@ -35,7 +37,7 @@ rsync -avz --remove-source-files \
     -DstagingProfileId="$NEXUS_STAGING_PROFILE" \
     -DserverId="$NEXUS_STAGING_SERVER_ID" \
     -s "$SETTINGS_FILE" \
-    -gs "$GLOBAL_SETTINGS_FILE" | tee "$WORKSPACE/deploy-staged-repository.log"
+    -gs "$GLOBAL_SETTINGS_FILE" | tee "$STAGING_LOG"
 
 # Log all files larger than 200 MB into large-files.log
 while IFS= read -r -d '' file
@@ -46,3 +48,9 @@ do
         echo "$FILE_SIZE $file" >> "$WORKSPACE/large-files.log"
     fi
 done <   <(find "$(pwd)/m2repo" -type f -print0)
+
+# Detect if staging failed: mvn always exits 0 even if staging failed.
+if grep '^\[ERROR\]' "$STAGING_LOG"; then
+    echo "Error creating staging repo. Refer to logs above for details."
+    exit 1
+fi
