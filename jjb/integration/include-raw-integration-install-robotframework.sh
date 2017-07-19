@@ -58,7 +58,8 @@ pip install --upgrade jsonpatch
 
 #Module OpenstackClient is needed for NEtvirt CSIT jobs
 pip install python-openstackclient
-pip install python-neutronclient
+pip install networking-gw
+pip install python-neutronclient==6.1.0
 
 # Print installed versions.
 pip freeze
