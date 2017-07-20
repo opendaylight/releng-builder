@@ -36,6 +36,7 @@ LOGFILE=stack.sh.log
 SCREEN_LOGDIR=/opt/stack/data/log
 LOG_COLOR=False
 RECLONE=${RECLONE}
+ETCD_PORT=2379
 EOF
 
 IFS=,
@@ -57,8 +58,10 @@ if [ "$plugin_name" == "networking-odl" ]; then
     ENABLE_PLUGIN_ARGS="${ODL_ML2_DRIVER_REPO} ${ODL_ML2_BRANCH}"
 elif [ "$plugin_name" == "kuryr-kubernetes" ]; then
     ENABLE_PLUGIN_ARGS="${DEVSTACK_KUBERNETES_PLUGIN_REPO} master" # note: kuryr-kubernetes only exists in master at the moment
+    IS_KUBERNETES_PLUGIN_ENABLED="yes"
 elif [ "$plugin_name" == "neutron-lbaas" ]; then
     ENABLE_PLUGIN_ARGS="${DEVSTACK_LBAAS_PLUGIN_REPO} ${OPENSTACK_BRANCH}"
+    IS_LBAAS_PLUGIN_ENABLED="yes"
 elif [ "$plugin_name" == "networking-sfc" ]; then
     ENABLE_PLUGIN_ARGS="${DEVSTACK_NETWORKING_SFC_PLUGIN_REPO} ${OPENSTACK_BRANCH}"
 else
@@ -74,6 +77,13 @@ if [ "${OPENSTACK_BRANCH}" == "master" ] || [ "${OPENSTACK_BRANCH}" == "stable/o
     # placement is mandatory for nova since Ocata, note that this requires computes to enable placement-client
     # this should be moved into enabled_services for each job (but only for Ocata)
     echo "enable_service placement-api" >> ${local_conf_file_name}
+fi
+if [ "${OPENSTACK_BRANCH}" == "stable/ocata" ]; then # Ocata
+    # running kubernetes master against devstack ocata has some issues with etcd3 and this
+    # workaround is needed for things to work
+    if [ "$IS_KUBERNETES_PLUGIN_ENABLED" == "yes" ]; then
+        echo "disable_service etcd3" >> ${local_conf_file_name}
+    fi
 fi
 cat >> ${local_conf_file_name} << EOF
 HOST_IP=${HOSTIP}
@@ -156,22 +166,20 @@ disable_service q-l3
 PUBLIC_INTERFACE=br100
 EOF
 
+SERVICE_PLUGINS="networking_odl.l3.l3_odl.OpenDaylightL3RouterPlugin"
 if [ "${ENABLE_NETWORKING_L2GW}" == "yes" ]; then
-cat >> ${local_conf_file_name} << EOF
-[[post-config|\$NEUTRON_CONF]]
-[DEFAULT]
-service_plugins = networking_odl.l3.l3_odl.OpenDaylightL3RouterPlugin, networking_l2gw.services.l2gateway.plugin.L2GatewayPlugin
-
-EOF
-else
-cat >> ${local_conf_file_name} << EOF
-[[post-config|\$NEUTRON_CONF]]
-[DEFAULT]
-service_plugins = networking_odl.l3.l3_odl.OpenDaylightL3RouterPlugin
-EOF
+  SERVICE_PLUGINS+=", networking_l2gw.services.l2gateway.plugin.L2GatewayPlugin"
 fi #check for ENABLE_NETWORKING_L2GW
+if [ "${IS_LBAAS_PLUGIN_ENABLED}" == "yes" ]; then
+  SERVICE_PLUGINS+=", lbaasv2"
+fi #check for ENABLE_LBAAS_PLUGIN
+fi #check for ODL_ENABLE_L3_FWD
 
-fi #ODL_ENABLE_L3_FWD check
+cat >> ${local_conf_file_name} << EOF
+[[post-config|\$NEUTRON_CONF]]
+[DEFAULT]
+service_plugins = ${SERVICE_PLUGINS}
+EOF
 
 cat >> ${local_conf_file_name} << EOF
 [[post-config|/etc/neutron/plugins/ml2/ml2_conf.ini]]
@@ -417,7 +425,9 @@ do
     scp ${!OS_CTRL_IP}:/var/log/openvswitch/ovs-vswitchd.log ${OS_CTRL_FOLDER}/ovs-vswitchd.log
     scp ${!OS_CTRL_IP}:/etc/neutron/neutron.conf ${OS_CTRL_FOLDER}/neutron.conf
     scp ${!OS_CTRL_IP}:/etc/nova/nova.conf ${OS_CTRL_FOLDER}/nova.conf
-    scp ${!OS_CTRL_IP}:/etc/kuryr/kuryr.conf ${OS_CTRL_FOLDER}/kuryr.conf
+    scp ${!OS_CTRL_IP}:/etc/kuryr/kuryr.conf ${OS_COMPUTE_FOLDER}/kuryr.conf
+    scp ${!OS_CTRL_IP}:/etc/neutron/neutron_lbaas.conf ${OS_CTRL_FOLDER}/neutron-lbaas.conf
+    scp ${!OS_CTRL_IP}:/etc/neutron/services/loadbalancer/haproxy/lbaas_agent.ini ${OS_CTRL_FOLDER}/lbaas-agent.ini
     rsync -avhe ssh ${!OS_CTRL_IP}:/opt/stack/logs/* ${OS_CTRL_FOLDER} # rsync to prevent copying of symbolic links
     scp extra_debug.sh ${!OS_CTRL_IP}:/tmp
     ${SSH} ${!OS_CTRL_IP} "bash /tmp/extra_debug.sh > /tmp/extra_debug.log"
