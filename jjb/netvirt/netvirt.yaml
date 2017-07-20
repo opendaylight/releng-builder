@@ -120,3 +120,14 @@
     dependencies:
     email-upstream: '[netvirt]'
     archive-artifacts: ''
+
+- project:
+    name: netvirt-sonar
+    jobs:
+      - '{project-name}-sonar'
+    project: 'netvirt'
+    project-name: 'netvirt'
+    branch: 'master'
+    mvn-settings: 'netvirt-settings'
+    mvn-goals: 'clean install'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
