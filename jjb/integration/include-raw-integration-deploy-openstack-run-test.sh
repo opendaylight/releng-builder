@@ -425,7 +425,7 @@ do
     scp ${!OS_CTRL_IP}:/var/log/openvswitch/ovs-vswitchd.log ${OS_CTRL_FOLDER}/ovs-vswitchd.log
     scp ${!OS_CTRL_IP}:/etc/neutron/neutron.conf ${OS_CTRL_FOLDER}/neutron.conf
     scp ${!OS_CTRL_IP}:/etc/nova/nova.conf ${OS_CTRL_FOLDER}/nova.conf
-    scp ${!OS_CTRL_IP}:/etc/kuryr/kuryr.conf ${OS_COMPUTE_FOLDER}/kuryr.conf
+    scp ${!OS_CTRL_IP}:/etc/kuryr/kuryr.conf ${OS_CTRL_FOLDER}/kuryr.conf
     scp ${!OS_CTRL_IP}:/etc/neutron/neutron_lbaas.conf ${OS_CTRL_FOLDER}/neutron-lbaas.conf
     scp ${!OS_CTRL_IP}:/etc/neutron/services/loadbalancer/haproxy/lbaas_agent.ini ${OS_CTRL_FOLDER}/lbaas-agent.ini
     rsync -avhe ssh ${!OS_CTRL_IP}:/opt/stack/logs/* ${OS_CTRL_FOLDER} # rsync to prevent copying of symbolic links
