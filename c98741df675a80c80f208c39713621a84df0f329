@@ -22,6 +22,30 @@
       "revId": "c98741df675a80c80f208c39713621a84df0f329",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2a55be_6d861215",
+        "filename": "jjb/integration/include-raw-integration-get-slave-addresses.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2017-07-22T01:55:38Z",
+      "side": 1,
+      "message": "We have to know which vm is the control node and which are the computes since the control node needs to remain with the 8gb vm. But, there isn\u0027t a good way to know which vm is which because all we have are a list of ip\u0027s. So in the code earlier up we loop through all the ip\u0027s and ssh into the vm and get the hostname. The hostname\u0027s are of the pattern imagetype-index. So the openstack ip\u0027s comes back with devstack-{0, 1, 2} in the name. From that we can get a list of the openstack nodes. But that index 0, 1, 2 is based of which vm_group the vm was allocated and the indexes always start at 0. So the controller is in vm_group 1, heat spins up the vm and calls it devstack-0. Then vm_group 2 is created and two vms comje out as devstack-0 and devstack-1. So we don\u0027t know which vm is the control or the compute since they are both named devstack-0. But we do know when the ip addr list is created it does it in reverse, so the first devstack-0 we get will be the compute and then the next devstack-0 is the controller. So index 0 is compute devstack-0 and then index 2 is the control devstack-0. We know index 2 sine we know we know the number of vms allocated and we know vm_group 1 is last. In the list here we finally just swap index 0 and index 2. The code later in this script assumes the controller is at index 0 and then the computes next. So that is why we do this final swap.\n\nWe could rewrite this whole file but can do that in a different patch. The main goal here is to simply make better use of the resources. I think what really needs to happen is we need to rework the templates so we can really pass in names like control and compute and get around this workaround. I couldn\u0027t do that and test in sandbox because any changes made to the templates are ignored when the jobs run as the merged heat templates overwrite the ones you had in the patch. Took me a while to get that until Thanh set me straight.",
+      "parentUuid": "da2a55be_4d27ceb6",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 2
+      },
+      "revId": "c98741df675a80c80f208c39713621a84df0f329",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
