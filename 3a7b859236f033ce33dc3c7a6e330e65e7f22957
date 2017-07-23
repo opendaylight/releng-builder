@@ -42,6 +42,29 @@
     },
     {
       "key": {
+        "uuid": "da2a55be_6dba926f",
+        "filename": "packer/provision/java-builder.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2017-07-23T08:53:56Z",
+      "side": 1,
+      "message": "from  the latest updates on the dev script: https://github.com/6WIND/zrpcd/blob/master/pkgsrc/dev_compile_script.sh#L60-L99\nI dont this fixed in the scripts, to retrive the OS/flavor and versions, please use more standard commands like `facter`, this is already available on the images. Its much cleaner and failsafe way then using regex/sed/tr from the conf files (`/etc/release-*`). Is there any specific reason facter is not used ?\n\n$ facter operatingsystem\nUbuntu\n$ facter operatingsystemrelease\n16.04",
+      "range": {
+        "startLine": 73,
+        "startChar": 41,
+        "endLine": 73,
+        "endChar": 62
+      },
+      "revId": "3a7b859236f033ce33dc3c7a6e330e65e7f22957",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da2a55be_52192f87",
         "filename": "packer/provision/mininet-ovs-2.5.sh",
         "patchSetId": 1
