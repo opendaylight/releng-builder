@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "da2a55be_edd682f0",
+        "filename": "packer/provision/java-builder.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2017-07-23T05:53:50Z",
+      "side": 1,
+      "message": "Previously, a stable version was checked out, before invoking the build scripts. I would recommend going with that approach, to make sure odl images are built with stable/tested changes.",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 44
+      },
+      "revId": "3a7b859236f033ce33dc3c7a6e330e65e7f22957",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da2a55be_52192f87",
         "filename": "packer/provision/mininet-ovs-2.5.sh",
         "patchSetId": 1
