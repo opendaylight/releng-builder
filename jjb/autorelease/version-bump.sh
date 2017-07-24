@@ -12,6 +12,9 @@
 # This script performs version bumping activities for an ODL release.
 echo "---> version-bump.sh"
 
+# set release tag as $STREAM, except for boron
+RELEASE_TAG="${RELEASE_TAG:-$STREAM}"
+
 mkdir -p "$WORKSPACE/archives"
 LOG_FILE="$WORKSPACE/archives/version-bump.log"
 BRANCH="$GERRIT_BRANCH"

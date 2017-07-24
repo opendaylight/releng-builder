@@ -27,7 +27,7 @@
       - distribution-karaf-version:
           karaf-version: '{karaf-version}'
       - autorelease-release-tag:
-          release-tag: '{next-release-tag}'
+          release-tag: '{stream}'
       - autorelease-release-branch:
           release-branch: '{branch}'
       - string:
@@ -220,7 +220,7 @@
           refspec: 'refs/heads/{branch}'
       - string:
           name: RELEASE_TAG
-          default: '{next-release-tag}'
+          default: '{stream}'
           description: |
               Release that is being version bumped.
               Eg. Lithium, Beryllium, Boron, Carbon, Carbon-SR1, Carbon-SR2...
