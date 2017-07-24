@@ -12,6 +12,9 @@
 # RELEASE_TAG=Beryllium-SR1  # Example
 # RELEASE_BRANCH=stable/beryllium  # Example
 
+# set release tag as $STREAM, except for boron
+RELEASE_TAG="${RELEASE_TAG:-$STREAM}"
+
 # Directory to put git format-patches
 PATCH_DIR="$WORKSPACE/patches"
 

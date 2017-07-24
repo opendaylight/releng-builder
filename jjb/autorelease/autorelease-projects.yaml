@@ -10,12 +10,14 @@
 
     stream:
       - nitrogen:
-          next-release-tag: Nitrogen
+          # todo: After boron EOL remove next-release-tag and directy pass
+          # '{stream}' to autorelease-release-tag parameter  
+          next-release-tag: '{stream}'
           branch: 'master'
           jdk: 'openjdk8'
           integration-test: nitrogen
       - carbon:
-          next-release-tag: Carbon
+          next-release-tag: '{stream}'
           branch: 'stable/carbon'
           jdk: 'openjdk8'
           integration-test: carbon
