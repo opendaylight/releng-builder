@@ -12,6 +12,11 @@
 # RELEASE_TAG=Beryllium-SR1  # Example
 # RELEASE_BRANCH=stable/beryllium  # Example
 
+# Set release tag as $STREAM, when no release tag is passed
+RELEASE_TAG="${RELEASE_TAG:-${STREAM^}}"
+# Ensure that the first letter of RELEASE_TAG is uppercase.
+RELEASE_TAG="${RELEASE_TAG^}"
+
 # Directory to put git format-patches
 PATCH_DIR="$WORKSPACE/patches"
 
