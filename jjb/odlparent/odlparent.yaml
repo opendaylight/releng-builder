@@ -2,7 +2,6 @@
 - project:
     name: odlparent-master
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-merge-{stream}'
       - '{project-name}-verify-{stream}-{maven}-{jdks}'
@@ -31,13 +30,11 @@
     archive-artifacts: ''
 
     # Used by the release job
-    settings-file: odlparent-settings
     staging-profile-id: 880d5ac25eaa
 
 - project:
     name: odlparent-2.0.x
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-merge-{stream}'
       - '{project-name}-verify-{stream}-{maven}-{jdks}'
@@ -66,18 +63,17 @@
     archive-artifacts: ''
 
     # Used by the release job
-    settings-file: odlparent-settings
     staging-profile-id: 880d5ac25eaa
 
 - project:
     name: odlparent-carbon
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
       - '{project-name}-merge-{stream}'
       - '{project-name}-verify-{stream}-{maven}-{jdks}'
       - '{project-name}-verify-tox-{stream}'
+      - '{project-name}-maven-jobs'
 
     stream: carbon
     project: 'odlparent'
@@ -97,14 +93,17 @@
     email-upstream: '[odlparent]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: 880d5ac25eaa
+
 - project:
     name: odlparent-boron
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
       - '{project-name}-merge-{stream}'
       - '{project-name}-verify-{stream}-{maven}-{jdks}'
+      - '{project-name}-maven-jobs'
 
     stream: boron
     project: 'odlparent'
@@ -123,6 +122,9 @@
     dependencies: ''
     email-upstream: '[odlparent]'
     archive-artifacts: ''
+
+    # Used by the release job
+    staging-profile-id: 880d5ac25eaa
 
 - project:
     name: odlparent-sonar
