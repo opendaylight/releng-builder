@@ -60,7 +60,7 @@ pip install --upgrade jsonpatch
 # Module networking-l2gw is required for using l2gw commands with neutron client
 # Module python-neutronclient is needed for certain tests run with Openstack Newton
 #  that does not work with Openstack Client
-pip install python-openstackclient
+pip install python-openstackclient==3.11.0
 pip install networking-l2gw
 pip install python-neutronclient==6.1.0
 
