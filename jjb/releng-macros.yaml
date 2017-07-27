@@ -255,15 +255,6 @@
             notbuilt: true
 
 - publisher:
-    name: archive-artifacts
-    publishers:
-      - archive:
-          artifacts: '{artifacts}'
-          allow-empty: true
-          fingerprint: true
-          latest-only: true
-
-- publisher:
     name: email-notification
     publishers:
       - email-ext:
