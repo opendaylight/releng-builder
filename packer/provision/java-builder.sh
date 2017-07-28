@@ -39,28 +39,27 @@ yum -y install mono-complete nuget
 echo "---> Installing the Hbase Server..."
 mkdir /tmp/Hbase
 cd /tmp/Hbase
-wget --no-verbose https://archive.apache.org/dist/hbase/hbase-0.94.27/hbase-0.94.27.tar.gz
+wget -nv https://archive.apache.org/dist/hbase/hbase-0.94.27/hbase-0.94.27.tar.gz
 tar -xvf hbase-0.94.27.tar.gz
 
 # Needed by TSDR
 echo "---> Installing the Cassandra Server..."
 mkdir /tmp/cassandra
 cd /tmp/cassandra
-wget --no-verbose https://archive.apache.org/dist/cassandra/2.1.16/apache-cassandra-2.1.16-bin.tar.gz
+wget -nv https://archive.apache.org/dist/cassandra/2.1.16/apache-cassandra-2.1.16-bin.tar.gz
 tar -xvf apache-cassandra-2.1.16-bin.tar.gz
 
 # Generally useful for all projects
 echo "---> Installing the Elasticsearch node..."
 mkdir /tmp/elasticsearch
 cd /tmp/elasticsearch
-wget --no-verbose https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.7.5.tar.gz
+wget -nv https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.7.5.tar.gz
 tar -xvzf elasticsearch-1.7.5.tar.gz
 
 # Installs Hashicorp's Packer binary, required for {verify,merge}-packer jobs
 mkdir /tmp/packer
 cd /tmp/packer
-wget https://releases.hashicorp.com/packer/0.12.2/packer_0.12.2_linux_amd64.zip
+wget -nv https://releases.hashicorp.com/packer/0.12.2/packer_0.12.2_linux_amd64.zip
 unzip packer_0.12.2_linux_amd64.zip -d /usr/local/bin/
 # rename packer to avoid conflict with binary in cracklib
 mv /usr/local/bin/packer /usr/local/bin/packer.io
-
