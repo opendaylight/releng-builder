@@ -2,6 +2,7 @@
 # Activate robotframework virtualenv
 # ${ROBOT_VENV} comes from the include-raw-integration-install-robotframework.sh
 # script.
+# shellcheck source=${ROBOT_VENV}/bin/activate disable=SC1091
 source ${ROBOT_VENV}/bin/activate
 
 CONTROLLERMEM="2048m"
@@ -33,6 +34,7 @@ if [ -f "${WORKSPACE}/test/csit/scriptplans/${TESTPLAN}" ]; then
     cat scriptplan.txt
     for line in $( egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' scriptplan.txt ); do
         echo "Executing ${line}..."
+        # shellcheck source=${line} disable=SC1091
         source ${line}
     done
 fi
@@ -210,6 +212,7 @@ if [ -f "${configplan_filepath}" ]; then
     cat configplan.txt
     for line in $( egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' configplan.txt ); do
         echo "Executing ${line}..."
+        # shellcheck source=${line} disable=SC1091
         source ${line}
     done
 fi
