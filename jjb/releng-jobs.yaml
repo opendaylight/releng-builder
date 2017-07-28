@@ -41,12 +41,13 @@
     templates:
       - devstack
       - devstack-pre-pip-newton:
-          build-timeout: 60
+          build-timeout: 75
       - devstack-pre-pip-ocata:
           build-timeout: 60
       - docker
       - gbp
-      - java-builder
+      - java-builder:
+          build-timeout: 60
       - mininet
       - mininet-ovs-2.5
       - robot
