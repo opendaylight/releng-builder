@@ -37,6 +37,7 @@ IFS=',' read -ra PATCHES <<< "${PATCHES_TO_BUILD}"
 # * Optionally, checkout a specific (typically unmerged) Gerrit patch. If none,
 #   default to Integration/Distribution branch via {branch} JJB param.
 # * Also optionally, cherry-pick series of patchs on top of the checkout.
+# * Final option: perform a 'release' by removing "-SNAPSHOT" everywhere within the project.
 #
 # Each patch is found in the ${PATCHES_TO_BUILD} variable as a comma separated
 # list of project[=checkout][:cherry-pick]* values.
@@ -53,11 +54,11 @@ IFS=',' read -ra PATCHES <<< "${PATCHES_TO_BUILD}"
 #
 # PATCHES_TO_BUILD='controller=61/29761/5:45/29645/6'
 distribution_status="not_included"
-for patch in "${PATCHES[@]}"
+for proto_patch in "${PATCHES[@]}"
 do
-    echo "working on ${patch}"
+    echo "working on ${protopatch}"
     # For patch=controller=61/29761/5:45/29645/6, this gives controller
-    PROJECT=`echo ${patch} | cut -d\: -f 1 | cut -d\= -f 1`
+    PROJECT=`echo ${pure_patch} | cut -d\: -f 1 | cut -d\= -f 1`
     if [ "${PROJECT}" == "integration/distribution" ]; then
         distribution_status="included"
     fi
@@ -66,10 +67,16 @@ do
     git clone "https://git.opendaylight.org/gerrit/p/${PROJECT}"
     echo "<module>${PROJECT_SHORTNAME}</module>" >> ${POM_FILE}
     cd ${PROJECT_SHORTNAME}
-    # For patch=controller=61/29761/5:45/29645/6, this gives 61/29761/5
-    CHECKOUT=`echo ${patch} | cut -d\= -s -f 2 | cut -d\: -f 1`
+    if [ "$(echo -n \"proto_patch\" | tail -c 1)" == 'r' ]; then
+        pure_patch="$(echo -n \"proto_patch\" | head -c -1)"
+    else
+        pure_patch="$proto_patch"
+    fi
+    # For patch = controller=61/29761/5:45/29645/6, this gives 61/29761/5
+    CHECKOUT=`echo ${pure_patch} | cut -d\= -s -f 2 | cut -d\: -f 1`
     if [ "x${CHECKOUT}" != "x" ]; then
         echo "checking out ${CHECKOUT}"
+        # TODO: Make this script accept "29645/6" as a shorthand for "45/29645/6".
         git fetch "https://git.opendaylight.org/gerrit/${PROJECT}" "refs/changes/$CHECKOUT"
         git checkout FETCH_HEAD
     else
@@ -77,7 +84,7 @@ do
         git checkout "${DISTRIBUTION_BRANCH_TO_BUILD}"
     fi
     # For patch=controller=61/29761/5:45/29645/6, this gives 45/29645/6
-    PICK_SEGMENT=`echo "${patch}" | cut -d\: -s -f 2-`
+    PICK_SEGMENT=`echo "${pure_patch}" | cut -d\: -s -f 2-`
     IFS=':' read -ra PICKS <<< "${PICK_SEGMENT}"
     for pick in "${PICKS[@]}"
     do
@@ -85,6 +92,10 @@ do
         git fetch "https://git.opendaylight.org/gerrit/${PROJECT}" "refs/changes/${pick}"
         git cherry-pick --ff --keep-redundant-commits FETCH_HEAD
     done
+    if [ "$(echo -n \"proto_patch\" | tail -c 1)" == 'r' ]; then
+        # Here 'r' means release. Useful for testing Nitrogen Odlparent changes.
+        find . -name "*.xml" -print0 | xargs -0 sed -i 's/-SNAPSHOT//g'
+    fi
     cd "${BUILD_DIR}"
 done
 
