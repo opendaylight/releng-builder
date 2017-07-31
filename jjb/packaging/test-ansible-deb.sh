@@ -17,14 +17,19 @@ $PYTHON -m pip install --upgrade pip
 # and causes our apt commands to fail.
 while pgrep apt > /dev/null; do sleep 1; done
 
-# Install latest ansible
+# Install Ansible
 sudo apt-add-repository ppa:ansible/ansible
 sudo apt-get update
 sudo apt-get install -y ansible
 
-git clone https://github.com/dfarrell07/ansible-opendaylight.git
-cd ansible-opendaylight
-sudo ansible-galaxy install -r requirements.yml
-sudo ansible-playbook -i "localhost," -c local examples/deb_repo_install_playbook.yml
+# Install local version of ansible-opendaylight to path expected by Ansible.
+# Could almost do this by setting ANSIBLE_ROLES_PATH=$WORKSPACE, but Ansible
+# expects the dir containing the role to have the name of role. The JJB project
+# is called "ansible", which causes the cloned repo name to not match the role
+# name "opendaylight". So we need a cp/mv either way and this is simplest.
+sudo cp -R $WORKSPACE/ansible /etc/ansible/roles/opendaylight
+
+# Install OpenDaylight via repo using example Ansible playbook
+sudo ansible-playbook -i "localhost," -c local $WORKSPACE/ansible/examples/deb_repo_install_playbook.yml
 
 # Add more tests
