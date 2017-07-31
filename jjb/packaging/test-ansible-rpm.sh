@@ -13,8 +13,7 @@ PYTHON="rpm_build/bin/python"
 $PYTHON -m pip install --upgrade pip
 sudo yum install -y ansible
 
-git clone https://github.com/dfarrell07/ansible-opendaylight.git
-cd ansible-opendaylight
+cd $WORKSPACE/ansible
 sudo ansible-galaxy install -r requirements.yml
 sudo ansible-playbook -i "localhost," -c local examples/odl_6_testing_playbook.yml
 
