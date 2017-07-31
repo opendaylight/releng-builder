@@ -1,10 +1,14 @@
 ---
 - project:
-    name: netvirt-csit-openstack-integration
+    name: netvirt-csit-openstack-integration-nitrogen
     jobs:
       - '{project}-csit-{topology}-openstack-{openstack}-{functionality}-{stream}'
 
     project: 'netvirt'
+
+    stream: 'nitrogen'
+    branch: 'master'
+    jre: 'openjdk8'
 
     topology:
       - 1node:
@@ -62,40 +66,173 @@
           sg-mode: 'transparent'
           testplan: '{project}-{topology}-tempest-openstack.txt'
 
-    stream:
-      - oxygen:
-          branch: 'master'
-          jre: 'openjdk8'
-      - nitrogen:
-          branch: 'stable/nitrogen'
-          jre: 'openjdk8'
-      - carbon:
-          branch: 'stable/carbon'
-          jre: 'openjdk8'
-          karaf-version: karaf3
-      - boron:
-          branch: 'stable/boron'
-          jre: 'openjdk8'
-          karaf-version: karaf3
+    openstack:
+      - ocata:
+          openstack-branch: 'stable/ocata'
+          odl-ml2-branch: 'stable/ocata'
+          odl-ml2-driver-version: 'v2'
+          openstack_system_image: 'CentOS 7 - devstack-newton - 20170707-0359'
+          openstack_system2_image: 'CentOS 7 - devstack-newton - 20170707-0359'
+      - pike:
+          openstack-branch: 'stable/pike'
+          odl-ml2-branch: 'stable/pike'
+          odl-ml2-driver-version: 'v2'
+          odl-ml2-port-binding: 'pseudo-agentdb-binding'
+          enable-openstack-services: 'q-svc,q-dhcp,q-meta,n-cauth,tempest'
+          disable-openstack-services: 'swift,cinder,n-net,q-vpn,n-cpu,horizon'
+          openstack_system_image: 'CentOS 7 - devstack-pike - 20170901-2223'
+          openstack_system2_image: 'CentOS 7 - devstack-pike - 20170901-2223'
+      - queens:
+          openstack-branch: 'master'
+          odl-ml2-branch: 'master'
+          odl-ml2-driver-version: 'v2'
+          odl-ml2-port-binding: 'pseudo-agentdb-binding'
+          openstack_system_image: 'CentOS 7 - devstack-pike - 20170901-2223'
+          openstack_system2_image: 'CentOS 7 - devstack-pike - 20170901-2223'
+
+    security-group-mode: '{sg-mode}'
+
+- project:
+    name: netvirt-csit-openstack-integration-carbon
+    jobs:
+      - '{project}-csit-{topology}-openstack-{openstack}-{functionality}-{stream}'
+
+    project: 'netvirt'
+
+    stream: 'carbon'
+    branch: 'stable/carbon'
+    jre: 'openjdk8'
+    karaf-version: karaf3
+
+    topology:
+      - 1node:
+          openstack_system_count: 1
+          openstack_system2_count: 2
+          odl_system_count: 1
+          enable-haproxy: 'no'
+          install-features: 'odl-netvirt-openstack'
+      - 3node:
+          openstack_system_count: 1
+          openstack_system2_count: 3
+          odl_system_count: 3
+          enable-haproxy: 'yes'
+          install-features: 'odl-jolokia,odl-netvirt-openstack'
+
+    testplan: '{project}-{topology}-openstack.txt'
+
+    functionality:
+      - upstream-transparent:
+          schedule: ''
+          sg-mode: 'transparent'
+      - upstream-stateful:
+          schedule: ''
+          sg-mode: 'stateful'
+      - upstream-stateful-snat-conntrack:
+          schedule: ''
+          sg-mode: 'stateful'
+          odl-snat-mode: 'conntrack'
+      - upstream-learn:
+          schedule: ''
+          sg-mode: 'learn'
+      - gate-learn:
+          schedule: ''
+          sg-mode: 'learn'
+      - gate-transparent:
+          schedule: ''
+          sg-mode: 'transparent'
+      - gate-stateful:
+          schedule: ''
+          sg-mode: 'stateful'
+      - gate-minimal-transparent:
+          schedule: ''
+          sg-mode: 'transparent'
+          testplan: '{project}-{topology}-minimal-openstack.txt'
+      - gate-tempest-transparent:
+          schedule: ''
+          sg-mode: 'transparent'
+          testplan: '{project}-{topology}-tempest-openstack.txt'
+
+    openstack:
+      - ocata:
+          openstack-branch: 'stable/ocata'
+          odl-ml2-branch: 'stable/ocata'
+          odl-ml2-driver-version: 'v2'
+          openstack_system_image: 'CentOS 7 - devstack-newton - 20170707-0359'
+          openstack_system2_image: 'CentOS 7 - devstack-newton - 20170707-0359'
+
+    security-group-mode: '{sg-mode}'
+
+- project:
+    name: netvirt-csit-openstack-integration-boron
+    jobs:
+      - '{project}-csit-{topology}-openstack-{openstack}-{functionality}-{stream}'
+
+    project: 'netvirt'
+
+    stream: 'boron'
+    branch: 'stable/boron'
+    jre: 'openjdk8'
+    karaf-version: karaf3
+
+    topology:
+      - 1node:
+          openstack_system_count: 1
+          openstack_system2_count: 2
+          odl_system_count: 1
+          enable-haproxy: 'no'
+          install-features: 'odl-netvirt-openstack'
+      - 3node:
+          openstack_system_count: 1
+          openstack_system2_count: 3
+          odl_system_count: 3
+          enable-haproxy: 'yes'
+          install-features: 'odl-jolokia,odl-netvirt-openstack'
+
+    testplan: '{project}-{topology}-openstack.txt'
+
+    functionality:
+      - upstream-transparent:
+          schedule: ''
+          sg-mode: 'transparent'
+      - upstream-stateful:
+          schedule: ''
+          sg-mode: 'stateful'
+      - upstream-stateful-snat-conntrack:
+          schedule: ''
+          sg-mode: 'stateful'
+          odl-snat-mode: 'conntrack'
+      - upstream-learn:
+          schedule: ''
+          sg-mode: 'learn'
+      - gate-learn:
+          schedule: ''
+          sg-mode: 'learn'
+      - gate-transparent:
+          schedule: ''
+          sg-mode: 'transparent'
+      - gate-stateful:
+          schedule: ''
+          sg-mode: 'stateful'
+      - gate-minimal-transparent:
+          schedule: ''
+          sg-mode: 'transparent'
+          testplan: '{project}-{topology}-minimal-openstack.txt'
+      - gate-tempest-transparent:
+          schedule: ''
+          sg-mode: 'transparent'
+          testplan: '{project}-{topology}-tempest-openstack.txt'
 
     openstack:
       - newton:
           openstack-branch: 'stable/newton'
           odl-ml2-branch: 'stable/newton'
-          openstack_system_image: 'CentOS 7 - devstack-newton - 20170808-0528'
-          openstack_system2_image: 'CentOS 7 - devstack-newton - 20170808-0528'
       - newton-nodl-v2:
           openstack-branch: 'stable/newton'
           odl-ml2-branch: 'stable/newton'
           odl-ml2-driver-version: 'v2'
-          openstack_system_image: 'CentOS 7 - devstack-newton - 20170808-0528'
-          openstack_system2_image: 'CentOS 7 - devstack-newton - 20170808-0528'
-      - ocata:
-          openstack-branch: 'stable/ocata'
-          odl-ml2-branch: 'stable/ocata'
-          odl-ml2-driver-version: 'v2'
-          openstack_system_image: 'CentOS 7 - devstack-newton - 20170808-0528'
-          openstack_system2_image: 'CentOS 7 - devstack-newton - 20170808-0528'
+
+    openstack_system_image: 'CentOS 7 - devstack-newton - 20170808-0528'
+    openstack_system2_image: 'CentOS 7 - devstack-newton - 20170808-0528'
 
     security-group-mode: '{sg-mode}'
 
@@ -134,6 +271,8 @@
           openstack-branch: 'stable/newton'
           odl-ml2-branch: 'stable/newton'
           odl-ml2-driver-version: 'v2'
-          openstack_system_image: 'CentOS 7 - devstack-newton - 20170808-0528'
+
+    openstack_system_image: 'CentOS 7 - devstack-newton - 20170808-0528'
+    openstack_system2_image: 'CentOS 7 - devstack-newton - 20170808-0528'
 
     security-group-mode: 'stateful'
