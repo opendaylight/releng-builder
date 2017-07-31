@@ -291,6 +291,13 @@ PUBLIC_PHYSICAL_NETWORK=${PUBLIC_PHYSICAL_NETWORK}
 ODL_PROVIDER_MAPPINGS=${ODL_PROVIDER_MAPPINGS}
 EOF
 fi
+cat >> ${local_conf_file_name} << EOF
+
+[[post-config|/etc/nova/nova.conf]]
+[api]
+auth_strategy = keystone
+
+EOF
 echo "local.conf Created...."
 cat ${local_conf_file_name}
 }
