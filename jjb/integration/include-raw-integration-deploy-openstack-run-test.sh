@@ -291,6 +291,13 @@ PUBLIC_PHYSICAL_NETWORK=${PUBLIC_PHYSICAL_NETWORK}
 ODL_PROVIDER_MAPPINGS=${ODL_PROVIDER_MAPPINGS}
 EOF
 fi
+cat >> ${local_conf_file_name} << EOF
+
+[[post-config|/etc/nova/nova.conf]]
+[api]
+auth_strategy = keystone
+
+EOF
 echo "local.conf Created...."
 cat ${local_conf_file_name}
 }
@@ -641,6 +648,13 @@ do
 
     echo "sleep for 60s and print hypervisor-list"
     sleep 60
+    # For Ocata, if we do not enable the n-cpu in control node
+    # We need to discover hosts manually and ensure that they are mapped to cells.
+    # reference: https://ask.openstack.org/en/question/102256/how-to-configure-placement-service-for-compute-node-on-ocata/
+    if [ "${OPENSTACK_BRANCH}" == "master" ] || [ "${OPENSTACK_BRANCH}" == "stable/ocata" ]; then
+        scp ${WORKSPACE}/setup_host_cell_mapping.sh  ${!CONTROLIP}:/tmp
+        ${SSH} ${!CONTROLIP} "sudo bash /tmp/setup_host_cell_mapping.sh"
+    fi
     ${SSH} ${!CONTROLIP} "cd /opt/stack/devstack; source openrc admin admin; nova hypervisor-list"
     # in the case that we are doing openstack (control + compute) all in one node, then the number of hypervisors
     # will be the same as the number of openstack systems. However, if we are doing multinode openstack then the
@@ -658,13 +672,6 @@ do
         exit 1
     fi
 
-    # For Ocata, if we do not enable the n-cpu in control node
-    # We need to discover hosts manually and ensure that they are mapped to cells.
-    # reference: https://ask.openstack.org/en/question/102256/how-to-configure-placement-service-for-compute-node-on-ocata/
-    if [ "${OPENSTACK_BRANCH}" == "stable/ocata" ]; then
-        scp ${WORKSPACE}/setup_host_cell_mapping.sh  ${!CONTROLIP}:/tmp
-        ${SSH} ${!CONTROLIP} "sudo bash /tmp/setup_host_cell_mapping.sh"
-    fi
 
     # upgrading pip, urllib3 and httplib2 so that tempest tests can be run on openstack control node
     # this needs to happen after devstack runs because it seems devstack is pulling in specific versions
