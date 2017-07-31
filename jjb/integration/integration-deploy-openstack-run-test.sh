@@ -75,7 +75,7 @@ enable_plugin ${plugin_name} ${ENABLE_PLUGIN_ARGS}
 EOF
 done
 unset IFS
-if [ "${OPENSTACK_BRANCH}" == "master" ] || [ "${OPENSTACK_BRANCH}" == "stable/ocata" ]; then # Ocata+
+if [ "${OPENSTACK_BRANCH}" == "stable/pike" ] || [ "${OPENSTACK_BRANCH}" == "stable/ocata" ]; then # Ocata+
     # placement is mandatory for nova since Ocata, note that this requires computes to enable placement-client
     # this should be moved into enabled_services for each job (but only for Ocata)
     echo "enable_service placement-api" >> ${local_conf_file_name}
@@ -168,7 +168,12 @@ disable_service q-l3
 PUBLIC_INTERFACE=br100
 EOF
 
-SERVICE_PLUGINS="networking_odl.l3.l3_odl.OpenDaylightL3RouterPlugin"
+if [ "${ODL_ML2_DRIVER_VERSION}" == "v2" ]; then
+   SERVICE_PLUGINS="odl-router_v2"
+else
+   SERVICE_PLUGINS="odl-router"
+fi
+
 if [ "${ENABLE_NETWORKING_L2GW}" == "yes" ]; then
   SERVICE_PLUGINS+=", networking_l2gw.services.l2gateway.plugin.L2GatewayPlugin"
 fi #check for ENABLE_NETWORKING_L2GW
@@ -220,7 +225,7 @@ if [ "${ODL_ML2_BRANCH}" != "stable/ocata" ]; then
 else
    RECLONE=yes
 fi
-if [ "${OPENSTACK_BRANCH}" == "master" ] || [ "${OPENSTACK_BRANCH}" == "stable/ocata" ]; then # Ocata+
+if [ "${OPENSTACK_BRANCH}" == "stable/pike" ] || [ "${OPENSTACK_BRANCH}" == "stable/ocata" ]; then # Ocata+
     # placement is mandatory for nova since Ocata, note that this requires controller to enable placement-api
     ENABLED_SERVICES="n-cpu,placement-client"
 else
@@ -294,6 +299,13 @@ PUBLIC_PHYSICAL_NETWORK=${PUBLIC_PHYSICAL_NETWORK}
 ODL_PROVIDER_MAPPINGS=${ODL_PROVIDER_MAPPINGS}
 EOF
 fi
+cat >> ${local_conf_file_name} << EOF
+
+[[post-config|/etc/nova/nova.conf]]
+[api]
+auth_strategy = keystone
+
+EOF
 echo "local.conf Created...."
 cat ${local_conf_file_name}
 }
@@ -636,6 +648,20 @@ for i in `seq 1 ${NUM_OPENSTACK_SITES}`
 do
     echo "Configure the Control Node"
     CONTROLIP=OPENSTACK_CONTROL_NODE_${i}_IP
+    # Gather Compute IPs for the site
+    for j in `seq 1 ${NUM_COMPUTES_PER_SITE}`
+    do
+        COMPUTE_INDEX=$(((i-1) * NUM_COMPUTES_PER_SITE + j))
+        IP_VAR=OPENSTACK_COMPUTE_NODE_${COMPUTE_INDEX}_IP
+        COMPUTE_IPS[$((j-1))]=${!IP_VAR}
+    done
+
+    # Need to disable firewalld and iptables in compute nodes as well
+    for ip in ${COMPUTE_IPS[*]}
+    do
+        scp ${WORKSPACE}/disable_firewall.sh "${ip}:/tmp"
+        ${SSH} "${ip}" "sudo bash /tmp/disable_firewall.sh"
+    done
 
     #Need to disable firewalld and iptables in control node
     echo "Stop Firewall in Control Node for compute nodes to be able to reach the ports and add to hypervisor-list"
@@ -644,6 +670,13 @@ do
 
     echo "sleep for 60s and print hypervisor-list"
     sleep 60
+    # For Ocata, if we do not enable the n-cpu in control node
+    # We need to discover hosts manually and ensure that they are mapped to cells.
+    # reference: https://ask.openstack.org/en/question/102256/how-to-configure-placement-service-for-compute-node-on-ocata/
+    if [ "${OPENSTACK_BRANCH}" == "stable/ocata" ]; then
+        scp ${WORKSPACE}/setup_host_cell_mapping.sh  ${!CONTROLIP}:/tmp
+        ${SSH} ${!CONTROLIP} "sudo bash /tmp/setup_host_cell_mapping.sh"
+    fi
     ${SSH} ${!CONTROLIP} "cd /opt/stack/devstack; source openrc admin admin; nova hypervisor-list"
     # in the case that we are doing openstack (control + compute) all in one node, then the number of hypervisors
     # will be the same as the number of openstack systems. However, if we are doing multinode openstack then the
@@ -661,13 +694,6 @@ do
         exit 1
     fi
 
-    # For Ocata, if we do not enable the n-cpu in control node
-    # We need to discover hosts manually and ensure that they are mapped to cells.
-    # reference: https://ask.openstack.org/en/question/102256/how-to-configure-placement-service-for-compute-node-on-ocata/
-    if [ "${OPENSTACK_BRANCH}" == "stable/ocata" ]; then
-        scp ${WORKSPACE}/setup_host_cell_mapping.sh  ${!CONTROLIP}:/tmp
-        ${SSH} ${!CONTROLIP} "sudo bash /tmp/setup_host_cell_mapping.sh"
-    fi
 
     # upgrading pip, urllib3 and httplib2 so that tempest tests can be run on openstack control node
     # this needs to happen after devstack runs because it seems devstack is pulling in specific versions
@@ -801,6 +827,12 @@ cat testplan.txt
 
 SUITES=`egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' testplan.txt | tr '\012' ' '`
 
+if [ "${OPENSTACK_BRANCH}" == "stable/pike" ]; then # Ocata
+   AUTH="http://${!CONTROLIP}/identity" 
+else
+   AUTH="http://${!CONTROLIP}:35357/v3"
+fi
+
 #Environment Variables Needed to execute Openstack Client for NEtvirt Jobs
 cat > /tmp/os_netvirt_client_rc << EOF
 export OS_USERNAME=admin
@@ -808,7 +840,7 @@ export OS_PASSWORD=admin
 export OS_PROJECT_NAME=admin
 export OS_USER_DOMAIN_NAME=default
 export OS_PROJECT_DOMAIN_NAME=default
-export OS_AUTH_URL="http://${!CONTROLIP}:35357/v3"
+export OS_AUTH_URL=${AUTH}
 export OS_IDENTITY_API_VERSION=3
 export OS_IMAGE_API_VERSION=2
 export OS_TENANT_NAME=admin
