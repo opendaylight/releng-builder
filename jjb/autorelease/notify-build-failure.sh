@@ -8,16 +8,17 @@
 # which accompanies this distribution, and is available at
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
+# This script parses the console log to discover which project has caused a
+# build failure and notify the project as appropriate.
 
 NEWLINE=$'\n'
 RELEASE_EMAIL="release@lists.opendaylight.org"
 ARCHIVES_DIR="$JENKINS_HOSTNAME/$JOB_NAME/$BUILD_NUMBER"
 CONSOLE_LOG="/tmp/autorelease-build.log"
 STREAM=${JOB_NAME#*-*e-}
-ERROR_LOG="$WORKSPACE/error.log.gz"
+ERROR_LOG="$WORKSPACE/archives/error.log.gz"
 
-# get console logs
-wget --no-verbose -O "$CONSOLE_LOG" "${BUILD_URL}consoleText"
+wget -nv -O "$CONSOLE_LOG" "${BUILD_URL}consoleText"
 
 # TODO: This section is still required since some of the projects use
 # description. Remove this section when the reactor info is more consistant.
