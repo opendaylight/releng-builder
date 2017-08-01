@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ba1f61a0_62d67ac7",
+        "filename": "jjb/packaging/include-raw-test-karaf.expect",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2017-08-01T13:26:48Z",
+      "side": 1,
+      "message": "I agree that sleeps suck, but I can\u0027t mix bash into an expect script like this",
+      "parentUuid": "ba1f61a0_7c26216a",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 8
+      },
+      "revId": "c4b0f12698aa9aa4b528f13245ec812696890f4e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba1f61a0_5c2b5d30",
         "filename": "jjb/packaging/include-raw-test-karaf.expect",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-01T00:06:45Z",
       "side": 1,
       "message": "I think expect can do \"set timeout 5\" so that we don\u0027t\nhard sleep 5, but the Password check below will wait UP TO\n5 seconds for it to appear.",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 7
+      },
+      "revId": "c4b0f12698aa9aa4b528f13245ec812696890f4e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba1f61a0_02e5fea7",
+        "filename": "jjb/packaging/include-raw-test-karaf.expect",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2017-08-01T13:26:48Z",
+      "side": 1,
+      "message": "The timeout is 10 by default, so this is like temporally making it 15, but I may be able to just remove this. Will try",
+      "parentUuid": "ba1f61a0_5c2b5d30",
       "range": {
         "startLine": 20,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ba1f61a0_42eed68c",
+        "filename": "jjb/packaging/include-raw-test-karaf.expect",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2017-08-01T13:26:48Z",
+      "side": 1,
+      "message": "Yeah, I\u0027ll try to remove it and/or use a longer expect timeout",
+      "parentUuid": "ba1f61a0_bc1ff908",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 7
+      },
+      "revId": "c4b0f12698aa9aa4b528f13245ec812696890f4e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba1f61a0_9c1cb515",
         "filename": "jjb/packaging/include-raw-test-karaf.expect",
         "patchSetId": 8
@@ -82,6 +154,24 @@
       "writtenOn": "2017-08-01T00:06:45Z",
       "side": 1,
       "message": "you could use the -i option here to just list features\nthat are installed.",
+      "revId": "c4b0f12698aa9aa4b528f13245ec812696890f4e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba1f61a0_22f3e274",
+        "filename": "jjb/packaging/include-raw-test-karaf.expect",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2017-08-01T13:26:48Z",
+      "side": 1,
+      "message": "Good idea",
+      "parentUuid": "ba1f61a0_9c1cb515",
       "revId": "c4b0f12698aa9aa4b528f13245ec812696890f4e",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
