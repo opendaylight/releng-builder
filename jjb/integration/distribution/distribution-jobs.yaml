@@ -185,7 +185,7 @@
 
 - job-template:
     name: 'distribution-check-{stream}'
-    # Like a {project}-distribution-check, but one step less as there is no upstream project involved.
+    # Like a {project}-distribution-check, but few steps less as there is no upstream project involved.
     disabled: false
 
     project-type: freestyle
@@ -238,11 +238,7 @@
           mvn-opts: '{opendaylight-infra-mvn-opts}'
       - distribution-check-verify-groupid:
           gerrit-project: 'integration'
-      - distribution-check-delete-snapshots
-      - distribution-check-configure-remotes
-      - distribution-check-repeat-build:
-          dist-pom: 'distribution/pom.xml'
-          mvn-opts: '{opendaylight-infra-mvn-opts}'
+      # No need to repeat with SFT as distribution-verify has that covered.
       - integration-upload-distribution:
           dist-pom: distribution/pom.xml
       - integration-distribution-check
