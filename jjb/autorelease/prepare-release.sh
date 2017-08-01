@@ -8,6 +8,12 @@
 # which accompanies this distribution, and is available at
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
+# Script to prepare project for release.
+#
+# 1) Drop -SNAPSHOT from all versions
+# 2) Create git patches (diffs of changes)
+# 3) Create git bundles (byte exact commit objects)
+# 4) Create tarball for distribution.
 
 # RELEASE_TAG=Beryllium-SR1  # Example
 # RELEASE_BRANCH=stable/beryllium  # Example
