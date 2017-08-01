@@ -18,18 +18,14 @@
     parameters:
       - maven-exec:
           maven-version: 'mvn33'
-      - opendaylight-infra-parameters:
-          os-cloud: '{os-cloud}'
+      - lf-infra-parameters:
           project: '{project}'
+          stream: '{stream}'
           branch: '{branch}'
-          refspec: 'refs/heads/{branch}'
-          artifacts: '{archive-artifacts}'
       - distribution-karaf-version:
           karaf-version: '{karaf-version}'
       - autorelease-release-tag:
           release-tag: '{next-release-tag}'
-      - autorelease-release-branch:
-          release-branch: '{branch}'
       - string:
           name: EXTRA_MVN_OPTS
           default: '{extra-mvn-opts}'
