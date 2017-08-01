@@ -12,10 +12,10 @@
 # This script performs version bumping activities for an ODL release.
 echo "---> version-bump.sh"
 
-# Set release tag as $STREAM, when no release tag is passed
-RELEASE_TAG="${RELEASE_TAG:-${STREAM^}}"
-# Ensure that the first letter of RELEASE_TAG is uppercase.
-RELEASE_TAG="${RELEASE_TAG^}"
+# The only purpose of RELEASE_TAG in this script is to set the Gerrit topic.
+# It is also used as a placeholder for version bumping but gets wiped out
+# immediately to bump versions by x.y.(z+1).
+RELEASE_TAG="${STREAM^}"
 
 mkdir -p "$WORKSPACE/archives"
 LOG_FILE="$WORKSPACE/archives/version-bump.log"

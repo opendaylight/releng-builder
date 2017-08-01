@@ -21,7 +21,15 @@ RELEASE_TAG="${RELEASE_TAG^}"
 PATCH_DIR="$WORKSPACE/patches"
 
 echo "$RELEASE_TAG"
-lftools version release "$RELEASE_TAG"
+# Remove this case statement when Carbon is no longer supported.
+# Nitrogen onwards we do not want to use the release tag so simply need to
+# strip xml files of -SNAPSHOT tags.
+case "$RELEASE_TAG" in
+    Boron*|Carbon*)
+        lftools version release "$RELEASE_TAG"
+    *)
+        find . -name "*.xml" | xargs sed -i 's/-SNAPSHOT//'
+esac
 git submodule foreach "git commit -am \"Release $RELEASE_TAG\" || true"
 git commit -am "Release $RELEASE_TAG"
 
