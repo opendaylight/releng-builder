@@ -23,7 +23,8 @@ RELEASE_TAG="${RELEASE_TAG:-${STREAM^}}"
 RELEASE_TAG="${RELEASE_TAG^}"
 
 # Directory to put git format-patches
-PATCH_DIR="$WORKSPACE/patches"
+PATCH_DIR="$WORKSPACE/archives/patches"
+mkdir -p "$PATCH_DIR"
 
 echo "$RELEASE_TAG"
 # Remove this case statement when Carbon is no longer supported.
@@ -40,7 +41,6 @@ esac
 git submodule foreach "git commit -am \"Release $RELEASE_TAG\" || true"
 git commit -am "Release $RELEASE_TAG"
 
-mkdir patches
 # TODO: Fix this workaround so that scripts will ensure that taglist.log exists and archived.
 mv taglist.log "$PATCH_DIR" || true
 modules=$(xmlstarlet sel -N x=http://maven.apache.org/POM/4.0.0 -t -m '//x:modules' -v '//x:module' pom.xml)
@@ -51,5 +51,5 @@ for module in $modules; do
     popd
 done
 
-tar cvzf patches.tar.gz -C "$WORKSPACE" patches
+tar cvzf "$PATCH_DIR/patches.tar.gz" -C "$WORKSPACE/archives" patches
 rm "$PATCH_DIR"/*.bundle
