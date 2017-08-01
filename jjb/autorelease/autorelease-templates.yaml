@@ -16,12 +16,15 @@
           build-days-to-keep: 7
 
     parameters:
-      - maven-exec:
-          maven-version: 'mvn33'
       - lf-infra-parameters:
           project: '{project}'
           stream: '{stream}'
           branch: '{branch}'
+      - lf-infra-maven-parameters:
+          mvn-version: mvn33
+          mvn-params:
+          mvn-opts:
+          staging-profile-id:
       - distribution-karaf-version:
           karaf-version: '{karaf-version}'
       - autorelease-release-tag:
@@ -60,13 +63,8 @@
 
     builders:
       # force jenkins install of maven version before any shell scripts use it
-      - maven-target:
-          maven-version: 'mvn33'
-          goals: '-version'
-          settings: 'autorelease-settings'
-          settings-type: cfp
-          global-settings: 'global-settings'
-          global-settings-type: cfp
+      - lf-maven-install:
+          mvn-version: mvn33
       - wipe-local-maven-repo
       - jacoco-nojava-workaround
       - shell: "./scripts/list-project-dependencies.sh"
