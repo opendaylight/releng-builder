@@ -197,8 +197,14 @@
       - shell: !include-raw: include-raw-stop-odl.sh
 
     publishers:
-      - archive-artifacts:
+      # TODO: Remove the archive publisher
+      #       small data should be stored on logs.opendaylight.org
+      #       large data should be stored on nexus.opendaylight.org
+      - archive:
           artifacts: '**'
+          allow-empty: true
+          fingerprint: true
+          latest-only: true
       - lf-infra-publish
 
 
