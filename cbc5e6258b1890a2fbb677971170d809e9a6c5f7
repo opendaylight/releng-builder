@@ -22,6 +22,30 @@
       "revId": "cbc5e6258b1890a2fbb677971170d809e9a6c5f7",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba1f61a0_c5012d3b",
+        "filename": "jjb/packaging/include-raw-test-karaf.expect",
+        "patchSetId": 11
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2017-08-02T08:16:44Z",
+      "side": 1,
+      "message": "Good point, but I think for now we don\u0027t really need netvirt to be up and working. Once/if we add some additional tests that actually require working netvirt, yes we\u0027ll need to check if it\u0027s actually up. For now, as you said, we\u0027re just doing a simple \"is the feature there and installable\" check (which seems to catch RPM failures, as test currently shows).",
+      "parentUuid": "ba1f61a0_3217ada5",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 2
+      },
+      "revId": "cbc5e6258b1890a2fbb677971170d809e9a6c5f7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
