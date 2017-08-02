@@ -132,6 +132,8 @@ fi
 
 if [ "${ODL_ML2_DRIVER_VERSION}" == "v2" ]; then
     echo "ODL_V2DRIVER=True" >> ${local_conf_file_name}
+else
+    echo "ODL_V2DRIVER=False" >> ${local_conf_file_name}
 fi
 
 echo "ODL_OVS_MANAGERS=${ODL_OVS_MANAGERS}" >> ${local_conf_file_name}
@@ -165,21 +167,7 @@ ODL_PROVIDER_MAPPINGS=${ODL_PROVIDER_MAPPINGS}
 disable_service q-l3
 PUBLIC_INTERFACE=br100
 EOF
-
-SERVICE_PLUGINS="networking_odl.l3.l3_odl.OpenDaylightL3RouterPlugin"
-if [ "${ENABLE_NETWORKING_L2GW}" == "yes" ]; then
-  SERVICE_PLUGINS+=", networking_l2gw.services.l2gateway.plugin.L2GatewayPlugin"
-fi #check for ENABLE_NETWORKING_L2GW
-if [ "${IS_LBAAS_PLUGIN_ENABLED}" == "yes" ]; then
-  SERVICE_PLUGINS+=", lbaasv2"
-fi #check for ENABLE_LBAAS_PLUGIN
 fi #check for ODL_ENABLE_L3_FWD
-
-cat >> ${local_conf_file_name} << EOF
-[[post-config|\$NEUTRON_CONF]]
-[DEFAULT]
-service_plugins = ${SERVICE_PLUGINS}
-EOF
 
 cat >> ${local_conf_file_name} << EOF
 [[post-config|/etc/neutron/plugins/ml2/ml2_conf.ini]]
