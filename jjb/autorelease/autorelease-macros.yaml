@@ -125,6 +125,17 @@
           exit 0
 
 - builder:
+    name: autorelease-generate-artifact-versions
+    # Generate versions.csv containing version of all mvn artifacts in this build.
+    builders:
+      - shell: |
+          #!/bin/bash
+          set -eu -o pipefail
+          ./scripts/generate-artifact-versions.sh
+          mkdir -p "$WORKSPACE/archives"
+          mv versions.csv "$WORKSPACE/archives"
+
+- builder:
     name: autorelease-generate-release-patches
     builders:
       - shell: !include-raw:

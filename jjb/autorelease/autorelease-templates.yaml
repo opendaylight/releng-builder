@@ -86,6 +86,7 @@
       - distribute-build-url:
           path: 'integration/distribution/$KARAF_ARTIFACT/src/main/assembly'
       - autorelease-generate-release-patches
+      - autorelease-generate-artifact-versions
       # In a perfect world projects should be releasing separately and we consume them
       # via a project that pulls the release bits from each project from Nexus.
       # Keep the patches compatible with that ideal, but apply an edit
