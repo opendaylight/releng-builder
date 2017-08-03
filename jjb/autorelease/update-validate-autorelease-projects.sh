@@ -14,12 +14,12 @@ BRANCH="stable/${STREAM}"
 
 # The current development release will not have a stable branch defined so if
 # branch does not exist assume master
-wget --no-verbose -O /tmp/ar-branches.json https://git.opendaylight.org/gerrit/projects/releng%2Fautorelease/branches/
+wget -nv -O /tmp/ar-branches.json https://git.opendaylight.org/gerrit/projects/releng%2Fautorelease/branches/
 if ! grep "$BRANCH" /tmp/ar-branches.json; then
     BRANCH=master
 fi
 
-wget --no-verbose -O /tmp/pom.xml "https://git.opendaylight.org/gerrit/gitweb?p=releng/autorelease.git;a=blob_plain;f=pom.xml;hb=$GERRIT_BRANCH"
+wget -nv -O /tmp/pom.xml "https://git.opendaylight.org/gerrit/gitweb?p=releng/autorelease.git;a=blob_plain;f=pom.xml;hb=$GERRIT_BRANCH"
 modules=($(xmlstarlet sel -N x=http://maven.apache.org/POM/4.0.0 -t -m '//x:modules' -v '//x:module' /tmp/pom.xml))
 
 cat > "$YAML_FILE" << EOF

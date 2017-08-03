@@ -22,7 +22,7 @@ OS_STACKS=($(openstack stack list \
 ACTIVE_BUILDS=()
 for silo in releng sandbox; do
     JENKINS_URL="https://jenkins.opendaylight.org/$silo//computer/api/json?tree=computer[executors[currentExecutable[url]],oneOffExecutors[currentExecutable[url]]]&xpath=//url&wrapper=builds"
-    wget --no-verbose -O "${silo}_builds.json" "$JENKINS_URL"
+    wget -nv -O "${silo}_builds.json" "$JENKINS_URL"
     sleep 1  # Need to sleep for 1 second otherwise next line causes script to stall
     ACTIVE_BUILDS=(${ACTIVE_BUILDS[@]} $( \
         jq -r '.computer[].executors[].currentExecutable.url' "${silo}_builds.json" \
