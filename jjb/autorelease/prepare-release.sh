@@ -16,7 +16,6 @@
 # 4) Create tarball for distribution.
 
 # RELEASE_TAG=Beryllium-SR1  # Example
-# RELEASE_BRANCH=stable/beryllium  # Example
 
 # Set release tag as $STREAM, when no release tag is passed
 RELEASE_TAG="${RELEASE_TAG:-${STREAM^}}"
@@ -47,7 +46,7 @@ mv taglist.log "$PATCH_DIR" || true
 modules=$(xmlstarlet sel -N x=http://maven.apache.org/POM/4.0.0 -t -m '//x:modules' -v '//x:module' pom.xml)
 for module in $modules; do
     pushd "$module"
-    git format-patch --stdout "origin/$RELEASE_BRANCH" > "$PATCH_DIR/${module//\//-}.patch"
+    git format-patch --stdout "origin/$BRANCH" > "$PATCH_DIR/${module//\//-}.patch"
     git bundle create "$PATCH_DIR/${module//\//-}.bundle" "origin/master..HEAD"
     popd
 done
