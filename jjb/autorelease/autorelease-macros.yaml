@@ -157,12 +157,11 @@
           fi
 
 - publisher:
-    # include-raw-autorelease-notify-build-failure.sh searches console log for
-    # failures and emails the status to the release mailing list.
+    # Search console log for failures and email status to the release mailing list.
     name: opendaylight-infra-notify-status
     publishers:
       - postbuildscript:
           builders:
-            - shell: !include-raw: include-raw-autorelease-notify-build-failure.sh
-          script-only-if-succeeded: 'False'
-          script-only-if-failed: 'True'
+            - shell: !include-raw: notify-build-failure.sh
+          script-only-if-succeeded: false
+          script-only-if-failed: true
