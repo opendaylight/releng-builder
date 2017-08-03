@@ -46,6 +46,30 @@
       "revId": "d69988e8377ff4c48aed40fce140005abe4fd709",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba1f61a0_038976ca",
+        "filename": "jjb/autorelease/autorelease-templates.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2017-08-03T15:02:52Z",
+      "side": 1,
+      "message": "\u003e if we set both to false neither will run\n\nIt is the other way around.\n\nA build not triggering anything: https://jenkins.opendaylight.org/releng/view/autorelease/job/autorelease-release-carbon/lastFailedBuild/\n\nPlugin source code: \nhttps://github.com/jenkinsci/postbuildscript-plugin/blob/master/src/main/java/org/jenkinsci/plugins/postbuildscript/PostBuildScript.java#L98-L106\n\nFix: https://git.opendaylight.org/gerrit/61120",
+      "parentUuid": "ba1f61a0_d925940b",
+      "range": {
+        "startLine": 156,
+        "startChar": 0,
+        "endLine": 157,
+        "endChar": 37
+      },
+      "revId": "d69988e8377ff4c48aed40fce140005abe4fd709",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
