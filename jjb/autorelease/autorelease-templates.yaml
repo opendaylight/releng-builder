@@ -153,8 +153,9 @@
                         predefined-parameters: DOWNLOAD_URL=$BUNDLE_URL
                         property-file: variables.jenkins-trigger
                         fail-on-missing: true
-          script-only-if-succeeded: true
-          script-only-if-failed: true
+          # Never skip executing the script.
+          script-only-if-succeeded: false
+          script-only-if-failed: false
       - lf-infra-publish
 
 - job-template:
