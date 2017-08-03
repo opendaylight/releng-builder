@@ -1,6 +1,5 @@
 #!/bin/bash
-
-# @License EPL-1.0 <http://spdx.org/licenses/EPL-1.0>
+# SPDX-License-Identifier: EPL-1.0
 ##############################################################################
 # Copyright (c) 2015 The Linux Foundation and others.
 #
@@ -22,4 +21,3 @@ if LC_ALL=C grep -r '[^[:print:][:space:]]' "$directory"; then
 fi
 
 echo "All files are ASCII only"
-
