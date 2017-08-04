@@ -52,5 +52,6 @@ for module in $modules; do
     popd
 done
 
-tar cvzf "$PATCH_DIR/patches.tar.gz" -C "$WORKSPACE/archives" patches
+touch "$PATCH_DIR/patches.tar.gz"
+tar cvzf "$PATCH_DIR/patches.tar.gz" --exclude="patches.tar.gz ." -C "$WORKSPACE/archives" patches
 rm "$PATCH_DIR"/*.bundle
