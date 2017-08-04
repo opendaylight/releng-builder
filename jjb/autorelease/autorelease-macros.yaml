@@ -8,6 +8,14 @@
           default: '{release-tag}'
           description: "The Release train tag to use eg. Beryllium-SR1"
 
+- parameter:
+    name: autorelease-release-branch
+    parameters:
+      - string:
+          name: RELEASE_BRANCH
+          default: '{release-branch}'
+          description: "The Release train branch to base build off eg. stable/beryllium"
+
 - wrapper:
     name: autorelease-build-timeout
     wrappers:

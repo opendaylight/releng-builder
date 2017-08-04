@@ -348,6 +348,8 @@
           artifacts: '{archive-artifacts}'
       - autorelease-release-tag:
           release-tag: 'validate'
+      - autorelease-release-branch:
+          release-branch: '{branch}'
       - string:
           name: CLONE_URL
           default: '{git-url}/releng/autorelease'
