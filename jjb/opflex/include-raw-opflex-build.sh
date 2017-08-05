@@ -23,6 +23,10 @@ export PATH="$ROOT/bin:$PATH"
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$ROOT/lib"
 export PKG_CONFIG_PATH="$ROOT/lib/pkgconfig"
 
+# Move OpFlex artifacts to upload files directory
+UPLOAD_FILES_PATH="$WORKSPACE/upload_files"
+mkdir -p "$UPLOAD_FILES_PATH"
+
 # build libopflex
 pushd libopflex
 ./autogen.sh
@@ -34,6 +38,7 @@ make -j8
 if ! make check; then find . -name test-suite.log -exec cat {} \; && false; fi
 make install
 make dist
+mv *.tar.gz "$UPLOAD_FILES_PATH"
 popd
 
 # build libmodelgbp
@@ -45,6 +50,7 @@ bash autogen.sh
 make -j2
 make install
 make dist
+mv *.tar.gz "$UPLOAD_FILES_PATH"
 popd
 popd
 
@@ -58,4 +64,5 @@ pushd agent-ovs
 make -j8
 if ! make check; then find . -name test-suite.log -exec cat {} \; && false; fi
 make dist
+mv *.tar.gz "$UPLOAD_FILES_PATH"
 popd
