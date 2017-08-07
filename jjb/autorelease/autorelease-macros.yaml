@@ -63,7 +63,7 @@
 - builder:
     name: autorelease-maven-deploy
     builders:
-      - shell: !include-raw: include-raw-autorelease-maven-deploy.sh
+      - shell: !include-raw: autorelease-maven-deploy.sh
 
 - builder:
     name: autorelease-maven-sources
@@ -115,7 +115,7 @@
     name: autorelease-get-integration-test-variables
     builders:
       - integration-set-variables
-      - shell: !include-raw: include-raw-autorelease-get-integration-test-variables.sh
+      - shell: !include-raw: autorelease-get-integration-test-variables.sh
       - inject:
           properties-file: variables.prop
 
