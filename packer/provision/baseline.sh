@@ -291,7 +291,9 @@ EOF
     # facter is not installed by default on the base image and facter package
     # gets removed when puppet4 is updated. To fix this use version of facter
     # shipped with puppet4.
-    ensure_ubuntu_install facter
+    apt-get clean
+    apt-get update -m
+    apt-get install facter
     # ensure facter is available in $PATH avoid failures in retry loop
     export PATH="/opt/puppetlabs/bin/:$PATH"
 
