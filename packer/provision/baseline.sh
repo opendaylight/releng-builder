@@ -288,18 +288,18 @@ EOF
     # add additional repositories
     sudo add-apt-repository "deb http://us.archive.ubuntu.com/ubuntu $(lsb_release -sc) main universe restricted multiverse"
 
-    # facter is not installed by default on the base image and facter package
-    # gets removed when puppet4 is updated. To fix this use version of facter
-    # shipped with puppet4.
-    ensure_ubuntu_install facter
-    # ensure facter is available in $PATH avoid failures in retry loop
-    export PATH="/opt/puppetlabs/bin/:$PATH"
-
     echo "---> Installing base packages"
     apt-get clean
     apt-get update -m
     apt-get upgrade -m
     apt-get dist-upgrade -m
+    apt-get install facter
+
+    # facter is not installed by default on the base image and facter package
+    # gets removed when puppet4 is updated. To fix this use version of facter
+    # shipped with puppet4.
+    # ensure facter is available in $PATH avoid failures in retry loop
+    export PATH="/opt/puppetlabs/bin/:$PATH"
 
     ensure_ubuntu_install unzip xz-utils git libxml-xpath-perl
 
