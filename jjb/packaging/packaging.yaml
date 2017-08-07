@@ -73,7 +73,7 @@
           build-timeout: '{build-timeout}'
 
     builders:
-      - shell: !include-raw: include-raw-build-rpm.sh
+      - shell: !include-raw: build-rpm.sh
       - lf-infra-deploy-maven-file:
           global-settings-file: 'global-settings'
           settings-file: 'packaging-settings'
@@ -141,7 +141,7 @@
           build-timeout: '{build-timeout}'
 
     builders:
-      - shell: !include-raw: include-raw-build-rpm-snap.sh
+      - shell: !include-raw: build-rpm-snap.sh
       - lf-infra-deploy-maven-file:
           global-settings-file: 'global-settings'
           settings-file: 'packaging-settings'
@@ -186,15 +186,15 @@
           build-timeout: '{build-timeout}'
 
     builders:
-      - shell: !include-raw: include-raw-install-rpm.sh
-      - shell: !include-raw: include-raw-start-odl.sh
+      - shell: !include-raw: install-rpm.sh
+      - shell: !include-raw: start-odl.sh
       - shell: |
           # Install expect to interact with Karaf shell
           sudo yum install -y expect
           # Install nmap to check status of ODL's SSH port
           sudo yum install -y nmap
       - shell: !include-raw: include-raw-test-karaf.expect
-      - shell: !include-raw: include-raw-stop-odl.sh
+      - shell: !include-raw: stop-odl.sh
 
     publishers:
       # TODO: Remove the archive publisher
@@ -242,19 +242,19 @@
           build-timeout: '{build-timeout}'
 
     builders:
-      - shell: !include-raw: include-raw-install-rpm.sh
-      - shell: !include-raw: include-raw-start-odl.sh
+      - shell: !include-raw: install-rpm.sh
+      - shell: !include-raw: start-odl.sh
       - shell: |
           # Install expect to interact with Karaf shell
           sudo yum install -y expect
           # Install nmap to check status of ODL's SSH port
           sudo yum install -y nmap
       - shell: !include-raw: include-raw-test-karaf.expect
-      - shell: !include-raw: include-raw-stop-odl.sh
-      - shell: !include-raw: include-raw-test-rpm-upgrade.sh
-      - shell: !include-raw: include-raw-start-odl.sh
+      - shell: !include-raw: stop-odl.sh
+      - shell: !include-raw: test-rpm-upgrade.sh
+      - shell: !include-raw: start-odl.sh
       - shell: !include-raw: include-raw-test-karaf.expect
-      - shell: !include-raw: include-raw-stop-odl.sh
+      - shell: !include-raw: stop-odl.sh
 
     publishers:
       - lf-infra-publish
@@ -288,15 +288,15 @@
           build-timeout: '{build-timeout}'
 
     builders:
-      - shell: !include-raw: include-raw-install-deb.sh
-      - shell: !include-raw: include-raw-start-odl.sh
+      - shell: !include-raw: install-deb.sh
+      - shell: !include-raw: start-odl.sh
       - shell: |
           # Install expect to interact with Karaf shell
           sudo apt-get install -y expect
           # Install nmap to check status of ODL's SSH port
           sudo apt-get install -y nmap
       - shell: !include-raw: include-raw-test-karaf.expect
-      - shell: !include-raw: include-raw-stop-odl.sh
+      - shell: !include-raw: stop-odl.sh
 
     publishers:
       - lf-infra-publish
@@ -394,7 +394,7 @@
           build-timeout: '{build-timeout}'
 
     builders:
-      - shell: !include-raw: include-raw-build-deb.sh
+      - shell: !include-raw: build-deb.sh
       - lf-infra-deploy-maven-file:
           global-settings-file: 'global-settings'
           settings-file: 'packaging-settings'

@@ -44,7 +44,7 @@
           build-timeout: '{build-timeout}'
 
     builders:
-      - shell: !include-raw: include-raw-test-ansible-rpm.sh
+      - shell: !include-raw: test-ansible-rpm.sh
 
     triggers:
       - timed: '@daily'
@@ -87,7 +87,7 @@
           build-timeout: '{build-timeout}'
 
     builders:
-      - shell: !include-raw: include-raw-test-ansible-deb.sh
+      - shell: !include-raw: test-ansible-deb.sh
 
     triggers:
       - timed: '@daily'
