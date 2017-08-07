@@ -1,6 +1,6 @@
 #@IgnoreInspection BashAddShebang
 # Activate robotframework virtualenv
-# ${ROBOT_VENV} comes from the include-raw-integration-install-robotframework.sh
+# ${ROBOT_VENV} comes from the integration-install-robotframework.sh
 # script.
 # shellcheck source=${ROBOT_VENV}/bin/activate disable=SC1091
 source ${ROBOT_VENV}/bin/activate

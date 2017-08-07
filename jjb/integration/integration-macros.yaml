@@ -311,7 +311,7 @@
 - builder:
     name: integration-get-slave-addresses
     builders:
-      - shell: !include-raw: include-raw-integration-get-slave-addresses.sh
+      - shell: !include-raw: integration-get-slave-addresses.sh
 
 - builder:
     name: integration-set-variables
@@ -372,7 +372,7 @@
 - builder:
     name: integration-deploy-controller-run-test
     builders:
-      - shell: !include-raw: include-raw-integration-deploy-controller-run-test.sh
+      - shell: !include-raw: integration-deploy-controller-run-test.sh
 
 # Macro: integration-configure-clustering
 # Operation: this macro configures the clustering
@@ -381,7 +381,7 @@
 - builder:
     name: integration-configure-clustering
     builders:
-      - shell: !include-raw: include-raw-integration-configure-clustering.sh
+      - shell: !include-raw: integration-configure-clustering.sh
 
 # Macro: integration-start-cluster-run-test
 # Operation: this macro starts the 3-node cluster and runs test
@@ -390,7 +390,7 @@
 - builder:
     name: integration-start-cluster-run-test
     builders:
-      - shell: !include-raw: include-raw-integration-start-cluster-run-test.sh
+      - shell: !include-raw: integration-start-cluster-run-test.sh
 
 # Macro: integration-install-robotframework
 # Operation: Installs robotframework using pip to a virtualenv
@@ -399,7 +399,7 @@
 - builder:
     name: integration-install-robotframework
     builders:
-      - shell: !include-raw: include-raw-integration-install-robotframework.sh
+      - shell: !include-raw: integration-install-robotframework.sh
 
 # Macro: integration-cleanup-tmp
 # Operation: Cleans up temporary files created by build
@@ -408,7 +408,7 @@
 - builder:
     name: integration-cleanup-tmp
     builders:
-      - shell: !include-raw: include-raw-integration-cleanup-tmp.sh
+      - shell: !include-raw: integration-cleanup-tmp.sh
 
 # Macro: integration-multipatch-builder
 # Operation: checks out multiple patches and builds custom distribution
@@ -426,7 +426,7 @@
 - builder:
     name: integration-cleanup-workspace
     builders:
-      - shell: !include-raw: include-raw-integration-cleanup-workspace.sh
+      - shell: !include-raw: integration-cleanup-workspace.sh
 
 # Macro: integration-rebase-patch
 # Operation: For cloned project, rebase checked-out Gerrit patch onto $DISTROBRANCH.
@@ -435,12 +435,12 @@
 - builder:
     name: integration-rebase-gerrit-patch
     builders:
-      - shell: !include-raw: include-raw-integration-rebase-gerrit-patch.sh
+      - shell: !include-raw: integration-rebase-gerrit-patch.sh
 
 - builder:
     name: integration-deploy-openstack-run-test
     builders:
-      - shell: !include-raw: include-raw-integration-deploy-openstack-run-test.sh
+      - shell: !include-raw: integration-deploy-openstack-run-test.sh
 
 # Macro: integration-list-jobs
 # Operation: queries Jenkins jobs from jenkins.opendaylight.org and
@@ -457,7 +457,7 @@
 - builder:
     name: integration-list-jobs
     builders:
-      - shell: !include-raw: include-raw-integration-list-jobs.sh
+      - shell: !include-raw: integration-list-jobs.sh
 
 # Macro: integration-replace-block-text
 # Operation: using starting and ending regex to
@@ -474,7 +474,7 @@
 - builder:
     name: integration-replace-block-text
     builders:
-      - shell: !include-raw: include-raw-integration-replace-block-text.sh
+      - shell: !include-raw: integration-replace-block-text.sh
 
 
 - builder:
@@ -486,7 +486,7 @@
     # Required bash variables:
     #   KARAF_ARTIFACT: 'karaf' or 'distribution-karaf'. Use integration-set-variables.
     builders:
-      - shell: !include-raw: include-raw-integration-compare-distributions.sh
+      - shell: !include-raw: integration-compare-distributions.sh
 
 - builder:
     name: integration-upload-distribution
