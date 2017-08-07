@@ -21,6 +21,9 @@
       - oxygen
     branch: 'master'
 
+    # common parameters required for 'lf-infra-deploy-maven-file' builder
+    group-id: 'org.opendaylight.integration-packaging'
+    upload-files-dir: '$WORKSPACE/upload_files'
 
 - job-template:
     name: 'packaging-build-rpm-{stream}'
@@ -78,11 +81,11 @@
       - lf-infra-deploy-maven-file:
           global-settings-file: 'global-settings'
           settings-file: 'packaging-settings'
-          mvn-version: 'mvn33'
-          maven-repo-url: '$NEXUS_URL/content/repositories/$REPO_ID'
+          mvn-version: '{mvn-version}'
           repo-id: 'opendaylight-{stream}-epel-7-x86_64-devel'
-          group-id: 'org.opendaylight.integration-packaging'
-          upload-files-dir: '$WORKSPACE/upload_files'
+          group-id: '{group-id}'
+          upload-files-dir: '{upload-files-dir}'
+          maven-repo-url: '$NEXUS_URL/content/repositories/opendaylight-{stream}-epel-7-x86_64-devel'
 
     publishers:
       - lf-infra-publish
@@ -147,11 +150,12 @@
       - lf-infra-deploy-maven-file:
           global-settings-file: 'global-settings'
           settings-file: 'packaging-settings'
-          mvn-version: 'mvn33'
-          maven-repo-url: '$NEXUS_URL/content/repositories/$REPO_ID'
+          mvn-version: '{mvn-version}'
           repo-id: 'opendaylight-{stream}-epel-7-x86_64-devel'
-          group-id: 'org.opendaylight.integration-packaging'
-          upload-files-dir: '$WORKSPACE/upload_files'
+          group-id: '{group-id}'
+          upload-files-dir: '{upload-files-dir}'
+          maven-repo-url: '$NEXUS_URL/content/repositories/opendaylight-{stream}-epel-7-x86_64-devel'
+
 
     triggers:
       - timed: '@daily'
@@ -362,10 +366,11 @@
           global-settings-file: 'global-settings'
           settings-file: 'packaging-settings'
           mvn-version: '{mvn-version}'
-          maven-repo-url: '$NEXUS_URL/content/repositories/$REPO_ID'
           repo-id: 'opendaylight-{stream}-ubuntu-1604-x86_64-devel'
-          group-id: 'org.opendaylight.integration-packaging'
-          upload-files-dir: '$WORKSPACE/upload_files'
+          group-id: '{group-id}'
+          upload-files-dir: '{upload-files-dir}'
+          maven-repo-url: '$NEXUS_URL/content/repositories/opendaylight-{stream}-ubuntu-1604-x86_64-devel'
+
 
     publishers:
       - lf-infra-publish
