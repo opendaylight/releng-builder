@@ -42,7 +42,7 @@
           name: 'ovsdb'
 
     builders:
-      - shell: !include-raw-escape: include-raw-setup-docker.sh
+      - shell: !include-raw-escape: setup-docker.sh
       - inject:
           properties-file: env.properties
       - shell: !include-raw-escape: include-setup-hwvtep-docker.sh
@@ -90,7 +90,7 @@
           settings-type: cfp
           global-settings: 'global-settings'
           global-settings-type: cfp
-      - shell: !include-raw-escape: include-raw-cleanup-docker.sh
+      - shell: !include-raw-escape: cleanup-docker.sh
       - jacoco-nojava-workaround
 
     publishers:
