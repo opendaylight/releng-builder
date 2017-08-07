@@ -52,7 +52,7 @@
           build-timeout: '{build-timeout}'
 
     builders:
-      - shell: !include-raw: include-raw-test-puppet.sh
+      - shell: !include-raw: test-puppet.sh
 
     triggers:
       - timed: '@weekly'
@@ -99,7 +99,7 @@
           build-timeout: '{build-timeout}'
 
     builders:
-      - shell: !include-raw: include-raw-test-puppet.sh
+      - shell: !include-raw: test-puppet.sh
 
     triggers:
       - timed: '@daily'
