@@ -47,9 +47,10 @@
       - docker
       - gbp
       - java-builder:
-          build-timeout: 60
+          build-timeout: 75
       - mininet
       - mininet-ovs-2.5
+          build-timeout: 60
       - robot
 
     exclude:
