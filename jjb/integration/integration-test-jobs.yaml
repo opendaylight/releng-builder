@@ -394,6 +394,26 @@
       - provide-maven-settings:
           global-settings-file: 'global-settings'
           settings-file: 'yangtools-settings'
+      - conditional-step:
+          condition-kind: file-exists
+          condition-filename: pom.xml
+          condition-basedir: patch_tester/odlparent
+          steps:
+            - maven-target:
+                maven-version: mvn33
+                pom: patch_tester/odlparent/pom.xml
+                # TODO: Make Maven options configurable. Currently tests are not skipped, everything else is.
+                goals: |
+                    clean install dependency:tree -DoutputFile=dependency_tree.txt
+                    -Pq
+                    -Dstream={stream}
+                    {opendaylight-infra-mvn-opts}
+                java-opts:
+                  - '-Xmx3072m -Dmaven.compile.fork=true'
+                settings: integration-settings
+                settings-type: cfp
+                global-settings: global-settings
+                global-settings-type: cfp
       - maven-target:
           maven-version: mvn33
           pom: patch_tester/pom.xml
