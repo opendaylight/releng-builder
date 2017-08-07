@@ -131,14 +131,14 @@
           OVS_VERSION: '{OVS_VERSION}'
           maven-version: '{maven-version}'
           stream: '{stream}'
-      - shell: !include-raw-escape: include-raw-setup-docker.sh
+      - shell: !include-raw-escape: setup-docker.sh
       - inject:
           properties-file: env.properties
       - run-netvirt-sfc-it:
           OVS_VERSION: '{OVS_VERSION}'
           maven-version: '{maven-version}'
           stream: '{stream}'
-      - shell: !include-raw-escape: include-raw-cleanup-docker.sh
+      - shell: !include-raw-escape: cleanup-docker.sh
 
 - job-template:
     name: 'netvirt-daily-full-integration-{stream}'
