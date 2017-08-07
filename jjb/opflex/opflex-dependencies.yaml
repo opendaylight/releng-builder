@@ -91,7 +91,7 @@
 - builder:
     name: 'builder-opflex-libuv-v1'
     builders:
-      - shell: !include-raw-escape: deps-inc-v1/include-raw-libuv_tgz-build.sh
+      - shell: !include-raw-escape: deps-inc-v1/libuv_tgz-build.sh
 
 - job-template:
     name: 'opflex-libuv_tgz-{stream}'
@@ -124,7 +124,7 @@
 - builder:
     name: 'builder-opflex-rapidjson-v1'
     builders:
-      - shell: !include-raw-escape: deps-inc-v1/include-raw-rapidjson_tgz-build.sh
+      - shell: !include-raw-escape: deps-inc-v1/rapidjson_tgz-build.sh
 
 - job-template:
     name: 'opflex-rapidjson_tgz-{stream}'
@@ -157,12 +157,12 @@
 - builder:
     name: 'builder-opflex-openvswitch-v1'
     builders:
-      - shell: !include-raw: deps-inc-v1/include-raw-openvswitch_tgz-build.sh
+      - shell: !include-raw: deps-inc-v1/openvswitch_tgz-build.sh
 
 - builder:
     name: 'builder-opflex-openvswitch-v2'
     builders:
-      - shell: !include-raw: deps-inc-v2/include-raw-openvswitch_tgz-build.sh
+      - shell: !include-raw: deps-inc-v2/openvswitch_tgz-build.sh
 
 - job-template:
     name: 'opflex-openvswitch_tgz-{stream}'

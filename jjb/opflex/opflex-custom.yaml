@@ -35,7 +35,7 @@
       - copyartifact:
           project: opflex-openvswitch_tgz-{stream}
           flatten: true
-      - shell: !include-raw-escape: include-raw-opflex-build.sh
+      - shell: !include-raw-escape: opflex-build.sh
 
 - job-template:
     name: 'opflex-verify-{stream}'
