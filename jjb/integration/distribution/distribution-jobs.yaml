@@ -60,6 +60,8 @@
           global-settings-type: cfp
 
     publishers:
+      - shell: |
+          find / -name *.hprof
       - findbugs
       - jacoco-report
       - lf-infra-publish
