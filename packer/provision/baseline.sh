@@ -227,9 +227,6 @@ EOF
     cabal install "Cabal<1.18"  # Pull Cabal version that is capable of building shellcheck
     cabal install --bindir=/usr/local/bin "shellcheck-0.4.6"  # Pin shellcheck version
 
-    # openldap dev headers are required for lftools
-    yum install -y openldap-devel
-
     # NLTK_DATA Cache: many jobs that use coala pull down nltk_data
     wget -nv -O /opt/nltk_data.zip https://github.com/nltk/nltk_data/archive/gh-pages.zip
 
@@ -389,9 +386,6 @@ EOF
     ensure_ubuntu_install cabal-install
     cabal update
     cabal install --bindir=/usr/local/bin "shellcheck-0.4.6"  # Pin shellcheck version
-
-    # openldap dev headers are required for lftools
-    ensure_ubuntu_install libldap2-dev libssl-dev libsasl2-dev
 
     # NLTK_DATA Cache: many jobs that use coala pull down nltk_data
     wget -nv -O /opt/nltk_data.zip https://github.com/nltk/nltk_data/archive/gh-pages.zip
