@@ -7,7 +7,7 @@
 set -ex -o pipefail
 
 # Adapted from puppet-opendaylight/Vagrantfile
-# https://github.com/dfarrell07/puppet-opendaylight/blob/master/Vagrantfile
+# https://git.opendaylight.org/gerrit/gitweb?p=integration/packaging/puppet-opendaylight.git;a=blob;f=Vagrantfile
 
 # Install system-wide dependencies
 # TODO: Are all of these still needed?
