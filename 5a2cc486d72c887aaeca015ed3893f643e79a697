@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba1f61a0_10923d57",
+        "filename": "jjb/opflex/opflex.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-08-09T19:45:53Z",
+      "side": 1,
+      "message": "This variable can be removed since it\u0027s not archiving anything.",
+      "revId": "5a2cc486d72c887aaeca015ed3893f643e79a697",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba1f61a0_908d8d34",
+        "filename": "jjb/opflex/opflex.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-08-09T19:45:53Z",
+      "side": 1,
+      "message": "opendaylight-infra should be a reserved prefix for releng macros. If thsi is non-specific to opflex then it should be put into releng-macros. Otherwise it should be renamed to opflex- prefix.",
+      "range": {
+        "startLine": 33,
+        "startChar": 10,
+        "endLine": 33,
+        "endChar": 28
+      },
+      "revId": "5a2cc486d72c887aaeca015ed3893f643e79a697",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba1f61a0_509cb569",
+        "filename": "jjb/opflex/opflex.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-08-09T19:45:53Z",
+      "side": 1,
+      "message": "We should cleanup the maven-settings file at the end of the builder.",
+      "revId": "5a2cc486d72c887aaeca015ed3893f643e79a697",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba1f61a0_70c8d974",
+        "filename": "jjb/opflex/opflex.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-08-09T19:45:53Z",
+      "side": 1,
+      "message": "opflex-release-{stream} would be better. Otherwise they job will not have an indication of what it does.",
+      "range": {
+        "startLine": 85,
+        "startChar": 11,
+        "endLine": 85,
+        "endChar": 27
+      },
+      "revId": "5a2cc486d72c887aaeca015ed3893f643e79a697",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba1f61a0_f08209ff",
+        "filename": "jjb/opflex/opflex.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-08-09T19:45:53Z",
+      "side": 1,
+      "message": "If we\u0027re hardcoding the staging-profile-id then the declaration in the project section is pointless. Either turn this into a variable or remove the unnecessary declaration in the project section.",
+      "revId": "5a2cc486d72c887aaeca015ed3893f643e79a697",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
