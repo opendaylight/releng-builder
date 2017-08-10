@@ -457,6 +457,12 @@
 - builder:
     name: integration-list-jobs
     builders:
+      - inject:
+          properties-content: |
+              SEARCH_STRING={search_string}
+              BLACKLIST={blacklist}
+              STREAM={stream}
+              JOBS_FILENAME={jobs-filename}
       - shell: !include-raw: include-raw-integration-list-jobs.sh
 
 # Macro: integration-replace-block-text
@@ -473,7 +479,14 @@
 
 - builder:
     name: integration-replace-block-text
+
     builders:
+      - inject:
+          properties-content: |
+              STARTING_REGEX={starting-regex}
+              ENDING_REGEX={ending-regex}
+              FILE_WITH_CHANGES_TO_INSERT={file-with-changes-to-insert}
+              FILE_TO_CHANGE={file-to-change}
       - shell: !include-raw: include-raw-integration-replace-block-text.sh
 
 
