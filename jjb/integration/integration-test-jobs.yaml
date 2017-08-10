@@ -402,6 +402,7 @@
               clean install dependency:tree -DoutputFile=dependency_tree.txt
               -Pq
               -Dstream={stream}
+              -Dsft.heap.max=4g
               {opendaylight-infra-mvn-opts}
           java-opts:
             - '-Xmx3072m -Dmaven.compile.fork=true'

@@ -641,6 +641,7 @@
               clean install dependency:tree
               -DoutputFile=dependency_tree.txt -s fake_remotes.xml
               -Pq
+              -Dsft.heap.max=4g
               -DskipTests=false
               {mvn-opts}
           java-opts:
