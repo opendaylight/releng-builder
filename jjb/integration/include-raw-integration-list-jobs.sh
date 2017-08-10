@@ -3,19 +3,19 @@
 # output: newline & comma-separated list
 
 system="releng"
-search_string="{search_string}"
-blacklist_in="{blacklist}"
-blacklist=( $(echo ${{blacklist_in}}) )
-stream="{stream}"
+# shellcheck disable=SC2034
+blacklist=( $(echo "$BLACKLIST") )
 
 wget --quiet -O jenkins-jobs.xml https://jenkins.opendaylight.org/$system/api/xml
 jobs=$(xmlstarlet sel -t -m '//hudson/job' \
-    -n -v 'name' jenkins-jobs.xml | grep $search_string | grep $stream)
+    -n -v 'name' jenkins-jobs.xml | grep $SEARCH_STRING | grep $STREAM;)
 
-bl_len=${{#blacklist[@]}}
-for (( i = 0; i < ${{bl_len}}; i++ )); do
-    jobs="$(echo "$jobs" | grep -v ${{blacklist[$i]}} )"
+# shellcheck disable=SC2154
+bl_len="${{#blacklist[*]}}"
+for i in $(seq 0 "$bl_len"); do
+    # shellcheck disable=SC2154
+    jobs="$(echo "$jobs" | grep -v "${{blacklist[$i]}}")"
 done
-# output as comma-separated list with 8 spaces before each item
-echo $jobs | sed 's: :,\n:g' | sed 's:^\(.*\):        \1:g' > {jobs-filename}
 
+# output as comma-separated list with 8 spaces before each item
+echo $jobs | sed 's: :,\n:g' | sed 's:^\(.*\):        \1:g' > "${{JOBS_FILENAME}}"
