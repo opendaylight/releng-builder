@@ -351,15 +351,10 @@ need to use the `jenkins-jobs` executable to translate a set of jobs into
 their XML descriptions and upload them to the sandbox Jenkins server.
 
 We document `installing <Installing Jenkins Job Builder_>`_ `jenkins-jobs`
-below. We also provide
-a `pre-built Docker image <jjb-docker_>`_ with `jenkins-jobs` already installed.
+below.
 
 Installing Jenkins Job Builder
 ------------------------------
-
-For users who aren't already experienced with Docker or otherwise don't want
-to use our `pre-built JJB Docker image <jjb-docker_>`_, installing JJB into a
-virtual environment is an equally good option.
 
 We recommend using `pip <Installing JJB using pip_>`_ to assist with JJB
 installs, but we
@@ -532,30 +527,6 @@ To validate that JJB was successfully installed you can run this command:
 
     (jjb)$ jenkins-jobs --version
 
-JJB Docker Image
-----------------
-
-`Docker <docker-docs_>`_ is an open platform used to create virtualized Linux containers
-for shipping self-contained applications. Docker leverages LinuX Containers
-\(LXC\) running on the same operating system as the host machine, whereas a
-traditional VM runs an operating system over the host.
-
-.. code-block:: bash
-
-    docker pull zxiiro/jjb-docker
-    docker run --rm -v ${PWD}:/jjb jjb-docker
-
-This `Dockerfile <jjb-dockerfile_>`_ created the
-`zxiiro/jjb-docker image <jjb-docker_>`_.
-By default it will run:
-
-.. code-block:: bash
-
-    jenkins-jobs test .
-
-You'll need to use the `-v/--volume=[]` parameter to mount a directory
-containing your YAML files, as well as a configured `jenkins.ini` file if you
-wish to upload your jobs to the `Jenkins Sandbox`_.
 
 Jenkins Job Templates
 ---------------------
@@ -911,38 +882,7 @@ details, including console output.
 Make changes to your JJB configuration, re-test, re-push and re-run until
 your job is ready.
 
-Docker Method
-^^^^^^^^^^^^^
 
-If `using Docker <JJB Docker image_>`_:
-
-.. code-block:: bash
-
-    # To test
-    docker run --rm -v ${PWD}:/jjb zxiiro/jjb-docker
-
-.. important::
-
-    When pushing with `jenkins-jobs`, a log message with
-    the number of jobs you're pushing will be issued, typically to stdout.
-    **If the number is greater than 1** (or the number of jobs you passed to
-    the command to push) then you are pushing too many jobs and should **`ctrl+c`
-    to cancel the upload**. Else you will flood the system with jobs.
-
-    .. code-block:: bash
-
-          INFO:jenkins_jobs.builder:Number of jobs generated:  1
-
-    **Failing to provide the final `<job-name>` param will push all jobs!**
-
-    .. code-block:: bash
-
-        # To upload jobs to the sandbox
-        # Please ensure that you include a configured jenkins.ini in your volume mount
-        # Making sure not to push more jobs than expected, ctrl+c to abort
-        docker run --rm -v ${PWD}:/jjb zxiiro/jjb-docker jenkins-jobs --conf jenkins.ini update . openflowplugin-csit-periodic-1node-cds-longevity-only-master
-
-.. _docker-docs: https://www.docker.com/whatisdocker/
 .. _example-jenkins.ini: https://git.opendaylight.org/gerrit/gitweb?p=releng/builder.git;a=blob;f=jenkins.ini.example
 .. _integration-test-wiki: https://wiki.opendaylight.org/view/Integration/Test
 .. _jenkins-master: https://jenkins.opendaylight.org/releng
@@ -950,8 +890,6 @@ If `using Docker <JJB Docker image_>`_:
 .. _jenkins-sandbox-login: https://jenkins.opendaylight.org/sandbox/login
 .. _jenkins.ini: http://docs.openstack.org/infra/jenkins-job-builder/execution.html#configuration-file
 .. _jjb-autoupdate-project.py: https://git.opendaylight.org/gerrit/gitweb?p=releng/builder.git;a=blob;f=scripts/jjb-autoupdate-project.py
-.. _jjb-docker: https://hub.docker.com/r/zxiiro/jjb-docker/
-.. _jjb-dockerfile: https://github.com/zxiiro/jjb-docker/blob/master/Dockerfile
 .. _jjb-docs: http://ci.openstack.org/jenkins-job-builder/
 .. _jjb-init-project.py: https://git.opendaylight.org/gerrit/gitweb?p=releng/builder.git;a=blob;f=scripts/jjb-init-project.py
 .. _jjb-repo: https://github.com/openstack-infra/jenkins-job-builder
