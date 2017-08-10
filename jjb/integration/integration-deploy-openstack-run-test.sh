@@ -2,6 +2,7 @@
 # Activate robotframework virtualenv
 # ${ROBOT_VENV} comes from the integration-install-robotframework.sh
 # script.
+# shellcheck source=${ROBOT_VENV}/bin/activate disable=SC1091
 source ${ROBOT_VENV}/bin/activate
 PYTHON="${ROBOT_VENV}/bin/python"
 
@@ -455,11 +456,11 @@ do
     mv ${OS_COMPUTE_FOLDER} ${WORKSPACE}/archives/
 done
 
-ls local.conf* | xargs -I % mv % %.log
+find local.conf* -print0 | xargs -0 -I % mv % %.log
 
 # Tempest
 DEVSTACK_TEMPEST_DIR="/opt/stack/tempest"
-if $(ssh ${OPENSTACK_CONTROL_NODE_1_IP} "sudo sh -c '[ -f ${DEVSTACK_TEMPEST_DIR}/.testrepository/0 ]'"); then # if Tempest results exist
+if ssh ${OPENSTACK_CONTROL_NODE_1_IP} "sudo sh -c '[ -f ${DEVSTACK_TEMPEST_DIR}/.testrepository/0 ]'"; then # if Tempest results exist
     ssh ${OPENSTACK_CONTROL_NODE_1_IP} "for I in \$(sudo ls ${DEVSTACK_TEMPEST_DIR}/.testrepository/ | grep -E '^[0-9]+$'); do sudo sh -c \"${DEVSTACK_TEMPEST_DIR}/.tox/tempest/bin/subunit-1to2 < ${DEVSTACK_TEMPEST_DIR}/.testrepository/\${I} >> ${DEVSTACK_TEMPEST_DIR}/subunit_log.txt\"; done"
     ssh ${OPENSTACK_CONTROL_NODE_1_IP} "sudo sh -c '${DEVSTACK_TEMPEST_DIR}/.tox/tempest/bin/python ${DEVSTACK_TEMPEST_DIR}/.tox/tempest/lib/python2.7/site-packages/os_testr/subunit2html.py ${DEVSTACK_TEMPEST_DIR}/subunit_log.txt ${DEVSTACK_TEMPEST_DIR}/tempest_results.html'"
     TEMPEST_LOGS_DIR=${WORKSPACE}/archives/tempest
@@ -599,7 +600,7 @@ iteration=0
 in_progress=1
 while [ ${in_progress} -eq 1 ]; do
 iteration=$(($iteration + 1))
-for index in ${!os_node_list[@]}
+for index in "${!os_node_list[@]}"
 do
 echo "Check the status of stacking in ${os_node_list[index]}"
 scp ${WORKSPACE}/check_stacking.sh  ${os_node_list[index]}:/tmp
@@ -614,7 +615,7 @@ elif [ "$stacking_status" == "Stacking Failed" ]; then
   collect_logs_and_exit
   exit 1
 elif [ "$stacking_status" == "Stacking Complete" ]; then
-  unset os_node_list[index]
+  unset 'os_node_list[index]'
   if  [ ${#os_node_list[@]} -eq 0 ]; then
      in_progress=0
   fi
@@ -734,7 +735,6 @@ do
     # Control Node - PUBLIC_BRIDGE will act as the external router
     # Parameter values below are used in integration/test - changing them requires updates in intergration/test as well
     EXTNET_GATEWAY_IP="10.10.10.250"
-    EXTNET_VLAN_ID=167
     EXTNET_INTERNET_IP="10.9.9.9"
     EXTNET_PNF_IP="10.10.10.253"
     ${SSH} ${!CONTROLIP} "sudo ifconfig ${PUBLIC_BRIDGE} up ${EXTNET_GATEWAY_IP}/24"
@@ -761,10 +761,10 @@ do
     do
         # Tunnel from controller to compute
         COMPUTEPORT=compute$(( compute_index++ ))_vxlan
-        ${SSH} ${!CONTROLIP} "sudo ovs-vsctl add-port $PUBLIC_BRIDGE $COMPUTEPORT -- set interface $COMPUTEPORT type=vxlan options:local_ip="${!CONTROLIP}" options:remote_ip="$compute_ip" options:dst_port=9876 options:key=flow"
+        "${SSH}" "${!CONTROLIP}" "sudo ovs-vsctl add-port $PUBLIC_BRIDGE $COMPUTEPORT -- set interface $COMPUTEPORT type=vxlan options:local_ip=${!CONTROLIP} options:remote_ip=$compute_ip options:dst_port=9876 options:key=flow"
         # Tunnel from compute to controller
         CONTROLPORT="control_vxlan"
-        ${SSH} $compute_ip "sudo ovs-vsctl add-port $PUBLIC_BRIDGE $CONTROLPORT -- set interface $CONTROLPORT type=vxlan options:local_ip="$compute_ip" options:remote_ip="${!CONTROLIP}" options:dst_port=9876 options:key=flow"
+        "${SSH}" "$compute_ip" "sudo ovs-vsctl add-port $PUBLIC_BRIDGE $CONTROLPORT -- set interface $CONTROLPORT type=vxlan options:local_ip=$compute_ip options:remote_ip=${!CONTROLIP} options:dst_port=9876 options:key=flow"
     done
 done
 
