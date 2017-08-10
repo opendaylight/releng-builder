@@ -423,6 +423,13 @@
                     KARAF_VERSION=$KARAF_VERSION
 
     publishers:
+      - postbuildscript:
+          builders:
+            - shell: |
+                find / -name *.hprof
+          script-only-if-succeeded: false
+          script-only-if-failed: false
+          mark-unstable-if-failed: false
       - lf-infra-publish
       - email-notification:
           email-recipients: '{email-recipients}'

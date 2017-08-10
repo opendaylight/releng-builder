@@ -60,6 +60,13 @@
           global-settings-type: cfp
 
     publishers:
+      - postbuildscript:
+          builders:
+            - shell: |
+                find / -name *.hprof
+          script-only-if-succeeded: false
+          script-only-if-failed: false
+          mark-unstable-if-failed: false
       - findbugs
       - jacoco-report
       - lf-infra-publish
