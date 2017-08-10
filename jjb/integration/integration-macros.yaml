@@ -457,7 +457,13 @@
 - builder:
     name: integration-list-jobs
     builders:
-      - shell: !include-raw: include-raw-integration-list-jobs.sh
+      - inject:
+          properties-content: |
+              SEARCH_STRING={search_string}
+              BLACKLIST={blacklist}
+              STREAM={stream}
+              JOBS_FILENAME={jobs-filename}
+      - shell: !include-raw-escape: include-raw-integration-list-jobs.sh
 
 # Macro: integration-replace-block-text
 # Operation: using starting and ending regex to
@@ -473,8 +479,15 @@
 
 - builder:
     name: integration-replace-block-text
+
     builders:
-      - shell: !include-raw: include-raw-integration-replace-block-text.sh
+      - inject:
+          properties-content: |
+              STARTING_REGEX={starting-regex}
+              ENDING_REGEX={ending-regex}
+              FILE_WITH_CHANGES_TO_INSERT={file-with-changes-to-insert}
+              FILE_TO_CHANGE={file-to-change}
+      - shell: !include-raw-escape: include-raw-integration-replace-block-text.sh
 
 
 - builder:
