@@ -10,17 +10,11 @@
     # The functionality under test
     functionality: 'basic'
 
-    # Set trigger
-    trigger-jobs: '{project}-merge-{stream}'
-
     # Project branches
     stream:
-      - carbon:
+      - nitrogen:
           branch: 'master'
           jre: 'openjdk8'
-          karaf-version: karaf3
-          # yamllint disable-line rule:line-length
-          bundle-url: 'https://jenkins.opendaylight.org/releng/view/daexim/job/daexim-merge-carbon/lastSuccessfulBuild/org.opendaylight.daexim$daexim-karaf/artifact/org.opendaylight.daexim/daexim-karaf/1.0.0-SNAPSHOT/daexim-karaf-1.0.0-SNAPSHOT.zip'
 
     install:
       - only:
