@@ -121,7 +121,7 @@
       - timed: 'H H * * 1'
 
     builders:
-      - shell: !include-raw-escape: include-raw-check-poms.sh
+      - shell: !include-raw-escape: check-poms.sh
 
     publishers:
       - email-notification:
