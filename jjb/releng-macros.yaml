@@ -415,12 +415,12 @@
 - builder:
     name: releng-generate-p2pom
     builders:
-      - shell: !include-raw: include-raw-generate-p2pom.sh
+      - shell: !include-raw: generate-p2pom.sh
 
 - builder:
     name: releng-update-p2composite-metadata
     builders:
-      - shell: !include-raw: include-raw-update-p2composite-metadata.sh
+      - shell: !include-raw: update-p2composite-metadata.sh
       - conditional-step:
           condition-kind: file-exists
           condition-filename: deploy-composite-repo.xml
@@ -436,7 +436,7 @@
 - builder:
     name: releng-stage-release
     builders:
-      - shell: !include-raw: include-raw-stage-release.sh
+      - shell: !include-raw: stage-release.sh
 
 - wrapper:
     # This wrapper is required for all jobs as it configures the wrappers
@@ -468,7 +468,7 @@
     # developers public keys into a local repository without increasing the job thoughput.
     name: verify-gpg-signature
     builders:
-      - shell: !include-raw: include-raw-verify-gpg-signatures.sh
+      - shell: !include-raw: verify-gpg-signatures.sh
 
 - builder:
     name: opendaylight-infra-jjbini
