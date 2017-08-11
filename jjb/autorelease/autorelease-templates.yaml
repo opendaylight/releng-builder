@@ -42,6 +42,12 @@
           name: ARCHIVE_ARTIFACTS
           default: '{archive-artifacts}'
           description: Artifacts to archive to the logs server.
+      - bool:
+          name: TRIGGER_DOWNSTREAM_JOBS
+          default: true
+          description: |
+              Used by the post-build-script step to determine if downstream
+              jobs should be triggered for this run or not.
 
     scm:
       - git:
@@ -113,31 +119,39 @@
 
     publishers:
       - opendaylight-infra-notify-status
-      - trigger-parameterized-builds:
-          - project: 'integration-distribution-test-{integration-test}'
-            condition: UNSTABLE_OR_BETTER
-            property-file: variables.jenkins-trigger
-            fail-on-missing: true
-          - project: 'integration-distribution-test-{integration-test}'
-            condition: FAILED
-            trigger-with-no-params: true
-          - project: 'integration-sanity-test-{integration-test}'
-            condition: UNSTABLE_OR_BETTER
-            property-file: variables.jenkins-trigger
-            fail-on-missing: true
-          - project: 'integration-sanity-test-{integration-test}'
-            condition: FAILED
-            trigger-with-no-params: true
-          - project: 'packaging-build-rpm-{stream}'
-            condition: UNSTABLE_OR_BETTER
-            predefined-parameters: DOWNLOAD_URL=$BUNDLE_URL
-            property-file: variables.jenkins-trigger
-            fail-on-missing: true
-          - project: 'packaging-build-deb-{stream}'
-            condition: UNSTABLE_OR_BETTER
-            predefined-parameters: DOWNLOAD_URL=$BUNDLE_URL
-            property-file: variables.jenkins-trigger
-            fail-on-missing: true
+      - postbuildscript:
+          builders:
+            - conditional-step:
+                condition-kind: boolean-expression
+                condition-expression: $TRIGGER_DOWNSTREAM_JOBS
+                steps:
+                  - trigger-builds:
+                      - project: 'integration-distribution-test-{integration-test}'
+                        condition: UNSTABLE_OR_BETTER
+                        property-file: variables.jenkins-trigger
+                        fail-on-missing: true
+                      - project: 'integration-distribution-test-{integration-test}'
+                        condition: FAILED
+                        trigger-with-no-params: true
+                      - project: 'integration-sanity-test-{integration-test}'
+                        condition: UNSTABLE_OR_BETTER
+                        property-file: variables.jenkins-trigger
+                        fail-on-missing: true
+                      - project: 'integration-sanity-test-{integration-test}'
+                        condition: FAILED
+                        trigger-with-no-params: true
+                      - project: 'packaging-build-rpm-{stream}'
+                        condition: UNSTABLE_OR_BETTER
+                        predefined-parameters: DOWNLOAD_URL=$BUNDLE_URL
+                        property-file: variables.jenkins-trigger
+                        fail-on-missing: true
+                      - project: 'packaging-build-deb-{stream}'
+                        condition: UNSTABLE_OR_BETTER
+                        predefined-parameters: DOWNLOAD_URL=$BUNDLE_URL
+                        property-file: variables.jenkins-trigger
+                        fail-on-missing: true
+          script-only-if-succeeded: false
+          script-only-if-failed: false
       - lf-infra-publish
 
 - job-template:
