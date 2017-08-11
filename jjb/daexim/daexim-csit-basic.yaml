@@ -10,13 +10,14 @@
     # The functionality under test
     functionality: 'basic'
 
-    # Set trigger
-    trigger-jobs: '{project}-merge-{stream}'
-
     # Project branches
     stream:
-      - carbon:
+      - nitrogen:
           branch: 'master'
+          jre: 'openjdk8'
+      - carbon:
+          trigger-jobs: '{project}-merge-{stream}'
+          branch: 'stable/carbon'
           jre: 'openjdk8'
           karaf-version: karaf3
           # yamllint disable-line rule:line-length
