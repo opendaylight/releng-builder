@@ -24,7 +24,7 @@ BEGIN {
     endpat = startpat                              # end pattern
     op = "^" ws "---" ws "$"                       # match files starts with "---"
 
-    next_release_tag            = "^" ws "next-release-tag: " curr_tag
+    next_release_tag            = "^" ws "next-release-tag: '{stream}'"
     master                      = "'master'"
     new_branch                  = "'stable/" new_release "'"
     curr_branch                 = "'stable/" curr_release "'"
@@ -39,20 +39,22 @@ BEGIN {
 
     # replace block for autorelease-projects
     #new_rel_yaml_tag           = "- " new_release ":";
-    next_rel_tag_new_yaml_tag   = "    next-release-tag: " new_tag;
+    next_rel_tag_new_yaml_tag   = "    next-release-tag: '{stream}'";
     #br_master_yaml_tag         = "    branch: 'master'";
     jdk_yaml_tag                = "    jdk: 'openjdk8'";
     intg_test_yaml_tag          = "    integration-test: " new_release;
     #curr_rel_yaml_tag          = "- " curr_release ":";
-    next_rel_tag_curr_yaml_tag  = "    next-release-tag: " curr_tag;
+    next_rel_tag_curr_yaml_tag  = "    next-release-tag: '{stream}'";
     #br_stable_curr_yaml_tag    = "    branch: 'stable/" curr_release "'";
 
     # search patterns
     smaster = "^" ws "- master:"
     sstream = "^" ws "stream:"
     srelease = "^" ws "- " curr_release ":"
+    snext_release_tag = "^" ws "next-release-tag:"
     #if (l ~ next_release_tag) { next_release_tag = 1; continue; }
     sbranch = "^" ws "branch: " master
+    sfunctionality = "^" ws "functionality:"
 
     debug = 0                                   # set to 1 to print debug info
     file_format = 2                             # project stream format
@@ -60,6 +62,7 @@ BEGIN {
     release_found = 0
     stream_found = 0
     nrt_found = 0
+    func_found = 0
 }
 
 {
@@ -155,16 +158,24 @@ function process_blk(bs, be, bn,   i, l) {
             l = firstblk[i]
             if (l ~ sstream) { stream_found = 1; }
             if (l ~ srelease) { release_found = 1; indent = substr(l, 1, index(l, "-")-1); continue; }
-            if (l ~ next_release_tag) { nrt_found = 1; continue; }
+            if (l ~ sfunctionality) { func_found = 1; }
+            if (l ~ snext_release_tag) { nrt_found = 1; }
             if (l ~ sbranch) {
                 # append lines
                 if (stream_found && release_found && !nrt_found) {
                     newblk[++nex3] = indent new_rel_yaml_tag;
                     newblk[++nex3] = indent br_master_yaml_tag;
-                    newblk[++nex3] = indent jre_yaml_tag;
+                    # set 'jdk' macro for patch-test jobs
+                    if (!func_found) {
+                        newblk[++nex3] = indent jdk_yaml_tag;
+                    } else {
+                        newblk[++nex3] = indent jre_yaml_tag;
+                    }
                     newblk[++nex3] = indent curr_rel_yaml_tag;
                     newblk[++nex3] = indent br_stable_curr_yaml_tag;
-                    stream_found = 0; release_found = 0;
+                    stream_found = 0;
+                    release_found = 0;
+                    func_found = 0;
                     continue;
                 }
                 if (stream_found && release_found && nrt_found) {

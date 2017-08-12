@@ -10,17 +10,24 @@
 #
 ##############################################################################
 
-# List of files exclude
+# List of directories, files to exclude
 declare -a excludes=("releng-defaults.yaml"
-                     "releng-macros.yaml")
+                     "releng-macros.yaml"
+                     "global-jjb"
+                     "lf-infra"
+                     "-macros.yaml"
+                     "validate-autorelease"
+                     "opflex-dependencies.yaml")
 
 TEMP="/tmp/tmp.yaml"
 mod=0
 count=0
 
 function usage {
-    echo "Usage: $(basename $0) options (-n [next release]) (-c [current release]) (-p [previous release]) -h for help";
-    exit 1;
+    echo "Usage: $(basename $0) options (-c [current release]) (-n [next release]) (-p [previous release]) -h for help";
+    echo "example:"
+    echo "branch_cutter.sh -n oxygen -c nitrogen -p carbon"
+    exit 0;
 }
 
 if ( ! getopts ":n:c:p:h" opt ); then
@@ -54,20 +61,20 @@ done
 
 echo "Start Branch Cutting:"
 
-while IFS="" read -r y; do
+while IFS="" read -r file; do
     found=0
-    for f in "${excludes[@]}"; do
-        if [[ $y =~ $f && $found -eq 0 ]]; then
+    for exclude in "${excludes[@]}"; do
+        if [[ $file =~ $exclude && $found -eq 0 ]]; then
             found=1
             break
         fi
     done
     if [[ $found -eq 1 ]]; then
-        echo "Ignore file $y found in excludes list"
+        echo "Ignore file $file found in excludes list"
     else
-        ./branch_cut.awk -v new_reltag="$new_reltag" -v curr_reltag="$curr_reltag" -v prev_reltag="$prev_reltag" "$y" > "$TEMP"
-        [[ ! -s "$TEMP" ]] && echo "$y: excluded"
-        [[ -s "$TEMP" ]] && mv "$TEMP" "$y" && echo "$y: Done" && let "mod++"
+        ./branch_cut.awk -v new_reltag="$new_reltag" -v curr_reltag="$curr_reltag" -v prev_reltag="$prev_reltag" "$file" > "$TEMP"
+        [[ ! -s "$TEMP" ]] && echo "$file: excluded"
+        [[ -s "$TEMP" ]] && mv "$TEMP" "$file" && echo "$file: Done" && let "mod++"
         let "count++"
     fi
 done < <(find ../../jjb -name "*.yaml")
