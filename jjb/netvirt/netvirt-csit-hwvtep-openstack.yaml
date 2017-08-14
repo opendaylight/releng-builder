@@ -26,15 +26,9 @@
       - upstream-transparent:
           schedule: ''
           sg-mode: 'transparent'
-      - upstream-stateful:
+      - gate-transparent:
           schedule: ''
-          sg-mode: 'stateful'
-      - upstream-learn:
-          schedule: ''
-          sg-mode: 'learn'
-      - gate-stateful:
-          schedule: ''
-          sg-mode: 'stateful'
+          sg-mode: 'transparent'
 
     stream:
       - oxygen:
