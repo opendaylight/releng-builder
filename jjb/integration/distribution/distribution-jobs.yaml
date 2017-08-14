@@ -51,6 +51,7 @@
           goals: |
               clean install dependency:tree -DoutputFile=dependency_tree.txt
               -Dstream={stream}
+              -Dsft.heap.max=4g
               {opendaylight-infra-mvn-opts}
           java-opts:
             - '-Xmx1024m -XX:MaxPermSize=256m'
@@ -124,6 +125,7 @@
       goals: >
           clean install dependency:tree -DoutputFile=dependency_tree.txt -V -B
           -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r
+          -Dsft.heap.max=4g
           -Djenkins -Dmerge -Dstream={stream}
       maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
       settings: 'integration-settings'
