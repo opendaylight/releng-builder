@@ -73,9 +73,11 @@ while true; do
         netstat -pnatu
         exit 1
     else
-        COUNT="$(( ${COUNT} + 5 ))"
-        sleep 5
-        echo "waiting ${COUNT} secs..."
+        COUNT=$(( ${COUNT} + 1 ))
+        sleep 1
+        if [[ $(($COUNT % 5)) == 0 ]]; then
+            echo already waited ${COUNT} seconds...
+        fi
     fi
 done
 
