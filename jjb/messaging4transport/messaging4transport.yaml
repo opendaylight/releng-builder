@@ -1,5 +1,31 @@
 ---
 - project:
+    name: messaging4transport-oxygen
+    jobs:
+      - '{project-name}-clm-{stream}'
+      - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-integration-{stream}'
+      - '{project-name}-merge-{stream}'
+      - '{project-name}-verify-{stream}-{maven}-{jdks}'
+
+    stream: oxygen
+    project: 'messaging4transport'
+    project-name: 'messaging4transport'
+    branch: 'master'
+    jdk: openjdk8
+    jdks:
+      - openjdk8
+    maven:
+      - mvn33:
+          mvn-version: 'mvn33'
+    mvn-settings: 'messaging4transport-settings'
+    mvn-goals: 'clean install'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: ''
+    email-upstream: '[messaging4transport]'
+    archive-artifacts: ''
+
+- project:
     name: messaging4transport-nitrogen
     jobs:
       - '{project-name}-clm-{stream}'
@@ -11,7 +37,7 @@
     stream: nitrogen
     project: 'messaging4transport'
     project-name: 'messaging4transport'
-    branch: 'master'
+    branch: 'stable/nitrogen'
     jdk: openjdk8
     jdks:
       - openjdk8

@@ -16,8 +16,11 @@
 
     # CSIT Lists in releng-defaults.yaml
     stream:
-      - nitrogen:
+      - oxygen:
           branch: 'master'
+          jdk: 'openjdk8'
+      - nitrogen:
+          branch: 'stable/nitrogen'
           jre: 'openjdk8'
           csit-list: '{csit-list-nitrogen}'
           csit-sanity-list: '{csit-sanity-list-nitrogen}'

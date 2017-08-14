@@ -8,8 +8,11 @@
     project: 'ovsdb'
 
     stream:
-      - nitrogen:
+      - oxygen:
           branch: 'master'
+          jdk: 'openjdk8'
+      - nitrogen:
+          branch: 'stable/nitrogen'
           jdk: 'openjdk8'
       - carbon:
           branch: 'stable/carbon'

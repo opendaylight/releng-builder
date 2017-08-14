@@ -1,5 +1,31 @@
 ---
 - project:
+    name: capwap-oxygen
+    jobs:
+      - '{project-name}-clm-{stream}'
+      - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-integration-{stream}'
+      - '{project-name}-merge-{stream}'
+      - '{project-name}-verify-{stream}-{maven}-{jdks}'
+
+    stream: oxygen
+    project: 'capwap'
+    project-name: 'capwap'
+    branch: 'master'
+    jdk: openjdk8
+    jdks:
+      - openjdk8
+    maven:
+      - mvn33:
+          mvn-version: 'mvn33'
+    mvn-settings: 'capwap-settings'
+    mvn-goals: 'clean install'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: ''
+    email-upstream: '[capwap]'
+    archive-artifacts: ''
+
+- project:
     name: capwap-nitrogen
     jobs:
       - '{project-name}-clm-{stream}'
@@ -11,7 +37,7 @@
     stream: nitrogen
     project: 'capwap'
     project-name: 'capwap'
-    branch: 'master'
+    branch: 'stable/nitrogen'
     jdk: openjdk8
     jdks:
       - openjdk8
