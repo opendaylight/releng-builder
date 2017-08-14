@@ -1,5 +1,37 @@
 ---
 - project:
+    name: netvirt-oxygen
+    jobs:
+      - '{project-name}-clm-{stream}'
+      - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-integration-{stream}'
+      - '{project-name}-merge-{stream}'
+      - '{project-name}-verify-{stream}-{maven}-{jdks}'
+
+    stream: oxygen
+    project: 'netvirt'
+    project-name: 'netvirt'
+    branch: 'master'
+    jdk: openjdk8
+    jdks:
+      - openjdk8
+    maven:
+      - mvn33:
+          mvn-version: 'mvn33'
+    mvn-settings: 'netvirt-settings'
+    mvn-goals: 'clean install'
+    mvn-opts: '-Xmx2048m -XX:MaxPermSize=512m'
+    dependencies: >
+        genius-merge-{stream},
+        neutron-merge-{stream},
+        openflowjava-merge-{stream},
+        openflowplugin-merge-{stream},
+        ovsdb-merge-{stream},
+        sfc-merge-{stream}
+    email-upstream: '[genius] [netvirt] [neutron] [openflowjava] [openflowplugin] [ovsdb] [sfc]'
+    archive-artifacts: ''
+
+- project:
     name: netvirt-nitrogen
     jobs:
       - '{project-name}-clm-{stream}'
@@ -11,7 +43,7 @@
     stream: nitrogen
     project: 'netvirt'
     project-name: 'netvirt'
-    branch: 'master'
+    branch: 'stable/nitrogen'
     jdk: openjdk8
     jdks:
       - openjdk8

@@ -11,8 +11,14 @@
 
     # Project branches
     stream:
-      - nitrogen:
+      - oxygen:
           branch: 'master'
+          jdk: 'openjdk8'
+          csit-list: >
+             vtn-csit-1node-manager-only-{stream},
+             vtn-csit-3node-manager-only-{stream}
+      - nitrogen:
+          branch: 'stable/nitrogen'
           jdk: 'openjdk8'
           csit-list: >
              vtn-csit-1node-manager-only-{stream},

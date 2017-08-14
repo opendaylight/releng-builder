@@ -1,5 +1,31 @@
 ---
 - project:
+    name: mdsal-oxygen
+    jobs:
+      - '{project-name}-clm-{stream}'
+      - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-integration-{stream}'
+      - '{project-name}-merge-{stream}'
+      - '{project-name}-verify-{stream}-{maven}-{jdks}'
+
+    stream: oxygen
+    project: 'mdsal'
+    project-name: 'mdsal'
+    branch: 'master'
+    jdk: openjdk8
+    jdks:
+      - openjdk8
+    maven:
+      - mvn33:
+          mvn-version: 'mvn33'
+    mvn-settings: 'mdsal-settings'
+    mvn-goals: '-Dmaven.compile.fork=true clean install -Dintegrationtests'
+    mvn-opts: '-Xmx2048m -XX:MaxPermSize=1024m'
+    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream}'
+    email-upstream: '[mdsal] [odlparent] [yangtools]'
+    archive-artifacts: ''
+
+- project:
     name: mdsal-nitrogen
     jobs:
       - '{project-name}-clm-{stream}'
@@ -11,7 +37,7 @@
     stream: nitrogen
     project: 'mdsal'
     project-name: 'mdsal'
-    branch: 'master'
+    branch: 'stable/nitrogen'
     jdk: openjdk8
     jdks:
       - openjdk8

@@ -1,5 +1,37 @@
 ---
 - project:
+    name: bgpcep-oxygen
+    jobs:
+      - '{project-name}-clm-{stream}'
+      - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-integration-{stream}'
+      - '{project-name}-merge-{stream}'
+      - '{project-name}-verify-{stream}-{maven}-{jdks}'
+
+    stream: oxygen
+    project: 'bgpcep'
+    project-name: 'bgpcep'
+    build-node: centos7-java-builder-4c-8g
+    branch: 'master'
+    jdk: openjdk8
+    jdks:
+      - openjdk8
+    maven:
+      - mvn33:
+          mvn-version: 'mvn33'
+    mvn-settings: 'bgpcep-settings'
+    mvn-goals: 'clean install'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: >
+        odlparent-merge-{stream},
+        yangtools-merge-{stream},
+        controller-merge-{stream},
+        mdsal-merge-{stream},
+        tcpmd5-merge-{stream}
+    email-upstream: '[bgpcep] [odlparent] [yangtools] [controller] [mdsal] [tcpmd5]'
+    archive-artifacts: ''
+
+- project:
     name: bgpcep-nitrogen
     jobs:
       - '{project-name}-clm-{stream}'
@@ -12,7 +44,7 @@
     project: 'bgpcep'
     project-name: 'bgpcep'
     build-node: centos7-java-builder-4c-8g
-    branch: 'master'
+    branch: 'stable/nitrogen'
     jdk: openjdk8
     jdks:
       - openjdk8

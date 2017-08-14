@@ -339,6 +339,11 @@
       - integration-list-jobs:
           blacklist: '{csit-list-blacklist}'
           search_string: "csit"
+          stream: "oxygen"
+          jobs-filename: "csit_jobs_oxygen.lst"
+      - integration-list-jobs:
+          blacklist: '{csit-list-blacklist}'
+          search_string: "csit"
           stream: "nitrogen"
           jobs-filename: "csit_jobs_nitrogen.lst"
       - integration-list-jobs:
@@ -351,6 +356,11 @@
           search_string: "csit"
           stream: "boron"
           jobs-filename: "csit_jobs_boron.lst"
+      - integration-replace-block-text:
+          starting-regex: "'csit-list-oxygen: >'"
+          ending-regex: "'csit-list-nitrogen: >'"
+          file-with-changes-to-insert: "'csit_jobs_oxygen.lst'"
+          file-to-change: "'jjb/releng-defaults.yaml'"
       - integration-replace-block-text:
           starting-regex: "'csit-list-nitrogen: >'"
           ending-regex: "'csit-list-carbon: >'"

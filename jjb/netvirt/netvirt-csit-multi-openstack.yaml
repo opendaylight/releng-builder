@@ -55,8 +55,11 @@
           testplan: '{project}-{topology}-tempest-openstack.txt'
 
     stream:
-      - nitrogen:
+      - oxygen:
           branch: 'master'
+          jre: 'openjdk8'
+      - nitrogen:
+          branch: 'stable/nitrogen'
           jre: 'openjdk8'
       - carbon:
           branch: 'stable/carbon'
