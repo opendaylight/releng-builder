@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba1f61a0_d03c14c2",
+        "filename": "jjb/integration/include-raw-integration-list-jobs.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-08-14T14:08:39Z",
+      "side": 1,
+      "message": "See my comments in the other file that has this.",
+      "range": {
+        "startLine": 6,
+        "startChar": 21,
+        "endLine": 6,
+        "endChar": 27
+      },
+      "revId": "6137b0b0c414f021e67efa112de92cdada2ccf4c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba1f61a0_304c9070",
+        "filename": "jjb/integration/include-raw-integration-list-jobs.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-08-14T14:08:39Z",
+      "side": 1,
+      "message": "Same here.",
+      "range": {
+        "startLine": 13,
+        "startChar": 21,
+        "endLine": 13,
+        "endChar": 27
+      },
+      "revId": "6137b0b0c414f021e67efa112de92cdada2ccf4c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba1f61a0_1047cc4c",
+        "filename": "jjb/integration/include-raw-integration-list-jobs.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-08-14T14:08:39Z",
+      "side": 1,
+      "message": "and here.",
+      "range": {
+        "startLine": 16,
+        "startChar": 25,
+        "endLine": 16,
+        "endChar": 31
+      },
+      "revId": "6137b0b0c414f021e67efa112de92cdada2ccf4c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba1f61a0_5051440d",
+        "filename": "jjb/integration/include-raw-integration-replace-block-text.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-08-14T14:08:39Z",
+      "side": 1,
+      "message": "I think we can handle this with ${var:?} for example below:\n\n starting_regex\u003d\"${STARTING_REGEX:?}\"\n\nas recommended by shellcheck [0] in the exceptions statement.\n\nhttps://github.com/koalaman/shellcheck/wiki/SC2154",
+      "range": {
+        "startLine": 2,
+        "startChar": 21,
+        "endLine": 2,
+        "endChar": 27
+      },
+      "revId": "6137b0b0c414f021e67efa112de92cdada2ccf4c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba1f61a0_10306ce7",
+        "filename": "jjb/integration/include-raw-integration-replace-block-text.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-08-14T14:08:39Z",
+      "side": 1,
+      "message": "This is easily resolved by finding a spot to echo the variables. Plus it\u0027s useful for troubleshooting. Print something like:\n\n starting_regex: \"$STARTING_REGEX\"\n ending_regex: \"$ENDING_REGEX\"\n files_with_changes_to_insert\u003d\"$FILE_WITH_CHANGES_TO_INSERT\"",
+      "range": {
+        "startLine": 6,
+        "startChar": 21,
+        "endLine": 6,
+        "endChar": 27
+      },
+      "revId": "6137b0b0c414f021e67efa112de92cdada2ccf4c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba1f61a0_905bbc2d",
+        "filename": "jjb/integration/include-raw-integration-replace-block-text.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-08-14T14:08:39Z",
+      "side": 1,
+      "message": "I think this is related to SC2153 above and should likely go away with the same fix.",
+      "range": {
+        "startLine": 10,
+        "startChar": 21,
+        "endLine": 10,
+        "endChar": 27
+      },
+      "revId": "6137b0b0c414f021e67efa112de92cdada2ccf4c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba1f61a0_f041583a",
+        "filename": "jjb/integration/include-raw-integration-replace-block-text.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-08-14T14:08:39Z",
+      "side": 1,
+      "message": "If we\u0027re going through the trouble of fixing up the JJB variables we should be able to switch to !include-raw-escape so that we can stop worrying about JJB escapes like this.",
+      "range": {
+        "startLine": 13,
+        "startChar": 19,
+        "endLine": 13,
+        "endChar": 21
+      },
+      "revId": "6137b0b0c414f021e67efa112de92cdada2ccf4c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
