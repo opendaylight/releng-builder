@@ -8,12 +8,17 @@
       - 'autorelease-version-bump-{stream}'
       - '{project-name}-validate-autorelease-{stream}'
 
+    # todo: After boron EOL remove next-release-tag and directy pass
+    # '{stream}' to autorelease-release-tag parameter
     stream:
-      - nitrogen:
-          # todo: After boron EOL remove next-release-tag and directy pass
-          # '{stream}' to autorelease-release-tag parameter
+      - oxygen:
           next-release-tag: '{stream}'
           branch: 'master'
+          jdk: 'openjdk8'
+          integration-test: oxygen
+      - nitrogen:
+          next-release-tag: '{stream}'
+          branch: 'stable/nitrogen'
           jdk: 'openjdk8'
           integration-test: nitrogen
       - carbon:

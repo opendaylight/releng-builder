@@ -17,8 +17,11 @@
       # backward incompatible changes in test suites for Carbon
       # TODO: Create test suites for specific release before
       # Carbon if needed.
-      - nitrogen:
+      - oxygen:
           branch: 'master'
+          jre: 'openjdk8'
+      - nitrogen:
+          branch: 'stable/nitrogen'
           jre: 'openjdk8'
       - carbon:
           branch: 'stable/carbon'
