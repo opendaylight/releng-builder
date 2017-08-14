@@ -1,5 +1,31 @@
 ---
 - project:
+    name: lacp-oxygen
+    jobs:
+      - '{project-name}-clm-{stream}'
+      - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-integration-{stream}'
+      - '{project-name}-merge-{stream}'
+      - '{project-name}-verify-{stream}-{maven}-{jdks}'
+
+    stream: oxygen
+    project: 'lacp'
+    project-name: 'lacp'
+    branch: 'master'
+    jdk: openjdk8
+    jdks:
+      - openjdk8
+    mvn-settings: 'lacp-settings'
+    maven:
+      - mvn33:
+          mvn-version: 'mvn33'
+    mvn-goals: 'clean install javadoc:aggregate -DrepoBuild'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: 'openflowjava-merge-{stream},openflowplugin-merge-{stream}'
+    email-upstream: '[lacp] [openflowjava] [openflowplugin]'
+    archive-artifacts: ''
+
+- project:
     name: lacp-nitrogen
     jobs:
       - '{project-name}-clm-{stream}'
@@ -11,7 +37,7 @@
     stream: nitrogen
     project: 'lacp'
     project-name: 'lacp'
-    branch: 'master'
+    branch: 'stable/nitrogen'
     jdk: openjdk8
     jdks:
       - openjdk8
