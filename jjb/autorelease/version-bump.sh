@@ -48,7 +48,12 @@ mkdir -p "$patch_dir"
 for module in $(git submodule | awk '{ print $2 }')
 do
     pushd "$module"
-    git format-patch --stdout "origin/${BRANCH,,}" > "$patch_dir/${module//\//-}.patch"
+    # TODO: Remove once stable/nitrogen is no longer supported.
+    if [ "$GERRIT_BRANCH" == "stable/nitrogen" ] && [ "$module" == "yangtools" ]; then
+        git format-patch --stdout "origin/v1.2.x" > "$PATCH_DIR/${module//\//-}.patch"
+    else
+        git format-patch --stdout "origin/${BRANCH,,}" > "$patch_dir/${module//\//-}.patch"
+    fi
     git bundle create "$patch_dir/${module//\//-}.bundle" "origin/${BRANCH,,}..HEAD"
     popd
 done
