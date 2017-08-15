@@ -442,41 +442,6 @@
     builders:
       - shell: !include-raw: include-raw-integration-deploy-openstack-run-test.sh
 
-# Macro: integration-list-jobs
-# Operation: queries Jenkins jobs from jenkins.opendaylight.org and
-#   writes a list of the jobs corresponding to the search terms to a file.
-# Used by: builder-merge job template
-#
-# This script requires the following JJB variables to be passed in:
-#   {search_string}     Job type to act as a primary filter (e.g. csit)
-#   {blacklist}         List of sub-projects to filter out (e.g. longevity)
-#   {stream}            Development release name (e.g. boron)
-#   {jobs-filename}     Filename to write list into (e.g. carbon-jobs.lst)
-# NOTE: Requires xmlstarlet installed on node.
-
-- builder:
-    name: integration-list-jobs
-    builders:
-      - shell: !include-raw: include-raw-integration-list-jobs.sh
-
-# Macro: integration-replace-block-text
-# Operation: using starting and ending regex to
-# replace a block of text in a file with the text in
-# another file. Regex should be basic and work with sed
-# Used by: builder-merge job template
-#
-# This script requires the following JJB variables to be passed in:
-#   {starting-regex}
-#   {ending-regex}
-#   {file-with-changes-to-insert}
-#   {file-to-change}
-
-- builder:
-    name: integration-replace-block-text
-    builders:
-      - shell: !include-raw: include-raw-integration-replace-block-text.sh
-
-
 - builder:
     name: integration-compare-distributions
     # Operation: will compare an already created distribtion (probably last
