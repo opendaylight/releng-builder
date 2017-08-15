@@ -13,52 +13,56 @@
       - 'integration-multipatch-test-{stream}'
       - 'integration-distribution-weekly-test-trigger-{stream}'
       - 'integration-distribution-high-frequency-test-trigger-{stream}'
+      - 'integration-update-csit-tests-{stream}'
 
     # CSIT Lists in releng-defaults.yaml
     stream:
       - oxygen:
           branch: 'master'
           jdk: 'openjdk8'
-          csit-list: '{csit-list-oxygen}'
+          csit-blacklist: 'longevity gate sanity daexim jsonrpc'
+          csit-list: !include: csit-jobs-oxygen.lst
           csit-sanity-list: '{csit-sanity-list-oxygen}'
           csit-weekly-list: '{csit-weekly-list-oxygen}'
           schedule-weekly: 'H 23 * * 6'
           csit-high-frequency-list: ''
           schedule-high-frequency: ''
 
-      - nitrogen:
-          branch: 'stable/nitrogen'
-          jre: 'openjdk8'
-          csit-list: '{csit-list-nitrogen}'
-          csit-sanity-list: '{csit-sanity-list-nitrogen}'
-          csit-weekly-list: '{csit-weekly-list-nitrogen}'
-          schedule-weekly: 'H 23 * * 6'
-          csit-high-frequency-list: ''
-          schedule-high-frequency: ''
-
-      - carbon:
-          branch: 'stable/carbon'
-          karaf-version: karaf3
-          jdk: 'openjdk8'
-          jre: 'openjdk8'
-          csit-list: '{csit-list-carbon}'
-          csit-sanity-list: '{csit-sanity-list-carbon}'
-          csit-weekly-list: '{csit-weekly-list-carbon}'
-          schedule-weekly: 'H 23 * * 6'
-          csit-high-frequency-list: '{csit-high-frequency-list-carbon}'
-          schedule-high-frequency: 'H H/4 * * *'
-
-      - boron:
-          branch: 'stable/boron'
-          karaf-version: karaf3
-          jdk: 'openjdk8'
-          jre: 'openjdk8'
-          csit-list: '{csit-list-boron}'
-          csit-sanity-list: '{csit-sanity-list-boron}'
-          csit-weekly-list: '{csit-weekly-list-boron}'
-          schedule-weekly: 'H 23 * * 6'
-          csit-high-frequency-list: ''
-          schedule-high-frequency: ''
+    #   - nitrogen:
+    #       branch: 'stable/nitrogen'
+    #       jre: 'openjdk8'
+    #       csit-list: !include: csit-jobs-nitrogen.lst
+    #       csit-sanity-list: '{csit-sanity-list-nitrogen}'
+    #       csit-weekly-list: '{csit-weekly-list-nitrogen}'
+    #       schedule-weekly: 'H 23 * * 6'
+    #       csit-high-frequency-list: ''
+    #       schedule-high-frequency: ''
+      #
+    #   - carbon:
+    #       branch: 'stable/carbon'
+    #       karaf-version: karaf3
+    #       jdk: 'openjdk8'
+    #       jre: 'openjdk8'
+    #       csit-blacklist: 'longevity gate sanity daexim jsonrpc'
+    #       csit-list: !include: csit-jobs-carbon.lst
+    #       csit-sanity-list: '{csit-sanity-list-carbon}'
+    #       csit-weekly-list: '{csit-weekly-list-carbon}'
+    #       schedule-weekly: 'H 23 * * 6'
+    #       csit-high-frequency-list: '{csit-high-frequency-list-carbon}'
+    #       schedule-high-frequency: 'H H/4 * * *'
+      #
+    #   - boron:
+    #       branch: 'stable/boron'
+    #       karaf-version: karaf3
+    #       jdk: 'openjdk8'
+    #       jre: 'openjdk8'
+    #       csit-blacklist: 'longevity gate sanity daexim jsonrpc'
+    #       csit-list: !include: csit-jobs-boron.lst
+    #       csit-sanity-list: '{csit-sanity-list-boron}'
+    #       csit-weekly-list: '{csit-weekly-list-boron}'
+    #       schedule-weekly: 'H 23 * * 6'
+    #       csit-high-frequency-list: ''
+    #       schedule-high-frequency: ''
 
     # tools system image
     tools_system_image: Ubuntu 16.04 - mininet-ovs-25 - 20170808-0158
@@ -502,3 +506,71 @@
       - email-notification:
           email-recipients: '{email-recipients}'
           email-prefix: '[integration]'
+
+- job-template:
+    name: 'integration-update-csit-tests-{stream}'
+
+    # This job's purpose is to update csit
+    # tests to run in integration-distribution-test-{stream}
+    # by updating integration files: csit-list-carbon.inc,
+    # csit-list-boron.inc, csit-list-beryllium.inc
+    # These files can be used as !include in int-dist-test-{stream}
+
+    ######################
+    # Default parameters #
+    ######################
+
+    git-url: '$GIT_URL/releng/builder'
+    submodule-recursive: true
+
+    #####################
+    # Job Configuration #
+    #####################
+
+    project-type: freestyle
+    node: centos7-java-builder-2c-4g
+
+    properties:
+      - lf-infra-properties:
+          build-days-to-keep: 7
+
+    parameters:
+      - lf-infra-parameters:
+          project: '{project}'
+          stream: '{stream}'
+          branch: '{branch}'
+      - string:
+          name: CSIT_BLACKLIST
+          default: '{csit-blacklist}'
+          description: Space separated list of jobs strings to blacklist.
+
+    scm:
+      - lf-infra-gerrit-scm:
+          jenkins-ssh-credential: '{jenkins-ssh-credential}'
+          git-url: '{git-url}'
+          refspec: '$GERRIT_REFSPEC'
+          branch: '$GERRIT_BRANCH'
+          submodule-recursive: '{submodule-recursive}'
+          choosing-strategy: default
+
+    wrappers:
+      - lf-infra-wrappers:
+          build-timeout: 10
+          jenkins-ssh-credential: '{jenkins-ssh-credential}'
+
+    triggers:
+      - reverse:
+          jobs: builder-jjb-merge
+
+    builders:
+      - shell: !include-raw-escape: update-csit-tests.sh
+      - shell: |
+          git status
+          git add jjb/integration/*.lst
+      - opendaylight-infra-push-gerrit-patch:
+          project: "releng/builder"
+          gerrit-topic: "auto-update-csit-jobs-{stream}"
+          gerrit-commit-message: "Auto Update CSIT Jobs to run for {stream}"
+
+    publishers:
+      - lf-infra-publish
