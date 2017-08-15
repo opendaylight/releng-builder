@@ -406,16 +406,29 @@
           settings-file: 'yangtools-settings'
       - maven-target:
           maven-version: mvn33
-          pom: patch_tester/pom.xml
-          # TODO: Make Maven options configurable. Currently tests are not skipped, everything else is.
+          pom: patch_tester/odlparent/pom.xml
           goals: |
               clean install dependency:tree -DoutputFile=dependency_tree.txt
               -Pq
               -Dstream={stream}
-              -Dsft.heap.max=4g
               {opendaylight-infra-mvn-opts}
           java-opts:
             - '-Xmx3072m -Dmaven.compile.fork=true'
+          settings: integration-settings
+          settings-type: cfp
+          global-settings: global-settings
+          global-settings-type: cfp
+      - maven-target:
+          maven-version: mvn33
+          pom: patch_tester/pom.xml
+          goals: |
+              clean install dependency:tree -DoutputFile=dependency_tree.txt
+              -Dstream={stream}
+              -Dsft.heap.max=4g
+              {opendaylight-infra-mvn-opts}
+          java-opts:
+            - '-Xmx2048m -Dmaven.compile.fork=true'
+            # 3G is too much for 8G machine with 4G SFT.
           settings: integration-settings
           settings-type: cfp
           global-settings: global-settings
