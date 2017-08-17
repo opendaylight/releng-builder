@@ -12,10 +12,10 @@ virtualenv rpm_build
 source rpm_build/bin/activate
 PYTHON="rpm_build/bin/python"
 $PYTHON -m pip install --upgrade pip
-$PYTHON -m pip install -r "$WORKSPACE/packaging/rpm/requirements.txt"
+$PYTHON -m pip install -r "$WORKSPACE/packaging/packages/requirements.txt"
 
 # Build the latest snapshot matching the given major minor version
-"$WORKSPACE/packaging/rpm/build.py" --build-latest-snap \
+"$WORKSPACE/packaging/packages/build.py" --rpm --build-latest-snap \
                                   --major "$VERSION_MAJOR" \
                                   --minor "$VERSION_MINOR" \
                                   --changelog_name "$CHANGELOG_NAME" \
