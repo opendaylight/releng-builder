@@ -33,6 +33,7 @@ local_conf_file_name=${WORKSPACE}/local.conf_control_${HOSTIP}
 cat > ${local_conf_file_name} << EOF
 [[local|localrc]]
 LOGFILE=stack.sh.log
+USE_SCREEN=True
 SCREEN_LOGDIR=/opt/stack/data/log
 LOG_COLOR=False
 RECLONE=${RECLONE}
@@ -230,6 +231,7 @@ cat > ${local_conf_file_name} << EOF
 [[local|localrc]]
 LOGFILE=stack.sh.log
 LOG_COLOR=False
+USE_SCREEN=True
 SCREEN_LOGDIR=/opt/stack/data/log
 RECLONE=${RECLONE}
 
