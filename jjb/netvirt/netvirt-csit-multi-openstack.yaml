@@ -27,10 +27,10 @@
           schedule: ''
           sg-mode: 'transparent'
       - upstream-stateful:
-          schedule: ''
+          schedule: '@daily'
           sg-mode: 'stateful'
       - upstream-stateful-snat-conntrack:
-          schedule: ''
+          schedule: '@daily'
           sg-mode: 'stateful'
           odl-snat-mode: 'conntrack'
       - upstream-learn:
