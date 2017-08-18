@@ -70,6 +70,24 @@
       "revId": "db7232f379857cb90c9befbdfc5746560ac1d2e6",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba1f61a0_fd5d9616",
+        "filename": "jjb/opflex/opflex-custom.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2017-08-18T22:05:14Z",
+      "side": 1,
+      "message": "OK so a 50% increase in the build times... for what purpose?  I see no advantage to consolidating them.  Note that the dependencies jobs run rarely, so time to spin up VMs doesn\u0027t matter since it\u0027s amortized over many dozens of verify/merge builds.\n\nWe could consolidate all the dependencies into a single dependencies job without hurting much, though I\u0027m still failing to see why.\n\nIf you\u0027re worried about disk space we can just set jenkins to only keep the most recent artifacts or the last 2 or similar.",
+      "parentUuid": "ba1f61a0_dd3a52cc",
+      "revId": "db7232f379857cb90c9befbdfc5746560ac1d2e6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
