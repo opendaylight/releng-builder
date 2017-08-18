@@ -7,6 +7,7 @@
       - 'autorelease-update-validate-jobs-{stream}'
       - 'autorelease-version-bump-{stream}'
       - '{project-name}-validate-autorelease-{stream}'
+      - gerrit-tox-verify
 
     # todo: After boron EOL remove next-release-tag and directy pass
     # '{stream}' to autorelease-release-tag parameter
@@ -39,6 +40,7 @@
 
     project: releng/autorelease
     project-name: autorelease
+    build-node: centos7-java-builder-2c-4g
     # Before adding more here, beware of https://jira.linuxfoundation.org/browse/RELENG-280
     archive-artifacts: >
         **/*.prop
