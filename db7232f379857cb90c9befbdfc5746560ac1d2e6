@@ -52,6 +52,24 @@
       "revId": "db7232f379857cb90c9befbdfc5746560ac1d2e6",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba1f61a0_dd3a52cc",
+        "filename": "jjb/opflex/opflex-custom.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-08-18T21:35:04Z",
+      "side": 1,
+      "message": "According to the durations here https://jenkins.opendaylight.org/releng/view/opflex/\n\nThe dependency jobs all run in \u003c 30 seconds with the exception of openvswitch with takes between 2 -3 minutes to run. The verify job which I assume uses the dependencies takes between 12 - 15 minutes to run. Consolidating them will increase the job build time probably by 5 minutes at the most but probably more likely ~3 minutes.\n\nIt takes longer for Jenkins to spin up VMs for each of these jobs imo.\n\nWe can potentially increase the speed by baking the dependencies into the vms too as an alternative method in which case the vms that spin up will just have the dependencies. No need to build them.",
+      "parentUuid": "ba1f61a0_9d0a9a1f",
+      "revId": "db7232f379857cb90c9befbdfc5746560ac1d2e6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
