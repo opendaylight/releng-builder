@@ -21,6 +21,9 @@ parameters:
         description: SSH Key name to use (Public key must exist in OpenStack)
     index:
         type: number
+    group:
+        type: number
+        default: "0"
     vm_flavor:
         type: string
         default: 1 GB General Purpose v1
@@ -37,7 +40,7 @@ resources:
             image: {get_param: vm_image}
             name:
                 str_replace:
-                    template: SILO-JOB_NAME-VM_TYPE-INDEX
+                    template: SILO-JOB_NAME-GROUP-VM_TYPE-INDEX
                     params:
                         "SILO": {get_param: silo}
                         "JOB_NAME": {get_param: job_name}
@@ -46,6 +49,7 @@ resources:
                                 - ' - '
                                 - {get_param: vm_image}
                                 - 1
+                        "GROUP": {get_param: group}
                         "INDEX": {get_param: index}
             networks:
                 - network: RC-ODL
