@@ -45,6 +45,10 @@
       - gate-stateful:
           schedule: ''
           sg-mode: 'stateful'
+      - gate-stateful-snat-conntrack:
+          schedule: ''
+          sg-mode: 'stateful'
+          odl-snat-mode: 'conntrack'
       - gate-minimal-transparent:
           schedule: ''
           sg-mode: 'transparent'
