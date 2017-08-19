@@ -88,6 +88,24 @@
       "revId": "db7232f379857cb90c9befbdfc5746560ac1d2e6",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba1f61a0_98ac68a2",
+        "filename": "jjb/opflex/opflex-custom.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-08-19T17:14:22Z",
+      "side": 1,
+      "message": "We\u0027re trying to discourage the use of Jenkins as an archive system as artifacts should be pushed to Nexus. Additionally LFIT will not longer be increasing disk size on Jenkins if we run out of disk again so we\u0027re trying to encourage projects to push things to Nexus instead of Jenkins as the Nexus server has significantly more disk space allocated to it and is designed to be a storage system.\n\nI was hoping OpFlex would be ok with building the dependencies as part of their builds considering most of the dependencies appear to take only 10s of seconds of build time and that the time it takes to spin up a VM for a 20 second build is significantly more ~2-5 minutes we would save time and resources here. I believe these are actually being archived to our logs server which is supposed to be only for logs but considering these are small I\u0027m willing to make an exception here.\n\nOpenVSwitch appears to be the only dependency that takes a significant amount of build time so if we bake it into the image it would likely speed up your build time a little because you won\u0027t have to spend cycles downloading the compiled artifact.\n\nIf this is going to be a contentious issue then I\u0027m ok with leaving things the way things are. Admittedly OpFlex is a very small project and I\u0027m not worried about OpFlex\u0027s builds requiring us to increase Jenkins disks space.",
+      "parentUuid": "ba1f61a0_fd5d9616",
+      "revId": "db7232f379857cb90c9befbdfc5746560ac1d2e6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
