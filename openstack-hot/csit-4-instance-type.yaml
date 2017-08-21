@@ -59,6 +59,7 @@ resources:
                     silo: {get_param: silo}
                     ssh_key: {get_param: silo}
                     index: "%index%"
+                    group: "0"
                     vm_flavor: {get_param: vm_0_flavor}
                     vm_image: {get_param: vm_0_image}
 
@@ -73,6 +74,7 @@ resources:
                     silo: {get_param: silo}
                     ssh_key: {get_param: silo}
                     index: "%index%"
+                    group: "1"
                     vm_flavor: {get_param: vm_1_flavor}
                     vm_image: {get_param: vm_1_image}
 
@@ -87,6 +89,7 @@ resources:
                     silo: {get_param: silo}
                     ssh_key: {get_param: silo}
                     index: "%index%"
+                    group: "2"
                     vm_flavor: {get_param: vm_2_flavor}
                     vm_image: {get_param: vm_2_image}
     vm_3_group:
@@ -100,6 +103,7 @@ resources:
                     silo: {get_param: silo}
                     ssh_key: {get_param: silo}
                     index: "%index%"
+                    group: "3"
                     vm_flavor: {get_param: vm_3_flavor}
                     vm_image: {get_param: vm_3_image}
 
