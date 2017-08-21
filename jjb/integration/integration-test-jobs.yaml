@@ -540,6 +540,7 @@
           project: releng/builder  # Hardcode as this job needs to pull releng/builder
           stream: '{stream}'
           branch: master  # Hardcode as releng/builder only has master
+          lftools-version: '{lftools-version}'
       - string:
           name: CSIT_BLACKLIST
           default: '{csit-blacklist}'

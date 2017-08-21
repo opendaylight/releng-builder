@@ -23,6 +23,7 @@
           project: '{project}'
           stream: '{stream}'
           branch: '{branch}'
+          lftools-version: '{lftools-version}'
       - distribution-karaf-version:
           karaf-version: '{karaf-version}'
       - autorelease-release-tag:
@@ -155,6 +156,7 @@
           project: releng/builder
           branch: '{branch}'
           stream: '{stream}'
+          lftools-version: '{lftools-version}'
 
     scm:
       - lf-infra-gerrit-scm:
@@ -214,6 +216,7 @@
           branch: '{branch}'
           stream: '{stream}'
           refspec: 'refs/heads/{branch}'
+          lftools-version: '{lftools-version}'
       - string:
           name: RELEASE_TAG
           default: '{next-release-tag}'
@@ -278,6 +281,7 @@
           project: '{project}'
           branch: '{branch}'
           stream: '{stream}'
+          lftools-version: '{lftools-version}'
 
     scm:
       - lf-infra-gerrit-scm:
@@ -332,6 +336,7 @@
           project: '{project}'
           stream: '{stream}'
           branch: '{branch}'
+          lftools-version: '{lftools-version}'
       - autorelease-release-tag:
           release-tag: validate
       - string:
