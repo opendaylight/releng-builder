@@ -3,7 +3,6 @@
     name: odlparent-master
     jobs:
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
       - '{project-name}-verify-tox-{stream}'
       - '{project-name}-maven-jobs'
 
@@ -35,7 +34,6 @@
     name: odlparent-2.0.x
     jobs:
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
       - '{project-name}-verify-tox-{stream}'
       - '{project-name}-maven-jobs'
 
@@ -69,7 +67,6 @@
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
       - '{project-name}-verify-tox-{stream}'
       - '{project-name}-maven-jobs'
 
@@ -100,7 +97,6 @@
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
       - '{project-name}-maven-jobs'
 
     stream: boron
