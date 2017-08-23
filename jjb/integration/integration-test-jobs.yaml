@@ -20,7 +20,7 @@
       - oxygen:
           branch: 'master'
           jdk: 'openjdk8'
-          csit-blacklist: longevity gate sanity daexim jsonrpc
+          csit-blacklist: longevity gate sanity capwap coe jsonrpc lacp netide
           csit-list: !include: csit-jobs-oxygen.lst
           csit-sanity-list: '{csit-sanity-list-oxygen}'
           csit-weekly-list: '{csit-weekly-list-oxygen}'
@@ -31,7 +31,7 @@
       - nitrogen:
           branch: 'stable/nitrogen'
           jre: 'openjdk8'
-          csit-blacklist: longevity gate sanity daexim jsonrpc
+          csit-blacklist: longevity gate sanity capwap coe jsonrpc lacp netide 
           csit-list: !include: csit-jobs-nitrogen.lst
           csit-sanity-list: '{csit-sanity-list-nitrogen}'
           csit-weekly-list: '{csit-weekly-list-nitrogen}'
@@ -44,7 +44,7 @@
           karaf-version: karaf3
           jdk: 'openjdk8'
           jre: 'openjdk8'
-          csit-blacklist: longevity gate sanity daexim jsonrpc
+          csit-blacklist: longevity gate sanity capwap coe jsonrpc
           csit-list: !include: csit-jobs-carbon.lst
           csit-sanity-list: '{csit-sanity-list-carbon}'
           csit-weekly-list: '{csit-weekly-list-carbon}'
@@ -57,7 +57,7 @@
           karaf-version: karaf3
           jdk: 'openjdk8'
           jre: 'openjdk8'
-          csit-blacklist: longevity gate sanity daexim jsonrpc
+          csit-blacklist: longevity gate sanity jsonrpc
           csit-list: !include: csit-jobs-boron.lst
           csit-sanity-list: '{csit-sanity-list-boron}'
           csit-weekly-list: '{csit-weekly-list-boron}'
