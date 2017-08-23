@@ -14,14 +14,25 @@ PYTHON="rpm_build/bin/python"
 $PYTHON -m pip install --upgrade pip
 $PYTHON -m pip install -r "$WORKSPACE/packaging/packages/requirements.txt"
 
-# Make a URL for the tarball artifact from DOWNLOAD_URL (a zip)
-# shellcheck disable=SC2154
-download_url="${{DOWNLOAD_URL//zip/tar.gz}}"
+# Packaging logic needs a tarball, but can repackage a zip into tar.gz
+# if needed. All builds except multipatch-test publish both a tar.gz and zip.
+# Autorelease passes DOWNLOAD_URL to zip, others typically use tar.gz.
+# If URL is to zip, check if there's a tar.gz available to avoid repackaging.
+if [[ $DOWNLOAD_URL = *.zip ]]; then
+  # shellcheck disable=SC2154
+  candidate_tarball_url="${{DOWNLOAD_URL//zip/tar.gz}}"
+  # shellcheck disable=SC2154
+  url_status=$(curl --silent --head --location --output /dev/null --write-out \
+    '%{{http_code}}' "$candidate_tarball_url")
+  if [[ $url_status = 2* ]]; then
+    DOWNLOAD_URL="$candidate_tarball_url"
+  fi
+fi
 
 # Build release specified by build params
-"$WORKSPACE/packaging/packages/build.py" --rpm --download_url "$download_url" \
-                                    --changelog_name "$CHANGELOG_NAME" \
-                                    --changelog_email "$CHANGELOG_EMAIL"
+"$WORKSPACE/packaging/packages/build.py" --rpm --download_url "$DOWNLOAD_URL" \
+                                         --changelog_name "$CHANGELOG_NAME" \
+                                         --changelog_email "$CHANGELOG_EMAIL"
 
 # Move RPMs (SRPM and noarch) to dir of files that will be uploaded to Nexus
 UPLOAD_FILES_PATH="$WORKSPACE/upload_files"
