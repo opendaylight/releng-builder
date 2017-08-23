@@ -12,9 +12,8 @@ function cleanup {
 
 # create dependency root prefix
 cleanup
-mkdir -p "$ROOT"
+mkdir -p "$ROOT" || true
 trap cleanup EXIT
-
 tar -xz -C "$ROOT" --strip-components=2 -f libuv.tgz
 tar -xz -C "$ROOT" --strip-components=2 -f rapidjson.tgz
 tar -xz -C "$ROOT" --strip-components=2 -f openvswitch.tgz

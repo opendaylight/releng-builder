@@ -4,6 +4,16 @@
 set -e
 set -x
 
+if [[ $RAPIDJSON_BUILD =~ v1 ]]; then
+    refs="refs/tags/v1.0.1"
+else
+    refs="refs/tags/v1.0.2"
+fi
+
+git clone https://github.com/miloyip/rapidjson.git
+cd rapidjson || exit 1
+git checkout "$refs"
+
 ROOT=/tmp/opflex-prefix
 DESTDIR=install-root
 
@@ -18,3 +28,5 @@ sed -e "s|@INCLUDE_INSTALL_DIR@|$ROOT/include|" \
 
 pushd $DESTDIR
 tar -czf rapidjson.tgz *
+mv rapidjson.tgz "$WORKSPACE"
+popd
