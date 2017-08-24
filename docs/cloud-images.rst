@@ -49,6 +49,7 @@ Following are the list of published images available to be used with Jenkins job
 * Ubuntu 14.04 - gbp - 20170210-0536
 * Ubuntu 14.04 - gbp - 20170706-1254
 * Ubuntu 14.04 - gbp - 20170808-0524
+* Ubuntu 14.04 - gbp - 20170823-0530
 * Ubuntu 14.04 - mininet - 20170117-0003
 * Ubuntu 14.04 - mininet - 20170130-0425
 * Ubuntu 14.04 - mininet - 20170207-2055
@@ -67,6 +68,7 @@ Following are the list of published images available to be used with Jenkins job
 * Ubuntu 14.04 - mininet-ovs-25 - 20170210-0300
 * Ubuntu 14.04 LTS Trusty Tahr (cloudimg)
 * Ubuntu 16.04 - gbp - 20170308-0321
+* Ubuntu 16.04 - gbp - 20170823-0529
 * Ubuntu 16.04 - mininet-ovs-25 - 20170308-0230
 * Ubuntu 16.04 - mininet-ovs-25 - 20170516-0740
 * Ubuntu 16.04 - mininet-ovs-25 - 20170606-0534
