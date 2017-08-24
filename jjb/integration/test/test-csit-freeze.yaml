@@ -1,0 +1,39 @@
+---
+- project:
+    name: test-csit-freeze
+    jobs:
+      - '{project}-csit-1node-{functionality}-{install}-{stream}'
+
+    # The project name
+    project: 'test'
+
+    # The functionality under test
+    functionality: 'freeze'
+
+    # Project branches
+    stream:
+      - oxygen:
+          branch: 'master'
+          jre: 'openjdk8'
+      - nitrogen:
+          branch: 'stable/nitrogen'
+          jre: 'openjdk8'
+      - carbon:
+          branch: 'stable/carbon'
+          jre: 'openjdk8'
+          karaf-version: karaf3
+
+    install:
+      - only:
+          scope: 'only'
+      - all:
+          scope: 'all'
+
+    # Features to install
+    install-features: 'odl-restconf,odl-jolokia'
+
+    # Robot custom options
+    robot-options: ''
+
+    # Controller configuration
+    odl_system_flavor: 8 GB General Purpose v1
