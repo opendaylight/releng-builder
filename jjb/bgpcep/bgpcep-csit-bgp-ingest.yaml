@@ -42,9 +42,6 @@
               -v MULTIPLICITY_CHANGE_COUNT_MANY:600
               -v TEST_DURATION_MULTIPLIER_CHANGE_COUNT_MANY:8.0
 
-    install:
-      - only:
-          scope: 'only'
       - all:
           scope: 'all'
 
@@ -109,9 +106,6 @@
               -v UPDATE:single
               -v TEST_DURATION_MULTIPLIER:4
 
-    install:
-      - only:
-          scope: 'only'
       - all:
           scope: 'all'
 
@@ -186,9 +180,6 @@
               -v UPDATE:single
               -v TEST_DURATION_MULTIPLIER:4
 
-    install:
-      - only:
-          scope: 'only'
       - all:
           scope: 'all'
 
