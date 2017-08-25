@@ -1,115 +1,27 @@
 ---
 - project:
-    name: netvirt-oxygen
+    name: netvirt
     jobs:
       - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
       - '{project-name}-merge-{stream}'
       - '{project-name}-verify-{stream}-{maven}-{jdks}'
+      - '{project-name}-verify-tox-{stream}'
 
-    stream: oxygen
+    stream:
+      - oxygen:
+          branch: 'master'
+      - nitrogen:
+          branch: 'stable/nitrogen'
+      - carbon:
+          branch: 'stable/carbon'
+          karaf-version: karaf3
+      - boron:
+          branch: 'stable/boron'
+          karaf-version: karaf3
     project: 'netvirt'
     project-name: 'netvirt'
-    branch: 'master'
-    jdk: openjdk8
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
-    mvn-settings: 'netvirt-settings'
-    mvn-goals: 'clean install'
-    mvn-opts: '-Xmx2048m -XX:MaxPermSize=512m'
-    dependencies: >
-        genius-merge-{stream},
-        neutron-merge-{stream},
-        openflowjava-merge-{stream},
-        openflowplugin-merge-{stream},
-        ovsdb-merge-{stream},
-        sfc-merge-{stream}
-    email-upstream: '[genius] [netvirt] [neutron] [openflowjava] [openflowplugin] [ovsdb] [sfc]'
-    archive-artifacts: ''
-
-- project:
-    name: netvirt-nitrogen
-    jobs:
-      - '{project-name}-clm-{stream}'
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-integration-{stream}'
-      - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
-
-    stream: nitrogen
-    project: 'netvirt'
-    project-name: 'netvirt'
-    branch: 'stable/nitrogen'
-    jdk: openjdk8
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
-    mvn-settings: 'netvirt-settings'
-    mvn-goals: 'clean install'
-    mvn-opts: '-Xmx2048m -XX:MaxPermSize=512m'
-    dependencies: >
-        genius-merge-{stream},
-        neutron-merge-{stream},
-        openflowjava-merge-{stream},
-        openflowplugin-merge-{stream},
-        ovsdb-merge-{stream},
-        sfc-merge-{stream}
-    email-upstream: '[genius] [netvirt] [neutron] [openflowjava] [openflowplugin] [ovsdb] [sfc]'
-    archive-artifacts: ''
-
-- project:
-    name: netvirt-carbon
-    jobs:
-      - '{project-name}-clm-{stream}'
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-integration-{stream}'
-      - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
-
-    stream: carbon
-    project: 'netvirt'
-    project-name: 'netvirt'
-    branch: 'stable/carbon'
-    karaf-version: karaf3
-    jdk: openjdk8
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
-    mvn-settings: 'netvirt-settings'
-    mvn-goals: 'clean install'
-    mvn-opts: '-Xmx2048m -XX:MaxPermSize=512m'
-    dependencies: >
-        genius-merge-{stream},
-        neutron-merge-{stream},
-        openflowjava-merge-{stream},
-        openflowplugin-merge-{stream},
-        ovsdb-merge-{stream},
-        sfc-merge-{stream}
-    email-upstream: '[genius] [netvirt] [neutron] [openflowjava] [openflowplugin] [ovsdb] [sfc]'
-    archive-artifacts: ''
-
-- project:
-    name: netvirt-boron
-    jobs:
-      - '{project-name}-clm-{stream}'
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-integration-{stream}'
-      - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
-
-    stream: boron
-    project: 'netvirt'
-    project-name: 'netvirt'
-    branch: 'stable/boron'
-    karaf-version: karaf3
     jdk: openjdk8
     jdks:
       - openjdk8
