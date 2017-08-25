@@ -394,6 +394,10 @@ echo -e "/usr/sbin/lsmod | /usr/bin/grep openvswitch\n"
 /usr/sbin/lsmod | /usr/bin/grep openvswitch
 echo -e "\ngrep ct_ /var/log/openvswitch/ovs-vswitchd.log\n"
 grep ct_ /var/log/openvswitch/ovs-vswitchd.log
+echo -e "\novsdb-tool -mm show-log\n"
+ovsdb-tool -mm show-log
+echo -e "\nnetstat -punta\n"
+netstat -punta
 EOF
 
 sleep 5
@@ -426,6 +430,7 @@ do
     mkdir -p ${OS_CTRL_FOLDER}
     scp ${!OS_CTRL_IP}:/opt/stack/devstack/nohup.out ${OS_CTRL_FOLDER}/stack.log
     scp ${!OS_CTRL_IP}:/var/log/openvswitch/ovs-vswitchd.log ${OS_CTRL_FOLDER}/ovs-vswitchd.log
+    scp ${!OS_CTRL_IP}:/var/log/openvswitch/ovsdb-server.log ${OS_CTRL_FOLDER}/ovsdb-server.log
     scp ${!OS_CTRL_IP}:/etc/neutron/neutron.conf ${OS_CTRL_FOLDER}/neutron.conf
     scp ${!OS_CTRL_IP}:/etc/nova/nova.conf ${OS_CTRL_FOLDER}/nova.conf
     scp ${!OS_CTRL_IP}:/etc/kuryr/kuryr.conf ${OS_CTRL_FOLDER}/kuryr.conf
@@ -448,6 +453,7 @@ do
     mkdir -p ${OS_COMPUTE_FOLDER}
     scp ${!OSIP}:/opt/stack/devstack/nohup.out ${OS_COMPUTE_FOLDER}/stack.log
     scp ${!OSIP}:/var/log/openvswitch/ovs-vswitchd.log ${OS_COMPUTE_FOLDER}/ovs-vswitchd.log
+    scp ${!OSIP}:/var/log/openvswitch/ovsdb-server.log ${OS_COMPUTE_FOLDER}/ovsdb-server.log
     scp ${!OSIP}:/etc/nova/nova.conf ${OS_COMPUTE_FOLDER}/nova.conf
     rsync -avhe ssh ${!OSIP}:/opt/stack/logs/* ${OS_COMPUTE_FOLDER} # rsync to prevent copying of symbolic links
     scp extra_debug.sh ${!OSIP}:/tmp
