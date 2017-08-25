@@ -1,0 +1,38 @@
+---
+- project:
+    name: ovil
+    jobs:
+      - '{project-name}-merge-{stream}'
+      - '{project-name}-verify-tox-{stream}'
+      - '{project-name}-maven-jobs'
+
+    project: ovil
+    project-name: ovil
+    stream:
+      - oxygen:
+          branch: master
+    jdk: openjdk8
+    jdks:
+      - openjdk8
+    mvn-settings: ovil-settings
+    mvn-goals: clean install
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    mvn-version: mvn33
+
+    dependencies: ''
+    email-upstream: '[ovil]'
+    archive-artifacts: ''
+
+    # Used by the release job
+    staging-profile-id: 7b48866c207d8
+
+- project:
+    name: ovil-sonar
+    jobs:
+      - '{project-name}-sonar'
+    project: 'ovil'
+    project-name: 'ovil'
+    branch: 'master'
+    mvn-settings: 'ovil-settings'
+    mvn-goals: 'clean install'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
