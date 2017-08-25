@@ -49,6 +49,10 @@
           schedule: ''
           sg-mode: 'stateful'
           odl-snat-mode: 'conntrack'
+      - gate-minimal-cluster:
+          schedule: ''
+          sg-mode: 'stateful'
+          testplan: '{project}-{topology}-minimal-openstack.txt'
       - gate-minimal-transparent:
           schedule: ''
           sg-mode: 'transparent'
