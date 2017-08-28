@@ -1,4 +1,13 @@
 #!/bin/bash
+# SPDX-License-Identifier: EPL-1.0
+##############################################################################
+# Copyright (c) 2017 The Linux Foundation and others.
+#
+# All rights reserved. This program and the accompanying materials
+# are made available under the terms of the Eclipse Public License v1.0
+# which accompanies this distribution, and is available at
+# http://www.eclipse.org/legal/epl-v10.html
+##############################################################################
 
 # Todo: As a safe check we could obtain the list of active jobs from Jenkins and
 # compute the checksum from $JOB_NAME to check if any active nodes exist and
