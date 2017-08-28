@@ -52,6 +52,18 @@
           description: 'Features to install in the controller separated by comma'
 
 - parameter:
+    name: integration-controller-debug-map
+    parameters:
+      - string:
+          name: CONTROLLERDEBUGMAP
+          default: '{controller-debug-map}'
+          description: |
+              Key:Value map of debugs to enable on the controller separated by spaces.
+              The module should not include org.opendaylight.
+              The levels must be one of: ERROR, WARN, INFO, DEBUG, TRACE.
+              (ex. ovsdb.lib:ERROR netvirt.vpnservice:INFO)
+
+- parameter:
     name: integration-distribution-stream
     parameters:
       - string:
