@@ -64,11 +64,29 @@ fi
 cat \${CUSTOMPROP}
 
 echo "Configuring the log..."
+echo "CONTROLLERDEBUGMAP: $CONTROLLERDEBUGMAP"
 LOGCONF=/tmp/${BUNDLEFOLDER}/etc/org.ops4j.pax.logging.cfg
 sed -ie 's/log4j.appender.out.maxBackupIndex=10/log4j.appender.out.maxBackupIndex=1/g' \${LOGCONF}
 # FIXME: Make log size limit configurable from build parameter.
 sed -ie 's/log4j.appender.out.maxFileSize=1MB/log4j.appender.out.maxFileSize=30GB/g' \${LOGCONF}
 echo "log4j.logger.org.opendaylight.yangtools.yang.parser.repo.YangTextSchemaContextResolver = WARN" >> \${LOGCONF}
+# Add custom logging levels
+# DEBUGMAPS is expected to be a key:value map of space separated values like "module:level module2:level2"
+# where module is abbreviated and does not include org.opendaylight
+unset IFS
+if [ -n "${CONTROLLERDEBUGMAP}" ]; then
+    echo "here 1: CONTROLLERDEBUGMAP: $CONTROLLERDEBUGMAP"
+    # shellcheck disable=SC2154
+    for kv in \${CONTROLLERDEBUGMAP}; do
+        module=\${kv%%:*}
+        level=\${kv#*:}
+        echo "here 2: kv: $kv - $module - $level"
+        if [ -n "${module}" ] && [ -n "${level}" ]; then
+        echo "here 3: kv: $kv - $module $level"
+            echo "log4j.logger.org.opendaylight.$module = $level" >> \${LOGCONF}
+        fi
+    done
+fi
 cat \${LOGCONF}
 
 echo "Configure java home and max memory..."

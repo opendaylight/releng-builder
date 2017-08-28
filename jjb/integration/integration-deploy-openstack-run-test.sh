@@ -6,6 +6,7 @@
 source ${ROBOT_VENV}/bin/activate
 PYTHON="${ROBOT_VENV}/bin/python"
 
+exit
 # TODO: remove this work to run changes.py if/when it's moved higher up to be visible at the Robot level
 echo "showing recent changes that made it in to the distribution used by this job"
 $PYTHON -m pip install --upgrade urllib3
