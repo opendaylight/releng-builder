@@ -46,6 +46,7 @@ apt-get install vlan
 apt-get install python-netaddr
 
 # Check out quagga , compile and install for router functionalities
+# Thirft version=4 is applicable for carbon and nitrogen
 echo "Installing the Quagga..."
 mkdir -p /tmp/build_quagga
 cd /tmp/build_quagga
@@ -53,7 +54,7 @@ git clone https://github.com/6WIND/zrpcd.git
 cd zrpcd
 git checkout 20170731
 chmod a+x /tmp/build_quagga/zrpcd/pkgsrc/dev_compile_script.sh
-/tmp/build_quagga/zrpcd/pkgsrc/dev_compile_script.sh -d -b -t
+/tmp/build_quagga/zrpcd/pkgsrc/dev_compile_script.sh -d -b -t -v 4
 
 # Removing the build_quagga folder
 rm -rf /tmp/build_quagga/
