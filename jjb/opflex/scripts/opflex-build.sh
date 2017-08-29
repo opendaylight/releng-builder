@@ -4,6 +4,8 @@
 set -e
 set -x
 
+echo "---> scripts/opflex-build.sh"
+
 ROOT=/tmp/opflex-prefix
 
 function cleanup {
@@ -15,9 +17,14 @@ cleanup
 mkdir -p "$ROOT"
 trap cleanup EXIT
 
-tar -xz -C "$ROOT" --strip-components=2 -f libuv.tgz
-tar -xz -C "$ROOT" --strip-components=2 -f rapidjson.tgz
-tar -xz -C "$ROOT" --strip-components=2 -f openvswitch.tgz
+# Download the artifacts from nexus thirdparty
+wget -nv ${NEXUS_URL}/service/local/repositories/thirdparty/content/openvswitch/openvswitch/${OPENVSWITCH_VERSION}/openvswitch-${OPENVSWITCH_VERSION}.tar.gz
+wget -nv ${NEXUS_URL}/service/local/repositories/thirdparty/content/rapidjson/rapidjson/${RAPIDJSON_VERSION}/rapidjson-${RAPIDJSON_VERSION}.tar.gz
+wget -nv ${NEXUS_URL}/service/local/repositories/thirdparty/content/libuv/libuv/${LIBUV_VERSION}/libuv-${LIBUV_VERSION}.tar.gz
+
+tar -xz -C "$ROOT" --strip-components=2 -f libuv-${LIBUV_VERSION}.tar.gz
+tar -xz -C "$ROOT" --strip-components=2 -f rapidjson-${RAPIDJSON_VERSION}.tar.gz
+tar -xz -C "$ROOT" --strip-components=2 -f openvswitch-${OPENVSWITCH_VERSION}.tar.gz
 
 export PATH="$ROOT/bin:$PATH"
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$ROOT/lib"
