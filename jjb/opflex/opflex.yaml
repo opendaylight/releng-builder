@@ -8,15 +8,39 @@
       - oxygen:
           branch: 'master'
           jdk: 'openjdk8'
+          libuv-build: v1
+          libuv-scm: v2
+          rapidjson-build: v1
+          rapidjson-scm: v2
+          openvswitch-build: v2
+          openvswitch-scm: v2
       - nitrogen:
           branch: 'stable/nitrogen'
-          jdk: openjdk8
+          jdk: 'openjdk8'
+          libuv-build: v1
+          libuv-scm: v2
+          rapidjson-build: v1
+          rapidjson-scm: v2
+          openvswitch-build: v2
+          openvswitch-scm: v2
       - carbon:
           branch: 'stable/carbon'
-          jdk: openjdk8
+          jdk: 'openjdk8'
+          libuv-build: v1
+          libuv-scm: v2
+          rapidjson-build: v1
+          rapidjson-scm: v2
+          openvswitch-build: v2
+          openvswitch-scm: v2
       - boron:
           branch: 'stable/boron'
-          jdk: openjdk8
+          jdk: 'openjdk8'
+          libuv-build: v1
+          libuv-scm: v1
+          rapidjson-build: v1
+          rapidjson-scm: v1
+          openvswitch-build: v1
+          openvswitch-scm: v1
 
     project: 'opflex'
     project-name: 'opflex'
@@ -126,6 +150,15 @@
           build-timeout: '{build-timeout}'
 
     builders:
+      - inject:
+          properties-content: |
+              LIBUV_BUILD={libuv-build}
+              LIBUV_SCM={libuv-scm}
+              RAPIDJSON_BUILD={rapidjson-build}
+              RAPIDJSON_SCM={rapidjson-scm}
+              OPENVSWITCH_BUILD={openvswitch-build}
+              OPENVSWITCH_SCM={openvswitch-scm}
+              STREAM={stream}
       - opflex-build:
           mvn33: '{mvn-version}'
           stream: '{stream}'
