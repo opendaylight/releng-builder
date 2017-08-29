@@ -26,7 +26,7 @@
           csit-weekly-list: '{csit-weekly-list-oxygen}'
           schedule-weekly: 'H 23 * * 6'
           csit-high-frequency-list: '{csit-high-frequency-list-oxygen}'
-          schedule-high-frequency: ''
+          schedule-high-frequency: 'H H/4 * * *'
 
       - nitrogen:
           branch: 'stable/nitrogen'
@@ -37,7 +37,7 @@
           csit-weekly-list: '{csit-weekly-list-nitrogen}'
           schedule-weekly: 'H 23 * * 6'
           csit-high-frequency-list: '{csit-high-frequency-list-nitrogen}'
-          schedule-high-frequency: ''
+          schedule-high-frequency: 'H H/4 * * *'
 
       - carbon:
           branch: 'stable/carbon'
