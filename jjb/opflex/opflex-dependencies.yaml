@@ -2,200 +2,208 @@
 - project:
     name: opflex-dependencies
     jobs:
-      - 'opflex-libuv_tgz-{stream}'
-      - 'opflex-rapidjson_tgz-{stream}'
-      - 'opflex-openvswitch_tgz-{stream}'
+      - 'opflex-libuv-{stream}'
+      - 'opflex-rapidjson-{stream}'
+      - 'opflex-openvswitch-{stream}'
 
+    # todo: remove 'ovs-scm' after boron EOL
     stream:
       - oxygen:
           branch: 'master'
-          libuv-build: v1
-          libuv-scm: v2
-          rapidjson-build: v1
-          rapidjson-scm: v2
-          openvswitch-build: v2
-          openvswitch-scm: v2
+          libuv-version: '1.8.0'
+          rapidjson-version: '1.0.2'
+          openvswitch-version: '2.6.0'
+          ovs-scm: v2
       - nitrogen:
           branch: 'stable/nitrogen'
-          libuv-build: v1
-          libuv-scm: v2
-          rapidjson-build: v1
-          rapidjson-scm: v2
-          openvswitch-build: v2
-          openvswitch-scm: v2
+          libuv-version: '1.8.0'
+          rapidjson-version: '1.0.2'
+          openvswitch-version: '2.6.0'
+          ovs-scm: v2
       - carbon:
           branch: 'stable/carbon'
-          libuv-build: v1
-          libuv-scm: v2
-          rapidjson-build: v1
-          rapidjson-scm: v2
-          openvswitch-build: v2
-          openvswitch-scm: v2
+          libuv-version: '1.8.0'
+          rapidjson-version: '1.0.2'
+          openvswitch-version: '2.6.0'
+          ovs-scm: v2
       - boron:
           branch: 'stable/boron'
-          libuv-build: v1
-          libuv-scm: v1
-          rapidjson-build: v1
-          rapidjson-scm: v1
-          openvswitch-build: v1
-          openvswitch-scm: v1
+          libuv-version: '1.7.5'
+          rapidjson-version: '1.0.1'
+          openvswitch-version: 'noiro'
+          ovs-scm: v1
 
     project: 'opflex'
 
-- scm:
-    name: 'git-opflex-libuv-v1'
-    scm:
-      - git:
-          url: https://github.com/libuv/libuv.git
-          branches:
-            - 'refs/tags/v1.7.5'
-          wipe-workspace: true
+    mvn-opts: ''
+    mvn-params: ''
+    mvn-version: mvn33
 
-- scm:
-    name: 'git-opflex-libuv-v2'
-    scm:
-      - git:
-          url: https://github.com/libuv/libuv.git
-          branches:
-            - 'refs/tags/v1.8.0'
-          wipe-workspace: true
-
-- scm:
-    name: 'git-opflex-rapidjson-v1'
-    scm:
-      - git:
-          url: https://github.com/miloyip/rapidjson.git
-          branches:
-            - 'refs/tags/v1.0.1'
-          wipe-workspace: true
-
-- scm:
-    name: 'git-opflex-rapidjson-v2'
-    scm:
-      - git:
-          url: https://github.com/miloyip/rapidjson.git
-          branches:
-            - 'refs/tags/v1.0.2'
-          wipe-workspace: true
-
-- scm:
-    name: 'git-opflex-ovs-v1'
-    scm:
-      - git:
-          url: https://github.com/noironetworks/ovs.git
-          branches:
-            - 'origin/noiro'
-          wipe-workspace: true
-
-- scm:
-    name: 'git-opflex-ovs-v2'
-    scm:
-      - git:
-          url: https://github.com/openvswitch/ovs.git
-          branches:
-            - 'refs/tags/v2.6.0'
-          wipe-workspace: true
-
-- builder:
-    name: 'builder-opflex-libuv-v1'
-    builders:
-      - shell: !include-raw-escape: deps-inc-v1/libuv_tgz-build.sh
+    # common parameters required for 'lf-infra-deploy-maven-file' builder
+    repo-id: 'thirdparty'
+    upload-files-dir: '$WORKSPACE/upload_files'
 
 - job-template:
-    name: 'opflex-libuv_tgz-{stream}'
+    name: 'opflex-libuv-{stream}'
 
     project-type: freestyle
     node: centos7-java-builder-2c-8g
     concurrent: true
 
+    group-id: 'libuv'
+
     properties:
       - opendaylight-infra-properties:
           build-days-to-keep: '{build-days-to-keep}'
 
+    parameters:
+      - opendaylight-infra-parameters:
+          os-cloud: '{os-cloud}'
+          project: '{project}'
+          branch: '{branch}'
+          refspec: 'refs/heads/{branch}'
+          artifacts: '{archive-artifacts}'
+      - lf-infra-maven-parameters:
+          mvn-opts: '{mvn-opts}'
+          mvn-params: '{mvn-params}'
+          mvn-version: '{mvn-version}'
+          staging-profile-id: ''
+      - string:
+          name: LIBUV_VERSION
+          # yamllint disable-line rule:line-length
+          default: '{libuv-version}'
+          description: 'libuv version'
+
     scm:
-      - git-opflex-libuv-{libuv-scm}
+      - git-opflex-libuv
 
     wrappers:
       - opendaylight-infra-wrappers:
           build-timeout: '{build-timeout}'
 
     builders:
-      - builder-opflex-libuv-{libuv-build}
+      - opflex-build-libuv
+      - lf-infra-deploy-maven-file:
+          global-settings-file: 'global-settings'
+          settings-file: 'opflex-settings'
+          mvn-version: '{mvn-version}'
+          repo-id: '{repo-id}'
+          group-id: '{group-id}'
+          upload-files-dir: '{upload-files-dir}'
+          maven-repo-url: '$NEXUS_URL/content/repositories/thirdparty'
 
     publishers:
       - email-notification:
           email-recipients: '{email-recipients}'
           email-prefix: '[opflex]'
-      - archive:
-          artifacts: 'install-root/*.tgz'
-
-- builder:
-    name: 'builder-opflex-rapidjson-v1'
-    builders:
-      - shell: !include-raw-escape: deps-inc-v1/rapidjson_tgz-build.sh
+      - lf-infra-publish
 
 - job-template:
-    name: 'opflex-rapidjson_tgz-{stream}'
+    name: 'opflex-rapidjson-{stream}'
 
     project-type: freestyle
     node: centos7-java-builder-2c-8g
     concurrent: true
 
+    group-id: 'rapidjson'
+
     properties:
       - opendaylight-infra-properties:
           build-days-to-keep: '{build-days-to-keep}'
 
+    parameters:
+      - opendaylight-infra-parameters:
+          os-cloud: '{os-cloud}'
+          project: '{project}'
+          branch: '{branch}'
+          refspec: 'refs/heads/{branch}'
+          artifacts: '{archive-artifacts}'
+      - lf-infra-maven-parameters:
+          mvn-opts: '{mvn-opts}'
+          mvn-params: '{mvn-params}'
+          mvn-version: '{mvn-version}'
+          staging-profile-id: ''
+      - string:
+          name: RAPIDJSON_VERSION
+          # yamllint disable-line rule:line-length
+          default: '{rapidjson-version}'
+          description: 'rapidjson version'
+
     scm:
-      - git-opflex-rapidjson-{rapidjson-scm}
+      - git-opflex-rapidjson
 
     wrappers:
       - opendaylight-infra-wrappers:
           build-timeout: '{build-timeout}'
 
     builders:
-      - builder-opflex-rapidjson-{rapidjson-build}
+      - opflex-build-rapidjson
+      - lf-infra-deploy-maven-file:
+          global-settings-file: 'global-settings'
+          settings-file: 'opflex-settings'
+          mvn-version: '{mvn-version}'
+          repo-id: '{repo-id}'
+          group-id: '{group-id}'
+          upload-files-dir: '{upload-files-dir}'
+          maven-repo-url: '$NEXUS_URL/content/repositories/thirdparty'
 
     publishers:
       - email-notification:
           email-recipients: '{email-recipients}'
           email-prefix: '[opflex]'
-      - archive:
-          artifacts: 'install-root/*.tgz'
-
-- builder:
-    name: 'builder-opflex-openvswitch-v1'
-    builders:
-      - shell: !include-raw: deps-inc-v1/openvswitch_tgz-build.sh
-
-- builder:
-    name: 'builder-opflex-openvswitch-v2'
-    builders:
-      - shell: !include-raw: deps-inc-v2/openvswitch_tgz-build.sh
+      - lf-infra-publish
 
 - job-template:
-    name: 'opflex-openvswitch_tgz-{stream}'
+    name: 'opflex-openvswitch-{stream}'
 
     project-type: freestyle
     node: centos7-java-builder-2c-8g
     concurrent: true
 
+    group-id: 'openvswitch'
+
     properties:
       - opendaylight-infra-properties:
           build-days-to-keep: '{build-days-to-keep}'
 
+    parameters:
+      - opendaylight-infra-parameters:
+          os-cloud: '{os-cloud}'
+          project: '{project}'
+          branch: '{branch}'
+          refspec: 'refs/heads/{branch}'
+          artifacts: '{archive-artifacts}'
+      - lf-infra-maven-parameters:
+          mvn-opts: '{mvn-opts}'
+          mvn-params: '{mvn-params}'
+          mvn-version: '{mvn-version}'
+          staging-profile-id: ''
+      - string:
+          name: OPENVSWITCH_VERSION
+          # yamllint disable-line rule:line-length
+          default: '{openvswitch-version}'
+          description: 'openvswitch-version'
+
     scm:
-      - git-opflex-ovs-{openvswitch-scm}
+      - git-opflex-ovs-{ovs-scm}
 
     wrappers:
       - opendaylight-infra-wrappers:
           build-timeout: '{build-timeout}'
 
     builders:
-      - builder-opflex-openvswitch-{openvswitch-build}
+      - opflex-build-openvswitch
+      - lf-infra-deploy-maven-file:
+          global-settings-file: 'global-settings'
+          settings-file: 'opflex-settings'
+          mvn-version: '{mvn-version}'
+          repo-id: '{repo-id}'
+          group-id: '{group-id}'
+          upload-files-dir: '{upload-files-dir}'
+          maven-repo-url: '$NEXUS_URL/content/repositories/thirdparty'
 
     publishers:
       - email-notification:
           email-recipients: '{email-recipients}'
           email-prefix: '[opflex]'
-      - archive:
-          artifacts: 'install-root/*.tgz'
+      - lf-infra-publish
