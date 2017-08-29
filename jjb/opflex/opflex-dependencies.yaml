@@ -42,6 +42,15 @@
 
     project: 'opflex'
 
+    mvn-opts: ''
+    mvn-params: ''
+    mvn-version: mvn33
+
+   # common parameters required for 'lf-infra-deploy-maven-file' builder
+    repo-id: 'thirdparty'
+    upload-files-dir: '$WORKSPACE/upload_files'
+
+
 - scm:
     name: 'git-opflex-libuv-v1'
     scm:
@@ -108,9 +117,24 @@
     node: centos7-java-builder-2c-8g
     concurrent: true
 
+    group-id: 'libuv'
+
     properties:
       - opendaylight-infra-properties:
           build-days-to-keep: '{build-days-to-keep}'
+
+    parameters:
+      - opendaylight-infra-parameters:
+          os-cloud: '{os-cloud}'
+          project: '{project}'
+          branch: '{branch}'
+          refspec: 'refs/heads/{branch}'
+          artifacts: '{archive-artifacts}'
+      - lf-infra-maven-parameters:
+          mvn-opts: '{mvn-opts}'
+          mvn-params: '{mvn-params}'
+          mvn-version: '{mvn-version}'
+          staging-profile-id: ''
 
     scm:
       - git-opflex-libuv-{libuv-scm}
@@ -120,14 +144,23 @@
           build-timeout: '{build-timeout}'
 
     builders:
+      - inject:
+          properties-content: |
+              LIBUV_BUILD={libuv-build}
       - builder-opflex-libuv-{libuv-build}
+      - lf-infra-deploy-maven-file:
+          global-settings-file: 'global-settings'
+          settings-file: 'opflex-settings'
+          mvn-version: '{mvn-version}'
+          repo-id: '{repo-id}'
+          group-id: '{group-id}'
+          upload-files-dir: '{upload-files-dir}'
+          maven-repo-url: '$NEXUS_URL/content/repositories/thirdparty'
 
     publishers:
       - email-notification:
           email-recipients: '{email-recipients}'
           email-prefix: '[opflex]'
-      - archive:
-          artifacts: 'install-root/*.tgz'
 
 - builder:
     name: 'builder-opflex-rapidjson-v1'
@@ -141,9 +174,24 @@
     node: centos7-java-builder-2c-8g
     concurrent: true
 
+    group-id: 'rapidjson'
+
     properties:
       - opendaylight-infra-properties:
           build-days-to-keep: '{build-days-to-keep}'
+
+    parameters:
+      - opendaylight-infra-parameters:
+          os-cloud: '{os-cloud}'
+          project: '{project}'
+          branch: '{branch}'
+          refspec: 'refs/heads/{branch}'
+          artifacts: '{archive-artifacts}'
+      - lf-infra-maven-parameters:
+          mvn-opts: '{mvn-opts}'
+          mvn-params: '{mvn-params}'
+          mvn-version: '{mvn-version}'
+          staging-profile-id: ''
 
     scm:
       - git-opflex-rapidjson-{rapidjson-scm}
@@ -153,14 +201,23 @@
           build-timeout: '{build-timeout}'
 
     builders:
+      - inject:
+          properties-content: |
+              RAPIDJSON_BUILD={rapidjson-build}
       - builder-opflex-rapidjson-{rapidjson-build}
+      - lf-infra-deploy-maven-file:
+          global-settings-file: 'global-settings'
+          settings-file: 'opflex-settings'
+          mvn-version: '{mvn-version}'
+          repo-id: '{repo-id}'
+          group-id: '{group-id}'
+          upload-files-dir: '{upload-files-dir}'
+          maven-repo-url: '$NEXUS_URL/content/repositories/thirdparty'
 
     publishers:
       - email-notification:
           email-recipients: '{email-recipients}'
           email-prefix: '[opflex]'
-      - archive:
-          artifacts: 'install-root/*.tgz'
 
 - builder:
     name: 'builder-opflex-openvswitch-v1'
@@ -179,9 +236,24 @@
     node: centos7-java-builder-2c-8g
     concurrent: true
 
+    group-id: 'openvswitch'
+
     properties:
       - opendaylight-infra-properties:
           build-days-to-keep: '{build-days-to-keep}'
+
+    parameters:
+      - opendaylight-infra-parameters:
+          os-cloud: '{os-cloud}'
+          project: '{project}'
+          branch: '{branch}'
+          refspec: 'refs/heads/{branch}'
+          artifacts: '{archive-artifacts}'
+      - lf-infra-maven-parameters:
+          mvn-opts: '{mvn-opts}'
+          mvn-params: '{mvn-params}'
+          mvn-version: '{mvn-version}'
+          staging-profile-id: ''
 
     scm:
       - git-opflex-ovs-{openvswitch-scm}
@@ -191,11 +263,20 @@
           build-timeout: '{build-timeout}'
 
     builders:
+      - inject:
+          properties-content: |
+              OPENVSWITCH_BUILD={openvswitch-build}
       - builder-opflex-openvswitch-{openvswitch-build}
+      - lf-infra-deploy-maven-file:
+          global-settings-file: 'global-settings'
+          settings-file: 'opflex-settings'
+          mvn-version: '{mvn-version}'
+          repo-id: '{repo-id}'
+          group-id: '{group-id}'
+          upload-files-dir: '{upload-files-dir}'
+          maven-repo-url: '$NEXUS_URL/content/repositories/thirdparty'
 
     publishers:
       - email-notification:
           email-recipients: '{email-recipients}'
           email-prefix: '[opflex]'
-      - archive:
-          artifacts: 'install-root/*.tgz'

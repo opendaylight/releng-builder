@@ -4,6 +4,15 @@
 set -e
 set -x
 
+set -x
+
+if [[ $RAPIDJSON_BUILD =~ v1 ]]; then
+    version="1.0.1"
+else
+    version="1.0.2"
+fi
+
+
 ROOT=/tmp/opflex-prefix
 DESTDIR=install-root
 
@@ -17,4 +26,9 @@ sed -e "s|@INCLUDE_INSTALL_DIR@|$ROOT/include|" \
     "$DESTDIR/$ROOT/lib/pkgconfig/RapidJSON.pc"
 
 pushd $DESTDIR
-tar -czf rapidjson.tgz *
+tar -cvzf "rapidjson-$version.tar.gz" *
+# Move tarball to dir of files that will be uploaded to Nexus
+UPLOAD_FILES_PATH="$WORKSPACE/upload_files"
+mkdir -p "$UPLOAD_FILES_PATH"
+mv *.tar.gz "$_"
+popd
