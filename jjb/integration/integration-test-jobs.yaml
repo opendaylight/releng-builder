@@ -202,6 +202,7 @@
               KARAF_VERSION=$KARAF_VERSION
 
     publishers:
+      - opendaylight-infra-generate-csit-status-report
       - email-notification:
           email-recipients: '{email-recipients}'
           email-prefix: '[integration]'
