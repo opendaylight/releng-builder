@@ -649,3 +649,14 @@
               {mvn-opts}
           java-opts:
             - '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
+
+- publisher:
+    name: opendaylight-infra-generate-csit-status-report
+    publishers:
+      - postbuildscript:
+          builders:
+            - shell: !include-raw-escape:
+                - generate-csit-status-report.sh
+          script-only-if-succeeded: false
+          script-only-if-failed: false
+          mark-unstable-if-failed: false
