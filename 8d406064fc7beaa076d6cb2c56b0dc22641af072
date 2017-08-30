@@ -70,6 +70,30 @@
       "revId": "8d406064fc7beaa076d6cb2c56b0dc22641af072",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba1f61a0_c7bc18df",
+        "filename": "jjb/generate-csit-status-report.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-08-30T16:38:28Z",
+      "side": 1,
+      "message": "Scripts inside the releng/builder project are not available at runtime so we cannot place it into any releng/builder directory. Since this job clones integration/test at runtime that\u0027s the only place it can find a script such as this.\n\nAlternatively I can release it on pypi somewhere and we can pip install the script from pypi.",
+      "parentUuid": "ba1f61a0_875340e1",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 3
+      },
+      "revId": "8d406064fc7beaa076d6cb2c56b0dc22641af072",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
