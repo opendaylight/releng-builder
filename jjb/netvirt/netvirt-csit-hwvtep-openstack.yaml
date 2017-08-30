@@ -26,6 +26,12 @@
       - upstream-transparent:
           schedule: ''
           sg-mode: 'transparent'
+      - upstream-stateful:
+          schedule: ''
+          sg-mode: 'stateful'
+      - upstream-learn:
+          schedule: ''
+          sg-mode: 'learn'
       - gate-transparent:
           schedule: ''
           sg-mode: 'transparent'
@@ -59,7 +65,7 @@
 
     tools_system_count: 2
 
-    tools_system_image: 'Ubuntu 16.04 - mininet-ovs-25 - 20170808-0158'
+    tools_system_image: 'Ubuntu 16.04 - mininet-ovs-26 - 20170829-0548'
 
     enable-networking-l2gw: 'yes'
 
