@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ba1f61a0_120b0c7e",
+        "filename": "jjb/opflex/deps-inc-v2/openvswitch_tgz-build.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2017-08-30T23:42:15Z",
+      "side": 1,
+      "message": "If we had only version required at any point in time, we could simply pass it through the env variable. However we have multiple version and scripts are diff.",
+      "parentUuid": "ba1f61a0_524104a8",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 2
+      },
+      "revId": "1d0bd9a4d01a2c7640824516c6849e01cb8a0c0b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba1f61a0_323e1029",
         "filename": "jjb/opflex/deps-inc-v2/openvswitch_tgz-build.sh",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-30T23:34:51Z",
       "side": 1,
       "message": "the use of tgz was intentional as this generally signifies a binary root package tarball.  Doesn\u0027t make much difference though.",
+      "range": {
+        "startLine": 32,
+        "startChar": 32,
+        "endLine": 32,
+        "endChar": 38
+      },
+      "revId": "1d0bd9a4d01a2c7640824516c6849e01cb8a0c0b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba1f61a0_b21960d9",
+        "filename": "jjb/opflex/deps-inc-v2/openvswitch_tgz-build.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2017-08-30T23:42:15Z",
+      "side": 1,
+      "message": ".tgz and .tar.gz are the same type, while the former is just a shorthand.",
+      "parentUuid": "ba1f61a0_323e1029",
       "range": {
         "startLine": 32,
         "startChar": 32,
