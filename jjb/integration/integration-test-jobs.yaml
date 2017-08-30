@@ -202,9 +202,11 @@
               KARAF_VERSION=$KARAF_VERSION
 
     publishers:
+      - opendaylight-infra-generate-csit-status-report
       - email-notification:
           email-recipients: '{email-recipients}'
           email-prefix: '[integration]'
+      - lf-infra-publish
 
 # Template: integration-sanity-test-{stream}
 # Goal: Verify a distribution through sanity test
