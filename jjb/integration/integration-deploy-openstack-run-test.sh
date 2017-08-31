@@ -454,6 +454,7 @@ do
     scp ${!OSIP}:/opt/stack/devstack/nohup.out ${OS_COMPUTE_FOLDER}/stack.log
     scp ${!OSIP}:/var/log/openvswitch/ovs-vswitchd.log ${OS_COMPUTE_FOLDER}/ovs-vswitchd.log
     scp ${!OSIP}:/var/log/openvswitch/ovsdb-server.log ${OS_COMPUTE_FOLDER}/ovsdb-server.log
+    scp ${!OSIP}:/var/log/libvirt/libvirtd.log ${OS_COMPUTE_FOLDER}/libvirtd.log
     scp ${!OSIP}:/etc/nova/nova.conf ${OS_COMPUTE_FOLDER}/nova.conf
     rsync -avhe ssh ${!OSIP}:/opt/stack/logs/* ${OS_COMPUTE_FOLDER} # rsync to prevent copying of symbolic links
     scp extra_debug.sh ${!OSIP}:/tmp
