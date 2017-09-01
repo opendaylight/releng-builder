@@ -30,7 +30,7 @@
       - upstream-transparent:
           schedule: ''
           sg-mode: 'transparent'
-      - shague-upstream-stateful:
+      - upstream-stateful:
           schedule: ''
           sg-mode: 'stateful'
       - upstream-stateful-snat-conntrack:
@@ -92,14 +92,16 @@
           odl-ml2-branch: 'stable/pike'
           odl-ml2-driver-version: 'v2'
           odl-ml2-port-binding: 'pseudo-agentdb-binding'
+          enable-openstack-services: 'q-svc,q-dhcp,q-meta,n-cauth'
+          disable-openstack-services: 'swift,cinder,n-net,q-vpn,n-cpu,tempest,horizon'
       - queens:
           openstack-branch: 'master'
           odl-ml2-branch: 'master'
           odl-ml2-driver-version: 'v2'
           odl-ml2-port-binding: 'pseudo-agentdb-binding'
 
-    openstack_system_image: 'CentOS 7 - devstack-newton - 20170707-0359'
-    openstack_system2_image: 'CentOS 7 - devstack-newton - 20170707-0359'
+    openstack_system_image: 'CentOS 7 - devstack-pike - 20170901-2223'
+    openstack_system2_image: 'CentOS 7 - devstack-pike - 20170901-2223'
 
     security-group-mode: '{sg-mode}'
 
@@ -135,7 +137,7 @@
       - upstream-transparent:
           schedule: ''
           sg-mode: 'transparent'
-      - upstream-stateful:
+      - shague-p-upstream-stateful:
           schedule: ''
           sg-mode: 'stateful'
       - upstream-stateful-snat-conntrack:
