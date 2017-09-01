@@ -441,6 +441,8 @@ do
     scp ${!OS_CTRL_IP}:/etc/neutron/neutron_lbaas.conf ${OS_CTRL_FOLDER}/neutron-lbaas.conf
     scp ${!OS_CTRL_IP}:/etc/neutron/services/loadbalancer/haproxy/lbaas_agent.ini ${OS_CTRL_FOLDER}/lbaas-agent.ini
     rsync -avhe ssh ${!OS_CTRL_IP}:/opt/stack/logs/* ${OS_CTRL_FOLDER} # rsync to prevent copying of symbolic links
+    # Use rsync with sudo to get access to the log dir.
+    rsync --rsync-path="sudo rsync" -avhe ssh ${!OS_CTRL_IP}:/var/log/audit/audit.log ${OS_CTRL_FOLDER}
     scp extra_debug.sh ${!OS_CTRL_IP}:/tmp
     ${SSH} ${!OS_CTRL_IP} "bash /tmp/extra_debug.sh > /tmp/extra_debug.log"
     scp ${!OS_CTRL_IP}:/tmp/extra_debug.log ${OS_CTRL_FOLDER}/extra_debug.log
@@ -464,6 +466,10 @@ do
     scp ${!OSIP}:/var/log/libvirt/qeum/*.log ${OS_COMPUTE_FOLDER}
     scp ${!OSIP}:/etc/nova/nova.conf ${OS_COMPUTE_FOLDER}/nova.conf
     rsync -avhe ssh ${!OSIP}:/opt/stack/logs/* ${OS_COMPUTE_FOLDER} # rsync to prevent copying of symbolic links
+    # Use rsync with sudo to get access to the log dir. Also can't use wildcard because the dirs only have
+    # exec permissions which doesn't allow ls.
+    rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/libvirt ${OS_COMPUTE_FOLDER}
+    rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/audit/audit.log ${OS_COMPUTE_FOLDER}
     scp extra_debug.sh ${!OSIP}:/tmp
     ${SSH} ${!OSIP} "bash /tmp/extra_debug.sh > /tmp/extra_debug.log"
     scp ${!OSIP}:/tmp/extra_debug.log ${OS_COMPUTE_FOLDER}/extra_debug.log
