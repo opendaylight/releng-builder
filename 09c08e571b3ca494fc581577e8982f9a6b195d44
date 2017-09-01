@@ -22,6 +22,30 @@
       "revId": "09c08e571b3ca494fc581577e8982f9a6b195d44",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba1f61a0_a418f71e",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2017-09-01T18:49:15Z",
+      "side": 1,
+      "message": "I haven\u0027t seen this before either... but somehow it seems to work. the cat of the file shows what we expect.\n\nMy bigger question is how this file eventually ends up in /etc/hosts. The later code does a scp of this file to /tmp/hosts but I don\u0027t see it copied to /etc.",
+      "parentUuid": "ba1f61a0_042aa32b",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 25
+      },
+      "revId": "09c08e571b3ca494fc581577e8982f9a6b195d44",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
