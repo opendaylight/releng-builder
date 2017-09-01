@@ -396,8 +396,10 @@ echo -e "\ngrep ct_ /var/log/openvswitch/ovs-vswitchd.log\n"
 grep ct_ /var/log/openvswitch/ovs-vswitchd.log
 echo -e "\novsdb-tool -mm show-log\n"
 ovsdb-tool -mm show-log
-echo -e "\nnetstat -punta\n"
-netstat -punta
+echo -e "\nsudo netstat -punta\n"
+sudo netstat -punta
+echo -e "\nsudo getenforce\n"
+sudo getenforce
 EOF
 
 sleep 5
