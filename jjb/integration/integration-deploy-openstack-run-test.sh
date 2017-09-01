@@ -40,17 +40,16 @@ cat ${WORKSPACE}/hosts_file
 echo "Created the hosts file for ${NODE_IP}"
 }
 
-
-function create_control_node_local_conf {
-HOSTIP=$1
-MGRIP=$2
-ODL_OVS_MANAGERS="$3"
-#Needs to be removed
 if [ "${ODL_ML2_BRANCH}" != "stable/ocata" ]; then
    RECLONE=no
 else
    RECLONE=yes
 fi
+function create_control_node_local_conf {
+HOSTIP=$1
+MGRIP=$2
+ODL_OVS_MANAGERS="$3"
+#Needs to be removed
 local_conf_file_name=${WORKSPACE}/local.conf_control_${HOSTIP}
 cat > ${local_conf_file_name} << EOF
 [[local|localrc]]
@@ -115,7 +114,7 @@ SERVICE_HOST=\$HOST_IP
 NEUTRON_CREATE_INITIAL_NETWORKS=${CREATE_INITIAL_NETWORKS}
 Q_PLUGIN=ml2
 Q_ML2_TENANT_NETWORK_TYPE=${TENANT_NETWORK_TYPE}
-Q_OVS_USE_VETH=True
+#Q_OVS_USE_VETH=True
 
 ENABLE_TENANT_TUNNELS=True
 
@@ -186,7 +185,6 @@ ML2_VLAN_RANGES=${PUBLIC_PHYSICAL_NETWORK}
 ODL_PROVIDER_MAPPINGS=${ODL_PROVIDER_MAPPINGS}
 
 disable_service q-l3
-PUBLIC_INTERFACE=br100
 EOF
 
 if [ "${ODL_ML2_DRIVER_VERSION}" == "v2" ]; then
@@ -244,11 +242,6 @@ SERVICEHOST=$2
 MGRIP=$3
 ODL_OVS_MANAGERS="$4"
 #Needs to be removed
-if [ "${ODL_ML2_BRANCH}" != "stable/ocata" ]; then
-   RECLONE=no
-else
-   RECLONE=yes
-fi
 if [ "${OPENSTACK_BRANCH}" == "stable/pike" ] || [ "${OPENSTACK_BRANCH}" == "stable/ocata" ]; then # Ocata+
     # placement is mandatory for nova since Ocata, note that this requires controller to enable placement-api
     ENABLED_SERVICES="n-cpu,placement-client"
@@ -317,7 +310,6 @@ cat >> ${local_conf_file_name} << EOF
 # Uncomment lines below if odl-compute is to be used for l3 forwarding
 Q_L3_ENABLED=True
 ODL_L3=${ODL_L3}
-PUBLIC_INTERFACE=br100 # FIXME do we use br100 at all?
 PUBLIC_BRIDGE=${PUBLIC_BRIDGE}
 PUBLIC_PHYSICAL_NETWORK=${PUBLIC_PHYSICAL_NETWORK}
 ODL_PROVIDER_MAPPINGS=${ODL_PROVIDER_MAPPINGS}
@@ -330,6 +322,7 @@ cat >> ${local_conf_file_name} << EOF
 auth_strategy = keystone
 [DEFAULT]
 vif_plugging_timeout = 300
+vif_plugging_is_fatal = false
 use_neutron = True
 
 
@@ -480,6 +473,7 @@ do
     scp ${!OS_CTRL_IP}:/etc/neutron/neutron_lbaas.conf ${OS_CTRL_FOLDER}/neutron-lbaas.conf
     scp ${!OS_CTRL_IP}:/etc/neutron/services/loadbalancer/haproxy/lbaas_agent.ini ${OS_CTRL_FOLDER}/lbaas-agent.ini
     rsync -avhe ssh ${!OS_CTRL_IP}:/opt/stack/logs/* ${OS_CTRL_FOLDER} # rsync to prevent copying of symbolic links
+    rsync --rsync-path="sudo rsync" -avhe ssh ${!OS_CTRL_IP}:/etc/hosts ${OS_CTRL_FOLDER}/hosts.log
     # Use rsync with sudo to get access to the log dir.
     rsync --rsync-path="sudo rsync" -avhe ssh ${!OS_CTRL_IP}:/var/log/audit/audit.log ${OS_CTRL_FOLDER}
     scp extra_debug.sh ${!OS_CTRL_IP}:/tmp
@@ -505,6 +499,7 @@ do
     scp ${!OSIP}:/var/log/libvirt/qeum/*.log ${OS_COMPUTE_FOLDER}
     scp ${!OSIP}:/etc/nova/nova.conf ${OS_COMPUTE_FOLDER}/nova.conf
     rsync -avhe ssh ${!OSIP}:/opt/stack/logs/* ${OS_COMPUTE_FOLDER} # rsync to prevent copying of symbolic links
+    rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/etc/hosts ${OS_COMPUTE_FOLDER}/hosts.log
     # Use rsync with sudo to get access to the log dir. Also can't use wildcard because the dirs only have
     # exec permissions which doesn't allow ls.
     rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/libvirt ${OS_COMPUTE_FOLDER}
@@ -552,7 +547,7 @@ sudo killall dnsmasq
 echo "127.0.0.1    localhost \${HOSTNAME}" >> /tmp/hosts
 echo "::1   localhost  \${HOSTNAME}" >> /tmp/hosts
 sudo mv /tmp/hosts /etc/hosts
-sudo /usr/sbin/brctl addbr br100
+# sudo /usr/sbin/brctl addbr br100
 # FIXME: why is this line commented out? can we just remove it?
 # sudo ifconfig eth0 mtu 2000
 sudo mkdir /opt/stack
@@ -633,7 +628,7 @@ do
     COMPUTEIP=OPENSTACK_COMPUTE_NODE_${i}_IP
     CONTROLIP=OPENSTACK_CONTROL_NODE_${SITE_INDEX}_IP
     create_etc_hosts ${!COMPUTEIP} ${!CONTROLIP}
-    scp ${WORKSPACE}/hosts_file ${!CONTROLIP}:/tmp/hosts
+    scp ${WORKSPACE}/hosts_file ${!COMPUTEIP}:/tmp/hosts
     scp ${WORKSPACE}/get_devstack.sh  ${!COMPUTEIP}:/tmp
     ${SSH} ${!COMPUTEIP} "bash /tmp/get_devstack.sh"
     create_compute_node_local_conf ${!COMPUTEIP} ${!CONTROLIP} ${ODLMGRIP[$SITE_INDEX]} "${ODL_OVS_MGRS[$SITE_INDEX]}"
@@ -725,7 +720,7 @@ do
     # In anything after Newton, if we do not enable the n-cpu in control node
     # We need to discover hosts manually and ensure that they are mapped to cells.
     # reference: https://ask.openstack.org/en/question/102256/how-to-configure-placement-service-for-compute-node-on-ocata/
-    if [ "${OPENSTACK_BRANCH}" != "stable/newton" ]; then
+    if [ "${OPENSTACK_BRANCH}" == "stable/ocata" ]; then
         scp ${WORKSPACE}/setup_host_cell_mapping.sh  ${!CONTROLIP}:/tmp
         ${SSH} ${!CONTROLIP} "sudo bash /tmp/setup_host_cell_mapping.sh"
     fi
