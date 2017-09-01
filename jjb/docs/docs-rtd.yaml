@@ -2,9 +2,8 @@
 - project:
     name: docs-rtd
     jobs:
-      - 'docs-merge-rtd-{stream}'
-      - 'docs-verify-rtd-{stream}'
-      - '{project-name}-verify-tox-{stream}'
+      - '{project-name}-rtd-jobs'
+      - gerrit-tox-verify
 
     stream:
       - oxygen:
@@ -18,6 +17,7 @@
       - boron:
           branch: 'stable/boron'
 
+    build-node: centos7-java-builder-2c-4g
     project: docs
     project-name: docs
     rtdproject: opendaylight
