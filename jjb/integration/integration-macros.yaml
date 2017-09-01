@@ -64,6 +64,14 @@
               (ex. ovsdb.lib:ERROR netvirt.vpnservice:INFO)
 
 - parameter:
+    name: integration-openstack-debug
+    parameters:
+      - string:
+          name: OPENSTACKDEBUG
+          default: '{os-debug}'
+          description: 'Set to True to enable OpenStack debugging. Default is False.'
+
+- parameter:
     name: integration-distribution-stream
     parameters:
       - string:

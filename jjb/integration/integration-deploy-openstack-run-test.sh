@@ -181,6 +181,7 @@ cat >> ${local_conf_file_name} << EOF
 [[post-config|\$NEUTRON_CONF]]
 [DEFAULT]
 service_plugins = ${SERVICE_PLUGINS}
+debug = ${OPENSTACKDEBUG}
 EOF
 
 cat >> ${local_conf_file_name} << EOF
@@ -202,7 +203,7 @@ enable_isolated_metadata = True
 [[post-config|/etc/nova/nova.conf]]
 [DEFAULT]
 force_config_drive = False
-
+debug = ${OPENSTACKDEBUG}
 EOF
 
 echo "local.conf Created...."
