@@ -22,6 +22,29 @@
       "revId": "4eda50a713022a74d4c0b56396a82f1605c0ba4a",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba1f61a0_d54f9b69",
+        "filename": "packer/provision/devstack-pre-pip.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2017-09-01T01:32:32Z",
+      "side": 1,
+      "message": "openvswitch fails to install ... \n\n   public_cloud: + yum install -y --nogpgcheck openvswitch\n    public_cloud: Verifying  : rdo-release-pike-0.noarch                                    1/1\n    public_cloud:\n    public_cloud: Installed:\n    public_cloud: rdo-release.noarch 0:pike-0\n    public_cloud:\n    public_cloud: Complete!\n    public_cloud: Loaded plugins: fastestmirror, langpacks\n    public_cloud: Loading mirror speeds from cached hostfile\n    public_cloud: * base: yum.tamu.edu\n    public_cloud: * epel: pubmirror2.math.uh.edu\n    public_cloud: * extras: mirror.raystedman.net\n    public_cloud: * updates: centos.pymesolutionsweb.com\n    public_cloud: Error: Nothing to do\n    public_cloud: No package openvswitch available.\n\u003d\u003d\u003e public_cloud: Terminating the source server: d8700926-656b-44a2-a55f-e73c8d6b3c17 ...\n\u003d\u003d\u003e public_cloud: Deleting temporary keypair: packer_59a89c56-314c-d80b-2694-48938adeadb4 ...\nBuild \u0027public_cloud\u0027 errored: Script exited with non-zero exit status: 1",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 39
+      },
+      "revId": "4eda50a713022a74d4c0b56396a82f1605c0ba4a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
