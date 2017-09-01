@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "ba1f61a0_c4324b5e",
+        "filename": "jjb/packaging/build-packer-docker.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 6794
+      },
+      "writtenOn": "2017-09-01T22:15:37Z",
+      "side": 1,
+      "message": "The job is ending in an error -\u003e docker: Error executing Ansible: Non-zero exit status: 2. Just like the virtualbox one",
+      "revId": "4d92bcef5b70379f8607868cc1d4a83b0627c1ce",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba1f61a0_d5283b88",
+        "filename": "jjb/packaging/build-packer-docker.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 6794
+      },
+      "writtenOn": "2017-09-01T22:15:37Z",
+      "side": 1,
+      "message": "https://logs.opendaylight.org/sandbox/jenkins091/packaging-build-packer-docker-master/1/console.log.gz - Ends up in an error",
+      "revId": "4d92bcef5b70379f8607868cc1d4a83b0627c1ce",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba1f61a0_b52dc797",
+        "filename": "jjb/packaging/build-packer-docker.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 6794
+      },
+      "writtenOn": "2017-09-01T22:15:37Z",
+      "side": 1,
+      "message": "Yes, because the provision scripts are addressed considering packaging/packer as current directory",
+      "revId": "4d92bcef5b70379f8607868cc1d4a83b0627c1ce",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba1f61a0_5543ab41",
+        "filename": "jjb/packaging/build-packer-docker.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 6794
+      },
+      "writtenOn": "2017-09-01T22:15:37Z",
+      "side": 1,
+      "message": "https://logs.opendaylight.org/sandbox/jenkins091/packaging-build-packer-docker-master/2/console.log.gz",
+      "revId": "4d92bcef5b70379f8607868cc1d4a83b0627c1ce",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba1f61a0_53515561",
         "filename": "jjb/packaging/build-packer-libvirt.sh",
         "patchSetId": 4
@@ -13,6 +81,75 @@
       "writtenOn": "2017-08-11T16:21:15Z",
       "side": 1,
       "message": "Not the last two anymore (I already removed one), but should check all of them",
+      "revId": "4d92bcef5b70379f8607868cc1d4a83b0627c1ce",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba1f61a0_e4df8f0b",
+        "filename": "jjb/packaging/build-packer-libvirt.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 6794
+      },
+      "writtenOn": "2017-09-01T22:15:37Z",
+      "side": 1,
+      "message": "We need all the three packages",
+      "parentUuid": "ba1f61a0_53515561",
+      "revId": "4d92bcef5b70379f8607868cc1d4a83b0627c1ce",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba1f61a0_d59ddbbd",
+        "filename": "jjb/packaging/build-packer-libvirt.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 6794
+      },
+      "writtenOn": "2017-09-01T22:15:37Z",
+      "side": 1,
+      "message": "Yes we do need to cd",
+      "revId": "4d92bcef5b70379f8607868cc1d4a83b0627c1ce",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba1f61a0_a4747736",
+        "filename": "jjb/packaging/build-packer-virtualbox.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 6794
+      },
+      "writtenOn": "2017-09-01T22:15:37Z",
+      "side": 1,
+      "message": "There seems to be an error while running this job -\u003e https://logs.opendaylight.org/sandbox/jenkins091/packaging-build-packer-virtualbox-master/1/console.log.gz. Tried installing ansible but still the same error -\u003e https://logs.opendaylight.org/sandbox/jenkins091/packaging-build-packer-virtualbox-master/2/console.log.gz",
+      "revId": "4d92bcef5b70379f8607868cc1d4a83b0627c1ce",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba1f61a0_33c9efac",
+        "filename": "jjb/packaging/build-packer-virtualbox.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 6794
+      },
+      "writtenOn": "2017-09-01T22:15:37Z",
+      "side": 1,
+      "message": "Yes we do need to cd",
       "revId": "4d92bcef5b70379f8607868cc1d4a83b0627c1ce",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
