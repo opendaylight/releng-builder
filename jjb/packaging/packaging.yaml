@@ -192,7 +192,7 @@
           sudo yum install -y expect
           # Install nmap to check status of ODL's SSH port
           sudo yum install -y nmap
-      - shell: !include-raw: include-raw-test-karaf.expect
+      - shell: !include-raw: test-karaf.expect
       - shell: !include-raw: stop-odl.sh
 
     publishers:
@@ -248,11 +248,11 @@
           sudo yum install -y expect
           # Install nmap to check status of ODL's SSH port
           sudo yum install -y nmap
-      - shell: !include-raw: include-raw-test-karaf.expect
+      - shell: !include-raw: test-karaf.expect
       - shell: !include-raw: stop-odl.sh
       - shell: !include-raw: test-rpm-upgrade.sh
       - shell: !include-raw: start-odl.sh
-      - shell: !include-raw: include-raw-test-karaf.expect
+      - shell: !include-raw: test-karaf.expect
       - shell: !include-raw: stop-odl.sh
 
     publishers:
@@ -294,7 +294,7 @@
           sudo apt-get install -y expect
           # Install nmap to check status of ODL's SSH port
           sudo apt-get install -y nmap
-      - shell: !include-raw: include-raw-test-karaf.expect
+      - shell: !include-raw: test-karaf.expect
       - shell: !include-raw: stop-odl.sh
 
     publishers:
