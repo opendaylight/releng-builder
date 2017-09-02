@@ -30,9 +30,11 @@ if [[ $DOWNLOAD_URL = *.zip ]]; then
 fi
 
 # Build release specified by build params
-"$WORKSPACE/packaging/packages/build.py" --rpm --download_url "$DOWNLOAD_URL" \
+"$WORKSPACE/packaging/packages/build.py" --rpm \
                                          --changelog_name "$CHANGELOG_NAME" \
-                                         --changelog_email "$CHANGELOG_EMAIL"
+                                         --changelog_email "$CHANGELOG_EMAIL" \
+                                         direct \
+                                         --download_url "$DOWNLOAD_URL"
 
 # Move RPMs (SRPM and noarch) to dir of files that will be uploaded to Nexus
 UPLOAD_FILES_PATH="$WORKSPACE/upload_files"

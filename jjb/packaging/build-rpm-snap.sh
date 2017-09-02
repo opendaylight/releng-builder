@@ -33,10 +33,11 @@ else
 fi
 
 # Build the latest snapshot matching the given major minor version
-"$WORKSPACE/packaging/packages/build.py" --rpm --build-latest-snap \
-                                         --major "$VERSION_MAJOR" \
+"$WORKSPACE/packaging/packages/build.py" --rpm \
                                          --changelog_name "$CHANGELOG_NAME" \
-                                         --changelog_email "$CHANGELOG_EMAIL"
+                                         --changelog_email "$CHANGELOG_EMAIL" \
+                                         latest_snap \
+                                         --major "$VERSION_MAJOR"
 
 # Copy the rpm to be upload
 UPLOAD_FILES_PATH="$WORKSPACE/upload_files"
