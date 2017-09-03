@@ -88,6 +88,17 @@
           description: 'General test plan we will run unless stream-specific one is found'
 
 - parameter:
+    name: integration-test-suites
+    parameters:
+      - string:
+          name: SUITES
+          default: '{test-suites}'
+          description: |
+              List of space-separated suites. Useful when running specific suites within a testplan.
+              (ex. integration/test/csit/suites/openstack/connectivity/01_l2_tests.robot
+              integration/test/csit/suites/netvirt/ElanService/).
+
+- parameter:
     name: integration-test-options
     parameters:
       - string:

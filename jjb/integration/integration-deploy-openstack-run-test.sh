@@ -821,7 +821,9 @@ echo "Changing the testplan path..."
 cat "${testplan_filepath}" | sed "s:integration:${WORKSPACE}:" > testplan.txt
 cat testplan.txt
 
-SUITES=`egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' testplan.txt | tr '\012' ' '`
+if [ -z "${SUITES}" ]; then
+    SUITES=`egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' testplan.txt | tr '\012' ' '`
+fi
 
 #Environment Variables Needed to execute Openstack Client for NEtvirt Jobs
 cat > /tmp/os_netvirt_client_rc << EOF
