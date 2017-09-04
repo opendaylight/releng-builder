@@ -73,7 +73,8 @@
           $PYTHON -m pip install --upgrade -r spectrometer/server/requirements.txt
           $PYTHON -m pip install --upgrade gunicorn gevent
           $PYTHON -m pip install --upgrade nodeenv
-          $PYTHON -m pip freeze
+          $PYTHON -m pip install --upgrade pipdeptree
+          pipdeptree
 
           echo "---> Setup NodeJS"
           if [ -e venv-nodejs/bin/activate ]; then

@@ -175,7 +175,8 @@
           PYTHON="$WORKSPACE/venv-tox/bin/python"
           $PYTHON -m pip install --upgrade pip
           $PYTHON -m pip install --upgrade tox argparse
-          $PYTHON -m pip freeze
+          $PYTHON -m pip install --upgrade pipdeptree
+          pipdeptree
           cd $WORKSPACE/repo/{toxdir}
           tox
 
@@ -344,7 +345,8 @@
           PYTHON="$WORKSPACE/venv-python/bin/python"
           $PYTHON -m pip install --upgrade pip
           $PYTHON -m pip install --upgrade tox argparse nodeenv
-          $PYTHON -m pip freeze
+          $PYTHON -m pip install --upgrade pipdeptree
+          pipdeptree
 
           # Prepare node
           nodeenv --node={nodever} --prebuilt $WORKSPACE/venv-node

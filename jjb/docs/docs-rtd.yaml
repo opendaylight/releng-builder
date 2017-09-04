@@ -120,8 +120,9 @@
           source $WORKSPACE/venv/bin/activate
           PYTHON="$WORKSPACE/venv/bin/python"
           $PYTHON -m pip install --upgrade pip
-          $PYTHON -m pip freeze
+          $PYTHON -m pip install --upgrade pipdeptree
           $PYTHON -m pip install tox
+          pipdeptree
           tox -edocs
 
           # Archive generated docs
