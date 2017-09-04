@@ -11,13 +11,13 @@ enable_service() {
 
     for service in "${services[@]}"; do
         echo "---> Enable service: $service"
-        FACTER_OS=$(/usr/bin/facter operatingsystem)
+        FACTER_OS=$(/usr/bin/facter operatingsystem | tr '[:upper:]' '[:lower:]')
         FACTER_OSVER=$(/usr/bin/facter operatingsystemrelease)
-        if [ "$FACTER_OS" == "CentOS" ]; then
+        if [ "$FACTER_OS" == "centos" ]; then
             systemctl enable "$service"
             systemctl start "$service"
             systemctl status "$service"
-        elif [ "$FACTER_OS" == "Ubuntu" ]; then
+        elif [ "$FACTER_OS" == "ubuntu" ]; then
             case "$FACTER_OSVER" in
                 14.04)
                     service "$service" start
@@ -172,10 +172,10 @@ EOF
     echo "---> Configuring OpenJDK"
     yum install -y 'java-*-openjdk-devel'
 
-    FACTER_OS=$(/usr/bin/facter operatingsystem)
+    FACTER_OS=$(/usr/bin/facter operatingsystem | tr '[:upper:]' '[:lower:]')
     FACTER_OSVER=$(/usr/bin/facter operatingsystemrelease)
     case "$FACTER_OS" in
-        Fedora)
+        fedora)
             if [ "$FACTER_OSVER" -ge "21" ]
             then
                 echo "---> not modifying java alternatives as OpenJDK 1.7.0 does not exist"
@@ -184,7 +184,7 @@ EOF
                 alternatives --set java_sdk_openjdk /usr/lib/jvm/java-1.7.0-openjdk.x86_64
             fi
         ;;
-        RedHat|CentOS)
+        redhat|centos)
             if [ "$(echo "$FACTER_OSVER" | cut -d'.' -f1)" -ge "7" ]
             then
                 echo "---> not modifying java alternatives as OpenJDK 1.7.0 does not exist"
@@ -421,9 +421,9 @@ all_systems() {
 
     # Do any Distro specific installations here
     echo "Checking distribution"
-    FACTER_OS=$(/usr/bin/facter operatingsystem)
+    FACTER_OS=$(/usr/bin/facter operatingsystem | tr '[:upper:]' '[:lower:]')
     case "$FACTER_OS" in
-        RedHat|CentOS)
+        redhat|centos)
             if [ "$(/usr/bin/facter operatingsystemrelease | /bin/cut -d '.' -f1)" = "7" ]; then
                 echo
                 echo "---> CentOS 7"
