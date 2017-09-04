@@ -15,9 +15,11 @@ $PYTHON -m pip install --upgrade pip
 $PYTHON -m pip install -r "$WORKSPACE/packaging/packages/requirements.txt"
 
 # Build release specified by build params
-"$WORKSPACE/packaging/packages/build.py" --deb --download_url "$DOWNLOAD_URL" \
+"$WORKSPACE/packaging/packages/build.py" --deb \
                                          --changelog_name "$CHANGELOG_NAME" \
-                                         --changelog_email "$CHANGELOG_EMAIL"
+                                         --changelog_email "$CHANGELOG_EMAIL" \
+                                         direct \
+                                         --download_url "$DOWNLOAD_URL"
 
 # Copy the debs to be upload
 UPLOAD_FILES_PATH="$WORKSPACE/upload_files"
