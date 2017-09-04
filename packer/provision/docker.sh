@@ -33,12 +33,12 @@ ubuntu_changes() {
     echo "---> Ubuntu changes"
 }
 
-OS=$(/usr/bin/facter operatingsystem)
+OS=$(/usr/bin/facter operatingsystem | tr '[:upper:]' '[:lower:]')
 case "$OS" in
-    CentOS|Fedora|RedHat)
+    centos|fedora|redhat)
         rh_changes
     ;;
-    Ubuntu)
+    ubuntu)
         ubuntu_changes
     ;;
     *)
