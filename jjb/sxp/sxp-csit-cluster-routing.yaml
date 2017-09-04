@@ -22,6 +22,7 @@
           branch: 'stable/carbon'
           jre: 'openjdk8'
           karaf-version: karaf3
+          install-features: 'odl-restconf,odl-sxp-controller,odl-sxp-route'
 
     install:
       - only:
@@ -30,7 +31,7 @@
           scope: 'all'
 
     # Features to install
-    install-features: 'odl-restconf,odl-sxp-controller,odl-sxp-route'
+    install-features: 'odl-restconf,odl-sxp-controller,odl-sxp-routing'
 
     # Tools VMs:
     tools_system_count: 2
