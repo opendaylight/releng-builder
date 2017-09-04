@@ -503,7 +503,7 @@ EOF
 
 cat > ${WORKSPACE}/get_devstack.sh << EOF
 sudo systemctl stop firewalld
-sudo yum install bridge-utils -y
+sudo yum install bridge-utils python-pip -y
 sudo systemctl stop  NetworkManager
 #Disable NetworkManager and kill dhclient and dnsmasq
 sudo systemctl stop NetworkManager
@@ -521,6 +521,8 @@ cd /opt/stack
 git clone https://git.openstack.org/openstack-dev/devstack
 cd devstack
 git checkout $OPENSTACK_BRANCH
+#To fix the recent tempest/tox issues which blocks stacking
+sudo pip install tox==2.7.0
 EOF
 
 cat > "${WORKSPACE}/setup_host_cell_mapping.sh" << EOF
