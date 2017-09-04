@@ -55,7 +55,8 @@
           PYTHON="$WORKSPACE/venv/bin/python"
           $PYTHON -m pip install --upgrade pip
           $PYTHON -m pip install --upgrade networkx
-          $PYTHON -m pip freeze
+          $PYTHON -m pip install --upgrade pipdeptree
+          pipdeptree
           ./scripts/determine-merge-order.py
           deactivate
           rm -rf $WORKSPACE/venv

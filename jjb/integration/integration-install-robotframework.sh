@@ -64,6 +64,7 @@ pip install networking-l2gw
 pip install python-neutronclient==6.1.0
 
 # Print installed versions.
-pip freeze
+pip install --upgrade pipdeptree
+pipdeptree
 
 # vim: sw=4 ts=4 sts=4 et ft=sh :

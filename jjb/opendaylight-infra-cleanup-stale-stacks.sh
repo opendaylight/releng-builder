@@ -14,7 +14,8 @@ virtualenv "/tmp/v/openstack"
 source "/tmp/v/openstack/bin/activate"
 pip install --upgrade pip
 pip install --upgrade python-openstackclient python-heatclient
-pip freeze
+pip install --upgrade pipdeptree
+pipdeptree
 
 #########################
 ## FETCH ACTIVE BUILDS ##
