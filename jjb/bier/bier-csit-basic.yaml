@@ -13,6 +13,10 @@
 
     # Project branches
     stream:
+      # Removed jobs testing Carbon branches due to the CSIT update
+      # incompatible changes in test suites for Nitrogen
+      # TODO: Create test suites for specific release before
+      # Nitrogen if needed.
       - oxygen:
           branch: 'master'
           jre: 'openjdk8'
@@ -24,11 +28,10 @@
           jre: 'openjdk8'
           karaf-version: karaf3
 
-    # TODO: Delete the following if suites are compatible with Boron again.
-    verify-stream: 'carbon'
-    # TODO: Remove the lines above and below when carbon becomes the default scit-verify stream.
-    verify-branch: 'stable/carbon'
-    # TODO: Update the line above when stable/carbon is created.
+    # TODO: Delete the following if suites are compatible with Nitrogen again.
+    verify-stream: 'nitrogen'
+    # TODO: Remove the lines above and below when nitrogen becomes the default csit-verify stream.
+    verify-branch: 'master'
 
     install:
       - only:
