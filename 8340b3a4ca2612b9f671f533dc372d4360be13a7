@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "ba1f61a0_eaa8ee21",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 14
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2017-09-05T23:57:28Z",
+      "side": 1,
+      "message": "There is a problem with doing this in the yaml. The yaml creates the services for the controller node and not the compute - and these values here are for the compute. Example, we have n-cpu in the disabled list for the controller, but enabled for the computes.\n\nLet\u0027s keep it this way here and rework the services in another patch. I have been meaning to do that anyways.",
+      "parentUuid": "ba1f61a0_eabc6e08",
+      "range": {
+        "startLine": 244,
+        "startChar": 0,
+        "endLine": 250,
+        "endChar": 2
+      },
+      "revId": "8340b3a4ca2612b9f671f533dc372d4360be13a7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba1f61a0_0a7c6282",
         "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
         "patchSetId": 14
