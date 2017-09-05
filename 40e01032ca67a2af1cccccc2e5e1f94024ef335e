@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba1f61a0_87716b78",
+        "filename": "jjb/opflex/scripts/openvswitch-build.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2017-09-05T17:01:36Z",
+      "side": 1,
+      "message": "In the v1 script this is\n\nfind lib ofproto -name \"*.h\" -exec cp --parents -t \"$DESTDIR/$ROOT/include/openvswitch/\" {} \\;\n\nin v2 this is \n\nfind lib -name \"*.h\" -exec cp --parents -t \"$DESTDIR/$ROOT/include/openvswitch/\" {} \\;",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 86
+      },
+      "revId": "40e01032ca67a2af1cccccc2e5e1f94024ef335e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
