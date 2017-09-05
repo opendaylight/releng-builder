@@ -21,9 +21,19 @@ $PYTHON -m pip install -r "$WORKSPACE/packaging/packages/requirements.txt"
                                          direct \
                                          --download_url "$DOWNLOAD_URL"
 
-# Copy the debs to be upload
-UPLOAD_FILES_PATH="$WORKSPACE/upload_files"
-mkdir -p "$UPLOAD_FILES_PATH"
-# Note: no source packages are available, since the debs are not built
-# from the actual source
-mv "$WORKSPACE/packaging/packages/deb/opendaylight/"*.deb "$_"
+# Publish debs to Nexus if in production Jenkins, else host on sandbox Jenkins
+if [ "$SILO" == "sandbox" ]; then
+  # TODO: Host debs on Jenkins temporarily
+  echo "Not uploading debs to Nexus because running in sandbox"
+elif  [ "$SILO" == "releng" ]; then
+  # Copy the debs to be upload
+  # Move debs to dir of files that will be uploaded to Nexus
+  UPLOAD_FILES_PATH="$WORKSPACE/upload_files"
+  mkdir -p "$UPLOAD_FILES_PATH"
+  # Note: no source packages are available, since the debs are not built
+  # from the actual source
+  mv "$WORKSPACE/packaging/packages/deb/opendaylight/"*.deb "$_"
+else
+  echo "Unknown Jenkins silo: $SILO"
+  exit 1
+fi
