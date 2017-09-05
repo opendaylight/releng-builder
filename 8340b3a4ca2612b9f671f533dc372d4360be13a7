@@ -1,0 +1,199 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba1f61a0_ca46ca4e",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 14
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2017-09-05T20:02:54Z",
+      "side": 1,
+      "message": "what\u0027s the story here? we don\u0027t need it for any jobs any more? if so, let\u0027s just delete the line entirely",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 20
+      },
+      "revId": "8340b3a4ca2612b9f671f533dc372d4360be13a7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba1f61a0_2a77a6a1",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 14
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2017-09-05T20:02:54Z",
+      "side": 1,
+      "message": "thinking more about this, and noticing the jjb .yaml file,\ncan\u0027t we control this from the .yaml instead of this logic?\nI would prefer that. anything to make this script easier\nto digest is good.",
+      "range": {
+        "startLine": 244,
+        "startChar": 0,
+        "endLine": 250,
+        "endChar": 2
+      },
+      "revId": "8340b3a4ca2612b9f671f533dc372d4360be13a7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba1f61a0_0a7c6282",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 14
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2017-09-05T20:02:54Z",
+      "side": 1,
+      "message": "how about a comment here with a link to bug 9092 to help\nus remember what we think the problem is and why we need\nthis to be false.",
+      "range": {
+        "startLine": 325,
+        "startChar": 0,
+        "endLine": 325,
+        "endChar": 29
+      },
+      "revId": "8340b3a4ca2612b9f671f533dc372d4360be13a7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba1f61a0_6a6d1ecc",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 14
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2017-09-05T20:02:54Z",
+      "side": 1,
+      "message": "time to just delete these lines?",
+      "range": {
+        "startLine": 550,
+        "startChar": 0,
+        "endLine": 552,
+        "endChar": 29
+      },
+      "revId": "8340b3a4ca2612b9f671f533dc372d4360be13a7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba1f61a0_aa6a76b0",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 14
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2017-09-05T20:02:54Z",
+      "side": 1,
+      "message": "what\u0027s the thinking here? will the API be /identity from\nnow on, meaning pike, queens, \u0027R\u0027, etc?\n\nif so, it\u0027s probably better to check if the branch is newton or ocata and set to /v3 and put it as /identity otherwise.",
+      "range": {
+        "startLine": 881,
+        "startChar": 0,
+        "endLine": 885,
+        "endChar": 2
+      },
+      "revId": "8340b3a4ca2612b9f671f533dc372d4360be13a7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba1f61a0_ea60eed0",
+        "filename": "jjb/netvirt/netvirt-csit-multi-openstack.yaml",
+        "patchSetId": 14
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2017-09-05T20:02:54Z",
+      "side": 1,
+      "message": "yeah, see my comment in the script. It feels cleaner and\neasier to maintain if we just worry about our services\nhere. will it work that way?",
+      "range": {
+        "startLine": 81,
+        "startChar": 10,
+        "endLine": 81,
+        "endChar": 74
+      },
+      "revId": "8340b3a4ca2612b9f671f533dc372d4360be13a7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba1f61a0_ca5d2a17",
+        "filename": "jjb/netvirt/netvirt-csit-multi-openstack.yaml",
+        "patchSetId": 14
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2017-09-05T20:02:54Z",
+      "side": 1,
+      "message": "so was it really shague-a, shague-b ... and we ended up all\nthe way to shague-p ? wow!",
+      "range": {
+        "startLine": 127,
+        "startChar": 8,
+        "endLine": 127,
+        "endChar": 17
+      },
+      "revId": "8340b3a4ca2612b9f671f533dc372d4360be13a7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba1f61a0_2a9e86b9",
+        "filename": "jjb/netvirt/netvirt-csit-multi-openstack.yaml",
+        "patchSetId": 14
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2017-09-05T20:02:54Z",
+      "side": 1,
+      "message": "blank line",
+      "revId": "8340b3a4ca2612b9f671f533dc372d4360be13a7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba1f61a0_0aa3c201",
+        "filename": "jjb/netvirt/netvirt-csit-multi-openstack.yaml",
+        "patchSetId": 14
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2017-09-05T20:02:54Z",
+      "side": 1,
+      "message": "do we need the enable-openstack-services stuff here too?",
+      "revId": "8340b3a4ca2612b9f671f533dc372d4360be13a7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
