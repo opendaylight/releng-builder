@@ -36,8 +36,17 @@ fi
                                          direct \
                                          --download_url "$DOWNLOAD_URL"
 
-# Move RPMs (SRPM and noarch) to dir of files that will be uploaded to Nexus
-UPLOAD_FILES_PATH="$WORKSPACE/upload_files"
-mkdir -p "$UPLOAD_FILES_PATH"
-mv "/home/$USER/rpmbuild/RPMS/noarch/"*.rpm "$_"
-mv "/home/$USER/rpmbuild/SRPMS/"*.rpm "$_"
+# Publish RPMs to Nexus if in production Jenkins, else host on sandbox Jenkins
+if [ "$SILO" == "sandbox" ]; then
+  # TODO: Host RPMs on Jenkins temporarily
+  echo "Not uploading RPMs to Nexus because running in sandbox"
+elif  [ "$SILO" == "releng" ]; then
+  # Move RPMs (SRPM and noarch) to dir of files that will be uploaded to Nexus
+  UPLOAD_FILES_PATH="$WORKSPACE/upload_files"
+  mkdir -p "$UPLOAD_FILES_PATH"
+  mv "/home/$USER/rpmbuild/RPMS/noarch/"*.rpm "$_"
+  mv "/home/$USER/rpmbuild/SRPMS/"*.rpm "$_"
+else
+  echo "Unknown Jenkins silo: $SILO"
+  exit 1
+fi
