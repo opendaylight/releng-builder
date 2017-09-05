@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ba1f61a0_aac6f697",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 14
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2017-09-05T20:50:13Z",
+      "side": 1,
+      "message": "This was a workaround for older RHEL os\u0027s - like rhel 6.x. It isn\u0027t the default so I removed it. It also names the namespace ports differently, so another reason I cleaned it up. We can push this to another patch.",
+      "parentUuid": "ba1f61a0_ca46ca4e",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 20
+      },
+      "revId": "8340b3a4ca2612b9f671f533dc372d4360be13a7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba1f61a0_2a77a6a1",
         "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
         "patchSetId": 14
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-05T20:02:54Z",
       "side": 1,
       "message": "thinking more about this, and noticing the jjb .yaml file,\ncan\u0027t we control this from the .yaml instead of this logic?\nI would prefer that. anything to make this script easier\nto digest is good.",
+      "range": {
+        "startLine": 244,
+        "startChar": 0,
+        "endLine": 250,
+        "endChar": 2
+      },
+      "revId": "8340b3a4ca2612b9f671f533dc372d4360be13a7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba1f61a0_eabc6e08",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 14
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2017-09-05T20:50:13Z",
+      "side": 1,
+      "message": "yeah, better to add this into the openstack version section. Much more readable that way.",
+      "parentUuid": "ba1f61a0_2a77a6a1",
       "range": {
         "startLine": 244,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ba1f61a0_cab9aa16",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 14
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2017-09-05T20:50:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba1f61a0_0a7c6282",
+      "range": {
+        "startLine": 325,
+        "startChar": 0,
+        "endLine": 325,
+        "endChar": 29
+      },
+      "revId": "8340b3a4ca2612b9f671f533dc372d4360be13a7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba1f61a0_6a6d1ecc",
         "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
         "patchSetId": 14
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "ba1f61a0_2a3a0699",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 14
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2017-09-05T20:50:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba1f61a0_6a6d1ecc",
+      "range": {
+        "startLine": 550,
+        "startChar": 0,
+        "endLine": 552,
+        "endChar": 29
+      },
+      "revId": "8340b3a4ca2612b9f671f533dc372d4360be13a7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba1f61a0_aa6a76b0",
         "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
         "patchSetId": 14
@@ -105,6 +201,30 @@
       "writtenOn": "2017-09-05T20:02:54Z",
       "side": 1,
       "message": "what\u0027s the thinking here? will the API be /identity from\nnow on, meaning pike, queens, \u0027R\u0027, etc?\n\nif so, it\u0027s probably better to check if the branch is newton or ocata and set to /v3 and put it as /identity otherwise.",
+      "range": {
+        "startLine": 881,
+        "startChar": 0,
+        "endLine": 885,
+        "endChar": 2
+      },
+      "revId": "8340b3a4ca2612b9f671f533dc372d4360be13a7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba1f61a0_4a45ba15",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 14
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2017-09-05T20:50:13Z",
+      "side": 1,
+      "message": "Not 100% certain on this. I think we should be using v3 since that is the latest method, but I had issues with it in the pike job. This was an original change from Venkat so I guess he hit the same issue. I tried it a few times in the sandbox and couldn\u0027t get v3 to work with pike so I left it. We can work on this as a later item.",
+      "parentUuid": "ba1f61a0_aa6a76b0",
       "range": {
         "startLine": 881,
         "startChar": 0,
