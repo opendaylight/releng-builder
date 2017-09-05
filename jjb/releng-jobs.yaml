@@ -44,6 +44,8 @@
           build-timeout: 75
       - devstack-pre-pip-ocata:
           build-timeout: 60
+      - devstack-pre-pip-pike:
+          build-timeout: 75
       - docker
       - gbp
       - java-builder:
@@ -70,6 +72,8 @@
         templates: devstack-pre-pip-newton
       - platforms: ubuntu-14.04
         templates: devstack-pre-pip-ocata
+      - platforms: ubuntu-14.04
+        templates: devstack-pre-pip-pike
       - platforms: ubuntu-14.04
         templates: devstack
       - platforms: ubuntu-14.04
