@@ -16,7 +16,7 @@
 # $REPO_ID                 :  Provided by a job parameter.
 # $GROUP_ID                :  Provided by a job parameter.
 # $UPLOAD_FILES_PATH        :  Provided by a job parameter.
-echo "---> deploy-opflex.sh"
+echo "---> scripts/deploy-opflex.sh"
 
 # DO NOT enable -u because $MAVEN_PARAMS and $MAVEN_OPTIONS could be unbound.
 # Ensure we fail the job if any steps fail.
