@@ -1,6 +1,6 @@
 ---
 - project:
-    name: netvirt-patch-test
+    name: netvirt-patch-test-oxygen
     jobs:
       - '{project}-patch-test-{feature}-{stream}'
 
@@ -12,15 +12,61 @@
       - oxygen:
           branch: 'master'
           jdk: 'openjdk8'
-      - nitrogen:
-          branch: 'stable/nitrogen'
+
+    feature:
+      - current:
+          csit-list: >
+              netvirt-csit-1node-openstack-pike-gate-stateful-{stream}
+      - cluster-current:
+          csit-list: >
+              netvirt-csit-3node-openstack-pike-gate-stateful-{stream}
+      - snat-conntrack:
+          csit-list: >
+              netvirt-csit-1node-openstack-pike-gate-stateful-snat-conntrack-{stream}
+      - hwvtep:
+          csit-list: >
+              netvirt-csit-hwvtep-1node-openstack-pike-gate-stateful-{stream}
+
+- project:
+    name: netvirt-patch-test-nitrogen
+    jobs:
+      - '{project}-patch-test-{feature}-{stream}'
+
+    # The project name
+    project: 'netvirt'
+
+    # Project branches
+    stream:
+      - oxygen:
+          branch: 'master'
           jdk: 'openjdk8'
-      - carbon:
+
+    feature:
+      - current:
+          csit-list: >
+              netvirt-csit-1node-openstack-pike-gate-stateful-{stream}
+      - cluster-current:
+          csit-list: >
+              netvirt-csit-3node-openstack-pike-gate-stateful-{stream}
+      - snat-conntrack:
+          csit-list: >
+              netvirt-csit-1node-openstack-pike-gate-stateful-snat-conntrack-{stream}
+      - hwvtep:
+          csit-list: >
+              netvirt-csit-hwvtep-1node-openstack-pike-gate-stateful-{stream}
+
+- project:
+    name: netvirt-patch-test-carbon
+    jobs:
+      - '{project}-patch-test-{feature}-{stream}'
+
+    # The project name
+    project: 'netvirt'
+
+    # Project branches
+    stream:
+      - oxygen:
           branch: 'stable/carbon'
-          jdk: 'openjdk8'
-          karaf-version: karaf3
-      - boron:
-          branch: 'stable/boron'
           jdk: 'openjdk8'
           karaf-version: karaf3
 
@@ -28,36 +74,45 @@
       - current:
           csit-list: >
               netvirt-csit-1node-openstack-ocata-gate-stateful-{stream}
-      - minimal-current:
-          csit-list: >
-              netvirt-csit-1node-openstack-ocata-gate-minimal-stateful-{stream}
-      - tempest-current:
-          csit-list: >
-              netvirt-csit-1node-openstack-ocata-gate-tempest-stateful-{stream}
       - cluster-current:
           csit-list: >
               netvirt-csit-3node-openstack-ocata-gate-stateful-{stream}
-      - cluster-minimal-current:
-          csit-list: >
-               netvirt-csit-3node-openstack-ocata-gate-minimal-cluster-{stream}
-      - nodl-v1-current:
-          csit-list: >
-              netvirt-csit-1node-openstack-newton-gate-stateful-{stream}
-      - learn-current:
-          csit-list: >
-              netvirt-csit-1node-openstack-ocata-gate-learn-{stream}
-      - stateful-current:
-          csit-list: >
-              netvirt-csit-1node-openstack-ocata-gate-stateful-{stream}
-      - transparent-current:
-          csit-list: >
-              netvirt-csit-1node-openstack-ocata-gate-transparent-{stream}
       - snat-conntrack:
           csit-list: >
               netvirt-csit-1node-openstack-ocata-gate-stateful-snat-conntrack-{stream}
       - hwvtep:
           csit-list: >
               netvirt-csit-hwvtep-1node-openstack-ocata-gate-stateful-{stream}
+
+- project:
+    name: netvirt-patch-test-boron
+    jobs:
+      - '{project}-patch-test-{feature}-{stream}'
+
+    # The project name
+    project: 'netvirt'
+
+    # Project branches
+    stream:
+      - oxygen:
+          branch: 'stable/boron'
+          jdk: 'openjdk8'
+          karaf-version: karaf3
+
+    feature:
+      - current:
+          csit-list: >
+              netvirt-csit-1node-openstack-newton-gate-stateful-{stream}
+      - cluster-current:
+          csit-list: >
+              netvirt-csit-3node-openstack-newton-gate-stateful-{stream}
+      - snat-conntrack:
+          csit-list: >
+              netvirt-csit-1node-openstack-newton-gate-stateful-snat-conntrack-{stream}
+      - hwvtep:
+          csit-list: >
+              netvirt-csit-hwvtep-1node-openstack-newton-gate-stateful-{stream}
+
 
 - project:
     name: netvirt-legacy-patch-test
@@ -68,11 +123,9 @@
     project: 'netvirt-legacy'
 
     # Project branches
-    stream:
-      - boron:
-          branch: 'stable/boron'
+      - nitrogen:
+          branch: 'stable/nitrogen'
           jdk: 'openjdk8'
-          karaf-version: karaf3
 
     feature:
       - legacy:
