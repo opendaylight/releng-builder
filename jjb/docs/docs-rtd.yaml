@@ -2,26 +2,23 @@
 - project:
     name: docs-rtd
     jobs:
-      - 'docs-merge-rtd-{stream}'
-      - 'docs-verify-rtd-{stream}'
+      - '{project-name}-rtd-jobs'
       - gerrit-tox-verify
 
     stream:
       - oxygen:
-          branch: 'master'
-          jdk: 'openjdk8'
+          branch: master
       - nitrogen:
-          branch: 'stable/nitrogen'
-          jre: 'openjdk8'
+          branch: stable/nitrogen
       - carbon:
-          branch: 'stable/carbon'
+          branch: stable/carbon
       - boron:
-          branch: 'stable/boron'
+          branch: stable/boron
 
     project: docs
     project-name: docs
     build-node: centos7-java-builder-2c-4g
-    rtdproject: opendaylight
+    rtd-project: opendaylight
     archive-artifacts: ''
 
 - job-template:
