@@ -1,13 +1,17 @@
 ---
 - project:
-    name: netvirt-csit-openstack-integration-nitrogen
+    name: netvirt-csit-openstack-integration
     jobs:
       - '{project}-csit-{topology}-openstack-{openstack}-{functionality}-{stream}'
 
     project: 'netvirt'
 
-    stream: 'nitrogen'
-    branch: 'master'
+    stream:
+      - oxygen:
+          branch: 'master'
+      - nitrogen:
+          branch: 'stable/nitrogen'
+
     jre: 'openjdk8'
 
     topology:
