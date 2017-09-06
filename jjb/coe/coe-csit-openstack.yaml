@@ -31,10 +31,6 @@
       - nitrogen:
           branch: 'stable/nitrogen'
           jre: 'openjdk8'
-      - carbon:
-          branch: 'stable/carbon'
-          jre: 'openjdk8'
-          karaf-version: karaf3
 
     openstack:
       - ocata:
@@ -43,7 +39,6 @@
           odl-ml2-driver-version: 'v2'
           openstack_system_image: 'CentOS 7 - devstack-ocata - 20170808-0528'
 
-
     create-initial-networks: 'True'
 
     enable-openstack-plugins: 'networking-odl,kuryr-kubernetes,neutron-lbaas'
@@ -51,6 +46,8 @@
     enable-openstack-services: >
         q-svc,q-dhcp,q-meta,n-cauth,legacy_etcd,docker,q-lbaasv2,kubernetes-api,
         kubernetes-controller-manager,kubernetes-scheduler,kubelet,kuryr-kubernetes
+
+    disnable-openstack-services: 'etcd3'
 
     lbaas-service-provider: >
         'LOADBALANCERV2:opendaylight:networking_odl.lbaas.driver_v2.OpenDaylightLbaasDriverV2:default'
