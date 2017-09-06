@@ -26,12 +26,11 @@
       - carbon:
           branch: 'stable/carbon'
           jre: 'openjdk8'
-          karaf-version: karaf3
+          karaf-version: 'karaf3'
 
-    # TODO: Delete the following if suites are compatible with Nitrogen again.
     verify-stream: 'nitrogen'
-    # TODO: Remove the lines above and below when nitrogen becomes the default csit-verify stream.
-    verify-branch: 'master'
+    verify-branch: 'stable/nitrogen'
+    verify-karaf-version: 'karaf4'
 
     install:
       - all:
