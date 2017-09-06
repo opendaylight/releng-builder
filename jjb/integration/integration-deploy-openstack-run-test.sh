@@ -231,7 +231,7 @@ discover_hosts_in_cells_interval = 30
 
 EOF
 
-echo "local.conf Created...."
+echo "Control local.conf created:"
 cat ${local_conf_file_name}
 }
 
@@ -334,7 +334,7 @@ vif_plugging_is_fatal = false
 EOF
 fi
 
-echo "local.conf Created...."
+echo "Compute local.conf created:"
 cat ${local_conf_file_name}
 }
 
@@ -474,11 +474,14 @@ do
     mkdir -p ${OS_CTRL_FOLDER}
     scp ${!OS_CTRL_IP}:/opt/stack/devstack/nohup.out ${OS_CTRL_FOLDER}/stack.log
     scp ${!OS_CTRL_IP}:/var/log/openvswitch/ovs-vswitchd.log ${OS_CTRL_FOLDER}/ovs-vswitchd.log
+    scp ${!OS_CTRL_IP}:/etc/neutron/plugins/ml2/ml2_conf.ini ${OS_CTRL_FOLDER}
+    scp ${!OS_CTRL_IP}:/etc/neutron/dhcp_agent.ini ${OS_CTRL_FOLDER}
     scp ${!OS_CTRL_IP}:/etc/neutron/neutron.conf ${OS_CTRL_FOLDER}/neutron.conf
     scp ${!OS_CTRL_IP}:/etc/nova/nova.conf ${OS_CTRL_FOLDER}/nova.conf
     scp ${!OS_CTRL_IP}:/etc/kuryr/kuryr.conf ${OS_CTRL_FOLDER}/kuryr.conf
     scp ${!OS_CTRL_IP}:/etc/neutron/neutron_lbaas.conf ${OS_CTRL_FOLDER}/neutron-lbaas.conf
     scp ${!OS_CTRL_IP}:/etc/neutron/services/loadbalancer/haproxy/lbaas_agent.ini ${OS_CTRL_FOLDER}/lbaas-agent.ini
+    rsync --rsync-path="sudo rsync" -avhe ssh ${!OS_CTRL_IP}:/usr/lib/systemd/system/haproxy.service ${OS_CTRL_FOLDER}
     rsync -avhe ssh ${!OS_CTRL_IP}:/opt/stack/logs/* ${OS_CTRL_FOLDER} # rsync to prevent copying of symbolic links
     rsync --rsync-path="sudo rsync" -avhe ssh ${!OS_CTRL_IP}:/etc/hosts ${OS_CTRL_FOLDER}/hosts.log
     # Use rsync with sudo to get access to the log dir.
