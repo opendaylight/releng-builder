@@ -217,6 +217,10 @@ minimize_polling=True
 physical_network_mtus = ${PUBLIC_PHYSICAL_NETWORK}:1440
 path_mtu = 1490
 
+# workaround for port-status not working due to https://bugs.opendaylight.org/show_bug.cgi?id=9092
+[ml2_odl]
+odl_features=nothing
+
 [[post-config|/etc/neutron/dhcp_agent.ini]]
 [DEFAULT]
 force_metadata = True
@@ -322,17 +326,6 @@ auth_strategy = keystone
 [DEFAULT]
 use_neutron = True
 EOF
-
-# Keep this block after the nova.conf above to ensure it goes in the DEFAULT section
-# Ignore not receiving the vif plugging event by setting the vif_plugging_is_fatal ot false.
-# Due to https://bugs.opendaylight.org/show_bug.cgi?id=9092, the event is not sent.
-# This allows the instance to spawn and neutron and nove to continue processing the vm creation.
-if [ "${OPENSTACK_BRANCH}" == "stable/pike" ]; then
-cat >> ${local_conf_file_name} << EOF
-vif_plugging_timeout = 300
-vif_plugging_is_fatal = false
-EOF
-fi
 
 echo "Compute local.conf created:"
 cat ${local_conf_file_name}
