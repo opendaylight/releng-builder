@@ -26,7 +26,7 @@
     feature:
       - genius:
           csit-list: >
-              genius-csit-1node-genius-only-{stream}
+              genius-csit-1node-genius-all-{stream}
       - netvirt:
           csit-list: >
               netvirt-csit-1node-openstack-ocata-gate-stateful-{stream}
@@ -36,6 +36,5 @@
 
       - core:
           csit-list: >
-              ovsdb-csit-1node-gate-southbound-only-{stream},
               ovsdb-csit-1node-gate-southbound-all-{stream},
               ovsdb-csit-3node-gate-clustering-only-{stream}
