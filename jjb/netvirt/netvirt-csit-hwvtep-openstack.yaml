@@ -61,8 +61,9 @@
 
     tools_system_image: 'Ubuntu 16.04 - mininet-ovs-26 - 20170829-0548'
 
+    # TODO: remove this flag and instead use the enable-openstack-services list to know if l2gw is enabled
     enable-networking-l2gw: 'yes'
 
-    enable-openstack-services: 'q-svc,q-dhcp,q-meta,n-cauth,tempest,l2gw-plugin'
+    enable-openstack-services: 'l2gw-plugin,neutron,nova,tempest'
 
     security-group-mode: '{sg-mode}'

@@ -1026,6 +1026,10 @@
           default: '{openstack-branch}'
           description: 'Openstack version to use with devstack'
       - string:
+          name: DEVSTACK_HASH
+          default: '{devstack-hash}'
+          description: 'devstack hash to checkout'
+      - string:
           name: ODL_ML2_DRIVER_REPO
           default: '{odl-ml2-driver-repo}'
           description: 'URL to fetch networking-odl driver'
@@ -1073,7 +1077,11 @@
       - string:
           name: ENABLE_OS_SERVICES
           default: '{enable-openstack-services}'
-          description: 'comma seperated list of services to enable'
+          description: 'comma separated list of services to enable on controller nodes'
+      - string:
+          name: ENABLE_OS_COMPUTE_SERVICES
+          default: '{enable-openstack-compute_services}'
+          description: 'comma separated list of services to enable on compute nodes'
       - string:
           name: ENABLE_OS_PLUGINS
           default: '{enable-openstack-plugins}'
@@ -1215,6 +1223,10 @@
           default: '{openstack-branch}'
           description: 'Openstack version to use with devstack'
       - string:
+          name: DEVSTACK_HASH
+          default: '{devstack-hash}'
+          description: 'devstack hash to checkout'
+      - string:
           name: ODL_ML2_DRIVER_REPO
           default: '{odl-ml2-driver-repo}'
           description: 'URL to fetch networking-odl driver'
@@ -1263,6 +1275,10 @@
           name: ENABLE_OS_SERVICES
           default: '{enable-openstack-services}'
           description: 'comma seperated list of services to enable'
+      - string:
+          name: ENABLE_OS_COMPUTE_SERVICES
+          default: '{enable-openstack-compute_services}'
+          description: 'comma separated list of services to enable on compute nodes'
       - string:
           name: ENABLE_OS_PLUGINS
           default: '{enable-openstack-plugins}'
