@@ -23,18 +23,12 @@
     testplan: '{project}-{topology}-l2gw-openstack.txt'
 
     functionality:
-      - upstream-transparent:
-          schedule: ''
-          sg-mode: 'transparent'
       - upstream-stateful:
           schedule: ''
           sg-mode: 'stateful'
-      - upstream-learn:
+      - gate-stateful:
           schedule: ''
-          sg-mode: 'learn'
-      - gate-transparent:
-          schedule: ''
-          sg-mode: 'transparent'
+          sg-mode: 'stateful'
 
     stream:
       - oxygen:
