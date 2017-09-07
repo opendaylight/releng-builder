@@ -41,11 +41,14 @@
 - project:
     name: lf-infra-lftools
     jobs:
+      - '{project-name}-rtd-jobs'
       - gerrit-tox-verify
 
     project-name: lf-infra-lftools
     project: releng/lftools
+    project-pattern: releng/lftools
     build-node: centos7-java-builder-2c-4g
+    rtd-project: lf-releng-tools
     stream: master
 
     git-url: https://gerrit.linuxfoundation.org/infra/$GERRIT_PROJECT
