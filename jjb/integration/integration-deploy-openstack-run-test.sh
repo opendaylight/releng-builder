@@ -554,6 +554,11 @@ sudo mkdir /opt/stack
 sudo chmod 777 /opt/stack
 cd /opt/stack
 git clone https://git.openstack.org/openstack-dev/devstack --branch $OPENSTACK_BRANCH
+f [ -n "${DEVSTACK_HASH}" ]; then
+    cd devstack
+    git checkout ${DEVSTACK_HASH}
+fi
+git --no-pager log --pretty=format:'%h %<(13)%ar%<(13)%cr %<(20,trunc)%an%d %s\n%b' -n20
 #To fix the recent tempest/tox issues which blocks stacking
 sudo pip install tox==2.7.0
 EOF
@@ -608,7 +613,7 @@ do
     create_etc_hosts ${!CONTROLIP}
     scp ${WORKSPACE}/hosts_file ${!CONTROLIP}:/tmp/hosts
     scp ${WORKSPACE}/get_devstack.sh ${!CONTROLIP}:/tmp
-    ${SSH} ${!CONTROLIP} "bash /tmp/get_devstack.sh"
+    ${SSH} ${!CONTROLIP} "bash /tmp/get_devstack.sh > /tmp/get_devstack.sh.txt 2>&1 &"
     create_control_node_local_conf ${!CONTROLIP} ${ODLMGRIP[$i]} "${ODL_OVS_MGRS[$i]}"
     scp ${WORKSPACE}/local.conf_control_${!CONTROLIP} ${!CONTROLIP}:/opt/stack/devstack/local.conf
     ssh ${!CONTROLIP} "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
@@ -632,7 +637,7 @@ do
     create_etc_hosts ${!COMPUTEIP} ${!CONTROLIP}
     scp ${WORKSPACE}/hosts_file ${!COMPUTEIP}:/tmp/hosts
     scp ${WORKSPACE}/get_devstack.sh  ${!COMPUTEIP}:/tmp
-    ${SSH} ${!COMPUTEIP} "bash /tmp/get_devstack.sh"
+    ${SSH} ${!COMPUTEIP} "bash /tmp/get_devstack.sh > /tmp/get_devstack.sh.txt 2>&1 &"
     create_compute_node_local_conf ${!COMPUTEIP} ${!CONTROLIP} ${ODLMGRIP[$SITE_INDEX]} "${ODL_OVS_MGRS[$SITE_INDEX]}"
     scp ${WORKSPACE}/local.conf_compute_${!COMPUTEIP} ${!COMPUTEIP}:/opt/stack/devstack/local.conf
     ssh ${!COMPUTEIP} "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
