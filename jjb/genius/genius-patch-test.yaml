@@ -11,27 +11,29 @@
     stream:
       - oxygen:
           branch: 'master'
-          jdk: 'openjdk8'
+          os-branch: 'pike'
       - nitrogen:
           branch: 'stable/nitrogen'
-          jdk: 'openjdk8'
+          os-branch: 'ocata'
       - carbon:
           branch: 'stable/carbon'
-          jdk: 'openjdk8'
+          os-branch: 'ocata'
           karaf-version: karaf3
       - boron:
           branch: 'stable/boron'
-          jdk: 'openjdk8'
+          os-branch: 'newton'
           karaf-version: karaf3
+
+    jdk: 'openjdk8'
 
     feature:
       - netvirt:
           csit-list: >
-              netvirt-csit-1node-openstack-ocata-gate-stateful-{stream}
+              netvirt-csit-1node-openstack-{os-branch}-gate-stateful-{stream}
 
       - cluster-netvirt:
           csit-list: >
-              netvirt-csit-3node-openstack-ocata-gate-stateful-{stream}
+              netvirt-csit-3node-openstack-{os-branch}-gate-stateful-{stream}
 
       - genius:
           csit-list: >
