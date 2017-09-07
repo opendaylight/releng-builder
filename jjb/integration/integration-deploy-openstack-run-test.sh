@@ -554,9 +554,19 @@ sudo mkdir /opt/stack
 sudo chmod 777 /opt/stack
 cd /opt/stack
 git clone https://git.openstack.org/openstack-dev/devstack --branch $OPENSTACK_BRANCH
-#To fix the recent tempest/tox issues which blocks stacking
-sudo pip install tox==2.7.0
 EOF
+
+#Work around for pike stacking failure by avoiding recently merged changes
+# Currently reset to state as in 01-Sep-2017
+#ToDo Need to get rid of this sooner
+if [ "${OPENSTACK_BRANCH}" == "stable/pike" ]; then # Pike
+cat >> ${WORKSPACE}/get_devstack.sh << EOF
+cd devstack
+git reset --hard c2bb1020ac4f18df5aa90a13f3b6ee8eb2c15d65
+EOF
+fi
+
+
 
 cat > "${WORKSPACE}/setup_host_cell_mapping.sh" << EOF
 sudo nova-manage cell_v2 map_cell0
