@@ -1026,6 +1026,10 @@
           default: '{openstack-branch}'
           description: 'Openstack version to use with devstack'
       - string:
+          name: DEVSTACK_HASH
+          default: '{devstack-hash}'
+          description: 'devstack hash to checkout'
+      - string:
           name: ODL_ML2_DRIVER_REPO
           default: '{odl-ml2-driver-repo}'
           description: 'URL to fetch networking-odl driver'
@@ -1214,6 +1218,10 @@
           name: OPENSTACK_BRANCH
           default: '{openstack-branch}'
           description: 'Openstack version to use with devstack'
+      - string:
+          name: DEVSTACK_HASH
+          default: '{devstack-hash}'
+          description: 'devstack hash to checkout'
       - string:
           name: ODL_ML2_DRIVER_REPO
           default: '{odl-ml2-driver-repo}'
