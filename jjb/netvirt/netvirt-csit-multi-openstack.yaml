@@ -25,21 +25,16 @@
 
     functionality:
       - upstream-stateful:
-          schedule: ''
           sg-mode: 'stateful'
       - upstream-stateful-snat-conntrack:
-          schedule: ''
           sg-mode: 'stateful'
           odl-snat-mode: 'conntrack'
       - gate-stateful:
-          schedule: ''
           sg-mode: 'stateful'
       - gate-stateful-snat-conntrack:
-          schedule: ''
           sg-mode: 'stateful'
           odl-snat-mode: 'conntrack'
       - gate-minimal-cluster:
-          schedule: ''
           sg-mode: 'stateful'
           testplan: '{project}-{topology}-minimal-openstack.txt'
 
@@ -94,21 +89,16 @@
 
     functionality:
       - upstream-stateful:
-          schedule: ''
           sg-mode: 'stateful'
       - upstream-stateful-snat-conntrack:
-          schedule: ''
           sg-mode: 'stateful'
           odl-snat-mode: 'conntrack'
       - gate-stateful:
-          schedule: ''
           sg-mode: 'stateful'
       - gate-stateful-snat-conntrack:
-          schedule: ''
           sg-mode: 'stateful'
           odl-snat-mode: 'conntrack'
       - gate-minimal-cluster:
-          schedule: ''
           sg-mode: 'stateful'
           testplan: '{project}-{topology}-minimal-openstack.txt'
 
@@ -164,17 +154,13 @@
 
     functionality:
       - upstream-stateful:
-          schedule: ''
           sg-mode: 'stateful'
       - upstream-stateful-snat-conntrack:
-          schedule: ''
           sg-mode: 'stateful'
           odl-snat-mode: 'conntrack'
       - gate-stateful:
-          schedule: ''
           sg-mode: 'stateful'
       - gate-stateful-snat-conntrack:
-          schedule: ''
           sg-mode: 'stateful'
           odl-snat-mode: 'conntrack'
 
@@ -224,33 +210,24 @@
 
     functionality:
       - upstream-transparent:
-          schedule: ''
           sg-mode: 'transparent'
       - upstream-stateful:
-          schedule: ''
           sg-mode: 'stateful'
       - upstream-stateful-snat-conntrack:
-          schedule: ''
           sg-mode: 'stateful'
           odl-snat-mode: 'conntrack'
       - upstream-learn:
-          schedule: ''
           sg-mode: 'learn'
       - gate-learn:
-          schedule: ''
           sg-mode: 'learn'
       - gate-transparent:
-          schedule: ''
           sg-mode: 'transparent'
       - gate-stateful:
-          schedule: ''
           sg-mode: 'stateful'
       - gate-minimal-transparent:
-          schedule: ''
           sg-mode: 'transparent'
           testplan: '{project}-{topology}-minimal-openstack.txt'
       - gate-tempest-transparent:
-          schedule: ''
           sg-mode: 'transparent'
           testplan: '{project}-{topology}-tempest-openstack.txt'
 
@@ -284,7 +261,6 @@
 
     functionality:
       - sfc:
-          schedule: ''
           enable-openstack-plugins: 'networking-odl,networking-sfc'
           testplan: '{project}-extensions-sfc.txt'
 

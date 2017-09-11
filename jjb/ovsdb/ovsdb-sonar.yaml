@@ -36,7 +36,7 @@
           build-timeout: '{build-timeout}'
 
     triggers:
-      - timed: 'H H * * 6'
+      - timed: '{schedule-saturday}'
       - gerrit-trigger-patch-sonar:
           server-name: '{server-name}'
           name: 'ovsdb'
