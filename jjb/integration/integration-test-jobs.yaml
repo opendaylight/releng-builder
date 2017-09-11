@@ -24,9 +24,7 @@
           csit-list: !include: csit-jobs-oxygen.lst
           csit-sanity-list: '{csit-sanity-list-oxygen}'
           csit-weekly-list: '{csit-weekly-list-oxygen}'
-          schedule-weekly: 'H 23 * * 6'
           csit-high-frequency-list: '{csit-high-frequency-list-oxygen}'
-          schedule-high-frequency: 'H H/4 * * *'
 
       - nitrogen:
           branch: 'stable/nitrogen'
@@ -35,9 +33,7 @@
           csit-list: !include: csit-jobs-nitrogen.lst
           csit-sanity-list: '{csit-sanity-list-nitrogen}'
           csit-weekly-list: '{csit-weekly-list-nitrogen}'
-          schedule-weekly: 'H 23 * * 6'
           csit-high-frequency-list: '{csit-high-frequency-list-nitrogen}'
-          schedule-high-frequency: 'H H/4 * * *'
 
       - carbon:
           branch: 'stable/carbon'
@@ -48,9 +44,7 @@
           csit-list: !include: csit-jobs-carbon.lst
           csit-sanity-list: '{csit-sanity-list-carbon}'
           csit-weekly-list: '{csit-weekly-list-carbon}'
-          schedule-weekly: 'H 23 * * 6'
           csit-high-frequency-list: '{csit-high-frequency-list-carbon}'
-          schedule-high-frequency: 'H H/4 * * *'
 
       - boron:
           branch: 'stable/boron'
@@ -61,7 +55,6 @@
           csit-list: !include: csit-jobs-boron.lst
           csit-sanity-list: '{csit-sanity-list-boron}'
           csit-weekly-list: '{csit-weekly-list-boron}'
-          schedule-weekly: 'H 23 * * 6'
           csit-high-frequency-list: ''
           schedule-high-frequency: ''
 
