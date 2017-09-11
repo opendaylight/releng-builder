@@ -1,20 +1,23 @@
 ---
 - project:
-    name: netvirt-csit-hwvtep-openstack-integration
+    name: netvirt-csit-hwvtep-openstack-integration-oxygen
     jobs:
       - '{project}-csit-hwvtep-{topology}-openstack-{openstack}-{functionality}-{stream}'
 
     project: 'netvirt'
+    stream: 'oxygen'
+    branch: 'master'
+    jre: 'openjdk8'
 
     topology:
       - 1node:
-          openstack_system_count: 1
+          openstack_system1_count: 1
           openstack_system2_count: 2
           odl_system_count: 1
           enable-haproxy: 'no'
           install-features: 'odl-netvirt-openstack'
       - 3node:
-          openstack_system_count: 1
+          openstack_system1_count: 1
           openstack_system2_count: 3
           odl_system_count: 3
           enable-haproxy: 'yes'
@@ -28,40 +31,219 @@
       - gate-stateful:
           sg-mode: 'stateful'
 
-    stream:
-      - oxygen:
-          branch: 'master'
-          jre: 'openjdk8'
-      - nitrogen:
-          branch: 'stable/nitrogen'
-          jre: 'openjdk8'
-      - carbon:
-          branch: 'stable/carbon'
-          jre: 'openjdk8'
-          karaf-version: karaf3
-      - boron:
-          branch: 'stable/boron'
-          jre: 'openjdk8'
-          karaf-version: karaf3
-
     openstack:
-      - newton:
-          openstack-branch: 'stable/newton'
-          odl-ml2-branch: 'stable/newton'
-          openstack_system_image: 'CentOS 7 - devstack-newton - 20170808-0528'
-      - newton-nodl-v2:
-          openstack-branch: 'stable/newton'
-          odl-ml2-branch: 'stable/newton'
-          odl-ml2-driver-version: 'v2'
-          openstack_system_image: 'CentOS 7 - devstack-newton - 20170808-0528'
+      - ocata:
+          openstack-branch: 'stable/ocata'
+          odl-ml2-branch: 'stable/ocata'
+          openstack_system_image: 'CentOS 7 - devstack-newton - 20170707-0359'
+          openstack_system2_image: 'CentOS 7 - devstack-newton - 20170707-0359'
+      - pike:
+          openstack-branch: 'stable/pike'
+          devstack-hash: 'c2bb1020ac4f18df5aa90a13f3b6ee8eb2c15d65'
+          odl-ml2-branch: 'stable/pike'
+          odl-ml2-port-binding: 'pseudo-agentdb-binding'
+          openstack_system_image: 'CentOS 7 - devstack-pike - 20170901-2223'
+          openstack_system2_image: 'CentOS 7 - devstack-pike - 20170901-2223'
+      - queens:
+          openstack-branch: 'master'
+          odl-ml2-branch: 'master'
+          odl-ml2-port-binding: 'pseudo-agentdb-binding'
+          openstack_system_image: 'CentOS 7 - devstack-pike - 20170901-2223'
+          openstack_system2_image: 'CentOS 7 - devstack-pike - 20170901-2223'
 
+    odl-ml2-driver-version: 'v2'
+    enable-openstack-services: 'placement-api,l2gw-plugin'
+    enable-openstack-compute_services: 'placement-client'
+    security-group-mode: '{sg-mode}'
     tools_system_count: 2
-
     tools_system_image: 'Ubuntu 16.04 - mininet-ovs-26 - 20170829-0548'
 
     # TODO: remove this flag and instead use the enable-openstack-services list to know if l2gw is enabled
     enable-networking-l2gw: 'yes'
 
-    enable-openstack-services: 'l2gw-plugin,neutron,nova,tempest'
+- project:
+    name: netvirt-csit-hwvtep-openstack-integration-nitrogen
+    jobs:
+      - '{project}-csit-hwvtep-{topology}-openstack-{openstack}-{functionality}-{stream}'
 
+    project: 'netvirt'
+    stream: 'nitrogen'
+    branch: 'stable/nitrogen'
+    jre: 'openjdk8'
+
+    topology:
+      - 1node:
+          openstack_system1_count: 1
+          openstack_system2_count: 2
+          odl_system_count: 1
+          enable-haproxy: 'no'
+          install-features: 'odl-netvirt-openstack'
+      - 3node:
+          openstack_system1_count: 1
+          openstack_system2_count: 3
+          odl_system_count: 3
+          enable-haproxy: 'yes'
+          install-features: 'odl-jolokia,odl-netvirt-openstack'
+
+    testplan: '{project}-{topology}-l2gw-openstack.txt'
+
+    functionality:
+      - upstream-stateful:
+          schedule: ''
+          sg-mode: 'stateful'
+      - gate-stateful:
+          schedule: ''
+          sg-mode: 'stateful'
+
+    openstack:
+      - ocata:
+          openstack-branch: 'stable/ocata'
+          odl-ml2-branch: 'stable/ocata'
+          openstack_system_image: 'CentOS 7 - devstack-newton - 20170707-0359'
+          openstack_system2_image: 'CentOS 7 - devstack-newton - 20170707-0359'
+      - pike:
+          openstack-branch: 'stable/pike'
+          devstack-hash: 'c2bb1020ac4f18df5aa90a13f3b6ee8eb2c15d65'
+          odl-ml2-branch: 'stable/pike'
+          odl-ml2-port-binding: 'pseudo-agentdb-binding'
+          openstack_system_image: 'CentOS 7 - devstack-pike - 20170901-2223'
+          openstack_system2_image: 'CentOS 7 - devstack-pike - 20170901-2223'
+      - queens:
+          openstack-branch: 'master'
+          odl-ml2-branch: 'master'
+          odl-ml2-port-binding: 'pseudo-agentdb-binding'
+          openstack_system_image: 'CentOS 7 - devstack-pike - 20170901-2223'
+          openstack_system2_image: 'CentOS 7 - devstack-pike - 20170901-2223'
+
+    odl-ml2-driver-version: 'v2'
+    enable-openstack-services: 'placement-api,l2gw-plugin'
+    enable-openstack-compute_services: 'placement-client'
     security-group-mode: '{sg-mode}'
+    tools_system_count: 2
+    tools_system_image: 'Ubuntu 16.04 - mininet-ovs-26 - 20170829-0548'
+
+    # TODO: remove this flag and instead use the enable-openstack-services list to know if l2gw is enabled
+    enable-networking-l2gw: 'yes'
+
+- project:
+    name: netvirt-csit-hwvtep-openstack-integration-carbon
+    jobs:
+      - '{project}-csit-hwvtep-{topology}-openstack-{openstack}-{functionality}-{stream}'
+
+    project: 'netvirt'
+
+    stream: 'carbon'
+    branch: 'stable/carbon'
+    jre: 'openjdk8'
+    karaf-version: karaf3
+
+    topology:
+      - 1node:
+          openstack_system1_count: 1
+          openstack_system2_count: 2
+          odl_system_count: 1
+          enable-haproxy: 'no'
+          install-features: 'odl-netvirt-openstack'
+      - 3node:
+          openstack_system1_count: 1
+          openstack_system2_count: 3
+          odl_system_count: 3
+          enable-haproxy: 'yes'
+          install-features: 'odl-jolokia,odl-netvirt-openstack'
+
+    testplan: '{project}-{topology}-l2gw-openstack.txt'
+
+    functionality:
+      - upstream-stateful:
+          schedule: ''
+          sg-mode: 'stateful'
+      - gate-stateful:
+          schedule: ''
+          sg-mode: 'stateful'
+
+    openstack:
+      - ocata:
+          openstack-branch: 'stable/ocata'
+          odl-ml2-branch: 'stable/ocata'
+          openstack_system_image: 'CentOS 7 - devstack-newton - 20170707-0359'
+          openstack_system2_image: 'CentOS 7 - devstack-newton - 20170707-0359'
+      - pike:
+          openstack-branch: 'stable/pike'
+          devstack-hash: 'c2bb1020ac4f18df5aa90a13f3b6ee8eb2c15d65'
+          odl-ml2-branch: 'stable/pike'
+          odl-ml2-port-binding: 'pseudo-agentdb-binding'
+          openstack_system_image: 'CentOS 7 - devstack-pike - 20170901-2223'
+          openstack_system2_image: 'CentOS 7 - devstack-pike - 20170901-2223'
+
+    odl-ml2-driver-version: 'v2'
+    enable-openstack-services: 'placement-api,l2gw-plugin'
+    enable-openstack-compute-services: 'placement-client'
+    security-group-mode: '{sg-mode}'
+    tools_system_count: 2
+    tools_system_image: 'Ubuntu 16.04 - mininet-ovs-26 - 20170829-0548'
+
+    # TODO: remove this flag and instead use the enable-openstack-services list to know if l2gw is enabled
+    enable-networking-l2gw: 'yes'
+
+- project:
+    name: netvirt-csit-hwvtep-openstack-integration-boron
+    jobs:
+      - '{project}-csit-hwvtep-{topology}-openstack-{openstack}-{functionality}-{stream}'
+
+    project: 'netvirt'
+
+    stream: 'boron'
+    branch: 'stable/boron'
+    jre: 'openjdk8'
+    karaf-version: karaf3
+
+    topology:
+      - 1node:
+          openstack_system1_count: 1
+          openstack_system2_count: 2
+          odl_system_count: 1
+          enable-haproxy: 'no'
+          install-features: 'odl-netvirt-openstack'
+      - 3node:
+          openstack_system1_count: 1
+          openstack_system2_count: 3
+          odl_system_count: 3
+          enable-haproxy: 'yes'
+          install-features: 'odl-jolokia,odl-netvirt-openstack'
+
+    testplan: '{project}-{topology}-l2gw-openstack.txt'
+
+    functionality:
+      - upstream-transparent:
+          schedule: ''
+          sg-mode: 'transparent'
+      - upstream-stateful:
+          schedule: ''
+          sg-mode: 'stateful'
+      - upstream-learn:
+          schedule: ''
+          sg-mode: 'learn'
+      - gate-stateful:
+          schedule: ''
+          sg-mode: 'stateful'
+
+    openstack:
+      - newton:
+          openstack-branch: 'stable/newton'
+          odl-ml2-branch: 'stable/newton'
+      - newton-nodl-v2:
+          openstack-branch: 'stable/newton'
+          odl-ml2-branch: 'stable/newton'
+          odl-ml2-driver-version: 'v2'
+
+    openstack_system_image: 'CentOS 7 - devstack-newton - 20170808-0528'
+    openstack_system2_image: 'CentOS 7 - devstack-newton - 20170808-0528'
+    security-group-mode: '{sg-mode}'
+
+    tools_system_count: 2
+    tools_system_image: 'Ubuntu 16.04 - mininet-ovs-26 - 20170829-0548'
+
+    # TODO: remove this flag and instead use the enable-openstack-services list to know if l2gw is enabled
+    enable-networking-l2gw: 'yes'
+    enable-openstack-services: 'neutron,nova,l2gw-plugin'
+
