@@ -1,0 +1,36 @@
+---
+- project:
+    name: mdsal-csit-dom-data-broker-clean-leader-shutdown-longevity
+    jobs:
+      - '{project}-csit-3node-{functionality}-{install}-{stream}'
+
+    # The project name
+    project: 'controller'
+
+    # The functionality under test
+    functionality: 'ddb-clean-lead-shutdown-longevity'
+
+    # Project branches
+    stream:
+      - oxygen:
+          branch: 'master'
+          jre: 'openjdk8'
+      - nitrogen:
+          branch: 'stable/nitrogen'
+          jre: 'openjdk8'
+      - carbon:
+          branch: 'stable/carbon'
+          jre: 'openjdk8'
+          karaf-version: karaf3
+
+    install:
+      - only:
+          scope: 'only'
+
+    # Features to install
+    install-features: >
+        odl-restconf-noauth,
+        odl-clustering-test-app
+
+    # Built timeout
+    build-timeout: '1500'
