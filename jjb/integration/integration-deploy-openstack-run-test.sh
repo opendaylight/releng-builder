@@ -499,9 +499,6 @@ EOF
         mv ${OS_COMPUTE_FOLDER} ${WORKSPACE}/archives/
     done
 
-    # Find all the local.conf files and append .log so they are archived
-    find local.conf* -print0 | xargs -0 -I % mv % %.log
-
     # Tempest
     DEVSTACK_TEMPEST_DIR="/opt/stack/tempest"
     if ssh ${OPENSTACK_CONTROL_NODE_1_IP} "sudo sh -c '[ -f ${DEVSTACK_TEMPEST_DIR}/.testrepository/0 ]'"; then # if Tempest results exist
