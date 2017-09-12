@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ba1f61a0_4f5013d4",
+        "filename": "jjb/netvirt/netvirt-csit-hwvtep-openstack.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2029
+      },
+      "writtenOn": "2017-09-12T12:52:32Z",
+      "side": 1,
+      "message": "Thanks, I have taken a look, and structured the code to match the supported releases as in this file. Pushing new patch in a few mins.",
+      "parentUuid": "ba1f61a0_e6077416",
+      "revId": "2be848aee3ad6b669ab50c8188b7b4ecd21bae01",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba1f61a0_401aa77d",
         "filename": "jjb/netvirt/netvirt-csit-hwvtep-openstack.yaml",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ba1f61a0_af60afa5",
+        "filename": "jjb/netvirt/netvirt-csit-hwvtep-openstack.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 2029
+      },
+      "writtenOn": "2017-09-12T12:52:32Z",
+      "side": 1,
+      "message": "Removed these, I don\u0027t believe we need them, as hwvtep doesn\u0027t support SGs.",
+      "parentUuid": "ba1f61a0_401aa77d",
+      "revId": "2be848aee3ad6b669ab50c8188b7b4ecd21bae01",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba1f61a0_6047eb77",
         "filename": "jjb/netvirt/netvirt-csit-hwvtep-openstack.yaml",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-11T17:20:04Z",
       "side": 1,
       "message": "all of these are enabled by default except tempest so only include tempest in the list.\n\nDo these jobs need the placement-api enabled? The standard job needs placement-api,",
+      "revId": "2be848aee3ad6b669ab50c8188b7b4ecd21bae01",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba1f61a0_8f65ebb6",
+        "filename": "jjb/netvirt/netvirt-csit-hwvtep-openstack.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 2029
+      },
+      "writtenOn": "2017-09-12T12:52:32Z",
+      "side": 1,
+      "message": "I copied these from the netvirt csit test, thinking these were also needed for the l2gw test suite. Wouldn\u0027t they be needed for l2gw also, or is there some cleanup needed in both suite definitions?",
+      "parentUuid": "ba1f61a0_6047eb77",
       "revId": "2be848aee3ad6b669ab50c8188b7b4ecd21bae01",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "ba1f61a0_cf5b63f4",
+        "filename": "jjb/netvirt/netvirt-csit-hwvtep-openstack.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 2029
+      },
+      "writtenOn": "2017-09-12T12:52:32Z",
+      "side": 1,
+      "message": "Same as above...",
+      "parentUuid": "ba1f61a0_603ecbdb",
+      "range": {
+        "startLine": 64,
+        "startChar": 39,
+        "endLine": 64,
+        "endChar": 44
+      },
+      "revId": "2be848aee3ad6b669ab50c8188b7b4ecd21bae01",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba1f61a0_c02697cd",
         "filename": "jjb/netvirt/netvirt-csit-hwvtep-openstack.yaml",
         "patchSetId": 1
@@ -87,6 +165,30 @@
       "writtenOn": "2017-09-11T17:20:04Z",
       "side": 1,
       "message": "is there a reason this version is not the same as the 0528 one below in the newton block?",
+      "range": {
+        "startLine": 71,
+        "startChar": 35,
+        "endLine": 71,
+        "endChar": 77
+      },
+      "revId": "2be848aee3ad6b669ab50c8188b7b4ecd21bae01",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba1f61a0_2f74bf66",
+        "filename": "jjb/netvirt/netvirt-csit-hwvtep-openstack.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 2029
+      },
+      "writtenOn": "2017-09-12T12:52:32Z",
+      "side": 1,
+      "message": "fixed. Thanks.",
+      "parentUuid": "ba1f61a0_c02697cd",
       "range": {
         "startLine": 71,
         "startChar": 35,
