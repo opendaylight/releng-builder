@@ -61,11 +61,42 @@ export KARAF_REDIRECT="${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log"
 echo "Starting controller..."
 ${WORKSPACE}/${BUNDLEFOLDER}/bin/start
 
-echo "Sleeping 30 seconds to make sure Karaf ssh has started..."
-sleep 30
+echo "Waiting for controller to come up..."
+# Silence the chatty output during the loop.
+set +x
+COUNT=0
+# Bug 9044 workaround: use bin/client instead of Linux ssh command.
+CLIENT="${WORKSPACE}/${BUNDLEFOLDER}/bin/client"
+while true; do
+    # Is there a way to both print output and store RC without manipulating the e flag?
+    set +e
+    ${CLIENT} "feature:list -i"
+    RC="$?"
+    set -e
+    if [[ "${RC}" == "0" ]]; then
+        echo Karaf is UP
+        break
+    elif (( "${COUNT}" > 600 )); then
+        echo Timeout Karaf DOWN
+        echo "Dumping Karaf log..."
+        cat "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log"
+        echo "Listing all open ports on controller system"
+        netstat -pnatu
+        exit 1
+    else
+        echo "${RC}"
+        COUNT=$(( ${COUNT} + 1 ))
+        sleep 1
+        if [[ $(($COUNT % 5)) == 0 ]]; then
+            echo already waited ${COUNT} seconds...
+        fi
+    fi
+done
+# Un-silence the chatty output.
+set -x
 
 echo "Installing all features..."
-sshpass -p karaf ${WORKSPACE}/${BUNDLEFOLDER}/bin/client -u karaf "feature:install ${ACTUALFEATURES}" || echo $? > "${WORKSPACE}/error.txt"
+$CLIENT feature:install ${ACTUALFEATURES} || echo $? > "${WORKSPACE}/error.txt"
 
 echo "killing karaf process..."
 ps axf | grep karaf | grep -v grep | awk '{print "kill -9 " $1}' | sh
@@ -76,10 +107,12 @@ echo "Fetching Karaf logs"
 cp "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log" .
 cp "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log" .
 
-echo "Exit with error"
+echo "Exit if error"
 if [ -f "${WORKSPACE}/error.txt" ]; then
     echo "Failed to deploy offline"
     exit 1
+else
+    echo "Offline test: PASS"
 fi
 
 # vim: ts=4 sw=4 sts=4 et ft=sh :
