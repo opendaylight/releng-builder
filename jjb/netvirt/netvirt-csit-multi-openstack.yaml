@@ -1,18 +1,76 @@
 ---
 - project:
-    name: netvirt-csit-openstack-integration-oxygen
+    name: netvirt-csit-openstack-integration
     jobs:
       - '{project}-csit-{topology}-openstack-{openstack}-{functionality}-{stream}'
 
     project: 'netvirt'
-    stream: 'oxygen'
-    branch: 'master'
     jre: 'openjdk8'
     testplan: '{project}-{topology}-openstack.txt'
     odl-ml2-driver-version: 'v2'
     enable-openstack-services: 'placement-api,tempest'
     enable-openstack-compute_services: 'placement-client'
     security-group-mode: 'stateful'
+
+    stream:
+      - oxygen:
+          branch: 'master'
+      - nitrogen:
+          branch: 'stable/nitrogen'
+      - carbon:
+          branch: 'stable/carbon'
+      - boron:
+          branch: 'stable/boron'
+          karaf-version: karaf3
+
+    exclude:
+      - stream: boron
+        openstack: queens
+      - stream: boron
+        openstack: pike
+      - stream: boron
+        openstack: ocata
+
+      - stream: carbon
+        openstack: newton
+      - stream: carbon
+        openstack: newton-nodl-v2
+      - stream: carbon
+        openstack: queens
+      - stream: carbon
+        functionality: upstream-transparent
+      - stream: carbon
+        functionality: gate-transparent
+      - stream: carbon
+        functionality: upstream-learn
+      - stream: carbon
+        functionality: gate-learn
+
+      - stream: nitrogen
+        openstack: newton
+      - stream: nitrogen
+        openstack: newton-nodl-v2
+      - stream: nitrogen
+        functionality: upstream-transparent
+      - stream: nitrogen
+        functionality: gate-transparent
+      - stream: nitrogen
+        functionality: upstream-learn
+      - stream: carbon
+        functionality: gate-learn
+
+      - stream: oxygen
+        openstack: newton
+      - stream: oxygen
+        openstack: newton-nodl-v2
+      - stream: oxygen
+        functionality: upstream-transparent
+      - stream: oxygen
+        functionality: gate-transparent
+      - stream: oxygen
+        functionality: upstream-learn
+      - stream: oxygen
+        functionality: gate-learn
 
     topology:
       - 1node:
@@ -36,191 +94,46 @@
       - gate-minimal-cluster:
           testplan: '{project}-{topology}-minimal-openstack.txt'
 
-    openstack:
-      - ocata:
-          openstack-branch: 'stable/ocata'
-          odl-ml2-branch: 'stable/ocata'
-          openstack_system_image: 'CentOS 7 - devstack-newton - 20170707-0359'
-          openstack_system2_image: 'CentOS 7 - devstack-newton - 20170707-0359'
-      - pike:
-          openstack-branch: 'stable/pike'
-          devstack-hash: 'c2bb1020ac4f18df5aa90a13f3b6ee8eb2c15d65'
-          odl-ml2-branch: 'stable/pike'
-          odl-ml2-port-binding: 'pseudo-agentdb-binding'
-          openstack_system_image: 'CentOS 7 - devstack-pike - 20170901-2223'
-          openstack_system2_image: 'CentOS 7 - devstack-pike - 20170901-2223'
-      - queens:
-          openstack-branch: 'master'
-          devstack-hash: '2d5494cfc57b95b61f8b33240eff65f1a339a53e'
-          odl-ml2-branch: 'master'
-          odl-ml2-port-binding: 'pseudo-agentdb-binding'
-          openstack_system_image: 'CentOS 7 - devstack-pike - 20170901-2223'
-          openstack_system2_image: 'CentOS 7 - devstack-pike - 20170901-2223'
-
-- project:
-    name: netvirt-csit-openstack-integration-nitrogen
-    jobs:
-      - '{project}-csit-{topology}-openstack-{openstack}-{functionality}-{stream}'
-
-    project: 'netvirt'
-    stream: 'nitrogen'
-    branch: 'stable/nitrogen'
-    jre: 'openjdk8'
-    testplan: '{project}-{topology}-openstack.txt'
-    odl-ml2-driver-version: 'v2'
-    enable-openstack-services: 'placement-api,tempest'
-    enable-openstack-compute_services: 'placement-client'
-    security-group-mode: 'stateful'
-
-    topology:
-      - 1node:
-          openstack_system2_count: 2
-          odl_system_count: 1
-          enable-haproxy: 'no'
-          install-features: 'odl-netvirt-openstack'
-      - 3node:
-          openstack_system2_count: 3
-          odl_system_count: 3
-          enable-haproxy: 'yes'
-          install-features: 'odl-jolokia,odl-netvirt-openstack'
-
-    functionality:
-      - upstream-stateful
-      - upstream-stateful-snat-conntrack:
-          odl-snat-mode: 'conntrack'
-      - gate-stateful
-      - gate-stateful-snat-conntrack:
-          odl-snat-mode: 'conntrack'
-      - gate-minimal-cluster:
-          testplan: '{project}-{topology}-minimal-openstack.txt'
-
-    openstack:
-      - ocata:
-          openstack-branch: 'stable/ocata'
-          odl-ml2-branch: 'stable/ocata'
-          openstack_system_image: 'CentOS 7 - devstack-newton - 20170707-0359'
-          openstack_system2_image: 'CentOS 7 - devstack-newton - 20170707-0359'
-      - pike:
-          openstack-branch: 'stable/pike'
-          devstack-hash: 'c2bb1020ac4f18df5aa90a13f3b6ee8eb2c15d65'
-          odl-ml2-branch: 'stable/pike'
-          odl-ml2-port-binding: 'pseudo-agentdb-binding'
-          openstack_system_image: 'CentOS 7 - devstack-pike - 20170901-2223'
-          openstack_system2_image: 'CentOS 7 - devstack-pike - 20170901-2223'
-      - queens:
-          openstack-branch: 'master'
-          devstack-hash: '2d5494cfc57b95b61f8b33240eff65f1a339a53e'
-          odl-ml2-branch: 'master'
-          odl-ml2-port-binding: 'pseudo-agentdb-binding'
-          openstack_system_image: 'CentOS 7 - devstack-pike - 20170901-2223'
-          openstack_system2_image: 'CentOS 7 - devstack-pike - 20170901-2223'
-
-- project:
-    name: netvirt-csit-openstack-integration-carbon
-    jobs:
-      - '{project}-csit-{topology}-openstack-{openstack}-{functionality}-{stream}'
-
-    project: 'netvirt'
-    stream: 'carbon'
-    branch: 'stable/carbon'
-    jre: 'openjdk8'
-    karaf-version: karaf3
-    testplan: '{project}-{topology}-openstack.txt'
-    odl-ml2-driver-version: 'v2'
-    enable-openstack-services: 'placement-api,tempest'
-    enable-openstack-compute_services: 'placement-client'
-    security-group-mode: 'stateful'
-
-    topology:
-      - 1node:
-          openstack_system2_count: 2
-          odl_system_count: 1
-          enable-haproxy: 'no'
-          install-features: 'odl-netvirt-openstack'
-      - 3node:
-          openstack_system2_count: 3
-          odl_system_count: 3
-          enable-haproxy: 'yes'
-          install-features: 'odl-jolokia,odl-netvirt-openstack'
-
-    functionality:
-      - shague-simple-upstream-stateful
-      - upstream-stateful-snat-conntrack:
-          odl-snat-mode: 'conntrack'
-      - gate-stateful
-      - gate-stateful-snat-conntrack:
-          odl-snat-mode: 'conntrack'
-
-    openstack:
-      - ocata:
-          openstack-branch: 'stable/ocata'
-          odl-ml2-branch: 'stable/ocata'
-          openstack_system_image: 'CentOS 7 - devstack-newton - 20170707-0359'
-          openstack_system2_image: 'CentOS 7 - devstack-newton - 20170707-0359'
-      - pike:
-          openstack-branch: 'stable/pike'
-          devstack-hash: 'c2bb1020ac4f18df5aa90a13f3b6ee8eb2c15d65'
-          odl-ml2-branch: 'stable/pike'
-          odl-ml2-port-binding: 'pseudo-agentdb-binding'
-          openstack_system_image: 'CentOS 7 - devstack-pike - 20170901-2223'
-          openstack_system2_image: 'CentOS 7 - devstack-pike - 20170901-2223'
-
-- project:
-    name: netvirt-csit-openstack-integration-boron
-    jobs:
-      - '{project}-csit-{topology}-openstack-{openstack}-{functionality}-{stream}'
-
-    project: 'netvirt'
-    stream: 'boron'
-    branch: 'stable/boron'
-    jre: 'openjdk8'
-    karaf-version: karaf3
-    testplan: '{project}-{topology}-openstack.txt'
-    enable-openstack-services: 'tempest'
-    openstack_system_image: 'CentOS 7 - devstack-newton - 20170808-0528'
-    openstack_system2_image: 'CentOS 7 - devstack-newton - 20170808-0528'
-    openstack-branch: 'stable/newton'
-    odl-ml2-branch: 'stable/newton'
-
-    topology:
-      - 1node:
-          openstack_system2_count: 2
-          odl_system_count: 1
-          enable-haproxy: 'no'
-          install-features: 'odl-netvirt-openstack'
-      - 3node:
-          openstack_system2_count: 3
-          odl_system_count: 3
-          enable-haproxy: 'yes'
-          install-features: 'odl-jolokia,odl-netvirt-openstack'
-
-    functionality:
       - upstream-transparent:
+           security-group-mode: 'transparent'
+      - gate-transparent:
           security-group-mode: 'transparent'
-      - upstream-stateful:
-          security-group-mode: 'stateful'
-      - upstream-stateful-snat-conntrack:
-          security-group-mode: 'stateful'
-          odl-snat-mode: 'conntrack'
       - upstream-learn:
           security-group-mode: 'learn'
       - gate-learn:
           security-group-mode: 'learn'
-      - gate-transparent:
-          security-group-mode: 'transparent'
-      - gate-stateful:
-          security-group-mode: 'stateful'
-      - gate-minimal-transparent:
-          security-group-mode: 'transparent'
-          testplan: '{project}-{topology}-minimal-openstack.txt'
-      - gate-tempest-transparent:
-          security-group-mode: 'transparent'
-          testplan: '{project}-{topology}-tempest-openstack.txt'
 
     openstack:
-      - newton
+      - newton:
+          openstack-branch: 'stable/newton'
+          odl-ml2-branch: 'stable/newton'
+          openstack_system_image: 'CentOS 7 - devstack-newton - 20170808-0528'
+          openstack_system2_image: 'CentOS 7 - devstack-newton - 20170808-0528'
       - newton-nodl-v2:
+          openstack-branch: 'stable/newton'
+          odl-ml2-branch: 'stable/newton'
           odl-ml2-driver-version: 'v2'
+          openstack_system_image: 'CentOS 7 - devstack-newton - 20170808-0528'
+          openstack_system2_image: 'CentOS 7 - devstack-newton - 20170808-0528'
+      - ocata:
+          openstack-branch: 'stable/ocata'
+          odl-ml2-branch: 'stable/ocata'
+          openstack_system_image: 'CentOS 7 - devstack-newton - 20170707-0359'
+          openstack_system2_image: 'CentOS 7 - devstack-newton - 20170707-0359'
+      - pike:
+          openstack-branch: 'stable/pike'
+          devstack-hash: 'c2bb1020ac4f18df5aa90a13f3b6ee8eb2c15d65'
+          odl-ml2-branch: 'stable/pike'
+          odl-ml2-port-binding: 'pseudo-agentdb-binding'
+          openstack_system_image: 'CentOS 7 - devstack-pike - 20170901-2223'
+          openstack_system2_image: 'CentOS 7 - devstack-pike - 20170901-2223'
+      - queens:
+          openstack-branch: 'master'
+          devstack-hash: '2d5494cfc57b95b61f8b33240eff65f1a339a53e'
+          odl-ml2-branch: 'master'
+          odl-ml2-port-binding: 'pseudo-agentdb-binding'
+          openstack_system_image: 'CentOS 7 - devstack-pike - 20170901-2223'
+          openstack_system2_image: 'CentOS 7 - devstack-pike - 20170901-2223'
 
 - project:
     name: netvirt-csit-sfc-openstack-integration
