@@ -61,11 +61,38 @@ export KARAF_REDIRECT="${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log"
 echo "Starting controller..."
 ${WORKSPACE}/${BUNDLEFOLDER}/bin/start
 
-echo "Sleeping 30 seconds to make sure Karaf ssh has started..."
-sleep 30
+echo "Waiting for controller to come up..."
+# Silence the chatty output during the loop.
+set +x
+COUNT=0
+CLIENT="${WORKSPACE}/${BUNDLEFOLDER}/bin/client"
+while true; do
+    ${CLIENT} "feature:list -i"
+    RC="$?"
+    if [[ "${RC}" == "0" ]]; then
+        echo Karaf is UP
+        break
+    elif (( "${COUNT}" > 600 )); then
+        echo Timeout Karaf DOWN
+        echo "Dumping Karaf log..."
+        cat "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log"
+        echo "Listing all open ports on controller system"
+        netstat -pnatu
+        exit 1
+    else
+        echo "${RC}"
+        COUNT=$(( ${COUNT} + 1 ))
+        sleep 1
+        if [[ $(($COUNT % 5)) == 0 ]]; then
+            echo already waited ${COUNT} seconds...
+        fi
+    fi
+done
+# Un-silence the chatty output.
+set -x
 
 echo "Installing all features..."
-sshpass -p karaf ${WORKSPACE}/${BUNDLEFOLDER}/bin/client -u karaf "feature:install ${ACTUALFEATURES}" || echo $? > "${WORKSPACE}/error.txt"
+$CLIENT feature:install ${ACTUALFEATURES} || echo $? > "${WORKSPACE}/error.txt"
 
 echo "killing karaf process..."
 ps axf | grep karaf | grep -v grep | awk '{print "kill -9 " $1}' | sh
