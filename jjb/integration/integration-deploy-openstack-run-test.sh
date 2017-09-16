@@ -516,12 +516,6 @@ EOF
     fi
 } # collect_logs()
 
-if [ "${ODL_ML2_BRANCH}" != "stable/ocata" ]; then
-   RECLONE=no
-else
-   RECLONE=yes
-fi
-
 # if we are using the new netvirt impl, as determined by the feature name
 # odl-netvirt-openstack (note: old impl is odl-ovsdb-openstack) then we
 # want PROVIDER_MAPPINGS to be used -- this should be fixed if we want to support
@@ -642,6 +636,17 @@ for i in `seq 1 ${NUM_OPENSTACK_COMPUTE_NODES}`; do
     ssh ${!COMPUTEIP} "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
     ssh ${!COMPUTEIP} "ps -ef | grep stack.sh"
     os_node_list+=(${!COMPUTEIP})
+    # Workaround for https://review.openstack.org/#/c/491032/
+    # Modify upper-constraints to use libvirt-python 3.2.0
+    if [ "${ODL_ML2_BRANCH}" == "stable/ocata" ]; then
+        ${SSH} ${!COMPUTEIP} "
+            cd /opt/stack;
+            git clone https://git.openstack.org/openstack/requirements;
+            cd requirements;
+            git checkout stable/ocata;
+            sed -i s/libvirt-python===2.5.0/libvirt-python===3.2.0/ upper-constraints.txt
+        "
+    fi
 done
 
 echo "nodelist: ${os_node_list[*]}"
@@ -725,8 +730,8 @@ for i in `seq 1 ${NUM_OPENSTACK_SITES}`; do
 
     echo "sleep for 60s and print hypervisor-list"
     sleep 60
-    # In anything after Newton, if we do not enable the n-cpu in control node
-    # We need to discover hosts manually and ensure that they are mapped to cells.
+    # In Ocata if we do not enable the n-cpu in control node then
+    # we need to discover hosts manually and ensure that they are mapped to cells.
     # reference: https://ask.openstack.org/en/question/102256/how-to-configure-placement-service-for-compute-node-on-ocata/
     if [ "${OPENSTACK_BRANCH}" == "stable/ocata" ]; then
         scp ${WORKSPACE}/setup_host_cell_mapping.sh  ${!CONTROLIP}:/tmp
