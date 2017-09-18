@@ -616,6 +616,10 @@ for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
     ${SSH} ${!CONTROLIP} "bash /tmp/get_devstack.sh > /tmp/get_devstack.sh.txt 2>&1"
     create_control_node_local_conf ${!CONTROLIP} ${ODLMGRIP[$i]} "${ODL_OVS_MGRS[$i]}"
     scp ${WORKSPACE}/local.conf_control_${!CONTROLIP} ${!CONTROLIP}:/opt/stack/devstack/local.conf
+    if [ "${ODL_ML2_BRANCH}" == "stable/ocata" ]; then
+        ssh ${!CONTROLIP} "cd /opt/stack; git clone https://git.openstack.org/openstack/requirements; cd requirements; git checkout stable/ocata; sed -i 's/libvirt-python.*/libvirt-python==3.2.0/g' upper-constraints.txt"
+        ssh ${!CONTROLIP} "cat /opt/stack/requirements/upper-constraints.txt"
+    fi
     ssh ${!CONTROLIP} "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
     ssh ${!CONTROLIP} "ps -ef | grep stack.sh"
     ssh ${!CONTROLIP} "ls -lrt /opt/stack/devstack/nohup.out"
@@ -625,6 +629,7 @@ for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
     if [ "${ODL_ML2_BRANCH}" == "stable/newton" ]; then
         ssh ${!CONTROLIP} "cd /opt/stack; git clone https://git.openstack.org/openstack/requirements; cd requirements; git checkout stable/newton; sed -i /appdirs/d upper-constraints.txt"
     fi
+
 done
 
 for i in `seq 1 ${NUM_OPENSTACK_COMPUTE_NODES}`; do
@@ -639,6 +644,10 @@ for i in `seq 1 ${NUM_OPENSTACK_COMPUTE_NODES}`; do
     ${SSH} ${!COMPUTEIP} "bash /tmp/get_devstack.sh > /tmp/get_devstack.sh.txt 2>&1"
     create_compute_node_local_conf ${!COMPUTEIP} ${!CONTROLIP} ${ODLMGRIP[$SITE_INDEX]} "${ODL_OVS_MGRS[$SITE_INDEX]}"
     scp ${WORKSPACE}/local.conf_compute_${!COMPUTEIP} ${!COMPUTEIP}:/opt/stack/devstack/local.conf
+    if [ "${ODL_ML2_BRANCH}" == "stable/ocata" ]; then
+        ssh ${!COMPUTEIP} "cd /opt/stack; git clone https://git.openstack.org/openstack/requirements; cd requirements; git checkout stable/ocata; sed -i 's/libvirt-python.*/libvirt-python==3.2.0/g' upper-constraints.txt"
+        ssh ${!COMPUTEIP} "cat /opt/stack/requirements/upper-constraints.txt"
+    fi
     ssh ${!COMPUTEIP} "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
     ssh ${!COMPUTEIP} "ps -ef | grep stack.sh"
     os_node_list+=(${!COMPUTEIP})
