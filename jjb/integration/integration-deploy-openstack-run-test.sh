@@ -417,7 +417,7 @@ sudo netstat -punta
 echo -e "\nsudo getenforce\n"
 sudo getenforce
 echo -e "\njournalctl > /tmp/journalctl.log\n"
-journalctl > /tmp/journalctl.log
+sudo journalctl > /tmp/journalctl.log
 EOF
 
     sleep 5
@@ -443,60 +443,61 @@ EOF
 
     # Control Node
     for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
-        OS_CTRL_IP=OPENSTACK_CONTROL_NODE_${i}_IP
-        OS_CTRL_FOLDER="control_${i}"
-        mkdir -p ${OS_CTRL_FOLDER}
-        scp ${!OS_CTRL_IP}:/opt/stack/devstack/nohup.out ${OS_CTRL_FOLDER}/stack.log
-        scp ${!OS_CTRL_IP}:/var/log/openvswitch/ovs-vswitchd.log ${OS_CTRL_FOLDER}/ovs-vswitchd.log
-        scp ${!OS_CTRL_IP}:/etc/neutron/plugins/ml2/ml2_conf.ini ${OS_CTRL_FOLDER}
-        scp ${!OS_CTRL_IP}:/etc/neutron/dhcp_agent.ini ${OS_CTRL_FOLDER}
-        scp ${!OS_CTRL_IP}:/etc/neutron/neutron.conf ${OS_CTRL_FOLDER}/neutron.conf
-        scp ${!OS_CTRL_IP}:/etc/nova/nova.conf ${OS_CTRL_FOLDER}/nova.conf
-        scp ${!OS_CTRL_IP}:/etc/kuryr/kuryr.conf ${OS_CTRL_FOLDER}/kuryr.conf
-        scp ${!OS_CTRL_IP}:/etc/neutron/neutron_lbaas.conf ${OS_CTRL_FOLDER}/neutron-lbaas.conf
-        scp ${!OS_CTRL_IP}:/etc/neutron/services/loadbalancer/haproxy/lbaas_agent.ini ${OS_CTRL_FOLDER}/lbaas-agent.ini
-        rsync --rsync-path="sudo rsync" -avhe ssh ${!OS_CTRL_IP}:/usr/lib/systemd/system/haproxy.service ${OS_CTRL_FOLDER}
-        rsync -avhe ssh ${!OS_CTRL_IP}:/opt/stack/logs/* ${OS_CTRL_FOLDER} # rsync to prevent copying of symbolic links
-        rsync --rsync-path="sudo rsync" -avhe ssh ${!OS_CTRL_IP}:/etc/hosts ${OS_CTRL_FOLDER}/hosts.log
-        # Use rsync with sudo to get access to the log dir.
-        rsync --rsync-path="sudo rsync" -avhe ssh ${!OS_CTRL_IP}:/var/log/audit/audit.log ${OS_CTRL_FOLDER}
-        scp ${!OS_CTRL_IP}:/tmp/get_devstack.sh.txt ${OS_CTRL_FOLDER}
-        scp extra_debug.sh ${!OS_CTRL_IP}:/tmp
-        ${SSH} ${!OS_CTRL_IP} "bash /tmp/extra_debug.sh > /tmp/extra_debug.log"
-        scp ${!OS_CTRL_IP}:/tmp/extra_debug.log ${OS_CTRL_FOLDER}/extra_debug.log
-        scp ${!OS_CTRL_IP}:/tmp/journalctl.log ${OS_CTRL_FOLDER}
-        rsync --rsync-path="sudo rsync" -avhe ssh ${!OS_CTRL_IP}:/var/log/messages ${OS_CTRL_FOLDER}
-        scp ${!OS_CTRL_IP}:/tmp/*.xz ${OS_CTRL_FOLDER}/
-        mv local.conf_control_${!OS_CTRL_IP} ${OS_CTRL_FOLDER}/local.conf
-        mv ${OS_CTRL_FOLDER} ${WORKSPACE}/archives/
+        OSIP=OPENSTACK_CONTROL_NODE_${i}_IP
+        NODE_FOLDER="control_${i}"
+        mkdir -p ${NODE_FOLDER}
+        scp ${!OSIP}:/etc/kuryr/kuryr.conf ${NODE_FOLDER}
+        scp ${!OSIP}:/etc/neutron/dhcp_agent.ini ${NODE_FOLDER}
+        scp ${!OSIP}:/etc/neutron/metadata_agent.ini ${NODE_FOLDER}
+        scp ${!OSIP}:/etc/neutron/neutron.conf ${NODE_FOLDER}
+        scp ${!OSIP}:/etc/neutron/neutron_lbaas.conf ${NODE_FOLDER}
+        scp ${!OSIP}:/etc/neutron/plugins/ml2/ml2_conf.ini ${NODE_FOLDER}
+        scp ${!OSIP}:/etc/neutron/services/loadbalancer/haproxy/lbaas_agent.ini ${NODE_FOLDER}
+        scp ${!OSIP}:/etc/nova/nova.conf ${NODE_FOLDER}
+        scp ${!OSIP}:/opt/stack/devstack/nohup.out ${NODE_FOLDER}/stack.log
+        scp ${!OSIP}:/opt/stack/requirements/upper-constraints.txt ${NODE_FOLDER}
+        scp ${!OSIP}:/tmp/get_devstack.sh.txt ${NODE_FOLDER}
+        scp ${!OSIP}:/var/log/openvswitch/ovs-vswitchd.log ${NODE_FOLDER}
+        scp ${!OSIP}:/var/log/openvswitch/ovsdb-server.log ${NODE_FOLDER}
+        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/etc/hosts ${NODE_FOLDER}
+        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/usr/lib/systemd/system/haproxy.service ${NODE_FOLDER}
+        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/audit/audit.log ${NODE_FOLDER}
+        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/messages ${NODE_FOLDER}
+        rsync -avhe ssh ${!OSIP}:/opt/stack/logs/* ${NODE_FOLDER} # rsync to prevent copying of symbolic links
+        scp extra_debug.sh ${!OSIP}:/tmp
+        ${SSH} ${!OSIP} "bash /tmp/extra_debug.sh > /tmp/extra_debug.log"
+        scp ${!OSIP}:/tmp/extra_debug.log ${NODE_FOLDER}
+        scp ${!OSIP}:/tmp/journalctl.log ${NODE_FOLDER}
+        scp ${!OSIP}:/tmp/*.xz ${NODE_FOLDER}
+        mv local.conf_control_${!OSIP} ${NODE_FOLDER}/local.conf
+        mv ${NODE_FOLDER} ${WORKSPACE}/archives/
     done
 
     # Compute Nodes
     for i in `seq 1 ${NUM_OPENSTACK_COMPUTE_NODES}`; do
         OSIP=OPENSTACK_COMPUTE_NODE_${i}_IP
-        OS_COMPUTE_FOLDER="compute_${i}"
-        mkdir -p ${OS_COMPUTE_FOLDER}
-        scp ${!OSIP}:/opt/stack/devstack/nohup.out ${OS_COMPUTE_FOLDER}/stack.log
-        scp ${!OSIP}:/var/log/openvswitch/ovs-vswitchd.log ${OS_COMPUTE_FOLDER}/ovs-vswitchd.log
-        scp ${!OSIP}:/var/log/openvswitch/ovsdb-server.log ${OS_COMPUTE_FOLDER}/ovsdb-server.log
-        scp ${!OSIP}:/var/log/libvirt/libvirtd.log* ${OS_COMPUTE_FOLDER}
-        scp ${!OSIP}:/var/log/libvirt/qeum/*.log ${OS_COMPUTE_FOLDER}
-        scp ${!OSIP}:/etc/nova/nova.conf ${OS_COMPUTE_FOLDER}/nova.conf
-        rsync -avhe ssh ${!OSIP}:/opt/stack/logs/* ${OS_COMPUTE_FOLDER} # rsync to prevent copying of symbolic links
-        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/etc/hosts ${OS_COMPUTE_FOLDER}/hosts.log
-        # Use rsync with sudo to get access to the log dir. Also can't use wildcard because the dirs only have
-        # exec permissions which doesn't allow ls.
-        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/libvirt ${OS_COMPUTE_FOLDER}
-        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/audit/audit.log ${OS_COMPUTE_FOLDER}
-        scp ${!OSIP}:/tmp/get_devstack.sh.txt ${OS_COMPUTE_FOLDER}
+        NODE_FOLDER="compute_${i}"
+        mkdir -p ${NODE_FOLDER}
+        scp ${!OSIP}:/etc/nova/nova.conf ${NODE_FOLDER}
+        scp ${!OSIP}:/opt/stack/devstack/nohup.out ${NODE_FOLDER}/stack.log
+        scp ${!OSIP}:/opt/stack/requirements/upper-constraints.txt ${NODE_FOLDER}
+        scp ${!OSIP}:/tmp/get_devstack.sh.txt ${NODE_FOLDER}
+        scp ${!OSIP}:/var/log/openvswitch/ovs-vswitchd.log ${NODE_FOLDER}
+        scp ${!OSIP}:/var/log/openvswitch/ovsdb-server.log ${NODE_FOLDER}
+        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/etc/hosts ${NODE_FOLDER}
+        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/audit/audit.log ${NODE_FOLDER}
+        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/dmesg.log ${NODE_FOLDER}
+        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/libvirt ${NODE_FOLDER}
+        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/messages ${NODE_FOLDER}
+        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/nova-agent.log ${NODE_FOLDER}
+        rsync -avhe ssh ${!OSIP}:/opt/stack/logs/* ${NODE_FOLDER} # rsync to prevent copying of symbolic links
         scp extra_debug.sh ${!OSIP}:/tmp
         ${SSH} ${!OSIP} "bash /tmp/extra_debug.sh > /tmp/extra_debug.log"
-        scp ${!OSIP}:/tmp/extra_debug.log ${OS_COMPUTE_FOLDER}/extra_debug.log
-        scp ${!OSIP}:/tmp/journalctl.log ${OS_COMPUTE_FOLDER}
-        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/messages ${OS_COMPUTE_FOLDER}
-        scp ${!OSIP}:/tmp/*.xz ${OS_COMPUTE_FOLDER}/
-        mv local.conf_compute_${!OSIP} ${OS_COMPUTE_FOLDER}/local.conf
-        mv ${OS_COMPUTE_FOLDER} ${WORKSPACE}/archives/
+        scp ${!OSIP}:/tmp/extra_debug.log ${NODE_FOLDER}
+        scp ${!OSIP}:/tmp/journalctl.log ${NODE_FOLDER}
+        scp ${!OSIP}:/tmp/*.xz ${NODE_FOLDER}/
+        mv local.conf_compute_${!OSIP} ${NODE_FOLDER}/local.conf
+        mv ${NODE_FOLDER} ${WORKSPACE}/archives/
     done
 
     # Tempest
