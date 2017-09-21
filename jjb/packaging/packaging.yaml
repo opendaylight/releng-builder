@@ -88,6 +88,22 @@
           upload-files-dir: '{upload-files-dir}'
           maven-repo-url: '{maven-repo-url}'
 
+    triggers:
+      - gerrit:
+          server-name: '{server-name}'
+          trigger-on:
+            - comment-added-contains-event:
+                comment-contains-value: 'build-rpm'
+          projects:
+            - project-compare-type: 'ANT'
+              project-pattern: '{project}'
+              branches:
+                - branch-compare-type: 'ANT'
+                  branch-pattern: '**/{branch}'
+              file-paths:
+                - compare-type: ANT
+                  pattern: 'pacakges/**'
+
     publishers:
       - lf-infra-publish
 
@@ -151,6 +167,20 @@
 
     triggers:
       - timed: '@daily'
+      - gerrit:
+          server-name: '{server-name}'
+          trigger-on:
+            - comment-added-contains-event:
+                comment-contains-value: 'build-rpm'
+          projects:
+            - project-compare-type: 'ANT'
+              project-pattern: '{project}'
+              branches:
+                - branch-compare-type: 'ANT'
+                  branch-pattern: '**/{branch}'
+              file-paths:
+                - compare-type: ANT
+                  pattern: 'pacakges/**'
 
     publishers:
       - lf-infra-publish
@@ -363,6 +393,21 @@
           upload-files-dir: '{upload-files-dir}'
           maven-repo-url: '{maven-repo-url}'
 
+    triggers:
+      - gerrit:
+          server-name: '{server-name}'
+          trigger-on:
+            - comment-added-contains-event:
+                comment-contains-value: 'build-deb'
+          projects:
+            - project-compare-type: 'ANT'
+              project-pattern: '{project}'
+              branches:
+                - branch-compare-type: 'ANT'
+                  branch-pattern: '**/{branch}'
+              file-paths:
+                - compare-type: ANT
+                  pattern: 'pacakges/**'
 
     publishers:
       - lf-infra-publish
