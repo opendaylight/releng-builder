@@ -33,7 +33,7 @@ echo autorelease "$(git rev-parse --verify HEAD)" "${RELEASE_TAG}" \
     | tee -a "$PATCH_DIR/taglist.log"
 # Disable SC2154 because we want $path to be the submodule parameter not the shell.
 # shellcheck disable=SC2154
-git submodule foreach "echo \$path $(git rev-parse --verify HEAD) ${RELEASE_TAG} \
+git submodule foreach "echo \$path \$(git rev-parse --verify HEAD) ${RELEASE_TAG} \
     | tee -a $PATCH_DIR/taglist.log"
 
 echo "$RELEASE_TAG"
