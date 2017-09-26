@@ -60,7 +60,7 @@
           openstack_system2_image: 'CentOS 7 - devstack-pike - 20170901-2223'
 
     odl-ml2-driver-version: 'v2'
-    enable-openstack-services: 'placement-api,tempest'
+    enable-openstack-services: 'placement-api,tempest,n-api-meta'
     enable-openstack-compute-services: 'placement-client'
     security-group-mode: '{sg-mode}'
 
@@ -125,7 +125,7 @@
           openstack_system2_image: 'CentOS 7 - devstack-pike - 20170901-2223'
 
     odl-ml2-driver-version: 'v2'
-    enable-openstack-services: 'placement-api,tempest'
+    enable-openstack-services: 'placement-api,tempest,n-api-meta'
     enable-openstack-compute-services: 'placement-client'
     security-group-mode: '{sg-mode}'
 
@@ -181,7 +181,7 @@
           openstack_system2_image: 'CentOS 7 - devstack-pike - 20170901-2223'
 
     odl-ml2-driver-version: 'v2'
-    enable-openstack-services: 'placement-api,tempest'
+    enable-openstack-services: 'placement-api,tempest,n-api-meta'
     enable-openstack-compute-services: 'placement-client'
     security-group-mode: '{sg-mode}'
 
@@ -263,7 +263,7 @@
 
     functionality:
       - sfc:
-          enable-openstack-services: 'placement-api,tempest'
+          enable-openstack-services: 'placement-api,tempest,n-api-meta'
           enable-openstack-compute-services: 'placement-client'
           enable-openstack-plugins: 'networking-odl,networking-sfc'
           testplan: '{project}-extensions-sfc.txt'

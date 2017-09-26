@@ -53,7 +53,7 @@
           openstack_system2_image: 'CentOS 7 - devstack-pike - 20170901-2223'
 
     odl-ml2-driver-version: 'v2'
-    enable-openstack-services: 'placement-api,l2gw-plugin'
+    enable-openstack-services: 'placement-api,l2gw-plugin,n-api-meta'
     enable-openstack-compute-services: 'placement-client'
     security-group-mode: '{sg-mode}'
     tools_system_count: 2
@@ -118,7 +118,7 @@
           openstack_system2_image: 'CentOS 7 - devstack-pike - 20170901-2223'
 
     odl-ml2-driver-version: 'v2'
-    enable-openstack-services: 'placement-api,l2gw-plugin'
+    enable-openstack-services: 'placement-api,l2gw-plugin,n-api-meta'
     enable-openstack-compute-services: 'placement-client'
     security-group-mode: '{sg-mode}'
     tools_system_count: 2
@@ -178,7 +178,7 @@
           openstack_system2_image: 'CentOS 7 - devstack-pike - 20170901-2223'
 
     odl-ml2-driver-version: 'v2'
-    enable-openstack-services: 'placement-api,l2gw-plugin'
+    enable-openstack-services: 'placement-api,l2gw-plugin,n-api-meta'
     enable-openstack-compute-services: 'placement-client'
     security-group-mode: '{sg-mode}'
     tools_system_count: 2
@@ -247,5 +247,5 @@
 
     # TODO: remove this flag and instead use the enable-openstack-services list to know if l2gw is enabled
     enable-networking-l2gw: 'yes'
-    enable-openstack-services: 'neutron,nova,l2gw-plugin'
+    enable-openstack-services: 'neutron,nova,l2gw-plugin,n-api-meta'
 
