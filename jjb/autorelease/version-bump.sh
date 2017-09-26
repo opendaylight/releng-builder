@@ -25,7 +25,18 @@ BRANCH="$GERRIT_BRANCH"
 set -eu -o pipefail
 
 git checkout -b "${BRANCH,,}" "origin/${BRANCH,,}"
-git submodule foreach git checkout -b "${BRANCH,,}" "origin/${BRANCH,,}"
+
+# TODO: Simplify once stable/nitrogen is no longer supported.
+for module in $(git submodule | awk '{ print $2 }')
+do
+    pushd "$module"
+    if [ "$GERRIT_BRANCH" == "stable/nitrogen" ] && [ "$module" == "yangtools" ]; then
+        git checkout -b "v1.2.x" "origin/v1.2.x"
+    else
+        git checkout -b "${BRANCH,,}" "origin/${BRANCH,,}"
+    fi
+    popd
+done
 
 # Setup Gerrit remove to ensure Change-Id gets set on commit.
 git config --global --add gitreview.username "jenkins-releng"
@@ -51,10 +62,11 @@ do
     # TODO: Remove once stable/nitrogen is no longer supported.
     if [ "$GERRIT_BRANCH" == "stable/nitrogen" ] && [ "$module" == "yangtools" ]; then
         git format-patch --stdout "origin/v1.2.x" > "$patch_dir/${module//\//-}.patch"
+        git bundle create "$patch_dir/${module//\//-}.bundle" "origin/v1.2.x..HEAD"
     else
         git format-patch --stdout "origin/${BRANCH,,}" > "$patch_dir/${module//\//-}.patch"
+        git bundle create "$patch_dir/${module//\//-}.bundle" "origin/${BRANCH,,}..HEAD"
     fi
-    git bundle create "$patch_dir/${module//\//-}.bundle" "origin/${BRANCH,,}..HEAD"
     popd
 done
 
