@@ -537,7 +537,7 @@ CORE_OS_CONTROL_SERVICES+=",g-api,g-reg"
 # Keystone
 CORE_OS_CONTROL_SERVICES+=",key"
 # Nova - services to support libvirt
-CORE_OS_CONTROL_SERVICES+=",n-api,n-cauth,n-cond,n-crt,n-obj,n-sch"
+CORE_OS_CONTROL_SERVICES+=",n-api,n-api-meta,n-cauth,n-cond,n-crt,n-obj,n-sch"
 # ODL - services to connect to ODL
 CORE_OS_CONTROL_SERVICES+=",odl-compute,odl-neutron"
 # Neutron
