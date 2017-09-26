@@ -1,0 +1,147 @@
+---
+- project:
+    name: netvirt-quagga-dependencies
+    jobs:
+      - 'netvirt-quagga-centos7-{stream}'
+      - 'netvirt-quagga-ubuntu1604-{stream}'
+
+    stream:
+      - neon:
+          branch: 'master'
+      - fluorine:
+          branch: 'stable/fluorine'
+      - oxygen:
+          branch: 'stable/oxygen'
+
+    quagga-version: '4'
+    project: 'netvirt'
+
+    mvn-opts: ''
+    mvn-params: ''
+    mvn-version: mvn35
+
+    # common parameters required for 'lf-infra-deploy-maven-file' builder
+    repo-id: 'thirdparty'
+    upload-files-dir: '$WORKSPACE/upload_files'
+    group-id: 'quagga$QUAGGA_VERSION'
+
+    # Used by the release job
+    staging-profile-id: a67da0ffbb1ba
+
+- job-template:
+    name: 'netvirt-quagga-centos7-{stream}'
+    project-type: freestyle
+    node: centos7-builder-2c-8g
+    concurrent: true
+
+    properties:
+      - opendaylight-infra-properties:
+          build-days-to-keep: '{build-days-to-keep}'
+
+    parameters:
+      - opendaylight-infra-parameters:
+          os-cloud: '{os-cloud}'
+          project: '{project}'
+          branch: '{branch}'
+          refspec: 'refs/heads/{branch}'
+          artifacts: '{archive-artifacts}'
+      - lf-infra-maven-parameters:
+          mvn-opts: '{mvn-opts}'
+          mvn-params: '{mvn-params}'
+          mvn-version: '{mvn-version}'
+          staging-profile-id: '{staging-profile-id}'
+      - string:
+          name: QUAGGA_VERSION
+          default: '{quagga-version}'
+          description: 'quagga version'
+
+    scm:
+      - git-netvirt-quagga
+
+    wrappers:
+      - opendaylight-infra-wrappers:
+          build-timeout: '{build-timeout}'
+
+    builders:
+      - netvirt-build-quagga
+      - lf-infra-deploy-maven-file:
+          global-settings-file: 'global-settings'
+          settings-file: 'netvirt-settings'
+          mvn-version: '{mvn-version}'
+          repo-id: '{repo-id}'
+          group-id: '{group-id}'
+          upload-files-dir: '{upload-files-dir}'
+          maven-repo-url: '$NEXUS_URL/content/repositories/thirdparty'
+
+    publishers:
+      - email-notification:
+          email-recipients: '{email-recipients}'
+          email-prefix: '[netvirt]'
+      - lf-infra-publish
+
+- job-template:
+    name: 'netvirt-quagga-ubuntu1604-{stream}'
+    project-type: freestyle
+    node: ubuntu1604-mininet-ovs-25-1c-4g
+    concurrent: true
+
+    properties:
+      - opendaylight-infra-properties:
+          build-days-to-keep: '{build-days-to-keep}'
+
+    parameters:
+      - opendaylight-infra-parameters:
+          os-cloud: '{os-cloud}'
+          project: '{project}'
+          branch: '{branch}'
+          refspec: 'refs/heads/{branch}'
+          artifacts: '{archive-artifacts}'
+      - lf-infra-maven-parameters:
+          mvn-opts: '{mvn-opts}'
+          mvn-params: '{mvn-params}'
+          mvn-version: '{mvn-version}'
+          staging-profile-id: '{staging-profile-id}'
+      - string:
+          name: QUAGGA_VERSION
+          # yamllint disable-line rule:line-length
+          default: '{quagga-version}'
+          description: 'quagga version'
+
+    scm:
+      - git-netvirt-quagga
+
+    wrappers:
+      - opendaylight-infra-wrappers:
+          build-timeout: '{build-timeout}'
+
+    builders:
+      - netvirt-build-quagga
+      - lf-infra-deploy-maven-file:
+          global-settings-file: 'global-settings'
+          settings-file: 'netvirt-settings'
+          mvn-version: '{mvn-version}'
+          repo-id: '{repo-id}'
+          group-id: '{group-id}'
+          upload-files-dir: '{upload-files-dir}'
+          maven-repo-url: '$NEXUS_URL/content/repositories/thirdparty'
+
+    publishers:
+      - email-notification:
+          email-recipients: '{email-recipients}'
+          email-prefix: '[netvirt]'
+      - lf-infra-publish
+
+- builder:
+    name: 'netvirt-build-quagga'
+    builders:
+      - shell: !include-raw-escape: quagga-build.sh
+
+- scm:
+    name: 'git-netvirt-quagga'
+    scm:
+      - git:
+          url: https://github.com/6WIND/zrpcd.git
+          basedir: 'zrpcd'
+          branches:
+            - '20180720'
+          wipe-workspace: true
