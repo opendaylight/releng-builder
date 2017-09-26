@@ -63,6 +63,28 @@ function csv2ssv() {
     echo "${ssv}"
 } # csv2ssv
 
+# Add enable_services and disable_services to the local.conf
+function add_os_services() {
+    local core_services=$1
+    local enable_services=$2
+    local disable_services=$3
+    local local_conf_file_name=$4
+
+    cat >> ${local_conf_file_name} << EOF
+enable_service $(csv2ssv "${core_services}")
+EOF
+    if [ -n "${enable_services}" ]; then
+        cat >> ${local_conf_file_name} << EOF
+enable_service $(csv2ssv "${enable_services}")
+EOF
+    fi
+    if [ -n "${disable_services}" ]; then
+        cat >> ${local_conf_file_name} << EOF
+disable_service $(csv2ssv "${disable_services}")
+EOF
+    fi
+}
+
 function create_control_node_local_conf() {
     HOSTIP=$1
     MGRIP=$2
@@ -80,20 +102,7 @@ RECLONE=${RECLONE}
 disable_all_services
 EOF
 
-    CORE_OS_SERVICES="dstat,g-api,g-reg,key,mysql,n-api,n-cauth,n-cond,n-crt,n-obj,n-sch,odl-compute,odl-neutron,q-dhcp,q-meta,q-svc,rabbit"
-    cat >> ${local_conf_file_name} << EOF
-enable_service $(csv2ssv "${CORE_OS_SERVICES}")
-EOF
-    if [ -n "${ENABLE_OS_SERVICES}" ]; then
-        cat >> ${local_conf_file_name} << EOF
-enable_service $(csv2ssv "${ENABLE_OS_SERVICES}")
-EOF
-    fi
-    if [ -n "${DISABLE_OS_SERVICES}" ]; then
-        cat >> ${local_conf_file_name} << EOF
-disable_service $(csv2ssv "${DISABLE_OS_SERVICES}")
-EOF
-    fi
+    add_os_services "${CORE_OS_CONTROL_SERVICES}" "${ENABLE_OS_SERVICES}" "${DISABLE_OS_SERVICES}" "${local_conf_file_name}"
 
     cat >> ${local_conf_file_name} << EOF
 
@@ -101,9 +110,6 @@ HOST_IP=${HOSTIP}
 SERVICE_HOST=\$HOST_IP
 Q_ML2_TENANT_NETWORK_TYPE=${TENANT_NETWORK_TYPE}
 NEUTRON_CREATE_INITIAL_NETWORKS=${CREATE_INITIAL_NETWORKS}
-#Q_PLUGIN=ml2
-#ENABLE_TENANT_TUNNELS=True
-#LIBVIRT_TYPE=qemu
 
 ODL_MODE=manual
 ODL_MGR_IP=${MGRIP}
@@ -240,30 +246,13 @@ RECLONE=${RECLONE}
 disable_all_services
 EOF
 
-    CORE_OS_SERVICES="n-cpu,odl-compute"
-    cat >> ${local_conf_file_name} << EOF
-enable_service $(csv2ssv "${CORE_OS_SERVICES}")
-EOF
-    if [ -n "${ENABLE_OS_COMPUTE_SERVICES}" ]; then
-        cat >> ${local_conf_file_name} << EOF
-enable_service $(csv2ssv "${ENABLE_OS_COMPUTE_SERVICES}")
-EOF
-    fi
-    if [ -n "${DISABLE_OS_SERVICES}" ]; then
-        cat >> ${local_conf_file_name} << EOF
-disable_service $(csv2ssv "${DISABLE_OS_SERVICES}")
-EOF
-    fi
+    add_os_services "${CORE_OS_COMPUTE_SERVICES}" "${ENABLE_OS_COMPUTE_SERVICES}" "${DISABLE_OS_SERVICES}" "${local_conf_file_name}"
 
     cat >> ${local_conf_file_name} << EOF
 
 HOST_IP=${HOSTIP}
 SERVICE_HOST=${SERVICEHOST}
 Q_ML2_TENANT_NETWORK_TYPE=${TENANT_NETWORK_TYPE}
-#Q_PLUGIN=ml2
-#ENABLE_TENANT_TUNNELS=True
-#LIBVIRT_TYPE=qemu
-#MULTI_HOST=1
 
 ODL_MODE=manual
 ODL_MGR_IP=${MGRIP}
@@ -535,6 +524,29 @@ if [[ ${CONTROLLERFEATURES} == *"odl-ovsdb-openstack"* ]]; then
 else
     ODL_L3=False
 fi
+
+RECLONE=False
+
+# Always compare the lists below against the devstack upstream ENABLED_SERVICES in
+# https://github.com/openstack-dev/devstack/blob/master/stackrc#L52
+# ODL CSIT does not use vnc, cinder, q-agt, q-l3 or horizon so they are not included below.
+# collect performance stats
+CORE_OS_CONTROL_SERVICES="dstat"
+# Glance
+CORE_OS_CONTROL_SERVICES+=",g-api,g-reg"
+# Keystone
+CORE_OS_CONTROL_SERVICES+=",key"
+# Nova - services to support libvirt
+CORE_OS_CONTROL_SERVICES+=",n-api,n-cauth,n-cond,n-crt,n-obj,n-sch"
+# ODL - services to connect to ODL
+CORE_OS_CONTROL_SERVICES+=",odl-compute,odl-neutron"
+# Neutron
+CORE_OS_CONTROL_SERVICES+=",q-dhcp,q-meta,q-svc"
+# Additional services
+CORE_OS_CONTROL_SERVICES+=",mysql,rabbit"
+
+# computes only need nova and odl
+CORE_OS_COMPUTE_SERVICES="n-cpu,odl-compute"
 
 cat > ${WORKSPACE}/disable_firewall.sh << EOF
 sudo systemctl stop firewalld
