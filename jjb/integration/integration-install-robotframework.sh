@@ -62,6 +62,7 @@ pip install --upgrade jsonpatch
 pip install python-openstackclient==3.11.0
 pip install networking-l2gw
 pip install python-neutronclient==6.1.0
+pip install networking-sfc
 
 # Print installed versions.
 pip install --upgrade pipdeptree
