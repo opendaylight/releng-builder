@@ -33,6 +33,7 @@ function trap_handler() {
 
 trap 'trap_handler ${LINENO} ${$?}' ERR
 
+
 function create_etc_hosts() {
     NODE_IP=$1
     CTRL_IP=$2
