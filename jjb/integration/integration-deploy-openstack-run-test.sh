@@ -895,7 +895,7 @@ if [ -z "${SUITES}" ]; then
     SUITES=`egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' testplan.txt | tr '\012' ' '`
 fi
 
-if [ "${OPENSTACK_BRANCH}" == "stable/pike" ]; then
+if [ "${OPENSTACK_BRANCH}" == "stable/pike" ] || [ "${OPENSTACK_BRANCH}" == "master ]; then
    AUTH="http://${!CONTROLIP}/identity"
 else
    AUTH="http://${!CONTROLIP}:35357/v3"
