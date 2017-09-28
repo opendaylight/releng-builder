@@ -14,10 +14,11 @@ $PYTHON -m pip install --upgrade urllib3
 python ${WORKSPACE}/test/tools/distchanges/changes.py -d /tmp/distribution_folder \
                   -u ${ACTUAL_BUNDLE_URL} -b ${DISTROBRANCH} \
                   -r ssh://jenkins-${SILO}@git.opendaylight.org:29418 || true
-
-echo "#################################################"
-echo "##         Deploy Openstack 3-node             ##"
-echo "#################################################"
+cat << EOF
+#################################################
+##         Deploy Openstack 3-node             ##
+#################################################
+EOF
 
 # Catch command errors and collect logs.
 # This ensures logs are collected when script commands fail rather than simply exiting.
@@ -32,6 +33,50 @@ function trap_handler() {
 } # trap_handler()
 
 trap 'trap_handler ${LINENO} ${$?}' ERR
+
+function print_job_parameters() {
+    cat << EOF
+
+Job parameters:
+DISTROBRANCH: ${DISTROBRANCH}
+DISTROSTREAM: ${DISTROSTREAM}
+BUNDLE_URL: ${BUNDLE_URL}
+CONTROLLERFEATURES: ${CONTROLLERFEATURES}
+CONTROLLERDEBUGMAP: ${CONTROLLERDEBUGMAP}
+TESTPLAN: ${TESTPLAN}
+SUITES: ${SUITES}
+PATCHREFSPEC: ${PATCHREFSPEC}
+OPENSTACK_BRANCH: ${OPENSTACK_BRANCH}
+DEVSTACK_HASH: ${DEVSTACK_HASH}
+ODL_ML2_DRIVER_REPO: ${ODL_ML2_DRIVER_REPO}
+ODL_ML2_BRANCH: ${ODL_ML2_BRANCH}
+ODL_ML2_DRIVER_VERSION: ${ODL_ML2_DRIVER_VERSION}
+ODL_ML2_PORT_BINDING: ${ODL_ML2_PORT_BINDING}
+DEVSTACK_KUBERNETES_PLUGIN_REPO: ${DEVSTACK_KUBERNETES_PLUGIN_REPO}
+DEVSTACK_LBAAS_PLUGIN_REPO: ${DEVSTACK_LBAAS_PLUGIN_REPO}
+DEVSTACK_NETWORKING_SFC_PLUGIN_REPO: ${DEVSTACK_NETWORKING_SFC_PLUGIN_REPO}
+ODL_ENABLE_L3_FWD: ${ODL_ENABLE_L3_FWD}
+IPSEC_VXLAN_TUNNELS_ENABLED: ${IPSEC_VXLAN_TUNNELS_ENABLED}
+PUBLIC_BRIDGE: ${PUBLIC_BRIDGE}
+ENABLE_HAPROXY_FOR_NEUTRON: ${ENABLE_HAPROXY_FOR_NEUTRON}
+ENABLE_OS_SERVICES: ${ENABLE_OS_SERVICES}
+ENABLE_OS_COMPUTE_SERVICES: ${ENABLE_OS_COMPUTE_SERVICES}
+ENABLE_OS_PLUGINS: ${ENABLE_OS_PLUGINS}
+DISABLE_OS_SERVICES: ${DISABLE_OS_SERVICES}
+TENANT_NETWORK_TYPE: ${TENANT_NETWORK_TYPE}
+SECURITY_GROUP_MODE: ${SECURITY_GROUP_MODE}
+PUBLIC_PHYSICAL_NETWORK: ${PUBLIC_PHYSICAL_NETWORK}
+ENABLE_NETWORKING_L2GW: ${ENABLE_NETWORKING_L2GW}
+CREATE_INITIAL_NETWORKS: ${CREATE_INITIAL_NETWORKS}
+LBAAS_SERVICE_PROVIDER: ${LBAAS_SERVICE_PROVIDER}
+NUM_OPENSTACK_SITES: ${NUM_OPENSTACK_SITES}
+ODL_SFC_DRIVER: ${ODL_SFC_DRIVER}
+ODL_SNAT_MODE: ${ODL_SNAT_MODE}
+
+EOF
+}
+
+print_job_parameters
 
 function create_etc_hosts() {
     NODE_IP=$1
@@ -385,6 +430,7 @@ EOF
 
 function collect_logs () {
     set +e  # We do not want to create red dot just because something went wrong while fetching logs.
+
     for i in `seq 1 ${NUM_ODL_SYSTEM}`; do
         CONTROLLERIP=ODL_SYSTEM_${i}_IP
         echo "Lets's take the karaf thread dump again..."
@@ -429,6 +475,8 @@ EOF
     # creates the ${WORKSPACE}/archives dir, we have to do it here first.  The mkdir in the
     # archives build step will essentially be a noop.
     mkdir -p ${WORKSPACE}/archives
+
+    print_job_parameters > ${WORKSPACE}/archives/params.txt
 
     # Control Node
     for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
@@ -492,11 +540,11 @@ EOF
     # Tempest
     DEVSTACK_TEMPEST_DIR="/opt/stack/tempest"
     TESTREPO=".stestr"
+    TEMPEST_LOGS_DIR=${WORKSPACE}/archives/tempest
     # Look for tempest test results in the $TESTREPO dir and copy if found
     if ${SSH} ${OPENSTACK_CONTROL_NODE_1_IP} "sudo sh -c '[ -f ${DEVSTACK_TEMPEST_DIR}/${TESTREPO}/0 ]'"; then
         ${SSH} ${OPENSTACK_CONTROL_NODE_1_IP} "for I in \$(sudo ls ${DEVSTACK_TEMPEST_DIR}/${TESTREPO}/ | grep -E '^[0-9]+$'); do sudo sh -c \"${DEVSTACK_TEMPEST_DIR}/.tox/tempest/bin/subunit-1to2 < ${DEVSTACK_TEMPEST_DIR}/${TESTREPO}/\${I} >> ${DEVSTACK_TEMPEST_DIR}/subunit_log.txt\"; done"
         ${SSH} ${OPENSTACK_CONTROL_NODE_1_IP} "sudo sh -c '${DEVSTACK_TEMPEST_DIR}/.tox/tempest/bin/python ${DEVSTACK_TEMPEST_DIR}/.tox/tempest/lib/python2.7/site-packages/os_testr/subunit2html.py ${DEVSTACK_TEMPEST_DIR}/subunit_log.txt ${DEVSTACK_TEMPEST_DIR}/tempest_results.html'"
-        TEMPEST_LOGS_DIR=${WORKSPACE}/archives/tempest
         mkdir -p ${TEMPEST_LOGS_DIR}
         scp ${OPENSTACK_CONTROL_NODE_1_IP}:${DEVSTACK_TEMPEST_DIR}/tempest_results.html ${TEMPEST_LOGS_DIR}
         scp ${OPENSTACK_CONTROL_NODE_1_IP}:${DEVSTACK_TEMPEST_DIR}/tempest.log ${TEMPEST_LOGS_DIR}
