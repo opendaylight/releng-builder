@@ -500,10 +500,10 @@
       - maven-target:
           maven-version: 'mvn33'
           pom: '{pom}'
+          # Temporarily remove -Pq here to allow easier version bumping at the cost of longer build time.
           goals: |
               clean deploy dependency:tree
               -DoutputFile=dependency_tree.txt
-              -Pq
               -DaltDeploymentRepository=fake-nexus::default::file:///tmp/n/
               {mvn-opts}
           java-opts:
