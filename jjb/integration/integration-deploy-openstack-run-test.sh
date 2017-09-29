@@ -428,7 +428,7 @@ EOF
     ${SSH} ${MGRIP} "sudo bash /tmp/deploy_ha_proxy.sh"
 } # configure_haproxy_for_neutron_requests()
 
-function collect_logs () {
+function collect_logs() {
     set +e  # We do not want to create red dot just because something went wrong while fetching logs.
 
     for i in `seq 1 ${NUM_ODL_SYSTEM}`; do
@@ -493,6 +493,7 @@ EOF
         scp ${!OSIP}:/etc/nova/nova.conf ${NODE_FOLDER}
         scp ${!OSIP}:/opt/stack/devstack/nohup.out ${NODE_FOLDER}/stack.log
         scp ${!OSIP}:/opt/stack/requirements/upper-constraints.txt ${NODE_FOLDER}
+        scp ${!OSIP}:/opt/stack/tempest/etc/tempest.conf ${NODE_FOLDER}
         scp ${!OSIP}:/tmp/get_devstack.sh.txt ${NODE_FOLDER}
         scp ${!OSIP}:/var/log/openvswitch/ovs-vswitchd.log ${NODE_FOLDER}
         scp ${!OSIP}:/var/log/openvswitch/ovsdb-server.log ${NODE_FOLDER}
@@ -507,6 +508,19 @@ EOF
         scp ${!OSIP}:/tmp/journalctl.log ${NODE_FOLDER}
         scp ${!OSIP}:/tmp/*.xz ${NODE_FOLDER}
         mv local.conf_control_${!OSIP} ${NODE_FOLDER}/local.conf
+
+        # Collect the list of files on the hosts
+        if [ 1 ]; then
+            ${SSH} ${!OSIP} "sudo find /etc > /tmp/find.etc.txt"
+            ${SSH} ${!OSIP} "sudo find /opt/stack > /tmp/find.stack.txt"
+            ${SSH} ${!OSIP} "sudo find /var > /tmp/find.var.txt"
+            ${SSH} ${!OSIP} "sudo find /var > /tmp/find3.txt"
+            scp ${!OSIP}:/tmp/find.etc.txt ${NODE_FOLDER}
+            scp ${!OSIP}:/tmp/find.stack.txt ${NODE_FOLDER}
+            scp ${!OSIP}:/tmp/find.var.txt ${NODE_FOLDER}
+            scp ${!OSIP}:/tmp/find3.txt ${NODE_FOLDER}
+        fi
+
         mv ${NODE_FOLDER} ${WORKSPACE}/archives/
     done
 
@@ -534,6 +548,19 @@ EOF
         scp ${!OSIP}:/tmp/journalctl.log ${NODE_FOLDER}
         scp ${!OSIP}:/tmp/*.xz ${NODE_FOLDER}/
         mv local.conf_compute_${!OSIP} ${NODE_FOLDER}/local.conf
+
+        # Collect the list of files on the hosts
+        if [ 1 ]; then
+            ${SSH} ${!OSIP} "sudo find /etc > /tmp/find.etc.txt"
+            ${SSH} ${!OSIP} "sudo find /opt/stack > /tmp/find.stack.txt"
+            ${SSH} ${!OSIP} "sudo find /var > /tmp/find.var.txt"
+            ${SSH} ${!OSIP} "sudo find /var > /tmp/find3.txt"
+            scp ${!OSIP}:/tmp/find.etc.txt ${NODE_FOLDER}
+            scp ${!OSIP}:/tmp/find.stack.txt ${NODE_FOLDER}
+            scp ${!OSIP}:/tmp/find.var.txt ${NODE_FOLDER}
+            scp ${!OSIP}:/tmp/find3.txt ${NODE_FOLDER}
+        fi
+
         mv ${NODE_FOLDER} ${WORKSPACE}/archives/
     done
 
@@ -553,6 +580,22 @@ EOF
         echo "tempest results not found in ${DEVSTACK_TEMPEST_DIR}/${TESTREPO}/0"
     fi
 } # collect_logs()
+
+function create_stestr_conf() {
+    local node_ip=$1
+
+    cat > ${WORKSPACE}/stestr.conf<< EOF
+[DEFAULT]
+#test_path=${OS_TEST_PATH:-./odl/tests/unit}
+#test_path=${OS_TEST_PATH:-./tests/unit}
+test_path=${OS_TEST_PATH:-./}
+top_dir=./
+EOF
+
+    scp ${WORKSPACE}/stestr.conf ${node_ip}:/opt/stack/tempest/.stestr.conf
+    #/opt/stack/tempest/.tox/tempest
+    #/opt/stack/tempest/etc/tempest.conf
+}
 
 # if we are using the new netvirt impl, as determined by the feature name
 # odl-netvirt-openstack (note: old impl is odl-ovsdb-openstack) then we
@@ -788,6 +831,8 @@ for i in `seq 1 ${NUM_OPENSTACK_SITES}`; do
     echo "Stop Firewall in Control Node for compute nodes to be able to reach the ports and add to hypervisor-list"
     scp ${WORKSPACE}/disable_firewall.sh ${!CONTROLIP}:/tmp
     ${SSH} ${!CONTROLIP} "sudo bash /tmp/disable_firewall.sh"
+
+    create_stestr_conf "${!CONTROLIP}"
 
     echo "sleep for 60s and print hypervisor-list"
     sleep 60
