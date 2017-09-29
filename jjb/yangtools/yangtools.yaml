@@ -1,17 +1,15 @@
 ---
 - project:
-    name: yangtools-oxygen
+    name: yangtools-master
     jobs:
-      - '{project-name}-clm-{stream}'
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-integration-{stream}'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
+      - '{project-name}-verify-tox-{stream}'
+      - '{project-name}-maven-jobs'
 
-    stream: oxygen
     project: 'yangtools'
     project-name: 'yangtools'
     branch: 'master'
+    stream: master
     jdk: openjdk8
     jdks:
       - openjdk8
@@ -25,14 +23,20 @@
     email-upstream: '[yangtools] [odlparent]'
     archive-artifacts: ''
 
+    dependencies: ''
+    email-upstream: '[yangtools]'
+    archive-artifacts: ''
+
+    # Used by the release job
+    staging-profile-id: 1271cf710cc09d
+
 - project:
     name: yangtools-nitrogen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: nitrogen
     project: 'yangtools'
@@ -55,11 +59,10 @@
 - project:
     name: yangtools-carbon
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: carbon
     project: 'yangtools'
@@ -82,11 +85,10 @@
 - project:
     name: yangtools-boron
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: boron
     project: 'yangtools'
