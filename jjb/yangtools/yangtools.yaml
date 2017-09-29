@@ -1,18 +1,18 @@
 ---
 - project:
-    name: yangtools-oxygen
+    name: yangtools-master
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
-      - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-maven-javadoc-jobs'
+      - '{project-name}-merge-{stream}'
 
-    stream: oxygen
-    project: 'yangtools'
-    project-name: 'yangtools'
-    branch: 'master'
+    project: yangtools
+    project-name: yangtools
+    branch: master
+    stream: master
+
     jdks:
       - openjdk8
     maven:
@@ -21,18 +21,23 @@
     mvn-settings: 'yangtools-settings'
     mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: 'odlparent-merge-{stream}'
-    email-upstream: '[yangtools] [odlparent]'
+    mvn-version: mvn33
+
+    dependencies: ''
+    email-upstream: '[yangtools]'
     archive-artifacts: ''
+
+    # Used by the release job
+    staging-profile-id: 1271cf710cc09d
 
 - project:
     name: yangtools-nitrogen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
+      - '{project-name}-maven-javadoc-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: nitrogen
     project: 'yangtools'
@@ -47,18 +52,23 @@
     mvn-settings: 'yangtools-settings'
     mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    mvn-version: mvn33
+
     dependencies: 'odlparent-merge-{stream}'
     email-upstream: '[yangtools] [odlparent]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: 1271cf710cc09d
+
 - project:
     name: yangtools-carbon
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
+      - '{project-name}-maven-javadoc-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: carbon
     project: 'yangtools'
@@ -73,9 +83,14 @@
     mvn-settings: 'yangtools-settings'
     mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    mvn-version: mvn33
+
     dependencies: 'odlparent-merge-{stream}'
     email-upstream: '[yangtools] [odlparent]'
     archive-artifacts: ''
+
+    # Used by the release job
+    staging-profile-id: 1271cf710cc09d
 
 - project:
     name: yangtools-sonar
