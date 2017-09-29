@@ -54,7 +54,17 @@ echo "Configuring the startup features..."
 FEATURESCONF=/tmp/${BUNDLEFOLDER}/etc/org.apache.karaf.features.cfg
 CUSTOMPROP=/tmp/${BUNDLEFOLDER}/etc/custom.properties
 sed -ie "s/\(featuresBoot=\|featuresBoot =\)/featuresBoot = ${ACTUALFEATURES},/g" \${FEATURESCONF}
-sed -ie "s%mvn:org.opendaylight.integration/features-integration-index/${BUNDLEVERSION}/xml/features%mvn:org.opendaylight.integration/features-integration-index/${BUNDLEVERSION}/xml/features,mvn:org.opendaylight.integration/features-integration-test/${BUNDLEVERSION}/xml/features,mvn:org.apache.karaf.decanter/apache-karaf-decanter/1.0.0/xml/features%g" \${FEATURESCONF}
+
+FEATURE_INDEX_STRING="features-integration-index"
+FEATURE_TEST_STRING="features-integration-test"
+if [[ "$KARAF_VERSION" == "karaf4" ]]; then
+    FEATURE_INDEX_STRING="features-index"
+    FEATURE_TEST_STRING="features-test"
+fi
+
+echo "JAMO: ${KARAF_VERSION} and ${FEATURE_INDEX_STRING} and ${FEATURE_TEST_STRING}"
+
+sed -ie "s%mvn:org.opendaylight.integration/${FEATURE_INDEX_STRING}/${BUNDLEVERSION}/xml/features%mvn:org.opendaylight.integration/${FEATURE_INDEX_STRING}/${BUNDLEVERSION}/xml/features,mvn:org.opendaylight.integration/${FEATURE_TEST_STRING}/${BUNDLEVERSION}/xml/features,mvn:org.apache.karaf.decanter/apache-karaf-decanter/1.0.0/xml/features%g" \${FEATURESCONF}
 cat \${FEATURESCONF}
 
 if [ "${ODL_ENABLE_L3_FWD}" == "yes" ]; then
