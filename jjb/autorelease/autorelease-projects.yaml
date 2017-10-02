@@ -23,6 +23,8 @@
           jdk: 'openjdk8'
           integration-test: nitrogen
       - carbon:
+          # Run once a week now that Nitrogen is released and Oxygen is in active development
+          cron: 'H 12 * * 0'
           next-release-tag: '{stream}'
           branch: 'stable/carbon'
           jdk: 'openjdk8'
