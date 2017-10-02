@@ -5,6 +5,7 @@
       - '{project-name}-merge-{stream}'
       - '{project-name}-verify-tox-{stream}'
       - '{project-name}-maven-jobs'
+      - '{project-name}-maven-javadoc-jobs'
 
     project: odlparent
     project-name: odlparent
@@ -28,6 +29,7 @@
     archive-artifacts: ''
 
     # Used by the release job
+    javadoc-path: $PROJECT/$STREAM
     staging-profile-id: 880d5ac25eaa
 
 - project:
@@ -36,6 +38,7 @@
       - '{project-name}-merge-{stream}'
       - '{project-name}-verify-tox-{stream}'
       - '{project-name}-maven-jobs'
+      - '{project-name}-maven-javadoc-jobs'
 
     project: odlparent
     project-name: odlparent
@@ -59,6 +62,7 @@
     archive-artifacts: ''
 
     # Used by the release job
+    javadoc-path: $PROJECT/$STREAM
     staging-profile-id: 880d5ac25eaa
 
 - project:
@@ -69,6 +73,7 @@
       - '{project-name}-merge-{stream}'
       - '{project-name}-verify-tox-{stream}'
       - '{project-name}-maven-jobs'
+      - '{project-name}-maven-javadoc-jobs'
 
     stream: carbon
     project: 'odlparent'
@@ -89,6 +94,7 @@
     archive-artifacts: ''
 
     # Used by the release job
+    javadoc-path: $PROJECT/$STREAM
     staging-profile-id: 880d5ac25eaa
 
 - project:
