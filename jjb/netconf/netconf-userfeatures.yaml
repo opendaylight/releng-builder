@@ -25,18 +25,6 @@
           branch: 'stable/carbon'
           jre: 'openjdk8'
           karaf-version: karaf3
-      - boron:
-          branch: 'stable/boron'
-          jre: 'openjdk8'
-          karaf-version: karaf3
-          install-features: >
-              odl-restconf,
-              odl-netconf-mdsal,
-              odl-mdsal-apidocs,
-              odl-clustering-test-app,
-              odl-netconf-connector-all,
-              odl-netconf-topology
-          robot-options: '-v NETOPEER_USER:root -v USE_NETCONF_CONNECTOR:True'
 
     install:
       - all:

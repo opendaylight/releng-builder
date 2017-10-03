@@ -24,7 +24,6 @@
           karaf-version: karaf3
           # yamllint disable-line rule:line-length
           bundleurl: 'https://jenkins.opendaylight.org/releng/view/jsonrpc/job/jsonrpc-merge-nitrogen/lastSuccessfulBuild/org.opendaylight.jsonrpc$jsonrpc-karaf/artifact/org.opendaylight.jsonrpc/jsonrpc-karaf/1.1.0-SNAPSHOT/jsonrpc-karaf-1.1.0-SNAPSHOT.zip'
-
       - carbon:
           branch: 'stable/carbon'
           jre: 'openjdk8'
@@ -32,12 +31,6 @@
           # yamllint disable-line rule:line-length
           bundleurl: 'https://jenkins.opendaylight.org/releng/view/jsonrpc/job/jsonrpc-merge-carbon/lastSuccessfulBuild/org.opendaylight.jsonrpc$jsonrpc-karaf/artifact/org.opendaylight.jsonrpc/jsonrpc-karaf/1.0.0-SNAPSHOT/jsonrpc-karaf-1.0.0-SNAPSHOT.zip'
 
-      - boron:
-          branch: 'stable/boron'
-          jre: 'openjdk8'
-          karaf-version: karaf3
-          # yamllint disable-line rule:line-length
-          bundleurl: 'https://jenkins.opendaylight.org/releng/view/jsonrpc/job/jsonrpc-merge-boron/lastSuccessfulBuild/org.opendaylight.jsonrpc$jsonrpc-karaf/artifact/org.opendaylight.jsonrpc/jsonrpc-karaf/0.9.0-SNAPSHOT/jsonrpc-karaf-0.9.0-SNAPSHOT.zip'
 
     install:
       - only:

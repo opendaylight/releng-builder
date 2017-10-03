@@ -22,11 +22,6 @@
           branch: 'stable/carbon'
           jre: 'openjdk8'
           karaf-version: karaf3
-      - boron:
-          branch: 'stable/boron'
-          jre: 'openjdk8'
-          karaf-version: karaf3
-          install-features: 'odl-restconf,odl-bgpcep-pcep-all,odl-bgpcep-pcep'
 
     install:
       - all:
@@ -71,11 +66,6 @@
           branch: 'stable/carbon'
           jre: 'openjdk8'
           karaf-version: karaf3
-      - boron:
-          branch: 'stable/boron'
-          jre: 'openjdk8'
-          karaf-version: karaf3
-          install-features: 'odl-restconf,odl-bgpcep-pcep-all,odl-bgpcep-pcep'
 
     install:
       - all:
@@ -96,4 +86,3 @@
 
     # Controller configuration
     odl_system_flavor: 8 GB General Purpose v1
-

@@ -31,14 +31,6 @@
           integration-test: carbon
           karaf-version: karaf3
           extra-mvn-opts: -Dskip.karaf4.featureTest=true
-      - boron:
-          # Only run once a week since Boron is in maintenance mode
-          cron: 'H 12 * * 0'
-          next-release-tag: Boron-SR5
-          branch: 'stable/boron'
-          jdk: 'openjdk8'
-          integration-test: boron
-          karaf-version: karaf3
 
     project: releng/autorelease
     project-name: autorelease
