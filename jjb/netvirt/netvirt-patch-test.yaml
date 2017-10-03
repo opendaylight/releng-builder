@@ -25,10 +25,6 @@
           branch: 'stable/carbon'
           os-branch: 'ocata'
           karaf-version: karaf3
-      - boron:
-          branch: 'stable/boron'
-          os-branch: 'newton'
-          karaf-version: karaf3
 
     jdk: 'openjdk8'
 
@@ -48,28 +44,3 @@
       - hwvtep:
           csit-list: >
               netvirt-csit-hwvtep-1node-openstack-{os-branch}-gate-stateful-{stream}
-
-- project:
-    name: netvirt-legacy-patch-test
-    jobs:
-      - '{project}-patch-test-{feature}-{stream}'
-
-    # The project name
-    project: 'netvirt-legacy'
-
-    # Project branches
-    stream:
-      - boron:
-          branch: 'stable/boron'
-          jdk: 'openjdk8'
-          karaf-version: karaf3
-
-    feature:
-      - legacy:
-          csit-list: >
-              netvirt-legacy-csit-1node-openstack-newton-nodl-v2-gate-{stream},
-              netvirt-legacy-csit-1node-openstack-basic-all-{stream}
-      - cluster-legacy:
-          csit-list: >
-              netvirt-legacy-csit-3node-openstack-newton-nodl-v2-gate-{stream},
-              netvirt-legacy-csit-3node-clustering-only-{stream}
