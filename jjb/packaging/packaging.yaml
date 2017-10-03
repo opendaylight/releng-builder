@@ -4,7 +4,6 @@
     project-name: packaging
 
     jobs:
-      - '{project-name}-verify-tox-master'
       - 'packaging-build-rpm-{stream}'
       - 'packaging-build-rpm-snap-{stream}'
       - 'packaging-build-deb-{stream}'
@@ -13,6 +12,7 @@
       - 'packaging-test-rpm-master'
       - 'packaging-test-rpm-upgrade-master'
       - 'packaging-test-deb-master'
+      - gerrit-tox-verify
 
     project: 'integration/packaging'
 

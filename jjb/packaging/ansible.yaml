@@ -4,9 +4,9 @@
     project-name: ansible
 
     jobs:
-      - '{project-name}-verify-tox-{stream}'
       - '{project-name}-test-rpm-{stream}'
       - '{project-name}-test-deb-{stream}'
+      - gerrit-tox-verify
 
     project: 'integration/packaging/ansible-opendaylight'
 

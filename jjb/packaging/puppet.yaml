@@ -4,9 +4,9 @@
     project-name: puppet
 
     jobs:
-      - '{project-name}-verify-tox-{stream}'
       - '{project-name}-test-sanity-{stream}'
       - '{project-name}-test-full-{stream}'
+      - gerrit-tox-verify
 
     project: 'integration/packaging/puppet-opendaylight'
 

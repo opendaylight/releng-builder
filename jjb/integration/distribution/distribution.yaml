@@ -6,12 +6,12 @@
       # {project-name}- is generic template, distribution- is project specific.
       - '{project-name}-clm-{stream}'
       - '{project-name}-sonar'
-      - '{project-name}-verify-tox-{stream}'
       - 'distribution-merge-{stream}'
       - 'distribution-verify-{stream}'
       - 'distribution-deploy-{stream}'
       - 'distribution-offline-{stream}'
       - 'distribution-check-{stream}'
+      - gerrit-tox-verify
 
     project: integration/distribution
     project-name: distribution
