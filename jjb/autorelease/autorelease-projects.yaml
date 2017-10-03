@@ -10,23 +10,18 @@
           build-node: centos7-java-builder-2c-8g
       - gerrit-tox-verify
 
-    # todo: After Carbon EOL remove next-release-tag and directy pass
-    # '{stream}' to autorelease-release-tag parameter
     stream:
       - oxygen:
-          next-release-tag: '{stream}'
           branch: 'master'
           jdk: 'openjdk8'
           integration-test: oxygen
       - nitrogen:
-          next-release-tag: '{stream}'
           branch: 'stable/nitrogen'
           jdk: 'openjdk8'
           integration-test: nitrogen
       - carbon:
           # Run once a week now that Nitrogen is released and Oxygen is in active development
           cron: 'H 12 * * 0'
-          next-release-tag: '{stream}'
           branch: 'stable/carbon'
           jdk: 'openjdk8'
           integration-test: carbon
