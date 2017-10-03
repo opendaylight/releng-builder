@@ -41,7 +41,7 @@ echo "$RELEASE_TAG"
 # Nitrogen onwards we do not want to use the release tag so simply need to
 # strip xml files of -SNAPSHOT tags.
 case "$RELEASE_TAG" in
-    Boron*|Carbon*)
+    Carbon*)
         lftools version release "$RELEASE_TAG"
         ;;
     *)

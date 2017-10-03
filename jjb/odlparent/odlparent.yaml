@@ -98,35 +98,6 @@
     staging-profile-id: 880d5ac25eaa
 
 - project:
-    name: odlparent-boron
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-integration-{stream}'
-      - '{project-name}-merge-{stream}'
-      - '{project-name}-maven-jobs'
-
-    stream: boron
-    project: 'odlparent'
-    project-name: 'odlparent'
-    branch: 'stable/boron'
-    karaf-version: karaf3
-    jdk: openjdk8
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
-    mvn-settings: 'odlparent-settings'
-    mvn-goals: 'clean install'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: ''
-    email-upstream: '[odlparent]'
-    archive-artifacts: ''
-
-    # Used by the release job
-    staging-profile-id: 880d5ac25eaa
-
-- project:
     name: odlparent-sonar
     jobs:
       - '{project-name}-sonar'
