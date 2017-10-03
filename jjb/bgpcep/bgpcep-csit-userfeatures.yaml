@@ -25,20 +25,6 @@
           branch: 'stable/carbon'
           jre: 'openjdk8'
           karaf-version: karaf3
-      - boron:
-          branch: 'stable/boron'
-          jre: 'openjdk8'
-          karaf-version: karaf3
-          install-features: >
-              odl-restconf,
-              odl-bgpcep-pcep-all,
-              odl-bgpcep-bgp-all,
-              odl-bgpcep-bgp,
-              odl-bgpcep-pcep,
-              odl-netconf-connector-all,
-              odl-bgpcep-bmp,
-              odl-jolokia
-          robot-options: '-v USE_NETCONF_CONNECTOR:True'
 
     install:
       - all:

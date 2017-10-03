@@ -80,35 +80,6 @@
     archive-artifacts: ''
 
 - project:
-    name: yangtools-boron
-    jobs:
-      - '{project-name}-clm-{stream}'
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-integration-{stream}'
-      - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
-
-    stream: boron
-    project: 'yangtools'
-    project-name: 'yangtools'
-    branch: 'stable/boron'
-    karaf-version: karaf3
-    jdk: openjdk8
-    jdks:
-      - openjdk8
-    maven:
-      - mvn32:
-          mvn-version: 'mvn32'
-      - mvn33:
-          mvn-version: 'mvn33'
-    mvn-settings: 'yangtools-settings'
-    mvn-goals: 'clean install'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: 'odlparent-merge-{stream}'
-    email-upstream: '[yangtools] [odlparent]'
-    archive-artifacts: ''
-
-- project:
     name: yangtools-sonar
     jobs:
       - '{project-name}-sonar'
