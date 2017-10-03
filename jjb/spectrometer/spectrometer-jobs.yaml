@@ -3,9 +3,10 @@
     name: spectrometer
     jobs:
       - '{project-name}-merge-rtd-{stream}'
-      - '{project-name}-verify-node-{stream}'
       - '{project-name}-verify-python-{stream}'
       - 'spectrometer-deploy-webapp-master'
+      - '{project-name}-node-jobs'
+      - '{project-name}-python-jobs'
 
     stream:
       - master:
