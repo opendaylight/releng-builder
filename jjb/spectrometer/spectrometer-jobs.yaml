@@ -2,21 +2,21 @@
 - project:
     name: spectrometer
     jobs:
-      - '{project-name}-merge-rtd-{stream}'
-      - '{project-name}-verify-node-{stream}'
-      - '{project-name}-verify-python-{stream}'
       - 'spectrometer-deploy-webapp-master'
+      - '{project-name}-node-jobs'
+      - '{project-name}-python-jobs'
+      - '{project-name}-rtd-jobs'
 
     stream:
       - master:
           branch: 'master'
 
-    project: 'spectrometer'
-    project-name: 'spectrometer'
-    rtdproject: 'opendaylight-spectrometer'
-    toxdir: server
-    nodedir: web
-    nodever: 6.9.4
+    project: spectrometer
+    project-name: spectrometer
+    rtd-project: opendaylight-spectrometer
+    tox-dir: server
+    node-dir: web
+    node-version: 6.11.4
     staging-server: spectrometer03.dfw.opendaylight.org
 
 - job-template:
@@ -81,7 +81,7 @@
               echo "---> Updating NodeJS dependencies"
           else
               echo "---> nodeenv not found. Setting up new nodeenv"
-              nodeenv --node={nodever} --prebuilt venv-nodejs
+              nodeenv --node={node-version} --prebuilt venv-nodejs
           fi
           source venv-nodejs/bin/activate
           node -v
