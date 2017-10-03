@@ -26,6 +26,19 @@
     gerrit-server-name: LinuxFoundation
 
 - project:
+    name: lf-infra-docs
+    jobs:
+      - gerrit-tox-verify
+
+    project-name: lf-infra-docs
+    project: releng/docs
+    build-node: centos7-java-builder-2c-4g
+    stream: master
+
+    git-url: https://gerrit.linuxfoundation.org/infra/$GERRIT_PROJECT
+    gerrit-server-name: LinuxFoundation
+
+- project:
     name: lf-infra-global-jjb
     jobs:
       - gerrit-tox-verify
