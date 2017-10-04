@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a245df4_69877c10",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2017-10-04T08:28:03Z",
+      "side": 1,
+      "message": "Current Oxygen snapshots using 1.2.0 is just a temporary state before 2.0.0 is released (and downstream patches created to fix incompatibilities).\nMaster branch currently builds 2.0.0-SNAPSHOT versions.",
+      "range": {
+        "startLine": 9,
+        "startChar": 35,
+        "endLine": 9,
+        "endChar": 49
+      },
+      "revId": "174ac200d6592b5a9d89d8b8630e1bee85758199",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a245df4_8982b0fe",
+        "filename": "jjb/yangtools/yangtools.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2017-10-04T08:28:03Z",
+      "side": 1,
+      "message": "I believe Yangtools prefers streams to be named after versions, so this should be \u0027v2.0.x\u0027.\nThe reason is that when bumping master branch to 2.1.x (or 3.0.x) and cutting branch v2.0.x, we want any downstream jobs to follow that version, not the new master.",
+      "range": {
+        "startLine": 12,
+        "startChar": 12,
+        "endLine": 12,
+        "endChar": 18
+      },
+      "revId": "174ac200d6592b5a9d89d8b8630e1bee85758199",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
