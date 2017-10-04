@@ -69,6 +69,30 @@
       "revId": "174ac200d6592b5a9d89d8b8630e1bee85758199",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a245df4_24348bdd",
+        "filename": "jjb/yangtools/yangtools.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2017-10-04T11:31:14Z",
+      "side": 1,
+      "message": "\u003e \u0027follow\u0027 is different\n\nCurrently, Yangtools does not have any distribution-check or csit job that would help validate the version-to-be-released works correctly, but in some future we might add such jobs. \n\nstream\u003dmaster is very unfriendly to branch cuts and version bumps. I prefer to chose the correct value right now, so we lose less history later.\n\n\u003e we do not want downstreams to track our -SNAPSHOTs\n\nTODO for me: Add a check for distribution-check job to fail if Yangtools snapshots are detected in Oxygen.\n\n\u003e an interim 1.3.x release\n\nWould that be released from master branch, or would you cut v1.3.x branch for that?",
+      "parentUuid": "9a245df4_29090496",
+      "range": {
+        "startLine": 12,
+        "startChar": 12,
+        "endLine": 12,
+        "endChar": 18
+      },
+      "revId": "174ac200d6592b5a9d89d8b8630e1bee85758199",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
