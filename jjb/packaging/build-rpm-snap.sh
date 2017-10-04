@@ -19,9 +19,7 @@ $PYTHON -m pip install -r "$WORKSPACE/packaging/packages/requirements.txt"
 STREAM=${{JOB_NAME##*-}}
 
 # Convert stream to numeric ODL major version
-if [ "$STREAM" == "boron" ]; then
-  VERSION_MAJOR=5
-elif [ "$STREAM" == "carbon" ]; then
+if [ "$STREAM" == "carbon" ]; then
   VERSION_MAJOR=6
 elif [ "$STREAM" == "nitrogen" ]; then
   VERSION_MAJOR=7

@@ -6,26 +6,22 @@
       - 'opflex-rapidjson-{stream}'
       - 'opflex-openvswitch-{stream}'
 
-    # todo: remove 'ovs-scm' after boron EOL
     stream:
       - oxygen:
           branch: 'master'
           libuv-version: '1.8.0'
           rapidjson-version: '1.0.2'
           openvswitch-version: '2.6.0'
-          ovs-scm: v2
       - nitrogen:
           branch: 'stable/nitrogen'
           libuv-version: '1.8.0'
           rapidjson-version: '1.0.2'
           openvswitch-version: '2.6.0'
-          ovs-scm: v2
       - carbon:
           branch: 'stable/carbon'
           libuv-version: '1.8.0'
           rapidjson-version: '1.0.2'
           openvswitch-version: '2.6.0'
-          ovs-scm: v2
 
     project: 'opflex'
 
@@ -179,7 +175,7 @@
           description: 'openvswitch-version'
 
     scm:
-      - git-opflex-ovs-{ovs-scm}
+      - git-opflex-ovs-v2
 
     wrappers:
       - opendaylight-infra-wrappers:
