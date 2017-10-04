@@ -2,7 +2,14 @@
 - project:
     name: bgpcep-pcepy
     jobs:
-      - '{project-name}-verify-python-{stream}'
+      - gerrit-tox-verify
+
+    project: 'bgpcep'
+    project-name: 'bgpcep'
+    tox-dir: 'pcep/pcepy'
+
+    build-node: centos7-java-builder-2c-4g
+    gerrit-server-name: OpenDaylight
 
     stream:
       # Pcepy was removed in Carbon.
@@ -10,7 +17,3 @@
           branch: master
       - nitrogen:
           branch: stable/nitrogen
-
-    toxdir: 'pcep/pcepy'
-    project: 'bgpcep'
-    project-name: 'bgpcep'
