@@ -943,6 +943,12 @@ if [ -z "${SUITES}" ]; then
     SUITES=`egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' testplan.txt | tr '\012' ' '`
 fi
 
+#Remove Deprecation Warnings while excuting Tempest Tests
+if [ "${OPENSTACK_BRANCH}" == "stable/pike" ] || [ "${OPENSTACK_BRANCH}" == "stable/ocata" ]; then
+    CONTROLIP=OPENSTACK_CONTROL_NODE_${i}_IP 
+    ${SSH} ${!CONTROLIP} "cd /opt/stack/neutron; git checkout master -- neutron/tests"
+fi
+
 if [ "${OPENSTACK_BRANCH}" == "stable/pike" ] || [ "${OPENSTACK_BRANCH}" == "master" ]; then
    AUTH="http://${!CONTROLIP}/identity"
 else
