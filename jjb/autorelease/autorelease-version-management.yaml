@@ -2,11 +2,13 @@
 - project:
     name: autorelease-version-management
     jobs:
-      - '{project-name}-verify-python-{stream}'
+      - gerrit-tox-verify
 
     project: releng/autorelease
     project-name: autorelease-version-management
-    toxdir: 'scripts/version_management'
+    tox-dir: 'scripts/version_management'
+
+    build-node: centos7-java-builder-2c-4g
 
     stream:
       - oxygen:
