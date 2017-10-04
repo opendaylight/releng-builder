@@ -359,6 +359,7 @@
           staging-profile-id: ''
       - string:
           name: DOWNLOAD_URL
+          # FIXME: Update the default value to an active stream.
           # yamllint disable-line rule:line-length
           default: 'https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/integration/distribution-karaf/0.5.3-Boron-SR3/distribution-karaf-0.5.3-Boron-SR3.tar.gz'
           description: 'URL to ODL tarball artifact to repackage into .deb'

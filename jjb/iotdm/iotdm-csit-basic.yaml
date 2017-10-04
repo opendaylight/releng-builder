@@ -13,10 +13,6 @@
 
     # Project branches
     stream:
-      # Removed jobs testing Beryllium and Boron branches due to
-      # backward incompatible changes in test suites for Carbon
-      # TODO: Create test suites for specific release before
-      # Carbon if needed.
       - oxygen:
           branch: 'master'
           jre: 'openjdk8'
@@ -27,12 +23,6 @@
           branch: 'stable/carbon'
           jre: 'openjdk8'
           karaf-version: karaf3
-
-    # TODO: Delete the following if suites are compatible with Boron again.
-    verify-stream: 'carbon'
-    # TODO: Remove the lines above and below when carbon becomes the default scit-verify stream.
-    verify-branch: 'master'
-    # TODO: Update the line above when stable/carbon is created.
 
     install:
       - all:

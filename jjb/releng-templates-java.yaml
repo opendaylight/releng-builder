@@ -67,16 +67,6 @@
 - job-template:
     name: '{project-name}-integration-{stream}'
 
-    # Job template for ODL integration verify jobs
-    #
-    # This is similar to a normal verify job, but it runs
-    # when a project that's a dependency of your project
-    # is successfully built.
-    #
-    # Required Variables:
-    #     stream:    release stream (eg. boron or carbon)
-    #     branch:    git branch (eg. stable/boron or master)
-
     project-type: freestyle
     node: '{build-node}'
     jdk: '{jdk}'
@@ -134,15 +124,6 @@
 
 - job-template:
     name: '{project-name}-merge-{stream}'
-
-    # Job template for ODL merge jobs
-    #
-    # The purpose of this job template is to setup a ODL merge job
-    # and deploy artifacts to Nexus.
-    #
-    # Required Variables:
-    #     stream:    release stream (eg. boron or carbon)
-    #     branch:    git branch (eg. stable/boron or master)
 
     # Need to keep jobs that deploy to Nexus at end of build as Maven
     # projects. Maybe reconsider this once upstream moves deploy to a
@@ -328,14 +309,6 @@
 
 - job-template:
     name: '{project-name}-verify-{stream}-{maven}-{jdks}'
-
-    # Job template for ODL verify jobs
-    #
-    # The purpose of this job template is to setup a ODL verify job
-    #
-    # Required Variables:
-    #     stream:    release stream (eg. boron or carbon)
-    #     branch:    git branch (eg. stable/boron or master)
 
     project-type: freestyle
     node: '{build-node}'

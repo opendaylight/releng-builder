@@ -94,16 +94,6 @@
             - 'refs/tags/v$OPENVSWITCH_VERSION'
           wipe-workspace: true
 
-# todo: remove 'git-opflex-ovs-v1' after boron EOL
-- scm:
-    name: 'git-opflex-ovs-v1'
-    scm:
-      - git:
-          url: https://github.com/noironetworks/ovs.git
-          branches:
-            - 'origin/noiro'
-          wipe-workspace: true
-
 - scm:
     name: 'git-opflex-rapidjson'
     scm:
