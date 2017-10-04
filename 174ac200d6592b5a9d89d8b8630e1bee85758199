@@ -45,6 +45,30 @@
       "revId": "174ac200d6592b5a9d89d8b8630e1bee85758199",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a245df4_29090496",
+        "filename": "jjb/yangtools/yangtools.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2017-10-04T08:58:05Z",
+      "side": 1,
+      "message": "what does the stream name affect?\n\n\u0027follow\u0027 is different in the sense that we do not want downstreams to track our -SNAPSHOTs, just releases (just like odlparent), hence stream name should not matter that much.\n\nGiven odlparent release cycle, it is currently not clear whether we will integrate 2.0.0 with odlparent-3.0.0 or will end up creating an interim 1.3.x release.",
+      "parentUuid": "9a245df4_8982b0fe",
+      "range": {
+        "startLine": 12,
+        "startChar": 12,
+        "endLine": 12,
+        "endChar": 18
+      },
+      "revId": "174ac200d6592b5a9d89d8b8630e1bee85758199",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
