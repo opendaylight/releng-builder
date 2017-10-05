@@ -60,9 +60,9 @@ pip install --upgrade jsonpatch
 # Module python-neutronclient is needed for certain tests run with Openstack Newton
 #  that does not work with Openstack Client
 pip install python-openstackclient==3.11.0
+pip install networking-sfc
 pip install networking-l2gw
 pip install python-neutronclient==6.1.0
-pip install networking-sfc
 
 # Print installed versions.
 pip install --upgrade pipdeptree
