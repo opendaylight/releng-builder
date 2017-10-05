@@ -9,6 +9,7 @@
       - 'packaging-build-rpm-snap-{stream}'
       - 'packaging-build-deb-{stream}'
       - 'packaging-verify-full-rpm-master'
+      - 'packaging-verify-rpm-master'
       - 'packaging-test-rpm-master'
       - 'packaging-test-rpm-upgrade-master'
       - 'packaging-test-deb-master'
@@ -152,6 +153,67 @@
 
     triggers:
       - timed: '@daily'
+
+    publishers:
+      - lf-infra-publish
+
+
+- job-template:
+    name: 'packaging-verify-rpm-master'
+
+    node: centos7-java-builder-2c-4g
+
+    project-type: freestyle
+
+    parameters:
+      - opendaylight-infra-parameters:
+          os-cloud: '{os-cloud}'
+          project: '{project}'
+          branch: '{branch}'
+          refspec: 'refs/heads/{branch}'
+          artifacts: '{archive-artifacts}'
+
+    scm:
+      - integration-gerrit-scm:
+          basedir: 'packaging'
+          refspec: '$GERRIT_REFSPEC'
+          branch: 'master'
+
+    wrappers:
+      - opendaylight-infra-wrappers:
+          build-timeout: '{build-timeout}'
+
+    builders:
+      # TODO: Install/test each RPM? Will require builder script changes.
+      # Test Nitrogen tarball
+      - inject:
+          # yamllint disable-line rule:line-length
+          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/integration/karaf/0.7.0/karaf-0.7.0.tar.gz'
+      - shell: !include-raw: build-rpm.sh
+
+      # Test Nitrogen multipatch zip (no parallel tarball available)
+      - inject:
+          # yamllint disable-line rule:line-length
+          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/org/opendaylight/integration/integration/distribution/karaf/0.7.1-SNAPSHOT/karaf-0.7.1-20171003.134117-9.zip'
+      - shell: !include-raw: build-rpm.sh
+
+      # Test latest Nitrogen snapshot
+      - inject:
+          properties-content: 'STREAM=nitrogen'
+      - shell: !include-raw: build-rpm-snap.sh
+
+    triggers:
+      - gerrit:
+          server-name: '{server-name}'
+          projects:
+            - project-compare-type: ANT
+              project-pattern: '{project}'
+              branches:
+                - branch-compare-type: ANT
+                  branch-pattern: '**/{branch}'
+              file-paths:
+                - compare-type: ANT
+                  pattern: 'packages/**'
 
     publishers:
       - lf-infra-publish
