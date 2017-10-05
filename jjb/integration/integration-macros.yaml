@@ -538,6 +538,9 @@
                 curl --output robot-plugin.zip "$BUILD_URL/robot/report/*zip*/robot-plugin.zip"
                 unzip -d $WORKSPACE/archives robot-plugin.zip
                 mv *log* *.log *.log.gz *.csv *.png $WORKSPACE/archives || true  # Don't fail if file missing
+                # TODO: Can the following line ever fail?
+                find $WORKSPACE -type f -name *.hprof -print0 | tar -cvf - --null -T - | xz -1 > $WORKSPACE/archives/hprof.tar.xz
+                # TODO: Tweak the compression level if better ratio (or speed) is needed.
           script-only-if-succeeded: 'False'
           script-only-if-failed: 'False'
           mark-unstable-if-failed: 'True'
