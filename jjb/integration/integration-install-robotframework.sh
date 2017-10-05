@@ -3,10 +3,7 @@
 ##############################################################################
 # Copyright (c) 2015 The Linux Foundation and others.
 #
-# All rights reserved. This program and the accompanying materials
-# are made available under the terms of the Eclipse Public License v1.0
-# which accompanies this distribution, and is available at
-# http://www.eclipse.org/legal/epl-v10.html
+# All rights reserved. This program and the accompanying materials # are made available under the terms of the Eclipse Public License v1.0 # which accompanies this distribution, and is available at # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
 
 ROBOT_VENV="/tmp/v/robot"
@@ -60,7 +57,7 @@ pip install --upgrade jsonpatch
 # Module python-neutronclient is needed for certain tests run with Openstack Newton
 #  that does not work with Openstack Client
 pip install python-openstackclient==3.11.0
-pip install networking-l2gw
+pip install networking-l2gw==11.0.0
 pip install python-neutronclient==6.1.0
 pip install networking-sfc
 
