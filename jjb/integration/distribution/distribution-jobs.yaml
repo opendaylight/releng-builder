@@ -240,7 +240,11 @@
           mvn-opts: '{opendaylight-infra-mvn-opts}'
       - distribution-check-verify-groupid:
           gerrit-project: 'integration'
-      # No need to repeat with SFT as distribution-verify has that covered.
+      - distribution-check-delete-snapshots
+      - distribution-check-configure-remotes
+      - distribution-check-repeat-project-build:
+          pom: 'distribution/pom.xml'
+          mvn-opts: '{opendaylight-infra-mvn-opts}'
       - integration-upload-distribution:
           dist-pom: distribution/pom.xml
       - integration-distribution-check
