@@ -14,9 +14,11 @@ PYTHON="rpm_build/bin/python"
 $PYTHON -m pip install --upgrade pip
 $PYTHON -m pip install -r "$WORKSPACE/packaging/packages/requirements.txt"
 
-# Extract stream from job name (format: foo-job-name-<stream>)
-# shellcheck disable=SC1083
-STREAM=${{JOB_NAME##*-}}
+# If STREAM not passed, extract from job name (format: foo-job-name-<stream>)
+if [ -z "$STREAM" ]; then
+  # shellcheck disable=SC1083
+  STREAM=${{JOB_NAME##*-}}
+fi
 
 # Convert stream to numeric ODL major version
 if [ "$STREAM" == "carbon" ]; then
