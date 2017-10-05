@@ -61,16 +61,21 @@
       - distribution-check-build-project:
           pom: '$GERRIT_PROJECT/pom.xml'
           mvn-opts: '{opendaylight-infra-mvn-opts}'
+          # TODO: {opendaylight-infra-parallel-mvn-opts}?
       - distribution-check-verify-groupid:
           gerrit-project: '$GERRIT_PROJECT'
       - distribution-check-download-deps:
           dist-pom: 'distribution/pom.xml'
-          mvn-opts: '{opendaylight-infra-mvn-opts}'
+          mvn-opts: '{opendaylight-infra-parallel-mvn-opts}'
       - distribution-check-delete-snapshots
       - distribution-check-configure-remotes
-      - distribution-check-repeat-build:
-          dist-pom: 'distribution/pom.xml'
+      - distribution-check-repeat-project-build:
+          pom: '$GERRIT_PROJECT/pom.xml'
           mvn-opts: '{opendaylight-infra-mvn-opts}'
+          # TODO: {opendaylight-infra-parallel-mvn-opts}?
+      - distribution-check-repeat-distro-build:
+          dist-pom: 'distribution/pom.xml'
+          mvn-opts: '{opendaylight-infra-parallel-mvn-opts}'
       - integration-upload-distribution:
           dist-pom: distribution/pom.xml
       - integration-distribution-check
