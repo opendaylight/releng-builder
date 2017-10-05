@@ -8,6 +8,8 @@
       - 'packaging-build-rpm-{stream}'
       - 'packaging-build-rpm-snap-{stream}'
       - 'packaging-build-deb-{stream}'
+      - 'packaging-verify-rpm-master'
+      - 'packaging-verify-deb-master'
       - 'packaging-test-rpm-master'
       - 'packaging-test-rpm-upgrade-master'
       - 'packaging-test-deb-master'
@@ -88,22 +90,6 @@
           upload-files-dir: '{upload-files-dir}'
           maven-repo-url: '{maven-repo-url}'
 
-    triggers:
-      - gerrit:
-          server-name: '{server-name}'
-          trigger-on:
-            - comment-added-contains-event:
-                comment-contains-value: 'build-rpm-direct'
-          projects:
-            - project-compare-type: ANT
-              project-pattern: '{project}'
-              branches:
-                - branch-compare-type: ANT
-                  branch-pattern: '**/{branch}'
-              file-paths:
-                - compare-type: ANT
-                  pattern: 'packages/**'
-
     publishers:
       - lf-infra-publish
 
@@ -167,11 +153,115 @@
 
     triggers:
       - timed: '@daily'
+
+    publishers:
+      - lf-infra-publish
+
+
+- job-template:
+    name: 'packaging-verify-rpm-master'
+
+    node: centos7-java-builder-2c-4g
+
+    project-type: freestyle
+
+    parameters:
+      - opendaylight-infra-parameters:
+          os-cloud: '{os-cloud}'
+          project: '{project}'
+          branch: '{branch}'
+          refspec: 'refs/heads/{branch}'
+          artifacts: '{archive-artifacts}'
+
+    scm:
+      - integration-gerrit-scm:
+          basedir: 'packaging'
+          refspec: '$GERRIT_REFSPEC'
+          branch: 'master'
+
+    wrappers:
+      - opendaylight-infra-wrappers:
+          build-timeout: '{build-timeout}'
+
+    builders:
+      - inject:
+          # yamllint disable-line rule:line-length
+          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/integration/distribution-karaf/0.6.1-Carbon/distribution-karaf-0.6.1-Carbon.tar.gz'
+      - shell: !include-raw: build-rpm.sh
+      # FIXME: STREAM var is still master in the builder script
+      # - inject:
+      #    properties-content: 'STREAM=carbon'
+      # - shell: !include-raw: build-rpm-snap.sh
+      - inject:
+          # yamllint disable-line rule:line-length
+          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/integration/karaf/0.7.0/karaf-0.7.0.tar.gz'
+      - shell: !include-raw: build-rpm.sh
+      # FIXME: STREAM var is still master in the builder script
+      # - inject:
+      #    properties-content: 'STREAM=nitrogen'
+      # - shell: !include-raw: build-rpm-snap.sh
+      - inject:
+          # yamllint disable-line rule:line-length
+          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/org/opendaylight/integration/karaf/0.8.0-SNAPSHOT/karaf-0.8.0-20170928.142221-597.tar.gz'
+      - shell: !include-raw: build-rpm.sh
+      - inject:
+          properties-content: 'STREAM=master'
+      - shell: !include-raw: build-rpm-snap.sh
+
+    triggers:
       - gerrit:
           server-name: '{server-name}'
           trigger-on:
             - comment-added-contains-event:
-                comment-contains-value: 'build-rpm-snap'
+                comment-contains-value: 'verify-rpm'
+          projects:
+            - project-compare-type: ANT
+              project-pattern: '{project}'
+              branches:
+                - branch-compare-type: ANT
+                  branch-pattern: '**/{branch}'
+              file-paths:
+                - compare-type: ANT
+                  pattern: 'packages/**'
+
+    publishers:
+      - lf-infra-publish
+
+
+- job-template:
+    name: 'packaging-verify-deb-master'
+
+    node: ubuntu1604-mininet-ovs-25-2c-4g
+
+    project-type: freestyle
+
+    parameters:
+      - opendaylight-infra-parameters:
+          os-cloud: '{os-cloud}'
+          project: '{project}'
+          branch: '{branch}'
+          refspec: 'refs/heads/{branch}'
+          artifacts: '{archive-artifacts}'
+
+    scm:
+      - integration-gerrit-scm:
+          basedir: 'packaging'
+          refspec: '$GERRIT_REFSPEC'
+          branch: 'master'
+
+    wrappers:
+      - opendaylight-infra-wrappers:
+          build-timeout: '{build-timeout}'
+
+    builders:
+      - shell: !include-raw: build-deb.sh
+
+    triggers:
+      - gerrit:
+          server-name: '{server-name}'
+          trigger-on:
+            - comment-added-contains-event:
+                comment-contains-value: 'verify-deb'
           projects:
             - project-compare-type: ANT
               project-pattern: '{project}'
@@ -392,22 +482,6 @@
           group-id: '{group-id}'
           upload-files-dir: '{upload-files-dir}'
           maven-repo-url: '{maven-repo-url}'
-
-    triggers:
-      - gerrit:
-          server-name: '{server-name}'
-          trigger-on:
-            - comment-added-contains-event:
-                comment-contains-value: 'build-deb'
-          projects:
-            - project-compare-type: ANT
-              project-pattern: '{project}'
-              branches:
-                - branch-compare-type: ANT
-                  branch-pattern: '**/{branch}'
-              file-paths:
-                - compare-type: ANT
-                  pattern: 'packages/**'
 
     publishers:
       - lf-infra-publish
