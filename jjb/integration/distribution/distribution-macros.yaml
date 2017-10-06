@@ -245,6 +245,29 @@
           popd
 
 - builder:
+    name: distribution-check-warn-9192
+    # Detect ODL bundles referenced from multiple features within a project, store them to a file to be archived.
+    # Current implementation will also include Bug 9191 violations.
+    # Do not fail the build, this is just to inform interested contributors.
+    # TODO: Improve integration archiving macro so that it finds bug9192.log without us crating it in $WORKSPACE/.
+    builders:
+      - shell: |
+          # No failure in this macro should affect the job result.
+          set +e
+          rm -f "$WORKSPACE/bug9192.1.log"
+          pushd "$WORKSPACE/distribution/$KARAF_ARTIFACT/target/assembly/system/org/opendaylight"
+          for folder in `ls`; do
+          find "$folder" -name \*features.xml | xargs fgrep -n '<bundle>' > bug9192.0.log
+          fgrep org.opendaylight bug9192.0.log >> "$WORKSPACE/bug9192.1.log"
+          rm bug9192.0.log
+          done
+          popd
+          sort -t ':' -k 3- "$WORKSPACE/bug9192.1.log" > "$WORKSPACE/bug9192.2.log"
+          sort -u -t ':' -k 3- "$WORKSPACE/bug9192.1.log" > "$WORKSPACE/bug9192.3.log"
+          diff -ubtdc0 "$WORKSPACE/bug9192.3.log" "$WORKSPACE/bug9192.2.log" > "$WORKSPACE/bug9192.log"
+          rm -f "$WORKSPACE"/bug9192.?.log
+
+- builder:
     name: distribution-check-bootup
     # Operation: Locally deploy ODL with all fetures, check it is not broken.
     # Required bash variables:
