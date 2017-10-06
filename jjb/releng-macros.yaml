@@ -28,7 +28,7 @@
               **/target/failsafe-reports/failsafe-summary.xml
               **/hs_err_*.log
               **/target/feature/feature.xml
-              **/*.hprof
+          # TODO: **/*.hprof is too large, compress with xz first
           description: 'Space separated glob patterns for artifacts to archive into logs.opendaylight.org'
       - string:
           name: GERRIT_PROJECT
