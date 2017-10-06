@@ -78,6 +78,7 @@
           mvn-opts: '{opendaylight-infra-parallel-mvn-opts}'
       - integration-upload-distribution:
           dist-pom: distribution/pom.xml
+      - distribution-check-warn-9191
       - integration-distribution-check
 
     publishers:
