@@ -494,6 +494,7 @@ EOF
         scp ${!OSIP}:/opt/stack/devstack/nohup.out ${NODE_FOLDER}/stack.log
         scp ${!OSIP}:/opt/stack/requirements/upper-constraints.txt ${NODE_FOLDER}
         scp ${!OSIP}:/tmp/get_devstack.sh.txt ${NODE_FOLDER}
+        scp ${!OSIP}:/tmp/get_tempest.sh.txt ${NODE_FOLDER}
         scp ${!OSIP}:/var/log/openvswitch/ovs-vswitchd.log ${NODE_FOLDER}
         scp ${!OSIP}:/var/log/openvswitch/ovsdb-server.log ${NODE_FOLDER}
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/etc/hosts ${NODE_FOLDER}
@@ -627,6 +628,14 @@ fi
 git --no-pager log --pretty=format:'%h %<(13)%ar%<(13)%cr %<(20,trunc)%an%d %s\n%b' -n20
 EOF
 
+
+cat > ${WORKSPACE}/get_tempest.sh << EOF
+cd /opt/stack
+git clone https://git.openstack.org/openstack/tempest
+cd tempest
+sed -i "s/default::DeprecationWarning/ignore::DeprecationWarning/g" tox.ini
+EOF
+
 cat > "${WORKSPACE}/setup_host_cell_mapping.sh" << EOF
 sudo nova-manage cell_v2 map_cell0
 sudo nova-manage cell_v2 simple_cell_setup
@@ -668,7 +677,9 @@ for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
     create_etc_hosts ${!CONTROLIP}
     scp ${WORKSPACE}/hosts_file ${!CONTROLIP}:/tmp/hosts
     scp ${WORKSPACE}/get_devstack.sh ${!CONTROLIP}:/tmp
+    scp ${WORKSPACE}/get_tempest.sh ${!CONTROLIP}:/tmp
     ${SSH} ${!CONTROLIP} "bash /tmp/get_devstack.sh > /tmp/get_devstack.sh.txt 2>&1"
+    ${SSH} ${!CONTROLIP} "bash /tmp/get_tempest.sh > /tmp/get_tempest.sh.txt 2>&1"
     create_control_node_local_conf ${!CONTROLIP} ${ODLMGRIP[$i]} "${ODL_OVS_MGRS[$i]}"
     scp ${WORKSPACE}/local.conf_control_${!CONTROLIP} ${!CONTROLIP}:/opt/stack/devstack/local.conf
     ssh ${!CONTROLIP} "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
