@@ -203,3 +203,18 @@
               {mvn-opts}
           java-opts:
             - '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
+
+- builder:
+    name: distribution-check-warn-9191
+    # Detect ODL bundles referenced cross-project from features, store them to a file to be archived.
+    # Do not fail the build, this is just to inform interested contributors.
+    builders:
+      - shell: |
+          pushd "$WORKSPACE/distribution/karaf/target/assembly/system/org/opendaylight"
+          rm bug9191.log
+          for folder in `ls`; do
+          find "$folder" -name \*features.xml | xargs fgrep -n '<bundle>' > bug9191.0.log
+          fgrep org.opendaylight bug9191.0.log | fgrep -v org.opendaylight.$folder >> bug9191.log
+          rm bug9191.0.log
+          done
+          popd
