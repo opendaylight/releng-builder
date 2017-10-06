@@ -494,6 +494,7 @@ EOF
         scp ${!OSIP}:/opt/stack/devstack/nohup.out ${NODE_FOLDER}/stack.log
         scp ${!OSIP}:/opt/stack/requirements/upper-constraints.txt ${NODE_FOLDER}
         scp ${!OSIP}:/tmp/get_devstack.sh.txt ${NODE_FOLDER}
+        scp ${!OSIP}:/tmp/config_tempest.sh.txt ${NODE_FOLDER}
         scp ${!OSIP}:/var/log/openvswitch/ovs-vswitchd.log ${NODE_FOLDER}
         scp ${!OSIP}:/var/log/openvswitch/ovsdb-server.log ${NODE_FOLDER}
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/etc/hosts ${NODE_FOLDER}
@@ -627,6 +628,19 @@ fi
 git --no-pager log --pretty=format:'%h %<(13)%ar%<(13)%cr %<(20,trunc)%an%d %s\n%b' -n20
 EOF
 
+
+function config_tempest () {
+    control_ip=$1
+    cat > ${WORKSPACE}/config_tempest.sh << EOF
+cd /opt/stack
+git clone https://git.openstack.org/openstack/tempest
+cd tempest
+sed -i "s/default::DeprecationWarning/ignore::DeprecationWarning/g" tox.ini
+EOF
+    scp ${WORKSPACE}/config_tempest.sh ${control_ip}:/tmp
+    ${SSH} ${control_ip} "bash /tmp/config_tempest.sh > /tmp/config_tempest.sh.txt 2>&1"
+}
+
 cat > "${WORKSPACE}/setup_host_cell_mapping.sh" << EOF
 sudo nova-manage cell_v2 map_cell0
 sudo nova-manage cell_v2 simple_cell_setup
@@ -668,6 +682,7 @@ for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
     create_etc_hosts ${!CONTROLIP}
     scp ${WORKSPACE}/hosts_file ${!CONTROLIP}:/tmp/hosts
     scp ${WORKSPACE}/get_devstack.sh ${!CONTROLIP}:/tmp
+    config_tempest ${!CONTROLIP}
     ${SSH} ${!CONTROLIP} "bash /tmp/get_devstack.sh > /tmp/get_devstack.sh.txt 2>&1"
     create_control_node_local_conf ${!CONTROLIP} ${ODLMGRIP[$i]} "${ODL_OVS_MGRS[$i]}"
     scp ${WORKSPACE}/local.conf_control_${!CONTROLIP} ${!CONTROLIP}:/opt/stack/devstack/local.conf
@@ -967,7 +982,7 @@ source /tmp/os_netvirt_client_rc
 
 echo "Starting Robot test suites ${SUITES} ..."
 # please add pybot -v arguments on a single line and alphabetized
-pybot -N ${TESTPLAN} --removekeywords wuks -c critical -e exclude -e skip_if_${DISTROSTREAM} \
+pybot -N ${TESTPLAN} --removekeywords wuks --removekeywords foritem -c critical -e exclude -e skip_if_${DISTROSTREAM} \
     -v BUNDLEFOLDER:${BUNDLEFOLDER} \
     -v BUNDLE_URL:${ACTUAL_BUNDLE_URL} \
     -v CONTROLLER_USER:${USER} \
