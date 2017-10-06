@@ -247,6 +247,7 @@
           mvn-opts: '{opendaylight-infra-parallel-mvn-opts}'
       - integration-set-variables
       - distribution-check-warn-9191
+      - distribution-check-warn-9192
       - integration-upload-distribution:
           dist-pom: distribution/pom.xml
       - distribution-check-bootup
