@@ -358,36 +358,6 @@
       - inject:
           properties-file: detect_variables.env
 
-- builder:
-    name: integration-distribution-check
-    # Operation: Locally deploy ODL with all fetures, check it is not broken.
-    # Required bash variables:
-    #   KARAF_VERSION: 'karaf4' or 'karaf3'.
-    #     Use distribution-karaf-version macro to customize.
-    builders:
-      - integration-set-variables
-      - shell: !include-raw: integration-distribution-check.sh
-
-- builder:
-    name: distribution-deploy-verify
-    # Operation: Deploy ODL with all fetures and check it is not broken.
-    # Required bash variables:
-    #   KARAF_VERSION: 'karaf4' or 'karaf3'.
-    #     Use distribution-karaf-version macro to customize.
-    builders:
-      - integration-detect-variables
-      - shell: !include-raw: distribution-deploy-verify.sh
-
-- builder:
-    name: distribution-deploy-offline
-    # Operation: Deploys ODL on the current system, with no external repo configuration, check it works.
-    # Required bash variables:
-    #   KARAF_VERSION: 'karaf4' or 'karaf3'.
-    #     Use distribution-karaf-version macro to customize.
-    builders:
-      - integration-detect-variables
-      - shell: !include-raw: distribution-deploy-offline.sh
-
 # Macro: integration-deply-controller-run-test
 # Operation: this macro deploys single contoller and runs test
 # Used by: {project}-csit-1node-* job templates
