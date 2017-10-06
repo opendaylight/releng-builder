@@ -52,7 +52,7 @@
               clean install dependency:tree -DoutputFile=dependency_tree.txt
               -Dstream={stream}
               -Dsft.heap.max=4g
-              {opendaylight-infra-mvn-opts}
+              {opendaylight-infra-parallel-mvn-opts}
           java-opts:
             - '-Xmx1024m -XX:MaxPermSize=256m'
           settings: integration-settings
@@ -237,10 +237,14 @@
       - distribution-check-wipe
       - distribution-check-build-project:
           pom: 'distribution/pom.xml'
-          mvn-opts: '{opendaylight-infra-mvn-opts}'
+          mvn-opts: '{opendaylight-infra-parallel-mvn-opts}'
       - distribution-check-verify-groupid:
           gerrit-project: 'integration'
-      # No need to repeat with SFT as distribution-verify has that covered.
+      - distribution-check-delete-snapshots
+      - distribution-check-configure-remotes
+      - distribution-check-repeat-project-build:
+          pom: 'distribution/pom.xml'
+          mvn-opts: '{opendaylight-infra-parallel-mvn-opts}'
       - integration-upload-distribution:
           dist-pom: distribution/pom.xml
       - integration-distribution-check
