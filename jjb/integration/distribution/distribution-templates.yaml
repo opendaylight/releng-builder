@@ -76,9 +76,10 @@
       - distribution-check-repeat-distro-build:
           dist-pom: 'distribution/pom.xml'
           mvn-opts: '{opendaylight-infra-parallel-mvn-opts}'
+      - distribution-check-warn-9191
       - integration-upload-distribution:
           dist-pom: distribution/pom.xml
-      - integration-distribution-check
+      - distribution-check-bootup
 
     publishers:
       - email-notification:
