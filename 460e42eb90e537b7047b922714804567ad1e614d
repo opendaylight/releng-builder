@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9a245df4_c2bbd570",
+        "filename": "jjb/spectrometer/spectrometer-jobs.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-10-08T01:08:32Z",
+      "side": 1,
+      "message": "I don\u0027t get why rtd jobs need a different patch but modifying python jobs can stay in this patch? If we\u0027re gonna make different patches based on topics then we need 3 patches for changes to rtd, python, and node.\n\nOr if we want to do one patch then we can have rtd, node, and python in the same patch.\n\nIn case there\u0027s some confusion. NodeJS and Python are 2 different programming languages / Frameworks. The fact that we leverage tox to setup NodeJS to make things easy doesn\u0027t make it a python project.\n\nSpectrometer has 2 components a Python based Backend service which uses the python jobs to test and a NodeJS based Frontend service which uses Node jobs to test.\n\nHope this clarifies things.",
+      "parentUuid": "9a245df4_2de74742",
+      "revId": "460e42eb90e537b7047b922714804567ad1e614d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a245df4_e6c0bb2c",
         "filename": "jjb/spectrometer/spectrometer-jobs.yaml",
         "patchSetId": 1
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "https://jenkins.opendaylight.org/releng/view/autorelease/search/?q\u003dverify-python\n\nsfc-verify-python-carbon\nsfc-verify-python-oxygen\nsfc-verify-python-nitrogen\nbgpcep-verify-python-oxygen\nbgpcep-verify-python-nitrogen\nspectrometer-verify-python-master",
       "parentUuid": "9a245df4_cdcdcb5f",
+      "revId": "460e42eb90e537b7047b922714804567ad1e614d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a245df4_e2b6d989",
+        "filename": "jjb/spectrometer/spectrometer-jobs.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-10-08T01:08:32Z",
+      "side": 1,
+      "message": "Sorry I wasn\u0027t clear with what I was asking.\n\nDo we still need the verify-python-{stream} job in this file if we\u0027re adding the python-jobs group? does it do anything different than the python-jobs template does?",
+      "parentUuid": "9a245df4_ee01a53a",
       "revId": "460e42eb90e537b7047b922714804567ad1e614d",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
