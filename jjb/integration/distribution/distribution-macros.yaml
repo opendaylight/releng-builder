@@ -230,7 +230,7 @@
     name: distribution-check-warn-9191
     # Detect ODL bundles referenced cross-project from features, store them to a file to be archived.
     # Do not fail the build, this is just to inform interested contributors.
-    # TODO: Improve integration archiving macro so that it finds bug9191.log without us crating it in $WORKSPACE/.
+    # TODO: Improve integration archiving macro so that it finds bug9191 log without us crating it in $WORKSPACE/.
     builders:
       - shell: |
           # No failure in this macro should affect the job result.
@@ -243,6 +243,26 @@
           rm bug9191.0.log
           done
           popd
+
+- builder:
+    name: distribution-check-warn-9192
+    # Detect ODL bundles referenced from multiple features within a project, store them to a file to be archived.
+    # Current implementation will also include Bug 9191 violations,
+    # presenting an unified diff with lines marked to be removed, among unmarked lines to compare to.
+    # Do not fail the build, this is just to inform interested contributors.
+    # TODO: Improve integration archiving macro so that it finds bug9192 log without us crating it in $WORKSPACE/.
+    builders:
+      - shell: |
+          # No failure in this macro should affect the job result.
+          set +e
+          pushd "$WORKSPACE/distribution/$KARAF_ARTIFACT/target/assembly/system/org/opendaylight"
+          find . -name \*features.xml | xargs fgrep -n '<bundle>' > "$WORKSPACE/bug9192.0.log"
+          popd
+          fgrep org.opendaylight bug9192.0.log > "$WORKSPACE/bug9192.1.log"
+          sort -s -t '<' -k 2 "$WORKSPACE/bug9192.1.log" > "$WORKSPACE/bug9192.2.log"
+          sort -u -s -t '<' -k 2 "$WORKSPACE/bug9192.1.log" > "$WORKSPACE/bug9192.3.log"
+          diff -U 999 -b -t -d "$WORKSPACE/bug9192.2.log" "$WORKSPACE/bug9192.3.log" > "$WORKSPACE/bug9192.diff.log"
+          rm -f "$WORKSPACE"/bug9192.?.log
 
 - builder:
     name: distribution-check-bootup
