@@ -2,6 +2,26 @@
 ---
 
 - builder:
+    name: distribution-deploy-verify
+    # Operation: Deploy ODL with all fetures and check it is not broken.
+    # Required bash variables:
+    #   KARAF_VERSION: 'karaf4' or 'karaf3'.
+    #     Use distribution-karaf-version macro to customize.
+    builders:
+      - integration-detect-variables
+      - shell: !include-raw: distribution-deploy-verify.sh
+
+- builder:
+    name: distribution-deploy-offline
+    # Operation: Deploys ODL on the current system, with no external repo configuration, check it works.
+    # Required bash variables:
+    #   KARAF_VERSION: 'karaf4' or 'karaf3'.
+    #     Use distribution-karaf-version macro to customize.
+    builders:
+      - integration-detect-variables
+      - shell: !include-raw: distribution-deploy-offline.sh
+
+- builder:
     name: distribution-check-wipe
     # Step zero: Wipe file repositories up front.
     builders:
@@ -12,6 +32,8 @@
           rm -rfv /tmp/n
           echo "wipe t: the transient repository used in some manipulations"
           rm -rfv /tmp/t
+          echo "create n: multithreaded execution might fail at creating it."
+          mkdir /tmp/n
 
 - builder:
     name: distribution-check-build-project
@@ -203,3 +225,30 @@
               {mvn-opts}
           java-opts:
             - '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
+
+- builder:
+    name: distribution-check-warn-9191
+    # Detect ODL bundles referenced cross-project from features, store them to a file to be archived.
+    # Do not fail the build, this is just to inform interested contributors.
+    # TODO: Improve integration archiving macro so that it finds bug9191.log without us crating it in $WORKSPACE/.
+    builders:
+      - shell: |
+          # No failure in this macro should affect the job result.
+          set +e
+          rm -f "$WORKSPACE/bug9191.log"
+          pushd "$WORKSPACE/distribution/$KARAF_ARTIFACT/target/assembly/system/org/opendaylight"
+          for folder in `ls`; do
+          find "$folder" -name \*features.xml | xargs fgrep -n '<bundle>' > bug9191.0.log
+          fgrep org.opendaylight bug9191.0.log | fgrep -v "org.opendaylight.$folder" >> "$WORKSPACE/bug9191.log"
+          rm bug9191.0.log
+          done
+          popd
+
+- builder:
+    name: distribution-check-bootup
+    # Operation: Locally deploy ODL with all fetures, check it is not broken.
+    # Required bash variables:
+    #   KARAF_VERSION: 'karaf4' or 'karaf3'.
+    #     Use distribution-karaf-version macro to customize.
+    builders:
+      - shell: !include-raw: distribution-check-bootup.sh
