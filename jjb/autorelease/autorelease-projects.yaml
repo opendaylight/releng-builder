@@ -18,11 +18,13 @@
           branch: 'master'
           jdk: 'openjdk8'
           integration-test: oxygen
+          extra-mvn-opts: -Dsft.heap.max=4g
       - nitrogen:
           next-release-tag: '{stream}'
           branch: 'stable/nitrogen'
           jdk: 'openjdk8'
           integration-test: nitrogen
+          extra-mvn-opts: -Dsft.heap.max=4g
       - carbon:
           # Run once a week now that Nitrogen is released and Oxygen is in active development
           cron: 'H 12 * * 0'
