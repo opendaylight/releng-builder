@@ -117,6 +117,30 @@
       "revId": "174ac200d6592b5a9d89d8b8630e1bee85758199",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a245df4_38749efc",
+        "filename": "jjb/yangtools/yangtools.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2017-10-09T14:27:54Z",
+      "side": 1,
+      "message": "After discussing with Robert, I think we have a consensus.\n\nFirst, release-based projects have different usage for stream than snapshot-based projects. Relative to a release-based project, its upstream is only consumed via released artifacts, so stream triggers are not needed. Similarly, its downstream consumes only released versions, so once again, triggering should happen by version bump, no by snapshot upload.\n\nSecond, stability branches are different from master branch for release-based projects. The difference is in that master branch contains incompatible changes which have never been released. Even the version is not decided yet. Therefore downstream cannot be ready to integrate with master. Some semi-automated testing similar to multipatch is possible, but that would need to use specific downstream patches, making the distribution different from the usual simultaneous stream builds.\nOn the other hand, stability branches will exhibit only minor bumps, downstream should be patch-able automatically, and we can assign a stream name based on version. Note that there might be multiple simultaneous releases consuming the same minor bump.\n\nWith that in mind, I now agree with \u0027master\u0027 as a special stream name, signifying this stream has no regular {project}-integration-master, no {project}-distribution-check-master, no CSIT jobs. Before creating those, Releng/Builder should require the project to cut a stability branch.\n\nIn long term, CLM and sonar jobs should run on the stability branches only, but it is OK to keep them running on master for now.",
+      "parentUuid": "9a245df4_d8fe226b",
+      "range": {
+        "startLine": 12,
+        "startChar": 12,
+        "endLine": 12,
+        "endChar": 18
+      },
+      "revId": "174ac200d6592b5a9d89d8b8630e1bee85758199",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
