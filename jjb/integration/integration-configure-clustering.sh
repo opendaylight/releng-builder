@@ -97,6 +97,17 @@ if [ -n "${CONTROLLERDEBUGMAP}" ]; then
         fi
     done
 fi
+echo "log4j.logger.org.opendaylight.controller.cluster.access.client=DEBUG" >> ${LOGCONF}
+#echo "log4j.logger.org.opendaylight.controller.cluster.access.client=TRACE" >> ${LOGCONF}
+echo "log4j.logger.org.opendaylight.controller.cluster.databroker.actors.dds=DEBUG" >> ${LOGCONF}
+#echo "log4j.logger.org.opendaylight.controller.cluster.databroker.actors.dds=TRACE" >> ${LOGCONF}
+echo "log4j.logger.org.opendaylight.mdsal.dom.broker=DEBUG" >> ${LOGCONF}
+#echo "log4j.logger.org.opendaylight.mdsal.dom.broker=TRACE" >> ${LOGCONF}
+echo "log4j.logger.org.opendaylight.controller.cluster.common.actor=DEBUG" >> ${LOGCONF}
+echo "log4j.logger.org.opendaylight.controller.clustering.it.provider=DEBUG" >> ${LOGCONF}
+#echo "log4j.logger.org.opendaylight.controller.clustering.it.provider.impl=TRACE" >> ${LOGCONF}
+echo "log4j.logger.akka.cluster=DEBUG" >> ${LOGCONF}
+#echo "log4j.logger.akka.remote=DEBUG" >> ${LOGCONF}
 cat ${LOGCONF}
 
 if [ "${ODL_ENABLE_L3_FWD}" == "yes" ]; then
