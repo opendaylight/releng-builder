@@ -16,13 +16,11 @@
       - oxygen:
           next-release-tag: '{stream}'
           branch: 'master'
-          jdk: 'openjdk8'
           integration-test: oxygen
           extra-mvn-opts: -Dsft.heap.max=4g
       - nitrogen:
           next-release-tag: '{stream}'
           branch: 'stable/nitrogen'
-          jdk: 'openjdk8'
           integration-test: nitrogen
           extra-mvn-opts: -Dsft.heap.max=4g
       - carbon:
@@ -30,7 +28,6 @@
           cron: 'H 12 * * 0'
           next-release-tag: '{stream}'
           branch: 'stable/carbon'
-          jdk: 'openjdk8'
           integration-test: carbon
           karaf-version: karaf3
           extra-mvn-opts: -Dskip.karaf4.featureTest=true
