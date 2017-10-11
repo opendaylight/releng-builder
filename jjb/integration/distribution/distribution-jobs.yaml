@@ -53,8 +53,10 @@
               -Dstream={stream}
               -Dsft.heap.max=4g
               {opendaylight-infra-parallel-mvn-opts}
+          # java-opts has to be a Yaml list (as opposed to string),
+          # otherwise it gets interpreted as a list of characters.
           java-opts:
-            - '-Xmx1024m -XX:MaxPermSize=256m'
+            - '{xmx}'
           settings: integration-settings
           settings-type: cfp
           global-settings: global-settings
@@ -127,7 +129,7 @@
           -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r
           -Dsft.heap.max=4g
           -Djenkins -Dmerge -Dstream={stream}
-      maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+      maven-opts: '{xmx}'
       settings: 'integration-settings'
       settings-type: cfp
       global-settings: 'global-settings'
@@ -150,8 +152,10 @@
                 maven-version: 'mvn33'
                 pom: pom.xml
                 goals: 'site:deploy -V -B -Dstream={stream}'
+                # java-opts has to be a Yaml list (as opposed to string),
+                # otherwise it gets interpreted as a list of characters.
                 java-opts:
-                  - '-Xmx2g'
+                  - '{xmx}'
                 settings: 'integration-settings'
                 settings-type: cfp
                 global-settings: 'global-settings'
@@ -160,8 +164,10 @@
                 maven-version: 'mvn33'
                 pom: deploy-site.xml
                 goals: 'site:deploy -V -B -Dstream={stream}'
+                # java-opts has to be a Yaml list (as opposed to string),
+                # otherwise it gets interpreted as a list of characters.
                 java-opts:
-                  - '-Xmx2g'
+                  - '{xmx}'
                 settings: 'integration-settings'
                 settings-type: cfp
                 global-settings: 'global-settings'

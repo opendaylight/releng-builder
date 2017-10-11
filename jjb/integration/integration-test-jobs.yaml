@@ -189,7 +189,7 @@
               {opendaylight-infra-mvn-opts}
           # TODO: {opendaylight-infra-parallel-mvn-opts}?
           java-opts:
-            - '-Xmx4096m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
+            - '-Xmx4g -Dmaven.compile.fork=true'
           settings: integration-settings
           settings-type: cfp
           global-settings: global-settings
@@ -201,7 +201,7 @@
               clean install dependency:tree -DoutputFile=dependency_tree.txt
               {opendaylight-infra-parallel-mvn-opts}
           java-opts:
-            - '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
+            - '-Xmx1g -Dmaven.compile.fork=true'
           settings: integration-settings
           settings-type: cfp
           global-settings: global-settings
@@ -295,7 +295,7 @@
               {opendaylight-infra-mvn-opts}
           # TODO: {opendaylight-infra-parallel-mvn-opts}?
           java-opts:
-            - '-Xmx3072m -Dmaven.compile.fork=true'
+            - '-Xmx3g -Dmaven.compile.fork=true'
           settings: integration-settings
           settings-type: cfp
           global-settings: global-settings

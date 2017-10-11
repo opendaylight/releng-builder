@@ -54,7 +54,7 @@
               -Djenkins
               -DaltDeploymentRepository=staging::default::file:hide/from/pom/files/stage
           java-opts:
-            - '-Xmx1024m -XX:MaxPermSize=256m'
+            - '-Xmx1g'
           settings: 'autorelease-settings'
           settings-type: cfp
           global-settings: 'global-settings'

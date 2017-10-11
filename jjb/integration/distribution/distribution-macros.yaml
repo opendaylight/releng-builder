@@ -41,6 +41,7 @@
     # Ordinary SingleFeatureTest failures are detected in the verify job, so we can use "q" profile here.
     # Arguments:
     #   pom: Relative path to pom file to use. Typically '$GERRIT_PROJECT/pom.xml'.
+    #   mvn-opts: Additional maven options not related to Java sizing.
     builders:
       - maven-target:
           maven-version: 'mvn33'
@@ -52,7 +53,7 @@
               -DaltDeploymentRepository=fake-nexus::default::file:///tmp/n/
               {mvn-opts}
           java-opts:
-            - '-Xmx4096m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
+            - '-Xmx4g -Dmaven.compile.fork=true'
           settings: 'integration-settings'
           settings-type: cfp
           global-settings: 'global-settings'
@@ -81,6 +82,7 @@
     # Running SingleFeaturesTest here does not seem to be required, so -Pq is used again.
     # Arguments:
     #   dist-pom: Relative path to pom file to use. 'distribution/pom.xml' is recommended.
+    #   mvn-opts: Additional maven options not related to Java sizing.
     builders:
       - maven-target:
           maven-version: 'mvn33'
@@ -91,7 +93,7 @@
               -Pq
               {mvn-opts}
           java-opts:
-            - '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
+            - '-Xmx1g -Dmaven.compile.fork=true'
           settings: 'integration-settings'
           settings-type: cfp
           global-settings: 'global-settings'
@@ -183,6 +185,7 @@
     # TODO: Could there be missing dependencies which would only affect SFT here?
     # Arguments:
     #   pom: Relative path to pom file to use. Typically '$GERRIT_PROJECT/pom.xml'.
+    #   mvn-opts: Additional maven options not related to Java sizing.
     builders:
       - shell: |
           cp -r /tmp/r /tmp/t
@@ -196,7 +199,7 @@
               -Pq
               {mvn-opts}
           java-opts:
-            - '-Xmx4096m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
+            - '-Xmx4g -Dmaven.compile.fork=true'
       - shell: |
           rm -rf /tmp/r
           mv /tmp/t /tmp/r
@@ -211,6 +214,7 @@
     # TODO: Lower -Dsft.heap.max to 3g or lower when Bug 9218 is fixed.
     # Arguments:
     #   dist-pom: Relative path to pom file to use. 'distribution/pom.xml' is recommended.
+    #   mvn-opts: Additional maven options not related to Java sizing.
     builders:
       - maven-target:
           maven-version: 'mvn33'
@@ -224,7 +228,7 @@
               -DskipTests=false
               {mvn-opts}
           java-opts:
-            - '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
+            - '-Xmx1g -Dmaven.compile.fork=true'
 
 - builder:
     name: distribution-check-warn-9191
