@@ -13,19 +13,16 @@
     stream:
       - oxygen:
           branch: 'master'
-          jdk: 'openjdk8'
           csit-list: >
              vtn-csit-1node-manager-all-{stream},
              vtn-csit-3node-manager-all-{stream}
       - nitrogen:
           branch: 'stable/nitrogen'
-          jdk: 'openjdk8'
           csit-list: >
              vtn-csit-1node-manager-all-{stream},
              vtn-csit-3node-manager-all-{stream}
       - carbon:
           branch: 'stable/carbon'
-          jdk: 'openjdk8'
           karaf-version: karaf3
           csit-list: >
              vtn-csit-1node-manager-all-{stream},
