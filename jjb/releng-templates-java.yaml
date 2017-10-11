@@ -48,8 +48,10 @@
               clean install dependency:tree com.sonatype.clm:clm-maven-plugin:index
               -Pq
               {opendaylight-infra-mvn-opts}
+          # java-opts has to be a Yaml list (as opposed to string),
+          # otherwise it gets interpreted as a list of characters.
           java-opts:
-            - '-Xmx4096m -XX:MaxPermSize=512m'
+            - '-Xmx4g'
           settings: '{mvn-settings}'
           settings-type: cfp
           global-settings: 'global-settings'
@@ -107,8 +109,10 @@
           goals: |
               {mvn-goals}
               {opendaylight-infra-mvn-opts}
+          # java-opts has to be a Yaml list (as opposed to string),
+          # otherwise it gets interpreted as a list of characters.
           java-opts:
-            - '{mvn-opts}'
+            - '{xmx}'
           settings: '{mvn-settings}'
           settings-type: cfp
           global-settings: 'global-settings'
@@ -179,7 +183,7 @@
           -Dmerge
           -Dstream={stream}
           {opendaylight-infra-mvn-opts}
-      maven-opts: '{mvn-opts}'
+      maven-opts: '{xmx}'
       settings: '{mvn-settings}'
       settings-type: cfp
       global-settings: 'global-settings'
@@ -203,8 +207,10 @@
                 maven-version: 'mvn33'
                 pom: pom.xml
                 goals: 'site:deploy -V -B -Dstream={stream}'
+                # java-opts has to be a Yaml list (as opposed to string),
+                # otherwise it gets interpreted as a list of characters.
                 java-opts:
-                  - '-Xmx2g'
+                  - '{xmx}'
                 settings: '{mvn-settings}'
                 settings-type: cfp
                 global-settings: 'global-settings'
@@ -276,8 +282,10 @@
               {mvn-goals}
               -Dsonar
               {opendaylight-infra-mvn-opts}
-          maven-opts:
-            - '{mvn-opts}'
+          # java-opts has to be a Yaml list (as opposed to string),
+          # otherwise it gets interpreted as a list of characters.
+          java-opts:
+            - '{xmx}'
           settings: '{mvn-settings}'
           settings-type: cfp
           global-settings: 'global-settings'
@@ -292,8 +300,8 @@
               -Dsonar
               -Dsonar.host.url=https://sonar.opendaylight.org
               {opendaylight-infra-mvn-opts}
-          maven-opts:
-            - '{mvn-opts}'
+          java-opts:
+            - '{xmx}'
           settings: '{mvn-settings}'
           settings-type: cfp
           global-settings: 'global-settings'
@@ -355,7 +363,7 @@
               -Dstream={stream}
               {opendaylight-infra-mvn-opts}
           java-opts:
-            - '{mvn-opts}'
+            - '{xmx}'
           settings: '{mvn-settings}'
           settings-type: cfp
           global-settings: 'global-settings'

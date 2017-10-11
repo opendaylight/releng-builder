@@ -19,7 +19,7 @@
           mvn-version: 'mvn33'
     mvn-settings: 'l2switch-settings'
     mvn-goals: 'clean install'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
+    xmx: '-Xmx1g -Dmaven.compile.fork=true'
     dependencies: >
         odlparent-merge-{stream},
         yangtools-merge-{stream},
@@ -49,7 +49,7 @@
           mvn-version: 'mvn33'
     mvn-settings: 'l2switch-settings'
     mvn-goals: 'clean install'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
+    xmx: '-Xmx1g -Dmaven.compile.fork=true'
     dependencies: >
         odlparent-merge-{stream},
         yangtools-merge-{stream},
@@ -80,7 +80,7 @@
           mvn-version: 'mvn33'
     mvn-settings: 'l2switch-settings'
     mvn-goals: 'clean install'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
+    xmx: '-Xmx1g -Dmaven.compile.fork=true'
     dependencies: >
         odlparent-merge-{stream},
         yangtools-merge-{stream},
@@ -99,4 +99,4 @@
     branch: 'master'
     mvn-settings: 'l2switch-settings'
     mvn-goals: 'clean install'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
+    xmx: '-Xmx1g -Dmaven.compile.fork=true'
