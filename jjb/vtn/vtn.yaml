@@ -19,7 +19,6 @@
           mvn-version: 'mvn33'
     mvn-settings: 'vtn-settings'
     mvn-goals: 'clean install -V -Pintegrationtests,strictcheck,docs -Dvtn.build.jobs=2'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'neutron-merge-{stream},openflowplugin-merge-{stream},ovsdb-merge-{stream}'
     email-upstream: '[vtn] [neutron] [openflowplugin] [ovsdb]'
 
@@ -48,7 +47,6 @@
           mvn-version: 'mvn33'
     mvn-settings: 'vtn-settings'
     mvn-goals: 'clean install -V -Pintegrationtests,strictcheck,docs -Dvtn.build.jobs=2'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'neutron-merge-{stream},openflowplugin-merge-{stream},ovsdb-merge-{stream}'
     email-upstream: '[vtn] [neutron] [openflowplugin] [ovsdb]'
 
@@ -78,7 +76,6 @@
           mvn-version: 'mvn33'
     mvn-settings: 'vtn-settings'
     mvn-goals: 'clean install -V -Pintegrationtests,strictcheck,docs -Dvtn.build.jobs=2'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'neutron-merge-{stream},openflowplugin-merge-{stream},ovsdb-merge-{stream}'
     email-upstream: '[vtn] [neutron] [openflowplugin] [ovsdb]'
 
@@ -96,4 +93,3 @@
     branch: 'master'
     mvn-settings: 'vtn-settings'
     mvn-goals: 'clean install -V -Pintegrationtests,strictcheck,docs -Dvtn.build.jobs=2'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
