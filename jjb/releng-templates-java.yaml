@@ -12,6 +12,7 @@
     project-type: freestyle
     node: '{build-node}'
     jdk: '{jdk}'
+    mvn-opts: '{mvn-opts}'
 
     properties:
       - opendaylight-infra-properties:
@@ -49,7 +50,7 @@
               -Pq
               {opendaylight-infra-mvn-opts}
           java-opts:
-            - '-Xmx4096m -XX:MaxPermSize=512m'
+            - '-Xmx4g'
           settings: '{mvn-settings}'
           settings-type: cfp
           global-settings: 'global-settings'
@@ -70,6 +71,7 @@
     project-type: freestyle
     node: '{build-node}'
     jdk: '{jdk}'
+    mvn-opts: '{mvn-opts}'
 
     properties:
       - opendaylight-infra-properties:
@@ -132,6 +134,7 @@
     project-type: maven
     node: '{build-node}'
     jdk: '{jdk}'
+    mvn-opts: '{mvn-opts}'
 
     properties:
       - opendaylight-infra-properties:
@@ -236,6 +239,7 @@
     project-type: freestyle
     node: '{build-node}'
     jdk: 'openjdk8'
+    mvn-opts: '{mvn-opts}'
 
     properties:
       - opendaylight-infra-properties:
@@ -314,6 +318,7 @@
     node: '{build-node}'
     concurrent: true
     jdk: '{jdks}'
+    mvn-opts: '{mvn-opts}'
 
     properties:
       - opendaylight-infra-properties:

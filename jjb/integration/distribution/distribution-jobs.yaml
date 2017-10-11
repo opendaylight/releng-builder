@@ -9,6 +9,7 @@
     node: centos7-java-builder-2c-8g
     concurrent: true
     jdk: '{jre}'
+    mvn-opts: '{mvn-opts}'
 
     properties:
       - opendaylight-infra-properties:
@@ -54,7 +55,7 @@
               -Dsft.heap.max=4g
               {opendaylight-infra-parallel-mvn-opts}
           java-opts:
-            - '-Xmx1024m -XX:MaxPermSize=256m'
+            - '{mvn-opts}'
           settings: integration-settings
           settings-type: cfp
           global-settings: global-settings
@@ -79,6 +80,7 @@
     project-type: maven
     node: '{build-node}'
     jdk: '{jre}'
+    mvn-opts: '{mvn-opts}'
 
     properties:
       - opendaylight-infra-properties:
@@ -127,7 +129,7 @@
           -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r
           -Dsft.heap.max=4g
           -Djenkins -Dmerge -Dstream={stream}
-      maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+      maven-opts: '{mvn-opts}'
       settings: 'integration-settings'
       settings-type: cfp
       global-settings: 'global-settings'
@@ -151,7 +153,7 @@
                 pom: pom.xml
                 goals: 'site:deploy -V -B -Dstream={stream}'
                 java-opts:
-                  - '-Xmx2g'
+                  - '{mvn-opts}'
                 settings: 'integration-settings'
                 settings-type: cfp
                 global-settings: 'global-settings'
@@ -161,7 +163,7 @@
                 pom: deploy-site.xml
                 goals: 'site:deploy -V -B -Dstream={stream}'
                 java-opts:
-                  - '-Xmx2g'
+                  - '{mvn-opts}'
                 settings: 'integration-settings'
                 settings-type: cfp
                 global-settings: 'global-settings'
@@ -194,6 +196,7 @@
     node: '{build-node}'
     concurrent: true
     jdk: '{jdk}'
+    mvn-opts: '{mvn-opts}'
 
     properties:
       - opendaylight-infra-properties:
