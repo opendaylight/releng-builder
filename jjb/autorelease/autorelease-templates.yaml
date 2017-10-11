@@ -96,7 +96,7 @@
               -DaltDeploymentRepository=staging::default::file:hide/from/pom/files/stage
               {opendaylight-infra-mvn-opts}
           java-opts:
-            - '-Xmx8g -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
+            - '-Xmx8g -Dmaven.compile.fork=true'
           settings: 'autorelease-settings'
           settings-type: cfp
           global-settings: 'global-settings'
@@ -398,7 +398,7 @@
               -Pq
               {opendaylight-infra-mvn-opts}
           java-opts:
-            - '-Xmx8g -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
+            - '-Xmx8g -Dmaven.compile.fork=true'
           settings: autorelease-settings
           settings-type: cfp
           global-settings: global-settings
