@@ -1,15 +1,14 @@
 ---
 - project:
-    name: bgpcep-csit-throughpcep
+    name: bgpcep-csit-gate-throughpcep
     jobs:
-      - '{project}-csit-1node-periodic-{functionality}-{install}-{stream}'
-      # FIXME: Rename job to drop -periodic- and unify job definition with -gate- functionality.
+      - '{project}-csit-1node-{functionality}-{install}-{stream}'
 
     # The project name
     project: 'bgpcep'
 
     # The functionality under test
-    functionality: 'throughpcep'
+    functionality: 'gate-throughpcep'
 
     # Project branches
     stream:
