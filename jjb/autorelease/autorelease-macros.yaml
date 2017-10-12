@@ -34,6 +34,9 @@
           # If the project is autorelease then we need to init and update submodules
           if [ "$GERRIT_PROJECT" == "releng/autorelease" ]; then
               git submodule update --init
+              # The previous checkout might have failed to remove directory of a submodule being removed.
+              # See https://stackoverflow.com/a/10761699
+              git clean -dff
           fi
 
 - builder:
