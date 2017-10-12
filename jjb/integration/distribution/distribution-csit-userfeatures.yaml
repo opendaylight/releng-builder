@@ -14,16 +14,11 @@
     stream:
       - oxygen:
           branch: 'master'
-          jre: 'openjdk8'
       - nitrogen:
           branch: 'stable/nitrogen'
-          jre: 'openjdk8'
       - carbon:
           branch: 'stable/carbon'
-          jre: 'openjdk8'
           karaf-version: karaf3
-
-    # TODO: Add Beryllium when everything is backported there.
 
     install:
       - all:

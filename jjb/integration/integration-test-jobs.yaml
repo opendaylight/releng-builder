@@ -18,7 +18,6 @@
     stream:
       - oxygen:
           branch: 'master'
-          jdk: 'openjdk8'
           csit-blacklist: longevity gate sanity capwap centinel coe didm iotdm jsonrpc lacp netide tsdr
           csit-list: !include: csit-jobs-oxygen.lst
           csit-sanity-list: '{csit-sanity-list-oxygen}'
@@ -27,7 +26,6 @@
 
       - nitrogen:
           branch: 'stable/nitrogen'
-          jre: 'openjdk8'
           csit-blacklist: longevity gate sanity capwap centinel coe didm iotdm jsonrpc lacp netide tsdr
           csit-list: !include: csit-jobs-nitrogen.lst
           csit-sanity-list: '{csit-sanity-list-nitrogen}'
@@ -37,8 +35,6 @@
       - carbon:
           branch: 'stable/carbon'
           karaf-version: karaf3
-          jdk: 'openjdk8'
-          jre: 'openjdk8'
           csit-blacklist: longevity gate sanity capwap centinel coe jsonrpc
           csit-list: !include: csit-jobs-carbon.lst
           csit-sanity-list: '{csit-sanity-list-carbon}'

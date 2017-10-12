@@ -17,16 +17,13 @@
     stream:
       - oxygen:
           branch: 'master'
-          jre: 'openjdk8'
       - nitrogen:
           branch: 'stable/nitrogen'
-          jre: 'openjdk8'
           karaf-version: karaf3
           # yamllint disable-line rule:line-length
           bundleurl: 'https://jenkins.opendaylight.org/releng/view/jsonrpc/job/jsonrpc-merge-nitrogen/lastSuccessfulBuild/org.opendaylight.jsonrpc$jsonrpc-karaf/artifact/org.opendaylight.jsonrpc/jsonrpc-karaf/1.1.0-SNAPSHOT/jsonrpc-karaf-1.1.0-SNAPSHOT.zip'
       - carbon:
           branch: 'stable/carbon'
-          jre: 'openjdk8'
           karaf-version: karaf3
           # yamllint disable-line rule:line-length
           bundleurl: 'https://jenkins.opendaylight.org/releng/view/jsonrpc/job/jsonrpc-merge-carbon/lastSuccessfulBuild/org.opendaylight.jsonrpc$jsonrpc-karaf/artifact/org.opendaylight.jsonrpc/jsonrpc-karaf/1.0.0-SNAPSHOT/jsonrpc-karaf-1.0.0-SNAPSHOT.zip'
