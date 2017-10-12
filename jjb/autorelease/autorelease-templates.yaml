@@ -348,7 +348,7 @@
       - git:
           url: '$CLONE_URL'
           credentials-id: 'opendaylight-jenkins-ssh'
-          refspec: ''
+          refspec: '$GERRIT_REFSPEC'
           branches:
             - 'origin/{branch}'
           skip-tag: true
