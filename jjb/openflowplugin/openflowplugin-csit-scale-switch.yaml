@@ -1,14 +1,14 @@
 ---
 - project:
-    name: openflowplugin-csit-link-scalability-daily
+    name: openflowplugin-csit-scale-switch
     jobs:
-      - '{project}-csit-1node-periodic-{functionality}-{install}-{stream}'
+      - '{project}-csit-1node-{functionality}-{install}-{stream}'
 
     # The project name
     project: 'openflowplugin'
 
     # The functionality under test
-    functionality: 'link-scalability-daily'
+    functionality: 'scale-switch'
 
     # Project branches
     stream:
@@ -27,7 +27,6 @@
     # Features to install
     install-features: >
         odl-openflowplugin-flow-services-rest,
-        odl-openflowplugin-app-table-miss-enforcer,
         decanter-collector-jmx,
         decanter-appender-elasticsearch
 
@@ -38,11 +37,11 @@
     tools_system_image: Ubuntu 16.04 - mininet-ovs-25 - 20170808-0158
 
     # Plot Info
-    01-plot-title: 'Maximum Links Full Mesh Topology'
-    01-plot-yaxis: 'Links'
-    01-plot-group: 'Link Scalability'
-    01-plot-data-file: 'links.csv'
+    01-plot-title: 'Maximum Switches Linear Topology'
+    01-plot-yaxis: 'Switches'
+    01-plot-group: 'Switch Scalability'
+    01-plot-data-file: 'switches.csv'
     02-plot-title: 'Topology Discover Time'
     02-plot-yaxis: 'Seconds'
-    02-plot-group: 'Link Scalability'
+    02-plot-group: 'Switch Scalability'
     02-plot-data-file: 'time.csv'

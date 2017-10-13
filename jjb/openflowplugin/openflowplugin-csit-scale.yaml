@@ -1,16 +1,16 @@
 ---
 - project:
-    name: openflowplugin-csit-bulkomatic-clustering-daily
+    name: openflowplugin-csit-scale
     jobs:
-      - '{project}-csit-3node-periodic-{functionality}-{install}-{stream}'
+      - '{project}-csit-1node-{functionality}-{install}-{stream}'
 
     # The project name
     project: 'openflowplugin'
 
     # The functionality under test
     functionality:
-      - bulkomatic-clustering-daily
-      - gate-bulkomatic-clustering-daily
+      - scale
+      - gate-scale
 
     # Project branches
     stream:
@@ -27,7 +27,7 @@
           scope: 'only'
 
     # Features to install
-    install-features: 'odl-openflowplugin-flow-services-rest,odl-openflowplugin-app-bulk-o-matic'
+    install-features: 'odl-openflowplugin-flow-services-rest,decanter-collector-jmx,decanter-appender-elasticsearch'
 
     # Robot custom options
-    robot-options: '-v ODL_OF_PLUGIN:lithium'
+    robot-options: '-v TOPO_TREE_DEPTH:7'
