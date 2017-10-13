@@ -1,16 +1,16 @@
 ---
 - project:
-    name: openflowplugin-csit-bulkomatic-clustering-perf-daily
+    name: openflowplugin-csit-clustering-perf-bulkomatic
     jobs:
-      - '{project}-csit-3node-periodic-{functionality}-{install}-{stream}'
+      - '{project}-csit-3node-{functionality}-{install}-{stream}'
 
     # The project name
     project: 'openflowplugin'
 
     # The functionality under test
     functionality:
-      - bulkomatic-clustering-perf-daily
-      - gate-bulkomatic-clustering-perf-daily
+      - clustering-perf-bulkomatic
+      - gate-clustering-perf-bulkomatic
 
     # Project branches
     stream:

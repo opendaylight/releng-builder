@@ -1,14 +1,14 @@
 ---
 - project:
-    name: openflowplugin-csit-cbench-daily
+    name: openflowplugin-csit-cbench
     jobs:
-      - '{project}-csit-1node-periodic-{functionality}-{install}-{stream}'
+      - '{project}-csit-1node-{functionality}-{install}-{stream}'
 
     # The project name
     project: 'openflowplugin'
 
     # The functionality under test
-    functionality: 'cbench-daily'
+    functionality: 'cbench'
 
     # Project branches
     stream:
