@@ -28,10 +28,12 @@
 - project:
     name: lf-infra-docs
     jobs:
+      - '{project-name}-rtd-jobs'
       - gerrit-tox-verify
 
     project-name: lf-infra-docs
     project: releng/docs
+    project-pattern: releng/docs
     build-node: centos7-java-builder-2c-4g
     stream: master
 
@@ -41,10 +43,12 @@
 - project:
     name: lf-infra-global-jjb
     jobs:
+      - '{project-name}-rtd-jobs'
       - gerrit-tox-verify
 
     project-name: lf-infra-global-jjb
     project: releng/global-jjb
+    project-pattern: releng/global-jjb
     build-node: centos7-java-builder-2c-4g
     stream: master
 
