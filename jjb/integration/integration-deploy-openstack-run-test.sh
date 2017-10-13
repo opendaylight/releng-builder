@@ -466,7 +466,9 @@ EOF
         scp "${!CONTROLLERIP}:/tmp/odl${i}_zrpcd.log.tar" "${WORKSPACE}/odl${i}_zrpcd.log.tar"
         tar -xvf ${WORKSPACE}/odl${i}_karaf.log.tar -C . --strip-components 2 --transform s/karaf/odl${i}_karaf/g
         grep "ROBOT MESSAGE\| ERROR " odl${i}_karaf.log > odl${i}_err.log
-        grep "ROBOT MESSAGE\|Exception" odl${i}_karaf.log > odl${i}_exception.log
+        # Print ROBOT lines, Print Caused by...Exception: lines,
+        # Print Exception{ lines as well as the previous line that has the timestamp for context
+        sed -n -e '/ROBOT MESSAGE/P' -e '/Caused by.*Exception:/P' -e '$!N;/Exception{/P;D' odl${i}_karaf.log > odl${i}_exception.log
         grep "ROBOT MESSAGE\| ERROR \| WARN \|Exception" odl${i}_karaf.log > odl${i}_err_warn_exception.log
         rm ${WORKSPACE}/odl${i}_karaf.log.tar
     done
