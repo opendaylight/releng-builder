@@ -28,11 +28,14 @@
 - project:
     name: lf-infra-docs
     jobs:
+      - '{project-name}-rtd-jobs'
       - gerrit-tox-verify
 
     project-name: lf-infra-docs
     project: releng/docs
+    project-pattern: releng/docs
     build-node: centos7-java-builder-2c-4g
+    rtd-project: lf-releng-docs
     stream: master
 
     git-url: https://gerrit.linuxfoundation.org/infra/$GERRIT_PROJECT
@@ -41,11 +44,14 @@
 - project:
     name: lf-infra-global-jjb
     jobs:
+      - '{project-name}-rtd-jobs'
       - gerrit-tox-verify
 
     project-name: lf-infra-global-jjb
     project: releng/global-jjb
+    project-pattern: releng/global-jjb
     build-node: centos7-java-builder-2c-4g
+    rtd-project: lf-releng-global-jjb
     stream: master
 
     git-url: https://gerrit.linuxfoundation.org/infra/$GERRIT_PROJECT
