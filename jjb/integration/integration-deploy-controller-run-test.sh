@@ -15,11 +15,11 @@ if [ "${ENABLE_HAPROXY_FOR_NEUTRON}" == "yes" ]; then
 fi
 
 if [ ${CONTROLLERSCOPE} == 'all' ]; then
-    ACTUALFEATURES="odl-integration-compatible-with-all,${CONTROLLERFEATURES}"
+    ACTUALFEATURES="odl-infrautils-ready,odl-integration-compatible-with-all,${CONTROLLERFEATURES}"
     CONTROLLERMEM="3072m"
     COOLDOWN_PERIOD="180"
 else
-    ACTUALFEATURES="${CONTROLLERFEATURES}"
+    ACTUALFEATURES="odl-infrautils-ready,${CONTROLLERFEATURES}"
     COOLDOWN_PERIOD="60"
 fi
 

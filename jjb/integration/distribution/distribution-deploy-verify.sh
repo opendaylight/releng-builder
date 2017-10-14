@@ -1,5 +1,5 @@
 CONTROLLERMEM="3072m"
-ACTUALFEATURES="odl-integration-all"
+ACTUALFEATURES="odl-infrautils-ready,odl-integration-all"
 
 echo "Kill any controller running"
 ps axf | grep karaf | grep -v grep | awk '{print "kill -9 " $1}' | sh

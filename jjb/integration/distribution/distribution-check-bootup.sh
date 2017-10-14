@@ -1,6 +1,6 @@
 
 CONTROLLERMEM="3072m"
-ACTUALFEATURES="odl-integration-all"
+ACTUALFEATURES="odl-infrautils-ready,odl-integration-all"
 BUNDLEVERSION="$(xpath distribution/pom.xml '/project/version/text()' 2> /dev/null)"
 BUNDLEFOLDER="${KARAF_ARTIFACT}-${BUNDLEVERSION}"
 BUNDLE="${BUNDLEFOLDER}.zip"
