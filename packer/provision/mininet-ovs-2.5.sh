@@ -19,6 +19,12 @@ echo '---> Install OpenVSwitch 2.5.0'
 apt-get update -m
 apt-get install openvswitch-switch openvswitch-vtep
 
+# Temporary workaround required to bring up OVS
+# post-install without which OVS daemon exits.
+service openvswitch-switch restart
+# Verify the OVS service status
+service openvswitch-switch status
+
 echo '---> Installing mininet'
 apt-get install mininet
 
