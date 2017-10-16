@@ -46,7 +46,8 @@
           build-timeout: 60
       - devstack-pre-pip-pike:
           build-timeout: 75
-      - docker
+      - docker:
+          build-timeout: 60
       - gbp
       - java-builder:
           build-timeout: 75
