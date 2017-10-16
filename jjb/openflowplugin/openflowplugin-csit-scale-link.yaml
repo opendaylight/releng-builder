@@ -1,14 +1,14 @@
 ---
 - project:
-    name: openflowplugin-csit-link-scalability-daily
+    name: openflowplugin-csit-scale-link
     jobs:
-      - '{project}-csit-1node-periodic-{functionality}-{install}-{stream}'
+      - '{project}-csit-1node-{functionality}-{install}-{stream}'
 
     # The project name
     project: 'openflowplugin'
 
     # The functionality under test
-    functionality: 'link-scalability-daily'
+    functionality: 'scale-link'
 
     # Project branches
     stream:
