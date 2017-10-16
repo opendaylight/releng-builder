@@ -7,7 +7,8 @@
     project-name: lf-infra-ci-workshop
     project: releng/ci-workshop
     build-node: centos7-java-builder-2c-4g
-    stream: master
+    stream: any
+    branch: '*'
 
     git-url: https://gerrit.linuxfoundation.org/infra/$GERRIT_PROJECT
     gerrit-server-name: LinuxFoundation
@@ -20,7 +21,8 @@
     project-name: lf-infra-common-packer
     project: releng/common-packer
     build-node: centos7-java-builder-2c-4g
-    stream: master
+    stream: any
+    branch: '*'
 
     git-url: https://gerrit.linuxfoundation.org/infra/$GERRIT_PROJECT
     gerrit-server-name: LinuxFoundation
@@ -36,7 +38,8 @@
     project-pattern: releng/docs
     build-node: centos7-java-builder-2c-4g
     rtd-project: lf-releng-docs
-    stream: master
+    stream: any
+    branch: '*'
 
     git-url: https://gerrit.linuxfoundation.org/infra/$GERRIT_PROJECT
     gerrit-server-name: LinuxFoundation
@@ -52,7 +55,8 @@
     project-pattern: releng/global-jjb
     build-node: centos7-java-builder-2c-4g
     rtd-project: lf-releng-global-jjb
-    stream: master
+    stream: any
+    branch: '*'
 
     git-url: https://gerrit.linuxfoundation.org/infra/$GERRIT_PROJECT
     gerrit-server-name: LinuxFoundation
@@ -68,7 +72,8 @@
     project-pattern: releng/lftools
     build-node: centos7-java-builder-2c-4g
     rtd-project: lf-releng-tools
-    stream: master
+    stream: any
+    branch: '*'
 
     git-url: https://gerrit.linuxfoundation.org/infra/$GERRIT_PROJECT
     gerrit-server-name: LinuxFoundation
