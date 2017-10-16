@@ -7,6 +7,11 @@
     project: 'netvirt'
     stream: 'oxygen'
     branch: 'master'
+    testplan: '{project}-{topology}-openstack.txt'
+    odl-ml2-driver-version: 'v2'
+    enable-openstack-services: 'placement-api,tempest'
+    enable-openstack-compute-services: 'placement-client'
+    security-group-mode: 'stateful'
 
     topology:
       - 1node:
@@ -20,21 +25,14 @@
           enable-haproxy: 'yes'
           install-features: 'odl-jolokia,odl-netvirt-openstack'
 
-    testplan: '{project}-{topology}-openstack.txt'
-
     functionality:
-      - upstream-stateful:
-          sg-mode: 'stateful'
+      - upstream-stateful
       - upstream-stateful-snat-conntrack:
-          sg-mode: 'stateful'
           odl-snat-mode: 'conntrack'
-      - gate-stateful:
-          sg-mode: 'stateful'
+      - gate-stateful
       - gate-stateful-snat-conntrack:
-          sg-mode: 'stateful'
           odl-snat-mode: 'conntrack'
       - gate-minimal-cluster:
-          sg-mode: 'stateful'
           testplan: '{project}-{topology}-minimal-openstack.txt'
 
     openstack:
@@ -58,11 +56,6 @@
           odl-ml2-port-binding: 'pseudo-agentdb-binding'
           openstack_system_image: '{openstack_system_image_pike}'
           openstack_system2_image: '{openstack_system_image_pike}'
-
-    odl-ml2-driver-version: 'v2'
-    enable-openstack-services: 'placement-api,tempest'
-    enable-openstack-compute-services: 'placement-client'
-    security-group-mode: '{sg-mode}'
 
 - project:
     name: netvirt-csit-openstack-integration-nitrogen
@@ -72,6 +65,11 @@
     project: 'netvirt'
     stream: 'nitrogen'
     branch: 'stable/nitrogen'
+    testplan: '{project}-{topology}-openstack.txt'
+    odl-ml2-driver-version: 'v2'
+    enable-openstack-services: 'placement-api,tempest'
+    enable-openstack-compute-services: 'placement-client'
+    security-group-mode: 'stateful'
 
     topology:
       - 1node:
@@ -85,21 +83,14 @@
           enable-haproxy: 'yes'
           install-features: 'odl-jolokia,odl-netvirt-openstack'
 
-    testplan: '{project}-{topology}-openstack.txt'
-
     functionality:
-      - upstream-stateful:
-          sg-mode: 'stateful'
+      - upstream-stateful
       - upstream-stateful-snat-conntrack:
-          sg-mode: 'stateful'
           odl-snat-mode: 'conntrack'
-      - gate-stateful:
-          sg-mode: 'stateful'
+      - gate-stateful
       - gate-stateful-snat-conntrack:
-          sg-mode: 'stateful'
           odl-snat-mode: 'conntrack'
       - gate-minimal-cluster:
-          sg-mode: 'stateful'
           testplan: '{project}-{topology}-minimal-openstack.txt'
 
     openstack:
@@ -123,11 +114,6 @@
           odl-ml2-port-binding: 'pseudo-agentdb-binding'
           openstack_system_image: '{openstack_system_image_pike}'
           openstack_system2_image: '{openstack_system_image_pike}'
-
-    odl-ml2-driver-version: 'v2'
-    enable-openstack-services: 'placement-api,tempest'
-    enable-openstack-compute-services: 'placement-client'
-    security-group-mode: '{sg-mode}'
 
 - project:
     name: netvirt-csit-openstack-integration-carbon
@@ -138,6 +124,11 @@
     stream: 'carbon'
     branch: 'stable/carbon'
     karaf-version: karaf3
+    testplan: '{project}-{topology}-openstack.txt'
+    odl-ml2-driver-version: 'v2'
+    enable-openstack-services: 'placement-api,tempest'
+    enable-openstack-compute-services: 'placement-client'
+    security-group-mode: 'stateful'
 
     topology:
       - 1node:
@@ -151,18 +142,12 @@
           enable-haproxy: 'yes'
           install-features: 'odl-jolokia,odl-netvirt-openstack'
 
-    testplan: '{project}-{topology}-openstack.txt'
-
     functionality:
-      - upstream-stateful:
-          sg-mode: 'stateful'
+      - upstream-stateful
       - upstream-stateful-snat-conntrack:
-          sg-mode: 'stateful'
           odl-snat-mode: 'conntrack'
-      - gate-stateful:
-          sg-mode: 'stateful'
+      - gate-stateful
       - gate-stateful-snat-conntrack:
-          sg-mode: 'stateful'
           odl-snat-mode: 'conntrack'
 
     openstack:
@@ -180,17 +165,13 @@
           openstack_system_image: '{openstack_system_image_pike}'
           openstack_system2_image: '{openstack_system_image_pike}'
 
-    odl-ml2-driver-version: 'v2'
-    enable-openstack-services: 'placement-api,tempest'
-    enable-openstack-compute-services: 'placement-client'
-    security-group-mode: '{sg-mode}'
-
 - project:
     name: netvirt-csit-sfc-openstack-integration
     jobs:
       - '{project}-csit-{topology}-openstack-{openstack}-{functionality}-{stream}'
 
     project: 'netvirt'
+    security-group-mode: 'stateful'
 
     topology:
       - 1node:
@@ -223,5 +204,3 @@
           odl-ml2-port-binding: 'pseudo-agentdb-binding'
           openstack_system_image: '{openstack_system_image_pike}'
           openstack_system2_image: '{openstack_system_image_pike}'
-
-    security-group-mode: 'stateful'
