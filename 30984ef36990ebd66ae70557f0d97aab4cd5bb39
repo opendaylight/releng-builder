@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a245df4_6aa0e190",
+        "filename": "jjb/yangtools/yangtools.yaml",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-10-17T14:44:48Z",
+      "side": 1,
+      "message": "Not sure why verify-tox was added since YangTools does not have a tox.ini in their repo. This will cause Jenkins to always vote -1 because this job will fail.\n\nI will remove it and update the patch.",
+      "revId": "30984ef36990ebd66ae70557f0d97aab4cd5bb39",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a245df4_eabb31c2",
+        "filename": "jjb/yangtools/yangtools.yaml",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-10-17T14:44:48Z",
+      "side": 1,
+      "message": "maven-jobs group has a clm job so this should be removed.",
+      "revId": "30984ef36990ebd66ae70557f0d97aab4cd5bb39",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a245df4_0ab7a5d9",
+        "filename": "jjb/yangtools/yangtools.yaml",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-10-17T14:44:48Z",
+      "side": 1,
+      "message": "maven-jobs group contains a clm job so this should be removed.",
+      "revId": "30984ef36990ebd66ae70557f0d97aab4cd5bb39",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a245df4_aaaad96d",
+        "filename": "jjb/yangtools/yangtools.yaml",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-10-17T14:44:48Z",
+      "side": 1,
+      "message": "If we\u0027re adding the maven-jobs group the merge and verify job listed here become unnecessary. We should probably add the javadoc job too.",
+      "revId": "30984ef36990ebd66ae70557f0d97aab4cd5bb39",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
