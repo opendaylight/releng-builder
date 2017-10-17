@@ -428,6 +428,21 @@ EOF
     ${SSH} ${MGRIP} "sudo bash /tmp/deploy_ha_proxy.sh"
 } # configure_haproxy_for_neutron_requests()
 
+# Collect the list of files on the hosts
+function list_files () {
+    local ip=$1
+    local folder=$2
+    ${SSH} ${ip} "sudo find /etc > /tmp/find.etc.txt"
+    ${SSH} ${ip} "sudo find /opt/stack > /tmp/find.opt.stack.txt"
+    ${SSH} ${ip} "sudo find /var > /tmp/find.var.txt"
+    ${SSH} ${ip} "sudo find /var > /tmp/find2.txt"
+    rsync --rsync-path="sudo rsync" --list-only ssh ${ip}:/var/ > ${folder}/rsync.var.txt
+    scp ${ip}:/tmp/find.etc.txt ${folder}
+    scp ${ip}:/tmp/find.opt.stack.txt ${folder}
+    scp ${ip}:/tmp/find.var.txt ${folder}
+    scp ${ip}:/tmp/find2.txt ${folder}
+}
+
 function collect_logs () {
     set +e  # We do not want to create red dot just because something went wrong while fetching logs.
 
@@ -498,6 +513,7 @@ EOF
         scp ${!OSIP}:/tmp/get_devstack.sh.txt ${NODE_FOLDER}
         scp ${!OSIP}:/var/log/openvswitch/ovs-vswitchd.log ${NODE_FOLDER}
         scp ${!OSIP}:/var/log/openvswitch/ovsdb-server.log ${NODE_FOLDER}
+        list_files "${!OSIP}" "${NODE_FOLDER}"
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/etc/hosts ${NODE_FOLDER}
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/usr/lib/systemd/system/haproxy.service ${NODE_FOLDER}
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/audit/audit.log ${NODE_FOLDER}
