@@ -22,6 +22,30 @@
       "revId": "e17795eb1d754dfb56d05086a57a708cdb74fe8e",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a245df4_5e74bece",
+        "filename": "jjb/netvirt/netvirt-csit-multi-openstack.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2017-10-17T18:32:50Z",
+      "side": 1,
+      "message": "in the template - do you mean the integration-template or do you mean the releng-defaults? These values change depending on the openstack branch so I left them out. We could add make the pike/queens values the defaults in the releng-defaults and remove some of the values here. I wasn\u0027t sure though since there are other yamls using the defaults if we wanted to do that. I guess the other yamls would override the defaults thought.\n\nI could still see merging this patch here since it does tidy up the file. There really isn\u0027t any functional change here.",
+      "parentUuid": "9a245df4_9ee2b69d",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 35
+      },
+      "revId": "e17795eb1d754dfb56d05086a57a708cdb74fe8e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
