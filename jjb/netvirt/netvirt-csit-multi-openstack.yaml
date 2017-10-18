@@ -143,9 +143,11 @@
           install-features: 'odl-jolokia,odl-netvirt-openstack'
 
     functionality:
-      - upstream-stateful
+      - upstream-stateful:
+          schedule: '@daily'
       - upstream-stateful-snat-conntrack:
           odl-snat-mode: 'conntrack'
+          schedule: '@daily'
       - gate-stateful
       - gate-stateful-snat-conntrack:
           odl-snat-mode: 'conntrack'
