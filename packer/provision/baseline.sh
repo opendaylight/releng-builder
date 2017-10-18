@@ -440,6 +440,11 @@ all_systems() {
             echo "No extra steps for $FACTER_OS"
         ;;
     esac
+
+    # Update /etc/nss-switch.conf to map hostname with IP instead of using `localhost`
+    # from /etc/hosts which is required by some of the Java API's to avoid
+    # Java UnknownHostException: "Name or service not known" error.
+    sed -i "/^hosts:/s/$/ myhostname/" /etc/nsswitch.conf
 }
 
 echo "---> Attempting to detect OS"
