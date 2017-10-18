@@ -146,9 +146,11 @@
       - upstream-stateful
       - upstream-stateful-snat-conntrack:
           odl-snat-mode: 'conntrack'
+          schedule: '@daily'
       - gate-stateful
       - gate-stateful-snat-conntrack:
           odl-snat-mode: 'conntrack'
+          schedule: '@daily'
 
     openstack:
       - ocata:
