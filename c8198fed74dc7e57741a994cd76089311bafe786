@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9a245df4_a3b95f30",
+        "filename": "docs/jenkins.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 867,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2017-10-18T21:20:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a245df4_a18ddf7d",
+      "range": {
+        "startLine": 867,
+        "startChar": 0,
+        "endLine": 867,
+        "endChar": 14
+      },
+      "revId": "c8198fed74dc7e57741a994cd76089311bafe786",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a245df4_c193b3f8",
         "filename": "docs/jenkins.rst",
         "patchSetId": 1
@@ -90,6 +114,24 @@
       "side": 1,
       "message": "It will be the name of the job as described by the templates \u0026 project sections. The jjb-deploy job unfortunately does not support renaming jobs.\n\nCurious idea that should probably be discussed on the mailing list. If we add a {user} variable to all the job templates That is blank by default perhaps we could have the jjb-deploy job set {user} to something before pushing the job. That will then allow us to support parsing usernames and pushing unique job names to sandbox.",
       "parentUuid": "9a245df4_21bc4f69",
+      "revId": "c8198fed74dc7e57741a994cd76089311bafe786",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a245df4_43ace3ed",
+        "filename": "docs/jenkins.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 869,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2017-10-18T21:20:34Z",
+      "side": 1,
+      "message": "yeah, at this point it\u0027s one of our overall pain points\nin our sandbox. non-experienced users will push jobs with\nthe same names and overwrite each other. experienced users\nend up with garbage in their yaml\u0027s to make them unique and\nwe have to remember to remove it when pushing our final \ngerrit update.\n\neither way, nothing to do here I don\u0027t think.",
+      "parentUuid": "9a245df4_683f4426",
       "revId": "c8198fed74dc7e57741a994cd76089311bafe786",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
