@@ -78,6 +78,24 @@
     },
     {
       "key": {
+        "uuid": "9a245df4_683f4426",
+        "filename": "docs/jenkins.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 869,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-10-18T19:36:09Z",
+      "side": 1,
+      "message": "It will be the name of the job as described by the templates \u0026 project sections. The jjb-deploy job unfortunately does not support renaming jobs.\n\nCurious idea that should probably be discussed on the mailing list. If we add a {user} variable to all the job templates That is blank by default perhaps we could have the jjb-deploy job set {user} to something before pushing the job. That will then allow us to support parsing usernames and pushing unique job names to sandbox.",
+      "parentUuid": "9a245df4_21bc4f69",
+      "revId": "c8198fed74dc7e57741a994cd76089311bafe786",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a245df4_01eaeb0e",
         "filename": "jjb/global-jjb",
         "patchSetId": 1
