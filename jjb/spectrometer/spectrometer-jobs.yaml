@@ -4,8 +4,8 @@
     jobs:
       - '{project-name}-merge-rtd-{stream}'
       - '{project-name}-verify-node-{stream}'
-      - '{project-name}-verify-python-{stream}'
-      - 'spectrometer-deploy-webapp-master'
+      - gerrit-tox-verify
+      - spectrometer-deploy-webapp-master
 
     stream:
       - master:

@@ -3,8 +3,8 @@
     name: ovil
     jobs:
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-tox-{stream}'
       - '{project-name}-maven-jobs'
+      - gerrit-tox-verify
 
     project: ovil
     project-name: ovil
