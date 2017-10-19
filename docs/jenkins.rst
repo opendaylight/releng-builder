@@ -863,6 +863,13 @@ can push them to the Jenkins sandbox.
         # Don't push all jobs by omitting the final param! (ctrl+c to abort)
         jenkins-jobs --conf jenkins.ini update jjb/ <job-name>
 
+Alternatively, you can push a job to the Jenkins sandbox with a special comment in a
+releng/builder gerrit patch. The job will be based off of the code your patch is
+based upon. Meaning, if your patch is changing something related to the job you are
+pushing, those changes will exist in the sandbox job. The format of the comment is::
+
+        jjb-deploy <job name>
+
 Running Jobs
 ^^^^^^^^^^^^
 
