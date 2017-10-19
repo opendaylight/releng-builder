@@ -377,6 +377,8 @@
     builders:
       - autorelease-checkout-gerrit-patch
       - jacoco-nojava-workaround
+      - shell: "./scripts/list-project-dependencies.sh"
+      - autorelease-determine-merge-order
       - autorelease-generate-release-patches
       # In a perfect world projects should be releasing separately and we consume them
       # via a project that pulls the release bits from each project from Nexus.
@@ -410,6 +412,9 @@
           settings-type: cfp
           global-settings: global-settings
           global-settings-type: cfp
+      - shell: |
+          mkdir -p archives/
+          cp *.log $_
 
     publishers:
       - email-notification:
