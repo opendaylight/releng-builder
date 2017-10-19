@@ -12,7 +12,12 @@ echo "#################################################"
 AKKACONF=/tmp/${BUNDLEFOLDER}/configuration/initial/akka.conf
 MODULESCONF=/tmp/${BUNDLEFOLDER}/configuration/initial/modules.conf
 MODULESHARDSCONF=/tmp/${BUNDLEFOLDER}/configuration/initial/module-shards.conf
+FEATURESCONF=/tmp/${BUNDLEFOLDER}/etc/org.apache.karaf.features.cfg
+CUSTOMPROP=/tmp/${BUNDLEFOLDER}/etc/custom.properties
+LOGCONF=/tmp/${BUNDLEFOLDER}/etc/org.ops4j.pax.logging.cfg
+MEMCONF=/tmp/${BUNDLEFOLDER}/bin/setenv
 CONTROLLERMEM="2048m"
+
 
 if [ ${CONTROLLERSCOPE} == 'all' ]; then
     ACTUALFEATURES="odl-integration-compatible-with-all,${CONTROLLERFEATURES}"
@@ -71,30 +76,26 @@ echo "Extracting the new controller..."
 unzip -q ${BUNDLE}
 
 echo "Configuring the startup features..."
-FEATURESCONF=/tmp/${BUNDLEFOLDER}/etc/org.apache.karaf.features.cfg
-CUSTOMPROP=/tmp/${BUNDLEFOLDER}/etc/custom.properties
-sed -ie "s/\(featuresBoot=\|featuresBoot =\)/featuresBoot = ${ACTUALFEATURES},/g" \${FEATURESCONF}
-sed -ie "s%mvn:org.opendaylight.integration/features-integration-index/${BUNDLEVERSION}/xml/features%mvn:org.opendaylight.integration/features-integration-index/${BUNDLEVERSION}/xml/features,mvn:org.opendaylight.integration/features-integration-test/${BUNDLEVERSION}/xml/features,mvn:org.apache.karaf.decanter/apache-karaf-decanter/1.0.0/xml/features%g" \${FEATURESCONF}
-cat \${FEATURESCONF}
+sed -ie "s/\(featuresBoot=\|featuresBoot =\)/featuresBoot = ${ACTUALFEATURES},/g" ${FEATURESCONF}
+sed -ie "s%mvn:org.opendaylight.integration/features-integration-index/${BUNDLEVERSION}/xml/features%mvn:org.opendaylight.integration/features-integration-index/${BUNDLEVERSION}/xml/features,mvn:org.opendaylight.integration/features-integration-test/${BUNDLEVERSION}/xml/features,mvn:org.apache.karaf.decanter/apache-karaf-decanter/1.0.0/xml/features%g" ${FEATURESCONF}
+cat ${FEATURESCONF}
 
 echo "Configuring the log..."
-LOGCONF=/tmp/${BUNDLEFOLDER}/etc/org.ops4j.pax.logging.cfg
-sed -ie 's/log4j.appender.out.maxBackupIndex=10/log4j.appender.out.maxBackupIndex=1/g' \${LOGCONF}
+sed -ie 's/log4j.appender.out.maxBackupIndex=10/log4j.appender.out.maxBackupIndex=1/g' ${LOGCONF}
 # FIXME: Make log size limit configurable from build parameter.
-sed -ie 's/log4j.appender.out.maxFileSize=1MB/log4j.appender.out.maxFileSize=30GB/g' \${LOGCONF}
-cat \${LOGCONF}
+sed -ie 's/log4j.appender.out.maxFileSize=1MB/log4j.appender.out.maxFileSize=30GB/g' ${LOGCONF}
+cat ${LOGCONF}
 
 if [ "${ODL_ENABLE_L3_FWD}" == "yes" ]; then
   echo "Enable the l3.fwd in custom.properties.."
-  echo "ovsdb.l3.fwd.enabled=yes" >> \${CUSTOMPROP}
-  cat \${CUSTOMPROP}
+  echo "ovsdb.l3.fwd.enabled=yes" >> ${CUSTOMPROP}
+  cat ${CUSTOMPROP}
 fi
 
 echo "Configure java home and max memory..."
-MEMCONF=/tmp/${BUNDLEFOLDER}/bin/setenv
-sed -ie 's%^# export JAVA_HOME%export JAVA_HOME="\${JAVA_HOME:-${JAVA_HOME}}"%g' \${MEMCONF}
-sed -ie 's/JAVA_MAX_MEM="2048m"/JAVA_MAX_MEM="${CONTROLLERMEM}"/g' \${MEMCONF}
-cat \${MEMCONF}
+sed -ie 's%^# export JAVA_HOME%export JAVA_HOME="\${JAVA_HOME:-${JAVA_HOME}}"%g' ${MEMCONF}
+sed -ie 's/JAVA_MAX_MEM="2048m"/JAVA_MAX_MEM="${CONTROLLERMEM}"/g' ${MEMCONF}
+cat ${MEMCONF}
 
 echo "Set Java version"
 sudo /usr/sbin/alternatives --install /usr/bin/java java ${JAVA_HOME}/bin/java 1

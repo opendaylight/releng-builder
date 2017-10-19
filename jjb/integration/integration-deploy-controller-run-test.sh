@@ -5,6 +5,10 @@
 # shellcheck source=${ROBOT_VENV}/bin/activate disable=SC1091
 source ${ROBOT_VENV}/bin/activate
 
+FEATURESCONF=/tmp/${BUNDLEFOLDER}/etc/org.apache.karaf.features.cfg
+CUSTOMPROP=/tmp/${BUNDLEFOLDER}/etc/custom.properties
+LOGCONF=/tmp/${BUNDLEFOLDER}/etc/org.ops4j.pax.logging.cfg
+MEMCONF=/tmp/${BUNDLEFOLDER}/bin/setenv
 CONTROLLERMEM="2048m"
 
 if [ "${ENABLE_HAPROXY_FOR_NEUTRON}" == "yes" ]; then
@@ -51,9 +55,7 @@ echo "Extracting the new controller..."
 unzip -q ${BUNDLE}
 
 echo "Configuring the startup features..."
-FEATURESCONF=/tmp/${BUNDLEFOLDER}/etc/org.apache.karaf.features.cfg
-CUSTOMPROP=/tmp/${BUNDLEFOLDER}/etc/custom.properties
-sed -ie "s/\(featuresBoot=\|featuresBoot =\)/featuresBoot = ${ACTUALFEATURES},/g" \${FEATURESCONF}
+sed -ie "s/\(featuresBoot=\|featuresBoot =\)/featuresBoot = ${ACTUALFEATURES},/g" ${FEATURESCONF}
 
 FEATURE_INDEX_STRING="features-integration-index"
 FEATURE_TEST_STRING="features-integration-test"
@@ -62,21 +64,20 @@ if [[ "$KARAF_VERSION" == "karaf4" ]]; then
     FEATURE_TEST_STRING="features-test"
 fi
 
-sed -ie "s%mvn:org.opendaylight.integration/\${FEATURE_INDEX_STRING}/${BUNDLEVERSION}/xml/features%mvn:org.opendaylight.integration/\${FEATURE_INDEX_STRING}/${BUNDLEVERSION}/xml/features,mvn:org.opendaylight.integration/\${FEATURE_TEST_STRING}/${BUNDLEVERSION}/xml/features,mvn:org.apache.karaf.decanter/apache-karaf-decanter/1.0.0/xml/features%g" \${FEATURESCONF}
-cat \${FEATURESCONF}
+sed -ie "s%mvn:org.opendaylight.integration/\${FEATURE_INDEX_STRING}/${BUNDLEVERSION}/xml/features%mvn:org.opendaylight.integration/\${FEATURE_INDEX_STRING}/${BUNDLEVERSION}/xml/features,mvn:org.opendaylight.integration/\${FEATURE_TEST_STRING}/${BUNDLEVERSION}/xml/features,mvn:org.apache.karaf.decanter/apache-karaf-decanter/1.0.0/xml/features%g" ${FEATURESCONF}
+cat ${FEATURESCONF}
 
 if [ "${ODL_ENABLE_L3_FWD}" == "yes" ]; then
     echo "Enable the l3.fwd in custom.properties..."
-    echo "ovsdb.l3.fwd.enabled=yes" >> \${CUSTOMPROP}
+    echo "ovsdb.l3.fwd.enabled=yes" >> ${CUSTOMPROP}
 fi
-cat \${CUSTOMPROP}
+cat ${CUSTOMPROP}
 
 echo "Configuring the log..."
-LOGCONF=/tmp/${BUNDLEFOLDER}/etc/org.ops4j.pax.logging.cfg
-sed -ie 's/log4j.appender.out.maxBackupIndex=10/log4j.appender.out.maxBackupIndex=1/g' \${LOGCONF}
+sed -ie 's/log4j.appender.out.maxBackupIndex=10/log4j.appender.out.maxBackupIndex=1/g' ${LOGCONF}
 # FIXME: Make log size limit configurable from build parameter.
-sed -ie 's/log4j.appender.out.maxFileSize=1MB/log4j.appender.out.maxFileSize=30GB/g' \${LOGCONF}
-echo "log4j.logger.org.opendaylight.yangtools.yang.parser.repo.YangTextSchemaContextResolver = WARN" >> \${LOGCONF}
+sed -ie 's/log4j.appender.out.maxFileSize=1MB/log4j.appender.out.maxFileSize=30GB/g' ${LOGCONF}
+echo "log4j.logger.org.opendaylight.yangtools.yang.parser.repo.YangTextSchemaContextResolver = WARN" >> ${LOGCONF}
 # Add custom logging levels
 # CONTROLLERDEBUGMAP is expected to be a key:value map of space separated values like "module:level module2:level2"
 # where module is abbreviated and does not include org.opendaylight
@@ -86,17 +87,16 @@ if [ -n "${CONTROLLERDEBUGMAP}" ]; then
         module=\${kv%%:*}
         level=\${kv#*:}
         if [ -n \${module} ] && [ -n \${level} ]; then
-            echo "log4j.logger.org.opendaylight.\${module} = \${level}" >> \${LOGCONF}
+            echo "log4j.logger.org.opendaylight.\${module} = \${level}" >> ${LOGCONF}
         fi
     done
 fi
-cat \${LOGCONF}
+cat ${LOGCONF}
 
 echo "Configure java home and max memory..."
-MEMCONF=/tmp/${BUNDLEFOLDER}/bin/setenv
-sed -ie 's%^# export JAVA_HOME%export JAVA_HOME="\${JAVA_HOME:-${JAVA_HOME}}"%g' \${MEMCONF}
-sed -ie 's/JAVA_MAX_MEM="2048m"/JAVA_MAX_MEM="${CONTROLLERMEM}"/g' \${MEMCONF}
-cat \${MEMCONF}
+sed -ie 's%^# export JAVA_HOME%export JAVA_HOME="\${JAVA_HOME:-${JAVA_HOME}}"%g' ${MEMCONF}
+sed -ie 's/JAVA_MAX_MEM="2048m"/JAVA_MAX_MEM="${CONTROLLERMEM}"/g' ${MEMCONF}
+cat ${MEMCONF}
 
 echo "Listing all open ports on controller system..."
 netstat -pnatu
