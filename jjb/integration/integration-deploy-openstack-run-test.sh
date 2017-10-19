@@ -252,10 +252,6 @@ minimize_polling=True
 physical_network_mtus = ${PUBLIC_PHYSICAL_NETWORK}:1440
 path_mtu = 1490
 
-# workaround for port-status not working due to https://bugs.opendaylight.org/show_bug.cgi?id=9092
-[ml2_odl]
-odl_features=nothing
-
 [[post-config|/etc/neutron/dhcp_agent.ini]]
 [DEFAULT]
 force_metadata = True
