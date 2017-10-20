@@ -948,6 +948,11 @@ pushing, those changes will exist in the sandbox job. The format of the comment 
 
         jjb-deploy <job name>
 
+.. note::
+
+    Also note that wildcards can be used in <job name> which
+    will expand all jobs that exist for the pattern.
+
 Running Jobs
 ^^^^^^^^^^^^
 
