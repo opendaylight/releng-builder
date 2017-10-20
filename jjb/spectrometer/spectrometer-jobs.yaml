@@ -4,7 +4,8 @@
     jobs:
       - '{project-name}-node-jobs'
       - '{project-name}-python-jobs'
-      - '{project-name}-rtd-jobs'
+      - '{project-name}-rtd-jobs':
+          project-pattern: spectrometer
       - spectrometer-deploy-webapp-master
 
     stream:
