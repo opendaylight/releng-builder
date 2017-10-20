@@ -5,7 +5,6 @@
     project-name: integration-test
     test-branch: master
     jobs:
-      - '{project-name}-verify-tox-master'
       - 'integration-distribution-test-{stream}'
       - 'integration-sanity-test-{stream}'
       - 'integration-patch-test-{stream}'
@@ -13,6 +12,9 @@
       - 'integration-distribution-weekly-test-trigger-{stream}'
       - 'integration-distribution-high-frequency-test-trigger-{stream}'
       - 'integration-update-csit-tests-{stream}'
+      - gerrit-tox-verify:
+          branch: master
+          stream: master
 
     # CSIT Lists in releng-defaults.yaml
     stream:
