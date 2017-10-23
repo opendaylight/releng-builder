@@ -22,6 +22,30 @@
       "revId": "1a459a9bd6dc33ca4f12c8eedcd489cb60395914",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a245df4_4cba460b",
+        "filename": "jjb/autorelease/autorelease-projects.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-10-23T14:11:14Z",
+      "side": 1,
+      "message": "So the reason {jdk} does not get pulled from defaults is because {jdk} is also the name of the setting in the a regular job template. JJB does not appear to expand defaults if the job configuration and the default have the same name.\n\nA solution is to standardize on {java-version} which also exists in releng-defaults.yaml but would require updating existing templates to switch over.\n\n{jdk} is currently used anywhere the system java is configured so we should switch it everywhere to {java-version} if we need to differentiate the jdk and jre then I\u0027d suggestion switching all jre\u0027s to {java-runtime-version} for name consistency.\n\n[0] https://docs.openstack.org/infra/jenkins-job-builder/definition.html#job",
+      "parentUuid": "9a245df4_b15ebb74",
+      "range": {
+        "startLine": 38,
+        "startChar": 4,
+        "endLine": 38,
+        "endChar": 7
+      },
+      "revId": "1a459a9bd6dc33ca4f12c8eedcd489cb60395914",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
