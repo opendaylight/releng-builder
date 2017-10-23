@@ -23,7 +23,7 @@ if [ ${CONTROLLERSCOPE} == 'all' ]; then
     ACTUALFEATURES="odl-integration-compatible-with-all,${CONTROLLERFEATURES}"
     CONTROLLERMEM="3072m"
 else
-    ACTUALFEATURES="${CONTROLLERFEATURES}"
+    ACTUALFEATURES="odl-infrautils-ready,${CONTROLLERFEATURES}"
 fi
 # Some versions of jenkins job builder result in feature list containing spaces
 # and ending in newline. Remove all that.
