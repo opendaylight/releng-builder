@@ -3,14 +3,22 @@
 - job-template:
     name: 'autorelease-release-{stream}'
 
-    project-type: freestyle
-    node: centos7-autorelease-4c-16g
-    jdk: '{jdk}'
-    cron: 'H 0 * * *'
+    ############
+    # Defaults #
+    ############
 
-    # Default variable values
+    java-version: openjdk8
     mvn-version: mvn33
     extra-mvn-opts: ''
+
+    #####################
+    # Job Configuration #
+    #####################
+
+    project-type: freestyle
+    node: centos7-autorelease-4c-16g
+    jdk: '{java-version}'
+    cron: 'H 0 * * *'
 
     properties:
       - lf-infra-properties:
@@ -327,12 +335,22 @@
 
 - job-template:
     name: '{project-name}-validate-autorelease-{stream}'
-    disabled: false
 
+    ############
+    # Defaults #
+    ############
+
+    java-version: openjdk8
+
+    #####################
+    # Job Configuration #
+    #####################
+
+    disabled: false
     project-type: freestyle
     node: '{build-node}'
     concurrent: true
-    jdk: openjdk8
+    jdk: '{java-version}'
 
     properties:
       - lf-infra-properties:
