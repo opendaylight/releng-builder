@@ -22,8 +22,8 @@ cd /builder/openstack-hot || exit 1
 JOB_SUM=$(echo "$JOB_NAME" | sum | awk '{{ print $1 }}')
 VM_NAME="$JOB_SUM-$BUILD_NUMBER"
 
-OS_TIMEOUT=10  # Minutes to wait for OpenStack VM to come online
-STACK_RETRIES=3  # Number of times to retry creating a stack before fully giving up
+OS_TIMEOUT=15  # Minutes to wait for OpenStack VM to come online
+STACK_RETRIES=2  # Number of times to retry creating a stack before fully giving up
 STACK_SUCCESSFUL=false
 # seq X refers to waiting for X minutes for OpenStack to return
 # a status that is not CREATE_IN_PROGRESS before giving up.
