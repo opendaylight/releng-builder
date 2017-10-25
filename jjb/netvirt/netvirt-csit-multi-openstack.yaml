@@ -26,7 +26,7 @@
           install-features: 'odl-jolokia,odl-netvirt-openstack'
 
     functionality:
-      - upstream-stateful
+      - shague-wait-upstream-stateful
       - upstream-stateful-snat-conntrack:
           odl-snat-mode: 'conntrack'
       - gate-stateful
@@ -39,12 +39,12 @@
       - ocata:
           openstack-branch: 'stable/ocata'
           odl-ml2-branch: 'stable/ocata'
-          devstack-hash: '8cb43d098ca88ce57ec216423c009cccd07f1299'
+          devstack-hash: ''
           openstack_system_image: '{openstack_system_image_ocata}'
           openstack_system2_image: '{openstack_system_image_ocata}'
       - pike:
           openstack-branch: 'stable/pike'
-          devstack-hash: 'c2bb1020ac4f18df5aa90a13f3b6ee8eb2c15d65'
+          devstack-hash: ''
           odl-ml2-branch: 'stable/pike'
           odl-ml2-port-binding: 'pseudo-agentdb-binding'
           openstack_system_image: '{openstack_system_image_pike}'
@@ -143,7 +143,7 @@
           install-features: 'odl-jolokia,odl-netvirt-openstack'
 
     functionality:
-      - upstream-stateful:
+      - shague-wait-upstream-stateful:
           schedule: '@daily'
       - upstream-stateful-snat-conntrack:
           odl-snat-mode: 'conntrack'
@@ -156,7 +156,7 @@
       - ocata:
           openstack-branch: 'stable/ocata'
           odl-ml2-branch: 'stable/ocata'
-          devstack-hash: '8cb43d098ca88ce57ec216423c009cccd07f1299'
+          devstack-hash: ''
           openstack_system_image: '{openstack_system_image_ocata}'
           openstack_system2_image: '{openstack_system_image_ocata}'
       - pike:
