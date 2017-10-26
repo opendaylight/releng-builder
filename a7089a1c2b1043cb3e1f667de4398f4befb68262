@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "9a245df4_c37277e2",
+        "filename": "jjb/netvirt/quagga-build.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2017-10-26T07:09:30Z",
+      "side": 1,
+      "message": "You may want to fix these issue on zrpcd scripts. Please make sure you are using shebang \"!#/bin/bash\" run the script with bash or at least use bash explicitly while you want to use pushd/popd built-in commands, or Jenkins would call the default shell which \"/bin/sh\" leading to the below error.\n\nhttps://logs.opendaylight.org/sandbox/jenkins091/netvirt-quagga-ubuntu-carbon/8/console-timestamp.log.gz\n06:54:57  + pushd /tmp\n06:54:57  /w/workspace/netvirt-quagga-ubuntu-carbon/zrpcd/pkgsrc/dev_compile_script.sh: 54: /w/workspace/netvirt-quagga-ubuntu-carbon/zrpcd/pkgsrc/dev_compile_script.sh: pushd: not found\n\n[1.] https://github.com/6WIND/zrpcd/blob/master/pkgsrc/dev_compile_script.sh#L54",
+      "revId": "a7089a1c2b1043cb3e1f667de4398f4befb68262",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a245df4_034acfab",
         "filename": "jjb/netvirt/quagga-build.sh",
         "patchSetId": 3
