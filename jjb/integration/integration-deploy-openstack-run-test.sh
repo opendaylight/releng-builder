@@ -481,7 +481,7 @@ EOF
         grep "ROBOT MESSAGE\| ERROR " odl${i}_karaf.log > odl${i}_err.log
         # Print ROBOT lines, Print Caused by...Exception: lines,
         # Print Exception{ lines as well as the previous line that has the timestamp for context
-        sed -n -e '/ROBOT MESSAGE/P' -e '/Caused by.*Exception:/P' -e '$!N;/Exception{/P;D' odl${i}_karaf.log > odl${i}_exception.log
+        sed -n -e '/ROBOT MESSAGE/P' -e '/Caused by.*Exception:/P' -e '$!N;/Exception:/P;D' -e '$!N;/Exception{/P;D' odl${i}_karaf.log > odl${i}_exception.log
         grep "ROBOT MESSAGE\| ERROR \| WARN \|Exception" odl${i}_karaf.log > odl${i}_err_warn_exception.log
         rm ${WORKSPACE}/odl${i}_karaf.log.tar
     done
