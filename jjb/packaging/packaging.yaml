@@ -57,7 +57,7 @@
       - string:
           name: DOWNLOAD_URL
           # yamllint disable-line rule:line-length
-          default: 'https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/integration/distribution-karaf/0.6.0-Carbon/distribution-karaf-0.6.0-Carbon.tar.gz'
+          default: 'https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/integration/karaf/0.7.0/karaf-0.7.0.tar.gz'
           description: 'URL to ODL tarball artifact to repackage into RPM'
       - string:
           name: CHANGELOG_NAME
@@ -190,15 +190,21 @@
           properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/integration/karaf/0.7.0/karaf-0.7.0.tar.gz'
       - shell: !include-raw: build-rpm.sh
 
-      # Test Nitrogen multipatch zip (no parallel tarball available)
+      # Test Oxygen pre-release autorelease tarball
       - inject:
           # yamllint disable-line rule:line-length
-          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/org/opendaylight/integration/integration/distribution/karaf/0.7.1-SNAPSHOT/karaf-0.7.1-20171009.081353-13.zip'
+          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/autorelease-2011/org/opendaylight/integration/karaf/0.8.0/karaf-0.8.0.tar.gz'
       - shell: !include-raw: build-rpm.sh
 
-      # Test latest Nitrogen snapshot
+      # Test Oxygen multipatch zip (no parallel tarball available)
       - inject:
-          properties-content: 'STREAM=nitrogen'
+          # yamllint disable-line rule:line-length
+          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/org/opendaylight/integration/integration/distribution/karaf/0.8.0-SNAPSHOT/karaf-0.8.0-20171030.111310-56.zip'
+      - shell: !include-raw: build-rpm.sh
+
+      # Test latest Oxygen snapshot
+      - inject:
+          properties-content: 'STREAM=oxygen'
       - shell: !include-raw: build-rpm-snap.sh
 
     triggers:
@@ -245,16 +251,16 @@
 
     builders:
       # TODO: Install/test each RPM. Will require builder script changes.
-      # Test Carbon SR1 tarball
+      # Test Carbon SR2 tarball
       - inject:
           # yamllint disable-line rule:line-length
-          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/integration/distribution-karaf/0.6.1-Carbon/distribution-karaf-0.6.1-Carbon.tar.gz'
+          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/integration/distribution-karaf/0.6.2-Carbon/distribution-karaf-0.6.2-Carbon.tar.gz'
       - shell: !include-raw: build-rpm.sh
 
       # Test Carbon multipatch zip (no parallel tarball available)
       - inject:
           # yamllint disable-line rule:line-length
-          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/org/opendaylight/integration/integration/distribution/distribution-karaf/0.6.2-SNAPSHOT/distribution-karaf-0.6.2-20171009.100453-60.zip'
+          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/org/opendaylight/integration/integration/distribution/distribution-karaf/0.6.3-SNAPSHOT/distribution-karaf-0.6.3-20171027.223207-3.zip'
       - shell: !include-raw: build-rpm.sh
 
       # Test latest Carbon snapshot
@@ -271,7 +277,7 @@
       # Test Nitrogen multipatch zip (no parallel tarball available)
       - inject:
           # yamllint disable-line rule:line-length
-          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/org/opendaylight/integration/integration/distribution/karaf/0.7.1-SNAPSHOT/karaf-0.7.1-20171009.081353-13.zip'
+          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/org/opendaylight/integration/integration/distribution/karaf/0.7.1-SNAPSHOT/karaf-0.7.1-20171027.044826-22.zip'
       - shell: !include-raw: build-rpm.sh
 
       # Test latest Nitrogen snapshot
@@ -279,17 +285,16 @@
           properties-content: 'STREAM=nitrogen'
       - shell: !include-raw: build-rpm-snap.sh
 
-      # Test Oxygen tarball
-      # TODO: Change this to an autorelease build once available
+      # Test Oxygen pre-release autorelease tarball
       - inject:
           # yamllint disable-line rule:line-length
-          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/org/opendaylight/integration/karaf/0.8.0-SNAPSHOT/karaf-0.8.0-20171009.114003-676.tar.gz'
+          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/autorelease-2011/org/opendaylight/integration/karaf/0.8.0/karaf-0.8.0.tar.gz'
       - shell: !include-raw: build-rpm.sh
 
       # Test Oxygen multipatch zip (no parallel tarball available)
       - inject:
           # yamllint disable-line rule:line-length
-          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/org/opendaylight/integration/integration/distribution/karaf/0.8.0-SNAPSHOT/karaf-0.8.0-20171004.132827-33.zip'
+          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/org/opendaylight/integration/integration/distribution/karaf/0.8.0-SNAPSHOT/karaf-0.8.0-20171030.111310-56.zip'
       - shell: !include-raw: build-rpm.sh
 
       # Test latest Oxygen snapshot
