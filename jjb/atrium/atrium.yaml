@@ -2,9 +2,9 @@
 - project:
     name: atrium-oxygen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
       - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
@@ -24,12 +24,15 @@
     email-upstream: '[atrium]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: 9324f12310e6a
+
 - project:
     name: atrium-nitrogen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
       - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
@@ -49,12 +52,15 @@
     email-upstream: '[atrium]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: 9324f12310e6a
+
 - project:
     name: atrium-carbon
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
       - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
@@ -74,6 +80,9 @@
     dependencies: ''
     email-upstream: '[atrium]'
     archive-artifacts: ''
+
+    # Used by the release job
+    staging-profile-id: 9324f12310e6a
 
 - project:
     name: atrium-sonar
