@@ -143,7 +143,7 @@ USE_SCREEN=True
 SCREEN_LOGDIR=/opt/stack/data/log
 LOG_COLOR=False
 RECLONE=${RECLONE}
-CELLSV2_SETUP=singleconductor
+# CELLSV2_SETUP=singleconductor
 
 disable_all_services
 EOF
@@ -288,7 +288,7 @@ LOG_COLOR=False
 USE_SCREEN=True
 SCREEN_LOGDIR=/opt/stack/data/log
 RECLONE=${RECLONE}
-CELLSV2_SETUP=singleconductor
+# CELLSV2_SETUP=singleconductor
 
 disable_all_services
 EOF
@@ -529,16 +529,17 @@ EOF
         scp ${!OSIP}:/opt/stack/requirements/upper-constraints.txt ${NODE_FOLDER}
         scp ${!OSIP}:/opt/stack/tempest/etc/tempest.conf ${NODE_FOLDER}
         scp ${!OSIP}:/tmp/get_devstack.sh.txt ${NODE_FOLDER}
-        scp ${!OSIP}:/var/log/openvswitch/ovs-vswitchd.log ${NODE_FOLDER}
-        scp ${!OSIP}:/var/log/openvswitch/ovsdb-server.log ${NODE_FOLDER}
         scp ${!OSIP}:/var/log/httpd/keystone_access.log ${NODE_FOLDER}
         scp ${!OSIP}:/var/log/httpd/keystone.log ${NODE_FOLDER}
+        scp ${!OSIP}:/var/log/openvswitch/ovs-vswitchd.log ${NODE_FOLDER}
+        scp ${!OSIP}:/var/log/openvswitch/ovsdb-server.log ${NODE_FOLDER}
         list_files "${!OSIP}" "${NODE_FOLDER}"
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/etc/hosts ${NODE_FOLDER}
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/usr/lib/systemd/system/haproxy.service ${NODE_FOLDER}
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/audit/audit.log ${NODE_FOLDER}
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/dmesg.log ${NODE_FOLDER}
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/messages ${NODE_FOLDER}
+        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/rabbitmq ${NODE_FOLDER}
         rsync -avhe ssh ${!OSIP}:/opt/stack/logs/* ${NODE_FOLDER} # rsync to prevent copying of symbolic links
         scp extra_debug.sh ${!OSIP}:/tmp
         ${SSH} ${!OSIP} "bash /tmp/extra_debug.sh > /tmp/extra_debug.log"
@@ -820,11 +821,14 @@ done
 # compute exits and does not attempt to restart.
 # 180s is chosen because in test runs the control node usually finished in 17-20 minutes and the computes finished
 # in 17 minutes, so take the max difference of 3 minutes and the jobs should still finish around the same time.
-# This is the error seen in the compute n-cpu.log:
+# one of the following errors is seen in the compute n-cpu.log:
 # Unhandled error: NotAllowed: Connection.open: (530) NOT_ALLOWED - access to vhost 'nova_cell1' refused for user 'stackrabbit'
-# Compare that to this log in the control stack.log: sudo rabbitmqctl set_permissions -p nova_cell1 stackrabbit
-# echo "Sleeping for 180s to allow controller to create nova_cell1 before the computes need it"
-# sleep 180
+# AccessRefused: (0, 0): (403) ACCESS_REFUSED - Login was refused using authentication mechanism AMQPLAIN. For details see the broker logfile.
+# Compare that timestamp to this log in the control stack.log: sudo rabbitmqctl set_permissions -p nova_cell1 stackrabbit
+# If the n-cpu.log is earlier than the control stack.log timestamp then the failure condition is likely hit.
+# TODO: modify devstack to wait for rabbitmq to be available on the controller before starting nova-compute.
+echo "Sleeping for 360s to allow controller to create nova_cell1 before the computes need it"
+sleep 360
 
 for i in `seq 1 ${NUM_OPENSTACK_COMPUTE_NODES}`; do
     NUM_COMPUTES_PER_SITE=$((NUM_OPENSTACK_COMPUTE_NODES / NUM_OPENSTACK_SITES))
