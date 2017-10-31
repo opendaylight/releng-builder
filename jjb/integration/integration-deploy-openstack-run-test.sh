@@ -143,6 +143,7 @@ USE_SCREEN=True
 SCREEN_LOGDIR=/opt/stack/data/log
 LOG_COLOR=False
 RECLONE=${RECLONE}
+CELLSV2_SETUP=singleconductor
 
 disable_all_services
 EOF
@@ -287,6 +288,7 @@ LOG_COLOR=False
 USE_SCREEN=True
 SCREEN_LOGDIR=/opt/stack/data/log
 RECLONE=${RECLONE}
+CELLSV2_SETUP=singleconductor
 
 disable_all_services
 EOF
@@ -466,6 +468,13 @@ echo -e "\nsudo getenforce\n"
 sudo getenforce
 echo -e "\njournalctl > /tmp/journalctl.log\n"
 sudo journalctl > /tmp/journalctl.log
+echo -e "\nsudo systemctl status httpd\n"
+sudo systemctl status httpd
+echo -e "\nenv\n"
+env
+source /opt/stack/devstack/openrc admin admin
+echo -e "\nenv after openrc\n"
+env
 EOF
 
     sleep 5
@@ -498,6 +507,9 @@ EOF
         OSIP=OPENSTACK_CONTROL_NODE_${i}_IP
         NODE_FOLDER="control_${i}"
         mkdir -p ${NODE_FOLDER}
+        scp ${!OSIP}:/etc/keystone/keystone.conf ${NODE_FOLDER}
+        scp ${!OSIP}:/etc/keystone/keystone-uwsgi-admin.ini ${NODE_FOLDER}
+        scp ${!OSIP}:/etc/keystone/keystone-uwsgi-public.ini ${NODE_FOLDER}
         scp ${!OSIP}:/etc/kuryr/kuryr.conf ${NODE_FOLDER}
         scp ${!OSIP}:/etc/neutron/dhcp_agent.ini ${NODE_FOLDER}
         scp ${!OSIP}:/etc/neutron/metadata_agent.ini ${NODE_FOLDER}
@@ -506,16 +518,26 @@ EOF
         scp ${!OSIP}:/etc/neutron/plugins/ml2/ml2_conf.ini ${NODE_FOLDER}
         scp ${!OSIP}:/etc/neutron/services/loadbalancer/haproxy/lbaas_agent.ini ${NODE_FOLDER}
         scp ${!OSIP}:/etc/nova/nova.conf ${NODE_FOLDER}
+        scp ${!OSIP}:/etc/nova/nova-api-uwsgi.ini ${NODE_FOLDER}
+        scp ${!OSIP}:/etc/nova/nova_cell1.conf ${NODE_FOLDER}
+        scp ${!OSIP}:/etc/nova/nova-cpu.conf ${NODE_FOLDER}
+        scp ${!OSIP}:/etc/nova/placement-uwsgi.ini ${NODE_FOLDER}
+        scp ${!OSIP}:/etc/openstack/clouds.yaml ${NODE_FOLDER}
+        scp ${!OSIP}:/opt/stack/devstack/.stackenv ${NODE_FOLDER}
         scp ${!OSIP}:/opt/stack/devstack/nohup.out ${NODE_FOLDER}/stack.log
+        scp ${!OSIP}:/opt/stack/devstack/openrc ${NODE_FOLDER}
         scp ${!OSIP}:/opt/stack/requirements/upper-constraints.txt ${NODE_FOLDER}
         scp ${!OSIP}:/opt/stack/tempest/etc/tempest.conf ${NODE_FOLDER}
         scp ${!OSIP}:/tmp/get_devstack.sh.txt ${NODE_FOLDER}
         scp ${!OSIP}:/var/log/openvswitch/ovs-vswitchd.log ${NODE_FOLDER}
         scp ${!OSIP}:/var/log/openvswitch/ovsdb-server.log ${NODE_FOLDER}
+        scp ${!OSIP}:/var/log/httpd/keystone_access.log ${NODE_FOLDER}
+        scp ${!OSIP}:/var/log/httpd/keystone.log ${NODE_FOLDER}
         list_files "${!OSIP}" "${NODE_FOLDER}"
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/etc/hosts ${NODE_FOLDER}
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/usr/lib/systemd/system/haproxy.service ${NODE_FOLDER}
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/audit/audit.log ${NODE_FOLDER}
+        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/dmesg.log ${NODE_FOLDER}
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/messages ${NODE_FOLDER}
         rsync -avhe ssh ${!OSIP}:/opt/stack/logs/* ${NODE_FOLDER} # rsync to prevent copying of symbolic links
         scp extra_debug.sh ${!OSIP}:/tmp
@@ -533,7 +555,11 @@ EOF
         NODE_FOLDER="compute_${i}"
         mkdir -p ${NODE_FOLDER}
         scp ${!OSIP}:/etc/nova/nova.conf ${NODE_FOLDER}
+        scp ${!OSIP}:/etc/nova/nova-cpu.conf ${NODE_FOLDER}
+        scp ${!OSIP}:/etc/openstack/clouds.yaml ${NODE_FOLDER}
+        scp ${!OSIP}:/opt/stack/devstack/.stackenv ${NODE_FOLDER}
         scp ${!OSIP}:/opt/stack/devstack/nohup.out ${NODE_FOLDER}/stack.log
+        scp ${!OSIP}:/opt/stack/devstack/openrc ${NODE_FOLDER}
         scp ${!OSIP}:/opt/stack/requirements/upper-constraints.txt ${NODE_FOLDER}
         scp ${!OSIP}:/tmp/get_devstack.sh.txt ${NODE_FOLDER}
         scp ${!OSIP}:/var/log/openvswitch/ovs-vswitchd.log ${NODE_FOLDER}
@@ -571,6 +597,76 @@ EOF
         echo "tempest results not found in ${DEVSTACK_TEMPEST_DIR}/${TESTREPO}/0"
     fi
 } # collect_logs()
+
+# Following three functions are debugging helpers when debugging devstack changes.
+# Keeping them for now so we can simply call them when needed.
+ctrlhn=""
+comp1hn=""
+comp2hn=""
+function get_hostnames () {
+    set +e
+    local ctrlip=${OPENSTACK_CONTROL_NODE_1_IP}
+    local comp1ip=${OPENSTACK_COMPUTE_NODE_1_IP}
+    local comp2ip=${OPENSTACK_COMPUTE_NODE_2_IP}
+    ctrlhn=$(${SSH} ${ctrlip} "hostname")
+    comp1hn=$(${SSH} ${comp1ip} "hostname")
+    comp2hn=$(${SSH} ${comp2ip} "hostname")
+    echo "hostnames: ${ctrlhn}, ${comp1hn}, ${comp2hn}"
+    set -e
+}
+
+function check_firewall() {
+    set +e
+    echo $-
+    local ctrlip=${OPENSTACK_CONTROL_NODE_1_IP}
+    local comp1ip=${OPENSTACK_COMPUTE_NODE_1_IP}
+    local comp2ip=${OPENSTACK_COMPUTE_NODE_2_IP}
+
+    echo "check_firewall on control"
+    ${SSH} ${ctrlip} "
+        sudo systemctl status firewalld
+        sudo systemctl -l status iptables
+        sudo iptables --line-numbers -nvL
+    " || true
+    echo "check_firewall on compute 1"
+    ${SSH} ${comp1ip} "
+        sudo systemctl status firewalld
+        sudo systemctl -l status iptables
+        sudo iptables --line-numbers -nvL
+    " || true
+    echo "check_firewall on compute 2"
+    ${SSH} ${comp2ip} "
+        sudo systemctl status firewalld
+        sudo systemctl -l status iptables
+        sudo iptables --line-numbers -nvL
+    " || true
+}
+
+function get_service () {
+    set +e
+    local iter=$1
+    #local idx=$2
+    local ctrlip=${OPENSTACK_CONTROL_NODE_1_IP}
+    local comp1ip=${OPENSTACK_COMPUTE_NODE_1_IP}
+
+    #if [ ${idx} -eq 1 ]; then
+        if [ ${iter} -eq 1 ] || [ ${iter} -gt 16 ]; then
+            curl http://${ctrlip}:5000
+            curl http://${ctrlip}:35357
+            curl http://${ctrlip}/identity
+            ${SSH} ${ctrlip} "
+                source /opt/stack/devstack/openrc admin admin;
+                env
+                openstack configuration show --unmask;
+                openstack service list
+                openstack --os-cloud devstack-admin --os-region RegionOne compute service list
+                openstack hypervisor list;
+            " || true
+            check_firewall
+        fi
+    #fi
+    set -e
+}
 
 # if we are using the new netvirt impl, as determined by the feature name
 # odl-netvirt-openstack (note: old impl is odl-ovsdb-openstack) then we
@@ -616,7 +712,17 @@ CORE_OS_COMPUTE_SERVICES="n-cpu,odl-compute"
 
 cat > ${WORKSPACE}/disable_firewall.sh << EOF
 sudo systemctl stop firewalld
-sudo systemctl stop iptables
+# Open these ports to match the tutorial vms
+# http/https (80/443), samba (445), netbios (137,138,139)
+sudo iptables -I INPUT -p tcp -m multiport --dports 80,443,139,445 -j ACCEPT
+sudo iptables -I INPUT -p udp -m multiport --dports 137,138 -j ACCEPT
+# OpenStack services as well as vxlan tunnel ports 4789 and 9876
+# identity public/admin (5000/35357), ampq (5672), vnc (6080), nova (8774), glance (9292), neutron (9696)
+sudo sudo iptables -I INPUT -p tcp -m multiport --dports 5000,5672,6080,8774,9292,9696,35357 -j ACCEPT
+sudo sudo iptables -I INPUT -p udp -m multiport --dports 4789,9876 -j ACCEPT
+sudo iptables-save > /etc/sysconfig/iptables
+sudo systemctl restart iptables
+sudo iptables --line-numbers -nvL
 true
 EOF
 
@@ -643,6 +749,10 @@ if [ -n "${DEVSTACK_HASH}" ]; then
     git checkout ${DEVSTACK_HASH}
 fi
 git --no-pager log --pretty=format:'%h %<(13)%ar%<(13)%cr %<(20,trunc)%an%d %s\n%b' -n20
+echo "workaround: adjust wait from 60s to 1800s (30m)"
+sed -i 's/wait_for_compute 60/wait_for_compute 1800/g' /opt/stack/devstack/lib/nova
+# TODO: modify sleep 1 to sleep 60, search wait_for_compute, then first sleep 1
+# that would just reduce the number of logs in the compute stack.log
 EOF
 
 cat > "${WORKSPACE}/setup_host_cell_mapping.sh" << EOF
@@ -682,13 +792,16 @@ done
 
 for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
     CONTROLIP=OPENSTACK_CONTROL_NODE_${i}_IP
-    echo "Stack the control node ${i} of ${NUM_OPENSTACK_CONTROL_NODES}: ${CONTROLIP}"
+    echo "Configure the stack of the control node ${i} of ${NUM_OPENSTACK_CONTROL_NODES}: ${CONTROLIP}"
+    scp ${WORKSPACE}/disable_firewall.sh ${!CONTROLIP}:/tmp
+    ${SSH} ${!CONTROLIP} "sudo bash /tmp/disable_firewall.sh"
     create_etc_hosts ${!CONTROLIP}
     scp ${WORKSPACE}/hosts_file ${!CONTROLIP}:/tmp/hosts
     scp ${WORKSPACE}/get_devstack.sh ${!CONTROLIP}:/tmp
     ${SSH} ${!CONTROLIP} "bash /tmp/get_devstack.sh > /tmp/get_devstack.sh.txt 2>&1"
     create_control_node_local_conf ${!CONTROLIP} ${ODLMGRIP[$i]} "${ODL_OVS_MGRS[$i]}"
     scp ${WORKSPACE}/local.conf_control_${!CONTROLIP} ${!CONTROLIP}:/opt/stack/devstack/local.conf
+    echo "Stack the control node ${i} of ${NUM_OPENSTACK_CONTROL_NODES}: ${CONTROLIP}"
     ssh ${!CONTROLIP} "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
     ssh ${!CONTROLIP} "ps -ef | grep stack.sh"
     ssh ${!CONTROLIP} "ls -lrt /opt/stack/devstack/nohup.out"
@@ -700,24 +813,35 @@ for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
     fi
 done
 
+# This is a backup to the CELLSV2_SETUP=singleconductor workaround. Keeping it here as an easy lookup
+# if needed.
+# Let the control node get started to avoid a race condition where the computes start and try to access
+# the nova_cell1 on the control node before it is created. If that happens, the nova-compute service on the
+# compute exits and does not attempt to restart.
+# 180s is chosen because in test runs the control node usually finished in 17-20 minutes and the computes finished
+# in 17 minutes, so take the max difference of 3 minutes and the jobs should still finish around the same time.
+# This is the error seen in the compute n-cpu.log:
+# Unhandled error: NotAllowed: Connection.open: (530) NOT_ALLOWED - access to vhost 'nova_cell1' refused for user 'stackrabbit'
+# Compare that to this log in the control stack.log: sudo rabbitmqctl set_permissions -p nova_cell1 stackrabbit
+# echo "Sleeping for 180s to allow controller to create nova_cell1 before the computes need it"
+# sleep 180
+
 for i in `seq 1 ${NUM_OPENSTACK_COMPUTE_NODES}`; do
     NUM_COMPUTES_PER_SITE=$((NUM_OPENSTACK_COMPUTE_NODES / NUM_OPENSTACK_SITES))
     SITE_INDEX=$((((i - 1) / NUM_COMPUTES_PER_SITE) + 1)) # We need the site index to infer the control node IP for this compute
     COMPUTEIP=OPENSTACK_COMPUTE_NODE_${i}_IP
     CONTROLIP=OPENSTACK_CONTROL_NODE_${SITE_INDEX}_IP
-    echo "Stack the compute node ${i} of ${NUM_OPENSTACK_COMPUTE_NODES}: ${COMPUTEIP}"
+    echo "Configure the stack of the compute node ${i} of ${NUM_OPENSTACK_COMPUTE_NODES}: ${COMPUTEIP}"
+    scp ${WORKSPACE}/disable_firewall.sh "${!COMPUTEIP}:/tmp"
+    ${SSH} "${!COMPUTEIP}" "sudo bash /tmp/disable_firewall.sh"
     create_etc_hosts ${!COMPUTEIP} ${!CONTROLIP}
     scp ${WORKSPACE}/hosts_file ${!COMPUTEIP}:/tmp/hosts
     scp ${WORKSPACE}/get_devstack.sh  ${!COMPUTEIP}:/tmp
     ${SSH} ${!COMPUTEIP} "bash /tmp/get_devstack.sh > /tmp/get_devstack.sh.txt 2>&1"
-    create_compute_node_local_conf ${!COMPUTEIP} ${!CONTROLIP} ${ODLMGRIP[$SITE_INDEX]} "${ODL_OVS_MGRS[$SITE_INDEX]}"
-    scp ${WORKSPACE}/local.conf_compute_${!COMPUTEIP} ${!COMPUTEIP}:/opt/stack/devstack/local.conf
-    ssh ${!COMPUTEIP} "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
-    ssh ${!COMPUTEIP} "ps -ef | grep stack.sh"
-    os_node_list+=(${!COMPUTEIP})
-    # Workaround for https://review.openstack.org/#/c/491032/
-    # Modify upper-constraints to use libvirt-python 3.2.0
     if [ "${ODL_ML2_BRANCH}" == "stable/ocata" ]; then
+        echo "Updating requirements for ${ODL_ML2_BRANCH}"
+        echo "Workaround for https://review.openstack.org/#/c/491032/"
+        echo "Modify upper-constraints to use libvirt-python 3.2.0"
         ${SSH} ${!COMPUTEIP} "
             cd /opt/stack;
             git clone https://git.openstack.org/openstack/requirements;
@@ -726,6 +850,12 @@ for i in `seq 1 ${NUM_OPENSTACK_COMPUTE_NODES}`; do
             sed -i s/libvirt-python===2.5.0/libvirt-python===3.2.0/ upper-constraints.txt
         "
     fi
+    create_compute_node_local_conf ${!COMPUTEIP} ${!CONTROLIP} ${ODLMGRIP[$SITE_INDEX]} "${ODL_OVS_MGRS[$SITE_INDEX]}"
+    scp ${WORKSPACE}/local.conf_compute_${!COMPUTEIP} ${!COMPUTEIP}:/opt/stack/devstack/local.conf
+    echo "Stack the compute node ${i} of ${NUM_OPENSTACK_COMPUTE_NODES}: ${COMPUTEIP}"
+    ssh ${!COMPUTEIP} "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
+    ssh ${!COMPUTEIP} "ps -ef | grep stack.sh"
+    os_node_list+=(${!COMPUTEIP})
 done
 
 echo "nodelist: ${os_node_list[*]}"
@@ -749,6 +879,9 @@ elif [ \${ret} -eq 0 ]; then
 fi
 EOF
 
+# devstack debugging
+# get_hostnames
+
 # Check if the stacking is finished. Poll all nodes every 60s for one hour.
 iteration=0
 in_progress=1
@@ -761,6 +894,8 @@ while [ ${in_progress} -eq 1 ]; do
         scp ${os_node_list[index]}:/tmp/stack_progress .
         cat stack_progress
         stacking_status=`cat stack_progress`
+        # devstack debugging
+        # get_service "${iteration}" "${index}"
         if [ "$stacking_status" == "Still Stacking" ]; then
             continue
         elif [ "$stacking_status" == "Stacking Failed" ]; then
@@ -795,17 +930,6 @@ for i in `seq 1 ${NUM_OPENSTACK_SITES}`; do
         IP_VAR=OPENSTACK_COMPUTE_NODE_${COMPUTE_INDEX}_IP
         COMPUTE_IPS[$((j-1))]=${!IP_VAR}
     done
-
-    # Need to disable firewalld and iptables in compute nodes as well
-    for ip in ${COMPUTE_IPS[*]}; do
-        scp ${WORKSPACE}/disable_firewall.sh "${ip}:/tmp"
-        ${SSH} "${ip}" "sudo bash /tmp/disable_firewall.sh"
-    done
-
-    #Need to disable firewalld and iptables in control node
-    echo "Stop Firewall in Control Node for compute nodes to be able to reach the ports and add to hypervisor-list"
-    scp ${WORKSPACE}/disable_firewall.sh ${!CONTROLIP}:/tmp
-    ${SSH} ${!CONTROLIP} "sudo bash /tmp/disable_firewall.sh"
 
     echo "sleep for 60s and print hypervisor-list"
     sleep 60
@@ -845,12 +969,6 @@ for i in `seq 1 ${NUM_OPENSTACK_SITES}`; do
         COMPUTE_INDEX=$(((i-1) * NUM_COMPUTES_PER_SITE + j))
         IP_VAR=OPENSTACK_COMPUTE_NODE_${COMPUTE_INDEX}_IP
         COMPUTE_IPS[$((j-1))]=${!IP_VAR}
-    done
-
-    # Need to disable firewalld and iptables in compute nodes as well
-    for ip in ${COMPUTE_IPS[*]}; do
-        scp ${WORKSPACE}/disable_firewall.sh "${ip}:/tmp"
-        ${SSH} "${ip}" "sudo bash /tmp/disable_firewall.sh"
     done
 
     # External Network
@@ -961,12 +1079,7 @@ if [ -z "${SUITES}" ]; then
     SUITES=`egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' testplan.txt | tr '\012' ' '`
 fi
 
-if [ "${OPENSTACK_BRANCH}" == "stable/pike" ] || [ "${OPENSTACK_BRANCH}" == "master" ]; then
-   AUTH="http://${!CONTROLIP}/identity"
-else
-   AUTH="http://${!CONTROLIP}:35357/v3"
-fi
-
+# TODO: run openrc on control node and then scrape the vars from it
 # Environment Variables Needed to execute Openstack Client for NetVirt Jobs
 cat > /tmp/os_netvirt_client_rc << EOF
 export OS_USERNAME=admin
@@ -974,7 +1087,7 @@ export OS_PASSWORD=admin
 export OS_PROJECT_NAME=admin
 export OS_USER_DOMAIN_NAME=default
 export OS_PROJECT_DOMAIN_NAME=default
-export OS_AUTH_URL=${AUTH}
+export OS_AUTH_URL="http://${!CONTROLIP}/identity"
 export OS_IDENTITY_API_VERSION=3
 export OS_IMAGE_API_VERSION=2
 export OS_TENANT_NAME=admin
