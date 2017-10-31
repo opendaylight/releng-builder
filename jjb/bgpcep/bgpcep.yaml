@@ -2,12 +2,10 @@
 - project:
     name: bgpcep-oxygen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
-      - gerrit-maven-verify-dependencies
 
     stream: oxygen
     project: 'bgpcep'
@@ -31,14 +29,16 @@
     email-upstream: '[bgpcep] [odlparent] [yangtools] [controller] [mdsal] [tcpmd5]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: 9427a05049030
+
 - project:
     name: bgpcep-nitrogen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: nitrogen
     project: 'bgpcep'
@@ -62,14 +62,16 @@
     email-upstream: '[bgpcep] [odlparent] [yangtools] [controller] [mdsal] [tcpmd5]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: 9427a05049030
+
 - project:
     name: bgpcep-carbon
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: carbon
     project: 'bgpcep'
@@ -93,6 +95,9 @@
         tcpmd5-merge-{stream}
     email-upstream: '[bgpcep] [odlparent] [yangtools] [controller] [mdsal] [tcpmd5]'
     archive-artifacts: ''
+
+    # Used by the release job
+    staging-profile-id: 9427a05049030
 
 - project:
     name: bgpcep-sonar
