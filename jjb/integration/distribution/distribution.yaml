@@ -3,14 +3,14 @@
 - project:
     name: distribution
     jobs:
-      # {project-name}- is generic template, distribution- is project specific.
-      - '{project-name}-clm-{stream}'
-      - '{project-name}-sonar'
+      # gerrit- is generic template, distribution- is project specific.
       - 'distribution-merge-{stream}'
       - 'distribution-verify-{stream}'
       - 'distribution-deploy-{stream}'
       - 'distribution-offline-{stream}'
       - 'distribution-check-{stream}'
+      - gerrit-maven-clm
+      - gerrit-maven-sonar
       - gerrit-tox-verify
 
     project: integration/distribution
