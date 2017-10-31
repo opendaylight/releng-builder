@@ -34,6 +34,24 @@
       "revId": "8916e5134a28c1ac95c2fa124cc7fbe72be649c8",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a245df4_a3780cf3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-10-31T19:13:45Z",
+      "side": 1,
+      "message": "I\u0027m saying that lines 13, 15 and 16 should have no blank line between them. The last block of text that up until a blank line is considered a metadata footer in a lot of git tools.\n\nThis is why if you\u0027ve ever amended a commit and accidentally put a blank line between Change-Id and Signed-off-by you\u0027ll notice that Gerrit will assign you a new Change-Id field and assume it\u0027s a new patch rather than the same patch.",
+      "parentUuid": "9a245df4_60a44aa6",
+      "revId": "8916e5134a28c1ac95c2fa124cc7fbe72be649c8",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
