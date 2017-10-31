@@ -2,12 +2,10 @@
 - project:
     name: l2switch-oxygen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
-      - gerrit-maven-verify-dependencies
 
     stream: oxygen
     project: 'l2switch'
@@ -30,14 +28,16 @@
     email-upstream: '[l2switch] [odlparent] [yangtools] [controller] [openflowjava] [openflowplugin]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: 96fee85953ca0
+
 - project:
     name: l2switch-nitrogen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: nitrogen
     project: 'l2switch'
@@ -60,14 +60,16 @@
     email-upstream: '[l2switch] [odlparent] [yangtools] [controller] [openflowjava] [openflowplugin]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: 96fee85953ca0
+
 - project:
     name: l2switch-carbon
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: carbon
     project: 'l2switch'
@@ -90,6 +92,9 @@
         openflowplugin-merge-{stream}
     email-upstream: '[l2switch] [odlparent] [yangtools] [controller] [openflowjava] [openflowplugin]'
     archive-artifacts: ''
+
+    # Used by the release job
+    staging-profile-id: 96fee85953ca0
 
 - project:
     name: l2switch-sonar
