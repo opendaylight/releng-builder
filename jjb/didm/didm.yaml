@@ -2,11 +2,10 @@
 - project:
     name: didm-oxygen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: oxygen
     project: 'didm'
@@ -24,14 +23,16 @@
     email-upstream: '[didm]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: 96e6338c870f5
+
 - project:
     name: didm-nitrogen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: nitrogen
     project: 'didm'
@@ -49,14 +50,16 @@
     email-upstream: '[didm]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: 96e6338c870f5
+
 - project:
     name: didm-carbon
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: carbon
     project: 'didm'
@@ -74,6 +77,9 @@
     dependencies: ''
     email-upstream: '[didm]'
     archive-artifacts: ''
+
+    # Used by the release job
+    staging-profile-id: 96e6338c870f5
 
 - project:
     name: didm-sonar
