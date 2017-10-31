@@ -2,12 +2,10 @@
 - project:
     name: coe-oxygen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
-      - gerrit-maven-verify-dependencies
 
     project: 'coe'
     project-name: 'coe'
@@ -25,14 +23,16 @@
     email-upstream: '[coe] [odlparent] [yangtools] [controller]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: 96c0be46aac33
+
 - project:
     name: coe-nitrogen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     project: 'coe'
     project-name: 'coe'
@@ -50,13 +50,15 @@
     email-upstream: '[coe] [odlparent] [yangtools] [controller]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: 96c0be46aac33
+
 - project:
     name: coe-carbon
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     project: 'coe'
     project-name: 'coe'
@@ -74,6 +76,9 @@
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
     email-upstream: '[coe] [odlparent] [yangtools] [controller]'
     archive-artifacts: ''
+
+    # Used by the release job
+    staging-profile-id: 96c0be46aac33
 
 - project:
     name: coe-sonar
