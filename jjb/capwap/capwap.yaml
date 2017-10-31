@@ -2,11 +2,10 @@
 - project:
     name: capwap-oxygen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: oxygen
     project: 'capwap'
@@ -24,14 +23,16 @@
     email-upstream: '[capwap]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: 96bd6b5bf86e3
+
 - project:
     name: capwap-nitrogen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: nitrogen
     project: 'capwap'
@@ -49,14 +50,16 @@
     email-upstream: '[capwap]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: 96bd6b5bf86e3
+
 - project:
     name: capwap-carbon
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: carbon
     project: 'capwap'
@@ -74,6 +77,9 @@
     dependencies: ''
     email-upstream: '[capwap]'
     archive-artifacts: ''
+
+    # Used by the release job
+    staging-profile-id: 96bd6b5bf86e3
 
 - project:
     name: capwap
