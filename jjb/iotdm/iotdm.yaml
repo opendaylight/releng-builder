@@ -2,11 +2,10 @@
 - project:
     name: iotdm-oxygen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: oxygen
     project: 'iotdm'
@@ -24,14 +23,16 @@
     email-upstream: '[iotdm] [aaa]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: 96fd6e9453970
+
 - project:
     name: iotdm-nitrogen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: nitrogen
     project: 'iotdm'
@@ -49,14 +50,16 @@
     email-upstream: '[iotdm] [aaa]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: 96fd6e9453970
+
 - project:
     name: iotdm-carbon
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: carbon
     project: 'iotdm'
@@ -74,6 +77,9 @@
     dependencies: 'aaa-merge-{stream}'
     email-upstream: '[iotdm] [aaa]'
     archive-artifacts: ''
+
+    # Used by the release job
+    staging-profile-id: 96fd6e9453970
 
 - project:
     name: iotdm-sonar
