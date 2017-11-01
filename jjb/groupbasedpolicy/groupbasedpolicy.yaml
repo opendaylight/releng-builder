@@ -2,12 +2,10 @@
 - project:
     name: groupbasedpolicy-oxygen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
-      - gerrit-maven-verify-dependencies
 
     stream: oxygen
     project: 'groupbasedpolicy'
@@ -30,14 +28,16 @@
     email-upstream: '[groupbasedpolicy] [openflowjava] [openflowplugin] [neutron] [sfc] [ovsdb]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: 96fbb93f95a76
+
 - project:
     name: groupbasedpolicy-nitrogen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: nitrogen
     project: 'groupbasedpolicy'
@@ -60,14 +60,16 @@
     email-upstream: '[groupbasedpolicy] [openflowjava] [openflowplugin] [neutron] [sfc] [ovsdb]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: 96fbb93f95a76
+
 - project:
     name: groupbasedpolicy-carbon
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: carbon
     project: 'groupbasedpolicy'
@@ -90,6 +92,9 @@
         ovsdb-merge-{stream}
     email-upstream: '[groupbasedpolicy] [openflowjava] [openflowplugin] [neutron] [sfc] [ovsdb]'
     archive-artifacts: ''
+
+    # Used by the release job
+    staging-profile-id: 96fbb93f95a76
 
 - project:
     name: groupbasedpolicy-sonar
