@@ -2,11 +2,10 @@
 - project:
     name: centinel-oxygen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: oxygen
     project: 'centinel'
@@ -24,14 +23,16 @@
     email-upstream: '[centinel]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: 96bf9b3fefd8a
+
 - project:
     name: centinel-nitrogen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: nitrogen
     project: 'centinel'
@@ -49,14 +50,16 @@
     email-upstream: '[centinel]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: 96bf9b3fefd8a
+
 - project:
     name: centinel-carbon
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: carbon
     project: 'centinel'
@@ -74,6 +77,9 @@
     dependencies: ''
     email-upstream: '[centinel]'
     archive-artifacts: ''
+
+    # Used by the release job
+    staging-profile-id: 96bf9b3fefd8a
 
 - project:
     name: centinel-sonar
