@@ -2,12 +2,10 @@
 - project:
     name: alto-oxygen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
-      - gerrit-maven-verify-dependencies
 
     stream: oxygen
     project: 'alto'
@@ -25,14 +23,16 @@
     email-upstream: '[alto] [l2switch]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: 931eabae9693c
+
 - project:
     name: alto-nitrogen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: nitrogen
     project: 'alto'
@@ -50,14 +50,16 @@
     email-upstream: '[alto] [l2switch]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: 931eabae9693c
+
 - project:
     name: alto-carbon
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: carbon
     project: 'alto'
@@ -75,6 +77,9 @@
     dependencies: 'l2switch-merge-{stream}'
     email-upstream: '[alto] [l2switch]'
     archive-artifacts: ''
+
+    # Used by the release job
+    staging-profile-id: 931eabae9693c
 
 - project:
     name: alto-sonar
