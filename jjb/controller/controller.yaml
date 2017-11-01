@@ -2,13 +2,11 @@
 - project:
     name: controller-oxygen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
-      - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-maven-javadoc-jobs'
-      - gerrit-maven-verify-dependencies
+      - '{project-name}-merge-{stream}'
 
     stream: oxygen
     project: 'controller'
@@ -26,14 +24,16 @@
     email-upstream: '[controller] [odlparent] [yangtools] [aaa]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: 96c1c9177efdd
+
 - project:
     name: controller-nitrogen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: nitrogen
     project: 'controller'
@@ -51,14 +51,16 @@
     email-upstream: '[controller] [odlparent] [yangtools] [aaa]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: 96c1c9177efdd
+
 - project:
     name: controller-carbon
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: carbon
     project: 'controller'
@@ -76,6 +78,9 @@
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},aaa-merge-{stream}'
     email-upstream: '[controller] [odlparent] [yangtools] [aaa]'
     archive-artifacts: ''
+
+    # Used by the release job
+    staging-profile-id: 96c1c9177efdd
 
 - project:
     name: controller-sonar
