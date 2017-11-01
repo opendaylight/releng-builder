@@ -2,12 +2,10 @@
 - project:
     name: lispflowmapping-oxygen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
-      - gerrit-maven-verify-dependencies
 
     stream: oxygen
     project: 'lispflowmapping'
@@ -26,14 +24,16 @@
     archive-artifacts: ''
     build-node: centos7-java-builder-4c-8g
 
+    # Used by the release job
+    staging-profile-id: 96fff2503b766
+
 - project:
     name: lispflowmapping-nitrogen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: nitrogen
     project: 'lispflowmapping'
@@ -52,14 +52,16 @@
     archive-artifacts: ''
     build-node: centos7-java-builder-4c-8g
 
+    # Used by the release job
+    staging-profile-id: 96fff2503b766
+
 - project:
     name: lispflowmapping-carbon
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: carbon
     project: 'lispflowmapping'
@@ -78,6 +80,9 @@
     email-upstream: '[lispflowmapping] [controller] [odlparent] [yangtools] [neutron]'
     archive-artifacts: ''
     build-node: centos7-java-builder-4c-8g
+
+    # Used by the release job
+    staging-profile-id: 96fff2503b766
 
 - project:
     name: lispflowmapping-sonar
