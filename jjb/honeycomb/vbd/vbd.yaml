@@ -2,12 +2,10 @@
 - project:
     name: vbd-oxygen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
-      - gerrit-maven-verify-dependencies
 
     stream: oxygen
     project: 'honeycomb/vbd'
@@ -25,14 +23,16 @@
     email-upstream: '[vbd]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: 96fc362c36862
+
 - project:
     name: vbd-nitrogen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: nitrogen
     project: 'honeycomb/vbd'
@@ -50,14 +50,16 @@
     email-upstream: '[vbd]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: 96fc362c36862
+
 - project:
     name: vbd-carbon
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: carbon
     project: 'honeycomb/vbd'
@@ -75,6 +77,9 @@
     dependencies: ''
     email-upstream: '[vbd]'
     archive-artifacts: ''
+
+    # Used by the release job
+    staging-profile-id: 96fc362c36862
 
 - project:
     name: vbd-sonar
