@@ -2,10 +2,9 @@
 - project:
     name: coretutorials-oxygen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: oxygen
     project: 'coretutorials'
@@ -23,13 +22,15 @@
     email-upstream: '[coretutorials]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: 96cd299563ec6
+
 - project:
     name: coretutorials-nitrogen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: nitrogen
     project: 'coretutorials'
@@ -47,13 +48,15 @@
     email-upstream: '[coretutorials]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: 96cd299563ec6
+
 - project:
     name: coretutorials-carbon
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: carbon
     project: 'coretutorials'
@@ -71,6 +74,9 @@
     dependencies: ''
     email-upstream: '[coretutorials]'
     archive-artifacts: ''
+
+    # Used by the release job
+    staging-profile-id: 96cd299563ec6
 
 - project:
     name: coretutorials-sonar
