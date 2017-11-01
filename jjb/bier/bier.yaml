@@ -2,12 +2,10 @@
 - project:
     name: bier-oxygen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
-      - gerrit-maven-verify-dependencies
 
     stream: oxygen
     project: 'bier'
@@ -25,14 +23,16 @@
     email-upstream: '[bier]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: 942a8075b1f2a
+
 - project:
     name: bier-nitrogen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: nitrogen
     project: 'bier'
@@ -50,14 +50,16 @@
     email-upstream: '[bier]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: 942a8075b1f2a
+
 - project:
     name: bier-carbon
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: carbon
     project: 'bier'
@@ -75,6 +77,9 @@
     dependencies: ''
     email-upstream: '[bier]'
     archive-artifacts: ''
+
+    # Used by the release job
+    staging-profile-id: 942a8075b1f2a
 
 - project:
     name: bier-sonar
