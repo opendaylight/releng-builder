@@ -2,12 +2,10 @@
 - project:
     name: dluxapps-oxygen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
-      - gerrit-maven-verify-dependencies
 
     project: 'dluxapps'
     project-name: 'dluxapps'
@@ -25,14 +23,16 @@
     email-upstream: '[dluxapps] [odlparent] [yangtools] [controller]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: 96e6fb1e65bf9
+
 - project:
     name: dluxapps-nitrogen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     project: 'dluxapps'
     project-name: 'dluxapps'
@@ -50,14 +50,16 @@
     email-upstream: '[dluxapps] [odlparent] [yangtools] [controller]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: 96e6fb1e65bf9
+
 - project:
     name: dluxapps-carbon
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     project: 'dluxapps'
     project-name: 'dluxapps'
@@ -75,6 +77,9 @@
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
     email-upstream: '[dluxapps] [odlparent] [yangtools] [controller]'
     archive-artifacts: ''
+
+    # Used by the release job
+    staging-profile-id: 96e6fb1e65bf9
 
 - project:
     name: dluxapps-sonar
