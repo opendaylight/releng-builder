@@ -479,6 +479,12 @@ EOF
     # FIXME: Do not create .tar and gzip before copying.
     for i in `seq 1 ${NUM_ODL_SYSTEM}`; do
         CONTROLLERIP=ODL_SYSTEM_${i}_IP
+        NODE_FOLDER="odl_${i}"
+        ${SSH} "${!CONTROLLERIP}"  "journalctl > /tmp/journalctl.log"
+        scp "${!CONTROLLERIP}:/tmp/journalctl.log" ${NODE_FOLDER}
+        ${SSH} "${!CONTROLLERIP}"  "dmesg -T > /tmp/dmesg.log"
+        scp "${!CONTROLLERIP}:/tmp/dmesg.log" ${NODE_FOLDER}
+        rsync --rsync-path="sudo rsync" -avhe ssh ${!CONTROLLERIP}:/tmp/${BUNDLEFOLDER}/ ${NODE_FOLDER}
         ${SSH} "${!CONTROLLERIP}"  "cp -r /tmp/${BUNDLEFOLDER}/data/log /tmp/odl_log"
         ${SSH} "${!CONTROLLERIP}"  "tar -cf /tmp/odl${i}_karaf.log.tar /tmp/odl_log/*"
         scp "${!CONTROLLERIP}:/tmp/odl${i}_karaf.log.tar" "${WORKSPACE}/odl${i}_karaf.log.tar"
