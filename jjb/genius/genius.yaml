@@ -2,13 +2,11 @@
 - project:
     name: genius-oxygen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
-      - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-maven-javadoc-jobs'
-      - gerrit-maven-verify-dependencies
+      - '{project-name}-merge-{stream}'
 
     stream: oxygen
     project: 'genius'
@@ -31,14 +29,16 @@
     email-upstream: '[genius] [controller] [yangtools] [odlparent] [openflowplugin] [neutron]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: 96fb4b6d9d1ee
+
 - project:
     name: genius-nitrogen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: nitrogen
     project: 'genius'
@@ -61,14 +61,16 @@
     email-upstream: '[genius] [controller] [yangtools] [odlparent] [openflowplugin] [neutron]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: 96fb4b6d9d1ee
+
 - project:
     name: genius-carbon
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: carbon
     project: 'genius'
@@ -91,6 +93,9 @@
         neutron-merge-{stream}
     email-upstream: '[genius] [controller] [yangtools] [odlparent] [openflowplugin] [neutron]'
     archive-artifacts: ''
+
+    # Used by the release job
+    staging-profile-id: 96fb4b6d9d1ee
 
 - project:
     name: genius-sonar
