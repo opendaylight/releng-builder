@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a245df4_bfef7486",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2017-11-02T15:50:59Z",
+      "side": 1,
+      "message": "in a cleanup patch we should make this common across the odl and openstack nodes:\n\n- some of this is already done in extra_debug\n- different methods to collect dmesg\n\nI like this method here to create the remote tmp folder and then rsync that whole folder over rather than individual ssh/scps.",
+      "revId": "cba80b59ade71496dea6593356e5d4bbdfebdfc8",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a245df4_9ff2706d",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2017-11-02T15:50:59Z",
+      "side": 1,
+      "message": "be nice to move this stuff all into the odl{i} folder also.",
+      "revId": "cba80b59ade71496dea6593356e5d4bbdfebdfc8",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
