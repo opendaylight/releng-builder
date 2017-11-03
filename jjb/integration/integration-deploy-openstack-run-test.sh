@@ -1106,7 +1106,11 @@ source /tmp/os_netvirt_client_rc
 
 echo "Starting Robot test suites ${SUITES} ..."
 # please add pybot -v arguments on a single line and alphabetized
+for suite in ${SUITES}
+do
+log_name_ext=$(basename ${suite} | cut -d. -f1)
 pybot -N ${TESTPLAN} --removekeywords wuks -c critical -e exclude -e skip_if_${DISTROSTREAM} \
+    --log log_${log_name_ext}.html  --report NONE --output output_${log_name_ext}.xml \
     -v BUNDLEFOLDER:${BUNDLEFOLDER} \
     -v BUNDLE_URL:${ACTUAL_BUNDLE_URL} \
     -v CONTROLLER_USER:${USER} \
@@ -1152,8 +1156,9 @@ pybot -N ${TESTPLAN} --removekeywords wuks -c critical -e exclude -e skip_if_${D
     -v TOOLS_SYSTEM_2_IP:${TOOLS_SYSTEM_2_IP} \
     -v USER_HOME:${HOME} \
     -v WORKSPACE:/tmp \
-    ${TESTOPTIONS} ${SUITES} || true
-
+    ${TESTOPTIONS} ${suite} || true
+done
+rebot --merge output_*.xml --output output.xml
 echo "Examining the files in data/log and checking file size"
 ssh ${ODL_SYSTEM_IP} "ls -altr /tmp/${BUNDLEFOLDER}/data/log/"
 ssh ${ODL_SYSTEM_IP} "du -hs /tmp/${BUNDLEFOLDER}/data/log/*"
