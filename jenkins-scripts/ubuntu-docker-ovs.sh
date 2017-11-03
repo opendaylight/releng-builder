@@ -6,6 +6,12 @@ Defaults:jenkins !requiretty
 jenkins     ALL = NOPASSWD: ALL
 EOF
 
+# Add 'hostname' into /etc/hosts during node spinup time to avoid sudo returning
+# an 'unable to resolve host' message or some Java API's returning an unknown
+# host exception. The workaround on adding "myhostname" into /etc/nss-switch.conf
+# does not work on Ubuntu flavours.
+sed -i "/127.0.0.1/s/$/\t$(hostname)/" /etc/hosts
+
 # Do the final install of OVS that the has to be done at boot time for
 # some reason due to how the snapshots keep behaving.
 dpkg --install /root/openvswitch-datapath-dkms* && \
