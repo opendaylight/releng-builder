@@ -475,6 +475,11 @@ echo -e "\nenv after openrc\n"
 env
 EOF
 
+    # Since this log collection work is happening before the archive build macro which also
+    # creates the ${WORKSPACE}/archives dir, we have to do it here first.  The mkdir in the
+    # archives build step will essentially be a noop.
+    mkdir -p ${WORKSPACE}/archives
+
     sleep 5
     # FIXME: Do not create .tar and gzip before copying.
     for i in `seq 1 ${NUM_ODL_SYSTEM}`; do
@@ -484,7 +489,6 @@ EOF
         scp "${!CONTROLLERIP}:/tmp/journalctl.log" ${NODE_FOLDER}
         ${SSH} "${!CONTROLLERIP}"  "dmesg -T > /tmp/dmesg.log"
         scp "${!CONTROLLERIP}:/tmp/dmesg.log" ${NODE_FOLDER}
-        rsync --rsync-path="sudo rsync" -avhe ssh ${!CONTROLLERIP}:/tmp/${BUNDLEFOLDER}/ ${NODE_FOLDER}
         ${SSH} "${!CONTROLLERIP}"  "cp -r /tmp/${BUNDLEFOLDER}/data/log /tmp/odl_log"
         ${SSH} "${!CONTROLLERIP}"  "tar -cf /tmp/odl${i}_karaf.log.tar /tmp/odl_log/*"
         scp "${!CONTROLLERIP}:/tmp/odl${i}_karaf.log.tar" "${WORKSPACE}/odl${i}_karaf.log.tar"
@@ -497,12 +501,8 @@ EOF
         sed -n -e '/ROBOT MESSAGE/P' -e '/Caused by.*Exception:/P' -e '$!N;/Exception:/P;D' -e '$!N;/Exception{/P;D' odl${i}_karaf.log > odl${i}_exception.log
         grep "ROBOT MESSAGE\| ERROR \| WARN \|Exception" odl${i}_karaf.log > odl${i}_err_warn_exception.log
         rm ${WORKSPACE}/odl${i}_karaf.log.tar
+        mv ${NODE_FOLDER} ${WORKSPACE}/archives/
     done
-
-    # Since this log collection work is happening before the archive build macro which also
-    # creates the ${WORKSPACE}/archives dir, we have to do it here first.  The mkdir in the
-    # archives build step will essentially be a noop.
-    mkdir -p ${WORKSPACE}/archives
 
     print_job_parameters > ${WORKSPACE}/archives/params.txt
 
