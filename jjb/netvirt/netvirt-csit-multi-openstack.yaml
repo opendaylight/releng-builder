@@ -9,13 +9,13 @@
     branch: 'master'
     testplan: '{project}-{topology}-openstack.txt'
     odl-ml2-driver-version: 'v2'
-    enable-openstack-services: 'placement-api,tempest'
+    enable-openstack-services: 'n-cpu,placement-api,placement-client,tempest'
     enable-openstack-compute-services: 'placement-client'
     security-group-mode: 'stateful'
 
     topology:
       - 1node:
-          openstack_system2_count: 2
+          openstack_system2_count: 1
           odl_system_count: 1
           enable-haproxy: 'no'
           install-features: 'odl-netvirt-openstack'
@@ -26,7 +26,7 @@
           install-features: 'odl-jolokia,odl-netvirt-openstack'
 
     functionality:
-      - upstream-stateful
+      - shague-combo-upstream-stateful
       - upstream-stateful-snat-conntrack:
           odl-snat-mode: 'conntrack'
       - gate-stateful
@@ -81,7 +81,7 @@
           install-features: 'odl-jolokia,odl-netvirt-openstack'
 
     functionality:
-      - upstream-stateful
+      - shague-combo-upstream-stateful
       - upstream-stateful-snat-conntrack:
           odl-snat-mode: 'conntrack'
       - gate-stateful
@@ -137,7 +137,7 @@
           install-features: 'odl-jolokia,odl-netvirt-openstack'
 
     functionality:
-      - upstream-stateful:
+      - shague-combo-upstream-stateful:
           schedule: '@daily'
       - upstream-stateful-snat-conntrack:
           odl-snat-mode: 'conntrack'
