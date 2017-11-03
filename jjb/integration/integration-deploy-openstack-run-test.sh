@@ -491,15 +491,15 @@ EOF
         scp "${!CONTROLLERIP}:/tmp/dmesg.log" ${NODE_FOLDER}
         ${SSH} "${!CONTROLLERIP}"  "cp -r /tmp/${BUNDLEFOLDER}/data/log /tmp/odl_log"
         ${SSH} "${!CONTROLLERIP}"  "tar -cf /tmp/odl${i}_karaf.log.tar /tmp/odl_log/*"
-        scp "${!CONTROLLERIP}:/tmp/odl${i}_karaf.log.tar" "${WORKSPACE}/odl${i}_karaf.log.tar"
+        scp "${!CONTROLLERIP}:/tmp/odl${i}_karaf.log.tar" "${NODE_FOLDER}/odl${i}_karaf.log.tar"
         ${SSH} "${!CONTROLLERIP}"  "tar -cf /tmp/odl${i}_zrpcd.log.tar /tmp/zrpcd.init.log"
-        scp "${!CONTROLLERIP}:/tmp/odl${i}_zrpcd.log.tar" "${WORKSPACE}/odl${i}_zrpcd.log.tar"
+        scp "${!CONTROLLERIP}:/tmp/odl${i}_zrpcd.log.tar" "${NODE_FOLDER}/odl${i}_zrpcd.log.tar"
         tar -xvf ${WORKSPACE}/odl${i}_karaf.log.tar -C . --strip-components 2 --transform s/karaf/odl${i}_karaf/g
         grep "ROBOT MESSAGE\| ERROR " odl${i}_karaf.log > odl${i}_err.log
         # Print ROBOT lines, Print Caused by...Exception: lines,
         # Print Exception{ lines as well as the previous line that has the timestamp for context
-        sed -n -e '/ROBOT MESSAGE/P' -e '/Caused by.*Exception:/P' -e '$!N;/Exception:/P;D' -e '$!N;/Exception{/P;D' odl${i}_karaf.log > odl${i}_exception.log
-        grep "ROBOT MESSAGE\| ERROR \| WARN \|Exception" odl${i}_karaf.log > odl${i}_err_warn_exception.log
+        sed -n -e '/ROBOT MESSAGE/P' -e '/Caused by.*Exception:/P' -e '$!N;/Exception:/P;D' -e '$!N;/Exception{/P;D' odl${i}_karaf.log > ${NODE_FOLDER}/odl${i}_exception.log
+        grep "ROBOT MESSAGE\| ERROR \| WARN \|Exception" odl${i}_karaf.log > ${NODE_FOLDER}/odl${i}_err_warn_exception.log
         rm ${WORKSPACE}/odl${i}_karaf.log.tar
         mv ${NODE_FOLDER} ${WORKSPACE}/archives/
     done
