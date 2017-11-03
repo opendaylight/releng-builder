@@ -78,6 +78,18 @@ EOF
 
 print_job_parameters
 
+# Checks for substring within string
+function contains() {
+    string=$1
+    substring=$2
+    test "${string#*$substring}" != "$string"
+}
+
+# Checks if there is a control+compute node by looking for the n-cpu service
+function is_combo_node() {
+    contains "${ENABLE_OS_SERVICES}" "n-cpu"
+}
+
 function create_etc_hosts() {
     NODE_IP=$1
     CTRL_IP=$2
@@ -513,8 +525,19 @@ EOF
     # Control Node
     for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
         OSIP=OPENSTACK_CONTROL_NODE_${i}_IP
-        NODE_FOLDER="control_${i}"
+        if is_combo_node; then
+            NODE_FOLDER="cntl_comp_${i}"
+        else
+            NODE_FOLDER="control_${i}"
+        fi
         mkdir -p ${NODE_FOLDER}
+        # Capture compute logs if this is a combo node
+        if is_combo_node; then
+            scp ${!OSIP}:/etc/nova/nova.conf ${NODE_FOLDER}
+            scp ${!OSIP}:/etc/nova/nova-cpu.conf ${NODE_FOLDER}
+            scp ${!OSIP}:/etc/openstack/clouds.yaml ${NODE_FOLDER}
+            rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/nova-agent.log ${NODE_FOLDER}
+        fi
         scp ${!OSIP}:/etc/keystone/keystone.conf ${NODE_FOLDER}
         scp ${!OSIP}:/etc/keystone/keystone-uwsgi-admin.ini ${NODE_FOLDER}
         scp ${!OSIP}:/etc/keystone/keystone-uwsgi-public.ini ${NODE_FOLDER}
@@ -677,6 +700,24 @@ function get_service () {
     set -e
 }
 
+# Wrapper function to modify the requirements for ocata branches.
+# This keeps the calling code clean and free of distractions.
+function modify_requirements() {
+    local ip=$1
+    if [ "${ODL_ML2_BRANCH}" == "stable/ocata" ]; then
+        echo "Updating requirements for ${ODL_ML2_BRANCH}"
+        echo "Workaround for https://review.openstack.org/#/c/491032/"
+        echo "Modify upper-constraints to use libvirt-python 3.2.0"
+        ${SSH} ${ip} "
+            cd /opt/stack;
+            git clone https://git.openstack.org/openstack/requirements;
+            cd requirements;
+            git checkout stable/ocata;
+            sed -i s/libvirt-python===2.5.0/libvirt-python===3.2.0/ upper-constraints.txt
+        "
+    fi
+}
+
 # if we are using the new netvirt impl, as determined by the feature name
 # odl-netvirt-openstack (note: old impl is odl-ovsdb-openstack) then we
 # want PROVIDER_MAPPINGS to be used -- this should be fixed if we want to support
@@ -808,6 +849,9 @@ for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
     scp ${WORKSPACE}/hosts_file ${!CONTROLIP}:/tmp/hosts
     scp ${WORKSPACE}/get_devstack.sh ${!CONTROLIP}:/tmp
     ${SSH} ${!CONTROLIP} "bash /tmp/get_devstack.sh > /tmp/get_devstack.sh.txt 2>&1"
+    if is_combo_node; then
+        modify_requirements "${!CONTROLIP}"
+    fi
     create_control_node_local_conf ${!CONTROLIP} ${ODLMGRIP[$i]} "${ODL_OVS_MGRS[$i]}"
     scp ${WORKSPACE}/local.conf_control_${!CONTROLIP} ${!CONTROLIP}:/opt/stack/devstack/local.conf
     echo "Stack the control node ${i} of ${NUM_OPENSTACK_CONTROL_NODES}: ${CONTROLIP}"
@@ -838,8 +882,9 @@ done
 echo "Sleeping for 360s to allow controller to create nova_cell1 before the computes need it"
 sleep 360
 
+NUM_COMPUTES_PER_SITE=$((NUM_OPENSTACK_COMPUTE_NODES / NUM_OPENSTACK_SITES))
+
 for i in `seq 1 ${NUM_OPENSTACK_COMPUTE_NODES}`; do
-    NUM_COMPUTES_PER_SITE=$((NUM_OPENSTACK_COMPUTE_NODES / NUM_OPENSTACK_SITES))
     SITE_INDEX=$((((i - 1) / NUM_COMPUTES_PER_SITE) + 1)) # We need the site index to infer the control node IP for this compute
     COMPUTEIP=OPENSTACK_COMPUTE_NODE_${i}_IP
     CONTROLIP=OPENSTACK_CONTROL_NODE_${SITE_INDEX}_IP
@@ -850,18 +895,7 @@ for i in `seq 1 ${NUM_OPENSTACK_COMPUTE_NODES}`; do
     scp ${WORKSPACE}/hosts_file ${!COMPUTEIP}:/tmp/hosts
     scp ${WORKSPACE}/get_devstack.sh  ${!COMPUTEIP}:/tmp
     ${SSH} ${!COMPUTEIP} "bash /tmp/get_devstack.sh > /tmp/get_devstack.sh.txt 2>&1"
-    if [ "${ODL_ML2_BRANCH}" == "stable/ocata" ]; then
-        echo "Updating requirements for ${ODL_ML2_BRANCH}"
-        echo "Workaround for https://review.openstack.org/#/c/491032/"
-        echo "Modify upper-constraints to use libvirt-python 3.2.0"
-        ${SSH} ${!COMPUTEIP} "
-            cd /opt/stack;
-            git clone https://git.openstack.org/openstack/requirements;
-            cd requirements;
-            git checkout stable/ocata;
-            sed -i s/libvirt-python===2.5.0/libvirt-python===3.2.0/ upper-constraints.txt
-        "
-    fi
+    modify_requirements "${!COMPUTEIP}"
     create_compute_node_local_conf ${!COMPUTEIP} ${!CONTROLIP} ${ODLMGRIP[$SITE_INDEX]} "${ODL_OVS_MGRS[$SITE_INDEX]}"
     scp ${WORKSPACE}/local.conf_compute_${!COMPUTEIP} ${!COMPUTEIP}:/opt/stack/devstack/local.conf
     echo "Stack the compute node ${i} of ${NUM_OPENSTACK_COMPUTE_NODES}: ${COMPUTEIP}"
@@ -948,9 +982,11 @@ for i in `seq 1 ${NUM_OPENSTACK_SITES}`; do
     # In Ocata if we do not enable the n-cpu in control node then
     # we need to discover hosts manually and ensure that they are mapped to cells.
     # reference: https://ask.openstack.org/en/question/102256/how-to-configure-placement-service-for-compute-node-on-ocata/
-    if [ "${OPENSTACK_BRANCH}" == "stable/ocata" ]; then
-        scp ${WORKSPACE}/setup_host_cell_mapping.sh  ${!CONTROLIP}:/tmp
-        ${SSH} ${!CONTROLIP} "sudo bash /tmp/setup_host_cell_mapping.sh"
+    if ! is_combo_node; then
+        if [ "${OPENSTACK_BRANCH}" == "stable/ocata" ]; then
+            scp ${WORKSPACE}/setup_host_cell_mapping.sh  ${!CONTROLIP}:/tmp
+            ${SSH} ${!CONTROLIP} "sudo bash /tmp/setup_host_cell_mapping.sh"
+        fi
     fi
     ${SSH} ${!CONTROLIP} "cd /opt/stack/devstack; source openrc admin admin; nova hypervisor-list"
     # in the case that we are doing openstack (control + compute) all in one node, then the number of hypervisors
@@ -961,6 +997,9 @@ for i in `seq 1 ${NUM_OPENSTACK_SITES}`; do
         expected_num_hypervisors=1
     else
         expected_num_hypervisors=${NUM_COMPUTES_PER_SITE}
+        if is_combo_node; then
+            expected_num_hypervisors=$((expected_num_hypervisors + 1))
+        fi
     fi
     num_hypervisors=$(${SSH} ${!CONTROLIP} "cd /opt/stack/devstack; source openrc admin admin; openstack hypervisor list -f value | wc -l" | tail -1 | tr -d "\r")
     if ! [ "${num_hypervisors}" ] || ! [ ${num_hypervisors} -eq ${expected_num_hypervisors} ]; then
@@ -976,13 +1015,6 @@ for i in `seq 1 ${NUM_OPENSTACK_SITES}`; do
     ${SSH} ${!CONTROLIP} "sudo pip install urllib3 --upgrade"
     ${SSH} ${!CONTROLIP} "sudo pip install httplib2 --upgrade"
 
-    # Gather Compute IPs for the site
-    for j in `seq 1 ${NUM_COMPUTES_PER_SITE}`; do
-        COMPUTE_INDEX=$(((i-1) * NUM_COMPUTES_PER_SITE + j))
-        IP_VAR=OPENSTACK_COMPUTE_NODE_${COMPUTE_INDEX}_IP
-        COMPUTE_IPS[$((j-1))]=${!IP_VAR}
-    done
-
     # External Network
     echo "prepare external networks by adding vxlan tunnels between all nodes on a separate bridge..."
     # FIXME Should there be a unique gateway IP and devstack index for each site?
@@ -994,6 +1026,7 @@ for i in `seq 1 ${NUM_OPENSTACK_SITES}`; do
     done
 
     # ipsec support
+    # TODO: verify this works. We don't use ipsec so this is not needed currently.
     if [ "${IPSEC_VXLAN_TUNNELS_ENABLED}" == "yes" ]; then
         ALL_NODES=(${!CONTROLIP} ${COMPUTE_IPS[*]})
         for ((inx_ip1=0; inx_ip1<$((${#ALL_NODES[@]} - 1)); inx_ip1++)); do
