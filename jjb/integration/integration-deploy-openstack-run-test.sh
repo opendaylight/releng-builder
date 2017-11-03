@@ -485,15 +485,16 @@ EOF
     for i in `seq 1 ${NUM_ODL_SYSTEM}`; do
         CONTROLLERIP=ODL_SYSTEM_${i}_IP
         NODE_FOLDER="odl_${i}"
-        ${SSH} "${!CONTROLLERIP}"  "journalctl > /tmp/journalctl.log"
-        scp "${!CONTROLLERIP}:/tmp/journalctl.log" ${NODE_FOLDER}
-        ${SSH} "${!CONTROLLERIP}"  "dmesg -T > /tmp/dmesg.log"
-        scp "${!CONTROLLERIP}:/tmp/dmesg.log" ${NODE_FOLDER}
-        ${SSH} "${!CONTROLLERIP}"  "cp -r /tmp/${BUNDLEFOLDER}/data/log /tmp/odl_log"
-        ${SSH} "${!CONTROLLERIP}"  "tar -cf /tmp/odl${i}_karaf.log.tar /tmp/odl_log/*"
-        scp "${!CONTROLLERIP}:/tmp/odl${i}_karaf.log.tar" "${NODE_FOLDER}/odl${i}_karaf.log.tar"
-        ${SSH} "${!CONTROLLERIP}"  "tar -cf /tmp/odl${i}_zrpcd.log.tar /tmp/zrpcd.init.log"
-        scp "${!CONTROLLERIP}:/tmp/odl${i}_zrpcd.log.tar" "${NODE_FOLDER}/odl${i}_zrpcd.log.tar"
+        mkdir -p ${NODE_FOLDER}
+        ${SSH} ${!CONTROLLERIP} "journalctl > /tmp/journalctl.log"
+        scp ${!CONTROLLERIP}:/tmp/journalctl.log ${NODE_FOLDER}
+        ${SSH} ${!CONTROLLERIP} "dmesg -T > /tmp/dmesg.log"
+        scp ${!CONTROLLERIP}:/tmp/dmesg.log ${NODE_FOLDER}
+        ${SSH} ${!CONTROLLERIP} "cp -r /tmp/${BUNDLEFOLDER}/data/log /tmp/odl_log"
+        ${SSH} ${!CONTROLLERIP} "tar -cf /tmp/odl${i}_karaf.log.tar /tmp/odl_log/*"
+        scp ${!CONTROLLERIP}:/tmp/odl${i}_karaf.log.tar ${NODE_FOLDER}
+        ${SSH} ${!CONTROLLERIP} "tar -cf /tmp/odl${i}_zrpcd.log.tar /tmp/zrpcd.init.log"
+        scp ${!CONTROLLERIP}:/tmp/odl${i}_zrpcd.log.tar ${NODE_FOLDER}
         tar -xvf ${WORKSPACE}/odl${i}_karaf.log.tar -C . --strip-components 2 --transform s/karaf/odl${i}_karaf/g
         grep "ROBOT MESSAGE\| ERROR " odl${i}_karaf.log > ${NODE_FOLDER}/odl${i}_err.log
         # Print ROBOT lines, Print Caused by...Exception: lines,
