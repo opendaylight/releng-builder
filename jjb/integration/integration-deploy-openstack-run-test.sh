@@ -495,7 +495,7 @@ EOF
         scp ${!CONTROLLERIP}:/tmp/odl${i}_karaf.log.tar ${NODE_FOLDER}
         ${SSH} ${!CONTROLLERIP} "tar -cf /tmp/odl${i}_zrpcd.log.tar /tmp/zrpcd.init.log"
         scp ${!CONTROLLERIP}:/tmp/odl${i}_zrpcd.log.tar ${NODE_FOLDER}
-        tar -xvf ${WORKSPACE}/odl${i}_karaf.log.tar -C . --strip-components 2 --transform s/karaf/odl${i}_karaf/g
+        tar -xvf ${NODE_FOLDER}/odl${i}_karaf.log.tar -C ${NODE_FOLDER} --strip-components 2 --transform s/karaf/odl${i}_karaf/g
         grep "ROBOT MESSAGE\| ERROR " ${NODE_FOLDER}/odl${i}_karaf.log > ${NODE_FOLDER}/odl${i}_err.log
         # Print ROBOT lines, Print Caused by...Exception: lines,
         # Print Exception{ lines as well as the previous line that has the timestamp for context
@@ -503,7 +503,8 @@ EOF
             ${NODE_FOLDER}/odl${i}_karaf.log > ${NODE_FOLDER}/odl${i}_exception.log
         grep "ROBOT MESSAGE\| ERROR \| WARN \|Exception" \
             ${NODE_FOLDER}/odl${i}_karaf.log > ${NODE_FOLDER}/odl${i}_err_warn_exception.log
-        rm ${WORKSPACE}/odl${i}_karaf.log.tar
+        rm ${NODE_FOLDER}/odl${i}_karaf.log.tar
+        mv karaf_${i}_threads* ${NODE_FOLDER}
         mv ${NODE_FOLDER} ${WORKSPACE}/archives/
     done
 
