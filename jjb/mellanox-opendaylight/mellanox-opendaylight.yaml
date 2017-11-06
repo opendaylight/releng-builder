@@ -1,0 +1,24 @@
+- project:
+    name: MELLANOX_OPENDAYLIGHT-oxygen
+    jobs:
+      - '{project-name}-clm-{stream}'
+      - '{project-name}-integration-{stream}'
+      - '{project-name}-merge-{stream}'
+      - '{project-name}-verify-{stream}-{maven}-{jdks}'
+
+    project: 'MELLANOX_OPENDAYLIGHT'
+    project-name: 'MELLANOX_OPENDAYLIGHT-'
+    stream: oxygen
+    branch: 'master'
+    jdk: openjdk8
+    jdks:
+      - openjdk8
+    maven:
+      - mvn33:
+          mvn-version: 'mvn33'
+    mvn-settings: 'MELLANOX_OPENDAYLIGHT-settings'
+    mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
+    email-upstream: '[MELLANOX_OPENDAYLIGHT] [odlparent] [yangtools] [controller]'
+    archive-artifacts: ''
