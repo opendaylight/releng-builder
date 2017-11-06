@@ -2,11 +2,11 @@
 - project:
     name: natapp-oxygen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
+      - '{project-name}-maven-javadoc-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: oxygen
     project: 'natapp'
@@ -24,14 +24,17 @@
     email-upstream: '[natapp] [openflowplugin]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: a679c0f4f08a8
+
 - project:
     name: natapp-nitrogen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
+      - '{project-name}-maven-javadoc-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: nitrogen
     project: 'natapp'
@@ -49,14 +52,17 @@
     email-upstream: '[natapp] [openflowplugin]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: a679c0f4f08a8
+
 - project:
     name: natapp-carbon
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
+      - '{project-name}-maven-javadoc-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: carbon
     project: 'natapp'
@@ -74,6 +80,9 @@
     dependencies: 'openflowplugin-merge-{stream}'
     email-upstream: '[natapp] [openflowplugin]'
     archive-artifacts: ''
+
+    # Used by the release job
+    staging-profile-id: a679c0f4f08a8
 
 - project:
     name: natapp-sonar
