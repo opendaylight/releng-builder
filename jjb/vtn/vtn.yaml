@@ -2,13 +2,11 @@
 - project:
     name: vtn-oxygen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-maven-javadoc-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
-      - gerrit-maven-verify-dependencies
 
     stream: oxygen
     project: 'vtn'
@@ -30,15 +28,17 @@
     # https://nexus.opendaylight.org/content/sites/site/
     archive-artifacts: 'manager/dist/*/target/*.zip coordinator/dist/target/*.bz2'
 
+    # Used by the release job
+    staging-profile-id: a699799dd6fc9
+
 - project:
     name: vtn-nitrogen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-maven-javadoc-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: nitrogen
     project: 'vtn'
@@ -60,15 +60,17 @@
     # https://nexus.opendaylight.org/content/sites/site/
     archive-artifacts: 'manager/dist/*/target/*.zip coordinator/dist/target/*.bz2'
 
+    # Used by the release job
+    staging-profile-id: a699799dd6fc9
+
 - project:
     name: vtn-carbon
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-maven-javadoc-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: carbon
     project: 'vtn'
@@ -90,6 +92,9 @@
     # Maven sites are published to Nexus at:
     # https://nexus.opendaylight.org/content/sites/site/
     archive-artifacts: 'manager/dist/*/target/*.zip coordinator/dist/target/*.bz2'
+
+    # Used by the release job
+    staging-profile-id: a699799dd6fc9
 
 - project:
     name: vtn-sonar
