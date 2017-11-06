@@ -2,12 +2,10 @@
 - project:
     name: sxp-oxygen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
-      - gerrit-maven-verify-dependencies
 
     stream: oxygen
     project: 'sxp'
@@ -25,14 +23,16 @@
     email-upstream: '[sxp] [odlparent] [controller] [yangtools]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: a6909c75719b7
+
 - project:
     name: sxp-nitrogen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: nitrogen
     project: 'sxp'
@@ -50,14 +50,16 @@
     email-upstream: '[sxp] [odlparent] [controller] [yangtools]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: a6909c75719b7
+
 - project:
     name: sxp-carbon
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: carbon
     project: 'sxp'
@@ -75,6 +77,9 @@
     dependencies: 'odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream}'
     email-upstream: '[sxp] [odlparent] [controller] [yangtools]'
     archive-artifacts: ''
+
+    # Used by the release job
+    staging-profile-id: a6909c75719b7
 
 - project:
     name: sxp-sonar
