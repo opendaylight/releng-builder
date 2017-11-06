@@ -2,12 +2,10 @@
 - project:
     name: snmp-oxygen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
-      - gerrit-maven-verify-dependencies
 
     stream: oxygen
     project: 'snmp'
@@ -25,14 +23,16 @@
     email-upstream: '[snmp] [odlparent]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: a68fb236b93a6
+
 - project:
     name: snmp-nitrogen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: nitrogen
     project: 'snmp'
@@ -50,14 +50,16 @@
     email-upstream: '[snmp] [odlparent]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: a68fb236b93a6
+
 - project:
     name: snmp-carbon
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: carbon
     project: 'snmp'
@@ -75,6 +77,9 @@
     dependencies: 'odlparent-merge-{stream}'
     email-upstream: '[snmp] [odlparent]'
     archive-artifacts: ''
+
+    # Used by the release job
+    staging-profile-id: a68fb236b93a6
 
 - project:
     name: snmp-sonar
