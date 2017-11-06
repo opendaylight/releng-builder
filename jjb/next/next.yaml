@@ -2,11 +2,10 @@
 - project:
     name: next-oxygen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: oxygen
     project: 'next'
@@ -24,14 +23,16 @@
     email-upstream: '[next]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: a67e7c516f385
+
 - project:
     name: next-nitrogen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: nitrogen
     project: 'next'
@@ -49,14 +50,16 @@
     email-upstream: '[next]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: a67e7c516f385
+
 - project:
     name: next-carbon
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: carbon
     project: 'next'
@@ -74,6 +77,9 @@
     dependencies: ''
     email-upstream: '[next]'
     archive-artifacts: ''
+
+    # Used by the release job
+    staging-profile-id: a67e7c516f385
 
 - project:
     name: next-sonar
