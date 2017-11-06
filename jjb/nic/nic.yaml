@@ -2,12 +2,10 @@
 - project:
     name: nic-oxygen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
-      - gerrit-maven-verify-dependencies
 
     stream: oxygen
     project: 'nic'
@@ -25,14 +23,16 @@
     email-upstream: '[nic] [vtn] [groupbasedpolicy]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: a67ef386204aa
+
 - project:
     name: nic-nitrogen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: nitrogen
     project: 'nic'
@@ -50,14 +50,16 @@
     email-upstream: '[nic] [vtn] [groupbasedpolicy]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: a67ef386204aa
+
 - project:
     name: nic-carbon
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: carbon
     project: 'nic'
@@ -75,6 +77,9 @@
     dependencies: 'vtn-merge-{stream},groupbasedpolicy-merge-{stream}'
     email-upstream: '[nic] [vtn] [groupbasedpolicy]'
     archive-artifacts: ''
+
+    # Used by the release job
+    staging-profile-id: a67ef386204aa
 
 - project:
     name: nic-sonar
