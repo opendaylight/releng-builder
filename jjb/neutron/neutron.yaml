@@ -2,13 +2,11 @@
 - project:
     name: neutron-oxygen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-maven-javadoc-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
-      - gerrit-maven-verify-dependencies
 
     stream: oxygen
     project: 'neutron'
@@ -27,15 +25,17 @@
     email-upstream: '[neutron] [odlparent] [aaa]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: a67e1b40d7419
+
 - project:
     name: neutron-nitrogen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-maven-javadoc-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: nitrogen
     project: 'neutron'
@@ -54,15 +54,17 @@
     email-upstream: '[neutron] [odlparent] [aaa]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: a67e1b40d7419
+
 - project:
     name: neutron-carbon
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-maven-javadoc-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: carbon
     project: 'neutron'
@@ -81,6 +83,9 @@
     dependencies: 'odlparent-merge-{stream},aaa-merge-{stream}'
     email-upstream: '[neutron] [odlparent] [aaa]'
     archive-artifacts: ''
+
+    # Used by the release job
+    staging-profile-id: a67e1b40d7419
 
 - project:
     name: neutron-sonar
