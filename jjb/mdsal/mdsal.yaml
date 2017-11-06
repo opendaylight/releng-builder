@@ -2,13 +2,11 @@
 - project:
     name: mdsal-oxygen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
-      - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-maven-javadoc-jobs'
-      - gerrit-maven-verify-dependencies
+      - '{project-name}-merge-{stream}'
 
     stream: oxygen
     project: 'mdsal'
@@ -26,14 +24,17 @@
     email-upstream: '[mdsal] [odlparent] [yangtools]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: a674173c7b29d
+
 - project:
     name: mdsal-nitrogen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
+      - '{project-name}-maven-javadoc-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: nitrogen
     project: 'mdsal'
@@ -51,14 +52,17 @@
     email-upstream: '[mdsal] [odlparent] [yangtools]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: a674173c7b29d
+
 - project:
     name: mdsal-carbon
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
+      - '{project-name}-maven-javadoc-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: carbon
     project: 'mdsal'
@@ -76,6 +80,9 @@
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream}'
     email-upstream: '[mdsal] [odlparent] [yangtools]'
     archive-artifacts: ''
+
+    # Used by the release job
+    staging-profile-id: a674173c7b29d
 
 - project:
     name: mdsal-sonar
