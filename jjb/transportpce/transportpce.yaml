@@ -2,10 +2,9 @@
 - project:
     name: transportpce-oxygen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     project: 'transportpce'
     project-name: 'transportpce'
@@ -23,13 +22,15 @@
     email-upstream: '[transportpce] [odlparent] [yangtools] [controller]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: a6927323fa3d4
+
 - project:
     name: transportpce-nitrogen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     project: 'transportpce'
     project-name: 'transportpce'
@@ -47,13 +48,15 @@
     email-upstream: '[transportpce] [odlparent] [yangtools] [controller]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: a6927323fa3d4
+
 - project:
     name: transportpce-carbon
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     project: 'transportpce'
     project-name: 'transportpce'
@@ -71,6 +74,9 @@
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
     email-upstream: '[transportpce] [odlparent] [yangtools] [controller]'
     archive-artifacts: ''
+
+    # Used by the release job
+    staging-profile-id: a6927323fa3d4
 
 - project:
     name: transportpce-sonar
