@@ -2,10 +2,9 @@
 - project:
     name: persistence-oxygen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: oxygen
     project: 'persistence'
@@ -25,13 +24,15 @@
     email-upstream: '[persistence]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: a68d3c2bb44d1
+
 - project:
     name: persistence-nitrogen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: nitrogen
     project: 'persistence'
@@ -51,13 +52,15 @@
     email-upstream: '[persistence]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: a68d3c2bb44d1
+
 - project:
     name: persistence-carbon
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: carbon
     project: 'persistence'
@@ -77,6 +80,9 @@
     dependencies: ''
     email-upstream: '[persistence]'
     archive-artifacts: ''
+
+    # Used by the release job
+    staging-profile-id: a68d3c2bb44d1
 
 - project:
     name: persistence-sonar
