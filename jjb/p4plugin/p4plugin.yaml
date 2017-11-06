@@ -2,12 +2,11 @@
 - project:
     name: p4plugin-oxygen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
+      - '{project-name}-maven-javadoc-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
-      - gerrit-maven-verify-dependencies
 
     stream: oxygen
     project: 'p4plugin'
@@ -24,6 +23,9 @@
     dependencies: ''
     email-upstream: '[p4plugin]'
     archive-artifacts: ''
+
+    # Used by the release job
+    staging-profile-id: a68bf26e208d4
 
 - project:
     name: p4plugin-sonar
