@@ -2,13 +2,11 @@
 - project:
     name: ovsdb-oxygen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
-      - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-maven-javadoc-jobs'
-      - gerrit-maven-verify-dependencies
+      - '{project-name}-merge-{stream}'
 
     stream: oxygen
     project: 'ovsdb'
@@ -26,14 +24,17 @@
     email-upstream: '[ovsdb] [odlparent] [controller] [yangtools]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: a68b188166958
+
 - project:
     name: ovsdb-nitrogen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
+      - '{project-name}-maven-javadoc-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: nitrogen
     project: 'ovsdb'
@@ -51,14 +52,17 @@
     email-upstream: '[ovsdb] [odlparent] [controller] [yangtools]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: a68b188166958
+
 - project:
     name: ovsdb-carbon
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
+      - '{project-name}-maven-javadoc-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: carbon
     project: 'ovsdb'
@@ -76,3 +80,6 @@
     dependencies: 'odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream}'
     email-upstream: '[ovsdb] [odlparent] [controller] [yangtools]'
     archive-artifacts: ''
+
+    # Used by the release job
+    staging-profile-id: a68b188166958
