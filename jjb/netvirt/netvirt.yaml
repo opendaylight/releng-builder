@@ -5,10 +5,9 @@
       - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
-      - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-maven-javadoc-jobs'
-      - gerrit-maven-verify-dependencies
+      - '{project-name}-merge-{stream}'
       - gerrit-tox-verify
 
     stream:
@@ -39,10 +38,13 @@
     email-upstream: '[genius] [netvirt] [neutron] [openflowjava] [openflowplugin] [ovsdb] [sfc]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: a67da0ffbb1ba
+
 - project:
     name: netvirt-vpp
     jobs:
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
+      - gerrit-maven-verify
 
     stream: vpp
     project: 'netvirt'
