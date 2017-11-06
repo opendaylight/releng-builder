@@ -2,11 +2,10 @@
 - project:
     name: sdninterfaceapp-oxygen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: oxygen
     project: 'sdninterfaceapp'
@@ -24,14 +23,16 @@
     email-upstream: '[sdninterfaceapp] [bgpcep]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: a68e3d1ff55e3
+
 - project:
     name: sdninterfaceapp-nitrogen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: nitrogen
     project: 'sdninterfaceapp'
@@ -49,14 +50,16 @@
     email-upstream: '[sdninterfaceapp] [bgpcep]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: a68e3d1ff55e3
+
 - project:
     name: sdninterfaceapp-carbon
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: carbon
     project: 'sdninterfaceapp'
@@ -74,6 +77,9 @@
     dependencies: 'bgpcep-merge-{stream}'
     email-upstream: '[sdninterfaceapp] [bgpcep]'
     archive-artifacts: ''
+
+    # Used by the release job
+    staging-profile-id: a68e3d1ff55e3
 
 - project:
     name: sdninterfaceapp-sonar
