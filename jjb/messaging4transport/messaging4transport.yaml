@@ -2,11 +2,11 @@
 - project:
     name: messaging4transport-oxygen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
+      - '{project-name}-maven-javadoc-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: oxygen
     project: 'messaging4transport'
@@ -24,14 +24,17 @@
     email-upstream: '[messaging4transport]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: a677283157db4
+
 - project:
     name: messaging4transport-nitrogen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
+      - '{project-name}-maven-javadoc-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: nitrogen
     project: 'messaging4transport'
@@ -49,14 +52,17 @@
     email-upstream: '[messaging4transport]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: a677283157db4
+
 - project:
     name: messaging4transport-carbon
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
+      - '{project-name}-maven-javadoc-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: carbon
     project: 'messaging4transport'
@@ -74,6 +80,9 @@
     dependencies: ''
     email-upstream: '[messaging4transport]'
     archive-artifacts: ''
+
+    # Used by the release job
+    staging-profile-id: a677283157db4
 
 - project:
     name: messaging4transport-sonar
