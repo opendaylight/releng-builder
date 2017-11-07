@@ -2,12 +2,10 @@
 - project:
     name: packetcable-oxygen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
-      - gerrit-maven-verify-dependencies
 
     stream: oxygen
     project: 'packetcable'
@@ -25,14 +23,16 @@
     email-upstream: '[packetcable]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: a68ca4a24655c
+
 - project:
     name: packetcable-nitrogen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: nitrogen
     project: 'packetcable'
@@ -50,14 +50,16 @@
     email-upstream: '[packetcable]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: a68ca4a24655c
+
 - project:
     name: packetcable-carbon
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: carbon
     project: 'packetcable'
@@ -75,6 +77,9 @@
     dependencies: ''
     email-upstream: '[packetcable]'
     archive-artifacts: ''
+
+    # Used by the release job
+    staging-profile-id: a68ca4a24655c
 
 - project:
     name: packetcable-sonar
