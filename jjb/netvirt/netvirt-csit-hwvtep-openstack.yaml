@@ -61,6 +61,16 @@
 
     # TODO: remove this flag and instead use the enable-openstack-services list to know if l2gw is enabled
     enable-networking-l2gw: 'yes'
+    # Quagga installation setting 
+    quagga-version: '4'
+    parameters:
+      - string:
+          name: QUAGGA_VERSION
+          # yamllint disable-line rule:line-length
+          default: '{quagga-version}'
+          description: 'quagga version'
+    builders:
+       - netvirt-quagga-install
 
 - project:
     name: netvirt-csit-hwvtep-openstack-integration-nitrogen
@@ -127,12 +137,33 @@
     # TODO: remove this flag and instead use the enable-openstack-services list to know if l2gw is enabled
     enable-networking-l2gw: 'yes'
 
+    # Quagga installation setting 
+    quagga-version: '4'
+    parameters:
+      - string:
+          name: QUAGGA_VERSION
+          # yamllint disable-line rule:line-length
+          default: '{quagga-version}'
+          description: 'quagga version'
+    builders:
+       - netvirt-quagga-install
+
 - project:
     name: netvirt-csit-hwvtep-openstack-integration-carbon
     jobs:
       - '{project}-csit-hwvtep-{topology}-openstack-{openstack}-{functionality}-{stream}'
 
     project: 'netvirt'
+    # Quagga installation setting 
+    quagga-version: '2'
+    parameters:
+      - string:
+          name: QUAGGA_VERSION
+          # yamllint disable-line rule:line-length
+          default: '{quagga-version}'
+          description: 'quagga version'
+    builders:
+      - netvirt-quagga-install
 
     stream: 'carbon'
     branch: 'stable/carbon'
@@ -186,3 +217,9 @@
 
     # TODO: remove this flag and instead use the enable-openstack-services list to know if l2gw is enabled
     enable-networking-l2gw: 'yes'
+
+- builder:
+    name: 'netvirt-quagga-install'
+    builders:
+      - shell: !include-raw-escape: quagga-install.sh
+
