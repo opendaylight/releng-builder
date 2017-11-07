@@ -435,6 +435,12 @@
     builders:
       - shell: !include-raw: integration-deploy-openstack-run-test.sh
 
+# Macro: Quagga package install script 
+- builder:
+    name: quagga-install-package
+    builders:
+      - shell: !include-raw: quagga-install.sh
+
 - builder:
     name: integration-compare-distributions
     # Operation: will compare an already created distribtion (probably last
