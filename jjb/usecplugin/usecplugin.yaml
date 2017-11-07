@@ -2,11 +2,10 @@
 - project:
     name: usecplugin-oxygen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: oxygen
     project: 'usecplugin'
@@ -24,14 +23,16 @@
     email-upstream: '[usecplugin] [openflowplugin]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: a69902281e037
+
 - project:
     name: usecplugin-nitrogen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: nitrogen
     project: 'usecplugin'
@@ -49,14 +50,16 @@
     email-upstream: '[usecplugin] [openflowplugin]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: a69902281e037
+
 - project:
     name: usecplugin-carbon
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: carbon
     project: 'usecplugin'
@@ -74,6 +77,9 @@
     dependencies: 'openflowplugin-merge-{stream}'
     email-upstream: '[usecplugin] [openflowplugin]'
     archive-artifacts: ''
+
+    # Used by the release job
+    staging-profile-id: a69902281e037
 
 - project:
     name: usecplugin-sonar
