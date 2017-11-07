@@ -2,10 +2,9 @@
 - project:
     name: reservation-oxygen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: oxygen
     project: 'reservation'
@@ -23,13 +22,15 @@
     email-upstream: '[reservation]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: a68d9bc504037
+
 - project:
     name: reservation-nitrogen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: nitrogen
     project: 'reservation'
@@ -47,13 +48,15 @@
     email-upstream: '[reservation]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: a68d9bc504037
+
 - project:
     name: reservation-carbon
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: carbon
     project: 'reservation'
@@ -71,6 +74,9 @@
     dependencies: ''
     email-upstream: '[reservation]'
     archive-artifacts: ''
+
+    # Used by the release job
+    staging-profile-id: a68d9bc504037
 
 - project:
     name: reservation-sonar
