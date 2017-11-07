@@ -2,11 +2,10 @@
 - project:
     name: yang-push-oxygen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: oxygen
     project: 'yang-push'
@@ -24,14 +23,16 @@
     email-upstream: '[yang-push]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: a69aae2832869
+
 - project:
     name: yang-push-nitrogen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: nitrogen
     project: 'yang-push'
@@ -49,14 +50,16 @@
     email-upstream: '[yang-push]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: a69aae2832869
+
 - project:
     name: yang-push-carbon
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: carbon
     project: 'yang-push'
@@ -74,6 +77,9 @@
     dependencies: ''
     email-upstream: '[yang-push]'
     archive-artifacts: ''
+
+    # Used by the release job
+    staging-profile-id: a69aae2832869
 
 - project:
     name: yang-push-sonar
