@@ -10,7 +10,6 @@
       - 'distribution-offline-{stream}'
       - 'distribution-check-{stream}'
       - gerrit-maven-clm
-      - gerrit-maven-sonar
       - gerrit-tox-verify
 
     project: integration/distribution
@@ -29,3 +28,14 @@
       - carbon:
           branch: stable/carbon
           karaf-version: karaf3
+
+- project:
+    name: distribution-sonar
+    jobs:
+      - gerrit-maven-sonar
+    project: integration/distribution
+    project-name: distribution
+    branch: master
+    mvn-settings: integration-distribution-settings
+    mvn-goals: clean install dependency:tree -DoutputFile=dependency_tree.txt
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
