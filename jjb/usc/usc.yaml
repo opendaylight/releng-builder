@@ -2,13 +2,11 @@
 - project:
     name: usc-oxygen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-maven-javadoc-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
-      - gerrit-maven-verify-dependencies
 
     stream: oxygen
     project: 'usc'
@@ -26,15 +24,17 @@
     email-upstream: '[usc] [controller] [yangtools] [odlparent]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: a697b633b3ffe
+
 - project:
     name: usc-nitrogen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-maven-javadoc-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: nitrogen
     project: 'usc'
@@ -52,15 +52,17 @@
     email-upstream: '[usc] [controller] [yangtools] [odlparent]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: a697b633b3ffe
+
 - project:
     name: usc-carbon
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-maven-javadoc-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: carbon
     project: 'usc'
@@ -78,6 +80,9 @@
     dependencies: 'controller-merge-{stream},yangtools-merge-{stream},odlparent-merge-{stream}'
     email-upstream: '[usc] [controller] [yangtools] [odlparent]'
     archive-artifacts: ''
+
+    # Used by the release job
+    staging-profile-id: a697b633b3ffe
 
 - project:
     name: usc-sonar
