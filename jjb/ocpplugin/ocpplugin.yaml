@@ -2,12 +2,10 @@
 - project:
     name: ocpplugin-oxygen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
-      - gerrit-maven-verify-dependencies
 
     stream: oxygen
     project: 'ocpplugin'
@@ -25,14 +23,16 @@
     email-upstream: '[ocpplugin] [odlparent] [yangtools] [controller]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: a687673279f9c
+
 - project:
     name: ocpplugin-nitrogen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: nitrogen
     project: 'ocpplugin'
@@ -50,14 +50,16 @@
     email-upstream: '[ocpplugin] [odlparent] [yangtools] [controller]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: a687673279f9c
+
 - project:
     name: ocpplugin-carbon
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: carbon
     project: 'ocpplugin'
@@ -75,6 +77,9 @@
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
     email-upstream: '[ocpplugin] [odlparent] [yangtools] [controller]'
     archive-artifacts: ''
+
+    # Used by the release job
+    staging-profile-id: a687673279f9c
 
 - project:
     name: ocpplugin-sonar
