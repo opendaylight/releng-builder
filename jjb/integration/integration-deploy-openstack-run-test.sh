@@ -1038,6 +1038,10 @@ for i in `seq 1 ${NUM_OPENSTACK_SITES}`; do
         sudo ip netns exec pnf_ns ifconfig pnf_veth1 up ${EXTNET_PNF_IP}/24;
         sudo ovs-vsctl add-port ${PUBLIC_BRIDGE} pnf_veth0;
     "
+    # Control Node - set VXLAN TEP IP for Genius Auto TZ
+    ${SSH} ${!CONTROLIP} "
+        sudo ovs-vsctl set O . external_ids:tep-ip=${!CONTROLIP};
+    "
 
     # Control Node - external net internet address simulation
     ${SSH} ${!CONTROLIP} "
@@ -1057,6 +1061,10 @@ for i in `seq 1 ${NUM_OPENSTACK_SITES}`; do
         CONTROLPORT="control_vxlan"
         ${SSH} $compute_ip "
             sudo ovs-vsctl add-port $PUBLIC_BRIDGE $CONTROLPORT -- set interface $CONTROLPORT type=vxlan options:local_ip=$compute_ip options:remote_ip=${!CONTROLIP} options:dst_port=9876 options:key=flow
+        "
+         #Compute Node - set VXLAN TEP IP for Genius Auto TZ
+        ${SSH} $compute_ip "
+            sudo ovs-vsctl set O . external_ids:tep-ip=${compute_ip};
         "
     done
 done
