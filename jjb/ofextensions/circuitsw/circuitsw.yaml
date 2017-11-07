@@ -2,10 +2,9 @@
 - project:
     name: circuitsw-oxygen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: oxygen
     project: 'ofextensions/circuitsw'
@@ -23,13 +22,15 @@
     email-upstream: '[circuitsw]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: a68970cf5b25c
+
 - project:
     name: circuitsw-nitrogen
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: nitrogen
     project: 'ofextensions/circuitsw'
@@ -47,13 +48,15 @@
     email-upstream: '[circuitsw]'
     archive-artifacts: ''
 
+    # Used by the release job
+    staging-profile-id: a68970cf5b25c
+
 - project:
     name: circuitsw-carbon
     jobs:
-      - '{project-name}-clm-{stream}'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-maven-jobs'
       - '{project-name}-merge-{stream}'
-      - '{project-name}-verify-{stream}-{maven}-{jdks}'
 
     stream: carbon
     project: 'ofextensions/circuitsw'
@@ -70,6 +73,9 @@
     dependencies: ''
     email-upstream: '[circuitsw]'
     archive-artifacts: ''
+
+    # Used by the release job
+    staging-profile-id: a68970cf5b25c
 
 - project:
     name: circuitsw-sonar
