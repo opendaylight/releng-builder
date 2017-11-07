@@ -1,4 +1,4 @@
-#@IgnoreInspection BashAddShebang
+#!/bin/bash
 # Activate robotframework virtualenv
 # ${ROBOT_VENV} comes from the integration-install-robotframework.sh
 # script.
@@ -67,6 +67,7 @@ TENANT_NETWORK_TYPE: ${TENANT_NETWORK_TYPE}
 SECURITY_GROUP_MODE: ${SECURITY_GROUP_MODE}
 PUBLIC_PHYSICAL_NETWORK: ${PUBLIC_PHYSICAL_NETWORK}
 ENABLE_NETWORKING_L2GW: ${ENABLE_NETWORKING_L2GW}
+ENABLE_NETWORKING_BGPVPN: ${ENABLE_NETWORKING_BGPVPN}
 CREATE_INITIAL_NETWORKS: ${CREATE_INITIAL_NETWORKS}
 LBAAS_SERVICE_PROVIDER: ${LBAAS_SERVICE_PROVIDER}
 NUM_OPENSTACK_SITES: ${NUM_OPENSTACK_SITES}
@@ -213,6 +214,15 @@ enable_plugin networking-l2gw ${NETWORKING_L2GW_DRIVER} ${ODL_ML2_BRANCH}
 NETWORKING_L2GW_SERVICE_DRIVER=L2GW:OpenDaylight:networking_odl.l2gateway.driver.OpenDaylightL2gwDriver:default
 EOF
     fi
+    if [ "${ENABLE_NETWORKING_BGPVPN}" == "yes" ]; then
+        cat >> ${local_conf_file_name} << EOF
+enable_plugin networking-bgpvpn ${NETWORKING_BGPVPN_DRIVER} ${ODL_ML2_BRANCH}
+Q_PLUGIN_EXTRA_CONF_FILES=(networking_bgpvpn.conf)
+[[post-config|$NETWORKING_BGPVPN_CONF]]
+[service_providers]
+service_provider=BGPVPN:OpenDaylight:networking_bgpvpn.neutron.services.service_drivers.opendaylight.odl.OpenDaylightBgpvpnDriver:default
+EOF
+    fi
 
     if [ "${ODL_ENABLE_L3_FWD}" == "yes" ]; then
         cat >> ${local_conf_file_name} << EOF
@@ -248,9 +258,9 @@ minimize_polling=True
 
 [ml2]
 # Needed for VLAN provider tests - because our provider networks are always encapsulated in VXLAN (br-physnet1)
-# MTU(1440) + VXLAN(50) + VLAN(4) = 1494 < MTU eth0/br-physnet1(1500)
-physical_network_mtus = ${PUBLIC_PHYSICAL_NETWORK}:1440
-path_mtu = 1490
+# MTU(1400) + VXLAN(50) + VLAN(4) = 1454 < MTU eth0/br-physnet1(1458)
+physical_network_mtus = ${PUBLIC_PHYSICAL_NETWORK}:1400
+path_mtu = 1458
 
 # workaround for port-status not working due to https://bugs.opendaylight.org/show_bug.cgi?id=9092
 [ml2_odl]
@@ -435,23 +445,18 @@ function list_files () {
     ${SSH} ${ip} "sudo find /etc > /tmp/find.etc.txt"
     ${SSH} ${ip} "sudo find /opt/stack > /tmp/find.opt.stack.txt"
     ${SSH} ${ip} "sudo find /var > /tmp/find2.txt"
-    rsync --rsync-path="sudo rsync" -arv --list-only ssh ${ip}:/var/ > ${folder}/rsync.var.txt
+    ${SSH} ${ip} "sudo find /var > /tmp/find.var.txt"
+    rsync --rsync-path="sudo rsync" --list-only -arvhe ssh ${ip}:/etc/ > ${folder}/rsync.etc.txt
+    rsync --rsync-path="sudo rsync" --list-only -arvhe ssh ${ip}:/opt/stack/ > ${folder}/rsync.opt.stack.txt
+    rsync --rsync-path="sudo rsync" --list-only -arvhe ssh ${ip}:/var/ > ${folder}/rsync.var.txt
     scp ${ip}:/tmp/find.etc.txt ${folder}
     scp ${ip}:/tmp/find.opt.stack.txt ${folder}
     scp ${ip}:/tmp/find2.txt ${folder}
+    scp ${ip}:/tmp/find.var.txt ${folder}
 }
 
 function collect_logs () {
     set +e  # We do not want to create red dot just because something went wrong while fetching logs.
-
-    for i in `seq 1 ${NUM_ODL_SYSTEM}`; do
-        CONTROLLERIP=ODL_SYSTEM_${i}_IP
-        echo "Lets's take the karaf thread dump again..."
-        KARAF_PID=$(ssh ${!CONTROLLERIP} "ps aux | grep ${KARAF_ARTIFACT} | grep -v grep | tr -s ' ' | cut -f2 -d' '")
-        ssh ${!CONTROLLERIP} "jstack $KARAF_PID"> ${WORKSPACE}/karaf_${i}_threads_after.log || true
-        echo "killing karaf process..."
-        ${SSH} "${!CONTROLLERIP}" bash -c 'ps axf | grep karaf | grep -v grep | awk '"'"'{print "kill -9 " $1}'"'"' | sh'
-    done
 
     cat > extra_debug.sh << EOF
 echo -e "/usr/sbin/lsmod | /usr/bin/grep openvswitch\n"
@@ -466,38 +471,71 @@ echo -e "\nsudo getenforce\n"
 sudo getenforce
 echo -e "\njournalctl > /tmp/journalctl.log\n"
 sudo journalctl > /tmp/journalctl.log
+echo -e "\nsudo systemctl status httpd\n"
+sudo systemctl status httpd
+echo -e "\nenv\n"
+env
+source /opt/stack/devstack/openrc admin admin
+echo -e "\nenv after openrc\n"
+env
+echo "\nsudo du -hs /opt/stack"
+sudo du -hs /opt/stack
+echo "\nsudo mount"
+sudo mount
 EOF
-
-    sleep 5
-    # FIXME: Do not create .tar and gzip before copying.
-    for i in `seq 1 ${NUM_ODL_SYSTEM}`; do
-        CONTROLLERIP=ODL_SYSTEM_${i}_IP
-        ${SSH} "${!CONTROLLERIP}"  "cp -r /tmp/${BUNDLEFOLDER}/data/log /tmp/odl_log"
-        ${SSH} "${!CONTROLLERIP}"  "tar -cf /tmp/odl${i}_karaf.log.tar /tmp/odl_log/*"
-        scp "${!CONTROLLERIP}:/tmp/odl${i}_karaf.log.tar" "${WORKSPACE}/odl${i}_karaf.log.tar"
-        ${SSH} "${!CONTROLLERIP}"  "tar -cf /tmp/odl${i}_zrpcd.log.tar /tmp/zrpcd.init.log"
-        scp "${!CONTROLLERIP}:/tmp/odl${i}_zrpcd.log.tar" "${WORKSPACE}/odl${i}_zrpcd.log.tar"
-        tar -xvf ${WORKSPACE}/odl${i}_karaf.log.tar -C . --strip-components 2 --transform s/karaf/odl${i}_karaf/g
-        grep "ROBOT MESSAGE\| ERROR " odl${i}_karaf.log > odl${i}_err.log
-        # Print ROBOT lines, Print Caused by...Exception: lines,
-        # Print Exception{ lines as well as the previous line that has the timestamp for context
-        sed -n -e '/ROBOT MESSAGE/P' -e '/Caused by.*Exception:/P' -e '$!N;/Exception:/P;D' -e '$!N;/Exception{/P;D' odl${i}_karaf.log > odl${i}_exception.log
-        grep "ROBOT MESSAGE\| ERROR \| WARN \|Exception" odl${i}_karaf.log > odl${i}_err_warn_exception.log
-        rm ${WORKSPACE}/odl${i}_karaf.log.tar
-    done
 
     # Since this log collection work is happening before the archive build macro which also
     # creates the ${WORKSPACE}/archives dir, we have to do it here first.  The mkdir in the
     # archives build step will essentially be a noop.
     mkdir -p ${WORKSPACE}/archives
 
+    sleep 5
+    # FIXME: Do not create .tar and gzip before copying.
+    for i in `seq 1 ${NUM_ODL_SYSTEM}`; do
+        CONTROLLERIP=ODL_SYSTEM_${i}_IP
+        echo "collect_logs: for opendaylight controller ip: ${!CONTROLLERIP}"
+        NODE_FOLDER="odl_${i}"
+        mkdir -p ${NODE_FOLDER}
+        echo "Lets's take the karaf thread dump again..."
+        ssh ${!CONTROLLERIP} "sudo ps aux" > ${WORKSPACE}/ps_after.log
+        pid=$(grep org.apache.karaf.main.Main ${WORKSPACE}/ps_after.log | grep -v grep | tr -s ' ' | cut -f2 -d' ')
+        echo "karaf main: org.apache.karaf.main.Main, pid:${pid}"
+        ssh ${!CONTROLLERIP} "jstack ${pid}" > ${WORKSPACE}/karaf_${i}_${pid}_threads_after.log || true
+        echo "killing karaf process..."
+        ${SSH} "${!CONTROLLERIP}" bash -c 'ps axf | grep karaf | grep -v grep | awk '"'"'{print "kill -9 " $1}'"'"' | sh'
+        ${SSH} ${!CONTROLLERIP} "sudo journalctl > /tmp/journalctl.log"
+        scp ${!CONTROLLERIP}:/tmp/journalctl.log ${NODE_FOLDER}
+        ${SSH} ${!CONTROLLERIP} "dmesg -T > /tmp/dmesg.log"
+        scp ${!CONTROLLERIP}:/tmp/dmesg.log ${NODE_FOLDER}
+        ${SSH} ${!CONTROLLERIP} "cp -r /tmp/${BUNDLEFOLDER}/data/log /tmp/odl_log"
+        ${SSH} ${!CONTROLLERIP} "tar -cf /tmp/odl${i}_karaf.log.tar /tmp/odl_log/*"
+        scp ${!CONTROLLERIP}:/tmp/odl${i}_karaf.log.tar ${NODE_FOLDER}
+        ${SSH} ${!CONTROLLERIP} "tar -cf /tmp/odl${i}_zrpcd.log.tar /tmp/zrpcd.init.log"
+        scp ${!CONTROLLERIP}:/tmp/odl${i}_zrpcd.log.tar ${NODE_FOLDER}
+        tar -xvf ${NODE_FOLDER}/odl${i}_karaf.log.tar -C ${NODE_FOLDER} --strip-components 2 --transform s/karaf/odl${i}_karaf/g
+        grep "ROBOT MESSAGE\| ERROR " ${NODE_FOLDER}/odl${i}_karaf.log > ${NODE_FOLDER}/odl${i}_err.log
+        grep "ROBOT MESSAGE\| ERROR \| WARN \|Exception" \
+            ${NODE_FOLDER}/odl${i}_karaf.log > ${NODE_FOLDER}/odl${i}_err_warn_exception.log
+        # Print ROBOT lines and print Exception lines. For exception lines also print the previous line for context
+        sed -n -e '/ROBOT MESSAGE/P' -e '$!N;/Exception/P;D' ${NODE_FOLDER}/odl${i}_karaf.log > ${NODE_FOLDER}/odl${i}_exception.log
+        rm ${NODE_FOLDER}/odl${i}_karaf.log.tar
+        mv *_threads* ${NODE_FOLDER}
+        mv ps_* ${NODE_FOLDER}
+        mv ${NODE_FOLDER} ${WORKSPACE}/archives/
+    done
+
     print_job_parameters > ${WORKSPACE}/archives/params.txt
 
     # Control Node
     for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
         OSIP=OPENSTACK_CONTROL_NODE_${i}_IP
+        echo "collect_logs: for openstack control node ip: ${!OSIP}"
         NODE_FOLDER="control_${i}"
         mkdir -p ${NODE_FOLDER}
+        scp ${!OSIP}:/etc/dnsmasq.conf ${NODE_FOLDER}
+        scp ${!OSIP}:/etc/keystone/keystone.conf ${NODE_FOLDER}
+        scp ${!OSIP}:/etc/keystone/keystone-uwsgi-admin.ini ${NODE_FOLDER}
+        scp ${!OSIP}:/etc/keystone/keystone-uwsgi-public.ini ${NODE_FOLDER}
         scp ${!OSIP}:/etc/kuryr/kuryr.conf ${NODE_FOLDER}
         scp ${!OSIP}:/etc/neutron/dhcp_agent.ini ${NODE_FOLDER}
         scp ${!OSIP}:/etc/neutron/metadata_agent.ini ${NODE_FOLDER}
@@ -506,7 +544,14 @@ EOF
         scp ${!OSIP}:/etc/neutron/plugins/ml2/ml2_conf.ini ${NODE_FOLDER}
         scp ${!OSIP}:/etc/neutron/services/loadbalancer/haproxy/lbaas_agent.ini ${NODE_FOLDER}
         scp ${!OSIP}:/etc/nova/nova.conf ${NODE_FOLDER}
+        scp ${!OSIP}:/etc/nova/nova-api-uwsgi.ini ${NODE_FOLDER}
+        scp ${!OSIP}:/etc/nova/nova_cell1.conf ${NODE_FOLDER}
+        scp ${!OSIP}:/etc/nova/nova-cpu.conf ${NODE_FOLDER}
+        scp ${!OSIP}:/etc/nova/placement-uwsgi.ini ${NODE_FOLDER}
+        scp ${!OSIP}:/etc/openstack/clouds.yaml ${NODE_FOLDER}
+        scp ${!OSIP}:/opt/stack/devstack/.stackenv ${NODE_FOLDER}
         scp ${!OSIP}:/opt/stack/devstack/nohup.out ${NODE_FOLDER}/stack.log
+        scp ${!OSIP}:/opt/stack/devstack/openrc ${NODE_FOLDER}
         scp ${!OSIP}:/opt/stack/requirements/upper-constraints.txt ${NODE_FOLDER}
         scp ${!OSIP}:/opt/stack/tempest/etc/tempest.conf ${NODE_FOLDER}
         scp ${!OSIP}:/tmp/get_devstack.sh.txt ${NODE_FOLDER}
@@ -516,24 +561,35 @@ EOF
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/etc/hosts ${NODE_FOLDER}
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/usr/lib/systemd/system/haproxy.service ${NODE_FOLDER}
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/audit/audit.log ${NODE_FOLDER}
+        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/httpd/keystone_access.log ${NODE_FOLDER}
+        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/httpd/keystone.log ${NODE_FOLDER}
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/messages ${NODE_FOLDER}
+        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/rabbitmq ${NODE_FOLDER}
         rsync -avhe ssh ${!OSIP}:/opt/stack/logs/* ${NODE_FOLDER} # rsync to prevent copying of symbolic links
         scp extra_debug.sh ${!OSIP}:/tmp
         ${SSH} ${!OSIP} "bash /tmp/extra_debug.sh > /tmp/extra_debug.log"
         scp ${!OSIP}:/tmp/extra_debug.log ${NODE_FOLDER}
         scp ${!OSIP}:/tmp/journalctl.log ${NODE_FOLDER}
         scp ${!OSIP}:/tmp/*.xz ${NODE_FOLDER}
+        ${SSH} ${!CONTROLLERIP} "dmesg -T > /tmp/dmesg.log"
+        scp ${!CONTROLLERIP}:/tmp/dmesg.log ${NODE_FOLDER}
         mv local.conf_control_${!OSIP} ${NODE_FOLDER}/local.conf
+        mv /tmp/qdhcp ${NODE_FOLDER}
         mv ${NODE_FOLDER} ${WORKSPACE}/archives/
     done
 
     # Compute Nodes
     for i in `seq 1 ${NUM_OPENSTACK_COMPUTE_NODES}`; do
         OSIP=OPENSTACK_COMPUTE_NODE_${i}_IP
+        echo "collect_logs: for openstack compute node ip: ${!OSIP}"
         NODE_FOLDER="compute_${i}"
         mkdir -p ${NODE_FOLDER}
         scp ${!OSIP}:/etc/nova/nova.conf ${NODE_FOLDER}
+        scp ${!OSIP}:/etc/nova/nova-cpu.conf ${NODE_FOLDER}
+        scp ${!OSIP}:/etc/openstack/clouds.yaml ${NODE_FOLDER}
+        scp ${!OSIP}:/opt/stack/devstack/.stackenv ${NODE_FOLDER}
         scp ${!OSIP}:/opt/stack/devstack/nohup.out ${NODE_FOLDER}/stack.log
+        scp ${!OSIP}:/opt/stack/devstack/openrc ${NODE_FOLDER}
         scp ${!OSIP}:/opt/stack/requirements/upper-constraints.txt ${NODE_FOLDER}
         scp ${!OSIP}:/tmp/get_devstack.sh.txt ${NODE_FOLDER}
         scp ${!OSIP}:/var/log/openvswitch/ovs-vswitchd.log ${NODE_FOLDER}
@@ -541,7 +597,6 @@ EOF
         list_files "${!OSIP}" "${NODE_FOLDER}"
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/etc/hosts ${NODE_FOLDER}
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/audit/audit.log ${NODE_FOLDER}
-        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/dmesg.log ${NODE_FOLDER}
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/libvirt ${NODE_FOLDER}
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/messages ${NODE_FOLDER}
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/nova-agent.log ${NODE_FOLDER}
@@ -551,6 +606,8 @@ EOF
         scp ${!OSIP}:/tmp/extra_debug.log ${NODE_FOLDER}
         scp ${!OSIP}:/tmp/journalctl.log ${NODE_FOLDER}
         scp ${!OSIP}:/tmp/*.xz ${NODE_FOLDER}/
+        ${SSH} ${!OSIP} "dmesg -T > /tmp/dmesg.log"
+        scp ${!OSIP}:/tmp/dmesg.log ${NODE_FOLDER}
         mv local.conf_compute_${!OSIP} ${NODE_FOLDER}/local.conf
         mv ${NODE_FOLDER} ${WORKSPACE}/archives/
     done
@@ -571,6 +628,113 @@ EOF
         echo "tempest results not found in ${DEVSTACK_TEMPEST_DIR}/${TESTREPO}/0"
     fi
 } # collect_logs()
+
+# Following three functions are debugging helpers when debugging devstack changes.
+# Keeping them for now so we can simply call them when needed.
+ctrlhn=""
+comp1hn=""
+comp2hn=""
+function get_hostnames () {
+    set +e
+    local ctrlip=${OPENSTACK_CONTROL_NODE_1_IP}
+    local comp1ip=${OPENSTACK_COMPUTE_NODE_1_IP}
+    local comp2ip=${OPENSTACK_COMPUTE_NODE_2_IP}
+    ctrlhn=$(${SSH} ${ctrlip} "hostname")
+    comp1hn=$(${SSH} ${comp1ip} "hostname")
+    comp2hn=$(${SSH} ${comp2ip} "hostname")
+    echo "hostnames: ${ctrlhn}, ${comp1hn}, ${comp2hn}"
+    set -e
+}
+
+function check_firewall() {
+    set +e
+    echo $-
+    local ctrlip=${OPENSTACK_CONTROL_NODE_1_IP}
+    local comp1ip=${OPENSTACK_COMPUTE_NODE_1_IP}
+    local comp2ip=${OPENSTACK_COMPUTE_NODE_2_IP}
+
+    echo "check_firewall on control"
+    ${SSH} ${ctrlip} "
+        sudo systemctl status firewalld
+        sudo systemctl -l status iptables
+        sudo iptables --line-numbers -nvL
+    " || true
+    echo "check_firewall on compute 1"
+    ${SSH} ${comp1ip} "
+        sudo systemctl status firewalld
+        sudo systemctl -l status iptables
+        sudo iptables --line-numbers -nvL
+    " || true
+    echo "check_firewall on compute 2"
+    ${SSH} ${comp2ip} "
+        sudo systemctl status firewalld
+        sudo systemctl -l status iptables
+        sudo iptables --line-numbers -nvL
+    " || true
+}
+
+function get_service () {
+    set +e
+    local iter=$1
+    #local idx=$2
+    local ctrlip=${OPENSTACK_CONTROL_NODE_1_IP}
+    local comp1ip=${OPENSTACK_COMPUTE_NODE_1_IP}
+
+    #if [ ${idx} -eq 1 ]; then
+        if [ ${iter} -eq 1 ] || [ ${iter} -gt 16 ]; then
+            curl http://${ctrlip}:5000
+            curl http://${ctrlip}:35357
+            curl http://${ctrlip}/identity
+            ${SSH} ${ctrlip} "
+                source /opt/stack/devstack/openrc admin admin;
+                env
+                openstack configuration show --unmask;
+                openstack service list
+                openstack --os-cloud devstack-admin --os-region RegionOne compute service list
+                openstack hypervisor list;
+            " || true
+            check_firewall
+        fi
+    #fi
+    set -e
+}
+
+# Check if rabbitmq is ready by looking for a pid in it's status.
+# The function returns the status of the grep command which callers can check.
+function is_rabbitmq_ready() {
+    local -r ip=$1
+    rm -f rabbit.txt
+    ${SSH} ${ip} "sudo rabbitmqctl status" > rabbit.txt
+    grep pid rabbit.txt
+}
+
+# retry the given command ($3) until success for a number of iterations ($1)
+# sleeping ($2) between tries.
+function retry() {
+    set +e
+    local -r -i max_tries=${1}
+    local -r -i sleep_time=${2}
+    local -r cmd=${3}
+    local -i retries=1
+    local -i rc=1
+    while true; do
+        echo "retry ${cmd}: attempt: ${retries}"
+        ${cmd}
+        rc=$?
+        if ((${rc} == 0)); then
+            break;
+        else
+            if ((${retries} == ${max_tries})); then
+                break
+            else
+                ((retries++))
+                sleep ${sleep_time}
+            fi
+        fi
+    done
+    set -e
+    return ${rc}
+}
 
 # if we are using the new netvirt impl, as determined by the feature name
 # odl-netvirt-openstack (note: old impl is odl-ovsdb-openstack) then we
@@ -616,7 +780,17 @@ CORE_OS_COMPUTE_SERVICES="n-cpu,odl-compute"
 
 cat > ${WORKSPACE}/disable_firewall.sh << EOF
 sudo systemctl stop firewalld
-sudo systemctl stop iptables
+# Open these ports to match the tutorial vms
+# http/https (80/443), samba (445), netbios (137,138,139)
+sudo iptables -I INPUT -p tcp -m multiport --dports 80,443,139,445 -j ACCEPT
+sudo iptables -I INPUT -p udp -m multiport --dports 137,138 -j ACCEPT
+# OpenStack services as well as vxlan tunnel ports 4789 and 9876
+# identity public/admin (5000/35357), ampq (5672), vnc (6080), nova (8774), glance (9292), neutron (9696)
+sudo sudo iptables -I INPUT -p tcp -m multiport --dports 5000,5672,6080,8774,9292,9696,35357 -j ACCEPT
+sudo sudo iptables -I INPUT -p udp -m multiport --dports 4789,9876 -j ACCEPT
+sudo iptables-save > /etc/sysconfig/iptables
+sudo systemctl restart iptables
+sudo iptables --line-numbers -nvL
 true
 EOF
 
@@ -633,6 +807,8 @@ echo "127.0.0.1   localhost \${HOSTNAME}" >> /tmp/hosts
 echo "::1         localhost \${HOSTNAME}" >> /tmp/hosts
 sudo mv /tmp/hosts /etc/hosts
 sudo mkdir /opt/stack
+echo "Create RAM disk for /opt/stack"
+sudo mount -t tmpfs -o size=2G tmpfs /opt/stack
 sudo chmod 777 /opt/stack
 cd /opt/stack
 echo "git clone https://git.openstack.org/openstack-dev/devstack --branch ${OPENSTACK_BRANCH}"
@@ -643,6 +819,10 @@ if [ -n "${DEVSTACK_HASH}" ]; then
     git checkout ${DEVSTACK_HASH}
 fi
 git --no-pager log --pretty=format:'%h %<(13)%ar%<(13)%cr %<(20,trunc)%an%d %s\n%b' -n20
+echo "workaround: adjust wait from 60s to 1800s (30m)"
+sed -i 's/wait_for_compute 60/wait_for_compute 1800/g' /opt/stack/devstack/lib/nova
+# TODO: modify sleep 1 to sleep 60, search wait_for_compute, then first sleep 1
+# that would just reduce the number of logs in the compute stack.log
 EOF
 
 cat > "${WORKSPACE}/setup_host_cell_mapping.sh" << EOF
@@ -682,13 +862,16 @@ done
 
 for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
     CONTROLIP=OPENSTACK_CONTROL_NODE_${i}_IP
-    echo "Stack the control node ${i} of ${NUM_OPENSTACK_CONTROL_NODES}: ${CONTROLIP}"
+    echo "Configure the stack of the control node ${i} of ${NUM_OPENSTACK_CONTROL_NODES}: ${CONTROLIP}"
+    scp ${WORKSPACE}/disable_firewall.sh ${!CONTROLIP}:/tmp
+    ${SSH} ${!CONTROLIP} "sudo bash /tmp/disable_firewall.sh"
     create_etc_hosts ${!CONTROLIP}
     scp ${WORKSPACE}/hosts_file ${!CONTROLIP}:/tmp/hosts
     scp ${WORKSPACE}/get_devstack.sh ${!CONTROLIP}:/tmp
     ${SSH} ${!CONTROLIP} "bash /tmp/get_devstack.sh > /tmp/get_devstack.sh.txt 2>&1"
     create_control_node_local_conf ${!CONTROLIP} ${ODLMGRIP[$i]} "${ODL_OVS_MGRS[$i]}"
     scp ${WORKSPACE}/local.conf_control_${!CONTROLIP} ${!CONTROLIP}:/opt/stack/devstack/local.conf
+    echo "Stack the control node ${i} of ${NUM_OPENSTACK_CONTROL_NODES}: ${CONTROLIP}"
     ssh ${!CONTROLIP} "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
     ssh ${!CONTROLIP} "ps -ef | grep stack.sh"
     ssh ${!CONTROLIP} "ls -lrt /opt/stack/devstack/nohup.out"
@@ -700,24 +883,46 @@ for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
     fi
 done
 
+# This is a backup to the CELLSV2_SETUP=singleconductor workaround. Keeping it here as an easy lookup
+# if needed.
+# Let the control node get started to avoid a race condition where the computes start and try to access
+# the nova_cell1 on the control node before it is created. If that happens, the nova-compute service on the
+# compute exits and does not attempt to restart.
+# 180s is chosen because in test runs the control node usually finished in 17-20 minutes and the computes finished
+# in 17 minutes, so take the max difference of 3 minutes and the jobs should still finish around the same time.
+# one of the following errors is seen in the compute n-cpu.log:
+# Unhandled error: NotAllowed: Connection.open: (530) NOT_ALLOWED - access to vhost 'nova_cell1' refused for user 'stackrabbit'
+# AccessRefused: (0, 0): (403) ACCESS_REFUSED - Login was refused using authentication mechanism AMQPLAIN. For details see the broker logfile.
+# Compare that timestamp to this log in the control stack.log: sudo rabbitmqctl set_permissions -p nova_cell1 stackrabbit
+# If the n-cpu.log is earlier than the control stack.log timestamp then the failure condition is likely hit.
+WAIT_FOR_RABBITMQ_MINUTES=60
+echo "Wait a maximum of ${WAIT_FOR_RABBITMQ_MINUTES}m until rabbitmq is ready to allow the controller to create nova_cell1 before the computes need it"
+retry ${WAIT_FOR_RABBITMQ_MINUTES} 60 "is_rabbitmq_ready ${OPENSTACK_CONTROL_NODE_1_IP}"
+rc=$?
+if ((${rc} == 0)); then
+    echo "rabbitmq is ready, starting ${NUM_OPENSTACK_COMPUTE_NODES} compute(s)"
+else
+    echo "rabbitmq was not ready in ${WAIT_FOR_RABBITMQ_MINUTES}m"
+    collect_logs
+    exit 1
+fi
+
 for i in `seq 1 ${NUM_OPENSTACK_COMPUTE_NODES}`; do
     NUM_COMPUTES_PER_SITE=$((NUM_OPENSTACK_COMPUTE_NODES / NUM_OPENSTACK_SITES))
     SITE_INDEX=$((((i - 1) / NUM_COMPUTES_PER_SITE) + 1)) # We need the site index to infer the control node IP for this compute
     COMPUTEIP=OPENSTACK_COMPUTE_NODE_${i}_IP
     CONTROLIP=OPENSTACK_CONTROL_NODE_${SITE_INDEX}_IP
-    echo "Stack the compute node ${i} of ${NUM_OPENSTACK_COMPUTE_NODES}: ${COMPUTEIP}"
+    echo "Configure the stack of the compute node ${i} of ${NUM_OPENSTACK_COMPUTE_NODES}: ${COMPUTEIP}"
+    scp ${WORKSPACE}/disable_firewall.sh "${!COMPUTEIP}:/tmp"
+    ${SSH} "${!COMPUTEIP}" "sudo bash /tmp/disable_firewall.sh"
     create_etc_hosts ${!COMPUTEIP} ${!CONTROLIP}
     scp ${WORKSPACE}/hosts_file ${!COMPUTEIP}:/tmp/hosts
     scp ${WORKSPACE}/get_devstack.sh  ${!COMPUTEIP}:/tmp
     ${SSH} ${!COMPUTEIP} "bash /tmp/get_devstack.sh > /tmp/get_devstack.sh.txt 2>&1"
-    create_compute_node_local_conf ${!COMPUTEIP} ${!CONTROLIP} ${ODLMGRIP[$SITE_INDEX]} "${ODL_OVS_MGRS[$SITE_INDEX]}"
-    scp ${WORKSPACE}/local.conf_compute_${!COMPUTEIP} ${!COMPUTEIP}:/opt/stack/devstack/local.conf
-    ssh ${!COMPUTEIP} "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
-    ssh ${!COMPUTEIP} "ps -ef | grep stack.sh"
-    os_node_list+=(${!COMPUTEIP})
-    # Workaround for https://review.openstack.org/#/c/491032/
-    # Modify upper-constraints to use libvirt-python 3.2.0
     if [ "${ODL_ML2_BRANCH}" == "stable/ocata" ]; then
+        echo "Updating requirements for ${ODL_ML2_BRANCH}"
+        echo "Workaround for https://review.openstack.org/#/c/491032/"
+        echo "Modify upper-constraints to use libvirt-python 3.2.0"
         ${SSH} ${!COMPUTEIP} "
             cd /opt/stack;
             git clone https://git.openstack.org/openstack/requirements;
@@ -726,6 +931,12 @@ for i in `seq 1 ${NUM_OPENSTACK_COMPUTE_NODES}`; do
             sed -i s/libvirt-python===2.5.0/libvirt-python===3.2.0/ upper-constraints.txt
         "
     fi
+    create_compute_node_local_conf ${!COMPUTEIP} ${!CONTROLIP} ${ODLMGRIP[$SITE_INDEX]} "${ODL_OVS_MGRS[$SITE_INDEX]}"
+    scp ${WORKSPACE}/local.conf_compute_${!COMPUTEIP} ${!COMPUTEIP}:/opt/stack/devstack/local.conf
+    echo "Stack the compute node ${i} of ${NUM_OPENSTACK_COMPUTE_NODES}: ${COMPUTEIP}"
+    ssh ${!COMPUTEIP} "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
+    ssh ${!COMPUTEIP} "ps -ef | grep stack.sh"
+    os_node_list+=(${!COMPUTEIP})
 done
 
 echo "nodelist: ${os_node_list[*]}"
@@ -749,6 +960,9 @@ elif [ \${ret} -eq 0 ]; then
 fi
 EOF
 
+# devstack debugging
+# get_hostnames
+
 # Check if the stacking is finished. Poll all nodes every 60s for one hour.
 iteration=0
 in_progress=1
@@ -761,6 +975,8 @@ while [ ${in_progress} -eq 1 ]; do
         scp ${os_node_list[index]}:/tmp/stack_progress .
         cat stack_progress
         stacking_status=`cat stack_progress`
+        # devstack debugging
+        # get_service "${iteration}" "${index}"
         if [ "$stacking_status" == "Still Stacking" ]; then
             continue
         elif [ "$stacking_status" == "Stacking Failed" ]; then
@@ -795,17 +1011,6 @@ for i in `seq 1 ${NUM_OPENSTACK_SITES}`; do
         IP_VAR=OPENSTACK_COMPUTE_NODE_${COMPUTE_INDEX}_IP
         COMPUTE_IPS[$((j-1))]=${!IP_VAR}
     done
-
-    # Need to disable firewalld and iptables in compute nodes as well
-    for ip in ${COMPUTE_IPS[*]}; do
-        scp ${WORKSPACE}/disable_firewall.sh "${ip}:/tmp"
-        ${SSH} "${ip}" "sudo bash /tmp/disable_firewall.sh"
-    done
-
-    #Need to disable firewalld and iptables in control node
-    echo "Stop Firewall in Control Node for compute nodes to be able to reach the ports and add to hypervisor-list"
-    scp ${WORKSPACE}/disable_firewall.sh ${!CONTROLIP}:/tmp
-    ${SSH} ${!CONTROLIP} "sudo bash /tmp/disable_firewall.sh"
 
     echo "sleep for 60s and print hypervisor-list"
     sleep 60
@@ -845,12 +1050,6 @@ for i in `seq 1 ${NUM_OPENSTACK_SITES}`; do
         COMPUTE_INDEX=$(((i-1) * NUM_COMPUTES_PER_SITE + j))
         IP_VAR=OPENSTACK_COMPUTE_NODE_${COMPUTE_INDEX}_IP
         COMPUTE_IPS[$((j-1))]=${!IP_VAR}
-    done
-
-    # Need to disable firewalld and iptables in compute nodes as well
-    for ip in ${COMPUTE_IPS[*]}; do
-        scp ${WORKSPACE}/disable_firewall.sh "${ip}:/tmp"
-        ${SSH} "${ip}" "sudo bash /tmp/disable_firewall.sh"
     done
 
     # External Network
@@ -908,6 +1107,10 @@ for i in `seq 1 ${NUM_OPENSTACK_SITES}`; do
         sudo ip netns exec pnf_ns ifconfig pnf_veth1 up ${EXTNET_PNF_IP}/24;
         sudo ovs-vsctl add-port ${PUBLIC_BRIDGE} pnf_veth0;
     "
+    # Control Node - set VXLAN TEP IP for Genius Auto TZ
+    ${SSH} ${!CONTROLIP} "
+        sudo ovs-vsctl set O . external_ids:tep-ip=${!CONTROLIP};
+    "
 
     # Control Node - external net internet address simulation
     ${SSH} ${!CONTROLIP} "
@@ -927,6 +1130,10 @@ for i in `seq 1 ${NUM_OPENSTACK_SITES}`; do
         CONTROLPORT="control_vxlan"
         ${SSH} $compute_ip "
             sudo ovs-vsctl add-port $PUBLIC_BRIDGE $CONTROLPORT -- set interface $CONTROLPORT type=vxlan options:local_ip=$compute_ip options:remote_ip=${!CONTROLIP} options:dst_port=9876 options:key=flow
+        "
+         #Compute Node - set VXLAN TEP IP for Genius Auto TZ
+        ${SSH} $compute_ip "
+            sudo ovs-vsctl set O . external_ids:tep-ip=${compute_ip};
         "
     done
 done
@@ -959,14 +1166,21 @@ cat testplan.txt
 # Use the testplan if specific SUITES are not defined.
 if [ -z "${SUITES}" ]; then
     SUITES=`egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' testplan.txt | tr '\012' ' '`
-fi
-
-if [ "${OPENSTACK_BRANCH}" == "stable/pike" ] || [ "${OPENSTACK_BRANCH}" == "master" ]; then
-   AUTH="http://${!CONTROLIP}/identity"
 else
-   AUTH="http://${!CONTROLIP}:35357/v3"
+    newsuites=""
+    workpath="${WORKSPACE}/test/csit/suites"
+    for suite in ${SUITES}; do
+        fullsuite="${workpath}/${suite}"
+        if [ -z ${newsuites} ]; then
+            newsuites+=${fullsuite}
+        else
+            newsuites+=" "${fullsuite}
+        fi
+    done
+    SUITES=${newsuites}
 fi
 
+# TODO: run openrc on control node and then scrape the vars from it
 # Environment Variables Needed to execute Openstack Client for NetVirt Jobs
 cat > /tmp/os_netvirt_client_rc << EOF
 export OS_USERNAME=admin
@@ -974,7 +1188,7 @@ export OS_PASSWORD=admin
 export OS_PROJECT_NAME=admin
 export OS_USER_DOMAIN_NAME=default
 export OS_PROJECT_DOMAIN_NAME=default
-export OS_AUTH_URL=${AUTH}
+export OS_AUTH_URL="http://${!CONTROLIP}/identity"
 export OS_IDENTITY_API_VERSION=3
 export OS_IMAGE_API_VERSION=2
 export OS_TENANT_NAME=admin
@@ -985,9 +1199,19 @@ source /tmp/os_netvirt_client_rc
 
 echo "Starting Robot test suites ${SUITES} ..."
 # please add pybot -v arguments on a single line and alphabetized
-pybot -N ${TESTPLAN} --removekeywords wuks --flattenkeywords for -c critical -e exclude -e skip_if_${DISTROSTREAM} \
+suite_num=0
+for suite in ${SUITES}; do
+    # prepend a incrmental counter to the suite name so that the full robot log combining all the suites as is done
+    # in the rebot step below will list all the suites in chronological order as rebot seems to alphabatize them
+    let "suite_num = suite_num + 1"
+    suite_index="$(printf %02d ${suite_num})"
+    suite_name="$(basename ${suite} | cut -d. -f1)"
+    log_name="${suite_index}_${suite_name}"
+    pybot -N ${log_name} --removekeywords wuks -c critical -e exclude -e skip_if_${DISTROSTREAM} \
+    --log log_${log_name}.html --report None --output output_${log_name}.xml \
     -v BUNDLEFOLDER:${BUNDLEFOLDER} \
     -v BUNDLE_URL:${ACTUAL_BUNDLE_URL} \
+    -v CONTROLLERFEATURES:${CONTROLLERFEATURES} \
     -v CONTROLLER_USER:${USER} \
     -v DEVSTACK_DEPLOY_PATH:/opt/stack/devstack \
     -v HA_PROXY_IP:${HA_PROXY_IP} \
@@ -1031,7 +1255,10 @@ pybot -N ${TESTPLAN} --removekeywords wuks --flattenkeywords for -c critical -e 
     -v TOOLS_SYSTEM_2_IP:${TOOLS_SYSTEM_2_IP} \
     -v USER_HOME:${HOME} \
     -v WORKSPACE:/tmp \
-    ${TESTOPTIONS} ${SUITES} || true
+    ${TESTOPTIONS} ${suite} || true
+done
+#rebot exit codes seem to be different
+rebot --output ${WORKSPACE}/output.xml --log log_full.html --report None -N openstack output_*.xml || true
 
 echo "Examining the files in data/log and checking file size"
 ssh ${ODL_SYSTEM_IP} "ls -altr /tmp/${BUNDLEFOLDER}/data/log/"

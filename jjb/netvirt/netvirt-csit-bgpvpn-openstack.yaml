@@ -1,8 +1,8 @@
 ---
 - project:
-    name: netvirt-csit-hwvtep-openstack-integration-oxygen
+    name: netvirt-csit-bgpvpn-openstack-integration-oxygen
     jobs:
-      - '{project}-csit-hwvtep-{topology}-openstack-{openstack}-{functionality}-{stream}'
+      - '{project}-csit-bgpvpn-{topology}-openstack-{openstack}-{functionality}-{stream}'
 
     project: 'netvirt'
     stream: 'oxygen'
@@ -22,7 +22,7 @@
           enable-haproxy: 'yes'
           install-features: 'odl-jolokia,odl-netvirt-openstack'
 
-    testplan: '{project}-{topology}-l2gw-openstack.txt'
+    testplan: '{project}-{topology}-bgpvpn-openstack.txt'
 
     functionality:
       - upstream-stateful:
@@ -50,19 +50,19 @@
           openstack_system2_image: '{openstack_system_image_pike}'
 
     odl-ml2-driver-version: 'v2'
-    enable-openstack-services: 'placement-api,l2gw-plugin'
+    enable-openstack-services: 'placement-api'
     enable-openstack-compute-services: 'placement-client'
     security-group-mode: '{sg-mode}'
     tools_system_count: 2
     tools_system_image: ZZCI - Ubuntu 16.04 - mininet-ovs-26 - 20171208-1847
 
-    # TODO: remove this flag and instead use the enable-openstack-services list to know if l2gw is enabled
-    enable-networking-l2gw: 'yes'
+    # TODO: remove this flag and instead use the enable-openstack-services list to know if bgpvpn is enabled
+    enable-networking-bgpvpn: 'yes'
 
 - project:
-    name: netvirt-csit-hwvtep-openstack-integration-nitrogen
+    name: netvirt-csit-bgpvpn-openstack-integration-nitrogen
     jobs:
-      - '{project}-csit-hwvtep-{topology}-openstack-{openstack}-{functionality}-{stream}'
+      - '{project}-csit-bgpvpn-{topology}-openstack-{openstack}-{functionality}-{stream}'
 
     project: 'netvirt'
     stream: 'nitrogen'
@@ -82,7 +82,7 @@
           enable-haproxy: 'yes'
           install-features: 'odl-jolokia,odl-netvirt-openstack'
 
-    testplan: '{project}-{topology}-l2gw-openstack.txt'
+    testplan: '{project}-{topology}-bgpvpn-openstack.txt'
 
     functionality:
       - upstream-stateful:
@@ -112,25 +112,26 @@
           openstack_system2_image: '{openstack_system_image_pike}'
 
     odl-ml2-driver-version: 'v2'
-    enable-openstack-services: 'placement-api,l2gw-plugin'
+    enable-openstack-services: 'placement-api'
     enable-openstack-compute-services: 'placement-client'
     security-group-mode: '{sg-mode}'
     tools_system_count: 2
     tools_system_image: ZZCI - Ubuntu 16.04 - mininet-ovs-26 - 20171208-1847
 
-    # TODO: remove this flag and instead use the enable-openstack-services list to know if l2gw is enabled
-    enable-networking-l2gw: 'yes'
+    # TODO: remove this flag and instead use the enable-openstack-services list to know if bgpvpn is enabled
+    enable-networking-bgpvpn: 'yes'
 
 - project:
-    name: netvirt-csit-hwvtep-openstack-integration-carbon
+    name: netvirt-csit-bgpvpn-openstack-integration-carbon
     jobs:
-      - '{project}-csit-hwvtep-{topology}-openstack-{openstack}-{functionality}-{stream}'
+      - '{project}-csit-bgpvpn-{topology}-openstack-{openstack}-{functionality}-{stream}'
 
     project: 'netvirt'
 
     stream: 'carbon'
     branch: 'stable/carbon'
     karaf-version: karaf3
+    quagga-version: '2'    
 
     topology:
       - 1node:
@@ -146,7 +147,7 @@
           enable-haproxy: 'yes'
           install-features: 'odl-jolokia,odl-netvirt-openstack'
 
-    testplan: '{project}-{topology}-l2gw-openstack.txt'
+    testplan: '{project}-{topology}-bgpvpn-openstack.txt'
 
     functionality:
       - upstream-stateful:
@@ -170,11 +171,11 @@
           openstack_system2_image: '{openstack_system_image_pike}'
 
     odl-ml2-driver-version: 'v2'
-    enable-openstack-services: 'placement-api,l2gw-plugin'
+    enable-openstack-services: 'placement-api'
     enable-openstack-compute-services: 'placement-client'
     security-group-mode: '{sg-mode}'
     tools_system_count: 2
     tools_system_image: ZZCI - Ubuntu 16.04 - mininet-ovs-26 - 20171208-1847
 
-    # TODO: remove this flag and instead use the enable-openstack-services list to know if l2gw is enabled
-    enable-networking-l2gw: 'yes'
+    # TODO: remove this flag and instead use the enable-openstack-services list to know if bgpvpn is enabled
+    enable-networking-bgpvpn: 'yes'

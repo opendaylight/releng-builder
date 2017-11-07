@@ -95,7 +95,8 @@
           default: '{test-suites}'
           description: |
               List of space-separated suites. Useful when running specific suites within a testplan.
-              (ex. integration/test/csit/suites/openstack/connectivity/01_l2_tests.robot
+              Do not include ${{WORKSPACE}}/test/csit/suites/ in the values:
+              (ex. openstack/connectivity/l2.robot openstack/tempest/tempest.robot
               integration/test/csit/suites/netvirt/ElanService/).
 
 - parameter:
@@ -161,7 +162,7 @@
 # in order to prevent Jenkins from starting only a subset and still voting Verified+1.
 # Contrary to gerrit-trigger-patch-submitted, this votes +1 also on unstable runs.
 # Arguments:
-#     server: name of gerrit server to listen to
+#     gerrit-server-name: name of gerrit server to listen to
 #     project: pattern to match triggering projects
 #     branch: triggering branch name
 #     files: pattern to match triggering filepaths
@@ -169,7 +170,7 @@
     name: integration-trigger-patch-submitted
     triggers:
       - gerrit:
-          server-name: '{server}'
+          server-name: '{gerrit-server-name}'
           trigger-on:
             - patchset-created-event:
                 exclude-drafts: true
@@ -434,6 +435,12 @@
     name: integration-deploy-openstack-run-test
     builders:
       - shell: !include-raw: integration-deploy-openstack-run-test.sh
+
+# Macro: Quagga package install script 
+- builder:
+    name: quagga-install-package
+    builders:
+      - shell: !include-raw: quagga-install.sh
 
 - builder:
     name: integration-compare-distributions
