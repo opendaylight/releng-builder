@@ -1127,6 +1127,11 @@
           name: ODL_SNAT_MODE
           default: '{odl-snat-mode}'
           description: 'The SNAT mode to be configured - options are conntrack/controller.'
+      - string:
+          name: QUAGGA_VERSION
+          default: '{quagga-version}'
+          description: 'set the quagga version.'
+
     scm:
       - integration-gerrit-scm:
           basedir: 'test'
@@ -1163,6 +1168,7 @@
           properties-file: 'slave_addresses.txt'
       - integration-detect-variables
       - integration-deploy-controller-run-test
+      - quagga-install-package
       - integration-deploy-openstack-run-test
       - integration-cleanup-tmp
 
