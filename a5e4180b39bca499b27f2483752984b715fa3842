@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a245df4_4f715875",
+        "filename": "jjb/packaging/build-packer-docker.sh",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2017-11-07T01:09:10Z",
+      "side": 1,
+      "message": "We should use the version of packer already installed on java-builder images, which is recent (1.1.1) and regularly updated unless there is a dependency on a specific version of packer.  \n\nAlso remember that we have renamed packer binary to packer.io, since this conflicts with cracklib binary on CentOS7., therefore please use the packer.io available in the default $PATH.",
+      "range": {
+        "startLine": 18,
+        "startChar": 5,
+        "endLine": 18,
+        "endChar": 26
+      },
+      "revId": "a5e4180b39bca499b27f2483752984b715fa3842",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a245df4_ef076cc8",
+        "filename": "jjb/packaging/build-packer-libvirt.sh",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2017-11-07T01:09:10Z",
+      "side": 1,
+      "message": "We should use the version of packer already installed on java-builder images, which is recent (1.1.1) and regularly updated unless there is a dependency on a specific version of packer.  \n\nAlso remember that we have renamed packer binary to packer.io, since this conflicts with cracklib binary on CentOS7., therefore please use the packer.io available in the default $PATH.",
+      "range": {
+        "startLine": 15,
+        "startChar": 5,
+        "endLine": 15,
+        "endChar": 26
+      },
+      "revId": "a5e4180b39bca499b27f2483752984b715fa3842",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a245df4_af01f4b0",
+        "filename": "jjb/packaging/build-packer-virtualbox.sh",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2017-11-07T01:09:10Z",
+      "side": 1,
+      "message": "I would recommend raising a request with helpdesk to bake these packages into the image, if they are going to be required for many packaging jobs, would potentially decrease the time it take to run the job.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 34
+      },
+      "revId": "a5e4180b39bca499b27f2483752984b715fa3842",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a245df4_cf0c28f0",
+        "filename": "jjb/packaging/build-packer-virtualbox.sh",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2017-11-07T01:09:10Z",
+      "side": 1,
+      "message": "We should use the version of packer already installed on java-builder images, which is recent (1.1.1) and regularly updated unless there is a dependency on a specific version of packer.  \n\nAlso remember that we have renamed packer binary to packer.io, since this conflicts with cracklib binary on CentOS7., therefore please use the packer.io available in the default $PATH.",
+      "range": {
+        "startLine": 20,
+        "startChar": 5,
+        "endLine": 20,
+        "endChar": 25
+      },
+      "revId": "a5e4180b39bca499b27f2483752984b715fa3842",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a245df4_cfa8a88f",
+        "filename": "jjb/packaging/install-packer.sh",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2017-11-07T01:09:10Z",
+      "side": 1,
+      "message": "Please refer to the previous comment.",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 48
+      },
+      "revId": "a5e4180b39bca499b27f2483752984b715fa3842",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
