@@ -209,7 +209,7 @@
 
     triggers:
       - gerrit:
-          server-name: '{server-name}'
+          server-name: '{gerrit-server-name}'
           projects:
             - project-compare-type: ANT
               project-pattern: '{project}'
@@ -305,7 +305,7 @@
     triggers:
       - timed: '@daily'
       - gerrit:
-          server-name: '{server-name}'
+          server-name: '{gerrit-server-name}'
           trigger-on:
             - comment-added-contains-event:
                 comment-contains-value: 'verify-rpm-full'

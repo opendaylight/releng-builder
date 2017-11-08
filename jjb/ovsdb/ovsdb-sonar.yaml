@@ -38,7 +38,7 @@
     triggers:
       - timed: '{schedule-saturday}'
       - gerrit-trigger-patch-sonar:
-          server-name: '{server-name}'
+          server-name: '{gerrit-server-name}'
           name: 'ovsdb'
 
     builders:
