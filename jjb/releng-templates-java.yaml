@@ -54,7 +54,7 @@
           email-recipients: '{email-recipients}'
           email-prefix: '{email-upstream}'
       - findbugs
-      - jacoco-report
+      - lf-jacoco-report
       - lf-infra-publish
 
 - job-template:
@@ -158,7 +158,7 @@
           id: ''
           unique-version: true
           deploy-unstable: false
-      - jacoco-report
+      - lf-jacoco-report
       - lf-infra-publish
       - trigger:
           project: 'distribution-merge-{stream}'

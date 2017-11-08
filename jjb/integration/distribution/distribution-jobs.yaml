@@ -63,7 +63,7 @@
 
     publishers:
       - findbugs
-      - jacoco-report
+      - lf-jacoco-report
       - lf-infra-publish
       - email-notification:
           email-recipients: '{email-recipients}'
@@ -180,7 +180,7 @@
           id: ''
           unique-version: true
           deploy-unstable: false
-      - jacoco-report
+      - lf-jacoco-report
       - lf-infra-publish
       - email-notification:
           email-recipients: '{email-recipients}'
