@@ -279,6 +279,19 @@
       - opendaylight-infra-wrappers:
           build-timeout: '1200'
 
+    triggers:
+      - gerrit:
+          server-name: '{gerrit-server-name}'
+          trigger-on:
+            - comment-added-contains-event:
+                comment-contains-value: 'multipatch-build:'
+          projects:
+            - project-compare-type: ANT
+              project-pattern: '**'
+              branches:
+                - branch-compare-type: ANT
+                  branch-pattern: '**'
+
     builders:
       - wipe-org-opendaylight-repo
       - integration-multipatch-builder
