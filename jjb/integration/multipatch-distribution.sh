@@ -30,7 +30,12 @@ export EMAIL="sandbox@jenkins.opendaylight.org"
 export GIT_COMMITTER_NAME="Multipatch Job"
 
 # TODO: Is "patches" still the correct word?
-IFS=',' read -ra PATCHES <<< "${PATCHES_TO_BUILD}"
+if [ -n "$GERRIT_EVENT_COMMENT_TEXT" ]; then
+    PATCHES=($(echo "$GERRIT_EVENT_COMMENT_TEXT" \
+        | grep 'multipatch-build:' | awk -F: '{print $2}'))
+else
+    IFS=',' read -ra PATCHES <<< "${PATCHES_TO_BUILD}"
+fi
 
 # For each patch:
 # * Clone the project.
