@@ -57,7 +57,7 @@
     triggers:
       - timed: '@weekly'
       - gerrit-trigger-patch-submitted:
-          server: '{server-name}'
+          server: '{gerrit-server-name}'
           project: '{project}'
           branch: '{branch}'
           files: '**'
@@ -104,7 +104,7 @@
     triggers:
       - timed: '@daily'
       - gerrit:
-          server-name: '{server-name}'
+          server-name: '{gerrit-server-name}'
           trigger-on:
             - comment-added-contains-event:
                 comment-contains-value: 'puppet-test-full'

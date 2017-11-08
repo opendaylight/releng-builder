@@ -39,7 +39,7 @@
 
     triggers:
       - gerrit-trigger-patch-merged:
-          server-name: '{server-name}'
+          server-name: '{gerrit-server-name}'
           name: 'spectrometer'
           branch: 'master'
       - timed: '@daily'

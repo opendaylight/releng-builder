@@ -35,7 +35,7 @@
 
     triggers:
       - gerrit-trigger-patch-submitted:
-          server: '{server-name}'
+          server: '{gerrit-server-name}'
           project: '{project}'
           branch: '{branch}'
           files: '**'
@@ -106,7 +106,7 @@
 
     triggers:
       - gerrit-trigger-patch-merged:
-          server-name: '{server-name}'
+          server-name: '{gerrit-server-name}'
           name: 'integration/distribution'
           branch: '{branch}'
 
@@ -229,7 +229,7 @@
 
     triggers:
       - gerrit-trigger-patch-submitted:
-          server: '{server-name}'
+          server: '{gerrit-server-name}'
           project: '{project}'
           branch: '{branch}'
           files: '**'

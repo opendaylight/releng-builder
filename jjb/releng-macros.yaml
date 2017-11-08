@@ -206,7 +206,7 @@
     name: gerrit-trigger-patch-merged
     triggers:
       - gerrit:
-          server-name: '{server-name}'
+          server-name: '{gerrit-server-name}'
           trigger-on:
             - change-merged-event
             - comment-added-contains-event:
@@ -241,7 +241,7 @@
     name: gerrit-trigger-patch-sonar
     triggers:
       - gerrit:
-          server-name: '{server-name}'
+          server-name: '{gerrit-server-name}'
           trigger-on:
             - comment-added-contains-event:
                 comment-contains-value: 'run-sonar'
