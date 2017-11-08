@@ -77,7 +77,7 @@
 
     triggers:
       - integration-trigger-patch-submitted:
-          server: '{server-name}'
+          gerrit-server-name: '{gerrit-server-name}'
           project: 'integration/test'
           branch: 'master'
           files: 'csit/suites/{project}/**'
@@ -501,7 +501,7 @@
 
     triggers:
       - integration-trigger-patch-submitted:
-          server: '{server-name}'
+          gerrit-server-name: '{gerrit-server-name}'
           project: 'integration/test'
           branch: 'master'
           files: 'csit/suites/{project}/**'
@@ -1427,7 +1427,7 @@
 
     triggers:
       - gerrit:
-          server-name: '{server-name}'
+          server-name: '{gerrit-server-name}'
           trigger-on:
             - comment-added-contains-event:
                 comment-contains-value: 'test-{project}-all'

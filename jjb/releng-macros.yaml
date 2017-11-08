@@ -174,7 +174,7 @@
 # Only 'recheck' trigger word is supported, it always triggers the full set of relevant jobs,
 # in order to prevent Jenkins from starting only a subset and still voting Verified+1.
 # Arguments:
-#     server: name of gerrit server to listen to
+#     gerrit-server-name: name of gerrit server to listen to
 #     project: pattern to match triggering projects
 #     branch: triggering branch name
 #     files: pattern to match triggering filepaths
@@ -182,7 +182,7 @@
     name: gerrit-trigger-patch-submitted
     triggers:
       - gerrit:
-          server-name: '{server}'
+          server-name: '{gerrit-server-name}'
           trigger-on:
             - patchset-created-event:
                 exclude-drafts: true
@@ -206,7 +206,7 @@
     name: gerrit-trigger-patch-merged
     triggers:
       - gerrit:
-          server-name: '{server-name}'
+          server-name: '{gerrit-server-name}'
           trigger-on:
             - change-merged-event
             - comment-added-contains-event:
@@ -241,7 +241,7 @@
     name: gerrit-trigger-patch-sonar
     triggers:
       - gerrit:
-          server-name: '{server-name}'
+          server-name: '{gerrit-server-name}'
           trigger-on:
             - comment-added-contains-event:
                 comment-contains-value: 'run-sonar'

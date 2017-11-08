@@ -96,7 +96,7 @@
     triggers:
       - timed: 'H H * * 0'
       - gerrit-trigger-patch-merged:
-          server-name: '{server-name}'
+          gerrit-server-name: '{gerrit-server-name}'
           name: '{project}'
           branch: '{branch}'
 
