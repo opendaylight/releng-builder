@@ -161,7 +161,7 @@
 # in order to prevent Jenkins from starting only a subset and still voting Verified+1.
 # Contrary to gerrit-trigger-patch-submitted, this votes +1 also on unstable runs.
 # Arguments:
-#     server: name of gerrit server to listen to
+#     gerrit-server-name: name of gerrit server to listen to
 #     project: pattern to match triggering projects
 #     branch: triggering branch name
 #     files: pattern to match triggering filepaths
@@ -169,7 +169,7 @@
     name: integration-trigger-patch-submitted
     triggers:
       - gerrit:
-          server-name: '{server}'
+          server-name: '{gerrit-server-name}'
           trigger-on:
             - patchset-created-event:
                 exclude-drafts: true
