@@ -462,22 +462,6 @@
       - openstack:
           single-use: true
 
-- builder:
-    # TODO: Verify signature after downloading users public key from a locally created
-    # repository instead of the public keymesh. This requires a process in place to get ODL
-    # developers public keys into a local repository without increasing the job thoughput.
-    name: verify-gpg-signature
-    builders:
-      - shell: !include-raw: verify-gpg-signatures.sh
-
-- builder:
-    name: opendaylight-infra-jjbini
-    builders:
-      - config-file-provider:
-          files:
-            - file-id: 'jjbini'
-              target: '$HOME/.config/jenkins_jobs/jenkins_jobs.ini'
-
 - publisher:
     name: opendaylight-infra-generate-csit-status-report
     publishers:
