@@ -70,6 +70,30 @@
       "revId": "65bb68eb27a731e3df941d07c1fa85b9132fb488",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a245df4_d2a5e347",
+        "filename": "jjb/integration/integration-test-jobs.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2017-11-09T08:21:57Z",
+      "side": 1,
+      "message": "\u003e redesign the multipatch job to not require a -{stream} in the job name.\n\nI think patch sets 3 and 5 are fine.\nIf I have a contribution chain for Odlparent v2.0.x branch (with latest bump reverted) and I wish to multipatch-build Nitrogen (as opposed to Oxygen) distribution, I still have to signal the intended distribution version. Commenting on another project change for stable/nitrogen branch (and adding a link from my odlparent change) is usable enough.\n\nMultipatch job without -{stream} would still need to know the desired distribution branch. We could introduce trigger words such as multipatch-build-nitrogen. But in the future we could wish to add some fast sanity csit tests, so keeping -{stream} makes more sense for me.",
+      "parentUuid": "9a245df4_23afd895",
+      "range": {
+        "startLine": 293,
+        "startChar": 38,
+        "endLine": 293,
+        "endChar": 46
+      },
+      "revId": "65bb68eb27a731e3df941d07c1fa85b9132fb488",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
