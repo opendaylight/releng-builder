@@ -1162,8 +1162,14 @@ for suite in ${SUITES}; do
     ${TESTOPTIONS} ${suite} || true
 done
 #rebot exit codes seem to be different
-rebot --output ${WORKSPACE}/output.xml --log None --report None --merge output_*.xml || true
-
+if [ -e output_tempest.xml ]; then
+    mv output_tempest.xml skip_output_tempest.xml
+    rebot --output output_no_tempest.xml --log log_no_tempest.html --report None output_*.xml || true
+    mv skip_output_tempest.xml output_tempest.xml
+fi
+rebot --output output.xml --log None --report None output_*.xml || true
+rebot  --log log.html --report None output.xml || true
+ls -al
 echo "Examining the files in data/log and checking file size"
 ssh ${ODL_SYSTEM_IP} "ls -altr /tmp/${BUNDLEFOLDER}/data/log/"
 ssh ${ODL_SYSTEM_IP} "du -hs /tmp/${BUNDLEFOLDER}/data/log/*"
