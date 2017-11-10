@@ -25,7 +25,11 @@
           scope: 'all'
 
     # Features to install
-    install-features: 'odl-restconf-noauth,odl-bgpcep-bgp,odl-netconf-clustered-topology'
+    install-features: >
+        odl-restconf-noauth,
+        odl-bgpcep-bgp,
+        odl-bgpcep-bgp-config-example,
+        odl-netconf-clustered-topology
 
     # Robot custom options:
     robot-options: '-v USE_NETCONF_CONNECTOR:False'

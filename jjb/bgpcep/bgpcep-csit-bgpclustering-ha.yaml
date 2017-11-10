@@ -25,7 +25,10 @@
           scope: 'only'
 
     # Features to install
-    install-features: 'odl-restconf,odl-bgpcep-bgp'
+    install-features: >
+        odl-restconf,
+        odl-bgpcep-bgp,
+        odl-bgpcep-bgp-config-example
 
     # Robot custom options:
     robot-options: '-v USE_NETCONF_CONNECTOR:False'
