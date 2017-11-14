@@ -50,7 +50,7 @@ pushd libopflex
     --with-buildversion=$BUILD_NUMBER \
     CPPFLAGS="-isystem $ROOT/include" \
     CXXFLAGS="-Wall"
-make -j8
+make -j4
 if ! make check; then find . -name test-suite.log -exec cat {} \; && false; fi
 make install
 make dist
@@ -77,7 +77,7 @@ pushd agent-ovs
     --with-buildversion=$BUILD_NUMBER \
     CPPFLAGS="-isystem $ROOT/include" \
     CXXFLAGS="-Wall"
-make -j8
+make -j4
 if ! make check; then find . -name test-suite.log -exec cat {} \; && false; fi
 make dist
 mv *.tar.gz "$UPLOAD_FILES_PATH"
