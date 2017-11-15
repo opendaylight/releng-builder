@@ -20,7 +20,7 @@
           mvn-version: 'mvn33'
     mvn-settings: 'bgpcep-settings'
     mvn-goals: 'clean install'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    mvn-opts: '-Xmx2048m -XX:MaxPermSize=256m'
     dependencies: >
         odlparent-merge-{stream},
         yangtools-merge-{stream},
@@ -54,7 +54,7 @@
           mvn-version: 'mvn33'
     mvn-settings: 'bgpcep-settings'
     mvn-goals: 'clean install'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    mvn-opts: '-Xmx2048m -XX:MaxPermSize=256m'
     dependencies: >
         odlparent-merge-{stream},
         yangtools-merge-{stream},
@@ -89,7 +89,7 @@
           mvn-version: 'mvn33'
     mvn-settings: 'bgpcep-settings'
     mvn-goals: 'clean -DrepoBuild install javadoc:aggregate'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    mvn-opts: '-Xmx2048m -XX:MaxPermSize=256m'
     dependencies: >
         odlparent-merge-{stream},
         yangtools-merge-{stream},
