@@ -1,0 +1,37 @@
+---
+- project:
+    name: netvirt-csit-3node-openflowpluginscaleandperf-dynamicdpn
+    jobs:
+      - '{project}-csit-3node-{functionality}-{install}-{stream}'
+
+    # The project name
+    project: 'netvirt'
+
+    functionality: 'openflowplugin-scale-perf'
+  
+    # Project branches
+    stream:
+      - oxygen:
+          branch: 'master'
+      - nitrogen:
+          branch: 'stable/nitrogen'
+      - carbon:
+          branch: 'stable/carbon'
+          karaf-version: karaf3
+
+    install:
+      - only:
+          scope: 'only'
+
+    # Job images
+    tools_system_count: 10
+    tools_system_image: 'Ubuntu 16.04 - mininet-ovs-26 - 20171016-0212'
+
+    # Features to install
+    install-features: >
+        features-openflowplugin
+        features-openflowplugin-extension
+
+    # Robot custom options
+    robot-options: '-v ODL_OF_PLUGIN:lithium -v switch_count:10'
+
