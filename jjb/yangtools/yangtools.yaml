@@ -23,7 +23,13 @@
 
     dependencies: ''
     email-upstream: '[yangtools]'
-    archive-artifacts: ''
+    archive-artifacts: >
+        **/*.prop
+        **/*.log
+        **/target/surefire-reports/*-output.txt
+        **/target/failsafe-reports/failsafe-summary.xml
+        **/hs_err_*.log
+        **/target/feature/feature.xml
 
     # Used by the release job
     staging-profile-id: 1271cf710cc09d
@@ -54,7 +60,13 @@
 
     dependencies: 'odlparent-merge-{stream}'
     email-upstream: '[yangtools] [odlparent]'
-    archive-artifacts: ''
+    archive-artifacts: >
+        **/*.prop
+        **/*.log
+        **/target/surefire-reports/*-output.txt
+        **/target/failsafe-reports/failsafe-summary.xml
+        **/hs_err_*.log
+        **/target/feature/feature.xml
 
     # Used by the release job
     staging-profile-id: 1271cf710cc09d
@@ -85,7 +97,13 @@
 
     dependencies: 'odlparent-merge-{stream}'
     email-upstream: '[yangtools] [odlparent]'
-    archive-artifacts: ''
+    archive-artifacts: >
+        **/*.prop
+        **/*.log
+        **/target/surefire-reports/*-output.txt
+        **/target/failsafe-reports/failsafe-summary.xml
+        **/hs_err_*.log
+        **/target/feature/feature.xml
 
     # Used by the release job
     staging-profile-id: 1271cf710cc09d
