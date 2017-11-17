@@ -140,6 +140,8 @@
           build-timeout: '{build-timeout}'
 
     builders:
+      - inject:
+          properties-content: 'STREAM={stream}'
       - shell: !include-raw: build-rpm-snap.sh
       - lf-infra-deploy-maven-file:
           global-settings-file: 'global-settings'
