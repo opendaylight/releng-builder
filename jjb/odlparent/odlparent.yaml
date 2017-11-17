@@ -25,7 +25,13 @@
 
     dependencies: ''
     email-upstream: '[odlparent]'
-    archive-artifacts: ''
+    archive-artifacts: >
+        **/*.prop
+        **/*.log
+        **/target/surefire-reports/*-output.txt
+        **/target/failsafe-reports/failsafe-summary.xml
+        **/hs_err_*.log
+        **/target/feature/feature.xml
 
     # Used by the release job
     staging-profile-id: 880d5ac25eaa
@@ -56,7 +62,13 @@
 
     dependencies: ''
     email-upstream: '[odlparent]'
-    archive-artifacts: ''
+    archive-artifacts: >
+        **/*.prop
+        **/*.log
+        **/target/surefire-reports/*-output.txt
+        **/target/failsafe-reports/failsafe-summary.xml
+        **/hs_err_*.log
+        **/target/feature/feature.xml
 
     # Used by the release job
     javadoc-path: org.opendaylight.$PROJECT/$STREAM
@@ -87,7 +99,13 @@
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: ''
     email-upstream: '[odlparent]'
-    archive-artifacts: ''
+    archive-artifacts: >
+        **/*.prop
+        **/*.log
+        **/target/surefire-reports/*-output.txt
+        **/target/failsafe-reports/failsafe-summary.xml
+        **/hs_err_*.log
+        **/target/feature/feature.xml
 
     # Used by the release job
     javadoc-path: org.opendaylight.$PROJECT/$STREAM
