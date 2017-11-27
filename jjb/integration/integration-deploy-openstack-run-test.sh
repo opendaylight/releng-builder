@@ -677,6 +677,43 @@ function get_service () {
     set -e
 }
 
+# Check if rabbitmq is ready by looking for a pid in it's status.
+# The function returns the status of the grep command which callers can check.
+function is_rabbitmq_ready() {
+    local -r ip=$1
+    rm -f rabbit.txt
+    ${SSH} ${ip} "sudo rabbitmqctl status" > rabbit.txt
+    grep pid rabbit.txt
+}
+
+# retry the given command ($3) until success for a number of iterations ($1)
+# sleeping ($2) between tries.
+function retry() {
+    set +e
+    local -r -i max_tries=${1}
+    local -r -i sleep_time=${2}
+    local -r cmd=${3}
+    local -i retries=1
+    local -i rc=1
+    while true; do
+        echo "retry ${cmd}: attempt: ${retries}"
+        ${cmd}
+        rc=$?
+        if ((${rc} == 0)); then
+            break;
+        else
+            if ((${retries} == ${max_tries})); then
+                break
+            else
+                ((retries++))
+                sleep ${sleep_time}
+            fi
+        fi
+    done
+    set -e
+    return ${rc}
+}
+
 # if we are using the new netvirt impl, as determined by the feature name
 # odl-netvirt-openstack (note: old impl is odl-ovsdb-openstack) then we
 # want PROVIDER_MAPPINGS to be used -- this should be fixed if we want to support
@@ -834,9 +871,17 @@ done
 # AccessRefused: (0, 0): (403) ACCESS_REFUSED - Login was refused using authentication mechanism AMQPLAIN. For details see the broker logfile.
 # Compare that timestamp to this log in the control stack.log: sudo rabbitmqctl set_permissions -p nova_cell1 stackrabbit
 # If the n-cpu.log is earlier than the control stack.log timestamp then the failure condition is likely hit.
-# TODO: modify devstack to wait for rabbitmq to be available on the controller before starting nova-compute.
-echo "Sleeping for 360s to allow controller to create nova_cell1 before the computes need it"
-sleep 360
+
+echo "Wait a maximum of 30m until rabbitmq is ready to allow the controller to create nova_cell1 before the computes need it"
+retry 30 60 "is_rabbitmq_ready ${OPENSTACK_CONTROL_NODE_1_IP}"
+rc=$?
+if ((${rc} == 0)); then
+    echo "rabbitmq is ready, starting ${NUM_OPENSTACK_COMPUTE_NODES} compute(s)"
+else
+    echo "rabbitmq was not ready in "
+    collect_logs
+    exit 1
+fi
 
 for i in `seq 1 ${NUM_OPENSTACK_COMPUTE_NODES}`; do
     NUM_COMPUTES_PER_SITE=$((NUM_OPENSTACK_COMPUTE_NODES / NUM_OPENSTACK_SITES))
