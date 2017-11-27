@@ -5,6 +5,7 @@
 # shellcheck source=${ROBOT_VENV}/bin/activate disable=SC1091
 source ${ROBOT_VENV}/bin/activate
 
+MAVENCONF=/tmp/${BUNDLEFOLDER}/etc/org.ops4j.pax.url.mvn.cfg
 FEATURESCONF=/tmp/${BUNDLEFOLDER}/etc/org.apache.karaf.features.cfg
 CUSTOMPROP=/tmp/${BUNDLEFOLDER}/etc/custom.properties
 LOGCONF=/tmp/${BUNDLEFOLDER}/etc/org.ops4j.pax.logging.cfg
@@ -54,6 +55,10 @@ wget --progress=dot:mega '${ACTUAL_BUNDLE_URL}'
 echo "Extracting the new controller..."
 unzip -q ${BUNDLE}
 
+echo "Adding external repositories..."
+sed -ie "s%org.ops4j.pax.url.mvn.repositories=/org.ops4j.pax.url.mvn.repositories=http://repo1.maven.org/maven2@id=central, http://repository.springsource.com/maven/bundles/release@id=spring.ebr.release, http://repository.springsource.com/maven/bundles/external@id=spring.ebr.external, http://zodiac.springsource.com/maven/bundles/release@id=gemini, http://repository.apache.org/content/groups/snapshots-group@id=apache@snapshots@noreleases, https://oss.sonatype.org/content/repositories/snapshots@id=sonatype.snapshots.deploy@snapshots@noreleases, https://oss.sonatype.org/content/repositories/ops4j-snapshots@id=ops4j.sonatype.snapshots.deploy@snapshots@noreleases%g" ${MAVENCONF}
+cat ${MAVENCONF}
+
 echo "Configuring the startup features..."
 sed -ie "s/\(featuresBoot=\|featuresBoot =\)/featuresBoot = ${ACTUALFEATURES},/g" ${FEATURESCONF}
 
@@ -63,6 +68,9 @@ if [[ "$KARAF_VERSION" == "karaf4" ]]; then
     FEATURE_INDEX_STRING="features-index"
     FEATURE_TEST_STRING="features-test"
 fi
+
+sed -ie "s%org.ops4j.pax.url.mvn.repositories=/org.ops4j.pax.url.mvn.repositories=http://repo1.maven.org/maven2@id=central, http://repository.springsource.com/maven/bundles/release@id=spring.ebr.release, http://repository.springsource.com/maven/bundles/external@id=spring.ebr.external, http://zodiac.springsource.com/maven/bundles/release@id=gemini, http://repository.apache.org/content/groups/snapshots-group@id=apache@snapshots@noreleases, https://oss.sonatype.org/content/repositories/snapshots@id=sonatype.snapshots.deploy@snapshots@noreleases, https://oss.sonatype.org/content/repositories/ops4j-snapshots@id=ops4j.sonatype.snapshots.deploy@snapshots@noreleases%g" ${MAVENCONF}
+cat ${MAVENCONF}
 
 sed -ie "s%mvn:org.opendaylight.integration/\${FEATURE_INDEX_STRING}/${BUNDLEVERSION}/xml/features%mvn:org.opendaylight.integration/\${FEATURE_INDEX_STRING}/${BUNDLEVERSION}/xml/features,mvn:org.opendaylight.integration/\${FEATURE_TEST_STRING}/${BUNDLEVERSION}/xml/features,mvn:org.apache.karaf.decanter/apache-karaf-decanter/1.0.0/xml/features%g" ${FEATURESCONF}
 cat ${FEATURESCONF}
