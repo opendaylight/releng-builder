@@ -12,6 +12,7 @@ echo "#################################################"
 AKKACONF=/tmp/${BUNDLEFOLDER}/configuration/initial/akka.conf
 MODULESCONF=/tmp/${BUNDLEFOLDER}/configuration/initial/modules.conf
 MODULESHARDSCONF=/tmp/${BUNDLEFOLDER}/configuration/initial/module-shards.conf
+MAVENCONF=/tmp/${BUNDLEFOLDER}/etc/org.ops4j.pax.url.mvn.cfg
 FEATURESCONF=/tmp/${BUNDLEFOLDER}/etc/org.apache.karaf.features.cfg
 CUSTOMPROP=/tmp/${BUNDLEFOLDER}/etc/custom.properties
 LOGCONF=/tmp/${BUNDLEFOLDER}/etc/org.ops4j.pax.logging.cfg
@@ -74,6 +75,10 @@ wget --progress=dot:mega  '${ACTUAL_BUNDLE_URL}'
 
 echo "Extracting the new controller..."
 unzip -q ${BUNDLE}
+
+echo "Adding external repositories..."
+sed -ie "s%org.ops4j.pax.url.mvn.repositories=%org.ops4j.pax.url.mvn.repositories=http://repo1.maven.org/maven2@id=central, http://repository.springsource.com/maven/bundles/release@id=spring.ebr.release, http://repository.springsource.com/maven/bundles/external@id=spring.ebr.external, http://zodiac.springsource.com/maven/bundles/release@id=gemini, http://repository.apache.org/content/groups/snapshots-group@id=apache@snapshots@noreleases, https://oss.sonatype.org/content/repositories/snapshots@id=sonatype.snapshots.deploy@snapshots@noreleases, https://oss.sonatype.org/content/repositories/ops4j-snapshots@id=ops4j.sonatype.snapshots.deploy@snapshots@noreleases%g" ${MAVENCONF}
+cat ${MAVENCONF}
 
 echo "Configuring the startup features..."
 sed -ie "s/\(featuresBoot=\|featuresBoot =\)/featuresBoot = ${ACTUALFEATURES},/g" ${FEATURESCONF}
