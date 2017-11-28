@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a1969be_ad9fbe4f",
+        "filename": "jjb/integration/multipatch-distribution.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-11-28T14:20:21Z",
+      "side": 1,
+      "message": "This breaks the GERRIT comment trigger use case because PATCHES_TO_BUILD is not exactly the same depending on how it is triggered.\n\n1) Via manual Jenkins trigger PATCHES_TO_BUILD is a comma separated string.\n2) Via Gerrit comment trigger PATCHES_TO_BUILD is an array",
+      "revId": "867cbb5d2105d0414a7e66f4ef9bd5e25ece0ac0",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
