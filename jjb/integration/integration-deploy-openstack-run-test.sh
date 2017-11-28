@@ -1089,6 +1089,18 @@ cat testplan.txt
 # Use the testplan if specific SUITES are not defined.
 if [ -z "${SUITES}" ]; then
     SUITES=`egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' testplan.txt | tr '\012' ' '`
+else
+    newsuites=""
+    workpath="${WORKSPACE}/test/csit/suites"
+    for suite in ${SUITES}; do
+        fullsuite="/${workpath}${suite}"
+        if [ -z ${newsuites} ]; then
+            newsuites+=${fullsuite}
+        else
+            newsuites+=" "${fullsuite}
+        fi
+    done
+    SUITES=${newsuites}
 fi
 
 # TODO: run openrc on control node and then scrape the vars from it
