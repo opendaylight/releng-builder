@@ -95,7 +95,8 @@
           default: '{test-suites}'
           description: |
               List of space-separated suites. Useful when running specific suites within a testplan.
-              (ex. integration/test/csit/suites/openstack/connectivity/01_l2_tests.robot
+              Do not include ${WORKSPACE}/test/csit/suites/ in the values:
+              (ex. openstack/connectivity/l2.robot openstack/tempest/tempest.robot
               integration/test/csit/suites/netvirt/ElanService/).
 
 - parameter:
