@@ -125,24 +125,24 @@ if ([ ! -z "${NAME}" ] || [ ! -z "${ARTIFACT_ID}" ]) && [[ "${BUILD_STATUS}" != 
           $CONSOLE_LOG | gzip > "$ERROR_LOG"
 
     if [ -n "${PROJECT}" ]; then
-        RELEASE_EMAIL="${RELEASE_EMAIL}, ${PROJECT}-dev@lists.opendaylight.org"
+        RELEASE_EMAIL="\${RELEASE_EMAIL}, \${PROJECT}-dev@lists.opendaylight.org"
     fi
 
     file_size=$(du -k "$ERROR_LOG" | cut -f1)
 
+    PARAMS=("-r \"Jenkins <jenkins-dontreply@opendaylight.org>\"")
+    PARAMS+=("-s \"$SUBJECT\"")
     # Only send emails in production (releng), not testing (sandbox)
     if [ "${SILO}" == "releng" ]; then
         if [[ "$file_size" -gt 100 ]]; then
             # shellcheck disable=SC2034
             ATTACHMENT=ATTACHMENT_EXCLUDE
-            eval echo \""${BODY}"\" | mail \
-                -r "Jenkins <jenkins-dontreply@opendaylight.org>" \
-                -s "${SUBJECT}" "${RELEASE_EMAIL}"
         else
-            eval echo \""${BODY}"\" | mail -a "$ERROR_LOG" \
-                -r "Jenkins <jenkins-dontreply@opendaylight.org>" \
-                -s "${SUBJECT}" "${RELEASE_EMAIL}"
+            PARAMS+=("-a \"$ERROR_LOG\"")
         fi
+
+        eval echo \""${BODY}"\" | eval mail "${PARAMS[*]}" "${RELEASE_EMAIL}"
+
     elif [ "${SILO}" == "sandbox" ]; then
         echo "Running in sandbox, not actually sending notification emails"
         echo "Subject: ${SUBJECT}"
