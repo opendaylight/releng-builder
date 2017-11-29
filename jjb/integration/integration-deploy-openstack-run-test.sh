@@ -497,12 +497,12 @@ EOF
         scp ${!CONTROLLERIP}:/tmp/odl${i}_zrpcd.log.tar ${NODE_FOLDER}
         tar -xvf ${NODE_FOLDER}/odl${i}_karaf.log.tar -C ${NODE_FOLDER} --strip-components 2 --transform s/karaf/odl${i}_karaf/g
         grep "ROBOT MESSAGE\| ERROR " ${NODE_FOLDER}/odl${i}_karaf.log > ${NODE_FOLDER}/odl${i}_err.log
-        # Print ROBOT lines, Print Caused by...Exception: lines,
-        # Print Exception{ lines as well as the previous line that has the timestamp for context
-        sed -n -e '/ROBOT MESSAGE/P' -e '/Caused by.*Exception:/P' -e '$!N;/Exception:/P;D' -e '$!N;/Exception{/P;D' \
-            ${NODE_FOLDER}/odl${i}_karaf.log > ${NODE_FOLDER}/odl${i}_exception.log
         grep "ROBOT MESSAGE\| ERROR \| WARN \|Exception" \
             ${NODE_FOLDER}/odl${i}_karaf.log > ${NODE_FOLDER}/odl${i}_err_warn_exception.log
+        # -B1 will collect one line before the match, and -A2 will collect two lines after the match. We really only
+        # need the ROBOT match, but in order to keep the context of the Exception matches we want to collect and have
+        # the ROBOT logs in the right place, we have to live with it.
+        grep -A2 -B1 -E '(ROBOT|Exception$|Exception:|Exception{)' ${NODE_FOLDER}/odl${i}_karaf.log > ${NODE_FOLDER}/odl${i}_exception.log
         rm ${NODE_FOLDER}/odl${i}_karaf.log.tar
         mv karaf_${i}_threads* ${NODE_FOLDER}
         mv ${NODE_FOLDER} ${WORKSPACE}/archives/
