@@ -499,10 +499,8 @@ EOF
         grep "ROBOT MESSAGE\| ERROR " ${NODE_FOLDER}/odl${i}_karaf.log > ${NODE_FOLDER}/odl${i}_err.log
         grep "ROBOT MESSAGE\| ERROR \| WARN \|Exception" \
             ${NODE_FOLDER}/odl${i}_karaf.log > ${NODE_FOLDER}/odl${i}_err_warn_exception.log
-        # -B1 will collect one line before the match, and -A2 will collect two lines after the match. We really only
-        # need the ROBOT match, but in order to keep the context of the Exception matches we want to collect and have
-        # the ROBOT logs in the right place, we have to live with it.
-        grep -A2 -B1 -E '(ROBOT|Exception$|Exception:|Exception{)' ${NODE_FOLDER}/odl${i}_karaf.log > ${NODE_FOLDER}/odl${i}_exception.log
+        # Print ROBOT lines and print Exception lines. For exception lines also print the previous line for context
+        sed -n -e '/ROBOT MESSAGE/P' -e '$!N;/Exception/P;D' ${NODE_FOLDER}/odl${i}_karaf.log > ${NODE_FOLDER}/odl${i}_exception.log
         rm ${NODE_FOLDER}/odl${i}_karaf.log.tar
         mv karaf_${i}_threads* ${NODE_FOLDER}
         mv ${NODE_FOLDER} ${WORKSPACE}/archives/
