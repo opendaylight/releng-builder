@@ -1165,9 +1165,13 @@ source /tmp/os_netvirt_client_rc
 
 echo "Starting Robot test suites ${SUITES} ..."
 # please add pybot -v arguments on a single line and alphabetized
+suite_num=0
 for suite in ${SUITES}; do
-    log_name_ext=$(basename ${suite} | cut -d. -f1)
-    pybot -N ${TESTPLAN} --removekeywords wuks -c critical -e exclude -e skip_if_${DISTROSTREAM} \
+    # prepend a incrmental counter to the suite name so that the full robot log combining all the suites as is done
+    # in the rebot step below will list all the suites in chronological order as rebot seems to alphabatize them
+    ((suite_num++))
+    log_name_ext="$(printf %02d ${suite_num})_$(basename ${suite} | cut -d. -f1)"
+    pybot -N ${log_name_ext} --removekeywords wuks -c critical -e exclude -e skip_if_${DISTROSTREAM} \
     --log log_${log_name_ext}.html --report None --output output_${log_name_ext}.xml \
     -v BUNDLEFOLDER:${BUNDLEFOLDER} \
     -v BUNDLE_URL:${ACTUAL_BUNDLE_URL} \
@@ -1217,7 +1221,7 @@ for suite in ${SUITES}; do
     ${TESTOPTIONS} ${suite} || true
 done
 #rebot exit codes seem to be different
-rebot --output ${WORKSPACE}/output.xml --log None --report None output_*.xml || true
+rebot --output ${WORKSPACE}/output.xml --log log_full.html --report None -N openstack output_*.xml || true
 
 echo "Examining the files in data/log and checking file size"
 ssh ${ODL_SYSTEM_IP} "ls -altr /tmp/${BUNDLEFOLDER}/data/log/"
