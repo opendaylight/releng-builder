@@ -125,7 +125,7 @@ if ([ ! -z "${NAME}" ] || [ ! -z "${ARTIFACT_ID}" ]) && [[ "${BUILD_STATUS}" != 
           $CONSOLE_LOG | gzip > "$ERROR_LOG"
 
     if [ -n "${PROJECT}" ]; then
-        RELEASE_EMAIL="${RELEASE_EMAIL}, ${PROJECT}-dev@lists.opendaylight.org"
+        RELEASE_EMAIL="\${RELEASE_EMAIL}, \${PROJECT}-dev@lists.opendaylight.org"
     fi
 
     file_size=$(du -k "$ERROR_LOG" | cut -f1)
