@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7a1969be_881105af",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 1170,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2017-12-01T00:48:59Z",
+      "side": 1,
+      "message": "whoops",
+      "parentUuid": "7a1969be_7aee138d",
+      "revId": "54be37b93682ef983b5eaefb824b10d8c3d3b754",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a1969be_fa01633a",
         "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-30T16:02:15Z",
       "side": 1,
       "message": "add the index to the log file also, so that log file and suite name are the same?",
+      "revId": "54be37b93682ef983b5eaefb824b10d8c3d3b754",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a1969be_e825190b",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 1175,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2017-12-01T00:48:59Z",
+      "side": 1,
+      "message": "actually this is important. my sandbox job made me realize\nthe rebot command is sorting the suites based on the output\nfilename alpha order, not the -N \u003csuite name\u003e that is just\na tag inside the output.xml file. So, doing what you say\nhere solves it.",
+      "parentUuid": "7a1969be_fa01633a",
       "revId": "54be37b93682ef983b5eaefb824b10d8c3d3b754",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -70,6 +106,48 @@
       "writtenOn": "2017-11-30T16:02:15Z",
       "side": 1,
       "message": "log_full so all files start with log_?",
+      "revId": "54be37b93682ef983b5eaefb824b10d8c3d3b754",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a1969be_2820d1f6",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 1226,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2017-12-01T00:48:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a1969be_bae88b7d",
+      "range": {
+        "startLine": 1226,
+        "startChar": 76,
+        "endLine": 1226,
+        "endChar": 90
+      },
+      "revId": "54be37b93682ef983b5eaefb824b10d8c3d3b754",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a1969be_c822dd00",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 1226,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2017-12-01T00:48:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a1969be_5af35773",
       "revId": "54be37b93682ef983b5eaefb824b10d8c3d3b754",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
