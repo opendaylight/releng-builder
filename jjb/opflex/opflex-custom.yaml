@@ -30,7 +30,7 @@
     name: 'opflex-verify-{stream}'
 
     project-type: freestyle
-    node: centos7-java-builder-2c-8g
+    node: centos7-java-builder-8c-8g
     concurrent: true
     jdk: '{jdk}'
 
@@ -91,7 +91,7 @@
 - job-template:
     name: 'opflex-merge-{stream}'
 
-    node: centos7-java-builder-2c-8g
+    node: centos7-java-builder-8c-8g
     jdk: '{jdk}'
 
     properties:
