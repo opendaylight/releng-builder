@@ -26,7 +26,7 @@ parameters:
         default: "0"
     vm_flavor:
         type: string
-        default: 1 GB General Purpose v1
+        default: v1-standard-1
         description: OpenStack Flavor to use
     vm_image:
         type: string
@@ -52,7 +52,7 @@ resources:
                         "GROUP": {get_param: group}
                         "INDEX": {get_param: index}
             networks:
-                - network: RC-ODL
+                - network: odlci
             key_name: {get_param: ssh_key}
             user_data: |
                 #!/bin/bash
@@ -66,4 +66,4 @@ resources:
 outputs:
     ip:
         description: IP address of the instance
-        value: {get_attr: [instance, networks, RC-ODL, 0]}
+        value: {get_attr: [instance, networks, odlci, 0]}
