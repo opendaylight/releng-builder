@@ -56,7 +56,7 @@
     archive-artifacts: ''
     branch: master
     distribution_branch: '$GERRIT_BRANCH'
-    os-cloud: rackspace
+    os-cloud: vex
 
     # Distribution bundle URL
     bundle-url: 'last'
@@ -70,8 +70,8 @@
     docker_system_flavor: 4 GB General Purpose v1
     docker_system_image: CentOS 7 - docker - 20171016-0023
     odl_system_count: 1
-    odl_system_flavor: 4 GB General Purpose v1
-    odl_system_image: CentOS 7 - java-builder - 20171030-1039
+    odl_system_flavor: v1-standard-4
+    odl_system_image: CIMAN - CentOS 7 - java-builder - 20171206-1842
     openstack_system_count: 1
     openstack_system_flavor: 8 GB General Purpose v1
     openstack_system_image: CentOS 7 - devstack - 20171014-2147
@@ -79,8 +79,8 @@
     openstack_system2_flavor: 2 GB General Purpose v1
     openstack_system2_image: CentOS 7 - devstack - 20171014-2147
     tools_system_count: 1
-    tools_system_flavor: 2 GB General Purpose v1
-    tools_system_image: Ubuntu 14.04 - mininet - 20171001-1002
+    tools_system_flavor: v1-standard-2
+    tools_system_image: CIMAN - CentOS 7 - robot - 20171207-1911
 
     # Default Robot framework options
     robot-options: ''
