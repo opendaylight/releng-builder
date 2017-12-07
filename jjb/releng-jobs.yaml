@@ -19,7 +19,7 @@
     project-name: builder
     stream: master
     branch: master
-    build-node: centos7-java-builder-2c-4g
+    build-node: centos7-java-builder-1c-4g
     archive-artifacts: '**/*.log'
     build-timeout: 10
 
@@ -32,6 +32,7 @@
     project-name: builder
     branch: master
     archive-artifacts: '**/*.log'
+    build-node: centos7-java-builder-1c-4g
 
     platforms:
       - centos
@@ -110,7 +111,7 @@
 
 - job-template:
     name: builder-check-poms
-    node: centos7-java-builder-2c-4g
+    node: centos7-java-builder-1c-4g
 
     project-type: freestyle
 
@@ -146,7 +147,7 @@
 - job-template:
     name: 'builder-verify-image-visibility'
     project-type: freestyle
-    node: centos7-java-builder-2c-4g
+    node: centos7-java-builder-1c-4g
 
     os-cloud: 'odlpriv-sandbox'
 
@@ -193,7 +194,7 @@
 - job-template:
     name: 'builder-cleanup-old-images'
     project-type: freestyle
-    node: centos7-java-builder-2c-4g
+    node: centos7-java-builder-1c-4g
 
     properties:
       - opendaylight-infra-properties:
@@ -239,7 +240,7 @@
 - job-template:
     name: 'builder-delete-stale-nodes'
     project-type: freestyle
-    node: centos7-java-builder-2c-4g
+    node: centos7-java-builder-1c-4g
 
     properties:
       - opendaylight-infra-properties:
@@ -276,7 +277,7 @@
 - job-template:
     name: 'builder-delete-stale-stacks'
     project-type: freestyle
-    node: centos7-java-builder-2c-4g
+    node: centos7-java-builder-1c-4g
 
     properties:
       - opendaylight-infra-properties:
@@ -311,7 +312,7 @@
 - job-template:
     name: 'builder-update-image-list'
     project-type: freestyle
-    node: centos7-java-builder-2c-4g
+    node: centos7-java-builder-1c-4g
 
     properties:
       - opendaylight-infra-properties:
