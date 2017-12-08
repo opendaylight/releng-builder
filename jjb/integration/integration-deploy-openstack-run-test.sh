@@ -869,14 +869,14 @@ done
 # AccessRefused: (0, 0): (403) ACCESS_REFUSED - Login was refused using authentication mechanism AMQPLAIN. For details see the broker logfile.
 # Compare that timestamp to this log in the control stack.log: sudo rabbitmqctl set_permissions -p nova_cell1 stackrabbit
 # If the n-cpu.log is earlier than the control stack.log timestamp then the failure condition is likely hit.
-
-echo "Wait a maximum of 30m until rabbitmq is ready to allow the controller to create nova_cell1 before the computes need it"
-retry 30 60 "is_rabbitmq_ready ${OPENSTACK_CONTROL_NODE_1_IP}"
+WAIT_FOR_RABBITMQ_MINUTES=60
+echo "Wait a maximum of ${WAIT_FOR_RABBITMQ_MINUTES}m until rabbitmq is ready to allow the controller to create nova_cell1 before the computes need it"
+retry ${WAIT_FOR_RABBITMQ_MINUTES} 60 "is_rabbitmq_ready ${OPENSTACK_CONTROL_NODE_1_IP}"
 rc=$?
 if ((${rc} == 0)); then
     echo "rabbitmq is ready, starting ${NUM_OPENSTACK_COMPUTE_NODES} compute(s)"
 else
-    echo "rabbitmq was not ready in "
+    echo "rabbitmq was not ready in ${WAIT_FOR_RABBITMQ_MINUTES}m"
     collect_logs
     exit 1
 fi
