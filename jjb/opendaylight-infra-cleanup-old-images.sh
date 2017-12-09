@@ -9,7 +9,5 @@
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
 
-lftools openstack --os-cloud odlpriv-sandbox \
-    image cleanup --hide-public=True \
-                  --days=30 \
-                  --clouds=odlpriv-sandbox,rackspace
+lftools openstack --os-cloud vex \
+    image cleanup --days=30
