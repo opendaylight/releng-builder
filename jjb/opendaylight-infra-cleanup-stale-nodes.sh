@@ -15,7 +15,7 @@
 # 24H timeout in place for all jobs therefore all jobs are expected to complete
 # within the timeout.
 
-lftools openstack --os-cloud rackspace \
+lftools openstack --os-cloud vex \
     server list --days=1
-lftools openstack --os-cloud rackspace \
+lftools openstack --os-cloud vex \
     server cleanup --days=1
