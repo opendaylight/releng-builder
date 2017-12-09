@@ -1,7 +1,7 @@
 #!/bin/bash -x
 # SPDX-License-Identifier: EPL-1.0
 ##############################################################################
-# Copyright (c) 2015, 2016 The Linux Foundation and others.
+# Copyright (c) 2017 The Linux Foundation and others.
 #
 # All rights reserved. This program and the accompanying materials
 # are made available under the terms of the Eclipse Public License v1.0
@@ -9,12 +9,12 @@
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
 
-# Checks the image visibility and set "public" marker
+# Checks the image "protected" value and set "True" marker
 #
-# The script is involked by 'builder-verify-image-visibility', searches
-# the jjb source code for the images presently uesd and verifies visibility
-# on RS private cloud. If the image visibility is not "public", set the
-# image visibility to "public" to prevent the image from getting purged
+# The script is involked by 'builder-verify-image-protection', searches
+# the jjb source code for the images presently used and verifies protection
+# setting. If the image protection is not "True", sets the
+# image visibility to "True" to prevent the image from getting purged
 # by the cleanup old images job.
 
 virtualenv "/tmp/v/openstack"
@@ -29,10 +29,10 @@ declare -a images
 readarray -t images <<< "$(grep -r _system_image: --include \*.yaml | awk -F": " -e '{print $3}' | sed "s:'::;s:'$::;/^$/d")"
 
 for image in "${images[@]}"; do
-    os_image_visibility=$(openstack --os-cloud $OS_CLOUD image show "$image" -f json -c "visibility" | jq -r '.[]')
-    echo "Visibility for $image: $os_image_visibility"
-    if [[ $os_image_visibility != public ]]; then
-        echo "Image: $image NOT set as public, changing the visibility"
-        openstack --os-cloud $OS_CLOUD image set --public "$image"
+    os_image_protected=$(openstack --os-cloud $OS_CLOUD image show "$image" -f value -c protected)
+    echo "Protected setting for $image: $os_image_protected"
+    if [[ $os_image_protected != True ]]; then
+        echo "Image: $image NOT set as protected, changing the protected value."
+        openstack --os-cloud $OS_CLOUD image set --protected "$image"
     fi
 done

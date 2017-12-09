@@ -6,7 +6,7 @@
       - builder-check-poms
       - gerrit-tox-verify
       # OpenStack Related
-      - 'builder-verify-image-visibility'
+      - 'builder-verify-image-protection'
       - 'builder-cleanup-old-images'
       - 'builder-delete-stale-nodes'
       - 'builder-delete-stale-stacks'
@@ -145,7 +145,7 @@
 
 
 - job-template:
-    name: 'builder-verify-image-visibility'
+    name: 'builder-verify-image-protection'
     project-type: freestyle
     node: centos7-java-builder-4c-4g
 
@@ -177,12 +177,11 @@
               target: '$HOME/.config/openstack/clouds.yaml'
 
     triggers:
-      # Check images visibility on a daily schedule
       - timed: '@daily'
 
     builders:
       - shell: !include-raw-escape:
-          - opendaylight-infra-check-image-visibility.sh
+          - opendaylight-infra-check-image-protection.sh
 
     publishers:
       - email-notification:
