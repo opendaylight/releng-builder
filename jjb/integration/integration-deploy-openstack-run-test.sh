@@ -441,6 +441,16 @@ function list_files () {
     scp ${ip}:/tmp/find2.txt ${folder}
 }
 
+function dhcp_logs_script() {
+    local -r ip=$1
+    cat > collect_dhcp_logs.sh << EOF
+mkdir -p $dstdir
+cp -rf $srcdir $dstdir
+EOF
+    chmod +x collect_dhcp_logs.sh
+    scp collect_dhcp_logs.sh ${ip}:/tmp
+}
+
 function collect_logs () {
     set +e  # We do not want to create red dot just because something went wrong while fetching logs.
 
@@ -513,6 +523,7 @@ EOF
         OSIP=OPENSTACK_CONTROL_NODE_${i}_IP
         NODE_FOLDER="control_${i}"
         mkdir -p ${NODE_FOLDER}
+        scp ${!OSIP}:/etc/dnsmasq.conf ${NODE_FOLDER}
         scp ${!OSIP}:/etc/keystone/keystone.conf ${NODE_FOLDER}
         scp ${!OSIP}:/etc/keystone/keystone-uwsgi-admin.ini ${NODE_FOLDER}
         scp ${!OSIP}:/etc/keystone/keystone-uwsgi-public.ini ${NODE_FOLDER}
@@ -547,6 +558,7 @@ EOF
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/messages ${NODE_FOLDER}
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/rabbitmq ${NODE_FOLDER}
         rsync -avhe ssh ${!OSIP}:/opt/stack/logs/* ${NODE_FOLDER} # rsync to prevent copying of symbolic links
+        rsync -avhe ssh ${!OSIP}:/tmp/qdhcp ${NODE_FOLDER}
         scp extra_debug.sh ${!OSIP}:/tmp
         ${SSH} ${!OSIP} "bash /tmp/extra_debug.sh > /tmp/extra_debug.log"
         scp ${!OSIP}:/tmp/extra_debug.log ${NODE_FOLDER}
@@ -1091,6 +1103,8 @@ for i in `seq 1 ${NUM_OPENSTACK_SITES}`; do
         sudo ip tuntap add dev internet_tap mode tap;
         sudo ifconfig internet_tap up ${EXTNET_INTERNET_IP}/24;
     "
+
+    dhcp_logs_script "${!CONTROLIP}"
 
     # Computes
     compute_index=1
