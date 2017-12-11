@@ -56,7 +56,7 @@ resources:
             key_name: {get_param: ssh_key}
             user_data: |
                 #!/bin/bash
-                until ping -c1 git.opendaylight.org &>/dev/null
+                until host git.opendaylight.org &>/dev/null
                 do
                     echo "Waiting until git.opendaylight.org is resolvable..."
                 done
