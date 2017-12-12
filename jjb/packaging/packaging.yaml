@@ -144,6 +144,7 @@
       - inject:
           properties-content: 'STREAM={stream}'
       - shell: !include-raw: build-rpm-snap.sh
+      - shell: !include-raw: test-rpm-deps.sh
       - lf-infra-deploy-maven-file:
           global-settings-file: 'global-settings'
           settings-file: 'packaging-settings'
