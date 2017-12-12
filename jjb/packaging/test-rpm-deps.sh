@@ -20,19 +20,24 @@ declare -a expected_deps=( "/bin/bash"
                            "shadow-utils"
                            "rpmlib(PayloadIsXz) <= 5.2-1" )
 
+# Verify exactly 1 RPM is in the path we expect
+set -- /home/$USER/rpmbuild/RPMS/noarch/*.rpm
+# shellcheck disable=SC2034
+[ $# -eq 1 ] || {{ echo "Expected 1 RPM, found $#"; exit 1; }}
+
 # shellcheck disable=SC2034
 mapfile -t actual_deps < <( rpm -qp /home/$USER/rpmbuild/RPMS/noarch/*.rpm --requires )
 # shellcheck disable=SC2154 disable=SC2145
-printf '%s\n' "${{actual_deps[@]}}"
+printf 'Dependency found: %s\n' "${{actual_deps[@]}}"
 
 # shellcheck disable=SC2154 disable=SC2145 disable=SC2034
-diff_deps=(`echo "${{expected_deps[@]}}" "${{actual_deps[@]}}" | tr ' ' '\n' | sort | uniq -u `)
+diff_deps=(`echo "${{expected_deps[@]}}" "${{actual_deps[@]}}" | tr ' ' '\n' | sort | uniq -u`)
 # shellcheck disable=SC2154 disable=SC2145 disable=SC2068 disable=SC2170 disable=SC1083
 if [ ${{#diff_deps[*]}} -eq 0 ]; then
     echo "RPM requirements are as expected"
 else
     echo "RPM requirements don't match the expected requirements"
     # shellcheck disable=SC2154 disable=SC2145
-    printf '%s\n' "${{diff_deps[@]}}"
+    printf 'Dependency mismatch: %s\n' ${{diff_deps[@]}}
     exit 1
 fi
