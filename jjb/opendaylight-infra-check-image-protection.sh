@@ -8,6 +8,7 @@
 # which accompanies this distribution, and is available at
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
+echo "---> Protect used images"
 
 # Checks the image "protected" value and set "True" marker
 #
