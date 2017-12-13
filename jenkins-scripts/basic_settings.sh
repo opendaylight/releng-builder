@@ -20,6 +20,11 @@ Host 10.29.12.* 10.29.13.* 10.29.14.* 10.29.15.*
 Host 10.29.8.* 10.29.9.* 10.29.10.* 10.29.11.*
   StrictHostKeyChecking no
   UserKnownHostsFile /dev/null
+
+# Vexxhost (ODL)
+Host 10.30.170.* 10.30.171.*
+  StrictHostKeyChecking no
+  UserKnownHostsFile /dev/null
 EOSSH
 
 cat <<EOKNOWN >  /etc/ssh/ssh_known_hosts
