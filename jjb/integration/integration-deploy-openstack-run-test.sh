@@ -513,6 +513,7 @@ EOF
         OSIP=OPENSTACK_CONTROL_NODE_${i}_IP
         NODE_FOLDER="control_${i}"
         mkdir -p ${NODE_FOLDER}
+        scp ${!OSIP}:/etc/dnsmasq.conf ${NODE_FOLDER}
         scp ${!OSIP}:/etc/keystone/keystone.conf ${NODE_FOLDER}
         scp ${!OSIP}:/etc/keystone/keystone-uwsgi-admin.ini ${NODE_FOLDER}
         scp ${!OSIP}:/etc/keystone/keystone-uwsgi-public.ini ${NODE_FOLDER}
@@ -553,6 +554,7 @@ EOF
         scp ${!OSIP}:/tmp/journalctl.log ${NODE_FOLDER}
         scp ${!OSIP}:/tmp/*.xz ${NODE_FOLDER}
         mv local.conf_control_${!OSIP} ${NODE_FOLDER}/local.conf
+        mv /tmp/qdhcp ${NODE_FOLDER}
         mv ${NODE_FOLDER} ${WORKSPACE}/archives/
     done
 
