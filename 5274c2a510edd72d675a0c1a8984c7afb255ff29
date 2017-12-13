@@ -16,6 +16,142 @@
       "revId": "5274c2a510edd72d675a0c1a8984c7afb255ff29",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "af3363f9_5df82fc1",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2017-12-13T17:51:17Z",
+      "side": 1,
+      "message": "This is adding two methods for collecting these files. Just want to soak this a few runs to see which way I like best.",
+      "revId": "5274c2a510edd72d675a0c1a8984c7afb255ff29",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8168dca4_0ba72d90",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2017-12-13T17:51:17Z",
+      "side": 1,
+      "message": "this was a bug, as the --list-only has to be before the other args",
+      "revId": "5274c2a510edd72d675a0c1a8984c7afb255ff29",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d6e3878b_ad58f1fa",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2017-12-13T17:51:17Z",
+      "side": 1,
+      "message": "adding an echo in the console so it is easy to follow where these logs are collected. There are many commands with no indicators what is happening.",
+      "revId": "5274c2a510edd72d675a0c1a8984c7afb255ff29",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "580f5a5c_47e58c16",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2017-12-13T17:51:17Z",
+      "side": 1,
+      "message": "this is just moving the block. We have two loops for the odl controller logs, of which this block was in the first loop. So move the block here and delete the first loop.",
+      "revId": "5274c2a510edd72d675a0c1a8984c7afb255ff29",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "134856e2_38b1b5b2",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2017-12-13T17:51:17Z",
+      "side": 1,
+      "message": "a bug, needs sudo to get a log",
+      "revId": "5274c2a510edd72d675a0c1a8984c7afb255ff29",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eccf6481_dbe0e122",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2017-12-13T17:51:17Z",
+      "side": 1,
+      "message": "add log",
+      "revId": "5274c2a510edd72d675a0c1a8984c7afb255ff29",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e922118_9eb4714f",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2017-12-13T17:51:17Z",
+      "side": 1,
+      "message": "this was a bug, as before scp was used but these files are protected so need rsync to get sudo access.",
+      "revId": "5274c2a510edd72d675a0c1a8984c7afb255ff29",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f553b638_59ba06e4",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2017-12-13T17:51:17Z",
+      "side": 1,
+      "message": "not much of a bug and really a bug, bug is was trying to copy dmesg.log rathe than just dmesg.\n\nBut I like this method better for grabbing dmesg. Previously was just copying /var/log/dmesg, so it has the epoch timestamps rather than the nice time.",
+      "revId": "5274c2a510edd72d675a0c1a8984c7afb255ff29",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
