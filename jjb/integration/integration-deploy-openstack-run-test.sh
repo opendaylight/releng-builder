@@ -435,23 +435,18 @@ function list_files () {
     ${SSH} ${ip} "sudo find /etc > /tmp/find.etc.txt"
     ${SSH} ${ip} "sudo find /opt/stack > /tmp/find.opt.stack.txt"
     ${SSH} ${ip} "sudo find /var > /tmp/find2.txt"
-    rsync --rsync-path="sudo rsync" -arv --list-only ssh ${ip}:/var/ > ${folder}/rsync.var.txt
+    ${SSH} ${ip} "sudo find /var > /tmp/find.var.txt"
+    rsync --rsync-path="sudo rsync" --list-only -arvhe ssh ${ip}:/etc/ > ${folder}/rsync.etc.txt
+    rsync --rsync-path="sudo rsync" --list-only -arvhe ssh ${ip}:/opt/stack/ > ${folder}/rsync.opt.stack.txt
+    rsync --rsync-path="sudo rsync" --list-only -arvhe ssh ${ip}:/var/ > ${folder}/rsync.var.txt
     scp ${ip}:/tmp/find.etc.txt ${folder}
     scp ${ip}:/tmp/find.opt.stack.txt ${folder}
     scp ${ip}:/tmp/find2.txt ${folder}
+    scp ${ip}:/tmp/find.var.txt ${folder}
 }
 
 function collect_logs () {
     set +e  # We do not want to create red dot just because something went wrong while fetching logs.
-
-    for i in `seq 1 ${NUM_ODL_SYSTEM}`; do
-        CONTROLLERIP=ODL_SYSTEM_${i}_IP
-        echo "Lets's take the karaf thread dump again..."
-        KARAF_PID=$(ssh ${!CONTROLLERIP} "ps aux | grep ${KARAF_ARTIFACT} | grep -v grep | tr -s ' ' | cut -f2 -d' '")
-        ssh ${!CONTROLLERIP} "jstack $KARAF_PID"> ${WORKSPACE}/karaf_${i}_threads_after.log || true
-        echo "killing karaf process..."
-        ${SSH} "${!CONTROLLERIP}" bash -c 'ps axf | grep karaf | grep -v grep | awk '"'"'{print "kill -9 " $1}'"'"' | sh'
-    done
 
     cat > extra_debug.sh << EOF
 echo -e "/usr/sbin/lsmod | /usr/bin/grep openvswitch\n"
@@ -484,9 +479,16 @@ EOF
     # FIXME: Do not create .tar and gzip before copying.
     for i in `seq 1 ${NUM_ODL_SYSTEM}`; do
         CONTROLLERIP=ODL_SYSTEM_${i}_IP
+        echo "collect_logs: for opendaylight controller ip: ${!CONTROLLERIP}"
         NODE_FOLDER="odl_${i}"
         mkdir -p ${NODE_FOLDER}
-        ${SSH} ${!CONTROLLERIP} "journalctl > /tmp/journalctl.log"
+        echo "Lets's take the karaf thread dump again..."
+        ${SSH} ${!CONTROLLERIP} "sudo ps aux > /tmp/ps.log"
+        KARAF_PID=$(ssh ${!CONTROLLERIP} "ps aux | grep ${KARAF_ARTIFACT} | grep -v grep | tr -s ' ' | cut -f2 -d' '")
+        ssh ${!CONTROLLERIP} "jstack ${KARAF_PID}"> ${WORKSPACE}/karaf_${i}_threads_after.log || true
+        echo "killing karaf process..."
+        ${SSH} "${!CONTROLLERIP}" bash -c 'ps axf | grep karaf | grep -v grep | awk '"'"'{print "kill -9 " $1}'"'"' | sh'
+        ${SSH} ${!CONTROLLERIP} "sudo journalctl > /tmp/journalctl.log"
         scp ${!CONTROLLERIP}:/tmp/journalctl.log ${NODE_FOLDER}
         ${SSH} ${!CONTROLLERIP} "dmesg -T > /tmp/dmesg.log"
         scp ${!CONTROLLERIP}:/tmp/dmesg.log ${NODE_FOLDER}
@@ -511,6 +513,7 @@ EOF
     # Control Node
     for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
         OSIP=OPENSTACK_CONTROL_NODE_${i}_IP
+        echo "collect_logs: for openstack control node ip: ${!OSIP}"
         NODE_FOLDER="control_${i}"
         mkdir -p ${NODE_FOLDER}
         scp ${!OSIP}:/etc/dnsmasq.conf ${NODE_FOLDER}
@@ -536,15 +539,14 @@ EOF
         scp ${!OSIP}:/opt/stack/requirements/upper-constraints.txt ${NODE_FOLDER}
         scp ${!OSIP}:/opt/stack/tempest/etc/tempest.conf ${NODE_FOLDER}
         scp ${!OSIP}:/tmp/get_devstack.sh.txt ${NODE_FOLDER}
-        scp ${!OSIP}:/var/log/httpd/keystone_access.log ${NODE_FOLDER}
-        scp ${!OSIP}:/var/log/httpd/keystone.log ${NODE_FOLDER}
         scp ${!OSIP}:/var/log/openvswitch/ovs-vswitchd.log ${NODE_FOLDER}
         scp ${!OSIP}:/var/log/openvswitch/ovsdb-server.log ${NODE_FOLDER}
         list_files "${!OSIP}" "${NODE_FOLDER}"
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/etc/hosts ${NODE_FOLDER}
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/usr/lib/systemd/system/haproxy.service ${NODE_FOLDER}
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/audit/audit.log ${NODE_FOLDER}
-        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/dmesg.log ${NODE_FOLDER}
+        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/httpd/keystone_access.log ${NODE_FOLDER}
+        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/httpd/keystone.log ${NODE_FOLDER}
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/messages ${NODE_FOLDER}
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/rabbitmq ${NODE_FOLDER}
         rsync -avhe ssh ${!OSIP}:/opt/stack/logs/* ${NODE_FOLDER} # rsync to prevent copying of symbolic links
@@ -553,6 +555,8 @@ EOF
         scp ${!OSIP}:/tmp/extra_debug.log ${NODE_FOLDER}
         scp ${!OSIP}:/tmp/journalctl.log ${NODE_FOLDER}
         scp ${!OSIP}:/tmp/*.xz ${NODE_FOLDER}
+        ${SSH} ${!CONTROLLERIP} "dmesg -T > /tmp/dmesg.log"
+        scp ${!CONTROLLERIP}:/tmp/dmesg.log ${NODE_FOLDER}
         mv local.conf_control_${!OSIP} ${NODE_FOLDER}/local.conf
         mv /tmp/qdhcp ${NODE_FOLDER}
         mv ${NODE_FOLDER} ${WORKSPACE}/archives/
@@ -561,6 +565,7 @@ EOF
     # Compute Nodes
     for i in `seq 1 ${NUM_OPENSTACK_COMPUTE_NODES}`; do
         OSIP=OPENSTACK_COMPUTE_NODE_${i}_IP
+        echo "collect_logs: for openstack compute node ip: ${!OSIP}"
         NODE_FOLDER="compute_${i}"
         mkdir -p ${NODE_FOLDER}
         scp ${!OSIP}:/etc/nova/nova.conf ${NODE_FOLDER}
@@ -576,7 +581,6 @@ EOF
         list_files "${!OSIP}" "${NODE_FOLDER}"
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/etc/hosts ${NODE_FOLDER}
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/audit/audit.log ${NODE_FOLDER}
-        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/dmesg.log ${NODE_FOLDER}
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/libvirt ${NODE_FOLDER}
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/messages ${NODE_FOLDER}
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/nova-agent.log ${NODE_FOLDER}
@@ -586,6 +590,8 @@ EOF
         scp ${!OSIP}:/tmp/extra_debug.log ${NODE_FOLDER}
         scp ${!OSIP}:/tmp/journalctl.log ${NODE_FOLDER}
         scp ${!OSIP}:/tmp/*.xz ${NODE_FOLDER}/
+        ${SSH} ${!OSIP} "dmesg -T > /tmp/dmesg.log"
+        scp ${!OSIP}:/tmp/dmesg.log ${NODE_FOLDER}
         mv local.conf_compute_${!OSIP} ${NODE_FOLDER}/local.conf
         mv ${NODE_FOLDER} ${WORKSPACE}/archives/
     done
