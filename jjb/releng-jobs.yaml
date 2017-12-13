@@ -171,6 +171,7 @@
     builders:
       - shell: !include-raw-escape:
           - global-jjb/shell/lftools-install.sh
+          - opendaylight-infra-openstack-cron-prep.sh
           # Servers
           - opendaylight-infra-cleanup-stale-stacks.sh
           - opendaylight-infra-cleanup-stale-nodes.sh
