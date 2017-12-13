@@ -8,7 +8,6 @@
 # which accompanies this distribution, and is available at
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
-echo "---> Cleanup old images"
 
 lftools openstack --os-cloud vex \
     image cleanup --days=30

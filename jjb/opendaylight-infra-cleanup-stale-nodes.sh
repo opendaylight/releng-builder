@@ -8,7 +8,6 @@
 # which accompanies this distribution, and is available at
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
-echo "---> Cleanup old servers"
 
 # Todo: As a safe check we could obtain the list of active jobs from Jenkins and
 # compute the checksum from $JOB_NAME to check if any active nodes exist and
