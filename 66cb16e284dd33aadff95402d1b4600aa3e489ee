@@ -22,6 +22,30 @@
       "revId": "66cb16e284dd33aadff95402d1b4600aa3e489ee",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "60a5211e_51966bdc",
+        "filename": "jjb/opendaylight-infra-cleanup-orphaned-volumes.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2017-12-14T23:13:20Z",
+      "side": 1,
+      "message": "Yeah the original problem was we were deleting too fast. I guess a less lazy way is to check that `volume show` returns nothing to confirm that it was deleted before moving on.",
+      "parentUuid": "c21944d3_b2122f73",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 11
+      },
+      "revId": "66cb16e284dd33aadff95402d1b4600aa3e489ee",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
