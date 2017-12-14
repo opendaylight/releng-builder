@@ -356,7 +356,7 @@
       - string:
           name: URL
           # yamllint disable-line rule:line-length
-          default: 'https://git.opendaylight.org/gerrit/gitweb?p=integration/packaging.git;a=blob_plain;f=packages/rpm/example_repo_configs/opendaylight-8-testing.repo'
+          default: 'https://git.opendaylight.org/gerrit/gitweb?p=integration/packaging.git;a=blob_plain;f=packages/rpm/example_repo_configs/opendaylight-8-devel.repo'
           description: 'Link to .repo or .rpm file'
 
     scm:
@@ -407,12 +407,12 @@
       - string:
           name: URL
           # yamllint disable-line rule:line-length
-          default: 'https://raw.githubusercontent.com/opendaylight/integration-packaging/master/packages/rpm/example_repo_configs/opendaylight-6-release.repo'
+          default: 'https://raw.githubusercontent.com/opendaylight/integration-packaging/master/packages/rpm/example_repo_configs/opendaylight-7-release.repo'
           description: 'Link to .repo or .rpm file'
       - string:
           name: UPGRADE_URL
           # yamllint disable-line rule:line-length
-          default: 'https://raw.githubusercontent.com/opendaylight/integration-packaging/master/packages/rpm/example_repo_configs/opendaylight-6-testing.repo'
+          default: 'https://raw.githubusercontent.com/opendaylight/integration-packaging/master/packages/rpm/example_repo_configs/opendaylight-7-devel.repo'
           description: 'Link to .repo or .rpm file'
 
     scm:
