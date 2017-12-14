@@ -275,8 +275,10 @@ do
     CONTROLLERIP=ODL_SYSTEM_${i}_IP
     odl_variables=${odl_variables}" -v ${CONTROLLERIP}:${!CONTROLLERIP}"
     echo "Lets's take the karaf thread dump"
-    KARAF_PID=$(ssh ${!CONTROLLERIP} "ps aux | grep ${KARAF_ARTIFACT} | grep -v grep | tr -s ' ' | cut -f2 -d' '")
-    ssh ${!CONTROLLERIP} "jstack $KARAF_PID"> ${WORKSPACE}/karaf_${i}_threads_before.log || true
+    ${SSH} ${!CONTROLLERIP} "sudo ps aux > /tmp/ps_before.log"
+    pid=$(grep org.apache.karaf.main.Main /tmp/ps_before.log | grep -v grep | tr -s ' ' | cut -f2 -d' ')
+    echo "karaf main: org.apache.karaf.main.Main, pid:${pid}"
+    ssh ${!CONTROLLERIP} "jstack ${pid}" > ${WORKSPACE}/karaf_${i}_${pid}_threads_before.log || true
 done
 
 if [ ${NUM_OPENSTACK_SYSTEM} -gt 0 ]; then
@@ -323,8 +325,10 @@ for i in `seq 1 ${NUM_ODL_SYSTEM}`
 do
     CONTROLLERIP=ODL_SYSTEM_${i}_IP
     echo "Lets's take the karaf thread dump again..."
-    KARAF_PID=$(ssh ${!CONTROLLERIP} "ps aux | grep ${KARAF_ARTIFACT} | grep -v grep | tr -s ' ' | cut -f2 -d' '")
-    ssh ${!CONTROLLERIP} "jstack $KARAF_PID"> ${WORKSPACE}/karaf_${i}_threads_after.log || true
+    ${SSH} ${!CONTROLLERIP} "sudo ps aux > /tmp/ps_after.log"
+    pid=$(grep org.apache.karaf.main.Main /tmp/ps_after.log | grep -v grep | tr -s ' ' | cut -f2 -d' ')
+    echo "karaf main: org.apache.karaf.main.Main, pid:${pid}"
+    ssh ${!CONTROLLERIP} "jstack ${pid}" > ${WORKSPACE}/karaf_${i}_${pid}_threads_after.log || true
     echo "Killing ODL"
     set +e  # We do not want to create red dot just because something went wrong while fetching logs.
     ssh "${!CONTROLLERIP}" bash -c 'ps axf | grep karaf | grep -v grep | awk '"'"'{print "kill -9 " $1}'"'"' | sh'
