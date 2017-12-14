@@ -33,14 +33,17 @@ parameters:
         description: VM Image to spin up
 
 resources:
+    volume:
+        type: "OS::Cinder::Volume"
+        properties:
+            image: {get_param: vm_image}
+            size: 40
     instance:
         type: "OS::Nova::Server"
         properties:
             flavor: {get_param: vm_flavor}
             block_device_mapping_v2:
-                - image: {get_param: vm_image}
-                  delete_on_termination: true
-                  volume_size: 40
+                  - volume_id: {get_resource: volume}
             name:
                 str_replace:
                     template: SILO-JOB_NAME-GROUP-VM_TYPE-INDEX
