@@ -58,8 +58,12 @@ for STACK_NAME in "${OS_STACKS[@]}"; do
                 continue
             ;;
             DELETE_FAILED)
-                echo "Stack delete failed, trying to stack abandon now."
-                openstack stack abandon "$STACK_NAME"
+                # Abandon is not supported in Vexxhost so let's keep trying to
+                # delete for now...
+                # echo "Stack delete failed, trying to stack abandon now."
+                # openstack stack abandon "$STACK_NAME"
+                echo "Deleting orphaned stack: $STACK_NAME"
+                openstack stack delete --yes "$STACK_NAME"
                 STACK_SHOW=$(openstack stack show "$STACK_NAME")
                 echo "$STACK_SHOW"
                 continue
