@@ -46,6 +46,30 @@
       "revId": "66cb16e284dd33aadff95402d1b4600aa3e489ee",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b250fe95_4ed76215",
+        "filename": "jjb/opendaylight-infra-cleanup-orphaned-volumes.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2017-12-14T23:37:51Z",
+      "side": 1,
+      "message": "deleting what too fast? isn\u0027t this a loop over a list of\nunique volumes? so each volume only gets deleted once\nand then maybe it takes a few seconds for it to be gone, so\nmove that few seconds sleep outside of the loop so it\nhappens only once.",
+      "parentUuid": "60a5211e_51966bdc",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 11
+      },
+      "revId": "66cb16e284dd33aadff95402d1b4600aa3e489ee",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
