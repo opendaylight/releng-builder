@@ -46,6 +46,7 @@ done
 # Search for stacks that are not in use by either releng or sandbox silos and
 # delete them.
 for STACK_NAME in "${OS_STACKS[@]}"; do
+    echo "Deleting stack $STACK_NAME"
     STACK_STATUS=$(openstack stack show -f value -c "stack_status" "$STACK_NAME")
     if [[ "${ACTIVE_BUILDS[*]}" =~ $STACK_NAME ]]; then
         # No need to delete stacks if there exists an active build for them
