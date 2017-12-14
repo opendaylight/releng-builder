@@ -23,11 +23,11 @@ pipdeptree
 # Fetch stack list before fetching active builds to minimize race condition
 # where we might be try to delete stacks while jobs are trying to start
 OS_STACKS=($(openstack stack list \
-            -f json -c "Stack Name" -c "Stack Status" \
+            -f value -c "Stack Name" -c "Stack Status" \
             --property "stack_status=CREATE_COMPLETE" \
             --property "stack_status=DELETE_FAILED" \
             --property "stack_status=CREATE_FAILED" \
-            | jq -r '.[] | ."Stack Name"'))
+            | awk '{print $1}'))
 
 # Make sure we fetch active builds on both the releng and sandbox silos
 ACTIVE_BUILDS=()
