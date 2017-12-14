@@ -28,11 +28,11 @@ OS_SERVERS=($(openstack server list -f value -c "Name" | grep -E 'prd|snd'))
 # Make sure we fetch active minions on both the releng and sandbox silos
 ACTIVE_MINIONS=()
 for silo in releng sandbox; do
-    JENKINS_URL="https://jenkins.opendaylight.org/$silo/computer/api/json?tree=computer[displayName]"
-    wget -nv -O "${silo}_builds.json" "$JENKINS_URL"
-    sleep 1  # Need to sleep for 1 second otherwise next line causes script to stall
-    ACTIVE_MINIONS=(${ACTIVE_MINIONS[@]} $( \
-        jq -r '.computer[].displayName' "${silo}_builds.json" | grep -v master))
+    query="https://jenkins.opendaylight.org/$silo/computer/api/json?tree=computer[displayName]"
+    resp=$(curl -s -w "\n\n%{http_code}" --header "Accept: application/json" "$query")
+    json_data=$(echo "$resp" | head -n1)
+    ACTIVE_MINIONS=(${ACTIVE_MINIONS[@]} $( echo "$json_data" \
+        | jq -r '.computer[].displayName' | grep -v master))
 done
 
 #############################
