@@ -39,7 +39,8 @@ do
        ;;
     *devstack*)
        # track potential controllers which would have -0 at the end of the hostname
-       if [[ ${REMHOST: -2} == "-0" ]]; then
+       # NOTE: systems in the vexxhost cloud provider will also append the .vexxhost.net domain to the hostname
+       if [[ ${REMHOST: -15} == "-0.vexxhost.net" ]]; then
           OPENSTACK_CONTROLLERS=( "${OPENSTACK_CONTROLLERS[@]}" "${i}" )
        fi
 
