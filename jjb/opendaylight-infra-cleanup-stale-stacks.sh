@@ -32,11 +32,11 @@ OS_STACKS=($(openstack stack list \
 # Make sure we fetch active builds on both the releng and sandbox silos
 ACTIVE_BUILDS=()
 for silo in releng sandbox; do
-    JENKINS_URL="https://jenkins.opendaylight.org/$silo//computer/api/json?tree=computer[executors[currentExecutable[url]],oneOffExecutors[currentExecutable[url]]]&xpath=//url&wrapper=builds"
-    wget -nv -O "${silo}_builds.json" "$JENKINS_URL"
-    sleep 1  # Need to sleep for 1 second otherwise next line causes script to stall
-    ACTIVE_BUILDS=(${ACTIVE_BUILDS[@]} $( \
-        jq -r '.computer[].executors[].currentExecutable.url' "${silo}_builds.json" \
+    query="https://jenkins.opendaylight.org/$silo//computer/api/json?tree=computer[executors[currentExecutable[url]],oneOffExecutors[currentExecutable[url]]]&xpath=//url&wrapper=builds"
+    resp=$(curl -s -w "\n\n%{http_code}" --header "Accept: application/json" "$query")
+    json_data=$(echo "$resp" | head -n1)
+    ACTIVE_BUILDS=(${ACTIVE_BUILDS[@]} $( echo "$json_data" \
+        | jq -r '.computer[].executors[].currentExecutable.url' \
         | grep -v null | awk -F'/' '{print $4 "-" $6 "-" $7}'))
 done
 
