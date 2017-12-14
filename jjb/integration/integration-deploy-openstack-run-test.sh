@@ -483,9 +483,10 @@ EOF
         NODE_FOLDER="odl_${i}"
         mkdir -p ${NODE_FOLDER}
         echo "Lets's take the karaf thread dump again..."
-        ${SSH} ${!CONTROLLERIP} "sudo ps aux > /tmp/ps.log"
-        KARAF_PID=$(ssh ${!CONTROLLERIP} "ps aux | grep ${KARAF_ARTIFACT} | grep -v grep | tr -s ' ' | cut -f2 -d' '")
-        ssh ${!CONTROLLERIP} "jstack ${KARAF_PID}"> ${WORKSPACE}/karaf_${i}_threads_after.log || true
+        ssh ${!CONTROLLERIP} "sudo ps aux" > ${WORKSPACE}/ps_after.log"
+        pid=$("grep org.apache.karaf.main.Main ${WORKSPACE}/ps_after.log | grep -v grep | tr -s ' ' | cut -f2 -d' '")
+        echo "karaf main: org.apache.karaf.main.Main, pid:${pid}"
+        ssh ${!CONTROLLERIP} "jstack ${pid}" > ${WORKSPACE}/karaf_${i}_${pid}_threads_after.log || true
         echo "killing karaf process..."
         ${SSH} "${!CONTROLLERIP}" bash -c 'ps axf | grep karaf | grep -v grep | awk '"'"'{print "kill -9 " $1}'"'"' | sh'
         ${SSH} ${!CONTROLLERIP} "sudo journalctl > /tmp/journalctl.log"
@@ -504,7 +505,8 @@ EOF
         # Print ROBOT lines and print Exception lines. For exception lines also print the previous line for context
         sed -n -e '/ROBOT MESSAGE/P' -e '$!N;/Exception/P;D' ${NODE_FOLDER}/odl${i}_karaf.log > ${NODE_FOLDER}/odl${i}_exception.log
         rm ${NODE_FOLDER}/odl${i}_karaf.log.tar
-        mv karaf_${i}_threads* ${NODE_FOLDER}
+        mv *_threads* ${NODE_FOLDER}
+        mv ps_* ${NODE_FOLDER}
         mv ${NODE_FOLDER} ${WORKSPACE}/archives/
     done
 
