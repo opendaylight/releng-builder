@@ -248,9 +248,9 @@ minimize_polling=True
 
 [ml2]
 # Needed for VLAN provider tests - because our provider networks are always encapsulated in VXLAN (br-physnet1)
-# MTU(1440) + VXLAN(50) + VLAN(4) = 1494 < MTU eth0/br-physnet1(1500)
-physical_network_mtus = ${PUBLIC_PHYSICAL_NETWORK}:1440
-path_mtu = 1490
+# MTU(1400) + VXLAN(50) + VLAN(4) = 1454 < MTU eth0/br-physnet1(1458)
+physical_network_mtus = ${PUBLIC_PHYSICAL_NETWORK}:1400
+path_mtu = 1458
 
 # workaround for port-status not working due to https://bugs.opendaylight.org/show_bug.cgi?id=9092
 [ml2_odl]
