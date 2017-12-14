@@ -32,7 +32,7 @@ ADDR=($(openstack stack show -f json -c outputs "$STACK_NAME" | \
 
 for i in "${ADDR[@]}"
 do
-    REMHOST=$(ssh "${i}" hostname)
+    REMHOST=$(ssh "${i}" hostname -s)
     case ${REMHOST} in
     *java*)
        ODL_SYSTEM=( "${ODL_SYSTEM[@]}" "${i}" )
