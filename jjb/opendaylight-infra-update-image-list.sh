@@ -24,7 +24,8 @@ EOF
 # Blank line before EOF is on purpose to ensure there is spacing.
 
 IFS=$'\n'
-IMAGES=($(openstack image list --public -f value -c Name))
+IMAGES=($(openstack image list --long -f value -c Name -c Protected \
+    | grep 'ZZCI.*True' | sed 's/ True//'))
 for i in "${IMAGES[@]}"; do
     echo "* $i" >> "$WORKSPACE/docs/cloud-images.rst"
 done
