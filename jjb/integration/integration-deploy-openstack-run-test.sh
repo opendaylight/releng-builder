@@ -1296,14 +1296,19 @@ echo "Starting Robot test suites ${SUITES} ..."
 # please add pybot -v arguments on a single line and alphabetized
 suite_num=0
 for suite in ${SUITES}; do
-    # prepend a incrmental counter to the suite name so that the full robot log combining all the suites as is done
+    # prepend an incremental counter to the suite name so that the full robot log combining all the suites as is done
     # in the rebot step below will list all the suites in chronological order as rebot seems to alphabatize them
     let "suite_num = suite_num + 1"
     suite_index="$(printf %02d ${suite_num})"
     suite_name="$(basename ${suite} | cut -d. -f1)"
     log_name="${suite_index}_${suite_name}"
-    pybot -N ${log_name} --removekeywords wuks -c critical -e exclude -e skip_if_${DISTROSTREAM} \
+    pybot -N ${log_name} \
+    -c critical -e exclude -e skip_if_${DISTROSTREAM} \
     --log log_${log_name}.html --report None --output output_${log_name}.xml \
+    --removekeywords wuks \
+    --removekeywords name:SetupUtils.Setup_Utils_For_Setup_And_Teardown \
+    --removekeywords name:SetupUtils.Setup_Test_With_Logging_And_Without_Fast_Failing \
+    --removekeywords name:OpenStackOperations.Add_OVS_Logging_On_All_OpenStack_Nodes \
     -v BUNDLEFOLDER:${BUNDLEFOLDER} \
     -v BUNDLE_URL:${ACTUAL_BUNDLE_URL} \
     -v CONTROLLERFEATURES:"${CONTROLLERFEATURES}" \
