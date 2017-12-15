@@ -188,7 +188,41 @@ time for every job which runs on the image. After all of these scripts have
 executed Jenkins will finally attach the minion as an actual minion and start
 handling jobs on it.
 
-Pool: ODLRPC
+Flavors
+^^^^^^^
+
+Performance flavors come with dedicated CPUs and are not shared with other
+accounts in the cloud so should ensure consistent performance.
+
+.. list-table:: Flavors
+   :widths: auto"
+   :header-rows: 1"
+
+   * - Instance Type
+     - CPUs
+     - Memory
+
+   * - v1-performance-1
+     - 1
+     - 4
+
+   * - v1-performance-2
+     - 2
+     - 8
+
+   * - v1-performance-4
+     - 4
+     - 16
+
+   * - v1-performance-8
+     - 8
+     - 32
+
+   * - v1-performance-16
+     - 16
+     - 64
+
+Pool: ODLVEX
 ^^^^^^^^^^^^
 
 .. raw:: html
@@ -316,7 +350,7 @@ Pool: ODLRPC
 
     </table>
 
-Pool: ODLPUB - HOT (Heat Orchestration Templates)
+Pool: ODLVEX - HOT (Heat Orchestration Templates)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 HOT integration enables to spin up integration labs servers for CSIT jobs
@@ -324,10 +358,6 @@ using heat, rathar than using jclouds (deprecated). Image names are updated
 on the project specific job templates using the variable
 `{odl,docker,openstack,tools}_system_image` followed by image name in the
 format `<platform> - <template> - <date-stamp>`.
-
-.. code-block:: yaml
-
-    CentOS 7 - docker - 20161031-0802
 
 .. include:: cloud-images.rst
 
