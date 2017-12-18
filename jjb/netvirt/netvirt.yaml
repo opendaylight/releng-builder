@@ -27,6 +27,7 @@
     mvn-settings: 'netvirt-settings'
     mvn-goals: 'clean install'
     mvn-opts: '-Xmx2048m -XX:MaxPermSize=512m'
+    build-timeout: 90
     dependencies: >
         genius-merge-{stream},
         neutron-merge-{stream},
