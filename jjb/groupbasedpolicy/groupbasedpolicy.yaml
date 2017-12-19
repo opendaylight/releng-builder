@@ -19,6 +19,7 @@
     mvn-settings: 'groupbasedpolicy-settings'
     mvn-goals: '-U clean install findbugs:findbugs'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    build-timeout: 90
     dependencies: >
         openflowjava-merge-{stream},
         openflowplugin-merge-{stream},

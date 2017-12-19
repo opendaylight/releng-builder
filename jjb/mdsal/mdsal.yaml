@@ -20,6 +20,7 @@
     mvn-settings: 'mdsal-settings'
     mvn-goals: '-Dmaven.compile.fork=true clean install -Dintegrationtests'
     mvn-opts: '-Xmx2048m -XX:MaxPermSize=1024m'
+    build-timeout: 90
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream}'
     email-upstream: '[mdsal] [odlparent] [yangtools]'
     archive-artifacts: ''
