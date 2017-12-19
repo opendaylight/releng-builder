@@ -21,6 +21,7 @@
     mvn-settings: 'neutron-settings'
     mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    build-timeout: 90
     dependencies: 'odlparent-merge-{stream},aaa-merge-{stream}'
     email-upstream: '[neutron] [odlparent] [aaa]'
     archive-artifacts: ''
