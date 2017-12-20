@@ -62,11 +62,11 @@ resources:
             key_name: {get_param: ssh_key}
             user_data: |
                 #!/bin/bash
-                until host git.opendaylight.org &>/dev/null
+                until host devvexx.opendaylight.org &>/dev/null
                 do
-                    echo "Waiting until git.opendaylight.org is resolvable..."
+                    echo "Waiting until devvexx.opendaylight.org is resolvable..."
                 done
-                git clone https://git.opendaylight.org/gerrit/releng/builder /builder
+                git clone git://devvexx.opendaylight.org/mirror/releng/builder /builder
                 /builder/jenkins-scripts/jenkins-init-script.sh
 
 outputs:
