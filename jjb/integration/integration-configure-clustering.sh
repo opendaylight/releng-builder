@@ -66,6 +66,8 @@ fi
 
 # Create the configuration script to be run on controllers.
 cat > ${WORKSPACE}/configuration-script.sh <<EOF
+echo "Create RAM disk"
+sudo mount -t tmpfs -o size=2G tmpfs /tmp
 
 echo "Changing to /tmp"
 cd /tmp
