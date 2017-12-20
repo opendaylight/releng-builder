@@ -26,8 +26,15 @@
       - only:
           scope: 'only'
 
+    # Job images
+    odl_system_flavor: v1-performance-4
+
     # Features to install
-    install-features: 'odl-openflowplugin-flow-services-rest,decanter-collector-jmx,decanter-appender-elasticsearch'
+    install-features: >
+        odl-openflowplugin-flow-services-rest,
+        odl-openflowplugin-app-table-miss-enforcer,
+        decanter-collector-jmx,
+        decanter-appender-elasticsearch
 
     # Robot custom options
     robot-options: '-v TOPO_TREE_DEPTH:7'
