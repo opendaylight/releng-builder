@@ -468,6 +468,10 @@ env
 source /opt/stack/devstack/openrc admin admin
 echo -e "\nenv after openrc\n"
 env
+echo "\nsudo du -hs /opt/stack"
+sudo du -hs /opt/stack
+echo "\nsudo mount"
+sudo mount
 EOF
 
     # Since this log collection work is happening before the archive build macro which also
@@ -596,6 +600,7 @@ EOF
         scp ${!OSIP}:/tmp/dmesg.log ${NODE_FOLDER}
         mv local.conf_compute_${!OSIP} ${NODE_FOLDER}/local.conf
         mv ${NODE_FOLDER} ${WORKSPACE}/archives/
+        ${SSH} ${!OSIP} "sudo du -hs /opt/stack"
     done
 
     # Tempest
@@ -793,6 +798,8 @@ echo "127.0.0.1   localhost \${HOSTNAME}" >> /tmp/hosts
 echo "::1         localhost \${HOSTNAME}" >> /tmp/hosts
 sudo mv /tmp/hosts /etc/hosts
 sudo mkdir /opt/stack
+echo "Create RAM disk for /opt/stack"
+sudo mount -t tmpfs -o size=2G tmpfs /opt/stack
 sudo chmod 777 /opt/stack
 cd /opt/stack
 echo "git clone https://git.openstack.org/openstack-dev/devstack --branch ${OPENSTACK_BRANCH}"
