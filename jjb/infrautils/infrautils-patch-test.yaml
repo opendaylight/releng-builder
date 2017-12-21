@@ -1,0 +1,30 @@
+---
+- project:
+    name: infrautils-patch-test
+    jobs:
+      - '{project}-patch-test-{feature}-{stream}'
+
+    project: 'infrautils'
+
+    stream:
+      - oxygen:
+          branch: 'master'
+          os-branch: 'ocata'
+      - nitrogen:
+          branch: 'stable/nitrogen'
+          os-branch: 'ocata'
+      - carbon:
+          branch: 'stable/carbon'
+          os-branch: 'ocata'
+          karaf-version: karaf3
+
+    jdk: 'openjdk8'
+
+    feature:
+      - netvirt:
+          csit-list: >
+              netvirt-csit-1node-openstack-{os-branch}-gate-stateful-{stream}
+
+      - cluster-netvirt:
+          csit-list: >
+              netvirt-csit-3node-openstack-{os-branch}-gate-stateful-{stream}
