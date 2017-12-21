@@ -20,7 +20,7 @@ mkdir -p m2repo/org/opendaylight/
 # in cases where an internal ci system is using multiple NEXUS systems one for artifacts and another for staging,
 # we can override using ODLNEXUS_STAGING_URL to route the staging build to the 2nd server.
 # (most CI setups where a single Nexus server is used, ODLNEXUS_STAGING_URL should be left unset)
-NEXUS_STAGING_URL=${ODLNEXUS_STAGING_URL:-"http://10.29.8.46:8081"}
+NEXUS_STAGING_URL=${ODLNEXUS_STAGING_URL:-"https://10.30.168.7:8081"}
 NEXUS_STAGING_PROFILE=${ODLNEXUS_STAGING_PROFILE:-425e43800fea70}
 NEXUS_STAGING_SERVER_ID=${ODLNEXUS_STAGING_SERVER_ID:-"opendaylight.staging"}
 
