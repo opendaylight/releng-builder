@@ -265,6 +265,10 @@ enable_isolated_metadata = True
 [DEFAULT]
 force_config_drive = False
 
+[[post-config|/etc/neutron/plugins/ml2/ml2_conf.ini]]
+[ml2_odl]
+maintenance_interval = 30
+
 [scheduler]
 discover_hosts_in_cells_interval = 30
 EOF
