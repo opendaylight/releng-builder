@@ -1417,6 +1417,197 @@
       - integration-csit-run-postscript
       - lf-infra-publish
 
+- job-template:
+    name: 'janki-{project}-csit-{topology}-openstack-{openstack}-{functionality}-{stream}-upgrade'
+    disabled: false
+
+    project-type: freestyle
+    node: centos7-robot-2c-8g
+    concurrent: true
+
+    properties:
+      - opendaylight-infra-properties:
+          build-days-to-keep: '{build-days-to-keep}'
+
+    parameters:
+      - opendaylight-infra-parameters:
+          os-cloud: '{os-cloud}'
+          project: 'integration/test'
+          branch: '{branch}'
+          refspec: 'refs/heads/{branch}'
+          artifacts: '{archive-artifacts}'
+      - integration-distribution-branch:
+          branch: '{branch}'
+      - integration-distribution-stream:
+          stream: '{stream}'
+      - integration-bundle-url:
+          bundle-url: '{bundle-url}'
+      - integration-controller-features:
+          controller-features: '{install-features}'
+      - integration-controller-debug-map:
+          controller-debug-map: '{debug-map}'
+      - integration-test-options:
+          test-options: '{robot-options}'
+      - integration-test-plan:
+          test-plan: '{testplan}'
+      - integration-test-suites:
+          test-suites: '{test-suites}'
+      - integration-patch-refspec:
+          branch: 'master'
+      - integration-jdk-version:
+          jdkversion: '{jre}'
+      - distribution-karaf-version:
+          karaf-version: '{karaf-version}'
+      - string:
+          name: OPENSTACK_BRANCH
+          default: '{openstack-branch}'
+          description: 'Openstack version to use with devstack'
+      - string:
+          name: DEVSTACK_HASH
+          default: '{devstack-hash}'
+          description: 'devstack hash to checkout'
+      - string:
+          name: ODL_ML2_DRIVER_REPO
+          default: '{odl-ml2-driver-repo}'
+          description: 'URL to fetch networking-odl driver'
+      - string:
+          name: ODL_ML2_BRANCH
+          default: '{odl-ml2-branch}'
+          description: 'Version of networking-odl to checkout from the repo'
+      - string:
+          name: ODL_ML2_DRIVER_VERSION
+          default: '{odl-ml2-driver-version}'
+          description: 'Mode of networking-odl (v1 or v2)'
+      - string:
+          name: ODL_ML2_PORT_BINDING
+          default: '{odl-ml2-port-binding}'
+          description: 'Method of networking-odl port-binding (pseudo-agentdb-binding or legacy-port-binding or
+          network-topology)'
+      - string:
+          name: DEVSTACK_KUBERNETES_PLUGIN_REPO
+          default: '{devstack-kubernetes-plugin-repo}'
+          description: 'URL to fetch kubernetes devstack plugin'
+      - string:
+          name: DEVSTACK_LBAAS_PLUGIN_REPO
+          default: '{devstack-lbaas-plugin-repo}'
+          description: 'URL to fetch neutron-lbaas devstack plugin'
+      - string:
+          name: DEVSTACK_NETWORKING_SFC_PLUGIN_REPO
+          default: '{devstack-networking-sfc-plugin-repo}'
+          description: 'URL to fetch neutron-lbaas devstack plugin'
+      - string:
+          name: ODL_ENABLE_L3_FWD
+          default: '{odl-enable-l3}'
+          description: 'Enable L3 FWD in ODL for createing br-ex'
+      - string:
+          name: IPSEC_VXLAN_TUNNELS_ENABLED
+          default: '{ipsec-vxlan-tunnels-enabled}'
+          description: 'Enable ipsec over vxlan support for all controllers and computes'
+      - string:
+          name: PUBLIC_BRIDGE
+          default: '{public-bridge}'
+          description: 'Specifies public bridge for provider and external networking'
+      - string:
+          name: ENABLE_HAPROXY_FOR_NEUTRON
+          default: '{enable-haproxy}'
+          description: 'Enable HAProxy for using neutron interface as HA'
+      - string:
+          name: ENABLE_OS_SERVICES
+          default: '{enable-openstack-services}'
+          description: 'comma seperated list of services to enable'
+      - string:
+          name: ENABLE_OS_COMPUTE_SERVICES
+          default: '{enable-openstack-compute-services}'
+          description: 'comma separated list of services to enable on compute nodes'
+      - string:
+          name: ENABLE_OS_PLUGINS
+          default: '{enable-openstack-plugins}'
+          description: 'comma seperated list of plugins to enable'
+      - string:
+          name: DISABLE_OS_SERVICES
+          default: '{disable-openstack-services}'
+          description: 'comma seperated list of services to enable'
+      - string:
+          name: TENANT_NETWORK_TYPE
+          default: '{tenant-network-type}'
+          description: 'Tenant Network Type supported by the implementation'
+      - string:
+          name: SECURITY_GROUP_MODE
+          default: '{security-group-mode}'
+          description: 'Security Group Mode to be used in netvirt aclservice config'
+      - string:
+          name: PUBLIC_PHYSICAL_NETWORK
+          default: '{public-physical-network}'
+          description: 'provider physical network used for flat/vlan networks'
+      - string:
+          name: CREATE_INITIAL_NETWORKS
+          default: '{create-initial-networks}'
+          description: 'Toggles the option of letting devstack create initial networks (True/False)'
+      - string:
+          name: LBAAS_SERVICE_PROVIDER
+          default: '{lbaas-service-provider}'
+          description: 'The NEUTRON_LBAAS_SERVICE_PROVIDERV2 value to be used in local.conf - only relevant when using
+          neutron-lbaas'
+      - string:
+          name: NUM_OPENSTACK_SITES
+          default: '{num-openstack-sites}'
+          description: 'Number of openstack sites'
+      - string:
+          name: ODL_SFC_DRIVER
+          default: '{odl-sfc-driver}'
+          description: 'The SFC driver to be used in local.conf - only relevant when using networking-sfc'
+      - string:
+          name: ODL_SNAT_MODE
+          default: '{odl-snat-mode}'
+          description: 'The SNAT mode to be configured - options are conntrack/controller.'
+
+    scm:
+      - integration-gerrit-scm:
+          basedir: 'test'
+          refspec: '$PATCHREFSPEC'
+          branch: 'master'
+
+    wrappers:
+      - opendaylight-infra-wrappers:
+          build-timeout: '{build-timeout}'
+
+    triggers:
+      - timed: '{schedule}'
+
+    builders:
+      - integration-infra-stack-3-type:
+          stack-template: '{stack-template}'
+          vm_0_count: '{odl_system_count}'
+          vm_0_flavor: '{odl_system_flavor}'
+          vm_0_image: '{odl_system_image}'
+          vm_1_count: '{openstack_system_count}'
+          vm_1_flavor: '{openstack_system_flavor}'
+          vm_1_image: '{openstack_system_image}'
+          vm_2_count: '{openstack_system2_count}'
+          vm_2_flavor: '{openstack_system2_flavor}'
+          vm_2_image: '{openstack_system2_image}'
+      - integration-install-robotframework
+      - inject:
+          properties-file: 'env.properties'
+      - integration-get-slave-addresses
+      - inject:
+          properties-file: 'slave_addresses.txt'
+      - integration-detect-variables
+      - integration-deploy-controller-run-test
+      - integration-deploy-openstack-run-test
+      - integration-cleanup-tmp
+
+    publishers:
+      - integration-robot-tempest:
+          unstable-if: 0.0
+          pass-if: 100.0
+      - email-notification:
+          email-recipients: '{email-recipients}'
+          email-prefix: '[{project}]'
+      - integration-csit-archive-build
+      - integration-csit-run-postscript
+      - lf-infra-publish
+
 # Template: {project}-patch-test-{stream}
 # Goal: Build a patch and run project specific system test on a distribution containing the change
 # Operation: This job template builds a patch, creates a distribution containing the patch, and
