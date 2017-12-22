@@ -256,6 +256,9 @@ path_mtu = 1490
 [ml2_odl]
 odl_features=nothing
 
+# Trigger n-odl full sync every 30 secs.
+maintenance_interval = 30
+
 [[post-config|/etc/neutron/dhcp_agent.ini]]
 [DEFAULT]
 force_metadata = True
