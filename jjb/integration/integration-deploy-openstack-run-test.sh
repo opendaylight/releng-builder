@@ -320,6 +320,10 @@ minimize_polling=True
 physical_network_mtus = ${PUBLIC_PHYSICAL_NETWORK}:1400
 path_mtu = 1458
 
+[ml2_odl]
+# Trigger n-odl full sync every 30 secs.
+maintenance_interval = 30
+
 [[post-config|/etc/neutron/dhcp_agent.ini]]
 [DEFAULT]
 force_metadata = True
@@ -836,6 +840,10 @@ CORE_OS_CONTROL_SERVICES+=",key"
 CORE_OS_CONTROL_SERVICES+=",n-api,n-api-meta,n-cauth,n-cond,n-crt,n-obj,n-sch"
 # ODL - services to connect to ODL
 CORE_OS_CONTROL_SERVICES+=",odl-compute,odl-neutron"
+
+#CORE_OS_CONTROL_SERVICES+=",q-dhcp,q-meta,q-svc"
+CORE_OS_CONTROL_SERVICES+=",neutron-dhcp,neutron-metadata-agent,neutron-api"
+
 # Additional services
 CORE_OS_CONTROL_SERVICES+=",mysql,rabbit"
 
