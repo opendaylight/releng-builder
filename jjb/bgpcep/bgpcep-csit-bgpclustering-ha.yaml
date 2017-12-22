@@ -16,9 +16,17 @@
           branch: 'master'
       - nitrogen:
           branch: 'stable/nitrogen'
+          install-features: >
+              odl-restconf,
+              odl-bgpcep-bgp,
+              odl-bgpcep-bgp-config-example
       - carbon:
           branch: 'stable/carbon'
           karaf-version: karaf3
+          install-features: >
+              odl-restconf,
+              odl-bgpcep-bgp,
+              odl-bgpcep-bgp-config-example
 
     install:
       - only:
@@ -28,7 +36,9 @@
     install-features: >
         odl-restconf,
         odl-bgpcep-bgp,
-        odl-bgpcep-bgp-config-example
+        odl-bgpcep-bgp-config-example,
+        odl-bgpcep-bmp,
+        odl-bgpcep-bmp-config-example
 
     # Robot custom options:
     robot-options: '-v USE_NETCONF_CONNECTOR:False'
