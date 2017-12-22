@@ -1,0 +1,44 @@
+---
+- project:
+    name: netvirt-csit-openstack-integration-oxygen-upgrade
+    jobs:
+      - 'janki-{project}-csit-{topology}-openstack-{openstack}-{functionality}-{stream}-upgrade'
+
+    project: 'netvirt'
+    stream: 'oxygen'
+    branch: 'master'
+    jre: 'openjdk8'
+
+    topology:
+      - 1node:
+          openstack_system2_count: 2
+          odl_system_count: 1
+          enable-haproxy: 'no'
+          install-features: 'odl-netvirt-openstack'
+
+    testplan: '{project}-{topology}-openstack-upgrade.txt'
+
+    functionality:
+      - upstream-stateful:
+          sg-mode: 'stateful'
+      - upstream-stateful-snat-conntrack:
+          sg-mode: 'stateful'
+          odl-snat-mode: 'conntrack'
+      - upstream-stateful-snat-conntroller:
+          sg-mode: 'stateful'
+          odl-snat-mode: 'controller'
+
+
+    openstack:
+      - queens:
+          openstack-branch: 'master'
+          devstack-hash: '2d5494cfc57b95b61f8b33240eff65f1a339a53e'
+          odl-ml2-branch: 'master'
+          odl-ml2-port-binding: 'pseudo-agentdb-binding'
+          openstack_system_image: 'CentOS 7 - devstack-pike - 20170901-2223'
+          openstack_system2_image: 'CentOS 7 - devstack-pike - 20170901-2223'
+
+    odl-ml2-driver-version: 'v2'
+    enable-openstack-services: 'placement-api,tempest'
+    enable-openstack-compute-services: 'placement-client'
+    security-group-mode: '{sg-mode}'
