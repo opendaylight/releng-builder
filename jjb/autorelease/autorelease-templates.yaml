@@ -16,7 +16,7 @@
     #####################
 
     project-type: freestyle
-    node: centos7-autorelease-4c-16g
+    node: centos7-java-builder-4c-16g
     jdk: '{java-version}'
     cron: 'H 0 * * *'
 
@@ -212,7 +212,7 @@
 - job-template:
     name: autorelease-version-bump-{stream}
     project-type: freestyle
-    node: centos7-autorelease-4c-16g
+    node: centos7-java-builder-4c-16g
 
     properties:
       - opendaylight-infra-properties:
