@@ -14,6 +14,12 @@ set -- /home/$USER/rpmbuild/RPMS/noarch/*.rpm
 # If path is globbed (/path/to/*.rpm), expand it
 path=$(sudo find / -wholename /home/$USER/rpmbuild/RPMS/noarch/*.rpm)
 
+# If no RPM found, fail clearly
+if [ -z $path ]; then
+    echo "RPM not found"
+    exit 1
+fi
+
 # Requirements for package where SRPM was built into noarch on CentOS CBS
 # rpm -qp opendaylight-8.0.0-0.1.20171125rel2049.el7.noarch.rpm --requires
 # shellcheck disable=SC2034
