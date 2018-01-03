@@ -19,11 +19,14 @@
           branch: 'stable/nitrogen'
       - carbon:
           branch: 'stable/carbon'
-          karaf-version: karaf3
+          karaf-version: 'karaf3'
 
     install:
       - only:
           scope: 'only'
+
+    # Job images
+    tools_system_image: 'ZZCI - Ubuntu 16.04 - mininet-ovs-26 - 20171208-1847'
 
     # Features to install
     install-features: >
@@ -33,6 +36,3 @@
 
     # Robot custom options
     robot-options: '-v SWITCHES:3'
-
-    # mininet image
-    tools_system_image: ZZCI - Ubuntu 16.04 - mininet-ovs-25 - 20171208-1847
