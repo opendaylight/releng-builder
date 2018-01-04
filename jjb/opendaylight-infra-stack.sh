@@ -36,7 +36,7 @@ for try in $(seq $STACK_RETRIES); do
     echo "$try: Waiting for $OS_TIMEOUT minutes to create $STACK_NAME."
     for i in $(seq $OS_TIMEOUT); do
         sleep 60
-        OS_STATUS=$(openstack stack show -f json -c stack_status "$STACK_NAME" | jq -r '.stack_status')
+        OS_STATUS=$(openstack stack show -f value -c stack_status "$STACK_NAME")
         echo "$i: $OS_STATUS"
 
         case "$OS_STATUS" in
@@ -46,31 +46,41 @@ for try in $(seq $STACK_RETRIES); do
                 break
             ;;
             CREATE_FAILED)
-                echo "ERROR: Failed to initialize infrastructure. Deleting stack and possibly retrying to create..."
+                reason=$(openstack stack show "$STACK_NAME" -f value -c stack_status_reason)
+                echo "ERROR: Failed to initialize infrastructure. Reason: $reason"
+
+                echo "Deleting stack and possibly retrying to create..."
                 openstack stack delete --yes "$STACK_NAME"
-                openstack stack show "$STACK_NAME"
+
                 # after stack delete, poll for 10m to know when stack is fully removed
                 # the logic here is that when "stack show $STACK_NAME" does not contain $STACK_NAME
                 # we assume it's successfully deleted and we can break to retry
                 for j in $(seq 20); do
-                    sleep 30;
-                    STACK_SHOW=$(openstack stack show "$STACK_NAME")
-                    echo "$j: $STACK_SHOW"
-                    if [[ $STACK_SHOW == *"DELETE_FAILED"* ]]; then
-                        echo "stack delete failed. trying to stack abandon now"
-                        openstack stack abandon "$STACK_NAME"
-                        STACK_SHOW=$(openstack stack show "$STACK_NAME")
-                        echo "$STACK_SHOW"
+                    sleep 30
+                    delete_status=$(openstack stack show "$STACK_NAME" -f value -c stack_status)
+                    echo "$j: $delete_status"
+                    if [[ $delete_status == "DELETE_FAILED" ]]; then
+                        reason=$(openstack stack show "$STACK_NAME" -f value -c stack_status_reason)
+                        echo "ERROR: Failed to delete $STACK_NAME. Reason: $reason"
+
+                        # Abandon is not supported in Vexxhost so let's keep trying to
+                        # delete for now...
+                        # echo "Stack delete failed, trying to stack abandon now."
+                        # openstack stack abandon "$STACK_NAME"
+                        echo "Deleting failed stack: $STACK_NAME"
+                        openstack stack delete --yes "$STACK_NAME"
                     fi
-                    if [[ $STACK_SHOW != *"$STACK_NAME"* ]]; then
-                        echo "stack show on $STACK_NAME came back empty. Assuming successful delete"
+
+                    if ! openstack stack show "$STACK_NAME" -f value -c stack_status; then
+                        echo "Stack show on $STACK_NAME came back empty. Assuming successful delete"
                         break
                     fi
                 done
-                # if we still see $STACK_NAME in $STACK_SHOW it means the delete hasn't fully
+
+                # If we still see $STACK_NAME in `openstack stack show` it means the delete hasn't fully
                 # worked and we can exit forcefully
-                if [[ $STACK_SHOW == *"$STACK_NAME"* ]]; then
-                    echo "stack $STACK_NAME still in stack show output after polling. Quitting!"
+                if openstack stack show "$STACK_NAME" -f value -c stack_status; then
+                    echo "Stack $STACK_NAME still in cloud output after polling. Quitting!"
                     exit 1
                 fi
                 break
@@ -94,7 +104,11 @@ for try in $(seq $STACK_RETRIES); do
 done
 
 # capture stack info in console logs
-openstack stack show "$STACK_NAME"
+echo "------------------------------------"
+echo "Stack details"
+echo "------------------------------------"
+openstack stack show "$STACK_NAME" -f yaml
+echo "------------------------------------"
 
 if ! $STACK_SUCCESSFUL; then
     exit 1
