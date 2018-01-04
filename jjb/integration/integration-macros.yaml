@@ -123,6 +123,14 @@
           default: '{branch}'
           description: 'Integration Patch Refspec'
 
+- parameter:
+    name: integration-use-features-boot
+    parameters:
+      - string:
+          name: USEFEATURESBOOT
+          default: '{use-features-boot}'
+          description: 'Boolean to toggle whether featuresBoot is appended or ignored'
+
 # Macro: integration-gerrit-scm
 # Operation: this macro downloads a project gerrit
 # Used by: all csit jobs
