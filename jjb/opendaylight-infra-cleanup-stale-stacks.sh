@@ -17,6 +17,38 @@ pip install --upgrade python-openstackclient python-heatclient
 pip install --upgrade pipdeptree
 pipdeptree
 
+stack_in_jenkins() {
+    # Usage: check_stack_in_jenkins STACK_NAME JENKINS_URL [JENKINS_URL...]
+    # Returns: 0 If stack is in Jenkins and 1 if stack is not in Jenkins.
+
+    STACK_NAME="${1}"
+
+    builds=()
+    for jenkins in "${@:2}"; do
+        JENKINS_URL="$jenkins/computer/api/json?tree=computer[executors[currentExecutable[url]],oneOffExecutors[currentExecutable[url]]]&xpath=//url&wrapper=builds"
+        resp=$(curl -s -w "\n\n%{http_code}" --globoff -H "Content-Type:application/json" "$JENKINS_URL")
+        json_data=$(echo "$resp" | head -n1)
+        status=$(echo "$resp" | awk 'END {print $NF}')
+
+        if [[ "${jenkins}" == *"jenkins."*".org" ]]; then
+            silo="production"
+        else
+            silo=$(echo "$jenkins" | sed "s/\/*$//" | awk -F'/' '{print $NF}')
+        fi
+        export silo
+        builds=(${builds[@]} $(echo "$json_data" | \
+            jq -r '.computer[].executors[].currentExecutable.url' \
+            | grep -v null | awk -F'/' '{print ENVIRON["silo"] "-" $6 "-" $7}')
+        )
+    done
+
+    if [[ "${builds[*]}" =~ $STACK_NAME ]]; then
+        return 0
+    fi
+
+    return 1
+}
+
 #########################
 ## FETCH ACTIVE BUILDS ##
 #########################
@@ -29,15 +61,9 @@ OS_STACKS=($(openstack stack list \
             --property "stack_status=CREATE_FAILED" \
             | awk '{print $1}'))
 
-# Make sure we fetch active builds on both the releng and sandbox silos
-ACTIVE_BUILDS=()
-for silo in releng sandbox; do
-    JENKINS_URL="https://jenkins.opendaylight.org/$silo//computer/api/json?tree=computer[executors[currentExecutable[url]],oneOffExecutors[currentExecutable[url]]]&xpath=//url&wrapper=builds"
-    wget -nv -O "${silo}_builds.json" "$JENKINS_URL"
-    sleep 1  # Need to sleep for 1 second otherwise next line causes script to stall
-    ACTIVE_BUILDS=(${ACTIVE_BUILDS[@]} $( \
-        jq -r '.computer[].executors[].currentExecutable.url' "${silo}_builds.json" \
-        | grep -v null | awk -F'/' '{print $4 "-" $6 "-" $7}'))
+echo "---> Active stacks"
+for stack in "${OS_STACKS[@]}"; do
+    echo "$stack"
 done
 
 ##########################
@@ -48,7 +74,8 @@ done
 for STACK_NAME in "${OS_STACKS[@]}"; do
     echo "Deleting stack $STACK_NAME"
     STACK_STATUS=$(openstack stack show -f value -c "stack_status" "$STACK_NAME")
-    if [[ "${ACTIVE_BUILDS[*]}" =~ $STACK_NAME ]]; then
+
+    if stack_in_jenkins "$STACK_NAME" $JENKINS_URLS; then
         # No need to delete stacks if there exists an active build for them
         continue
     else
