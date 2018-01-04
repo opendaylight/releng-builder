@@ -31,6 +31,12 @@ fi
 # Some versions of jenkins job builder result in feature list containing spaces
 # and ending in newline. Remove all that.
 ACTUALFEATURES=`echo "${ACTUALFEATURES}" | tr -d '\n \r'`
+echo "ACTUALFEATURES: ${ACTUALFEATURES}"
+
+# In the case that we want to install features via karaf shell, a space separated list of
+# ACTUALFEATURES IS NEEDED
+SPACE_SEPARATED_FEATURES=$(echo "${ACTUALFEATURES}" | tr ',' ' ')
+echo "SPACE_SEPARATED_FEATURES: ${SPACE_SEPARATED_FEATURES}"
 
 if [ -f "${WORKSPACE}/test/csit/scriptplans/${TESTPLAN}" ]; then
     echo "scriptplan exists!!!"
@@ -59,8 +65,10 @@ echo "Adding external repositories..."
 sed -ie "s%org.ops4j.pax.url.mvn.repositories=%org.ops4j.pax.url.mvn.repositories=http://repo1.maven.org/maven2@id=central, http://repository.springsource.com/maven/bundles/release@id=spring.ebr.release, http://repository.springsource.com/maven/bundles/external@id=spring.ebr.external, http://zodiac.springsource.com/maven/bundles/release@id=gemini, http://repository.apache.org/content/groups/snapshots-group@id=apache@snapshots@noreleases, https://oss.sonatype.org/content/repositories/snapshots@id=sonatype.snapshots.deploy@snapshots@noreleases, https://oss.sonatype.org/content/repositories/ops4j-snapshots@id=ops4j.sonatype.snapshots.deploy@snapshots@noreleases%g" ${MAVENCONF}
 cat ${MAVENCONF}
 
-echo "Configuring the startup features..."
-sed -ie "s/\(featuresBoot=\|featuresBoot =\)/featuresBoot = ${ACTUALFEATURES},/g" ${FEATURESCONF}
+if [[ "$USEFEATURESBOOT" == "True" ]]; then
+    echo "Configuring the startup features..."
+    sed -ie "s/\(featuresBoot=\|featuresBoot =\)/featuresBoot = ${ACTUALFEATURES},/g" ${FEATURESCONF}
+fi
 
 FEATURE_INDEX_STRING="features-integration-index"
 FEATURE_TEST_STRING="features-integration-test"
@@ -154,6 +162,33 @@ echo "Starting controller..."
 EOF
 
 cat > ${WORKSPACE}/post-startup-script.sh <<EOF
+
+if [[ "$USEFEATURESBOOT" != "True" ]]; then
+
+    # wait up to 60s for karaf port 8101 to be opened, polling every 5s
+    loop_count=0;
+    until [[ \$loop_count -ge 12 ]]; do
+        netstat -na | grep 8101 && break;
+        loop_count=\$[\$loop_count+1];
+        sleep 5;
+    done
+
+    echo "going to feature:install --no-auto-refresh ${SPACE_SEPARATED_FEATURES} one at a time"
+    for feature in ${SPACE_SEPARATED_FEATURES}; do
+        sshpass -p karaf ssh -o StrictHostKeyChecking=no \
+                             -o UserKnownHostsFile=/dev/null \
+                             -o LogLevel=error \
+                             -p 8101 karaf@localhost \
+                             feature:install --no-auto-refresh ${feature};
+    done
+
+    echo "ssh to karaf console to list -i installed features"
+    sshpass -p karaf ssh -o StrictHostKeyChecking=no \
+                         -o UserKnownHostsFile=/dev/null \
+                         -o LogLevel=error \
+                         -p 8101 karaf@localhost \
+                         feature:list -i
+fi
 
 echo "Waiting for controller to come up..."
 COUNT="0"

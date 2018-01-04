@@ -15,19 +15,18 @@
     odl_system_flavor: v1-performance-8
     openstack_system_flavor: v1-performance-8
     openstack_system2_flavor: v1-performance-4
-    use-features-boot: 'False'
 
     topology:
       - 1node:
           openstack_system2_count: 2
           odl_system_count: 1
           enable-haproxy: 'no'
-          install-features: 'odl-netvirt-openstack'
+          install-features: 'odl-mdsal-trace, odl-netvirt-openstack'
       - 3node:
           openstack_system2_count: 3
           odl_system_count: 3
           enable-haproxy: 'yes'
-          install-features: 'odl-jolokia,odl-netvirt-openstack'
+          install-features: 'odl-mdsal-trace, odl-jolokia,odl-netvirt-openstack'
 
     functionality:
       - upstream-stateful
@@ -74,7 +73,6 @@
     odl_system_flavor: v1-performance-8
     openstack_system_flavor: v1-performance-8
     openstack_system2_flavor: v1-performance-4
-    use-features-boot: 'False'
 
     topology:
       - 1node:
@@ -134,7 +132,6 @@
     odl_system_flavor: v1-performance-8
     openstack_system_flavor: v1-performance-8
     openstack_system2_flavor: v1-performance-4
-    use-features-boot: 'False'
 
     topology:
       - 1node:
@@ -180,7 +177,6 @@
     security-group-mode: 'stateful'
     odl_system_flavor: v1-performance-4
     openstack_system2_flavor: v1-performance-2
-    use-features-boot: 'False'
 
     topology:
       - 1node:
