@@ -8,6 +8,9 @@
 # which accompanies this distribution, and is available at
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
+# Cleanup stale stacks in the cloud
+# Requires the variable JENKINS_URLS declared in the job as a space separated
+# list of Jenkins instances to check for active builds.
 
 virtualenv "/tmp/v/openstack"
 # shellcheck source=/tmp/v/openstack/bin/activate disable=SC1091
@@ -17,11 +20,48 @@ pip install --upgrade python-openstackclient python-heatclient
 pip install --upgrade pipdeptree
 pipdeptree
 
+stack_in_jenkins() {
+    # Usage: check_stack_in_jenkins STACK_NAME JENKINS_URL [JENKINS_URL...]
+    # Returns: 0 If stack is in Jenkins and 1 if stack is not in Jenkins.
+
+    STACK_NAME="${1}"
+
+    builds=()
+    for jenkins in "${@:2}"; do
+        JENKINS_URL="$jenkins/computer/api/json?tree=computer[executors[currentExecutable[url]],oneOffExecutors[currentExecutable[url]]]&xpath=//url&wrapper=builds"
+        resp=$(curl -s -w "\\n\\n%{http_code}" --globoff -H "Content-Type:application/json" "$JENKINS_URL")
+        json_data=$(echo "$resp" | head -n1)
+        #status=$(echo "$resp" | awk 'END {print $NF}')
+
+        if [[ "${jenkins}" == *"jenkins."*".org" ]]; then
+            silo="production"
+        else
+            silo=$(echo "$jenkins" | sed 's/\/*$//' | awk -F'/' '{print $NF}')
+        fi
+        export silo
+        # We purposely want to wordsplit here to combine the arrays
+        # shellcheck disable=SC2206,SC2207
+        builds=(${builds[@]} $(echo "$json_data" | \
+            jq -r '.computer[].executors[].currentExecutable.url' \
+            | grep -v null | awk -F'/' '{print ENVIRON["silo"] "-" $6 "-" $7}')
+        )
+    done
+
+    if [[ "${builds[*]}" =~ $STACK_NAME ]]; then
+        return 0
+    fi
+
+    return 1
+}
+
 #########################
 ## FETCH ACTIVE BUILDS ##
 #########################
 # Fetch stack list before fetching active builds to minimize race condition
 # where we might be try to delete stacks while jobs are trying to start
+
+# We purposely need word splitting here to create the OS_STACKS array.
+# shellcheck disable=SC2207
 OS_STACKS=($(openstack stack list \
             -f value -c "Stack Name" -c "Stack Status" \
             --property "stack_status=CREATE_COMPLETE" \
@@ -29,15 +69,9 @@ OS_STACKS=($(openstack stack list \
             --property "stack_status=CREATE_FAILED" \
             | awk '{print $1}'))
 
-# Make sure we fetch active builds on both the releng and sandbox silos
-ACTIVE_BUILDS=()
-for silo in releng sandbox; do
-    JENKINS_URL="https://jenkins.opendaylight.org/$silo//computer/api/json?tree=computer[executors[currentExecutable[url]],oneOffExecutors[currentExecutable[url]]]&xpath=//url&wrapper=builds"
-    wget -nv -O "${silo}_builds.json" "$JENKINS_URL"
-    sleep 1  # Need to sleep for 1 second otherwise next line causes script to stall
-    ACTIVE_BUILDS=(${ACTIVE_BUILDS[@]} $( \
-        jq -r '.computer[].executors[].currentExecutable.url' "${silo}_builds.json" \
-        | grep -v null | awk -F'/' '{print $4 "-" $6 "-" $7}'))
+echo "---> Active stacks"
+for stack in "${OS_STACKS[@]}"; do
+    echo "$stack"
 done
 
 ##########################
@@ -48,7 +82,11 @@ done
 for STACK_NAME in "${OS_STACKS[@]}"; do
     echo "Deleting stack $STACK_NAME"
     STACK_STATUS=$(openstack stack show -f value -c "stack_status" "$STACK_NAME")
-    if [[ "${ACTIVE_BUILDS[*]}" =~ $STACK_NAME ]]; then
+
+    # JENKINS_URLS is provided by the Jenkins Job declaration and intentially
+    # needs to be globbed.
+    # shellcheck disable=SC2153,SC2086
+    if stack_in_jenkins "$STACK_NAME" $JENKINS_URLS; then
         # No need to delete stacks if there exists an active build for them
         continue
     else
