@@ -64,8 +64,7 @@ for STACK_NAME in "${OS_STACKS[@]}"; do
                 # openstack stack abandon "$STACK_NAME"
                 echo "Deleting orphaned stack: $STACK_NAME"
                 openstack stack delete --yes "$STACK_NAME"
-                STACK_SHOW=$(openstack stack show "$STACK_NAME")
-                echo "$STACK_SHOW"
+                openstack stack show "$STACK_NAME"
                 continue
             ;;
             CREATE_COMPLETE|CREATE_FAILED)
