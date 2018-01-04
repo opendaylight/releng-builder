@@ -1201,7 +1201,7 @@ for suite in ${SUITES}; do
     --log log_${log_name}.html --report None --output output_${log_name}.xml \
     -v BUNDLEFOLDER:${BUNDLEFOLDER} \
     -v BUNDLE_URL:${ACTUAL_BUNDLE_URL} \
-    -v CONTROLLERFEATURES:${CONTROLLERFEATURES} \
+    -v CONTROLLERFEATURES:"${CONTROLLERFEATURES}" \
     -v CONTROLLER_USER:${USER} \
     -v DEVSTACK_DEPLOY_PATH:/opt/stack/devstack \
     -v HA_PROXY_IP:${HA_PROXY_IP} \
