@@ -59,8 +59,10 @@ echo "Adding external repositories..."
 sed -ie "s%org.ops4j.pax.url.mvn.repositories=%org.ops4j.pax.url.mvn.repositories=http://repo1.maven.org/maven2@id=central, http://repository.springsource.com/maven/bundles/release@id=spring.ebr.release, http://repository.springsource.com/maven/bundles/external@id=spring.ebr.external, http://zodiac.springsource.com/maven/bundles/release@id=gemini, http://repository.apache.org/content/groups/snapshots-group@id=apache@snapshots@noreleases, https://oss.sonatype.org/content/repositories/snapshots@id=sonatype.snapshots.deploy@snapshots@noreleases, https://oss.sonatype.org/content/repositories/ops4j-snapshots@id=ops4j.sonatype.snapshots.deploy@snapshots@noreleases%g" ${MAVENCONF}
 cat ${MAVENCONF}
 
-echo "Configuring the startup features..."
-sed -ie "s/\(featuresBoot=\|featuresBoot =\)/featuresBoot = ${ACTUALFEATURES},/g" ${FEATURESCONF}
+if [[ "$USEFEATURESBOOT" == "True" ]]; then
+    echo "Configuring the startup features..."
+    sed -ie "s/\(featuresBoot=\|featuresBoot =\)/featuresBoot = ${ACTUALFEATURES},/g" ${FEATURESCONF}
+fi
 
 FEATURE_INDEX_STRING="features-integration-index"
 FEATURE_TEST_STRING="features-integration-test"
@@ -152,6 +154,37 @@ echo "Starting controller..."
 /tmp/${BUNDLEFOLDER}/bin/start
 
 EOF
+
+if [[ "$USEFEATURESBOOT" != "True" ]]; then
+    # split csv from ACTUALFEATURES TO MAKE A LIST
+    # install trace
+    # install features
+    # list features
+
+    SPACE_SEPARATED_FEATURES="\$(echo "${ACTUALFEATURES}" | tr ',' ' ')"
+
+    sleep 60 # TODO: better to poll here on port 8101 being open
+    echo "going to feature:install odl-mdsal-trace"
+    sshpass -p karaf ssh -o StrictHostKeyChecking=no \
+                         -o UserKnownHostsFile=/dev/null \
+                         -o LogLevel=error \
+                         -p 8101 karaf@localhost \
+                         feature:install odl-mdsal-trace
+
+    echo "going to feature:install --no-auto-refresh ${SPACE_SEPARATED_FEATURES}"
+    sshpass -p karaf ssh -o StrictHostKeyChecking=no \
+                         -o UserKnownHostsFile=/dev/null \
+                         -o LogLevel=error \
+                         -p 8101 karaf@localhost \
+                         feature:install --no-auto-refresh ${SPACE_SEPARATED_FEATURES}
+
+    echo "ssh to karaf console to list -i installed features"
+    sshpass -p karaf ssh -o StrictHostKeyChecking=no \
+                         -o UserKnownHostsFile=/dev/null \
+                         -o LogLevel=error \
+                         -p 8101 karaf@localhost \
+                         feature:list -i
+fi
 
 cat > ${WORKSPACE}/post-startup-script.sh <<EOF
 
