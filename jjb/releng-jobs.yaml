@@ -249,6 +249,10 @@
           branch: '{branch}'
           refspec: 'refs/heads/{branch}'
           artifacts: '{archive-artifacts}'
+      - string:
+          name: JENKINS_URLS
+          default: 'https://jenkins.opendaylight.org/releng https://jenkins.opendaylight.org/sandbox'
+          description: 'Space separated list of Jenkins URLs to check for active builds'
 
     wrappers:
       - opendaylight-infra-wrappers:

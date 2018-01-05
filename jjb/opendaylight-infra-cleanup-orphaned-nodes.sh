@@ -18,22 +18,48 @@ pip install --upgrade python-openstackclient python-heatclient
 pip install --upgrade pipdeptree
 pipdeptree
 
+minion_in_jenkins() {
+    # Usage: check_stack_in_jenkins STACK_NAME JENKINS_URL [JENKINS_URL...]
+    # Returns: 0 If stack is in Jenkins and 1 if stack is not in Jenkins.
+
+    MINION="${1}"
+
+    minions=()
+    for jenkins in "${@:2}"; do
+        JENKINS_URL="$jenkins/computer/api/json?tree=computer/api/json?tree=computer[displayName]"
+        resp=$(curl -s -w "\\n\\n%{http_code}" --globoff -H "Content-Type:application/json" "$JENKINS_URL")
+        json_data=$(echo "$resp" | head -n1)
+        #status=$(echo "$resp" | awk 'END {print $NF}')
+
+        if [[ "${jenkins}" == *"jenkins."*".org" ]]; then
+            silo="production"
+        else
+            silo=$(echo "$jenkins" | sed 's/\/*$//' | awk -F'/' '{print $NF}')
+        fi
+        export silo
+        # We purposely want to wordsplit here to combine the arrays
+        # shellcheck disable=SC2206,SC2207
+        minions=(${minions[@]} $(echo "$json_data" | \
+            jq -r '.computer[].displayName' "${silo}_builds.json" | grep -v master)
+        )
+    done
+
+    if [[ "${minions[*]}" =~ $MINION ]]; then
+        return 0
+    fi
+
+    return 1
+}
+
 ##########################
 ## FETCH ACTIVE MINIONS ##
 ##########################
 # Fetch server list before fetching active minions to minimize race condition
 # where we might be trying to delete servers while jobs are trying to start
-OS_SERVERS=($(openstack server list -f value -c "Name" | grep -E 'prd|snd'))
 
-# Make sure we fetch active minions on both the releng and sandbox silos
-ACTIVE_MINIONS=()
-for silo in releng sandbox; do
-    JENKINS_URL="https://jenkins.opendaylight.org/$silo/computer/api/json?tree=computer[displayName]"
-    wget -nv -O "${silo}_builds.json" "$JENKINS_URL"
-    sleep 1  # Need to sleep for 1 second otherwise next line causes script to stall
-    ACTIVE_MINIONS=(${ACTIVE_MINIONS[@]} $( \
-        jq -r '.computer[].displayName' "${silo}_builds.json" | grep -v master))
-done
+# We purposely need word splitting here to create the OS_SERVERS array.
+# shellcheck disable=SC2207
+OS_SERVERS=($(openstack server list -f value -c "Name" | grep -E 'prd|snd'))
 
 #############################
 ## DELETE ORPHANED SERVERS ##
@@ -41,7 +67,10 @@ done
 # Search for servers that are not in use by either releng or sandbox silos and
 # delete them.
 for server in "${OS_SERVERS[@]}"; do
-    if [[ "${ACTIVE_MINIONS[*]}" =~ $server ]]; then
+    # JENKINS_URLS is provided by the Jenkins Job declaration and intentially
+    # needs to be globbed.
+    # shellcheck disable=SC2153,SC2086
+    if minion_in_jenkins "$server" $JENKINS_URLS; then
         # No need to delete server if it is still attached to Jenkins
         continue
     else
