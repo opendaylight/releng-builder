@@ -176,7 +176,6 @@ EOF
     echo "---> Configuring OpenJDK"
     yum install -y 'java-*-openjdk-devel'
 
-    MANUAL_JAVA9=1
     FACTER_OS=$(/usr/bin/facter operatingsystem | tr '[:upper:]' '[:lower:]')
     FACTER_OSVER=$(/usr/bin/facter operatingsystemrelease)
     case "$FACTER_OS" in
@@ -187,11 +186,6 @@ EOF
             else
                 alternatives --set java /usr/lib/jvm/jre-1.7.0-openjdk.x86_64/bin/java
                 alternatives --set java_sdk_openjdk /usr/lib/jvm/java-1.7.0-openjdk.x86_64
-            fi
-            # Java 9 is included in fedora-27
-            if [ "$FACTER_OSVER" -ge "27" ]
-            then
-                MANUAL_JAVA9=0
             fi
         ;;
         redhat|centos)
@@ -208,16 +202,6 @@ EOF
             alternatives --set java_sdk_openjdk /usr/lib/jvm/java-1.7.0-openjdk.x86_64
         ;;
     esac
-
-    # Not all distributions ship JDK9 in their repositories, download
-    # and install Oracle JDK9 for those which are not known to provide
-    # their own package
-    if [ "$MANUAL_JAVA9" -eq "1" ]
-    then
-        echo "---> Fetching and installing JDK9"
-        wget --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/9.0.1+11/jdk-9.0.1_linux-x64_bin.rpm"
-        yum localinstall -y jdk-9.0.1_linux-x64_bin.rpm
-    fi
 
     ########################
     # --- START LFTOOLS DEPS
