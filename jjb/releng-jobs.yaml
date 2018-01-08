@@ -48,8 +48,6 @@
           build-timeout: 60
       - devstack-pre-pip-pike:
           build-timeout: 75
-      - docker:
-          build-timeout: 60
       - gbp
       - java-builder:
           build-timeout: 75
@@ -82,8 +80,6 @@
       - platforms: ubuntu-14.04
         templates: devstack
       - platforms: ubuntu-14.04
-        templates: docker
-      - platforms: ubuntu-14.04
         templates: mininet-ovs-2.5
       - platforms: ubuntu-14.04
         templates: mininet-ovs-2.6
@@ -99,8 +95,6 @@
         templates: devstack-pre-pip-pike
       - platforms: ubuntu-16.04
         templates: devstack
-      - platforms: ubuntu-16.04
-        templates: docker
       - platforms: ubuntu-16.04
         templates: mininet
       - platforms: ubuntu-16.04
