@@ -1,0 +1,21 @@
+---
+- import_playbook: baseline.yaml
+
+- hosts: all
+  become_user: root
+  become_method: sudo
+
+  pre_tasks:
+    - include_role: name=system-update
+
+  roles:
+    - cassandra-install
+    - elastic-search-install
+    - hbase-install
+    - mono-install
+    - quagga-install
+
+  post_tasks:
+    - name: System Reseal
+      script: system-reseal.sh
+      become: true
