@@ -2,9 +2,9 @@
 - project:
     name: odlparent-master
     jobs:
-      - '{project-name}-merge-{stream}'
       - '{project-name}-maven-jobs'
       - '{project-name}-maven-javadoc-jobs'
+      - gerrit-maven-merge
       - gerrit-tox-verify
 
     project: odlparent
@@ -39,9 +39,9 @@
 - project:
     name: odlparent-2.0.x
     jobs:
-      - '{project-name}-merge-{stream}'
       - '{project-name}-maven-jobs'
       - '{project-name}-maven-javadoc-jobs'
+      - gerrit-maven-merge
       - gerrit-tox-verify
 
     project: odlparent
@@ -79,9 +79,9 @@
     jobs:
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
-      - '{project-name}-merge-{stream}'
       - '{project-name}-maven-jobs'
       - '{project-name}-maven-javadoc-jobs'
+      - gerrit-maven-merge
       - gerrit-tox-verify
 
     stream: carbon
