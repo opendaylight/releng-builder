@@ -26,6 +26,7 @@
 # integration-stream-test-plan: stream specific robot test plan ($STREAMTESTPLAN)
 # integration-test-plan: fallback robot test plan ($TESTPLAN)
 # integration-patch-refspec: test branch ($PATCHREFSPEC)
+# integration-use-features-boot: bool to toggle use of featuresBoot ($USEFEATURESBOOT)
 
 
 # New templates
@@ -68,7 +69,8 @@
           jdkversion: '{verify-jdkversion}'
       - distribution-karaf-version:
           karaf-version: '{verify-karaf-version}'
-
+      - integration-use-features-boot:
+          use-features-boot: 'True'
     scm:
       - integration-gerrit-scm:
           basedir: 'test'
@@ -157,6 +159,8 @@
           jdkversion: '{jre}'
       - distribution-karaf-version:
           karaf-version: '{karaf-version}'
+      - integration-use-features-boot:
+          use-features-boot: 'True'
 
     scm:
       - integration-gerrit-scm:
@@ -272,6 +276,8 @@
           jdkversion: '{jre}'
       - distribution-karaf-version:
           karaf-version: '{karaf-version}'
+      - integration-use-features-boot:
+          use-features-boot: 'True'
 
     scm:
       - integration-gerrit-scm:
@@ -492,6 +498,8 @@
           jdkversion: '{verify-jdkversion}'
       - distribution-karaf-version:
           karaf-version: '{verify-karaf-version}'
+      - integration-use-features-boot:
+          use-features-boot: 'True'
 
     scm:
       - integration-gerrit-scm:
@@ -581,6 +589,8 @@
           jdkversion: '{jre}'
       - distribution-karaf-version:
           karaf-version: '{karaf-version}'
+      - integration-use-features-boot:
+          use-features-boot: 'True'
 
     scm:
       - integration-gerrit-scm:
@@ -690,6 +700,8 @@
           jdkversion: '{jre}'
       - distribution-karaf-version:
           karaf-version: '{karaf-version}'
+      - integration-use-features-boot:
+          use-features-boot: 'True'
 
     scm:
       - integration-gerrit-scm:
@@ -801,6 +813,8 @@
           jdkversion: '{jre}'
       - distribution-karaf-version:
           karaf-version: '{karaf-version}'
+      - integration-use-features-boot:
+          use-features-boot: 'True'
 
     scm:
       - integration-gerrit-scm:
@@ -1025,6 +1039,8 @@
           jdkversion: '{jre}'
       - distribution-karaf-version:
           karaf-version: '{karaf-version}'
+      - integration-use-features-boot:
+          use-features-boot: '{use-features-boot}'
       - string:
           name: OPENSTACK_BRANCH
           default: '{openstack-branch}'
@@ -1222,6 +1238,8 @@
           jdkversion: '{jre}'
       - distribution-karaf-version:
           karaf-version: '{karaf-version}'
+      - integration-use-features-boot:
+          use-features-boot: '{use-features-boot}'
       - string:
           name: OPENSTACK_BRANCH
           default: '{openstack-branch}'
