@@ -1,5 +1,21 @@
 ---
 - project:
+    name: packer-builder-jobs
+    jobs:
+      - gerrit-packer-merge
+
+    project: releng/builder
+    project-name: builder
+    branch: master
+    archive-artifacts: '**/*.log'
+
+    build-node: centos7-builder-2c-8g
+    build-timeout: 75
+
+    platforms: centos
+    templates: builder
+
+- project:
     name: packer-docker-jobs
     jobs:
       - gerrit-packer-merge
@@ -9,7 +25,7 @@
     branch: master
     archive-artifacts: '**/*.log'
 
-    build-node: centos7-java-builder-2c-8g
+    build-node: centos7-builder-2c-8g
     build-timeout: 60
 
     platforms: centos
