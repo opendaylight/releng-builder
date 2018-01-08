@@ -1161,7 +1161,7 @@ else
     workpath="${WORKSPACE}/test/csit/suites"
     for suite in ${SUITES}; do
         fullsuite="${workpath}/${suite}"
-        if [ -z ${newsuites} ]; then
+        if [ -z "${newsuites}" ]; then
             newsuites+=${fullsuite}
         else
             newsuites+=" "${fullsuite}
