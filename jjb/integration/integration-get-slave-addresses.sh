@@ -34,7 +34,7 @@ for i in "${ADDR[@]}"
 do
     REMHOST=$(ssh "${i}" hostname -s)
     case ${REMHOST} in
-    *java*)
+    *builder*)
        ODL_SYSTEM=( "${ODL_SYSTEM[@]}" "${i}" )
        ;;
     *devstack*)
