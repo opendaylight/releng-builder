@@ -14,6 +14,7 @@ SYSTEM_TYPE=''
 
 IFS=','
 for i in "java-builder,builder" \
+         "builder,builder" \
          "devstack,devstack" \
          "docker,docker" \
          "gbp,ubuntu-docker-ovs" \
