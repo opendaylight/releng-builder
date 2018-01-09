@@ -813,6 +813,10 @@ echo "workaround: adjust wait from 60s to 1800s (30m)"
 sed -i 's/wait_for_compute 60/wait_for_compute 1800/g' /opt/stack/devstack/lib/nova
 # TODO: modify sleep 1 to sleep 60, search wait_for_compute, then first sleep 1
 # that would just reduce the number of logs in the compute stack.log
+
+#Work around for Pike Failure due to recent version of qemu-img
+sudo yum install -y qemu-kvm-ev-2.9.0-16.el7_4.11.1
+sed -i 's/qemu-kvm/qemu-kvm-ev-2.9.0-16.el7_4.11.1/g' /opt/stack/devstack/lib/nova_plugins/functions-libvirt
 EOF
 
 cat > "${WORKSPACE}/setup_host_cell_mapping.sh" << EOF
