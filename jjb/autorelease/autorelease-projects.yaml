@@ -7,7 +7,7 @@
       - 'autorelease-update-validate-jobs-{stream}'
       - 'autorelease-version-bump-{stream}'
       - '{project-name}-validate-autorelease-{stream}':
-          build-node: centos7-java-builder-2c-8g
+          build-node: centos7-builder-2c-8g
       - gerrit-tox-verify
 
     # todo: After Carbon EOL remove next-release-tag and directy pass
@@ -34,7 +34,7 @@
 
     project: releng/autorelease
     project-name: autorelease
-    build-node: centos7-java-builder-2c-8g
+    build-node: centos7-builder-2c-8g
     # Before adding more here, beware of https://jira.linuxfoundation.org/browse/RELENG-280
     archive-artifacts: >
         **/*.prop

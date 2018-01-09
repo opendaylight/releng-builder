@@ -11,7 +11,7 @@
     stream: oxygen
     project: 'bgpcep'
     project-name: 'bgpcep'
-    build-node: centos7-java-builder-2c-8g
+    build-node: centos7-builder-2c-8g
     build-timeout: 120
     branch: 'master'
     jdks:
@@ -46,7 +46,7 @@
     stream: nitrogen
     project: 'bgpcep'
     project-name: 'bgpcep'
-    build-node: centos7-java-builder-2c-8g
+    build-node: centos7-builder-2c-8g
     build-timeout: 120
     branch: 'stable/nitrogen'
     jdks:
@@ -81,7 +81,7 @@
     stream: carbon
     project: 'bgpcep'
     project-name: 'bgpcep'
-    build-node: centos7-java-builder-2c-8g
+    build-node: centos7-builder-2c-8g
     build-timeout: 120
     branch: 'stable/carbon'
     karaf-version: karaf3
@@ -112,7 +112,7 @@
 
     project: 'bgpcep'
     project-name: 'bgpcep'
-    build-node: centos7-java-builder-2c-8g
+    build-node: centos7-builder-2c-8g
     branch: 'master'
     mvn-settings: 'bgpcep-settings'
     mvn-goals: 'clean -DrepoBuild install javadoc:aggregate'
