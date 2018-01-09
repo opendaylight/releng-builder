@@ -264,6 +264,7 @@ enable_isolated_metadata = True
 [[post-config|/etc/nova/nova.conf]]
 [DEFAULT]
 force_config_drive = False
+force_raw_images = False
 
 [scheduler]
 discover_hosts_in_cells_interval = 30
@@ -344,6 +345,7 @@ EOF
 auth_strategy = keystone
 [DEFAULT]
 use_neutron = True
+force_raw_images = False
 EOF
 
     echo "Compute local.conf created:"
@@ -813,6 +815,10 @@ echo "workaround: adjust wait from 60s to 1800s (30m)"
 sed -i 's/wait_for_compute 60/wait_for_compute 1800/g' /opt/stack/devstack/lib/nova
 # TODO: modify sleep 1 to sleep 60, search wait_for_compute, then first sleep 1
 # that would just reduce the number of logs in the compute stack.log
+
+#Install qemu-img command in Control Node for Pike
+echo "Install qemu-img application"
+sudo yum install -y qemu-img
 EOF
 
 cat > "${WORKSPACE}/setup_host_cell_mapping.sh" << EOF
