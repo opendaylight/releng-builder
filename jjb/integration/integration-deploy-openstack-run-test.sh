@@ -264,6 +264,7 @@ enable_isolated_metadata = True
 [[post-config|/etc/nova/nova.conf]]
 [DEFAULT]
 force_config_drive = False
+force_raw_images = False
 
 [scheduler]
 discover_hosts_in_cells_interval = 30
@@ -344,6 +345,7 @@ EOF
 auth_strategy = keystone
 [DEFAULT]
 use_neutron = True
+force_raw_images = False
 EOF
 
     echo "Compute local.conf created:"
@@ -813,6 +815,10 @@ echo "workaround: adjust wait from 60s to 1800s (30m)"
 sed -i 's/wait_for_compute 60/wait_for_compute 1800/g' /opt/stack/devstack/lib/nova
 # TODO: modify sleep 1 to sleep 60, search wait_for_compute, then first sleep 1
 # that would just reduce the number of logs in the compute stack.log
+
+#Install qemu-img command in Control Node for Pike
+echo "Install qemu-img application"
+sudo yum install -y qemu-img
 EOF
 
 cat > "${WORKSPACE}/setup_host_cell_mapping.sh" << EOF
@@ -1186,6 +1192,12 @@ unset OS_CLOUD
 EOF
 
 source /tmp/os_netvirt_client_rc
+
+if [ "${OPENSTACK_BRANCH}" == "stable/pike" ]; then
+      scp ${!CONTROLLERIP}:/opt/stack/devstack/files/cirros-0.3.5-x86_64-disk.img /tmp
+      openstack image delete cirros-0.3.5-x86_64-disk
+      openstack image create cirros-0.3.5-x86_64-disk --public --container-format qcow2 --disk-format raw --file /tmp/cirros-0.3.5-x86_64-disk.img
+fi
 
 echo "Starting Robot test suites ${SUITES} ..."
 # please add pybot -v arguments on a single line and alphabetized
