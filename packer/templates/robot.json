@@ -1,35 +1,36 @@
 {
   "variables": {
-    "public_base_image": null,
-    "public_network": null,
-    "public_cloud_user": null,
-    "public_auth_url": null,
-    "public_tenant": null,
-    "public_user": null,
-    "public_pass": null,
+    "base_image": null,
     "distro": null,
+    "cloud_auth_url": null,
+    "cloud_user": null,
+    "cloud_pass": null,
+    "cloud_network": null,
+    "cloud_tenant": null,
     "cloud_user_data": null,
+    "ssh_user": null,
     "ssh_proxy_host": ""
   },
   "builders": [
     {
+      "name": "vexxhost",
+      "image_name": "ZZCI - {{user `distro`}} - robot - {{isotime \"20060102-1504\"}}",
+      "source_image_name": "{{user `base_image`}}",
       "type": "openstack",
-      "identity_endpoint": "{{user `public_auth_url`}}",
+      "identity_endpoint": "{{user `cloud_auth_url`}}",
+      "username": "{{user `cloud_user`}}",
+      "password": "{{user `cloud_pass`}}",
+      "tenant_name": "{{user `cloud_tenant`}}",
       "domain_name": "Default",
-      "tenant_name": "{{user `public_tenant`}}",
-      "username": "{{user `public_user`}}",
-      "password": "{{user `public_pass`}}",
       "region": "ca-ymq-1",
       "availability_zone": "ca-ymq-2",
-      "ssh_username": "{{user `public_cloud_user`}}",
-      "ssh_proxy_host": "{{user `ssh_proxy_host`}}",
-      "image_name": "ZZCI - {{user `distro`}} - robot - {{isotime \"20060102-1504\"}}",
-      "source_image_name": "{{user `public_base_image`}}",
-      "flavor": "v1-standard-1",
       "networks": [
-        "{{user `public_network`}}"
+        "{{user `cloud_network`}}"
       ],
       "user_data_file": "{{user `cloud_user_data`}}",
+      "ssh_username": "{{user `ssh_user`}}",
+      "ssh_proxy_host": "{{user `ssh_proxy_host`}}",
+      "flavor": "v1-standard-1",
       "metadata": {
         "ci_managed": "yes"
       }
@@ -39,12 +40,20 @@
     {
       "type": "shell",
       "scripts": [
-        "provision/baseline.sh",
-        "provision/robot.sh",
-        "provision/system_reseal_local_env.sh",
-        "provision/system_reseal.sh"
+        "common-packer/provision/install-python.sh"
       ],
       "execute_command": "chmod +x {{ .Path }}; if [ \"$UID\" == \"0\" ]; then {{ .Vars }} '{{ .Path }}'; else {{ .Vars }} sudo -E '{{ .Path }}'; fi"
+    },
+    {
+      "type": "ansible",
+      "playbook_file": "provision/robot.yaml",
+      "ansible_env_vars": [
+        "ANSIBLE_NOCOWS=1",
+        "ANSIBLE_PIPELINING=True",
+        "ANSIBLE_ROLES_PATH=../lf-ansible/roles",
+        "ANSIBLE_CALLBACK_WHITELIST=profile_tasks",
+        "ANSIBLE_STDOUT_CALLBACK=debug"
+      ]
     }
   ]
 }

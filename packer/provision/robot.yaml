@@ -1,0 +1,72 @@
+---
+- import_playbook: ../common-packer/provision/baseline.yaml
+
+- hosts: all
+  become_user: root
+  become_method: sudo
+
+  pre_tasks:
+    - include_role: name=system-update
+
+  tasks:
+    - name: Install robot dependencies
+      yum: 'name={{item}} state=present'
+      with_items:
+        - postgresql-devel
+        - python-docker-py
+        - python-matplotlib
+        - python-netaddr
+      become: true
+
+    - name: Install dlux dependencies
+      block:
+        - name: Install dlux dependencies
+          yum: 'name={{item}} state=present'
+          with_items:
+            - firefox
+            - xorg-x11-server-Xvfb
+      become: true
+
+    - name: Install lispflowmapping dependencies
+      block:
+        - name: Install lispflowmapping dependencies
+          yum: 'name={{item}} state=present'
+          with_items:
+            - boost-devel
+            - libpcap-devel
+            - libxml2-devel
+            - libxslt-devel
+            - python-docker-py
+            - python-netaddr
+          become: true
+        - name: Install udpreplay
+          block:
+            - name: Fetch udpreplay git repo
+              git:
+                repo: https://github.com/ska-sa/udpreplay.git
+                dest: /tmp/udpreplay
+            - name: Run bootstrap.sh script
+              command: /tmp/udpreplay/bootstrap.sh
+              args:
+                chdir: /tmp/udpreplay
+            - name: Run configure script
+              command: /tmp/udpreplay/configure
+              args:
+                chdir: /tmp/udpreplay
+            - name: Run make
+              command: make
+              args:
+                chdir: /tmp/udpreplay
+            - name: Install udpreplay to /usr/local/bin/udpreplay
+              copy:
+                src: /tmp/udpreplay/udpreplay
+                dest: /usr/local/bin/udpreplay
+                mode: 0755
+                owner: root
+                remote_src: yes
+              become: yes
+
+  post_tasks:
+    - name: System Reseal
+      script: ../common-packer/provision/system-reseal.sh
+      become: true
