@@ -12,7 +12,7 @@
 
 script=$(mktemp)
 
-cat > $script <<EOF
+cat > "$script" <<EOF
 # SPDX-License-Identifier: EPL-1.0
 ##############################################################################
 # Copyright (c) 2017 The Linux Foundation and others.
@@ -49,7 +49,7 @@ for link in links:
 
         url = link['href']
         project = url.split('/')[3].split('-')[0]
-        _file.write("{}\t{}{}\n".format(project, jenkins_url, url))
+        _file.write("{}\\t{}{}\\n".format(project, jenkins_url, url))
 
 _file.close()
 EOF

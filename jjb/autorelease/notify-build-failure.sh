@@ -69,6 +69,7 @@ if [ ! -z "$ARTIFACT_ID" ]; then
               --else -o ""\
               "$p" 2>/dev/null)
         if [ ! -z "${GROUP}" ]; then
+            # shellcheck disable=SC2207
             grouplist+=($(echo "${GROUP}" | awk -F'.' '{ print $3 }'))
         fi
     done < <(find . -name "pom.xml")

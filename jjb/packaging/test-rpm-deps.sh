@@ -43,7 +43,7 @@ mapfile -t actual_deps < <( rpm -qp /home/$USER/rpmbuild/RPMS/noarch/*.rpm --req
 # shellcheck disable=SC2154 disable=SC2145
 printf 'Dependency found: %s\n' "${{actual_deps[@]}}"
 
-# shellcheck disable=SC2154 disable=SC2145 disable=SC2034
+# shellcheck disable=SC2154,SC2145,SC2034,SC2207
 diff_deps=(`echo "${{expected_deps[@]}}" "${{actual_deps[@]}}" | tr ' ' '\n' | sort | uniq -u`)
 # shellcheck disable=SC2154 disable=SC2145 disable=SC2068 disable=SC2170 disable=SC1083
 if [ ${{#diff_deps[*]}} -eq 0 ]; then

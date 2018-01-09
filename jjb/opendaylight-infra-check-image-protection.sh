@@ -30,10 +30,10 @@ readarray -t images <<< "$(grep -r _system_image: --include \*.yaml \
     | awk -F": " -e '{print $3}' | sed "s:'::;s:'$::;/^$/d" | sort | uniq)"
 
 for image in "${images[@]}"; do
-    os_image_protected=$(openstack --os-cloud $OS_CLOUD image show "$image" -f value -c protected)
+    os_image_protected=$(openstack --os-cloud "$OS_CLOUD" image show "$image" -f value -c protected)
     echo "Protected setting for $image: $os_image_protected"
     if [[ $os_image_protected != True ]]; then
         echo "Image: $image NOT set as protected, changing the protected value."
-        openstack --os-cloud $OS_CLOUD image set --protected "$image"
+        openstack --os-cloud "$OS_CLOUD" image set --protected "$image"
     fi
 done

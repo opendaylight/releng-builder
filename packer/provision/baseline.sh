@@ -7,6 +7,8 @@ set -xeu -o pipefail
 
 enable_service() {
     # Enable services for Ubuntu instances
+    # We purposely want to allow globbing to build the package array
+    # shellcheck disable=SC2206
     services=($@)
 
     for service in "${services[@]}"; do
@@ -72,6 +74,8 @@ ensure_ubuntu_install() {
     # On Ubuntu sometimes the mirrors fail to install a package. This wrapper
     # checks that a package is successfully installed before moving on.
 
+    # We purposely want to allow globbing to build the package array
+    # shellcheck disable=SC2206
     packages=($@)
 
     for pkg in "${packages[@]}"

@@ -34,8 +34,11 @@ echo '---> Waiting 15 secs for services to start'
 sleep 15
 ovs-vsctl --version
 ovs-vsctl show
-ps -elf|grep ovs
-ps -elf|grep vtep
+# We want to see the entire ps output not just the pid
+# shellcheck disable=SC2009
+ps -elf | grep ovs
+# shellcheck disable=SC2009
+ps -elf | grep vtep
 echo '---> Finished installing OpenVSwitch 2.6.1'
 
 echo '---> Installing mininet'
