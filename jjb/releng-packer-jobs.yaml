@@ -30,3 +30,18 @@
 
     platforms: centos
     templates: docker
+
+- project:
+    name: packer-robot-jobs
+    jobs:
+      - gerrit-packer-merge
+
+    project: releng/builder
+    project-name: builder
+    branch: master
+    archive-artifacts: '**/*.log'
+
+    build-node: centos7-builder-2c-8g
+
+    platforms: centos
+    templates: robot

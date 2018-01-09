@@ -54,7 +54,6 @@
           build-timeout: 60
       - mininet-ovs-2.6:
           build-timeout: 75
-      - robot
 
     exclude:
       - platforms: centos
@@ -65,8 +64,6 @@
         templates: mininet-ovs-2.5
       - platforms: centos
         templates: mininet-ovs-2.6
-      - platforms: ubuntu-14.04
-        templates: robot
       - platforms: ubuntu-14.04
         templates: devstack-pre-pip-newton
       - platforms: ubuntu-14.04
@@ -79,8 +76,6 @@
         templates: mininet-ovs-2.5
       - platforms: ubuntu-14.04
         templates: mininet-ovs-2.6
-      - platforms: ubuntu-16.04
-        templates: robot
       - platforms: ubuntu-16.04
         templates: devstack-pre-pip-newton
       - platforms: ubuntu-16.04
