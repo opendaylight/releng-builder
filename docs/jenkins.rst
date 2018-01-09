@@ -169,9 +169,9 @@ triggered by verify-packer and merge-packer jobs.
 
 Please note that the combination of a Packer definitions from `vars`, `templates`
 and the `provision` scripts is what defines a given minion. For instance, a minion
-may be defined as `centos7-java-builder` which is a combination of Packer OS image
+may be defined as `centos7-builder` which is a combination of Packer OS image
 definitions from `vars/centos.json`, Packer template definitions from
-`templates/java-buidler.json` and spinup scripts from `provision/java-builder.sh`.
+`templates/builder.json` and spinup scripts from `provision/builder.sh`.
 This combination provides the full definition of the realized minion.
 
 Jenkins starts a minion using the latest image which is built and linked into the
@@ -229,15 +229,15 @@ Pool: ODLVEX
 
     <table class="table table-bordered">
       <tr class="warning">
-        <td><b>Jenkins Labels</b><br/> centos7-java-builder-2c-4g,
-          centos7-java-builder-2c-8g, centos7-java-builder-4c-8g,
-          centos7-java-builder-8c-8g, centos7-java-builder-4c-16g</td>
-        <td><b>Minion Template names</b><br/> centos7-java-builder-2c-4g,
-          centos7-java-builder-2c-4g, centos7-java-builder-2c-8g,
-          centos7-java-builder-4c-8g, centos7-java-builder-8c-8g,
-          centos7-java-builder-4c-16g</td>
+        <td><b>Jenkins Labels</b><br/> centos7-builder-2c-4g,
+          centos7-builder-2c-8g, centos7-java-builder-4c-8g,
+          centos7-builder-8c-8g, centos7-java-builder-4c-16g</td>
+        <td><b>Minion Template names</b><br/> centos7-builder-2c-4g,
+          centos7-builder-2c-4g, centos7-java-builder-2c-8g,
+          centos7-builder-4c-8g, centos7-java-builder-8c-8g,
+          centos7-builder-4c-16g</td>
         <td><b>Packer Template</b><br/>
-        releng/builder/packer/templates/java-builder.json</td>
+        releng/builder/packer/templates/builder.json</td>
         <td><b>Spinup Script</b><br/>
         releng/builder/jenkins-scripts/builder.sh</td>
       </tr>
