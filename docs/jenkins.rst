@@ -195,8 +195,8 @@ Performance flavors come with dedicated CPUs and are not shared with other
 accounts in the cloud so should ensure consistent performance.
 
 .. list-table:: Flavors
-   :widths: auto"
-   :header-rows: 1"
+   :widths: auto
+   :header-rows: 1
 
    * - Instance Type
      - CPUs
