@@ -17,7 +17,7 @@ source "/tmp/v/openstack/bin/activate"
 function copy-ssh-keys-to-slave() {
     RETRIES=60
     for j in $(seq 1 $RETRIES); do
-        # shellcheck disable=SC2092
+        # shellcheck disable=SC2006,SC2092
         if `ssh-copy-id -i /home/jenkins/.ssh/id_rsa.pub "jenkins@${i}" > /dev/null 2>&1`; then
             ssh "jenkins@${i}" 'echo "$(facter ipaddress_eth0) $(/bin/hostname)" | sudo tee -a /etc/hosts'
             echo "Successfully copied public keys to slave ${i}"
@@ -43,7 +43,7 @@ function copy-ssh-keys-to-slave() {
 # to which VM types.
 openstack stack show -c outputs "$STACK_NAME"
 
-# shellcheck disable=SC2006
+# shellcheck disable=SC2006,SC2207
 ADDR=(`openstack stack show -f json -c outputs "$STACK_NAME" | \
        jq -r '.outputs[] | \
               select(.output_key | match("^vm_[0-9]+_ips\$")) | \

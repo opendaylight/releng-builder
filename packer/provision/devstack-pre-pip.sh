@@ -25,7 +25,7 @@ projs="requirements keystone glance cinder neutron nova horizon"
 # shellcheck disable=SC2154
 branch=${os_branch}
 # strip the "stable" off of the branch
-branch_name=$(cut -d'/' -f2 <<< ${branch})
+branch_name=$(cut -d'/' -f2 <<< "${branch}")
 
 wget https://bootstrap.pypa.io/get-pip.py
 python get-pip.py
@@ -34,24 +34,24 @@ mkdir tmp
 cd tmp
 
 git clone https://github.com/openstack-dev/devstack.git
-(cd devstack && git checkout ${branch})
+(cd devstack && git checkout "${branch}")
 sed -e 's/#.*//' devstack/files/rpms/general | xargs yum install -y
 
 base_url=https://github.com/openstack/
 for proj in $projs
 do
-    git clone ${base_url}${proj}
-    (cd ${proj} && git checkout ${branch})
-    pip install -c requirements/upper-constraints.txt -e ${proj}
-    pip install -c requirements/upper-constraints.txt -r ${proj}/test-requirements.txt
+    git clone "${base_url}${proj}"
+    (cd "${proj}" && git checkout "${branch}")
+    pip install -c requirements/upper-constraints.txt -e "${proj}"
+    pip install -c requirements/upper-constraints.txt -r "${proj}/test-requirements.txt"
 done
 
 echo '---> Installing openvswitch from relevant openstack branch'
-yum install -y centos-release-openstack-${branch_name}
+yum install -y "centos-release-openstack-${branch_name}"
 
 yum install -y --nogpgcheck openvswitch
 
-cd $OLDPWD
+cd "$OLDPWD"
 rm -fr tmp
 
 # vim: sw=4 ts=4 sts=4 et :
