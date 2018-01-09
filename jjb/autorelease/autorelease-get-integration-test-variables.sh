@@ -14,9 +14,9 @@
 # in cases where an internal ci system is using multiple NEXUS systems one for artifacts and another for staging,
 # we can override using ODLNEXUS_STAGING_URL to route the staging build to the 2nd server.
 # (most CI setups where a single Nexus server is used, ODLNEXUS_STAGING_URL should be left unset)
-NEXUS_STAGING_URL=${ODLNEXUS_STAGING_URL:-$ODLNEXUSPROXY}
+NEXUS_STAGING_URL="${ODLNEXUS_STAGING_URL:-$ODLNEXUSPROXY}"
 
-NEXUSURL=${NEXUS_STAGING_URL}/content/repositories/
+NEXUSURL="${NEXUS_STAGING_URL}/content/repositories/"
 VERSION=$(grep -m2 '<version>' "${WORKSPACE}/integration/distribution/${KARAF_ARTIFACT}/pom.xml" | tail -n1 | awk -F'[<|>]' '/version/ { printf $3 }')
 echo "VERSION: ${VERSION}"
 STAGING_REPO_ID=$(grep "Created staging repository with ID" "$WORKSPACE/deploy-staged-repository.log" | cut -d '"' -f2)

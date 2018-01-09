@@ -52,17 +52,17 @@ cd ./util
 ./install.sh -nfv
 
 echo '---> Installing cbench installation for running openflow performance tests'
-OF_DIR=$HOME/openflow  # Directory that contains OpenFlow code
-OFLOPS_DIR=$HOME/oflops  # Directory that contains oflops repo
+OF_DIR="$HOME/openflow"  # Directory that contains OpenFlow code
+OFLOPS_DIR="$HOME/oflops"  # Directory that contains oflops repo
 
 apt-get install -y --force-yes libsnmp-dev libpcap-dev libconfig-dev
 
-git clone git://gitosis.stanford.edu/openflow.git $OF_DIR
-git clone https://github.com/andi-bigswitch/oflops.git $OFLOPS_DIR
+git clone git://gitosis.stanford.edu/openflow.git "$OF_DIR"
+git clone https://github.com/andi-bigswitch/oflops.git "$OFLOPS_DIR"
 
-cd $OFLOPS_DIR
+cd "$OFLOPS_DIR"
 ./boot.sh
-./configure --with-openflow-src-dir=$OF_DIR
+./configure --with-openflow-src-dir="$OF_DIR"
 make
 make install
 
