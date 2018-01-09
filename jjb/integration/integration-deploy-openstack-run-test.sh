@@ -1187,6 +1187,12 @@ EOF
 
 source /tmp/os_netvirt_client_rc
 
+if [ "${OPENSTACK_BRANCH}" == "stable/pike" ]; then
+      scp ${!CONTROLLERIP}:/opt/stack/devstack/files/cirros-0.3.5-x86_64-disk.img /tmp
+      openstack image delete cirros-0.3.5-x86_64-disk
+      openstack image create cirros-0.3.5-x86_64-disk --public --container-format qcow2 --disk-format raw --file /tmp/cirros-0.3.5-x86_64-disk.img
+fi
+
 echo "Starting Robot test suites ${SUITES} ..."
 # please add pybot -v arguments on a single line and alphabetized
 suite_num=0
