@@ -11,6 +11,8 @@
 # This script parses the console log to discover which project has caused a
 # build failure and notify the project as appropriate.
 
+echo "---> notify-build-failure.sh"
+
 NEWLINE=$'\n'
 RELEASE_EMAIL="release@lists.opendaylight.org"
 ARCHIVES_DIR="$JENKINS_HOSTNAME/$JOB_NAME/$BUILD_NUMBER"
