@@ -123,7 +123,7 @@
     name: 'integration-patch-test-{stream}'
 
     project-type: freestyle
-    node: centos7-java-builder-2c-8g
+    node: centos7-builder-2c-8g
 
     properties:
       - opendaylight-infra-properties:
@@ -250,7 +250,7 @@
     # 13. Currently, the .zip lasts 24 hours (?) so you may need to jump to step 2 (or 0) after some time.
 
     project-type: freestyle
-    node: centos7-java-builder-2c-8g
+    node: centos7-builder-2c-8g
     jdk: '{jdk}'
 
     properties:
@@ -418,7 +418,7 @@
     #####################
 
     project-type: freestyle
-    node: centos7-java-builder-2c-8g
+    node: centos7-builder-2c-8g
 
     properties:
       - lf-infra-properties:
