@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ccaccb1e_519db8fe",
+        "filename": "jjb/packaging/build-packer-docker.sh",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2018-01-09T20:57:26Z",
+      "side": 1,
+      "message": "This is no longer the case apparently, the new bilder images don\u0027t have packer according to Thanh. Need to install it ourselves, either by copying install_packer script or via ansible role.\n\nhttps://github.com/lfit/releng-global-jjb/blob/master/shell/packer-install.sh\nhttps://github.com/lfit/releng-lf-ansible/tree/master/roles/packer-install",
+      "parentUuid": "9a245df4_4f715875",
+      "range": {
+        "startLine": 18,
+        "startChar": 5,
+        "endLine": 18,
+        "endChar": 26
+      },
+      "revId": "a5e4180b39bca499b27f2483752984b715fa3842",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a245df4_ef076cc8",
         "filename": "jjb/packaging/build-packer-libvirt.sh",
         "patchSetId": 9
