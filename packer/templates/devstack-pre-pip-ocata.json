@@ -1,33 +1,33 @@
 {
   "variables": {
-    "public_base_image": null,
-    "public_network": null,
-    "public_cloud_user": null,
-    "public_auth_url": null,
-    "public_tenant": null,
-    "public_user": null,
-    "public_pass": null,
+    "base_image": null,
     "distro": null,
+    "cloud_auth_url": null,
+    "cloud_user": null,
+    "cloud_pass": null,
+    "cloud_network": null,
+    "cloud_tenant": null,
     "cloud_user_data": null,
+    "ssh_user": null,
     "ssh_proxy_host": ""
   },
   "builders": [
     {
       "type": "openstack",
-      "identity_endpoint": "{{user `public_auth_url`}}",
+      "identity_endpoint": "{{user `cloud_auth_url`}}",
       "domain_name": "Default",
-      "tenant_name": "{{user `public_tenant`}}",
-      "username": "{{user `public_user`}}",
-      "password": "{{user `public_pass`}}",
+      "tenant_name": "{{user `cloud_tenant`}}",
+      "username": "{{user `cloud_user`}}",
+      "password": "{{user `cloud_pass`}}",
       "region": "ca-ymq-1",
       "availability_zone": "ca-ymq-2",
-      "ssh_username": "{{user `public_cloud_user`}}",
+      "ssh_username": "{{user `ssh_user`}}",
       "ssh_proxy_host": "{{user `ssh_proxy_host`}}",
       "image_name": "ZZCI - {{user `distro`}} - devstack-ocata - {{isotime \"20060102-1504\"}}",
-      "source_image_name": "{{user `public_base_image`}}",
+      "source_image_name": "{{user `base_image`}}",
       "flavor": "v1-standard-1",
       "networks": [
-        "{{user `public_network`}}"
+        "{{user `cloud_network`}}"
       ],
       "user_data_file": "{{user `cloud_user_data`}}",
       "metadata": {
