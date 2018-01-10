@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b52c7a13_3d1500be",
+        "filename": "jjb/packaging/packaging.yaml",
+        "patchSetId": 15
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2018-01-10T21:03:10Z",
+      "side": 1,
+      "message": "This is failing with\n\n20:45:29 packer.io command not is available. Installing packer ...\n20:45:29 /tmp/jenkins8024552679583525907.sh: line 27: pushd: packer: No such file or directory\n\nhttps://jenkins.opendaylight.org/sandbox/job/packaging-build-packer-virtualbox-master/4/console\n\nI have a fixed proposed here\n\nhttps://gerrit.linuxfoundation.org/infra/#/c/8347/",
+      "revId": "f4ae9487e6218156bf6da88c9601ccc21007cc91",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
