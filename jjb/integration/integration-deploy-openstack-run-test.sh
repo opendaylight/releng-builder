@@ -6,7 +6,7 @@
 source ${ROBOT_VENV}/bin/activate
 PYTHON="${ROBOT_VENV}/bin/python"
 SSH="ssh -t -t"
-ADMIN_PASSWORD=admin
+ADMIN_PASSWORD="admin"
 
 # TODO: remove this work to run changes.py if/when it's moved higher up to be visible at the Robot level
 echo "showing recent changes that made it in to the distribution used by this job"
@@ -352,6 +352,7 @@ EOF
 
 function configure_haproxy_for_neutron_requests() {
     MGRIP=$1
+    # shellcheck disable=SC2206
     ODL_IPS=(${2//,/ })
 
     cat > ${WORKSPACE}/install_ha_proxy.sh<< EOF
@@ -865,7 +866,7 @@ for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
     ssh ${!CONTROLIP} "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
     ssh ${!CONTROLIP} "ps -ef | grep stack.sh"
     ssh ${!CONTROLIP} "ls -lrt /opt/stack/devstack/nohup.out"
-    os_node_list+=(${!CONTROLIP})
+    os_node_list+=("${!CONTROLIP}")
     # Workaround for stable/newton jobs
     # TODO: can this be removed now?
     if [ "${ODL_ML2_BRANCH}" == "stable/newton" ]; then
@@ -926,7 +927,7 @@ for i in `seq 1 ${NUM_OPENSTACK_COMPUTE_NODES}`; do
     echo "Stack the compute node ${i} of ${NUM_OPENSTACK_COMPUTE_NODES}: ${COMPUTEIP}"
     ssh ${!COMPUTEIP} "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
     ssh ${!COMPUTEIP} "ps -ef | grep stack.sh"
-    os_node_list+=(${!COMPUTEIP})
+    os_node_list+=("${!COMPUTEIP}")
 done
 
 echo "nodelist: ${os_node_list[*]}"
@@ -1054,6 +1055,7 @@ for i in `seq 1 ${NUM_OPENSTACK_SITES}`; do
 
     # ipsec support
     if [ "${IPSEC_VXLAN_TUNNELS_ENABLED}" == "yes" ]; then
+        # shellcheck disable=SC2206
         ALL_NODES=(${!CONTROLIP} ${COMPUTE_IPS[*]})
         for ((inx_ip1=0; inx_ip1<$((${#ALL_NODES[@]} - 1)); inx_ip1++)); do
             for ((inx_ip2=$((inx_ip1 + 1)); inx_ip2<${#ALL_NODES[@]}; inx_ip2++)); do

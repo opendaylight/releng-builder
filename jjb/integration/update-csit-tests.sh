@@ -14,6 +14,7 @@ jobs_file=$(mktemp)
 search_string="csit"
 
 wget --quiet -O "$jobs_file" https://jenkins.opendaylight.org/$SILO/api/xml
+# shellcheck disable=SC2207
 jobs=($(xmlstarlet sel -t -m '//hudson/job' \
     -n -v 'name' "$jobs_file" | grep $search_string | grep $STREAM))
 

@@ -151,9 +151,9 @@ echo "Kill controller"
 ps axf | grep karaf | grep -v grep | awk '{print "kill -9 " $1}' | sh
 
 echo "Bug 4628: Detecting misplaced config files"
-pushd "${WORKSPACE}/${BUNDLEFOLDER}"
+pushd "${WORKSPACE}/${BUNDLEFOLDER}" || exit
 XMLS_FOUND="$(echo *.xml)"
-popd
+popd || exit
 if [ "$XMLS_FOUND" != "*.xml" ]; then
     echo "Bug 4628 confirmed."
     ## TODO: Uncomment the following when ODL is fixed, to guard against regression.
