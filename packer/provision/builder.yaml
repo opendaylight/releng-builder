@@ -49,6 +49,7 @@
           shell: /tmp/build_quagga/zrpcd/pkgsrc/dev_compile_script.sh -d -b -t
           args:
             chdir: /tmp/build_quagga/zrpcd
+            executable: /bin/bash
           become: true
 
   post_tasks:
