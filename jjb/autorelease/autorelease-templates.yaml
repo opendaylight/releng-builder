@@ -7,6 +7,7 @@
     # Defaults #
     ############
 
+    build-node: centos7-autorelease-8c-16g
     java-version: openjdk8
     mvn-version: mvn33
     extra-mvn-opts: ''
@@ -16,7 +17,7 @@
     #####################
 
     project-type: freestyle
-    node: centos7-builder-4c-16g
+    node: '{build-node}'
     jdk: '{java-version}'
     cron: 'H 0 * * *'
 
