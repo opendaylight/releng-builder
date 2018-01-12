@@ -337,7 +337,23 @@ fi
 echo "Changing the testplan path..."
 cat "${testplan_filepath}" | sed "s:integration:${WORKSPACE}:" > testplan.txt
 cat testplan.txt
-SUITES=$( egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' testplan.txt | tr '\012' ' ' )
+
+# Use the testplan if specific SUITES are not defined.
+if [ -z "${SUITES}" ]; then
+    SUITES=`egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' testplan.txt | tr '\012' ' '`
+else
+    newsuites=""
+    workpath="${WORKSPACE}/test/csit/suites"
+    for suite in ${SUITES}; do
+        fullsuite="${workpath}/${suite}"
+        if [ -z "${newsuites}" ]; then
+            newsuites+=${fullsuite}
+        else
+            newsuites+=" "${fullsuite}
+        fi
+    done
+    SUITES=${newsuites}
+fi
 
 echo "Starting Robot test suites ${SUITES} ..."
 pybot -N ${TESTPLAN} --removekeywords wuks -c critical -e exclude -e skip_if_${DISTROSTREAM} -v BUNDLEFOLDER:${BUNDLEFOLDER} -v WORKSPACE:/tmp \

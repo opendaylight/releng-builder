@@ -153,6 +153,8 @@
           stream-test-plan: '{project}-{functionality}-{stream}.txt'
       - integration-test-plan:
           test-plan: '{project}-{functionality}.txt'
+      - integration-test-suites:
+          test-suites: '{test-suites}'
       - integration-patch-refspec:
           branch: 'master'
       - integration-jdk-version:
@@ -270,6 +272,8 @@
           stream-test-plan: '{project}-{functionality}-{stream}.txt'
       - integration-test-plan:
           test-plan: '{project}-{functionality}.txt'
+      - integration-test-suites:
+          test-suites: '{test-suites}'
       - integration-patch-refspec:
           branch: 'master'
       - integration-jdk-version:
@@ -494,6 +498,8 @@
           stream-test-plan: '{project}-{functionality}-{verify-stream}.txt'
       - integration-test-plan:
           test-plan: '{project}-{functionality}.txt'
+      - integration-test-suites:
+          test-suites: '{test-suites}'
       - integration-jdk-version:
           jdkversion: '{verify-jdkversion}'
       - distribution-karaf-version:
@@ -583,6 +589,8 @@
           stream-test-plan: '{project}-{functionality}-{stream}.txt'
       - integration-test-plan:
           test-plan: '{project}-{functionality}.txt'
+      - integration-test-suites:
+          test-suites: '{test-suites}'
       - integration-patch-refspec:
           branch: 'master'
       - integration-jdk-version:
@@ -807,6 +815,8 @@
           stream-test-plan: '{project}-{functionality}-{stream}.txt'
       - integration-test-plan:
           test-plan: '{project}-{functionality}.txt'
+      - integration-test-suites:
+          test-suites: '{test-suites}'
       - integration-patch-refspec:
           branch: 'master'
       - integration-jdk-version:
