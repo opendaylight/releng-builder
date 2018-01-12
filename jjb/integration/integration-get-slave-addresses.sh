@@ -103,6 +103,15 @@ done
 # The rest of the openstack nodes until NUM_OPENSTACK_SYSTEM are computes
 NUM_OPENSTACK_COMPUTE_NODES=$(( NUM_OPENSTACK_SYSTEM - NUM_OPENSTACK_CONTROL_NODES ))
 echo "NUM_OPENSTACK_COMPUTE_NODES=${NUM_OPENSTACK_COMPUTE_NODES}" >> slave_addresses.txt
+
+# Order the computes in the list so that the devstack-0 is index 1 and devstack-1 is index 2. Currently they are
+# backwards because of the controller swap earlier.
+if [ ${NUM_OPENSTACK_COMPUTE_NODES} -ge 2 ]; then
+    tmp_addr=${OPENSTACK_SYSTEM[1]}
+    OPENSTACK_SYSTEM[1]=${OPENSTACK_SYSTEM[2]}
+    OPENSTACK_SYSTEM[2]=${tmp_addr}
+fi
+
 for i in $(seq 0 $((NUM_OPENSTACK_COMPUTE_NODES - 1)))
 do
     echo "OPENSTACK_COMPUTE_NODE_$((i+1))_IP=${OPENSTACK_SYSTEM[$((openstack_index++))]}" >> slave_addresses.txt
