@@ -3,11 +3,11 @@
     name: autorelease-projects
     jobs:
       - 'autorelease-generate-release-notes-{stream}'
-      - 'autorelease-release-{stream}'
+      - 'autorelease-release-{stream}':
+          build-node: centos7-autorelease-8c-16g
       - 'autorelease-update-validate-jobs-{stream}'
       - 'autorelease-version-bump-{stream}'
-      - '{project-name}-validate-autorelease-{stream}':
-          build-node: centos7-builder-2c-8g
+      - '{project-name}-validate-autorelease-{stream}'
       - gerrit-tox-verify
 
     # todo: After Carbon EOL remove next-release-tag and directy pass
