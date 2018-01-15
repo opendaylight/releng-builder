@@ -4,7 +4,6 @@
     jobs:
       - '{project-name}-maven-jobs'
       - '{project-name}-maven-javadoc-jobs'
-      - gerrit-maven-merge
       - gerrit-tox-verify
 
     project: odlparent
@@ -41,7 +40,6 @@
     jobs:
       - '{project-name}-maven-jobs'
       - '{project-name}-maven-javadoc-jobs'
-      - gerrit-maven-merge
       - gerrit-tox-verify
 
     project: odlparent
@@ -81,7 +79,6 @@
       - '{project-name}-integration-{stream}'
       - '{project-name}-maven-jobs'
       - '{project-name}-maven-javadoc-jobs'
-      - gerrit-maven-merge
       - gerrit-tox-verify
 
     stream: carbon
