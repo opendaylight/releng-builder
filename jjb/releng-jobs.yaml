@@ -4,6 +4,7 @@
     jobs:
       - '{project-name}-ci-jobs'
       - builder-check-poms
+      - builder-copy-sandbox-logs
       - gerrit-tox-verify
       # OpenStack Related
       - 'builder-verify-image-protection'
@@ -115,6 +116,47 @@
       - email-notification:
           email-recipients: '{email-recipients}'
           email-prefix: '[releng]'
+      - lf-infra-publish
+
+- job-template:
+    name: builder-copy-sandbox-logs
+    node: centos7-builder-2c-8g
+
+    project-type: freestyle
+
+    properties:
+      - opendaylight-infra-properties:
+          build-days-to-keep: 1
+
+    parameters:
+      - opendaylight-infra-parameters:
+          os-cloud: '{os-cloud}'
+          project: '{project}'
+          branch: '{branch}'
+          refspec: 'refs/heads/{branch}'
+          artifacts: '{archive-artifacts}'
+
+    wrappers:
+      - opendaylight-infra-wrappers:
+          build-timeout: 10
+
+    triggers:
+      - gerrit:
+          server-name: '{gerrit-server-name}'
+          trigger-on:
+            - comment-added-contains-event:
+                comment-contains-value: 'copy-logs:'
+          projects:
+            - project-compare-type: ANT
+              project-pattern: 'releng/builder'
+              branches:
+                - branch-compare-type: ANT
+                  branch-pattern: '**/master'
+
+    builders:
+      - shell: !include-raw-escape: copy-sandbox-logs.sh
+
+    publishers:
       - lf-infra-publish
 
 
