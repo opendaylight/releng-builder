@@ -455,15 +455,11 @@ function collect_logs () {
 echo -e "/usr/sbin/lsmod | /usr/bin/grep openvswitch\n"
 /usr/sbin/lsmod | /usr/bin/grep openvswitch
 echo -e "\ngrep ct_ /var/log/openvswitch/ovs-vswitchd.log\n"
-grep ct_ /var/log/openvswitch/ovs-vswitchd.log
-echo -e "\novsdb-tool -mm show-log\n"
-ovsdb-tool -mm show-log
+grep "Datapath supports" /var/log/openvswitch/ovs-vswitchd.log
 echo -e "\nsudo netstat -punta\n"
 sudo netstat -punta
 echo -e "\nsudo getenforce\n"
 sudo getenforce
-echo -e "\njournalctl > /tmp/journalctl.log\n"
-sudo journalctl > /tmp/journalctl.log
 echo -e "\nsudo systemctl status httpd\n"
 sudo systemctl status httpd
 echo -e "\nenv\n"
@@ -471,10 +467,16 @@ env
 source /opt/stack/devstack/openrc admin admin
 echo -e "\nenv after openrc\n"
 env
-echo "\nsudo du -hs /opt/stack"
+echo -e "\nsudo du -hs /opt/stack"
 sudo du -hs /opt/stack
-echo "\nsudo mount"
+echo -e "\nsudo mount"
 sudo mount
+echo -e "\ndmesg -T > /tmp/dmesg.log"
+dmesg -T > /tmp/dmesg.log
+echo -e "\njournalctl > /tmp/journalctl.log\n"
+sudo journalctl > /tmp/journalctl.log
+echo -e "\novsdb-tool -mm show-log > /tmp/ovsdb-tool.log"
+ovsdb-tool -mm show-log > /tmp/ovsdb-tool.log
 EOF
 
     # Since this log collection work is happening before the archive build macro which also
@@ -525,6 +527,8 @@ EOF
         echo "collect_logs: for openstack control node ip: ${!OSIP}"
         NODE_FOLDER="control_${i}"
         mkdir -p ${NODE_FOLDER}
+        scp extra_debug.sh ${!OSIP}:/tmp
+        ${SSH} ${!OSIP} "bash /tmp/extra_debug.sh > /tmp/extra_debug.log"
         scp ${!OSIP}:/etc/dnsmasq.conf ${NODE_FOLDER}
         scp ${!OSIP}:/etc/keystone/keystone.conf ${NODE_FOLDER}
         scp ${!OSIP}:/etc/keystone/keystone-uwsgi-admin.ini ${NODE_FOLDER}
@@ -547,7 +551,12 @@ EOF
         scp ${!OSIP}:/opt/stack/devstack/openrc ${NODE_FOLDER}
         scp ${!OSIP}:/opt/stack/requirements/upper-constraints.txt ${NODE_FOLDER}
         scp ${!OSIP}:/opt/stack/tempest/etc/tempest.conf ${NODE_FOLDER}
+        scp ${!OSIP}:/tmp/*.xz ${NODE_FOLDER}
+        scp ${!OSIP}:/tmp/dmesg.log ${NODE_FOLDER}
+        scp ${!OSIP}:/tmp/extra_debug.log ${NODE_FOLDER}
         scp ${!OSIP}:/tmp/get_devstack.sh.txt ${NODE_FOLDER}
+        scp ${!OSIP}:/tmp/journalctl.log ${NODE_FOLDER}
+        scp ${!OSIP}:/tmp/ovsdb-tool.log ${NODE_FOLDER}
         scp ${!OSIP}:/var/log/openvswitch/ovs-vswitchd.log ${NODE_FOLDER}
         scp ${!OSIP}:/var/log/openvswitch/ovsdb-server.log ${NODE_FOLDER}
         list_files "${!OSIP}" "${NODE_FOLDER}"
@@ -559,14 +568,8 @@ EOF
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/messages ${NODE_FOLDER}
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/rabbitmq ${NODE_FOLDER}
         rsync -avhe ssh ${!OSIP}:/opt/stack/logs/* ${NODE_FOLDER} # rsync to prevent copying of symbolic links
-        scp extra_debug.sh ${!OSIP}:/tmp
-        ${SSH} ${!OSIP} "bash /tmp/extra_debug.sh > /tmp/extra_debug.log"
-        scp ${!OSIP}:/tmp/extra_debug.log ${NODE_FOLDER}
-        scp ${!OSIP}:/tmp/journalctl.log ${NODE_FOLDER}
-        scp ${!OSIP}:/tmp/*.xz ${NODE_FOLDER}
-        ${SSH} ${!CONTROLLERIP} "dmesg -T > /tmp/dmesg.log"
-        scp ${!CONTROLLERIP}:/tmp/dmesg.log ${NODE_FOLDER}
         mv local.conf_control_${!OSIP} ${NODE_FOLDER}/local.conf
+        # qdhcp files are created by robot tests
         mv /tmp/qdhcp ${NODE_FOLDER}
         mv ${NODE_FOLDER} ${WORKSPACE}/archives/
     done
@@ -577,6 +580,8 @@ EOF
         echo "collect_logs: for openstack compute node ip: ${!OSIP}"
         NODE_FOLDER="compute_${i}"
         mkdir -p ${NODE_FOLDER}
+        scp extra_debug.sh ${!OSIP}:/tmp
+        ${SSH} ${!OSIP} "bash /tmp/extra_debug.sh > /tmp/extra_debug.log"
         scp ${!OSIP}:/etc/nova/nova.conf ${NODE_FOLDER}
         scp ${!OSIP}:/etc/nova/nova-cpu.conf ${NODE_FOLDER}
         scp ${!OSIP}:/etc/openstack/clouds.yaml ${NODE_FOLDER}
@@ -584,7 +589,12 @@ EOF
         scp ${!OSIP}:/opt/stack/devstack/nohup.out ${NODE_FOLDER}/stack.log
         scp ${!OSIP}:/opt/stack/devstack/openrc ${NODE_FOLDER}
         scp ${!OSIP}:/opt/stack/requirements/upper-constraints.txt ${NODE_FOLDER}
+        scp ${!OSIP}:/tmp/*.xz ${NODE_FOLDER}/
+        scp ${!OSIP}:/tmp/dmesg.log ${NODE_FOLDER}
+        scp ${!OSIP}:/tmp/extra_debug.log ${NODE_FOLDER}
         scp ${!OSIP}:/tmp/get_devstack.sh.txt ${NODE_FOLDER}
+        scp ${!OSIP}:/tmp/journalctl.log ${NODE_FOLDER}
+        scp ${!OSIP}:/tmp/ovsdb-tool.log ${NODE_FOLDER}
         scp ${!OSIP}:/var/log/openvswitch/ovs-vswitchd.log ${NODE_FOLDER}
         scp ${!OSIP}:/var/log/openvswitch/ovsdb-server.log ${NODE_FOLDER}
         list_files "${!OSIP}" "${NODE_FOLDER}"
@@ -594,13 +604,6 @@ EOF
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/messages ${NODE_FOLDER}
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/nova-agent.log ${NODE_FOLDER}
         rsync -avhe ssh ${!OSIP}:/opt/stack/logs/* ${NODE_FOLDER} # rsync to prevent copying of symbolic links
-        scp extra_debug.sh ${!OSIP}:/tmp
-        ${SSH} ${!OSIP} "bash /tmp/extra_debug.sh > /tmp/extra_debug.log"
-        scp ${!OSIP}:/tmp/extra_debug.log ${NODE_FOLDER}
-        scp ${!OSIP}:/tmp/journalctl.log ${NODE_FOLDER}
-        scp ${!OSIP}:/tmp/*.xz ${NODE_FOLDER}/
-        ${SSH} ${!OSIP} "dmesg -T > /tmp/dmesg.log"
-        scp ${!OSIP}:/tmp/dmesg.log ${NODE_FOLDER}
         mv local.conf_compute_${!OSIP} ${NODE_FOLDER}/local.conf
         mv ${NODE_FOLDER} ${WORKSPACE}/archives/
     done
