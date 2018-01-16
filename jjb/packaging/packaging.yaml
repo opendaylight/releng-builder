@@ -92,6 +92,7 @@
           sudo yum install -y nmap
       - shell: !include-raw: test-karaf.expect
       - shell: !include-raw: stop-odl.sh
+      - shell: !include-raw: uninstall-rpm.sh
       - lf-infra-deploy-maven-file:
           global-settings-file: 'global-settings'
           settings-file: 'packaging-settings'
@@ -383,6 +384,7 @@
           sudo yum install -y nmap
       - shell: !include-raw: test-karaf.expect
       - shell: !include-raw: stop-odl.sh
+      - shell: !include-raw: uninstall-rpm.sh
 
     publishers:
       # TODO: Remove the archive publisher
@@ -443,6 +445,7 @@
       - shell: !include-raw: start-odl.sh
       - shell: !include-raw: test-karaf.expect
       - shell: !include-raw: stop-odl.sh
+      - shell: !include-raw: uninstall-rpm.sh
 
     publishers:
       - lf-infra-publish
