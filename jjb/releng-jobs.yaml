@@ -21,7 +21,7 @@
     project-name: builder
     stream: master
     branch: master
-    build-node: centos7-builder-2c-8g
+    build-node: centos7-builder-2c-1g
     archive-artifacts: '**/*.log'
     build-timeout: 30
     jjb-version: 2.0.0
@@ -35,7 +35,7 @@
     project-name: builder
     branch: master
     archive-artifacts: '**/*.log'
-    build-node: centos7-builder-2c-8g
+    build-node: centos7-builder-2c-1g
 
     platforms:
       - centos
@@ -86,7 +86,7 @@
 
 - job-template:
     name: builder-check-poms
-    node: centos7-builder-2c-8g
+    node: centos7-builder-2c-1g
 
     project-type: freestyle
 
@@ -120,7 +120,7 @@
 
 - job-template:
     name: builder-copy-sandbox-logs
-    node: centos7-builder-2c-8g
+    node: centos7-builder-2c-1g
 
     project-type: freestyle
 
@@ -163,7 +163,7 @@
 - job-template:
     name: 'builder-verify-image-protection'
     project-type: freestyle
-    node: centos7-builder-2c-8g
+    node: centos7-builder-2c-1g
 
     properties:
       - opendaylight-infra-properties:
@@ -207,7 +207,7 @@
 - job-template:
     name: 'builder-cleanup-old-images'
     project-type: freestyle
-    node: centos7-builder-2c-8g
+    node: centos7-builder-2c-1g
 
     properties:
       - opendaylight-infra-properties:
@@ -253,7 +253,7 @@
 - job-template:
     name: builder-delete-orphaned-nodes
     project-type: freestyle
-    node: centos7-builder-2c-8g
+    node: centos7-builder-2c-1g
 
     properties:
       - opendaylight-infra-properties:
@@ -292,7 +292,7 @@
 - job-template:
     name: 'builder-delete-stale-nodes'
     project-type: freestyle
-    node: centos7-builder-2c-8g
+    node: centos7-builder-2c-1g
 
     properties:
       - opendaylight-infra-properties:
@@ -329,7 +329,7 @@
 - job-template:
     name: 'builder-delete-stale-stacks'
     project-type: freestyle
-    node: centos7-builder-2c-8g
+    node: centos7-builder-2c-1g
 
     properties:
       - opendaylight-infra-properties:
@@ -368,7 +368,7 @@
 - job-template:
     name: 'builder-update-image-list'
     project-type: freestyle
-    node: centos7-builder-2c-8g
+    node: centos7-builder-2c-1g
 
     properties:
       - opendaylight-infra-properties:
