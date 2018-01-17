@@ -1,0 +1,20 @@
+---
+- project:
+    name: coe-csit
+    jobs:
+      - inttest-csit-1node
+
+    project: 'coe'
+    functionality: 'container-networking'
+
+    install-features: 'odl-netvirt-coe'
+
+    stream:
+      - oxygen:
+          branch: 'master'
+    install:
+      - all:
+          scope: 'all'
+
+    tools_system_count: 3
+    tools_system_image: ZZCI - Ubuntu 16.04 - mininet-ovs-28 - 20180111-1704
