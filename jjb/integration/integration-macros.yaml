@@ -374,7 +374,9 @@
 - builder:
     name: integration-deploy-controller-run-test
     builders:
-      - shell: !include-raw: integration-deploy-controller-run-test.sh
+      - shell: !include-raw-escape:
+          - common-functions.sh
+          - integration-deploy-controller-run-test.sh
 
 # Macro: integration-configure-clustering
 # Operation: this macro configures the clustering
@@ -383,7 +385,9 @@
 - builder:
     name: integration-configure-clustering
     builders:
-      - shell: !include-raw: integration-configure-clustering.sh
+      - shell: !include-raw:
+          - common-functions.sh
+          - integration-configure-clustering.sh
 
 # Macro: integration-start-cluster-run-test
 # Operation: this macro starts the 3-node cluster and runs test

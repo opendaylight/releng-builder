@@ -9,20 +9,9 @@ echo "#################################################"
 echo "##         Configure Cluster and Start         ##"
 echo "#################################################"
 
-AKKACONF=/tmp/${BUNDLEFOLDER}/configuration/initial/akka.conf
-MODULESCONF=/tmp/${BUNDLEFOLDER}/configuration/initial/modules.conf
-MODULESHARDSCONF=/tmp/${BUNDLEFOLDER}/configuration/initial/module-shards.conf
-MAVENCONF=/tmp/${BUNDLEFOLDER}/etc/org.ops4j.pax.url.mvn.cfg
-FEATURESCONF=/tmp/${BUNDLEFOLDER}/etc/org.apache.karaf.features.cfg
-CUSTOMPROP=/tmp/${BUNDLEFOLDER}/etc/custom.properties
-LOGCONF=/tmp/${BUNDLEFOLDER}/etc/org.ops4j.pax.logging.cfg
-MEMCONF=/tmp/${BUNDLEFOLDER}/bin/setenv
-CONTROLLERMEM="2048m"
-
-
 if [ ${CONTROLLERSCOPE} == 'all' ]; then
     ACTUALFEATURES="odl-integration-compatible-with-all,${CONTROLLERFEATURES}"
-    CONTROLLERMEM="3072m"
+    export CONTROLLERMEM="3072m"
 else
     ACTUALFEATURES="odl-infrautils-ready,${CONTROLLERFEATURES}"
 fi
@@ -110,22 +99,7 @@ if [ "${ODL_ENABLE_L3_FWD}" == "yes" ]; then
   cat ${CUSTOMPROP}
 fi
 
-echo "Configure java home and max memory..."
-sed -ie 's%^# export JAVA_HOME%export JAVA_HOME="\${JAVA_HOME:-${JAVA_HOME}}"%g' ${MEMCONF}
-sed -ie 's/JAVA_MAX_MEM="2048m"/JAVA_MAX_MEM="${CONTROLLERMEM}"/g' ${MEMCONF}
-cat ${MEMCONF}
-
-echo "Set Java version"
-sudo /usr/sbin/alternatives --install /usr/bin/java java ${JAVA_HOME}/bin/java 1
-sudo /usr/sbin/alternatives --set java ${JAVA_HOME}/bin/java
-echo "JDK default version ..."
-java -version
-
-echo "Set JAVA_HOME"
-export JAVA_HOME="${JAVA_HOME}"
-# Did you know that in HERE documents, single quote is an ordinary character, but backticks are still executing?
-JAVA_RESOLVED=\`readlink -e "\${JAVA_HOME}/bin/java"\`
-echo "Java binary pointed at by JAVA_HOME: \${JAVA_RESOLVED}"
+set_java_vars
 
 # Copy shard file if exists
 if [ -f /tmp/custom_shard_config.txt ]; then
