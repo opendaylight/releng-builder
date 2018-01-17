@@ -1,0 +1,30 @@
+---
+- project:
+    name: coe-csit
+    jobs:
+      - '{project}-csit-1node-{functionality}-{install}-{stream}'
+      - '{project}-csit-verify-1node-{functionality}'
+
+    project: 'coe'
+
+    # The functionality under test
+    functionality: 'container-networking'
+
+    # Project branches
+    stream:
+      - oxygen:
+          branch: 'master'
+
+    install:
+      - all:
+          scope: 'all'
+
+    # K8S Systems
+    tools_system_count: 3
+    tools_system_image: ZZCI - Ubuntu 16.04 - mininet-ovs-28 - 20180111-1704
+
+    # Features to install
+    install-features: 'odl-netvirt-coe, odl-restconf-all'
+
+    # Robot custom options
+    robot-options: ''
