@@ -77,7 +77,7 @@ if [[ "$KARAF_VERSION" == "karaf4" ]]; then
     FEATURE_TEST_STRING="features-test"
 fi
 
-sed -ie "s%mvn:org.opendaylight.integration/\${FEATURE_INDEX_STRING}/${BUNDLEVERSION}/xml/features%mvn:org.opendaylight.integration/\${FEATURE_INDEX_STRING}/${BUNDLEVERSION}/xml/features,mvn:org.opendaylight.integration/\${FEATURE_TEST_STRING}/${BUNDLEVERSION}/xml/features,mvn:org.apache.karaf.decanter/apache-karaf-decanter/1.0.0/xml/features%g" ${FEATURESCONF}
+sed -ie "s%\(featuresRepositories=\|featuresRepositories =\)%featuresRepositories = mvn:org.opendaylight.integration/\${FEATURE_TEST_STRING}/${BUNDLEVERSION}/xml/features,mvn:org.apache.karaf.decanter/apache-karaf-decanter/1.0.0/xml/features,%g" ${FEATURESCONF}
 cat ${FEATURESCONF}
 
 if [ "${ODL_ENABLE_L3_FWD}" == "yes" ]; then
