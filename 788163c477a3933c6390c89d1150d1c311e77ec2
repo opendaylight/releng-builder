@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f4fce536_ba26e8c8",
+        "filename": "jjb/integration/integration-install-openstacktestprereqs.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-01-18T20:24:37Z",
+      "side": 1,
+      "message": "you are right when the packages are all the same, but how would we handle something like we\ncurrently see where in queens (only) we would need to pin the novaclient version?",
+      "parentUuid": "5ec64f0b_2eb2763d",
+      "revId": "788163c477a3933c6390c89d1150d1c311e77ec2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39ef699e_42c0c3a7",
         "filename": "jjb/integration/integration-install-openstacktestprereqs.sh",
         "patchSetId": 1
@@ -64,6 +82,24 @@
       "writtenOn": "2018-01-18T17:29:39Z",
       "side": 1,
       "message": "instead of a builder couldn\u0027t the install.sh just call the new stuff? I find it hard sometimes to keep track of builders and scripts - with no idea why to use one over the other.",
+      "revId": "788163c477a3933c6390c89d1150d1c311e77ec2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5fa0a1bb_f3c56f44",
+        "filename": "jjb/integration/integration-macros.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-01-18T20:24:37Z",
+      "side": 1,
+      "message": "not following this one, Sam.\n\nwhere would we call the script instead of using a builder?",
+      "parentUuid": "f2288975_bfd7221c",
       "revId": "788163c477a3933c6390c89d1150d1c311e77ec2",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
