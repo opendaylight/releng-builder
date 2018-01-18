@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ec64f0b_2eb2763d",
+        "filename": "jjb/integration/integration-install-openstacktestprereqs.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-01-18T17:29:39Z",
+      "side": 1,
+      "message": "Would it be better to rework this to just set vars and then a final pip install loop? This would reduce duplicating code which becomes a maintenance issue.\n\nMake a copy of all the vars and set them before the case to serve as defaults. Then in each case choice only put the vars that are different.\n\nLast thought, is seems like this is a requirements type thing. Seems like the versions should already be defined somewhere. WE start with that requirements.txt file and change it when broken, otherwise leave it is as.",
+      "revId": "788163c477a3933c6390c89d1150d1c311e77ec2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39ef699e_42c0c3a7",
+        "filename": "jjb/integration/integration-install-openstacktestprereqs.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-01-18T17:29:39Z",
+      "side": 1,
+      "message": "whitespace",
+      "revId": "788163c477a3933c6390c89d1150d1c311e77ec2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3edac5dd_ecbb1834",
+        "filename": "jjb/integration/integration-install-openstacktestprereqs.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-01-18T17:29:39Z",
+      "side": 1,
+      "message": "print the final vars used.",
+      "revId": "788163c477a3933c6390c89d1150d1c311e77ec2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f2288975_bfd7221c",
+        "filename": "jjb/integration/integration-macros.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-01-18T17:29:39Z",
+      "side": 1,
+      "message": "instead of a builder couldn\u0027t the install.sh just call the new stuff? I find it hard sometimes to keep track of builders and scripts - with no idea why to use one over the other.",
+      "revId": "788163c477a3933c6390c89d1150d1c311e77ec2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
