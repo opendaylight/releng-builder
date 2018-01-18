@@ -20,6 +20,7 @@
     dependencies: ''
     email-upstream: '[coretutorials]'
     archive-artifacts: ''
+    build-timeout: 120
 
     # Used by the release job
     staging-profile-id: 96cd299563ec6
@@ -45,6 +46,7 @@
     dependencies: ''
     email-upstream: '[coretutorials]'
     archive-artifacts: ''
+    build-timeout: 120
 
     # Used by the release job
     staging-profile-id: 96cd299563ec6
@@ -71,6 +73,7 @@
     dependencies: ''
     email-upstream: '[coretutorials]'
     archive-artifacts: ''
+    build-timeout: 120
 
     # Used by the release job
     staging-profile-id: 96cd299563ec6
@@ -86,3 +89,5 @@
     mvn-settings: 'coretutorials-settings'
     mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    build-timeout: 120
+
