@@ -8,21 +8,17 @@
 
 # create a fresh empty place to build this custom distribution
 BUILD_DIR=${WORKSPACE}/patch_tester
-POM_FILE=${WORKSPACE}/patch_tester/pom.xml
 DISTRIBUTION_BRANCH_TO_BUILD=$DISTROBRANCH  #renaming variable for clarity
+MAVEN_OPTIONS="$(echo --show-version \
+    --batch-mode \
+    -Djenkins \
+    -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn \
+    -Dmaven.repo.local=/tmp/r \
+    -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r)"
 
 rm -rf $BUILD_DIR
 mkdir -p $BUILD_DIR
 cd $BUILD_DIR || exit 1
-
-# create a root pom that will contain a module for each project we have a patch for
-echo "<project>" >> $POM_FILE
-echo "<groupId>org.opendaylight.test</groupId>" >> $POM_FILE
-echo "<artifactId>test</artifactId>" >> $POM_FILE
-echo "<version>0.1</version>" >> $POM_FILE
-echo "<modelVersion>4.0.0</modelVersion>" >> $POM_FILE
-echo "<packaging>pom</packaging>" >> $POM_FILE
-echo "<modules>" >> $POM_FILE
 
 # Set up git committer name and email, needed for commit creation when cherry-picking.
 export EMAIL="sandbox@jenkins.opendaylight.org"
@@ -69,7 +65,6 @@ do
     PROJECT_SHORTNAME="${PROJECT##*/}"  # http://stackoverflow.com/a/3162500
     echo "cloning project ${PROJECT}"
     git clone "https://git.opendaylight.org/gerrit/p/${PROJECT}"
-    echo "<module>${PROJECT_SHORTNAME}</module>" >> ${POM_FILE}
     cd ${PROJECT_SHORTNAME} || exit 1
     if [ "$(echo -n ${proto_patch} | tail -c 1)" == 'r' ]; then
         pure_patch="$(echo -n $proto_patch | head -c -1)"
@@ -100,6 +95,14 @@ do
         # Here 'r' means release. Useful for testing Nitrogen Odlparent changes.
         find . -name "*.xml" -print0 | xargs -0 sed -i 's/-SNAPSHOT//g'
     fi
+    # Build project
+    "$MVN" clean install \
+    -e -Pq \
+    -Dstream=oxygen \
+    -DskipTests=true \
+    --global-settings "$GLOBAL_SETTINGS_FILE" \
+    --settings "$SETTINGS_FILE" \
+    $MAVEN_OPTIONS
     cd "${BUILD_DIR}" || exit 1
 done
 
@@ -109,10 +112,14 @@ if [ "${distribution_status}" == "not_included" ]; then
     git clone "https://git.opendaylight.org/gerrit/p/integration/distribution"
     cd distribution || exit 1
     git checkout "${DISTRIBUTION_BRANCH_TO_BUILD}"
+    # Build project
+    "$MVN" clean install \
+    -e -Pq \
+    -Dstream="$DISTROSTREAM" \
+    -DskipTests=true \
+    --global-settings "$GLOBAL_SETTINGS_FILE" \
+    --settings "$SETTINGS_FILE" \
+    $MAVEN_OPTIONS
     cd "${BUILD_DIR}" || exit 1
-    echo "<module>distribution</module>" >> ${POM_FILE}
 fi
 
-# finish pom file
-echo "</modules>" >> "${POM_FILE}"
-echo "</project>" >> "${POM_FILE}"
