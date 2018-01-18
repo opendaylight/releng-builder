@@ -25,6 +25,7 @@
           csit-sanity-list: '{csit-sanity-list-oxygen}'
           csit-weekly-list: '{csit-weekly-list-oxygen}'
           csit-high-frequency-list: '{csit-high-frequency-list-oxygen}'
+          mvn-version: 'mvn33'
 
       - nitrogen:
           branch: 'stable/nitrogen'
@@ -33,6 +34,7 @@
           csit-sanity-list: '{csit-sanity-list-nitrogen}'
           csit-weekly-list: '{csit-weekly-list-nitrogen}'
           csit-high-frequency-list: '{csit-high-frequency-list-nitrogen}'
+          mvn-version: 'mvn33'
 
       - carbon:
           branch: 'stable/carbon'
@@ -42,6 +44,7 @@
           csit-sanity-list: '{csit-sanity-list-carbon}'
           csit-weekly-list: '{csit-weekly-list-carbon}'
           csit-high-frequency-list: '{csit-high-frequency-list-carbon}'
+          mvn-version: 'mvn33'
 
     # tools system image
     tools_system_image: ZZCI - Ubuntu 16.04 - mininet-ovs-25 - 20171208-1847
@@ -227,30 +230,12 @@
 - job-template:
     name: 'integration-multipatch-test-{stream}'
     # Goal: Build one or more patches and run all available system test on a distribution containing the change.
-    # Operation: This job template checks out and builds each patch provided in job parameters, creates a distribution
-    # containing these patches, and triggers the distribution test job which includes most (if not all) available
-    # CSIT jobs
-    # TODO: Move the following to appropriate readthedocs document.
-    # Recommended Sandbox usage:
-    # 0. Create this job and a CSIT job you want to run on the new .zip in Sandbox (disable timed triggers).
-    # 1. Copy the csit job name to clipboard.
-    # 2. Navigate to Sandbox page of this job.
-    # 3. Click "Configure".
-    # 4. Locate "Trigger/call builds on other projects" (under "Post Steps" tab).
-    # 5. Delete the long value of "Projects to build" field and paste the job name from clipboard (ctrl+a, ctrl+v).
-    # 6. Click "Save" button.
-    # 7. Click "Build with Parameters".
-    # yamllint disable-line rule:line-length
-    # 8. Start the job with your parameters, see https://wiki.opendaylight.org/view/Integration/Test/Running_System_Tests#Running_System_Tests_Using_Custom_Distribution_Built_From_Multiple_Patches
-    # 9. The multipatch job waits for the csit job to finish, so abort csit if you see something went wrong.
-    # 10. Navigate to Sandbox page of the csit job, click the run triggered from multipatch.
-    # 11. Click Parameters and copy the long value of BUNDLE_URL field to clipboard.
-    # 12. Run the same csit job woth different patchset or test options, or other csit jobs, with this BUNDLE_URL value
-    #     so you do not have to wait for multipatch build. Repeat step 12.
-    # 13. Currently, the .zip lasts 24 hours (?) so you may need to jump to step 2 (or 0) after some time.
+    # Operation: This job template checks out and builds in order each patch provided in job parameters, finally
+    # it creates a distribution containing all patches and triggers the distribution test job which includes most
+    # (if not all) available CSIT jobs.
 
     project-type: freestyle
-    node: centos7-builder-2c-8g
+    node: centos7-builder-4c-4g
     jdk: '{jdk}'
 
     properties:
@@ -264,6 +249,8 @@
           run-test: 'false'
       - integration-distribution-branch:
           branch: '{branch}'
+      - integration-distribution-stream:
+          stream: '{stream}'
       - distribution-karaf-version:
           karaf-version: '{karaf-version}'
       - opendaylight-infra-parameters:
@@ -294,27 +281,12 @@
 
     builders:
       - wipe-org-opendaylight-repo
-      - integration-multipatch-builder
+      - lf-maven-install:
+          mvn-version: '{mvn-version}'
       - provide-maven-settings:
           global-settings-file: 'global-settings'
-          settings-file: 'yangtools-settings'
-      - maven-target:
-          maven-version: mvn33
-          pom: patch_tester/pom.xml
-          # TODO: Make Maven options configurable. Currently tests are not skipped, everything else is.
-          goals: |
-              clean install dependency:tree -DoutputFile=dependency_tree.txt
-              -Pq
-              -Dstream={stream}
-              -Dsft.heap.max=4g
-              {opendaylight-infra-mvn-opts}
-          # TODO: {opendaylight-infra-parallel-mvn-opts}?
-          java-opts:
-            - '-Xmx3072m -Dmaven.compile.fork=true'
-          settings: integration-settings
-          settings-type: cfp
-          global-settings: global-settings
-          global-settings-type: cfp
+          settings-file: 'integration-distribution-settings'
+      - integration-multipatch-builder
       - integration-upload-distribution:
           dist-pom: patch_tester/distribution/pom.xml
       - conditional-step:
