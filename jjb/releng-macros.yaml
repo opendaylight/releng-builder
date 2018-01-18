@@ -82,7 +82,8 @@
           name: PATCHES_TO_BUILD
           default: ''
           description: |
-            Patches to add to distro in CSV project:changeset format (genius:32/53632/9,netvirt:59/50259/47)
+              Ordered list of patches to build in the format of project=changeset (checkout) or
+              project:changeset (cherry-pick) for example: genius=32/53632/9,netvirt:59/50259/47
 
 - parameter:
     name: run-test-parameter
