@@ -32,7 +32,8 @@
 # New templates
 
 - job-template:
-    name: '{project}-csit-verify-1node-{functionality}'
+    name: '{prefix}{project}-csit-verify-1node-{functionality}'
+    id: inttest-csit-verify-1node
     disabled: false
 
     project-type: freestyle
