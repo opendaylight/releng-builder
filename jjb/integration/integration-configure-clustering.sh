@@ -82,7 +82,15 @@ cat ${MAVENCONF}
 
 echo "Configuring the startup features..."
 sed -ie "s/\(featuresBoot=\|featuresBoot =\)/featuresBoot = ${ACTUALFEATURES},/g" ${FEATURESCONF}
-sed -ie "s%\(featuresRepositories=\|featuresRepositories =\)%featuresRepositories = mvn:org.opendaylight.integration/features-integration-test/${BUNDLEVERSION}/xml/features,mvn:org.apache.karaf.decanter/apache-karaf-decanter/1.0.0/xml/features,%g" ${FEATURESCONF}
+
+FEATURE_INDEX_STRING="features-integration-index"
+FEATURE_TEST_STRING="features-integration-test"
+if [[ "$KARAF_VERSION" == "karaf4" ]]; then
+    FEATURE_INDEX_STRING="features-index"
+    FEATURE_TEST_STRING="features-test"
+fi
+
+sed -ie "s%\(featuresRepositories=\|featuresRepositories =\)%featuresRepositories = mvn:org.opendaylight.integration/\${FEATURE_TEST_STRING}/${BUNDLEVERSION}/xml/features,mvn:org.apache.karaf.decanter/apache-karaf-decanter/1.0.0/xml/features,%g" ${FEATURESCONF}
 cat ${FEATURESCONF}
 
 echo "Configuring the log..."
