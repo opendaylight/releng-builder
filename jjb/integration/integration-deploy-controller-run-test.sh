@@ -70,10 +70,8 @@ if [[ "$USEFEATURESBOOT" == "True" ]]; then
     sed -ie "s/\(featuresBoot=\|featuresBoot =\)/featuresBoot = ${ACTUALFEATURES},/g" ${FEATURESCONF}
 fi
 
-FEATURE_INDEX_STRING="features-integration-index"
 FEATURE_TEST_STRING="features-integration-test"
 if [[ "$KARAF_VERSION" == "karaf4" ]]; then
-    FEATURE_INDEX_STRING="features-index"
     FEATURE_TEST_STRING="features-test"
 fi
 

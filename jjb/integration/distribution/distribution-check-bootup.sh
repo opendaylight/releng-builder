@@ -20,10 +20,13 @@ unzip -q "${BUNDLE}"
 
 echo "Configuring the startup features..."
 FEATURESCONF="${WORKSPACE}/${BUNDLEFOLDER}/etc/org.apache.karaf.features.cfg"
-# Add test feature repo if Karaf 4.
-sed -ie "s%\(featuresRepositories=\|featuresRepositories =\)%featuresRepositories = mvn:org.opendaylight.integration/features-test/${BUNDLEVERSION}/xml/features,%g" "${FEATURESCONF}"
-# Add test feature repo if Karaf 3.
-sed -ie "s%\(featuresRepositories=\|featuresRepositories =\)%featuresRepositories = mvn:org.opendaylight.integration/features-integration-test/${BUNDLEVERSION}/xml/features,%g" "${FEATURESCONF}"
+FEATURE_TEST_STRING="features-integration-test"
+if [[ "$KARAF_VERSION" == "karaf4" ]]; then
+    FEATURE_TEST_STRING="features-test"
+fi
+
+sed -ie "s%\(featuresRepositories=\|featuresRepositories =\)%featuresRepositories = mvn:org.opendaylight.integration/${FEATURE_TEST_STRING}/${BUNDLEVERSION}/xml/features,%g" ${FEATURESCONF}
+
 # Add actual boot features.
 sed -ie "s/\(featuresBoot=\|featuresBoot =\)/featuresBoot = ${ACTUALFEATURES},/g" "${FEATURESCONF}"
 cat "${FEATURESCONF}"
