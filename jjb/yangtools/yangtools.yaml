@@ -2,8 +2,8 @@
 - project:
     name: yangtools-master
     jobs:
-      - '{project-name}-maven-jobs'
       - '{project-name}-maven-javadoc-jobs'
+      - odl-maven-jobs
 
     project: yangtools
     project-name: yangtools
@@ -38,8 +38,8 @@
     jobs:
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
-      - '{project-name}-maven-jobs'
       - '{project-name}-maven-javadoc-jobs'
+      - odl-maven-jobs
 
     stream: nitrogen
     project: 'yangtools'
@@ -74,8 +74,8 @@
     jobs:
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
-      - '{project-name}-maven-jobs'
       - '{project-name}-maven-javadoc-jobs'
+      - odl-maven-jobs
 
     stream: carbon
     project: 'yangtools'

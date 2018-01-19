@@ -3,7 +3,7 @@
     name: coretutorials-oxygen
     jobs:
       - '{project-name}-integration-{stream}'
-      - '{project-name}-maven-jobs'
+      - odl-maven-jobs
 
     stream: oxygen
     project: 'coretutorials'
@@ -29,7 +29,7 @@
     name: coretutorials-nitrogen
     jobs:
       - '{project-name}-integration-{stream}'
-      - '{project-name}-maven-jobs'
+      - odl-maven-jobs
 
     stream: nitrogen
     project: 'coretutorials'
@@ -55,7 +55,7 @@
     name: coretutorials-carbon
     jobs:
       - '{project-name}-integration-{stream}'
-      - '{project-name}-maven-jobs'
+      - odl-maven-jobs
 
     stream: carbon
     project: 'coretutorials'
@@ -90,4 +90,3 @@
     mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     build-timeout: 120
-
