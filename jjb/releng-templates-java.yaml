@@ -2,21 +2,54 @@
 - job-template:
     name: '{project-name}-integration-{stream}'
 
+    ######################
+    # Default parameters #
+    ######################
+
+    branch: master
+    build-days-to-keep: 30  # 30 days in case we need to troubleshoot
+    build-timeout: 30
+    cron: ''
+    git-url: '$GIT_URL/$PROJECT'
+    java-version: openjdk8
+    mvn-global-settings: global-settings
+    mvn-goals: clean install
+    mvn-opts: ''
+    mvn-params: '-Dmerge'
+    mvn-version: mvn33
+    nexus-cut-dirs: 6  # Number of dirs in the Nexus path to remove for wget -r.
+    staging-profile-id: ''  # Unused by this job.
+    stream: master
+    submodule-recursive: true
+
+    #####################
+    # Job Configuration #
+    #####################
+
     project-type: freestyle
     node: '{build-node}'
     jdk: '{jdk}'
 
     properties:
-      - opendaylight-infra-properties:
+      - lf-infra-properties:
           build-days-to-keep: '{build-days-to-keep}'
 
     parameters:
-      - opendaylight-infra-parameters:
-          os-cloud: '{os-cloud}'
+      - lf-infra-parameters:
           project: '{project}'
           branch: '{branch}'
-          refspec: 'refs/heads/{branch}'
-          artifacts: '{archive-artifacts}'
+          stream: '{stream}'
+          lftools-version: '{lftools-version}'
+      - lf-infra-maven-parameters:
+          mvn-opts: '{mvn-opts}'
+          mvn-params: '{mvn-params}'
+          mvn-version: '{mvn-version}'
+          # Staging repos do not make sense for CLM jobs so set it blank.
+          staging-profile-id: '{staging-profile-id}'
+      - string:
+          name: ARCHIVE_ARTIFACTS
+          default: '{archive-artifacts}'
+          description: Artifacts to archive to the logs server.
 
     scm:
       - git-scm:
@@ -24,8 +57,9 @@
           branch: '{branch}'
 
     wrappers:
-      - opendaylight-infra-wrappers:
+      - lf-infra-wrappers:
           build-timeout: '{build-timeout}'
+          jenkins-ssh-credential: '{jenkins-ssh-credential}'
 
     triggers:
       - reverse:
@@ -33,21 +67,19 @@
           result: 'success'
 
     builders:
-      - jacoco-nojava-workaround
-      - provide-maven-settings:
-          global-settings-file: 'global-settings'
+      - lf-jacoco-nojava-workaround
+      - lf-maven-install:
+          mvn-version: '{mvn-version}'
+      - lf-provide-maven-settings:
+          global-settings-file: '{mvn-global-settings}'
           settings-file: '{mvn-settings}'
-      - maven-target:
-          maven-version: 'mvn33'
-          goals: |
-              {mvn-goals}
-              {opendaylight-infra-mvn-opts}
-          java-opts:
-            - '{mvn-opts}'
-          settings: '{mvn-settings}'
-          settings-type: cfp
-          global-settings: 'global-settings'
-          global-settings-type: cfp
+      - lf-infra-create-netrc:
+          server-id: '{mvn-snapshot-id}'
+      - shell: !include-raw-escape:
+          - global-jjb/shell/lftools-install.sh
+          - global-jjb/shell/common-variables.sh
+          - global-jjb/shell/maven-fetch-metadata.sh
+          - global-jjb/shell/maven-build.sh
 
     publishers:
       - email-notification:
