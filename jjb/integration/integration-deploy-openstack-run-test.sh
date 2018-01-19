@@ -7,6 +7,7 @@ source ${ROBOT_VENV}/bin/activate
 PYTHON="${ROBOT_VENV}/bin/python"
 SSH="ssh -t -t"
 ADMIN_PASSWORD="admin"
+OPENSTACK_MASTER_CLIENTS_VERSION="pike"
 
 # TODO: remove this work to run changes.py if/when it's moved higher up to be visible at the Robot level
 echo "showing recent changes that made it in to the distribution used by this job"
@@ -97,6 +98,45 @@ function create_etc_hosts() {
     echo "Created the hosts file for ${NODE_IP}:"
     cat ${WORKSPACE}/hosts_file
 } # create_etc_hosts()
+
+#function to install Openstack Clients for Testing
+#This will pull the latest versions compatiable with the 
+# openstack release
+function install_openstack_clients_in_robot_vm() {
+    packages=("python-novaclient:9.1.1" "python-neutronclient:6.5.0" "python-openstackclient:3.12.0")
+    for plugin_name in ${ENABLE_OS_PLUGINS}; do
+        if [ "$plugin_name" == "networking-sfc" ]; then
+            packages+=("networking-sfc:5.0.0")
+        fi
+    done
+    openstack_version=$(echo ${OPENSTACK_BRANCH} | cut -d/ -f2)
+    #If the job tests "master", we will use the clients from previous released stable version to avoid failures
+    if [ "${openstack_version}" == "master" ]; then
+       openstack_version=${OPENSTACK_MASTER_CLIENTS_VERSION}
+    fi
+      
+    for package in ${packages[*]}; do
+       package_name=$(echo ${package} | cut -d: -f1)
+       default_version=$(echo ${package} | cut -d: -f2)
+       latest_compat_version_no=${default_version}
+       echo "Get the current support version of the package ${package_name}"
+       wget https://raw.githubusercontent.com/openstack/releases/master/deliverables/${openstack_version}/${package_name}.yaml -O /tmp/package_file.yaml 2>/dev/null
+       if [ $? -eq 0 ]; then
+          latest_compat_version_line=$(cat /tmp/package_file.yaml | grep "version:" | tail -1)
+          latest_compat_version_no=$(echo ${latest_compat_version_line} | cut -d: -f2 | sed 's/ //g')
+       fi
+       echo "pip install --upgrade ${package_name}==${latest_compat_version_no}"
+       pip install --upgrade ${package_name}==${latest_compat_version_no}
+    done
+
+    if [ "${ENABLE_NETWORKING_L2GW}" == "yes" ]; then
+        #networking-l2gw is not officially available in any release yet. Gettting the latest stable version.
+    	pip install networking-l2gw
+    fi
+
+}
+
+
 
 # convert commas in csv strings to spaces (ssv)
 function csv2ssv() {
@@ -1181,6 +1221,9 @@ else
     SUITES=${newsuites}
 fi
 
+#install all client versions required for this job testing
+install_openstack_clients_in_robot_vm
+
 # TODO: run openrc on control node and then scrape the vars from it
 # Environment Variables Needed to execute Openstack Client for NetVirt Jobs
 cat > /tmp/os_netvirt_client_rc << EOF
@@ -1197,6 +1240,11 @@ unset OS_CLOUD
 EOF
 
 source /tmp/os_netvirt_client_rc
+
+echo "Get all versions before executing pybot"
+openstack --version
+nova --version
+neutron --version
 
 echo "Starting Robot test suites ${SUITES} ..."
 # please add pybot -v arguments on a single line and alphabetized

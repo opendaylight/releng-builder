@@ -407,6 +407,12 @@
     builders:
       - shell: !include-raw: integration-install-robotframework.sh
 
+- builder:
+    name: integration-install-openstacktestprereqs
+    builders:
+      - shell: !include-raw: integration-install-openstacktestprereqs.sh
+
+
 # Macro: integration-cleanup-tmp
 # Operation: Cleans up temporary files created by build
 # Used by: {project}-csit-* job templates

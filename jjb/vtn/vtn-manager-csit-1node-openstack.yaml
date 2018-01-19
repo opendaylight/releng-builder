@@ -29,10 +29,11 @@
           karaf-version: karaf3
 
     openstack:
-      - newton:
-          openstack-branch: 'stable/newton'
-          odl-ml2-branch: 'stable/newton'
-          openstack_system_image: 'CentOS 7 - devstack-newton - 20171014-2147'
+     - ocata:
+          openstack-branch: 'stable/ocata'
+          odl-ml2-branch: 'stable/ocata'
+          odl-ml2-port-binding: 'network-topology'
+          openstack_system_image: '{openstack_system_image_ocata}'
 
     odl-enable-l3: 'no'
 
