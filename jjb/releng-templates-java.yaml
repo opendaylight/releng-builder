@@ -1,4 +1,20 @@
 ---
+- job-group:
+    name: odl-maven-jobs
+
+    jobs:
+      - gerrit-maven-clm
+
+      - gerrit-maven-merge:
+          post_build_trigger:
+            - project:
+                - 'distribution-merge-{stream}'
+              condition: SUCCESS
+
+      - gerrit-maven-release
+      - gerrit-maven-verify
+      - gerrit-maven-verify-dependencies
+
 - job-template:
     name: '{project-name}-integration-{stream}'
 
