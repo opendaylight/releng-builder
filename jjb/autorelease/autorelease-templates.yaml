@@ -423,7 +423,7 @@
           pom: pom.xml
           goals: |
               clean validate
-              -Pq
+              -Pq -Dduplicate-finder.skip=true
               {opendaylight-infra-mvn-opts}
           java-opts:
             - '-Xmx8g -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
