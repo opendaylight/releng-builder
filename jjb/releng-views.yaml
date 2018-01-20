@@ -1,0 +1,644 @@
+---
+- releng_view: &releng_view_common
+    name: releng-view-common
+    # common configuration for project views.
+
+    ######################
+    # Default parameters #
+    ######################
+    view-type: list
+
+# Todo: Add a '01-recent' view once the implementation for most recent job filter
+# is fixed in JJB 2.1. JJB 2.0 view implementation does not implement the job filters
+# completely therefore, most recent jobs run filter is not implemented through JJB
+# code and the view requires to be manuaged manually on the releng/builder.
+
+- view:
+    name: All-Sonar
+    regex: '.*-sonar$'
+    description: 'List of Sonar jobs'
+    <<: *releng_view_common
+
+- view:
+    name: CLM
+    description: 'List of CLM jobs'
+    regex: '.*-clm$'
+    <<: *releng_view_common
+
+- view:
+    name: CSIT-1node
+    description: 'List of CSIT 1node jobs'
+    regex: '^.*-csit-1node.*'
+    <<: *releng_view_common
+
+- view:
+    name: CSIT-3node
+    description: 'List of CSIT 3node jobs'
+    regex: '^.*-csit-3node.*'
+    <<: *releng_view_common
+
+- view:
+    name: CSIT
+    description: 'List of CSIT jobs'
+    regex: '^.*-csit-.*'
+    <<: *releng_view_common
+
+- view:
+    name: CSIT-Verify
+    description: 'List of CSIT Verify jobs'
+    regex: '^.*-csit-verify.*'
+    <<: *releng_view_common
+
+- view:
+    name: Distribution-Check
+    description: 'List of Distribution Check jobs'
+    regex: '.*-distribution.*-check-.*'
+    <<: *releng_view_common
+
+- view:
+    name: Distribution-Jobs
+    description: 'List of Distribution jobs (test, check, merge, deploy, offline, verify)'
+    regex: '^.*-distribution-(?!(test|check|merge|deploy|offline|verify)).*'
+    <<: *releng_view_common
+
+- view:
+    name: Gate
+    description: 'List of Gate jobs'
+    regex: '.*-gate-.*'
+    <<: *releng_view_common
+
+- view:
+    name: Integration
+    description: 'List of Integration jobs'
+    regex: '.*-integration-.*'
+    <<: *releng_view_common
+
+- view:
+    name: Merge-Jobs
+    description: 'List of Merge jobs'
+    regex: '.*-merge-.*'
+    <<: *releng_view_common
+
+- view:
+    name: Patch-Test
+    description: 'List of Patch-Test jobs, for prioritizing jobs via the Job Priorities plugin'
+    regex: '.*-patch-test-.*'
+    <<: *releng_view_common
+
+- view:
+    name: Periodic
+    description: 'List of Periodic jobs'
+    regex: '[a-zA-Z0-9]+-periodic-[a-zA-Z0-9]+'
+    <<: *releng_view_common
+
+- view:
+    name: Release
+    description: 'List of Release jobs'
+    regex: '.*-release-.*'
+    <<: *releng_view_common
+
+- view:
+    name: Sanity
+    description: 'List of Sanity jobs'
+    regex: '.*-sanity-.*'
+    <<: *releng_view_common
+
+- view:
+    name: Validate
+    description: 'List of Validate jobs'
+    regex: '.*-validate-autorelease-.*'
+    <<: *releng_view_common
+
+- view:
+    name: Verify
+    description: 'List of Verify jobs, exluding CSIT jobs'
+    regex: '^(?!.*-csit).*-verify-.*'
+    <<: *releng_view_common
+
+- view:
+    name: aaa
+    description: 'List of aaa jobs'
+    regex: '^aaa-.*'
+    <<: *releng_view_common
+
+- view:
+    name: alto
+    description: 'List of alto jobs'
+    regex: '^alto-.*'
+    <<: *releng_view_common
+
+- view:
+    name: atrium
+    description: 'List of atrium jobs'
+    regex: '^atrium-.*'
+    <<: *releng_view_common
+
+- view:
+    name: autorelease
+    description: 'List of autorelease jobs'
+    regex: '^autorelease-.*'
+    <<: *releng_view_common
+
+- view:
+    name: bgpcep
+    description: 'List of bgpcep jobs'
+    regex: '^bgpcep-.*'
+    <<: *releng_view_common
+
+- view:
+    name: bier
+    description: 'List of bier jobs'
+    regex: '^bier-.*'
+    <<: *releng_view_common
+
+- view:
+    name: builder
+    description: 'List of builder jobs'
+    regex: '^(builder|lf-infra)-.*'
+    <<: *releng_view_common
+
+- view:
+    name: capwap
+    description: 'List of capwap jobs'
+    regex: '^capwap-.*'
+    <<: *releng_view_common
+
+- view:
+    name: cardinal
+    description: 'List of cardinal jobs'
+    regex: '^cardinal-.*'
+    <<: *releng_view_common
+
+- view:
+    name: centinel
+    description: 'List of centinel jobs'
+    regex: '^centinel-.*'
+    <<: *releng_view_common
+
+- view:
+    name: circuitsw
+    description: 'List of circuitsw jobs'
+    regex: '^circuitsw-.*'
+    <<: *releng_view_common
+
+- view:
+    name: coe
+    description: 'List of coe jobs'
+    regex: '^coe-.*'
+    <<: *releng_view_common
+
+- view:
+    name: controller
+    description: 'List of controller jobs'
+    regex: '^controller-.*'
+    <<: *releng_view_common
+
+- view:
+    name: coretutorials
+    description: 'List of coretutorials jobs'
+    regex: '^coretutorials-.*'
+    <<: *releng_view_common
+
+- view:
+    name: daexim
+    description: 'List of daexim jobs'
+    regex: '^daexim-.*'
+    <<: *releng_view_common
+
+- view:
+    name: didm
+    description: 'List of didm jobs'
+    regex: '^didm-.*'
+    <<: *releng_view_common
+
+- view:
+    name: distribution
+    description: 'List of distribution jobs'
+    regex: '^(integration-)?distribution-.*'
+    <<: *releng_view_common
+
+- view:
+    name: dlux
+    description: 'List of dlux jobs'
+    regex: '^dlux-.*'
+    <<: *releng_view_common
+
+- view:
+    name: dluxapps
+    description: 'List of dluxapps jobs'
+    regex: '^dluxapps-.*'
+    <<: *releng_view_common
+
+- view:
+    name: docs
+    description: 'List of docs jobs'
+    regex: '^docs-.*'
+    <<: *releng_view_common
+
+- view:
+    name: eman
+    description: 'List of eman jobs'
+    regex: '^eman-.*'
+    <<: *releng_view_common
+
+- view:
+    name: epc
+    description: 'List of epc jobs'
+    regex: '^epc-.*'
+    <<: *releng_view_common
+
+- view:
+    name: faas
+    description: 'List of faas jobs'
+    regex: '^faas-.*'
+    <<: *releng_view_common
+
+- view:
+    name: federation
+    description: 'List of federation jobs'
+    regex: '^federation-.*'
+    <<: *releng_view_common
+
+- view:
+    name: fpc
+    description: 'List of fpc jobs'
+    regex: '^fpc-.*'
+    <<: *releng_view_common
+
+- view:
+    name: genius
+    description: 'List of genius jobs'
+    regex: '^genius-.*'
+    <<: *releng_view_common
+
+- view:
+    name: gnt
+    description: 'List of gnt jobs'
+    regex: '^gnt-.*'
+    <<: *releng_view_common
+
+- view:
+    name: groupbasedpolicy
+    description: 'List of groupbasedpolicy jobs'
+    regex: '^groupbasedpolicy-.*'
+    <<: *releng_view_common
+
+- view:
+    name: intrautils
+    description: 'List of infrautils jobs'
+    regex: '^infrautils-.*'
+    <<: *releng_view_common
+
+- view:
+    name: integration
+    description: 'List of integration jobs'
+    regex: '^integration-.*'
+    <<: *releng_view_common
+
+- view:
+    name: iotdm
+    description: 'List of iotdm jobs'
+    regex: '^iotdm-.*'
+    <<: *releng_view_common
+
+- view:
+    name: jsonrpc
+    description: 'List of jsonrpc jobs'
+    regex: '^jsonrpc-.*'
+    <<: *releng_view_common
+
+- view:
+    name: kafkaproducer
+    description: 'List of kafkaproducer jobs'
+    regex: '^kafkaproducer-.*'
+    <<: *releng_view_common
+
+- view:
+    name: l2switch
+    description: 'List of l2switch jobs'
+    regex: '^l2switch-.*'
+    <<: *releng_view_common
+
+- view:
+    name: lacp
+    description: 'List of lacp jobs'
+    regex: '^lacp-.*'
+    <<: *releng_view_common
+
+- view:
+    name: lispflowmapping
+    description: 'List of lispflowmapping jobs'
+    regex: '^lispflowmapping-.*'
+    <<: *releng_view_common
+
+- view:
+    name: mdsal
+    description: 'List of mdsal jobs'
+    regex: '^mdsal-.*'
+    <<: *releng_view_common
+
+- view:
+    name: messaging4transport
+    description: 'List of messaging4transport jobs'
+    regex: '^messaging4transport-.*'
+    <<: *releng_view_common
+
+- view:
+    name: natapp
+    description: 'List of natapp jobs'
+    regex: '^natapp-.*'
+    <<: *releng_view_common
+
+- view:
+    name: nemo
+    description: 'List of nemo jobs'
+    regex: '^nemo-.*'
+    <<: *releng_view_common
+
+- view:
+    name: netconf
+    description: 'List of netconf jobs'
+    regex: '^netconf-.*'
+    <<: *releng_view_common
+
+- view:
+    name: netide
+    description: 'List of netide jobs'
+    regex: '^netide-.*'
+    <<: *releng_view_common
+
+- view:
+    name: netvirt
+    description: 'List of netvirt jobs'
+    regex: '^netvirt-.*'
+    <<: *releng_view_common
+
+- view:
+    name: netvirt-csit
+    description: 'List of netvirt-csit jobs'
+    regex: 'netvirt-csit(?!(.*gate)|(.*hwvtep)).*'
+    <<: *releng_view_common
+
+- view:
+    name: neutron
+    description: 'List of neutron jobs'
+    regex: '^neutron-.*'
+    <<: *releng_view_common
+
+- view:
+    name: next
+    description: 'List of next jobs'
+    regex: '^next-.*'
+    <<: *releng_view_common
+
+- view:
+    name: nic
+    description: 'List of nic jobs'
+    regex: '^nic-.*'
+    <<: *releng_view_common
+
+- view:
+    name: ocpplugin
+    description: 'List of ocpplugin jobs'
+    regex: '^ocpplugin-.*'
+    <<: *releng_view_common
+
+- view:
+    name: odlparent
+    description: 'List of odlparent jobs'
+    regex: '^odlparent-.*'
+    <<: *releng_view_common
+
+- view:
+    name: of-config
+    description: 'List of of-config jobs'
+    regex: '^of-config-.*'
+    <<: *releng_view_common
+
+- view:
+    name: openflowjava
+    description: 'List of openflowjava jobs'
+    regex: '^openflowjava-.*'
+    <<: *releng_view_common
+
+- view:
+    name: openflowplugin
+    description: 'List of openflowplugin jobs'
+    regex: '^openflowplugin-.*'
+    <<: *releng_view_common
+
+- view:
+    name: openflowplugin-carbon
+    description: 'List of openflowplugin carbon jobs'
+    regex: 'openflowplugin-.*-carbon'
+    <<: *releng_view_common
+
+- view:
+    name: openflowplugin-nitrogen
+    description: 'List of openflowplugin nitrogen jobs'
+    regex: 'openflowplugin-.*-nitrogen'
+    <<: *releng_view_common
+
+- view:
+    name: openflowplugin-oxygen
+    description: 'List of openflowplugin oxygen jobs'
+    regex: 'openflowplugin-.*-oxygen'
+    <<: *releng_view_common
+
+- view:
+    name: opflex
+    description: 'List of opflex jobs'
+    regex: '^opflex-.*'
+    <<: *releng_view_common
+
+- view:
+    name: ovil
+    description: 'List of ovil jobs'
+    regex: '^ovil-.*'
+    <<: *releng_view_common
+
+- view:
+    name: ovsdb
+    description: 'List of ovsdb jobs'
+    regex: '^ovsdb-.*'
+    <<: *releng_view_common
+
+- view:
+    name: p4plugin
+    description: 'List of p4plugin jobs'
+    regex: '^p4plugin-.*'
+    <<: *releng_view_common
+
+- view:
+    name: packaging
+    description: 'List of packaging, ansible and puppet jobs'
+    regex: '^packaging.*|ansible.*|puppet.*'
+    <<: *releng_view_common
+
+- view:
+    name: packer
+    description: 'List of packer jobs'
+    regex: '^builder-.*packer.*'
+    <<: *releng_view_common
+
+- view:
+    name: packetcable
+    description: 'List of packetcable jobs'
+    regex: '^packetcable-.*'
+    <<: *releng_view_common
+
+- view:
+    name: persistence
+    description: 'List of persistence jobs'
+    regex: '^persistence-.*'
+    <<: *releng_view_common
+
+- view:
+    name: potn
+    description: 'List of potn jobs'
+    regex: '^potn-.*'
+    <<: *releng_view_common
+
+- view:
+    name: reservation
+    description: 'List of reservation jobs'
+    regex: '^reservation-.*'
+    <<: *releng_view_common
+
+- view:
+    name: sdninterfaceapp
+    description: 'List of sdninterfaceapp jobs'
+    regex: '^sdninterfaceapp-.*'
+    <<: *releng_view_common
+
+- view:
+    name: sfc
+    description: 'List of sfc jobs'
+    regex: '^sfc-.*'
+    <<: *releng_view_common
+
+- view:
+    name: snbi
+    description: 'List of snbi jobs'
+    regex: '^snbi-.*'
+    <<: *releng_view_common
+
+- view:
+    name: snmp
+    description: 'List of snmp jobs'
+    regex: '^snmp-.*'
+    <<: *releng_view_common
+
+- view:
+    name: snmp4sdn
+    description: 'List of snmp4sdn jobs'
+    regex: '^snmp4sdn-.*'
+    <<: *releng_view_common
+
+- view:
+    name: spectrometer
+    description: 'List of spectrometer jobs'
+    regex: '^spectrometer-.*'
+    <<: *releng_view_common
+
+- view:
+    name: sptn
+    description: 'List of sptn jobs'
+    regex: '^sptn-.*'
+    <<: *releng_view_common
+
+- view:
+    name: spx
+    description: 'List of spx jobs'
+    regex: '^sxp-.*'
+    <<: *releng_view_common
+
+- view:
+    name: systemmetrics
+    description: 'List of systemmetrics jobs'
+    regex: '^systemmetrics-.*'
+    <<: *releng_view_common
+
+- view:
+    name: topoprocessing
+    description: 'List of topoprocessing jobs'
+    regex: '^topoprocessing-.*'
+    <<: *releng_view_common
+
+- view:
+    name: transportpce
+    description: 'List of transportpce jobs'
+    regex: '^transportpce-.*'
+    <<: *releng_view_common
+
+- view:
+    name: tsdr
+    description: 'List of tsdr jobs'
+    regex: '^tsdr-.*'
+    <<: *releng_view_common
+
+- view:
+    name: ttp
+    description: 'List of ttp jobs'
+    regex: '^ttp-.*'
+    <<: *releng_view_common
+
+- view:
+    name: unimgr
+    description: 'List of unimgr jobs'
+    regex: '^unimgr-.*'
+    <<: *releng_view_common
+
+- view:
+    name: usc
+    description: 'List of usc jobs'
+    regex: '^usc-.*'
+    <<: *releng_view_common
+
+- view:
+    name: uscplugin
+    description: 'List of uscplugin jobs'
+    regex: '^usecplugin-.*'
+    <<: *releng_view_common
+
+- view:
+    name: vbd
+    description: 'List of vbd jobs'
+    regex: '^vbd-.*'
+    <<: *releng_view_common
+
+- view:
+    name: verify-python
+    description: 'List of pyhton-verify jobs'
+    regex: '.*-python-.*'
+    <<: *releng_view_common
+
+- view:
+    name: vpnservice
+    description: 'List of vpnservice jobs'
+    regex: '^vpnservice-.*'
+    <<: *releng_view_common
+
+- view:
+    name: vtn
+    description: 'List of vtn jobs'
+    regex: '^vtn-.*'
+    <<: *releng_view_common
+
+- view:
+    name: yang-push
+    description: 'List of yang-push jobs'
+    regex: '^yang-push-.*'
+    <<: *releng_view_common
+
+- view:
+    name: yangide
+    description: 'List of yangide jobs'
+    regex: '^yangide-.*'
+    <<: *releng_view_common
+
+- view:
+    name: yangtools
+    description: 'List of yangtools jobs'
+    regex: '^yangtools-.*'
+    <<: *releng_view_common
