@@ -55,19 +55,6 @@ pip install --upgrade jmespath
 # Module for backup-restore support library
 pip install --upgrade jsonpatch
 
-# Module OpenstackClient is needed for Netvirt CSIT jobs
-# Module networking-l2gw is required for using l2gw commands with neutron client
-# Module python-neutronclient is needed for certain tests run with Openstack Newton
-#  that does not work with Openstack Client
-# Module pyhon-novaclient is installed as a dependency of openstackclient, but the
-#  latest version (v10.0.0) has some problem with "server add floating ip" that is
-#  not there with v9.0.0, so pinning it to that for now
-pip install python-openstackclient
-pip install networking-l2gw==11.0.0
-pip install python-neutronclient==6.1.0
-pip install networking-sfc
-pip install --upgrade python-novaclient==9.0.0
-
 # Print installed versions.
 pip install --upgrade pipdeptree
 pipdeptree
