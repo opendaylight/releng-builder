@@ -8,7 +8,6 @@
 # which accompanies this distribution, and is available at
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
-
 # Checks the image "protected" value and set "True" marker
 #
 # The script is involked by 'builder-verify-image-protection', searches
@@ -16,14 +15,10 @@
 # setting. If the image protect setting is not "True", sets the
 # image protect setting to "True" to prevent the image from getting purged
 # by the cleanup old images job.
+echo "---> Check image protection"
 
-virtualenv "/tmp/v/openstack"
 # shellcheck source=/tmp/v/openstack/bin/activate disable=SC1091
 source "/tmp/v/openstack/bin/activate"
-pip install --upgrade pip
-pip install --upgrade python-openstackclient
-pip install --upgrade pipdeptree
-pipdeptree
 
 declare -a images
 readarray -t images <<< "$(grep -r _system_image: --include \*.yaml \

@@ -290,6 +290,11 @@
       - shell: !include-raw: odl-openstack-install.sh
 
 - builder:
+    name: odl-openstack-check-image-protection
+    builders:
+      - shell: !include-raw: odl-openstack-check-image-protection.sh
+
+- builder:
     # Deploys a maven site to Nexus using lftools nexus-zip command
     name: opendaylight-infra-deploy-maven-site
     builders:
