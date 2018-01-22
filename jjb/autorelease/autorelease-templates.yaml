@@ -250,6 +250,7 @@
           jenkins-ssh-credential: opendaylight-jenkins-ssh
 
     builders:
+      - autorelease-update-project-views
       - autorelease-update-validate-projects
       - opendaylight-infra-push-gerrit-patch:
           project: 'releng/builder'

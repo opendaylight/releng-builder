@@ -147,6 +147,11 @@
           - generate-release-notes.sh
 
 - builder:
+    name: autorelease-update-project-views
+    builders:
+      - shell: !include-raw: update-autorelease-projects-views.sh
+
+- builder:
     name: autorelease-update-validate-projects
     builders:
       - shell: !include-raw: update-validate-autorelease-projects.sh
