@@ -59,6 +59,9 @@ resources:
                         "INDEX": {get_param: index}
             networks:
                 - network: odlci
+                  port_extra_properties:
+                      allowed_address_pairs:
+                          - ip_address: 10.250.0.0/24
             key_name: {get_param: ssh_key}
             user_data: |
                 #!/bin/bash
