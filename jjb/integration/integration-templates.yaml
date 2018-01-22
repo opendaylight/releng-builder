@@ -1105,6 +1105,10 @@
           default: '{enable-haproxy}'
           description: 'Enable HAProxy for using neutron interface as HA'
       - string:
+          name: ENABLE_OS_NETWORK_SERVICES
+          default: '{enable-openstack-network-services}'
+          description: 'comma seperated list of network services to enable'
+      - string:
           name: ENABLE_OS_SERVICES
           default: '{enable-openstack-services}'
           description: 'comma separated list of services to enable on controller nodes'
@@ -1303,6 +1307,10 @@
           name: ENABLE_HAPROXY_FOR_NEUTRON
           default: '{enable-haproxy}'
           description: 'Enable HAProxy for using neutron interface as HA'
+      - string:
+          name: ENABLE_OS_NETWORK_SERVICES
+          default: '{enable-openstack-network-services}'
+          description: 'comma seperated list of network services to enable'
       - string:
           name: ENABLE_OS_SERVICES
           default: '{enable-openstack-services}'
