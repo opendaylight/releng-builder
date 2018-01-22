@@ -62,6 +62,7 @@ PUBLIC_BRIDGE: ${PUBLIC_BRIDGE}
 ENABLE_HAPROXY_FOR_NEUTRON: ${ENABLE_HAPROXY_FOR_NEUTRON}
 ENABLE_OS_SERVICES: ${ENABLE_OS_SERVICES}
 ENABLE_OS_COMPUTE_SERVICES: ${ENABLE_OS_COMPUTE_SERVICES}
+ENABLE_OS_NETWORK_SERVICES: ${ENABLE_OS_NETWORK_SERVICES}
 ENABLE_OS_PLUGINS: ${ENABLE_OS_PLUGINS}
 DISABLE_OS_SERVICES: ${DISABLE_OS_SERVICES}
 TENANT_NETWORK_TYPE: ${TENANT_NETWORK_TYPE}
@@ -147,7 +148,13 @@ function add_os_services() {
     local enable_services=$2
     local disable_services=$3
     local local_conf_file_name=$4
+    local enable_network_services=$5
 
+    if [ -n "${enable_network_services}" ]; then
+        cat >> ${local_conf_file_name} << EOF
+enable_service $(csv2ssv "${enable_network_services}")
+EOF
+    fi
     cat >> ${local_conf_file_name} << EOF
 enable_service $(csv2ssv "${core_services}")
 EOF
@@ -180,7 +187,7 @@ RECLONE=${RECLONE}
 disable_all_services
 EOF
 
-    add_os_services "${CORE_OS_CONTROL_SERVICES}" "${ENABLE_OS_SERVICES}" "${DISABLE_OS_SERVICES}" "${local_conf_file_name}"
+    add_os_services "${CORE_OS_CONTROL_SERVICES}" "${ENABLE_OS_SERVICES}" "${DISABLE_OS_SERVICES}" "${local_conf_file_name}" "${ENABLE_OS_NETWORK_SERVICES}"
 
     cat >> ${local_conf_file_name} << EOF
 
@@ -801,8 +808,6 @@ CORE_OS_CONTROL_SERVICES+=",key"
 CORE_OS_CONTROL_SERVICES+=",n-api,n-api-meta,n-cauth,n-cond,n-crt,n-obj,n-sch"
 # ODL - services to connect to ODL
 CORE_OS_CONTROL_SERVICES+=",odl-compute,odl-neutron"
-# Neutron
-CORE_OS_CONTROL_SERVICES+=",q-dhcp,q-meta,q-svc"
 # Additional services
 CORE_OS_CONTROL_SERVICES+=",mysql,rabbit"
 
@@ -849,6 +854,7 @@ if [ -n "${DEVSTACK_HASH}" ]; then
     echo "git checkout ${DEVSTACK_HASH}"
     git checkout ${DEVSTACK_HASH}
 fi
+chmod 777 neutron_plugin_create_initial_networks
 git --no-pager log --pretty=format:'%h %<(13)%ar%<(13)%cr %<(20,trunc)%an%d %s\n%b' -n20
 echo "workaround: adjust wait from 60s to 1800s (30m)"
 sed -i 's/wait_for_compute 60/wait_for_compute 1800/g' /opt/stack/devstack/lib/nova
@@ -906,6 +912,14 @@ for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
     ${SSH} ${!CONTROLIP} "bash /tmp/get_devstack.sh > /tmp/get_devstack.sh.txt 2>&1"
     create_control_node_local_conf ${!CONTROLIP} ${ODLMGRIP[$i]} "${ODL_OVS_MGRS[$i]}"
     scp ${WORKSPACE}/local.conf_control_${!CONTROLIP} ${!CONTROLIP}:/opt/stack/devstack/local.conf
+    # devstack Master is yet to migrate fully to lib/neutron, there are some ugly hacks that is
+    # affecting the stacking.
+    #Workaround For Queens, Make the physical Network as physnet1 in lib/neutron
+    #Workaround Comment out creating initial Networks in lib/neutron
+    if [ "${ODL_ML2_BRANCH}" == "master" ]; then
+       ssh ${!CONTROLIP} "sed -i 's/flat_networks public/flat_networks public,physnet1/' /opt/stack/devstack/lib/neutron"
+       ssh ${!CONTROLIP} "sed -i '186i iniset $NEUTRON_CORE_PLUGIN_CONF ml2_type_vlan vlan_ranges public:1:4094,physnet1:1:4094'"
+    fi
     echo "Stack the control node ${i} of ${NUM_OPENSTACK_CONTROL_NODES}: ${CONTROLIP}"
     ssh ${!CONTROLIP} "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
     ssh ${!CONTROLIP} "ps -ef | grep stack.sh"
@@ -915,6 +929,18 @@ for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
     # TODO: can this be removed now?
     if [ "${ODL_ML2_BRANCH}" == "stable/newton" ]; then
         ssh ${!CONTROLIP} "cd /opt/stack; git clone https://git.openstack.org/openstack/requirements; cd requirements; git checkout stable/newton; sed -i /appdirs/d upper-constraints.txt"
+    fi
+    if [ "${ODL_ML2_BRANCH}" == "stable/ocata" ]; then
+        echo "Updating requirements for ${ODL_ML2_BRANCH}"
+        echo "Workaround for https://review.openstack.org/#/c/491032/"
+        echo "Modify upper-constraints to use libvirt-python 3.2.0"
+        ${SSH} ${!CONTROLIP} "
+            cd /opt/stack;
+            git clone https://git.openstack.org/openstack/requirements;
+            cd requirements;
+            git checkout stable/ocata;
+            sed -i s/libvirt-python===2.5.0/libvirt-python===3.2.0/ upper-constraints.txt
+        "
     fi
 done
 
@@ -930,16 +956,18 @@ done
 # AccessRefused: (0, 0): (403) ACCESS_REFUSED - Login was refused using authentication mechanism AMQPLAIN. For details see the broker logfile.
 # Compare that timestamp to this log in the control stack.log: sudo rabbitmqctl set_permissions -p nova_cell1 stackrabbit
 # If the n-cpu.log is earlier than the control stack.log timestamp then the failure condition is likely hit.
-WAIT_FOR_RABBITMQ_MINUTES=60
-echo "Wait a maximum of ${WAIT_FOR_RABBITMQ_MINUTES}m until rabbitmq is ready to allow the controller to create nova_cell1 before the computes need it"
-retry ${WAIT_FOR_RABBITMQ_MINUTES} 60 "is_rabbitmq_ready ${OPENSTACK_CONTROL_NODE_1_IP}"
-rc=$?
-if ((${rc} == 0)); then
-    echo "rabbitmq is ready, starting ${NUM_OPENSTACK_COMPUTE_NODES} compute(s)"
-else
-    echo "rabbitmq was not ready in ${WAIT_FOR_RABBITMQ_MINUTES}m"
-    collect_logs
-    exit 1
+if [ ${NUM_OPENSTACK_COMPUTE_NODES} -gt 0 ]; then
+   WAIT_FOR_RABBITMQ_MINUTES=60
+   echo "Wait a maximum of ${WAIT_FOR_RABBITMQ_MINUTES}m until rabbitmq is ready to allow the controller to create nova_cell1 before the computes need it"
+   retry ${WAIT_FOR_RABBITMQ_MINUTES} 60 "is_rabbitmq_ready ${OPENSTACK_CONTROL_NODE_1_IP}"
+   rc=$?
+   if ((${rc} == 0)); then
+      echo "rabbitmq is ready, starting ${NUM_OPENSTACK_COMPUTE_NODES} compute(s)"
+   else
+      echo "rabbitmq was not ready in ${WAIT_FOR_RABBITMQ_MINUTES}m"
+      collect_logs
+      exit 1
+   fi
 fi
 
 for i in `seq 1 ${NUM_OPENSTACK_COMPUTE_NODES}`; do
