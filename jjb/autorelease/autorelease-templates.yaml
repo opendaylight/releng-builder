@@ -199,6 +199,7 @@
           jenkins-ssh-credential: opendaylight-jenkins-ssh
 
     builders:
+      - autorelease-update-project-views
       - shell: !include-raw-escape:
           - update-validate-autorelease-projects.sh
       - opendaylight-infra-push-gerrit-patch:
