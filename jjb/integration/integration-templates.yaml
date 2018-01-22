@@ -1121,6 +1121,10 @@
           default: '{enable-openstack-compute-services}'
           description: 'comma separated list of services to enable on compute nodes'
       - string:
+          name: ENABLE_OS_NETWORK_SERVICES
+          default: '{enable-openstack-network-services}'
+          description: 'comma seperated list of network services to enable'
+      - string:
           name: ENABLE_OS_PLUGINS
           default: '{enable-openstack-plugins}'
           description: 'comma seperated list of plugins to enable'
@@ -1320,6 +1324,10 @@
           name: ENABLE_OS_COMPUTE_SERVICES
           default: '{enable-openstack-compute-services}'
           description: 'comma separated list of services to enable on compute nodes'
+      - string:
+          name: ENABLE_OS_NETWORK_SERVICES
+          default: '{enable-openstack-network-services}'
+          description: 'comma seperated list of network services to enable'
       - string:
           name: ENABLE_OS_PLUGINS
           default: '{enable-openstack-plugins}'
