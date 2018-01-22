@@ -1,0 +1,20 @@
+# Integration/Packaging macros
+---
+- builder:
+    name: install-test-uninstall-rpm
+    builders:
+      - inject:
+          properties-content: 'URL=/home/$USER/rpmbuild/RPMS/noarch/*.rpm'
+      - shell: !include-raw: install-rpm.sh
+      - shell: !include-raw: start-odl.sh
+      # Install deps needed interactive Karaf shell tests
+      - shell: |
+          # Install expect to interact with Karaf shell
+          # Install nmap to check status of ODL's SSH port
+          sudo yum install -y expect nmap
+      - shell: !include-raw: test-karaf.expect
+      - shell: !include-raw: stop-odl.sh
+      - shell: !include-raw: uninstall-rpm.sh
+      - shell: |
+          # Remove old host key so future installs don't fail to SSH
+          rm /home/jenkins/.ssh/known_hosts
