@@ -33,6 +33,12 @@ parameters:
         description: VM Image to spin up
 
 resources:
+    port:
+        type: "OS::Neutron::Port"
+        properties:
+            allowed_address_pairs:
+                - ip_address: 10.250.0.0/24
+            network: odlci
     volume:
         type: "OS::Cinder::Volume"
         properties:
@@ -58,7 +64,7 @@ resources:
                         "GROUP": {get_param: group}
                         "INDEX": {get_param: index}
             networks:
-                - network: odlci
+                - port: {get_resource: port}
             key_name: {get_param: ssh_key}
             user_data: |
                 #!/bin/bash
