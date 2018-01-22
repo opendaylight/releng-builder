@@ -11,14 +11,10 @@
 # Cleanup stale stacks in the cloud
 # Requires the variable JENKINS_URLS declared in the job as a space separated
 # list of Jenkins instances to check for active builds.
+echo "---> Cleanup stale stacks"
 
-virtualenv "/tmp/v/openstack"
 # shellcheck source=/tmp/v/openstack/bin/activate disable=SC1091
 source "/tmp/v/openstack/bin/activate"
-pip install --upgrade pip
-pip install --upgrade python-openstackclient python-heatclient
-pip install --upgrade pipdeptree
-pipdeptree
 
 stack_in_jenkins() {
     # Usage: check_stack_in_jenkins STACK_NAME JENKINS_URL [JENKINS_URL...]

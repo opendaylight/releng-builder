@@ -300,6 +300,11 @@
       - shell: !include-raw: odl-openstack-cleanup-old-images.sh
 
 - builder:
+    name: odl-openstack-cleanup-stale-stacks
+    builders:
+      - shell: !include-raw: odl-openstack-cleanup-stale-stacks.sh
+
+- builder:
     # Deploys a maven site to Nexus using lftools nexus-zip command
     name: opendaylight-infra-deploy-maven-site
     builders:
