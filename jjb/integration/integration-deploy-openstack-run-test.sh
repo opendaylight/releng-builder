@@ -62,6 +62,7 @@ PUBLIC_BRIDGE: ${PUBLIC_BRIDGE}
 ENABLE_HAPROXY_FOR_NEUTRON: ${ENABLE_HAPROXY_FOR_NEUTRON}
 ENABLE_OS_SERVICES: ${ENABLE_OS_SERVICES}
 ENABLE_OS_COMPUTE_SERVICES: ${ENABLE_OS_COMPUTE_SERVICES}
+ENABLE_OS_NETWORK_SERVICES: ${ENABLE_OS_NETWORK_SERVICES}
 ENABLE_OS_PLUGINS: ${ENABLE_OS_PLUGINS}
 DISABLE_OS_SERVICES: ${DISABLE_OS_SERVICES}
 TENANT_NETWORK_TYPE: ${TENANT_NETWORK_TYPE}
@@ -141,12 +142,36 @@ function csv2ssv() {
     echo "${ssv}"
 } # csv2ssv
 
+function is_openstack_feature_enabled() {
+    local feature=$1
+    for enabled_feature in $(csv2ssv ${ENABLE_OS_SERVICES})
+    do
+        if [ "${enabled_feature}" == "${feature}" ]; then
+           echo 1
+           return
+        fi
+    done
+    echo 0
+}
+
+function fix_libvirt_version_n_cpu_ocata() {
+    local ip=$1
+    ${SSH} ${ip} "
+        cd /opt/stack;
+        git clone https://git.openstack.org/openstack/requirements;
+        cd requirements;
+        git checkout stable/ocata;
+        sed -i s/libvirt-python===2.5.0/libvirt-python===3.2.0/ upper-constraints.txt
+   "
+}
+
 # Add enable_services and disable_services to the local.conf
 function add_os_services() {
     local core_services=$1
     local enable_services=$2
     local disable_services=$3
     local local_conf_file_name=$4
+    local enable_network_services=$5
 
     cat >> ${local_conf_file_name} << EOF
 enable_service $(csv2ssv "${core_services}")
@@ -159,6 +184,11 @@ EOF
     if [ -n "${disable_services}" ]; then
         cat >> ${local_conf_file_name} << EOF
 disable_service $(csv2ssv "${disable_services}")
+EOF
+    fi
+    if [ -n "${enable_network_services}" ]; then
+        cat >> ${local_conf_file_name} << EOF
+enable_service $(csv2ssv "${enable_network_services}")
 EOF
     fi
 }
@@ -180,7 +210,7 @@ RECLONE=${RECLONE}
 disable_all_services
 EOF
 
-    add_os_services "${CORE_OS_CONTROL_SERVICES}" "${ENABLE_OS_SERVICES}" "${DISABLE_OS_SERVICES}" "${local_conf_file_name}"
+    add_os_services "${CORE_OS_CONTROL_SERVICES}" "${ENABLE_OS_SERVICES}" "${DISABLE_OS_SERVICES}" "${local_conf_file_name}" "${ENABLE_OS_NETWORK_SERVICES}"
 
     cat >> ${local_conf_file_name} << EOF
 
@@ -212,6 +242,11 @@ NEUTRON_SFC_DRIVERS=${ODL_SFC_DRIVER} # Only relevant if networking-sfc plugin i
 NEUTRON_FLOWCLASSIFIER_DRIVERS=${ODL_SFC_DRIVER} # Only relevant if networking-sfc plugin is enabled
 ETCD_PORT=2379
 EOF
+    if [ "${TENANT_NETWORK_TYPE}" == "local" ]; then
+    cat >> ${local_conf_file_name} << EOF
+ENABLE_TENANT_TUNNELS=false
+EOF
+    fi
 
     if [ "${ODL_ML2_DRIVER_VERSION}" == "v2" ]; then
         echo "ODL_V2DRIVER=True" >> ${local_conf_file_name}
@@ -650,7 +685,6 @@ EOF
         mkdir -p ${TEMPEST_LOGS_DIR}
         scp ${OPENSTACK_CONTROL_NODE_1_IP}:${DEVSTACK_TEMPEST_DIR}/tempest_results.html ${TEMPEST_LOGS_DIR}
         scp ${OPENSTACK_CONTROL_NODE_1_IP}:${DEVSTACK_TEMPEST_DIR}/tempest.log ${TEMPEST_LOGS_DIR}
-        mv ${WORKSPACE}/tempest_output* ${TEMPEST_LOGS_DIR}
     else
         echo "tempest results not found in ${DEVSTACK_TEMPEST_DIR}/${TESTREPO}/0"
     fi
@@ -798,8 +832,6 @@ CORE_OS_CONTROL_SERVICES+=",key"
 CORE_OS_CONTROL_SERVICES+=",n-api,n-api-meta,n-cauth,n-cond,n-crt,n-obj,n-sch"
 # ODL - services to connect to ODL
 CORE_OS_CONTROL_SERVICES+=",odl-compute,odl-neutron"
-# Neutron
-CORE_OS_CONTROL_SERVICES+=",q-dhcp,q-meta,q-svc"
 # Additional services
 CORE_OS_CONTROL_SERVICES+=",mysql,rabbit"
 
@@ -900,7 +932,15 @@ for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
     create_etc_hosts ${!CONTROLIP}
     scp ${WORKSPACE}/hosts_file ${!CONTROLIP}:/tmp/hosts
     scp ${WORKSPACE}/get_devstack.sh ${!CONTROLIP}:/tmp
+    # devstack Master is yet to migrate fully to lib/neutron, there are some ugly hacks that is
+    # affecting the stacking.
+    #Workaround For Queens, Make the physical Network as physnet1 in lib/neutron
+    #Workaround Comment out creating initial Networks in lib/neutron
     ${SSH} ${!CONTROLIP} "bash /tmp/get_devstack.sh > /tmp/get_devstack.sh.txt 2>&1"
+    if [ "${ODL_ML2_BRANCH}" == "master" ]; then
+       ssh ${!CONTROLIP} "sed -i 's/flat_networks public/flat_networks public,physnet1/' /opt/stack/devstack/lib/neutron"
+       ssh ${!CONTROLIP} "sed -i '186i iniset \$NEUTRON_CORE_PLUGIN_CONF ml2_type_vlan network_vlan_ranges public:1:4094,physnet1:1:4094' /opt/stack/devstack/lib/neutron"
+    fi
     create_control_node_local_conf ${!CONTROLIP} ${ODLMGRIP[$i]} "${ODL_OVS_MGRS[$i]}"
     scp ${WORKSPACE}/local.conf_control_${!CONTROLIP} ${!CONTROLIP}:/opt/stack/devstack/local.conf
     echo "Stack the control node ${i} of ${NUM_OPENSTACK_CONTROL_NODES}: ${CONTROLIP}"
@@ -912,6 +952,12 @@ for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
     # TODO: can this be removed now?
     if [ "${ODL_ML2_BRANCH}" == "stable/newton" ]; then
         ssh ${!CONTROLIP} "cd /opt/stack; git clone https://git.openstack.org/openstack/requirements; cd requirements; git checkout stable/newton; sed -i /appdirs/d upper-constraints.txt"
+    fi
+    if [[ "${ODL_ML2_BRANCH}" == "stable/ocata" && "$(is_openstack_feature_enabled n-cpu)" == "1" ]]; then
+        echo "Updating requirements for ${ODL_ML2_BRANCH}"
+        echo "Workaround for https://review.openstack.org/#/c/491032/"
+        echo "Modify upper-constraints to use libvirt-python 3.2.0"
+        fix_libvirt_version_n_cpu_ocata ${!CONTROLIP}
     fi
 done
 
@@ -927,16 +973,18 @@ done
 # AccessRefused: (0, 0): (403) ACCESS_REFUSED - Login was refused using authentication mechanism AMQPLAIN. For details see the broker logfile.
 # Compare that timestamp to this log in the control stack.log: sudo rabbitmqctl set_permissions -p nova_cell1 stackrabbit
 # If the n-cpu.log is earlier than the control stack.log timestamp then the failure condition is likely hit.
-WAIT_FOR_RABBITMQ_MINUTES=60
-echo "Wait a maximum of ${WAIT_FOR_RABBITMQ_MINUTES}m until rabbitmq is ready to allow the controller to create nova_cell1 before the computes need it"
-retry ${WAIT_FOR_RABBITMQ_MINUTES} 60 "is_rabbitmq_ready ${OPENSTACK_CONTROL_NODE_1_IP}"
-rc=$?
-if ((${rc} == 0)); then
-    echo "rabbitmq is ready, starting ${NUM_OPENSTACK_COMPUTE_NODES} compute(s)"
-else
-    echo "rabbitmq was not ready in ${WAIT_FOR_RABBITMQ_MINUTES}m"
-    collect_logs
-    exit 1
+if [ ${NUM_OPENSTACK_COMPUTE_NODES} -gt 0 ]; then
+   WAIT_FOR_RABBITMQ_MINUTES=60
+   echo "Wait a maximum of ${WAIT_FOR_RABBITMQ_MINUTES}m until rabbitmq is ready to allow the controller to create nova_cell1 before the computes need it"
+   retry ${WAIT_FOR_RABBITMQ_MINUTES} 60 "is_rabbitmq_ready ${OPENSTACK_CONTROL_NODE_1_IP}"
+   rc=$?
+   if ((${rc} == 0)); then
+      echo "rabbitmq is ready, starting ${NUM_OPENSTACK_COMPUTE_NODES} compute(s)"
+   else
+      echo "rabbitmq was not ready in ${WAIT_FOR_RABBITMQ_MINUTES}m"
+      collect_logs
+      exit 1
+   fi
 fi
 
 for i in `seq 1 ${NUM_OPENSTACK_COMPUTE_NODES}`; do
@@ -955,13 +1003,7 @@ for i in `seq 1 ${NUM_OPENSTACK_COMPUTE_NODES}`; do
         echo "Updating requirements for ${ODL_ML2_BRANCH}"
         echo "Workaround for https://review.openstack.org/#/c/491032/"
         echo "Modify upper-constraints to use libvirt-python 3.2.0"
-        ${SSH} ${!COMPUTEIP} "
-            cd /opt/stack;
-            git clone https://git.openstack.org/openstack/requirements;
-            cd requirements;
-            git checkout stable/ocata;
-            sed -i s/libvirt-python===2.5.0/libvirt-python===3.2.0/ upper-constraints.txt
-        "
+        fix_libvirt_version_n_cpu_ocata ${!COMPUTEIP}
     fi
     create_compute_node_local_conf ${!COMPUTEIP} ${!CONTROLIP} ${ODLMGRIP[$SITE_INDEX]} "${ODL_OVS_MGRS[$SITE_INDEX]}"
     scp ${WORKSPACE}/local.conf_compute_${!COMPUTEIP} ${!COMPUTEIP}:/opt/stack/devstack/local.conf
