@@ -18,6 +18,7 @@ if [[ $URL == /*  ]]; then
 elif [[ $URL == *.rpm ]]; then
   sudo yum install -y "$URL"
 elif [[ $URL == *.repo ]]; then
+  # FIXME: This fails when called via a macro at brace expansion
   # shellcheck disable=SC2154
   repo_file="${{URL##*/}}"
   sudo curl --silent -o /etc/yum.repos.d/"$repo_file" "$URL"
