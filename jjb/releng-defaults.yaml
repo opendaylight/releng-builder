@@ -44,6 +44,7 @@
     enable-openstack-plugins: 'networking-odl'
     enable-openstack-services: ''
     enable-openstack-compute-services: ''
+    enable-openstack-network-services: 'neutron,neutron-dhcp,neutron-metadata-agent'
     ipsec-vxlan-tunnels-enabled: 'no'
     lbaas-service-provider: ''
     num-openstack-sites: 1
@@ -56,6 +57,7 @@
     tenant-network-type: 'vxlan'
     odl-sfc-driver: 'odl'
     odl-snat-mode: 'controller'
+    openstack_legacy_default_network_services: 'q-dhcp,q-meta,q-svc'
 
     # openstack-infra-parameters defaults
     archive-artifacts: ''

@@ -29,17 +29,18 @@
           karaf-version: karaf3
 
     openstack:
-      - newton:
-          openstack-branch: 'stable/newton'
-          odl-ml2-branch: 'stable/newton'
-          openstack_system_image: 'CentOS 7 - devstack-newton - 20171014-2147'
+      - ocata:
+          openstack-branch: 'stable/ocata'
+          odl-ml2-branch: 'stable/ocata'
+          openstack_system_image: '{openstack_system_image_ocata}'
+          openstack_system2_image: '{openstack_system_image_ocata}'
+          enable-openstack-services: 'n-cpu,placement-api,placement-client,tempest'
+          enable-openstack-network-services: '{openstack_legacy_default_network_services}'
+          odl-ml2-port-binding: 'network-topology'
 
     odl-enable-l3: 'no'
-
     public-bridge: 'br-ex'
-
-    enable-openstack-services: 'n-cpu,q-agt,q-svc,q-dhcp,q-meta,n-cauth,tempest'
-
     disable-openstack-services: 'n-net,q-l3'
-
     tenant-network-type: 'local'
+    odl_system_flavor: v1-performance-8
+    openstack_system_flavor: v1-performance-8
