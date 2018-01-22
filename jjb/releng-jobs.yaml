@@ -6,9 +6,9 @@
           build-node: centos7-builder-2c-2g
       - builder-check-poms
       - builder-copy-sandbox-logs
+      - builder-openstack-cron
       - gerrit-tox-verify
       # OpenStack Related
-      - 'builder-verify-image-protection'
       - 'builder-cleanup-old-images'
       - 'builder-delete-orphaned-nodes'
       - 'builder-delete-stale-nodes'
@@ -162,29 +162,37 @@
 
 
 - job-template:
-    name: 'builder-verify-image-protection'
+    name: builder-openstack-cron
     project-type: freestyle
-    node: centos7-builder-2c-1g
+    node: '{build-node}'
 
     properties:
-      - opendaylight-infra-properties:
+      - lf-infra-properties:
           build-days-to-keep: 7
 
     parameters:
-      - opendaylight-infra-parameters:
-          os-cloud: '{os-cloud}'
+      - lf-infra-parameters:
           project: '{project}'
+          stream: '{stream}'
           branch: '{branch}'
-          refspec: 'refs/heads/{branch}'
-          artifacts: '{archive-artifacts}'
+          lftools-version: '{lftools-version}'
+      - string:
+          name: OS_CLOUD
+          default: '{os-cloud}'
+          description: Artifacts to archive to the logs server.
+      - string:
+          name: ARCHIVE_ARTIFACTS
+          default: '{archive-artifacts}'
+          description: Artifacts to archive to the logs server.
 
     scm:
       - git-scm:
           branch: '{branch}'
 
     wrappers:
-      - opendaylight-infra-wrappers:
+      - lf-infra-wrappers:
           build-timeout: '{build-timeout}'
+          jenkins-ssh-credential: '{jenkins-ssh-credential}'
       # Listed after to override openstack-infra-wrappers clouds.yaml definition
       - config-file-provider:
           files:
@@ -192,16 +200,14 @@
               target: '$HOME/.config/openstack/clouds.yaml'
 
     triggers:
-      - timed: '@daily'
+      - timed: '0,30 * * * *'
 
     builders:
-      - shell: !include-raw-escape:
-          - opendaylight-infra-check-image-protection.sh
+      - odl-openstack-install
+      - shell: !include-raw-escape: global-jjb/shell/lftools-install.sh
+      - odl-openstack-check-image-protection
 
     publishers:
-      - email-notification:
-          email-recipients: '{email-recipients}'
-          email-prefix: '[releng]'
       - lf-infra-publish
 
 
