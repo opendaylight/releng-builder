@@ -45,16 +45,16 @@ fi
 # shellcheck disable=SC2034
 mapfile -t actual_deps < <( rpm -qp /home/$USER/rpmbuild/RPMS/noarch/*.rpm --requires )
 # shellcheck disable=SC2154 disable=SC2145
-printf 'Dependency found: %s\n' "${{actual_deps[@]}}"
+printf 'Dependency found: %s\n' "${actual_deps[@]}"
 
 # shellcheck disable=SC2154,SC2145,SC2034,SC2207
-diff_deps=(`echo "${{expected_deps[@]}}" "${{actual_deps[@]}}" | tr ' ' '\n' | sort | uniq -u`)
+diff_deps=(`echo "${expected_deps[@]}" "${actual_deps[@]}" | tr ' ' '\n' | sort | uniq -u`)
 # shellcheck disable=SC2154 disable=SC2145 disable=SC2068 disable=SC2170 disable=SC1083
-if [ ${{#diff_deps[*]}} -eq 0 ]; then
+if [ ${#diff_deps[*]} -eq 0 ]; then
     echo "RPM requirements are as expected"
 else
     echo "RPM requirements don't match the expected requirements"
     # shellcheck disable=SC2154 disable=SC2145
-    printf 'Dependency mismatch: %s\n' ${{diff_deps[@]}}
+    printf 'Dependency mismatch: %s\n' ${diff_deps[@]}
     exit 1
 fi
