@@ -300,6 +300,11 @@
       - shell: !include-raw: odl-openstack-cleanup-old-images.sh
 
 - builder:
+    name: odl-openstack-cleanup-stale-nodes
+    builders:
+      - shell: !include-raw: odl-openstack-cleanup-stale-nodes.sh
+
+- builder:
     name: odl-openstack-cleanup-stale-stacks
     builders:
       - shell: !include-raw: odl-openstack-cleanup-stale-stacks.sh

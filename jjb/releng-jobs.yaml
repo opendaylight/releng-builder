@@ -10,7 +10,6 @@
       - gerrit-tox-verify
       # OpenStack Related
       - 'builder-delete-orphaned-nodes'
-      - 'builder-delete-stale-nodes'
       # Automation for docs and jobs
       - 'builder-update-image-list'
 
@@ -212,6 +211,7 @@
       - shell: !include-raw-escape: global-jjb/shell/lftools-install.sh
       # Servers
       - odl-openstack-cleanup-stale-stacks
+      - odl-openstack-cleanup-stale-nodes
       # Images
       - odl-openstack-check-image-protection
       - odl-openstack-cleanup-old-images
@@ -251,43 +251,6 @@
 
     builders:
       - shell: !include-raw-escape: opendaylight-infra-cleanup-orphaned-nodes.sh
-
-    publishers:
-      - email-notification:
-          email-recipients: '{email-recipients}'
-          email-prefix: '[releng]'
-      - lf-infra-publish
-
-
-- job-template:
-    name: 'builder-delete-stale-nodes'
-    project-type: freestyle
-    node: centos7-builder-2c-1g
-
-    properties:
-      - opendaylight-infra-properties:
-          build-days-to-keep: 7
-
-    parameters:
-      - opendaylight-infra-parameters:
-          os-cloud: '{os-cloud}'
-          project: '{project}'
-          branch: '{branch}'
-          refspec: 'refs/heads/{branch}'
-          artifacts: '{archive-artifacts}'
-
-    wrappers:
-      - opendaylight-infra-wrappers:
-          build-timeout: '{build-timeout}'
-
-    triggers:
-      # Attempt to clear up stacks every 30 mins in case we have orphaned stacks
-      - timed: '0,30 * * * *'
-
-    builders:
-      - shell: !include-raw-escape:
-          - global-jjb/shell/lftools-install.sh
-          - opendaylight-infra-cleanup-stale-nodes.sh
 
     publishers:
       - email-notification:
