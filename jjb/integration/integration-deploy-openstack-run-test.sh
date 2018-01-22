@@ -180,7 +180,7 @@ RECLONE=${RECLONE}
 disable_all_services
 EOF
 
-    add_os_services "${CORE_OS_CONTROL_SERVICES}" "${ENABLE_OS_SERVICES}" "${DISABLE_OS_SERVICES}" "${local_conf_file_name}"
+    add_os_services "${CORE_OS_CONTROL_SERVICES}" "${ENABLE_OS_SERVICES}" "${ENABLE_OS_NETWORK_SERVICES}" "${DISABLE_OS_SERVICES}" "${local_conf_file_name}"
 
     cat >> ${local_conf_file_name} << EOF
 
@@ -799,8 +799,6 @@ CORE_OS_CONTROL_SERVICES+=",key"
 CORE_OS_CONTROL_SERVICES+=",n-api,n-api-meta,n-cauth,n-cond,n-crt,n-obj,n-sch"
 # ODL - services to connect to ODL
 CORE_OS_CONTROL_SERVICES+=",odl-compute,odl-neutron"
-# Neutron
-CORE_OS_CONTROL_SERVICES+=",q-dhcp,q-meta,q-svc"
 # Additional services
 CORE_OS_CONTROL_SERVICES+=",mysql,rabbit"
 
