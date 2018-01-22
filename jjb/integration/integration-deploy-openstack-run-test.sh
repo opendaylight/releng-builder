@@ -517,6 +517,8 @@ EOF
     # archives build step will essentially be a noop.
     mkdir -p ${WORKSPACE}/archives
 
+    mv /tmp/changes.txt ${WORKSPACE}/archives
+
     sleep 5
     # FIXME: Do not create .tar and gzip before copying.
     for i in `seq 1 ${NUM_ODL_SYSTEM}`; do
