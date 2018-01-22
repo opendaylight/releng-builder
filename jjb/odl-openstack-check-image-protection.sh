@@ -17,13 +17,8 @@
 # image protect setting to "True" to prevent the image from getting purged
 # by the cleanup old images job.
 
-virtualenv "/tmp/v/openstack"
 # shellcheck source=/tmp/v/openstack/bin/activate disable=SC1091
 source "/tmp/v/openstack/bin/activate"
-pip install --upgrade pip
-pip install --upgrade python-openstackclient
-pip install --upgrade pipdeptree
-pipdeptree
 
 declare -a images
 readarray -t images <<< "$(grep -r _system_image: --include \*.yaml \
