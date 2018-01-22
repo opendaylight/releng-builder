@@ -62,6 +62,7 @@ PUBLIC_BRIDGE: ${PUBLIC_BRIDGE}
 ENABLE_HAPROXY_FOR_NEUTRON: ${ENABLE_HAPROXY_FOR_NEUTRON}
 ENABLE_OS_SERVICES: ${ENABLE_OS_SERVICES}
 ENABLE_OS_COMPUTE_SERVICES: ${ENABLE_OS_COMPUTE_SERVICES}
+ENABLE_OS_NETWORK_SERVICES: ${ENABLE_OS_NETWORK_SERVICES}
 ENABLE_OS_PLUGINS: ${ENABLE_OS_PLUGINS}
 DISABLE_OS_SERVICES: ${DISABLE_OS_SERVICES}
 TENANT_NETWORK_TYPE: ${TENANT_NETWORK_TYPE}
@@ -147,7 +148,13 @@ function add_os_services() {
     local enable_services=$2
     local disable_services=$3
     local local_conf_file_name=$4
+    local enable_network_services=$5
 
+    if [ -n "${enable_network_services}" ]; then
+        cat >> ${local_conf_file_name} << EOF
+enable_service $(csv2ssv "${enable_network_services}")
+EOF
+    fi
     cat >> ${local_conf_file_name} << EOF
 enable_service $(csv2ssv "${core_services}")
 EOF
@@ -180,7 +187,7 @@ RECLONE=${RECLONE}
 disable_all_services
 EOF
 
-    add_os_services "${CORE_OS_CONTROL_SERVICES}" "${ENABLE_OS_SERVICES}" "${DISABLE_OS_SERVICES}" "${local_conf_file_name}"
+    add_os_services "${CORE_OS_CONTROL_SERVICES}" "${ENABLE_OS_SERVICES}" "${DISABLE_OS_SERVICES}" "${local_conf_file_name}" "${ENABLE_OS_NETWORK_SERVICES}"
 
     cat >> ${local_conf_file_name} << EOF
 
@@ -799,8 +806,6 @@ CORE_OS_CONTROL_SERVICES+=",key"
 CORE_OS_CONTROL_SERVICES+=",n-api,n-api-meta,n-cauth,n-cond,n-crt,n-obj,n-sch"
 # ODL - services to connect to ODL
 CORE_OS_CONTROL_SERVICES+=",odl-compute,odl-neutron"
-# Neutron
-CORE_OS_CONTROL_SERVICES+=",q-dhcp,q-meta,q-svc"
 # Additional services
 CORE_OS_CONTROL_SERVICES+=",mysql,rabbit"
 
