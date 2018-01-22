@@ -44,18 +44,21 @@
           odl-ml2-branch: 'stable/ocata'
           openstack_system_image: '{openstack_system_image_ocata}'
           openstack_system2_image: '{openstack_system_image_ocata}'
+          enable-openstack-network-services: 'q-dhcp,q-meta,q-svc'
       - pike:
           openstack-branch: 'stable/pike'
           odl-ml2-branch: 'stable/pike'
           odl-ml2-port-binding: 'pseudo-agentdb-binding'
           openstack_system_image: '{openstack_system_image_pike}'
           openstack_system2_image: '{openstack_system_image_pike}'
+          enable-openstack-network-services: 'q-dhcp,q-meta,q-svc'
       - queens:
           openstack-branch: 'master'
           odl-ml2-branch: 'master'
           odl-ml2-port-binding: 'pseudo-agentdb-binding'
           openstack_system_image: '{openstack_system_image_pike}'
           openstack_system2_image: '{openstack_system_image_pike}'
+          enable-openstack-network-services: 'neutron,neutron-api,neutron-dhcp,neutron-metadata-agent'
 
 - project:
     name: netvirt-csit-openstack-integration-nitrogen
@@ -102,18 +105,21 @@
           odl-ml2-branch: 'stable/ocata'
           openstack_system_image: '{openstack_system_image_ocata}'
           openstack_system2_image: '{openstack_system_image_ocata}'
+          enable-openstack-network-services: 'q-dhcp,q-meta,q-svc'
       - pike:
           openstack-branch: 'stable/pike'
           odl-ml2-branch: 'stable/pike'
           odl-ml2-port-binding: 'pseudo-agentdb-binding'
           openstack_system_image: '{openstack_system_image_pike}'
           openstack_system2_image: '{openstack_system_image_pike}'
+          enable-openstack-network-services: 'q-dhcp,q-meta,q-svc'
       - queens:
           openstack-branch: 'master'
           odl-ml2-branch: 'master'
           odl-ml2-port-binding: 'pseudo-agentdb-binding'
           openstack_system_image: '{openstack_system_image_pike}'
           openstack_system2_image: '{openstack_system_image_pike}'
+          enable-openstack-network-services: 'neutron,neutron-api,neutron-dhcp,neutron-metadata-agent'
 
 - project:
     name: netvirt-csit-openstack-integration-carbon
@@ -161,12 +167,14 @@
           odl-ml2-branch: 'stable/ocata'
           openstack_system_image: '{openstack_system_image_ocata}'
           openstack_system2_image: '{openstack_system_image_ocata}'
+          enable-openstack-network-services: 'q-dhcp,q-meta,q-svc'
       - pike:
           openstack-branch: 'stable/pike'
           odl-ml2-branch: 'stable/pike'
           odl-ml2-port-binding: 'pseudo-agentdb-binding'
           openstack_system_image: '{openstack_system_image_pike}'
           openstack_system2_image: '{openstack_system_image_pike}'
+          enable-openstack-network-services: 'q-dhcp,q-meta,q-svc'
 
 - project:
     name: netvirt-csit-sfc-openstack-integration
@@ -208,3 +216,4 @@
           odl-ml2-port-binding: 'pseudo-agentdb-binding'
           openstack_system_image: '{openstack_system_image_pike}'
           openstack_system2_image: '{openstack_system_image_pike}'
+          enable-openstack-network-services: 'q-dhcp,q-meta,q-svc'
