@@ -146,6 +146,11 @@
       - shell: !include-raw:
           - generate-release-notes.sh
 
+- builder:
+    name: autorelease-update-project-views
+    builders:
+      - shell: !include-raw: update-autorelease-projects-views.sh
+
 - publisher:
     # Search console log for failures and email status to the release mailing list.
     name: opendaylight-infra-notify-status
