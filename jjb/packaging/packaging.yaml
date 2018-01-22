@@ -81,20 +81,8 @@
           build-timeout: '{build-timeout}'
 
     builders:
-      - shell: !include-raw: build-rpm.sh
-      - shell: !include-raw: test-rpm-deps.sh
-      - inject:
-          properties-content: 'URL=/home/$USER/rpmbuild/RPMS/noarch/*.rpm'
-      - shell: !include-raw: install-rpm.sh
-      - shell: !include-raw: start-odl.sh
-      - shell: |
-          # Install expect to interact with Karaf shell
-          sudo yum install -y expect
-          # Install nmap to check status of ODL's SSH port
-          sudo yum install -y nmap
-      - shell: !include-raw: test-karaf.expect
-      - shell: !include-raw: stop-odl.sh
-      - shell: !include-raw: uninstall-rpm.sh
+      - shell: !include-raw-escape: build-rpm.sh
+      - install-test-uninstall-rpm
       - lf-infra-deploy-maven-file:
           global-settings-file: 'global-settings'
           settings-file: 'packaging-settings'
@@ -158,7 +146,7 @@
       - inject:
           properties-content: 'STREAM={stream}'
       - shell: !include-raw: build-rpm-snap.sh
-      - shell: !include-raw: test-rpm-deps.sh
+      - install-test-uninstall-rpm
       - lf-infra-deploy-maven-file:
           global-settings-file: 'global-settings'
           settings-file: 'packaging-settings'
@@ -206,19 +194,19 @@
       - inject:
           # yamllint disable-line rule:line-length
           properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/integration/karaf/0.7.0/karaf-0.7.0.tar.gz'
-      - shell: !include-raw: build-rpm.sh
+      - shell: !include-raw-escape: build-rpm.sh
 
       # Test Oxygen pre-release autorelease tarball
       - inject:
           # yamllint disable-line rule:line-length
           properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/autorelease-2052/org/opendaylight/integration/karaf/0.8.0/karaf-0.8.0.tar.gz'
-      - shell: !include-raw: build-rpm.sh
+      - shell: !include-raw-escape: build-rpm.sh
 
       # Test Oxygen multipatch zip (no parallel tarball available)
       - inject:
           # yamllint disable-line rule:line-length
           properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/org/opendaylight/integration/integration/distribution/karaf/0.8.0-SNAPSHOT/karaf-0.8.0-20171128.175421-68.zip'
-      - shell: !include-raw: build-rpm.sh
+      - shell: !include-raw-escape: build-rpm.sh
 
       # Test latest Oxygen snapshot
       - inject:
@@ -268,129 +256,62 @@
           build-timeout: '{build-timeout}'
 
     builders:
-      # Install deps needed for all tests
-      - shell: |
-          # Install expect to interact with Karaf shell
-          sudo yum install -y expect
-          # Install nmap to check status of ODL's SSH port
-          sudo yum install -y nmap
-
-      # Each new build will rm and replace this dir, only need to inject once
-      - inject:
-          properties-content: 'URL=/home/$USER/rpmbuild/RPMS/noarch/*.rpm'
-
       # Test Carbon SR2 tarball
       - inject:
           # yamllint disable-line rule:line-length
           properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/integration/distribution-karaf/0.6.2-Carbon/distribution-karaf-0.6.2-Carbon.tar.gz'
-      - shell: !include-raw: build-rpm.sh
-      - shell: !include-raw: install-rpm.sh
-      - shell: !include-raw: start-odl.sh
-      - shell: !include-raw: test-karaf.expect
-      - shell: !include-raw: stop-odl.sh
-      - shell: !include-raw: uninstall-rpm.sh
-      - shell: |
-          # Remove old host key so future installs don't fail to SSH
-          rm /home/jenkins/.ssh/known_hosts
+      - shell: !include-raw-escape: build-rpm.sh
+      - install-test-uninstall-rpm
 
       # Test Carbon multipatch zip (no parallel tarball available)
       # NB: This will need to be updated as old builds expire
       - inject:
           # yamllint disable-line rule:line-length
           properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/org/opendaylight/integration/integration/distribution/distribution-karaf/0.6.3-SNAPSHOT/distribution-karaf-0.6.3-20180115.181738-1.zip'
-      - shell: !include-raw: build-rpm.sh
-      - shell: !include-raw: install-rpm.sh
-      - shell: !include-raw: start-odl.sh
-      - shell: !include-raw: test-karaf.expect
-      - shell: !include-raw: stop-odl.sh
-      - shell: !include-raw: uninstall-rpm.sh
-      - shell: |
-          # Remove old host key so future installs don't fail to SSH
-          rm /home/jenkins/.ssh/known_hosts
+      - shell: !include-raw-escape: build-rpm.sh
+      - install-test-uninstall-rpm
 
       # Test latest Carbon snapshot
       - inject:
           properties-content: 'STREAM=carbon'
       - shell: !include-raw: build-rpm-snap.sh
-      - shell: !include-raw: install-rpm.sh
-      - shell: !include-raw: start-odl.sh
-      - shell: !include-raw: test-karaf.expect
-      - shell: !include-raw: stop-odl.sh
-      - shell: !include-raw: uninstall-rpm.sh
-      - shell: |
-          # Remove old host key so future installs don't fail to SSH
-          rm /home/jenkins/.ssh/known_hosts
+      - install-test-uninstall-rpm
 
       # Test Nitrogen tarball
       - inject:
           # yamllint disable-line rule:line-length
           properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/integration/karaf/0.7.0/karaf-0.7.0.tar.gz'
-      - shell: !include-raw: build-rpm.sh
-      - shell: !include-raw: install-rpm.sh
-      - shell: !include-raw: start-odl.sh
-      - shell: !include-raw: test-karaf.expect
-      - shell: !include-raw: stop-odl.sh
-      - shell: !include-raw: uninstall-rpm.sh
-      - shell: |
-          # Remove old host key so future installs don't fail to SSH
-          rm /home/jenkins/.ssh/known_hosts
+      - shell: !include-raw-escape: build-rpm.sh
+      - install-test-uninstall-rpm
 
       # Test Nitrogen SR1 tarball
       - inject:
           # yamllint disable-line rule:line-length
           properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/integration/karaf/0.7.1/karaf-0.7.1.tar.gz'
-      - shell: !include-raw: build-rpm.sh
-      - shell: !include-raw: install-rpm.sh
-      - shell: !include-raw: start-odl.sh
-      - shell: !include-raw: test-karaf.expect
-      - shell: !include-raw: stop-odl.sh
-      - shell: !include-raw: uninstall-rpm.sh
-      - shell: |
-          # Remove old host key so future installs don't fail to SSH
-          rm /home/jenkins/.ssh/known_hosts
+      - shell: !include-raw-escape: build-rpm.sh
+      - install-test-uninstall-rpm
 
       # Test Nitrogen multipatch zip (no parallel tarball available)
       # NB: This will need to be updated as old builds expire
       - inject:
           # yamllint disable-line rule:line-length
           properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/org/opendaylight/integration/integration/distribution/karaf/0.7.2-SNAPSHOT/karaf-0.7.2-20180115.183312-2.zip'
-      - shell: !include-raw: build-rpm.sh
-      - shell: !include-raw: install-rpm.sh
-      - shell: !include-raw: start-odl.sh
-      - shell: !include-raw: test-karaf.expect
-      - shell: !include-raw: stop-odl.sh
-      - shell: !include-raw: uninstall-rpm.sh
-      - shell: |
-          # Remove old host key so future installs don't fail to SSH
-          rm /home/jenkins/.ssh/known_hosts
+      - shell: !include-raw-escape: build-rpm.sh
+      - install-test-uninstall-rpm
 
       # Test latest Nitrogen snapshot
       - inject:
           properties-content: 'STREAM=nitrogen'
       - shell: !include-raw: build-rpm-snap.sh
-      - shell: !include-raw: install-rpm.sh
-      - shell: !include-raw: start-odl.sh
-      - shell: !include-raw: test-karaf.expect
-      - shell: !include-raw: stop-odl.sh
-      - shell: !include-raw: uninstall-rpm.sh
-      - shell: |
-          # Remove old host key so future installs don't fail to SSH
-          rm /home/jenkins/.ssh/known_hosts
+      - install-test-uninstall-rpm
 
       # Test Oxygen pre-release autorelease tarball
       # NB: This will need to be updated as old builds expire
       - inject:
           # yamllint disable-line rule:line-length
           properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/autorelease-2052/org/opendaylight/integration/karaf/0.8.0/karaf-0.8.0.tar.gz'
-      - shell: !include-raw: build-rpm.sh
-      - shell: !include-raw: install-rpm.sh
-      - shell: !include-raw: start-odl.sh
-      - shell: !include-raw: test-karaf.expect
-      - shell: !include-raw: stop-odl.sh
-      - shell: !include-raw: uninstall-rpm.sh
-      - shell: |
-          # Remove old host key so future installs don't fail to SSH
-          rm /home/jenkins/.ssh/known_hosts
+      - shell: !include-raw-escape: build-rpm.sh
+      - install-test-uninstall-rpm
 
       # Test Oxygen multipatch zip (no parallel tarball available)
       # FIXME: Something is wrong with current Oxygen multipatch builds
@@ -399,27 +320,13 @@
       # yamllint disable-line rule:line-length
       #     properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/org/opendaylight/integration/integration/distribution/karaf/0.8.0-SNAPSHOT/karaf-0.8.0-20180111.030942-90.zip'
       # - shell: !include-raw: build-rpm.sh
-      # - shell: !include-raw: install-rpm.sh
-      # - shell: !include-raw: start-odl.sh
-      # - shell: !include-raw: test-karaf.expect
-      # - shell: !include-raw: stop-odl.sh
-      # - shell: !include-raw: uninstall-rpm.sh
-      # - shell: |
-      #     Remove old host key so future installs don't fail to SSH
-      #     rm /home/jenkins/.ssh/known_hosts
+      # - install-test-uninstall-rpm
 
       # Test latest Oxygen snapshot
       - inject:
           properties-content: 'STREAM=oxygen'
       - shell: !include-raw: build-rpm-snap.sh
-      - shell: !include-raw: install-rpm.sh
-      - shell: !include-raw: start-odl.sh
-      - shell: !include-raw: test-karaf.expect
-      - shell: !include-raw: stop-odl.sh
-      - shell: !include-raw: uninstall-rpm.sh
-      - shell: |
-          # Remove old host key so future installs don't fail to SSH
-          rm /home/jenkins/.ssh/known_hosts
+      - install-test-uninstall-rpm
 
     triggers:
       - timed: '@daily'
@@ -468,16 +375,16 @@
           build-timeout: '{build-timeout}'
 
     builders:
-      - shell: !include-raw: install-rpm.sh
+      - shell: !include-raw-escape: install-rpm.sh
       - shell: !include-raw: start-odl.sh
       - shell: |
           # Install expect to interact with Karaf shell
-          sudo yum install -y expect
           # Install nmap to check status of ODL's SSH port
-          sudo yum install -y nmap
+          sudo yum install -y expect nmap
       - shell: !include-raw: test-karaf.expect
       - shell: !include-raw: stop-odl.sh
       - shell: !include-raw: uninstall-rpm.sh
+
 
     publishers:
       # TODO: Remove the archive publisher
@@ -525,7 +432,7 @@
           build-timeout: '{build-timeout}'
 
     builders:
-      - shell: !include-raw: install-rpm.sh
+      - shell: !include-raw-escape: install-rpm.sh
       - shell: !include-raw: start-odl.sh
       - shell: |
           # Install expect to interact with Karaf shell
