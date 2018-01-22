@@ -12,7 +12,9 @@
       - 'packaging-test-rpm-master'
       - 'packaging-test-rpm-upgrade-master'
       - 'packaging-test-deb-master'
-      - gerrit-tox-verify
+      - gerrit-tox-verify:
+          branch: master
+          stream: master
 
     project: 'integration/packaging'
 
