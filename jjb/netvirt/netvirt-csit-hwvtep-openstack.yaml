@@ -36,18 +36,21 @@
           odl-ml2-branch: 'stable/ocata'
           openstack_system_image: '{openstack_system_image_ocata}'
           openstack_system2_image: '{openstack_system_image_ocata}'
+          enable-openstack-network-services: 'q-dhcp,q-meta,q-svc'
       - pike:
           openstack-branch: 'stable/pike'
           odl-ml2-branch: 'stable/pike'
           odl-ml2-port-binding: 'pseudo-agentdb-binding'
           openstack_system_image: '{openstack_system_image_pike}'
           openstack_system2_image: '{openstack_system_image_pike}'
+          enable-openstack-network-services: 'q-dhcp,q-meta,q-svc'
       - queens:
           openstack-branch: 'master'
           odl-ml2-branch: 'master'
           odl-ml2-port-binding: 'pseudo-agentdb-binding'
           openstack_system_image: '{openstack_system_image_pike}'
           openstack_system2_image: '{openstack_system_image_pike}'
+          enable-openstack-network-services: 'neutron,neutron-dhcp,neutron-metadata-agent'
 
     odl-ml2-driver-version: 'v2'
     enable-openstack-services: 'placement-api,l2gw-plugin'
@@ -98,18 +101,21 @@
           odl-ml2-branch: 'stable/ocata'
           openstack_system_image: '{openstack_system_image_ocata}'
           openstack_system2_image: '{openstack_system_image_ocata}'
+          enable-openstack-network-services: 'q-dhcp,q-meta,q-svc'
       - pike:
           openstack-branch: 'stable/pike'
           odl-ml2-branch: 'stable/pike'
           odl-ml2-port-binding: 'pseudo-agentdb-binding'
           openstack_system_image: '{openstack_system_image_pike}'
           openstack_system2_image: '{openstack_system_image_pike}'
+          enable-openstack-network-services: 'q-dhcp,q-meta,q-svc'
       - queens:
           openstack-branch: 'master'
           odl-ml2-branch: 'master'
           odl-ml2-port-binding: 'pseudo-agentdb-binding'
           openstack_system_image: '{openstack_system_image_pike}'
           openstack_system2_image: '{openstack_system_image_pike}'
+          enable-openstack-network-services: 'neutron,neutron-dhcp,neutron-metadata-agent'
 
     odl-ml2-driver-version: 'v2'
     enable-openstack-services: 'placement-api,l2gw-plugin'
@@ -162,12 +168,14 @@
           odl-ml2-branch: 'stable/ocata'
           openstack_system_image: '{openstack_system_image_ocata}'
           openstack_system2_image: '{openstack_system_image_ocata}'
+          enable-openstack-network-services: 'q-dhcp,q-meta,q-svc'
       - pike:
           openstack-branch: 'stable/pike'
           odl-ml2-branch: 'stable/pike'
           odl-ml2-port-binding: 'pseudo-agentdb-binding'
           openstack_system_image: '{openstack_system_image_pike}'
           openstack_system2_image: '{openstack_system_image_pike}'
+          enable-openstack-network-services: 'q-dhcp,q-meta,q-svc'
 
     odl-ml2-driver-version: 'v2'
     enable-openstack-services: 'placement-api,l2gw-plugin'
