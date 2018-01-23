@@ -282,6 +282,13 @@
           send-to:
             - recipients
 
+
+- builder:
+    # Installs the openstack cli into a virtualenv at /tmp/v/openstack
+    name: odl-openstack-install
+    builders:
+      - shell: !include-raw: odl-openstack-install.sh
+
 - builder:
     # Deploys a maven site to Nexus using lftools nexus-zip command
     name: opendaylight-infra-deploy-maven-site
