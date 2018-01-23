@@ -1,7 +1,7 @@
 #!/bin/bash
 # SPDX-License-Identifier: EPL-1.0
 ##############################################################################
-# Copyright (c) 2017 The Linux Foundation and others.
+# Copyright (c) 2017 - 2018 The Linux Foundation and others.
 #
 # All rights reserved. This program and the accompanying materials
 # are made available under the terms of the Eclipse Public License v1.0
@@ -14,9 +14,10 @@ BRANCH="stable/${STREAM}"
 
 # The current development release will not have a stable branch defined so if
 # branch does not exist assume master
-wget -nv -O /tmp/ar-branches.json https://git.opendaylight.org/gerrit/projects/releng%2Fautorelease/branches/
-if ! grep "$BRANCH" /tmp/ar-branches.json; then
-    BRANCH=master
+url="https://git.opendaylight.org/gerrit/projects/releng%2Fautorelease/branches/"
+resp=$(curl -s -w "\\n\\n%{http_code}" --globoff -H "Content-Type:application/json" "$url")
+if [[ ! "$resp" =~ $BRANCH ]]; then
+    BRANCH="master"
 fi
 
 wget -nv -O /tmp/pom.xml "https://git.opendaylight.org/gerrit/gitweb?p=releng/autorelease.git;a=blob_plain;f=pom.xml;hb=$GERRIT_BRANCH"
