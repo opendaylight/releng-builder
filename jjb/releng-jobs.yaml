@@ -11,7 +11,6 @@
       # OpenStack Related
       - 'builder-delete-orphaned-nodes'
       - 'builder-delete-stale-nodes'
-      - 'builder-delete-stale-stacks'
       # Automation for docs and jobs
       - 'builder-update-image-list'
 
@@ -25,6 +24,9 @@
     archive-artifacts: '**/*.log'
     build-timeout: 30
     jjb-version: 2.0.0
+    jenkins-urls: >
+      https://jenkins.opendaylight.org/releng
+      https://jenkins.opendaylight.org/sandbox
 
 - project:
     name: packer-jobs
@@ -183,6 +185,10 @@
           name: ARCHIVE_ARTIFACTS
           default: '{archive-artifacts}'
           description: Artifacts to archive to the logs server.
+      - string:
+          name: JENKINS_URLS
+          default: '{jenkins-urls}'
+          description: 'Space separated list of Jenkins URLs to check for active builds'
 
     scm:
       - git-scm:
@@ -204,6 +210,9 @@
     builders:
       - odl-openstack-install
       - shell: !include-raw-escape: global-jjb/shell/lftools-install.sh
+      # Servers
+      - odl-openstack-cleanup-stale-stacks
+      # Images
       - odl-openstack-check-image-protection
       - odl-openstack-cleanup-old-images
 
@@ -285,46 +294,6 @@
           email-recipients: '{email-recipients}'
           email-prefix: '[releng]'
       - lf-infra-publish
-
-
-- job-template:
-    name: 'builder-delete-stale-stacks'
-    project-type: freestyle
-    node: centos7-builder-2c-1g
-
-    properties:
-      - opendaylight-infra-properties:
-          build-days-to-keep: 7
-
-    parameters:
-      - opendaylight-infra-parameters:
-          os-cloud: '{os-cloud}'
-          project: '{project}'
-          branch: '{branch}'
-          refspec: 'refs/heads/{branch}'
-          artifacts: '{archive-artifacts}'
-      - string:
-          name: JENKINS_URLS
-          default: 'https://jenkins.opendaylight.org/releng https://jenkins.opendaylight.org/sandbox'
-          description: 'Space separated list of Jenkins URLs to check for active builds'
-
-    wrappers:
-      - opendaylight-infra-wrappers:
-          build-timeout: '{build-timeout}'
-
-    triggers:
-      # Attempt to clear up stacks every 30 mins in case we have orphaned stacks
-      - timed: '0,30 * * * *'
-
-    builders:
-      - shell: !include-raw-escape: opendaylight-infra-cleanup-stale-stacks.sh
-
-    publishers:
-      - email-notification:
-          email-recipients: '{email-recipients}'
-          email-prefix: '[releng]'
-      - lf-infra-publish
-
 
 - job-template:
     name: 'builder-update-image-list'
