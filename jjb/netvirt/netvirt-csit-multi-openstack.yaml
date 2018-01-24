@@ -2,7 +2,7 @@
 - project:
     name: netvirt-csit-openstack-integration-oxygen
     jobs:
-      - '{project}-csit-{topology}-openstack-{openstack}-{functionality}-{stream}'
+      - inttest-csit-openstack
 
     project: 'netvirt'
     stream: 'oxygen'
@@ -60,7 +60,7 @@
 - project:
     name: netvirt-csit-openstack-integration-nitrogen
     jobs:
-      - '{project}-csit-{topology}-openstack-{openstack}-{functionality}-{stream}'
+      - inttest-csit-openstack
 
     project: 'netvirt'
     stream: 'nitrogen'
@@ -118,7 +118,7 @@
 - project:
     name: netvirt-csit-openstack-integration-carbon
     jobs:
-      - '{project}-csit-{topology}-openstack-{openstack}-{functionality}-{stream}'
+      - inttest-csit-openstack
 
     project: 'netvirt'
     stream: 'carbon'
@@ -171,7 +171,7 @@
 - project:
     name: netvirt-csit-sfc-openstack-integration
     jobs:
-      - '{project}-csit-{topology}-openstack-{openstack}-{functionality}-{stream}'
+      - inttest-csit-openstack
 
     project: 'netvirt'
     security-group-mode: 'stateful'
