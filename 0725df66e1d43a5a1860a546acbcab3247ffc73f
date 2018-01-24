@@ -1,0 +1,220 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f7f1993_e0a3e5c9",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 8
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-01-24T17:40:17Z",
+      "side": 1,
+      "message": "move this chunk down below the others to keep the current order.",
+      "revId": "0725df66e1d43a5a1860a546acbcab3247ffc73f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "deb78fb8_5e87436b",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 8
+      },
+      "lineNbr": 857,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-01-24T17:40:17Z",
+      "side": 1,
+      "message": "is this required or just for testing? Guess this is needed because we disable creating the initial network?",
+      "revId": "0725df66e1d43a5a1860a546acbcab3247ffc73f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "809b2efb_f6226e33",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 8
+      },
+      "lineNbr": 919,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-01-24T17:40:17Z",
+      "side": 1,
+      "message": "move this block to just after the get_devstack.sh line",
+      "range": {
+        "startLine": 919,
+        "startChar": 12,
+        "endLine": 919,
+        "endChar": 26
+      },
+      "revId": "0725df66e1d43a5a1860a546acbcab3247ffc73f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "71f917b6_4100c022",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 8
+      },
+      "lineNbr": 921,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-01-24T17:40:17Z",
+      "side": 1,
+      "message": "what is the 4094 for?",
+      "range": {
+        "startLine": 921,
+        "startChar": 115,
+        "endLine": 921,
+        "endChar": 119
+      },
+      "revId": "0725df66e1d43a5a1860a546acbcab3247ffc73f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9dcb1160_2aa6a3ea",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 8
+      },
+      "lineNbr": 932,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-01-24T17:40:17Z",
+      "side": 1,
+      "message": "maybe add a check if doing control+compute and then only update requirements on the control node.",
+      "revId": "0725df66e1d43a5a1860a546acbcab3247ffc73f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2266cfa3_23c6d45c",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 8
+      },
+      "lineNbr": 933,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-01-24T17:40:17Z",
+      "side": 1,
+      "message": "is this needed now on the control node? the ocata jobs have been running fine so not sure why this is needed? or does this fix a vtn job which is a control+compute node?\n\nIs this is needed, should move this block to above the nohub, and actually just after the get_devstack.sh line so it follows the flow, do the get devstack, then update requirements.",
+      "revId": "0725df66e1d43a5a1860a546acbcab3247ffc73f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0dbbfd26_8b0ab587",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 8
+      },
+      "lineNbr": 937,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-01-24T17:40:17Z",
+      "side": 1,
+      "message": "and this whole block could be a function since it is the same as the block in the compute side.",
+      "revId": "0725df66e1d43a5a1860a546acbcab3247ffc73f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "17b40c09_6231ca2d",
+        "filename": "jjb/integration/integration-templates.yaml",
+        "patchSetId": 8
+      },
+      "lineNbr": 1108,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-01-24T17:40:17Z",
+      "side": 1,
+      "message": "move down below compute_services",
+      "revId": "0725df66e1d43a5a1860a546acbcab3247ffc73f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a67f687e_93e5a6fd",
+        "filename": "jjb/integration/integration-templates.yaml",
+        "patchSetId": 8
+      },
+      "lineNbr": 1311,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-01-24T17:40:17Z",
+      "side": 1,
+      "message": "move down",
+      "revId": "0725df66e1d43a5a1860a546acbcab3247ffc73f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "72829258_6cbc58c0",
+        "filename": "jjb/netvirt/netvirt-csit-hwvtep-openstack.yaml",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-01-24T17:40:17Z",
+      "side": 1,
+      "message": "releng default for neutron-legacy",
+      "revId": "0725df66e1d43a5a1860a546acbcab3247ffc73f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "acf5be8f_642bc96f",
+        "filename": "jjb/netvirt/netvirt-csit-hwvtep-openstack.yaml",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-01-24T17:40:17Z",
+      "side": 1,
+      "message": "make a releng default so we don\u0027t need to set it. then we just set the values in the lower branches and can simply delete those configs as we age out of the older branches.",
+      "revId": "0725df66e1d43a5a1860a546acbcab3247ffc73f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "99b8c67a_b6fdb5f6",
+        "filename": "jjb/releng-defaults.yaml",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-01-24T17:40:17Z",
+      "side": 1,
+      "message": "set the default for master, add a legacy neutron default",
+      "revId": "0725df66e1d43a5a1860a546acbcab3247ffc73f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
