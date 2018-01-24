@@ -8,8 +8,12 @@ set -ex -o pipefail
 
 # Verify exactly 1 RPM is in the path we expect
 set -- /home/$USER/rpmbuild/RPMS/noarch/*.rpm
-# shellcheck disable=SC1054
-[ $# -eq 1 ] || {{ echo "Expected 1 RPM, found $#"; exit 1; }}
+if [ $# -eq 1 ]; then
+    echo "Found one RPM in build out dir, as expected"
+else
+    echo "Expected 1 RPM, found $#"
+    echo 1
+fi
 
 # If path is globbed (/path/to/*.rpm), expand it
 path=$(sudo find / -wholename /home/$USER/rpmbuild/RPMS/noarch/*.rpm)
