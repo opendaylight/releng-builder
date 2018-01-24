@@ -789,6 +789,13 @@ ODL_PORT=8181
 # https://github.com/openstack-dev/devstack/blob/master/stackrc#L52
 # ODL CSIT does not use vnc, cinder, q-agt, q-l3 or horizon so they are not included below.
 # collect performance stats
+
+# Use neutron services based on the branch. legacy_neutron was replaced with neutron libs starting with Queens
+neutron_svcs=",neutron-api,neutron-dhcp,neutron-metadata-agent"
+if [ "${OPENSTACK_BRANCH}" == "stable/ocata" ] || [ "${OPENSTACK_BRANCH}" == "stable/pike" ]; then
+    neutron_svcs=",q-dhcp,q-meta,q-svc"
+fi
+
 CORE_OS_CONTROL_SERVICES="dstat"
 # Glance
 CORE_OS_CONTROL_SERVICES+=",g-api,g-reg"
@@ -799,7 +806,7 @@ CORE_OS_CONTROL_SERVICES+=",n-api,n-api-meta,n-cauth,n-cond,n-crt,n-obj,n-sch"
 # ODL - services to connect to ODL
 CORE_OS_CONTROL_SERVICES+=",odl-compute,odl-neutron"
 # Neutron
-CORE_OS_CONTROL_SERVICES+=",q-dhcp,q-meta,q-svc"
+CORE_OS_CONTROL_SERVICES+=${neutron_svcs}
 # Additional services
 CORE_OS_CONTROL_SERVICES+=",mysql,rabbit"
 
