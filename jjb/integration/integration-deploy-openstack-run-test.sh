@@ -894,7 +894,7 @@ done
 
 for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
     CONTROLIP=OPENSTACK_CONTROL_NODE_${i}_IP
-    echo "Configure the stack of the control node ${i} of ${NUM_OPENSTACK_CONTROL_NODES}: ${CONTROLIP}"
+    echo "Configure the stack of the control node ${i} of ${NUM_OPENSTACK_CONTROL_NODES}: ${!CONTROLIP}"
     scp ${WORKSPACE}/disable_firewall.sh ${!CONTROLIP}:/tmp
     ${SSH} ${!CONTROLIP} "sudo bash /tmp/disable_firewall.sh"
     create_etc_hosts ${!CONTROLIP}
@@ -944,7 +944,7 @@ for i in `seq 1 ${NUM_OPENSTACK_COMPUTE_NODES}`; do
     SITE_INDEX=$((((i - 1) / NUM_COMPUTES_PER_SITE) + 1)) # We need the site index to infer the control node IP for this compute
     COMPUTEIP=OPENSTACK_COMPUTE_NODE_${i}_IP
     CONTROLIP=OPENSTACK_CONTROL_NODE_${SITE_INDEX}_IP
-    echo "Configure the stack of the compute node ${i} of ${NUM_OPENSTACK_COMPUTE_NODES}: ${COMPUTEIP}"
+    echo "Configure the stack of the compute node ${i} of ${NUM_OPENSTACK_COMPUTE_NODES}: ${!COMPUTEIP}"
     scp ${WORKSPACE}/disable_firewall.sh "${!COMPUTEIP}:/tmp"
     ${SSH} "${!COMPUTEIP}" "sudo bash /tmp/disable_firewall.sh"
     create_etc_hosts ${!COMPUTEIP} ${!CONTROLIP}
