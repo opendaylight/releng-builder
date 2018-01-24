@@ -1415,7 +1415,8 @@
 # triggers the project system test defined in {csit-list} when gerrit receives test-{project} keyword
 
 - job-template:
-    name: '{project}-patch-test-{feature}-{stream}'
+    name: '{prefix}{project}-patch-test-{feature}-{stream}'
+    id: inttest-patch-test
 
     project-type: freestyle
     node: centos7-builder-2c-8g
