@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9abc6c9_76cfef24",
+        "filename": "jjb/autorelease/update-validate-autorelease-projects.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2018-01-24T03:01:16Z",
+      "side": 1,
+      "message": "This is a Jenkins level environment variable that we\u0027re overwriting here. I\u0027d prefer if we didn\u0027t do that in case we need it later in the job.\n\nLet give this a local name like \"git_url\" or even just \"url\" considering it\u0027s used immediately in the next line it\u0027s not confusing and not be overwriting global Jenkins variables that we are providing to the jobs.",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 7
+      },
+      "revId": "d3feecbd0fb633e224bcb8a295073ea00ca61faa",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
