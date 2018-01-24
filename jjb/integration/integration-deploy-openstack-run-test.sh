@@ -80,22 +80,19 @@ EOF
 print_job_parameters
 
 function create_etc_hosts() {
-    NODE_IP=$1
-    CTRL_IP=$2
-    : > ${WORKSPACE}/hosts_file
-    for iter in `seq 1 ${NUM_OPENSTACK_COMPUTE_NODES}`
-    do
-        COMPUTE_IP=OPENSTACK_COMPUTE_NODE_${iter}_IP
-        if [ "${!COMPUTE_IP}" == "${NODE_IP}" ]; then
-           CONTROL_HNAME=$(${SSH}  ${CTRL_IP}  "hostname")
-           echo "${CTRL_IP}   ${CONTROL_HNAME}" >> ${WORKSPACE}/hosts_file
-        else
-           COMPUTE_HNAME=$(${SSH}  ${!COMPUTE_IP}  "hostname")
-           echo "${!COMPUTE_IP}   ${COMPUTE_HNAME}" >> ${WORKSPACE}/hosts_file
-        fi
+    for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
+        ip=OPENSTACK_CONTROL_NODE_${i}_IP
+        hostname=$(${SSH} ${!ip} "hostname")
+        echo "${!ip}   ${hostname}" >> ${WORKSPACE}/hosts_file
+     done
+
+    for i in `seq 1 ${NUM_OPENSTACK_COMPUTE_NODES}`; do
+        ip=OPENSTACK_COMPUTE_NODE_${i}_IP
+        hostname=$(${SSH} ${!ip} "hostname")
+        echo "${!ip}   ${hostname}" >> ${WORKSPACE}/hosts_file
     done
 
-    echo "Created the hosts file for ${NODE_IP}:"
+    echo "Created the hosts file:"
     cat ${WORKSPACE}/hosts_file
 } # create_etc_hosts()
 
@@ -822,6 +819,8 @@ sudo iptables --line-numbers -nvL
 true
 EOF
 
+create_etc_hosts
+
 cat > ${WORKSPACE}/get_devstack.sh << EOF
 sudo systemctl stop firewalld
 sudo yum install bridge-utils python-pip -y
@@ -831,9 +830,14 @@ sudo systemctl stop NetworkManager
 sudo killall dhclient
 sudo killall dnsmasq
 #Workaround for mysql failure
-echo "127.0.0.1   localhost \${HOSTNAME}" >> /tmp/hosts
-echo "::1         localhost \${HOSTNAME}" >> /tmp/hosts
-sudo mv /tmp/hosts /etc/hosts
+echo "node original hosts file:"
+sudo cat /etc/hosts
+echo "127.0.0.1   localhost \${HOSTNAME}" > /tmp/hosts2
+echo "::1         localhost \${HOSTNAME}" >> /tmp/hosts2
+cat /tmp/hosts >> /tmp/hosts2
+sudo mv /tmp/hosts2 /etc/hosts
+echo "node final hosts file:"
+sudo cat /etc/hosts
 sudo mkdir /opt/stack
 echo "Create RAM disk for /opt/stack"
 sudo mount -t tmpfs -o size=2G tmpfs /opt/stack
@@ -897,7 +901,6 @@ for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
     echo "Configure the stack of the control node ${i} of ${NUM_OPENSTACK_CONTROL_NODES}: ${CONTROLIP}"
     scp ${WORKSPACE}/disable_firewall.sh ${!CONTROLIP}:/tmp
     ${SSH} ${!CONTROLIP} "sudo bash /tmp/disable_firewall.sh"
-    create_etc_hosts ${!CONTROLIP}
     scp ${WORKSPACE}/hosts_file ${!CONTROLIP}:/tmp/hosts
     scp ${WORKSPACE}/get_devstack.sh ${!CONTROLIP}:/tmp
     ${SSH} ${!CONTROLIP} "bash /tmp/get_devstack.sh > /tmp/get_devstack.sh.txt 2>&1"
@@ -947,7 +950,6 @@ for i in `seq 1 ${NUM_OPENSTACK_COMPUTE_NODES}`; do
     echo "Configure the stack of the compute node ${i} of ${NUM_OPENSTACK_COMPUTE_NODES}: ${COMPUTEIP}"
     scp ${WORKSPACE}/disable_firewall.sh "${!COMPUTEIP}:/tmp"
     ${SSH} "${!COMPUTEIP}" "sudo bash /tmp/disable_firewall.sh"
-    create_etc_hosts ${!COMPUTEIP} ${!CONTROLIP}
     scp ${WORKSPACE}/hosts_file ${!COMPUTEIP}:/tmp/hosts
     scp ${WORKSPACE}/get_devstack.sh  ${!COMPUTEIP}:/tmp
     ${SSH} ${!COMPUTEIP} "bash /tmp/get_devstack.sh > /tmp/get_devstack.sh.txt 2>&1"
