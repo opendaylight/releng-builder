@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f781d969_f6a48d5b",
+        "filename": "jjb/packaging/packaging.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2018-01-24T02:13:01Z",
+      "side": 1,
+      "message": "Fiddle with include-raw vs include-raw-escape. My advice is to never escape brace expansion with the double {{ }} curly brace and instead use !include-raw-escape UNLESS you notice that JJB is inserting double braces into the shell when you only have single braces. In that case fall back to !include-raw. One of them always works. It\u0027s a bug in JJB IMO.",
+      "range": {
+        "startLine": 84,
+        "startChar": 16,
+        "endLine": 84,
+        "endChar": 27
+      },
+      "revId": "3a4ba12c973248d6ce8cc1aceff789e0f7270dfb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
