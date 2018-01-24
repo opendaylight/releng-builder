@@ -15,12 +15,12 @@
     jdks:
       - openjdk8
     maven:
-      - mvn33:
-          mvn-version: mvn33
+      - mvn35:
+          mvn-version: mvn35
     mvn-settings: odlparent-settings
     mvn-goals: clean install
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    mvn-version: mvn33
+    mvn-version: mvn35
 
     dependencies: ''
     email-upstream: '[odlparent]'
