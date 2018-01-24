@@ -20,10 +20,10 @@ $PYTHON -m pip install -r "$WORKSPACE/packaging/packages/requirements.txt"
 # If URL is to zip, check if there's a tar.gz available to avoid repackaging.
 if [[ $DOWNLOAD_URL = *.zip ]]; then
   # shellcheck disable=SC2154
-  candidate_tarball_url="${{DOWNLOAD_URL//zip/tar.gz}}"
+  candidate_tarball_url="${DOWNLOAD_URL//zip/tar.gz}"
   # shellcheck disable=SC2154
   url_status=$(curl --silent --head --location --output /dev/null --write-out \
-    '%{{http_code}}' "$candidate_tarball_url")
+    '%{http_code}' "$candidate_tarball_url")
   if [[ $url_status = 2* ]]; then
     DOWNLOAD_URL="$candidate_tarball_url"
   fi
