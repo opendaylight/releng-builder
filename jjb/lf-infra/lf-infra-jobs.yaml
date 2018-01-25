@@ -47,12 +47,14 @@
 - project:
     name: lf-infra-docs-conf
     jobs:
+      - '{project-name}-rtd-jobs'
       - gerrit-tox-verify
 
     project-name: lf-infra-docs-conf
     project: releng/docs-conf
     project-pattern: releng/docs-conf
     build-node: centos7-builder-2c-8g
+    rtd-project: lfdocs-conf
     stream: any
     branch: '*'
 
