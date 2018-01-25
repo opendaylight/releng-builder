@@ -47,6 +47,7 @@
 - project:
     name: lf-infra-docs-conf
     jobs:
+      - '{project-name}-rtd-jobs'
       - gerrit-tox-verify
 
     project-name: lf-infra-docs-conf
