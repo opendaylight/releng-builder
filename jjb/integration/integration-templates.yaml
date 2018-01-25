@@ -1014,7 +1014,8 @@
       - lf-infra-publish
 
 - job-template:
-    name: '{project}-csit-hwvtep-{topology}-openstack-{openstack}-{functionality}-{stream}'
+    name: '{prefix}{project}-csit-hwvtep-{topology}-openstack-{openstack}-{functionality}-{stream}'
+    id: inttest-csit-hwvtep-openstack
     disabled: false
 
     project-type: freestyle
