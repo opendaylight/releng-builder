@@ -5,7 +5,6 @@
     builders:
       - inject:
           properties-content: 'URL=/home/$USER/rpmbuild/RPMS/noarch/*.rpm'
-      # Use *-escape to make double brace expansion work. JJB strangeness.
       - shell: !include-raw: test-rpm-deps.sh
       - shell: !include-raw-escape: install-rpm.sh
       - shell: !include-raw: start-odl.sh
@@ -15,6 +14,7 @@
           # Install nmap to check status of ODL's SSH port
           sudo yum install -y expect nmap
       - shell: !include-raw: test-karaf.expect
+      - shell: !include-raw: test-rest-ok.sh
       - shell: !include-raw: stop-odl.sh
       - shell: !include-raw: uninstall-rpm.sh
       - shell: |
