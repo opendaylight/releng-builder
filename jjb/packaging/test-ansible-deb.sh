@@ -30,6 +30,6 @@ sudo apt-get install -y ansible
 sudo cp -R $WORKSPACE/ansible /etc/ansible/roles/opendaylight
 
 # Install OpenDaylight via repo using example Ansible playbook
-sudo ansible-playbook -i "localhost," -c local $WORKSPACE/ansible/examples/deb_repo_install_playbook.yml
+sudo ansible-playbook -i "localhost," -c local $WORKSPACE/ansible/examples/deb_repo.yml
 
 # Add more tests
