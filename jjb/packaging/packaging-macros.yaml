@@ -9,6 +9,7 @@
       - shell: !include-raw: test-rpm-deps.sh
       - shell: !include-raw-escape: install-rpm.sh
       - shell: !include-raw: start-odl.sh
+      - shell: !include-raw: test-rest-ok.sh
       # Install deps needed interactive Karaf shell tests
       - shell: |
           # Install expect to interact with Karaf shell
