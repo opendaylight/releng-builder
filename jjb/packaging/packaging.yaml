@@ -189,12 +189,12 @@
           build-timeout: '{build-timeout}'
 
     builders:
-      # TODO: Install/test each RPM? Will require builder script changes.
       # Test Nitrogen tarball
       - inject:
           # yamllint disable-line rule:line-length
           properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/integration/karaf/0.7.0/karaf-0.7.0.tar.gz'
       - shell: !include-raw-escape: build-rpm.sh
+      - install-test-uninstall-rpm
 
       # Test Oxygen pre-release autorelease tarball
       # FIXME: There aren't any available Oxygen autorelease builds, add one once possible
@@ -202,17 +202,20 @@
       # yamllint disable-line rule:line-length
       #    properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/autorelease-2052/org/opendaylight/integration/karaf/0.8.0/karaf-0.8.0.tar.gz'
       # - shell: !include-raw-escape: build-rpm.sh
+      # - install-test-uninstall-rpm
 
       # Test Oxygen multipatch zip (no parallel tarball available)
       - inject:
           # yamllint disable-line rule:line-length
           properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/org/opendaylight/integration/integration/distribution/karaf/0.8.0-SNAPSHOT/karaf-0.8.0-20171128.175421-68.zip'
       - shell: !include-raw-escape: build-rpm.sh
+      - install-test-uninstall-rpm
 
       # Test latest Oxygen snapshot
       - inject:
           properties-content: 'STREAM=oxygen'
       - shell: !include-raw: build-rpm-snap.sh
+      - install-test-uninstall-rpm
 
     triggers:
       - gerrit:
