@@ -80,30 +80,13 @@ fi
 sed -ie "s%\(featuresRepositories=\|featuresRepositories =\)%featuresRepositories = mvn:org.opendaylight.integration/\${FEATURE_TEST_STRING}/${BUNDLEVERSION}/xml/features,mvn:org.apache.karaf.decanter/apache-karaf-decanter/1.0.0/xml/features,%g" ${FEATURESCONF}
 cat ${FEATURESCONF}
 
-echo "Configuring the log..."
-sed -ie 's/log4j.appender.out.maxBackupIndex=10/log4j.appender.out.maxBackupIndex=1/g' ${LOGCONF}
-# FIXME: Make log size limit configurable from build parameter.
-sed -ie 's/log4j.appender.out.maxFileSize=1MB/log4j.appender.out.maxFileSize=30GB/g' ${LOGCONF}
-# Add custom logging levels
-# CONTROLLERDEBUGMAP is expected to be a key:value map of space separated values like "module:level module2:level2"
-# where module is abbreviated and does not include org.opendaylight
-unset IFS
-if [ -n "${CONTROLLERDEBUGMAP}" ]; then
-    for kv in ${CONTROLLERDEBUGMAP}; do
-        module=\${kv%%:*}
-        level=\${kv#*:}
-        if [ -n \${module} ] && [ -n \${level} ]; then
-            echo "log4j.logger.org.opendaylight.\${module} = \${level}" >> \${LOGCONF}
-        fi
-    done
-fi
-cat ${LOGCONF}
-
 if [ "${ODL_ENABLE_L3_FWD}" == "yes" ]; then
   echo "Enable the l3.fwd in custom.properties.."
   echo "ovsdb.l3.fwd.enabled=yes" >> ${CUSTOMPROP}
-  cat ${CUSTOMPROP}
 fi
+cat ${CUSTOMPROP}
+
+configure_karaf_log
 
 set_java_vars
 
