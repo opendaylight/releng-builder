@@ -28,7 +28,11 @@ cat "${FEATURESCONF}"
 
 echo "Configuring the log..."
 LOGCONF="${WORKSPACE}/${BUNDLEFOLDER}/etc/org.ops4j.pax.logging.cfg"
-sed -ie 's/log4j.appender.out.maxFileSize=1MB/log4j.appender.out.maxFileSize=20MB/g' "${LOGCONF}"
+if [[ "$KARAF_VERSION" == "karaf4" ]]; then
+    sed -ie 's/log4j2.appender.rolling.policies.size.size = 16MB/log4j2.appender.rolling.policies.size.size = 1GB/g' ${LOGCONF}
+else
+    sed -ie 's/log4j.appender.out.maxFileSize=1MB/log4j.appender.out.maxFileSize=20MB/g' "${LOGCONF}"
+fi
 cat "${LOGCONF}"
 
 echo "Configure max memory..."
