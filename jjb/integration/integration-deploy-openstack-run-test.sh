@@ -533,6 +533,7 @@ EOF
         scp ${!CONTROLLERIP}:/tmp/journalctl.log ${NODE_FOLDER}
         ${SSH} ${!CONTROLLERIP} "dmesg -T > /tmp/dmesg.log"
         scp ${!CONTROLLERIP}:/tmp/dmesg.log ${NODE_FOLDER}
+        rsync -avhe ssh ${!CONTROLLERIP}:/tmp/${BUNDLEFOLDER}/etc ${NODE_FOLDER}
         ${SSH} ${!CONTROLLERIP} "cp -r /tmp/${BUNDLEFOLDER}/data/log /tmp/odl_log"
         ${SSH} ${!CONTROLLERIP} "tar -cf /tmp/odl${i}_karaf.log.tar /tmp/odl_log/*"
         scp ${!CONTROLLERIP}:/tmp/odl${i}_karaf.log.tar ${NODE_FOLDER}
