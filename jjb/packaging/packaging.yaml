@@ -384,6 +384,7 @@
           # Install nmap to check status of ODL's SSH port
           sudo yum install -y expect nmap
       - shell: !include-raw: test-karaf.expect
+      - shell: !include-raw-escape: test-rest-ok.sh
       - shell: !include-raw: stop-odl.sh
       - shell: !include-raw: uninstall-rpm.sh
 
