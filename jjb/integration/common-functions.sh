@@ -33,3 +33,37 @@ function set_java_vars() {
     JAVA_RESOLVED=\`readlink -e "\${JAVA_HOME}/bin/java"\`
     echo "Java binary pointed at by JAVA_HOME: \${JAVA_RESOLVED}"
 } # set_java_vars()
+
+# shellcheck disable=SC2034
+# foo appears unused. Verify it or export it.
+function configure_karaf_log() {
+    local logapi=log4j
+    echo "Configuring the karaf log..."
+    if [[ "$KARAF_VERSION" == "karaf4" ]]; then
+        logapi=log4j2
+        # FIXME: Make log size limit configurable from build parameter.
+        echo "log4j2.appender.rolling.policies.size.size = 1GB" >> ${LOGCONF}
+        echo "log4j2.logger.org.opendaylight.yangtools.yang.parser.repo.YangTextSchemaContextResolver = WARN" >> ${LOGCONF}
+    else
+        sed -ie 's/log4j.appender.out.maxBackupIndex=10/log4j.appender.out.maxBackupIndex=1/g' ${LOGCONF}
+        # FIXME: Make log size limit configurable from build parameter.
+        sed -ie 's/log4j.appender.out.maxFileSize=1MB/log4j.appender.out.maxFileSize=30GB/g' ${LOGCONF}
+        echo "log4j.logger.org.opendaylight.yangtools.yang.parser.repo.YangTextSchemaContextResolver = WARN" >> ${LOGCONF}
+    fi
+
+    # Add custom logging levels
+    # CONTROLLERDEBUGMAP is expected to be a key:value map of space separated values like "module:level module2:level2"
+    # where module is abbreviated and does not include "org.opendaylight."
+    unset IFS
+    if [ -n "${CONTROLLERDEBUGMAP}" ]; then
+        for kv in ${CONTROLLERDEBUGMAP}; do
+            module="\${kv%%:*}"
+            level="\${kv#*:}"
+            if [ "\${module}" ] && [ "\${level}" ]; then
+                echo "\${logapi}.logger.org.opendaylight.\${module} = \${level}" >> ${LOGCONF}
+            fi
+        done
+    fi
+
+    cat ${LOGCONF}
+} # function configure_karaf_log()
