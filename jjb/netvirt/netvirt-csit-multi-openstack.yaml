@@ -37,6 +37,10 @@
           odl-snat-mode: 'conntrack'
       - gate-minimal-cluster:
           testplan: '{project}-{topology}-minimal-openstack.txt'
+      # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
+      - tdd-wip:
+          testplan: '{project}-{topology}-tdd-wip.txt'
+          schedule: ''
 
     openstack:
       - ocata:
