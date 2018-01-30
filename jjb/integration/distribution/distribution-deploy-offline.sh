@@ -27,9 +27,12 @@ cat "${FEATURESCONF}"
 
 echo "Configuring the log..."
 LOGCONF="${WORKSPACE}/${BUNDLEFOLDER}/etc/org.ops4j.pax.logging.cfg"
-sed -ie 's/log4j.appender.out.maxBackupIndex=10/log4j.appender.out.maxBackupIndex=1/g' "${LOGCONF}"
 # FIXME: Make log size limit configurable from build parameter.
-sed -ie 's/log4j.appender.out.maxFileSize=1MB/log4j.appender.out.maxFileSize=30GB/g' "${LOGCONF}"
+if [[ "$KARAF_VERSION" == "karaf4" ]]; then
+    echo "log4j2.appender.rolling.policies.size.size = 20MB" >> ${LOGCONF}
+else
+    sed -ie 's/log4j.appender.out.maxFileSize=1MB/log4j.appender.out.maxFileSize=20MB/g' "${LOGCONF}"
+fi
 cat "${LOGCONF}"
 
 echo "Configure the repos..."
