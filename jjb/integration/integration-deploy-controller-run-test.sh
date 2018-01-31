@@ -98,7 +98,11 @@ if [ -n "${CONTROLLERDEBUGMAP}" ]; then
 fi
 cat ${LOGCONF}
 
-set_java_vars
+# set_java_vars function comes from a common functions lib, but it needs to be
+# expanded in to this encompassing shell script first, before it can be called.
+# Otherwise it won't be available on the system this script is copied to where
+# it is run.
+function $(declare -f set_java_vars); set_java_vars
 
 echo "Listing all open ports on controller system..."
 netstat -pnatu
