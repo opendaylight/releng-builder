@@ -1508,7 +1508,7 @@
               -DgenerateReports=false
               -Dstream={stream}
               {opendaylight-infra-mvn-opts}
-          # TODO: {opendaylight-infra-parallel-mvn-opts}?
+          # {opendaylight-infra-parallel-mvn-opts} is bad when there are multiple big features in SFT.
           java-opts:
             - '-Xmx4096m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
           settings: integration-settings
@@ -1522,7 +1522,8 @@
               clean install dependency:tree
               -Pq
               -Dgitid.skip=false
-              {opendaylight-infra-parallel-mvn-opts}
+              {opendaylight-infra-mvn-opts}
+          # {opendaylight-infra-parallel-mvn-opts} is bad when there are multiple big features in SFT.
           java-opts:
             - '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
           settings: integration-settings

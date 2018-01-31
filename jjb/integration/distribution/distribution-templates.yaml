@@ -61,21 +61,23 @@
       - distribution-check-build-project:
           pom: '$GERRIT_PROJECT/pom.xml'
           mvn-opts: '{opendaylight-infra-mvn-opts}'
-          # TODO: {opendaylight-infra-parallel-mvn-opts}?
+          # {opendaylight-infra-parallel-mvn-opts} is bad when there are multiple big features in SFT.
       - distribution-check-verify-groupid:
           gerrit-project: '$GERRIT_PROJECT'
       - distribution-check-download-deps:
           dist-pom: 'distribution/pom.xml'
-          mvn-opts: '{opendaylight-infra-parallel-mvn-opts}'
+          mvn-opts: '{opendaylight-infra-mvn-opts}'
+          # {opendaylight-infra-parallel-mvn-opts} is bad when there are multiple big features in SFT.
       - distribution-check-delete-snapshots
       - distribution-check-configure-remotes
       - distribution-check-repeat-project-build:
           pom: '$GERRIT_PROJECT/pom.xml'
           mvn-opts: '{opendaylight-infra-mvn-opts}'
-          # TODO: {opendaylight-infra-parallel-mvn-opts}?
+          # {opendaylight-infra-parallel-mvn-opts} is bad when there are multiple big features in SFT.
       - distribution-check-repeat-distro-build:
           dist-pom: 'distribution/pom.xml'
-          mvn-opts: '{opendaylight-infra-parallel-mvn-opts}'
+          mvn-opts: '{opendaylight-infra-mvn-opts}'
+          # {opendaylight-infra-parallel-mvn-opts} is bad when there are multiple big features in SFT.
       - integration-set-variables
       - distribution-check-warn-9191
       - distribution-check-warn-9192

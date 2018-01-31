@@ -53,7 +53,7 @@
               -Dstream={stream}
               -Dsft.heap.max=4g
               {opendaylight-infra-mvn-opts}
-          # {opendaylight-infra-parallel-mvn-opts} is bad when there are multiple big features for SFT.
+          # {opendaylight-infra-parallel-mvn-opts} is bad when there are multiple big features in SFT.
           java-opts:
             - '-Xmx1024m -XX:MaxPermSize=256m'
           settings: integration-settings
@@ -238,14 +238,16 @@
       - distribution-check-wipe
       - distribution-check-build-project:
           pom: 'distribution/pom.xml'
-          mvn-opts: '{opendaylight-infra-parallel-mvn-opts}'
+          mvn-opts: '{opendaylight-infra-mvn-opts}'
+          # '{opendaylight-infra-parallel-mvn-opts}' is bad when there are multiple big features in SFT.
       - distribution-check-verify-groupid:
           gerrit-project: 'integration'
       - distribution-check-delete-snapshots
       - distribution-check-configure-remotes
       - distribution-check-repeat-project-build:
           pom: 'distribution/pom.xml'
-          mvn-opts: '{opendaylight-infra-parallel-mvn-opts}'
+          mvn-opts: '{opendaylight-infra-mvn-opts}'
+          # '{opendaylight-infra-parallel-mvn-opts}' is bad when there are multiple big features in SFT.
       - integration-set-variables
       - distribution-check-warn-9191
       - distribution-check-warn-9192
