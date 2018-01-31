@@ -105,6 +105,7 @@
       - inject:
           properties-file: 'slave_addresses.txt'
       - integration-detect-variables
+      - integration-install-common-functions
       - integration-deploy-controller-run-test
       - integration-cleanup-tmp
 
@@ -197,6 +198,7 @@
       - inject:
           properties-file: 'slave_addresses.txt'
       - integration-detect-variables
+      - integration-install-common-functions
       - integration-deploy-controller-run-test
       - integration-cleanup-tmp
 
@@ -312,6 +314,7 @@
       - inject:
           properties-file: 'slave_addresses.txt'
       - integration-detect-variables
+      - integration-install-common-functions
       - integration-deploy-controller-run-test
       - integration-cleanup-tmp
 
@@ -1204,6 +1207,7 @@
       - inject:
           properties-file: 'slave_addresses.txt'
       - integration-detect-variables
+      - integration-install-common-functions
       - integration-deploy-controller-run-test
       - integration-deploy-openstack-run-test
       - integration-cleanup-tmp
@@ -1410,6 +1414,7 @@
       - inject:
           properties-file: 'slave_addresses.txt'
       - integration-detect-variables
+      - integration-install-common-functions
       - integration-deploy-controller-run-test
       - integration-deploy-openstack-run-test
       - integration-cleanup-tmp
