@@ -4,6 +4,7 @@
 # script.
 # shellcheck source=${ROBOT_VENV}/bin/activate disable=SC1091
 source ${ROBOT_VENV}/bin/activate
+source /tmp/common-functions.sh ${BUNDLEFOLDER}
 
 echo "#################################################"
 echo "##         Configure Cluster and Start         ##"
@@ -55,6 +56,8 @@ fi
 
 # Create the configuration script to be run on controllers.
 cat > ${WORKSPACE}/configuration-script.sh <<EOF
+set -x
+source /tmp/common-functions.sh ${BUNDLEFOLDER}
 
 echo "Changing to /tmp"
 cd /tmp
@@ -105,7 +108,7 @@ if [ "${ODL_ENABLE_L3_FWD}" == "yes" ]; then
   cat ${CUSTOMPROP}
 fi
 
-set_java_vars
+set_java_vars "${JAVA_HOME}"
 
 # Copy shard file if exists
 if [ -f /tmp/custom_shard_config.txt ]; then
