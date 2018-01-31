@@ -80,6 +80,9 @@ EOF
 
 print_job_parameters
 
+collect_logs
+exit 1
+
 function create_etc_hosts() {
     NODE_IP=$1
     CTRL_IP=$2

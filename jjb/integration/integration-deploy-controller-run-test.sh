@@ -4,7 +4,9 @@
 # script.
 # shellcheck source=${ROBOT_VENV}/bin/activate disable=SC1091
 source ${ROBOT_VENV}/bin/activate
+source /tmp/common-functions.sh ${BUNDLEFOLDER}
 
+echo "JAVA_HOME: ${JAVA_HOME}, \${JAVA_HOME}"
 
 if [ "${ENABLE_HAPROXY_FOR_NEUTRON}" == "yes" ]; then
     echo "Configure cluster"
@@ -45,6 +47,8 @@ if [ -f "${WORKSPACE}/test/csit/scriptplans/${TESTPLAN}" ]; then
 fi
 
 cat > ${WORKSPACE}/configuration-script.sh <<EOF
+set -x
+source /tmp/common-functions.sh ${BUNDLEFOLDER}
 
 echo "Changing to /tmp"
 cd /tmp
@@ -96,9 +100,10 @@ if [ -n "${CONTROLLERDEBUGMAP}" ]; then
         fi
     done
 fi
+echo "cat ${LOGCONF}"
 cat ${LOGCONF}
 
-set_java_vars
+set_java_vars "${JAVA_HOME}"
 
 echo "Listing all open ports on controller system..."
 netstat -pnatu
@@ -126,6 +131,7 @@ if [ "${ENABLE_HAPROXY_FOR_NEUTRON}" == "yes" ]; then
 fi
 
 EOF
+# cat > ${WORKSPACE}/configuration-script.sh <<EOF
 
 # Create the startup script to be run on controller.
 cat > ${WORKSPACE}/startup-script.sh <<EOF
@@ -138,6 +144,7 @@ echo "Starting controller..."
 /tmp/${BUNDLEFOLDER}/bin/start
 
 EOF
+# cat > ${WORKSPACE}/startup-script.sh <<EOF
 
 cat > ${WORKSPACE}/post-startup-script.sh <<EOF
 
@@ -217,6 +224,7 @@ exit_on_log_file_message 'BindException: Address already in use'
 exit_on_log_file_message 'server is unhealthy'
 
 EOF
+# cat > ${WORKSPACE}/post-startup-script.sh <<EOF
 
 [ "$NUM_OPENSTACK_SITES" ] || NUM_OPENSTACK_SITES=1
 NUM_ODLS_PER_SITE=$((NUM_ODL_SYSTEM / NUM_OPENSTACK_SITES))

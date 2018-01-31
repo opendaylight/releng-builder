@@ -374,9 +374,7 @@
 - builder:
     name: integration-deploy-controller-run-test
     builders:
-      - shell: !include-raw:
-          - common-functions.sh
-          - integration-deploy-controller-run-test.sh
+      - shell: !include-raw: integration-deploy-controller-run-test.sh
 
 # Macro: integration-configure-clustering
 # Operation: this macro configures the clustering
@@ -385,9 +383,7 @@
 - builder:
     name: integration-configure-clustering
     builders:
-      - shell: !include-raw:
-          - common-functions.sh
-          - integration-configure-clustering.sh
+      - shell: !include-raw: integration-configure-clustering.sh
 
 # Macro: integration-start-cluster-run-test
 # Operation: this macro starts the 3-node cluster and runs test
@@ -444,9 +440,17 @@
       - shell: !include-raw: integration-rebase-gerrit-patch.sh
 
 - builder:
+    name: integration-install-common-functions
+    builders:
+      - shell: !include-raw:
+          - copy-common-functions.sh
+          - common-functions.sh
+
+- builder:
     name: integration-deploy-openstack-run-test
     builders:
-      - shell: !include-raw: integration-deploy-openstack-run-test.sh
+      - shell: !include-raw:
+          - integration-deploy-openstack-run-test.sh
 
 - builder:
     name: integration-compare-distributions
