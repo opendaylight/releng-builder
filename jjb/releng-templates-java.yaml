@@ -14,7 +14,8 @@
 
       - gerrit-maven-release
       - gerrit-maven-verify
-      - gerrit-maven-verify-dependencies
+      - gerrit-maven-verify-dependencies:
+          build-timeout: 180
 
 - job-template:
     name: '{project-name}-integration-{stream}'
