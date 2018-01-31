@@ -97,8 +97,8 @@ if [ -n "${CONTROLLERDEBUGMAP}" ]; then
     done
 fi
 cat ${LOGCONF}
-
-set_java_vars
+function $(declare -f set_java_vars)
+set_java_vars ${MEMCONF} ${CONTROLLERMEM} ${JAVA_HOME}
 
 echo "Listing all open ports on controller system..."
 netstat -pnatu
