@@ -446,7 +446,9 @@
 - builder:
     name: integration-deploy-openstack-run-test
     builders:
-      - shell: !include-raw: integration-deploy-openstack-run-test.sh
+      - shell: !include-raw:
+          - common-functions.sh
+          - integration-deploy-openstack-run-test.sh
 
 - builder:
     name: integration-compare-distributions
