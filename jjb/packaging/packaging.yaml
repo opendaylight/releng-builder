@@ -380,12 +380,13 @@
           build-timeout: '{build-timeout}'
 
     builders:
-      - shell: !include-raw-escape: install-rpm.sh
-      - shell: !include-raw: start-odl.sh
       - shell: |
           # Install expect to interact with Karaf shell
           # Install nmap to check status of ODL's SSH port
           sudo yum install -y expect nmap
+      - shell: !include-raw-escape: install-rpm.sh
+      - shell: !include-raw: start-odl.sh
+      - shell: !include-raw-escape: test-ports-nofeature.sh
       - shell: !include-raw: test-karaf.expect
       - shell: !include-raw-escape: test-rest-ok.sh
       - shell: !include-raw: stop-odl.sh
