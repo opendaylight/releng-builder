@@ -236,7 +236,8 @@ do
         # Copy over the config script to controller and execute it (parameters are used only for cluster)
         echo "Execute the configuration script on controller ${!odl_ip} for index $j with node list ${odl_node_list}"
         scp ${WORKSPACE}/configuration-script.sh ${!odl_ip}:/tmp
-        ssh ${!odl_ip} "bash /tmp/configuration-script.sh ${j} '${odl_node_list}'"
+        # function $(declare -f set_java_vars)
+        ssh ${!odl_ip} "$(declare -f); bash /tmp/configuration-script.sh ${j} '${odl_node_list}'"
     done
 done
 
