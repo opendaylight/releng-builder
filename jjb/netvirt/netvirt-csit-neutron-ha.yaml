@@ -1,0 +1,43 @@
+---
+- project:
+    name: netvirt-csit-neutron-ha-nitrogen
+    jobs:
+      -  csit-openstack-neutron-ha
+
+    project: 'netvirt'
+    stream: 'nitrogen'
+    branch: 'stable/nitrogen'
+    testplan: '{project}-{topology}-openstack.txt'
+    odl-ml2-driver-version: 'v2'
+    enable-openstack-services: 'placement-api,tempest'
+    enable-openstack-compute-services: 'placement-client'
+    security-group-mode: 'stateful'
+    openstack_system_count: 3
+    openstack_system_flavor: v2-standard-8
+
+    topology:
+      - 1node:
+          num-odl-nodes: 1
+      - 3node:
+          num-odl-nodes: 3
+
+    functionality:
+      - snat-conntrack:
+          odl-snat-mode: 'conntrack'
+      - gate-stateful
+      - gate-stateful-snat-conntrack:
+          odl-snat-mode: 'conntrack'
+      - gate-minimal-cluster:
+          testplan: '{project}-{topology}-minimal-openstack.txt'
+      # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
+      - gate-tdd-wip:
+          testplan: '{project}-{topology}-tdd-wip-openstack.txt'
+          schedule: ''
+
+    openstack:
+      - pike:
+          openstack-branch: 'stable/pike'
+          odl-ml2-branch: 'stable/pike'
+          odl-ml2-port-binding: 'pseudo-agentdb-binding'
+          openstack_system_image: 'ZZCI - CentOS 7 - openstack-pike - 20180405-0722'
+          odl-ml2-driver-rpm-name: 'latest'

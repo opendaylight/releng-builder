@@ -464,6 +464,12 @@
           - integration-deploy-openstack-run-test.sh
 
 - builder:
+    name: integration-deploy-openstack-ha-with-odl-and-test
+    builders:
+      - shell: !include-raw:
+          - integration-deploy-openstack-ha-with-odl-and-test.sh
+
+- builder:
     name: integration-compare-distributions
     # Operation: will compare an already created distribtion (probably last
     # published to nexus) to the current distribution being created.
