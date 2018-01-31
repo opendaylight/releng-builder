@@ -6,6 +6,7 @@ set -x
 ODL_SYSTEM=()
 TOOLS_SYSTEM=()
 OPENSTACK_SYSTEM=()
+OPENSTACK_SYSTEM_NEW=()
 OPENSTACK_CONTROLLERS=()
 [ "$NUM_OPENSTACK_SITES" ] || NUM_OPENSTACK_SITES=1
 
@@ -43,6 +44,10 @@ do
 
        OPENSTACK_SYSTEM=( "${OPENSTACK_SYSTEM[@]}" "${i}" )
        ;;
+    *openstack*)
+       OPENSTACK_SYSTEM_NEW=( "${OPENSTACK_SYSTEM_NEW[@]}" "${i}" )
+       ;;
+
     *)
        TOOLS_SYSTEM=( "${TOOLS_SYSTEM[@]}" "${i}" )
        ;;
