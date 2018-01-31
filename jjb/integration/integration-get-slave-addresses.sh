@@ -6,6 +6,8 @@ set -x
 ODL_SYSTEM=()
 TOOLS_SYSTEM=()
 OPENSTACK_SYSTEM=()
+OPENSTACK_SYSTEM_NEW=()
+OPENSTACK_SYSTEM_NEW_HOSTNAME=()
 OPENSTACK_CONTROLLERS=()
 [ "$NUM_OPENSTACK_SITES" ] || NUM_OPENSTACK_SITES=1
 
@@ -43,6 +45,11 @@ do
 
        OPENSTACK_SYSTEM=( "${OPENSTACK_SYSTEM[@]}" "${i}" )
        ;;
+    *openstack*)
+       OPENSTACK_SYSTEM_NEW=( "${OPENSTACK_SYSTEM_NEW[@]}" "${i}" )
+       OPENSTACK_SYSTEM_NEW_HOSTNAME=( "${OPENSTACK_SYSTEM_NEW_HOSTNAME[@]}" "${REMHOST}" )
+       ;;
+
     *)
        TOOLS_SYSTEM=( "${TOOLS_SYSTEM[@]}" "${i}" )
        ;;
@@ -123,5 +130,15 @@ do
     echo "OPENSTACK_HAPROXY_$((i+1))_IP=${OPENSTACK_SYSTEM[$((openstack_index++))]}" >> slave_addresses.txt
 done
 echo "Contents of slave_addresses.txt:"
+
+#The new Openstack Nodes created from the new image
+NUM_OPENSTACK_NEW_NODES=${#OPENSTACK_SYSTEM_NEW[@]}
+echo "NUM_OPENSTACK_NEW_NODES=${#OPENSTACK_SYSTEM_NEW[@]}" >> slave_addresses.txt
+for i in $(seq 0 $((NUM_OPENSTACK_NEW_NODES - 1)))
+do
+    echo "OPENSTACK_NEW_NODE_$((i+1))_IP=${OPENSTACK_SYSTEM_NEW[${i}]}" >> slave_addresses.txt
+    echo "OPENSTACK_NEW_NODE_$((i+1))_HOSTNAME=${OPENSTACK_SYSTEM_NEW_HOSTNAME[${i}]}" >> slave_addresses.txt
+done
+
 cat slave_addresses.txt
 # vim: sw=4 ts=4 sts=4 et ft=sh :
