@@ -48,12 +48,14 @@
           odl-ml2-branch: 'stable/ocata'
           openstack_system_image: '{openstack_system_image_ocata}'
           openstack_system2_image: '{openstack_system_image_ocata}'
+          enable-openstack-network-services: '{openstack_legacy_default_network_services}'
       - pike:
           openstack-branch: 'stable/pike'
           odl-ml2-branch: 'stable/pike'
           odl-ml2-port-binding: 'pseudo-agentdb-binding'
           openstack_system_image: '{openstack_system_image_pike}'
           openstack_system2_image: '{openstack_system_image_pike}'
+          enable-openstack-network-services: '{openstack_legacy_default_network_services}'
       - queens:
           openstack-branch: 'master'
           odl-ml2-branch: 'master'
@@ -106,12 +108,14 @@
           odl-ml2-branch: 'stable/ocata'
           openstack_system_image: '{openstack_system_image_ocata}'
           openstack_system2_image: '{openstack_system_image_ocata}'
+          enable-openstack-network-services: '{openstack_legacy_default_network_services}'
       - pike:
           openstack-branch: 'stable/pike'
           odl-ml2-branch: 'stable/pike'
           odl-ml2-port-binding: 'pseudo-agentdb-binding'
           openstack_system_image: '{openstack_system_image_pike}'
           openstack_system2_image: '{openstack_system_image_pike}'
+          enable-openstack-network-services: '{openstack_legacy_default_network_services}'
       - queens:
           openstack-branch: 'master'
           odl-ml2-branch: 'master'
@@ -165,12 +169,14 @@
           odl-ml2-branch: 'stable/ocata'
           openstack_system_image: '{openstack_system_image_ocata}'
           openstack_system2_image: '{openstack_system_image_ocata}'
+          enable-openstack-network-services: '{openstack_legacy_default_network_services}'
       - pike:
           openstack-branch: 'stable/pike'
           odl-ml2-branch: 'stable/pike'
           odl-ml2-port-binding: 'pseudo-agentdb-binding'
           openstack_system_image: '{openstack_system_image_pike}'
           openstack_system2_image: '{openstack_system_image_pike}'
+          enable-openstack-network-services: '{openstack_legacy_default_network_services}'
 
 - project:
     name: netvirt-csit-sfc-openstack-integration
@@ -212,3 +218,4 @@
           odl-ml2-port-binding: 'pseudo-agentdb-binding'
           openstack_system_image: '{openstack_system_image_pike}'
           openstack_system2_image: '{openstack_system_image_pike}'
+          enable-openstack-network-services: '{openstack_legacy_default_network_services}'
