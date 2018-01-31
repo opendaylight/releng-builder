@@ -105,7 +105,13 @@ if [ "${ODL_ENABLE_L3_FWD}" == "yes" ]; then
   cat ${CUSTOMPROP}
 fi
 
-set_java_vars
+# set_java_vars function comes from a common functions lib, but it needs to be
+# expanded in to this encompassing shell script first, before it can be called.
+# Otherwise it won't be available on the system this script is copied to where
+# it is run.
+echo "jamo debug, which java"
+which java
+function $(declare -f set_java_vars); set_java_vars
 
 # Copy shard file if exists
 if [ -f /tmp/custom_shard_config.txt ]; then
