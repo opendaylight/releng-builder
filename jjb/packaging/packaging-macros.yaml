@@ -5,18 +5,27 @@
     builders:
       - inject:
           properties-content: 'URL=/home/$USER/rpmbuild/RPMS/noarch/*.rpm'
-      - shell: !include-raw: test-rpm-deps.sh
-      - shell: !include-raw-escape: install-rpm.sh
-      - shell: !include-raw: start-odl.sh
       # Install deps needed interactive Karaf shell tests
       - shell: |
           # Install expect to interact with Karaf shell
           # Install nmap to check status of ODL's SSH port
           sudo yum install -y expect nmap
+      - shell: |
+          netstat -pnatu
+      - shell: !include-raw: test-rpm-deps.sh
+      - shell: !include-raw-escape: install-rpm.sh
+      - shell: !include-raw: start-odl.sh
+      - shell: !include-raw-escape: test-ports-nofeature.sh
+      - shell: |
+          netstat -pnatu
       - shell: !include-raw: test-karaf.expect
       - shell: !include-raw: test-rest-ok.sh
+      - shell: |
+          netstat -pnatu
       - shell: !include-raw: stop-odl.sh
       - shell: !include-raw: uninstall-rpm.sh
+      - shell: |
+          netstat -pnatu
       - shell: |
           # Remove old host key so future installs don't fail to SSH
           rm /home/jenkins/.ssh/known_hosts
