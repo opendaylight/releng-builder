@@ -46,6 +46,7 @@
     mvn-settings: 'controller-settings'
     mvn-goals: 'clean install -Pintegrationtests,docs'
     mvn-opts: '-Xmx4096m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
+    build-timeout: 90
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},aaa-merge-{stream}'
     email-upstream: '[controller] [odlparent] [yangtools] [aaa]'
     archive-artifacts: ''
@@ -73,6 +74,7 @@
     mvn-settings: 'controller-settings'
     mvn-goals: 'clean install -Pintegrationtests,docs'
     mvn-opts: '-Xmx4096m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
+    build-timeout: 90
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},aaa-merge-{stream}'
     email-upstream: '[controller] [odlparent] [yangtools] [aaa]'
     archive-artifacts: ''
