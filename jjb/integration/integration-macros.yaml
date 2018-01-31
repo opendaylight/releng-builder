@@ -446,6 +446,7 @@
 - builder:
     name: integration-deploy-openstack-run-test
     builders:
+      - common-functions.sh
       - shell: !include-raw: integration-deploy-openstack-run-test.sh
 
 - builder:
