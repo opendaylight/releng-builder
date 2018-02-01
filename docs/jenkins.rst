@@ -1,3 +1,5 @@
+.. _odl-jenkins:
+
 Jenkins
 =======
 
@@ -796,6 +798,8 @@ wish to run in your project.
     -Dsonar   : This flag is passed in our Sonar job and is equivalent to the
                 Maven property
                 <sonar>true</sonar>.
+
+.. _odl-jenkins-sandbox:
 
 Jenkins Sandbox
 ---------------
