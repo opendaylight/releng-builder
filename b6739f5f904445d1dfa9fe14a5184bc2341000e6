@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7a4df8b_1e282050",
+        "filename": "jjb/integration/common-functions.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-02-01T22:56:07Z",
+      "side": 1,
+      "message": "this is just for debug/information purposes right?",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 16
+      },
+      "revId": "b6739f5f904445d1dfa9fe14a5184bc2341000e6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6f50764_6af5356e",
+        "filename": "jjb/integration/copy-common-functions.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-02-01T22:56:07Z",
+      "side": 1,
+      "message": "I don\u0027t think we should be considering anything ODL or OPENSTACK here.\nmaybe just blindly copy this script to all nodes that come up.\n\nwe may have a lot of things down the road that is common bash that we want to be\navailable to use on all of the nodes.",
+      "revId": "b6739f5f904445d1dfa9fe14a5184bc2341000e6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4adbf9b4_fea01205",
+        "filename": "jjb/integration/integration-configure-clustering.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-02-01T22:56:07Z",
+      "side": 1,
+      "message": "does this work? I didn\u0027t think this file would be available unless we do that prepend trick in the builder\nlogic.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 47
+      },
+      "revId": "b6739f5f904445d1dfa9fe14a5184bc2341000e6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "344cc9f2_799b685b",
+        "filename": "jjb/integration/integration-deploy-controller-run-test.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-02-01T22:56:07Z",
+      "side": 1,
+      "message": "i like this idea. something we need, even if this patch doesn\u0027t go in. I\u0027m always confused to which EOF I\u0027m\nlooking at.",
+      "range": {
+        "startLine": 132,
+        "startChar": 0,
+        "endLine": 132,
+        "endChar": 50
+      },
+      "revId": "b6739f5f904445d1dfa9fe14a5184bc2341000e6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    }
+  ]
+}
