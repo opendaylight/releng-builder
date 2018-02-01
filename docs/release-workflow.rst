@@ -1,3 +1,5 @@
+.. _odl-release-workflow:
+
 Release Workflow
 ================
 

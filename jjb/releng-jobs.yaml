@@ -2,6 +2,8 @@
 - project:
     name: builder-jobs
     jobs:
+      - '{project-name}-rtd-jobs':
+          rtd-project: opendaylight-releng-builder
       - gerrit-jenkins-cfg-merge:
           jenkins-silos: releng sandbox
       - gerrit-jjb-deploy-job
