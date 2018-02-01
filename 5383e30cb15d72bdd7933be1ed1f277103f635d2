@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9137476b_a3899fd0",
+        "filename": "jjb/integration/common-functions.sh",
+        "patchSetId": 11
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-02-01T12:44:30Z",
+      "side": 1,
+      "message": "this is cruddy if we have to export these in each function. can\u0027t they just be used as locals?",
+      "revId": "5383e30cb15d72bdd7933be1ed1f277103f635d2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cefe3d5c_32ffbcb0",
+        "filename": "jjb/integration/common-functions.sh",
+        "patchSetId": 11
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-02-01T12:44:30Z",
+      "side": 1,
+      "message": "having a / didn\u0027t cause a problem. would be nice to use / so we can keep the sed\u0027s looking similar.",
+      "revId": "5383e30cb15d72bdd7933be1ed1f277103f635d2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8e6e3655_a0b36bda",
+        "filename": "jjb/integration/integration-configure-clustering.sh",
+        "patchSetId": 11
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-02-01T12:44:30Z",
+      "side": 1,
+      "message": "this is the main thing with this pattern, it requires this inlining to be done for each function. Why not just source the common-functions.sh one time and then call the functions as expected. This is the real difference between the two patches - everything else is pretty much the same. That and the calling of the functions is more intuitive with sourcing - with sourcing you don\u0027t need to remember to inline when using a HERE doc.",
+      "revId": "5383e30cb15d72bdd7933be1ed1f277103f635d2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6cfdc26c_e3c301dd",
+        "filename": "jjb/integration/integration-macros.yaml",
+        "patchSetId": 11
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-02-01T12:44:30Z",
+      "side": 1,
+      "message": "using this here means the common-functons.sh shouldn\u0027t have executable code and should mainly be a function file. That is fine, but it is something to be aware of, since the file is prepended to the run-test.sh and executed.",
+      "revId": "5383e30cb15d72bdd7933be1ed1f277103f635d2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
