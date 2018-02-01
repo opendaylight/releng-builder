@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e2b602b0_06e2adfd",
+        "filename": "jjb/integration/common-functions.sh",
+        "patchSetId": 11
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-02-01T22:50:24Z",
+      "side": 1,
+      "message": "No, I don\u0027t think we have to export them. I thought it was more clear in the\ncode below though. We can do $1 or whatever below. is that better?",
+      "parentUuid": "9137476b_a3899fd0",
+      "revId": "5383e30cb15d72bdd7933be1ed1f277103f635d2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cefe3d5c_32ffbcb0",
         "filename": "jjb/integration/common-functions.sh",
         "patchSetId": 11
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "aa60bc2e_c89370b8",
+        "filename": "jjb/integration/common-functions.sh",
+        "patchSetId": 11
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-02-01T22:50:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e903ec07_723daffc",
+      "revId": "5383e30cb15d72bdd7933be1ed1f277103f635d2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e6e3655_a0b36bda",
         "filename": "jjb/integration/integration-configure-clustering.sh",
         "patchSetId": 11
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "fe428739_1e24bb33",
+        "filename": "jjb/integration/integration-configure-clustering.sh",
+        "patchSetId": 11
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-02-01T22:50:24Z",
+      "side": 1,
+      "message": "we could abstract it a little if it\u0027s a little cryptic this way, but yeah, this is the main difference in the two patches. This patch doesn\u0027t\nrequire moving the common-funcs lib to each node and sourcing on that side.\n\nthis patch, we will still get the common-funcs outside of the HERE docs, and there is no way to \"source\" them when you wan to\nuse them outside of the HERE docs, which is why we add common-funcs in the builder steps escape-raw section.\n\nI guess it\u0027s just preference. one method (other patch) we have to 1) copy the common-func lib over, 2) source it, 3) drag the \nlocal constant vars down into the functions, 4) call them simply from the HERE doc\n\nthis patch its 1) inline the function with declare, 2) call it with args (no vars can be used in the function unless passed)",
+      "parentUuid": "8e6e3655_a0b36bda",
+      "revId": "5383e30cb15d72bdd7933be1ed1f277103f635d2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6cfdc26c_e3c301dd",
         "filename": "jjb/integration/integration-macros.yaml",
         "patchSetId": 11
@@ -82,6 +136,24 @@
       "writtenOn": "2018-02-01T12:44:30Z",
       "side": 1,
       "message": "using this here means the common-functons.sh shouldn\u0027t have executable code and should mainly be a function file. That is fine, but it is something to be aware of, since the file is prepended to the run-test.sh and executed.",
+      "revId": "5383e30cb15d72bdd7933be1ed1f277103f635d2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "912636ec_0eed154a",
+        "filename": "jjb/integration/integration-macros.yaml",
+        "patchSetId": 11
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-02-01T22:50:24Z",
+      "side": 1,
+      "message": "not following this comment.",
+      "parentUuid": "6cfdc26c_e3c301dd",
       "revId": "5383e30cb15d72bdd7933be1ed1f277103f635d2",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
