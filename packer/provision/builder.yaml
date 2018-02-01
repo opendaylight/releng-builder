@@ -19,21 +19,57 @@
     - mono-install
 
   tasks:
-    - name: 'Fetch Cassandra Server to /tmp/apache-cassandra-{{cassandra_version}}-bin.tar.gz'
-      get_url:
-        url: 'https://archive.apache.org/dist/cassandra/{{cassandra_version}}/apache-cassandra-{{cassandra_version}}-bin.tar.gz'
-        dest: '/tmp/apache-cassandra-{{cassandra_version}}-bin.tar.gz'
-        checksum: '{{cassandra_checksum}}'
-    - name: 'Fetch Elastic Search to /tmp/elasticsearch-{{elastic_search_version}}.tar.gz'
-      get_url:
-        url: 'https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-{{elastic_search_version}}.tar.gz'
-        dest: '/tmp/elasticsearch-{{elastic_search_version}}.tar.gz'
-        checksum: '{{elastic_search_checksum}}'
-    - name: 'Fetch HBase to /tmp/hbase-{{hbase_version}}.tar.gz'
-      get_url:
-        url: 'https://archive.apache.org/dist/hbase/hbase-{{hbase_version}}/hbase-{{hbase_version}}.tar.gz'
-        dest: '/tmp/hbase-{{hbase_version}}.tar.gz'
-        checksum: '{{hbase_checksum}}'
+    - name: Install Cassandra Server
+      block:
+        - name: 'Fetch Cassandra Server to /tmp/apache-cassandra-{{cassandra_version}}-bin.tar.gz'
+          get_url:
+            url: 'https://archive.apache.org/dist/cassandra/{{cassandra_version}}/apache-cassandra-{{cassandra_version}}-bin.tar.gz'
+            dest: '/tmp/apache-cassandra-{{cassandra_version}}-bin.tar.gz'
+            checksum: '{{cassandra_checksum}}'
+        - name: Make /tmp/cassandra directory
+          file:
+            path: /tmp/cassandra
+            state: directory
+            mode: 0755
+        - name: Untar Cassandra server to /tmp/cassandra
+          unarchive:
+            src: '/tmp/apache-cassandra-{{cassandra_version}}-bin.tar.gz'
+            dest: /tmp/cassandra
+            remote_src: true
+    - name: Install Elastic Search
+      block:
+        - name: 'Fetch Elastic Search to /tmp/elasticsearch-{{elastic_search_version}}.tar.gz'
+          get_url:
+            url: 'https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-{{elastic_search_version}}.tar.gz'
+            dest: '/tmp/elasticsearch-{{elastic_search_version}}.tar.gz'
+            checksum: '{{elastic_search_checksum}}'
+        - name: Make /tmp/elasticsearch directory
+          file:
+            path: /tmp/elasticsearch
+            state: directory
+            mode: 0755
+        - name: Untar Elastic Search to /tmp/elasticsearch
+          unarchive:
+            src: '/tmp/elasticsearch-{{elastic_search_version}}.tar.gz'
+            dest: /tmp/elasticsearch
+            remote_src: true
+    - name: Install HBase Server
+      block:
+        - name: 'Fetch HBase to /tmp/hbase-{{hbase_version}}.tar.gz'
+          get_url:
+            url: 'https://archive.apache.org/dist/hbase/hbase-{{hbase_version}}/hbase-{{hbase_version}}.tar.gz'
+            dest: '/tmp/hbase-{{hbase_version}}.tar.gz'
+            checksum: '{{hbase_checksum}}'
+        - name: Make /tmp/Hbase directory
+          file:
+            path: /tmp/Hbase
+            state: directory
+            mode: 0755
+        - name: Untar Hbase to /tmp/Hbase
+          unarchive:
+            src: '/tmp/hbase-{{hbase_version}}.tar.gz'
+            dest: /tmp/Hbase
+            remote_src: true
     - name: Install Quagga
       block:
         - name: Fetch Quagga git repo
