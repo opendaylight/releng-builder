@@ -80,26 +80,7 @@ if [ "${ODL_ENABLE_L3_FWD}" == "yes" ]; then
 fi
 cat ${CUSTOMPROP}
 
-echo "Configuring the log..."
-sed -ie 's/log4j.appender.out.maxBackupIndex=10/log4j.appender.out.maxBackupIndex=1/g' ${LOGCONF}
-# FIXME: Make log size limit configurable from build parameter.
-sed -ie 's/log4j.appender.out.maxFileSize=1MB/log4j.appender.out.maxFileSize=30GB/g' ${LOGCONF}
-echo "log4j.logger.org.opendaylight.yangtools.yang.parser.repo.YangTextSchemaContextResolver = WARN" >> ${LOGCONF}
-# Add custom logging levels
-# CONTROLLERDEBUGMAP is expected to be a key:value map of space separated values like "module:level module2:level2"
-# where module is abbreviated and does not include org.opendaylight
-unset IFS
-if [ -n "${CONTROLLERDEBUGMAP}" ]; then
-    for kv in ${CONTROLLERDEBUGMAP}; do
-        module=\${kv%%:*}
-        level=\${kv#*:}
-        if [ -n \${module} ] && [ -n \${level} ]; then
-            echo "log4j.logger.org.opendaylight.\${module} = \${level}" >> ${LOGCONF}
-        fi
-    done
-fi
-echo "cat ${LOGCONF}"
-cat ${LOGCONF}
+configure_karaf_log "${KARAF_VERSION}" "${CONTROLLERDEBUGMAP}"
 
 set_java_vars "${JAVA_HOME}"
 
