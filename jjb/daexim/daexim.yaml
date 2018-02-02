@@ -16,7 +16,6 @@
       - mvn33:
           mvn-version: 'mvn33'
     mvn-settings: 'daexim-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
     email-upstream: '[daexim] [odlparent] [yangtools] [controller]'
@@ -42,7 +41,6 @@
       - mvn33:
           mvn-version: 'mvn33'
     mvn-settings: 'daexim-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
     email-upstream: '[daexim] [odlparent] [yangtools] [controller]'
@@ -60,5 +58,4 @@
     project-name: 'daexim'
     branch: 'master'
     mvn-settings: 'daexim-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'

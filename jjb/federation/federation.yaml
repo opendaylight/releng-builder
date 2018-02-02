@@ -17,7 +17,6 @@
       - mvn33:
           mvn-version: 'mvn33'
     mvn-settings: 'federation-settings'
-    mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
     email-upstream: '[federation] [odlparent] [yangtools] [controller]'
@@ -44,7 +43,6 @@
       - mvn33:
           mvn-version: 'mvn33'
     mvn-settings: 'federation-settings'
-    mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
     email-upstream: '[federation] [odlparent] [yangtools] [controller]'
@@ -72,7 +70,6 @@
       - mvn33:
           mvn-version: 'mvn33'
     mvn-settings: 'federation-settings'
-    mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
     email-upstream: '[federation] [odlparent] [yangtools] [controller]'
@@ -90,5 +87,4 @@
     project-name: 'federation'
     branch: 'master'
     mvn-settings: 'federation-settings'
-    mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'

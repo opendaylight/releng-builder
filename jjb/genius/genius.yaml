@@ -17,7 +17,6 @@
       - mvn33:
           mvn-version: 'mvn33'
     mvn-settings: 'genius-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     build-timeout: 90
     dependencies: >
@@ -49,7 +48,6 @@
       - mvn33:
           mvn-version: 'mvn33'
     mvn-settings: 'genius-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: >
         controller-merge-{stream},
@@ -81,7 +79,6 @@
       - mvn33:
           mvn-version: 'mvn33'
     mvn-settings: 'genius-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: >
         controller-merge-{stream},
@@ -103,5 +100,4 @@
     project-name: 'genius'
     branch: 'master'
     mvn-settings: 'genius-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'

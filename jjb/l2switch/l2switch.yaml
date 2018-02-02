@@ -16,7 +16,6 @@
       - mvn33:
           mvn-version: 'mvn33'
     mvn-settings: 'l2switch-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
     dependencies: >
         odlparent-merge-{stream},
@@ -47,7 +46,6 @@
       - mvn33:
           mvn-version: 'mvn33'
     mvn-settings: 'l2switch-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
     dependencies: >
         odlparent-merge-{stream},
@@ -79,7 +77,6 @@
       - mvn33:
           mvn-version: 'mvn33'
     mvn-settings: 'l2switch-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
     dependencies: >
         odlparent-merge-{stream},
@@ -101,5 +98,4 @@
     project-name: 'l2switch'
     branch: 'master'
     mvn-settings: 'l2switch-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'

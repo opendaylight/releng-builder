@@ -16,7 +16,6 @@
       - mvn33:
           mvn-version: 'mvn33'
     mvn-settings: 'dlux-settings'
-    mvn-goals: 'clean install -e'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream}'
     email-upstream: '[dlux] [odlparent]'
@@ -42,7 +41,6 @@
       - mvn33:
           mvn-version: 'mvn33'
     mvn-settings: 'dlux-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream}'
     email-upstream: '[dlux] [odlparent]'
@@ -69,7 +67,6 @@
       - mvn33:
           mvn-version: 'mvn33'
     mvn-settings: 'dlux-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream}'
     email-upstream: '[dlux] [odlparent]'
@@ -86,5 +83,4 @@
     project-name: 'dlux'
     branch: 'master'
     mvn-settings: 'dlux-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'

@@ -16,7 +16,6 @@
     maven:
       - mvn33:
           mvn-version: 'mvn33'
-    mvn-goals: 'clean install javadoc:aggregate -DrepoBuild'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'openflowjava-merge-{stream},openflowplugin-merge-{stream}'
     email-upstream: '[lacp] [openflowjava] [openflowplugin]'
@@ -42,7 +41,6 @@
     maven:
       - mvn33:
           mvn-version: 'mvn33'
-    mvn-goals: 'clean install javadoc:aggregate -DrepoBuild'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'openflowjava-merge-{stream},openflowplugin-merge-{stream}'
     email-upstream: '[lacp] [openflowjava] [openflowplugin]'
@@ -69,7 +67,6 @@
     maven:
       - mvn33:
           mvn-version: 'mvn33'
-    mvn-goals: 'clean install javadoc:aggregate -DrepoBuild'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'openflowjava-merge-{stream},openflowplugin-merge-{stream}'
     email-upstream: '[lacp] [openflowjava] [openflowplugin]'
@@ -86,5 +83,4 @@
     project-name: 'lacp'
     branch: 'master'
     mvn-settings: 'lacp-settings'
-    mvn-goals: 'clean install javadoc:aggregate -DrepoBuild'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'

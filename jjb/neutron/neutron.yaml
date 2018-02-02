@@ -18,7 +18,6 @@
       - mvn33:
           mvn-version: 'mvn33'
     mvn-settings: 'neutron-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream},aaa-merge-{stream}'
     email-upstream: '[neutron] [odlparent] [aaa]'
@@ -46,7 +45,6 @@
       - mvn33:
           mvn-version: 'mvn33'
     mvn-settings: 'neutron-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream},aaa-merge-{stream}'
     email-upstream: '[neutron] [odlparent] [aaa]'
@@ -75,7 +73,6 @@
       - mvn33:
           mvn-version: 'mvn33'
     mvn-settings: 'neutron-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream},aaa-merge-{stream}'
     email-upstream: '[neutron] [odlparent] [aaa]'
@@ -92,5 +89,4 @@
     project-name: 'neutron'
     branch: 'master'
     mvn-settings: 'neutron-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'

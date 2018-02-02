@@ -16,7 +16,6 @@
       - mvn33:
           mvn-version: 'mvn33'
     mvn-settings: 'sfc-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx2048m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
     build-timeout: 120
     dependencies: 'openflowplugin-merge-{stream},ovsdb-merge-{stream},lispflowmapping-merge-{stream}'
@@ -44,7 +43,6 @@
       - mvn33:
           mvn-version: 'mvn33'
     mvn-settings: 'sfc-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx2048m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
     dependencies: 'openflowplugin-merge-{stream},ovsdb-merge-{stream},lispflowmapping-merge-{stream}'
     email-upstream: '[sfc] [openflowplugin] [ovsdb] [lispflowmapping]'
@@ -72,7 +70,6 @@
       - mvn33:
           mvn-version: 'mvn33'
     mvn-settings: 'sfc-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx2048m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
     dependencies: 'openflowplugin-merge-{stream},ovsdb-merge-{stream},lispflowmapping-merge-{stream}'
     email-upstream: '[sfc] [openflowplugin] [ovsdb] [lispflowmapping]'
@@ -90,5 +87,4 @@
     project-name: 'sfc'
     branch: 'master'
     mvn-settings: 'sfc-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx2048m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
