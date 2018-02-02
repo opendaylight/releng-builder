@@ -17,7 +17,7 @@
       - mvn33:
           mvn-version: 'mvn33'
     mvn-settings: 'mdsal-settings'
-    mvn-goals: '-Dmaven.compile.fork=true clean install -Dintegrationtests'
+    mvn-goals: '-Dmaven.compile.fork=true clean deploy -Dintegrationtests'
     mvn-opts: '-Xmx2048m -XX:MaxPermSize=1024m'
     build-timeout: 90
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream}'
@@ -45,7 +45,7 @@
       - mvn33:
           mvn-version: 'mvn33'
     mvn-settings: 'mdsal-settings'
-    mvn-goals: '-Dmaven.compile.fork=true clean install -Dintegrationtests'
+    mvn-goals: '-Dmaven.compile.fork=true clean deploy -Dintegrationtests'
     mvn-opts: '-Xmx2048m -XX:MaxPermSize=1024m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream}'
     email-upstream: '[mdsal] [odlparent] [yangtools]'
@@ -73,7 +73,7 @@
       - mvn33:
           mvn-version: 'mvn33'
     mvn-settings: 'mdsal-settings'
-    mvn-goals: '-Dmaven.compile.fork=true clean install -Dintegrationtests'
+    mvn-goals: '-Dmaven.compile.fork=true clean deploy -Dintegrationtests'
     mvn-opts: '-Xmx2048m -XX:MaxPermSize=1024m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream}'
     email-upstream: '[mdsal] [odlparent] [yangtools]'
@@ -90,5 +90,5 @@
     project-name: 'mdsal'
     branch: 'master'
     mvn-settings: 'mdsal-settings'
-    mvn-goals: '-Dmaven.compile.fork=true clean install -Dintegrationtests'
+    mvn-goals: '-Dmaven.compile.fork=true clean deploy -Dintegrationtests'
     mvn-opts: '-Xmx2048m -XX:MaxPermSize=1024m'

@@ -16,7 +16,7 @@
       - mvn33:
           mvn-version: 'mvn33'
     mvn-settings: 'groupbasedpolicy-settings'
-    mvn-goals: '-U clean install findbugs:findbugs'
+    mvn-goals: '-U clean deploy findbugs:findbugs'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     build-timeout: 90
     dependencies: >
@@ -48,7 +48,7 @@
       - mvn33:
           mvn-version: 'mvn33'
     mvn-settings: 'groupbasedpolicy-settings'
-    mvn-goals: '-U clean install findbugs:findbugs'
+    mvn-goals: '-U clean deploy findbugs:findbugs'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: >
         openflowjava-merge-{stream},
@@ -80,7 +80,7 @@
       - mvn33:
           mvn-version: 'mvn33'
     mvn-settings: 'groupbasedpolicy-settings'
-    mvn-goals: '-U clean install findbugs:findbugs'
+    mvn-goals: '-U clean deploy findbugs:findbugs'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: >
         openflowjava-merge-{stream},
@@ -102,5 +102,5 @@
     project-name: 'groupbasedpolicy'
     branch: 'master'
     mvn-settings: 'groupbasedpolicy-settings'
-    mvn-goals: '-U clean install findbugs:findbugs'
+    mvn-goals: '-U clean deploy findbugs:findbugs'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'

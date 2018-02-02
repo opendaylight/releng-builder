@@ -17,7 +17,7 @@
       - mvn33:
           mvn-version: 'mvn33'
     mvn-settings: 'controller-settings'
-    mvn-goals: 'clean install -Pintegrationtests,docs'
+    mvn-goals: 'clean deploy -Pintegrationtests,docs'
     mvn-opts: '-Xmx4096m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
     build-timeout: 90
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},aaa-merge-{stream}'
@@ -44,7 +44,7 @@
       - mvn33:
           mvn-version: 'mvn33'
     mvn-settings: 'controller-settings'
-    mvn-goals: 'clean install -Pintegrationtests,docs'
+    mvn-goals: 'clean deploy -Pintegrationtests,docs'
     mvn-opts: '-Xmx4096m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
     build-timeout: 90
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},aaa-merge-{stream}'
@@ -72,7 +72,7 @@
       - mvn33:
           mvn-version: 'mvn33'
     mvn-settings: 'controller-settings'
-    mvn-goals: 'clean install -Pintegrationtests,docs'
+    mvn-goals: 'clean deploy -Pintegrationtests,docs'
     mvn-opts: '-Xmx4096m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
     build-timeout: 90
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},aaa-merge-{stream}'
@@ -91,5 +91,5 @@
     project-name: 'controller'
     branch: master
     mvn-settings: 'controller-settings'
-    mvn-goals: 'clean install -Pintegrationtests,docs'
+    mvn-goals: 'clean deploy -Pintegrationtests,docs'
     mvn-opts: '-Xmx4096m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
