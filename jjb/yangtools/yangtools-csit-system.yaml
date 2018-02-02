@@ -15,6 +15,7 @@
       # The tested component was only introduced in Carbon.
       - oxygen:
           branch: 'master'
+          robot-options: '-v EXPLICIT_YANG_SYSTEM_TEST_URL:${NEXUSURL_PREFIX}/content/repositories/opendaylight.release'
       - nitrogen:
           branch: 'stable/nitrogen'
       - carbon:
