@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "ebc421c3_6ab628b8",
+        "filename": "jjb/integration/common-functions.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 797
+      },
+      "writtenOn": "2018-02-02T16:11:12Z",
+      "side": 1,
+      "message": "So this is the reason why I think crafting the common-functions.sh script, same we do with other scripts that run in controller and other VMs is more convenient: you do not need to pass global variables, they get automatically replaced by the value when you create the file in that way.",
+      "revId": "b6739f5f904445d1dfa9fe14a5184bc2341000e6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7a4df8b_1e282050",
         "filename": "jjb/integration/common-functions.sh",
         "patchSetId": 5
@@ -42,6 +59,40 @@
     },
     {
       "key": {
+        "uuid": "1c9f7128_08a4efcd",
+        "filename": "jjb/integration/copy-common-functions.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 797
+      },
+      "writtenOn": "2018-02-02T16:11:12Z",
+      "side": 1,
+      "message": "This part I do not get very well: is this script what is copied to /tmp/common-functions.sh in Jenkins robot VM? should not be the other script common-functions.sh?",
+      "revId": "b6739f5f904445d1dfa9fe14a5184bc2341000e6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "08319216_f7c4094f",
+        "filename": "jjb/integration/copy-common-functions.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 797
+      },
+      "writtenOn": "2018-02-02T16:11:12Z",
+      "side": 1,
+      "message": "For Jenkins scripts it is good practice to use ${WORKSPACE} instead of /tmp, among other things ${WORKSPACE} gets refreshed every time job runs.",
+      "revId": "b6739f5f904445d1dfa9fe14a5184bc2341000e6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4adbf9b4_fea01205",
         "filename": "jjb/integration/integration-configure-clustering.sh",
         "patchSetId": 5
@@ -53,6 +104,30 @@
       "writtenOn": "2018-02-01T22:56:07Z",
       "side": 1,
       "message": "does this work? I didn\u0027t think this file would be available unless we do that prepend trick in the builder\nlogic.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 47
+      },
+      "revId": "b6739f5f904445d1dfa9fe14a5184bc2341000e6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dacc196_c60efba3",
+        "filename": "jjb/integration/integration-configure-clustering.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 797
+      },
+      "writtenOn": "2018-02-02T16:11:12Z",
+      "side": 1,
+      "message": "file is available in Jenkins robot VM because it is copied there before being sent to other VMs.",
+      "parentUuid": "4adbf9b4_fea01205",
       "range": {
         "startLine": 7,
         "startChar": 0,
@@ -85,6 +160,23 @@
       "revId": "b6739f5f904445d1dfa9fe14a5184bc2341000e6",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d02aefc_94b089f0",
+        "filename": "jjb/integration/integration-macros.yaml",
+        "patchSetId": 5
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 797
+      },
+      "writtenOn": "2018-02-02T16:11:12Z",
+      "side": 1,
+      "message": "Please document macros, just few words what the below does.",
+      "revId": "b6739f5f904445d1dfa9fe14a5184bc2341000e6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
