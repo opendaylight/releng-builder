@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "1834659e_8e5b6f16",
+        "filename": "jjb/integration/common-functions.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-02-02T16:50:19Z",
+      "side": 1,
+      "message": "yeah for now, but we could keep it so that we know what the values are. Currently somewhere there is a set -x enabled so the lines are dumped to the console, but this ensures we will see the vars regardless.",
+      "parentUuid": "d7a4df8b_1e282050",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 16
+      },
+      "revId": "b6739f5f904445d1dfa9fe14a5184bc2341000e6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b6f50764_6af5356e",
         "filename": "jjb/integration/copy-common-functions.sh",
         "patchSetId": 5
@@ -59,6 +83,24 @@
     },
     {
       "key": {
+        "uuid": "9ae5672c_2197cb20",
+        "filename": "jjb/integration/copy-common-functions.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-02-02T16:50:19Z",
+      "side": 1,
+      "message": "yes, had same thought. just copy to all nodes. This was easy to add and verify here since we only use these funcs in the controller.",
+      "parentUuid": "b6f50764_6af5356e",
+      "revId": "b6739f5f904445d1dfa9fe14a5184bc2341000e6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1c9f7128_08a4efcd",
         "filename": "jjb/integration/copy-common-functions.sh",
         "patchSetId": 5
@@ -70,6 +112,24 @@
       "writtenOn": "2018-02-02T16:11:12Z",
       "side": 1,
       "message": "This part I do not get very well: is this script what is copied to /tmp/common-functions.sh in Jenkins robot VM? should not be the other script common-functions.sh?",
+      "revId": "b6739f5f904445d1dfa9fe14a5184bc2341000e6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cab55848_b271f3c9",
+        "filename": "jjb/integration/copy-common-functions.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-02-02T16:50:19Z",
+      "side": 1,
+      "message": "This is the key to how we know to copy the script or not. the copy script is prepended to the common-functions.sh file by jenkins. BASH_SOURCE[0] is the name of the program, so it will be common-functions.sh if executed or it will be bash if sourced. The builder executes it, so that goes down the copy path. The other .sh files source the file, so they hit this check, ignore it and go on to actually source common-functions.sh.",
+      "parentUuid": "1c9f7128_08a4efcd",
       "revId": "b6739f5f904445d1dfa9fe14a5184bc2341000e6",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -140,6 +200,30 @@
     },
     {
       "key": {
+        "uuid": "8da238c4_22ffba94",
+        "filename": "jjb/integration/integration-configure-clustering.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-02-02T16:50:19Z",
+      "side": 1,
+      "message": "yeah it is prepended and works fine",
+      "parentUuid": "4dacc196_c60efba3",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 47
+      },
+      "revId": "b6739f5f904445d1dfa9fe14a5184bc2341000e6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "344cc9f2_799b685b",
         "filename": "jjb/integration/integration-deploy-controller-run-test.sh",
         "patchSetId": 5
@@ -174,6 +258,24 @@
       "writtenOn": "2018-02-02T16:11:12Z",
       "side": 1,
       "message": "Please document macros, just few words what the below does.",
+      "revId": "b6739f5f904445d1dfa9fe14a5184bc2341000e6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "44272b3d_82820ddd",
+        "filename": "jjb/integration/integration-macros.yaml",
+        "patchSetId": 5
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-02-02T16:50:19Z",
+      "side": 1,
+      "message": "Yes, I will add that.",
+      "parentUuid": "2d02aefc_94b089f0",
       "revId": "b6739f5f904445d1dfa9fe14a5184bc2341000e6",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
