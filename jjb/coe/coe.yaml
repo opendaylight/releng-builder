@@ -10,8 +10,6 @@
     project-name: 'coe'
     stream: oxygen
     branch: 'master'
-    jdks:
-      - openjdk8
     mvn-settings: 'coe-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
@@ -32,8 +30,6 @@
     project-name: 'coe'
     stream: nitrogen
     branch: 'stable/nitrogen'
-    jdks:
-      - openjdk8
     mvn-settings: 'coe-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
@@ -54,8 +50,6 @@
     stream: carbon
     branch: 'stable/carbon'
     karaf-version: karaf3
-    jdks:
-      - openjdk8
     mvn-settings: 'coe-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'

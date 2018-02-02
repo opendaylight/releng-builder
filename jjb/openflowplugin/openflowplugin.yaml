@@ -11,8 +11,6 @@
     project: 'openflowplugin'
     project-name: 'openflowplugin'
     branch: 'master'
-    jdks:
-      - openjdk8
     mvn-settings: 'openflowplugin-settings'
     mvn-goals: 'clean deploy javadoc:aggregate'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
@@ -40,8 +38,6 @@
     project: 'openflowplugin'
     project-name: 'openflowplugin'
     branch: 'stable/nitrogen'
-    jdks:
-      - openjdk8
     mvn-settings: 'openflowplugin-settings'
     mvn-goals: 'clean deploy javadoc:aggregate'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
@@ -69,8 +65,6 @@
     project-name: 'openflowplugin'
     branch: 'stable/carbon'
     karaf-version: 'karaf3'
-    jdks:
-      - openjdk8
     mvn-settings: 'openflowplugin-settings'
     mvn-goals: 'clean deploy javadoc:aggregate'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'

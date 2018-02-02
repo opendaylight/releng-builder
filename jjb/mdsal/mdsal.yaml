@@ -11,8 +11,6 @@
     project: 'mdsal'
     project-name: 'mdsal'
     branch: 'master'
-    jdks:
-      - openjdk8
     mvn-settings: 'mdsal-settings'
     mvn-goals: '-Dmaven.compile.fork=true clean deploy -Dintegrationtests'
     mvn-opts: '-Xmx2048m -XX:MaxPermSize=1024m'
@@ -36,8 +34,6 @@
     project: 'mdsal'
     project-name: 'mdsal'
     branch: 'stable/nitrogen'
-    jdks:
-      - openjdk8
     mvn-settings: 'mdsal-settings'
     mvn-goals: '-Dmaven.compile.fork=true clean deploy -Dintegrationtests'
     mvn-opts: '-Xmx2048m -XX:MaxPermSize=1024m'
@@ -61,8 +57,6 @@
     project-name: 'mdsal'
     branch: 'stable/carbon'
     karaf-version: karaf3
-    jdks:
-      - openjdk8
     mvn-settings: 'mdsal-settings'
     mvn-goals: '-Dmaven.compile.fork=true clean deploy -Dintegrationtests'
     mvn-opts: '-Xmx2048m -XX:MaxPermSize=1024m'

@@ -10,8 +10,6 @@
     project: 'nic'
     project-name: 'nic'
     branch: 'master'
-    jdks:
-      - openjdk8
     mvn-settings: 'nic-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'vtn-merge-{stream},groupbasedpolicy-merge-{stream}'
@@ -32,8 +30,6 @@
     project: 'nic'
     project-name: 'nic'
     branch: 'stable/nitrogen'
-    jdks:
-      - openjdk8
     mvn-settings: 'nic-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'vtn-merge-{stream},groupbasedpolicy-merge-{stream}'
@@ -55,8 +51,6 @@
     project-name: 'nic'
     branch: 'stable/carbon'
     karaf-version: karaf3
-    jdks:
-      - openjdk8
     mvn-settings: 'nic-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'vtn-merge-{stream},groupbasedpolicy-merge-{stream}'

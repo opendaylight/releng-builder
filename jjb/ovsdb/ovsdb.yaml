@@ -11,8 +11,6 @@
     project: 'ovsdb'
     project-name: 'ovsdb'
     branch: 'master'
-    jdks:
-      - openjdk8
     mvn-settings: 'ovsdb-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream}'
@@ -34,8 +32,6 @@
     project: 'ovsdb'
     project-name: 'ovsdb'
     branch: 'stable/nitrogen'
-    jdks:
-      - openjdk8
     mvn-settings: 'ovsdb-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream}'
@@ -58,8 +54,6 @@
     project-name: 'ovsdb'
     branch: 'stable/carbon'
     karaf-version: karaf3
-    jdks:
-      - openjdk8
     mvn-settings: 'ovsdb-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream}'

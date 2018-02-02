@@ -13,8 +13,6 @@
     build-node: centos7-builder-2c-8g
     build-timeout: 120
     branch: 'master'
-    jdks:
-      - openjdk8
     mvn-settings: 'bgpcep-settings'
     mvn-opts: '-Xmx2048m -XX:MaxPermSize=256m'
     dependencies: >
@@ -43,8 +41,6 @@
     build-node: centos7-builder-2c-8g
     build-timeout: 120
     branch: 'stable/nitrogen'
-    jdks:
-      - openjdk8
     mvn-settings: 'bgpcep-settings'
     mvn-opts: '-Xmx2048m -XX:MaxPermSize=256m'
     dependencies: >
@@ -74,8 +70,6 @@
     build-timeout: 120
     branch: 'stable/carbon'
     karaf-version: karaf3
-    jdks:
-      - openjdk8
     mvn-settings: 'bgpcep-settings'
     mvn-opts: '-Xmx2048m -XX:MaxPermSize=256m'
     dependencies: >

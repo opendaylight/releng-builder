@@ -12,8 +12,6 @@
     project-name: 'neutron'
     build-timeout: 90
     branch: 'master'
-    jdks:
-      - openjdk8
     mvn-settings: 'neutron-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream},aaa-merge-{stream}'
@@ -36,8 +34,6 @@
     project-name: 'neutron'
     build-timeout: 60
     branch: 'stable/nitrogen'
-    jdks:
-      - openjdk8
     mvn-settings: 'neutron-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream},aaa-merge-{stream}'
@@ -61,8 +57,6 @@
     build-timeout: 60
     branch: 'stable/carbon'
     karaf-version: karaf3
-    jdks:
-      - openjdk8
     mvn-settings: 'neutron-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream},aaa-merge-{stream}'

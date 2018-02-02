@@ -10,8 +10,6 @@
     project: 'sfc'
     project-name: 'sfc'
     branch: 'master'
-    jdks:
-      - openjdk8
     mvn-settings: 'sfc-settings'
     mvn-opts: '-Xmx2048m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
     build-timeout: 120
@@ -34,8 +32,6 @@
     project: 'sfc'
     project-name: 'sfc'
     branch: 'stable/nitrogen'
-    jdks:
-      - openjdk8
     mvn-settings: 'sfc-settings'
     mvn-opts: '-Xmx2048m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
     dependencies: 'openflowplugin-merge-{stream},ovsdb-merge-{stream},lispflowmapping-merge-{stream}'
@@ -58,8 +54,6 @@
     project-name: 'sfc'
     branch: 'stable/carbon'
     karaf-version: karaf3
-    jdks:
-      - openjdk8
     mvn-settings: 'sfc-settings'
     mvn-opts: '-Xmx2048m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
     dependencies: 'openflowplugin-merge-{stream},ovsdb-merge-{stream},lispflowmapping-merge-{stream}'

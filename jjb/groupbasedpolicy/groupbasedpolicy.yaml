@@ -10,8 +10,6 @@
     project: 'groupbasedpolicy'
     project-name: 'groupbasedpolicy'
     branch: 'master'
-    jdks:
-      - openjdk8
     mvn-settings: 'groupbasedpolicy-settings'
     mvn-goals: '-U clean deploy findbugs:findbugs'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
@@ -39,8 +37,6 @@
     project: 'groupbasedpolicy'
     project-name: 'groupbasedpolicy'
     branch: 'stable/nitrogen'
-    jdks:
-      - openjdk8
     mvn-settings: 'groupbasedpolicy-settings'
     mvn-goals: '-U clean deploy findbugs:findbugs'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
@@ -68,8 +64,6 @@
     project-name: 'groupbasedpolicy'
     branch: 'stable/carbon'
     karaf-version: karaf3
-    jdks:
-      - openjdk8
     mvn-settings: 'groupbasedpolicy-settings'
     mvn-goals: '-U clean deploy findbugs:findbugs'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
