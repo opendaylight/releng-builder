@@ -326,6 +326,10 @@ minimize_polling=True
 physical_network_mtus = ${PUBLIC_PHYSICAL_NETWORK}:1400
 path_mtu = 1458
 
+[ml2_odl]
+# Trigger n-odl full sync every 30 secs.
+maintenance_interval = 30
+
 [[post-config|/etc/neutron/dhcp_agent.ini]]
 [DEFAULT]
 force_metadata = True
