@@ -29,7 +29,7 @@
 
       - nitrogen:
           branch: 'stable/nitrogen'
-          csit-blacklist: longevity gate sanity capwap centinel coe didm iotdm jsonrpc lacp netide tsdr
+          csit-blacklist: longevity gate sanity capwap centinel coe didm iotdm jsonrpc lacp netide tsdr tdd wip
           csit-list: !include: csit-jobs-nitrogen.lst
           csit-sanity-list: '{csit-sanity-list-nitrogen}'
           csit-weekly-list: '{csit-weekly-list-nitrogen}'
@@ -39,7 +39,7 @@
       - carbon:
           branch: 'stable/carbon'
           karaf-version: karaf3
-          csit-blacklist: longevity gate sanity capwap centinel coe jsonrpc
+          csit-blacklist: longevity gate sanity capwap centinel coe jsonrpc tdd wip
           csit-list: !include: csit-jobs-carbon.lst
           csit-sanity-list: '{csit-sanity-list-carbon}'
           csit-weekly-list: '{csit-weekly-list-carbon}'
