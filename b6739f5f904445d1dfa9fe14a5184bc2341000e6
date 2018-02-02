@@ -154,6 +154,24 @@
     },
     {
       "key": {
+        "uuid": "c32d3d4b_b70d1ec4",
+        "filename": "jjb/integration/copy-common-functions.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-02-02T22:09:51Z",
+      "side": 1,
+      "message": "The name is actually some random thing that jenkins comes up with, like random.sh. that\u0027s the way the script var works in the builders. jenkins just cat\u0027s them all together in the oeder listed in the builder and then assigns a random name to it like xxxx.sh. And then it executes the script. When executed bash_source[0] will have that name and when sourced it will have bash in the var.",
+      "parentUuid": "41f678b0_89f6e07b",
+      "revId": "b6739f5f904445d1dfa9fe14a5184bc2341000e6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08319216_f7c4094f",
         "filename": "jjb/integration/copy-common-functions.sh",
         "patchSetId": 5
