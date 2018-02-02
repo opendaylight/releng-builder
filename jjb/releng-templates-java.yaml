@@ -20,6 +20,16 @@
 - job-template:
     name: '{project-name}-integration-{stream}'
 
+    ######################
+    # Default parameters #
+    ######################
+
+    mvn-goals: clean install
+
+    #####################
+    # Job Configuration #
+    #####################
+
     project-type: freestyle
     node: '{build-node}'
     jdk: '{jdk}'

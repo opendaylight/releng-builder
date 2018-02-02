@@ -10,13 +10,7 @@
     project: 'snmp'
     project-name: 'snmp'
     branch: 'master'
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
     mvn-settings: 'snmp-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream}'
     email-upstream: '[snmp] [odlparent]'
@@ -36,13 +30,7 @@
     project: 'snmp'
     project-name: 'snmp'
     branch: 'stable/nitrogen'
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
     mvn-settings: 'snmp-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream}'
     email-upstream: '[snmp] [odlparent]'
@@ -63,13 +51,7 @@
     project-name: 'snmp'
     branch: 'stable/carbon'
     karaf-version: karaf3
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
     mvn-settings: 'snmp-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream}'
     email-upstream: '[snmp] [odlparent]'
@@ -86,5 +68,4 @@
     project-name: 'snmp'
     branch: 'master'
     mvn-settings: 'snmp-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'

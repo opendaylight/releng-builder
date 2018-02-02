@@ -9,13 +9,7 @@
     project-name: 'transportpce'
     stream: oxygen
     branch: 'master'
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
     mvn-settings: 'transportpce-settings'
-    mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
     email-upstream: '[transportpce] [odlparent] [yangtools] [controller]'
@@ -34,13 +28,7 @@
     project-name: 'transportpce'
     stream: nitrogen
     branch: 'stable/nitrogen'
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
     mvn-settings: 'transportpce-settings'
-    mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
     email-upstream: '[transportpce] [odlparent] [yangtools] [controller]'
@@ -60,13 +48,7 @@
     stream: carbon
     branch: 'stable/carbon'
     karaf-version: karaf3
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
     mvn-settings: 'transportpce-settings'
-    mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
     email-upstream: '[transportpce] [odlparent] [yangtools] [controller]'
@@ -84,5 +66,4 @@
     project-name: 'transportpce'
     branch: 'master'
     mvn-settings: 'transportpce-settings'
-    mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'

@@ -10,15 +10,8 @@
     branch: master
     stream: master
 
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
     mvn-settings: 'yangtools-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    mvn-version: mvn33
 
     dependencies: ''
     email-upstream: '[yangtools]'
@@ -46,15 +39,8 @@
     project-name: 'yangtools'
     branch: 'v1.2.x'
     distribution_branch: 'stable/nitrogen'
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
     mvn-settings: 'yangtools-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    mvn-version: mvn33
 
     dependencies: 'odlparent-merge-{stream}'
     email-upstream: '[yangtools] [odlparent]'
@@ -82,15 +68,8 @@
     project-name: 'yangtools'
     branch: 'stable/carbon'
     karaf-version: karaf3
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
     mvn-settings: 'yangtools-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    mvn-version: mvn33
 
     dependencies: 'odlparent-merge-{stream}'
     email-upstream: '[yangtools] [odlparent]'
@@ -114,5 +93,4 @@
     project-name: 'yangtools'
     branch: 'master'
     mvn-settings: 'yangtools-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'

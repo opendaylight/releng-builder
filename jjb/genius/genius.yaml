@@ -11,13 +11,7 @@
     project: 'genius'
     project-name: 'genius'
     branch: 'master'
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
     mvn-settings: 'genius-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     build-timeout: 90
     dependencies: >
@@ -43,13 +37,7 @@
     project: 'genius'
     project-name: 'genius'
     branch: 'stable/nitrogen'
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
     mvn-settings: 'genius-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: >
         controller-merge-{stream},
@@ -75,13 +63,7 @@
     project-name: 'genius'
     branch: 'stable/carbon'
     karaf-version: karaf3
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
     mvn-settings: 'genius-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: >
         controller-merge-{stream},
@@ -103,5 +85,4 @@
     project-name: 'genius'
     branch: 'master'
     mvn-settings: 'genius-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'

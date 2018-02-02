@@ -10,13 +10,7 @@
     project: 'sdninterfaceapp'
     project-name: 'sdninterfaceapp'
     branch: 'master'
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
     mvn-settings: 'sdninterfaceapp-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'bgpcep-merge-{stream}'
     email-upstream: '[sdninterfaceapp] [bgpcep]'
@@ -36,13 +30,7 @@
     project: 'sdninterfaceapp'
     project-name: 'sdninterfaceapp'
     branch: 'stable/nitrogen'
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
     mvn-settings: 'sdninterfaceapp-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'bgpcep-merge-{stream}'
     email-upstream: '[sdninterfaceapp] [bgpcep]'
@@ -63,13 +51,7 @@
     project-name: 'sdninterfaceapp'
     branch: 'stable/carbon'
     karaf-version: karaf3
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
     mvn-settings: 'sdninterfaceapp-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'bgpcep-merge-{stream}'
     email-upstream: '[sdninterfaceapp] [bgpcep]'
@@ -86,5 +68,4 @@
     project-name: 'sdninterfaceapp'
     branch: 'master'
     mvn-settings: 'sdninterfaceapp-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'

@@ -11,13 +11,7 @@
     project: 'openflowjava'
     project-name: 'openflowjava'
     branch: 'master'
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
     mvn-settings: 'openflowjava-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
     email-upstream: '[openflowjava] [odlparent] [yangtools] [controller]'
@@ -39,13 +33,7 @@
     project-name: 'openflowjava'
     branch: 'stable/carbon'
     karaf-version: karaf3
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
     mvn-settings: 'openflowjava-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
     email-upstream: '[openflowjava] [odlparent] [yangtools] [controller]'
@@ -62,5 +50,4 @@
     project-name: 'openflowjava'
     branch: 'master'
     mvn-settings: 'openflowjava-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'

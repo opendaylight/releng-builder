@@ -11,13 +11,8 @@
     project: 'vtn'
     project-name: 'vtn'
     branch: 'master'
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
     mvn-settings: 'vtn-settings'
-    mvn-goals: 'clean install -V -Pintegrationtests,strictcheck,docs -Dvtn.build.jobs=2'
+    mvn-goals: 'clean deploy -V -Pintegrationtests,strictcheck,docs -Dvtn.build.jobs=2'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'neutron-merge-{stream},openflowplugin-merge-{stream},ovsdb-merge-{stream}'
     email-upstream: '[vtn] [neutron] [openflowplugin] [ovsdb]'
@@ -42,13 +37,8 @@
     project: 'vtn'
     project-name: 'vtn'
     branch: 'stable/nitrogen'
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
     mvn-settings: 'vtn-settings'
-    mvn-goals: 'clean install -V -Pintegrationtests,strictcheck,docs -Dvtn.build.jobs=2'
+    mvn-goals: 'clean deploy -V -Pintegrationtests,strictcheck,docs -Dvtn.build.jobs=2'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'neutron-merge-{stream},openflowplugin-merge-{stream},ovsdb-merge-{stream}'
     email-upstream: '[vtn] [neutron] [openflowplugin] [ovsdb]'
@@ -74,13 +64,8 @@
     project-name: 'vtn'
     branch: 'stable/carbon'
     karaf-version: karaf3
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
     mvn-settings: 'vtn-settings'
-    mvn-goals: 'clean install -V -Pintegrationtests,strictcheck,docs -Dvtn.build.jobs=2'
+    mvn-goals: 'clean deploy -V -Pintegrationtests,strictcheck,docs -Dvtn.build.jobs=2'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'neutron-merge-{stream},openflowplugin-merge-{stream},ovsdb-merge-{stream}'
     email-upstream: '[vtn] [neutron] [openflowplugin] [ovsdb]'
@@ -101,5 +86,5 @@
     project-name: 'vtn'
     branch: 'master'
     mvn-settings: 'vtn-settings'
-    mvn-goals: 'clean install -V -Pintegrationtests,strictcheck,docs -Dvtn.build.jobs=2'
+    mvn-goals: 'clean deploy -V -Pintegrationtests,strictcheck,docs -Dvtn.build.jobs=2'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'

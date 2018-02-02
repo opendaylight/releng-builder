@@ -12,13 +12,7 @@
     branch: master
     distribution_branch: master
 
-    jdks:
-      - openjdk8
-    maven:
-      - mvn35:
-          mvn-version: mvn35
     mvn-settings: odlparent-settings
-    mvn-goals: clean install
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     mvn-version: mvn35
 
@@ -48,15 +42,8 @@
     branch: 3.1.x
     distribution_branch: master
 
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: mvn33
     mvn-settings: odlparent-settings
-    mvn-goals: clean install
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    mvn-version: mvn33
 
     dependencies: ''
     email-upstream: '[odlparent]'
@@ -85,15 +72,8 @@
     branch: 3.0.x
     distribution_branch: master
 
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: mvn33
     mvn-settings: odlparent-settings
-    mvn-goals: clean install
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    mvn-version: mvn33
 
     dependencies: ''
     email-upstream: '[odlparent]'
@@ -122,15 +102,8 @@
     branch: 2.0.x
     distribution_branch: master
 
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: mvn33
     mvn-settings: odlparent-settings
-    mvn-goals: clean install
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    mvn-version: mvn33
 
     dependencies: ''
     email-upstream: '[odlparent]'
@@ -160,13 +133,7 @@
     project-name: 'odlparent'
     branch: 'stable/carbon'
     karaf-version: karaf3
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
     mvn-settings: 'odlparent-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: ''
     email-upstream: '[odlparent]'
@@ -191,5 +158,4 @@
     project-name: 'odlparent'
     branch: 'master'
     mvn-settings: 'odlparent-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'

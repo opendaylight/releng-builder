@@ -18,13 +18,7 @@
           karaf-version: karaf3
     project: 'netvirt'
     project-name: 'netvirt'
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
     mvn-settings: 'netvirt-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx2048m -XX:MaxPermSize=512m'
     build-timeout: 90
     build-node: centos7-builder-4c-16g
@@ -52,13 +46,7 @@
     branch: 'topic/vpp'
     karaf-version: karaf3
     distribution_branch: 'master'
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
     mvn-settings: 'netvirt-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx2048m -XX:MaxPermSize=512m'
     dependencies:
     email-upstream: '[netvirt]'
@@ -72,5 +60,4 @@
     project-name: 'netvirt'
     branch: 'master'
     mvn-settings: 'netvirt-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'

@@ -10,13 +10,7 @@
     project: 'lacp'
     project-name: 'lacp'
     branch: 'master'
-    jdks:
-      - openjdk8
     mvn-settings: 'lacp-settings'
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
-    mvn-goals: 'clean install javadoc:aggregate -DrepoBuild'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'openflowjava-merge-{stream},openflowplugin-merge-{stream}'
     email-upstream: '[lacp] [openflowjava] [openflowplugin]'
@@ -36,13 +30,7 @@
     project: 'lacp'
     project-name: 'lacp'
     branch: 'stable/nitrogen'
-    jdks:
-      - openjdk8
     mvn-settings: 'lacp-settings'
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
-    mvn-goals: 'clean install javadoc:aggregate -DrepoBuild'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'openflowjava-merge-{stream},openflowplugin-merge-{stream}'
     email-upstream: '[lacp] [openflowjava] [openflowplugin]'
@@ -63,13 +51,7 @@
     project-name: 'lacp'
     branch: 'stable/carbon'
     karaf-version: karaf3
-    jdks:
-      - openjdk8
     mvn-settings: 'lacp-settings'
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
-    mvn-goals: 'clean install javadoc:aggregate -DrepoBuild'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'openflowjava-merge-{stream},openflowplugin-merge-{stream}'
     email-upstream: '[lacp] [openflowjava] [openflowplugin]'
@@ -86,5 +68,4 @@
     project-name: 'lacp'
     branch: 'master'
     mvn-settings: 'lacp-settings'
-    mvn-goals: 'clean install javadoc:aggregate -DrepoBuild'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'

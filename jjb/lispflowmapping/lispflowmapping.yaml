@@ -11,13 +11,8 @@
     project: 'lispflowmapping'
     project-name: 'lispflowmapping'
     branch: 'master'
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
     mvn-settings: 'lispflowmapping-settings'
-    mvn-goals: 'clean install findbugs:findbugs javadoc:aggregate -DrepoBuild'
+    mvn-goals: 'clean deploy findbugs:findbugs javadoc:aggregate -DrepoBuild'
     mvn-opts: '-Xmx2048m -XX:MaxPermSize=512m -Dmaven.compile.fork=true'
     dependencies: 'controller-merge-{stream},odlparent-merge-{stream},yangtools-merge-{stream},neutron-merge-{stream}'
     email-upstream: '[lispflowmapping] [controller] [odlparent] [yangtools] [neutron]'
@@ -42,13 +37,8 @@
     project: 'lispflowmapping'
     project-name: 'lispflowmapping'
     branch: 'stable/nitrogen'
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
     mvn-settings: 'lispflowmapping-settings'
-    mvn-goals: 'clean install findbugs:findbugs javadoc:aggregate -DrepoBuild'
+    mvn-goals: 'clean deploy findbugs:findbugs javadoc:aggregate -DrepoBuild'
     mvn-opts: '-Xmx2048m -XX:MaxPermSize=512m -Dmaven.compile.fork=true'
     dependencies: 'controller-merge-{stream},odlparent-merge-{stream},yangtools-merge-{stream},neutron-merge-{stream}'
     email-upstream: '[lispflowmapping] [controller] [odlparent] [yangtools] [neutron]'
@@ -74,13 +64,8 @@
     project-name: 'lispflowmapping'
     branch: 'stable/carbon'
     karaf-version: karaf3
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
     mvn-settings: 'lispflowmapping-settings'
-    mvn-goals: 'clean install findbugs:findbugs javadoc:aggregate -DrepoBuild'
+    mvn-goals: 'clean deploy findbugs:findbugs javadoc:aggregate -DrepoBuild'
     mvn-opts: '-Xmx2048m -XX:MaxPermSize=512m -Dmaven.compile.fork=true'
     dependencies: 'controller-merge-{stream},odlparent-merge-{stream},yangtools-merge-{stream},neutron-merge-{stream}'
     email-upstream: '[lispflowmapping] [controller] [odlparent] [yangtools] [neutron]'
@@ -98,5 +83,5 @@
     project-name: 'lispflowmapping'
     branch: 'master'
     mvn-settings: 'lispflowmapping-settings'
-    mvn-goals: 'clean install findbugs:findbugs javadoc:aggregate -DrepoBuild'
+    mvn-goals: 'clean deploy findbugs:findbugs javadoc:aggregate -DrepoBuild'
     mvn-opts: '-Xmx2048m -XX:MaxPermSize=512m -Dmaven.compile.fork=true'

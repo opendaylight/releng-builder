@@ -10,13 +10,8 @@
     project: 'netconf'
     project-name: 'netconf'
     branch: 'master'
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
     mvn-settings: 'netconf-settings'
-    mvn-goals: 'clean install -Pintegrationtests'
+    mvn-goals: 'clean deploy -Pintegrationtests'
     mvn-opts: '-Xmx2048m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
     build-timeout: 90
     dependencies: 'aaa-merge-{stream},controller-merge-{stream},odlparent-merge-{stream},yangtools-merge-{stream}'
@@ -37,13 +32,8 @@
     project: 'netconf'
     project-name: 'netconf'
     branch: 'stable/nitrogen'
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
     mvn-settings: 'netconf-settings'
-    mvn-goals: 'clean install -Pintegrationtests'
+    mvn-goals: 'clean deploy -Pintegrationtests'
     mvn-opts: '-Xmx2048m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
     dependencies: 'aaa-merge-{stream},controller-merge-{stream},odlparent-merge-{stream},yangtools-merge-{stream}'
     email-upstream: '[netconf] [aaa] [controller] [odlparent] [yangtools]'
@@ -64,13 +54,8 @@
     project-name: 'netconf'
     branch: 'stable/carbon'
     karaf-version: karaf3
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
     mvn-settings: 'netconf-settings'
-    mvn-goals: 'clean install -Pintegrationtests'
+    mvn-goals: 'clean deploy -Pintegrationtests'
     mvn-opts: '-Xmx2048m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
     dependencies: 'aaa-merge-{stream},controller-merge-{stream},odlparent-merge-{stream},yangtools-merge-{stream}'
     email-upstream: '[netconf] [aaa] [controller] [odlparent] [yangtools]'
@@ -87,5 +72,5 @@
     project-name: 'netconf'
     branch: 'master'
     mvn-settings: 'netconf-settings'
-    mvn-goals: 'clean install -Pintegrationtests'
+    mvn-goals: 'clean deploy -Pintegrationtests'
     mvn-opts: '-Xmx2048m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'

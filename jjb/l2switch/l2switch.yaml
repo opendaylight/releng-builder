@@ -10,13 +10,7 @@
     project: 'l2switch'
     project-name: 'l2switch'
     branch: 'master'
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
     mvn-settings: 'l2switch-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
     dependencies: >
         odlparent-merge-{stream},
@@ -41,13 +35,7 @@
     project: 'l2switch'
     project-name: 'l2switch'
     branch: 'stable/nitrogen'
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
     mvn-settings: 'l2switch-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
     dependencies: >
         odlparent-merge-{stream},
@@ -73,13 +61,7 @@
     project-name: 'l2switch'
     branch: 'stable/carbon'
     karaf-version: karaf3
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
     mvn-settings: 'l2switch-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
     dependencies: >
         odlparent-merge-{stream},
@@ -101,5 +83,4 @@
     project-name: 'l2switch'
     branch: 'master'
     mvn-settings: 'l2switch-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'

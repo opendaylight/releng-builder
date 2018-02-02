@@ -10,13 +10,7 @@
     project: 'cardinal'
     project-name: 'cardinal'
     branch: 'master'
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
     mvn-settings: 'cardinal-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'openflowplugin-merge-{stream},iotdm-merge-{stream},sfc-merge-{stream}'
     email-upstream: '[cardinal] [openflowplugin] [iotdm] [sfc]'
@@ -36,13 +30,7 @@
     project: 'cardinal'
     project-name: 'cardinal'
     branch: 'stable/nitrogen'
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
     mvn-settings: 'cardinal-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'openflowplugin-merge-{stream},iotdm-merge-{stream},sfc-merge-{stream}'
     email-upstream: '[cardinal] [openflowplugin] [iotdm] [sfc]'
@@ -63,13 +51,7 @@
     project-name: 'cardinal'
     branch: 'stable/carbon'
     karaf-version: karaf3
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
     mvn-settings: 'cardinal-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'openflowplugin-merge-{stream},iotdm-merge-{stream},sfc-merge-{stream}'
     email-upstream: '[cardinal] [openflowplugin] [iotdm] [sfc]'
@@ -87,5 +69,4 @@
     project-name: 'cardinal'
     branch: 'master'
     mvn-settings: 'cardinal-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'

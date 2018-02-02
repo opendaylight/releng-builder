@@ -13,13 +13,7 @@
     build-node: centos7-builder-2c-8g
     build-timeout: 120
     branch: 'master'
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
     mvn-settings: 'bgpcep-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx2048m -XX:MaxPermSize=256m'
     dependencies: >
         odlparent-merge-{stream},
@@ -47,13 +41,7 @@
     build-node: centos7-builder-2c-8g
     build-timeout: 120
     branch: 'stable/nitrogen'
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
     mvn-settings: 'bgpcep-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx2048m -XX:MaxPermSize=256m'
     dependencies: >
         odlparent-merge-{stream},
@@ -82,13 +70,7 @@
     build-timeout: 120
     branch: 'stable/carbon'
     karaf-version: karaf3
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
     mvn-settings: 'bgpcep-settings'
-    mvn-goals: 'clean -DrepoBuild install javadoc:aggregate'
     mvn-opts: '-Xmx2048m -XX:MaxPermSize=256m'
     dependencies: >
         odlparent-merge-{stream},
@@ -112,5 +94,4 @@
     build-node: centos7-builder-2c-8g
     branch: 'master'
     mvn-settings: 'bgpcep-settings'
-    mvn-goals: 'clean -DrepoBuild install javadoc:aggregate'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'

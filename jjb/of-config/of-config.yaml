@@ -10,13 +10,7 @@
     project: 'of-config'
     project-name: 'of-config'
     branch: 'master'
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
     mvn-settings: 'of-config-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: netconf-merge-{stream}'
     email-upstream: '[of-config] [netconf]'
@@ -36,13 +30,7 @@
     project: 'of-config'
     project-name: 'of-config'
     branch: 'stable/nitrogen'
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
     mvn-settings: 'of-config-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: netconf-merge-{stream}'
     email-upstream: '[of-config] [netconf]'
@@ -63,13 +51,7 @@
     project-name: 'of-config'
     branch: 'stable/carbon'
     karaf-version: karaf3
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
     mvn-settings: 'of-config-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: netconf-merge-{stream}'
     email-upstream: '[of-config] [netconf]'
@@ -86,5 +68,4 @@
     project-name: 'of-config'
     branch: 'master'
     mvn-settings: 'of-config-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'

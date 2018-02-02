@@ -10,13 +10,7 @@
     project: 'next'
     project-name: 'next'
     branch: 'master'
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
     mvn-settings: 'next-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: ''
     email-upstream: '[next]'
@@ -36,13 +30,7 @@
     project: 'next'
     project-name: 'next'
     branch: 'stable/nitrogen'
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
     mvn-settings: 'next-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: ''
     email-upstream: '[next]'
@@ -63,13 +51,7 @@
     project-name: 'next'
     branch: 'stable/carbon'
     karaf-version: karaf3
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
     mvn-settings: 'next-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: ''
     email-upstream: '[next]'
@@ -85,6 +67,5 @@
     project: 'next'
     project-name: 'next'
     branch: 'master'
-    mvn-settings: 'tsdr-settings'
-    mvn-goals: 'clean install javadoc:aggregate -DrepoBuild'
+    mvn-settings: 'next-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
