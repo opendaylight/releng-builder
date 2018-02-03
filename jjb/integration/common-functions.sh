@@ -64,9 +64,14 @@ function configure_karaf_log() {
     local -r controllerdebugmap=$2
     local logapi=log4j
 
-    echo "Configuring the karaf log... karaf_version: ${karaf_version}"
-    if [[ "${karaf_version}" == "karaf4" ]]; then
-        logapi=log4j2
+    # Check what the logging.cfg file is using for the logging api: log4j or log4j
+    grep "log4j2" ${LOGCONF}
+    if [ $? -eq 0 ]; then
+        logapi = log4j2
+    fi
+
+    echo "Configuring the karaf log... karaf_version: ${karaf_version}, logapi: ${logapi}"
+    if [[ "${logapi}" == "log4j2" ]]; then
         # FIXME: Make log size limit configurable from build parameter.
         sed -ie 's/log4j2.appender.rolling.policies.size.size = 16MB/log4j2.appender.rolling.policies.size.size = 1GB/g' ${LOGCONF}
         orgmodule="org.opendaylight.yangtools.yang.parser.repo.YangTextSchemaContextResolver"
@@ -93,7 +98,7 @@ function configure_karaf_log() {
             # shellcheck disable=SC2157
             if [ -n "${module}" ] && [ -n "${level}" ]; then
                 orgmodule="org.opendaylight.${module}"
-                if [[ "${karaf_version}" == "karaf4" ]]; then
+                if [[ "${logapi}" == "log4j2" ]]; then
                     orgmodule_="${orgmodule//./_}"
                     echo "${logapi}.logger.${orgmodule_}.name = ${orgmodule}" >> ${LOGCONF}
                     echo "${logapi}.logger.${orgmodule_}.level = ${level}" >> ${LOGCONF}
@@ -104,5 +109,6 @@ function configure_karaf_log() {
         done
     fi
 
+    echo "cat ${LOGCONF}"
     cat ${LOGCONF}
 } # function configure_karaf_log()
