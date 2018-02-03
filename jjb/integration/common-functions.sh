@@ -56,3 +56,53 @@ function set_java_vars() {
     JAVA_RESOLVED=$(readlink -e "${JAVA_HOME}/bin/java")
     echo "Java binary pointed at by JAVA_HOME: ${JAVA_RESOLVED}"
 } # set_java_vars()
+
+# shellcheck disable=SC2034
+# foo appears unused. Verify it or export it.
+function configure_karaf_log() {
+    local -r karaf_version=$1
+    local -r controllerdebugmap=$2
+    local logapi=log4j
+
+    echo "Configuring the karaf log... karaf_version: ${karaf_version}"
+    if [[ "${karaf_version}" == "karaf4" ]]; then
+        logapi=log4j2
+        # FIXME: Make log size limit configurable from build parameter.
+        sed -ie 's/log4j2.appender.rolling.policies.size.size = 16MB/log4j2.appender.rolling.policies.size.size = 1GB/g' ${LOGCONF}
+        orgmodule="org.opendaylight.yangtools.yang.parser.repo.YangTextSchemaContextResolver"
+        orgmodule_="${orgmodule//./_}"
+        echo "${logapi}.logger.${orgmodule_}.name = WARN" >> ${LOGCONF}
+        echo "${logapi}.logger.${orgmodule_}.level = WARN" >> ${LOGCONF}
+    else
+        sed -ie 's/log4j.appender.out.maxBackupIndex=10/log4j.appender.out.maxBackupIndex=1/g' ${LOGCONF}
+        # FIXME: Make log size limit configurable from build parameter.
+        sed -ie 's/log4j.appender.out.maxFileSize=1MB/log4j.appender.out.maxFileSize=30GB/g' ${LOGCONF}
+        echo "${logapi}.logger.org.opendaylight.yangtools.yang.parser.repo.YangTextSchemaContextResolver = WARN" >> ${LOGCONF}
+    fi
+
+    # Add custom logging levels
+    # CONTROLLERDEBUGMAP is expected to be a key:value map of space separated values like "module:level module2:level2"
+    # where module is abbreviated and does not include "org.opendaylight."
+    unset IFS
+    echo "controllerdebugmap: ${controllerdebugmap}"
+    if [ -n "${controllerdebugmap}" ]; then
+        for kv in ${controllerdebugmap}; do
+            module="${kv%%:*}"
+            level="${kv#*:}"
+            echo "module: $module, level: $level"
+            # shellcheck disable=SC2157
+            if [ -n "${module}" ] && [ -n "${level}" ]; then
+                orgmodule="org.opendaylight.${module}"
+                if [[ "${karaf_version}" == "karaf4" ]]; then
+                    orgmodule_="${orgmodule//./_}"
+                    echo "${logapi}.logger.${orgmodule_}.name = ${orgmodule}" >> ${LOGCONF}
+                    echo "${logapi}.logger.${orgmodule_}.level = ${level}" >> ${LOGCONF}
+                else
+                    echo "${logapi}.logger.${orgmodule} = ${level}" >> ${LOGCONF}
+                fi
+            fi
+        done
+    fi
+
+    cat ${LOGCONF}
+} # function configure_karaf_log()
