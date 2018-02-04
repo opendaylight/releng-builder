@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "534c4bea_8ee79580",
+        "filename": "jjb/integration/copy-common-functions.sh",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2018-02-04T04:23:57Z",
+      "side": 1,
+      "message": "openstack returns a newline separated list so `mapfile` is more appropriate here.\n\nmapfile -t ips \u003c \u003c(openstack stack show...)",
+      "revId": "42b62da727fe50768fc0c9cef388fa113ffc8d6b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
