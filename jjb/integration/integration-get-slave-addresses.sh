@@ -12,9 +12,7 @@ OPENSTACK_CONTROLLERS=()
 OPENSTACK_VENV="/tmp/v/openstack"
 # shellcheck source=/tmp/v/openstack/bin/activate disable=SC1091
 source $OPENSTACK_VENV/bin/activate
-# shellcheck disable=SC2207
-ADDR=($(openstack stack show -f json -c outputs "$STACK_NAME" | \
-       jq -r '.outputs[] | select(.output_key | match("^vm_[0-9]+_ips$")) | .output_value | .[]'))
+mapfile -t ADDR <<< "$(openstack stack show -f json -c outputs "$STACK_NAME" | jq -r '.outputs[] | select(.output_key | match("^vm_[0-9]+_ips$")) | .output_value | .[]')"
 
 # The next two blocks of code will parse the list of vm IP's hostnames to determine which type of node
 # the vm is: odl, devstack controller or compute, ha_proxy or tools. For the odl node's the hsotname will contain
