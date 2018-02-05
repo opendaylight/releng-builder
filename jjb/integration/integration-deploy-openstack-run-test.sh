@@ -497,19 +497,21 @@ EOF
 
 # Collect the list of files on the hosts
 function list_files () {
-    local ip=$1
-    local folder=$2
-    ${SSH} ${ip} "sudo find /etc > /tmp/find.etc.txt"
-    ${SSH} ${ip} "sudo find /opt/stack > /tmp/find.opt.stack.txt"
-    ${SSH} ${ip} "sudo find /var > /tmp/find2.txt"
-    ${SSH} ${ip} "sudo find /var > /tmp/find.var.txt"
-    rsync --rsync-path="sudo rsync" --list-only -arvhe ssh ${ip}:/etc/ > ${folder}/rsync.etc.txt
-    rsync --rsync-path="sudo rsync" --list-only -arvhe ssh ${ip}:/opt/stack/ > ${folder}/rsync.opt.stack.txt
-    rsync --rsync-path="sudo rsync" --list-only -arvhe ssh ${ip}:/var/ > ${folder}/rsync.var.txt
-    scp ${ip}:/tmp/find.etc.txt ${folder}
-    scp ${ip}:/tmp/find.opt.stack.txt ${folder}
-    scp ${ip}:/tmp/find2.txt ${folder}
-    scp ${ip}:/tmp/find.var.txt ${folder}
+    local -r ip=$1
+    local -r folder=$2
+    finddir=/tmp/finder
+    mkdir -p ${finddir}
+    ${SSH} ${ip} "sudo find /etc > ${finddir}/find.etc.txt"
+    ${SSH} ${ip} "sudo find /opt/stack > ${finddir}/find.opt.stack.txt"
+    ${SSH} ${ip} "sudo find /var > ${finddir}/find2.txt"
+    ${SSH} ${ip} "sudo find /var > ${finddir}/find.var.txt"
+    ${SSH} ${ip} "sudo tar -cJf /tmp/find.tar.xz -C /tmp finder"
+    scp ${ip}:/tmp/find.tar.xz ${folder}
+    rsync --rsync-path="sudo rsync" --list-only -arvhe ssh ${ip}:/etc/ > ${finddir}/rsync.etc.txt
+    rsync --rsync-path="sudo rsync" --list-only -arvhe ssh ${ip}:/opt/stack/ > ${finddir}/rsync.opt.stack.txt
+    rsync --rsync-path="sudo rsync" --list-only -arvhe ssh ${ip}:/var/ > ${finddir}/rsync.var.txt
+    tar -cJf /tmp/rsync.tar.xz -C /tmp finder
+    cp /tmp/rsync.tar.xz ${folder}
 }
 
 function collect_logs () {
@@ -568,7 +570,8 @@ EOF
         scp ${!CONTROLLERIP}:/tmp/journalctl.log ${NODE_FOLDER}
         ${SSH} ${!CONTROLLERIP} "dmesg -T > /tmp/dmesg.log"
         scp ${!CONTROLLERIP}:/tmp/dmesg.log ${NODE_FOLDER}
-        rsync -avhe ssh ${!CONTROLLERIP}:/tmp/${BUNDLEFOLDER}/etc ${NODE_FOLDER}
+        ${SSH} ${!CONTROLLERIP} "tar -cJf /tmp/etc.tar.xz -C /tmp/${BUNDLEFOLDER} etc"
+        scp ${!CONTROLLERIP}:/tmp/etc.tar.xz ${NODE_FOLDER}
         ${SSH} ${!CONTROLLERIP} "cp -r /tmp/${BUNDLEFOLDER}/data/log /tmp/odl_log"
         ${SSH} ${!CONTROLLERIP} "tar -cf /tmp/odl${i}_karaf.log.tar /tmp/odl_log/*"
         scp ${!CONTROLLERIP}:/tmp/odl${i}_karaf.log.tar ${NODE_FOLDER}
@@ -627,6 +630,8 @@ EOF
         scp ${!OSIP}:/var/log/openvswitch/ovs-vswitchd.log ${NODE_FOLDER}
         scp ${!OSIP}:/var/log/openvswitch/ovsdb-server.log ${NODE_FOLDER}
         list_files "${!OSIP}" "${NODE_FOLDER}"
+        ${SSH} ${!OSIP} "sudo tar -cJf /tmp/rabbitmq.tar.xz -C /var/log rabbitmq"
+        scp ${!OSIP}:/tmp/rabbitmq.tar.xz ${NODE_FOLDER}
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/etc/hosts ${NODE_FOLDER}
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/usr/lib/systemd/system/haproxy.service ${NODE_FOLDER}
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/audit/audit.log ${NODE_FOLDER}
@@ -636,8 +641,9 @@ EOF
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/rabbitmq ${NODE_FOLDER}
         rsync -avhe ssh ${!OSIP}:/opt/stack/logs/* ${NODE_FOLDER} # rsync to prevent copying of symbolic links
         mv local.conf_control_${!OSIP} ${NODE_FOLDER}/local.conf
-        # qdhcp files are created by robot tests
-        mv /tmp/qdhcp ${NODE_FOLDER}
+        # qdhcp files are created by robot tests and copied into /tmp/qdhcp during the test
+        tar -cJf /tmp/qdhcp.tar.xz -C /tmp qdhcp
+        mv /tmp/qdhcp.tar.xz ${NODE_FOLDER}
         mv ${NODE_FOLDER} ${WORKSPACE}/archives/
     done
 
@@ -665,9 +671,10 @@ EOF
         scp ${!OSIP}:/var/log/openvswitch/ovs-vswitchd.log ${NODE_FOLDER}
         scp ${!OSIP}:/var/log/openvswitch/ovsdb-server.log ${NODE_FOLDER}
         list_files "${!OSIP}" "${NODE_FOLDER}"
+        ${SSH} ${!OSIP} "sudo tar -cJf /tmp/libvirt.tar.xz -C /var/log libvirt"
+        scp ${!OSIP}:/tmp/libvirt.tar.xz ${NODE_FOLDER}
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/etc/hosts ${NODE_FOLDER}
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/audit/audit.log ${NODE_FOLDER}
-        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/libvirt ${NODE_FOLDER}
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/messages ${NODE_FOLDER}
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/nova-agent.log ${NODE_FOLDER}
         rsync -avhe ssh ${!OSIP}:/opt/stack/logs/* ${NODE_FOLDER} # rsync to prevent copying of symbolic links
