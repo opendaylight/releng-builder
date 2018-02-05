@@ -743,15 +743,6 @@ TODO: Document test-{project}-{feature} and test-{project}-all.
       </tr>
       <tr>
         <td colspan="2">
-        </td>
-      </tr>
-
-      <tr class="warning">
-        <td><b>Job Template</b><br/>integration-patch-test-{stream}</td>
-        <td><b>Gerrit Trigger</b><br/>test-integration</td>
-      </tr>
-      <tr>
-        <td colspan="2">
           This job builds a distribution against your Java patch and triggers distribution sanity CSIT jobs.
           Leave a comment with trigger keyword above to activate it for a particular patch.
           This job should not alter Gerrit votes for a given patch.
@@ -777,6 +768,27 @@ TODO: Document test-{project}-{feature} and test-{project}-all.
             </li>
         </td>
       </tr>
+
+      <tr class="warning">
+        <td><b>Job Template</b><br/>integration-multipatch-test-{stream}</td>
+        <td><b>Gerrit Trigger</b><br/>multipatch-build</td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          This job builds a list of patches provided in an specific order, and finally builds
+          a distribution from either provided patch or latest code in branch.
+          For example if someone leaves the following comment in a patch:
+          multipatch-build:controller=61/29761/5:45/29645/6,neutron=51/65551/4,netvirt:59/60259/17
+          the job will checkout controller patch 61/29761/5, cherry-pick 45/29645/6 and build controller,
+          checkout neutron patch 51/65551/4 and build neutron, checkout latest netvirt code,
+          cherry-pick 59/60259/17 and build netvirt, finally it will checkout latest distribution
+          code and build a distribution. The resulting distribution is stored in Nexus and the URL
+          is stored in a variable called BUNDLE_URL visible in the job console.
+          This job should not alter Gerrit votes for a given patch, nor will do anything with the
+          given patch unless the patch is added to the build list.
+        </td>
+      </tr>
+
     </table>
 
 Maven Properties
