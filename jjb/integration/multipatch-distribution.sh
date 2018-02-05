@@ -99,7 +99,6 @@ do
     "$MVN" clean install \
     -e -Pq \
     -Dstream=oxygen \
-    -DskipTests=true \
     -Dgitid.skip=false \
     --global-settings "$GLOBAL_SETTINGS_FILE" \
     --settings "$SETTINGS_FILE" \
@@ -117,7 +116,6 @@ if [ "${distribution_status}" == "not_included" ]; then
     "$MVN" clean install \
     -e -Pq \
     -Dstream="$DISTROSTREAM" \
-    -DskipTests=true \
     --global-settings "$GLOBAL_SETTINGS_FILE" \
     --settings "$SETTINGS_FILE" \
     $MAVEN_OPTIONS
