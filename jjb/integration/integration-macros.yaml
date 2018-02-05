@@ -528,7 +528,7 @@
                 mkdir -p ./archives
                 curl --output robot-plugin.zip "$BUILD_URL/robot/report/*zip*/robot-plugin.zip"
                 unzip -d ./archives robot-plugin.zip
-                mv *log* *.log *.log.gz *.csv *.png ./archives || true  # Don't fail if file missing
+                mv *.log *.log.gz *.csv *.png ./archives || true  # Don't fail if file missing
                 # TODO: Can the following line ever fail?
                 find . -type f -name *.hprof -print0 | tar -cvf - --null -T - | xz -9 > ./archives/hprof.tar.xz
                 # TODO: Tweak the compression level if better ratio (or speed) is needed.
