@@ -6,7 +6,7 @@
     name: 'distribution-verify-{stream}'
 
     project-type: freestyle
-    node: centos7-builder-2c-8g
+    node: centos7-builder-8c-8g
     concurrent: true
     jdk: '{jre}'
 
@@ -78,7 +78,7 @@
     #     https://issues.apache.org/jira/browse/MNG-5666
 
     project-type: maven
-    node: '{build-node}'
+    node: 'centos7-builder-8c-8g'
     jdk: '{jre}'
 
     properties:
@@ -192,7 +192,7 @@
     disabled: false
 
     project-type: freestyle
-    node: '{build-node}'
+    node: 'centos7-builder-8c-8g'
     concurrent: true
     jdk: '{jdk}'
 
@@ -269,7 +269,7 @@
     # FIXME: List required variables.
 
     project-type: freestyle
-    node: centos7-builder-2c-8g
+    node: centos7-builder-4c-4g
     concurrent: false
 
     properties:
@@ -315,7 +315,7 @@
     # FIXME: List required variables.
 
     project-type: freestyle
-    node: centos7-builder-2c-8g
+    node: centos7-builder-4c-4g
     concurrent: false
 
     properties:
