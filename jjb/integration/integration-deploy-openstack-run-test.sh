@@ -1356,5 +1356,9 @@ ssh ${ODL_SYSTEM_IP} "du -hs /tmp/${BUNDLEFOLDER}/data/log/*"
 echo "Tests Executed"
 collect_logs
 
+echo "ls -al ."
+ls -al .
+echo "ls -al ./archives"
+ls -al ./archives
 true  # perhaps Jenkins is testing last exit code
 # vim: ts=4 sw=4 sts=4 et ft=sh :
