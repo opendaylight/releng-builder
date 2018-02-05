@@ -100,6 +100,7 @@ do
     -e -Pq \
     -Dstream=oxygen \
     -DskipTests=true \
+    -Dgitid.skip=false \
     --global-settings "$GLOBAL_SETTINGS_FILE" \
     --settings "$SETTINGS_FILE" \
     $MAVEN_OPTIONS
