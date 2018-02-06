@@ -505,13 +505,13 @@ function collect_files () {
     ${SSH} ${ip} "sudo find /opt/stack > ${finddir}/find.opt.stack.txt"
     ${SSH} ${ip} "sudo find /var > ${finddir}/find2.txt"
     ${SSH} ${ip} "sudo find /var > ${finddir}/find.var.txt"
-    ${SSH} ${ip} "sudo tar -cJf /tmp/find.tar.xz -C /tmp finder"
+    ${SSH} ${ip} "sudo tar -cf - -C /tmp finder | xz -T 0 > /tmp/find.tar.xz"
     scp ${ip}:/tmp/find.tar.xz ${folder}
     mkdir -p ${finddir}
     rsync --rsync-path="sudo rsync" --list-only -arvhe ssh ${ip}:/etc/ > ${finddir}/rsync.etc.txt
     rsync --rsync-path="sudo rsync" --list-only -arvhe ssh ${ip}:/opt/stack/ > ${finddir}/rsync.opt.stack.txt
     rsync --rsync-path="sudo rsync" --list-only -arvhe ssh ${ip}:/var/ > ${finddir}/rsync.var.txt
-    tar -cJf /tmp/rsync.tar.xz -C /tmp finder
+    tar -cf - -C /tmp finder | xz -T 0 > /tmp/rsync.tar.xz
     cp /tmp/rsync.tar.xz ${folder}
 }
 
@@ -571,7 +571,7 @@ EOF
         scp ${!CONTROLLERIP}:/tmp/journalctl.log ${NODE_FOLDER}
         ${SSH} ${!CONTROLLERIP} "dmesg -T > /tmp/dmesg.log"
         scp ${!CONTROLLERIP}:/tmp/dmesg.log ${NODE_FOLDER}
-        ${SSH} ${!CONTROLLERIP} "tar -cJf /tmp/etc.tar.xz -C /tmp/${BUNDLEFOLDER} etc"
+        ${SSH} ${!CONTROLLERIP} "tar -cf - -C /tmp/${BUNDLEFOLDER} etc | xz -T 0 > /tmp/etc.tar.xz"
         scp ${!CONTROLLERIP}:/tmp/etc.tar.xz ${NODE_FOLDER}
         ${SSH} ${!CONTROLLERIP} "cp -r /tmp/${BUNDLEFOLDER}/data/log /tmp/odl_log"
         ${SSH} ${!CONTROLLERIP} "tar -cf /tmp/odl${i}_karaf.log.tar /tmp/odl_log/*"
@@ -631,7 +631,7 @@ EOF
         scp ${!OSIP}:/var/log/openvswitch/ovs-vswitchd.log ${NODE_FOLDER}
         scp ${!OSIP}:/var/log/openvswitch/ovsdb-server.log ${NODE_FOLDER}
         collect_files "${!OSIP}" "${NODE_FOLDER}"
-        ${SSH} ${!OSIP} "sudo tar -cJf /tmp/rabbitmq.tar.xz -C /var/log rabbitmq"
+        ${SSH} ${!OSIP} "sudo tar -cf - -C /var/log rabbitmq | xz -T 0 > /tmp/rabbitmq.tar.xz "
         scp ${!OSIP}:/tmp/rabbitmq.tar.xz ${NODE_FOLDER}
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/etc/hosts ${NODE_FOLDER}
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/usr/lib/systemd/system/haproxy.service ${NODE_FOLDER}
@@ -642,7 +642,7 @@ EOF
         rsync -avhe ssh ${!OSIP}:/opt/stack/logs/* ${NODE_FOLDER} # rsync to prevent copying of symbolic links
         mv local.conf_control_${!OSIP} ${NODE_FOLDER}/local.conf
         # qdhcp files are created by robot tests and copied into /tmp/qdhcp during the test
-        tar -cJf /tmp/qdhcp.tar.xz -C /tmp qdhcp
+        tar -cf - -C /tmp qdhcp | xz -T 0 > /tmp/qdhcp.tar.xz
         mv /tmp/qdhcp.tar.xz ${NODE_FOLDER}
         mv ${NODE_FOLDER} ${WORKSPACE}/archives/
     done
@@ -671,7 +671,7 @@ EOF
         scp ${!OSIP}:/var/log/openvswitch/ovs-vswitchd.log ${NODE_FOLDER}
         scp ${!OSIP}:/var/log/openvswitch/ovsdb-server.log ${NODE_FOLDER}
         collect_files "${!OSIP}" "${NODE_FOLDER}"
-        ${SSH} ${!OSIP} "sudo tar -cJf /tmp/libvirt.tar.xz -C /var/log libvirt"
+        ${SSH} ${!OSIP} "sudo tar -cf - -C /var/log libvirt | xz -T 0 > /tmp/libvirt.tar.xz "
         scp ${!OSIP}:/tmp/libvirt.tar.xz ${NODE_FOLDER}
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/etc/hosts ${NODE_FOLDER}
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/audit/audit.log ${NODE_FOLDER}
