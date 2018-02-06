@@ -1,0 +1,24 @@
+---
+- import_playbook: ../common-packer/provision/baseline.yaml
+
+- hosts: all
+  become_user: root
+  become_method: sudo
+
+  pre_tasks:
+    - include_role: name=system-update
+
+  roles:
+    - lf-dev-libs
+    - lf-recommended-tools
+    - python-install
+
+  post_tasks:
+    - name: Update net link setup
+      shell: ln -s /dev/null /etc/udev/rules.d/80-net-setup-link.rules
+      become: yes
+      when: ansible_distribution == 'CentOS'
+      become: yes
+    - name: System Reseal
+      script: ../common-packer/provision/system-reseal.sh
+      become: true
