@@ -10,6 +10,7 @@
     project-name: 'dluxapps'
     stream: oxygen
     branch: 'master'
+    build-node: centos7-builder-2c-8g
     mvn-settings: 'dluxapps-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
@@ -30,6 +31,7 @@
     project-name: 'dluxapps'
     stream: nitrogen
     branch: 'stable/nitrogen'
+    build-node: centos7-builder-2c-8g
     mvn-settings: 'dluxapps-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
@@ -50,6 +52,7 @@
     project-name: 'dluxapps'
     stream: carbon
     branch: 'stable/carbon'
+    build-node: centos7-builder-2c-8g
     karaf-version: karaf3
     mvn-settings: 'dluxapps-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
@@ -68,5 +71,6 @@
     project: 'dluxapps'
     project-name: 'dluxapps'
     branch: 'master'
+    build-node: centos7-builder-2c-8g
     mvn-settings: 'dluxapps-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
