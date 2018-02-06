@@ -13,6 +13,7 @@
       #         condition: SUCCESS
       #         trigger-with-no-params: true
       - '{project-name}-merge-{stream}':
+          build-timeout: 120
           mvn-goals: clean install -V -Dmaven.compile.fork=true -Dintegrationtests -Dvtn.build.jobs=2
 
       - gerrit-maven-release
