@@ -91,13 +91,23 @@
 - job-template:
     name: '{project-name}-merge-{stream}'
 
+    ######################
+    # Default parameters #
+    ######################
+
+    java-version: openjdk8
+
+    #####################
+    # Job Configuration #
+    #####################
+
     # Need to keep jobs that deploy to Nexus at end of build as Maven
     # projects. Maybe reconsider this once upstream moves deploy to a
     # separate lifecycle:
     #     https://issues.apache.org/jira/browse/MNG-5666
     project-type: maven
     node: '{build-node}'
-    jdk: '{jdk}'
+    jdk: '{java-version}'
 
     properties:
       - opendaylight-infra-properties:
