@@ -96,6 +96,7 @@
     # Default parameters #
     ######################
 
+    mvn-version: mvn33
     java-version: openjdk8
 
     #####################
@@ -147,10 +148,12 @@
       - provide-maven-settings:
           global-settings-file: 'global-settings'
           settings-file: '{mvn-settings}'
+      - lf-maven-install:
+          mvn-version: '{mvn-version}'
 
     # TODO: Do we want to apply sophisticated checks as in *-distribution-check-*?
     maven:
-      maven-name: 'mvn33'
+      maven-name: '{mvn-version}'
       goals: >
           {mvn-goals}
           -Dmerge
