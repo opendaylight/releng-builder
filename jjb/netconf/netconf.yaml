@@ -10,6 +10,7 @@
     project: 'netconf'
     project-name: 'netconf'
     branch: 'master'
+    build-node: centos7-builder-2c-8g
     mvn-settings: 'netconf-settings'
     mvn-goals: 'clean deploy -Pintegrationtests'
     mvn-opts: '-Xmx2048m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
@@ -32,6 +33,7 @@
     project: 'netconf'
     project-name: 'netconf'
     branch: 'stable/nitrogen'
+    build-node: centos7-builder-2c-8g
     mvn-settings: 'netconf-settings'
     mvn-goals: 'clean deploy -Pintegrationtests'
     mvn-opts: '-Xmx2048m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
@@ -53,6 +55,7 @@
     project: 'netconf'
     project-name: 'netconf'
     branch: 'stable/carbon'
+    build-node: centos7-builder-2c-8g
     karaf-version: karaf3
     mvn-settings: 'netconf-settings'
     mvn-goals: 'clean deploy -Pintegrationtests'
@@ -71,6 +74,7 @@
     project: 'netconf'
     project-name: 'netconf'
     branch: 'master'
+    build-node: centos7-builder-2c-8g
     mvn-settings: 'netconf-settings'
     mvn-goals: 'clean deploy -Pintegrationtests'
     mvn-opts: '-Xmx2048m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
