@@ -5,12 +5,15 @@
     jobs:
       - gerrit-maven-clm
 
-      - gerrit-maven-merge:
-          post_build_trigger:
-            - project:
-                - 'distribution-merge-{stream}'
-              condition: SUCCESS
-              trigger-with-no-params: true
+      # TODO: Figure out what's wrong with the gerrit-maven-merge job.
+      # - gerrit-maven-merge:
+      #     post_build_trigger:
+      #       - project:
+      #           - 'distribution-merge-{stream}'
+      #         condition: SUCCESS
+      #         trigger-with-no-params: true
+      - '{project-name}-merge-{stream}':
+          mvn-goals: clean install -V -Dmaven.compile.fork=true -Dintegrationtests -Dvtn.build.jobs=2
 
       - gerrit-maven-release
       - gerrit-maven-verify
