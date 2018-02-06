@@ -39,12 +39,20 @@
     {
       "type": "shell",
       "scripts": [
-        "provision/baseline.sh",
-        "provision/devstack.sh",
-        "provision/system_reseal_local_env.sh",
-        "provision/system_reseal.sh"
+        "common-packer/provision/install-python.sh"
       ],
       "execute_command": "chmod +x {{ .Path }}; if [ \"$UID\" == \"0\" ]; then {{ .Vars }} '{{ .Path }}'; else {{ .Vars }} sudo -E '{{ .Path }}'; fi"
+    },
+    {
+      "type": "ansible",
+      "playbook_file": "provision/devstack.yaml",
+      "ansible_env_vars": [
+        "ANSIBLE_NOCOWS=1",
+        "ANSIBLE_PIPELINING=True",
+        "ANSIBLE_ROLES_PATH=../lf-ansible/roles",
+        "ANSIBLE_CALLBACK_WHITELIST=profile_tasks",
+        "ANSIBLE_STDOUT_CALLBACK=debug"
+      ]
     }
   ]
 }

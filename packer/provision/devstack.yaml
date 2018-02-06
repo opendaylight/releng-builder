@@ -1,0 +1,49 @@
+---
+- import_playbook: ../common-packer/provision/baseline.yaml
+
+- hosts: all
+  become_user: root
+  become_method: sudo
+
+  pre_tasks:
+    - include_role: name=system-update
+
+  tasks:
+    - name: Install Xpath
+      block:
+        - name: Install xpath
+          yum: 'name={{item}} state=present'
+          with_items:
+            - perl-XML-XPath
+            - python-pip
+            - python-six
+          become: true
+        - name: Install crudini command line tool for editing config files
+          yum: 'name={{item}} state=present'
+          with_items:
+            - crudini
+          become: true
+        - name: Installing non-baseline requirements
+          yum: 'name={{item}} state=present'
+          with_items:
+            - deltarpm
+            - python
+            - python-crypto
+            - python-devel
+            - python-lxml
+            - python-setuptools
+            - libxml2-devel
+            - libxslt-devel
+            - libffi-devel
+            - openssl-devel
+          become: true
+
+  post_tasks:
+    - name: Update net link setup
+      shell: ln -s /dev/null /etc/udev/rules.d/80-net-setup-link.rules
+      become: yes
+      when: ansible_distribution == 'CentOS'
+      become: yes
+    - name: System Reseal
+      script: ../common-packer/provision/system-reseal.sh
+      become: true
