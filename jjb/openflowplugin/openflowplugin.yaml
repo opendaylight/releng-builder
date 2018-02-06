@@ -11,6 +11,7 @@
     project: 'openflowplugin'
     project-name: 'openflowplugin'
     branch: 'master'
+    build-node: centos7-builder-2c-8g
     mvn-settings: 'openflowplugin-settings'
     mvn-goals: 'clean deploy javadoc:aggregate'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
@@ -38,6 +39,7 @@
     project: 'openflowplugin'
     project-name: 'openflowplugin'
     branch: 'stable/nitrogen'
+    build-node: centos7-builder-2c-8g
     mvn-settings: 'openflowplugin-settings'
     mvn-goals: 'clean deploy javadoc:aggregate'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
@@ -64,6 +66,7 @@
     project: 'openflowplugin'
     project-name: 'openflowplugin'
     branch: 'stable/carbon'
+    build-node: centos7-builder-2c-8g
     karaf-version: 'karaf3'
     mvn-settings: 'openflowplugin-settings'
     mvn-goals: 'clean deploy javadoc:aggregate'
@@ -86,6 +89,7 @@
     project: 'openflowplugin'
     project-name: 'openflowplugin'
     branch: 'master'
+    build-node: centos7-builder-2c-8g
     mvn-settings: 'openflowplugin-settings'
     mvn-goals: 'clean deploy javadoc:aggregate'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
