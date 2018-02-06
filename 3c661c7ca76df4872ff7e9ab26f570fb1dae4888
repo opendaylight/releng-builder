@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4046608_12608f12",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2018-02-06T00:45:25Z",
+      "side": 1,
+      "message": "\u0027tar cf - | xz \u003e $file\u0027 would give us explicit control over xz cpu/mem/size trade-offs. Quoting xz.1:\n\n-0  is  sometimes  faster than gzip -9 while compressing much better.\n\n-4 ... -6\n                     Good to very good compression while keeping decompressor memory usage reasonable even for old systems.  -6 is the default, which is usually a good choice e.g. for distributing files that need to be  decompress?\n                     ible even on systems with only 16 MiB RAM.",
+      "range": {
+        "startLine": 573,
+        "startChar": 32,
+        "endLine": 573,
+        "endChar": 57
+      },
+      "revId": "3c661c7ca76df4872ff7e9ab26f570fb1dae4888",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
