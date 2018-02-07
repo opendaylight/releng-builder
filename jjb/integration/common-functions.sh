@@ -38,6 +38,7 @@ print_common_env
 function set_java_vars() {
     local JAVA_HOME=$1
     local CONTROLLERMEM=$2
+    local MEMCONF=$3
 
     echo "Configure java home and max memory..."
     sed -ie 's%^# export JAVA_HOME%export JAVA_HOME=${JAVA_HOME:-'"${JAVA_HOME}"'}%g' ${MEMCONF}
