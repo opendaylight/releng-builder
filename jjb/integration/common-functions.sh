@@ -37,6 +37,7 @@ print_common_env
 # Setup JAVA_HOME and MAX_MEM Value in ODL startup config file
 function set_java_vars() {
     local JAVA_HOME=$1
+    local CONTROLLERMEM=$2
 
     echo "Configure java home and max memory..."
     sed -ie 's%^# export JAVA_HOME%export JAVA_HOME=${JAVA_HOME:-'"${JAVA_HOME}"'}%g' ${MEMCONF}
