@@ -4,6 +4,17 @@
 
 - job-template:
     name: '{project-name}-distribution-check-{stream}'
+
+    ######################
+    # Default parameters #
+    ######################
+
+    java-version: openjdk8
+
+    #####################
+    # Job Configuration #
+    #####################
+
     # Operation: This job template builds a patch, creates a distribution containing
     #            the patch (making sure dependencies are specified),
     #            and performs the distribution deploy test.
@@ -12,7 +23,7 @@
     project-type: freestyle
     node: 'centos7-builder-8c-8g'
     concurrent: true
-    jdk: '{jdk}'
+    jdk: '{java-version}'
 
     properties:
       - opendaylight-infra-properties:
