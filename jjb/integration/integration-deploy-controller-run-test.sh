@@ -82,7 +82,7 @@ cat ${CUSTOMPROP}
 
 configure_karaf_log "${KARAF_VERSION}" "${CONTROLLERDEBUGMAP}"
 
-set_java_vars "${JAVA_HOME}" "${CONTROLLERMEM}"
+set_java_vars "${JAVA_HOME}" "${CONTROLLERMEM}" "${MEMCONF}"
 
 echo "Listing all open ports on controller system..."
 netstat -pnatu

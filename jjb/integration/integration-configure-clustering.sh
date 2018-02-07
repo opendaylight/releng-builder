@@ -91,7 +91,7 @@ fi
 
 configure_karaf_log "${KARAF_VERSION}" "${CONTROLLERDEBUGMAP}"
 
-set_java_vars "${JAVA_HOME}" "${CONTROLLERMEM}"
+set_java_vars "${JAVA_HOME}" "${CONTROLLERMEM}" "${MEMCONF}"
 
 # Copy shard file if exists
 if [ -f /tmp/custom_shard_config.txt ]; then

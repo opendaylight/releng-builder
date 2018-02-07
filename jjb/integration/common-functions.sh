@@ -36,25 +36,27 @@ print_common_env
 
 # Setup JAVA_HOME and MAX_MEM Value in ODL startup config file
 function set_java_vars() {
-    local JAVA_HOME=$1
-    local CONTROLLERMEM=$2
+    local -r java_home=$1
+    local -r controllermem=$2
+    local -r memconf=$3
 
-    echo "Configure java home and max memory..."
-    sed -ie 's%^# export JAVA_HOME%export JAVA_HOME=${JAVA_HOME:-'"${JAVA_HOME}"'}%g' ${MEMCONF}
-    sed -ie 's/JAVA_MAX_MEM="2048m"/JAVA_MAX_MEM='"${CONTROLLERMEM}"'/g' ${MEMCONF}
-    echo "cat ${MEMCONF}"
-    cat ${MEMCONF}
+    echo "Configure\n    java home: ${java_home}\n    max memory: ${controllermem}\n    memconf: ${memconf}"
+
+    sed -ie 's%^# export JAVA_HOME%export JAVA_HOME=${JAVA_HOME:-'"${java_home}"'}%g' ${memconf}
+    sed -ie 's/JAVA_MAX_MEM="2048m"/JAVA_MAX_MEM='"${controllermem}"'/g' ${memconf}
+    echo "cat ${memconf}"
+    cat ${memconf}
 
     echo "Set Java version"
-    sudo /usr/sbin/alternatives --install /usr/bin/java java ${JAVA_HOME}/bin/java 1
-    sudo /usr/sbin/alternatives --set java ${JAVA_HOME}/bin/java
+    sudo /usr/sbin/alternatives --install /usr/bin/java java ${java_home}/bin/java 1
+    sudo /usr/sbin/alternatives --set java ${java_home}/bin/java
     echo "JDK default version ..."
     java -version
 
     echo "Set JAVA_HOME"
-    export JAVA_HOME="${JAVA_HOME}"
+    export JAVA_HOME="${java_home}"
     # shellcheck disable=SC2037
-    JAVA_RESOLVED=$(readlink -e "${JAVA_HOME}/bin/java")
+    JAVA_RESOLVED=$(readlink -e "${java_home}/bin/java")
     echo "Java binary pointed at by JAVA_HOME: ${JAVA_RESOLVED}"
 } # set_java_vars()
 
