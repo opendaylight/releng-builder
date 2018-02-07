@@ -10,6 +10,7 @@
     project: 'groupbasedpolicy'
     project-name: 'groupbasedpolicy'
     branch: 'master'
+    build-node: centos7-builder-2c-8g
     mvn-settings: 'groupbasedpolicy-settings'
     mvn-goals: '-U clean deploy findbugs:findbugs'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
@@ -37,6 +38,7 @@
     project: 'groupbasedpolicy'
     project-name: 'groupbasedpolicy'
     branch: 'stable/nitrogen'
+    build-node: centos7-builder-2c-8g
     mvn-settings: 'groupbasedpolicy-settings'
     mvn-goals: '-U clean deploy findbugs:findbugs'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
@@ -63,6 +65,7 @@
     project: 'groupbasedpolicy'
     project-name: 'groupbasedpolicy'
     branch: 'stable/carbon'
+    build-node: centos7-builder-2c-8g
     karaf-version: karaf3
     mvn-settings: 'groupbasedpolicy-settings'
     mvn-goals: '-U clean deploy findbugs:findbugs'
@@ -86,6 +89,7 @@
     project: 'groupbasedpolicy'
     project-name: 'groupbasedpolicy'
     branch: 'master'
+    build-node: centos7-builder-2c-8g
     mvn-settings: 'groupbasedpolicy-settings'
     mvn-goals: '-U clean deploy findbugs:findbugs'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
