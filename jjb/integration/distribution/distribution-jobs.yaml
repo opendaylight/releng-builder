@@ -239,6 +239,7 @@
       - distribution-check-build-project:
           pom: 'distribution/pom.xml'
           mvn-opts: '{opendaylight-infra-mvn-opts}'
+          mvn-version: '{mvn-version}'
           # '{opendaylight-infra-parallel-mvn-opts}' is bad when there are multiple big features in SFT.
       - distribution-check-verify-groupid:
           gerrit-project: 'integration'
@@ -247,6 +248,7 @@
       - distribution-check-repeat-project-build:
           pom: 'distribution/pom.xml'
           mvn-opts: '{opendaylight-infra-mvn-opts}'
+          mvn-version: '{mvn-version}'
           # '{opendaylight-infra-parallel-mvn-opts}' is bad when there are multiple big features in SFT.
       - integration-set-variables
       - distribution-check-warn-9191

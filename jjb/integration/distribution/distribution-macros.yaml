@@ -43,7 +43,7 @@
     #   pom: Relative path to pom file to use. Typically '$GERRIT_PROJECT/pom.xml'.
     builders:
       - maven-target:
-          maven-version: 'mvn33'
+          maven-version: '{mvn-version}'
           pom: '{pom}'
           goals: |
               clean deploy
@@ -83,7 +83,7 @@
     #   dist-pom: Relative path to pom file to use. 'distribution/pom.xml' is recommended.
     builders:
       - maven-target:
-          maven-version: 'mvn33'
+          maven-version: '{mvn-version}'
           pom: '{dist-pom}'
           goals: |
               clean install
@@ -187,7 +187,7 @@
       - shell: |
           cp -r /tmp/r /tmp/t
       - maven-target:
-          maven-version: 'mvn33'
+          maven-version: '{mvn-version}'
           pom: '{pom}'
           goals: |
               clean install
@@ -213,7 +213,7 @@
     #   dist-pom: Relative path to pom file to use. 'distribution/pom.xml' is recommended.
     builders:
       - maven-target:
-          maven-version: 'mvn33'
+          maven-version: '{mvn-version}'
           pom: '{dist-pom}'
           goals: |
               clean install
