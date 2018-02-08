@@ -4,6 +4,19 @@
 
 - job-template:
     name: '{project-name}-distribution-check-{stream}'
+
+
+    ######################
+    # Default parameters #
+    ######################
+
+    mvn-version: mvn33
+
+    #####################
+    # Job Configuration #
+    #####################
+
+
     # Operation: This job template builds a patch, creates a distribution containing
     #            the patch (making sure dependencies are specified),
     #            and performs the distribution deploy test.
@@ -30,7 +43,7 @@
       - distribution-karaf-version:
           karaf-version: '{karaf-version}'
       - maven-exec:
-          maven-version: mvn33
+          maven-version: '{mvn-version}'
 
     scm:
       - integration-gerrit-scm:
