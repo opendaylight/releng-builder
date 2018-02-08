@@ -21,6 +21,7 @@
 - project:
     name: jsonrpc-oxygen
     jobs:
+      - '{project-name}-distribution-check-{stream}'
       - '{project-name}-integration-{stream}'
       - odl-maven-jobs
 
