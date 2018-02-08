@@ -32,7 +32,7 @@
     project-type: freestyle
     node: centos7-builder-2c-8g
     concurrent: true
-    jdk: '{jdk}'
+    jdk: '{java-version}'
 
     properties:
       - opendaylight-infra-properties:
@@ -92,7 +92,7 @@
     name: 'opflex-merge-{stream}'
 
     node: centos7-builder-2c-8g
-    jdk: '{jdk}'
+    jdk: '{java-version}'
 
     properties:
       - opendaylight-infra-properties:
