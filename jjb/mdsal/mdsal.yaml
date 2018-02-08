@@ -2,7 +2,8 @@
 - project:
     name: mdsal-oxygen
     jobs:
-      - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-distribution-check-{stream}':
+          mvn-version: 'mvn33'
       - '{project-name}-integration-{stream}'
       - '{project-name}-maven-javadoc-jobs'
       - odl-maven-jobs
