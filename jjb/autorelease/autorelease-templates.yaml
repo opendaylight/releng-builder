@@ -149,6 +149,10 @@
             predefined-parameters: DOWNLOAD_URL=$BUNDLE_URL
             property-file: variables.jenkins-trigger
             fail-on-missing: true
+      - naginator:
+          rerun-unstable-builds: true
+          fixed-delay: 300
+          max-failed-builds: 0
       - lf-infra-publish
 
 - job-template:
