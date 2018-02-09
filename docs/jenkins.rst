@@ -253,13 +253,21 @@ Pool: ODLVEX
 
     <table class="table table-bordered">
       <tr class="warning">
-        <td><b>Jenkins Labels</b><br/> centos7-builder-2c-4g,
-          centos7-builder-2c-8g, centos7-java-builder-4c-8g,
-          centos7-builder-8c-8g, centos7-java-builder-4c-16g</td>
-        <td><b>Minion Template names</b><br/> centos7-builder-2c-4g,
-          centos7-builder-2c-4g, centos7-java-builder-2c-8g,
-          centos7-builder-4c-8g, centos7-java-builder-8c-8g,
-          centos7-builder-4c-16g</td>
+        <td><b>Jenkins Labels</b><br/>
+          centos7-builder-2c-1g,<br/>
+          centos7-builder-2c-2g,<br/>
+          centos7-builder-2c-8g,<br/>
+          centos7-builder-4c-4g,<br/>
+          centos7-builder-8c-8g,<br/>
+          centos7-autorelease-4c-16g
+        </td>
+        <td><b>Minion Template names</b><br/>
+          centos7-builder-2c-1g,<br/>
+          centos7-builder-2c-2g,<br/>
+          centos7-builder-2c-8g,<br/>
+          centos7-builder-4c-4g,<br/>
+          centos7-builder-8c-8g,<br/>
+          centos7-autorelease-4c-16g
         <td><b>Packer Template</b><br/>
         releng/builder/packer/templates/builder.json</td>
         <td><b>Spinup Script</b><br/>
