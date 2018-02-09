@@ -4,6 +4,17 @@
 
 - job-template:
     name: '{project-name}-distribution-check-{stream}'
+
+    ######################
+    # Default parameters #
+    ######################
+
+    mvn-version: mvn33
+
+    #####################
+    # Job Configuration #
+    #####################
+
     # Operation: This job template builds a patch, creates a distribution containing
     #            the patch (making sure dependencies are specified),
     #            and performs the distribution deploy test.
@@ -30,7 +41,7 @@
       - distribution-karaf-version:
           karaf-version: '{karaf-version}'
       - maven-exec:
-          maven-version: mvn33
+          maven-version: '{mvn-version}'
 
     scm:
       - integration-gerrit-scm:
@@ -61,22 +72,26 @@
       - distribution-check-build-project:
           pom: '$GERRIT_PROJECT/pom.xml'
           mvn-opts: '{opendaylight-infra-mvn-opts}'
+          mvn-version: '{mvn-version}'
           # {opendaylight-infra-parallel-mvn-opts} is bad when there are multiple big features in SFT.
       - distribution-check-verify-groupid:
           gerrit-project: '$GERRIT_PROJECT'
       - distribution-check-download-deps:
           dist-pom: 'distribution/pom.xml'
           mvn-opts: '{opendaylight-infra-mvn-opts}'
+          mvn-version: '{mvn-version}'
           # {opendaylight-infra-parallel-mvn-opts} is bad when there are multiple big features in SFT.
       - distribution-check-delete-snapshots
       - distribution-check-configure-remotes
       - distribution-check-repeat-project-build:
           pom: '$GERRIT_PROJECT/pom.xml'
           mvn-opts: '{opendaylight-infra-mvn-opts}'
+          mvn-version: '{mvn-version}'
           # {opendaylight-infra-parallel-mvn-opts} is bad when there are multiple big features in SFT.
       - distribution-check-repeat-distro-build:
           dist-pom: 'distribution/pom.xml'
           mvn-opts: '{opendaylight-infra-mvn-opts}'
+          mvn-version: '{mvn-version}'
           # {opendaylight-infra-parallel-mvn-opts} is bad when there are multiple big features in SFT.
       - integration-set-variables
       - distribution-check-warn-9191
