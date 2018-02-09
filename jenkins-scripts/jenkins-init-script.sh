@@ -24,3 +24,9 @@ source /tmp/system_type.sh
 
 ## add local environment changes post scripts
 ./jenkins-init-script-local-env.sh
+
+# Create a swap file
+fallocate -l 1G /swap
+chmod 600 /swap
+mkswap /swap
+swapon /swap
