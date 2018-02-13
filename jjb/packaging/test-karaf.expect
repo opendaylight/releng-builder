@@ -2,6 +2,21 @@
 # This script starts the Karaf shell and sends the password for SSH auth.
 # Further tests in Karaf shell can be done here
 
+#-------------------------------------------------------------------------------
+# Exit if suse and in a VM
+#-------------------------------------------------------------------------------
+# Jenkins template and scripts are shared between suse and red hat to build and
+# test the rpms. However, all the suse processing is done in a container whereas
+# redhat processing is done in a VM. We should exit if we detect that this
+# script is going to test a suse rpm inside a VM. DISTRO variable only exists
+# when the script is executed in the VM.
+#-------------------------------------------------------------------------------
+if { "$DISTRO" == "suse" } {
+  echo "We are in a VM, nothing to do for suse"
+  exit 0
+}
+
+
 # Echo commands
 log_user 1
 
