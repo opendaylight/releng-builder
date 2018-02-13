@@ -6,6 +6,20 @@
 #   -o pipefail: Fail on errors in scripts this calls, give stacktrace
 set -ex -o pipefail
 
+#-------------------------------------------------------------------------------
+# Exit if suse and in a VM
+#-------------------------------------------------------------------------------
+# Jenkins template and scripts are shared between suse and red hat to build and
+# test the rpms. However, all the suse processing is done in a container whereas
+# redhat processing is done in a VM. We should exit if we detect that this
+# script is going to build a suse rpm inside a VM. DISTRO variable only exists
+# when the script is executed in the VM.
+#-------------------------------------------------------------------------------
+if [ "$DISTRO" == "suse" ]; then
+  echo "We are in a VM, nothing to do for suse"
+  exit 0
+fi
+
 # Install required packages
 virtualenv rpm_build
 # shellcheck disable=SC1091
@@ -38,11 +52,19 @@ if [ "$SILO" == "sandbox" ]; then
   # TODO: Host RPMs on Jenkins temporarily
   echo "Not uploading RPMs to Nexus because running in sandbox"
 elif  [ "$SILO" == "releng" ]; then
-  # Move RPMs (SRPM and noarch) to dir of files that will be uploaded to Nexus
-  UPLOAD_FILES_PATH="$WORKSPACE/upload_files"
-  mkdir -p "$UPLOAD_FILES_PATH"
-  cp "/home/$USER/rpmbuild/RPMS/noarch/"*.rpm "$_"
-  cp "/home/$USER/rpmbuild/SRPMS/"*.rpm "$_"
+  if [ -f /usr/bin/yum ]; then
+    # Move RPMs (SRPM and noarch) to dir of files that will be uploaded to Nexus
+    UPLOAD_FILES_PATH="$WORKSPACE/upload_files"
+    mkdir -p "$UPLOAD_FILES_PATH"
+    cp "/home/$USER/rpmbuild/RPMS/noarch/"*.rpm "$_"
+    cp "/home/$USER/rpmbuild/SRPMS/"*.rpm "$_"
+  elif [ -f /usr/bin/zypper ]; then
+    # Move RPMs (SRPM and noarch) to dir of files that will be uploaded to Nexus
+    UPLOAD_FILES_PATH="$WORKSPACE/upload_files"
+    mkdir -p "$UPLOAD_FILES_PATH"
+    cp "/root/rpmbuild/RPMS/noarch/"*.rpm "$_"
+    cp "/root/rpmbuild/SRPMS/"*.rpm "$_"
+  fi
 else
   echo "Unknown Jenkins silo: $SILO"
   exit 1

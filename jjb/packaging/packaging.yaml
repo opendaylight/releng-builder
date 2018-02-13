@@ -5,7 +5,7 @@
 
     jobs:
       - 'packaging-build-rpm-{stream}'
-      - 'packaging-build-rpm-snap-{stream}'
+      - 'packaging-build-rpm-{distro}-snap-{stream}'
       - 'packaging-build-deb-{stream}'
       - 'packaging-verify-full-rpm-master'
       - 'packaging-verify-rpm-master'
@@ -22,6 +22,9 @@
       - carbon
       - nitrogen
       - oxygen
+    distro:
+      - suse
+      - epel-7
     branch: 'master'
 
     # common parameters required for 'lf-infra-deploy-maven-file' builder
@@ -97,9 +100,9 @@
 
 
 - job-template:
-    name: 'packaging-build-rpm-snap-{stream}'
+    name: 'packaging-build-rpm-{distro}-snap-{stream}'
 
-    node: centos7-builder-2c-8g
+    node: centos7-docker-2c-8g
 
     project-type: freestyle
 
@@ -144,14 +147,18 @@
 
     builders:
       - inject:
-          properties-content: 'STREAM={stream}'
+          properties-content: |
+              'STREAM={stream}'
+              'DISTRO={distro}'
+      - shell: !include-raw: build-rpm-snap-docker.sh
+      - shell: !include-raw: test-rpm-docker.sh
       - shell: !include-raw: build-rpm-snap.sh
       - install-test-uninstall-rpm
       - lf-infra-deploy-maven-file:
           global-settings-file: 'global-settings'
           settings-file: 'packaging-settings'
           mvn-version: '{mvn-version}'
-          repo-id: 'opendaylight-{stream}-epel-7-x86_64-devel'
+          repo-id: 'opendaylight-{stream}-{distro}-x86_64-devel'
           group-id: '{group-id}'
           upload-files-dir: '{upload-files-dir}'
           maven-repo-url: '{maven-repo-url}'
