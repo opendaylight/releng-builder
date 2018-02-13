@@ -5,6 +5,7 @@
       - '{project-name}-ci-jobs':
           build-node: centos7-builder-2c-2g
           build-timeout: 60
+          jenkins-silos: releng sandbox
       - builder-check-poms
       - builder-copy-sandbox-logs
       - builder-openstack-cron
