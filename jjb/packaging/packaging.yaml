@@ -162,6 +162,71 @@
     publishers:
       - lf-infra-publish
 
+- job-template:
+    name: 'packaging-build-rpm-suse-snap-{stream}'
+
+    node: centos7-docker-2c-8g
+
+    project-type: freestyle
+
+    mvn-opts: ''
+    mvn-params: ''
+    mvn-version: mvn33
+
+    properties:
+      - opendaylight-infra-properties:
+          build-days-to-keep: 7
+
+    parameters:
+      - opendaylight-infra-parameters:
+          os-cloud: '{os-cloud}'
+          project: '{project}'
+          branch: '{branch}'
+          refspec: 'refs/heads/{branch}'
+          artifacts: '{archive-artifacts}'
+      - lf-infra-maven-parameters:
+          mvn-opts: '{mvn-opts}'
+          mvn-params: '{mvn-params}'
+          mvn-version: '{mvn-version}'
+          staging-profile-id: ''
+      - string:
+          name: CHANGELOG_NAME
+          default: 'Jenkins'
+          description: 'Name of person who defined RPM'
+      - string:
+          name: CHANGELOG_EMAIL
+          default: 'jenkins-donotreply@opendaylight.org'
+          description: 'Email of person who defined RPM'
+
+    scm:
+      - integration-gerrit-scm:
+          basedir: 'packaging'
+          refspec: '$GERRIT_REFSPEC'
+          branch: 'master'
+
+    wrappers:
+      - opendaylight-infra-wrappers:
+          build-timeout: '{build-timeout}'
+
+    builders:
+      - inject:
+          properties-content: 'STREAM={stream}'
+      - shell: !include-raw: build-and-test-rpm-docker.sh
+      - lf-infra-deploy-maven-file:
+          global-settings-file: 'global-settings'
+          settings-file: 'packaging-settings'
+          mvn-version: '{mvn-version}'
+          repo-id: 'opendaylight-{stream}-suse-x86_64-devel'
+          group-id: '{group-id}'
+          upload-files-dir: '{upload-files-dir}'
+          maven-repo-url: '{maven-repo-url}'
+
+    triggers:
+      - timed: '@daily'
+
+    publishers:
+      - lf-infra-publish
+
 
 - job-template:
     name: 'packaging-verify-rpm-master'
