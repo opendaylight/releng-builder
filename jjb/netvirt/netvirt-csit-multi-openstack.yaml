@@ -38,7 +38,7 @@
       - gate-minimal-cluster:
           testplan: '{project}-{topology}-minimal-openstack.txt'
       # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
-      - tdd-wip:
+      - gate-tdd-wip:
           testplan: '{project}-{topology}-tdd-wip-openstack.txt'
           schedule: ''
 
