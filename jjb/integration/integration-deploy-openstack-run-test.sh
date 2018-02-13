@@ -287,7 +287,8 @@ EOF
     if [ "${ENABLE_NETWORKING_L2GW}" == "yes" ]; then
         cat >> ${local_conf_file_name} << EOF
 
-enable_plugin networking-l2gw ${NETWORKING_L2GW_DRIVER} ${ODL_ML2_BRANCH}
+#enable_plugin networking-l2gw ${NETWORKING_L2GW_DRIVER} ${ODL_ML2_BRANCH}
+enable_plugin networking-l2gw https://github.com/vpickard/networking-l2gw queens-pluginFix
 NETWORKING_L2GW_SERVICE_DRIVER=L2GW:OpenDaylight:networking_odl.l2gateway.driver.OpenDaylightL2gwDriver:default
 EOF
     fi
@@ -992,7 +993,7 @@ done
 # Compare that timestamp to this log in the control stack.log: sudo rabbitmqctl set_permissions -p nova_cell1 stackrabbit
 # If the n-cpu.log is earlier than the control stack.log timestamp then the failure condition is likely hit.
 if [ ${NUM_OPENSTACK_COMPUTE_NODES} -gt 0 ]; then
-   WAIT_FOR_RABBITMQ_MINUTES=60
+   WAIT_FOR_RABBITMQ_MINUTES=20
    echo "Wait a maximum of ${WAIT_FOR_RABBITMQ_MINUTES}m until rabbitmq is ready to allow the controller to create nova_cell1 before the computes need it"
    retry ${WAIT_FOR_RABBITMQ_MINUTES} 60 "is_rabbitmq_ready ${OPENSTACK_CONTROL_NODE_1_IP}"
    rc=$?
