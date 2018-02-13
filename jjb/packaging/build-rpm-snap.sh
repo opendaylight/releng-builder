@@ -38,11 +38,19 @@ if [ "$SILO" == "sandbox" ]; then
   # TODO: Host RPMs on Jenkins temporarily
   echo "Not uploading RPMs to Nexus because running in sandbox"
 elif  [ "$SILO" == "releng" ]; then
-  # Move RPMs (SRPM and noarch) to dir of files that will be uploaded to Nexus
-  UPLOAD_FILES_PATH="$WORKSPACE/upload_files"
-  mkdir -p "$UPLOAD_FILES_PATH"
-  cp "/home/$USER/rpmbuild/RPMS/noarch/"*.rpm "$_"
-  cp "/home/$USER/rpmbuild/SRPMS/"*.rpm "$_"
+  if [ -f /usr/bin/yum ]; then
+    # Move RPMs (SRPM and noarch) to dir of files that will be uploaded to Nexus
+    UPLOAD_FILES_PATH="$WORKSPACE/upload_files"
+    mkdir -p "$UPLOAD_FILES_PATH"
+    cp "/home/$USER/rpmbuild/RPMS/noarch/"*.rpm "$_"
+    cp "/home/$USER/rpmbuild/SRPMS/"*.rpm "$_"
+  elif [ -f /usr/bin/zypper ]; then
+    # Move RPMs (SRPM and noarch) to dir of files that will be uploaded to Nexus
+    UPLOAD_FILES_PATH="$WORKSPACE/upload_files"
+    mkdir -p "$UPLOAD_FILES_PATH"
+    cp "/root/rpmbuild/RPMS/noarch/"*.rpm "$_"
+    cp "/root/rpmbuild/SRPMS/"*.rpm "$_"
+  fi
 else
   echo "Unknown Jenkins silo: $SILO"
   exit 1
