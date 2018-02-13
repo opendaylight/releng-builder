@@ -110,3 +110,17 @@
 
     git-url: https://gerrit.linuxfoundation.org/infra/$GERRIT_PROJECT
     gerrit-server-name: LinuxFoundation
+
+- project:
+    name: lf-infra-license-checker
+    jobs:
+      - gerrit-tox-verify
+
+    project-name: lf-infra-license-checker
+    project: releng/license-checker
+    build-node: centos7-builder-2c-2g
+    stream: any
+    branch: '*'
+
+    git-url: https://gerrit.linuxfoundation.org/infra/$GERRIT_PROJECT
+    gerrit-server-name: LinuxFoundation
