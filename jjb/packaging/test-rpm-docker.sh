@@ -9,9 +9,13 @@ set -ex -o pipefail
 scripts_path=/builder/jjb/packaging
 
 # A docker container must have been created by the build script
-docker_id=$(sudo docker ps -qf name=build_rpm_epel)
-
-sudo docker exec $docker_id /usr/bin/yum -y install curl expect nmap openssh
+if [ "$DISTRO" == "epel-7" ]; then
+  docker_id=$(sudo docker ps -qf name=build_rpm_epel)
+  sudo docker exec $docker_id /usr/bin/yum -y install curl expect nmap openssh
+elif [ "$DISTRO" == "opensuse-42" ]; then
+  docker_id=$(sudo docker ps -qf name=build_rpm_suse)
+  sudo docker exec $docker_id /usr/bin/zypper -n install curl expect nmap openssh
+fi
 
 sudo docker exec $docker_id /bin/bash $scripts_path/test-rpm-deps.sh
 

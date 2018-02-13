@@ -6,6 +6,7 @@
 #   -o pipefail: Fail on errors in scripts this calls, give stacktrace
 set -ex -o pipefail
 
+
 # Ports that should be open after ODL is started with default features
 # Port 1099: Karaf rmiRegistryPort
 # Port 8101: Karaf SSH Shell port

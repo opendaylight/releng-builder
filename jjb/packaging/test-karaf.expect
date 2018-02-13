@@ -54,7 +54,7 @@ expect {{
 
 # Verify installed feature is actually installed
 expect "$prompt"
-# The -i flag will show only installed features
+# The -i flag will only show installed features
 send "feature:list -i | grep odl-netvirt-openstack\r"
 expect {{
   timeout {{
