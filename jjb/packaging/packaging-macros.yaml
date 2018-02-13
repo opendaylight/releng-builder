@@ -21,4 +21,4 @@
       - shell: !include-raw: uninstall-rpm.sh
       - shell: |
           # Remove old host key so future installs don't fail to SSH
-          rm /home/jenkins/.ssh/known_hosts
+          rm /home/jenkins/.ssh/known_hosts || echo "No known_hosts file"
