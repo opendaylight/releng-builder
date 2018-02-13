@@ -99,7 +99,7 @@
 - job-template:
     name: 'packaging-build-rpm-snap-{stream}'
 
-    node: centos7-builder-2c-8g
+    node: centos7-docker-2c-8g
 
     project-type: freestyle
 
@@ -145,6 +145,7 @@
     builders:
       - inject:
           properties-content: 'STREAM={stream}'
+      - shell: !include-raw: build-test-rpm-docker.sh
       - shell: !include-raw: build-rpm-snap.sh
       - install-test-uninstall-rpm
       - lf-infra-deploy-maven-file:
