@@ -14,11 +14,11 @@
       - shell: !include-raw-escape: install-rpm.sh
       - shell: !include-raw: start-odl.sh
       - shell: !include-raw: test-ports-nofeature.sh
-      - shell: !include-raw: test-karaf.expect
+      - shell: !include-raw: test-karaf-epel-7.expect
       # Disable this test until ODLPARENT-139 is fixed
       # - shell: !include-raw: test-rest-ok.sh
       - shell: !include-raw: stop-odl.sh
       - shell: !include-raw: uninstall-rpm.sh
       - shell: |
           # Remove old host key so future installs don't fail to SSH
-          rm /home/jenkins/.ssh/known_hosts
+          rm /home/jenkins/.ssh/known_hosts || echo "No known_hosts file"
