@@ -149,7 +149,7 @@
 - builder:
     name: autorelease-update-validate-projects
     builders:
-      - shell: !include-raw-escape: update-validate-autorelease-projects.sh
+      - shell: !include-raw: update-validate-autorelease-projects.sh
 
 - publisher:
     # Search console log for failures and email status to the release mailing list.
