@@ -27,8 +27,8 @@ function trap_handler() {
     local prog="$0"
     local lastline="$1"
     local lasterr="$2"
-    echo "${prog}: line ${lastline}: exit status of last command: ${lasterr}"
-    echo "command: ${BASH_COMMAND}"
+    echo "trap_hanlder: ${prog}: line ${lastline}: exit status of last command: ${lasterr}"
+    echo "trap_handler: command: ${BASH_COMMAND}"
     collect_logs
     exit 1
 } # trap_handler()
@@ -783,7 +783,7 @@ function is_rabbitmq_ready() {
 # retry the given command ($3) until success for a number of iterations ($1)
 # sleeping ($2) between tries.
 function retry() {
-    set +e
+    # set +e
     local -r -i max_tries=${1}
     local -r -i sleep_time=${2}
     local -r cmd=${3}
@@ -804,7 +804,7 @@ function retry() {
             fi
         fi
     done
-    set -e
+    # set -e
     return ${rc}
 }
 
@@ -980,17 +980,19 @@ done
 # Compare that timestamp to this log in the control stack.log: sudo rabbitmqctl set_permissions -p nova_cell1 stackrabbit
 # If the n-cpu.log is earlier than the control stack.log timestamp then the failure condition is likely hit.
 if [ ${NUM_OPENSTACK_COMPUTE_NODES} -gt 0 ]; then
-   WAIT_FOR_RABBITMQ_MINUTES=60
-   echo "Wait a maximum of ${WAIT_FOR_RABBITMQ_MINUTES}m until rabbitmq is ready to allow the controller to create nova_cell1 before the computes need it"
-   retry ${WAIT_FOR_RABBITMQ_MINUTES} 60 "is_rabbitmq_ready ${OPENSTACK_CONTROL_NODE_1_IP}"
-   rc=$?
-   if ((${rc} == 0)); then
+    WAIT_FOR_RABBITMQ_MINUTES=60
+    echo "Wait a maximum of ${WAIT_FOR_RABBITMQ_MINUTES}m until rabbitmq is ready to allow the controller to create nova_cell1 before the computes need it"
+    set +e
+    retry ${WAIT_FOR_RABBITMQ_MINUTES} 60 "is_rabbitmq_ready ${OPENSTACK_CONTROL_NODE_1_IP}"
+    rc=$?
+    set -e
+    if ((${rc} == 0)); then
       echo "rabbitmq is ready, starting ${NUM_OPENSTACK_COMPUTE_NODES} compute(s)"
-   else
+    else
       echo "rabbitmq was not ready in ${WAIT_FOR_RABBITMQ_MINUTES}m"
       collect_logs
       exit 1
-   fi
+    fi
 fi
 
 for i in `seq 1 ${NUM_OPENSTACK_COMPUTE_NODES}`; do
