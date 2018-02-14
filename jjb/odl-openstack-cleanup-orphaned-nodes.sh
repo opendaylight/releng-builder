@@ -10,9 +10,6 @@
 ##############################################################################
 echo "---> Cleanup orphaned servers"
 
-# shellcheck source=/tmp/v/openstack/bin/activate disable=SC1091
-source "/tmp/v/openstack/bin/activate"
-
 minion_in_jenkins() {
     # Usage: check_stack_in_jenkins STACK_NAME JENKINS_URL [JENKINS_URL...]
     # Returns: 0 If stack is in Jenkins and 1 if stack is not in Jenkins.
@@ -46,13 +43,22 @@ minion_in_jenkins() {
 # Fetch server list before fetching active minions to minimize race condition
 # where we might be trying to delete servers while jobs are trying to start
 
+# shellcheck source=/tmp/v/openstack/bin/activate disable=SC1091
+source "/tmp/v/openstack/bin/activate"
+
 # We purposely need word splitting here to create the OS_SERVERS array.
 # shellcheck disable=SC2207
-OS_SERVERS=($(openstack server list -f value -c "Name" | grep -E 'prd|snd'))
+mapfile -t OS_SERVERS < <(openstack server list -f value -c "Name" | grep -E 'prd|snd')
+
+deactivate
 
 #############################
 ## DELETE ORPHANED SERVERS ##
 #############################
+
+# shellcheck source=/tmp/v/lftools/bin/activate disable=SC1091
+source "/tmp/v/lftools/bin/activate"
+
 # Search for servers that are not in use by either releng or sandbox silos and
 # delete them.
 for server in "${OS_SERVERS[@]}"; do
@@ -64,6 +70,9 @@ for server in "${OS_SERVERS[@]}"; do
         continue
     else
         echo "Deleting $server"
-        openstack server delete "$server"
+        lftools openstack --os-cloud opendaylight \
+            server remove --minutes 10 "$server"
     fi
 done
+
+deactivate
