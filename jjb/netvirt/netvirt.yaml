@@ -30,7 +30,6 @@
         ovsdb-merge-{stream},
         sfc-merge-{stream}
     email-upstream: '[genius] [netvirt] [neutron] [openflowjava] [openflowplugin] [ovsdb] [sfc]'
-    archive-artifacts: ''
 
     # Used by the release job
     staging-profile-id: a67da0ffbb1ba
@@ -50,7 +49,6 @@
     mvn-opts: '-Xmx2048m -XX:MaxPermSize=512m'
     dependencies:
     email-upstream: '[netvirt]'
-    archive-artifacts: ''
 
 - project:
     name: netvirt-sonar
