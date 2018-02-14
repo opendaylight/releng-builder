@@ -11,6 +11,7 @@
     project: 'ovsdb'
     project-name: 'ovsdb'
     branch: 'master'
+    build-node: centos7-builder-2c-8g
     mvn-settings: 'ovsdb-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream}'
@@ -32,6 +33,7 @@
     project: 'ovsdb'
     project-name: 'ovsdb'
     branch: 'stable/nitrogen'
+    build-node: centos7-builder-2c-8g
     mvn-settings: 'ovsdb-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream}'
@@ -53,6 +55,7 @@
     project: 'ovsdb'
     project-name: 'ovsdb'
     branch: 'stable/carbon'
+    build-node: centos7-builder-2c-8g
     karaf-version: karaf3
     mvn-settings: 'ovsdb-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
