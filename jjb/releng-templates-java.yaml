@@ -28,6 +28,12 @@
     # Default parameters #
     ######################
 
+    archive-artifacts: >
+      **/*.log
+      **/hs_err_*.log
+      **/target/**/feature.xml
+      **/target/failsafe-reports/failsafe-summary.xml
+      **/target/surefire-reports/*-output.txt
     mvn-goals: clean install
 
     #####################
@@ -96,6 +102,12 @@
     # Default parameters #
     ######################
 
+    archive-artifacts: >
+      **/*.log
+      **/hs_err_*.log
+      **/target/**/feature.xml
+      **/target/failsafe-reports/failsafe-summary.xml
+      **/target/surefire-reports/*-output.txt
     mvn-version: mvn33
     java-version: openjdk8
 
