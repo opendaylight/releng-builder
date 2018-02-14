@@ -48,6 +48,7 @@ for try in $(seq $STACK_RETRIES); do
             CREATE_FAILED)
                 reason=$(openstack stack show "$STACK_NAME" -f value -c stack_status_reason)
                 echo "ERROR: Failed to initialize infrastructure. Reason: $reason"
+                openstack stack resource list -n 25 "$STACK_NAME"
 
                 echo "Deleting stack and possibly retrying to create..."
                 openstack stack delete --yes "$STACK_NAME"
