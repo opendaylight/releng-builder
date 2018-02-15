@@ -22,6 +22,30 @@
       "revId": "2e2056fb43b101c8ee11968f0ad54f1ef4e9235d",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af543582_c8a91583",
+        "filename": "jjb/odl-openstack-cleanup-orphaned-nodes.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2018-02-15T19:17:35Z",
+      "side": 1,
+      "message": "Nope, it\u0027s using openstack shade which is a simple python api for managing simple openstack things.\n\nThe openstack cli sadly does not support parsing creation time so implementing it via lftools / shade is better here.",
+      "parentUuid": "818179d1_8111e548",
+      "range": {
+        "startLine": 73,
+        "startChar": 8,
+        "endLine": 73,
+        "endChar": 15
+      },
+      "revId": "2e2056fb43b101c8ee11968f0ad54f1ef4e9235d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
     }
   ]
 }
