@@ -165,6 +165,16 @@ function fix_libvirt_version_n_cpu_ocata() {
    "
 }
 
+function fix_tinyrpc_version_queens() {
+    local ip=$1
+    ${SSH} ${ip} "
+        cd /opt/stack;
+        git clone https://git.openstack.org/openstack/requirements;
+        cd requirements;
+        sed -i s/tinyrpc===0.7/tinyrpc===0.6/ upper-constraints.txt
+   "
+}
+
 # Add enable_services and disable_services to the local.conf
 function add_os_services() {
     local core_services=$1
@@ -951,6 +961,8 @@ for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
     if [ "${ODL_ML2_BRANCH}" == "master" ]; then
        ssh ${!CONTROLIP} "sed -i 's/flat_networks public/flat_networks public,physnet1/' /opt/stack/devstack/lib/neutron"
        ssh ${!CONTROLIP} "sed -i '186i iniset \$NEUTRON_CORE_PLUGIN_CONF ml2_type_vlan network_vlan_ranges public:1:4094,physnet1:1:4094' /opt/stack/devstack/lib/neutron"
+       echo "Modify uppper-constraints to use tinyrpc 0.6"
+       fix_tinyrpc_version_queens ${!CONTROLIP}
     fi
     if [[ "${ODL_ML2_BRANCH}" == "stable/ocata" && "$(is_openstack_feature_enabled n-cpu)" == "1" ]]; then
         echo "Updating requirements for ${ODL_ML2_BRANCH}"
@@ -1010,6 +1022,10 @@ for i in `seq 1 ${NUM_OPENSTACK_COMPUTE_NODES}`; do
         echo "Workaround for https://review.openstack.org/#/c/491032/"
         echo "Modify upper-constraints to use libvirt-python 3.2.0"
         fix_libvirt_version_n_cpu_ocata ${!COMPUTEIP}
+    fi
+    if [ "${ODL_ML2_BRANCH}" == "master" ]; then
+       echo "Modify uppper-constraints to use tinyrpc 0.6"
+       fix_tinyrpc_version_queens ${!CONTROLIP}
     fi
     create_compute_node_local_conf ${!COMPUTEIP} ${!CONTROLIP} ${ODLMGRIP[$SITE_INDEX]} "${ODL_OVS_MGRS[$SITE_INDEX]}"
     scp ${WORKSPACE}/local.conf_compute_${!COMPUTEIP} ${!COMPUTEIP}:/opt/stack/devstack/local.conf
@@ -1187,10 +1203,6 @@ for i in `seq 1 ${NUM_OPENSTACK_SITES}`; do
         sudo ip link set pnf_veth0 up;
         sudo ip netns exec pnf_ns ifconfig pnf_veth1 up ${EXTNET_PNF_IP}/24;
         sudo ovs-vsctl add-port ${PUBLIC_BRIDGE} pnf_veth0;
-    "
-    # Control Node - set VXLAN TEP IP for Genius Auto TZ
-    ${SSH} ${!CONTROLIP} "
-        sudo ovs-vsctl set O . external_ids:tep-ip=${!CONTROLIP};
     "
 
     # Control Node - external net internet address simulation
