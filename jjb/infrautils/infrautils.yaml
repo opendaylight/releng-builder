@@ -3,7 +3,6 @@
     name: infrautils-oxygen
     jobs:
       - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-integration-{stream}'
       - '{project-name}-maven-javadoc-jobs'
       - odl-maven-jobs
 
@@ -23,7 +22,6 @@
     name: infrautils-nitrogen
     jobs:
       - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-integration-{stream}'
       - odl-maven-jobs
 
     stream: nitrogen
@@ -42,7 +40,6 @@
     name: infrautils-carbon
     jobs:
       - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-integration-{stream}'
       - odl-maven-jobs
 
     stream: carbon

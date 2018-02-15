@@ -4,7 +4,6 @@
     jobs:
       - '{project-name}-distribution-check-{stream}':
           mvn-version: 'mvn35'
-      - '{project-name}-integration-{stream}'
       - '{project-name}-maven-javadoc-jobs'
       - odl-maven-jobs
 
@@ -27,7 +26,6 @@
     name: mdsal-nitrogen
     jobs:
       - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-integration-{stream}'
       - '{project-name}-maven-javadoc-jobs'
       - odl-maven-jobs
 
@@ -49,7 +47,6 @@
     name: mdsal-carbon
     jobs:
       - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-integration-{stream}'
       - '{project-name}-maven-javadoc-jobs'
       - odl-maven-jobs
 

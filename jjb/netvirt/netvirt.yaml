@@ -3,7 +3,6 @@
     name: netvirt
     jobs:
       - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-integration-{stream}'
       - '{project-name}-maven-javadoc-jobs'
       - gerrit-tox-verify
       - odl-maven-jobs
