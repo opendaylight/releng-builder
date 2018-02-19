@@ -11,10 +11,10 @@
     odl-ml2-driver-version: 'v2'
     enable-openstack-services: 'placement-api,l2gw-plugin'
     enable-openstack-compute-services: 'placement-client'
-    security-group-mode: '{sg-mode}'
-    odl_system_flavor: v1-performance-8
-    openstack_system_flavor: v1-performance-8
-    openstack_system2_flavor: v1-performance-4
+    security-group-mode: 'stateful'
+    odl_system_flavor: v2-standard-8
+    openstack_system_flavor: v2-standard-8
+    openstack_system2_flavor: v2-standard-4
     tools_system_count: 2
     tools_system_image: ZZCI - Ubuntu 16.04 - mininet-ovs-26 - 20171208-1847
 
@@ -23,23 +23,19 @@
 
     topology:
       - 1node:
-          openstack_system1_count: 1
           openstack_system2_count: 1
           odl_system_count: 1
           enable-haproxy: 'no'
           install-features: 'odl-netvirt-openstack'
       - 3node:
-          openstack_system1_count: 1
           openstack_system2_count: 1
           odl_system_count: 3
           enable-haproxy: 'yes'
           install-features: 'odl-jolokia,odl-netvirt-openstack'
 
     functionality:
-      - upstream-stateful:
-          sg-mode: 'stateful'
-      - gate-stateful:
-          sg-mode: 'stateful'
+      - upstream-stateful
+      - gate-stateful
 
     openstack:
       - ocata:
@@ -74,10 +70,10 @@
     odl-ml2-driver-version: 'v2'
     enable-openstack-services: 'placement-api,l2gw-plugin'
     enable-openstack-compute-services: 'placement-client'
-    security-group-mode: '{sg-mode}'
-    odl_system_flavor: v1-performance-8
-    openstack_system_flavor: v1-performance-8
-    openstack_system2_flavor: v1-performance-4
+    security-group-mode: 'stateful'
+    odl_system_flavor: v2-standard-8
+    openstack_system_flavor: v2-standard-8
+    openstack_system2_flavor: v2-standard-4
     tools_system_count: 2
     tools_system_image: ZZCI - Ubuntu 16.04 - mininet-ovs-26 - 20171208-1847
 
@@ -86,24 +82,19 @@
 
     topology:
       - 1node:
-          openstack_system1_count: 1
           openstack_system2_count: 1
           odl_system_count: 1
           enable-haproxy: 'no'
           install-features: 'odl-netvirt-openstack'
       - 3node:
-          openstack_system1_count: 1
           openstack_system2_count: 1
           odl_system_count: 3
           enable-haproxy: 'yes'
           install-features: 'odl-jolokia,odl-netvirt-openstack'
 
     functionality:
-      - upstream-stateful:
-          sg-mode: 'stateful'
-      - gate-stateful:
-          schedule: ''
-          sg-mode: 'stateful'
+      - upstream-stateful
+      - gate-stateful
 
     openstack:
       - ocata:
@@ -132,7 +123,6 @@
       - inttest-csit-hwvtep-openstack
 
     project: 'netvirt'
-
     stream: 'carbon'
     branch: 'stable/carbon'
     karaf-version: karaf3
@@ -140,10 +130,10 @@
     odl-ml2-driver-version: 'v2'
     enable-openstack-services: 'placement-api,l2gw-plugin'
     enable-openstack-compute-services: 'placement-client'
-    security-group-mode: '{sg-mode}'
-    odl_system_flavor: v1-performance-8
-    openstack_system_flavor: v1-performance-8
-    openstack_system2_flavor: v1-performance-4
+    security-group-mode: 'stateful'
+    odl_system_flavor: v2-standard-8
+    openstack_system_flavor: v2-standard-8
+    openstack_system2_flavor: v2-standard-4
     tools_system_count: 2
     tools_system_image: ZZCI - Ubuntu 16.04 - mininet-ovs-26 - 20171208-1847
 
@@ -152,24 +142,19 @@
 
     topology:
       - 1node:
-          openstack_system1_count: 1
           openstack_system2_count: 1
           odl_system_count: 1
           enable-haproxy: 'no'
           install-features: 'odl-netvirt-openstack'
       - 3node:
-          openstack_system1_count: 1
           openstack_system2_count: 1
           odl_system_count: 3
           enable-haproxy: 'yes'
           install-features: 'odl-jolokia,odl-netvirt-openstack'
 
     functionality:
-      - upstream-stateful:
-          sg-mode: 'stateful'
-      - gate-stateful:
-          schedule: ''
-          sg-mode: 'stateful'
+      - upstream-stateful
+      - gate-stateful
 
     openstack:
       - ocata:
