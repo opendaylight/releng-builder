@@ -1,0 +1,14 @@
+---
+- import_playbook: ../common-packer/provision/docker.yaml
+
+- hosts: all
+  become_user: root
+  become_method: sudo
+
+  pre_tasks:
+    - include_role: name=system-update
+
+  post_tasks:
+    - name: System Reseal
+      script: ../common-packer/provision/system-reseal.sh
+      become: true
