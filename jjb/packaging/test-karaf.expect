@@ -42,26 +42,27 @@ expect {{
   }}
 }}
 
+# Disable this test until ODLPARENT-139 is fixed
 # Install feature
-expect "$prompt"
-send "feature:install odl-netvirt-openstack\r"
-expect {{
-  "Error executing command: Can't install feature" {{
-    send_user "\nFailed to install test feature\n"
-    exit 1
-  }}
-}}
+# expect "$prompt"
+# send "feature:install odl-netvirt-openstack\r"
+# expect {{
+#   "Error executing command: Can't install feature" {{
+#     send_user "\nFailed to install test feature\n"
+#     exit 1
+#   }}
+# }}
 
 # Verify installed feature is actually installed
-expect "$prompt"
+# expect "$prompt"
 # The -i flag will only show installed features
-send "feature:list -i | grep odl-netvirt-openstack\r"
-expect {{
-  timeout {{
-    send_user "\nTest feature not installed\n"
-    exit 1
-  }}
-  "OpenDaylight :: NetVirt :: OpenStack" {{
-    send_user "\nTest feature installed successfully\n"
-  }}
-}}
+# send "feature:list -i | grep odl-netvirt-openstack\r"
+# expect {{
+#   timeout {{
+#     send_user "\nTest feature not installed\n"
+#     exit 1
+#   }}
+#   "OpenDaylight :: NetVirt :: OpenStack" {{
+#     send_user "\nTest feature installed successfully\n"
+#   }}
+# }}
