@@ -43,6 +43,7 @@ BEGIN {
     #br_master_yaml_tag         = "    branch: 'master'";
     jdk_yaml_tag                = "    jdk: 'openjdk8'";
     intg_test_yaml_tag          = "    integration-test: " new_release;
+    extra_mvn_opts_tag          = "    extra-mvn-opts: -Dsft.heap.max=4g"
     #curr_rel_yaml_tag          = "- " curr_release ":";
     next_rel_tag_curr_yaml_tag  = "    next-release-tag: '{stream}'";
     #br_stable_curr_yaml_tag    = "    branch: 'stable/" curr_release "'";
@@ -165,12 +166,6 @@ function process_blk(bs, be, bn,   i, l) {
                 if (stream_found && release_found && !nrt_found) {
                     newblk[++nex3] = indent new_rel_yaml_tag;
                     newblk[++nex3] = indent br_master_yaml_tag;
-                    # set 'jdk' macro for patch-test jobs
-                    if (!func_found) {
-                        newblk[++nex3] = indent jdk_yaml_tag;
-                    } else {
-                        newblk[++nex3] = indent jre_yaml_tag;
-                    }
                     newblk[++nex3] = indent curr_rel_yaml_tag;
                     newblk[++nex3] = indent br_stable_curr_yaml_tag;
                     stream_found = 0;
@@ -182,8 +177,8 @@ function process_blk(bs, be, bn,   i, l) {
                     newblk[++nex3] = indent new_rel_yaml_tag;
                     newblk[++nex3] = indent next_rel_tag_new_yaml_tag;
                     newblk[++nex3] = indent br_master_yaml_tag;
-                    newblk[++nex3] = indent jdk_yaml_tag;
                     newblk[++nex3] = indent intg_test_yaml_tag;
+                    newblk[++nex3] = indent extra_mvn_opts_tag;
                     newblk[++nex3] = indent curr_rel_yaml_tag;
                     newblk[++nex3] = indent next_rel_tag_curr_yaml_tag;
                     newblk[++nex3] = indent br_stable_curr_yaml_tag;
