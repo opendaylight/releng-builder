@@ -4,9 +4,9 @@
     jobs:
       - gerrit-tox-verify
 
-    project-name: lf-infra-ansible-roles-system-update
-    project: ansible/roles/system-update
-    build-node: centos7-docker-2c-2g
+    project-name: lf-infra-ansible-roles
+    project: ansible/roles/*
+    build-node: ubuntu1604-docker-2c-2g
     stream: any
     branch: '*'
 
