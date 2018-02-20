@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ce006b5d_dd74d99a",
+        "filename": "jjb/packaging/build-and-test-rpm-docker.sh",
+        "patchSetId": 23
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 6016
+      },
+      "writtenOn": "2018-02-20T20:14:46Z",
+      "side": 1,
+      "message": "Those are great questions. However, because we are combining VMs (for RH) and containers (for suse) and we want to reuse code as much as possible, things are not that easy. I could certainly separate build and test logic as you do, which will simplify this script. Regarding the macro, I would add it if I could separate testing tasks as you do, but in that case, I would need to create one dummy script per test which just does:\n\ndocker_id\u003d$(docker ps | $some_logic_to_fetch_the_id\ndocker exec $docker_id test-yyy\n\nI could create the macro with for example just two scripts but in that case, how to group tests? And again, I would need to create two extra dummy scripts. For just one script, I don\u0027t think it is worth it, or?\n\nRegarding having several individual exec lines, I could create one \"director\" bash test which calls each of them one by one. Would that be more acceptable?\n\nI am starting to feel that perhaps it is easier that we either move also the epel rpm build to containers or we add a opensuse VM. Otherwise the solution will not be very beautiful",
+      "parentUuid": "5cfc67d3_64703d9e",
+      "revId": "a87de3944202007d4e12dc9909e09928141edc03",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9fb74c76_ade290ce",
         "filename": "jjb/packaging/packaging.yaml",
         "patchSetId": 23
@@ -30,6 +48,30 @@
       "writtenOn": "2018-02-20T14:42:34Z",
       "side": 1,
       "message": "This job template is 99% the same thing as packaging-rpm-build-{stream} at the top of this file. I\u0027d love to see us not duplicating work and split out variables where it makes sense and reuse the same template.",
+      "range": {
+        "startLine": 212,
+        "startChar": 0,
+        "endLine": 223,
+        "endChar": 44
+      },
+      "revId": "a87de3944202007d4e12dc9909e09928141edc03",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "72576947_c624b8c5",
+        "filename": "jjb/packaging/packaging.yaml",
+        "patchSetId": 23
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 6016
+      },
+      "writtenOn": "2018-02-20T20:14:46Z",
+      "side": 1,
+      "message": "I\u0027ll try tomorrow to do something along these lines. However, because we want to reuse the build and testing scripts as much as possible and still build suse_rpm in a container and red_hat_rpm in a VM, I will most likely need to add this logic in a lot of those scripts: https://hastebin.com/qudesefipu.bash. Do you see any other way?",
+      "parentUuid": "9fb74c76_ade290ce",
       "range": {
         "startLine": 212,
         "startChar": 0,
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "f053affc_7b256b5a",
+        "filename": "jjb/packaging/start-odl.sh",
+        "patchSetId": 23
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 6016
+      },
+      "writtenOn": "2018-02-20T20:14:46Z",
+      "side": 1,
+      "message": "yes, good point",
+      "parentUuid": "5425c2f2_71e2acea",
+      "revId": "a87de3944202007d4e12dc9909e09928141edc03",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "338598c5_160cc6e7",
         "filename": "jjb/packaging/test-rpm-deps.sh",
         "patchSetId": 23
@@ -70,6 +130,24 @@
       "writtenOn": "2018-02-20T17:00:37Z",
       "side": 1,
       "message": "Looks like more of this could be common vs conditional",
+      "revId": "a87de3944202007d4e12dc9909e09928141edc03",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7bbf53e3_689f2e9e",
+        "filename": "jjb/packaging/test-rpm-deps.sh",
+        "patchSetId": 23
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 6016
+      },
+      "writtenOn": "2018-02-20T20:14:46Z",
+      "side": 1,
+      "message": "I\u0027ll investigate that. As the docker container uses always root, we should think differently",
+      "parentUuid": "338598c5_160cc6e7",
       "revId": "a87de3944202007d4e12dc9909e09928141edc03",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
