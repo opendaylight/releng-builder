@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "5cfc67d3_64703d9e",
+        "filename": "jjb/packaging/build-and-test-rpm-docker.sh",
+        "patchSetId": 23
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2018-02-20T17:00:37Z",
+      "side": 1,
+      "message": "Wondering if this will need to be split up into build logic and test logic to be reused in other package builds. Also wondering if it would be better as a macro, parallel to the existing install-test-uninstall one. Also wondering if we can just execute some script with this logic in the container (I see we\u0027re already passing code in) vs having so many individual exec lines.",
+      "revId": "a87de3944202007d4e12dc9909e09928141edc03",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9fb74c76_ade290ce",
         "filename": "jjb/packaging/packaging.yaml",
         "patchSetId": 23
@@ -19,6 +36,40 @@
         "endLine": 223,
         "endChar": 44
       },
+      "revId": "a87de3944202007d4e12dc9909e09928141edc03",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5425c2f2_71e2acea",
+        "filename": "jjb/packaging/start-odl.sh",
+        "patchSetId": 23
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2018-02-20T17:00:37Z",
+      "side": 1,
+      "message": "Might be better to do this with a loop around the pgrep step vs an always-sleep (we try to avoid those whenever possible, as they are fragile to timing changes and innefficent)",
+      "revId": "a87de3944202007d4e12dc9909e09928141edc03",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "338598c5_160cc6e7",
+        "filename": "jjb/packaging/test-rpm-deps.sh",
+        "patchSetId": 23
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2018-02-20T17:00:37Z",
+      "side": 1,
+      "message": "Looks like more of this could be common vs conditional",
       "revId": "a87de3944202007d4e12dc9909e09928141edc03",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
