@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f30b1c0c_0ac1bd26",
+        "filename": "jjb/packaging/packaging.yaml",
+        "patchSetId": 27
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2018-02-21T17:24:00Z",
+      "side": 1,
+      "message": "This is the wrong syntax. We should use YAML syntax here to write a full file like this:\n\n - inject:\n     properties-content: |\n         DISTRO\u003d{distro}\n         STREAM\u003d{stream}\n\nThe key here is the | character tells YAML to pass what follows as the full contents of a file rather than a single line.",
+      "range": {
+        "startLine": 149,
+        "startChar": 6,
+        "endLine": 151,
+        "endChar": 47
+      },
+      "revId": "ccf7bed30826a67681831efc5941dc2032a0bab0",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
