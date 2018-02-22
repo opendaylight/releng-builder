@@ -856,8 +856,10 @@ CORE_OS_CONTROL_SERVICES+=",odl-compute,odl-neutron"
 # Additional services
 CORE_OS_CONTROL_SERVICES+=",mysql,rabbit"
 
+# collect performance stats
+CORE_OS_COMPUTE_SERVICES="dstat"
 # computes only need nova and odl
-CORE_OS_COMPUTE_SERVICES="n-cpu,odl-compute"
+CORE_OS_COMPUTE_SERVICES+=",n-cpu,odl-compute"
 
 cat > ${WORKSPACE}/disable_firewall.sh << EOF
 sudo systemctl stop firewalld
