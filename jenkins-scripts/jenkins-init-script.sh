@@ -24,9 +24,3 @@ source /tmp/system_type.sh
 
 ## add local environment changes post scripts
 ./jenkins-init-script-local-env.sh
-
-# Create a swap file
-dd if=/dev/zero of=/swap count=1024 bs=1MiB
-chmod 600 /swap
-mkswap /swap
-swapon /swap
