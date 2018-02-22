@@ -119,6 +119,10 @@ echo "Redirecting karaf console output to karaf_console.log"
 export KARAF_REDIRECT="/tmp/${BUNDLEFOLDER}/data/log/karaf_console.log"
 mkdir -p /tmp/${BUNDLEFOLDER}/data/log
 
+echo "Starting performance data collection"
+DSTAT_CSV_OPTS="-tcmndrylpg --tcp --output /tmp/dstat-csv.log"
+dstat $DSTAT_CSV_OPTS >& /dev/null &
+
 echo "Starting controller..."
 /tmp/${BUNDLEFOLDER}/bin/start
 
@@ -348,6 +352,7 @@ do
     echo "Killing ODL"
     set +e  # We do not want to create red dot just because something went wrong while fetching logs.
     ssh "${!CONTROLLERIP}" bash -c 'ps axf | grep karaf | grep -v grep | awk '"'"'{print "kill -9 " $1}'"'"' | sh'
+    ssh "${!CONTROLLERIP}" bash -c 'ps axf | grep dstat | grep -v grep | awk '"'"'{print "kill -9 " $1}'"'"' | sh'
 done
 
 sleep 5
@@ -360,6 +365,8 @@ do
     ssh ${!CONTROLLERIP} gzip --best /tmp/${BUNDLEFOLDER}/data/log/karaf.log
     echo "Fetching compressed karaf.log ${i}"
     scp "${!CONTROLLERIP}:/tmp/${BUNDLEFOLDER}/data/log/karaf.log.gz" "odl${i}_karaf.log.gz" && ssh ${!CONTROLLERIP} rm -f "/tmp/${BUNDLEFOLDER}/data/log/karaf.log.gz"
+    echo "Fetching performance metrics"
+    scp "${!CONTROLLERIP}:/tmp/dstat-csv.log" "odl${i}_dstat.log" && ssh ${!CONTROLLERIP} rm -f "/tmp/dstat-csv.log"
     # TODO: Should we compress the output log file as well?
     scp "${!CONTROLLERIP}:/tmp/${BUNDLEFOLDER}/data/log/karaf_console.log" "odl${i}_karaf_console.log" && ssh ${!CONTROLLERIP} rm -f "/tmp/${BUNDLEFOLDER}/data/log/karaf_console.log"
     echo "Fetch GC logs"
