@@ -165,16 +165,6 @@ function fix_libvirt_version_n_cpu_ocata() {
    "
 }
 
-function fix_tinyrpc_version() {
-    local ip=$1
-    ${SSH} ${ip} "
-        cd /opt/stack;
-        git clone https://git.openstack.org/openstack/requirements;
-        cd requirements;
-        sed -i s/tinyrpc===0.7/tinyrpc===0.6/ upper-constraints.txt
-   "
-}
-
 # Add enable_services and disable_services to the local.conf
 function add_os_services() {
     local core_services=$1
@@ -963,8 +953,6 @@ for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
     if [ "${ODL_ML2_BRANCH}" == "master" ]; then
        ssh ${!CONTROLIP} "sed -i 's/flat_networks public/flat_networks public,physnet1/' /opt/stack/devstack/lib/neutron"
        ssh ${!CONTROLIP} "sed -i '186i iniset \$NEUTRON_CORE_PLUGIN_CONF ml2_type_vlan network_vlan_ranges public:1:4094,physnet1:1:4094' /opt/stack/devstack/lib/neutron"
-       echo "Modify uppper-constraints to use tinyrpc 0.6"
-       fix_tinyrpc_version ${!CONTROLIP}
     fi
     if [[ "${ODL_ML2_BRANCH}" == "stable/ocata" && "$(is_openstack_feature_enabled n-cpu)" == "1" ]]; then
         echo "Updating requirements for ${ODL_ML2_BRANCH}"
@@ -1024,10 +1012,6 @@ for i in `seq 1 ${NUM_OPENSTACK_COMPUTE_NODES}`; do
         echo "Workaround for https://review.openstack.org/#/c/491032/"
         echo "Modify upper-constraints to use libvirt-python 3.2.0"
         fix_libvirt_version_n_cpu_ocata ${!COMPUTEIP}
-    fi
-    if [ "${ODL_ML2_BRANCH}" == "master" ]; then
-       echo "Modify uppper-constraints to use tinyrpc 0.6"
-       fix_tinyrpc_version ${!CONTROLIP}
     fi
     create_compute_node_local_conf ${!COMPUTEIP} ${!CONTROLIP} ${ODLMGRIP[$SITE_INDEX]} "${ODL_OVS_MGRS[$SITE_INDEX]}"
     scp ${WORKSPACE}/local.conf_compute_${!COMPUTEIP} ${!COMPUTEIP}:/opt/stack/devstack/local.conf
