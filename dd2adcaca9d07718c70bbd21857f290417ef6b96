@@ -105,6 +105,30 @@
       "revId": "dd2adcaca9d07718c70bbd21857f290417ef6b96",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4966303a_2ce84ec3",
+        "filename": "jjb/integration/integration-deploy-controller-run-test.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-02-23T12:32:09Z",
+      "side": 1,
+      "message": "The *.log files get copied to the archives. We can rework that flow in a different patch.\n\nEven my question here about removing the files off the nodes. That was just a question wondering why we rm those files. Only reason I could think of is that disk\u0027s are not wiped from job to job and you end up with stale data possibly.",
+      "parentUuid": "71e252ab_45cdeb1f",
+      "range": {
+        "startLine": 369,
+        "startChar": 90,
+        "endLine": 369,
+        "endChar": 116
+      },
+      "revId": "dd2adcaca9d07718c70bbd21857f290417ef6b96",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
