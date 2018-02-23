@@ -100,6 +100,7 @@ do
     -e -Pq \
     -Dstream=oxygen \
     -Dgitid.skip=false \
+    -Dmaven.gitcommitid.skip=false \
     --global-settings "$GLOBAL_SETTINGS_FILE" \
     --settings "$SETTINGS_FILE" \
     $MAVEN_OPTIONS
