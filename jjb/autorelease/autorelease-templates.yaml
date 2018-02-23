@@ -212,7 +212,7 @@
 - job-template:
     name: autorelease-version-bump-{stream}
     project-type: freestyle
-    node: centos7-builder-4c-16g
+    node: '{build-node}'
 
     properties:
       - opendaylight-infra-properties:
