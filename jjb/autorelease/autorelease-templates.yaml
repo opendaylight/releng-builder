@@ -348,6 +348,8 @@
 
     disabled: false
     project-type: freestyle
+    # Note: This NEEDS to be hardcoded as projects should NOT be allowed to
+    #       override the build node.
     node: centos7-builder-2c-8g
     concurrent: true
     jdk: '{java-version}'
