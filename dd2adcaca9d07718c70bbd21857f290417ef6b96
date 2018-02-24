@@ -153,6 +153,30 @@
       "revId": "dd2adcaca9d07718c70bbd21857f290417ef6b96",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "56663e2b_7fab1d27",
+        "filename": "jjb/integration/integration-deploy-controller-run-test.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-02-24T04:42:58Z",
+      "side": 1,
+      "message": "I don\u0027t know. Notice the scp calls that were already existing - before the changes in this patch - where the user scp\u0027s a file from the remote node to the local node, and then deletes the file from the remote node \"\u0026\u0026 ssh ${!CONTROLLERIP} rm -f\".\n\nI was wondering why we ever did that in the first place.  The only reason I could think was that maybe these disks are recycled from job to job. I have no idea if that was the reason or a really a problem. Maybe someone just had this in there and it really isn\u0027t needed.",
+      "parentUuid": "888ffff0_e7e753aa",
+      "range": {
+        "startLine": 369,
+        "startChar": 90,
+        "endLine": 369,
+        "endChar": 116
+      },
+      "revId": "dd2adcaca9d07718c70bbd21857f290417ef6b96",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
