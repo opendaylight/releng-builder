@@ -9,8 +9,10 @@
 
     # Project branches
     stream:
-      - oxygen:
+      - fluorine:
           branch: 'master'
+      - oxygen:
+          branch: 'stable/oxygen'
           # ideally, master (oxygen) would gate against Queens (current master) or 'R' release
           # bug even the pike devstack environment is still unreliable. so sticking with Ocata
           # for now

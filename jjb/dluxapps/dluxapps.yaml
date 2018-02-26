@@ -1,5 +1,24 @@
 ---
 - project:
+    name: dluxapps-fluorine
+    jobs:
+      - '{project-name}-distribution-check-{stream}'
+      - odl-maven-jobs
+
+    project: 'dluxapps'
+    project-name: 'dluxapps'
+    stream: fluorine
+    branch: 'master'
+    build-node: centos7-builder-2c-8g
+    mvn-settings: 'dluxapps-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
+    email-upstream: '[dluxapps] [odlparent] [yangtools] [controller]'
+
+    # Used by the release job
+    staging-profile-id: 96e6fb1e65bf9
+
+- project:
     name: dluxapps-oxygen
     jobs:
       - '{project-name}-distribution-check-{stream}'
@@ -8,7 +27,7 @@
     project: 'dluxapps'
     project-name: 'dluxapps'
     stream: oxygen
-    branch: 'master'
+    branch: 'stable/oxygen'
     build-node: centos7-builder-2c-8g
     mvn-settings: 'dluxapps-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'

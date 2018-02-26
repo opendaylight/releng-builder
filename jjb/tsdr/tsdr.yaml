@@ -1,5 +1,23 @@
 ---
 - project:
+    name: tsdr-fluorine
+    jobs:
+      - '{project-name}-distribution-check-{stream}'
+      - odl-maven-jobs
+
+    stream: fluorine
+    project: 'tsdr'
+    project-name: 'tsdr'
+    branch: 'master'
+    mvn-settings: 'tsdr-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: ''
+    email-upstream: '[tsdr]'
+
+    # Used by the release job
+    staging-profile-id: a69373036303c
+
+- project:
     name: tsdr-oxygen
     jobs:
       - '{project-name}-distribution-check-{stream}'
@@ -8,7 +26,7 @@
     stream: oxygen
     project: 'tsdr'
     project-name: 'tsdr'
-    branch: 'master'
+    branch: 'stable/oxygen'
     mvn-settings: 'tsdr-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: ''

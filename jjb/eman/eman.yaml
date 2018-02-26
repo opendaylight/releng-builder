@@ -1,5 +1,25 @@
 ---
 - project:
+    name: eman-fluorine
+    jobs:
+      - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-maven-javadoc-jobs'
+      - odl-maven-jobs
+
+    stream: fluorine
+    project: 'eman'
+    project-name: 'eman'
+    branch: 'master'
+    mvn-settings: 'eman-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: ''
+    email-upstream: '[eman]'
+    build-node: centos7-builder-4c-16g
+
+    # Used by the release job
+    staging-profile-id: 96e9352979521
+
+- project:
     name: eman-oxygen
     jobs:
       - '{project-name}-distribution-check-{stream}'
@@ -9,7 +29,7 @@
     stream: oxygen
     project: 'eman'
     project-name: 'eman'
-    branch: 'master'
+    branch: 'stable/oxygen'
     mvn-settings: 'eman-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: ''
