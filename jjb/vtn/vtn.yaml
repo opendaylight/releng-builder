@@ -1,5 +1,30 @@
 ---
 - project:
+    name: vtn-fluorine
+    jobs:
+      - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-maven-javadoc-jobs'
+      - odl-maven-jobs
+
+    stream: fluorine
+    project: 'vtn'
+    project-name: 'vtn'
+    branch: 'master'
+    mvn-settings: 'vtn-settings'
+    mvn-goals: 'clean deploy -V -Pintegrationtests,strictcheck,docs -Dvtn.build.jobs=2'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: 'neutron-merge-{stream},openflowplugin-merge-{stream},ovsdb-merge-{stream}'
+    email-upstream: '[vtn] [neutron] [openflowplugin] [ovsdb]'
+
+    # Please do not archive maven sites!!!
+    # Maven sites are published to Nexus at:
+    # https://nexus.opendaylight.org/content/sites/site/
+    archive-artifacts: 'manager/dist/*/target/*.zip coordinator/dist/target/*.bz2'
+
+    # Used by the release job
+    staging-profile-id: a699799dd6fc9
+
+- project:
     name: vtn-oxygen
     jobs:
       - '{project-name}-distribution-check-{stream}'
@@ -9,7 +34,7 @@
     stream: oxygen
     project: 'vtn'
     project-name: 'vtn'
-    branch: 'master'
+    branch: 'stable/oxygen'
     mvn-settings: 'vtn-settings'
     mvn-goals: 'clean deploy -V -Pintegrationtests,strictcheck,docs -Dvtn.build.jobs=2'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'

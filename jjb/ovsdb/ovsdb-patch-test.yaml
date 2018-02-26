@@ -8,8 +8,13 @@
     project: 'ovsdb'
 
     stream:
-      - oxygen:
+      - fluorine:
           branch: 'master'
+          # os-branch: 'pike'
+          # issues with pike right now (esp l2gw), lets stick with ocata
+          os-branch: 'ocata'
+      - oxygen:
+          branch: 'stable/oxygen'
           # os-branch: 'pike'
           # issues with pike right now (esp l2gw), lets stick with ocata
           os-branch: 'ocata'

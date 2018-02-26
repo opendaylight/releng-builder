@@ -18,8 +18,16 @@
 
     # CSIT Lists in releng-defaults.yaml
     stream:
-      - oxygen:
+      - fluorine:
           branch: 'master'
+          csit-blacklist: longevity gate sanity capwap centinel coe didm iotdm jsonrpc lacp netide tdd wip
+          csit-list: !include: csit-jobs-fluorine.lst
+          csit-sanity-list: '{csit-sanity-list-fluorine}'
+          csit-weekly-list: '{csit-weekly-list-fluorine}'
+          csit-high-frequency-list: '{csit-high-frequency-list-fluorine}'
+          mvn-version: 'mvn33'
+      - oxygen:
+          branch: 'stable/oxygen'
           csit-blacklist: longevity gate sanity capwap centinel coe didm iotdm jsonrpc lacp netide tdd wip
           csit-list: !include: csit-jobs-oxygen.lst
           csit-sanity-list: '{csit-sanity-list-oxygen}'
