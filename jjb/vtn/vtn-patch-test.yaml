@@ -11,8 +11,13 @@
 
     # Project branches
     stream:
-      - oxygen:
+      - fluorine:
           branch: 'master'
+          csit-list: >
+             vtn-csit-1node-manager-all-{stream},
+             vtn-csit-3node-manager-all-{stream}
+      - oxygen:
+          branch: 'stable/oxygen'
           csit-list: >
              vtn-csit-1node-manager-all-{stream},
              vtn-csit-3node-manager-all-{stream}

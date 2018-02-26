@@ -1,5 +1,23 @@
 ---
 - project:
+    name: atrium-fluorine
+    jobs:
+      - '{project-name}-distribution-check-{stream}'
+      - odl-maven-jobs
+
+    stream: fluorine
+    project: 'atrium'
+    project-name: 'atrium'
+    branch: 'master'
+    mvn-settings: 'atrium-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: ''
+    email-upstream: '[atrium]'
+
+    # Used by the release job
+    staging-profile-id: 9324f12310e6a
+
+- project:
     name: atrium-oxygen
     jobs:
       - '{project-name}-distribution-check-{stream}'
@@ -8,7 +26,7 @@
     stream: oxygen
     project: 'atrium'
     project-name: 'atrium'
-    branch: 'master'
+    branch: 'stable/oxygen'
     mvn-settings: 'atrium-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: ''

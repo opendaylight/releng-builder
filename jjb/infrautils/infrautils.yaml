@@ -1,5 +1,24 @@
 ---
 - project:
+    name: infrautils-fluorine
+    jobs:
+      - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-maven-javadoc-jobs'
+      - odl-maven-jobs
+
+    stream: fluorine
+    project: 'infrautils'
+    project-name: 'infrautils'
+    branch: 'master'
+    mvn-settings: 'infrautils-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: 'odlparent-merge-{stream}'
+    email-upstream: '[infrautils] [odlparent]'
+
+    # Used by the release job
+    staging-profile-id: 96fca0367756c
+
+- project:
     name: infrautils-oxygen
     jobs:
       - '{project-name}-distribution-check-{stream}'
@@ -9,7 +28,7 @@
     stream: oxygen
     project: 'infrautils'
     project-name: 'infrautils'
-    branch: 'master'
+    branch: 'stable/oxygen'
     mvn-settings: 'infrautils-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream}'

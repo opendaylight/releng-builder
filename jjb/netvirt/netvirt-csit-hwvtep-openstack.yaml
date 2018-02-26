@@ -1,12 +1,71 @@
 ---
 - project:
+    name: netvirt-csit-hwvtep-openstack-integration-fluorine
+    jobs:
+      - inttest-csit-hwvtep-openstack
+
+    project: 'netvirt'
+    stream: 'fluorine'
+    branch: 'master'
+    testplan: '{project}-{topology}-l2gw-openstack.txt'
+    odl-ml2-driver-version: 'v2'
+    enable-openstack-services: 'placement-api,l2gw-plugin'
+    enable-openstack-compute-services: 'placement-client'
+    security-group-mode: 'stateful'
+    odl_system_flavor: v2-standard-8
+    openstack_system_flavor: v2-standard-8
+    openstack_system2_flavor: v2-standard-4
+    tools_system_count: 2
+    tools_system_image: ZZCI - Ubuntu 16.04 - mininet-ovs-26 - 20171208-1847
+
+    # TODO: remove this flag and instead use the enable-openstack-services list to know if l2gw is enabled
+    enable-networking-l2gw: 'yes'
+
+    topology:
+      - 1node:
+          openstack_system2_count: 1
+          odl_system_count: 1
+          enable-haproxy: 'no'
+          install-features: 'odl-netvirt-openstack'
+      - 3node:
+          openstack_system2_count: 1
+          odl_system_count: 3
+          enable-haproxy: 'yes'
+          install-features: 'odl-jolokia,odl-netvirt-openstack'
+
+    functionality:
+      - upstream-stateful
+      - gate-stateful
+
+    openstack:
+      - ocata:
+          openstack-branch: 'stable/ocata'
+          odl-ml2-branch: 'stable/ocata'
+          openstack_system_image: '{openstack_system_image_ocata}'
+          openstack_system2_image: '{openstack_system_image_ocata}'
+          enable-openstack-network-services: '{openstack_legacy_default_network_services}'
+      - pike:
+          openstack-branch: 'stable/pike'
+          odl-ml2-branch: 'stable/pike'
+          odl-ml2-port-binding: 'pseudo-agentdb-binding'
+          openstack_system_image: '{openstack_system_image_pike}'
+          openstack_system2_image: '{openstack_system_image_pike}'
+          enable-openstack-network-services: '{openstack_legacy_default_network_services}'
+      - queens:
+          openstack-branch: 'master'
+          odl-ml2-branch: 'master'
+          odl-ml2-port-binding: 'pseudo-agentdb-binding'
+          openstack_system_image: '{openstack_system_image_pike}'
+          openstack_system2_image: '{openstack_system_image_pike}'
+
+- project:
     name: netvirt-csit-hwvtep-openstack-integration-oxygen
     jobs:
       - inttest-csit-hwvtep-openstack
 
     project: 'netvirt'
     stream: 'oxygen'
-    branch: 'master'
+    branch: 'stable/oxygen'
     testplan: '{project}-{topology}-l2gw-openstack.txt'
     odl-ml2-driver-version: 'v2'
     enable-openstack-services: 'placement-api,l2gw-plugin'
