@@ -1,5 +1,28 @@
 ---
 - project:
+    name: mdsal-fluorine
+    jobs:
+      - '{project-name}-distribution-check-{stream}':
+          mvn-version: 'mvn35'
+      - '{project-name}-maven-javadoc-jobs'
+      - odl-maven-jobs
+
+    stream: fluorine
+    project: 'mdsal'
+    project-name: 'mdsal'
+    branch: 'master'
+    mvn-settings: 'mdsal-settings'
+    mvn-goals: '-Dmaven.compile.fork=true clean deploy -Dintegrationtests'
+    mvn-opts: '-Xmx2048m -XX:MaxPermSize=1024m'
+    build-node: centos7-builder-8c-8g
+    build-timeout: 90
+    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream}'
+    email-upstream: '[mdsal] [odlparent] [yangtools]'
+
+    # Used by the release job
+    staging-profile-id: a674173c7b29d
+
+- project:
     name: mdsal-oxygen
     jobs:
       - '{project-name}-distribution-check-{stream}':
@@ -10,7 +33,7 @@
     stream: oxygen
     project: 'mdsal'
     project-name: 'mdsal'
-    branch: 'master'
+    branch: 'stable/oxygen'
     mvn-settings: 'mdsal-settings'
     mvn-goals: '-Dmaven.compile.fork=true clean deploy -Dintegrationtests'
     mvn-opts: '-Xmx2048m -XX:MaxPermSize=1024m'

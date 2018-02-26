@@ -1,5 +1,23 @@
 ---
 - project:
+    name: sxp-fluorine
+    jobs:
+      - '{project-name}-distribution-check-{stream}'
+      - odl-maven-jobs
+
+    stream: fluorine
+    project: 'sxp'
+    project-name: 'sxp'
+    branch: 'master'
+    mvn-settings: 'sxp-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: 'odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream}'
+    email-upstream: '[sxp] [odlparent] [controller] [yangtools]'
+
+    # Used by the release job
+    staging-profile-id: a6909c75719b7
+
+- project:
     name: sxp-oxygen
     jobs:
       - '{project-name}-distribution-check-{stream}'
@@ -8,7 +26,7 @@
     stream: oxygen
     project: 'sxp'
     project-name: 'sxp'
-    branch: 'master'
+    branch: 'stable/oxygen'
     mvn-settings: 'sxp-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream}'

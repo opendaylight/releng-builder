@@ -1,5 +1,23 @@
 ---
 - project:
+    name: next-fluorine
+    jobs:
+      - '{project-name}-distribution-check-{stream}'
+      - odl-maven-jobs
+
+    stream: fluorine
+    project: 'next'
+    project-name: 'next'
+    branch: 'master'
+    mvn-settings: 'next-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: ''
+    email-upstream: '[next]'
+
+    # Used by the release job
+    staging-profile-id: a67e7c516f385
+
+- project:
     name: next-oxygen
     jobs:
       - '{project-name}-distribution-check-{stream}'
@@ -8,7 +26,7 @@
     stream: oxygen
     project: 'next'
     project-name: 'next'
-    branch: 'master'
+    branch: 'stable/oxygen'
     mvn-settings: 'next-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: ''

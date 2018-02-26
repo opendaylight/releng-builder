@@ -182,18 +182,31 @@
     10-exclude-value: ''
 
     # Manual CSIT job lists used by sanity or periodic in nature.
+    csit-high-frequency-list-fluorine: >
+        netvirt-csit-1node-openstack-ocata-upstream-stateful-fluorine
     csit-high-frequency-list-oxygen: >
         netvirt-csit-1node-openstack-ocata-upstream-stateful-oxygen
     csit-high-frequency-list-nitrogen: >
         netvirt-csit-1node-openstack-ocata-upstream-stateful-nitrogen
     csit-high-frequency-list-carbon: >
         netvirt-csit-1node-openstack-newton-nodl-v2-upstream-stateful-carbon
+    csit-sanity-list-fluorine: >
+        openflowplugin-csit-1node-sanity-only-fluorine
     csit-sanity-list-oxygen: >
         openflowplugin-csit-1node-sanity-only-oxygen
     csit-sanity-list-nitrogen: >
         openflowplugin-csit-1node-sanity-only-nitrogen
     csit-sanity-list-carbon: >
         openflowplugin-csit-1node-sanity-only-carbon
+    csit-weekly-list-fluorine: >
+        controller-csit-1node-notifications-longevity-only-fluorine,
+        controller-csit-3node-drb-partnheal-longevity-only-fluorine,
+        controller-csit-3node-drb-precedence-longevity-only-fluorine,
+        controller-csit-3node-ddb-expl-lead-movement-longevity-only-fluorine,
+        bgpcep-csit-3node-bgpclustering-longevity-only-fluorine,
+        distribution-deploy-fluorine,
+        distribution-offline-fluorine,
+        openflowplugin-csit-1node-longevity-only-fluorine
     csit-weekly-list-oxygen: >
         controller-csit-1node-notifications-longevity-only-oxygen,
         controller-csit-3node-drb-partnheal-longevity-only-oxygen,

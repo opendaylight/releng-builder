@@ -1,5 +1,23 @@
 ---
 - project:
+    name: snmp4sdn-fluorine
+    jobs:
+      - '{project-name}-distribution-check-{stream}'
+      - odl-maven-jobs
+
+    stream: fluorine
+    project: 'snmp4sdn'
+    project-name: 'snmp4sdn'
+    branch: 'master'
+    mvn-settings: 'snmp4sdn-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: 'odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream}'
+    email-upstream: '[snmp4sdn] [odlparent] [controller] [yangtools]'
+
+    # Used by the release job
+    staging-profile-id: a69034a4b6ef5
+
+- project:
     name: snmp4sdn-oxygen
     jobs:
       - '{project-name}-distribution-check-{stream}'
@@ -8,7 +26,7 @@
     stream: oxygen
     project: 'snmp4sdn'
     project-name: 'snmp4sdn'
-    branch: 'master'
+    branch: 'stable/oxygen'
     mvn-settings: 'snmp4sdn-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream}'

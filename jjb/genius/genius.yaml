@@ -1,5 +1,31 @@
 ---
 - project:
+    name: genius-fluorine
+    jobs:
+      - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-maven-javadoc-jobs'
+      - odl-maven-jobs
+
+    stream: fluorine
+    project: 'genius'
+    project-name: 'genius'
+    branch: 'master'
+    build-node: centos7-builder-2c-8g
+    mvn-settings: 'genius-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    build-timeout: 90
+    dependencies: >
+        controller-merge-{stream},
+        yangtools-merge-{stream},
+        odlparent-merge-{stream},
+        openflowplugin-merge-{stream},
+        neutron-merge-{stream}
+    email-upstream: '[genius] [controller] [yangtools] [odlparent] [openflowplugin] [neutron]'
+
+    # Used by the release job
+    staging-profile-id: 96fb4b6d9d1ee
+
+- project:
     name: genius-oxygen
     jobs:
       - '{project-name}-distribution-check-{stream}'
@@ -9,7 +35,7 @@
     stream: oxygen
     project: 'genius'
     project-name: 'genius'
-    branch: 'master'
+    branch: 'stable/oxygen'
     build-node: centos7-builder-2c-8g
     mvn-settings: 'genius-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
