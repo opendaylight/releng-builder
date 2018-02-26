@@ -1,5 +1,23 @@
 ---
 - project:
+    name: aaa-fluorine
+    jobs:
+      - '{project-name}-distribution-check-{stream}'
+      - odl-maven-jobs
+
+    stream: fluorine
+    project: 'aaa'
+    project-name: 'aaa'
+    branch: 'master'
+    mvn-settings: 'aaa-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
+    email-upstream: '[aaa] [odlparent] [yangtools] [controller]'
+
+    # Used by the release job
+    staging-profile-id: 9318cf3c82c33
+
+- project:
     name: aaa-oxygen
     jobs:
       - '{project-name}-distribution-check-{stream}'
@@ -8,7 +26,7 @@
     stream: oxygen
     project: 'aaa'
     project-name: 'aaa'
-    branch: 'master'
+    branch: 'stable/oxygen'
     mvn-settings: 'aaa-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
