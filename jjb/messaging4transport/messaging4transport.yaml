@@ -1,5 +1,24 @@
 ---
 - project:
+    name: messaging4transport-fluorine
+    jobs:
+      - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-maven-javadoc-jobs'
+      - odl-maven-jobs
+
+    stream: fluorine
+    project: 'messaging4transport'
+    project-name: 'messaging4transport'
+    branch: 'master'
+    mvn-settings: 'messaging4transport-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: ''
+    email-upstream: '[messaging4transport]'
+
+    # Used by the release job
+    staging-profile-id: a677283157db4
+
+- project:
     name: messaging4transport-oxygen
     jobs:
       - '{project-name}-distribution-check-{stream}'
@@ -9,7 +28,7 @@
     stream: oxygen
     project: 'messaging4transport'
     project-name: 'messaging4transport'
-    branch: 'master'
+    branch: 'stable/oxygen'
     mvn-settings: 'messaging4transport-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: ''

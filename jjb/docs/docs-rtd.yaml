@@ -6,12 +6,14 @@
       - gerrit-tox-verify
 
     stream:
+      - fluorine:
+          branch: 'master'
       - oxygen:
-          branch: master
+          branch: 'stable/oxygen'
       - nitrogen:
-          branch: stable/nitrogen
+          branch: 'stable/nitrogen'
       - carbon:
-          branch: stable/carbon
+          branch: 'stable/carbon'
 
     project: docs
     project-name: docs
