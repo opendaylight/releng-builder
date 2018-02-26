@@ -1,5 +1,28 @@
 ---
 - project:
+    name: l2switch-fluorine
+    jobs:
+      - '{project-name}-distribution-check-{stream}'
+      - odl-maven-jobs
+
+    stream: fluorine
+    project: 'l2switch'
+    project-name: 'l2switch'
+    branch: 'master'
+    mvn-settings: 'l2switch-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
+    dependencies: >
+        odlparent-merge-{stream},
+        yangtools-merge-{stream},
+        controller-merge-{stream},
+        openflowjava-merge-{stream},
+        openflowplugin-merge-{stream}
+    email-upstream: '[l2switch] [odlparent] [yangtools] [controller] [openflowjava] [openflowplugin]'
+
+    # Used by the release job
+    staging-profile-id: 96fee85953ca0
+
+- project:
     name: l2switch-oxygen
     jobs:
       - '{project-name}-distribution-check-{stream}'
@@ -8,7 +31,7 @@
     stream: oxygen
     project: 'l2switch'
     project-name: 'l2switch'
-    branch: 'master'
+    branch: 'stable/oxygen'
     mvn-settings: 'l2switch-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
     dependencies: >

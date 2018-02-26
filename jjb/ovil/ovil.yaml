@@ -5,11 +5,29 @@
       - odl-maven-jobs
       - gerrit-tox-verify
 
+    stream: fluorine
     project: ovil
     project-name: ovil
-    stream:
-      - oxygen:
-          branch: master
+    branch: 'master'
+    mvn-settings: ovil-settings
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+
+    dependencies: ''
+    email-upstream: '[ovil]'
+
+    # Used by the release job
+    staging-profile-id: 7b48866c207d8
+
+- project:
+    name: ovil
+    jobs:
+      - odl-maven-jobs
+      - gerrit-tox-verify
+
+    stream: 'oxygen'
+    project: ovil
+    project-name: ovil
+    branch: 'stable/oxygen'
     mvn-settings: ovil-settings
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
 
