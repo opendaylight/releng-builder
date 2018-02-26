@@ -7,7 +7,7 @@ source ${ROBOT_VENV}/bin/activate
 PYTHON="${ROBOT_VENV}/bin/python"
 SSH="ssh -t -t"
 ADMIN_PASSWORD="admin"
-OPENSTACK_MASTER_CLIENTS_VERSION="pike"
+OPENSTACK_MASTER_CLIENTS_VERSION="queens"
 
 # TODO: remove this work to run changes.py if/when it's moved higher up to be visible at the Robot level
 echo "showing recent changes that made it in to the distribution used by this job"
@@ -693,7 +693,7 @@ EOF
         mkdir -p ${TEMPEST_LOGS_DIR}
         scp ${OPENSTACK_CONTROL_NODE_1_IP}:${DEVSTACK_TEMPEST_DIR}/tempest_results.html ${TEMPEST_LOGS_DIR}
         scp ${OPENSTACK_CONTROL_NODE_1_IP}:${DEVSTACK_TEMPEST_DIR}/tempest.log ${TEMPEST_LOGS_DIR}
-        if [ "$(echo ${OPENSTACK_BRANCH} | cut -d/ -f2)" != "master" ]; then
+        if [ "$(echo ${OPENSTACK_BRANCH} | cut -d/ -f2)" != "queens" ]; then
            mv ${WORKSPACE}/tempest_output* ${TEMPEST_LOGS_DIR}
         fi
     else
@@ -948,7 +948,7 @@ for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
     #Workaround For Queens, Make the physical Network as physnet1 in lib/neutron
     #Workaround Comment out creating initial Networks in lib/neutron
     ${SSH} ${!CONTROLIP} "bash /tmp/get_devstack.sh > /tmp/get_devstack.sh.txt 2>&1"
-    if [ "${ODL_ML2_BRANCH}" == "master" ]; then
+    if [ "${ODL_ML2_BRANCH}" == "stable/queens" ]; then
        ssh ${!CONTROLIP} "sed -i 's/flat_networks public/flat_networks public,physnet1/' /opt/stack/devstack/lib/neutron"
        ssh ${!CONTROLIP} "sed -i '186i iniset \$NEUTRON_CORE_PLUGIN_CONF ml2_type_vlan network_vlan_ranges public:1:4094,physnet1:1:4094' /opt/stack/devstack/lib/neutron"
     fi
