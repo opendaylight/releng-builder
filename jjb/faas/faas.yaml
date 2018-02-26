@@ -1,5 +1,23 @@
 ---
 - project:
+    name: faas-fluorine
+    jobs:
+      - '{project-name}-distribution-check-{stream}'
+      - odl-maven-jobs
+
+    stream: fluorine
+    project: 'faas'
+    project-name: 'faas'
+    branch: 'master'
+    mvn-settings: 'faas-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: ''
+    email-upstream: '[faas]'
+
+    # Used by the release job
+    staging-profile-id: 96f5ac591d858
+
+- project:
     name: faas-oxygen
     jobs:
       - '{project-name}-distribution-check-{stream}'
@@ -8,7 +26,7 @@
     stream: oxygen
     project: 'faas'
     project-name: 'faas'
-    branch: 'master'
+    branch: 'stable/oxygen'
     mvn-settings: 'faas-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: ''

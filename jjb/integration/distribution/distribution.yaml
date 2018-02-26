@@ -1,5 +1,4 @@
 ---
-# ODL Releng build templates
 - project:
     name: distribution
     jobs:
@@ -22,12 +21,14 @@
     email-upstream: '[int/dist]'
 
     stream:
+      - fluorine:
+          branch: 'master'
       - oxygen:
-          branch: master
+          branch: 'stable/oxygen'
       - nitrogen:
-          branch: stable/nitrogen
+          branch: 'stable/nitrogen'
       - carbon:
-          branch: stable/carbon
+          branch: 'stable/carbon'
           karaf-version: karaf3
 
 - project:

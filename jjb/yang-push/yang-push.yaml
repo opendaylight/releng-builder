@@ -1,5 +1,23 @@
 ---
 - project:
+    name: yang-push-fluorine
+    jobs:
+      - '{project-name}-distribution-check-{stream}'
+      - odl-maven-jobs
+
+    stream: fluorine
+    project: 'yang-push'
+    project-name: 'yang-push'
+    branch: 'master'
+    mvn-settings: 'yang-push-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: ''
+    email-upstream: '[yang-push]'
+
+    # Used by the release job
+    staging-profile-id: a69aae2832869
+
+- project:
     name: yang-push-oxygen
     jobs:
       - '{project-name}-distribution-check-{stream}'
@@ -8,7 +26,7 @@
     stream: oxygen
     project: 'yang-push'
     project-name: 'yang-push'
-    branch: 'master'
+    branch: 'stable/oxygen'
     mvn-settings: 'yang-push-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: ''
