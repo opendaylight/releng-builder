@@ -1,5 +1,24 @@
 ---
 - project:
+    name: iotdm-fluorine
+    jobs:
+      - '{project-name}-distribution-check-{stream}'
+      - odl-maven-jobs
+
+    stream: fluorine
+    project: 'iotdm'
+    project-name: 'iotdm'
+    branch: 'master'
+    build-node: centos7-builder-2c-8g
+    mvn-settings: 'iotdm-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: 'aaa-merge-{stream}'
+    email-upstream: '[iotdm] [aaa]'
+
+    # Used by the release job
+    staging-profile-id: 96fd6e9453970
+
+- project:
     name: iotdm-oxygen
     jobs:
       - '{project-name}-distribution-check-{stream}'
@@ -8,7 +27,7 @@
     stream: oxygen
     project: 'iotdm'
     project-name: 'iotdm'
-    branch: 'master'
+    branch: 'stable/oxygen'
     build-node: centos7-builder-2c-8g
     mvn-settings: 'iotdm-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'

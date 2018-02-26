@@ -1,5 +1,22 @@
 ---
 - project:
+    name: reservation-fluorine
+    jobs:
+      - odl-maven-jobs
+
+    stream: fluorine
+    project: 'reservation'
+    project-name: 'reservation'
+    branch: 'master'
+    mvn-settings: 'reservation-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: ''
+    email-upstream: '[reservation]'
+
+    # Used by the release job
+    staging-profile-id: a68d9bc504037
+
+- project:
     name: reservation-oxygen
     jobs:
       - odl-maven-jobs
@@ -7,7 +24,7 @@
     stream: oxygen
     project: 'reservation'
     project-name: 'reservation'
-    branch: 'master'
+    branch: 'stable/oxygen'
     mvn-settings: 'reservation-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: ''

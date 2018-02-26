@@ -14,9 +14,14 @@
     # todo: After Carbon EOL remove next-release-tag and directy pass
     # '{stream}' to autorelease-release-tag parameter
     stream:
-      - oxygen:
+      - fluorine:
           next-release-tag: '{stream}'
           branch: 'master'
+          integration-test: fluorine
+          extra-mvn-opts: -Dsft.heap.max=4g
+      - oxygen:
+          next-release-tag: '{stream}'
+          branch: 'stable/oxygen'
           integration-test: oxygen
           extra-mvn-opts: -Dsft.heap.max=4g
       - nitrogen:

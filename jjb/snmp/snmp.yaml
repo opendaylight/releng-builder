@@ -1,5 +1,23 @@
 ---
 - project:
+    name: snmp-fluorine
+    jobs:
+      - '{project-name}-distribution-check-{stream}'
+      - odl-maven-jobs
+
+    stream: fluorine
+    project: 'snmp'
+    project-name: 'snmp'
+    branch: 'master'
+    mvn-settings: 'snmp-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: 'odlparent-merge-{stream}'
+    email-upstream: '[snmp] [odlparent]'
+
+    # Used by the release job
+    staging-profile-id: a68fb236b93a6
+
+- project:
     name: snmp-oxygen
     jobs:
       - '{project-name}-distribution-check-{stream}'
@@ -8,7 +26,7 @@
     stream: oxygen
     project: 'snmp'
     project-name: 'snmp'
-    branch: 'master'
+    branch: 'stable/oxygen'
     mvn-settings: 'snmp-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream}'
