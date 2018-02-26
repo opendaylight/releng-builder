@@ -1,5 +1,23 @@
 ---
 - project:
+    name: topoprocessing-fluorine
+    jobs:
+      - '{project-name}-distribution-check-{stream}'
+      - odl-maven-jobs
+
+    stream: fluorine
+    project: 'topoprocessing'
+    project-name: 'topoprocessing'
+    branch: 'master'
+    mvn-settings: 'topoprocessing-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: 'odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream}'
+    email-upstream: '[topoprocessing] [odlparent] [controller] [yangtools]'
+
+    # Used by the release job
+    staging-profile-id: a691bbe2328cb
+
+- project:
     name: topoprocessing-oxygen
     jobs:
       - '{project-name}-distribution-check-{stream}'
@@ -8,7 +26,7 @@
     stream: oxygen
     project: 'topoprocessing'
     project-name: 'topoprocessing'
-    branch: 'master'
+    branch: 'stable/oxygen'
     mvn-settings: 'topoprocessing-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream}'

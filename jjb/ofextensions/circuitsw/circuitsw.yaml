@@ -1,5 +1,22 @@
 ---
 - project:
+    name: circuitsw-fluorine
+    jobs:
+      - odl-maven-jobs
+
+    stream: fluorine
+    project: 'ofextensions/circuitsw'
+    project-name: 'circuitsw'
+    branch: 'master'
+    mvn-settings: 'ofextensions-circuitsw-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: ''
+    email-upstream: '[circuitsw]'
+
+    # Used by the release job
+    staging-profile-id: a68970cf5b25c
+
+- project:
     name: circuitsw-oxygen
     jobs:
       - odl-maven-jobs
@@ -7,7 +24,7 @@
     stream: oxygen
     project: 'ofextensions/circuitsw'
     project-name: 'circuitsw'
-    branch: 'master'
+    branch: 'stable/oxygen'
     mvn-settings: 'ofextensions-circuitsw-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: ''

@@ -1,5 +1,23 @@
 ---
 - project:
+    name: persistence-fluorine
+    jobs:
+      - odl-maven-jobs
+
+    stream: fluorine
+    project: 'persistence'
+    project-name: 'persistence'
+    branch: 'master'
+    jdk: openjdk7
+    mvn-settings: 'persistence-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: ''
+    email-upstream: '[persistence]'
+
+    # Used by the release job
+    staging-profile-id: a68d3c2bb44d1
+
+- project:
     name: persistence-oxygen
     jobs:
       - odl-maven-jobs
@@ -7,7 +25,7 @@
     stream: oxygen
     project: 'persistence'
     project-name: 'persistence'
-    branch: 'master'
+    branch: 'stable/oxygen'
     jdk: openjdk7
     mvn-settings: 'persistence-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
