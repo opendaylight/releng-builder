@@ -70,7 +70,10 @@ do
     popd
 done
 
-# Verify
+##########
+# Verify #
+##########
+
 {
     echo "----> Verify version bump"
     git submodule foreach git show HEAD
@@ -80,27 +83,40 @@ done
     ls "$patch_dir"
 } | tee -a "$LOG_FILE"
 
-# Push
+#########
+# Build #
+#########
+
+MVN_GOALS=(clean install)
 if [ "$DRY_RUN" = "false" ]
 then
-    # Run a build here! Should be safe to run mvn clean deploy as nothing should be
+    # Should be safe to run mvn clean deploy as nothing should be
     # using the version bumped versions just yet.
-    ./scripts/fix-relativepaths.sh
-    "$MVN" clean deploy -Pq \
-    -s "$SETTINGS_FILE" \
-    -gs "$GLOBAL_SETTINGS_FILE" \
-    -DaltDeploymentRepository="opendaylight-snapshot::default::https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot" \
-    --show-version \
-    --batch-mode \
-    -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn \
-    -Djenkins \
-    -Dmaven.repo.local=/tmp/r \
-    -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r
+    MVN_GOALS=(clean deploy)
+fi
 
-    # Clear any changes caused by Maven build
-    git checkout -f
-    git submodule foreach git checkout -f
+./scripts/fix-relativepaths.sh
+"$MVN" "${MVN_GOALS[@]}" -Pq \
+-s "$SETTINGS_FILE" \
+-gs "$GLOBAL_SETTINGS_FILE" \
+-DaltDeploymentRepository="opendaylight-snapshot::default::https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot" \
+--show-version \
+--batch-mode \
+-Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn \
+-Djenkins \
+-Dmaven.repo.local=/tmp/r \
+-Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r
 
+# Clear any changes caused by Maven build
+git checkout -f
+git submodule foreach git checkout -f
+
+########
+# Push #
+########
+
+if [ "$DRY_RUN" = "false" ]
+then
     # Push up patches last, as long as nothing failed.
     git submodule foreach git review --yes -t "${RELEASE_TAG}"
 fi
