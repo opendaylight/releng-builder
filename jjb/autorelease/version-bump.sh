@@ -96,7 +96,7 @@ then
 fi
 
 ./scripts/fix-relativepaths.sh
-"$MVN" "${MVN_GOALS[@]}" -Pq \
+"$MVN" "${MVN_GOALS[@]}" -Pq -T1C \
 -s "$SETTINGS_FILE" \
 -gs "$GLOBAL_SETTINGS_FILE" \
 -DaltDeploymentRepository="opendaylight-snapshot::default::https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot" \
