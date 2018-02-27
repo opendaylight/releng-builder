@@ -277,8 +277,10 @@ EOF
     if [ "${ENABLE_NETWORKING_L2GW}" == "yes" ]; then
         cat >> ${local_conf_file_name} << EOF
 
-enable_plugin networking-l2gw ${NETWORKING_L2GW_DRIVER} ${ODL_ML2_BRANCH}
-NETWORKING_L2GW_SERVICE_DRIVER=L2GW:OpenDaylight:networking_odl.l2gateway.driver.OpenDaylightL2gwDriver:default
+#enable_plugin networking-l2gw ${NETWORKING_L2GW_DRIVER} ${ODL_ML2_BRANCH}
+# Need this until patch https://review.openstack.org/#/c/546994/2 is merged
+enable_plugin networking-l2gw https://github.com/vpickard/networking-l2gw queens-pluginFix
+NETWORKING_L2GW_SERVICE_DRIVER=L2GW:OpenDaylight:networking_odl.l2gateway.driver_v2.OpenDaylightL2gwDriver:default
 EOF
     fi
 
@@ -777,8 +779,8 @@ function get_service () {
 function is_rabbitmq_ready() {
     local -r ip=$1
     rm -f rabbit.txt
-    ${SSH} ${ip} "sudo rabbitmqctl status" > rabbit.txt
-    grep pid rabbit.txt
+    ${SSH} ${ip} "sudo rabbitmqctl list_vhosts" > rabbit.txt
+    grep nova_cell1 rabbit.txt
 }
 
 # retry the given command ($3) until success for a number of iterations ($1)
@@ -1210,10 +1212,6 @@ for i in `seq 1 ${NUM_OPENSTACK_SITES}`; do
         CONTROLPORT="control_vxlan"
         ${SSH} $compute_ip "
             sudo ovs-vsctl add-port $PUBLIC_BRIDGE $CONTROLPORT -- set interface $CONTROLPORT type=vxlan options:local_ip=$compute_ip options:remote_ip=${!CONTROLIP} options:dst_port=9876 options:key=flow
-        "
-         #Compute Node - set VXLAN TEP IP for Genius Auto TZ
-        ${SSH} $compute_ip "
-            sudo ovs-vsctl set O . external_ids:tep-ip=${compute_ip};
         "
     done
 done
