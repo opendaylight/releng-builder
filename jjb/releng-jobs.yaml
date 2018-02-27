@@ -2,10 +2,13 @@
 - project:
     name: builder-jobs
     jobs:
-      - '{project-name}-ci-jobs':
-          build-node: centos7-builder-2c-2g
-          build-timeout: 60
+      - gerrit-jenkins-cfg-merge:
           jenkins-silos: releng sandbox
+      - gerrit-jjb-deploy-job
+      - gerrit-jjb-merge:
+          build-node: centos7-builder-4c-4g
+          build-timeout: 90
+      - gerrit-jjb-verify
       - builder-check-poms
       - builder-copy-sandbox-logs
       - builder-openstack-cron
@@ -19,7 +22,7 @@
     project-name: builder
     stream: master
     branch: master
-    build-node: centos7-builder-2c-1g
+    build-node: centos7-builder-2c-2g
     archive-artifacts: '**/*.log'
     build-timeout: 30
     jjb-version: 2.0.0
