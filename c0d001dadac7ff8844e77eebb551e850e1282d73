@@ -60,6 +60,24 @@
     },
     {
       "key": {
+        "uuid": "001dff15_bb1731c0",
+        "filename": "jjb/packaging/build-rpm-snap.sh",
+        "patchSetId": 35
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2018-02-27T21:45:07Z",
+      "side": 1,
+      "message": "Yeah, would be good but I don\u0027t think that\u0027s possible in our current infra.",
+      "parentUuid": "df94ad00_2b7c1ea7",
+      "revId": "c0d001dadac7ff8844e77eebb551e850e1282d73",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90e9508c_505e96a1",
         "filename": "jjb/packaging/start-odl.sh",
         "patchSetId": 35
@@ -89,6 +107,24 @@
       "side": 1,
       "message": "I wrote that because if I don\u0027t use the variable $i, coala complains :P. I could not find a way to do this without having to create a variable which I am not using",
       "parentUuid": "90e9508c_505e96a1",
+      "revId": "c0d001dadac7ff8844e77eebb551e850e1282d73",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "faa8e98d_02f63d3b",
+        "filename": "jjb/packaging/start-odl.sh",
+        "patchSetId": 35
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2018-02-27T21:45:07Z",
+      "side": 1,
+      "message": "You can just add an ignore for that rule above the offending line. There are lots of examples around, grep for \"disable\". Good thing to get used to with Coala;)",
+      "parentUuid": "fb38be97_6f09e772",
       "revId": "c0d001dadac7ff8844e77eebb551e850e1282d73",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -130,6 +166,24 @@
     },
     {
       "key": {
+        "uuid": "6dbc1896_ccf5cdf8",
+        "filename": "jjb/packaging/test-karaf-epel-7.expect",
+        "patchSetId": 35
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2018-02-27T21:45:07Z",
+      "side": 1,
+      "message": "You can\u0027t install netvirt with Oxygen like this, the SSH connection will drop. You have to turn off the REST port check too, as is currently the case on master. This is why it\u0027s important to run every effected test permutation in the sandbox:)",
+      "parentUuid": "574166f6_eb63f8a3",
+      "revId": "c0d001dadac7ff8844e77eebb551e850e1282d73",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6cd6cef_bd15a91d",
         "filename": "jjb/packaging/test-karaf-opensuse-42.expect",
         "patchSetId": 35
@@ -159,6 +213,24 @@
       "side": 1,
       "message": "Because in bash if we do this:\n\nif { $distro \u003d\u003d \"opensuse-42\" } {\n  send_user \"We are in a VM, nothing to do for opensuse\"\n  exit 0\n}\n\nand $distro does not exist, then we are fine and we don\u0027t enter the if condition and continue. However, in expect, we will get an error and the script will exit with an error code. When executing the expect script inside a container, the distro variable does not exist, that\u0027s why there is a different expect script which does not check that condition",
       "parentUuid": "c6cd6cef_bd15a91d",
+      "revId": "c0d001dadac7ff8844e77eebb551e850e1282d73",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "60da9bce_bb635499",
+        "filename": "jjb/packaging/test-karaf-opensuse-42.expect",
+        "patchSetId": 35
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2018-02-27T21:45:07Z",
+      "side": 1,
+      "message": "Humm, well that\u0027s quite ugly:(\n\nJust need to get the two parallel",
+      "parentUuid": "fa732a93_153c23f6",
       "revId": "c0d001dadac7ff8844e77eebb551e850e1282d73",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
