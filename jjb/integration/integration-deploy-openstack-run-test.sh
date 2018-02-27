@@ -359,7 +359,8 @@ EOF
     add_os_services "${CORE_OS_COMPUTE_SERVICES}" "${ENABLE_OS_COMPUTE_SERVICES}" "${DISABLE_OS_SERVICES}" "${local_conf_file_name}"
 
     cat >> ${local_conf_file_name} << EOF
-
+#Added to make Nova wait until nova in control node is ready.
+NOVA_READY_TIMEOUT=600
 HOST_IP=${HOSTIP}
 SERVICE_HOST=${SERVICEHOST}
 Q_ML2_TENANT_NETWORK_TYPE=${TENANT_NETWORK_TYPE}
