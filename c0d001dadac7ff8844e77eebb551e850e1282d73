@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "df94ad00_2b7c1ea7",
+        "filename": "jjb/packaging/build-rpm-snap.sh",
+        "patchSetId": 35
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 6016
+      },
+      "writtenOn": "2018-02-27T16:24:50Z",
+      "side": 1,
+      "message": "I agree. We could do that in a different patch. Actually, what would be great is if jenkins could spin a docker container instead of a VM. Then jenkins could call the scripts directly and not like we do now: \"sudo docker exec $docker_id....\"",
+      "parentUuid": "a19d132e_1028a4c4",
+      "revId": "c0d001dadac7ff8844e77eebb551e850e1282d73",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90e9508c_505e96a1",
         "filename": "jjb/packaging/start-odl.sh",
         "patchSetId": 35
@@ -53,6 +71,24 @@
       "writtenOn": "2018-02-27T12:24:08Z",
       "side": 1,
       "message": "Something like \"waited S seconds for ODL Java process to start\" might be more clear, no big deal",
+      "revId": "c0d001dadac7ff8844e77eebb551e850e1282d73",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fb38be97_6f09e772",
+        "filename": "jjb/packaging/start-odl.sh",
+        "patchSetId": 35
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 6016
+      },
+      "writtenOn": "2018-02-27T16:24:50Z",
+      "side": 1,
+      "message": "I wrote that because if I don\u0027t use the variable $i, coala complains :P. I could not find a way to do this without having to create a variable which I am not using",
+      "parentUuid": "90e9508c_505e96a1",
       "revId": "c0d001dadac7ff8844e77eebb551e850e1282d73",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -76,6 +112,24 @@
     },
     {
       "key": {
+        "uuid": "574166f6_eb63f8a3",
+        "filename": "jjb/packaging/test-karaf-epel-7.expect",
+        "patchSetId": 35
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 6016
+      },
+      "writtenOn": "2018-02-27T16:24:50Z",
+      "side": 1,
+      "message": "But if we don\u0027t install netvirt, the test-rest-ok.sh hangs waiting for ODL to start on port 8181",
+      "parentUuid": "95665a99_15a85c6c",
+      "revId": "c0d001dadac7ff8844e77eebb551e850e1282d73",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6cd6cef_bd15a91d",
         "filename": "jjb/packaging/test-karaf-opensuse-42.expect",
         "patchSetId": 35
@@ -87,6 +141,24 @@
       "writtenOn": "2018-02-27T12:24:08Z",
       "side": 1,
       "message": "Why do we need two different .expect files?",
+      "revId": "c0d001dadac7ff8844e77eebb551e850e1282d73",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa732a93_153c23f6",
+        "filename": "jjb/packaging/test-karaf-opensuse-42.expect",
+        "patchSetId": 35
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6016
+      },
+      "writtenOn": "2018-02-27T16:24:50Z",
+      "side": 1,
+      "message": "Because in bash if we do this:\n\nif { $distro \u003d\u003d \"opensuse-42\" } {\n  send_user \"We are in a VM, nothing to do for opensuse\"\n  exit 0\n}\n\nand $distro does not exist, then we are fine and we don\u0027t enter the if condition and continue. However, in expect, we will get an error and the script will exit with an error code. When executing the expect script inside a container, the distro variable does not exist, that\u0027s why there is a different expect script which does not check that condition",
+      "parentUuid": "c6cd6cef_bd15a91d",
       "revId": "c0d001dadac7ff8844e77eebb551e850e1282d73",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -110,6 +182,24 @@
     },
     {
       "key": {
+        "uuid": "b34e4e31_980047fe",
+        "filename": "jjb/packaging/test-karaf.expect",
+        "patchSetId": 35
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 6016
+      },
+      "writtenOn": "2018-02-27T16:24:50Z",
+      "side": 1,
+      "message": "But if we disable this, the test-rest-ok script will not work because the 8181 port is not coming up",
+      "parentUuid": "0037674e_5b83e290",
+      "revId": "c0d001dadac7ff8844e77eebb551e850e1282d73",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18c4090c_589f4e59",
         "filename": "jjb/packaging/test-rpm-docker.sh",
         "patchSetId": 35
@@ -121,6 +211,30 @@
       "writtenOn": "2018-02-27T12:24:08Z",
       "side": 1,
       "message": "container?",
+      "range": {
+        "startLine": 14,
+        "startChar": 69,
+        "endLine": 14,
+        "endChar": 71
+      },
+      "revId": "c0d001dadac7ff8844e77eebb551e850e1282d73",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a489fd5_1cc9421c",
+        "filename": "jjb/packaging/test-rpm-docker.sh",
+        "patchSetId": 35
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 6016
+      },
+      "writtenOn": "2018-02-27T16:24:50Z",
+      "side": 1,
+      "message": "yep",
+      "parentUuid": "18c4090c_589f4e59",
       "range": {
         "startLine": 14,
         "startChar": 69,
