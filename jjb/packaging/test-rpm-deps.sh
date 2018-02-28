@@ -7,7 +7,7 @@
 set -ex -o pipefail
 
 # Verify exactly 1 RPM is in the path we expect
-set -- /home/$USER/rpmbuild/RPMS/noarch/*.rpm
+set -- $HOME/rpmbuild/RPMS/noarch/*.rpm
 if [ $# -eq 1 ]; then
     echo "Found one RPM in build out dir, as expected"
 else
@@ -16,7 +16,7 @@ else
 fi
 
 # If path is globbed (/path/to/*.rpm), expand it
-path=$(sudo find / -wholename /home/$USER/rpmbuild/RPMS/noarch/*.rpm)
+path=$(sudo find / -wholename $HOME/rpmbuild/RPMS/noarch/*.rpm)
 
 # If no RPM found, fail clearly
 if [ -z $path ]; then
@@ -43,7 +43,7 @@ if [[ ! $path == *opendaylight-6*  ]]; then
 fi
 
 # shellcheck disable=SC2034
-mapfile -t actual_deps < <( rpm -qp /home/$USER/rpmbuild/RPMS/noarch/*.rpm --requires )
+mapfile -t actual_deps < <( rpm -qp $HOME/rpmbuild/RPMS/noarch/*.rpm --requires )
 # shellcheck disable=SC2154 disable=SC2145
 printf 'Dependency found: %s\n' "${actual_deps[@]}"
 
