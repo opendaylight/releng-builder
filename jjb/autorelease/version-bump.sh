@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 # SPDX-License-Identifier: EPL-1.0
 ##############################################################################
 # Copyright (c) 2017 The Linux Foundation and others.
@@ -24,7 +24,15 @@ BRANCH="$GERRIT_BRANCH"
 # Ensure we fail the job if any steps fail.
 set -eu -o pipefail
 
-git checkout -b "${BRANCH,,}" "origin/${BRANCH,,}"
+# Fail if branch cutting is not on master
+if [ "$BRANCH_CUT" = "true" ] && [ "$BRANCH" != "master" ]; then
+    echo "Cannot branch cut stable/"$BRANCH""
+    exit 1
+fi
+
+if [ "$BRANCH_CUT" = "false" ]; then
+    git checkout -b "${BRANCH,,}" "origin/${BRANCH,,}"
+fi
 
 # TODO: Simplify once stable/nitrogen is no longer supported.
 for module in $(git submodule | awk '{ print $2 }')
@@ -32,6 +40,8 @@ do
     pushd "$module"
     if [ "$GERRIT_BRANCH" == "stable/nitrogen" ] && [ "$module" == "yangtools" ]; then
         git checkout -b "v1.2.x" "origin/v1.2.x"
+    elif [ "$BRANCH_CUT" = "true" ]; then
+        git checkout master
     else
         git checkout -b "${BRANCH,,}" "origin/${BRANCH,,}"
     fi
@@ -39,14 +49,18 @@ do
 done
 
 # Setup Gerrit remove to ensure Change-Id gets set on commit.
-git config --global --add gitreview.username "jenkins-releng"
+git config --global --add gitreview.username "jenkins-$SILO"
+git remote add gerrit ssh://jenkins-$SILO@git.opendaylight.org:29418/releng/autorelease.git
+git remote -v
 git review -s
 git submodule foreach "git review -s"
 
 # Check if git state is clean
 git status
 
-lftools version release "$RELEASE_TAG"
+if [ "$BRANCH_CUT" = "false" ]; then
+    lftools version release "$RELEASE_TAG"
+fi
 lftools version bump "$RELEASE_TAG"
 
 git submodule foreach "git commit -asm 'Bump versions by x.y.(z+1)'"
