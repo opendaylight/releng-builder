@@ -362,7 +362,7 @@ EOF
 
     cat >> ${local_conf_file_name} << EOF
 #Added to make Nova wait until nova in control node is ready.
-NOVA_READY_TIMEOUT=900
+NOVA_READY_TIMEOUT=1800
 HOST_IP=${HOSTIP}
 SERVICE_HOST=${SERVICEHOST}
 Q_ML2_TENANT_NETWORK_TYPE=${TENANT_NETWORK_TYPE}
