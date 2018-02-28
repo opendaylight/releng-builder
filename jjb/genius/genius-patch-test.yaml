@@ -4,20 +4,18 @@
     jobs:
       - inttest-patch-test
 
-    # The project name
     project: 'genius'
 
-    # Project branches
     stream:
       - fluorine:
           branch: 'master'
-          os-branch: 'ocata'
+          os-branch: 'queens'
       - oxygen:
           branch: 'stable/oxygen'
-          os-branch: 'ocata'
+          os-branch: 'queens'
       - nitrogen:
           branch: 'stable/nitrogen'
-          os-branch: 'ocata'
+          os-branch: 'pike'
       - carbon:
           branch: 'stable/carbon'
           os-branch: 'ocata'
