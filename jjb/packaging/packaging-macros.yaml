@@ -14,7 +14,7 @@
       - shell: !include-raw-escape: install-rpm.sh
       - shell: !include-raw: start-odl.sh
       - shell: !include-raw: test-ports-nofeature.sh
-      - shell: !include-raw: test-karaf.expect
+      - shell: !include-raw: test-karaf-oxygensafe.expect
       # Disable this test until ODLPARENT-139 is fixed
       # - shell: !include-raw: test-rest-ok.sh
       - shell: !include-raw: stop-odl.sh
