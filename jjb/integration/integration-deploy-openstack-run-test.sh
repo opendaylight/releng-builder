@@ -277,9 +277,7 @@ EOF
     if [ "${ENABLE_NETWORKING_L2GW}" == "yes" ]; then
         cat >> ${local_conf_file_name} << EOF
 
-#enable_plugin networking-l2gw ${NETWORKING_L2GW_DRIVER} ${ODL_ML2_BRANCH}
-# Need this until patch https://review.openstack.org/#/c/546994/2 is merged
-enable_plugin networking-l2gw https://github.com/vpickard/networking-l2gw queens-pluginFix
+enable_plugin networking-l2gw ${NETWORKING_L2GW_DRIVER} ${ODL_ML2_BRANCH}
 NETWORKING_L2GW_SERVICE_DRIVER=L2GW:OpenDaylight:networking_odl.l2gateway.driver_v2.OpenDaylightL2gwDriver:default
 EOF
     fi
