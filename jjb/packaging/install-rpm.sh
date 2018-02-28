@@ -9,6 +9,8 @@ set -ex -o pipefail
 # Update mirror list to avoid slow/hung one
 sudo yum update -y yum-plugin-fastestmirror
 
+URL="$HOME"/rpmbuild/RPMS/noarch/*.rpm
+
 # Install ODL from RPM path, RPM URL or .repo file url
 # NB: Paths must be anchored at root
 if [[ $URL == /*  ]]; then
