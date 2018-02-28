@@ -283,6 +283,13 @@
               Release that is being version bumped.
               Eg. Lithium, Beryllium, Boron, Carbon, Carbon-SR1, Carbon-SR2...
       - bool:
+          name: BRANCH_CUT
+          default: false
+          description: |
+              If BRANCH_CUT is enabled, perform version bump for branch cutting
+              workflow, else perform version bump for simultaneous release
+              workflow (detault).
+      - bool:
           name: DRY_RUN
           default: true
           description: |
@@ -297,7 +304,7 @@
           git-url: '$GIT_URL/$GERRIT_PROJECT'
           branch: '{branch}'
           refspec: 'refs/heads/{branch}'
-          jenkins-ssh-credential: opendaylight-jenkins-ssh
+          jenkins-ssh-credential: opendaylight-jenkins-ssh-root
           submodule-recursive: true
           choosing-strategy: default
 
