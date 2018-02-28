@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29d85f33_2d32a805",
+        "filename": "jjb/autorelease/version-bump.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2018-02-28T19:10:25Z",
+      "side": 1,
+      "message": "Is this for debugging or do we really want this to be live?",
+      "revId": "27cfc79ddaa57494d1ef3a4d16553aa4610e63be",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "418458c1_b28b8600",
+        "filename": "jjb/autorelease/version-bump.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2018-02-28T19:10:25Z",
+      "side": 1,
+      "message": "Why can we not branch cut? Explain it in the message so that the reader understands.",
+      "revId": "27cfc79ddaa57494d1ef3a4d16553aa4610e63be",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "757c2ebf_7b59c9ab",
+        "filename": "jjb/autorelease/version-bump.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2018-02-28T19:10:25Z",
+      "side": 1,
+      "message": "Do we need to explicitly checkout master? I think git-scm will already take care of that. In fact this whole for loop is not necessary if BRANCH_CUT is true. Probably simpler to move it into the if statement on line 33.",
+      "revId": "27cfc79ddaa57494d1ef3a4d16553aa4610e63be",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e1f784e_2ca54c35",
+        "filename": "jjb/autorelease/version-bump.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2018-02-28T19:10:25Z",
+      "side": 1,
+      "message": "Probably don\u0027t need to hardcode this. `git review -s` will setup the right one. The only line that was missing to allow this to work on the sandbox was the git config line above imo.",
+      "revId": "27cfc79ddaa57494d1ef3a4d16553aa4610e63be",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
