@@ -53,14 +53,14 @@
 
     builders:
       - shell: |
-          virtualenv $WORKSPACE/venv-tox
+          virtualenv -p python3 $WORKSPACE/venv-tox
           source $WORKSPACE/venv-tox/bin/activate
-          PYTHON="$WORKSPACE/venv-tox/bin/python"
-          $PYTHON -m pip install tox argparse
+          pip install --upgrade pip setuptools
+          pip install tox argparse
+          source $WORKSPACE/venv-tox/bin/activate
           tox --version
           cd $WORKSPACE/sfc-py
           tox
-          ./jenkins_build_package.sh
 
     publishers:
       - email-notification:
