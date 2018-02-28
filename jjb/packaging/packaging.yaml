@@ -100,7 +100,7 @@
 - job-template:
     name: 'packaging-build-rpm-snap-{stream}'
 
-    node: centos7-builder-2c-8g
+    node: centos7-docker-2c-8g
 
     project-type: freestyle
 
@@ -146,8 +146,8 @@
     builders:
       - inject:
           properties-content: 'STREAM={stream}'
-      - shell: !include-raw: build-rpm-snap.sh
-      - install-test-uninstall-rpm
+      - shell: !include-raw: build-rpm-snap-docker.sh
+      - shell: !include-raw: test-rpm-docker.sh
       - lf-infra-deploy-maven-file:
           global-settings-file: 'global-settings'
           settings-file: 'packaging-settings'
@@ -397,7 +397,7 @@
       - shell: !include-raw-escape: install-rpm.sh
       - shell: !include-raw: start-odl.sh
       - shell: !include-raw-escape: test-ports-nofeature.sh
-      - shell: !include-raw: test-karaf.expect
+      - shell: !include-raw: test-karaf-oxygensafe.expect
       # Disable this test until ODLPARENT-139 is fixed
       # - shell: !include-raw-escape: test-rest-ok.sh
       - shell: !include-raw: stop-odl.sh
@@ -456,11 +456,11 @@
           sudo yum install -y expect
           # Install nmap to check status of ODL's SSH port
           sudo yum install -y nmap
-      - shell: !include-raw: test-karaf.expect
+      - shell: !include-raw: test-karaf-oxygensafe.expect
       - shell: !include-raw: stop-odl.sh
       - shell: !include-raw: test-rpm-upgrade.sh
       - shell: !include-raw: start-odl.sh
-      - shell: !include-raw: test-karaf.expect
+      - shell: !include-raw: test-karaf-oxygensafe.expect
       - shell: !include-raw: stop-odl.sh
       - shell: !include-raw: uninstall-rpm.sh
 
@@ -503,7 +503,7 @@
           sudo apt-get install -y expect
           # Install nmap to check status of ODL's SSH port
           sudo apt-get install -y nmap
-      - shell: !include-raw: test-karaf.expect
+      - shell: !include-raw: test-karaf-oxygensafe.expect
       - shell: !include-raw: stop-odl.sh
 
     publishers:
