@@ -11,22 +11,13 @@
     stream:
       - fluorine:
           branch: 'master'
-          # ideally, master (oxygen) would gate against Queens (current master) or 'R' release
-          # bug even the pike devstack environment is still unreliable. so sticking with Ocata
-          # for now
-          os-branch: 'ocata'
+          os-branch: 'queens'
       - oxygen:
           branch: 'stable/oxygen'
-          # ideally, master (oxygen) would gate against Queens (current master) or 'R' release
-          # bug even the pike devstack environment is still unreliable. so sticking with Ocata
-          # for now
-          os-branch: 'ocata'
+          os-branch: 'queens'
       - nitrogen:
           branch: 'stable/nitrogen'
-          # ideally, master (oxygen) would gate against Queens (current master)
-          # bug even the pike devstack environment is still unreliable. so sticking with Ocata
-          # for now
-          os-branch: 'ocata'
+          os-branch: 'pike'
       - carbon:
           branch: 'stable/carbon'
           os-branch: 'ocata'
