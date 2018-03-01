@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "557c13ec_b884e329",
+        "filename": "jjb/packaging/install-rpm.sh",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2018-03-01T14:11:31Z",
+      "side": 1,
+      "message": "This would break the test-rpm-master and test-rpm-upgrade-master jobs, as they expect to be able to pass it as an env var. This is why we try to test *all* the jobs impacted by a change:)\n\nI made it only set the var if it\u0027s empty in my patchset.",
+      "revId": "ec2ed1d7aa7062c477cf606ab3c1faf44d77c6c5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d2accf13_150acfb0",
+        "filename": "jjb/packaging/packaging.yaml",
+        "patchSetId": 8
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2018-03-01T14:11:31Z",
+      "side": 1,
+      "message": "How is this working without installing nmap and expect in the container? Surly they aren\u0027t already installed by default?",
+      "revId": "ec2ed1d7aa7062c477cf606ab3c1faf44d77c6c5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
