@@ -224,6 +224,9 @@
     triggers:
       - gerrit:
           server-name: '{gerrit-server-name}'
+          trigger-on:
+            - comment-added-contains-event:
+                comment-contains-value: 'rpm-verify'
           projects:
             - project-compare-type: ANT
               project-pattern: '{project}'
