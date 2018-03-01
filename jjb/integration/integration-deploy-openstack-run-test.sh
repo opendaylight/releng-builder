@@ -982,7 +982,7 @@ done
 # If the n-cpu.log is earlier than the control stack.log timestamp then the failure condition is likely hit.
 if [ ${NUM_OPENSTACK_COMPUTE_NODES} -gt 0 ]; then
     WAIT_FOR_RABBITMQ_MINUTES=60
-    echo "Wait a maximum of ${WAIT_FOR_RABBITMQ_MINUTES}m until rabbitmq is ready to allow the controller to create nova_cell1 before the computes need it"
+    echo "Wait a maximum of ${WAIT_FOR_RABBITMQ_MINUTES}m until rabbitmq is ready and nova_cell1 created to allow the controller to create nova_cell1 before the computes need it"
     set +e
     retry ${WAIT_FOR_RABBITMQ_MINUTES} 60 "is_rabbitmq_ready ${OPENSTACK_CONTROL_NODE_1_IP}"
     rc=$?
