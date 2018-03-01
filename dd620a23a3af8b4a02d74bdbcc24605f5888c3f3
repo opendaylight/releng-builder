@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "d2af3046_93403865",
+        "filename": "jjb/packaging/build-rpm-snap-docker.sh",
+        "patchSetId": 11
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2018-03-01T23:23:11Z",
+      "side": 1,
+      "message": "I\u0027m confused by this. If you push this patchset to the sandbox, it should have the proposed code already. And we need the logic to use the builder/jjb/packaging/ scripts anyway, so should just use the ones that are already there vs cloning again, right? Maybe I\u0027m missing something.",
+      "revId": "dd620a23a3af8b4a02d74bdbcc24605f5888c3f3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50f4ef7c_6c03b832",
         "filename": "jjb/packaging/test-rpm-docker.sh",
         "patchSetId": 11
