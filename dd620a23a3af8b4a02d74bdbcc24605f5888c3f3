@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "16a1c232_580681c1",
+        "filename": "jjb/packaging/build-rpm-snap-docker.sh",
+        "patchSetId": 11
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 6016
+      },
+      "writtenOn": "2018-03-02T11:02:15Z",
+      "side": 1,
+      "message": "I do this because the only scripts which are run directly by jenkins in the packaging-build-rpm-snap-{stream} job are build-rpm-snap-docker.sh and test-rpm-docker.sh:\n\n      - shell: !include-raw: build-rpm-snap-docker.sh\n      - shell: !include-raw: test-rpm-docker.sh\n\nThe rest, are executed inside those two scripts. So as far as I know, unless we clone them inside the container and git fetch the patch, there is no way to test the changes.\n\nI have just noticed that my in-line comment is wrong because we will always need to git clone the builder repo inside the container, otherwise we will not be able to run the scripts. I\u0027ll update it",
+      "parentUuid": "d2af3046_93403865",
+      "revId": "dd620a23a3af8b4a02d74bdbcc24605f5888c3f3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50f4ef7c_6c03b832",
         "filename": "jjb/packaging/test-rpm-docker.sh",
         "patchSetId": 11
