@@ -9,7 +9,8 @@
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
 
-# This script performs version bumping activities for an ODL release.
+# This script performs version bumping activities for an ODL release and branch
+# cutting.
 echo "---> version-bump.sh"
 
 # The only purpose of RELEASE_TAG in this script is to set the Gerrit topic.
@@ -24,29 +25,41 @@ BRANCH="$GERRIT_BRANCH"
 # Ensure we fail the job if any steps fail.
 set -eu -o pipefail
 
-git checkout -b "${BRANCH,,}" "origin/${BRANCH,,}"
+# Fail if branch cutting is not on master
+if [ "$BRANCH_CUT" = "true" ] && [ "$BRANCH" != "master" ]; then
+    echo "ERROR: Cannot branch cut on $BRANCH, its required to be on the master branch."
+    exit 1
+fi
 
-# TODO: Simplify once stable/nitrogen is no longer supported.
-for module in $(git submodule | awk '{ print $2 }')
-do
-    pushd "$module"
-    if [ "$GERRIT_BRANCH" == "stable/nitrogen" ] && [ "$module" == "yangtools" ]; then
-        git checkout -b "v1.2.x" "origin/v1.2.x"
-    else
-        git checkout -b "${BRANCH,,}" "origin/${BRANCH,,}"
-    fi
-    popd
-done
+if [ "$BRANCH_CUT" = "false" ]; then
+    git checkout -b "${BRANCH,,}" "origin/${BRANCH,,}"
+
+    # TODO: Simplify once stable/nitrogen is no longer supported.
+    for module in $(git submodule | awk '{ print $2 }')
+    do
+        pushd "$module"
+        if [ "$GERRIT_BRANCH" == "stable/nitrogen" ] && [ "$module" == "yangtools" ]; then
+            git checkout -b "v1.2.x" "origin/v1.2.x"
+        else
+            git checkout -b "${BRANCH,,}" "origin/${BRANCH,,}"
+        fi
+        popd
+    done
+fi
+
 
 # Setup Gerrit remove to ensure Change-Id gets set on commit.
-git config --global --add gitreview.username "jenkins-releng"
+git config --global --add gitreview.username "jenkins-$SILO"
 git review -s
+git remote -v
 git submodule foreach "git review -s"
 
 # Check if git state is clean
 git status
 
-lftools version release "$RELEASE_TAG"
+if [ "$BRANCH_CUT" = "false" ]; then
+    lftools version release "$RELEASE_TAG"
+fi
 lftools version bump "$RELEASE_TAG"
 
 git submodule foreach "git commit -asm 'Bump versions by x.y.(z+1)'"
