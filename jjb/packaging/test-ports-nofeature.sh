@@ -38,7 +38,7 @@ while true; do
         echo "Closed ports:"
         printf '%s\n' "${closed_ports[@]}"
         break
-    elif [ $COUNT -gt 120 ]; then
+    elif [ $COUNT -gt 300 ]; then
         echo "Timeout waiting ports to open"
         echo "Open ports:"
         printf '%s\n' "${open_ports[@]}"
