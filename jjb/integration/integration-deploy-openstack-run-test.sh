@@ -553,6 +553,7 @@ EOF
     mkdir -p ${WORKSPACE}/archives
 
     mv /tmp/changes.txt ${WORKSPACE}/archives
+    mv /tmp/rabbit.txt ${WORKSPACE}/archives
 
     sleep 5
     # FIXME: Do not create .tar and gzip before copying.
@@ -775,10 +776,16 @@ function get_service () {
 # Check if rabbitmq is ready by looking for a pid in it's status.
 # The function returns the status of the grep command which callers can check.
 function is_rabbitmq_ready() {
-    local -r ip=$1
+    local -r ip=${1}
+    local grepfor="nova_cell1"
     rm -f rabbit.txt
-    ${SSH} ${ip} "sudo rabbitmqctl list_vhosts" > rabbit.txt
-    grep nova_cell1 rabbit.txt
+    if [ "${OPENSTACK_BRANCH}" == "stable/ocata" ]; then
+        ${SSH} ${ip} "sudo rabbitmqctl status" > rabbit.txt
+        grepfor="pid"
+    else
+        ${SSH} ${ip} "sudo rabbitmqctl list_vhosts" > rabbit.txt
+    fi
+    grep ${grepfor} rabbit.txt
 }
 
 # retry the given command ($3) until success for a number of iterations ($1)
