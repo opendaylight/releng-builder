@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b78d1245_c675e309",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2018-03-05T17:09:34Z",
+      "side": 1,
+      "message": "Minor nit but I think it\u0027s important. The first line in a commit message is a summary line that should explain what the patch is modifying. If every time we updated the version bump job we left this message then when looking at \"gitk\" or \"git shortlog\" we\u0027d be left with a bunch of messages that look like:\n\n Update autorelease version bump job\n Update autorelease version bump job\n Update autorelease version bump job\n\nThis makes it difficult in hindsight to look back and figure out which patch introduced x feature without having to read the entire commit message of every patch.\n\nI think a better message here would be something that immediately makes it obvious that this patch introduced a new feature. A message like:\n\n Support branch cutting in version bump job\n\nThen when we look at the summary window in \"gitk\" or \"git shortlog\" we will see a much more clear picture of what was added.\n\nI think this blog post https://chris.beams.io/posts/git-commit/ does a very good job of explaining why these things matter.",
+      "revId": "55d7be4caf37beaab6eee8dfe6d060b6dd3dbcc7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
