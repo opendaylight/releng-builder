@@ -215,11 +215,10 @@
       # - install-test-uninstall-rpm
 
       # Test latest Oxygen snapshot
-      # FIXME: Oxygen tests fail due to jira.opendaylight.org/browse/ODLPARENT-139
-      # - inject:
-      #     properties-content: 'STREAM=oxygen'
-      # - shell: !include-raw: build-rpm-snap.sh
-      # - install-test-uninstall-rpm
+      - inject:
+          properties-content: 'STREAM=oxygen'
+      - shell: !include-raw: build-rpm-snap.sh
+      - install-test-uninstall-rpm
 
     triggers:
       - gerrit:
@@ -336,8 +335,6 @@
       # - install-test-uninstall-rpm
 
       # Test latest Oxygen snapshot
-      # FIXME: Oxygen tests fail due to jira.opendaylight.org/browse/ODLPARENT-139
-      # NB: Leaving this one known-failing Oxygen test running so can watch for fix
       - inject:
           properties-content: 'STREAM=oxygen'
       - shell: !include-raw: build-rpm-snap.sh
