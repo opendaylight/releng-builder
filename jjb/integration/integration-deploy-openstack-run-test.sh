@@ -10,11 +10,18 @@ ADMIN_PASSWORD="admin"
 OPENSTACK_MASTER_CLIENTS_VERSION="queens"
 
 # TODO: remove this work to run changes.py if/when it's moved higher up to be visible at the Robot level
-echo "showing recent changes that made it in to the distribution used by this job"
+echo "\nshowing recent changes that made it into the distribution used by this job:"
 $PYTHON -m pip install --upgrade urllib3
 python ${WORKSPACE}/test/tools/distchanges/changes.py -d /tmp/distribution_folder \
                   -u ${ACTUAL_BUNDLE_URL} -b ${DISTROBRANCH} \
                   -r ssh://jenkins-${SILO}@git.opendaylight.org:29418 || true
+
+echo "\nshowing recent changes that made it into integration/test used by this job:"
+cd ${WORKSPACE}/test
+git --no-pager log --pretty=format:'%h %<(13)%ar%<(13)%cr %<(20,trunc)%an%d %s' -n10
+echo
+cd -
+
 cat << EOF
 #################################################
 ##         Deploy Openstack 3-node             ##
@@ -897,7 +904,8 @@ if [ -n "${DEVSTACK_HASH}" ]; then
     echo "git checkout ${DEVSTACK_HASH}"
     git checkout ${DEVSTACK_HASH}
 fi
-git --no-pager log --pretty=format:'%h %<(13)%ar%<(13)%cr %<(20,trunc)%an%d %s\n%b' -n20
+git --no-pager log --pretty=format:'%h %<(13)%ar%<(13)%cr %<(20,trunc)%an%d %s%b' -n20
+echo
 echo "workaround: adjust wait from 60s to 1800s (30m)"
 sed -i 's/wait_for_compute 60/wait_for_compute 1800/g' /opt/stack/devstack/lib/nova
 # TODO: modify sleep 1 to sleep 60, search wait_for_compute, then first sleep 1
