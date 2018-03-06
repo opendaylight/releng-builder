@@ -26,12 +26,14 @@
           integration-test: oxygen
           extra-mvn-opts: -Dsft.heap.max=4g
       - nitrogen:
+          # Run once a week now that Fluorine branch is cut, and Oxygen is pending release
+          cron: 'H 12 * * 0'
           next-release-tag: '{stream}'
           branch: 'stable/nitrogen'
           integration-test: nitrogen
           extra-mvn-opts: -Dsft.heap.max=4g
       - carbon:
-          # Run once a week now that Nitrogen is released and Oxygen is in active development
+          # Run once a week now that Fluorine branch is cut, and Oxygen is pending release
           cron: 'H 12 * * 0'
           next-release-tag: '{stream}'
           branch: 'stable/carbon'
