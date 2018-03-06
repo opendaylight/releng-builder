@@ -81,3 +81,36 @@
     tools_system_count: 3
 
     install-features: 'odl-genius-rest'
+
+- project:
+    name: genius-csit-ovs-scale
+    jobs:
+      - inttest-csit-1node
+
+    # The project name
+    project: 'genius'
+
+    # The functionality under test
+    functionality: 'ovs-scale'
+
+    # Project branches
+    stream:
+      - fluorine:
+          branch: 'master'
+      - oxygen:
+          branch: 'stable/oxygen'
+
+    install:
+      - all:
+          scope: 'all'
+
+    # Features to install
+    install-features: 'odl-genius-rest'
+
+    tools_system_count: '1' 
+    tools_system_flavor: 'odl-highcpu-2'
+    tools_system_image: 'ZZCI - CentOS 7 - docker - 20180417-0311'
+
+
+    # Robot custom options
+    robot-options: ''
