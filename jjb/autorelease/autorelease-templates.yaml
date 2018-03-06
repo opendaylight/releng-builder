@@ -448,6 +448,7 @@
           files: '**/*.xml'
 
     builders:
+      - autorelease-compare-projects
       - autorelease-checkout-gerrit-patch
       - jacoco-nojava-workaround
       - shell: "./scripts/list-project-dependencies.sh"
