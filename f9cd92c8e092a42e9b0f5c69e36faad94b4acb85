@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba89ae3f_27b76a40",
+        "filename": "jjb/netvirt/quagga-build.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5278
+      },
+      "writtenOn": "2018-03-06T08:58:20Z",
+      "side": 1,
+      "message": "why can\u0027t you make it as apt/yum repositories for having quagga and its source packages ? This would simplify installers just to depend on package names (like thrift, zmq, c-capnproto, quagga and zrpc) without worrying too much on constructing relative paths with different versions ?\n\nThis will be also useful for ansible-opendaylight role (https://git.opendaylight.org/gerrit/#/c/66195/) for consuming quagga packages seamlessly just with corresponding quagga repo URLs.",
+      "revId": "f9cd92c8e092a42e9b0f5c69e36faad94b4acb85",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
