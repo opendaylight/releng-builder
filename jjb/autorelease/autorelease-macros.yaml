@@ -151,6 +151,11 @@
     builders:
       - shell: !include-raw: update-validate-autorelease-projects.sh
 
+- builder:
+    name: autorelease-compare-projects
+    builders:
+      - shell: !include-raw: compare-autorelease-projects.sh
+
 - publisher:
     # Search console log for failures and email status to the release mailing list.
     name: opendaylight-infra-notify-status
