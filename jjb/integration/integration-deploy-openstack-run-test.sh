@@ -10,16 +10,15 @@ ADMIN_PASSWORD="admin"
 OPENSTACK_MASTER_CLIENTS_VERSION="queens"
 
 # TODO: remove this work to run changes.py if/when it's moved higher up to be visible at the Robot level
-echo "\nshowing recent changes that made it into the distribution used by this job:"
+printf "\nshowing recent changes that made it into the distribution used by this job:\n"
 $PYTHON -m pip install --upgrade urllib3
 python ${WORKSPACE}/test/tools/distchanges/changes.py -d /tmp/distribution_folder \
                   -u ${ACTUAL_BUNDLE_URL} -b ${DISTROBRANCH} \
                   -r ssh://jenkins-${SILO}@git.opendaylight.org:29418 || true
 
-echo "\nshowing recent changes that made it into integration/test used by this job:"
+printf "\nshowing recent changes that made it into integration/test used by this job:\n"
 cd ${WORKSPACE}/test
 git --no-pager log --pretty=format:'%h %<(13)%ar%<(13)%cr %<(20,trunc)%an%d %s' -n10
-echo
 cd -
 
 cat << EOF
