@@ -203,21 +203,18 @@
       - install-test-uninstall-rpm
 
       # Test Oxygen pre-release autorelease tarball
-      # FIXME: There aren't any available Oxygen autorelease builds, add one once possible
-      # FIXME: Oxygen tests fail due to jira.opendaylight.org/browse/ODLPARENT-139
-      # - inject:
-      # yamllint disable-line rule:line-length
-      #    properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/autorelease-2052/org/opendaylight/integration/karaf/0.8.0/karaf-0.8.0.tar.gz'
-      # - shell: !include-raw-escape: build-rpm.sh
-      # - install-test-uninstall-rpm
+      - inject:
+          # yamllint disable-line rule:line-length
+          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/autorelease-2106/org/opendaylight/integration/karaf/0.8.0/karaf-0.8.0.tar.gz'
+      - shell: !include-raw-escape: build-rpm.sh
+      - install-test-uninstall-rpm
 
       # Test Oxygen multipatch zip (no parallel tarball available)
-      # FIXME: Oxygen tests fail due to jira.opendaylight.org/browse/ODLPARENT-139
-      # - inject:
-      # yamllint disable-line rule:line-length
-      #     properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/org/opendaylight/integration/integration/distribution/karaf/0.8.0-SNAPSHOT/karaf-0.8.0-20180204.191936-134.zip'
-      # - shell: !include-raw-escape: build-rpm.sh
-      # - install-test-uninstall-rpm
+      - inject:
+          # yamllint disable-line rule:line-length
+          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/org/opendaylight/integration/integration/distribution/karaf/0.8.0-SNAPSHOT/karaf-0.8.0-20180305.133042-180.zip'
+      - shell: !include-raw-escape: build-rpm.sh
+      - install-test-uninstall-rpm
 
       # Test latest Oxygen snapshot
       - inject:
@@ -282,7 +279,7 @@
       # NB: This will need to be updated as old builds expire
       - inject:
           # yamllint disable-line rule:line-length
-          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/org/opendaylight/integration/integration/distribution/distribution-karaf/0.6.3-SNAPSHOT/distribution-karaf-0.6.3-20180115.181738-1.zip'
+          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/org/opendaylight/integration/integration/distribution/distribution-karaf/0.6.4-SNAPSHOT/distribution-karaf-0.6.4-20180305.151247-2.zip'
       - shell: !include-raw-escape: build-rpm.sh
       - install-test-uninstall-rpm
 
@@ -310,7 +307,7 @@
       # NB: This will need to be updated as old builds expire
       - inject:
           # yamllint disable-line rule:line-length
-          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/org/opendaylight/integration/integration/distribution/karaf/0.7.2-SNAPSHOT/karaf-0.7.2-20180115.183312-2.zip'
+          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/org/opendaylight/integration/integration/distribution/karaf/0.7.3-SNAPSHOT/karaf-0.7.3-20180305.153647-3.zip'
       - shell: !include-raw-escape: build-rpm.sh
       - install-test-uninstall-rpm
 
@@ -321,23 +318,20 @@
       - install-test-uninstall-rpm
 
       # Test Oxygen pre-release autorelease tarball
-      # FIXME: There aren't any available Oxygen autorelease builds, add one once possible
-      # FIXME: Oxygen tests fail due to jira.opendaylight.org/browse/ODLPARENT-139
       # NB: This will need to be updated as old builds expire
-      # - inject:
-      # yamllint disable-line rule:line-length
-      #    properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/autorelease-2052/org/opendaylight/integration/karaf/0.8.0/karaf-0.8.0.tar.gz'
-      # - shell: !include-raw-escape: build-rpm.sh
-      # - install-test-uninstall-rpm
+      - inject:
+          # yamllint disable-line rule:line-length
+          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/autorelease-2106/org/opendaylight/integration/karaf/0.8.0/karaf-0.8.0.tar.gz'
+      - shell: !include-raw-escape: build-rpm.sh
+      - install-test-uninstall-rpm
 
       # Test Oxygen multipatch zip (no parallel tarball available)
-      # FIXME: Oxygen tests fail due to jira.opendaylight.org/browse/ODLPARENT-139
       # NB: This will need to be updated as old builds expire
-      # - inject:
-      # yamllint disable-line rule:line-length
-      #     properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/org/opendaylight/integration/integration/distribution/karaf/0.8.0-SNAPSHOT/karaf-0.8.0-20180204.191936-134.zip'
-      # - shell: !include-raw: build-rpm.sh
-      # - install-test-uninstall-rpm
+      - inject:
+          # yamllint disable-line rule:line-length
+          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/org/opendaylight/integration/integration/distribution/karaf/0.8.0-SNAPSHOT/karaf-0.8.0-20180305.133042-180.zip'
+      - shell: !include-raw-escape: build-rpm.sh
+      - install-test-uninstall-rpm
 
       # Test latest Oxygen snapshot
       - inject:
