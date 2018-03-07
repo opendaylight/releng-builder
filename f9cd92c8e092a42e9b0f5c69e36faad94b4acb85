@@ -16,6 +16,24 @@
       "revId": "f9cd92c8e092a42e9b0f5c69e36faad94b4acb85",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "21117a4d_1bb48432",
+        "filename": "jjb/netvirt/quagga-build.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2018-03-07T05:40:10Z",
+      "side": 1,
+      "message": "@Periyasamy: Can you confirm how many packages are created from build this quagga build? IMU totally requires about 6 packages * 2 (debs/rpms) which requires hosting and maintaining around 12 repositories. \n\nIt may not feasible to build and maintain several repositories for each external dependency on ODL Nexus since the releases are independent of ODL and the projects are not maintained by LF, note: each repo requires additional schedule tasks and jobs for metadata generation etc.. \n\nWe can still upload them as hosted repositories since its easy to pull them the .rpm/.deb with a simple curl/wget into the project builders/scripts files.",
+      "parentUuid": "ba89ae3f_27b76a40",
+      "revId": "f9cd92c8e092a42e9b0f5c69e36faad94b4acb85",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
