@@ -34,6 +34,24 @@
       "revId": "f9cd92c8e092a42e9b0f5c69e36faad94b4acb85",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4e57b84a_9c0f4d6a",
+        "filename": "jjb/netvirt/quagga-build.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5278
+      },
+      "writtenOn": "2018-03-07T08:36:18Z",
+      "side": 1,
+      "message": "Anil, Yes, there are 6 packages created with quagga build. But it doesn\u0027t need one repo/package. we just need 2 repositories (for apt and yum).  \n\nOn my local setup, I just run dpkg-scanpackages (or) createrepo commands to create apt/yum repositories accordingly with quagga packages and i guess it can be directly uploaded into nexus. \nso can\u0027t we make these relavant changes in this script ?\n\nI think it has following advantages.\n\n1. package dependencies are resolved automatically while installing quagga packages by apt-get install (or) yum install\n2. The quagga installer script will look clean and easily maintainable (we can avoid lot version hardcoding, etc. in https://git.opendaylight.org/gerrit/#/c/65245/7/jjb/integration/quagga-install.sh)\n3. The ansible-opendaylight role can just use ansible package module to install these packages irrespective of any distribution which looks cleaner way of installing things.\n\nI understand this repo should be maintained by 6wind and ODL, OPNFV can make use of it. Philippe can comment on it.",
+      "parentUuid": "21117a4d_1bb48432",
+      "revId": "f9cd92c8e092a42e9b0f5c69e36faad94b4acb85",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
