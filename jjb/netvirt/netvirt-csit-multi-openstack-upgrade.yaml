@@ -1,0 +1,37 @@
+---
+- project:
+    name: netvirt-csit-upgrade-openstack-integration-oxygen
+    jobs:
+      - inttest-csit-openstack
+
+    project: 'netvirt'
+    stream: 'fluorine'
+    branch: 'master'
+    testplan: '{project}-{topology}-openstack-upgrade.txt'
+    odl-ml2-driver-version: 'v2'
+    enable-openstack-services: 'placement-api,l2gw-plugin'
+    enable-openstack-compute-services: 'placement-client'
+    security-group-mode: 'stateful'
+    odl_system_flavor: odl-standard-8
+    openstack_system_flavor: odl-standard-8
+    openstack_system2_flavor: odl-standard-4
+
+    topology:
+      - 1node:
+          openstack_system2_count: 2
+          odl_system_count: 1
+          enable-haproxy: 'no'
+          install-features: 'odl-netvirt-openstack'
+
+    functionality:
+      - upgrade
+      - upgrade-snat-conntrack:
+          odl-snat-mode: 'conntrack'
+
+    openstack:
+      - queens:
+          openstack-branch: 'stable/queens'
+          odl-ml2-branch: 'stable/queens'
+          odl-ml2-port-binding: 'pseudo-agentdb-binding'
+          openstack_system_image: '{openstack_system_image_pike}'
+          openstack_system2_image: '{openstack_system_image_pike}'
