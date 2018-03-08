@@ -903,6 +903,12 @@ if [ -n "${DEVSTACK_HASH}" ]; then
     echo "git checkout ${DEVSTACK_HASH}"
     git checkout ${DEVSTACK_HASH}
 fi
+echo "workaround: Restore NEUTRON_CREATE_INITIAL_NETWORKS flag"
+if [ "${OPENSTACK_BRANCH}" == "stable/queens" ]; then
+    git config --local user.email jenkins@opendaylight.org
+    git config --local user.name jenkins
+    git fetch https://git.openstack.org/openstack-dev/devstack refs/changes/99/550499/1 && git cherry-pick FETCH_HEAD
+fi
 git --no-pager log --pretty=format:'%h %<(13)%ar%<(13)%cr %<(20,trunc)%an%d %s%b' -n20
 echo
 echo "workaround: adjust wait from 60s to 1800s (30m)"
