@@ -136,8 +136,6 @@ function install_openstack_clients_in_robot_vm() {
     fi
 }
 
-
-
 # convert commas in csv strings to spaces (ssv)
 function csv2ssv() {
     local csv=$1
@@ -503,7 +501,7 @@ EOF
 } # configure_haproxy_for_neutron_requests()
 
 # Collect the list of files on the hosts
-function collect_files () {
+function collect_files() {
     local -r ip=$1
     local -r folder=$2
     finddir=/tmp/finder
@@ -522,7 +520,51 @@ function collect_files () {
     cp /tmp/rsync.tar.xz ${folder}
 }
 
-function collect_logs () {
+declare -a os_services=(
+    "devstack@g-api.service"
+    "devstack@g-reg.service"
+    "devstack@keystone.service"
+    "devstack@n-api-meta.service"
+    "devstack@n-api.service"
+    "devstack@n-cauth.service"
+    "devstack@n-cond-cell1.service"
+    "devstack@n-cpu.service"
+    "devstack@n-novnc.service"
+    "devstack@n-sch.service"
+    "devstack@n-super-cond.service"
+    "devstack@n-xvnc.service"
+    "devstack@neutron-api.service"
+    "devstack@neutron-dhcp.service"
+    "devstack@placement-api.service"
+)
+
+# Collect the logs for the openstack services
+function collect_openstack_logs() {
+    local -r ip=${1}
+    local -r folder=${2}
+    local oslogs="${folder}/oslogs"
+
+    mkdir -p ${oslogs}
+    # There are always some logs in /opt/stack/logs and this also covers the
+    # pre-queens branches which always use /opt/stack/logs
+    rsync -avhe ssh ${ip}:/opt/stack/logs/* ${oslogs} # rsync to prevent copying of symbolic links
+
+    # Starting with queens break out the logs from journalctl
+    if [ "${OS_BRANCH}" = "stable/queens" ]; then
+        cat > ${WORKSPACE}/collect_openstack_logs.sh << EOF
+mkdir -p /tmp/oslogs
+for svc in ${os_services[@]}; do
+    svc_="\${svc:9}"
+    journalctl -u "\${svc}" > "/tmp/oslogs/\${svc_}.log"
+done
+EOF
+        scp ${WORKSPACE}/collect_openstack_logs.sh ${ip}:/tmp
+        ${SSH} ${ip} "bash /tmp/collect_openstack_logs.sh"
+        rsync -avhe ssh ${ip}:/tmp/oslogs/ ${oslogs}
+    fi
+}
+
+function collect_logs() {
     set +e  # We do not want to create red dot just because something went wrong while fetching logs.
 
     cat > extra_debug.sh << EOF
@@ -646,8 +688,8 @@ EOF
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/audit/audit.log ${NODE_FOLDER}
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/httpd/keystone_access.log ${NODE_FOLDER}
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/httpd/keystone.log ${NODE_FOLDER}
-        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/messages ${NODE_FOLDER}
-        rsync -avhe ssh ${!OSIP}:/opt/stack/logs/* ${NODE_FOLDER} # rsync to prevent copying of symbolic links
+        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/messages* ${NODE_FOLDER}
+        collect_openstack_logs ${!OSIP} ${NODE_FOLDER}
         mv local.conf_control_${!OSIP} ${NODE_FOLDER}/local.conf
         # qdhcp files are created by robot tests and copied into /tmp/qdhcp during the test
         tar -cf - -C /tmp qdhcp | xz -T 0 > /tmp/qdhcp.tar.xz
@@ -683,9 +725,9 @@ EOF
         scp ${!OSIP}:/tmp/libvirt.tar.xz ${NODE_FOLDER}
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/etc/hosts ${NODE_FOLDER}
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/audit/audit.log ${NODE_FOLDER}
-        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/messages ${NODE_FOLDER}
+        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/messages* ${NODE_FOLDER}
         rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/nova-agent.log ${NODE_FOLDER}
-        rsync -avhe ssh ${!OSIP}:/opt/stack/logs/* ${NODE_FOLDER} # rsync to prevent copying of symbolic links
+        collect_openstack_logs ${!OSIP} ${NODE_FOLDER}
         mv local.conf_compute_${!OSIP} ${NODE_FOLDER}/local.conf
         mv ${NODE_FOLDER} ${WORKSPACE}/archives/
     done
