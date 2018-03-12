@@ -22,3 +22,26 @@
       - shell: |
           # Remove old host key so future installs don't fail to SSH
           rm /home/jenkins/.ssh/known_hosts || echo "No known_hosts file"
+
+- builder:
+    name: install-test-uninstall-deb
+    builders:
+      - inject:
+          properties-content: 'URL=$WORKSPACE/packaging/packages/deb/opendaylight/"*.deb'
+      # Install deps needed interactive Karaf shell tests
+      - shell: |
+          # Install expect to interact with Karaf shell
+          # Install nmap to check status of ODL's SSH port
+          sudo apt-get install -y expect nmap
+      - shell: !include-raw: test-deb-deps.sh
+      - shell: !include-raw: install-deb.sh
+      - shell: !include-raw: start-odl.sh
+      - shell: !include-raw: test-ports-nofeature.sh
+      - shell: !include-raw: test-karaf-oxygensafe.expect
+      # Disable this test until ODLPARENT-139 is fixed
+      # - shell: !include-raw: test-rest-ok.sh
+      - shell: !include-raw: stop-odl.sh
+      - shell: !include-raw: uninstall-deb.sh
+      - shell: |
+          # Remove old host key so future installs don't fail to SSH
+          rm /home/jenkins/.ssh/known_hosts || echo "No known_hosts file"
