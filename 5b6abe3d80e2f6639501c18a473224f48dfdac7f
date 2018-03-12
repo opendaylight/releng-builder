@@ -63,6 +63,30 @@
       "revId": "5b6abe3d80e2f6639501c18a473224f48dfdac7f",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "234537f2_793cca7e",
+        "filename": "jjb/packaging/packaging.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 7924
+      },
+      "writtenOn": "2018-03-12T07:46:31Z",
+      "side": 1,
+      "message": "Hello all. To be honest right now we do not have a way to pull the latest debs from the nexus repository because ubuntu doesn\u0027t work exacly as Centos. In ubuntu you cannot just declare the nexus repo as apt repo and just pull packages from there. The only way to do this is through PPAs. So here I am seeing two solutions the first one  is that the packages are not only pushed in nexus but in a PPA too so we can have CD in debian easily. The second solution is to dirrectly download the deb package and install it but this approach has disadvantages too because we cannot be sure that we consume the latest deb all the time. So what do you think? Do you have anything to propose?",
+      "parentUuid": "370cf4e3_cf5aa4bc",
+      "range": {
+        "startLine": 481,
+        "startChar": 33,
+        "endLine": 481,
+        "endChar": 41
+      },
+      "revId": "5b6abe3d80e2f6639501c18a473224f48dfdac7f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
