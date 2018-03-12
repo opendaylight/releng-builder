@@ -5,7 +5,7 @@
 #   -e: Fail on errors
 #   -o pipefail: Fail on errors in scripts this calls, give stacktrace
 set -ex -o pipefail
-
+PACKAGE=${PACKAGE:-"$WORKSPACE/packaging/packages/deb/opendaylight/*.deb"}
 # Wait for any background apt processes to finish
 # There seems to be a backgroud apt process that locks /var/lib/dpkg/lock
 # and causes our apt commands to fail.
