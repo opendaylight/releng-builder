@@ -32,7 +32,7 @@ elif  [ "$SILO" == "releng" ]; then
   mkdir -p "$UPLOAD_FILES_PATH"
   # Note: no source packages are available, since the debs are not built
   # from the actual source
-  mv "$WORKSPACE/packaging/packages/deb/opendaylight/"*.deb "$_"
+  cp "$WORKSPACE/packaging/packages/deb/opendaylight/"*.deb "$_"
 else
   echo "Unknown Jenkins silo: $SILO"
   exit 1
