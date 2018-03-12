@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b539457_04c8df28",
+        "filename": "jjb/packaging/build-deb.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2018-03-12T14:29:00Z",
+      "side": 1,
+      "message": "Why do we even need to copy it? for convenience?\n\nAlternatively a hardlink via \"ln\" or a symlink via \"ln -s\" will save on copy time (and space).",
+      "revId": "76eb19c5e9c46e93fb8211ce84b1cc1a229248c7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
