@@ -70,6 +70,24 @@
       "revId": "76eb19c5e9c46e93fb8211ce84b1cc1a229248c7",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4e17c6db_4dbe8ffe",
+        "filename": "jjb/packaging/build-deb.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2018-03-13T15:01:32Z",
+      "side": 1,
+      "message": "If you are just reading then symbolic links should be fine (I\u0027m not sure how these files are being used).\n\nAlternatively if you want the equivalent of a cp without expending extra disk space then a hardlink is better. You can read more about hardlinks here:\n\nhttp://www.linfo.org/hard_link.html\n\nAt the end of the day, considering the size of the files, this will save you a trivial amount of build time. So whether you copy or hardlink doesn\u0027t really matter. If the files were GBs large however linking is faster and as a bonus saves on space :)\n\nThese are all just suggestions. Feel free to ignore.\n\nI was mostly wondering why you need to copy the file around rather than just reading it from the directory it was created in.",
+      "parentUuid": "13eddba1_39cf5d06",
+      "revId": "76eb19c5e9c46e93fb8211ce84b1cc1a229248c7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
