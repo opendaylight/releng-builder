@@ -169,6 +169,31 @@ function fix_libvirt_version_n_cpu_ocata() {
    "
 }
 
+#Function to install rdo release
+# This will help avoiding installing wrong version of packages which causes 
+# functionality failures
+function install_rdo_release() {
+    local ip=$1
+    case ${OPENSTACK_BRANCH} in
+       *pike*)
+          ${SSH} ${ip} "sudo yum install -y https://repos.fedorapeople.org/repos/openstack/openstack-pike/rdo-release-pike-1.noarch.rpm"
+          ;;
+
+       *queens*)
+          ${SSH} ${ip} "sudo yum install -y https://repos.fedorapeople.org/repos/openstack/openstack-queens/rdo-release-queens-1.noarch.rpm"
+          ;;
+
+       *ocata*)
+          ${SSH} ${ip} "sudo yum install -y https://repos.fedorapeople.org/repos/openstack/openstack-ocata/rdo-release-ocata-3.noarch.rpm"
+          ;;
+
+       master)
+          ${SSH} ${ip} "sudo yum install -y https://repos.fedorapeople.org/repos/openstack/openstack-queens/rdo-release-queens-1.noarch.rpm"
+          ;;
+    esac
+}
+
+
 # Add enable_services and disable_services to the local.conf
 function add_os_services() {
     local core_services=$1
@@ -1055,6 +1080,8 @@ for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
     fi
     create_control_node_local_conf ${!CONTROLIP} ${ODLMGRIP[$i]} "${ODL_OVS_MGRS[$i]}"
     scp ${WORKSPACE}/local.conf_control_${!CONTROLIP} ${!CONTROLIP}:/opt/stack/devstack/local.conf
+    echo "Install rdo release to avoid incompatible Package versions"
+    install_rdo_release ${!CONTROLIP}
     echo "Stack the control node ${i} of ${NUM_OPENSTACK_CONTROL_NODES}: ${CONTROLIP}"
     ssh ${!CONTROLIP} "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
     ssh ${!CONTROLIP} "ps -ef | grep stack.sh"
@@ -1110,6 +1137,8 @@ for i in `seq 1 ${NUM_OPENSTACK_COMPUTE_NODES}`; do
     fi
     create_compute_node_local_conf ${!COMPUTEIP} ${!CONTROLIP} ${ODLMGRIP[$SITE_INDEX]} "${ODL_OVS_MGRS[$SITE_INDEX]}"
     scp ${WORKSPACE}/local.conf_compute_${!COMPUTEIP} ${!COMPUTEIP}:/opt/stack/devstack/local.conf
+    echo "Install rdo release to avoid incompatible Package versions"
+    install_rdo_release ${!COMPUTEIP}
     echo "Stack the compute node ${i} of ${NUM_OPENSTACK_COMPUTE_NODES}: ${COMPUTEIP}"
     ssh ${!COMPUTEIP} "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
     ssh ${!COMPUTEIP} "ps -ef | grep stack.sh"
