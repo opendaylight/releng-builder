@@ -34,6 +34,24 @@
       "revId": "76eb19c5e9c46e93fb8211ce84b1cc1a229248c7",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f8ebd652_1eaa3e38",
+        "filename": "jjb/packaging/build-deb.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2018-03-13T00:59:17Z",
+      "side": 1,
+      "message": "We only move those pkgs to `$UPLOAD_FILES_PATH` for the purpose of the files being uploaded to ODL repos on Nexus, since lftools deploy picks up the files from the location defined. What Thanh suggests is instead of using mv or cp, simply create symlinks with `ln -s \u003csrc\u003e \u003cdest\u003e` this should add files into a `$UPLOAD_FILES_PATH` which be faster than cp IMHO. For this to work it may be required add a forloop to read each file before creating a symlink.",
+      "parentUuid": "b1099220_22d5a771",
+      "revId": "76eb19c5e9c46e93fb8211ce84b1cc1a229248c7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
