@@ -36,7 +36,7 @@ function trap_handler() {
     echo "trap_hanlder: ${prog}: line ${lastline}: exit status of last command: ${lasterr}"
     echo "trap_handler: command: ${BASH_COMMAND}"
     collect_logs
-    exit 1
+    exit 0
 } # trap_handler()
 
 trap 'trap_handler ${LINENO} ${$?}' ERR
@@ -1113,7 +1113,7 @@ if [ ${NUM_OPENSTACK_COMPUTE_NODES} -gt 0 ]; then
     else
       echo "rabbitmq was not ready in ${WAIT_FOR_RABBITMQ_MINUTES}m"
       collect_logs
-      exit 1
+      exit 0
     fi
 fi
 
@@ -1188,7 +1188,7 @@ while [ ${in_progress} -eq 1 ]; do
         elif [ "$stacking_status" == "Stacking Failed" ]; then
             echo "node $index ${os_node_list[index]}: stacking has failed"
             collect_logs
-            exit 1
+            exit 0
         elif [ "$stacking_status" == "Stacking Complete" ]; then
             echo "node $index ${os_node_list[index]}: stacking complete"
             unset 'os_node_list[index]'
@@ -1202,7 +1202,7 @@ while [ ${in_progress} -eq 1 ]; do
     if [ ${iteration} -eq 60 ]; then
         echo "stacking has failed - took longer than 60m"
         collect_logs
-        exit 1
+        exit 0
     fi
 done
 
@@ -1241,7 +1241,7 @@ for i in `seq 1 ${NUM_OPENSTACK_SITES}`; do
     if ! [ "${num_hypervisors}" ] || ! [ ${num_hypervisors} -eq ${expected_num_hypervisors} ]; then
         echo "Error: Only $num_hypervisors hypervisors detected, expected $expected_num_hypervisors"
         collect_logs
-        exit 1
+        exit 0
     fi
 
     # upgrading pip, urllib3 and httplib2 so that tempest tests can be run on openstack control node
