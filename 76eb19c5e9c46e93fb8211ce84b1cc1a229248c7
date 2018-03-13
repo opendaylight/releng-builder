@@ -52,6 +52,24 @@
       "revId": "76eb19c5e9c46e93fb8211ce84b1cc1a229248c7",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "13eddba1_39cf5d06",
+        "filename": "jjb/packaging/build-deb.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 7924
+      },
+      "writtenOn": "2018-03-13T13:36:41Z",
+      "side": 1,
+      "message": "The only reason that I am using cp and not symbolic links is because we need to read the deb packages as we do for the RPM packages in this builder [0]. Do you think that this will work with the symbolic links too?\n\n[0] https://github.com/opendaylight/releng-builder/blob/master/jjb/packaging/packaging-macros.yaml#L7",
+      "parentUuid": "f8ebd652_1eaa3e38",
+      "revId": "76eb19c5e9c46e93fb8211ce84b1cc1a229248c7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
