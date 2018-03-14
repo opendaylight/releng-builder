@@ -22,13 +22,16 @@ cd $BUILD_DIR || exit 1
 
 # Set up git committer name and email, needed for commit creation when cherry-picking.
 export EMAIL="sandbox@jenkins.opendaylight.org"
-# TODO: Is there a more appropriate e-mail?
 export GIT_COMMITTER_NAME="Multipatch Job"
 
-# TODO: Is "patches" still the correct word?
+# Extract a list of patches per project from an comment trigger. An example is:
+# Patch Set 1:
+#
+# multipatch-build:openflowplugin:45/69445/1,genius:46/69446/1,netvirt:47/69447/1
 if [ -n "$GERRIT_EVENT_COMMENT_TEXT" ]; then
-    PATCHES_TO_BUILD=$(echo "$GERRIT_EVENT_COMMENT_TEXT" \
-        | grep 'multipatch-build:' | awk -F: '{print $2}')
+    # Grep the multipatch-build: line and then strip from the beginning to the :
+    PATCHES_TO_BUILD=$(echo "$GERRIT_EVENT_COMMENT_TEXT" | grep 'multipatch-build:')
+    PATCHES_TO_BUILD=${GERRIT_EVENT_COMMENT_TEXT#*:}
 fi
 IFS=',' read -ra PATCHES <<< "${PATCHES_TO_BUILD}"
 
@@ -36,7 +39,7 @@ IFS=',' read -ra PATCHES <<< "${PATCHES_TO_BUILD}"
 # * Clone the project.
 # * Optionally, checkout a specific (typically unmerged) Gerrit patch. If none,
 #   default to Integration/Distribution branch via {branch} JJB param.
-# * Also optionally, cherry-pick series of patchs on top of the checkout.
+# * Also optionally, cherry-pick series of patches on top of the checkout.
 # * Final option: perform a 'release' by removing "-SNAPSHOT" everywhere within the project.
 #
 # Each patch is found in the ${PATCHES_TO_BUILD} variable as a comma separated
@@ -46,11 +49,11 @@ IFS=',' read -ra PATCHES <<< "${PATCHES_TO_BUILD}"
 #
 # PATCHES_TO_BUILD='odlparent=45/30045/2'
 #
-# Checkout patchs for both odlparent and yangtools.
+# Checkout patches for both odlparent and yangtools:
 #
 # PATCHES_TO_BUILD='odlparent=45/30045/2,yangtools:53/26853/25'
 #
-# Checkout a patch for controller, cherry-pick another patch on top of it.
+# Checkout a patch for controller, cherry-pick another patch on top of it:
 #
 # PATCHES_TO_BUILD='controller=61/29761/5:45/29645/6'
 distribution_status="not_included"
