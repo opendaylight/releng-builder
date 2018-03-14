@@ -34,6 +34,24 @@
       "revId": "84058fc59b03de8bf95be5f073c7218a03e6739e",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6c31cc68_1d7da56d",
+        "filename": "jjb/autorelease/compare-autorelease-projects.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2018-03-14T02:37:13Z",
+      "side": 1,
+      "message": "with the use case suggested by Luis, here is the test output. I added a project called \"test\" in int/dist which is not present in AR.\n\n$ bash ~/git/builder/jjb/autorelease/compare-autorelease-projects.sh\n---\u003e compare-autorelease-projects.sh\nERROR: List of projects mismatch in releng/autorelease and integration/distribution: test\nintegration/distribution: test\n$ echo $?\n1\n\nNot testing other way around, with the project only in AR and not in int/dist:\n\n$ bash ~/git/builder/jjb/autorelease/compare-autorelease-projects.sh\n---\u003e compare-autorelease-projects.sh\nWARNING: List of projects in releng/autorelease but NOT in integration/distribution: test\n$ echo $?\n0",
+      "parentUuid": "acd9514a_1a1872e7",
+      "revId": "84058fc59b03de8bf95be5f073c7218a03e6739e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
