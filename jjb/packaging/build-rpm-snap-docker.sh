@@ -22,7 +22,4 @@ sudo docker cp "$(pwd)"/packaging/ $docker_id:/packaging
 
 sudo docker exec $docker_id git clone https://git.opendaylight.org/gerrit/releng/builder
 
-sudo docker exec $docker_id git -C /builder fetch https://git.opendaylight.org/gerrit/releng/builder refs/changes/01/68201/38
-sudo docker exec $docker_id git -C /builder checkout FETCH_HEAD
-
 sudo docker exec $docker_id /bin/bash $scripts_path/build-rpm-snap.sh
