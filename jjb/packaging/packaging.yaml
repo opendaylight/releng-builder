@@ -563,6 +563,7 @@
 
     builders:
       - shell: !include-raw: build-deb.sh
+      - install-test-uninstall-deb
       - lf-infra-deploy-maven-file:
           global-settings-file: 'global-settings'
           settings-file: 'packaging-settings'
