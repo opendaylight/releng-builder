@@ -101,6 +101,7 @@
               $EXTRA_MVN_OPTS
               -Pintegrationtests,docs,repoBuild
               -Dcheckstyle.skip=true
+              -Dkaraf.keep.unpack=true
               -DaltDeploymentRepository=staging::default::file:hide/from/pom/files/stage
               {opendaylight-infra-mvn-opts}
           java-opts:
@@ -120,6 +121,11 @@
       - shell: |
           mkdir -p archives/
           cp *.log *.prop $_
+          for file in $(find . -name karaf.log); do
+              module="${{file%%/target/*}}"
+              module="${{module##*/}}"
+              cp "$file" "archives/${{module}}-karaf.log"
+          done
 
     publishers:
       - opendaylight-infra-notify-status
@@ -423,6 +429,7 @@
           goals: |
               clean validate
               -Pq
+              -Dkaraf.keep.unpack=true
               {opendaylight-infra-mvn-opts}
           java-opts:
             - '-Xmx8g -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
@@ -433,6 +440,11 @@
       - shell: |
           mkdir -p archives/
           cp *.log $_
+          for file in $(find . -name karaf.log); do
+              module="${{file%%/target/*}}"
+              module="${{module##*/}}"
+              cp "$file" "archives/${{module}}-karaf.log"
+          done
 
     publishers:
       - email-notification:
