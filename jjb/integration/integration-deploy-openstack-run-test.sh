@@ -235,6 +235,8 @@ USE_SCREEN=True
 SCREEN_LOGDIR=/opt/stack/data/log
 LOG_COLOR=False
 RECLONE=${RECLONE}
+# Increase the wait used by stack to poll for services
+SERVICE_TIMEOUT=120
 
 disable_all_services
 EOF
@@ -381,6 +383,8 @@ LOG_COLOR=False
 USE_SCREEN=True
 SCREEN_LOGDIR=/opt/stack/data/log
 RECLONE=${RECLONE}
+# Increase the wait used by stack to poll for the nova service on the control node
+NOVA_READY_TIMEOUT=1800
 
 disable_all_services
 EOF
@@ -388,8 +392,6 @@ EOF
     add_os_services "${CORE_OS_COMPUTE_SERVICES}" "${ENABLE_OS_COMPUTE_SERVICES}" "${DISABLE_OS_SERVICES}" "${local_conf_file_name}"
 
     cat >> ${local_conf_file_name} << EOF
-#Added to make Nova wait until nova in control node is ready.
-NOVA_READY_TIMEOUT=1800
 HOST_IP=${HOSTIP}
 SERVICE_HOST=${SERVICEHOST}
 Q_ML2_TENANT_NETWORK_TYPE=${TENANT_NETWORK_TYPE}
