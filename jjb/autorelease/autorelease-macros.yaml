@@ -8,6 +8,16 @@
           default: '{release-tag}'
           description: "The Release train tag to use eg. Beryllium-SR1"
 
+- parameter:
+    name: sr-project-change-list-parameter
+    parameters:
+      - string:
+          name: SR_PROJECT_CHANGE_LIST
+          default: ''
+          description: |
+              Ordered list of patches to build in the format of project=changeset (checkout) or
+              project:changeset (cherry-pick) for example: yangtools=32/53632/9,odlparent:59/50259/47
+
 - wrapper:
     name: autorelease-build-timeout
     wrappers:
@@ -155,6 +165,11 @@
     name: autorelease-compare-projects
     builders:
       - shell: !include-raw: compare-autorelease-projects.sh
+
+- builder:
+    name: autorelease-verify-sr-projects
+    builders:
+      - shell: !include-raw: verify-sr-projects.sh
 
 - publisher:
     # Search console log for failures and email status to the release mailing list.
