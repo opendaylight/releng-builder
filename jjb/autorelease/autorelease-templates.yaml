@@ -261,6 +261,103 @@
       - lf-infra-publish
 
 - job-template:
+    name: 'autorelease-verify-sr-projects-{stream}'
+
+    ############
+    # Defaults #
+    ############
+
+    build-node: '{build-node}'
+    java-version: openjdk8
+    mvn-version: mvn33
+    extra-mvn-opts: ''
+
+    #####################
+    # Job Configuration #
+    #####################
+
+    project-type: freestyle
+    node: '{build-node}'
+    jdk: '{java-version}'
+    cron: 'H 0 * * *'
+
+    properties:
+      - lf-infra-properties:
+          build-days-to-keep: 30
+
+    parameters:
+      - sr-project-change-list-parameter:
+          patches_to_build: '$SR_PROJECT_CHANGE_LIST'
+      - maven-exec:
+          maven-version: 'mvn33'
+      - lf-infra-parameters:
+          project: '{project}'
+          stream: '{stream}'
+          branch: '{branch}'
+          lftools-version: '{lftools-version}'
+      - distribution-karaf-version:
+          karaf-version: '{karaf-version}'
+      - autorelease-release-tag:
+          release-tag: '{next-release-tag}'
+      - string:
+          name: EXTRA_MVN_OPTS
+          default: '{extra-mvn-opts}'
+          description: |
+              Additional optional Maven Options to pass to the Maven Goals
+              parameter.
+
+              Examples:
+              -Dskip.karaf.featureTest=true  # To disable karaf SingleFeatureTests
+              --fail-never   # NEVER fail the build, regardless of project result
+              --fail-at-end  # Only fail the build afterwards; allow all non-impacted builds to continue
+      - string:
+          name: ARCHIVE_ARTIFACTS
+          default: '{archive-artifacts}'
+          description: Artifacts to archive to the logs server.
+
+    scm:
+      - git:
+          credentials-id: 'opendaylight-jenkins-ssh'
+          url: '$GIT_BASE'
+          refspec: '$GERRIT_REFSPEC'
+          branches:
+            - '$GERRIT_BRANCH'
+          choosing-strategy: default
+          skip-tag: true
+          submodule:
+            recursive: true
+            timeout: 60
+
+    wrappers:
+      - opendaylight-infra-wrappers:
+          build-timeout: '900'
+
+    triggers:
+      - timed: '{cron}'
+
+    builders:
+      # force jenkins install of maven version before any shell scripts use it
+      - lf-maven-install:
+          mvn-version: '{mvn-version}'
+      - wipe-local-maven-repo
+      - jacoco-nojava-workaround
+      - autorelease-cfp:
+          autorelease-settings: 'autorelease-settings'
+          global-settings: 'odl-global-settings'
+      - autorelease-verify-sr-projects
+      - autorelease-maven-sources:
+          opendaylight-infra-mvn-opts: '{opendaylight-infra-mvn-opts}'
+          maven-version: 'mvn33'
+          settings: 'autorelease-settings'
+          global-settings: 'global-settings'
+      - shell: |
+          mkdir -p archives/
+          cp *.log $_
+
+    publishers:
+      - lf-infra-publish
+
+- job-template:
     name: autorelease-version-bump-{stream}
     project-type: freestyle
     node: '{build-node}'
