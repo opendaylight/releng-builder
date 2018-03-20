@@ -4,6 +4,10 @@
     project-name: packaging
 
     jobs:
+      - '{project-name}-rtd-jobs':
+          build-node: centos7-builder-2c-2g
+          project-pattern: integration/packaging
+          rtd-project: odl-integrationpackaging
       - 'packaging-build-rpm-{stream}'
       - 'packaging-build-rpm-{distro}-snap-{stream}'
       - 'packaging-build-deb-{stream}'
