@@ -26,10 +26,6 @@
       - all:
           scope: 'all'
 
-    verify-stream: 'oxygen'
-    verify-branch: 'stable/oxygen'
-    verify-karaf-version: 'karaf4'
-
     # Mininet configuration
     tools_system_count: 3
     tools_system_image: ZZCI - Ubuntu 16.04 - mininet-ovs-25 - 20171208-1847
@@ -48,7 +44,6 @@
       - inttest-csit-verify-1node
       - inttest-csit-verify-3node
 
-
     # The project name
     project: 'genius'
 
@@ -64,6 +59,10 @@
       - carbon:
           branch: 'stable/carbon'
           karaf-version: karaf3
+
+    verify-stream: 'oxygen'
+    verify-branch: 'stable/oxygen'
+    verify-karaf-version: 'karaf4'
 
     install:
       - all:
