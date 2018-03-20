@@ -30,7 +30,7 @@ set -eu -o pipefail
 
 # Validate inputs
 if [ -z "$RELEASE" ]; then
-    echo "ERROR: RELEASE variable most be set to a release name. Eg Carbon"
+    echo "ERROR: RELEASE variable must be set to a release name. Eg Carbon"
     exit 1
 fi
 
