@@ -12,6 +12,10 @@
       - 'integration-distribution-weekly-test-trigger-{stream}'
       - 'integration-distribution-high-frequency-test-trigger-{stream}'
       - 'integration-update-csit-tests-{stream}'
+      - '{project-name}-rtd-jobs':
+          build-node: centos7-builder-2c-2g
+          project-pattern: integration/test
+          rtd-project: odl-integrationtest
       - gerrit-tox-verify:
           branch: master
           stream: master
