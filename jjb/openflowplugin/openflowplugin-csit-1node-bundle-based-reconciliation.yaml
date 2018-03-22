@@ -1,0 +1,30 @@
+---
+- project:
+    name: openflowplugin-csit-bundle-based-reconciliation
+    jobs:
+      - inttest-csit-1node
+
+    # The project name
+    project: 'openflowplugin'
+
+    # The functionality under test
+    functionality: 'bundle-based-reconciliation'
+
+    # Project branches
+    stream:
+      - oxygen:
+          branch: 'master'
+      - nitrogen:
+          branch: 'stable/nitrogen'
+
+    install:
+      - all:
+          scope: 'all'
+
+    # Job images
+    tools_system_count: 2
+    tools_system_image: 'ZZCI - Ubuntu 16.04 - mininet-ovs-26 - 20171208-1847'
+
+    # Features to install
+    install-features: >
+        odl-openflowplugin-flow-services-rest
