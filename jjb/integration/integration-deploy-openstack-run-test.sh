@@ -482,43 +482,25 @@ defaults
 listen opendaylight
   bind ${MGRIP}:8080
   balance source
-EOF
 
-    odlindex=1
-    for odlip in ${ODL_IPS[*]}; do
-        cat >> ${WORKSPACE}/haproxy.cfg << EOF
-  server controller-${odlindex} ${odlip}:8080 check fall 5 inter 2000 rise 2
-EOF
-        odlindex=$((odlindex+1))
-    done
-
-    cat >> ${WORKSPACE}/haproxy.cfg << EOF
 listen opendaylight_rest
   bind ${MGRIP}:8181
   balance source
-EOF
 
-    odlindex=1
-    for odlip in ${ODL_IPS[*]}; do
-        cat >> ${WORKSPACE}/haproxy.cfg << EOF
-  server controller-rest-${odlindex} ${odlip}:8181 check fall 5 inter 2000 rise 2
-EOF
-        odlindex=$((odlindex+1))
-    done
-
-    cat >> ${WORKSPACE}/haproxy.cfg << EOF
-listen opendaylight_rest
+listen opendaylight_websocket
   bind ${MGRIP}:8185
   balance source
+
 EOF
 
     odlindex=1
     for odlip in ${ODL_IPS[*]}; do
-        cat >> ${WORKSPACE}/haproxy.cfg << EOF
-  server controller-websocket-${odlindex} ${odlip}:8185 check fall 5 inter 2000 rise 2
-EOF
+        sed -i '/listen opendaylight$/a server controller-${odlindex} ${odlip}:8080 check fall 5 inter 2000 rise 2' ${WORKSPACE}/haproxy.cfg
+        sed -i '/listen opendaylight_rest$/a server controller-rest-${odlindex} ${odlip}:8181 check fall 5 inter 2000 rise 2' ${WORKSPACE}/haproxy.cfg
+        sed -i '/listen opendaylight_websocket$/a server controller-websocket-${odlindex} ${odlip}:8185 check fall 5 inter 2000 rise 2' ${WORKSPACE}/haproxy.cfg
         odlindex=$((odlindex+1))
     done
+
 
     echo "Dump haproxy.cfg"
     cat ${WORKSPACE}/haproxy.cfg
