@@ -14,6 +14,18 @@ PYTHON="rpm_build/bin/python"
 $PYTHON -m pip install --upgrade pip
 $PYTHON -m pip install -r "$WORKSPACE/packaging/packages/requirements.txt"
 
+# Verify artifact at DOWNLOAD_URL exists
+# shellcheck disable=SC2154
+url_status=$(curl --silent --head --location --output /dev/null --write-out \
+  '%{http_code}' "$DOWNLOAD_URL")
+if [[ $url_status = 2* ]]; then
+  echo "Artifact at DOWNLOAD_URL exists"
+else
+  echo "Artifact at DOWNLOAD_URL does not exist"
+  exit 1
+fi
+
+
 # Packaging logic needs a tarball, but can repackage a zip into tar.gz
 # if needed. All builds except multipatch-test publish both a tar.gz and zip.
 # Autorelease passes DOWNLOAD_URL to zip, others typically use tar.gz.
