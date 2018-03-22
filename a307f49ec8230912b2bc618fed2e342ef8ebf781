@@ -34,6 +34,24 @@
       "revId": "a307f49ec8230912b2bc618fed2e342ef8ebf781",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dd71d335_d56255e2",
+        "filename": "jjb/integration/integration-macros.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2018-03-22T22:06:54Z",
+      "side": 0,
+      "message": "I did intentionally remove it so that the default -6 takes effect. Note the table in man page, where it is noted:\n\nCompCPU  is a simplified representation of the LZMA2 settings that affect compression speed.  The dictionary size affects speed too, so while CompCPU is the same for levels -6 ... -9, higher levels still tend to be a little slower.\n\nI do not have benchmarks readily available, so I am fine either way ;-)",
+      "parentUuid": "9484caa7_b537ce5e",
+      "revId": "a307f49ec8230912b2bc618fed2e342ef8ebf781",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
