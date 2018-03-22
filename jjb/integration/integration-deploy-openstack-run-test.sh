@@ -506,6 +506,20 @@ EOF
         odlindex=$((odlindex+1))
     done
 
+    cat >> ${WORKSPACE}/haproxy.cfg << EOF
+listen opendaylight_rest
+  bind ${MGRIP}:8185
+  balance source
+EOF
+
+    odlindex=1
+    for odlip in ${ODL_IPS[*]}; do
+        cat >> ${WORKSPACE}/haproxy.cfg << EOF
+  server controller-websocket-${odlindex} ${odlip}:8185 check fall 5 inter 2000 rise 2
+EOF
+        odlindex=$((odlindex+1))
+    done
+
     echo "Dump haproxy.cfg"
     cat ${WORKSPACE}/haproxy.cfg
 
