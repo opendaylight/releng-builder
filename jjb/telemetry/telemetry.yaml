@@ -1,0 +1,38 @@
+---
+- project:
+    name: telemetry-fluorine
+    jobs:
+      - '{project-name}-clm-{stream}'
+      - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-integration-{stream}'
+      - '{project-name}-merge-{stream}'
+      - '{project-name}-verify-{stream}-{maven}-{jdks}'
+      - gerrit-maven-verify-dependencies
+
+    stream: fluorine
+    project: 'telemetry'
+    project-name: 'telemetry'
+    branch: 'master'
+    jdks:
+      - openjdk8
+    maven:
+      - mvn33:
+          mvn-version: 'mvn33'
+    mvn-settings: 'telemetry-settings'
+    mvn-goals: 'clean install'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: ''
+    email-upstream: '[telemetry]'
+    archive-artifacts: ''
+
+- project:
+    name: telemetry-sonar
+    jobs:
+      - '{project-name}-sonar'
+
+    project: 'telemetry'
+    project-name: 'telemetry'
+    branch: 'master'
+    mvn-settings: 'telemetry-settings'
+    mvn-goals: 'clean install'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
