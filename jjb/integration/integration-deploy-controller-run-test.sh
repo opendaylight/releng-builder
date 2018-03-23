@@ -16,10 +16,8 @@ fi
 if [ ${CONTROLLERSCOPE} == 'all' ]; then
     ACTUALFEATURES="odl-integration-compatible-with-all,${CONTROLLERFEATURES}"
     export CONTROLLERMEM="3072m"
-    COOLDOWN_PERIOD="180"
 else
     ACTUALFEATURES="odl-infrautils-ready,${CONTROLLERFEATURES}"
-    COOLDOWN_PERIOD="60"
 fi
 
 # Some versions of jenkins job builder result in feature list containing spaces
@@ -154,20 +152,62 @@ if [[ "$USEFEATURESBOOT" != "True" ]]; then
                          feature:list -i
 fi
 
-echo "Waiting for controller to come up..."
-COUNT="0"
-while true; do
-    RESP="\$( curl --user admin:admin -sL -w "%{http_code} %{url_effective}\\n" http://localhost:8181/restconf/modules -o /dev/null )"
-    echo \$RESP
-    if [ "${ENABLE_HAPROXY_FOR_NEUTRON}" == "yes" ]; then
-        SHARD="\$( curl --user admin:admin -sL -w "%{http_code} %{url_effective}\\n" http://localhost:8181/jolokia/read/org.opendaylight.controller:Category=Shards,name=\member-\$1-shard-inventory-config,type=DistributedConfigDatastore)"
-        echo \$SHARD
+if [ "${DISTROSTREAM}" == "carbon" ] || [ "${DISTROSTREAM}" == "nitrogen" ];
+then
+    echo "only oxygen and above have the infrautils.ready feature, so using REST API to /modules or /shards to determine if the controller is ready.";
+
+    COUNT="0"
+
+    while true; do
+        RESP="\$( curl --user admin:admin -sL -w "%{http_code} %{url_effective}\\n" http://localhost:8181/restconf/modules -o /dev/null )"
+        echo \$RESP
+
+        if [ "${ENABLE_HAPROXY_FOR_NEUTRON}" == "yes" ]; then
+            SHARD="\$( curl --user admin:admin -sL -w "%{http_code} %{url_effective}\\n" http://localhost:8181/jolokia/read/org.opendaylight.controller:Category=Shards,name=\member-\$1-shard-inventory-config,type=DistributedConfigDatastore)"
+            echo \$SHARD
+        fi
+
+        if ([[ \$RESP == *"200"* ]] && ([[ "${ENABLE_HAPROXY_FOR_NEUTRON}" != "yes" ]] || [[ \$SHARD  == *'"status":200'* ]])); then
+            echo "Controller is UP"
+            break
+
+        elif (( "\$COUNT" > "600" )); then
+            echo Timeout Controller DOWN
+            echo "Dumping first 500K bytes of karaf log..."
+            head --bytes=500K "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
+            echo "Dumping last 500K bytes of karaf log..."
+            tail --bytes=500K "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
+            echo "Listing all open ports on controller system"
+            netstat -pnatu
+            exit 1
+        else
+
+        COUNT=\$(( \${COUNT} + 1 ))
+        sleep 1
+
+        if [[ \$((\$COUNT % 5)) == 0 ]]; then
+            echo already waited \${COUNT} seconds...
+        fi
     fi
-    if ([[ \$RESP == *"200"* ]] && ([[ "${ENABLE_HAPROXY_FOR_NEUTRON}" != "yes" ]] || [[ \$SHARD  == *'"status":200'* ]])); then
-        echo Controller is UP
-        break
-    elif (( "\$COUNT" > "600" )); then
-        echo Timeout Controller DOWN
+    done
+
+else
+    echo "Waiting up to 3 minutes for controller to come up, checking every 5 seconds..."
+    for i in {1..36};
+        do sleep 5;
+        grep 'org.opendaylight.infrautils.ready-impl.*System ready' /tmp/${BUNDLEFOLDER}/data/log/karaf.log
+        if [ \$? -eq 0 ]
+        then
+          echo "Controller is UP"
+          break
+        fi
+    done;
+
+    # if we ended up not finding ready status in the above loop, we can output some debugs
+    grep 'org.opendaylight.infrautils.ready-impl.*System ready' /tmp/${BUNDLEFOLDER}/data/log/karaf.log
+    if [ $? -ne 0 ]
+    then
+        echo "Timeout Controller DOWN"
         echo "Dumping first 500K bytes of karaf log..."
         head --bytes=500K "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
         echo "Dumping last 500K bytes of karaf log..."
@@ -175,14 +215,8 @@ while true; do
         echo "Listing all open ports on controller system"
         netstat -pnatu
         exit 1
-    else
-        COUNT=\$(( \${COUNT} + 1 ))
-        sleep 1
-        if [[ \$((\$COUNT % 5)) == 0 ]]; then
-            echo already waited \${COUNT} seconds...
-        fi
     fi
-done
+fi
 
 echo "Listing all open ports on controller system..."
 netstat -pnatu
@@ -265,9 +299,6 @@ do
         seed_index=1
     fi
 done
-
-echo "Cool down for ${COOLDOWN_PERIOD} seconds :)..."
-sleep ${COOLDOWN_PERIOD}
 
 echo "Generating controller variables..."
 for i in `seq 1 ${NUM_ODL_SYSTEM}`
