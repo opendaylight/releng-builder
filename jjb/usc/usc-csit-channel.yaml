@@ -15,6 +15,9 @@
     stream:
       - fluorine:
           branch: 'master'
+          trigger-jobs: '{project}-merge-{stream}'
+          # yamllint disable-line rule:line-length
+          bundle-url: 'https://jenkins.opendaylight.org/releng/view/usc/job/usc-merge-fluorine/lastBuild/org.opendaylight.usc$usc-karaf/artifact/org.opendaylight.usc/usc-karaf/1.6.0-SNAPSHOT/usc-karaf-1.6.0-SNAPSHOT.zip'
       - oxygen:
           branch: 'stable/oxygen'
       - nitrogen:
