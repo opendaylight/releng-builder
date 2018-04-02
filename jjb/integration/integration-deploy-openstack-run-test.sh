@@ -187,6 +187,44 @@ function install_rdo_release() {
     esac
 }
 
+# Involves just setting up the shared directory
+function setup_live_migration_control() {
+    local control_ip=$1
+    printf "${control_ip}:Setup directory Share with NFS"
+    cat > ${WORKSPACE}/setup_live_migration_control.sh << EOF
+sudo mkdir --mode=777 /vm_instances
+sudo chown -R jenkins:jenkins /vm_instances
+sudo yum install -y nfs-utils
+printf "/vm_instances *(rw,no_root_squash)" | sudo tee -a /etc/exports
+sudo systemctl start rpcbind nfs-server
+sudo exportfs
+EOF
+    scp ${WORKSPACE}/setup_live_migration_control.sh ${control_ip}:/tmp/setup_live_migration_control.sh
+    ssh ${control_ip} "bash /tmp/setup_live_migration_control.sh"
+}
+
+# Involves mounting the share and configuring the libvirtd
+function setup_live_migration_compute() {
+    local compute_ip=$1
+    local control_ip=$2
+    printf "${compute_ip}:Mount Shared directory from ${control_ip}"
+    printf "${compute_ip}:Configure libvirt in listen mode"
+    cat >  ${WORKSPACE}/setup_live_migration_compute.sh << EOF
+sudo yum install -y libvirt libvirt-devel nfs-utils
+sudo crudini --verbose  --set --inplace /etc/libvirt/libvirtd.conf '' listen_tls 0
+sudo crudini --verbose  --set --inplace /etc/libvirt/libvirtd.conf '' listen_tcp 1
+sudo crudini --verbose  --set --inplace /etc/libvirt/libvirtd.conf '' auth_tcp '"none"'
+sudo crudini --verbose  --set --inplace /etc/sysconfig/libvirtd '' LIBVIRTD_ARGS '"--listen"'
+sudo mkdir --mode=777 -p /var/instances
+sudo chown -R jenkins:jenkins /var/instances
+sudo chmod o+x /var/instances
+sudo systemctl start rpcbind
+sudo mount -t nfs ${control_ip}:/vm_instances /var/instances
+sudo mount
+EOF
+    scp ${WORKSPACE}/setup_live_migration_compute.sh ${compute_ip}:/tmp/setup_live_migration_compute.sh
+    ssh ${compute_ip} "bash /tmp/setup_live_migration_compute.sh"
+}
 
 # Add enable_services and disable_services to the local.conf
 function add_os_services() {
@@ -436,6 +474,15 @@ auth_strategy = keystone
 [DEFAULT]
 use_neutron = True
 force_raw_images = False
+instances_path = /var/instances
+[libvirt]
+live_migration_flag=VIR_MIGRATE_UNDEFINE_SOURCE,VIR_MIGRATE_PEER2PEER,VIR_MIGRATE_LIVE,VIR_MIGRATE_TUNNELLED
+vif_driver = nova.virt.libvirt.vif.LibvirtGenericVIFDriver
+live_migration_uri = qemu+tcp://%s/system
+inject_partition = -2
+use_usb_tablet = False
+cpu_mode = none
+virt_type = qemu
 EOF
 
     echo "Compute local.conf created:"
@@ -1075,6 +1122,7 @@ for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
     scp ${WORKSPACE}/local.conf_control_${!CONTROLIP} ${!CONTROLIP}:/opt/stack/devstack/local.conf
     echo "Install rdo release to avoid incompatible Package versions"
     install_rdo_release ${!CONTROLIP}
+    setup_live_migration_control ${!CONTROLIP}
     echo "Stack the control node ${i} of ${NUM_OPENSTACK_CONTROL_NODES}: ${CONTROLIP}"
     ssh ${!CONTROLIP} "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
     ssh ${!CONTROLIP} "ps -ef | grep stack.sh"
@@ -1132,6 +1180,7 @@ for i in `seq 1 ${NUM_OPENSTACK_COMPUTE_NODES}`; do
     scp ${WORKSPACE}/local.conf_compute_${!COMPUTEIP} ${!COMPUTEIP}:/opt/stack/devstack/local.conf
     echo "Install rdo release to avoid incompatible Package versions"
     install_rdo_release ${!COMPUTEIP}
+    setup_live_migration_compute ${!COMPUTEIP} ${!CONTROLIP}
     echo "Stack the compute node ${i} of ${NUM_OPENSTACK_COMPUTE_NODES}: ${COMPUTEIP}"
     ssh ${!COMPUTEIP} "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
     ssh ${!COMPUTEIP} "ps -ef | grep stack.sh"
