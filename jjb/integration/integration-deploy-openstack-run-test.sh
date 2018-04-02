@@ -187,6 +187,44 @@ function install_rdo_release() {
     esac
 }
 
+# Involves just setting up the shared directory
+function setup_live_migration_control() {
+    local control_ip=$1
+    printf "${control_ip}:Setup directory Share with NFS"
+    cat > ${WORKSPACE}/setup_live_migration_control.sh << EOF
+sudo mkdir --mode=777 /vm_instances
+sudo chown -R jenkins:jenkins /vm_instances
+sudo yum install -y nfs-utils
+printf "/vm_instances *(rw,no_root_squash)" | sudo tee -a /etc/exports
+sudo systemctl start rpcbind nfs-server
+sudo exportfs
+EOF
+    scp ${WORKSPACE}/setup_live_migration_control.sh ${control_ip}:/tmp/setup_live_migration_control.sh
+    ssh ${control_ip} "bash /tmp/setup_live_migration_control.sh"
+}
+
+# Involves mounting the share and configuring the libvirtd
+function setup_live_migration_compute() {
+    local compute_ip=$1
+    local control_ip=$2
+    printf "${compute_ip}:Mount Shared directory from ${control_ip}"
+    printf "${compute_ip}:Configure libvirt in listen mode"
+    cat >  ${WORKSPACE}/setup_live_migration_compute.sh << EOF
+sudo yum install -y libvirt libvirt-devel nfs-utils
+sudo crudini --verbose  --set --inplace /etc/libvirt/libvirtd.conf '' listen_tls 0
+sudo crudini --verbose  --set --inplace /etc/libvirt/libvirtd.conf '' listen_tcp 1
+sudo crudini --verbose  --set --inplace /etc/libvirt/libvirtd.conf '' auth_tcp '"none"'
+sudo crudini --verbose  --set --inplace /etc/sysconfig/libvirtd '' LIBVIRTD_ARGS '"--listen"'
+sudo mkdir --mode=777 -p /var/instances
+sudo chown -R jenkins:jenkins /var/instances
+sudo chmod o+x /var/instances
+sudo systemctl start rpcbind
+sudo mount -t nfs ${control_ip}:/vm_instances /var/instances
+sudo mount
+EOF
+    scp ${WORKSPACE}/setup_live_migration_compute.sh ${compute_ip}:/tmp/setup_live_migration_compute.sh
+    ssh ${compute_ip} "bash /tmp/setup_live_migration_compute.sh"
+}
 
 # Add enable_services and disable_services to the local.conf
 function add_os_services() {
@@ -225,9 +263,8 @@ function create_control_node_local_conf() {
     cat > ${local_conf_file_name} << EOF
 [[local|localrc]]
 LOGFILE=stack.sh.log
-USE_SCREEN=True
-SCREEN_LOGDIR=/opt/stack/data/log
 LOG_COLOR=False
+USE_SYSTEMD=True
 RECLONE=${RECLONE}
 # Increase the wait used by stack to poll for services
 SERVICE_TIMEOUT=120
@@ -334,6 +371,7 @@ EOF
 [[post-config|\$NEUTRON_CONF]]
 [DEFAULT]
 service_plugins = ${SERVICE_PLUGINS}
+log_dir = /opt/stack/logs
 
 [[post-config|/etc/neutron/plugins/ml2/ml2_conf.ini]]
 [agent]
@@ -349,11 +387,13 @@ path_mtu = 1458
 [DEFAULT]
 force_metadata = True
 enable_isolated_metadata = True
+log_dir = /opt/stack/logs
 
 [[post-config|/etc/nova/nova.conf]]
 [DEFAULT]
 force_config_drive = False
 force_raw_images = False
+log_dir = /opt/stack/logs
 
 [scheduler]
 discover_hosts_in_cells_interval = 30
@@ -374,8 +414,7 @@ function create_compute_node_local_conf() {
 [[local|localrc]]
 LOGFILE=stack.sh.log
 LOG_COLOR=False
-USE_SCREEN=True
-SCREEN_LOGDIR=/opt/stack/data/log
+USE_SYSTEMD=True
 RECLONE=${RECLONE}
 # Increase the wait used by stack to poll for the nova service on the control node
 NOVA_READY_TIMEOUT=1800
@@ -436,6 +475,10 @@ auth_strategy = keystone
 [DEFAULT]
 use_neutron = True
 force_raw_images = False
+log_dir = /opt/stack/logs
+[libvirt]
+live_migration_uri = qemu+tcp://%s/system
+virt_type = qemu
 EOF
 
     echo "Compute local.conf created:"
@@ -1075,6 +1118,7 @@ for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
     scp ${WORKSPACE}/local.conf_control_${!CONTROLIP} ${!CONTROLIP}:/opt/stack/devstack/local.conf
     echo "Install rdo release to avoid incompatible Package versions"
     install_rdo_release ${!CONTROLIP}
+    setup_live_migration_control ${!CONTROLIP}
     echo "Stack the control node ${i} of ${NUM_OPENSTACK_CONTROL_NODES}: ${CONTROLIP}"
     ssh ${!CONTROLIP} "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
     ssh ${!CONTROLIP} "ps -ef | grep stack.sh"
@@ -1132,6 +1176,7 @@ for i in `seq 1 ${NUM_OPENSTACK_COMPUTE_NODES}`; do
     scp ${WORKSPACE}/local.conf_compute_${!COMPUTEIP} ${!COMPUTEIP}:/opt/stack/devstack/local.conf
     echo "Install rdo release to avoid incompatible Package versions"
     install_rdo_release ${!COMPUTEIP}
+    setup_live_migration_compute ${!COMPUTEIP} ${!CONTROLIP}
     echo "Stack the compute node ${i} of ${NUM_OPENSTACK_COMPUTE_NODES}: ${COMPUTEIP}"
     ssh ${!COMPUTEIP} "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
     ssh ${!COMPUTEIP} "ps -ef | grep stack.sh"
@@ -1459,6 +1504,7 @@ for suite in ${SUITES}; do
     -v OS_COMPUTE_4_IP:${OPENSTACK_COMPUTE_NODE_4_IP} \
     -v OS_COMPUTE_5_IP:${OPENSTACK_COMPUTE_NODE_5_IP} \
     -v OS_COMPUTE_6_IP:${OPENSTACK_COMPUTE_NODE_6_IP} \
+    -v CMP_INSTANCES_SHARED_PATH:/var/instances \
     -v OS_USER:${USER} \
     -v PUBLIC_PHYSICAL_NETWORK:${PUBLIC_PHYSICAL_NETWORK} \
     -v SECURITY_GROUP_MODE:${SECURITY_GROUP_MODE} \
