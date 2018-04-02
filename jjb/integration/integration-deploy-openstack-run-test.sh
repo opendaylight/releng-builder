@@ -193,6 +193,35 @@ function install_rdo_release() {
     esac
 }
 
+#Involves just setting up the shared directory
+function setup_live_migration_control(){
+    local control_ip=$1
+    ${SSH} ${control_ip} "sudo mkdir /vm_instances;chmod -R 777 /vm_instances"
+    ${SSH} ${control_ip} "sudo yum install -y nfs-utils"
+    ${SSH} ${control_ip} "echo /vm_instances *\\(rw,no_root_squash\\) >> /etc/exports"
+    ${SSH} ${control_ip} "sudo systemctl start rpcbind nfs-server"
+    ${SSH} ${control_ip} "sudo exportfs"
+}
+
+#Involves mounting the share and configuring the libvirtd
+function setup_live_migration_compute() {
+    local compute_ip=$1
+    local control_ip=$2
+    ${SSH} ${compute_ip} "sudo yum install -y libvirtd nfs-utils"
+    ${SSH} ${compute_ip} "sudo sudo crudini --verbose  --set --inplace /etc/libvirt/libvirtd.conf '' listen_tls 0"
+    ${SSH} ${compute_ip} "sudo sudo crudini --verbose  --set --inplace /etc/libvirt/libvirtd.conf '' listen_tcp 1"
+    ${SSH} ${compute_ip} "sudo sudo crudini --verbose  --set --inplace /etc/libvirt/libvirtd.conf '' auth_tcp '"none"'"
+    ${SSH} ${compute_ip} "sudo sudo crudini --verbose  --set --inplace /etc/sysconfig/libvirtd '' LIBVIRTD_ARGS '"--listen"'"
+    ${SSH} ${compute_ip} "sudo mkdir -p /var/instances;chmod -R 777 /var/instances"
+    ${SSH} ${compute_ip} "sudo systemctl start rpcbind"
+    ${SSH} ${compute_ip} "sudo mount -t nfs ${control_ip}:/vm_instances /var/instances"
+}
+
+function enable_nova_use_shared_directory() {
+    local compute_ip=$1
+    ${SSH} ${compute_ip} "sudo chown -R nova:nova /var/instances"
+}
+
 
 # Add enable_services and disable_services to the local.conf
 function add_os_services() {
@@ -360,6 +389,7 @@ enable_isolated_metadata = True
 [DEFAULT]
 force_config_drive = False
 force_raw_images = False
+instances_path = /var/instances
 
 [scheduler]
 discover_hosts_in_cells_interval = 30
@@ -1080,6 +1110,8 @@ for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
     scp ${WORKSPACE}/local.conf_control_${!CONTROLIP} ${!CONTROLIP}:/opt/stack/devstack/local.conf
     echo "Install rdo release to avoid incompatible Package versions"
     install_rdo_release ${!CONTROLIP}
+    echo "Setup Shared Directory For Live Migration Testing"
+    setup_live_migration_control ${!CONTROLIP}
     echo "Stack the control node ${i} of ${NUM_OPENSTACK_CONTROL_NODES}: ${CONTROLIP}"
     ssh ${!CONTROLIP} "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
     ssh ${!CONTROLIP} "ps -ef | grep stack.sh"
@@ -1137,6 +1169,8 @@ for i in `seq 1 ${NUM_OPENSTACK_COMPUTE_NODES}`; do
     scp ${WORKSPACE}/local.conf_compute_${!COMPUTEIP} ${!COMPUTEIP}:/opt/stack/devstack/local.conf
     echo "Install rdo release to avoid incompatible Package versions"
     install_rdo_release ${!COMPUTEIP}
+    echo "Mount shared directory from Control Node/Configure libvirtd for Live Migration Tests"
+    setup_live_migration_compute ${!COMPUTEIP} ${!CONTROLIP}
     echo "Stack the compute node ${i} of ${NUM_OPENSTACK_COMPUTE_NODES}: ${COMPUTEIP}"
     ssh ${!COMPUTEIP} "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
     ssh ${!COMPUTEIP} "ps -ef | grep stack.sh"
