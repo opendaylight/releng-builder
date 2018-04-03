@@ -1013,6 +1013,10 @@ sed -i 's/wait_for_compute 60/wait_for_compute 1800/g' /opt/stack/devstack/lib/n
 # TODO: modify sleep 1 to sleep 60, search wait_for_compute, then first sleep 1
 # that would just reduce the number of logs in the compute stack.log
 
+echo "workaround: do not upgrade openvswitch"
+sudo yum install -y yum-plugin-versionlock
+sudo yum versionlock add openvswitch
+
 #Install qemu-img command in Control Node for Pike
 echo "Install qemu-img application"
 sudo yum install -y qemu-img
