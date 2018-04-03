@@ -148,8 +148,7 @@ function csv2ssv() {
 
 function is_openstack_feature_enabled() {
     local feature=$1
-    for enabled_feature in $(csv2ssv ${ENABLE_OS_SERVICES})
-    do
+    for enabled_feature in $(csv2ssv ${ENABLE_OS_SERVICES}); do
         if [ "${enabled_feature}" == "${feature}" ]; then
            echo 1
            return
@@ -160,6 +159,9 @@ function is_openstack_feature_enabled() {
 
 function fix_libvirt_version_n_cpu_ocata() {
     local ip=$1
+    echo "Updating requirements for ${ODL_ML2_BRANCH}"
+    echo "Workaround for https://review.openstack.org/#/c/491032/"
+    echo "Modify upper-constraints to use libvirt-python 3.2.0"
     ${SSH} ${ip} "
         cd /opt/stack;
         git clone https://git.openstack.org/openstack/requirements;
@@ -701,8 +703,19 @@ EOF
     for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
         OSIP=OPENSTACK_CONTROL_NODE_${i}_IP
         echo "collect_logs: for openstack control node ip: ${!OSIP}"
-        NODE_FOLDER="control_${i}"
+        if [ "$(is_openstack_feature_enabled n-cpu)" == "1" ]; then
+            NODE_FOLDER="cntl_comp_${i}"
+        else
+            NODE_FOLDER="control_${i}"
+        fi
         mkdir -p ${NODE_FOLDER}
+        # Capture compute logs if this is a combo node
+        if [ "$(is_openstack_feature_enabled n-cpu)" == "1" ]; then
+            scp ${!OSIP}:/etc/nova/nova.conf ${NODE_FOLDER}
+            scp ${!OSIP}:/etc/nova/nova-cpu.conf ${NODE_FOLDER}
+            scp ${!OSIP}:/etc/openstack/clouds.yaml ${NODE_FOLDER}
+            rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/nova-agent.log ${NODE_FOLDER}
+        fi
         scp extra_debug.sh ${!OSIP}:/tmp
         ${SSH} ${!OSIP} "bash /tmp/extra_debug.sh > /tmp/extra_debug.log 2>&1"
         scp ${!OSIP}:/etc/dnsmasq.conf ${NODE_FOLDER}
@@ -1075,9 +1088,6 @@ for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
        ssh ${!CONTROLIP} "sed -i '186i iniset \$NEUTRON_CORE_PLUGIN_CONF ml2_type_vlan network_vlan_ranges public:1:4094,physnet1:1:4094' /opt/stack/devstack/lib/neutron"
     fi
     if [[ "${ODL_ML2_BRANCH}" == "stable/ocata" && "$(is_openstack_feature_enabled n-cpu)" == "1" ]]; then
-        echo "Updating requirements for ${ODL_ML2_BRANCH}"
-        echo "Workaround for https://review.openstack.org/#/c/491032/"
-        echo "Modify upper-constraints to use libvirt-python 3.2.0"
         fix_libvirt_version_n_cpu_ocata ${!CONTROLIP}
     fi
     create_control_node_local_conf ${!CONTROLIP} ${ODLMGRIP[$i]} "${ODL_OVS_MGRS[$i]}"
@@ -1119,8 +1129,9 @@ if [ ${NUM_OPENSTACK_COMPUTE_NODES} -gt 0 ]; then
     fi
 fi
 
+NUM_COMPUTES_PER_SITE=$((NUM_OPENSTACK_COMPUTE_NODES / NUM_OPENSTACK_SITES))
+
 for i in `seq 1 ${NUM_OPENSTACK_COMPUTE_NODES}`; do
-    NUM_COMPUTES_PER_SITE=$((NUM_OPENSTACK_COMPUTE_NODES / NUM_OPENSTACK_SITES))
     SITE_INDEX=$((((i - 1) / NUM_COMPUTES_PER_SITE) + 1)) # We need the site index to infer the control node IP for this compute
     COMPUTEIP=OPENSTACK_COMPUTE_NODE_${i}_IP
     CONTROLIP=OPENSTACK_CONTROL_NODE_${SITE_INDEX}_IP
@@ -1132,9 +1143,6 @@ for i in `seq 1 ${NUM_OPENSTACK_COMPUTE_NODES}`; do
     scp ${WORKSPACE}/get_devstack.sh  ${!COMPUTEIP}:/tmp
     ${SSH} ${!COMPUTEIP} "bash /tmp/get_devstack.sh > /tmp/get_devstack.sh.txt 2>&1"
     if [ "${ODL_ML2_BRANCH}" == "stable/ocata" ]; then
-        echo "Updating requirements for ${ODL_ML2_BRANCH}"
-        echo "Workaround for https://review.openstack.org/#/c/491032/"
-        echo "Modify upper-constraints to use libvirt-python 3.2.0"
         fix_libvirt_version_n_cpu_ocata ${!COMPUTEIP}
     fi
     create_compute_node_local_conf ${!COMPUTEIP} ${!CONTROLIP} ${ODLMGRIP[$SITE_INDEX]} "${ODL_OVS_MGRS[$SITE_INDEX]}"
@@ -1225,9 +1233,11 @@ for i in `seq 1 ${NUM_OPENSTACK_SITES}`; do
     # In Ocata if we do not enable the n-cpu in control node then
     # we need to discover hosts manually and ensure that they are mapped to cells.
     # reference: https://ask.openstack.org/en/question/102256/how-to-configure-placement-service-for-compute-node-on-ocata/
-    if [ "${OPENSTACK_BRANCH}" == "stable/ocata" ]; then
-        scp ${WORKSPACE}/setup_host_cell_mapping.sh  ${!CONTROLIP}:/tmp
-        ${SSH} ${!CONTROLIP} "sudo bash /tmp/setup_host_cell_mapping.sh"
+    if [ "$(is_openstack_feature_enabled n-cpu)" == "0" ]; then
+        if [ "${OPENSTACK_BRANCH}" == "stable/ocata" ]; then
+            scp ${WORKSPACE}/setup_host_cell_mapping.sh  ${!CONTROLIP}:/tmp
+            ${SSH} ${!CONTROLIP} "sudo bash /tmp/setup_host_cell_mapping.sh"
+        fi
     fi
     ${SSH} ${!CONTROLIP} "cd /opt/stack/devstack; source openrc admin admin; nova hypervisor-list"
     # in the case that we are doing openstack (control + compute) all in one node, then the number of hypervisors
@@ -1238,6 +1248,9 @@ for i in `seq 1 ${NUM_OPENSTACK_SITES}`; do
         expected_num_hypervisors=1
     else
         expected_num_hypervisors=${NUM_COMPUTES_PER_SITE}
+        if [ "$(is_openstack_feature_enabled n-cpu)" == "1" ]; then
+            expected_num_hypervisors=$((expected_num_hypervisors + 1))
+        fi
     fi
     num_hypervisors=$(${SSH} ${!CONTROLIP} "cd /opt/stack/devstack; source openrc admin admin; openstack hypervisor list -f value | wc -l" | tail -1 | tr -d "\r")
     if ! [ "${num_hypervisors}" ] || ! [ ${num_hypervisors} -eq ${expected_num_hypervisors} ]; then
