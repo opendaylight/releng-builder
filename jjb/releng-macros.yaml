@@ -485,7 +485,13 @@
     publishers:
       - postbuildscript:
           builders:
-            - shell: !include-raw: generate-csit-status-report.sh
-          script-only-if-succeeded: false
-          script-only-if-failed: false
-          mark-unstable-if-failed: false
+            - role: BOTH
+              build-on:
+                - ABORTED
+                - FAILURE
+                - NOT_BUILT
+                - SUCCESS
+                - UNSTABLE
+              build-steps:
+                - shell: !include-raw: generate-csit-status-report.sh
+          mark-unstable-if-failed: true

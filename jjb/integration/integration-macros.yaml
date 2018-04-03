@@ -522,44 +522,57 @@
     publishers:
       - postbuildscript:
           builders:
-            - shell: |
-                #!/bin/bash
-                cd $WORKSPACE
-                mkdir -p ./archives
-                curl --output robot-plugin.zip "$BUILD_URL/robot/report/*zip*/robot-plugin.zip"
-                unzip -d ./archives robot-plugin.zip
-                mv *.log *.log.gz *.csv *.png ./archives || true  # Don't fail if file missing
-                # TODO: Can the following line ever fail?
-                find . -type f -name *.hprof -print0 | tar -cvf - --null -T - | xz --threads=0 > ./archives/hprof.tar.xz
-                # TODO: Tweak the compression level if better ratio (or speed) is needed.
-          script-only-if-succeeded: 'False'
-          script-only-if-failed: 'False'
-          mark-unstable-if-failed: 'True'
+            - role: BOTH
+              build-on:
+                - ABORTED
+                - FAILURE
+                - NOT_BUILT
+                - SUCCESS
+                - UNSTABLE
+              build-steps:
+                - shell: |
+                    #!/bin/bash
+                    cd $WORKSPACE
+                    mkdir -p ./archives
+                    curl --output robot-plugin.zip "$BUILD_URL/robot/report/*zip*/robot-plugin.zip"
+                    unzip -d ./archives robot-plugin.zip
+                    mv *.log *.log.gz *.csv *.png ./archives || true  # Don't fail if file missing
+                    # TODO: Can the following line ever fail?
+                    find . -type f -name *.hprof -print0 | tar -cvf - --null -T - | xz --threads=0 > ./archives/hprof.tar.xz
+                    # TODO: Tweak the compression level if better ratio (or speed) is needed.
+          mark-unstable-if-failed: true
+
 
 - publisher:
     name: integration-csit-run-postscript
     publishers:
       - postbuildscript:
           builders:
-            - config-file-provider:
-                files:
-                  - file-id: 'odl-elastic-cloud'
-                    target: '${HOME}/.netrc'
-            - shell: |
-                #!/bin/bash
-                #The following script runs any configurable postplan stored in test/csit/postplans.
-                if [ -f "${WORKSPACE}/test/csit/postplans/${TESTPLAN}" ]; then
-                    echo "postplan exists!!!"
-                    echo "Changing the postplan path..."
-                    script_name=${WORKSPACE}/test/csit/postplans/${TESTPLAN}
-                    cat ${script_name} | sed "s:integration:${WORKSPACE}:" > postplan.txt
-                    cat postplan.txt
-                    egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' postplan.txt | while read -r line ; do
-                        echo "Executing ${line}..."
-                        ${line}
-                    done
-                fi
-                rm ${HOME}/.netrc
-          script-only-if-succeeded: 'False'
-          script-only-if-failed: 'False'
-          mark-unstable-if-failed: 'True'
+            - role: BOTH
+              build-on:
+                - ABORTED
+                - FAILURE
+                - NOT_BUILT
+                - SUCCESS
+                - UNSTABLE
+              build-steps:
+                - config-file-provider:
+                    files:
+                      - file-id: 'odl-elastic-cloud'
+                        target: '${HOME}/.netrc'
+                - shell: |
+                    #!/bin/bash
+                    #The following script runs any configurable postplan stored in test/csit/postplans.
+                    if [ -f "${WORKSPACE}/test/csit/postplans/${TESTPLAN}" ]; then
+                        echo "postplan exists!!!"
+                        echo "Changing the postplan path..."
+                        script_name=${WORKSPACE}/test/csit/postplans/${TESTPLAN}
+                        cat ${script_name} | sed "s:integration:${WORKSPACE}:" > postplan.txt
+                        cat postplan.txt
+                        egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' postplan.txt | while read -r line ; do
+                            echo "Executing ${line}..."
+                            ${line}
+                        done
+                    fi
+                    rm ${HOME}/.netrc
+          mark-unstable-if-failed: true
