@@ -162,6 +162,13 @@
     publishers:
       - postbuildscript:
           builders:
-            - shell: !include-raw: notify-build-failure.sh
-          script-only-if-succeeded: false
-          script-only-if-failed: true
+            - role: BOTH
+              build-on:
+                - ABORTED
+                - FAILURE
+                - NOT_BUILT
+                - SUCCESS
+                - UNSTABLE
+              build-steps:
+                - shell: !include-raw: notify-build-failure.sh
+          mark-unstable-if-failed: true
