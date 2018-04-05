@@ -16,6 +16,7 @@ echo "---> version-bump.sh"
 # The only purpose of RELEASE_TAG in this script is to set the Gerrit topic.
 # It is also used as a placeholder for version bumping but gets wiped out
 # immediately to bump versions by x.y.(z+1).
+TOPIC="${RELEASE_TAG}"
 RELEASE_TAG="${STREAM^}"
 
 mkdir -p "$WORKSPACE/archives"
@@ -131,7 +132,7 @@ git submodule foreach git checkout -f
 if [ "$DRY_RUN" = "false" ]
 then
     # Push up patches last, as long as nothing failed.
-    git submodule foreach git review --yes -t "${RELEASE_TAG}"
+    git submodule foreach git review --yes -t "${TOPIC}"
 fi
 
 echo "Version bumping complete."
