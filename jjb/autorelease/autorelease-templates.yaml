@@ -210,6 +210,17 @@
 
 - job-template:
     name: autorelease-update-validate-jobs-{stream}
+
+    ######################
+    # Default parameters #
+    ######################
+
+    cron: '@weekly'
+
+    #####################
+    # Job configuration #
+    #####################
+
     project-type: freestyle
     node: centos7-builder-2c-1g
 
@@ -234,6 +245,7 @@
           choosing-strategy: default
 
     triggers:
+      - timed: '{cron}'
       - gerrit:
           server-name: '{gerrit-server-name}'
           trigger-on:
