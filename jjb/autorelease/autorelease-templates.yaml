@@ -54,11 +54,12 @@
 - job-template:
     name: 'autorelease-release-{stream}'
 
-    ############
-    # Defaults #
-    ############
+    ######################
+    # Default parameters #
+    ######################
 
     build-node: '{build-node}'
+    cron: 'H 0 * * *'
     java-version: openjdk8
     mvn-version: mvn33
     extra-mvn-opts: ''
@@ -70,7 +71,6 @@
     project-type: freestyle
     node: '{build-node}'
     jdk: '{java-version}'
-    cron: 'H 0 * * *'
 
     properties:
       - lf-infra-properties:
