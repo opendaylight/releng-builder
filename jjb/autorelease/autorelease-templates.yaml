@@ -200,6 +200,15 @@
             predefined-parameters: DOWNLOAD_URL=$BUNDLE_URL
             property-file: variables.jenkins-trigger
             fail-on-missing: true
+      # Critical component of the OpenDaylight community
+      - postbuildscript:
+          builders:
+            - role: BOTH
+              build-on:
+                - SUCCESS
+              build-steps:
+                - shell: echo '#topic cookies'
+          mark-unstable-if-failed: false
       - lf-infra-publish
 
 - job-template:
