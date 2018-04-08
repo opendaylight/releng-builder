@@ -81,11 +81,11 @@ if [ ! -z "$ARTIFACT_ID" ]; then
     elif [ "${#grouplist[@]}" -gt 1 ]; then
         GROUPLIST="NOTE: The artifactId: $ARTIFACT_ID matches multiple groups: ${grouplist[*]}"
     else
-        echo "Failed to determine project.groupId using xpaths"
+        echo "Unable to determine project.groupId using xpaths"
     fi
 else
-    echo "Failed to determine ARTIFACT_ID"
-    exit 1
+    echo "Unable to determine failed ARTIFACT_ID. Build likely successful or bug in this script."
+    exit 0
 fi
 
 # Construct email subject & body
