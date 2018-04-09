@@ -539,6 +539,40 @@ To install from a tag, like 1.4.0:
     $ cat jjb/requirements.txt
     -e git+https://git.openstack.org/openstack-infra/jenkins-job-builder@1.4.0#egg=jenkins-job-builder
 
+Updating releng/builder repo or global-jjb
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Follow these steps to update the releng/builder repo. The repo uses a submodule from
+a global-jjb repo so that common source can be shared across different projects. This
+requires updating the releng/builder repo periodically to pick up the changes. New
+versions of jjb could also require updating the releng/builder repo. Follow the
+previous steps earlier for updating jenkins-jobs using the
+`builder/jjb/requirements.txt <odl-jjb-requirements.txt_>`_ file. Ensure that the
+version list in the file is the currently supported version, otherwise install a
+different version or simply upgrade using `pip install --upgrade jenkins-job-builder`.
+
+The example below assumes the user has cloned releng/builder to `~/git/releng/builder`.
+Update the repo, update the submodules and then submit a test to verify it works.
+
+.. code-block:: bash
+
+    cd ~/git/releng/builder
+    git checkout master
+    git pull
+    git submodule update --init --recursive
+    jenkins-jobs --conf jenkins.ini test jjb/ netvirt-csit-1node-openstack-queens-upstream-stateful-fluorine
+
+Updating jjb
+^^^^^^^^^^^^
+Use the methods below to update jenkins-jobs if needed.
+
+.. code-block:: bash
+
+    pip install -r jjb/requirements.txt
+    jenkins-jobs --version
+
+.. _odl-jjb-requirements.txt: https://git.opendaylight.org/gerrit/gitweb?p=releng/builder.git;a=blob;f=jjb/requirements.txt
+
 Installing JJB Manually
 -----------------------
 
