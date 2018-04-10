@@ -51,6 +51,23 @@
     staging-profile-id: a6927323fa3d4
 
 - project:
+    name: transportpce-nitrogen-unstable
+    jobs:
+      - odl-maven-jobs
+
+    project: 'transportpce'
+    project-name: 'transportpce'
+    stream: nitrogen
+    branch: 'nitrogen'
+    mvn-settings: 'transportpce-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream},netconf-merge-{stream}'
+    email-upstream: '[transportpce]'
+
+    # Used by the release job
+    staging-profile-id: a6927323fa3d4
+
+- project:
     name: transportpce-carbon
     jobs:
       - odl-maven-jobs
@@ -67,6 +84,25 @@
 
     # Used by the release job
     staging-profile-id: a6927323fa3d4
+
+- project:
+    name: transportpce-ATTsandbox
+    jobs:
+      - odl-maven-jobs
+
+    project: 'transportpce'
+    project-name: 'transportpce'
+    stream: carbon
+    branch: 'ATT-Sandbox'
+    karaf-version: karaf3
+    mvn-settings: 'transportpce-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream},netconf-merge-{stream}'
+    email-upstream: '[transportpce]'
+
+    # Used by the release job
+    staging-profile-id: a6927323fa3d4
+
 
 - project:
     name: transportpce-sonar
