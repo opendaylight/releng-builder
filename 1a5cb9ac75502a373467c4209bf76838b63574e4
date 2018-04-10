@@ -46,6 +46,30 @@
       "revId": "1a5cb9ac75502a373467c4209bf76838b63574e4",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a4416668_b98fc945",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2018-04-10T22:20:01Z",
+      "side": 1,
+      "message": "Ah I forgot about the csv2ssv command. It should probably look more like this then:\n\n local os_plugins\n IFS\u003d\" \" read -r -a os_plugins \u003c\u003c\u003c \"$(csv2ssv ${ENABLE_OS_PLUGINS})\"\n\n\nOr we could cut out the csv2ssv entirely and use IFS to deliminate on commas like:\n\n local os_plugins\n IFS\u003d\",\" read -r -a os_plugins \u003c\u003c\u003c \"${ENABLE_OS_PLUGINS}\"",
+      "parentUuid": "e411957b_74779eb7",
+      "range": {
+        "startLine": 114,
+        "startChar": 5,
+        "endLine": 114,
+        "endChar": 52
+      },
+      "revId": "1a5cb9ac75502a373467c4209bf76838b63574e4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
