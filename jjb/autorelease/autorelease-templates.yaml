@@ -273,11 +273,14 @@
     builders:
       - autorelease-update-project-views
       - autorelease-update-validate-projects
-      - opendaylight-infra-push-gerrit-patch:
-          project: 'releng/builder'
+      - lf-infra-push-gerrit-patch:
+          project: '{project}'
+          gerrit-user: 'jenkins-$SILO'
+          gerrit-host: 'git.opendaylight.org'
           gerrit-topic: 'autorelease-update-validate-jobs-{stream}'
           gerrit-commit-message: |
-              Update validate autorelease projects for {stream}
+              'Update validate autorelease projects for {stream}'
+          reviewers-email: 'release@lists.opendaylight.org'
 
     publishers:
       - lf-infra-publish
