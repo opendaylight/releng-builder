@@ -263,11 +263,13 @@
 
     builders:
       - autorelease-update-validate-projects
-      - opendaylight-infra-push-gerrit-patch:
+      - lf-infra-push-gerrit-patch:
           project: 'releng/builder'
+          gerrit-host: 'git.opendaylight.org'
           gerrit-topic: 'autorelease-update-validate-jobs-{stream}'
+          reviewers-email: '{email-recipients}'
           gerrit-commit-message: |
-              Update validate autorelease projects for {stream}
+              'Update validate autorelease projects for {stream}'
 
     publishers:
       - lf-infra-publish
