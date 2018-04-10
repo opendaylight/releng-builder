@@ -22,6 +22,30 @@
       "revId": "1a5cb9ac75502a373467c4209bf76838b63574e4",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e411957b_74779eb7",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-04-10T21:50:52Z",
+      "side": 1,
+      "message": "this does not work for me. I end up with the same csv of\nthings. example:\n\n$ dh\u003djamo,luhrsen\n$ IFS\u003d\" \" read -r -a dh1 \u003c\u003c\u003c \"$(echo ${dh})\"\n$ echo $dh1\njamo,luhrsen",
+      "parentUuid": "37ed53e5_de9bcea9",
+      "range": {
+        "startLine": 114,
+        "startChar": 5,
+        "endLine": 114,
+        "endChar": 52
+      },
+      "revId": "1a5cb9ac75502a373467c4209bf76838b63574e4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
