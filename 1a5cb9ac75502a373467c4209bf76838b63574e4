@@ -70,6 +70,30 @@
       "revId": "1a5cb9ac75502a373467c4209bf76838b63574e4",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0aaec0b5_2c95aa84",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-04-11T01:36:30Z",
+      "side": 1,
+      "message": "I think ps2 should work right?\n\nat least locally, I get what I want.\n\n$ dh\u003djamo,luhrsen\n$ local dh1\n$ dh1\u003d$(csv2ssv ${dh})\n$ for d in $dh1; do echo $d; done\njamo\nluhrsen\n\n\nwhen I do the IFS + read \u003c\u003c\u003c method, I am only getting\nthe first element back:\n\n$ IFS\u003d\" \" read -r -a dh1 \u003c\u003c\u003c \"$(csv2ssv ${dh})\"\n$ echo $dh1\njamo",
+      "parentUuid": "a4416668_b98fc945",
+      "range": {
+        "startLine": 114,
+        "startChar": 5,
+        "endLine": 114,
+        "endChar": 52
+      },
+      "revId": "1a5cb9ac75502a373467c4209bf76838b63574e4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
