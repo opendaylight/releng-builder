@@ -6,6 +6,7 @@
       - '{project-name}-maven-javadoc-jobs'
       - '{project-name}-rtd-jobs':
           build-node: centos7-builder-2c-2g
+          doc-dir: .tox/docs/tmp/html
           project-pattern: netvirt
           rtd-project: odl-netvirt
       - gerrit-tox-verify
