@@ -151,7 +151,7 @@
           goals: |
               clean deploy
               $EXTRA_MVN_OPTS
-              -Pintegrationtests,docs,repoBuild
+              -Pintegrationtests,repoBuild
               -Dcheckstyle.skip=true
               -DaltDeploymentRepository=staging::default::file:hide/from/pom/files/stage
               {opendaylight-infra-mvn-opts}
