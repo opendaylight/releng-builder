@@ -497,7 +497,7 @@
           build-timeout: '{build-timeout}'
 
     builders:
-      - shell: !include-raw: install-deb.sh
+      - shell: !include-raw-escape: install-deb.sh
       - shell: !include-raw: start-odl.sh
       - shell: !include-raw-escape: test-ports-nofeature.sh
       - shell: |
@@ -508,7 +508,7 @@
       # Disable this test until ODLPARENT-139 is fixed
       # - shell: !include-raw-escape: test-rest-ok.sh
       - shell: !include-raw: stop-odl.sh
-      - shell: !include-raw: uninstall-deb.sh
+      - shell: !include-raw-escape: uninstall-deb.sh
 
     publishers:
       - lf-infra-publish
@@ -568,6 +568,7 @@
 
     builders:
       - shell: !include-raw: build-deb.sh
+      - install-test-uninstall-deb
       - lf-infra-deploy-maven-file:
           global-settings-file: 'global-settings'
           settings-file: 'packaging-settings'
