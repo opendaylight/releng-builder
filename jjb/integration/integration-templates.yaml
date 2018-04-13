@@ -3,10 +3,8 @@
 # FIXME: Update
 #
 # {project}-csit-1node-{functionality}-{install}-{stream}
-# {project}-csit-1node-periodic-{functionality}-{install}-{stream}
 # {project}-csit-3node-docker-{functionality}-{install}-{stream}
 # {project}-csit-3node-{functionality}-{install}-{stream}
-# {project}-csit-3node-periodic-{functionality}-{install}-{stream}
 # {project}-csit-hwvtep-{topology}-openstack-{openstack}-{functionality}-{stream}
 # {project}-csit-{topology}-openstack-{openstack}-{functionality}-{stream}
 # {project}-csit-verify-1node-{functionality}
@@ -213,7 +211,7 @@
           - title: '{01-plot-title}'
             yaxis: '{01-plot-yaxis}'
             group: '{01-plot-group}'
-            num-builds: '5400'
+            num-builds: '180'
             keep-records: true
             style: line
             use-description: false
@@ -227,128 +225,12 @@
           - title: '{02-plot-title}'
             yaxis: '{02-plot-yaxis}'
             group: '{02-plot-group}'
-            num-builds: '5400'
+            num-builds: '180'
             keep-records: true
             style: line
             use-description: false
             # yamllint disable-line rule:line-length
             csv-file-name: '{project}-csit-1node-{functionality}-{install}-{stream}-{02-plot-data-file}-history.csv'
-            series:
-              - file: '{02-plot-data-file}'
-                inclusion-flag: 'off'
-                display-table: true
-                format: csv
-      - integration-csit-archive-build
-      - integration-csit-run-postscript
-      - lf-infra-publish
-
-- job-template:
-    name: '{prefix}{project}-csit-1node-periodic-{functionality}-{install}-{stream}'
-    id: inttest-csit-1node-periodic
-    disabled: false
-
-    project-type: freestyle
-    node: centos7-robot-2c-8g
-
-    properties:
-      - opendaylight-infra-properties:
-          build-days-to-keep: '{build-days-to-keep}'
-
-    parameters:
-      - opendaylight-infra-parameters:
-          os-cloud: '{os-cloud}'
-          project: 'integration/test'
-          branch: '{branch}'
-          refspec: 'refs/heads/{branch}'
-          artifacts: '{archive-artifacts}'
-      - integration-distribution-branch:
-          branch: '{branch}'
-      - integration-distribution-stream:
-          stream: '{stream}'
-      - integration-bundle-url:
-          bundle-url: '{bundle-url}'
-      - integration-controller-scope:
-          controller-scope: '{scope}'
-      - integration-controller-features:
-          controller-features: '{install-features}'
-      - integration-test-options:
-          test-options: '{robot-options}'
-      - integration-stream-test-plan:
-          stream-test-plan: '{project}-{functionality}-{stream}.txt'
-      - integration-test-plan:
-          test-plan: '{project}-{functionality}.txt'
-      - integration-test-suites:
-          test-suites: '{test-suites}'
-      - integration-patch-refspec:
-          branch: 'master'
-      - integration-jdk-version:
-          jdkversion: '{jre}'
-      - distribution-karaf-version:
-          karaf-version: '{karaf-version}'
-      - integration-use-features-boot:
-          use-features-boot: 'True'
-
-    scm:
-      - integration-gerrit-scm:
-          basedir: 'test'
-          refspec: '$PATCHREFSPEC'
-          branch: 'master'
-
-    wrappers:
-      - opendaylight-infra-wrappers:
-          build-timeout: '{build-timeout}'
-
-    builders:
-      - integration-infra-stack:
-          stack-template: '{stack-template}'
-          vm_0_count: '1'
-          vm_0_flavor: '{odl_system_flavor}'
-          vm_0_image: '{odl_system_image}'
-          vm_1_count: '{tools_system_count}'
-          vm_1_flavor: '{tools_system_flavor}'
-          vm_1_image: '{tools_system_image}'
-      - integration-install-robotframework
-      - inject:
-          properties-file: 'env.properties'
-      - integration-get-slave-addresses
-      - inject:
-          properties-file: 'slave_addresses.txt'
-      - integration-detect-variables
-      - integration-install-common-functions
-      - integration-deploy-controller-run-test
-      - integration-cleanup-tmp
-
-    publishers:
-      - integration-robot:
-          unstable-if: 0.0
-          pass-if: 100.0
-      - email-notification:
-          email-recipients: '{email-recipients}'
-          email-prefix: '[{project}]'
-      - plot:
-          - title: '{01-plot-title}'
-            yaxis: '{01-plot-yaxis}'
-            group: '{01-plot-group}'
-            num-builds: '180'
-            keep-records: true
-            style: line
-            use-description: false
-            # yamllint disable-line rule:line-length
-            csv-file-name: '{project}-csit-periodic-1node-{functionality}-{install}-{stream}-{01-plot-data-file}-history.csv'
-            series:
-              - file: '{01-plot-data-file}'
-                inclusion-flag: 'off'
-                display-table: true
-                format: csv
-          - title: '{02-plot-title}'
-            yaxis: '{02-plot-yaxis}'
-            group: '{02-plot-group}'
-            num-builds: '180'
-            keep-records: true
-            style: line
-            use-description: false
-            # yamllint disable-line rule:line-length
-            csv-file-name: '{project}-csit-periodic-1node-{functionality}-{install}-{stream}-{02-plot-data-file}-history.csv'
             series:
               - file: '{02-plot-data-file}'
                 inclusion-flag: 'off'
@@ -362,7 +244,7 @@
             style: line
             use-description: false
             # yamllint disable-line rule:line-length
-            csv-file-name: '{project}-csit-1node-periodic-{functionality}-{install}-{stream}-{03-plot-data-file}-03-history.csv'
+            csv-file-name: '{project}-csit-1node-{functionality}-{install}-{stream}-{03-plot-data-file}-03-history.csv'
             series:
               - file: '{03-plot-data-file}'
                 inclusion-flag: '{03-inclusion-flag}'
@@ -376,7 +258,7 @@
             style: line
             use-description: false
             # yamllint disable-line rule:line-length
-            csv-file-name: '{project}-csit-1node-periodic-{functionality}-{install}-{stream}-{04-plot-data-file}-04-history.csv'
+            csv-file-name: '{project}-csit-1node-{functionality}-{install}-{stream}-{04-plot-data-file}-04-history.csv'
             series:
               - file: '{04-plot-data-file}'
                 inclusion-flag: '{04-inclusion-flag}'
@@ -390,7 +272,7 @@
             style: line
             use-description: false
             # yamllint disable-line rule:line-length
-            csv-file-name: '{project}-csit-1node-periodic-{functionality}-{install}-{stream}-{05-plot-data-file}-05-history.csv'
+            csv-file-name: '{project}-csit-1node-{functionality}-{install}-{stream}-{05-plot-data-file}-05-history.csv'
             series:
               - file: '{05-plot-data-file}'
                 inclusion-flag: '{05-inclusion-flag}'
@@ -404,7 +286,7 @@
             style: line
             use-description: false
             # yamllint disable-line rule:line-length
-            csv-file-name: '{project}-csit-1node-periodic-{functionality}-{install}-{stream}-{06-plot-data-file}-06-history.csv'
+            csv-file-name: '{project}-csit-1node-{functionality}-{install}-{stream}-{06-plot-data-file}-06-history.csv'
             series:
               - file: '{06-plot-data-file}'
                 inclusion-flag: '{06-inclusion-flag}'
@@ -418,7 +300,7 @@
             style: line
             use-description: false
             # yamllint disable-line rule:line-length
-            csv-file-name: '{project}-csit-1node-periodic-{functionality}-{install}-{stream}-{07-plot-data-file}-07-history.csv'
+            csv-file-name: '{project}-csit-1node-{functionality}-{install}-{stream}-{07-plot-data-file}-07-history.csv'
             series:
               - file: '{07-plot-data-file}'
                 inclusion-flag: '{07-inclusion-flag}'
@@ -432,7 +314,7 @@
             style: line
             use-description: false
             # yamllint disable-line rule:line-length
-            csv-file-name: '{project}-csit-1node-periodic-{functionality}-{install}-{stream}-{08-plot-data-file}-08-history.csv'
+            csv-file-name: '{project}-csit-1node-{functionality}-{install}-{stream}-{08-plot-data-file}-08-history.csv'
             series:
               - file: '{08-plot-data-file}'
                 inclusion-flag: '{08-inclusion-flag}'
@@ -446,7 +328,7 @@
             style: line
             use-description: false
             # yamllint disable-line rule:line-length
-            csv-file-name: '{project}-csit-1node-periodic-{functionality}-{install}-{stream}-{09-plot-data-file}-09-history.csv'
+            csv-file-name: '{project}-csit-1node-{functionality}-{install}-{stream}-{09-plot-data-file}-09-history.csv'
             series:
               - file: '{09-plot-data-file}'
                 inclusion-flag: '{09-inclusion-flag}'
@@ -460,7 +342,7 @@
             style: line
             use-description: false
             # yamllint disable-line rule:line-length
-            csv-file-name: '{project}-csit-1node-periodic-{functionality}-{install}-{stream}-{10-plot-data-file}-10-history.csv'
+            csv-file-name: '{project}-csit-1node-{functionality}-{install}-{stream}-{10-plot-data-file}-10-history.csv'
             series:
               - file: '{10-plot-data-file}'
                 inclusion-flag: '{10-inclusion-flag}'
@@ -651,10 +533,11 @@
           - title: '{01-plot-title}'
             yaxis: '{01-plot-yaxis}'
             group: '{01-plot-group}'
-            num-builds: '5400'
+            num-builds: '180'
             keep-records: true
             style: line
             use-description: false
+            # yamllint disable-line rule:line-length
             csv-file-name: '{project}-csit-3node-{functionality}-{install}-{stream}-{01-plot-data-file}-history.csv'
             series:
               - file: '{01-plot-data-file}'
@@ -664,15 +547,128 @@
           - title: '{02-plot-title}'
             yaxis: '{02-plot-yaxis}'
             group: '{02-plot-group}'
-            num-builds: '5400'
+            num-builds: '180'
             keep-records: true
             style: line
             use-description: false
+            # yamllint disable-line rule:line-length
             csv-file-name: '{project}-csit-3node-{functionality}-{install}-{stream}-{02-plot-data-file}-history.csv'
             series:
               - file: '{02-plot-data-file}'
                 inclusion-flag: 'off'
                 display-table: true
+                format: csv
+          - title: '{03-plot-title}'
+            yaxis: '{03-plot-yaxis}'
+            group: '{03-plot-group}'
+            num-builds: '180'
+            keep-records: true
+            style: line
+            use-description: false
+            # yamllint disable-line rule:line-length
+            csv-file-name: '{project}-csit-3node-{functionality}-{install}-{stream}-{03-plot-data-file}-03-history.csv'
+            series:
+              - file: '{03-plot-data-file}'
+                inclusion-flag: '{03-inclusion-flag}'
+                exclude: '{03-exclude-value}'
+                format: csv
+          - title: '{04-plot-title}'
+            yaxis: '{04-plot-yaxis}'
+            group: '{04-plot-group}'
+            num-builds: '180'
+            keep-records: true
+            style: line
+            use-description: false
+            # yamllint disable-line rule:line-length
+            csv-file-name: '{project}-csit-3node-{functionality}-{install}-{stream}-{04-plot-data-file}-04-history.csv'
+            series:
+              - file: '{04-plot-data-file}'
+                inclusion-flag: '{04-inclusion-flag}'
+                exclude: '{04-exclude-value}'
+                format: csv
+          - title: '{05-plot-title}'
+            yaxis: '{05-plot-yaxis}'
+            group: '{05-plot-group}'
+            num-builds: '180'
+            keep-records: true
+            style: line
+            use-description: false
+            # yamllint disable-line rule:line-length
+            csv-file-name: '{project}-csit-3node-{functionality}-{install}-{stream}-{05-plot-data-file}-05-history.csv'
+            series:
+              - file: '{05-plot-data-file}'
+                inclusion-flag: '{05-inclusion-flag}'
+                exclude: '{05-exclude-value}'
+                format: csv
+          - title: '{06-plot-title}'
+            yaxis: '{06-plot-yaxis}'
+            group: '{06-plot-group}'
+            num-builds: '180'
+            keep-records: true
+            style: line
+            use-description: false
+            # yamllint disable-line rule:line-length
+            csv-file-name: '{project}-csit-3node-{functionality}-{install}-{stream}-{06-plot-data-file}-06-history.csv'
+            series:
+              - file: '{06-plot-data-file}'
+                inclusion-flag: '{06-inclusion-flag}'
+                exclude: '{06-exclude-value}'
+                format: csv
+          - title: '{07-plot-title}'
+            yaxis: '{07-plot-yaxis}'
+            group: '{07-plot-group}'
+            num-builds: '180'
+            keep-records: true
+            style: line
+            use-description: false
+            # yamllint disable-line rule:line-length
+            csv-file-name: '{project}-csit-3node-{functionality}-{install}-{stream}-{07-plot-data-file}-07-history.csv'
+            series:
+              - file: '{07-plot-data-file}'
+                inclusion-flag: '{07-inclusion-flag}'
+                exclude: '{07-exclude-value}'
+                format: csv
+          - title: '{08-plot-title}'
+            yaxis: '{08-plot-yaxis}'
+            group: '{08-plot-group}'
+            num-builds: '180'
+            keep-records: true
+            style: line
+            use-description: false
+            # yamllint disable-line rule:line-length
+            csv-file-name: '{project}-csit-3node-{functionality}-{install}-{stream}-{08-plot-data-file}-08-history.csv'
+            series:
+              - file: '{08-plot-data-file}'
+                inclusion-flag: '{08-inclusion-flag}'
+                exclude: '{08-exclude-value}'
+                format: csv
+          - title: '{09-plot-title}'
+            yaxis: '{09-plot-yaxis}'
+            group: '{09-plot-group}'
+            num-builds: '180'
+            keep-records: true
+            style: line
+            use-description: false
+            # yamllint disable-line rule:line-length
+            csv-file-name: '{project}-csit-3node-{functionality}-{install}-{stream}-{09-plot-data-file}-09-history.csv'
+            series:
+              - file: '{09-plot-data-file}'
+                inclusion-flag: '{09-inclusion-flag}'
+                exclude: '{09-exclude-value}'
+                format: csv
+          - title: '{10-plot-title}'
+            yaxis: '{10-plot-yaxis}'
+            group: '{10-plot-group}'
+            num-builds: '180'
+            keep-records: true
+            style: line
+            use-description: false
+            # yamllint disable-line rule:line-length
+            csv-file-name: '{project}-csit-3node-{functionality}-{install}-{stream}-{10-plot-data-file}-10-history.csv'
+            series:
+              - file: '{10-plot-data-file}'
+                inclusion-flag: '{10-inclusion-flag}'
+                exclude: '{10-exclude-value}'
                 format: csv
       - integration-csit-archive-build
       - integration-csit-run-postscript
@@ -788,235 +784,6 @@
               - file: '{02-plot-data-file}'
                 inclusion-flag: 'off'
                 display-table: true
-                format: csv
-      - integration-csit-archive-build
-      - integration-csit-run-postscript
-      - lf-infra-publish
-
-- job-template:
-    name: '{prefix}{project}-csit-3node-periodic-{functionality}-{install}-{stream}'
-    id: inttest-csit-3node-periodic
-    disabled: false
-
-    project-type: freestyle
-    node: centos7-robot-2c-8g
-
-    properties:
-      - opendaylight-infra-properties:
-          build-days-to-keep: '{build-days-to-keep}'
-
-    parameters:
-      - opendaylight-infra-parameters:
-          os-cloud: '{os-cloud}'
-          project: 'integration/test'
-          branch: '{branch}'
-          refspec: 'refs/heads/{branch}'
-          artifacts: '{archive-artifacts}'
-      - integration-distribution-branch:
-          branch: '{branch}'
-      - integration-distribution-stream:
-          stream: '{stream}'
-      - integration-bundle-url:
-          bundle-url: '{bundle-url}'
-      - integration-controller-scope:
-          controller-scope: '{scope}'
-      - integration-controller-features:
-          controller-features: 'odl-jolokia,{install-features}'
-      - integration-test-options:
-          test-options: '{robot-options}'
-      - integration-stream-test-plan:
-          stream-test-plan: '{project}-{functionality}-{stream}.txt'
-      - integration-test-plan:
-          test-plan: '{project}-{functionality}.txt'
-      - integration-test-suites:
-          test-suites: '{test-suites}'
-      - integration-patch-refspec:
-          branch: 'master'
-      - integration-jdk-version:
-          jdkversion: '{jre}'
-      - distribution-karaf-version:
-          karaf-version: '{karaf-version}'
-      - integration-use-features-boot:
-          use-features-boot: 'True'
-
-    scm:
-      - integration-gerrit-scm:
-          basedir: 'test'
-          refspec: '$PATCHREFSPEC'
-          branch: 'master'
-
-    wrappers:
-      - opendaylight-infra-wrappers:
-          build-timeout: '{build-timeout}'
-
-    builders:
-      - integration-infra-stack:
-          stack-template: '{stack-template}'
-          vm_0_count: '3'
-          vm_0_flavor: '{odl_system_flavor}'
-          vm_0_image: '{odl_system_image}'
-          vm_1_count: '{tools_system_count}'
-          vm_1_flavor: '{tools_system_flavor}'
-          vm_1_image: '{tools_system_image}'
-      - integration-install-robotframework
-      - inject:
-          properties-file: 'env.properties'
-      - integration-get-slave-addresses
-      - inject:
-          properties-file: 'slave_addresses.txt'
-      - integration-detect-variables
-      - integration-install-common-functions
-      - integration-configure-clustering
-      - integration-start-cluster-run-test
-      - integration-cleanup-tmp
-
-    publishers:
-      - integration-robot:
-          unstable-if: 0.0
-          pass-if: 100.0
-      - email-notification:
-          email-recipients: '{email-recipients}'
-          email-prefix: '[{project}]'
-      - plot:
-          - title: '{01-plot-title}'
-            yaxis: '{01-plot-yaxis}'
-            group: '{01-plot-group}'
-            num-builds: '180'
-            keep-records: true
-            style: line
-            use-description: false
-            # yamllint disable-line rule:line-length
-            csv-file-name: '{project}-csit-3node-periodic-{functionality}-{install}-{stream}-{01-plot-data-file}-history.csv'
-            series:
-              - file: '{01-plot-data-file}'
-                inclusion-flag: 'off'
-                display-table: true
-                format: csv
-          - title: '{02-plot-title}'
-            yaxis: '{02-plot-yaxis}'
-            group: '{02-plot-group}'
-            num-builds: '180'
-            keep-records: true
-            style: line
-            use-description: false
-            # yamllint disable-line rule:line-length
-            csv-file-name: '{project}-csit-3node-periodic-{functionality}-{install}-{stream}-{02-plot-data-file}-history.csv'
-            series:
-              - file: '{02-plot-data-file}'
-                inclusion-flag: 'off'
-                display-table: true
-                format: csv
-          - title: '{03-plot-title}'
-            yaxis: '{03-plot-yaxis}'
-            group: '{03-plot-group}'
-            num-builds: '180'
-            keep-records: true
-            style: line
-            use-description: false
-            # yamllint disable-line rule:line-length
-            csv-file-name: '{project}-csit-3node-periodic-{functionality}-{install}-{stream}-{03-plot-data-file}-03-history.csv'
-            series:
-              - file: '{03-plot-data-file}'
-                inclusion-flag: '{03-inclusion-flag}'
-                exclude: '{03-exclude-value}'
-                format: csv
-          - title: '{04-plot-title}'
-            yaxis: '{04-plot-yaxis}'
-            group: '{04-plot-group}'
-            num-builds: '180'
-            keep-records: true
-            style: line
-            use-description: false
-            # yamllint disable-line rule:line-length
-            csv-file-name: '{project}-csit-3node-periodic-{functionality}-{install}-{stream}-{04-plot-data-file}-04-history.csv'
-            series:
-              - file: '{04-plot-data-file}'
-                inclusion-flag: '{04-inclusion-flag}'
-                exclude: '{04-exclude-value}'
-                format: csv
-          - title: '{05-plot-title}'
-            yaxis: '{05-plot-yaxis}'
-            group: '{05-plot-group}'
-            num-builds: '180'
-            keep-records: true
-            style: line
-            use-description: false
-            # yamllint disable-line rule:line-length
-            csv-file-name: '{project}-csit-3node-periodic-{functionality}-{install}-{stream}-{05-plot-data-file}-05-history.csv'
-            series:
-              - file: '{05-plot-data-file}'
-                inclusion-flag: '{05-inclusion-flag}'
-                exclude: '{05-exclude-value}'
-                format: csv
-          - title: '{06-plot-title}'
-            yaxis: '{06-plot-yaxis}'
-            group: '{06-plot-group}'
-            num-builds: '180'
-            keep-records: true
-            style: line
-            use-description: false
-            # yamllint disable-line rule:line-length
-            csv-file-name: '{project}-csit-3node-periodic-{functionality}-{install}-{stream}-{06-plot-data-file}-06-history.csv'
-            series:
-              - file: '{06-plot-data-file}'
-                inclusion-flag: '{06-inclusion-flag}'
-                exclude: '{06-exclude-value}'
-                format: csv
-          - title: '{07-plot-title}'
-            yaxis: '{07-plot-yaxis}'
-            group: '{07-plot-group}'
-            num-builds: '180'
-            keep-records: true
-            style: line
-            use-description: false
-            # yamllint disable-line rule:line-length
-            csv-file-name: '{project}-csit-3node-periodic-{functionality}-{install}-{stream}-{07-plot-data-file}-07-history.csv'
-            series:
-              - file: '{07-plot-data-file}'
-                inclusion-flag: '{07-inclusion-flag}'
-                exclude: '{07-exclude-value}'
-                format: csv
-          - title: '{08-plot-title}'
-            yaxis: '{08-plot-yaxis}'
-            group: '{08-plot-group}'
-            num-builds: '180'
-            keep-records: true
-            style: line
-            use-description: false
-            # yamllint disable-line rule:line-length
-            csv-file-name: '{project}-csit-3node-periodic-{functionality}-{install}-{stream}-{08-plot-data-file}-08-history.csv'
-            series:
-              - file: '{08-plot-data-file}'
-                inclusion-flag: '{08-inclusion-flag}'
-                exclude: '{08-exclude-value}'
-                format: csv
-          - title: '{09-plot-title}'
-            yaxis: '{09-plot-yaxis}'
-            group: '{09-plot-group}'
-            num-builds: '180'
-            keep-records: true
-            style: line
-            use-description: false
-            # yamllint disable-line rule:line-length
-            csv-file-name: '{project}-csit-3node-periodic-{functionality}-{install}-{stream}-{09-plot-data-file}-09-history.csv'
-            series:
-              - file: '{09-plot-data-file}'
-                inclusion-flag: '{09-inclusion-flag}'
-                exclude: '{09-exclude-value}'
-                format: csv
-          - title: '{10-plot-title}'
-            yaxis: '{10-plot-yaxis}'
-            group: '{10-plot-group}'
-            num-builds: '180'
-            keep-records: true
-            style: line
-            use-description: false
-            # yamllint disable-line rule:line-length
-            csv-file-name: '{project}-csit-3node-periodic-{functionality}-{install}-{stream}-{10-plot-data-file}-10-history.csv'
-            series:
-              - file: '{10-plot-data-file}'
-                inclusion-flag: '{10-inclusion-flag}'
-                exclude: '{10-exclude-value}'
                 format: csv
       - integration-csit-archive-build
       - integration-csit-run-postscript
