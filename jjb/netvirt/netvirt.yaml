@@ -8,7 +8,8 @@
           build-node: centos7-builder-2c-2g
           doc-dir: .tox/docs/tmp/html
           project-pattern: netvirt
-          rtd-project: odl-netvirt
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-netvirt/32929/
+          rtd-token: 7b6a1dcfc729957ace511e016274e253e07a8d6c
       - gerrit-tox-verify
       - odl-maven-jobs
 

@@ -15,7 +15,8 @@
       - '{project-name}-rtd-jobs':
           build-node: centos7-builder-2c-2g
           project-pattern: integration/test
-          rtd-project: odl-integrationtest
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-integrationtest/32934/
+          rtd-token: 70766f97941a74ef80b84749ac4799e5ddeee99a
       - gerrit-tox-verify:
           branch: master
           stream: master

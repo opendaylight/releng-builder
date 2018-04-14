@@ -4,7 +4,8 @@
     jobs:
       - '{project-name}-rtd-jobs':
           project-pattern: releng/builder
-          rtd-project: opendaylight-releng-builder
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/opendaylight-releng-builder/32926/
+          rtd-token: e9fa62bd60a39c22de631791309ccacc37a9929e
       - gerrit-jenkins-cfg-merge:
           jenkins-silos: releng sandbox
       - gerrit-jjb-deploy-job
