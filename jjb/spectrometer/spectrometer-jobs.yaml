@@ -6,6 +6,8 @@
       - '{project-name}-python-jobs'
       - '{project-name}-rtd-jobs':
           project-pattern: spectrometer
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/opendaylight-spectrometer/32925/
+          rtd-token: 383146c345ca41b9e36859b6dcd57ffca38f21c7
       - spectrometer-deploy-webapp-master
 
     stream:
@@ -14,7 +16,6 @@
 
     project: spectrometer
     project-name: spectrometer
-    rtd-project: opendaylight-spectrometer
     tox-dir: server
     node-dir: web
     node-version: 6.11.4

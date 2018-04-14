@@ -8,7 +8,8 @@
           build-node: centos7-builder-2c-2g
           doc-dir: .tox/docs/tmp/html
           project-pattern: integration/packaging
-          rtd-project: odl-integrationpackaging
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-integrationpackaging/32928/
+          rtd-token: 371d63c43ad99b0745bb7779e3488c5e255c1180
       - 'packaging-build-rpm-{stream}'
       - 'packaging-build-rpm-{distro}-snap-{stream}'
       - 'packaging-build-deb-{stream}'
