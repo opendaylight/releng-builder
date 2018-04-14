@@ -15,7 +15,7 @@
 virtualenv "/tmp/v/git-review"
 # shellcheck source=/tmp/v/git-review/bin/activate disable=SC1091
 source "/tmp/v/git-review/bin/activate"
-pip install --upgrade pip
+pip install --upgrade "pip<10.0.0" setuptools
 pip install --upgrade git-review
 pip install --upgrade pipdeptree
 pipdeptree

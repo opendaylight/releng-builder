@@ -56,7 +56,7 @@
           virtualenv --system-site-packages $WORKSPACE/venv
           source $WORKSPACE/venv/bin/activate
           PYTHON="$WORKSPACE/venv/bin/python"
-          $PYTHON -m pip install --upgrade pip
+          $PYTHON -m pip install --upgrade "pip<10.0.0" setuptools
           $PYTHON -m pip install --upgrade networkx
           $PYTHON -m pip install --upgrade pipdeptree
           pipdeptree
