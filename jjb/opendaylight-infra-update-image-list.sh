@@ -14,8 +14,7 @@ virtualenv "/tmp/v/openstack"
 source "/tmp/v/openstack/bin/activate"
 pip install --upgrade --quiet "pip<10.0.0" setuptools
 pip install --upgrade --quiet python-openstackclient python-heatclient
-pip install --upgrade pipdeptree
-pipdeptree
+pip freeze
 
 cat > "$WORKSPACE/docs/cloud-images.rst" << EOF
 Following are the list of published images available to be used with Jenkins jobs.
