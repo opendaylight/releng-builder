@@ -28,6 +28,14 @@
           description: 'URL to karaf distribution zip'
 
 - parameter:
+    name: integration-repo-url
+    parameters:
+      - string:
+          name: REPO_URL
+          default: '{repo-url}'
+          description: 'URL to feature repo artifact'
+
+- parameter:
     name: integration-jdk-version
     parameters:
       - string:
