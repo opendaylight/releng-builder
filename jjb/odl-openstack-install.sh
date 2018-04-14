@@ -14,7 +14,6 @@ echo "---> Install openstack cli into /tmp/v/openstack"
 virtualenv "/tmp/v/openstack"
 # shellcheck source=/tmp/v/openstack/bin/activate disable=SC1091
 source "/tmp/v/openstack/bin/activate"
-pip install --upgrade "pip<10.0.0"
+pip install --upgrade "pip<10.0.0" setuptools
 pip install --upgrade python-openstackclient python-heatclient
-pip install --upgrade pipdeptree
-pipdeptree
+pip freeze
