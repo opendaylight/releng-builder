@@ -73,40 +73,66 @@ ${WORKSPACE}/${BUNDLEFOLDER}/bin/start
 # No need for verbose printing during repeating operations.
 set +x
 
-echo "Waiting for controller to come up..."
-COUNT=0
-while true; do
-    RESP="$(curl --user admin:admin -sL -w "%{http_code} %{url_effective}\\n" http://localhost:8181/restconf/modules -o /dev/null || true)"
-    echo "${RESP}"
-    if [[ "${RESP}" == *"200"* ]]; then
-        echo Controller is UP
-        break
-    elif (( "${COUNT}" > 600 )); then
-        echo Timeout Controller DOWN
-        echo "Dumping Karaf log..."
-        cat "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log"
-        echo "Listing all open ports on controller system"
-        netstat -pnatu
-        exit 1
-    else
+if [ "${DISTROSTREAM}" == "carbon" ] || [ "${DISTROSTREAM}" == "nitrogen" ];
+then
+    echo "only oxygen and above have the infrautils.ready feature, so using REST API to /modules or /shards to determine if the controller is ready.";
+
+    COUNT="0"
+
+    while true; do
+        RESP="$( curl --user admin:admin -sL -w "%{http_code} %{url_effective}\\n" http://localhost:8181/restconf/modules -o /dev/null )"
+        echo ${RESP}
+
+        if [[ ${RESP} == *"200"* ]]; then
+            echo "Controller is UP"
+            break
+
+        elif (( "${COUNT}" > "600" )); then
+            echo Timeout Controller DOWN
+            echo "Dumping first 500K bytes of karaf log..."
+            head --bytes=500K "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
+            echo "Dumping last 500K bytes of karaf log..."
+            tail --bytes=500K "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
+            echo "Listing all open ports on controller system"
+            netstat -pnatu
+            exit 1
+        else
+
         COUNT=$(( ${COUNT} + 1 ))
         sleep 1
-        if [[ $(($COUNT % 5)) == 0 ]]; then
+
+        if [[ $((${COUNT} % 5)) == 0 ]]; then
             echo already waited ${COUNT} seconds...
         fi
     fi
-done
+    done
 
-echo "loading many features at once.  Need to allow time for problems to show up in logs.  cool down for 5 min ..."
-COUNT="300"
-while true; do
-    if (( "${COUNT}" <= "0" )); then
-        break
+else
+    echo "Waiting up to 3 minutes for controller to come up, checking every 5 seconds..."
+    for i in {1..36};
+        do sleep 5;
+        grep 'org.opendaylight.infrautils.ready-impl.*System ready' /tmp/${BUNDLEFOLDER}/data/log/karaf.log
+        if [ $? -eq 0 ]
+        then
+          echo "Controller is UP"
+          break
+        fi
+    done;
+
+    # if we ended up not finding ready status in the above loop, we can output some debugs
+    grep 'org.opendaylight.infrautils.ready-impl.*System ready' /tmp/${BUNDLEFOLDER}/data/log/karaf.log
+    if [ $? -ne 0 ]
+    then
+        echo "Timeout Controller DOWN"
+        echo "Dumping first 500K bytes of karaf log..."
+        head --bytes=500K "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
+        echo "Dumping last 500K bytes of karaf log..."
+        tail --bytes=500K "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
+        echo "Listing all open ports on controller system"
+        netstat -pnatu
+        exit 1
     fi
-    echo "${COUNT} seconds yet to wait..."
-    sleep 10
-    COUNT="$(( ${COUNT} - 10 ))"
-done
+fi
 
 # End of repeating operations, enable verbose printing.
 set -x
