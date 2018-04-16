@@ -73,42 +73,50 @@ ${WORKSPACE}/${BUNDLEFOLDER}/bin/start
 # No need for verbose printing during repeating operations.
 set +x
 
-echo "Waiting for controller to come up..."
-COUNT=0
-while true; do
-    RESP="$(curl --user admin:admin -sL -w "%{http_code} %{url_effective}\\n" http://localhost:8181/restconf/modules -o /dev/null || true)"
-    echo "${RESP}"
-    if [[ "${RESP}" == *"200"* ]]; then
-        echo Controller is UP
-        break
-    elif (( "${COUNT}" > 600 )); then
-        echo Timeout Controller DOWN
-        echo "Dumping Karaf log..."
-        cat "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log"
-        echo "Listing all open ports on controller system"
-        netstat -pnatu
-        exit 1
-    else
-        COUNT=$(( ${COUNT} + 1 ))
-        sleep 1
-        if [[ $(($COUNT % 5)) == 0 ]]; then
-            echo already waited ${COUNT} seconds...
+function dump_log_and_exit {
+    echo "Dumping first 500K bytes of karaf log..."
+    head --bytes=500K "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log"
+    echo "Dumping last 500K bytes of karaf log..."
+    tail --bytes=500K "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log"
+    cp "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log" .
+    cp "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log" .
+    exit 1
+}
+
+echo "Waiting up to 5 minutes for controller to come up, checking every 5 seconds..."
+if [ "${DISTROSTREAM}" == "carbon" ] || [ "${DISTROSTREAM}" == "nitrogen" ]; then
+    # Only oxygen and above have the infrautils.ready feature, so using REST API to determine if the controller is ready.
+    COUNT="0"
+    while true; do
+        COUNT=$(( ${COUNT} + 5 ))
+        sleep 5
+        echo "already waited ${COUNT} seconds..."
+        RESP="$(curl --user admin:admin -sL -w "%{http_code} %{url_effective}\\n" http://localhost:8181/restconf/modules -o /dev/null || true)"
+        echo ${RESP}
+        if [[ ${RESP} == *"200"* ]]; then
+            echo "Controller is UP"
+            break
+        elif (( "${COUNT}" > "300" )); then
+            echo "Timeout Controller DOWN"
+            dump_log_and_exit
         fi
-    fi
-done
+    done
+else
+    COUNT="0"
+    while true; do
+        COUNT=$(( ${COUNT} + 5 ))
+        sleep 5
+        echo "already waited ${COUNT} seconds..."
+        if grep --quiet 'org.opendaylight.infrautils.ready-impl.*System ready' "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log"; then
+            echo "Controller is UP"
+            break
+        elif (( "${COUNT}" > "300" )); then
+            echo "Timeout Controller DOWN"
+            dump_log_and_exit
+        fi
+    done
+fi
 
-echo "loading many features at once.  Need to allow time for problems to show up in logs.  cool down for 5 min ..."
-COUNT="300"
-while true; do
-    if (( "${COUNT}" <= "0" )); then
-        break
-    fi
-    echo "${COUNT} seconds yet to wait..."
-    sleep 10
-    COUNT="$(( ${COUNT} - 10 ))"
-done
-
-# End of repeating operations, enable verbose printing.
 set -x
 
 # echo "Checking OSGi bundles..."
@@ -122,25 +130,13 @@ function exit_on_log_file_message {
     echo "looking for \"$1\" in karaf.log file"
     if grep --quiet "$1" "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log"; then
         echo ABORTING: found "$1"
-        echo "Dumping first 500K bytes of karaf log..."
-        head --bytes=500K "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log"
-        echo "Dumping last 500K bytes of karaf log..."
-        tail --bytes=500K "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log"
-        cp "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log" .
-        cp "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log" .
-        exit 1
+        dump_log_and_exit
     fi
 
     echo "looking for \"$1\" in karaf_console.log file"
     if grep --quiet "$1" "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log"; then
         echo ABORTING: found "$1"
-        echo "Dumping first 500K bytes of karaf log..."
-        head --bytes=500K "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log"
-        echo "Dumping last 500K bytes of karaf log..."
-        tail --bytes=500K "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log"
-        cp "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log" .
-        cp "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log" .
-        exit 1
+        dump_log_and_exit
     fi
 }
 

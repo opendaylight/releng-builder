@@ -218,6 +218,8 @@
           branch: '{branch}'
           refspec: 'refs/heads/{branch}'
           artifacts: '{archive-artifacts}'
+      - integration-distribution-stream:
+          stream: '{stream}'
       - distribution-karaf-version:
           karaf-version: '{karaf-version}'
       - maven-exec:
@@ -296,6 +298,8 @@
           branch: '{branch}'
           refspec: 'refs/heads/{branch}'
           artifacts: '{archive-artifacts}'
+      - integration-distribution-stream:
+          stream: '{stream}'
       - integration-distribution-branch:
           branch: '{branch}'
       - integration-bundle-url:
