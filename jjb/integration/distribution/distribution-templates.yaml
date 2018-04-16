@@ -37,6 +37,8 @@
           branch: '{branch}'
           refspec: 'refs/heads/{branch}'
           artifacts: '{archive-artifacts}'
+      - integration-distribution-stream:
+          stream: '{stream}'
       - integration-distribution-git-url:
           git-url: '{git-url}'
       - distribution-karaf-version:
