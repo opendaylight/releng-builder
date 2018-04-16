@@ -6,7 +6,7 @@
   become_method: sudo
 
   pre_tasks:
-    - include_role: name=system-update
+    - include_role: name=lfit.system-update
 
   post_tasks:
     - name: System Reseal
