@@ -61,34 +61,57 @@ mkdir -p ${WORKSPACE}/${BUNDLEFOLDER}/data/log
 echo "Starting controller..."
 ${WORKSPACE}/${BUNDLEFOLDER}/bin/start
 
-echo "Waiting for controller to come up..."
-COUNT=0
-while true; do
-    RESP="$(curl --user admin:admin -sL -w "%{http_code} %{url_effective}\\n" http://localhost:8181/restconf/modules -o /dev/null || true)"
-    echo "${RESP}"
-    if [[ "${RESP}" == *"200"* ]]; then
-        echo Controller is UP
-        break
-    elif (( "${COUNT}" > 600 )); then
-        echo Timeout Controller DOWN
-        echo "Dumping Karaf log..."
-        cat "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log"
-        echo "Listing all open ports on controller system"
-        netstat -pnatu
-        exit 1
-    else
-        COUNT=$(( ${COUNT} + 1 ))
-        sleep 1
-        if [[ $(($COUNT % 5)) == 0 ]]; then
-            echo already waited ${COUNT} seconds...
+echo "Waiting up to 5 minutes for controller to come up, checking every 5 seconds..."
+
+if [ "${DISTROSTREAM}" == "carbon" ] || [ "${DISTROSTREAM}" == "nitrogen" ]; then
+    # Only oxygen and above have the infrautils.ready feature, so using REST API to determine if the controller is ready.
+    COUNT="0"
+    while true; do
+        COUNT=$(( ${COUNT} + 5 ))
+        sleep 5
+        RESP="$( curl --user admin:admin -sL -w "%{http_code} %{url_effective}\\n" http://localhost:8181/restconf/modules -o /dev/null )"
+        echo ${RESP}
+        if [[ ${RESP} == *"200"* ]]; then
+            echo "Controller is UP"
+            break
+        elif (( "${COUNT}" > "300" )); then
+            echo "Timeout Controller DOWN"
+            echo "Dumping first 500K bytes of karaf log..."
+            head --bytes=500K "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log"
+            echo "Dumping last 500K bytes of karaf log..."
+            tail --bytes=500K "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log"
+            echo "Listing all open ports on controller system"
+            netstat -pnatu
+            exit 1
+        else
+            echo "already waited ${COUNT} seconds..."
         fi
-    fi
-done
+    done
+else
+    COUNT="0"
+    while true; do
+        COUNT=$(( ${COUNT} + 5 ))
+        sleep 5
+        grep 'org.opendaylight.infrautils.ready-impl.*System ready' ${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log
+        if [ $? -eq 0 ]; then
+            echo "Controller is UP"
+            break
+        elif (( "${COUNT}" > "300" )); then
+            echo "Timeout Controller DOWN"
+            echo "Dumping first 500K bytes of karaf log..."
+            head --bytes=500K "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log"
+            echo "Dumping last 500K bytes of karaf log..."
+            tail --bytes=500K "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log"
+            echo "Listing all open ports on controller system"
+            netstat -pnatu
+            exit 1
+        else
+            echo "already waited ${COUNT} seconds..."
+        fi
+    done
+fi
 
-echo "loading many features at once.  Need to allow time for problems to show up in logs.  cool down for 5 min ..."
-sleep 300
-
-echo "Checking OSGi bundles..."
+# echo "Checking OSGi bundles..."
 # sshpass seems to fail with new karaf version
 # sshpass -p karaf ${WORKSPACE}/${BUNDLEFOLDER}/bin/client -u karaf 'bundle:list'
 
