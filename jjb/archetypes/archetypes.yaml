@@ -2,7 +2,15 @@
 - project:
     name: archetypes-fluorine
     jobs:
-      - odl-maven-jobs
+      - gerrit-maven-clm
+      - '{project-name}-merge-{stream}':
+          build-timeout: 180
+          cron: '@daily'
+          mvn-goals: clean install -V -Dmaven.compile.fork=true
+      - gerrit-maven-release
+      - gerrit-maven-verify
+      - gerrit-maven-verify-dependencies:
+          build-timeout: 180
 
     stream: fluorine
     project: 'archetypes'
