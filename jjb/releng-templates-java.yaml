@@ -108,6 +108,7 @@
       **/target/**/feature.xml
       **/target/failsafe-reports/failsafe-summary.xml
       **/target/surefire-reports/*-output.txt
+    cron: 'H H * * 0'
     mvn-opts: ''
     mvn-version: mvn33
     java-version: openjdk8
@@ -150,7 +151,7 @@
           build-timeout: '{build-timeout}'
 
     triggers:
-      - timed: 'H H * * 0'
+      - timed: '{obj:cron}'
       - gerrit-trigger-patch-merged:
           gerrit-server-name: '{gerrit-server-name}'
           name: '{project}'
