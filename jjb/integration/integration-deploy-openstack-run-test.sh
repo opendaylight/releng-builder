@@ -4,6 +4,8 @@
 # script.
 # shellcheck source=${ROBOT_VENV}/bin/activate disable=SC1091
 source ${ROBOT_VENV}/bin/activate
+source /tmp/common-functions.sh ${BUNDLEFOLDER}
+
 PYTHON="${ROBOT_VENV}/bin/python"
 SSH="ssh -t -t"
 ADMIN_PASSWORD="admin"
@@ -111,7 +113,9 @@ function create_etc_hosts() {
 # openstack release
 function install_openstack_clients_in_robot_vm() {
     packages=("python-novaclient" "python-neutronclient" "python-openstackclient")
-    for plugin_name in ${ENABLE_OS_PLUGINS}; do
+    local os_plugins
+    os_plugins=$(csv2ssv "${ENABLE_OS_PLUGINS}")
+    for plugin_name in $os_plugins; do
         if [ "$plugin_name" == "networking-sfc" ]; then
             packages+=("networking-sfc")
         fi
@@ -135,16 +139,6 @@ function install_openstack_clients_in_robot_vm() {
         $PYTHON -m pip install networking-l2gw==11.0.0
     fi
 }
-
-# convert commas in csv strings to spaces (ssv)
-function csv2ssv() {
-    local csv=$1
-    if [ -n "${csv}" ]; then
-        ssv=$(echo ${csv} | sed 's/,/ /g' | sed 's/\ \ */\ /g')
-    fi
-
-    echo "${ssv}"
-} # csv2ssv
 
 function is_openstack_feature_enabled() {
     local feature=$1

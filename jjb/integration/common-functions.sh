@@ -115,3 +115,13 @@ function configure_karaf_log() {
     echo "cat ${LOGCONF}"
     cat ${LOGCONF}
 } # function configure_karaf_log()
+
+# convert commas in csv strings to spaces (ssv)
+function csv2ssv() {
+    local csv=$1
+    if [ -n "${csv}" ]; then
+        ssv=$(echo ${csv} | sed 's/,/ /g' | sed 's/\ \ */\ /g')
+    fi
+
+    echo "${ssv}"
+} # csv2ssv
