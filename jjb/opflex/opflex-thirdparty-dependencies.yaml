@@ -2,9 +2,9 @@
 - project:
     name: opflex-dependencies
     jobs:
-      - 'opflex-libuv-{stream}'
-      - 'opflex-rapidjson-{stream}'
-      - 'opflex-openvswitch-{stream}'
+      - 'opflex-thirdparty-libuv-{stream}'
+      - 'opflex-thirdparty-rapidjson-{stream}'
+      - 'opflex-thirdparty-openvswitch-{stream}'
 
     stream:
       - oxygen:
@@ -34,7 +34,7 @@
     upload-files-dir: '$WORKSPACE/upload_files'
 
 - job-template:
-    name: 'opflex-libuv-{stream}'
+    name: 'opflex-thirdparty-libuv-{stream}'
 
     project-type: freestyle
     node: centos7-builder-2c-8g
@@ -89,7 +89,7 @@
       - lf-infra-publish
 
 - job-template:
-    name: 'opflex-rapidjson-{stream}'
+    name: 'opflex-thirdparty-rapidjson-{stream}'
 
     project-type: freestyle
     node: centos7-builder-2c-8g
@@ -144,7 +144,7 @@
       - lf-infra-publish
 
 - job-template:
-    name: 'opflex-openvswitch-{stream}'
+    name: 'opflex-thirdparty-openvswitch-{stream}'
 
     project-type: freestyle
     node: centos7-builder-2c-8g
