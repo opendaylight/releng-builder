@@ -209,16 +209,18 @@
       - install-test-uninstall-rpm
 
       # Test Oxygen pre-release autorelease tarball
+      # NB: This will need to be updated as old builds expire
       - inject:
           # yamllint disable-line rule:line-length
-          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/autorelease-2106/org/opendaylight/integration/karaf/0.8.0/karaf-0.8.0.tar.gz'
+          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/autorelease-2131/org/opendaylight/integration/karaf/0.8.1/karaf-0.8.1.tar.gz'
       - shell: !include-raw-escape: build-rpm.sh
       - install-test-uninstall-rpm
 
       # Test Oxygen multipatch zip (no parallel tarball available)
+      # NB: This will need to be updated as old builds expire
       - inject:
           # yamllint disable-line rule:line-length
-          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/org/opendaylight/integration/integration/distribution/karaf/0.8.0-SNAPSHOT/karaf-0.8.0-20180305.133042-180.zip'
+          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/org/opendaylight/integration/integration/distribution/karaf/0.8.1-SNAPSHOT/karaf-0.8.1-20180417.030111-15.zip'
       - shell: !include-raw-escape: build-rpm.sh
       - install-test-uninstall-rpm
 
@@ -285,7 +287,7 @@
       # NB: This will need to be updated as old builds expire
       - inject:
           # yamllint disable-line rule:line-length
-          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/org/opendaylight/integration/integration/distribution/distribution-karaf/0.6.4-SNAPSHOT/distribution-karaf-0.6.4-20180305.151247-2.zip'
+          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/org/opendaylight/integration/integration/distribution/distribution-karaf/0.6.4-SNAPSHOT/distribution-karaf-0.6.4-20180408.212935-2.zip'
       - shell: !include-raw-escape: build-rpm.sh
       - install-test-uninstall-rpm
 
@@ -313,7 +315,7 @@
       # NB: This will need to be updated as old builds expire
       - inject:
           # yamllint disable-line rule:line-length
-          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/org/opendaylight/integration/integration/distribution/karaf/0.7.3-SNAPSHOT/karaf-0.7.3-20180305.153647-3.zip'
+          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/org/opendaylight/integration/integration/distribution/karaf/0.7.3-SNAPSHOT/karaf-0.7.3-20180408.214158-1.zip'
       - shell: !include-raw-escape: build-rpm.sh
       - install-test-uninstall-rpm
 
@@ -327,7 +329,7 @@
       # NB: This will need to be updated as old builds expire
       - inject:
           # yamllint disable-line rule:line-length
-          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/autorelease-2106/org/opendaylight/integration/karaf/0.8.0/karaf-0.8.0.tar.gz'
+          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/autorelease-2131/org/opendaylight/integration/karaf/0.8.1/karaf-0.8.1.tar.gz'
       - shell: !include-raw-escape: build-rpm.sh
       - install-test-uninstall-rpm
 
@@ -335,7 +337,7 @@
       # NB: This will need to be updated as old builds expire
       - inject:
           # yamllint disable-line rule:line-length
-          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/org/opendaylight/integration/integration/distribution/karaf/0.8.0-SNAPSHOT/karaf-0.8.0-20180305.133042-180.zip'
+          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/org/opendaylight/integration/integration/distribution/karaf/0.8.1-SNAPSHOT/karaf-0.8.1-20180417.030111-15.zip'
       - shell: !include-raw-escape: build-rpm.sh
       - install-test-uninstall-rpm
 
