@@ -76,7 +76,7 @@
           global-settings-file: 'global-settings'
           settings-file: '{mvn-settings}'
       - maven-target:
-          maven-version: 'mvn33'
+          maven-version: 'mvn35'
           goals: |
               {mvn-goals}
               {opendaylight-infra-mvn-opts}
@@ -110,7 +110,7 @@
       **/target/surefire-reports/*-output.txt
     cron: 'H H * * 0'
     mvn-opts: ''
-    mvn-version: mvn33
+    mvn-version: mvn35
     java-version: openjdk8
 
     #####################
