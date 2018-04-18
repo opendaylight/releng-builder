@@ -33,7 +33,7 @@
           csit-sanity-list: '{csit-sanity-list-fluorine}'
           csit-weekly-list: '{csit-weekly-list-fluorine}'
           csit-high-frequency-list: '{csit-high-frequency-list-fluorine}'
-          mvn-version: 'mvn33'
+          mvn-version: 'mvn35'
       - oxygen:
           branch: 'stable/oxygen'
           csit-blacklist: >
@@ -43,7 +43,7 @@
           csit-sanity-list: '{csit-sanity-list-oxygen}'
           csit-weekly-list: '{csit-weekly-list-oxygen}'
           csit-high-frequency-list: '{csit-high-frequency-list-oxygen}'
-          mvn-version: 'mvn33'
+          mvn-version: 'mvn35'
 
       - nitrogen:
           branch: 'stable/nitrogen'
@@ -52,7 +52,7 @@
           csit-sanity-list: '{csit-sanity-list-nitrogen}'
           csit-weekly-list: '{csit-weekly-list-nitrogen}'
           csit-high-frequency-list: '{csit-high-frequency-list-nitrogen}'
-          mvn-version: 'mvn33'
+          mvn-version: 'mvn35'
 
       - carbon:
           branch: 'stable/carbon'
@@ -62,7 +62,7 @@
           csit-sanity-list: '{csit-sanity-list-carbon}'
           csit-weekly-list: '{csit-weekly-list-carbon}'
           csit-high-frequency-list: '{csit-high-frequency-list-carbon}'
-          mvn-version: 'mvn33'
+          mvn-version: 'mvn35'
 
     # tools system image
     tools_system_image: ZZCI - Ubuntu 16.04 - mininet-ovs-25 - 20171208-1847
@@ -164,7 +164,7 @@
       - integration-distribution-git-url:
           git-url: '{git-url}'
       - maven-exec:
-          maven-version: mvn33
+          maven-version: mvn35
 
     scm:
       - integration-gerrit-scm:
@@ -203,7 +203,7 @@
           global-settings-file: 'global-settings'
           settings-file: 'integration-settings'
       - maven-target:
-          maven-version: 'mvn33'
+          maven-version: 'mvn35'
           pom: '$GERRIT_PROJECT/pom.xml'
           goals: |
               clean install dependency:tree -DoutputFile=dependency_tree.txt
@@ -218,7 +218,7 @@
           global-settings: global-settings
           global-settings-type: cfp
       - maven-target:
-          maven-version: mvn33
+          maven-version: mvn35
           pom: distribution/pom.xml
           goals: |
               clean install dependency:tree -DoutputFile=dependency_tree.txt
@@ -279,7 +279,7 @@
           refspec: 'refs/heads/{branch}'
           artifacts: '{archive-artifacts}'
       - maven-exec:
-          maven-version: mvn33
+          maven-version: mvn35
 
     wrappers:
       - opendaylight-infra-wrappers:

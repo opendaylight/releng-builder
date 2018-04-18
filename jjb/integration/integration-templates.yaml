@@ -1251,7 +1251,7 @@
           default: 'all'
           description: 'Specific feature test for patch'
       - maven-exec:
-          maven-version: mvn33
+          maven-version: mvn35
 
     scm:
       - integration-gerrit-scm:
@@ -1289,7 +1289,7 @@
       - integration-rebase-gerrit-patch
       - wipe-org-opendaylight-repo
       - maven-target:
-          maven-version: mvn33
+          maven-version: mvn35
           pom: '{project}/pom.xml'
           goals: |
               clean install dependency:tree
@@ -1307,7 +1307,7 @@
           global-settings: global-settings
           global-settings-type: cfp
       - maven-target:
-          maven-version: mvn33
+          maven-version: mvn35
           pom: distribution/pom.xml
           goals: |
               clean install dependency:tree
