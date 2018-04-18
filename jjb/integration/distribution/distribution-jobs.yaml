@@ -41,7 +41,7 @@
           global-settings-file: 'global-settings'
           settings-file: 'integration-settings'
       - maven-target:
-          maven-version: mvn33
+          maven-version: mvn35
           pom: pom.xml
           goals: |
               clean install dependency:tree -DoutputFile=dependency_tree.txt
@@ -117,7 +117,7 @@
           path: '$KARAF_ARTIFACT/src/main/assembly'
 
     maven:
-      maven-name: 'mvn33'
+      maven-name: 'mvn35'
       root-pom: 'pom.xml'
       goals: >
           clean install dependency:tree -DoutputFile=dependency_tree.txt -V -B
@@ -158,7 +158,7 @@
     # Default parameters #
     ######################
 
-    mvn-version: mvn33
+    mvn-version: mvn35
 
     #####################
     # Job Configuration #
@@ -188,7 +188,7 @@
       - distribution-karaf-version:
           karaf-version: '{karaf-version}'
       - maven-exec:
-          maven-version: mvn33
+          maven-version: mvn35
 
     scm:
       - integration-gerrit-scm:
