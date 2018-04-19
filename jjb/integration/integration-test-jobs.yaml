@@ -75,7 +75,7 @@
     name: 'integration-distribution-test-{stream}'
 
     project-type: freestyle
-    node: centos7-robot-2c-8g
+    node: queue-disttest-2c-1g
 
     properties:
       - opendaylight-infra-properties:
@@ -110,7 +110,7 @@
     name: 'integration-sanity-test-{stream}'
 
     project-type: freestyle
-    node: centos7-robot-2c-8g
+    node: queue-disttest-2c-1g
 
     properties:
       - opendaylight-infra-properties:
@@ -329,7 +329,7 @@
     name: 'integration-distribution-weekly-test-trigger-{stream}'
 
     project-type: freestyle
-    node: centos7-robot-2c-8g
+    node: queue-disttest-2c-1g
 
     properties:
       - opendaylight-infra-properties:
@@ -361,7 +361,7 @@
     name: 'integration-distribution-high-frequency-test-trigger-{stream}'
 
     project-type: freestyle
-    node: centos7-robot-2c-8g
+    node: queue-disttest-2c-1g
 
     properties:
       - opendaylight-infra-properties:
