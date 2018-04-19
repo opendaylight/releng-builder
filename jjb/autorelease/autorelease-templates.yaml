@@ -61,7 +61,7 @@
     build-node: '{build-node}'
     cron: 'H 0 * * *'
     java-version: openjdk8
-    mvn-version: mvn33
+    mvn-version: mvn35
     extra-mvn-opts: ''
 
     #####################
@@ -78,7 +78,7 @@
 
     parameters:
       - maven-exec:
-          maven-version: 'mvn33'
+          maven-version: 'mvn35'
       - lf-infra-parameters:
           project: '{project}'
           stream: '{stream}'
@@ -146,7 +146,7 @@
       # to enable building in a single maven reactor afterwards.
       - autorelease-fix-relative-paths
       - maven-target:
-          maven-version: 'mvn33'
+          maven-version: 'mvn35'
           pom: 'pom.xml'
           goals: |
               clean deploy
@@ -165,7 +165,7 @@
       - autorelease-get-integration-test-variables
       - autorelease-maven-sources:
           opendaylight-infra-mvn-opts: '{opendaylight-infra-mvn-opts}'
-          maven-version: 'mvn33'
+          maven-version: 'mvn35'
           settings: 'autorelease-settings'
           global-settings: 'global-settings'
       - autorelease-maven-sources-post-process
@@ -318,7 +318,7 @@
               and artifacts are not pushed to Nexus. Instead the build will be
               performed using the goals "clean install".
       - maven-exec:
-          maven-version: mvn33
+          maven-version: mvn35
 
     scm:
       - lf-infra-gerrit-scm:
@@ -337,7 +337,7 @@
     builders:
       # force jenkins install of maven version before any shell scripts use it
       - maven-target:
-          maven-version: mvn33
+          maven-version: mvn35
           goals: '-version'
           settings: autorelease-settings
           settings-type: cfp
@@ -488,7 +488,7 @@
       # to enable building in a single maven reactor afterwards.
       - autorelease-fix-relative-paths
       - maven-target:
-          maven-version: mvn33
+          maven-version: mvn35
           pom: validate-pom.xml
           goals: |
               clean install dependency:tree
@@ -504,7 +504,7 @@
       # Hack to workaround the duplicate-finder plugin in odlparent breaking validate-autorelease
       - shell: sed -i 's/validate/none/' /tmp/r/org/opendaylight/odlparent/odlparent/3.0.2/odlparent-3.0.2.pom || true
       - maven-target:
-          maven-version: mvn33
+          maven-version: mvn35
           pom: pom.xml
           goals: |
               clean validate
