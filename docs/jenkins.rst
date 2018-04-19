@@ -204,49 +204,37 @@ accounts in the cloud so should ensure consistent performance.
      - CPUs
      - Memory
 
-   * - v2-standard-1
+   * - odl-standard-1
      - 1
      - 4
 
-   * - v2-standard-2
+   * - odl-standard-2
      - 2
      - 8
 
-   * - v2-standard-4
+   * - odl-standard-4
      - 4
      - 16
 
-   * - v2-standard-8
+   * - odl-standard-8
      - 8
      - 32
 
-   * - v2-standard-16
+   * - odl-standard-16
      - 16
      - 64
 
-   * - v2-highcpu-1
-     - 1
-     - 1
-
-   * - v2-highcpu-2
+   * - odl-highcpu-2
      - 2
      - 2
 
-   * - v2-highcpu-4
+   * - odl-highcpu-4
      - 4
      - 4
 
-   * - v2-highcpu-8
+   * - odl-highcpu-8
      - 8
      - 8
-
-   * - v2-highcpu-16
-     - 16
-     - 16
-
-   * - v2-highcpu-32
-     - 32
-     - 32
 
 Pool: ODLVEX
 ^^^^^^^^^^^^
