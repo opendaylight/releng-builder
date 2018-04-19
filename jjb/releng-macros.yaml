@@ -454,6 +454,25 @@
                 settings: '{settings}'
                 global-settings: '{global-settings}'
 
+- publisher:
+    name: releng-openstack-stack-delete
+    publishers:
+      - postbuildscript:
+          builders:
+            - role: BOTH
+              build-on:
+                - ABORTED
+                - FAILURE
+                - SUCCESS
+                - UNSTABLE
+              build-steps:
+                - shell: |
+                    #!/bin/bash
+                    echo "Deleting $STACK_NAME"
+                    source "/tmp/v/openstack/bin/activate"
+                    openstack stack delete --yes "$STACK_NAME"
+          mark-unstable-if-failed: false
+
 - builder:
     name: releng-stage-release
     builders:

@@ -118,6 +118,7 @@
           email-prefix: '[{project}]'
       - integration-csit-archive-build
       - integration-csit-run-postscript
+      - releng-openstack-stack-delete
       - lf-infra-publish
 
 - job-template:
@@ -354,6 +355,7 @@
                 format: csv
       - integration-csit-archive-build
       - integration-csit-run-postscript
+      - releng-openstack-stack-delete
       - lf-infra-publish
 
 - job-template:
@@ -449,6 +451,7 @@
           email-prefix: '[{project}]'
       - integration-csit-archive-build
       - integration-csit-run-postscript
+      - releng-openstack-stack-delete
       - lf-infra-publish
 
 - job-template:
@@ -680,6 +683,7 @@
                 format: csv
       - integration-csit-archive-build
       - integration-csit-run-postscript
+      - releng-openstack-stack-delete
       - lf-infra-publish
 
 - job-template:
@@ -797,6 +801,7 @@
                 format: csv
       - integration-csit-archive-build
       - integration-csit-run-postscript
+      - releng-openstack-stack-delete
       - lf-infra-publish
 
 - job-template:
@@ -1004,6 +1009,7 @@
           email-prefix: '[{project}]'
       - integration-csit-archive-build
       - integration-csit-run-postscript
+      - releng-openstack-stack-delete
       - lf-infra-publish
 
 - job-template:
@@ -1213,6 +1219,7 @@
           email-prefix: '[{project}]'
       - integration-csit-archive-build
       - integration-csit-run-postscript
+      - releng-openstack-stack-delete
       - lf-infra-publish
 
 # Template: {project}-patch-test-{stream}
