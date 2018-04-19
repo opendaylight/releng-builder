@@ -39,17 +39,10 @@ resources:
             allowed_address_pairs:
                 - ip_address: 10.250.0.0/24
             network: odlci
-    volume:
-        type: "OS::Cinder::Volume"
-        properties:
-            image: {get_param: vm_image}
-            size: 40
     instance:
         type: "OS::Nova::Server"
         properties:
             flavor: {get_param: vm_flavor}
-            block_device_mapping_v2:
-                - volume_id: {get_resource: volume}
             name:
                 str_replace:
                     template: SILO-JOB_NAME-GROUP-VM_TYPE-INDEX
