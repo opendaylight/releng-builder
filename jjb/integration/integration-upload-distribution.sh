@@ -2,16 +2,17 @@
 set -xeu -o pipefail
 
 BUNDLE_VERSION=$(xpath "${BUNDLE_POM}" '/project/version/text()' 2> /dev/null)
-BUNDLE="${KARAF_ARTIFACT}-${BUNDLE_VERSION}.zip"
-BUNDLE_FILEPATH="/tmp/r/org/opendaylight/integration/${KARAF_ARTIFACT}/${BUNDLE_VERSION}/${BUNDLE}"
-ls -l "${BUNDLE_FILEPATH}"
+BUNDLE_FOLDER="${KARAF_ARTIFACT}-${BUNDLE_VERSION}"
+BUNDLE="${BUNDLE_FOLDER}.zip"
+BUNDLE_PATH="/tmp/r/org/opendaylight/integration/${KARAF_ARTIFACT}/${BUNDLE_VERSION}/${BUNDLE}"
+ls -l "${BUNDLE_PATH}"
 LOG_FILE='integration-upload-distribution.log'
 echo "Uploading distribution to Nexus..."
 "$MVN" deploy:deploy-file \
     --log-file ${LOG_FILE} \
     --global-settings "$GLOBAL_SETTINGS_FILE" \
     --settings "$SETTINGS_FILE" \
-    -Dfile="${BUNDLE_FILEPATH}" \
+    -Dfile="${BUNDLE_PATH}" \
     -DrepositoryId=opendaylight-snapshot \
     -Durl="$ODLNEXUSPROXY/content/repositories/opendaylight.snapshot/" \
     -DgroupId="org.opendaylight.integration.${GERRIT_PROJECT//\//.}" \
@@ -28,4 +29,8 @@ echo "Bundle uploaded to ${BUNDLE_URL}"
 # Re-inject the new BUNDLE_URL for downstream jobs to pull from Nexus
 cat > "${WORKSPACE}/integration-upload-distribution.env" <<EOF
 BUNDLE_URL=${BUNDLE_URL}
+BUNDLE_VERSION=$(xpath "${BUNDLE_POM}" '/project/version/text()' 2> /dev/null)
+BUNDLE_FOLDER="${KARAF_ARTIFACT}-${BUNDLE_VERSION}"
+BUNDLE="${BUNDLE_FOLDER}.zip"
+BUNDLE_PATH="/tmp/r/org/opendaylight/integration/${KARAF_ARTIFACT}/${BUNDLE_VERSION}/${BUNDLE}"
 EOF
