@@ -1,42 +1,5 @@
 ---
 - project:
-    name: genius-csit-genius-oxygen
-    jobs:
-      - inttest-csit-1node
-      - inttest-csit-3node
-
-    # The project name
-    project: 'genius'
-
-    # The functionality under test
-    functionality:
-      - 'upstream'
-      - 'gate'
-      - 'tdd-wip':
-          testplan: '{project}-tdd-wip.txt'
-          schedule: ''
-
-    # Project branches
-    stream:
-      - fluorine:
-          branch: 'master'
-      - oxygen:
-          branch: 'stable/oxygen'
-    install:
-      - all:
-          scope: 'all'
-
-    # Mininet configuration
-    tools_system_count: 3
-    tools_system_image: ZZCI - Ubuntu 16.04 - mininet-ovs-25 - 20171208-1847
-
-    # Features to install
-    install-features: 'odl-genius-rest'
-
-    # Robot custom options
-    robot-options: ' '
-
-- project:
     name: genius-csit-genius-{stream}
     jobs:
       - inttest-csit-1node
@@ -54,6 +17,14 @@
 
     # Project branches
     stream:
+      - fluorine:
+          branch: 'master'
+          functionality:
+            - 'tdd-wip':
+                testplan: '{project}-tdd-wip.txt'
+                schedule: ''
+      - oxygen:
+          branch: 'stable/oxygen'
       - nitrogen:
           branch: 'stable/nitrogen'
       - carbon:
