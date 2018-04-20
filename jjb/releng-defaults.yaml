@@ -9,10 +9,20 @@
     build-days-to-keep: 30
     use-features-boot: 'True'
 
+    # UM projects features
+    um-repos: >
+        mvn:org.opendaylight.sxp/features-sxp/1.7.0-SNAPSHOT/xml/features,
+        mvn:org.opendaylight.usc/usc-features/1.6.0-SNAPSHOT/xml/features
+
+    um-features: >
+        odl-sxp-controller,
+        odl-usc-channel-ui
+
     # Timeout in minutes
     build-timeout: 360
     build-node: centos7-builder-4c-4g
     schedule: ''
+    schedule-daily: 'H H * * *'
     schedule-saturday: 'H H * * 6'
     schedule-weekly: 'H 23 * * 6'
     schedule-high-frequency: 'H H/4 * * *'
@@ -68,6 +78,7 @@
     # Distribution bundle URL
     bundle-url: 'last'
     repo-url: ''
+    install-features: ''
 
     # CSIT images configuration
     openstack_system_image_ocata: ZZCI - CentOS 7 - devstack-ocata - 20171208-1649
@@ -191,21 +202,23 @@
     csit-high-frequency-list-carbon: >
         netvirt-csit-1node-openstack-ocata-upstream-stateful-carbon
     csit-sanity-list-fluorine: >
-        openflowplugin-csit-1node-sanity-only-fluorine
+        openflowplugin-csit-1node-sanity-only-fluorine,
+        distribution-sanity-fluorine
     csit-sanity-list-oxygen: >
-        openflowplugin-csit-1node-sanity-only-oxygen
+        openflowplugin-csit-1node-sanity-only-oxygen,
+        distribution-sanity-oxygen
     csit-sanity-list-nitrogen: >
-        openflowplugin-csit-1node-sanity-only-nitrogen
+        openflowplugin-csit-1node-sanity-only-nitrogen,
+        distribution-sanity-nitrogen
     csit-sanity-list-carbon: >
-        openflowplugin-csit-1node-sanity-only-carbon
+        openflowplugin-csit-1node-sanity-only-carbon,
+        distribution-sanity-carbon
     csit-weekly-list-fluorine: >
         controller-csit-1node-notifications-longevity-only-fluorine,
         controller-csit-3node-drb-partnheal-longevity-only-fluorine,
         controller-csit-3node-drb-precedence-longevity-only-fluorine,
         controller-csit-3node-ddb-expl-lead-movement-longevity-only-fluorine,
         bgpcep-csit-3node-bgpclustering-longevity-only-fluorine,
-        distribution-deploy-fluorine,
-        distribution-offline-fluorine,
         openflowplugin-csit-1node-longevity-only-fluorine
     csit-weekly-list-oxygen: >
         controller-csit-1node-notifications-longevity-only-oxygen,
@@ -213,8 +226,6 @@
         controller-csit-3node-drb-precedence-longevity-only-oxygen,
         controller-csit-3node-ddb-expl-lead-movement-longevity-only-oxygen,
         bgpcep-csit-3node-bgpclustering-longevity-only-oxygen,
-        distribution-deploy-oxygen,
-        distribution-offline-oxygen,
         openflowplugin-csit-1node-longevity-only-oxygen
     csit-weekly-list-nitrogen: >
         controller-csit-1node-notifications-longevity-only-nitrogen,
@@ -222,8 +233,6 @@
         controller-csit-3node-drb-precedence-longevity-only-nitrogen,
         controller-csit-3node-ddb-expl-lead-movement-longevity-only-nitrogen,
         bgpcep-csit-3node-bgpclustering-longevity-only-nitrogen,
-        distribution-deploy-nitrogen,
-        distribution-offline-nitrogen,
         openflowplugin-csit-1node-longevity-only-nitrogen
     csit-weekly-list-carbon: >
         controller-csit-1node-notifications-longevity-only-carbon,
@@ -233,6 +242,4 @@
         controller-csit-3node-drb-precedence-longevity-only-carbon,
         controller-csit-3node-ddb-expl-lead-movement-longevity-only-carbon,
         bgpcep-csit-3node-bgpclustering-longevity-only-carbon,
-        distribution-deploy-carbon,
-        distribution-offline-carbon,
         openflowplugin-csit-1node-longevity-only-carbon
