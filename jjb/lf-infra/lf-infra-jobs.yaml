@@ -79,6 +79,24 @@
     gerrit-server-name: LinuxFoundation
 
 - project:
+    name: lf-infra-lfn-process
+    jobs:
+      - '{project-name}-rtd-jobs'
+      - gerrit-tox-verify
+
+    project-name: lf-infra-lfn-process
+    project: lfn/process
+    project-pattern: lfn/process
+    build-node: centos7-builder-2c-1g
+    rtd-build-url: https://readthedocs.org/api/v2/webhook/lfn-process/TODO/
+    rtd-token: TODO
+    stream: any
+    branch: '*'
+
+    git-url: https://gerrit.linuxfoundation.org/infra/$GERRIT_PROJECT
+    gerrit-server-name: LinuxFoundation
+
+- project:
     name: lf-infra-global-jjb
     jobs:
       - '{project-name}-rtd-jobs'
