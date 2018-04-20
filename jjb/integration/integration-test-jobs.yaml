@@ -3,15 +3,9 @@
     name: integration-test
     project: integration/test
     project-name: integration-test
-    test-branch: master
     jobs:
-      - 'integration-distribution-test-{stream}'
-      - 'integration-sanity-test-{stream}'
       - 'integration-patch-test-{stream}'
       - 'integration-multipatch-test-{stream}'
-      - 'integration-distribution-weekly-test-trigger-{stream}'
-      - 'integration-distribution-high-frequency-test-trigger-{stream}'
-      - 'integration-update-csit-tests-{stream}'
       - '{project-name}-rtd-jobs':
           build-node: centos7-builder-2c-2g
           project-pattern: integration/test
@@ -25,12 +19,38 @@
     stream:
       - fluorine:
           branch: 'master'
+          mvn-version: 'mvn33'
+          csit-list: !include: csit-jobs-fluorine.lst
+
+      - oxygen:
+          branch: 'stable/oxygen'
+          mvn-version: 'mvn33'
+          csit-list: !include: csit-jobs-oxygen.lst
+
+      - nitrogen:
+          branch: 'stable/nitrogen'
+          mvn-version: 'mvn33'
+          csit-list: !include: csit-jobs-nitrogen.lst
+
+- project:
+    name: integration-distribution
+    project: integration/test
+    project-name: integration-test
+    jobs:
+      - 'integration-distribution-test-{stream}'
+      - 'integration-distribution-weekly-test-trigger-{stream}'
+      - 'integration-distribution-high-frequency-test-trigger-{stream}'
+      - 'integration-update-csit-tests-{stream}'
+
+    # CSIT Lists in releng-defaults.yaml
+    stream:
+      - fluorine:
+          branch: 'master'
           csit-blacklist: >
               alto bier capwap centinel coe didm dluxapps groupbasedpolicy iotdm jsonrpc lacp
               l2switch messaging4transport nemo netide nic ocpplugin of-config p4plugin packetcable
               sdninterfaceapp sxp tsdr unimgr usc usecplugin vtn gate longevity sanity tdd wip
           csit-list: !include: csit-jobs-fluorine.lst
-          csit-sanity-list: '{csit-sanity-list-fluorine}'
           csit-weekly-list: '{csit-weekly-list-fluorine}'
           csit-high-frequency-list: '{csit-high-frequency-list-fluorine}'
           mvn-version: 'mvn35'
@@ -40,7 +60,6 @@
               capwap centinel coe didm iotdm jsonrpc lacp messaging4transport netide nic
               ocpplugin sdninterfaceapp unimgr usecplugin gate longevity sanity tdd wip
           csit-list: !include: csit-jobs-oxygen.lst
-          csit-sanity-list: '{csit-sanity-list-oxygen}'
           csit-weekly-list: '{csit-weekly-list-oxygen}'
           csit-high-frequency-list: '{csit-high-frequency-list-oxygen}'
           mvn-version: 'mvn35'
@@ -49,20 +68,35 @@
           branch: 'stable/nitrogen'
           csit-blacklist: capwap centinel coe didm iotdm jsonrpc lacp netide tsdr gate longevity sanity tdd wip
           csit-list: !include: csit-jobs-nitrogen.lst
-          csit-sanity-list: '{csit-sanity-list-nitrogen}'
           csit-weekly-list: '{csit-weekly-list-nitrogen}'
           csit-high-frequency-list: '{csit-high-frequency-list-nitrogen}'
           mvn-version: 'mvn35'
 
-    # tools system image
-    tools_system_image: ZZCI - Ubuntu 16.04 - mininet-ovs-25 - 20171208-1847
+- project:
+    name: integration-sanity
+    project: integration/test
+    project-name: integration-test
+    jobs:
+      - 'integration-sanity-test-{stream}'
 
-# Template: integration-distribution-test-{stream}
-# Goal: Verify a distribution through all system test available
-# Operation: This template takes a distribution and passes all available system test
+    stream:
+      - fluorine:
+          branch: 'master'
+          karaf-version: odl
+          csit-sanity-list: '{csit-sanity-list-fluorine}'
+      - oxygen:
+          branch: 'stable/oxygen'
+          karaf-version: karaf4
+          csit-sanity-list: '{csit-sanity-list-oxygen}'
+      - nitrogen:
+          branch: 'stable/nitrogen'
+          karaf-version: karaf4
+          csit-sanity-list: '{csit-sanity-list-nitrogen}'
 
 - job-template:
     name: 'integration-distribution-test-{stream}'
+    # Goal: Verify a distribution through all system test available
+    # Operation: This template takes a distribution and passes all available system test
 
     project-type: freestyle
     node: queue-disttest-2c-1g
@@ -92,12 +126,11 @@
           email-prefix: '[integration]'
       - lf-infra-publish
 
-# Template: integration-sanity-test-{stream}
-# Goal: Verify a distribution through sanity test
-# Operation: This template takes a distribution and passes sanity test
-
 - job-template:
     name: 'integration-sanity-test-{stream}'
+    # Goal: Verify a distribution through sanity test
+    # Operation: This template takes a distribution and passes sanity test
+    # This jobs works for both managed & unmanaged distro.
 
     project-type: freestyle
     node: queue-intque-2c-1g
@@ -112,6 +145,9 @@
       - distribution-karaf-version:
           karaf-version: '{karaf-version}'
 
+    triggers:
+      - timed: '{schedule-daily}'
+
     builders:
       - trigger-builds:
           - project: '{csit-sanity-list}'
@@ -125,13 +161,12 @@
           email-recipients: '{email-recipients}'
           email-prefix: '[integration]'
 
-# Template: integration-patch-test-{stream}
-# Goal: Build a patch and run all available system test on a distribution containing the change
-# Operation: This job template builds a patch, creates a distribution containing the patch, and
-# triggers the distribution test when test-integration is used in gerrit comments
-
 - job-template:
     name: 'integration-patch-test-{stream}'
+    # Template: integration-patch-test-{stream}
+    # Goal: Build a patch and run all available system test on a distribution containing the change
+    # Operation: This job template builds a patch, creates a distribution containing the patch, and
+    # triggers the distribution test when test-integration is used in gerrit comments
 
     project-type: freestyle
     node: centos7-builder-2c-8g
