@@ -1,26 +1,38 @@
 CONTROLLERMEM="3072m"
 ACTUALFEATURES="odl-integration-all"
 
+if [[ ! -z "${CONTROLLERFEATURES}" ]]; then
+    ACTUALFEATURES="odl-integration-all,${CONTROLLERFEATURES}"
+fi
+
 echo "Kill any controller running"
 ps axf | grep karaf | grep -v grep | awk '{print "kill -9 " $1}' | sh
 
-echo "Clean workspace"
-rm -rf *
+echo "Clean Existing distribution"
+rm -rf ${BUNDLEFOLDER}
 
-echo "Downloading the distribution..."
-wget --progress=dot:mega  "${ACTUAL_BUNDLE_URL}"
+echo "Fetch the distribution..."
+if  [[ -z "${BUNDLE_PATH}" ]]; then
+    wget --progress=dot:mega  "${ACTUAL_BUNDLE_URL}"
+else
+cp "${BUNDLE_PATH}" .
+fi
 
 echo "Extracting the new controller..."
 unzip -q "${BUNDLE}"
 
 echo "Configuring the startup features..."
 FEATURESCONF="${WORKSPACE}/${BUNDLEFOLDER}/etc/org.apache.karaf.features.cfg"
-FEATURE_TEST_STRING="features-integration-test"
-if [[ "$KARAF_VERSION" == "karaf4" ]]; then
-    FEATURE_TEST_STRING="features-test"
+FEATURE_TEST_STRING="features-test"
+if [[ "$KARAF_VERSION" == "karaf3" ]]; then
+    FEATURE_TEST_STRING="features-integration-test"
 fi
 
 sed -ie "s%\(featuresRepositories=\|featuresRepositories =\)%featuresRepositories = mvn:org.opendaylight.integration/${FEATURE_TEST_STRING}/${BUNDLEVERSION}/xml/features,%g" ${FEATURESCONF}
+
+if [[ ! -z "${REPO_URL}" ]]; then
+   sed -ie "s%featuresRepositories =%featuresRepositories = ${REPO_URL},%g" ${FEATURESCONF}
+fi
 
 # Add actual boot features.
 sed -ie "s/\(featuresBoot=\|featuresBoot =\)/featuresBoot = ${ACTUALFEATURES},/g" "${FEATURESCONF}"
@@ -51,7 +63,7 @@ elif [ "${JDKVERSION}" == 'openjdk7' ]; then
     export JAVA_HOME='/usr/lib/jvm/java-1.7.0'
 fi
 readlink -e "${JAVA_HOME}/bin/java"
-echo "Default JDK Version, JAVA_HOME should override"
+echo "JDK Version should be overriden by JAVA_HOME"
 java -version
 
 echo "Redirecting karaf console output to karaf_console.log"
@@ -126,6 +138,7 @@ function exit_on_log_file_message {
     fi
 }
 
+exit_on_log_file_message 'Error installing boot feature repository'
 exit_on_log_file_message 'BindException: Address already in use'
 exit_on_log_file_message 'server is unhealthy'
 
@@ -139,7 +152,7 @@ ps axf | grep karaf | grep -v grep | awk '{print "kill -9 " $1}' | sh
 
 echo "Bug 4628: Detecting misplaced config files"
 pushd "${WORKSPACE}/${BUNDLEFOLDER}" || exit
-XMLS_FOUND=`echo *.xml`
+XMLS_FOUND="$(echo *.xml)"
 popd || exit
 if [ "$XMLS_FOUND" != "*.xml" ]; then
     echo "Bug 4628 confirmed."
