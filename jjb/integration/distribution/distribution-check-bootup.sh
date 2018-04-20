@@ -1,10 +1,14 @@
-
-CONTROLLERMEM="3072m"
-ACTUALFEATURES="odl-integration-all"
 BUNDLEVERSION="$(xpath distribution/pom.xml '/project/version/text()' 2> /dev/null)"
 BUNDLEFOLDER="${KARAF_ARTIFACT}-${BUNDLEVERSION}"
 BUNDLE="${BUNDLEFOLDER}.zip"
 BUNDLE_PATH="/tmp/r/org/opendaylight/integration/${KARAF_ARTIFACT}/${BUNDLEVERSION}/${BUNDLE}"
+
+CONTROLLERMEM="3072m"
+ACTUALFEATURES="odl-integration-all"
+
+if [[ ! -z "${CONTROLLERFEATURES}" ]]; then
+    ACTUALFEATURES="odl-integration-all,${CONTROLLERFEATURES}"
+fi
 
 echo "Kill any controller running"
 ps axf | grep karaf | grep -v grep | awk '{print "kill -9 " $1}' | sh
@@ -12,20 +16,28 @@ ps axf | grep karaf | grep -v grep | awk '{print "kill -9 " $1}' | sh
 echo "Clean Existing distribution"
 rm -rf ${BUNDLEFOLDER}
 
-echo "Copying the distribution..."
+echo "Fetch the distribution..."
+if  [[ -z "${BUNDLE_PATH}" ]]; then
+    wget --progress=dot:mega  "${ACTUAL_BUNDLE_URL}"
+else
 cp "${BUNDLE_PATH}" .
+fi
 
 echo "Extracting the new controller..."
 unzip -q "${BUNDLE}"
 
 echo "Configuring the startup features..."
 FEATURESCONF="${WORKSPACE}/${BUNDLEFOLDER}/etc/org.apache.karaf.features.cfg"
-FEATURE_TEST_STRING="features-integration-test"
-if [[ "$KARAF_VERSION" == "karaf4" ]]; then
-    FEATURE_TEST_STRING="features-test"
+FEATURE_TEST_STRING="features-test"
+if [[ "$KARAF_VERSION" == "karaf3" ]]; then
+    FEATURE_TEST_STRING="features-integration-test"
 fi
 
 sed -ie "s%\(featuresRepositories=\|featuresRepositories =\)%featuresRepositories = mvn:org.opendaylight.integration/${FEATURE_TEST_STRING}/${BUNDLEVERSION}/xml/features,%g" ${FEATURESCONF}
+
+if [[ ! -z "${REPO_URL}" ]]; then
+   sed -ie "s%featuresRepositories =%featuresRepositories = ${REPO_URL},%g" ${FEATURESCONF}
+fi
 
 # Add actual boot features.
 sed -ie "s/\(featuresBoot=\|featuresBoot =\)/featuresBoot = ${ACTUALFEATURES},/g" "${FEATURESCONF}"
@@ -43,10 +55,6 @@ cat "${MEMCONF}"
 
 echo "Listing all open ports on controller system"
 netstat -pnatu
-
-echo "redirected karaf console output to karaf_console.log"
-export KARAF_REDIRECT="${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log"
-mkdir -p ${WORKSPACE}/${BUNDLEFOLDER}/data/log
 
 if [ "${JDKVERSION}" == 'openjdk8' ]; then
     echo "Setting the JRE Version to 8"
@@ -69,9 +77,6 @@ mkdir -p ${WORKSPACE}/${BUNDLEFOLDER}/data/log
 
 echo "Starting controller..."
 ${WORKSPACE}/${BUNDLEFOLDER}/bin/start
-
-# No need for verbose printing during repeating operations.
-set +x
 
 function dump_log_and_exit {
     echo "Dumping first 500K bytes of karaf log..."
@@ -117,8 +122,6 @@ else
     done
 fi
 
-set -x
-
 # echo "Checking OSGi bundles..."
 # sshpass seems to fail with new karaf version
 # sshpass -p karaf ${WORKSPACE}/${BUNDLEFOLDER}/bin/client -u karaf 'bundle:list'
@@ -140,6 +143,7 @@ function exit_on_log_file_message {
     fi
 }
 
+exit_on_log_file_message 'Error installing boot feature repository'
 exit_on_log_file_message 'BindException: Address already in use'
 exit_on_log_file_message 'server is unhealthy'
 

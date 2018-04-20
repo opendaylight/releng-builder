@@ -34,6 +34,13 @@
           rm -rfv /tmp/t
           echo "create n: multithreaded execution might fail at creating it."
           mkdir /tmp/n
+          echo "detecting distribution allowed projects"
+          ALLOW_PROJECTS=(yangtools mdsal openflowjava)
+          ALLOW_PROJECTS+=(`grep '<groupId>org.opendaylight.' -Rh distribution \
+          | sed -e 's%^[ \t]*<groupId>org.opendaylight.%%' \
+          | sed -e 's%</groupId>%%' | sort -u`)
+          echo "Allowed projects are ${ALLOW_PROJECTS[@]}"
+          echo "ALLOW_PROJECTS=${ALLOW_PROJECTS[@]}" > allowed_projects.txt
 
 - builder:
     name: distribution-check-build-project
@@ -48,7 +55,7 @@
           goals: |
               clean deploy
               dependency:tree -DoutputFile=dependency_tree.txt
-              -Pq
+              -Pq -Pmanaged -Punmanaged
               -DaltDeploymentRepository=fake-nexus::default::file:///tmp/n/
               {mvn-opts}
           java-opts:
@@ -68,6 +75,18 @@
     #   gerrit-project: Project name as nexus URI part. Typically '$GERRIT_PROJECT'.
     builders:
       - shell: |
+          echo "These are allowed projects: $ALLOW_PROJECTS"
+          echo "These are distribution pulled projects:"
+          EXIT_CODE="0"
+          for PROJECT in `ls /tmp/r/org/opendaylight`; do
+          echo "$PROJECT"
+          if [[ "$ALLOW_PROJECTS" != *"$PROJECT"* ]]; then
+          echo "ERROR: Not allowed project $PROJECT pulled"
+          EXIT_CODE="1"
+          fi
+          done
+          exit $EXIT_CODE
+          echo "verify project groupId"
           mkdir -p /tmp/t/org/opendaylight/{gerrit-project}
           mv /tmp/n/org/opendaylight/{gerrit-project}/* /tmp/t/org/opendaylight/{gerrit-project}/
           test -z "`find /tmp/n/ -type f`" || ( echo "ERROR: Mismatched groupId detected (see above)." && false )
@@ -88,7 +107,7 @@
           goals: |
               clean install
               dependency:tree -DoutputFile=dependency_tree.txt
-              -Pq
+              -Pq -Pmanaged -Punmanaged
               {mvn-opts}
           java-opts:
             - '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
@@ -193,7 +212,7 @@
               clean install
               dependency:tree -DoutputFile=dependency_tree.txt
               -s fake_remotes.xml
-              -Pq
+              -Pq -Pmanaged -Punmanaged
               {mvn-opts}
           java-opts:
             - '-Xmx4096m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
@@ -219,7 +238,7 @@
               clean install
               dependency:tree -DoutputFile=dependency_tree.txt
               -s fake_remotes.xml
-              -Pq
+              -Pq -Pmananaged -Punmanaged
               -Dsft.heap.max=4g
               -DskipTests=false
               {mvn-opts}
