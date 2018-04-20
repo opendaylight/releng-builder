@@ -1,64 +1,26 @@
 ---
 - project:
-    name: genius-csit-genius-oxygen
-    jobs:
-      - inttest-csit-1node
-      - inttest-csit-3node
-
-    # The project name
-    project: 'genius'
-
-    # The functionality under test
-    functionality:
-      - 'upstream'
-      - 'gate'
-      - 'tdd-wip':
-          testplan: '{project}-tdd-wip.txt'
-          schedule: ''
-
-    # Project branches
-    stream:
-      - fluorine:
-          branch: 'master'
-      - oxygen:
-          branch: 'stable/oxygen'
-    install:
-      - all:
-          scope: 'all'
-
-    # Mininet configuration
-    tools_system_count: 3
-    tools_system_image: ZZCI - Ubuntu 16.04 - mininet-ovs-25 - 20171208-1847
-
-    # Features to install
-    install-features: 'odl-genius-rest'
-
-    # Robot custom options
-    robot-options: ' '
-
-- project:
-    name: genius-csit-genius-{stream}
+    name: genius-csit-genius-oxygen-fluorine
     jobs:
       - inttest-csit-1node
       - inttest-csit-3node
       - inttest-csit-verify-1node
       - inttest-csit-verify-3node
 
-    # The project name
     project: 'genius'
 
-    # The functionality under test
     functionality:
       - 'upstream'
       - 'gate'
+      - 'tdd-wip':
+          testplan: '{project}-tdd-wip.txt'
 
-    # Project branches
     stream:
-      - nitrogen:
-          branch: 'stable/nitrogen'
-      - carbon:
-          branch: 'stable/carbon'
-          karaf-version: karaf3
+      - fluorine:
+          branch: 'master'
+          testplan: 'will_this_work.txt'
+      - oxygen:
+          branch: 'stable/oxygen'
 
     verify-stream: 'oxygen'
     verify-branch: 'stable/oxygen'
@@ -68,12 +30,38 @@
       - all:
           scope: 'all'
 
-    # Mininet configuration
     tools_system_count: 3
     tools_system_image: ZZCI - Ubuntu 16.04 - mininet-ovs-25 - 20171208-1847
 
-    # Features to install
     install-features: 'odl-genius-rest'
 
-    # Robot custom options
-    robot-options: ' '
+
+
+
+- project:
+    name: genius-csit-genius-carbon-nitrogen
+    jobs:
+      - inttest-csit-1node
+      - inttest-csit-3node
+
+    project: 'genius'
+
+    functionality:
+      - 'upstream'
+      - 'gate'
+
+    stream:
+      - nitrogen:
+          branch: 'stable/nitrogen'
+      - carbon:
+          branch: 'stable/carbon'
+          karaf-version: karaf3
+
+    install:
+      - all:
+          scope: 'all'
+
+    tools_system_count: 3
+    tools_system_image: ZZCI - Ubuntu 16.04 - mininet-ovs-25 - 20171208-1847
+
+    install-features: 'odl-genius-rest'
