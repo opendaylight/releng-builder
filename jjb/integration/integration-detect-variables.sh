@@ -8,29 +8,29 @@ DISTROBRANCH="${DISTROBRANCH:-$GERRIT_BRANCH}"
 if [ ${BUNDLE_URL} == 'last' ]; then
     # Obtain current pom.xml of integration/distribution, correct branch.
     wget "http://${GERRIT_PATH}/gitweb?p=integration/distribution.git;a=blob_plain;f=pom.xml;hb=refs/heads/$DISTROBRANCH" -O "pom.xml"
-    # Extract the BUNDLEVERSION from the pom.xml
-    BUNDLEVERSION="$(xpath pom.xml '/project/version/text()' 2> /dev/null)"
-    echo "Bundle version is ${BUNDLEVERSION}"
+    # Extract the BUNDLE_VERSION from the pom.xml
+    BUNDLE_VERSION="$(xpath pom.xml '/project/version/text()' 2> /dev/null)"
+    echo "Bundle version is ${BUNDLE_VERSION}"
     # Acquire the timestamp information from maven-metadata.xml
     NEXUSPATH="${NEXUSURL_PREFIX}/${ODL_NEXUS_REPO}/org/opendaylight/integration/${KARAF_ARTIFACT}"
-    wget "${NEXUSPATH}/${BUNDLEVERSION}/maven-metadata.xml"
+    wget "${NEXUSPATH}/${BUNDLE_VERSION}/maven-metadata.xml"
     less "maven-metadata.xml"
     TIMESTAMP="$(xpath maven-metadata.xml "//snapshotVersion[extension='zip'][1]/value/text()" 2>/dev/null)"
     echo "Nexus timestamp is ${TIMESTAMP}"
-    BUNDLEFOLDER="${KARAF_ARTIFACT}-${BUNDLEVERSION}"
+    BUNDLEFOLDER="${KARAF_ARTIFACT}-${BUNDLE_VERSION}"
     BUNDLE="${KARAF_ARTIFACT}-${TIMESTAMP}.zip"
-    ACTUAL_BUNDLE_URL="${NEXUSPATH}/${BUNDLEVERSION}/${BUNDLE}"
+    ACTUAL_BUNDLE_URL="${NEXUSPATH}/${BUNDLE_VERSION}/${BUNDLE}"
 else
     ACTUAL_BUNDLE_URL="${BUNDLE_URL}"
     BUNDLE="${BUNDLE_URL##*/}"
     ARTIFACT="$(basename "$(dirname "$(dirname "${BUNDLE_URL}")")")"
-    BUNDLEVERSION="$(basename "$(dirname "${BUNDLE_URL}")")"
-    BUNDLEFOLDER="${ARTIFACT}-${BUNDLEVERSION}"
+    BUNDLE_VERSION="$(basename "$(dirname "${BUNDLE_URL}")")"
+    BUNDLEFOLDER="${ARTIFACT}-${BUNDLE_VERSION}"
 fi
 
 echo "Distribution bundle URL is ${ACTUAL_BUNDLE_URL}"
 echo "Distribution bundle is ${BUNDLE}"
-echo "Distribution bundle version is ${BUNDLEVERSION}"
+echo "Distribution bundle version is ${BUNDLE_VERSION}"
 echo "Distribution folder is ${BUNDLEFOLDER}"
 echo "Nexus prefix is ${NEXUSURL_PREFIX}"
 
@@ -38,7 +38,7 @@ echo "Nexus prefix is ${NEXUSURL_PREFIX}"
 cat > "${WORKSPACE}/detect_variables.env" <<EOF
 ACTUAL_BUNDLE_URL=${ACTUAL_BUNDLE_URL}
 BUNDLE=${BUNDLE}
-BUNDLEVERSION=${BUNDLEVERSION}
+BUNDLE_VERSION=${BUNDLE_VERSION}
 BUNDLEFOLDER=${BUNDLEFOLDER}
 NEXUSURL_PREFIX=${NEXUSURL_PREFIX}
 EOF
