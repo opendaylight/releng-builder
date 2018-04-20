@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a7e45d86_037986a7",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-04-20T20:19:23Z",
+      "side": 1,
+      "message": "no sure what you mean. like this:\nos_plugins\u003d$(csv2ssv \"${ENABLE_OS_PLUGINS}\")\n\nor \nos_plugins\u003d\"$(csv2ssv ${ENABLE_OS_PLUGINS})\"",
+      "parentUuid": "09945e8f_d2cb99e0",
+      "revId": "14303a7069394d7b88df99752c4d41235ca3edb6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cf969a0_9c636250",
         "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2018-04-19T22:45:02Z",
       "side": 1,
       "message": "remove all these sources since it is sourced up above at the top of the file",
+      "revId": "14303a7069394d7b88df99752c4d41235ca3edb6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "073b4dfb_e5edc0ae",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-04-20T20:19:23Z",
+      "side": 1,
+      "message": "no, these have to be here. these are little one-liner\nscripts I think. Without this source common-funcs in\nhere, it doesn\u0027t work. took me only 2 days to figure \nit out :/",
+      "parentUuid": "7cf969a0_9c636250",
       "revId": "14303a7069394d7b88df99752c4d41235ca3edb6",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
