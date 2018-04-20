@@ -1,4 +1,72 @@
 ---
+- project:
+    name: distribution
+    jobs:
+      # gerrit- is generic template, distribution- is project specific.
+      - 'distribution-merge-{stream}'
+      - 'distribution-verify-{stream}'
+      - 'distribution-check-{stream}'
+      - gerrit-maven-clm
+      - gerrit-maven-verify-dependencies
+      - gerrit-tox-verify
+      - '{project-name}-rtd-jobs':
+          project-pattern: integration/distribution
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/opendaylight-distribution/34591/
+          rtd-token: 6247e7a21158a20b207470b8bf7719c676ff8944
+
+    project: integration/distribution
+    project-name: distribution
+    mvn-settings: integration-distribution-settings
+    mvn-goals: 'clean install dependency:tree -DoutputFile=dependency_tree.txt'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: ''
+    email-upstream: '[int/dist]'
+
+    stream:
+      - fluorine:
+          branch: 'master'
+          karaf-version: odl
+          repo-url: '{sm-repos}'
+          install-features: '{sm-features}'
+      - oxygen:
+          branch: 'stable/oxygen'
+      - nitrogen:
+          branch: 'stable/nitrogen'
+
+- project:
+    name: distribution-sanity
+    jobs:
+      - 'distribution-sanity-{stream}'
+
+    project: integration/distribution
+    project-name: distribution
+    email-upstream: '[int/dist]'
+
+    stream:
+      - fluorine:
+          branch: 'master'
+          karaf-version: odl
+          repo-url: '{sm-repos}'
+          install-features: '{sm-features}'
+      - oxygen:
+          branch: 'stable/oxygen'
+          karaf-version: karaf4
+      - nitrogen:
+          branch: 'stable/nitrogen'
+          karaf-version: karaf4
+
+- project:
+    name: distribution-sonar
+    jobs:
+      - gerrit-maven-sonar
+
+    project: integration/distribution
+    project-name: distribution
+    branch: master
+    mvn-settings: integration-distribution-settings
+    mvn-goals: clean install dependency:tree -DoutputFile=dependency_tree.txt
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+
 - job-template:
     name: 'distribution-verify-{stream}'
 
@@ -214,6 +282,8 @@
 
     builders:
       - distribution-check-wipe
+      - inject:
+          properties-file: 'allowed_projects.txt'
       - distribution-check-build-project:
           pom: 'distribution/pom.xml'
           mvn-opts: '{opendaylight-infra-mvn-opts}'
@@ -243,10 +313,10 @@
       - lf-infra-publish
 
 - job-template:
-    name: 'distribution-deploy-{stream}'
+    name: 'distribution-sanity-{stream}'
     # Goal: Verify distribution starts with no issues when all features are loaded.
-    # Operation: This job deploys the controller installing odl-integration-all.
-    # FIXME: List required variables.
+    # Operation: This job deploys odl-integration-all + list of UM features.
+    # This jobs works for both managed & self-managed distro.
 
     project-type: freestyle
     node: centos7-builder-4c-4g
@@ -269,6 +339,10 @@
           branch: '{branch}'
       - integration-bundle-url:
           bundle-url: '{bundle-url}'
+      - integration-repo-url:
+          repo-url: '{repo-url}'
+      - integration-controller-features:
+          controller-features: '{install-features}'
       - integration-jdk-version:
           jdkversion: '{jre}'
       - distribution-karaf-version:
@@ -278,56 +352,9 @@
       - opendaylight-infra-wrappers:
           build-timeout: '{build-timeout}'
 
-    # TODO: Trigger from sanity (instead of weekly) when this job is stable for {stream}.
-
     builders:
-      - distribution-deploy-verify
-
-    publishers:
-      - email-notification:
-          email-recipients: '{email-recipients}'
-          email-prefix: '[{project-name}]'
-      - integration-csit-archive-build
-      - lf-infra-publish
-
-- job-template:
-    name: 'distribution-offline-{stream}'
-    # Goal: Verify distribution can start with no internet connection.
-    # Operation: This job deploys the controller removing any external repository definition.
-    # FIXME: List required variables.
-
-    project-type: freestyle
-    node: centos7-builder-4c-4g
-    concurrent: false
-
-    properties:
-      - opendaylight-infra-properties:
-          build-days-to-keep: '{build-days-to-keep}'
-
-    parameters:
-      - opendaylight-infra-parameters:
-          os-cloud: '{os-cloud}'
-          project: '{project}'
-          branch: '{branch}'
-          refspec: 'refs/heads/{branch}'
-          artifacts: '{archive-artifacts}'
-      - integration-distribution-branch:
-          branch: '{branch}'
-      - integration-bundle-url:
-          bundle-url: '{bundle-url}'
-      - integration-jdk-version:
-          jdkversion: '{jre}'
-      - distribution-karaf-version:
-          karaf-version: '{karaf-version}'
-
-    wrappers:
-      - opendaylight-infra-wrappers:
-          build-timeout: '{build-timeout}'
-
-    # TODO: Trigger from sanity (instead of weekly) when this job is stable for {stream}.
-
-    builders:
-      - distribution-deploy-offline
+      - integration-detect-variables
+      - distribution-check-bootup
 
     publishers:
       - email-notification:
