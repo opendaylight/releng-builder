@@ -1,8 +1,10 @@
 
-if [[ "$KARAF_VERSION" == "karaf3" ]]; then
+if [[ "$KARAF_VERSION" == "odl" ]]; then
+    KARAF_ARTIFACT="opendaylight"
+elif [[ "$KARAF_VERSION" == "karaf3" ]]; then
     KARAF_ARTIFACT="distribution-karaf"
 else
-    KARAF_ARTIFACT="karaf"
+    KARAF_ARTIFACT="karaf" 
 fi
 
 if [ "$JDKVERSION" == 'openjdk8' ]; then
