@@ -5,8 +5,6 @@
       # gerrit- is generic template, distribution- is project specific.
       - 'distribution-merge-{stream}'
       - 'distribution-verify-{stream}'
-      - 'distribution-deploy-{stream}'
-      - 'distribution-offline-{stream}'
       - 'distribution-check-{stream}'
       - gerrit-maven-clm
       - gerrit-maven-verify-dependencies
@@ -32,9 +30,35 @@
           karaf-version: karaf3
 
 - project:
+    name: distribution-sanity
+    jobs:
+      - 'distribution-sanity-{stream}'
+
+    project: integration/distribution
+    project-name: distribution
+    email-upstream: '[int/dist]'
+
+    stream:
+      - fluorine:
+          branch: 'master'
+          karaf-version: odl
+          repo-url: '{um-repos}'
+          install-features: '{um-features}'
+      - oxygen:
+          branch: 'stable/oxygen'
+          karaf-version: karaf4
+      - nitrogen:
+          branch: 'stable/nitrogen'
+          karaf-version: karaf4
+      - carbon:
+          branch: 'stable/carbon'
+          karaf-version: karaf3
+
+- project:
     name: distribution-sonar
     jobs:
       - gerrit-maven-sonar
+
     project: integration/distribution
     project-name: distribution
     branch: master
