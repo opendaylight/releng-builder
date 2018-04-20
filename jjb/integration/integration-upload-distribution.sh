@@ -22,7 +22,7 @@ echo "Uploading distribution to Nexus..."
 
 cat "${LOG_FILE}"
 
-BUNDLE_URL=$(grep "Uploaded.*${KARAF_ARTIFACT}/${BUNDLE_VERSION}.*.zip" ${LOG_FILE} | awk '{print $3}') || true
+BUNDLE_URL=$(grep "Uploaded.*${KARAF_ARTIFACT}/${BUNDLE_VERSION}.*.zip" ${LOG_FILE} | awk '{print $5}') || true
 echo "Bundle uploaded to ${BUNDLE_URL}"
 
 # Re-inject the new BUNDLE_URL for downstream jobs to pull from Nexus
