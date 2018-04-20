@@ -72,6 +72,8 @@
 
     builders:
       - distribution-check-wipe
+      - inject:
+          properties-file: 'allowed_projects.txt'
       - distribution-check-build-project:
           pom: '$GERRIT_PROJECT/pom.xml'
           mvn-opts: '{opendaylight-infra-mvn-opts}'
