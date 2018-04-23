@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "948bbc8c_68cca266",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-04-23T18:02:35Z",
+      "side": 1,
+      "message": "put ${ENABLE_OS_PLUGINS} in quotes",
+      "parentUuid": "a7e45d86_037986a7",
+      "revId": "14303a7069394d7b88df99752c4d41235ca3edb6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cf969a0_9c636250",
         "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
         "patchSetId": 1
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "no, these have to be here. these are little one-liner\nscripts I think. Without this source common-funcs in\nhere, it doesn\u0027t work. took me only 2 days to figure \nit out :/",
       "parentUuid": "7cf969a0_9c636250",
+      "revId": "14303a7069394d7b88df99752c4d41235ca3edb6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "60366cef_8052956f",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-04-23T18:02:35Z",
+      "side": 1,
+      "message": "no, this shouldn\u0027t be needed. The functions are sourced above so they are known to this script. This is no different then having the function local to the script before you made the change to move it to common-functions.sh",
+      "parentUuid": "073b4dfb_e5edc0ae",
       "revId": "14303a7069394d7b88df99752c4d41235ca3edb6",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
