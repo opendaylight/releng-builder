@@ -214,7 +214,6 @@
 
     builders:
       - odl-openstack-install
-      - shell: !include-raw-escape: global-jjb/shell/lftools-install.sh
       # Servers
       - odl-openstack-cleanup-stale-stacks
       - odl-openstack-cleanup-stale-nodes

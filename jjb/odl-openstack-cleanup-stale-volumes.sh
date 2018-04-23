@@ -15,8 +15,6 @@ source "/tmp/v/openstack/bin/activate"
 mapfile -t os_volumes < <(openstack volume list -f value -c ID --status Available)
 deactivate
 
-# shellcheck source=/tmp/v/lftools/bin/activate disable=SC1091
-source "/tmp/v/lftools/bin/activate"
 echo "---> Orphaned volumes"
 if [ ${#os_volumes[@]} -eq 0 ]; then
     echo "No orphaned volumes found."

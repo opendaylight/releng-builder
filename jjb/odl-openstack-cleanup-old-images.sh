@@ -11,6 +11,6 @@
 # Removes openstack images older than 30 days in the cloud
 echo "---> Cleanup old images"
 
-# shellcheck source=/tmp/v/lftools/bin/activate disable=SC1091
-source "/tmp/v/lftools/bin/activate"
+# shellcheck source=/tmp/v/openstack/bin/activate disable=SC1091
+source "/tmp/v/openstack/bin/activate"
 lftools openstack --os-cloud vex image cleanup --days=30
