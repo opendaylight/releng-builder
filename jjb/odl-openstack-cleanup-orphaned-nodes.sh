@@ -56,9 +56,6 @@ deactivate
 ## DELETE ORPHANED SERVERS ##
 #############################
 
-# shellcheck source=/tmp/v/lftools/bin/activate disable=SC1091
-source "/tmp/v/lftools/bin/activate"
-
 # Search for servers that are not in use by either releng or sandbox silos and
 # delete them.
 for server in "${OS_SERVERS[@]}"; do
