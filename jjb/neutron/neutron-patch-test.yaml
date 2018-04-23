@@ -1,0 +1,22 @@
+---
+- project:
+    name: neutron-patch-test
+    jobs:
+      - inttest-patch-test
+
+    project: 'neutron'
+
+    stream:
+      - fluorine:
+          branch: 'master'
+          os-branch: 'queens'
+      - oxygen:
+          branch: 'stable/oxygen'
+          os-branch: 'queens'
+
+    jdk: 'openjdk8'
+
+    feature:
+      - netvirt:
+          csit-list: >
+              netvirt-csit-1node-openstack-{os-branch}-gate-stateful-{stream}
