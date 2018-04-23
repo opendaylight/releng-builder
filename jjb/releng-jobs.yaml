@@ -204,6 +204,10 @@
           files:
             - file-id: clouds-yaml
               target: '$HOME/.config/openstack/clouds.yaml'
+            - file-id: npmrc
+              target: '$HOME/.npmrc'
+            - file-id: pipconf
+              target: '$HOME/.config/pip/pip.conf'
 
     triggers:
       - timed: '0,30 * * * *'
