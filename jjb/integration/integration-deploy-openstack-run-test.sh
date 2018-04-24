@@ -792,9 +792,6 @@ EOF
         mkdir -p ${TEMPEST_LOGS_DIR}
         scp ${OPENSTACK_CONTROL_NODE_1_IP}:${DEVSTACK_TEMPEST_DIR}/tempest_results.html ${TEMPEST_LOGS_DIR}
         scp ${OPENSTACK_CONTROL_NODE_1_IP}:${DEVSTACK_TEMPEST_DIR}/tempest.log ${TEMPEST_LOGS_DIR}
-        if [ "$(echo ${OPENSTACK_BRANCH} | cut -d/ -f2)" != "queens" ]; then
-           mv ${WORKSPACE}/tempest_output* ${TEMPEST_LOGS_DIR}
-        fi
     else
         echo "tempest results not found in ${DEVSTACK_TEMPEST_DIR}/${TESTREPO}/0"
     fi
