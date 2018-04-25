@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14c67a36_586216ae",
+        "filename": "jjb/netvirt/netvirt-csit-multi-openstack.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-04-25T13:34:55Z",
+      "side": 1,
+      "message": "this is a good use for this param, but sadly when this is parsed it will prefix with org.opendaylight. We would need to fix the configure_karaf_log() common-function.sh or just set the log:set in the int/test suite setup. I think the latter is the easier fix in the short-term.\n\nThe ssh path would be org.apache.karaf.shell.core or something like that.",
+      "revId": "951b3cf41e3ddcb933d351806a6d4499f033b931",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
