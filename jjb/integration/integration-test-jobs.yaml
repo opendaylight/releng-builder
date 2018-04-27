@@ -280,8 +280,11 @@
           branch: '{branch}'
           refspec: 'refs/heads/{branch}'
           artifacts: '{archive-artifacts}'
-      - maven-exec:
-          maven-version: mvn35
+      - lf-infra-maven-parameters:
+          mvn-opts: ''
+          mvn-params: ''
+          mvn-version: mvn35
+          staging-profile-id: ''  # Staging repos do not make sense for this job
 
     wrappers:
       - opendaylight-infra-wrappers:
