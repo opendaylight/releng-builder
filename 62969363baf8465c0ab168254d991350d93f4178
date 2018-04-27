@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02f9ded4_f732b7fb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2018-04-27T18:16:47Z",
+      "side": 1,
+      "message": "Well, looking at the script [0] which gets executed, it does not use M2-HOME at all (yet). At least not directly, perhaps some other macro sets a seemingly unrelated environment variable using it.\n\nBut the script does call \"$MVN\", so this makes sure it get the path we expect.\n\n[0] https://git.opendaylight.org/gerrit/gitweb?p\u003dreleng/builder.git;a\u003dblob;f\u003djjb/integration/multipatch-distribution.sh;h\u003d6fbdcfd6e02603ca84aa238de7b0c40d309ee745;hb\u003drefs/heads/master",
+      "range": {
+        "startLine": 9,
+        "startChar": 17,
+        "endLine": 9,
+        "endChar": 24
+      },
+      "revId": "62969363baf8465c0ab168254d991350d93f4178",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
