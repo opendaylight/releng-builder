@@ -29,9 +29,19 @@ export GIT_COMMITTER_NAME="Multipatch Job"
 #
 # multipatch-build:openflowplugin:45/69445/1,genius:46/69446/1,netvirt:47/69447/1
 if [ -n "$GERRIT_EVENT_COMMENT_TEXT" ]; then
-    # Grep the multipatch-build: line and then strip from the beginning to the :
-    PATCHES_TO_BUILD=$(echo "$GERRIT_EVENT_COMMENT_TEXT" | grep 'multipatch-build:')
+    if [[ "$GERRIT_EVENT_COMMENT_TEXT" == *fast* ]]; then
+        BUILD_FAST="true"
+        PATCHES_TO_BUILD=$(echo "$GERRIT_EVENT_COMMENT_TEXT" | grep 'multipatch-build-fast:')
+    else
+        BUILD_FAST="false"
+        PATCHES_TO_BUILD=$(echo "$GERRIT_EVENT_COMMENT_TEXT" | grep 'multipatch-build:')
+    fi
     PATCHES_TO_BUILD=${PATCHES_TO_BUILD#*:}
+fi
+if ${BUILD_FAST}; then
+    fast_option="-Pq"
+else
+    fast_option=""
 fi
 IFS=',' read -ra PATCHES <<< "${PATCHES_TO_BUILD}"
 
@@ -100,7 +110,7 @@ do
     fi
     # Build project
     "$MVN" clean install \
-    -e -Pq \
+    -e ${fast_option} \
     -Dstream=oxygen \
     -Dgitid.skip=false \
     -Dmaven.gitcommitid.skip=false \
