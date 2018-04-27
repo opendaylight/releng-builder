@@ -89,9 +89,17 @@
     name: run-test-parameter
     parameters:
       - string:
-          name: RUNTEST
+          name: RUN_TEST
           default: '{run-test}'
           description: 'Set true to run test after build'
+
+- parameter:
+    name: build-fast-parameter
+    parameters:
+      - string:
+          name: BUILD_FAST
+          default: '{build-fast}'
+          description: 'Set true to build fast -Pq'
 
 - parameter:
     name: distribution-branch-to-build-parameter

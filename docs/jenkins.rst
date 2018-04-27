@@ -805,6 +805,7 @@ TODO: Document test-{project}-{feature} and test-{project}-all.
           cherry-pick 59/60259/17 and build netvirt, finally it will checkout latest distribution
           code and build a distribution. The resulting distribution is stored in Nexus and the URL
           is stored in a variable called BUNDLE_URL visible in the job console.
+          Use multipatch-build-fast (vs multipatch-build) for building projects fast (-Pq).
           This job should not alter Gerrit votes for a given patch, nor will do anything with the
           given patch unless the patch is added to the build list.
         </td>

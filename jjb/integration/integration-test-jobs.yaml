@@ -254,7 +254,7 @@
     # (if not all) available CSIT jobs.
 
     project-type: freestyle
-    node: centos7-builder-4c-4g
+    node: centos7-builder-8c-8g
     jdk: '{java-version}'
 
     properties:
@@ -266,6 +266,8 @@
           patches_to_build: '$PATCHES_TO_BUILD'
       - run-test-parameter:
           run-test: 'false'
+      - build-fast-parameter:
+          build-fast: 'false'
       - integration-distribution-branch:
           branch: '{branch}'
       - integration-distribution-stream:
@@ -290,7 +292,7 @@
           server-name: '{gerrit-server-name}'
           trigger-on:
             - comment-added-contains-event:
-                comment-contains-value: 'multipatch-build:'
+                comment-contains-value: 'multipatch-build'
           projects:
             - project-compare-type: ANT
               project-pattern: '**'
@@ -310,7 +312,7 @@
           dist-pom: patch_tester/distribution/pom.xml
       - conditional-step:
           condition-kind: boolean-expression
-          condition-expression: $RUNTEST
+          condition-expression: $RUN_TEST
           steps:
             - trigger-builds:
                 - project: '{csit-list}'
