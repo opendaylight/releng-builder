@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # TODO: 1) clean up inline todo's below :)
 # TODO: 2) Use just a topic branch to create a distribution.  see this email:
 #          https://lists.opendaylight.org/pipermail/discuss/2015-December/006040.html
@@ -83,6 +85,10 @@ fi
 echo "Patches to build: ${PATCHES_TO_BUILD}"
 IFS=',' read -ra PATCHES <<< "${PATCHES_TO_BUILD}"
 
+# First phase: clone the necessary repos and set the patches up
+
+declare -a PROJECTS
+
 # For each patch:
 # * Clone the project.
 # * Optionally, checkout a specific (typically unmerged) Gerrit patch. If none,
@@ -114,6 +120,7 @@ do
         distribution_status="included"
     fi
     PROJECT_SHORTNAME="${PROJECT##*/}"  # http://stackoverflow.com/a/3162500
+    PROJECTS+=("${PROJECT_SHORTNAME}")
     echo "cloning project ${PROJECT}"
     git clone "https://git.opendaylight.org/gerrit/p/${PROJECT}"
     cd ${PROJECT_SHORTNAME} || exit 1
@@ -146,34 +153,35 @@ do
         # Here 'r' means release. Useful for testing Nitrogen Odlparent changes.
         find . -name "*.xml" -print0 | xargs -0 sed -i 's/-SNAPSHOT//g'
     fi
+    cd "${BUILD_DIR}" || exit 1
+done
+
+if [ "${distribution_status}" == "not_included" ]; then
+    echo "adding integration/distribution"
+    PROJECTS+=(distribution)
+    # clone distribution and add it as a module in root pom
+    git clone "https://git.opendaylight.org/gerrit/p/integration/distribution"
+    cd distribution || exit 1
+    git checkout "${DISTRIBUTION_BRANCH_TO_BUILD}"
+    cd "${BUILD_DIR}" || exit 1
+fi
+
+# Second phase: build everything
+
+for PROJECT_SHORTNAME in "${PROJECTS[@]}"; do
+    pushd "${PROJECT_SHORTNAME}" || exit 1
     # Build project
     "$MVN" clean install \
     -e ${fast_option} \
-    -Dstream=oxygen \
+    -Dstream="$DISTROSTREAM" \
     -Dgitid.skip=false \
     -Dmaven.gitcommitid.skip=false \
     --global-settings "$GLOBAL_SETTINGS_FILE" \
     --settings "$SETTINGS_FILE" \
     $MAVEN_OPTIONS
-    cd "${BUILD_DIR}" || exit 1
+    popd || exit 1
     # Since we've installed the artifacts, we can delete the build and save
     # disk space
     rm -rf "${PROJECT_SHORTNAME}"
 done
-
-if [ "${distribution_status}" == "not_included" ]; then
-    echo "adding integration/distribution"
-    # clone distribution and add it as a module in root pom
-    git clone "https://git.opendaylight.org/gerrit/p/integration/distribution"
-    cd distribution || exit 1
-    git checkout "${DISTRIBUTION_BRANCH_TO_BUILD}"
-    # Build project
-    "$MVN" clean install \
-    -e -Pq \
-    -Dstream="$DISTROSTREAM" \
-    --global-settings "$GLOBAL_SETTINGS_FILE" \
-    --settings "$SETTINGS_FILE" \
-    $MAVEN_OPTIONS
-    cd "${BUILD_DIR}" || exit 1
-fi
 
