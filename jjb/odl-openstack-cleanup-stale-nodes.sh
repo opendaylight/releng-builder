@@ -10,13 +10,14 @@
 ##############################################################################
 echo "---> Cleanup stale nodes"
 
+# shellcheck source=/tmp/v/openstack/bin/activate disable=SC1091
+source "/tmp/v/openstack/bin/activate"
+
 # Todo: As a safe check we could obtain the list of active jobs from Jenkins and
 # compute the checksum from $JOB_NAME to check if any active nodes exist and
 # skip deleting those nodes. This step may not be required since there is already
 # 24H timeout in place for all jobs therefore all jobs are expected to complete
 # within the timeout.
 
-# shellcheck source=/tmp/v/lftools/bin/activate disable=SC1091
-source "/tmp/v/lftools/bin/activate"
 lftools openstack --os-cloud vex server list --days=1
 lftools openstack --os-cloud vex server cleanup --days=1
