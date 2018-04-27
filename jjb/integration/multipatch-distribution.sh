@@ -108,6 +108,9 @@ do
     --settings "$SETTINGS_FILE" \
     $MAVEN_OPTIONS
     cd "${BUILD_DIR}" || exit 1
+    # Since we've installed the artifacts, we can delete the build and save
+    # disk space
+    rm -rf "${PROJECT_SHORTNAME}"
 done
 
 if [ "${distribution_status}" == "not_included" ]; then
