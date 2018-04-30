@@ -32,14 +32,6 @@
           branch: 'stable/nitrogen'
           integration-test: nitrogen
           extra-mvn-opts: -P!karaf -Dsft.heap.max=4g
-      - carbon:
-          # Run once a week (Saturday) now that Fluorine branch is cut, and Oxygen is pending release
-          cron: 'H 12 * * 6'
-          next-release-tag: '{stream}'
-          branch: 'stable/carbon'
-          integration-test: carbon
-          karaf-version: karaf3
-          extra-mvn-opts: -P!karaf -Dskip.karaf4.featureTest=true
 
     project: releng/autorelease
     project-name: autorelease
