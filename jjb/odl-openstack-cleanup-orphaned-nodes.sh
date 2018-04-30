@@ -50,8 +50,6 @@ source "/tmp/v/openstack/bin/activate"
 # shellcheck disable=SC2207
 mapfile -t OS_SERVERS < <(openstack server list -f value -c "Name" | grep -E 'prd|snd')
 
-deactivate
-
 #############################
 ## DELETE ORPHANED SERVERS ##
 #############################
