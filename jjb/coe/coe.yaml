@@ -3,6 +3,11 @@
     name: coe-fluorine
     jobs:
       - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-rtd-jobs':
+          build-node: centos7-builder-2c-2g
+          project-pattern: coe
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-coe/34924/
+          rtd-token: 95a5a8fed43b75c6be8432a2643f20a344ba5155
       - odl-maven-jobs
 
     project: 'coe'
@@ -22,6 +27,11 @@
     name: coe-oxygen
     jobs:
       - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-rtd-jobs':
+          build-node: centos7-builder-2c-2g
+          project-pattern: coe
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-coe/34924/
+          rtd-token: 95a5a8fed43b75c6be8432a2643f20a344ba5155
       - odl-maven-jobs
 
     project: 'coe'
@@ -41,6 +51,11 @@
     name: coe-nitrogen
     jobs:
       - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-rtd-jobs':
+          build-node: centos7-builder-2c-2g
+          project-pattern: coe
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-coe/34924/
+          rtd-token: 95a5a8fed43b75c6be8432a2643f20a344ba5155
       - odl-maven-jobs
 
     project: 'coe'
