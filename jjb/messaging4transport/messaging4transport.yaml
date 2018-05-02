@@ -37,45 +37,6 @@
     staging-profile-id: a677283157db4
 
 - project:
-    name: messaging4transport-nitrogen
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-maven-javadoc-jobs'
-      - odl-maven-jobs
-
-    stream: nitrogen
-    project: 'messaging4transport'
-    project-name: 'messaging4transport'
-    branch: 'stable/nitrogen'
-    mvn-settings: 'messaging4transport-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: ''
-    email-upstream: '[messaging4transport]'
-
-    # Used by the release job
-    staging-profile-id: a677283157db4
-
-- project:
-    name: messaging4transport-carbon
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-maven-javadoc-jobs'
-      - odl-maven-jobs
-
-    stream: carbon
-    project: 'messaging4transport'
-    project-name: 'messaging4transport'
-    branch: 'stable/carbon'
-    karaf-version: karaf3
-    mvn-settings: 'messaging4transport-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: ''
-    email-upstream: '[messaging4transport]'
-
-    # Used by the release job
-    staging-profile-id: a677283157db4
-
-- project:
     name: messaging4transport-sonar
     jobs:
       - gerrit-maven-sonar

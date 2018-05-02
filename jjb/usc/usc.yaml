@@ -37,45 +37,6 @@
     staging-profile-id: a697b633b3ffe
 
 - project:
-    name: usc-nitrogen
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-maven-javadoc-jobs'
-      - odl-maven-jobs
-
-    stream: nitrogen
-    project: 'usc'
-    project-name: 'usc'
-    branch: 'stable/nitrogen'
-    mvn-settings: 'usc-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: 'controller-merge-{stream},yangtools-merge-{stream},odlparent-merge-{stream}'
-    email-upstream: '[usc] [controller] [yangtools] [odlparent]'
-
-    # Used by the release job
-    staging-profile-id: a697b633b3ffe
-
-- project:
-    name: usc-carbon
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-maven-javadoc-jobs'
-      - odl-maven-jobs
-
-    stream: carbon
-    project: 'usc'
-    project-name: 'usc'
-    branch: 'stable/carbon'
-    karaf-version: karaf3
-    mvn-settings: 'usc-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: 'controller-merge-{stream},yangtools-merge-{stream},odlparent-merge-{stream}'
-    email-upstream: '[usc] [controller] [yangtools] [odlparent]'
-
-    # Used by the release job
-    staging-profile-id: a697b633b3ffe
-
-- project:
     name: usc-sonar
     jobs:
       - gerrit-maven-sonar

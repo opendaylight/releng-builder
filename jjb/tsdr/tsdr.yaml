@@ -35,43 +35,6 @@
     staging-profile-id: a69373036303c
 
 - project:
-    name: tsdr-nitrogen
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - odl-maven-jobs
-
-    stream: nitrogen
-    project: 'tsdr'
-    project-name: 'tsdr'
-    branch: 'stable/nitrogen'
-    mvn-settings: 'tsdr-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: ''
-    email-upstream: '[tsdr]'
-
-    # Used by the release job
-    staging-profile-id: a69373036303c
-
-- project:
-    name: tsdr-carbon
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - odl-maven-jobs
-
-    stream: carbon
-    project: 'tsdr'
-    project-name: 'tsdr'
-    branch: 'stable/carbon'
-    karaf-version: karaf3
-    mvn-settings: 'tsdr-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: ''
-    email-upstream: '[tsdr]'
-
-    # Used by the release job
-    staging-profile-id: a69373036303c
-
-- project:
     name: tsdr-sonar
     jobs:
       - gerrit-maven-sonar

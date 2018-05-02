@@ -35,43 +35,6 @@
     staging-profile-id: a67a9890f6202
 
 - project:
-    name: nemo-nitrogen
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - odl-maven-jobs
-
-    stream: nitrogen
-    project: 'nemo'
-    project-name: 'nemo'
-    branch: 'stable/nitrogen'
-    mvn-settings: 'nemo-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: ''
-    email-upstream: '[nemo]'
-
-    # Used by the release job
-    staging-profile-id: a67a9890f6202
-
-- project:
-    name: nemo-carbon
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - odl-maven-jobs
-
-    stream: carbon
-    project: 'nemo'
-    project-name: 'nemo'
-    branch: 'stable/carbon'
-    karaf-version: karaf3
-    mvn-settings: 'nemo-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: ''
-    email-upstream: '[nemo]'
-
-    # Used by the release job
-    staging-profile-id: a67a9890f6202
-
-- project:
     name: nemo-sonar
     jobs:
       - gerrit-maven-sonar

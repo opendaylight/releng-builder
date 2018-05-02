@@ -40,45 +40,6 @@
     staging-profile-id: a68eb361ca48a
 
 - project:
-    name: sfc-nitrogen
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - odl-maven-jobs
-
-    stream: nitrogen
-    project: 'sfc'
-    project-name: 'sfc'
-    branch: 'stable/nitrogen'
-    mvn-settings: 'sfc-settings'
-    mvn-opts: '-Xmx2048m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
-    dependencies: 'openflowplugin-merge-{stream},ovsdb-merge-{stream},lispflowmapping-merge-{stream}'
-    email-upstream: '[sfc] [openflowplugin] [ovsdb] [lispflowmapping]'
-    build-node: centos7-builder-8c-8g
-
-    # Used by the release job
-    staging-profile-id: a68eb361ca48a
-
-- project:
-    name: sfc-carbon
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - odl-maven-jobs
-
-    stream: carbon
-    project: 'sfc'
-    project-name: 'sfc'
-    branch: 'stable/carbon'
-    karaf-version: karaf3
-    mvn-settings: 'sfc-settings'
-    mvn-opts: '-Xmx2048m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
-    dependencies: 'openflowplugin-merge-{stream},ovsdb-merge-{stream},lispflowmapping-merge-{stream}'
-    email-upstream: '[sfc] [openflowplugin] [ovsdb] [lispflowmapping]'
-    build-node: centos7-builder-8c-8g
-
-    # Used by the release job
-    staging-profile-id: a68eb361ca48a
-
-- project:
     name: sfc-sonar
     jobs:
       - gerrit-maven-sonar

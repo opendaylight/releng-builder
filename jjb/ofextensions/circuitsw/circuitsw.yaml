@@ -34,40 +34,6 @@
     staging-profile-id: a68970cf5b25c
 
 - project:
-    name: circuitsw-nitrogen
-    jobs:
-      - odl-maven-jobs
-
-    stream: nitrogen
-    project: 'ofextensions/circuitsw'
-    project-name: 'circuitsw'
-    branch: 'stable/nitrogen'
-    mvn-settings: 'ofextensions-circuitsw-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: ''
-    email-upstream: '[circuitsw]'
-
-    # Used by the release job
-    staging-profile-id: a68970cf5b25c
-
-- project:
-    name: circuitsw-carbon
-    jobs:
-      - odl-maven-jobs
-
-    stream: carbon
-    project: 'ofextensions/circuitsw'
-    project-name: 'circuitsw'
-    branch: 'stable/carbon'
-    mvn-settings: 'ofextensions-circuitsw-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: ''
-    email-upstream: '[circuitsw]'
-
-    # Used by the release job
-    staging-profile-id: a68970cf5b25c
-
-- project:
     name: circuitsw-sonar
     jobs:
       - gerrit-maven-sonar

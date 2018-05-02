@@ -13,22 +13,13 @@
 
     # Project branches
     stream:
-      # Removed jobs testing Carbon branches due to the CSIT update
-      # incompatible changes in test suites for Nitrogen
-      # TODO: Create test suites for specific release before
-      # Nitrogen if needed.
       - fluorine:
           branch: 'master'
       - oxygen:
           branch: 'stable/oxygen'
-      - nitrogen:
-          branch: 'stable/nitrogen'
-      - carbon:
-          branch: 'stable/carbon'
-          karaf-version: 'karaf3'
 
-    verify-stream: 'nitrogen'
-    verify-branch: 'stable/nitrogen'
+    verify-stream: 'oxygen'
+    verify-branch: 'stable/oxygen'
     verify-karaf-version: 'karaf4'
 
     install:
