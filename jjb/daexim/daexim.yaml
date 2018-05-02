@@ -36,24 +36,6 @@
     staging-profile-id: 96e4dade34bd7
 
 - project:
-    name: daexim-nitrogen
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - odl-maven-jobs
-
-    project: 'daexim'
-    project-name: 'daexim'
-    stream: nitrogen
-    branch: 'stable/nitrogen'
-    mvn-settings: 'daexim-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
-    email-upstream: '[daexim] [odlparent] [yangtools] [controller]'
-
-    # Used by the release job
-    staging-profile-id: 96e4dade34bd7
-
-- project:
     name: daexim-sonar
     jobs:
       - gerrit-maven-sonar

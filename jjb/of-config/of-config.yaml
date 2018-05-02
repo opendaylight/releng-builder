@@ -35,43 +35,6 @@
     staging-profile-id: a6880455efe67
 
 - project:
-    name: of-config-nitrogen
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - odl-maven-jobs
-
-    stream: nitrogen
-    project: 'of-config'
-    project-name: 'of-config'
-    branch: 'stable/nitrogen'
-    mvn-settings: 'of-config-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: netconf-merge-{stream}'
-    email-upstream: '[of-config] [netconf]'
-
-    # Used by the release job
-    staging-profile-id: a6880455efe67
-
-- project:
-    name: of-config-carbon
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - odl-maven-jobs
-
-    stream: carbon
-    project: 'of-config'
-    project-name: 'of-config'
-    branch: 'stable/carbon'
-    karaf-version: karaf3
-    mvn-settings: 'of-config-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: netconf-merge-{stream}'
-    email-upstream: '[of-config] [netconf]'
-
-    # Used by the release job
-    staging-profile-id: a6880455efe67
-
-- project:
     name: of-config-sonar
     jobs:
       - gerrit-maven-sonar

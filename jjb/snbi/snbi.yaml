@@ -35,43 +35,6 @@
     staging-profile-id: a68f328cefed6
 
 - project:
-    name: snbi-nitrogen
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - odl-maven-jobs
-
-    stream: nitrogen
-    project: 'snbi'
-    project-name: 'snbi'
-    branch: 'stable/nitrogen'
-    mvn-settings: 'snbi-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: ''
-    email-upstream: '[snbi]'
-
-    # Used by the release job
-    staging-profile-id: a68f328cefed6
-
-- project:
-    name: snbi-carbon
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - odl-maven-jobs
-
-    stream: carbon
-    project: 'snbi'
-    project-name: 'snbi'
-    branch: 'stable/carbon'
-    karaf-version: karaf3
-    mvn-settings: 'snbi-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: ''
-    email-upstream: '[snbi]'
-
-    # Used by the release job
-    staging-profile-id: a68f328cefed6
-
-- project:
     name: snbi-sonar
     jobs:
       - gerrit-maven-sonar

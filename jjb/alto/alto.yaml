@@ -37,45 +37,6 @@
     staging-profile-id: 931eabae9693c
 
 - project:
-    name: alto-nitrogen
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - odl-maven-jobs
-
-    stream: nitrogen
-    project: 'alto'
-    project-name: 'alto'
-    branch: 'stable/nitrogen'
-    build-node: centos7-builder-2c-8g
-    mvn-settings: 'alto-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: 'l2switch-merge-{stream}'
-    email-upstream: '[alto] [l2switch]'
-
-    # Used by the release job
-    staging-profile-id: 931eabae9693c
-
-- project:
-    name: alto-carbon
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - odl-maven-jobs
-
-    stream: carbon
-    project: 'alto'
-    project-name: 'alto'
-    branch: 'stable/carbon'
-    build-node: centos7-builder-2c-8g
-    karaf-version: karaf3
-    mvn-settings: 'alto-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: 'l2switch-merge-{stream}'
-    email-upstream: '[alto] [l2switch]'
-
-    # Used by the release job
-    staging-profile-id: 931eabae9693c
-
-- project:
     name: alto-sonar
     jobs:
       - gerrit-maven-sonar

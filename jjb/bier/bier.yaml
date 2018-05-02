@@ -39,45 +39,6 @@
     staging-profile-id: 942a8075b1f2a
 
 - project:
-    name: bier-nitrogen
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - odl-maven-jobs
-
-    stream: nitrogen
-    project: 'bier'
-    project-name: 'bier'
-    branch: 'stable/nitrogen'
-    build-node: centos7-builder-2c-8g
-    mvn-settings: 'bier-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: ''
-    email-upstream: '[bier]'
-
-    # Used by the release job
-    staging-profile-id: 942a8075b1f2a
-
-- project:
-    name: bier-carbon
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - odl-maven-jobs
-
-    stream: carbon
-    project: 'bier'
-    project-name: 'bier'
-    branch: 'stable/carbon'
-    build-node: centos7-builder-2c-8g
-    karaf-version: karaf3
-    mvn-settings: 'bier-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: ''
-    email-upstream: '[bier]'
-
-    # Used by the release job
-    staging-profile-id: 942a8075b1f2a
-
-- project:
     name: bier-sonar
     jobs:
       - gerrit-maven-sonar

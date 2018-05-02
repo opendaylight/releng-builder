@@ -35,43 +35,6 @@
     staging-profile-id: 9324f12310e6a
 
 - project:
-    name: atrium-nitrogen
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - odl-maven-jobs
-
-    stream: nitrogen
-    project: 'atrium'
-    project-name: 'atrium'
-    branch: 'stable/nitrogen'
-    mvn-settings: 'atrium-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: ''
-    email-upstream: '[atrium]'
-
-    # Used by the release job
-    staging-profile-id: 9324f12310e6a
-
-- project:
-    name: atrium-carbon
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - odl-maven-jobs
-
-    stream: carbon
-    project: 'atrium'
-    project-name: 'atrium'
-    branch: 'stable/carbon'
-    karaf-version: karaf3
-    mvn-settings: 'atrium-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: ''
-    email-upstream: '[atrium]'
-
-    # Used by the release job
-    staging-profile-id: 9324f12310e6a
-
-- project:
     name: atrium-sonar
     jobs:
       - gerrit-maven-sonar
