@@ -128,22 +128,77 @@ if [ "${distribution_status}" == "not_included" ]; then
     cd "${BUILD_DIR}" || exit 1
 fi
 
-# Second phase: build everything
-
+# Second phase: calculate the build order
+generateeffectivepoms() {
+  for pomdir in "$@"; do
+    pushd $pomdir > /dev/null || exit 1
+    if grep -q '<modules>' pom.xml; then
+      # In the presence of modules, we rely on mvn itself to determine which
+      # modules we really need to process (depending on active profiles etc.)
+      ${MVN} ${MAVEN_OPTIONS} help:effective-pom -Doutput=effective-pom.xml
+      # Some projects don't generate the effective POM in the expected location
+      # but their absence isn't detrimental
+      if [ -f effective-pom.xml ]; then
+        local -a newpomdirs=($(xmlstarlet sel -N mvn=http://maven.apache.org/POM/4.0.0 -t -m '/mvn:project/mvn:modules/mvn:module' -v . -n effective-pom.xml))
+        if [[ ${#newpomdirs[@]} -gt 0 ]]; then
+          for newpomdir in "${newpomdirs[@]}"; do
+            generateeffectivepoms ${newpomdir}
+          done
+        fi
+      fi
+    else
+      # We know we want to process this POM, but we don't need to descend
+      # further
+      cp pom.xml effective-pom.xml
+    fi
+    popd > /dev/null
+  done
+}
+# groups maps groupIds to project shortnames
+unset groups
+declare -A groups
 for PROJECT_SHORTNAME in "${PROJECTS[@]}"; do
-    pushd "${PROJECT_SHORTNAME}" || exit 1
-    # Build project
-    "$MVN" clean install \
-    -e ${fast_option} \
-    -Dstream="$DISTROSTREAM" \
-    -Dgitid.skip=false \
-    -Dmaven.gitcommitid.skip=false \
-    --global-settings "$GLOBAL_SETTINGS_FILE" \
-    --settings "$SETTINGS_FILE" \
-    $MAVEN_OPTIONS
-    popd || exit 1
-    # Since we've installed the artifacts, we can delete the build and save
-    # disk space
-    rm -rf "${PROJECT_SHORTNAME}"
+  generateeffectivepoms "${PROJECT_SHORTNAME}"
+  for groupId in $(find ${PROJECT_SHORTNAME} -name effective-pom.xml -exec xmlstarlet sel -N mvn=http://maven.apache.org/POM/4.0.0 -t -m '/mvn:project/mvn:groupId' -v . -n '{}' \; | sort -u); do
+    groups["${groupId}"]="${PROJECT_SHORTNAME}"
+  done
+done
+> "${BUILD_DIR}/dependencies"
+for PROJECT_SHORTNAME in "${PROJECTS[@]}"; do
+  unset dependencies
+  declare -a dependencies
+  for groupId in $(find ${PROJECT_SHORTNAME} -name effective-pom.xml -exec xmlstarlet sel -N mvn=http://maven.apache.org/POM/4.0.0 -t -m '/mvn:project/mvn:dependencies/mvn:dependency/mvn:groupId' -v . -n '{}' \; | grep org.opendaylight | sort -u); do
+    if [[ "${groups[${groupId}]}" != "${PROJECT_SHORTNAME}" ]]; then
+      dependencies+=("${groups[${groupId}]}")
+    fi
+  done
+  echo ${PROJECT_SHORTNAME}: ${dependencies[*]} ${PROJECT_SHORTNAME}-stamp >> "${BUILD_DIR}/dependencies"
 done
 
+# Third phase: build everything
+# We use make to process the dependencies
+
+fast_option=-Pq
+
+# Tabs are significant here...
+cat > Makefile <<EOF
+include dependencies
+
+%-stamp:
+	cd \$* && \\
+	${MVN} clean install \\
+		-e \\
+		${fast_option} \\
+		-Dstream="${DISTROSTREAM}" \\
+		-Dgitid.skip=false \\
+		-Dmaven.gitcommitid.skip=false \\
+		--global-settings "${GLOBAL_SETTINGS_FILE}" \\
+		--settings "${SETTINGS_FILE}" \\
+		\$(MAVEN_OPTIONS) && \\
+	${MVN} \$(MAVEN_OPTIONS) clean
+	touch $*-stamp
+EOF
+# In the above, we clean builds as soon as they complete because we only care
+# about the installed artifacts
+
+make distribution-stamp MAVEN_OPTIONS="${MAVEN_OPTIONS}"
