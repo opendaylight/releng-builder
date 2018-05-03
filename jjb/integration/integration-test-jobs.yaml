@@ -54,16 +54,6 @@
           csit-high-frequency-list: '{csit-high-frequency-list-nitrogen}'
           mvn-version: 'mvn35'
 
-      - carbon:
-          branch: 'stable/carbon'
-          karaf-version: karaf3
-          csit-blacklist: capwap centinel coe jsonrpc gate longevity sanity tdd wip
-          csit-list: !include: csit-jobs-carbon.lst
-          csit-sanity-list: '{csit-sanity-list-carbon}'
-          csit-weekly-list: '{csit-weekly-list-carbon}'
-          csit-high-frequency-list: '{csit-high-frequency-list-carbon}'
-          mvn-version: 'mvn35'
-
     # tools system image
     tools_system_image: ZZCI - Ubuntu 16.04 - mininet-ovs-25 - 20171208-1847
 
