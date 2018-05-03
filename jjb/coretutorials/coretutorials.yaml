@@ -54,25 +54,6 @@
     staging-profile-id: 96cd299563ec6
 
 - project:
-    name: coretutorials-carbon
-    jobs:
-      - odl-maven-jobs
-
-    stream: carbon
-    project: 'coretutorials'
-    project-name: 'coretutorials'
-    branch: 'stable/carbon'
-    karaf-version: karaf3
-    mvn-settings: 'coretutorials-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: ''
-    email-upstream: '[coretutorials]'
-    build-timeout: 120
-
-    # Used by the release job
-    staging-profile-id: 96cd299563ec6
-
-- project:
     name: coretutorials-sonar
     jobs:
       - gerrit-maven-sonar
