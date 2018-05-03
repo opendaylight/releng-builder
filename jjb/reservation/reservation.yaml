@@ -51,24 +51,6 @@
     staging-profile-id: a68d9bc504037
 
 - project:
-    name: reservation-carbon
-    jobs:
-      - odl-maven-jobs
-
-    stream: carbon
-    project: 'reservation'
-    project-name: 'reservation'
-    branch: 'stable/carbon'
-    karaf-version: karaf3
-    mvn-settings: 'reservation-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: ''
-    email-upstream: '[reservation]'
-
-    # Used by the release job
-    staging-profile-id: a68d9bc504037
-
-- project:
     name: reservation-sonar
     jobs:
       - gerrit-maven-sonar
