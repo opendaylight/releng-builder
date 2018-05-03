@@ -53,25 +53,6 @@
     staging-profile-id: 96ff6c0ff6ab1
 
 - project:
-    name: lacp-carbon
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - odl-maven-jobs
-
-    stream: carbon
-    project: 'lacp'
-    project-name: 'lacp'
-    branch: 'stable/carbon'
-    karaf-version: karaf3
-    mvn-settings: 'lacp-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: 'openflowjava-merge-{stream},openflowplugin-merge-{stream}'
-    email-upstream: '[lacp] [openflowjava] [openflowplugin]'
-
-    # Used by the release job
-    staging-profile-id: 96ff6c0ff6ab1
-
-- project:
     name: lacp-sonar
     jobs:
       - gerrit-maven-sonar
