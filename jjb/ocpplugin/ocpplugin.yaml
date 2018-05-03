@@ -53,25 +53,6 @@
     staging-profile-id: a687673279f9c
 
 - project:
-    name: ocpplugin-carbon
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - odl-maven-jobs
-
-    stream: carbon
-    project: 'ocpplugin'
-    project-name: 'ocpplugin'
-    branch: 'stable/carbon'
-    karaf-version: karaf3
-    mvn-settings: 'ocpplugin-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
-    email-upstream: '[ocpplugin] [odlparent] [yangtools] [controller]'
-
-    # Used by the release job
-    staging-profile-id: a687673279f9c
-
-- project:
     name: ocpplugin-sonar
     jobs:
       - gerrit-maven-sonar
