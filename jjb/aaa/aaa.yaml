@@ -54,25 +54,6 @@
     staging-profile-id: 9318cf3c82c33
 
 - project:
-    name: aaa-carbon
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - odl-maven-jobs
-
-    stream: carbon
-    project: 'aaa'
-    project-name: 'aaa'
-    branch: 'stable/carbon'
-    karaf-version: karaf3
-    mvn-settings: 'aaa-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
-    email-upstream: '[aaa] [odlparent] [yangtools] [controller]'
-
-    # Used by the release job
-    staging-profile-id: 9318cf3c82c33
-
-- project:
     name: aaa-sonar
     jobs:
       - gerrit-maven-sonar
