@@ -53,25 +53,6 @@
     staging-profile-id: a69902281e037
 
 - project:
-    name: usecplugin-carbon
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - odl-maven-jobs
-
-    stream: carbon
-    project: 'usecplugin'
-    project-name: 'usecplugin'
-    branch: 'stable/carbon'
-    karaf-version: karaf3
-    mvn-settings: 'usecplugin-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: 'openflowplugin-merge-{stream}'
-    email-upstream: '[usecplugin] [openflowplugin]'
-
-    # Used by the release job
-    staging-profile-id: a69902281e037
-
-- project:
     name: usecplugin-sonar
     jobs:
       - gerrit-maven-sonar
