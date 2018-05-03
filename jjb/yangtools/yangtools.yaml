@@ -55,34 +55,6 @@
     staging-profile-id: 1271cf710cc09d
 
 - project:
-    name: yangtools-carbon
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-maven-javadoc-jobs'
-      - odl-maven-jobs
-
-    stream: carbon
-    project: 'yangtools'
-    project-name: 'yangtools'
-    branch: 'stable/carbon'
-    karaf-version: karaf3
-    mvn-settings: 'yangtools-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-
-    dependencies: 'odlparent-merge-{stream}'
-    email-upstream: '[yangtools] [odlparent]'
-    archive-artifacts: >
-        **/*.prop
-        **/*.log
-        **/target/surefire-reports/*-output.txt
-        **/target/failsafe-reports/failsafe-summary.xml
-        **/hs_err_*.log
-        **/target/feature/feature.xml
-
-    # Used by the release job
-    staging-profile-id: 1271cf710cc09d
-
-- project:
     name: yangtools-sonar
     jobs:
       - gerrit-maven-sonar
