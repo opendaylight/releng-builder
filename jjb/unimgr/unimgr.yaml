@@ -56,26 +56,6 @@
     staging-profile-id: a695d0a0b8d51
 
 - project:
-    name: unimgr-carbon
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - odl-maven-jobs
-
-    stream: carbon
-    project: 'unimgr'
-    project-name: 'unimgr'
-    branch: 'stable/carbon'
-    karaf-version: karaf3
-    mvn-settings: 'unimgr-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: 'ovsdb-merge-{stream}'
-    email-upstream: '[unimgr] [ovsdb]'
-    build-node: centos7-builder-4c-16g
-
-    # Used by the release job
-    staging-profile-id: a695d0a0b8d51
-
-- project:
     name: unimgr-sonar
     jobs:
       - gerrit-maven-sonar
