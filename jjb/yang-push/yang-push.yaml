@@ -53,25 +53,6 @@
     staging-profile-id: a69aae2832869
 
 - project:
-    name: yang-push-carbon
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - odl-maven-jobs
-
-    stream: carbon
-    project: 'yang-push'
-    project-name: 'yang-push'
-    branch: 'stable/carbon'
-    karaf-version: karaf3
-    mvn-settings: 'yang-push-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: ''
-    email-upstream: '[yang-push]'
-
-    # Used by the release job
-    staging-profile-id: a69aae2832869
-
-- project:
     name: yang-push-sonar
     jobs:
       - gerrit-maven-sonar
