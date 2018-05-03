@@ -16,8 +16,8 @@ echo "---> compare-autorelease-projects.sh"
 # are equal to the list of projects in integration/distribution.
 
 # Note: int/dist pom files uses templates only since Oxygen release.
-# Todo: Remove this check after Carbon and Nitrogen EOL
-if [[ $STREAM =~ carbon ]] || [[ $STREAM =~ nitrogen ]]; then
+# Todo: Remove this check after Nitrogen EOL
+if [[ $STREAM =~ nitrogen ]]; then
     exit 0
 fi
 
