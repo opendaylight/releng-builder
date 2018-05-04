@@ -47,7 +47,7 @@
               clean install dependency:tree -DoutputFile=dependency_tree.txt
               -Dstream={stream}
               -Dsft.heap.max=4g
-              -Pmanaged -Punmanaged
+              -Pmanaged -Pselfmanaged
               {opendaylight-infra-mvn-opts}
           # {opendaylight-infra-parallel-mvn-opts} is bad when there are multiple big features in SFT.
           java-opts:
@@ -124,7 +124,7 @@
           -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r
           -Dsft.heap.max=4g
           -Djenkins -Dmerge -Dstream={stream}
-          -Pmanaged -Punmanaged
+          -Pmanaged -Pselfmanaged
       maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
       settings: integration-settings
       settings-type: cfp
