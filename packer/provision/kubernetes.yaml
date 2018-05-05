@@ -1,0 +1,34 @@
+---
+
+- hosts: all
+  vars:
+    openvswitch_version: 2.8.2
+    openvswitch_checksum: sha256:87b4a7e7134a44ce1f808d3415a2244b4518c2b0b2a42fa2f8231e592f13103d
+    k8s_version: 1.9.4
+
+  roles:
+    - fkautz.bridge-utils-install
+    - fkautz.openvswitch-install
+    - fkautz.docker-install
+    # - lfit.docker-install
+    - fkautz.kubernetes-install
+
+- hosts: all
+  tasks:
+    - name: Make example directory
+      file:
+        path: /home/vagrant/examples
+        state: directory
+    - name: Copy example files to example directory
+      synchronize:
+        src: ../provision/examples/
+        dest: /home/vagrant/examples/
+
+- hosts: all
+  tasks:
+    - name: Download golang
+      get_url:
+        url: "https://dl.google.com/go/go{{ go_version }}.linux-amd64.tar.gz"
+        dest: "{{ ansible_env.HOME }}/go{{ go_version }}.linux-amd64.tar.gz"
+        mode: 0600
+      creates: "{{ ansible_env.HOME }}/go{{ go_version }}.linux-amd64.tar.gz"
