@@ -57,6 +57,8 @@
       - devstack-pre-pip-pike:
           build-timeout: 75
       - gbp
+      - kubernetes:
+          build-timeout: 90
       - mininet-ovs-2.5:
           build-timeout: 60
       - mininet-ovs-2.6:
@@ -69,12 +71,16 @@
         templates: mininet-ovs-2.5
       - platforms: centos
         templates: mininet-ovs-2.6
+      - platforms: centos
+        templates: kubernetes
       - platforms: ubuntu-14.04
         templates: devstack-pre-pip-ocata
       - platforms: ubuntu-14.04
         templates: devstack-pre-pip-pike
       - platforms: ubuntu-14.04
         templates: devstack
+      - platforms: ubuntu-14.04
+        templates: kubernetes
       - platforms: ubuntu-14.04
         templates: mininet-ovs-2.5
       - platforms: ubuntu-14.04
