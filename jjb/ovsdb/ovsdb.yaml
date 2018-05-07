@@ -4,6 +4,11 @@
     jobs:
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-maven-javadoc-jobs'
+      - '{project-name}-rtd-jobs':
+          build-node: centos7-builder-2c-2g
+          project-pattern: ovsdb
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/opendaylight-ovsdb/35667/
+          rtd-token: 46030df8681cf7fc857aa80c1a7695f46ed252be
       - odl-maven-jobs
 
     stream: fluorine
@@ -24,6 +29,11 @@
     jobs:
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-maven-javadoc-jobs'
+      - '{project-name}-rtd-jobs':
+          build-node: centos7-builder-2c-2g
+          project-pattern: ovsdb
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/opendaylight-ovsdb/35667/
+          rtd-token: 46030df8681cf7fc857aa80c1a7695f46ed252be
       - odl-maven-jobs
 
     stream: oxygen
@@ -44,6 +54,11 @@
     jobs:
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-maven-javadoc-jobs'
+      - '{project-name}-rtd-jobs':
+          build-node: centos7-builder-2c-2g
+          project-pattern: ovsdb
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/opendaylight-ovsdb/35667/
+          rtd-token: 46030df8681cf7fc857aa80c1a7695f46ed252be
       - odl-maven-jobs
 
     stream: nitrogen
@@ -64,6 +79,11 @@
     jobs:
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-maven-javadoc-jobs'
+      - '{project-name}-rtd-jobs':
+          build-node: centos7-builder-2c-2g
+          project-pattern: ovsdb
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/opendaylight-ovsdb/35667/
+          rtd-token: 46030df8681cf7fc857aa80c1a7695f46ed252be
       - odl-maven-jobs
 
     stream: carbon
