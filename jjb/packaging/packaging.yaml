@@ -26,9 +26,8 @@
 
     stream:
       - fluorine
-      - carbon
-      - nitrogen
       - oxygen
+      - nitrogen
     distro:
       - opensuse-42
       - epel-7
@@ -276,27 +275,6 @@
           build-timeout: '{build-timeout}'
 
     builders:
-      # Test Carbon SR2 tarball
-      - inject:
-          # yamllint disable-line rule:line-length
-          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/integration/distribution-karaf/0.6.2-Carbon/distribution-karaf-0.6.2-Carbon.tar.gz'
-      - shell: !include-raw-escape: build-rpm.sh
-      - install-test-uninstall-rpm
-
-      # Test Carbon multipatch zip (no parallel tarball available)
-      # NB: This will need to be updated as old builds expire
-      - inject:
-          # yamllint disable-line rule:line-length
-          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/org/opendaylight/integration/integration/distribution/distribution-karaf/0.6.4-SNAPSHOT/distribution-karaf-0.6.4-20180408.212935-2.zip'
-      - shell: !include-raw-escape: build-rpm.sh
-      - install-test-uninstall-rpm
-
-      # Test latest Carbon snapshot
-      - inject:
-          properties-content: 'STREAM=carbon'
-      - shell: !include-raw: build-rpm-snap.sh
-      - install-test-uninstall-rpm
-
       # Test Nitrogen tarball
       - inject:
           # yamllint disable-line rule:line-length
