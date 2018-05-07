@@ -4,6 +4,12 @@
     jobs:
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-maven-javadoc-jobs'
+      - '{project-name}--rtd-jobs':
+          build-node: centos7-builder-2c-2g
+          project-pattern: ovsdb
+          #These two lines needs to changed with actual ones
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-genius/34944/
+          rtd-token: 7ba691afb89bd53d19fd7d8585fdd8bd6620de7f
       - odl-maven-jobs
 
     stream: fluorine
@@ -24,6 +30,12 @@
     jobs:
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-maven-javadoc-jobs'
+      - '{project-name}--rtd-jobs':
+          build-node: centos7-builder-2c-2g
+          project-pattern: ovsdb
+          #These two lines needs to changed with actual ones
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-genius/34944/
+          rtd-token: 7ba691afb89bd53d19fd7d8585fdd8bd6620de7f
       - odl-maven-jobs
 
     stream: oxygen
@@ -44,6 +56,12 @@
     jobs:
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-maven-javadoc-jobs'
+      - '{project-name}--rtd-jobs':
+          build-node: centos7-builder-2c-2g
+          project-pattern: ovsdb
+          #These two lines needs to changed with actual ones
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-genius/34944/
+          rtd-token: 7ba691afb89bd53d19fd7d8585fdd8bd6620de7f
       - odl-maven-jobs
 
     stream: nitrogen
@@ -64,6 +82,12 @@
     jobs:
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-maven-javadoc-jobs'
+      - '{project-name}--rtd-jobs':
+          build-node: centos7-builder-2c-2g
+          project-pattern: ovsdb
+          #These two lines needs to changed with actual ones
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-genius/34944/
+          rtd-token: 7ba691afb89bd53d19fd7d8585fdd8bd6620de7f
       - odl-maven-jobs
 
     stream: carbon
