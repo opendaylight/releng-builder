@@ -15,9 +15,7 @@ $PYTHON -m pip install --upgrade pip
 $PYTHON -m pip install -r "$WORKSPACE/packaging/packages/requirements.txt"
 
 # Convert stream to numeric ODL major version
-if [ "$STREAM" == "carbon" ]; then
-  VERSION_MAJOR=6
-elif [ "$STREAM" == "nitrogen" ]; then
+if [ "$STREAM" == "nitrogen" ]; then
   VERSION_MAJOR=7
 elif [ "$STREAM" == "oxygen" ]; then
   VERSION_MAJOR=8
@@ -34,4 +32,3 @@ fi
                                          --changelog_email "$CHANGELOG_EMAIL" \
                                          latest_snap \
                                          --major "$VERSION_MAJOR"
-
