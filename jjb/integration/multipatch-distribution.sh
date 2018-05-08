@@ -43,6 +43,44 @@ if ${BUILD_FAST}; then
 else
     fast_option=""
 fi
+# check if topic exists, e.g. topic=binding-tlc-rpc
+if [[ "${PATCHES_TO_BUILD}" == *topic* ]]; then
+    TOPIC="${PATCHES_TO_BUILD#*=}"
+    echo "Create topic ${TOPIC} patch list"
+    PATCHES_TO_BUILD=""
+    read -ra PROJECT_LIST <<< "${BUILD_ORDER}"
+    for PROJECT in "${PROJECT_LIST[@]}"; do
+        # get all patches number for a topic for a given project
+        IFS=$'\n' read -rd '' -a GERRIT_PATCH_LIST <<< "$(ssh -p 29418 jenkins-$SILO@git.opendaylight.org gerrit query status:open topic:${TOPIC} project:${PROJECT} \
+        | grep 'number:' | awk '{{ print $2 }}')" || true
+        echo "Add ${PROJECT}:${GERRIT_PATCH_LIST[*]}"
+        # add project if it is the first with patches or it is not the first
+        if [[ -z "${PATCHES_TO_BUILD}" && ! -z "${GERRIT_PATCH_LIST[*]}" ]]; then
+            PATCHES_TO_BUILD="${PROJECT}"
+        elif [[ ! -z "${PATCHES_TO_BUILD}" ]]; then
+            PATCHES_TO_BUILD="${PATCHES_TO_BUILD},${PROJECT}"
+        fi
+        # sort project patches
+        if [[ ! -z "${GERRIT_PATCH_LIST[*]}" ]]; then
+            REF_LIST=()
+            # create reference list with patch number-refspec
+            for PATCH in "${GERRIT_PATCH_LIST[@]}"; do
+                REFSPEC=$(ssh -p 29418 jenkins-$SILO@git.opendaylight.org gerrit query change:${PATCH} --current-patch-set \
+                | grep 'ref:' | awk '{{ print $2 }}')
+                REF_LIST+=("${PATCH}-${REFSPEC/refs\/changes\/}")
+            done
+            # sort reference list by patch number
+            IFS=$'\n' SORT_REF=$(sort <<<"${REF_LIST[*]}") && unset IFS
+            read -rd '' -a SORT_REF_LIST <<< "${SORT_REF[*]}" || true
+            # add refspec to patches to build list
+            for PATCH in "${SORT_REF_LIST[@]}"; do
+                PATCHES_TO_BUILD="${PATCHES_TO_BUILD}:${PATCH/*-/}"
+            done
+        fi
+    done
+fi
+
+echo "Patches to build: ${PATCHES_TO_BUILD}"
 IFS=',' read -ra PATCHES <<< "${PATCHES_TO_BUILD}"
 
 # For each patch:

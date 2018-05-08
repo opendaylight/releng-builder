@@ -21,16 +21,25 @@
           branch: 'master'
           mvn-version: 'mvn33'
           csit-list: !include: csit-jobs-fluorine.lst
+          build-order: >
+              infrautils mdsal controller aaa netconf daexim bgpcep ovsdb neutron
+              lispflowmapping openflowplugin coe genius sfc netvirt
 
       - oxygen:
           branch: 'stable/oxygen'
           mvn-version: 'mvn33'
           csit-list: !include: csit-jobs-oxygen.lst
+          build-order: >
+              infrautils mdsal controller aaa netconf daexim bgpcep ovsdb neutron
+              lispflowmapping openflowplugin coe genius sfc netvirt
 
       - nitrogen:
           branch: 'stable/nitrogen'
           mvn-version: 'mvn33'
           csit-list: !include: csit-jobs-nitrogen.lst
+          build-order: >
+              infrautils mdsal controller aaa netconf daexim bgpcep ovsdb neutron
+              lispflowmapping openflowplugin coe genius sfc netvirt
 
 - project:
     name: integration-distribution
@@ -290,10 +299,12 @@
     parameters:
       - patches-to-build-parameter:
           patches_to_build: '$PATCHES_TO_BUILD'
-      - run-test-parameter:
-          run-test: 'false'
+      - build-order-parameter:
+          build-order: '{build-order}'
       - build-fast-parameter:
           build-fast: 'false'
+      - run-test-parameter:
+          run-test: 'false'
       - integration-distribution-branch:
           branch: '{branch}'
       - integration-distribution-stream:
