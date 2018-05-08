@@ -25,6 +25,9 @@
     stream:
       - fluorine:
           branch: 'master'
+          build-order: >
+              infrautils mdsal controller aaa netconf daexim bgpcep ovsdb neutron
+              lispflowmapping openflowplugin coe genius sfc netvirt
           csit-blacklist: >
               alto bier capwap centinel coe didm dluxapps groupbasedpolicy iotdm jsonrpc lacp
               l2switch messaging4transport nemo netide nic ocpplugin of-config p4plugin packetcable
@@ -36,6 +39,9 @@
           mvn-version: 'mvn35'
       - oxygen:
           branch: 'stable/oxygen'
+          build-order: >
+              infrautils mdsal controller aaa netconf daexim bgpcep ovsdb neutron
+              lispflowmapping openflowplugin coe genius sfc netvirt
           csit-blacklist: >
               capwap centinel coe didm iotdm jsonrpc lacp messaging4transport netide nic
               ocpplugin sdninterfaceapp unimgr usecplugin gate longevity sanity tdd wip
@@ -47,6 +53,9 @@
 
       - nitrogen:
           branch: 'stable/nitrogen'
+          build-order: >
+              infrautils mdsal controller aaa netconf daexim bgpcep ovsdb neutron
+              lispflowmapping openflowplugin coe genius sfc netvirt
           csit-blacklist: capwap centinel coe didm iotdm jsonrpc lacp netide tsdr gate longevity sanity tdd wip
           csit-list: !include: csit-jobs-nitrogen.lst
           csit-sanity-list: '{csit-sanity-list-nitrogen}'
@@ -255,10 +264,12 @@
     parameters:
       - patches-to-build-parameter:
           patches_to_build: '$PATCHES_TO_BUILD'
-      - run-test-parameter:
-          run-test: 'false'
+      - build-order-parameter:
+          build-order: '{build-order}'
       - build-fast-parameter:
           build-fast: 'false'
+      - run-test-parameter:
+          run-test: 'false'
       - integration-distribution-branch:
           branch: '{branch}'
       - integration-distribution-stream:
