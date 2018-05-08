@@ -805,6 +805,11 @@ TODO: Document test-{project}-{feature} and test-{project}-all.
           cherry-pick 59/60259/17 and build netvirt, finally it will checkout latest distribution
           code and build a distribution. The resulting distribution is stored in Nexus and the URL
           is stored in a variable called BUNDLE_URL visible in the job console.
+          This job also accepts a gerrit topic, for example: multipatch-build:topic=binding-tlc-rpc,
+          in this case the job will find all patches in the topic binding-tlc-rpc for the projects
+          specified in the BUILD_ORDER parameter and will build all projects from the first a patch
+          has been found (branch HEAD is used if no patch is found for a project). The job uses
+          patch numbers to sort patches in the same project.
           Use multipatch-build-fast (vs multipatch-build) for building projects fast (-Pq).
           This job should not alter Gerrit votes for a given patch, nor will do anything with the
           given patch unless the patch is added to the build list.
