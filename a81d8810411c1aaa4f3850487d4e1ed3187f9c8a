@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "debe83fb_4cbaf0b4",
+        "filename": "jjb/integration/integration-test-jobs.yaml",
+        "patchSetId": 10
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-05-09T12:43:58Z",
+      "side": 1,
+      "message": "k, same as in https://github.com/vorburger/opendaylight-bot/blob/master/bot/src/main/resources/odl/projects.txt",
+      "revId": "a81d8810411c1aaa4f3850487d4e1ed3187f9c8a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b79bfbb3_c13ea3cd",
+        "filename": "jjb/integration/multipatch-distribution.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-05-09T12:43:58Z",
+      "side": 1,
+      "message": "I don\u0027t really fully understand this magic shell script code to be able to properly review it, but you could compare the PATCHES_TO_BUILD this produces, for a couple of topics, against what you get as output on http://opendaylight-bot-opendaylight-bot.6923.rh-us-east-1.openshiftapps.com (email me if unclear to use) and see if they match completely?  I think such a diff would be very interesting and useful.  Does this also \"remove leading projects which have no changes\" like I do in https://github.com/vorburger/opendaylight-bot/blob/master/bot/src/main/java/org/opendaylight/bot/odl/MultipatchJob.java ?  So e.g. if you build topic:binding-tlc-getkey, then it has to NOT build infrautils, but it HAS to build all projects after mdsal, EVEN if they don\u0027t have changes yet... did you take that into account?",
+      "revId": "a81d8810411c1aaa4f3850487d4e1ed3187f9c8a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
