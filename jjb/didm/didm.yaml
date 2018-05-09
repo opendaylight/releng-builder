@@ -53,25 +53,6 @@
     staging-profile-id: 96e6338c870f5
 
 - project:
-    name: didm-carbon
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - odl-maven-jobs
-
-    stream: carbon
-    project: 'didm'
-    project-name: 'didm'
-    branch: 'stable/carbon'
-    karaf-version: karaf3
-    mvn-settings: 'didm-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: ''
-    email-upstream: '[didm]'
-
-    # Used by the release job
-    staging-profile-id: 96e6338c870f5
-
-- project:
     name: didm-sonar
     jobs:
       - gerrit-maven-sonar
