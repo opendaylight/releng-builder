@@ -37,17 +37,8 @@ git submodule foreach "echo \$path \$(git rev-parse --verify HEAD) ${RELEASE_TAG
     | tee -a $PATCH_DIR/taglist.log"
 
 echo "$RELEASE_TAG"
-# Remove this case statement when Carbon is no longer supported.
-# Nitrogen onwards we do not want to use the release tag so simply need to
-# strip xml files of -SNAPSHOT tags.
-case "$RELEASE_TAG" in
-    Carbon*)
-        lftools version release "$RELEASE_TAG"
-        ;;
-    *)
-        find . -name "*.xml" -print0 | xargs -0 sed -i 's/-SNAPSHOT//'
-        ;;
-esac
+find . -name "*.xml" -print0 | xargs -0 sed -i 's/-SNAPSHOT//'
+
 git submodule foreach "git commit -am \"Release $RELEASE_TAG\" || true"
 git commit -am "Release $RELEASE_TAG"
 

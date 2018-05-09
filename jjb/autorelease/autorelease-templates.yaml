@@ -87,7 +87,7 @@
       - distribution-karaf-version:
           karaf-version: '{karaf-version}'
       - autorelease-release-tag:
-          release-tag: '{next-release-tag}'
+          release-tag: '{stream}'
       - string:
           name: EXTRA_MVN_OPTS
           default: '{extra-mvn-opts}'
@@ -300,7 +300,7 @@
           lftools-version: '{lftools-version}'
       - string:
           name: RELEASE_TAG
-          default: '{next-release-tag}'
+          default: '{stream}'
           description: |
               Release that is being version bumped.
               Eg. Lithium, Beryllium, Boron, Carbon, Carbon-SR1, Carbon-SR2...
