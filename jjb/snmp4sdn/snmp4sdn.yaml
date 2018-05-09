@@ -53,25 +53,6 @@
     staging-profile-id: a69034a4b6ef5
 
 - project:
-    name: snmp4sdn-carbon
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - odl-maven-jobs
-
-    stream: carbon
-    project: 'snmp4sdn'
-    project-name: 'snmp4sdn'
-    branch: 'stable/carbon'
-    karaf-version: karaf3
-    mvn-settings: 'snmp4sdn-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: 'odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream}'
-    email-upstream: '[snmp4sdn] [odlparent] [controller] [yangtools]'
-
-    # Used by the release job
-    staging-profile-id: a69034a4b6ef5
-
-- project:
     name: snmp4sdn-sonar
     jobs:
       - gerrit-maven-sonar
