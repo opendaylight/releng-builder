@@ -56,26 +56,6 @@
     staging-profile-id: a679c0f4f08a8
 
 - project:
-    name: natapp-carbon
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-maven-javadoc-jobs'
-      - odl-maven-jobs
-
-    stream: carbon
-    project: 'natapp'
-    project-name: 'natapp'
-    branch: 'stable/carbon'
-    karaf-version: karaf3
-    mvn-settings: 'natapp-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: 'openflowplugin-merge-{stream}'
-    email-upstream: '[natapp] [openflowplugin]'
-
-    # Used by the release job
-    staging-profile-id: a679c0f4f08a8
-
-- project:
     name: natapp-sonar
     jobs:
       - gerrit-maven-sonar
