@@ -19,7 +19,7 @@
     stream:
       - fluorine:
           branch: 'master'
-          mvn-version: 'mvn33'
+          mvn-version: 'mvn35'
           csit-list: !include: csit-jobs-fluorine.lst
           build-order: >
               infrautils mdsal controller aaa netconf daexim bgpcep ovsdb neutron
@@ -27,7 +27,7 @@
 
       - oxygen:
           branch: 'stable/oxygen'
-          mvn-version: 'mvn33'
+          mvn-version: 'mvn35'
           csit-list: !include: csit-jobs-oxygen.lst
           build-order: >
               infrautils mdsal controller aaa netconf daexim bgpcep ovsdb neutron
@@ -35,7 +35,7 @@
 
       - nitrogen:
           branch: 'stable/nitrogen'
-          mvn-version: 'mvn33'
+          mvn-version: 'mvn35'
           csit-list: !include: csit-jobs-nitrogen.lst
           build-order: >
               infrautils mdsal controller aaa netconf daexim bgpcep ovsdb neutron
@@ -62,7 +62,6 @@
           csit-list: !include: csit-jobs-fluorine.lst
           csit-weekly-list: '{csit-weekly-list-fluorine}'
           csit-high-frequency-list: '{csit-high-frequency-list-fluorine}'
-          mvn-version: 'mvn35'
       - oxygen:
           branch: 'stable/oxygen'
           csit-blacklist: >
@@ -71,7 +70,6 @@
           csit-list: !include: csit-jobs-oxygen.lst
           csit-weekly-list: '{csit-weekly-list-oxygen}'
           csit-high-frequency-list: '{csit-high-frequency-list-oxygen}'
-          mvn-version: 'mvn35'
 
       - nitrogen:
           branch: 'stable/nitrogen'
@@ -79,7 +77,6 @@
           csit-list: !include: csit-jobs-nitrogen.lst
           csit-weekly-list: '{csit-weekly-list-nitrogen}'
           csit-high-frequency-list: '{csit-high-frequency-list-nitrogen}'
-          mvn-version: 'mvn35'
 
 - project:
     name: integration-sanity
