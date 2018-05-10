@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e897867_0825a214",
+        "filename": "packer/provision/kubernetes.yaml",
+        "patchSetId": 22
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2018-05-10T14:54:15Z",
+      "side": 1,
+      "message": "This is missing our initial baseline script. This is required for all templates, and must be the first thing that the playbook does (see packer/provision/local-builder.yaml for example)\n\n- import_playbook: ../common-packer/provision/baseline.yaml",
+      "revId": "0c0ee839e0532d96a6eedc788293caa0b58d8799",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7dbdf05c_c86940bc",
+        "filename": "packer/provision/kubernetes.yaml",
+        "patchSetId": 22
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2018-05-10T14:54:15Z",
+      "side": 1,
+      "message": "This should have a pre_task (see packer/provision/local-builder.yaml for example)\n\npre_tasks:\n  - include_role: name\u003dlfit.system-update",
+      "revId": "0c0ee839e0532d96a6eedc788293caa0b58d8799",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c706a9ec_4a10bfe7",
+        "filename": "packer/provision/kubernetes.yaml",
+        "patchSetId": 22
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2018-05-10T14:54:15Z",
+      "side": 1,
+      "message": "This needs a post_task (see packer/provision/local-builder.yaml for example)\n\npost_tasks:\n  - name: System Reseal\n    script: ../common-packer/provision/system-reseal.sh\n    become: true",
+      "revId": "0c0ee839e0532d96a6eedc788293caa0b58d8799",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
