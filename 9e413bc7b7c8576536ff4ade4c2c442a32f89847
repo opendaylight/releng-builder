@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e2588f5_768667d0",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 1115,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-05-10T15:34:38Z",
+      "side": 1,
+      "message": "merging this for now, but I think a better flow for\nthis is to have a generic \"fix_libvirt_version()\" function\nthat will do whatever is needed per branch (if anything).\n\nthat gives us a more usable function and removes this\nconditional logic from here.\n\nI guess it doesn\u0027t save us anything, code wise, but\nimagine if we still had Ocata and needed to do something\nslightly different? with this flow, we\u0027d end up with a\nanother function called \"fix_libvirt_version_n_cpu_ocata()\"\nand another condition here.",
+      "range": {
+        "startLine": 1110,
+        "startChar": 0,
+        "endLine": 1115,
+        "endChar": 6
+      },
+      "revId": "9e413bc7b7c8576536ff4ade4c2c442a32f89847",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
