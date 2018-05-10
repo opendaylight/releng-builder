@@ -480,10 +480,13 @@
       - shell: |
           git status
           git add jjb/integration/*.lst
-      - opendaylight-infra-push-gerrit-patch:
-          project: "releng/builder"
-          gerrit-topic: "auto-update-csit-jobs-{stream}"
-          gerrit-commit-message: "Auto Update CSIT Jobs to run for {stream}"
+      - lf-infra-push-gerrit-patch:
+          project: 'releng/builder'
+          gerrit-user: 'jenkins-$SILO'
+          gerrit-host: 'git.opendaylight.org'
+          gerrit-topic: 'auto-update-csit-jobs-{stream}'
+          gerrit-commit-message: 'Auto Update CSIT Jobs to run for {stream}'
+          reviewers-email: 'integration-dev@lists.opendaylight.org'
 
     publishers:
       - lf-infra-publish
