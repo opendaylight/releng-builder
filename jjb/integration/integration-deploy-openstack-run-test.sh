@@ -152,14 +152,14 @@ function is_openstack_feature_enabled() {
     echo 0
 }
 
-function fix_libvirt_version_n_cpu_ocata() {
+function fix_libvirt_version_n_cpu_pike() {
     local ip=$1
     ${SSH} ${ip} "
         cd /opt/stack;
         git clone https://git.openstack.org/openstack/requirements;
         cd requirements;
-        git checkout stable/ocata;
-        sed -i s/libvirt-python===2.5.0/libvirt-python===3.2.0/ upper-constraints.txt
+        git checkout stable/pike;
+        sed -i s/libvirt-python===3.5.0/libvirt-python===4.2.0/ upper-constraints.txt
    "
 }
 
@@ -175,10 +175,6 @@ function install_rdo_release() {
 
        *queens*)
           ${SSH} ${ip} "sudo yum install -y https://repos.fedorapeople.org/repos/openstack/openstack-queens/rdo-release-queens-1.noarch.rpm"
-          ;;
-
-       *ocata*)
-          ${SSH} ${ip} "sudo yum install -y https://repos.fedorapeople.org/repos/openstack/openstack-ocata/rdo-release-ocata-3.noarch.rpm"
           ;;
 
        master)
@@ -873,12 +869,7 @@ function is_rabbitmq_ready() {
     local -r ip=${1}
     local grepfor="nova_cell1"
     rm -f rabbit.txt
-    if [ "${OPENSTACK_BRANCH}" == "stable/ocata" ]; then
-        ${SSH} ${ip} "sudo rabbitmqctl status" > rabbit.txt
-        grepfor="pid"
-    else
-        ${SSH} ${ip} "sudo rabbitmqctl list_vhosts" > rabbit.txt
-    fi
+    ${SSH} ${ip} "sudo rabbitmqctl list_vhosts" > rabbit.txt
     grep ${grepfor} rabbit.txt
 }
 
@@ -1065,12 +1056,6 @@ for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
        ssh ${!CONTROLIP} "sed -i 's/flat_networks public/flat_networks public,physnet1/' /opt/stack/devstack/lib/neutron"
        ssh ${!CONTROLIP} "sed -i '186i iniset \$NEUTRON_CORE_PLUGIN_CONF ml2_type_vlan network_vlan_ranges public:1:4094,physnet1:1:4094' /opt/stack/devstack/lib/neutron"
     fi
-    if [[ "${ODL_ML2_BRANCH}" == "stable/ocata" && "$(is_openstack_feature_enabled n-cpu)" == "1" ]]; then
-        echo "Updating requirements for ${ODL_ML2_BRANCH}"
-        echo "Workaround for https://review.openstack.org/#/c/491032/"
-        echo "Modify upper-constraints to use libvirt-python 3.2.0"
-        fix_libvirt_version_n_cpu_ocata ${!CONTROLIP}
-    fi
     create_control_node_local_conf ${!CONTROLIP} ${ODLMGRIP[$i]} "${ODL_OVS_MGRS[$i]}"
     scp ${WORKSPACE}/local.conf_control_${!CONTROLIP} ${!CONTROLIP}:/opt/stack/devstack/local.conf
     echo "Install rdo release to avoid incompatible Package versions"
@@ -1122,11 +1107,11 @@ for i in `seq 1 ${NUM_OPENSTACK_COMPUTE_NODES}`; do
     scp ${WORKSPACE}/hosts_file ${!COMPUTEIP}:/tmp/hosts
     scp ${WORKSPACE}/get_devstack.sh  ${!COMPUTEIP}:/tmp
     ${SSH} ${!COMPUTEIP} "bash /tmp/get_devstack.sh > /tmp/get_devstack.sh.txt 2>&1"
-    if [ "${ODL_ML2_BRANCH}" == "stable/ocata" ]; then
+    if [ "${ODL_ML2_BRANCH}" == "stable/pike" ]; then
         echo "Updating requirements for ${ODL_ML2_BRANCH}"
-        echo "Workaround for https://review.openstack.org/#/c/491032/"
-        echo "Modify upper-constraints to use libvirt-python 3.2.0"
-        fix_libvirt_version_n_cpu_ocata ${!COMPUTEIP}
+        echo "Workaround for libvirt-python failing installation"
+        echo "Modify upper-constraints to use libvirt-python 4.2.0"
+        fix_libvirt_version_n_cpu_pike ${!COMPUTEIP}
     fi
     create_compute_node_local_conf ${!COMPUTEIP} ${!CONTROLIP} ${ODLMGRIP[$SITE_INDEX]} "${ODL_OVS_MGRS[$SITE_INDEX]}"
     scp ${WORKSPACE}/local.conf_compute_${!COMPUTEIP} ${!COMPUTEIP}:/opt/stack/devstack/local.conf
@@ -1213,13 +1198,6 @@ for i in `seq 1 ${NUM_OPENSTACK_SITES}`; do
 
     echo "sleep for 60s and print hypervisor-list"
     sleep 60
-    # In Ocata if we do not enable the n-cpu in control node then
-    # we need to discover hosts manually and ensure that they are mapped to cells.
-    # reference: https://ask.openstack.org/en/question/102256/how-to-configure-placement-service-for-compute-node-on-ocata/
-    if [ "${OPENSTACK_BRANCH}" == "stable/ocata" ]; then
-        scp ${WORKSPACE}/setup_host_cell_mapping.sh  ${!CONTROLIP}:/tmp
-        ${SSH} ${!CONTROLIP} "sudo bash /tmp/setup_host_cell_mapping.sh"
-    fi
     ${SSH} ${!CONTROLIP} "cd /opt/stack/devstack; source openrc admin admin; nova hypervisor-list"
     # in the case that we are doing openstack (control + compute) all in one node, then the number of hypervisors
     # will be the same as the number of openstack systems. However, if we are doing multinode openstack then the
