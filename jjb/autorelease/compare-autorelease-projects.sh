@@ -15,12 +15,6 @@ echo "---> compare-autorelease-projects.sh"
 # The purpose of this script is to compare list of projects in autorelease
 # are equal to the list of projects in integration/distribution.
 
-# Note: int/dist pom files uses templates only since Oxygen release.
-# Todo: Remove this check after Nitrogen EOL
-if [[ $STREAM =~ nitrogen ]]; then
-    exit 0
-fi
-
 mapfile -t PROJECTS_INT_DIST < <(xmlstarlet sel\
      -N "x=http://maven.apache.org/POM/4.0.0"\
      -t -m "/x:project/x:profiles/x:profile[x:activation/x:activeByDefault='true']/x:dependencies/x:dependency/x:groupId"\

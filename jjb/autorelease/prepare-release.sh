@@ -45,12 +45,7 @@ git commit -am "Release $RELEASE_TAG"
 modules=$(xmlstarlet sel -N x=http://maven.apache.org/POM/4.0.0 -t -m '//x:modules' -v '//x:module' pom.xml)
 for module in $modules; do
     pushd "$module" || exit
-    # TODO: Remove once stable/nitrogen is no longer supported.
-    if [ "$GERRIT_BRANCH" == "stable/nitrogen" ] && [ "$module" == "yangtools" ]; then
-        git format-patch --stdout "origin/v1.2.x" > "$PATCH_DIR/${module//\//-}.patch"
-    else
-        git format-patch --stdout "origin/$GERRIT_BRANCH" > "$PATCH_DIR/${module//\//-}.patch"
-    fi
+    git format-patch --stdout "origin/$GERRIT_BRANCH" > "$PATCH_DIR/${module//\//-}.patch"
     git bundle create "$PATCH_DIR/${module//\//-}.bundle" "origin/master..HEAD"
     popd || exit
 done

@@ -18,14 +18,8 @@
           integration-test: fluorine
           extra-mvn-opts: -P!karaf -Dsft.heap.max=4g
       - oxygen:
-          # Run once a week (Sunday) until Nitrogen-SR3 is out.
-          cron: 'H 12 * * 6'
           branch: 'stable/oxygen'
           integration-test: oxygen
-          extra-mvn-opts: -P!karaf -Dsft.heap.max=4g
-      - nitrogen:
-          branch: 'stable/nitrogen'
-          integration-test: nitrogen
           extra-mvn-opts: -P!karaf -Dsft.heap.max=4g
 
     project: releng/autorelease
