@@ -35,24 +35,6 @@
     staging-profile-id: a693f948563d5
 
 - project:
-    name: ttp-nitrogen
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - odl-maven-jobs
-
-    stream: nitrogen
-    project: 'ttp'
-    project-name: 'ttp'
-    branch: 'stable/nitrogen'
-    mvn-settings: 'ttp-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: 'odlparent-merge-{stream}'
-    email-upstream: '[ttp] [odlparent]'
-
-    # Used by the release job
-    staging-profile-id: a693f948563d5
-
-- project:
     name: ttp-sonar
     jobs:
       - gerrit-maven-sonar

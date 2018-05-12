@@ -35,24 +35,6 @@
     staging-profile-id: a67bab3755815
 
 - project:
-    name: netide-nitrogen
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - odl-maven-jobs
-
-    stream: nitrogen
-    project: 'netide'
-    project-name: 'netide'
-    branch: 'stable/nitrogen'
-    mvn-settings: 'netide-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: 'openflowjava-merge-{stream}'
-    email-upstream: '[netide] [openflowjava]'
-
-    # Used by the release job
-    staging-profile-id: a67bab3755815
-
-- project:
     name: netide-sonar
     jobs:
       - gerrit-maven-sonar

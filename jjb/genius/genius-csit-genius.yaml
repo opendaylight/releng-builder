@@ -27,34 +27,6 @@
 
     install-features: 'odl-genius-rest'
 
-
-- project:
-    name: genius-csit-genius-carbon-nitrogen
-    jobs:
-      - inttest-csit-1node
-      - inttest-csit-3node
-
-    project: 'genius'
-
-    functionality:
-      - 'upstream'
-      - 'gate'
-
-    stream:
-      - nitrogen:
-          branch: 'stable/nitrogen'
-
-    testplan: 'genius-carbon-nitrogen.txt'
-
-    install:
-      - all:
-          scope: 'all'
-
-    tools_system_count: 3
-
-    install-features: 'odl-genius-rest'
-
-
 - project:
     name: genius-csit-genius-verify
     jobs:
