@@ -26,7 +26,6 @@
 
     stream:
       - fluorine
-      - nitrogen
       - oxygen
     distro:
       - opensuse-42
@@ -200,13 +199,6 @@
           build-timeout: '{build-timeout}'
 
     builders:
-      # Test Nitrogen tarball
-      - inject:
-          # yamllint disable-line rule:line-length
-          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/integration/karaf/0.7.0/karaf-0.7.0.tar.gz'
-      - shell: !include-raw-escape: build-rpm.sh
-      - install-test-uninstall-rpm
-
       # Test Oxygen pre-release autorelease tarball
       # NB: This will need to be updated as old builds expire
       - inject:
@@ -275,34 +267,6 @@
           build-timeout: '{build-timeout}'
 
     builders:
-      # Test Nitrogen tarball
-      - inject:
-          # yamllint disable-line rule:line-length
-          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/integration/karaf/0.7.0/karaf-0.7.0.tar.gz'
-      - shell: !include-raw-escape: build-rpm.sh
-      - install-test-uninstall-rpm
-
-      # Test Nitrogen SR1 tarball
-      - inject:
-          # yamllint disable-line rule:line-length
-          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/integration/karaf/0.7.1/karaf-0.7.1.tar.gz'
-      - shell: !include-raw-escape: build-rpm.sh
-      - install-test-uninstall-rpm
-
-      # Test Nitrogen multipatch zip (no parallel tarball available)
-      # NB: This will need to be updated as old builds expire
-      - inject:
-          # yamllint disable-line rule:line-length
-          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/org/opendaylight/integration/integration/distribution/karaf/0.7.3-SNAPSHOT/karaf-0.7.3-20180408.214158-1.zip'
-      - shell: !include-raw-escape: build-rpm.sh
-      - install-test-uninstall-rpm
-
-      # Test latest Nitrogen snapshot
-      - inject:
-          properties-content: 'STREAM=nitrogen'
-      - shell: !include-raw: build-rpm-snap.sh
-      - install-test-uninstall-rpm
-
       # Test Oxygen pre-release autorelease tarball
       # NB: This will need to be updated as old builds expire
       - inject:
@@ -464,7 +428,7 @@
           artifacts: '{archive-artifacts}'
       - string:
           name: PACKAGE
-          default: 'ppa:odl-team/nitrogen'
+          default: 'ppa:odl-team/oxygen'
           description: 'Link to .deb package or name of PPA repo'
 
     scm:

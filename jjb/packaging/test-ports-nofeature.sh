@@ -13,8 +13,7 @@ set -ex -o pipefail
 declare -a expected_ports=("1099" "8101" "44444")
 
 # Ports that should only be open after odl-nevirt-openstack is installed
-# 8080 is Nitrogen and Carbon only, not Oxygen
-declare -a unexpected_ports=("2550" "6633" "6640" "6644" "6653" "8080" "8181" "8185")
+declare -a unexpected_ports=("2550" "6633" "6640" "6644" "6653" "8181" "8185")
 
 # Make sure expected ports open
 COUNT="0"
