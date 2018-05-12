@@ -84,38 +84,19 @@ function dump_log_and_exit {
 }
 
 echo "Waiting up to 5 minutes for controller to come up, checking every 5 seconds..."
-if [ "${DISTROSTREAM}" == "carbon" ] || [ "${DISTROSTREAM}" == "nitrogen" ]; then
-    # Only oxygen and above have the infrautils.ready feature, so using REST API to determine if the controller is ready.
-    COUNT="0"
-    while true; do
-        COUNT=$(( ${COUNT} + 5 ))
-        sleep 5
-        echo "already waited ${COUNT} seconds..."
-        RESP="$(curl --user admin:admin -sL -w "%{http_code} %{url_effective}\\n" http://localhost:8181/restconf/modules -o /dev/null || true)"
-        echo ${RESP}
-        if [[ ${RESP} == *"200"* ]]; then
-            echo "Controller is UP"
-            break
-        elif (( "${COUNT}" > "300" )); then
-            echo "Timeout Controller DOWN"
-            dump_log_and_exit
-        fi
-    done
-else
-    COUNT="0"
-    while true; do
-        COUNT=$(( ${COUNT} + 5 ))
-        sleep 5
-        echo "already waited ${COUNT} seconds..."
-        if grep --quiet 'org.opendaylight.infrautils.ready-impl.*System ready' "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log"; then
-            echo "Controller is UP"
-            break
-        elif (( "${COUNT}" > "300" )); then
-            echo "Timeout Controller DOWN"
-            dump_log_and_exit
-        fi
-    done
-fi
+COUNT="0"
+while true; do
+    COUNT=$(( ${COUNT} + 5 ))
+    sleep 5
+    echo "already waited ${COUNT} seconds..."
+    if grep --quiet 'org.opendaylight.infrautils.ready-impl.*System ready' "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log"; then
+        echo "Controller is UP"
+        break
+    elif (( "${COUNT}" > "300" )); then
+        echo "Timeout Controller DOWN"
+        dump_log_and_exit
+    fi
+done
 
 # echo "Checking OSGi bundles..."
 # sshpass seems to fail with new karaf version
