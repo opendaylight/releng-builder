@@ -35,24 +35,6 @@
     staging-profile-id: a68ca4a24655c
 
 - project:
-    name: packetcable-nitrogen
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - odl-maven-jobs
-
-    stream: nitrogen
-    project: 'packetcable'
-    project-name: 'packetcable'
-    branch: 'stable/nitrogen'
-    mvn-settings: 'packetcable-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: ''
-    email-upstream: '[packetcable]'
-
-    # Used by the release job
-    staging-profile-id: a68ca4a24655c
-
-- project:
     name: packetcable-sonar
     jobs:
       - gerrit-maven-sonar

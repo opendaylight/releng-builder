@@ -46,27 +46,6 @@
     staging-profile-id: a674173c7b29d
 
 - project:
-    name: mdsal-nitrogen
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-maven-javadoc-jobs'
-      - odl-maven-jobs
-
-    stream: nitrogen
-    project: 'mdsal'
-    project-name: 'mdsal'
-    branch: 'stable/nitrogen'
-    build-node: centos7-builder-8c-8g
-    mvn-settings: 'mdsal-settings'
-    mvn-goals: '-Dmaven.compile.fork=true clean deploy -Dintegrationtests'
-    mvn-opts: '-Xmx2048m -XX:MaxPermSize=1024m'
-    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream}'
-    email-upstream: '[mdsal] [odlparent] [yangtools]'
-
-    # Used by the release job
-    staging-profile-id: a674173c7b29d
-
-- project:
     name: mdsal-sonar
     jobs:
       - gerrit-maven-sonar

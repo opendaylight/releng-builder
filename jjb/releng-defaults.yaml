@@ -101,9 +101,9 @@
 
     # Data for csit-verify jobs
     # Branch for "last" version detection
-    verify-branch: stable/carbon
+    verify-branch: stable/oxygen
     # Value for ODL_STREAM
-    verify-stream: carbon
+    verify-stream: oxygen
     verify-karaf-version: karaf3
     verify-jdkversion: openjdk8
 
@@ -190,28 +190,20 @@
         netvirt-csit-1node-openstack-queens-upstream-stateful-fluorine
     csit-high-frequency-list-oxygen: >
         netvirt-csit-1node-openstack-queens-upstream-stateful-oxygen
-    csit-high-frequency-list-nitrogen: >
-        netvirt-csit-1node-openstack-pike-upstream-stateful-nitrogen
-    csit-high-frequency-list-carbon: >
-        netvirt-csit-1node-openstack-ocata-upstream-stateful-carbon
     csit-sanity-list-fluorine: >
         openflowplugin-csit-1node-sanity-only-fluorine,
         distribution-sanity-fluorine
     csit-sanity-list-oxygen: >
         openflowplugin-csit-1node-sanity-only-oxygen,
         distribution-sanity-oxygen
-    csit-sanity-list-nitrogen: >
-        openflowplugin-csit-1node-sanity-only-nitrogen,
-        distribution-sanity-nitrogen
-    csit-sanity-list-carbon: >
-        openflowplugin-csit-1node-sanity-only-carbon,
-        distribution-sanity-carbon
     csit-weekly-list-fluorine: >
         controller-csit-1node-notifications-longevity-only-fluorine,
         controller-csit-3node-drb-partnheal-longevity-only-fluorine,
         controller-csit-3node-drb-precedence-longevity-only-fluorine,
         controller-csit-3node-ddb-expl-lead-movement-longevity-only-fluorine,
         bgpcep-csit-3node-bgpclustering-longevity-only-fluorine,
+        distribution-deploy-fluorine,
+        distribution-offline-fluorine,
         openflowplugin-csit-1node-longevity-only-fluorine
     csit-weekly-list-oxygen: >
         controller-csit-1node-notifications-longevity-only-oxygen,
@@ -219,20 +211,6 @@
         controller-csit-3node-drb-precedence-longevity-only-oxygen,
         controller-csit-3node-ddb-expl-lead-movement-longevity-only-oxygen,
         bgpcep-csit-3node-bgpclustering-longevity-only-oxygen,
+        distribution-deploy-oxygen,
+        distribution-offline-oxygen,
         openflowplugin-csit-1node-longevity-only-oxygen
-    csit-weekly-list-nitrogen: >
-        controller-csit-1node-notifications-longevity-only-nitrogen,
-        controller-csit-3node-drb-partnheal-longevity-only-nitrogen,
-        controller-csit-3node-drb-precedence-longevity-only-nitrogen,
-        controller-csit-3node-ddb-expl-lead-movement-longevity-only-nitrogen,
-        bgpcep-csit-3node-bgpclustering-longevity-only-nitrogen,
-        openflowplugin-csit-1node-longevity-only-nitrogen
-    csit-weekly-list-carbon: >
-        controller-csit-1node-notifications-longevity-only-carbon,
-        controller-csit-3node-cs-chasing-leader-longevity-only-carbon,
-        controller-csit-3node-cs-partnheal-longevity-only-carbon,
-        controller-csit-3node-drb-partnheal-longevity-only-carbon,
-        controller-csit-3node-drb-precedence-longevity-only-carbon,
-        controller-csit-3node-ddb-expl-lead-movement-longevity-only-carbon,
-        bgpcep-csit-3node-bgpclustering-longevity-only-carbon,
-        openflowplugin-csit-1node-longevity-only-carbon
