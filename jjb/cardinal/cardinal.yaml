@@ -35,24 +35,6 @@
     staging-profile-id: 96be20348f0f2
 
 - project:
-    name: cardinal-nitrogen
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - odl-maven-jobs
-
-    stream: nitrogen
-    project: 'cardinal'
-    project-name: 'cardinal'
-    branch: 'stable/nitrogen'
-    mvn-settings: 'cardinal-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: 'openflowplugin-merge-{stream},iotdm-merge-{stream},sfc-merge-{stream}'
-    email-upstream: '[cardinal] [openflowplugin] [iotdm] [sfc]'
-
-    # Used by the release job
-    staging-profile-id: 96be20348f0f2
-
-- project:
     name: cardinal-sonar
     jobs:
       - gerrit-maven-sonar

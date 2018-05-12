@@ -35,24 +35,6 @@
     staging-profile-id: a687673279f9c
 
 - project:
-    name: ocpplugin-nitrogen
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - odl-maven-jobs
-
-    stream: nitrogen
-    project: 'ocpplugin'
-    project-name: 'ocpplugin'
-    branch: 'stable/nitrogen'
-    mvn-settings: 'ocpplugin-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
-    email-upstream: '[ocpplugin] [odlparent] [yangtools] [controller]'
-
-    # Used by the release job
-    staging-profile-id: a687673279f9c
-
-- project:
     name: ocpplugin-sonar
     jobs:
       - gerrit-maven-sonar

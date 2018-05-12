@@ -35,24 +35,6 @@
     staging-profile-id: 96bf9b3fefd8a
 
 - project:
-    name: centinel-nitrogen
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - odl-maven-jobs
-
-    stream: nitrogen
-    project: 'centinel'
-    project-name: 'centinel'
-    branch: 'stable/nitrogen'
-    mvn-settings: 'centinel-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: ''
-    email-upstream: '[centinel]'
-
-    # Used by the release job
-    staging-profile-id: 96bf9b3fefd8a
-
-- project:
     name: centinel-sonar
     jobs:
       - gerrit-maven-sonar

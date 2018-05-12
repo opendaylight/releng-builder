@@ -37,25 +37,6 @@
     staging-profile-id: a67ef386204aa
 
 - project:
-    name: nic-nitrogen
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - odl-maven-jobs
-
-    stream: nitrogen
-    project: 'nic'
-    project-name: 'nic'
-    branch: 'stable/nitrogen'
-    build-node: centos7-builder-2c-8g
-    mvn-settings: 'nic-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: 'vtn-merge-{stream},groupbasedpolicy-merge-{stream}'
-    email-upstream: '[nic] [vtn] [groupbasedpolicy]'
-
-    # Used by the release job
-    staging-profile-id: a67ef386204aa
-
-- project:
     name: nic-sonar
     jobs:
       - gerrit-maven-sonar

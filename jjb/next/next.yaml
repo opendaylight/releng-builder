@@ -35,24 +35,6 @@
     staging-profile-id: a67e7c516f385
 
 - project:
-    name: next-nitrogen
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - odl-maven-jobs
-
-    stream: nitrogen
-    project: 'next'
-    project-name: 'next'
-    branch: 'stable/nitrogen'
-    mvn-settings: 'next-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: ''
-    email-upstream: '[next]'
-
-    # Used by the release job
-    staging-profile-id: a67e7c516f385
-
-- project:
     name: next-sonar
     jobs:
       - gerrit-maven-sonar

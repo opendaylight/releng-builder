@@ -19,11 +19,6 @@
           branch: 'master'
       - oxygen:
           branch: 'stable/oxygen'
-      - nitrogen:
-          branch: 'stable/nitrogen'
-          karaf-version: karaf3
-          # yamllint disable-line rule:line-length
-          bundleurl: 'https://jenkins.opendaylight.org/releng/view/jsonrpc/job/jsonrpc-merge-nitrogen/lastSuccessfulBuild/org.opendaylight.jsonrpc$jsonrpc-karaf/artifact/org.opendaylight.jsonrpc/jsonrpc-karaf/1.1.0-SNAPSHOT/jsonrpc-karaf-1.1.0-SNAPSHOT.zip'
 
     install:
       - only:

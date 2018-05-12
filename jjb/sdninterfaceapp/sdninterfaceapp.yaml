@@ -37,25 +37,6 @@
     staging-profile-id: a68e3d1ff55e3
 
 - project:
-    name: sdninterfaceapp-nitrogen
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - odl-maven-jobs
-
-    stream: nitrogen
-    project: 'sdninterfaceapp'
-    project-name: 'sdninterfaceapp'
-    branch: 'stable/nitrogen'
-    build-node: centos7-builder-2c-8g
-    mvn-settings: 'sdninterfaceapp-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: 'bgpcep-merge-{stream}'
-    email-upstream: '[sdninterfaceapp] [bgpcep]'
-
-    # Used by the release job
-    staging-profile-id: a68e3d1ff55e3
-
-- project:
     name: sdninterfaceapp-sonar
     jobs:
       - gerrit-maven-sonar
