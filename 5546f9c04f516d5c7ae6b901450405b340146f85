@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "4beb8c99_fc3029fc",
+        "filename": "packer/provision/kubernetes.yaml",
+        "patchSetId": 23
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 5475
+      },
+      "writtenOn": "2018-05-12T23:23:05Z",
+      "side": 1,
+      "message": "Instead of relying on the centos version of docker, I\u0027ve reverted back to lfit.docker and modified the kubernetes-install ansible script to fix up the cgroup driver in the kubelet configuration. Patch #24 reverts this line.",
+      "parentUuid": "dcc7a8fc_122db6e3",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 27
+      },
+      "revId": "5546f9c04f516d5c7ae6b901450405b340146f85",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a83163c8_8c65eb77",
         "filename": "packer/provision/roles/coe/requirements.yaml",
         "patchSetId": 23
@@ -84,6 +108,30 @@
       "writtenOn": "2018-05-10T23:26:09Z",
       "side": 1,
       "message": "these roles are already defined in common-packer, we should find a way to make sure these are picked up from common-packer instead of replicating them. But for now its ok.",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 25
+      },
+      "revId": "5546f9c04f516d5c7ae6b901450405b340146f85",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9cedcf84_0835c252",
+        "filename": "packer/provision/roles/coe/requirements.yaml",
+        "patchSetId": 23
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 5475
+      },
+      "writtenOn": "2018-05-12T23:23:05Z",
+      "side": 1,
+      "message": "We had problems earlier with the ansible-galaxy script. Faseela has sent in a patch which would fix this.\n\nhttps://gerrit.linuxfoundation.org/infra/#/c/10620/1/ansible-galaxy.sh\n\nWe\u0027ll remove the duplication once this is fixed.",
+      "parentUuid": "a83163c8_8c65eb77",
       "range": {
         "startLine": 2,
         "startChar": 0,
