@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "249ece3e_4d638304",
+        "filename": "jjb/integration/multipatch-distribution.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 797
+      },
+      "writtenOn": "2018-05-15T16:59:25Z",
+      "side": 1,
+      "message": "The issue is that later in the job we extract the resulting distribution version like this:\n\nBUNDLE_POM\u003dpatch_tester/distribution/pom.xml\nBUNDLE_VERSION\u003d$(xpath \"${BUNDLE_POM}\" \u0027/project/version/text()\u0027 2\u003e /dev/null)\n\nAnd because distribution repo is deleted, this step fails. I think we can workaround this by getting the version from gerrit:\n\n    wget \"http://git.opendaylight.org/gerrit/gitweb?p\u003dintegration/distribution.git;a\u003dblob_plain;f\u003dpom.xml;hb\u003drefs/heads/$DISTROBRANCH\" -O \"pom.xml\"\n    # Extract the BUNDLE_VERSION from the pom.xml\n    BUNDLE_VERSION\u003d\"$(xpath pom.xml \u0027/project/version/text()\u0027 2\u003e /dev/null)\"",
+      "revId": "de03e9ec4bc306cb3e2e0fe351b35db318db78f7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
