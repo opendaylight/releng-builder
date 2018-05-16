@@ -1,0 +1,43 @@
+---
+- project:
+    name: relmang
+    project-name: relmang
+    project: relmang
+    build-node: centos7-builder-2c-1g
+    branch: '*'
+
+    jobs:
+      - 'relmang-tsc-attendance'
+
+- job-template:
+    name: 'relmang-tsc-attendance'
+
+    node: centos7-builder-2c-1g
+
+    project-type: freestyle
+
+    parameters:
+      - opendaylight-infra-parameters:
+          os-cloud: '{os-cloud}'
+          project: '{project}'
+          branch: '{branch}'
+          refspec: 'refs/heads/{branch}'
+          artifacts: '{archive-artifacts}'
+      - string:
+          name: START_DATE
+          default: '2018-01-01'
+          description: 'Start date of period to audit TSC attendance (YYYY-MM-DD)'
+      - string:
+          name: END_DATE
+          default: '2018-05-15'
+          description: 'End date of period to audit TSC attendance (YYYY-MM-DD)'
+
+    wrappers:
+      - opendaylight-infra-wrappers:
+          build-timeout: '{build-timeout}'
+
+    builders:
+      - shell: !include-raw: scrape-tsc-attendance.sh
+
+    publishers:
+      - lf-infra-publish
