@@ -33,14 +33,6 @@
               infrautils mdsal controller aaa netconf daexim bgpcep ovsdb neutron
               lispflowmapping openflowplugin coe genius sfc netvirt
 
-      - nitrogen:
-          branch: 'stable/nitrogen'
-          mvn-version: 'mvn35'
-          csit-list: !include: csit-jobs-nitrogen.lst
-          build-order: >
-              infrautils mdsal controller aaa netconf daexim bgpcep ovsdb neutron
-              lispflowmapping openflowplugin coe genius sfc netvirt
-
 - project:
     name: integration-distribution
     project: integration/test
@@ -71,13 +63,6 @@
           csit-weekly-list: '{csit-weekly-list-oxygen}'
           csit-high-frequency-list: '{csit-high-frequency-list-oxygen}'
 
-      - nitrogen:
-          branch: 'stable/nitrogen'
-          csit-blacklist: capwap centinel coe didm iotdm jsonrpc lacp netide tsdr gate longevity sanity tdd wip
-          csit-list: !include: csit-jobs-nitrogen.lst
-          csit-weekly-list: '{csit-weekly-list-nitrogen}'
-          csit-high-frequency-list: '{csit-high-frequency-list-nitrogen}'
-
 - project:
     name: integration-sanity
     project: integration/test
@@ -94,10 +79,6 @@
           branch: 'stable/oxygen'
           karaf-version: karaf4
           csit-sanity-list: '{csit-sanity-list-oxygen}'
-      - nitrogen:
-          branch: 'stable/nitrogen'
-          karaf-version: karaf4
-          csit-sanity-list: '{csit-sanity-list-nitrogen}'
 
 - job-template:
     name: 'integration-distribution-test-{stream}'
