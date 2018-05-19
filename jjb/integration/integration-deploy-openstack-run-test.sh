@@ -272,7 +272,6 @@ EOF
     if [ "${ODL_ML2_DRIVER_VERSION}" == "v2" ]; then
         echo "ODL_V2DRIVER=True" >> ${local_conf_file_name}
     fi
-
     IFS=,
     for plugin_name in ${ENABLE_OS_PLUGINS}; do
         if [ "$plugin_name" == "networking-odl" ]; then
@@ -283,7 +282,8 @@ EOF
             ENABLE_PLUGIN_ARGS="${DEVSTACK_LBAAS_PLUGIN_REPO} ${OPENSTACK_BRANCH}"
             IS_LBAAS_PLUGIN_ENABLED="yes"
         elif [ "$plugin_name" == "networking-sfc" ]; then
-            ENABLE_PLUGIN_ARGS="${DEVSTACK_NETWORKING_SFC_PLUGIN_REPO} ${OPENSTACK_BRANCH}"
+            ENABLE_PLUGIN_ARGS="${DEVSTACK_NETWORKING_SFC_PLUGIN_REPO} master"
+            IS_SFC_PLUGIN_ENABLED="yes"
         else
             echo "Error: Invalid plugin $plugin_name, unsupported"
             continue
@@ -322,6 +322,9 @@ EOF
         fi
         if [ "${IS_LBAAS_PLUGIN_ENABLED}" == "yes" ]; then
             SERVICE_PLUGINS+=", lbaasv2"
+        fi
+        if [ "${IS_SFC_PLUGIN_ENABLED}" == "yes" ]; then
+            SERVICE_PLUGINS+=", networking_sfc.services.flowclassifier.plugin.FlowClassifierPlugin,networking_sfc.services.sfc.plugin.SfcPlugin"
         fi
     fi #check for ODL_ENABLE_L3_FWD
 
