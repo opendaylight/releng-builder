@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa16dc2f_900c755f",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-05-19T16:00:55Z",
+      "side": 1,
+      "message": "this seems fragile. I am guessing this is the first place SERVICE_PLUGINS is set so it ends with a comma, then below, the odl_ml2_driver_version is checked, to add the next value, then the other checks add their own comma. It all works but seems like we could break it if we add something else. Wonder if we should make a nice function to hide the complexity of adding a comma or not.",
+      "revId": "8c0face410f056cdd62ddc3752a567718ed1e334",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
