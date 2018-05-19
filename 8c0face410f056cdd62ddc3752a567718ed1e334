@@ -16,6 +16,24 @@
       "revId": "8c0face410f056cdd62ddc3752a567718ed1e334",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "23c3aa8a_835b92c3",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-05-19T17:19:48Z",
+      "side": 1,
+      "message": "we have this:\n\nhttps://git.opendaylight.org/gerrit/gitweb?p\u003dreleng/builder.git;a\u003dblob;f\u003djjb/integration/common-functions.sh;h\u003d836100b774e7c1fa3f266b4b4daa86caabe3f866;hb\u003d8677c241183102bfef87c119de295c13fb2782e1#l120\n\nmaybe we enforce never or always using commas and then\nusing that function (or we can add a new ssv2csv() function\nto go the other way.\n\nbut, yeah it will be easier to maintain if we enforce just\none style.\n\nprobably something for a refactor patch though, not this\none trying to fix sfc.",
+      "parentUuid": "aa16dc2f_900c755f",
+      "revId": "8c0face410f056cdd62ddc3752a567718ed1e334",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
