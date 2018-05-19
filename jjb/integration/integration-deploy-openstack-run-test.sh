@@ -272,7 +272,6 @@ EOF
     if [ "${ODL_ML2_DRIVER_VERSION}" == "v2" ]; then
         echo "ODL_V2DRIVER=True" >> ${local_conf_file_name}
     fi
-
     IFS=,
     for plugin_name in ${ENABLE_OS_PLUGINS}; do
         if [ "$plugin_name" == "networking-odl" ]; then
@@ -283,7 +282,8 @@ EOF
             ENABLE_PLUGIN_ARGS="${DEVSTACK_LBAAS_PLUGIN_REPO} ${OPENSTACK_BRANCH}"
             IS_LBAAS_PLUGIN_ENABLED="yes"
         elif [ "$plugin_name" == "networking-sfc" ]; then
-            ENABLE_PLUGIN_ARGS="${DEVSTACK_NETWORKING_SFC_PLUGIN_REPO} ${OPENSTACK_BRANCH}"
+            ENABLE_PLUGIN_ARGS="${DEVSTACK_NETWORKING_SFC_PLUGIN_REPO} master"
+            SERVICE_PLUGINS="networking_sfc.services.flowclassifier.plugin.FlowClassifierPlugin,networking_sfc.services.sfc.plugin.SfcPlugin,"
         else
             echo "Error: Invalid plugin $plugin_name, unsupported"
             continue
@@ -313,9 +313,9 @@ ODL_PROVIDER_MAPPINGS=${ODL_PROVIDER_MAPPINGS}
 EOF
 
         if [ "${ODL_ML2_DRIVER_VERSION}" == "v2" ]; then
-           SERVICE_PLUGINS="odl-router_v2"
+           SERVICE_PLUGINS+="odl-router_v2"
         else
-           SERVICE_PLUGINS="odl-router"
+           SERVICE_PLUGINS+="odl-router"
         fi
         if [ "${ENABLE_NETWORKING_L2GW}" == "yes" ]; then
             SERVICE_PLUGINS+=", networking_l2gw.services.l2gateway.plugin.L2GatewayPlugin"
