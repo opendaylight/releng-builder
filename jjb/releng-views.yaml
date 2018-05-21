@@ -34,8 +34,20 @@
 - view:
     name: CLM
     description: 'List of CLM jobs'
-    regex: '.*-clm$'
-    <<: *releng_view_common
+    regex: '.*-clm-.*'
+    view-type: list
+    filter-executors: false
+    filter-queue: false
+    columns:
+      - status
+      - weather
+      - job
+      - last-success
+      - last-failure
+      - last-duration
+      - build-button
+      - policy-violations
+    recurse: false
 
 - view:
     name: CSIT-1node
