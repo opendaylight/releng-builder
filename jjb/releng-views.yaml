@@ -455,6 +455,12 @@
     <<: *releng_view_common
 
 - view:
+    name: openci
+    description: 'List of openci jobs'
+    regex: '^openci-.*'
+    <<: *releng_view_common
+
+- view:
     name: openflowjava
     description: 'List of openflowjava jobs'
     regex: '^openflowjava-.*'
