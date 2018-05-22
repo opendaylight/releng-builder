@@ -181,7 +181,12 @@
       - string:
           name: OS_CLOUD
           default: '{os-cloud}'
-          description: Artifacts to archive to the logs server.
+          description: |
+              The name of a cloud configuration in clouds.yaml. OS_CLOUD is a
+              variable name that is significant to openstack client as a
+              environment variable. Please refer to the documentation for
+              further details.
+              https://docs.openstack.org/developer/python-openstackclient/
       - string:
           name: ARCHIVE_ARTIFACTS
           default: '{archive-artifacts}'
