@@ -344,7 +344,7 @@ pybot -N ${TESTPLAN} \
       -v TOOLS_SYSTEM_IP:${TOOLS_SYSTEM_IP} \
       -v TOOLS_SYSTEM_USER:${USER} \
       -v USER_HOME:${HOME} \
-      -v WORKSPACE:/tmp \
+      -v WORKSPACE:${WORKSPACE} \
       ${TESTOPTIONS} ${SUITES} || true
 
 echo "Examining the files in data/log and checking filesize"
