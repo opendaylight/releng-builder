@@ -18,6 +18,7 @@ for i in "java-builder,builder" \
          "devstack,devstack" \
          "docker,docker" \
          "gbp,ubuntu-docker-ovs" \
+         "kubernetes,mininet-ubuntu" \
          "robot,robot" \
          "mininet,mininet-ubuntu"
 do set -- $i
