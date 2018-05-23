@@ -130,15 +130,34 @@ else
 fi
 
 echo "Starting Robot test suites ${SUITES} ..."
-pybot -N ${TESTPLAN} --removekeywords wuks -c critical -e exclude -e skip_if_${DISTROSTREAM} -v BUNDLEFOLDER:${BUNDLEFOLDER} \
--v WORKSPACE:/tmp -v BUNDLE_URL:${ACTUAL_BUNDLE_URL} -v JAVA_HOME:${JAVA_HOME} \
--v NEXUSURL_PREFIX:${NEXUSURL_PREFIX} -v JDKVERSION:${JDKVERSION} -v ODL_STREAM:${DISTROSTREAM} \
--v CONTROLLER:${ODL_SYSTEM_IP} -v CONTROLLER1:${ODL_SYSTEM_2_IP} -v CONTROLLER2:${ODL_SYSTEM_3_IP} -v ODL_SYSTEM_IP:${ODL_SYSTEM_IP} \
-${odl_variables} -v NUM_ODL_SYSTEM:${NUM_ODL_SYSTEM} -v CONTROLLER_USER:${USER} -v ODL_SYSTEM_USER:${USER} -v \
-TOOLS_SYSTEM_IP:${TOOLS_SYSTEM_IP} ${tools_variables} -v NUM_TOOLS_SYSTEM:${NUM_TOOLS_SYSTEM} -v TOOLS_SYSTEM_USER:${USER} \
--v MININET:${TOOLS_SYSTEM_IP} -v MININET1:${TOOLS_SYSTEM_2_IP} -v MININET2:${TOOLS_SYSTEM_3_IP} -v MININET_USER:${USER} \
--v USER_HOME:${HOME} ${TESTOPTIONS} ${SUITES} || true
-# FIXME: Sort (at least -v) options alphabetically.
+pybot -N ${TESTPLAN} \
+      --removekeywords wuks -c critical -e exclude -e skip_if_${DISTROSTREAM} \
+      -v BUNDLEFOLDER:${BUNDLEFOLDER} \
+      -v BUNDLE_URL:${ACTUAL_BUNDLE_URL} \
+      -v CONTROLLER:${ODL_SYSTEM_IP} \
+      -v CONTROLLER1:${ODL_SYSTEM_2_IP} \
+      -v CONTROLLER2:${ODL_SYSTEM_3_IP} \
+      -v CONTROLLER_USER:${USER} \
+      -v JAVA_HOME:${JAVA_HOME} \
+      -v JDKVERSION:${JDKVERSION} \
+      -v JENKINS_WORKSPACE:${WORKSPACE} \
+      -v MININET:${TOOLS_SYSTEM_IP} \
+      -v MININET1:${TOOLS_SYSTEM_2_IP} \
+      -v MININET2:${TOOLS_SYSTEM_3_IP} \
+      -v MININET_USER:${USER} \
+      -v NEXUSURL_PREFIX:${NEXUSURL_PREFIX} \
+      -v NUM_ODL_SYSTEM:${NUM_ODL_SYSTEM} \
+      -v NUM_TOOLS_SYSTEM:${NUM_TOOLS_SYSTEM} \
+      -v ODL_STREAM:${DISTROSTREAM} \
+      -v ODL_SYSTEM_IP:${ODL_SYSTEM_IP} ${odl_variables} \
+      -v ODL_SYSTEM_USER:${USER} \
+      -v TOOLS_SYSTEM_IP:${TOOLS_SYSTEM_IP} ${tools_variables} \
+      -v TOOLS_SYSTEM_USER:${USER} \
+      -v USER_HOME:${HOME} \
+      -v WORKSPACE:/tmp \
+      ${TESTOPTIONS} ${SUITES} || true
+
+
 
 echo "Examining the files in data/log and checking filesize"
 ssh ${ODL_SYSTEM_1_IP} "ls -altr /tmp/${BUNDLEFOLDER}/data/log/"

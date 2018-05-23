@@ -322,6 +322,7 @@ pybot -N ${TESTPLAN} \
       -v CONTROLLER_USER:${USER} \
       -v JAVA_HOME:${JAVA_HOME} \
       -v JDKVERSION:${JDKVERSION} \
+      -v JENKINS_WORKSPACE:${WORKSPACE} \
       -v MININET1:${TOOLS_SYSTEM_2_IP} \
       -v MININET2:${TOOLS_SYSTEM_3_IP} \
       -v MININET3:${TOOLS_SYSTEM_4_IP} \
@@ -345,7 +346,6 @@ pybot -N ${TESTPLAN} \
       -v TOOLS_SYSTEM_USER:${USER} \
       -v USER_HOME:${HOME} \
       -v WORKSPACE:/tmp \
-      -v JENKINS_WORKSPACE:${WORKSPACE} \
       ${TESTOPTIONS} ${SUITES} || true
 
 echo "Examining the files in data/log and checking filesize"
