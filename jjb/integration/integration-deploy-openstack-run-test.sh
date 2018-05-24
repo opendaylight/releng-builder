@@ -344,6 +344,9 @@ minimize_polling=True
 physical_network_mtus = ${PUBLIC_PHYSICAL_NETWORK}:1400
 path_mtu = 1458
 
+[ml2_odl]
+enable_dhcp_service = True
+
 [[post-config|/etc/neutron/dhcp_agent.ini]]
 [DEFAULT]
 force_metadata = True
