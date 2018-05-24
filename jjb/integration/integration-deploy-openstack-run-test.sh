@@ -359,6 +359,13 @@ force_raw_images = False
 [scheduler]
 discover_hosts_in_cells_interval = 30
 EOF
+    if [ "${ENABLE_NETWORKING_L2GW}" == "yes" ]; then
+    cat >> ${local_conf_file_name} << EOF
+
+[ml2_odl]
+enable_dhcp_service = True
+EOF
+fi
 
     echo "Control local.conf created:"
     cat ${local_conf_file_name}
