@@ -49,7 +49,11 @@ else
 fi
 # check if topic exists, e.g. topic=binding-tlc-rpc
 if [[ "${PATCHES_TO_BUILD}" == *topic* ]]; then
-    TOPIC="${PATCHES_TO_BUILD#*=}"
+    # Store the prefix and suffix if any
+    PTB_PREFIX="${PATCHES_TO_BUILD%*topic=*}"
+    PTB_SUFFIX="${PATCHES_TO_BUILD#*topic=}"
+    TOPIC="${PTB_SUFFIX%,*}"
+    PTB_SUFFIX="${PTB_SUFFIX:${#TOPIC}}"
     echo "Create topic ${TOPIC} patch list"
     PATCHES_TO_BUILD=""
     read -ra PROJECT_LIST <<< "${BUILD_ORDER}"
@@ -82,6 +86,7 @@ if [[ "${PATCHES_TO_BUILD}" == *topic* ]]; then
             done
         fi
     done
+    PATCHES_TO_BUILD="${PTB_PREFIX}${PATCHES_TO_BUILD}${PTB_SUFFIX}"
 fi
 
 echo "Patches to build: ${PATCHES_TO_BUILD}"
