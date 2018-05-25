@@ -682,6 +682,7 @@ EOF
             ${NODE_FOLDER}/odl${i}_karaf.log > ${NODE_FOLDER}/odl${i}_err_warn_exception.log
         # Print ROBOT lines and print Exception lines. For exception lines also print the previous line for context
         sed -n -e '/ROBOT MESSAGE/P' -e '$!N;/Exception/P;D' ${NODE_FOLDER}/odl${i}_karaf.log > ${NODE_FOLDER}/odl${i}_exception.log
+        mv /tmp/odl{i}_exceptions.txt ${NODE_FOLDER}
         rm ${NODE_FOLDER}/odl${i}_karaf.log.tar
         mv *_threads* ${NODE_FOLDER}
         mv ps_* ${NODE_FOLDER}
