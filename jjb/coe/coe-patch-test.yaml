@@ -1,0 +1,20 @@
+---
+- project:
+    name: coe-patch-test
+    jobs:
+      - inttest-patch-test
+
+    project: 'coe'
+
+    stream:
+      - fluorine:
+          branch: 'master'
+      - oxygen:
+          branch: 'stable/oxygen'
+
+    jdk: 'openjdk8'
+
+    feature:
+      - coe:
+          csit-list: >
+              coe-csit-1node-container-networking-all-{stream}
