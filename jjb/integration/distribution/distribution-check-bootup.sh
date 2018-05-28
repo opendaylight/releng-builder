@@ -28,14 +28,14 @@ if [[ "$KARAF_VERSION" == "karaf3" ]]; then
     FEATURE_TEST_STRING="features-integration-test"
 fi
 
-sed -ie "s%\(featuresRepositories=\|featuresRepositories =\)%featuresRepositories = mvn:org.opendaylight.integration/${FEATURE_TEST_STRING}/${BUNDLE_VERSION}/xml/features,%g" ${FEATURESCONF}
+sed -ie "s%\(featuresRepositories= \|featuresRepositories = \)%featuresRepositories = mvn:org.opendaylight.integration/${FEATURE_TEST_STRING}/${BUNDLE_VERSION}/xml/features,%g" ${FEATURESCONF}
 
 if [[ ! -z "${REPO_URL}" ]]; then
-   sed -ie "s%featuresRepositories =%featuresRepositories = ${REPO_URL},%g" ${FEATURESCONF}
+   sed -ie "s%featuresRepositories = %featuresRepositories = ${REPO_URL},%g" ${FEATURESCONF}
 fi
 
 # Add actual boot features.
-sed -ie "s/\(featuresBoot=\|featuresBoot =\)/featuresBoot = ${ACTUALFEATURES},/g" "${FEATURESCONF}"
+sed -ie "s/\(featuresBoot= \|featuresBoot = \)/featuresBoot = ${ACTUALFEATURES},/g" "${FEATURESCONF}"
 cat "${FEATURESCONF}"
 
 echo "Configuring the log..."
