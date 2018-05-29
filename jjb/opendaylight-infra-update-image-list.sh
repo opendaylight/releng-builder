@@ -13,7 +13,7 @@ virtualenv "/tmp/v/openstack"
 # shellcheck source=/tmp/v/openstack/bin/activate disable=SC1091
 source "/tmp/v/openstack/bin/activate"
 pip install --upgrade --quiet "pip<10.0.0" setuptools
-pip install --upgrade --quiet python-openstackclient python-heatclient
+pip install --upgrade --quiet python-openstackclient
 pip freeze
 
 cat > "$WORKSPACE/docs/cloud-images.rst" << EOF
