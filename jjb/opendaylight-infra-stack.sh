@@ -13,7 +13,9 @@ virtualenv "/tmp/v/openstack"
 # shellcheck source=/tmp/v/openstack/bin/activate disable=SC1091
 source "/tmp/v/openstack/bin/activate"
 pip install --upgrade "pip<10.0.0" setuptools
-pip install --upgrade python-openstackclient python-heatclient
+# hardcoding cmd2 version as the most recent version seems to be broken. 
+# reference: https://pypi.org/project/cmd2/#history
+pip install --upgrade cmd2==0.8.5 python-openstackclient python-heatclient
 pip freeze
 
 cd /builder/openstack-hot || exit 1
