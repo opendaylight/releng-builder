@@ -15,7 +15,7 @@ specific build, combine the template for the desired output artifact type with
 a variable file. To build a new java-builder instance the following would be done:
 
 ```
-packer build -var-file=vars/cloud-env.json -var-file=vars/centos.json templates/java-builder.json
+packer build -var-file=vars/cloud-env.json -var-file=vars/centos-7.json templates/java-builder.json
 ```
 
 **NOTE:** vars/cloud-env.json is a gitignored file as it contains private
