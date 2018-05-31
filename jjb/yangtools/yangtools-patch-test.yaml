@@ -1,10 +1,10 @@
 ---
 - project:
-    name: netconf-patch-test
+    name: yangtools-patch-test
     jobs:
       - inttest-patch-test
 
-    project: 'netconf'
+    project: 'yangtools'
 
     stream:
       - fluorine:
@@ -14,12 +14,9 @@
           branch: 'stable/oxygen'
           os-branch: 'queens'
 
-    feature:
-      - core:
-          csit-list: >
-                netconf-csit-1node-gate-userfeatures-all-{stream},
-                netconf-csit-1node-gate-callhome-only-{stream}
+    jdk: 'openjdk8'
 
+    feature:
       - netvirt:
           csit-list: >
               netvirt-csit-1node-openstack-{os-branch}-gate-stateful-{stream}
