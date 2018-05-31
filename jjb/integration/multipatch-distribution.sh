@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 # TODO: 1) clean up inline todo's below :)
 # TODO: 2) Use just a topic branch to create a distribution.  see this email:
 #          https://lists.opendaylight.org/pipermail/discuss/2015-December/006040.html
@@ -20,7 +22,7 @@ MAVEN_OPTIONS="$(echo --show-version \
 
 rm -rf $BUILD_DIR
 mkdir -p $BUILD_DIR
-cd $BUILD_DIR || exit 1
+cd $BUILD_DIR
 
 # Set up git committer name and email, needed for commit creation when cherry-picking.
 export EMAIL="sandbox@jenkins.opendaylight.org"
@@ -123,7 +125,7 @@ do
     PROJECTS+=("${PROJECT_SHORTNAME}")
     echo "cloning project ${PROJECT}"
     git clone "https://git.opendaylight.org/gerrit/p/${PROJECT}"
-    cd ${PROJECT_SHORTNAME} || exit 1
+    cd ${PROJECT_SHORTNAME}
     if [ "$(echo -n ${proto_patch} | tail -c 1)" == 'r' ]; then
         pure_patch="$(echo -n $proto_patch | head -c -1)"
     else
@@ -153,7 +155,7 @@ do
         # Here 'r' means release. Useful for testing Nitrogen Odlparent changes.
         find . -name "*.xml" -print0 | xargs -0 sed -i 's/-SNAPSHOT//g'
     fi
-    cd "${BUILD_DIR}" || exit 1
+    cd "${BUILD_DIR}"
 done
 
 if [ "${distribution_status}" == "not_included" ]; then
@@ -161,15 +163,15 @@ if [ "${distribution_status}" == "not_included" ]; then
     PROJECTS+=(distribution)
     # clone distribution and add it as a module in root pom
     git clone "https://git.opendaylight.org/gerrit/p/integration/distribution"
-    cd distribution || exit 1
+    cd distribution
     git checkout "${DISTRIBUTION_BRANCH_TO_BUILD}"
-    cd "${BUILD_DIR}" || exit 1
+    cd "${BUILD_DIR}"
 fi
 
 # Second phase: build everything
 
 for PROJECT_SHORTNAME in "${PROJECTS[@]}"; do
-    pushd "${PROJECT_SHORTNAME}" || exit 1
+    pushd "${PROJECT_SHORTNAME}"
     # Build project
     "$MVN" clean install \
     -e ${fast_option} \
@@ -189,6 +191,6 @@ for PROJECT_SHORTNAME in "${PROJECTS[@]}"; do
     --global-settings "$GLOBAL_SETTINGS_FILE" \
     --settings "$SETTINGS_FILE" \
     $MAVEN_OPTIONS
-    popd || exit 1
+    popd
 done
 
