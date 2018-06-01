@@ -199,25 +199,32 @@
           build-timeout: '{build-timeout}'
 
     builders:
-      # Test Oxygen pre-release autorelease tarball
-      # NB: This will need to be updated as old builds expire
+      # Test Oxygen SR1 release tarball
       - inject:
           # yamllint disable-line rule:line-length
-          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/autorelease-2192/org/opendaylight/integration/karaf/0.8.2/karaf-0.8.2.tar.gz'
+          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/integration/karaf/0.8.1/karaf-0.8.1.tar.gz'
       - shell: !include-raw-escape: build-rpm.sh
       - install-test-uninstall-rpm
 
-      # Test Oxygen multipatch zip (no parallel tarball available)
+      # Test Fluorine pre-release autorelease tarball
       # NB: This will need to be updated as old builds expire
       - inject:
           # yamllint disable-line rule:line-length
-          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/org/opendaylight/integration/integration/distribution/karaf/0.8.2-SNAPSHOT/karaf-0.8.2-20180524.145206-1.zip'
+          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/autorelease-2191/org/opendaylight/integration/karaf/0.9.0/karaf-0.9.0.tar.gz'
       - shell: !include-raw-escape: build-rpm.sh
       - install-test-uninstall-rpm
 
-      # Test latest Oxygen snapshot
+      # Test Fluorine multipatch zip (no parallel tarball available)
+      # NB: This will need to be updated as old builds expire
       - inject:
-          properties-content: 'STREAM=oxygen'
+          # yamllint disable-line rule:line-length
+          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/org/opendaylight/integration/integration/distribution/karaf/0.9.0-SNAPSHOT/karaf-0.9.0-20180531.192226-59.zip'
+      - shell: !include-raw-escape: build-rpm.sh
+      - install-test-uninstall-rpm
+
+      # Test latest Fluorine snapshot
+      - inject:
+          properties-content: 'STREAM=fluorine'
       - shell: !include-raw: build-rpm-snap.sh
       - install-test-uninstall-rpm
 
@@ -267,6 +274,13 @@
           build-timeout: '{build-timeout}'
 
     builders:
+      # Test Oxygen SR1 release tarball
+      - inject:
+          # yamllint disable-line rule:line-length
+          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/integration/karaf/0.8.1/karaf-0.8.1.tar.gz'
+      - shell: !include-raw-escape: build-rpm.sh
+      - install-test-uninstall-rpm
+
       # Test Oxygen pre-release autorelease tarball
       # NB: This will need to be updated as old builds expire
       - inject:
@@ -286,6 +300,28 @@
       # Test latest Oxygen snapshot
       - inject:
           properties-content: 'STREAM=oxygen'
+      - shell: !include-raw: build-rpm-snap.sh
+      - install-test-uninstall-rpm
+
+      # Test Fluorine pre-release autorelease tarball
+      # NB: This will need to be updated as old builds expire
+      - inject:
+          # yamllint disable-line rule:line-length
+          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/autorelease-2191/org/opendaylight/integration/karaf/0.9.0/karaf-0.9.0.tar.gz'
+      - shell: !include-raw-escape: build-rpm.sh
+      - install-test-uninstall-rpm
+
+      # Test Fluorine multipatch zip (no parallel tarball available)
+      # NB: This will need to be updated as old builds expire
+      - inject:
+          # yamllint disable-line rule:line-length
+          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/org/opendaylight/integration/integration/distribution/karaf/0.9.0-SNAPSHOT/karaf-0.9.0-20180531.192226-59.zip'
+      - shell: !include-raw-escape: build-rpm.sh
+      - install-test-uninstall-rpm
+
+      # Test latest Fluorine snapshot
+      - inject:
+          properties-content: 'STREAM=fluorine'
       - shell: !include-raw: build-rpm-snap.sh
       - install-test-uninstall-rpm
 
