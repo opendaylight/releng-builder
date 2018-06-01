@@ -1,5 +1,6 @@
 {
   "variables": {
+    "ansible_roles_path": ".galaxy",
     "base_image": null,
     "distro": null,
     "cloud_auth_url": null,
@@ -50,7 +51,7 @@
       "ansible_env_vars": [
         "ANSIBLE_NOCOWS=1",
         "ANSIBLE_PIPELINING=True",
-        "ANSIBLE_ROLES_PATH=../lf-ansible/roles",
+        "ANSIBLE_ROLES_PATH={{user `ansible_roles_path`}}",
         "ANSIBLE_CALLBACK_WHITELIST=profile_tasks",
         "ANSIBLE_STDOUT_CALLBACK=debug"
       ]
