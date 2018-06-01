@@ -15,5 +15,5 @@ virtualenv "/tmp/v/openstack"
 # shellcheck source=/tmp/v/openstack/bin/activate disable=SC1091
 source "/tmp/v/openstack/bin/activate"
 pip install --upgrade "pip<10.0.0" setuptools
-pip install --upgrade lftools python-openstackclient python-heatclient
+pip install --upgrade lftools lftools[openstack] python-openstackclient python-heatclient
 pip freeze
