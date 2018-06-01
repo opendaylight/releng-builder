@@ -203,7 +203,7 @@
       # NB: This will need to be updated as old builds expire
       - inject:
           # yamllint disable-line rule:line-length
-          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/autorelease-2131/org/opendaylight/integration/karaf/0.8.1/karaf-0.8.1.tar.gz'
+          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/autorelease-2192/org/opendaylight/integration/karaf/0.8.2/karaf-0.8.2.tar.gz'
       - shell: !include-raw-escape: build-rpm.sh
       - install-test-uninstall-rpm
 
@@ -211,7 +211,7 @@
       # NB: This will need to be updated as old builds expire
       - inject:
           # yamllint disable-line rule:line-length
-          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/org/opendaylight/integration/integration/distribution/karaf/0.8.1-SNAPSHOT/karaf-0.8.1-20180417.030111-15.zip'
+          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/org/opendaylight/integration/integration/distribution/karaf/0.8.2-SNAPSHOT/karaf-0.8.2-20180524.145206-1.zip'
       - shell: !include-raw-escape: build-rpm.sh
       - install-test-uninstall-rpm
 
@@ -271,7 +271,7 @@
       # NB: This will need to be updated as old builds expire
       - inject:
           # yamllint disable-line rule:line-length
-          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/autorelease-2131/org/opendaylight/integration/karaf/0.8.1/karaf-0.8.1.tar.gz'
+          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/autorelease-2192/org/opendaylight/integration/karaf/0.8.2/karaf-0.8.2.tar.gz'
       - shell: !include-raw-escape: build-rpm.sh
       - install-test-uninstall-rpm
 
@@ -279,7 +279,7 @@
       # NB: This will need to be updated as old builds expire
       - inject:
           # yamllint disable-line rule:line-length
-          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/org/opendaylight/integration/integration/distribution/karaf/0.8.1-SNAPSHOT/karaf-0.8.1-20180417.030111-15.zip'
+          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/org/opendaylight/integration/integration/distribution/karaf/0.8.2-SNAPSHOT/karaf-0.8.2-20180524.145206-1.zip'
       - shell: !include-raw-escape: build-rpm.sh
       - install-test-uninstall-rpm
 
