@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33c3d7c8_d2449a19",
+        "filename": "jjb/autorelease/autorelease-projects.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 2567
+      },
+      "writtenOn": "2018-06-01T22:40:11Z",
+      "side": 1,
+      "message": "I would like to kindly and gently suggest that we have separate jobs.  One Autorelease job without the SFT tests just so we can have a working distribution for testing.  Then a separate Autorelease job that actually runs the test so that we can confirm functionality testing.  In other words, by just skipping the tests, we are in fact just HIDING and masking the symptoms rather than the root cause.  If there are test failures, either remove the tests if they no longer apply or update the tests so they do not fail so randomly/sporadically.  The failures are helpful to the release management team (aadams) to decipher which projects need to put more resources into updating and correctly their SFT and functionality tests.\n\n      - fluorine:\n          branch: \u0027master\u0027\n          integration-test: fluorine\n          extra-mvn-opts: -P!karaf -Dsft.heap.max\u003d4g -Dskip.karaf.featureTest\u003dtrue\n      - fluorine-test:\n          branch: \u0027master\u0027\n          integration-test: fluorine\n          extra-mvn-opts: -P!karaf -Dsft.heap.max\u003d4g\n      - oxygen:\n          branch: \u0027stable/oxygen\u0027\n          integration-test: oxygen\n          extra-mvn-opts: -P!karaf -Dsft.heap.max\u003d4g -Dskip.karaf.featureTest\u003dtrue\n      - oxygen-test:\n          branch: \u0027stable/oxygen\u0027\n          integration-test: oxygen\n          extra-mvn-opts: -P!karaf -Dsft.heap.max\u003d4g",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 82
+      },
+      "revId": "c9f58b7a633d4c19407600281414ba17d24f116e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
