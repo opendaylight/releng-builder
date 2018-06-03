@@ -4,6 +4,11 @@
     jobs:
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-maven-javadoc-jobs'
+      - '{project-name}-rtd-jobs':
+          build-node: centos7-builder-2c-2g
+          project-pattern: infrautils
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-infrautils/38993/
+          rtd-token: 294c76173237e3a088365c31012cf4ddaa767dc9
       - odl-maven-jobs
 
     stream: fluorine
@@ -23,6 +28,11 @@
     jobs:
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-maven-javadoc-jobs'
+      - '{project-name}-rtd-jobs':
+          build-node: centos7-builder-2c-2g
+          project-pattern: infrautils
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-infrautils/38993/
+          rtd-token: 294c76173237e3a088365c31012cf4ddaa767dc9
       - odl-maven-jobs
 
     stream: oxygen
