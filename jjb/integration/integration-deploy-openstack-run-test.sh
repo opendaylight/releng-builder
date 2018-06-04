@@ -1223,9 +1223,9 @@ for i in `seq 1 ${NUM_OPENSTACK_SITES}`; do
     # upgrading pip, urllib3 and httplib2 so that tempest tests can be run on openstack control node
     # this needs to happen after devstack runs because it seems devstack is pulling in specific versions
     # of these libs that are not working for tempest.
-    ${SSH} ${!CONTROLIP} "sudo pip install --upgrade pip"
-    ${SSH} ${!CONTROLIP} "sudo pip install urllib3 --upgrade"
-    ${SSH} ${!CONTROLIP} "sudo pip install httplib2 --upgrade"
+    # ${SSH} ${!CONTROLIP} "sudo pip install --upgrade pip"
+    # ${SSH} ${!CONTROLIP} "sudo pip install urllib3 --upgrade"
+    # ${SSH} ${!CONTROLIP} "sudo pip install httplib2 --upgrade"
 
     # Gather Compute IPs for the site
     for j in `seq 1 ${NUM_COMPUTES_PER_SITE}`; do
