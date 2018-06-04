@@ -128,6 +128,7 @@ function install_openstack_clients_in_robot_vm() {
     for package in ${packages[*]}; do
        echo "Get the current support version of the package ${package}"
        wget https://raw.githubusercontent.com/openstack/requirements/stable/${openstack_version}/upper-constraints.txt -O /tmp/constraints.txt 2>/dev/null
+       sed -i s/python-openstackclient===3.14.2/python-openstackclient===3.14.1/ /tmp/constraints.txt
        echo "$PYTHON -m pip install --upgrade --no-deps ${package} --no-cache-dir -c /tmp/constraints.txt"
        $PYTHON -m pip install --upgrade --no-deps ${package} --no-cache-dir -c /tmp/constraints.txt
        echo "$PYTHON -m pip install ${package} --no-cache-dir -c /tmp/constraints.txt"
