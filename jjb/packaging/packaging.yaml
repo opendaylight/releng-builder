@@ -67,7 +67,7 @@
       - string:
           name: DOWNLOAD_URL
           # yamllint disable-line rule:line-length
-          default: 'https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/integration/karaf/0.7.0/karaf-0.7.0.tar.gz'
+          default: 'https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/integration/karaf/0.8.1/karaf-0.8.1.tar.gz'
           description: 'URL to ODL tarball artifact to repackage into RPM'
       - string:
           name: CHANGELOG_NAME
@@ -364,7 +364,7 @@
       - string:
           name: URL
           # yamllint disable-line rule:line-length
-          default: 'https://git.opendaylight.org/gerrit/gitweb?p=integration/packaging.git;a=blob_plain;f=packages/rpm/example_repo_configs/opendaylight-8-devel.repo'
+          default: 'https://git.opendaylight.org/gerrit/gitweb?p=integration/packaging.git;a=blob_plain;f=packages/rpm/example_repo_configs/opendaylight-9-devel.repo'
           description: 'Link to .repo or .rpm file'
 
     scm:
@@ -418,12 +418,12 @@
       - string:
           name: URL
           # yamllint disable-line rule:line-length
-          default: 'https://raw.githubusercontent.com/opendaylight/integration-packaging/master/packages/rpm/example_repo_configs/opendaylight-7-release.repo'
+          default: 'https://raw.githubusercontent.com/opendaylight/integration-packaging/master/packages/rpm/example_repo_configs/opendaylight-8-release.repo'
           description: 'Link to .repo or .rpm file'
       - string:
           name: UPGRADE_URL
           # yamllint disable-line rule:line-length
-          default: 'https://raw.githubusercontent.com/opendaylight/integration-packaging/master/packages/rpm/example_repo_configs/opendaylight-7-devel.repo'
+          default: 'https://raw.githubusercontent.com/opendaylight/integration-packaging/master/packages/rpm/example_repo_configs/opendaylight-8-devel.repo'
           description: 'Link to .repo or .rpm file'
 
     scm:
