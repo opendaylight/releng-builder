@@ -23,6 +23,7 @@ set -exu
 
 # Make sure pip itself us up-to-date.
 pip install --upgrade pip
+pip3 install --upgrade pip3
 
 pip install --upgrade docker-py importlib requests scapy netifaces netaddr ipaddr pyhocon
 pip install --upgrade robotframework-httplibrary \
@@ -54,6 +55,10 @@ pip install --upgrade jmespath
 
 # Module for backup-restore support library
 pip install --upgrade jsonpatch
+
+#Module for elasticsearch python client
+pip3 install elasticsearch
+pip3 install requests
 
 # Print installed versions.
 pip install --upgrade pipdeptree
