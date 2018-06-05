@@ -206,6 +206,12 @@
       - shell: !include-raw-escape: build-rpm.sh
       - install-test-uninstall-rpm
 
+      # Test latest Oxygen snapshot
+      - inject:
+          properties-content: 'STREAM=oxygen'
+      - shell: !include-raw: build-rpm-snap.sh
+      - install-test-uninstall-rpm
+
       # Test Fluorine pre-release autorelease tarball
       # NB: This will need to be updated as old builds expire
       - inject:
