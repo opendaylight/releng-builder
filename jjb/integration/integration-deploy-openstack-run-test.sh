@@ -20,7 +20,9 @@ python ${WORKSPACE}/test/tools/distchanges/changes.py -d /tmp/distribution_folde
 
 printf "\nshowing recent changes that made it into integration/test used by this job:\n"
 cd ${WORKSPACE}/test
-git --no-pager log --pretty=format:'%h %<(13)%ar%<(13)%cr %<(20,trunc)%an%d %s' -n10
+printf "Hash    Author Date                    Commit Date                    Author               Subject"
+printf "------- ------------------------------ ------------------------------ -------------------- -----------------------------"
+git --no-pager log --pretty=format:'%h %<(30)%ad%<(30)%cd %<(20,trunc)%an%d %s' -n20
 cd -
 
 cat << EOF
