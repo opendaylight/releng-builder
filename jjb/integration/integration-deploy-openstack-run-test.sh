@@ -988,10 +988,6 @@ if [ -n "${DEVSTACK_HASH}" ]; then
 fi
 git --no-pager log --pretty=format:'%h %<(13)%ar%<(13)%cr %<(20,trunc)%an%d %s%b' -n20
 echo
-echo "workaround: adjust wait from 60s to 1800s (30m)"
-sed -i 's/wait_for_compute 60/wait_for_compute 1800/g' /opt/stack/devstack/lib/nova
-# TODO: modify sleep 1 to sleep 60, search wait_for_compute, then first sleep 1
-# that would just reduce the number of logs in the compute stack.log
 
 echo "workaround: do not upgrade openvswitch"
 sudo yum install -y yum-plugin-versionlock
