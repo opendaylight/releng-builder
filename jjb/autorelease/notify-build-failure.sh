@@ -38,9 +38,11 @@ REACTOR_INFO=$(awk '/Reactor Summary:/ { flag=1 }
 # check for project format
 if [[ ${REACTOR_INFO} =~ .*::*.*::*. ]]; then
     # extract project and artifactId from full format
-    ODL=$(echo "${REACTOR_INFO}" | awk -F'::' '{ gsub(/^[ \t]+|[ \t]+$/, "", $1); print $1 }')
-    PROJECT_=$(echo "${REACTOR_INFO}" | awk -F'::' '{ gsub(/^[ \t]+|[ \t]+$/, "", $2); print $2 }')
-    NAME=$(echo "${REACTOR_INFO}" | awk -F'::' '{ gsub(/^[ \t]+|[ \t]+$/, "", $3); print $3 }')
+    # Ex: REACTOR_INFO="ODL::sfc::odl-sfc-pot-netconf-renderer 072 " is broken down into
+    # NAME="ODL", PROJECT_="sfc" and NAME="odl-sfc-pot-netconf-renderer"
+    ODL=$(echo "${REACTOR_INFO}" | awk -F'::' '{ gsub(/^[ \t]+|[ \t]+[0-9]+[ \t]+$|[ \t]+$/, "", $1); print $1}')
+    PROJECT_=$(echo "${REACTOR_INFO}" | awk -F'::' '{ gsub(/^[ \t]+|[ \t]+[0-9]+[ \t]+$|[ \t]+$/, "", $2); print $2}')
+    NAME=$(echo "${REACTOR_INFO}" | awk -F'::' '{ gsub(/^[ \t]+|[ \t]+[0-9]+[ \t]+$|[ \t]+$/, "", $3); print $3}')
 else
     # set project from partial format
     ODL=""
