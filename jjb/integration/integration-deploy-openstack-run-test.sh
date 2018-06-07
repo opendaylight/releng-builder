@@ -214,6 +214,43 @@ EOF
     fi
 }
 
+function install_ovs_with_nsh() {
+    OSNODE=$1
+
+    cat > ${WORKSPACE}/install_ovs_with_nsh.sh << EOF
+sudo yum remove -y openvswitch*
+sudo yum install -y yum-utils
+sudo yum-config-manager --enable C7.4.1708-base
+sudo yum -y install  rpm-build autoconf automake libtool systemd-units openssl openssl-devel python python-twisted-core python-zope-interface python-six desktop-file-utils groff graphviz  procps-ng libcap-ng libcap-ng-devel PyQt4 selinux-policy-devel kernel-3.10.0-693.el7 kernel-devel-3.10.0-693.el7 kernel-headers-3.10.0-693.el7 kernel-tools-3.10.0-693.el7 git rpmdevtools -v
+git clone https://github.com/yyang13/ovs_nsh_patches.git
+git clone https://github.com/openvswitch/ovs.git
+pushd ovs > /dev/null
+git checkout v2.6.1
+cp ../ovs_nsh_patches/v2.6.1_centos7/*.patch ./
+# Hack for build servers that have no git config
+git config user.email "jenkins@odl.com"
+git config user.name "jenkins"
+git am *.patch
+./boot.sh
+libtoolize --force
+aclocal
+autoheader
+automake --force-missing --add-missing
+autoconf
+./configure
+kernel_vxlan="/usr/src/kernels/3.10.0-693.el7.x86_64/include/net/vxlan.h"
+sudo sed -i '/struct vxlan_metadata {/a\        u32             gpe;' \$kernel_vxlan
+make rpm-fedora RPMBUILD_OPT="\"\"-D kversion 3.10.0-693.el7.x86_64 --without check"\"\"
+make rpm-fedora-kmod RPMBUILD_OPT="\"\"-D kversion 3.10.0-693.el7.x86_64"\"\"
+sudo yum localinstall -y rpm/rpmbuild/RPMS/x86_64/openvswitch-kmod-2.6.1-1.el7.centos.x86_64.rpm
+sudo yum localinstall -y rpm/rpmbuild/RPMS/x86_64/openvswitch-2.6.1-1.el7.centos.x86_64.rpm
+popd > /dev/null
+EOF
+
+
+
+}
+
 function create_control_node_local_conf() {
     HOSTIP=$1
     MGRIP=$2
