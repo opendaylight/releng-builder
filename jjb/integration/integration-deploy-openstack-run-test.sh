@@ -253,6 +253,59 @@ EOF
     fi
 }
 
+function install_ovs_with_nsh() {
+    OSNODE=$1
+
+    cat > ${WORKSPACE}/install_ovs_with_nsh.sh << EOF
+sudo cat /etc/centos-release
+sudo ls -lrt /etc/yum.repos.d
+sudo cat /etc/yum/repos.d/*.repo
+sudo rpm -q kernel 
+sudo rpm -q kernel-headers
+sudo rpm -q kernel-devel
+echo "[C7.4.1708]" | sudo tee /etc/yum.repos.d/centos-vault.repo
+echo "name=CentOS-7.4.1708" | sudo tee -a /etc/yum.repos.d/centos-vault.repo
+echo "baseurl=http://vault.centos.org/7.4.1708/updates/x86_64/" | sudo tee -a /etc/yum.repos.d/centos-vault.repo
+echo "gpgcheck=1" | sudo tee -a /etc/yum.repos.d/centos-vault.repo
+echo "enabled=1" | sudo tee -a /etc/yum.repos.d/centos-vault.repo
+sudo yum remove -y openvswitch*
+sudo yum clean all metadata
+sudo yum -y -v install  rpm-build autoconf automake libtool systemd-units openssl openssl-devel python python-twisted-core python-zope-interface python-six desktop-file-utils groff graphviz  procps-ng libcap-ng libcap-ng-devel PyQt4 selinux-policy-devel kernel-3.10.0-693.11.1.el7 kernel-devel-3.10.0-693.11.1.el7 kernel-headers-3.10.0-693.11.1.el7 kernel-tools-3.10.0-693.11.1.el7 git rpmdevtools patch youm-plugin-versionlock
+git clone https://github.com/yyang13/ovs_nsh_patches.git
+git clone https://github.com/openvswitch/ovs.git
+sudo pip uninstall -y flake8
+pushd ovs > /dev/null
+git checkout v2.6.1
+cp ../ovs_nsh_patches/v2.6.1_centos7/*.patch ./
+git config user.email "jenkins@opendaylight.com"
+git config user.name "odlcsit"
+git am *.patch
+./boot.sh
+libtoolize --force
+aclocal
+autoheader
+automake --force-missing --add-missing
+autoconf
+./configure
+kernel_vxlan="/usr/src/kernels/3.10.0-693.11.1.el7.x86_64/include/net/vxlan.h"
+sudo sed -i '/struct vxlan_metadata {/a\        u32             gpe;' \$kernel_vxlan
+sed -i '26i %define kernel 3.10.0-693.11.1.el7.x86_64' rhel/openvswitch-fedora.spec.in
+sed -i '/exit/d' rhel/openvswitch-fedora.spec.in
+make rpm-fedora
+sed -i '16i %define kernel 3.10.0-693.11.1.el7.x86_64' rhel/openvswitch-kmod-fedora.spec.in
+make rpm-fedora-kmod
+sudo yum localinstall -y rpm/rpmbuild/RPMS/x86_64/openvswitch-2.6.1-1.el7.centos.x86_64.rpm
+sudo yum localinstall -y rpm/rpmbuild/RPMS/x86_64/openvswitch-kmod-2.6.1-1.el7.centos.x86_64.rpm
+sudo yum versionlock openvswitch openvswitch-kmod
+echo exclude=openvswitch,openvswitch-kmod | sudo tee -a /etc/yum.conf
+popd > /dev/null
+EOF
+
+   scp ${WORKSPACE}/install_ovs_with_nsh.sh ${OSNODE}:/tmp
+   ${SSH} ${OSNODE} "sudo bash -x /tmp/install_ovs_with_nsh.sh > /tmp/install_ovs_nsh.txt 2>&1"
+
+}
+
 function create_control_node_local_conf() {
     HOSTIP=$1
     MGRIP=$2
@@ -835,6 +888,10 @@ for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
     echo "Install rdo release to avoid incompatible Package versions"
     install_rdo_release ${!CONTROLIP}
     setup_live_migration_control ${!CONTROLIP}
+    if [[ "${ENABLE_OS_PLUGINS}" =~ networking-sfc ]]; then
+        echo "Installing OVS with NSH in ${!CONTROLIP}"
+        install_ovs_with_nsh ${!CONTROLIP}
+    fi
     echo "Stack the control node ${i} of ${NUM_OPENSTACK_CONTROL_NODES}: ${CONTROLIP}"
     ssh ${!CONTROLIP} "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
     ssh ${!CONTROLIP} "ps -ef | grep stack.sh"
@@ -892,6 +949,10 @@ for i in `seq 1 ${NUM_OPENSTACK_COMPUTE_NODES}`; do
     echo "Install rdo release to avoid incompatible Package versions"
     install_rdo_release ${!COMPUTEIP}
     setup_live_migration_compute ${!COMPUTEIP} ${!CONTROLIP}
+    if [[ "${ENABLE_OS_PLUGINS}" =~ networking-sfc ]]; then
+        echo "Installing OVS with NSH in ${!COMPUTEIP}"
+        install_ovs_with_nsh ${!COMPUTEIP}
+    fi
     echo "Stack the compute node ${i} of ${NUM_OPENSTACK_COMPUTE_NODES}: ${COMPUTEIP}"
     ssh ${!COMPUTEIP} "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
     ssh ${!COMPUTEIP} "ps -ef | grep stack.sh"
@@ -1134,6 +1195,13 @@ unset OS_CLOUD
 EOF
 
 source /tmp/os_netvirt_client_rc
+#if [[ "${ENABLE_OS_PLUGINS}" =~ networking-sfc ]]; then
+#    wget http://artifacts.opnfv.org/apex/random/sfc_cloud.qcow2 -O /tmp/sfc_cloud.qcow2
+#    openstack image create sfc --file /tmp/sfc_cloud.qcow2 --disk-format qcow2 --container-format bare --public
+#    ssh-keygen -f /tmp/odlkey -q -N "" 
+#    openstack keypair create odltestkey --public-key /tmp/odlkey.pub
+#    scp /tmp/odlkey ${!CONTROLIP}:/tmp
+#fi
 
 echo "Get all versions before executing pybot"
 echo "openstack --version"
