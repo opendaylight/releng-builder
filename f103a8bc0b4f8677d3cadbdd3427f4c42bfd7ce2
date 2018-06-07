@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "ea32e095_c1d015e5",
+        "filename": "jjb/integration/multipatch-distribution.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 797
+      },
+      "writtenOn": "2018-06-07T20:02:57Z",
+      "side": 1,
+      "message": "I am thinking maybe it would be better if we initialize PATCHES_TO_BUILD with PTB_PREFIX. The reason is someone wanting to verify an MRI patch may probably want to build all MSI projects regardless of which one has a topic patch.",
+      "revId": "f103a8bc0b4f8677d3cadbdd3427f4c42bfd7ce2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "465665a0_b7420e72",
+        "filename": "jjb/integration/multipatch-distribution.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 797
+      },
+      "writtenOn": "2018-06-07T20:02:57Z",
+      "side": 1,
+      "message": "this will skip MSI projects until a topic patch is found, therefore my comment above.",
+      "revId": "f103a8bc0b4f8677d3cadbdd3427f4c42bfd7ce2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4798a54e_6c49317c",
         "filename": "jjb/integration/multipatch-distribution.sh",
         "patchSetId": 2
