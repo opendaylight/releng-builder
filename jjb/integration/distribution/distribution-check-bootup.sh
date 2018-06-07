@@ -83,7 +83,7 @@ function dump_log_and_exit {
     exit 1
 }
 
-echo "Waiting up to 5 minutes for controller to come up, checking every 5 seconds..."
+echo "Waiting up to 6 minutes for controller to come up, checking every 5 seconds..."
 COUNT="0"
 while true; do
     COUNT=$(( ${COUNT} + 5 ))
@@ -92,7 +92,7 @@ while true; do
     if grep --quiet 'org.opendaylight.infrautils.ready-impl.*System ready' "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log"; then
         echo "Controller is UP"
         break
-    elif (( "${COUNT}" > "300" )); then
+    elif (( "${COUNT}" > "360" )); then
         echo "Timeout Controller DOWN"
         dump_log_and_exit
     fi
