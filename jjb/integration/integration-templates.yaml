@@ -935,6 +935,10 @@
           default: '{security-group-mode}'
           description: 'Security Group Mode to be used in netvirt aclservice config'
       - string:
+          name: ENABLE_ITM_DIRECT_TUNNELS
+          default: '{enable-itm-direct-tunnels}'
+          description: 'Tunnel Configuration mode to be used in genius ifm config'
+      - string:
           name: PUBLIC_PHYSICAL_NETWORK
           default: '{public-physical-network}'
           description: 'provider physical network used for flat/vlan networks'
@@ -1143,6 +1147,10 @@
           name: SECURITY_GROUP_MODE
           default: '{security-group-mode}'
           description: 'Security Group Mode to be used in netvirt aclservice config'
+      - string:
+          name: ENABLE_ITM_DIRECT_TUNNELS
+          default: '{enable-itm-direct-tunnels}'
+          description: 'Tunnel Configuration mode to be used in genius ifm config'
       - string:
           name: PUBLIC_PHYSICAL_NETWORK
           default: '{public-physical-network}'
