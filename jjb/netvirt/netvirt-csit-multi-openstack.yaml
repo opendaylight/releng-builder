@@ -12,6 +12,7 @@
     enable-openstack-services: 'placement-api,tempest'
     enable-openstack-compute-services: 'placement-client'
     security-group-mode: 'stateful'
+    enable-itm-direct-tunnels: 'false'
     odl_system_flavor: odl-standard-8
     openstack_system_flavor: odl-standard-8
     openstack_system2_flavor: odl-standard-4
@@ -31,6 +32,8 @@
 
     functionality:
       - upstream-stateful
+      - upstream-stateful-itm-direct-tunnels:
+          enable-itm-direct-tunnels: 'true'
       - upstream-stateful-snat-conntrack:
           odl-snat-mode: 'conntrack'
       - gate-stateful
@@ -71,6 +74,7 @@
     enable-openstack-services: 'placement-api,tempest'
     enable-openstack-compute-services: 'placement-client'
     security-group-mode: 'stateful'
+    enable-itm-direct-tunnels: 'false'
     odl_system_flavor: odl-standard-8
     openstack_system_flavor: odl-standard-8
     openstack_system2_flavor: odl-standard-4
@@ -90,6 +94,8 @@
 
     functionality:
       - upstream-stateful
+      - upstream-stateful-itm-direct-tunnels:
+          enable-itm-direct-tunnels: 'true'
       - upstream-stateful-snat-conntrack:
           odl-snat-mode: 'conntrack'
       - gate-stateful
