@@ -13,8 +13,9 @@ Following are the list of published images available to be used with Jenkins job
 * ZZCI - CentOS 7 - docker - 20180417-0311
 * ZZCI - CentOS 7 - java-builder - 20171206-1842
 * ZZCI - CentOS 7 - java-builder - 20171209-0032
-* ZZCI - CentOS 7 - robot - 20171207-1911
+* ZZCI - CentOS 7 - robot - 20180601-2050
 * ZZCI - Ubuntu 14.04 - gbp - 20171208-2336
+* ZZCI - Ubuntu 16.04 - docker - 20180601-2047
 * ZZCI - Ubuntu 16.04 - gbp - 20171213-2018
 * ZZCI - Ubuntu 16.04 - mininet-ovs-25 - 20171208-1847
 * ZZCI - Ubuntu 16.04 - mininet-ovs-26 - 20171208-1847
