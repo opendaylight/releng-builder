@@ -58,3 +58,9 @@
     mvn-settings: 'mdsal-settings'
     mvn-goals: '-Dmaven.compile.fork=true clean deploy -Dintegrationtests'
     mvn-opts: '-Xmx2048m -XX:MaxPermSize=1024m'
+
+- view:
+    name: mdsal
+    description: 'List of mdsal jobs'
+    regex: '^mdsal-.*'
+    <<: *releng_view_common

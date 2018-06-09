@@ -75,3 +75,15 @@
     mvn-settings: 'openflowplugin-settings'
     mvn-goals: 'clean deploy javadoc:aggregate'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+
+- view:
+    name: openflowplugin
+    description: 'List of openflowplugin jobs'
+    regex: '^openflowplugin-.*'
+    <<: *releng_view_common
+
+- view:
+    name: openflowplugin-oxygen
+    description: 'List of openflowplugin oxygen jobs'
+    regex: 'openflowplugin-.*-oxygen'
+    <<: *releng_view_common

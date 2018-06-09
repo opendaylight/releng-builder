@@ -46,3 +46,9 @@
     build-node: centos7-builder-2c-8g
     mvn-settings: 'sdninterfaceapp-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+
+- view:
+    name: sdninterfaceapp
+    description: 'List of sdninterfaceapp jobs'
+    regex: '^sdninterfaceapp-.*'
+    <<: *releng_view_common

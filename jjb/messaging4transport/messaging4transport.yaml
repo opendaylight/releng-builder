@@ -45,3 +45,9 @@
     branch: 'master'
     mvn-settings: 'messaging4transport-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+
+- view:
+    name: messaging4transport
+    description: 'List of messaging4transport jobs'
+    regex: '^messaging4transport-.*'
+    <<: *releng_view_common

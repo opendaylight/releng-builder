@@ -229,3 +229,9 @@
           email-recipients: '{email-recipients}'
           email-prefix: '[releng]'
       - lf-infra-publish
+
+- view:
+    name: builder
+    description: 'List of builder jobs'
+    regex: '^builder-.*'
+    <<: *releng_view_common

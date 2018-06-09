@@ -42,3 +42,9 @@
     branch: 'master'
     mvn-settings: 'reservation-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+
+- view:
+    name: reservation
+    description: 'List of reservation jobs'
+    regex: '^reservation-.*'
+    <<: *releng_view_common

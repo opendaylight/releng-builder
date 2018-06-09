@@ -131,3 +131,9 @@
 
     git-url: https://gerrit.linuxfoundation.org/infra/$GERRIT_PROJECT
     gerrit-server-name: LinuxFoundation
+
+- view:
+    name: lf-infra
+    description: 'List of lf-infra jobs'
+    regex: '^lf-infra-.*'
+    <<: *releng_view_common

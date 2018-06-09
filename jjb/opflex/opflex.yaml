@@ -115,3 +115,9 @@
           email-recipients: '{email-recipients}'
           email-prefix: '[opflex]'
       - lf-infra-publish
+
+- view:
+    name: opflex
+    description: 'List of opflex jobs'
+    regex: '^opflex-.*'
+    <<: *releng_view_common
