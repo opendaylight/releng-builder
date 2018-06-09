@@ -71,3 +71,9 @@
     build-node: centos7-builder-2c-8g
     mvn-settings: 'genius-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+
+- view:
+    name: genius
+    description: 'List of genius jobs'
+    regex: '^genius-.*'
+    <<: *releng_view_common

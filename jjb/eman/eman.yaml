@@ -47,3 +47,9 @@
     branch: 'master'
     mvn-settings: 'eman-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+
+- view:
+    name: eman
+    description: 'List of eman jobs'
+    regex: '^eman-.*'
+    <<: *releng_view_common
