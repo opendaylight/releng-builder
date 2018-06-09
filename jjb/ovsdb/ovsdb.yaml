@@ -43,3 +43,9 @@
 
     # Used by the release job
     staging-profile-id: a68b188166958
+
+- view:
+    name: ovsdb
+    description: 'List of ovsdb jobs'
+    regex: '^ovsdb-.*'
+    <<: *releng_view_common

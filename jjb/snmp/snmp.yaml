@@ -43,3 +43,9 @@
     branch: 'master'
     mvn-settings: 'snmp-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+
+- view:
+    name: snmp
+    description: 'List of snmp jobs'
+    regex: '^snmp-.*'
+    <<: *releng_view_common

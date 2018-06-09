@@ -43,3 +43,9 @@
     branch: 'master'
     mvn-settings: 'snmp4sdn-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+
+- view:
+    name: snmp4sdn
+    description: 'List of snmp4sdn jobs'
+    regex: '^snmp4sdn-.*'
+    <<: *releng_view_common

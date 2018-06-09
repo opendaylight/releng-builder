@@ -35,3 +35,9 @@
     mvn-settings: 'telemetry-settings'
     mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+
+- view:
+    name: telemetry
+    description: 'List of telemetry jobs'
+    regex: '^telemetry-.*'
+    <<: *releng_view_common
