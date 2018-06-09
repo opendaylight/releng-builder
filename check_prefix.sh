@@ -12,7 +12,7 @@
 #
 # The production prefix MUST always be a blank string.
 
-if grep 'prefix:' jjb/releng-defaults.yaml | grep -v "''"; then
+if grep 'prefix:' jjb/defaults.yaml | grep -v "''"; then
     echo "ERROR: A non-blank prefix is defined in jjb/releng-defaults.yaml"
     echo "The prefix MUST be set to blank '' in production!"
     exit 1
