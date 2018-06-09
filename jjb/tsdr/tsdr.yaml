@@ -43,3 +43,9 @@
     branch: 'master'
     mvn-settings: 'tsdr-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+
+- view:
+    name: tsdr
+    description: 'List of tsdr jobs'
+    regex: '^tsdr-.*'
+    <<: *releng_view_common

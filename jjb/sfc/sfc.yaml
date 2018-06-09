@@ -58,3 +58,9 @@
     branch: 'master'
     mvn-settings: 'sfc-settings'
     mvn-opts: '-Xmx2048m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
+
+- view:
+    name: sfc
+    description: 'List of sfc jobs'
+    regex: '^sfc-.*'
+    <<: *releng_view_common

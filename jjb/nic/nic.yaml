@@ -46,3 +46,9 @@
     build-node: centos7-builder-2c-8g
     mvn-settings: 'nic-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+
+- view:
+    name: nic
+    description: 'List of nic jobs'
+    regex: '^nic-.*'
+    <<: *releng_view_common

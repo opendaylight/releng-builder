@@ -61,3 +61,9 @@
     mvn-settings: 'groupbasedpolicy-settings'
     mvn-goals: '-U clean deploy findbugs:findbugs'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+
+- view:
+    name: groupbasedpolicy
+    description: 'List of groupbasedpolicy jobs'
+    regex: '^groupbasedpolicy-.*'
+    <<: *releng_view_common

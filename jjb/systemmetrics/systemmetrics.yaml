@@ -26,3 +26,9 @@
     branch: 'master'
     mvn-settings: 'systemmetrics-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+
+- view:
+    name: systemmetrics
+    description: 'List of systemmetrics jobs'
+    regex: '^systemmetrics-.*'
+    <<: *releng_view_common
