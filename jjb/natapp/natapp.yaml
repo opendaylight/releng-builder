@@ -45,3 +45,9 @@
     branch: 'master'
     mvn-settings: 'natapp-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+
+- view:
+    name: natapp
+    description: 'List of natapp jobs'
+    regex: '^natapp-.*'
+    <<: *releng_view_common

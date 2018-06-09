@@ -36,3 +36,9 @@
         **/hs_err_*.log
         **/target/feature/feature.xml
     # TODO: **/*.hprof is too large, compress with xz first
+
+- view:
+    name: autorelease
+    description: 'List of autorelease jobs'
+    regex: '^autorelease-.*'
+    <<: *releng_view_common

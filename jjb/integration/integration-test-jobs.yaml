@@ -479,3 +479,9 @@
 
     publishers:
       - lf-infra-publish
+
+- view:
+    name: integration
+    description: 'List of integration jobs'
+    regex: '^integration-.*'
+    <<: *releng_view_common

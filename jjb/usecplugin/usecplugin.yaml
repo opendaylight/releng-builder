@@ -43,3 +43,9 @@
     project-name: 'usecplugin'
     mvn-settings: 'usecplugin-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+
+- view:
+    name: usecplugin
+    description: 'List of usecplugin jobs'
+    regex: '^usecplugin-.*'
+    <<: *releng_view_common

@@ -101,3 +101,9 @@
           echo $CI_MESSAGE
           echo "----------------------------------"
           echo " Promoted ODL Autorelease artifact as release candidate!"
+
+- view:
+    name: openci
+    description: 'List of openci jobs'
+    regex: '^openci-.*'
+    <<: *releng_view_common

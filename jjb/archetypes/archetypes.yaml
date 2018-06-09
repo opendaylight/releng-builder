@@ -32,3 +32,9 @@
     project-name: 'archetypes'
     branch: 'master'
     mvn-settings: 'archetypes-settings'
+
+- view:
+    name: archetypes
+    regex: '^archetypes-.*'
+    description: 'List of archetypes jobs'
+    <<: *releng_view_common

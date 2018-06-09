@@ -43,3 +43,9 @@
     branch: 'master'
     mvn-settings: 'netide-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+
+- view:
+    name: netide
+    description: 'List of netide jobs'
+    regex: '^netide-.*'
+    <<: *releng_view_common

@@ -46,3 +46,9 @@
     build-node: centos7-builder-2c-8g
     mvn-settings: 'iotdm-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+
+- view:
+    name: iotdm
+    description: 'List of iotdm jobs'
+    regex: '^iotdm-.*'
+    <<: *releng_view_common

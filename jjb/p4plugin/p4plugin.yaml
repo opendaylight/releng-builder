@@ -46,3 +46,9 @@
     branch: 'master'
     mvn-settings: 'p4plugin-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+
+- view:
+    name: p4plugin
+    description: 'List of p4plugin jobs'
+    regex: '^p4plugin-.*'
+    <<: *releng_view_common
