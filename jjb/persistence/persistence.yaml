@@ -44,3 +44,9 @@
     branch: 'master'
     mvn-settings: 'persistence-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+
+- view:
+    name: persistence
+    description: 'List of persistence jobs'
+    regex: '^persistence-.*'
+    <<: *releng_view_common

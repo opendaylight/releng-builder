@@ -43,3 +43,9 @@
     branch: 'master'
     mvn-settings: 'lacp-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+
+- view:
+    name: lacp
+    description: 'List of lacp jobs'
+    regex: '^lacp-.*'
+    <<: *releng_view_common

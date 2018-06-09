@@ -46,3 +46,9 @@
     mvn-settings: 'coretutorials-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     build-timeout: 120
+
+- view:
+    name: coretutorials
+    description: 'List of coretutorials jobs'
+    regex: '^coretutorials-.*'
+    <<: *releng_view_common

@@ -17,3 +17,9 @@
     build-timeout: 60
     rtd-build-url: https://readthedocs.org/api/v2/webhook/opendaylight/32322/
     rtd-token: 86e54dd38c651e2164ea63c183ae601d19cd1f3c
+
+- view:
+    name: docs
+    description: 'List of docs jobs'
+    regex: '^docs-.*'
+    <<: *releng_view_common

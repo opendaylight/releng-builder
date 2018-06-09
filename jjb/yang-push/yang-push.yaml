@@ -43,3 +43,9 @@
     branch: 'master'
     mvn-settings: 'yang-push-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+
+- view:
+    name: yang-push
+    description: 'List of yang-push jobs'
+    regex: '^yang-push-.*'
+    <<: *releng_view_common
