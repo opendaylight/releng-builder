@@ -11,7 +11,7 @@
 ##############################################################################
 
 # List of directories, files to exclude
-declare -a excludes=("releng-defaults.yaml"
+declare -a excludes=("defaults.yaml"
                      "releng-macros.yaml"
                      "global-jjb"
                      "lf-infra"
