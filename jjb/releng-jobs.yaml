@@ -51,11 +51,6 @@
       - ubuntu-16.04
 
     templates:
-      - devstack
-      - devstack-pre-pip-ocata:
-          build-timeout: 75
-      - devstack-pre-pip-pike:
-          build-timeout: 75
       - gbp
       - mininet-ovs-2.5:
           build-timeout: 60
@@ -70,21 +65,9 @@
       - platforms: centos
         templates: mininet-ovs-2.6
       - platforms: ubuntu-14.04
-        templates: devstack-pre-pip-ocata
-      - platforms: ubuntu-14.04
-        templates: devstack-pre-pip-pike
-      - platforms: ubuntu-14.04
-        templates: devstack
-      - platforms: ubuntu-14.04
         templates: mininet-ovs-2.5
       - platforms: ubuntu-14.04
         templates: mininet-ovs-2.6
-      - platforms: ubuntu-16.04
-        templates: devstack-pre-pip-ocata
-      - platforms: ubuntu-16.04
-        templates: devstack-pre-pip-pike
-      - platforms: ubuntu-16.04
-        templates: devstack
 
 - job-template:
     name: builder-check-poms
