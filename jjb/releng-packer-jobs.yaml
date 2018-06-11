@@ -1,5 +1,17 @@
 ---
 - project:
+    name: packer-packer-verify-jobs
+    jobs:
+      - gerrit-packer-verify
+
+    project: releng/builder
+    project-name: builder
+    branch: master
+    archive-artifacts: '**/*.log'
+
+    build-node: centos7-builder-2c-1g
+
+- project:
     name: packer-builder-jobs
     jobs:
       - gerrit-packer-merge
@@ -78,6 +90,24 @@
 
     platforms: centos-7
     templates: docker
+
+- project:
+    name: packer-gbp-jobs
+    jobs:
+      - gerrit-packer-merge
+
+    project: releng/builder
+    project-name: builder
+    branch: master
+    archive-artifacts: '**/*.log'
+
+    build-node: centos7-builder-2c-1g
+    build-timeout: 90
+
+    templates: gbp
+    platforms:
+      - ubuntu-14.04
+      - ubuntu-16.04
 
 - project:
     name: packer-mininet-ovs-2.5-jobs
