@@ -20,9 +20,15 @@ echo "---> Check image protection"
 # shellcheck source=/tmp/v/openstack/bin/activate disable=SC1091
 source "/tmp/v/openstack/bin/activate"
 
+declare -a yaml_images
+readarray -t yaml_images <<< "$(grep -r _system_image: --include \*.yaml \
+    | awk -F": " -e '{print $3}' | sed "s:'::;s:'$::;/^$/d" | sort -u)"
+declare -a cfg_images
+readarray -t cfg_images <<< "$(grep -r IMAGE_NAME --include \*.cfg \
+    | awk -F'=' -e '{print $2}' | sort -u)"
+combined=("${yaml_images[@]}" "${cfg_images[@]}")
 declare -a images
-readarray -t images <<< "$(grep -r _system_image: --include \*.yaml \
-    | awk -F": " -e '{print $3}' | sed "s:'::;s:'$::;/^$/d" | sort | uniq)"
+readarray -t images <<< "$(printf '%s\n' "${combined[@]}" | sort -u)"
 
 for image in "${images[@]}"; do
     os_image_protected=$(openstack --os-cloud "$OS_CLOUD" image show "$image" -f value -c protected)
