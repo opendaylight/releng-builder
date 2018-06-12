@@ -80,7 +80,39 @@
     templates: docker
 
 - project:
-    name: packer-mininet-jobs
+    name: packer-mininet-ovs-2.5-jobs
+    jobs:
+      - gerrit-packer-merge
+
+    project: releng/builder
+    project-name: builder
+    branch: master
+    archive-artifacts: '**/*.log'
+
+    build-node: centos7-builder-2c-1g
+    build-timeout: 60
+
+    templates: mininet-ovs-2.5
+    platforms: ubuntu-16.04
+
+- project:
+    name: packer-mininet-ovs-2.6-jobs
+    jobs:
+      - gerrit-packer-merge
+
+    project: releng/builder
+    project-name: builder
+    branch: master
+    archive-artifacts: '**/*.log'
+
+    build-node: centos7-builder-2c-1g
+    build-timeout: 75
+
+    templates: mininet-ovs-2.6
+    platforms: ubuntu-16.04
+
+- project:
+    name: packer-mininet-ovs-2.8-jobs
     jobs:
       - gerrit-packer-merge
 
@@ -92,8 +124,8 @@
     build-node: centos7-builder-2c-1g
     build-timeout: 90
 
-    platforms: ubuntu-16.04
     templates: mininet-ovs-2.8
+    platforms: ubuntu-16.04
 
 - project:
     name: packer-robot-jobs

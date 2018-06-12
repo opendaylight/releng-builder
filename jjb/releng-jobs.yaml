@@ -51,16 +51,6 @@
 
     templates:
       - gbp
-      - mininet-ovs-2.5:
-          build-timeout: 60
-      - mininet-ovs-2.6:
-          build-timeout: 75
-
-    exclude:
-      - platforms: ubuntu-14.04
-        templates: mininet-ovs-2.5
-      - platforms: ubuntu-14.04
-        templates: mininet-ovs-2.6
 
 - job-template:
     name: builder-check-poms
