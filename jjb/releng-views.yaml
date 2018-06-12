@@ -1,4 +1,20 @@
 ---
+- integration_view_csit: &integration_view_csit
+    name: integration-view-csit
+    view-type: list
+    filter-executors: false
+    filter-queue: false
+    columns:
+      - status
+      - weather
+      - job
+      - last-success
+      - last-failure
+      - last-duration
+      - build-button
+      - robot-list
+    recurse: false
+
 - releng_view: &releng_view_common
     name: releng-view-common
     view-type: list
@@ -55,25 +71,25 @@
     name: CSIT-1node
     description: 'List of CSIT 1node jobs'
     regex: '^.*-csit-1node.*'
-    <<: *releng_view_common
+    <<: *integration_view_csit
 
 - view:
     name: CSIT-3node
     description: 'List of CSIT 3node jobs'
     regex: '^.*-csit-3node.*'
-    <<: *releng_view_common
+    <<: *integration_view_csit
 
 - view:
     name: CSIT
     description: 'List of CSIT jobs'
     regex: '^.*-csit-.*'
-    <<: *releng_view_common
+    <<: *integration_view_csit
 
 - view:
     name: CSIT-Verify
     description: 'List of CSIT Verify jobs'
     regex: '^.*-csit-verify.*'
-    <<: *releng_view_common
+    <<: *integration_view_csit
 
 - view:
     name: Distribution-Check
