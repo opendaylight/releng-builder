@@ -34,24 +34,6 @@
       https://jenkins.opendaylight.org/releng
       https://jenkins.opendaylight.org/sandbox
 
-- project:
-    name: packer-jobs
-    # packer jobs templates are defined in global-jjb
-    jobs:
-      - '{project-name}-packer-jobs'
-    project: 'releng/builder'
-    project-name: builder
-    branch: master
-    archive-artifacts: '**/*.log'
-    build-node: centos7-builder-2c-1g
-
-    platforms:
-      - ubuntu-14.04
-      - ubuntu-16.04
-
-    templates:
-      - gbp
-
 - job-template:
     name: builder-check-poms
     node: centos7-builder-2c-1g
