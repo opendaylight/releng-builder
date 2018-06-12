@@ -1433,6 +1433,7 @@ for suite in ${SUITES}; do
     -v TOOLS_SYSTEM_IP:${TOOLS_SYSTEM_1_IP} \
     -v TOOLS_SYSTEM_1_IP:${TOOLS_SYSTEM_1_IP} \
     -v TOOLS_SYSTEM_2_IP:${TOOLS_SYSTEM_2_IP} \
+    -v TOOLS_SYSTEM_3_IP:${TOOLS_SYSTEM_3_IP} \
     -v USER_HOME:${HOME} \
     -v WORKSPACE:/tmp \
     ${TESTOPTIONS} ${suite} || true
