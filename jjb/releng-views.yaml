@@ -661,12 +661,6 @@
     <<: *releng_view_common
 
 - view:
-    name: verify-python
-    description: 'List of pyhton-verify jobs'
-    regex: '.*-python-.*'
-    <<: *releng_view_common
-
-- view:
     name: vpnservice
     description: 'List of vpnservice jobs'
     regex: '^vpnservice-.*'
