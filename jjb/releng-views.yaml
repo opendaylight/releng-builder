@@ -12,9 +12,11 @@
       - last-failure
       - last-duration
       - build-button
+      - jacoco
+      - find-bugs
+      - robot-list
     recurse: false
 
-# Note: most-recent Job Filter requires JJB 2.1 to be released.
 - view:
     name: 01-recent
     regex: '.*'
@@ -46,6 +48,8 @@
       - last-failure
       - last-duration
       - build-button
+      - jacoco
+      - find-bugs
       - policy-violations
     recurse: false
 
