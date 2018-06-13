@@ -653,6 +653,12 @@
     <<: *releng_view_common
 
 - view:
+    name: vbd
+    description: 'List of vbd jobs'
+    regex: '^vbd-.*'
+    <<: *releng_view_common
+
+- view:
     name: yang-push
     description: 'List of yang-push jobs'
     regex: '^yang-push-.*'
