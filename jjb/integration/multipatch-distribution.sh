@@ -151,7 +151,9 @@ do
         git fetch "https://git.opendaylight.org/gerrit/${PROJECT}" "refs/changes/${pick}"
         git cherry-pick --ff --keep-redundant-commits FETCH_HEAD
     done
-    if [ "$(echo -n ${proto_patch} | tail -c 1)" == 'r' ]; then
+    # Check whether the patch ends with 'r', and the patch isn't the project
+    # (to avoid releasing controller...)
+    if [ "${proto_patch:$((${#proto_patch}-1))}" = "r" -a "${proto_patch}" != "${PROJECT}" ]; then
         # Here 'r' means release. Useful for testing Nitrogen Odlparent changes.
         find . -name "*.xml" -print0 | xargs -0 sed -i 's/-SNAPSHOT//g'
     fi
