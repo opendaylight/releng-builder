@@ -20,3 +20,11 @@
       - netvirt:
           csit-list: >
               netvirt-csit-1node-openstack-{os-branch}-gate-stateful-{stream}
+
+      - cluster-netvirt:
+          csit-list: >
+              netvirt-csit-3node-openstack-{os-branch}-gate-stateful-{stream}
+
+      - genius:
+          csit-list: >
+              genius-csit-1node-gate-all-{stream}
