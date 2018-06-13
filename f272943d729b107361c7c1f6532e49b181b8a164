@@ -34,6 +34,23 @@
       "revId": "f272943d729b107361c7c1f6532e49b181b8a164",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7be6aa3_8044ace5",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-06-13T19:38:28Z",
+      "side": 1,
+      "message": "if we do wrap on l2gw, it would need to go here after the current EOF.\n\nif [ \"${ENABLE_NETWORKING_L2GW}\" \u003d\u003d \"yes\" ]; then\n    cat \u003e\u003e ${local_conf_file_name} \u003c\u003c EOF\n[ml2_odl]\nenable_dhcp_service \u003d True\nEOF\nfi",
+      "revId": "f272943d729b107361c7c1f6532e49b181b8a164",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
