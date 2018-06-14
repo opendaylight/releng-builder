@@ -16,11 +16,11 @@
       - fluorine:
           branch: 'master'
           integration-test: fluorine
-          extra-mvn-opts: -P!karaf -Dsft.heap.max=4g
+          extra-mvn-opts: -P!karaf -Dsft.heap.max=4g -Dskip.karaf.featureTest=true
       - oxygen:
           branch: 'stable/oxygen'
           integration-test: oxygen
-          extra-mvn-opts: -P!karaf -Dsft.heap.max=4g
+          extra-mvn-opts: -P!karaf -Dsft.heap.max=4g -Dskip.karaf.featureTest=true
 
     project: releng/autorelease
     project-name: autorelease
