@@ -48,7 +48,7 @@
       - fluorine:
           branch: 'master'
           csit-blacklist: >
-              alto bier capwap centinel coe didm dluxapps groupbasedpolicy iotdm jsonrpc lacp
+              alto bier capwap centinel didm dluxapps groupbasedpolicy iotdm jsonrpc lacp
               l2switch messaging4transport nemo netide nic ocpplugin of-config p4plugin packetcable
               sdninterfaceapp sxp tsdr unimgr usc usecplugin vtn gate longevity sanity tdd wip
           csit-list: !include: csit-jobs-fluorine.lst
@@ -57,7 +57,7 @@
       - oxygen:
           branch: 'stable/oxygen'
           csit-blacklist: >
-              capwap centinel coe didm iotdm jsonrpc lacp messaging4transport netide nic
+              capwap centinel didm iotdm jsonrpc lacp messaging4transport netide nic
               ocpplugin sdninterfaceapp unimgr usecplugin gate longevity sanity tdd wip
           csit-list: !include: csit-jobs-oxygen.lst
           csit-weekly-list: '{csit-weekly-list-oxygen}'
