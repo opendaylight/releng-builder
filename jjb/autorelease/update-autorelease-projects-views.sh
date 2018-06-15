@@ -34,13 +34,16 @@ cat > "$VIEWS_AR_YAML_FILE" << EOF
     filter-executors: false
     filter-queue: false
     columns:
-        - status
-        - weather
-        - job
-        - last-success
-        - last-failure
-        - last-duration
-        - build-button
+      - status
+      - weather
+      - job
+      - last-success
+      - last-failure
+      - last-duration
+      - build-button
+      - jacoco
+      - find-bugs
+      - robot-list
     recurse: false
 
 - view:
