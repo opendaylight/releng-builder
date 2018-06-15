@@ -30,7 +30,9 @@
           karaf-version: odl
           # Self-Managed projects repos and features:
           sm-repos: mvn:org.opendaylight.sxp/features-sxp//xml/features
-          sm-features: odl-sxp-controller
+          sm-features:
+            - odl-sxp-controller
+            - odl-sxp-routing
       - oxygen:
           branch: 'stable/oxygen'
           karaf-version: karaf4
