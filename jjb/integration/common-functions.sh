@@ -125,3 +125,287 @@ function csv2ssv() {
 
     echo "${ssv}"
 } # csv2ssv
+
+SSH="ssh -t -t"
+
+# Collect the list of files on the hosts
+function collect_files() {
+    local -r ip=$1
+    local -r folder=$2
+    finddir=/tmp/finder
+    ${SSH} ${ip} "mkdir -p ${finddir}"
+    ${SSH} ${ip} "sudo find /etc > ${finddir}/find.etc.txt"
+    ${SSH} ${ip} "sudo find /opt/stack > ${finddir}/find.opt.stack.txt"
+    ${SSH} ${ip} "sudo find /var > ${finddir}/find2.txt"
+    ${SSH} ${ip} "sudo find /var > ${finddir}/find.var.txt"
+    ${SSH} ${ip} "sudo tar -cf - -C /tmp finder | xz -T 0 > /tmp/find.tar.xz"
+    scp ${ip}:/tmp/find.tar.xz ${folder}
+    mkdir -p ${finddir}
+    rsync --rsync-path="sudo rsync" --list-only -arvhe ssh ${ip}:/etc/ > ${finddir}/rsync.etc.txt
+    rsync --rsync-path="sudo rsync" --list-only -arvhe ssh ${ip}:/opt/stack/ > ${finddir}/rsync.opt.stack.txt
+    rsync --rsync-path="sudo rsync" --list-only -arvhe ssh ${ip}:/var/ > ${finddir}/rsync.var.txt
+    tar -cf - -C /tmp finder | xz -T 0 > /tmp/rsync.tar.xz
+    cp /tmp/rsync.tar.xz ${folder}
+}
+
+# List of extra services to extract from journalctl
+# Add new services on a separate line, in alpha order, add \ at the end
+extra_services_cntl=" \
+    dnsmasq.service \
+    httpd.service \
+    libvirtd.service \
+    openvswitch.service \
+    ovs-vswitchd.service \
+    ovsdb-server.service \
+    rabbitmq-server.service \
+"
+
+extra_services_cmp=" \
+    libvirtd.service \
+    openvswitch.service \
+    ovs-vswitchd.service \
+    ovsdb-server.service \
+"
+
+# Collect the logs for the openstack services
+# First get all the services started by devstack which would have devstack@ as a prefix
+# Next get all the extra services
+function collect_openstack_logs() {
+    local -r ip=${1}
+    local -r folder=${2}
+    local -r node_type=${3}
+    local oslogs="${folder}/oslogs"
+
+    printf "collect_openstack_logs for ${node_type} node: ${ip} into ${oslogs}\n"
+    rm -rf ${oslogs}
+    mkdir -p ${oslogs}
+    # There are always some logs in /opt/stack/logs and this also covers the
+    # pre-queens branches which always use /opt/stack/logs
+    rsync -avhe ssh ${ip}:/opt/stack/logs/* ${oslogs} # rsync to prevent copying of symbolic links
+
+    # Starting with queens break out the logs from journalctl
+    if [ "${OPENSTACK_BRANCH}" = "stable/queens" ]; then
+        cat > ${WORKSPACE}/collect_openstack_logs.sh << EOF
+extra_services_cntl="${extra_services_cntl}"
+extra_services_cmp="${extra_services_cmp}"
+
+function extract_from_journal() {
+    local -r services=\${1}
+    local -r folder=\${2}
+    local -r node_type=\${3}
+    printf "extract_from_journal folder: \${folder}, services: \${services}\n"
+    for service in \${services}; do
+        # strip anything before @ and anything after .
+        # devstack@g-api.service will end as g-api
+        service_="\${service#*@}"
+        service_="\${service_%.*}"
+        sudo journalctl -u "\${service}" > "\${folder}/\${service_}.log"
+    done
+}
+
+rm -rf /tmp/oslogs
+mkdir -p /tmp/oslogs
+systemctl list-unit-files --all > /tmp/oslogs/systemctl.units.log 2>&1
+svcs=\$(grep devstack@ /tmp/oslogs/systemctl.units.log | awk '{print \$1}')
+extract_from_journal "\${svcs}" "/tmp/oslogs"
+if [ "\${node_type}" = "control" ]; then
+    extract_from_journal "\${extra_services_cntl}" "/tmp/oslogs"
+else
+    extract_from_journal "\${extra_services_cmp}" "/tmp/oslogs"
+fi
+ls -al /tmp/oslogs
+EOF
+# cat > ${WORKSPACE}/collect_openstack_logs.sh << EOF
+        printf "collect_openstack_logs for ${node_type} node: ${ip} into ${oslogs}, executing script\n"
+        cat ${WORKSPACE}/collect_openstack_logs.sh
+        scp ${WORKSPACE}/collect_openstack_logs.sh ${ip}:/tmp
+        ${SSH} ${ip} "bash /tmp/collect_openstack_logs.sh > /tmp/collect_openstack_logs.log 2>&1"
+        rsync -avhe ssh ${ip}:/tmp/oslogs/* ${oslogs}
+        scp ${ip}:/tmp/collect_openstack_logs.log ${oslogs}
+    fi # if [ "${OPENSTACK_BRANCH}" = "stable/queens" ]; then
+}
+
+function collect_logs() {
+    set +e  # We do not want to create red dot just because something went wrong while fetching logs.
+
+    cat > extra_debug.sh << EOF
+echo -e "/usr/sbin/lsmod | /usr/bin/grep openvswitch\n"
+/usr/sbin/lsmod | /usr/bin/grep openvswitch
+echo -e "\nsudo grep ct_ /var/log/openvswitch/ovs-vswitchd.log\n"
+sudo grep "Datapath supports" /var/log/openvswitch/ovs-vswitchd.log
+echo -e "\nsudo netstat -punta\n"
+sudo netstat -punta
+echo -e "\nsudo getenforce\n"
+sudo getenforce
+echo -e "\nsudo systemctl status httpd\n"
+sudo systemctl status httpd
+echo -e "\nenv\n"
+env
+source /opt/stack/devstack/openrc admin admin
+echo -e "\nenv after openrc\n"
+env
+echo -e "\nsudo du -hs /opt/stack"
+sudo du -hs /opt/stack
+echo -e "\nsudo mount"
+sudo mount
+echo -e "\ndmesg -T > /tmp/dmesg.log"
+dmesg -T > /tmp/dmesg.log
+echo -e "\njournalctl > /tmp/journalctl.log\n"
+sudo journalctl > /tmp/journalctl.log
+echo -e "\novsdb-tool -mm show-log > /tmp/ovsdb-tool.log"
+ovsdb-tool -mm show-log > /tmp/ovsdb-tool.log
+EOF
+
+    # Since this log collection work is happening before the archive build macro which also
+    # creates the ${WORKSPACE}/archives dir, we have to do it here first.  The mkdir in the
+    # archives build step will essentially be a noop.
+    mkdir -p ${WORKSPACE}/archives
+
+    mv /tmp/changes.txt ${WORKSPACE}/archives
+    mv ${WORKSPACE}/rabbit.txt ${WORKSPACE}/archives
+
+    sleep 5
+    # FIXME: Do not create .tar and gzip before copying.
+    for i in `seq 1 ${NUM_ODL_SYSTEM}`; do
+        CONTROLLERIP=ODL_SYSTEM_${i}_IP
+        echo "collect_logs: for opendaylight controller ip: ${!CONTROLLERIP}"
+        NODE_FOLDER="odl_${i}"
+        mkdir -p ${NODE_FOLDER}
+        echo "Lets's take the karaf thread dump again..."
+        ssh ${!CONTROLLERIP} "sudo ps aux" > ${WORKSPACE}/ps_after.log
+        pid=$(grep org.apache.karaf.main.Main ${WORKSPACE}/ps_after.log | grep -v grep | tr -s ' ' | cut -f2 -d' ')
+        echo "karaf main: org.apache.karaf.main.Main, pid:${pid}"
+        ssh ${!CONTROLLERIP} "jstack ${pid}" > ${WORKSPACE}/karaf_${i}_${pid}_threads_after.log || true
+        echo "killing karaf process..."
+        ${SSH} "${!CONTROLLERIP}" bash -c 'ps axf | grep karaf | grep -v grep | awk '"'"'{print "kill -9 " $1}'"'"' | sh'
+        ${SSH} ${!CONTROLLERIP} "sudo journalctl > /tmp/journalctl.log"
+        scp ${!CONTROLLERIP}:/tmp/journalctl.log ${NODE_FOLDER}
+        ${SSH} ${!CONTROLLERIP} "dmesg -T > /tmp/dmesg.log"
+        scp ${!CONTROLLERIP}:/tmp/dmesg.log ${NODE_FOLDER}
+        ${SSH} ${!CONTROLLERIP} "tar -cf - -C /tmp/${BUNDLEFOLDER} etc | xz -T 0 > /tmp/etc.tar.xz"
+        scp ${!CONTROLLERIP}:/tmp/etc.tar.xz ${NODE_FOLDER}
+        ${SSH} ${!CONTROLLERIP} "cp -r /tmp/${BUNDLEFOLDER}/data/log /tmp/odl_log"
+        ${SSH} ${!CONTROLLERIP} "tar -cf /tmp/odl${i}_karaf.log.tar /tmp/odl_log/*"
+        scp ${!CONTROLLERIP}:/tmp/odl${i}_karaf.log.tar ${NODE_FOLDER}
+        ${SSH} ${!CONTROLLERIP} "tar -cf /tmp/odl${i}_zrpcd.log.tar /tmp/zrpcd.init.log"
+        scp ${!CONTROLLERIP}:/tmp/odl${i}_zrpcd.log.tar ${NODE_FOLDER}
+        tar -xvf ${NODE_FOLDER}/odl${i}_karaf.log.tar -C ${NODE_FOLDER} --strip-components 2 --transform s/karaf/odl${i}_karaf/g
+        grep "ROBOT MESSAGE\| ERROR " ${NODE_FOLDER}/odl${i}_karaf.log > ${NODE_FOLDER}/odl${i}_err.log
+        grep "ROBOT MESSAGE\| ERROR \| WARN \|Exception" \
+            ${NODE_FOLDER}/odl${i}_karaf.log > ${NODE_FOLDER}/odl${i}_err_warn_exception.log
+        # Print ROBOT lines and print Exception lines. For exception lines also print the previous line for context
+        sed -n -e '/ROBOT MESSAGE/P' -e '$!N;/Exception/P;D' ${NODE_FOLDER}/odl${i}_karaf.log > ${NODE_FOLDER}/odl${i}_exception.log
+        mv /tmp/odl${i}_exceptions.txt ${NODE_FOLDER}
+        rm ${NODE_FOLDER}/odl${i}_karaf.log.tar
+        mv *_threads* ${NODE_FOLDER}
+        mv ps_* ${NODE_FOLDER}
+        mv ${NODE_FOLDER} ${WORKSPACE}/archives/
+    done
+
+    print_job_parameters > ${WORKSPACE}/archives/params.txt
+
+    # Control Node
+    for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
+        OSIP=OPENSTACK_CONTROL_NODE_${i}_IP
+        echo "collect_logs: for openstack control node ip: ${!OSIP}"
+        NODE_FOLDER="control_${i}"
+        mkdir -p ${NODE_FOLDER}
+        scp extra_debug.sh ${!OSIP}:/tmp
+        ${SSH} ${!OSIP} "bash /tmp/extra_debug.sh > /tmp/extra_debug.log 2>&1"
+        scp ${!OSIP}:/etc/dnsmasq.conf ${NODE_FOLDER}
+        scp ${!OSIP}:/etc/keystone/keystone.conf ${NODE_FOLDER}
+        scp ${!OSIP}:/etc/keystone/keystone-uwsgi-admin.ini ${NODE_FOLDER}
+        scp ${!OSIP}:/etc/keystone/keystone-uwsgi-public.ini ${NODE_FOLDER}
+        scp ${!OSIP}:/etc/kuryr/kuryr.conf ${NODE_FOLDER}
+        scp ${!OSIP}:/etc/neutron/dhcp_agent.ini ${NODE_FOLDER}
+        scp ${!OSIP}:/etc/neutron/metadata_agent.ini ${NODE_FOLDER}
+        scp ${!OSIP}:/etc/neutron/neutron.conf ${NODE_FOLDER}
+        scp ${!OSIP}:/etc/neutron/neutron_lbaas.conf ${NODE_FOLDER}
+        scp ${!OSIP}:/etc/neutron/plugins/ml2/ml2_conf.ini ${NODE_FOLDER}
+        scp ${!OSIP}:/etc/neutron/services/loadbalancer/haproxy/lbaas_agent.ini ${NODE_FOLDER}
+        scp ${!OSIP}:/etc/nova/nova.conf ${NODE_FOLDER}
+        scp ${!OSIP}:/etc/nova/nova-api-uwsgi.ini ${NODE_FOLDER}
+        scp ${!OSIP}:/etc/nova/nova_cell1.conf ${NODE_FOLDER}
+        scp ${!OSIP}:/etc/nova/nova-cpu.conf ${NODE_FOLDER}
+        scp ${!OSIP}:/etc/nova/placement-uwsgi.ini ${NODE_FOLDER}
+        scp ${!OSIP}:/etc/openstack/clouds.yaml ${NODE_FOLDER}
+        scp ${!OSIP}:/opt/stack/devstack/.stackenv ${NODE_FOLDER}
+        scp ${!OSIP}:/opt/stack/devstack/nohup.out ${NODE_FOLDER}/stack.log
+        scp ${!OSIP}:/opt/stack/devstack/openrc ${NODE_FOLDER}
+        scp ${!OSIP}:/opt/stack/requirements/upper-constraints.txt ${NODE_FOLDER}
+        scp ${!OSIP}:/opt/stack/tempest/etc/tempest.conf ${NODE_FOLDER}
+        scp ${!OSIP}:/tmp/*.xz ${NODE_FOLDER}
+        scp ${!OSIP}:/tmp/dmesg.log ${NODE_FOLDER}
+        scp ${!OSIP}:/tmp/extra_debug.log ${NODE_FOLDER}
+        scp ${!OSIP}:/tmp/get_devstack.sh.txt ${NODE_FOLDER}
+        scp ${!OSIP}:/tmp/journalctl.log ${NODE_FOLDER}
+        scp ${!OSIP}:/tmp/ovsdb-tool.log ${NODE_FOLDER}
+        collect_files "${!OSIP}" "${NODE_FOLDER}"
+        ${SSH} ${!OSIP} "sudo tar -cf - -C /var/log rabbitmq | xz -T 0 > /tmp/rabbitmq.tar.xz "
+        scp ${!OSIP}:/tmp/rabbitmq.tar.xz ${NODE_FOLDER}
+        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/etc/hosts ${NODE_FOLDER}
+        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/usr/lib/systemd/system/haproxy.service ${NODE_FOLDER}
+        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/audit/audit.log ${NODE_FOLDER}
+        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/httpd/keystone_access.log ${NODE_FOLDER}
+        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/httpd/keystone.log ${NODE_FOLDER}
+        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/messages* ${NODE_FOLDER}
+        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/openvswitch/ovs-vswitchd.log ${NODE_FOLDER}
+        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/openvswitch/ovsdb-server.log ${NODE_FOLDER}
+        collect_openstack_logs "${!OSIP}" "${NODE_FOLDER}" "control"
+        mv local.conf_control_${!OSIP} ${NODE_FOLDER}/local.conf
+        # qdhcp files are created by robot tests and copied into /tmp/qdhcp during the test
+        tar -cf - -C /tmp qdhcp | xz -T 0 > /tmp/qdhcp.tar.xz
+        mv /tmp/qdhcp.tar.xz ${NODE_FOLDER}
+        mv ${NODE_FOLDER} ${WORKSPACE}/archives/
+    done
+
+    # Compute Nodes
+    for i in `seq 1 ${NUM_OPENSTACK_COMPUTE_NODES}`; do
+        OSIP=OPENSTACK_COMPUTE_NODE_${i}_IP
+        echo "collect_logs: for openstack compute node ip: ${!OSIP}"
+        NODE_FOLDER="compute_${i}"
+        mkdir -p ${NODE_FOLDER}
+        scp extra_debug.sh ${!OSIP}:/tmp
+        ${SSH} ${!OSIP} "bash /tmp/extra_debug.sh > /tmp/extra_debug.log 2>&1"
+        scp ${!OSIP}:/etc/nova/nova.conf ${NODE_FOLDER}
+        scp ${!OSIP}:/etc/nova/nova-cpu.conf ${NODE_FOLDER}
+        scp ${!OSIP}:/etc/openstack/clouds.yaml ${NODE_FOLDER}
+        scp ${!OSIP}:/opt/stack/devstack/.stackenv ${NODE_FOLDER}
+        scp ${!OSIP}:/opt/stack/devstack/nohup.out ${NODE_FOLDER}/stack.log
+        scp ${!OSIP}:/opt/stack/devstack/openrc ${NODE_FOLDER}
+        scp ${!OSIP}:/opt/stack/requirements/upper-constraints.txt ${NODE_FOLDER}
+        scp ${!OSIP}:/tmp/*.xz ${NODE_FOLDER}/
+        scp ${!OSIP}:/tmp/dmesg.log ${NODE_FOLDER}
+        scp ${!OSIP}:/tmp/extra_debug.log ${NODE_FOLDER}
+        scp ${!OSIP}:/tmp/get_devstack.sh.txt ${NODE_FOLDER}
+        scp ${!OSIP}:/tmp/journalctl.log ${NODE_FOLDER}
+        scp ${!OSIP}:/tmp/ovsdb-tool.log ${NODE_FOLDER}
+        collect_files "${!OSIP}" "${NODE_FOLDER}"
+        ${SSH} ${!OSIP} "sudo tar -cf - -C /var/log libvirt | xz -T 0 > /tmp/libvirt.tar.xz "
+        scp ${!OSIP}:/tmp/libvirt.tar.xz ${NODE_FOLDER}
+        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/etc/hosts ${NODE_FOLDER}
+        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/audit/audit.log ${NODE_FOLDER}
+        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/messages* ${NODE_FOLDER}
+        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/nova-agent.log ${NODE_FOLDER}
+        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/openvswitch/ovs-vswitchd.log ${NODE_FOLDER}
+        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/openvswitch/ovsdb-server.log ${NODE_FOLDER}
+        collect_openstack_logs "${!OSIP}" "${NODE_FOLDER}" "compute"
+        mv local.conf_compute_${!OSIP} ${NODE_FOLDER}/local.conf
+        mv ${NODE_FOLDER} ${WORKSPACE}/archives/
+    done
+
+    # Tempest
+    DEVSTACK_TEMPEST_DIR="/opt/stack/tempest"
+    TESTREPO=".stestr"
+    TEMPEST_LOGS_DIR=${WORKSPACE}/archives/tempest
+    # Look for tempest test results in the $TESTREPO dir and copy if found
+    if ${SSH} ${OPENSTACK_CONTROL_NODE_1_IP} "sudo sh -c '[ -f ${DEVSTACK_TEMPEST_DIR}/${TESTREPO}/0 ]'"; then
+        ${SSH} ${OPENSTACK_CONTROL_NODE_1_IP} "for I in \$(sudo ls ${DEVSTACK_TEMPEST_DIR}/${TESTREPO}/ | grep -E '^[0-9]+$'); do sudo sh -c \"${DEVSTACK_TEMPEST_DIR}/.tox/tempest/bin/subunit-1to2 < ${DEVSTACK_TEMPEST_DIR}/${TESTREPO}/\${I} >> ${DEVSTACK_TEMPEST_DIR}/subunit_log.txt\"; done"
+        ${SSH} ${OPENSTACK_CONTROL_NODE_1_IP} "sudo sh -c '${DEVSTACK_TEMPEST_DIR}/.tox/tempest/bin/python ${DEVSTACK_TEMPEST_DIR}/.tox/tempest/lib/python2.7/site-packages/os_testr/subunit2html.py ${DEVSTACK_TEMPEST_DIR}/subunit_log.txt ${DEVSTACK_TEMPEST_DIR}/tempest_results.html'"
+        mkdir -p ${TEMPEST_LOGS_DIR}
+        scp ${OPENSTACK_CONTROL_NODE_1_IP}:${DEVSTACK_TEMPEST_DIR}/tempest_results.html ${TEMPEST_LOGS_DIR}
+        scp ${OPENSTACK_CONTROL_NODE_1_IP}:${DEVSTACK_TEMPEST_DIR}/tempest.log ${TEMPEST_LOGS_DIR}
+    else
+        echo "tempest results not found in ${DEVSTACK_TEMPEST_DIR}/${TESTREPO}/0"
+    fi
+} # collect_logs()
