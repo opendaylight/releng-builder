@@ -40,7 +40,6 @@ function trap_handler() {
     local lasterr="$2"
     echo "trap_hanlder: ${prog}: line ${lastline}: exit status of last command: ${lasterr}"
     echo "trap_handler: command: ${BASH_COMMAND}"
-    collect_logs
     exit 1
 } # trap_handler()
 
@@ -806,7 +805,6 @@ if [ ${NUM_OPENSTACK_COMPUTE_NODES} -gt 0 ]; then
       echo "rabbitmq is ready, starting ${NUM_OPENSTACK_COMPUTE_NODES} compute(s)"
     else
       echo "rabbitmq was not ready in ${WAIT_FOR_RABBITMQ_MINUTES}m"
-      collect_logs
       exit 1
     fi
 fi
@@ -881,7 +879,6 @@ while [ ${in_progress} -eq 1 ]; do
             continue
         elif [ "$stacking_status" == "Stacking Failed" ]; then
             echo "node $index ${os_node_list[index]}: stacking has failed"
-            collect_logs
             exit 1
         elif [ "$stacking_status" == "Stacking Complete" ]; then
             echo "node $index ${os_node_list[index]}: stacking complete"
@@ -895,7 +892,6 @@ while [ ${in_progress} -eq 1 ]; do
     sleep 60
     if [ ${iteration} -eq 60 ]; then
         echo "stacking has failed - took longer than 60m"
-        collect_logs
         exit 1
     fi
 done
@@ -927,7 +923,6 @@ for i in `seq 1 ${NUM_OPENSTACK_SITES}`; do
     num_hypervisors=$(${SSH} ${!CONTROLIP} "cd /opt/stack/devstack; source openrc admin admin; openstack hypervisor list -f value | wc -l" | tail -1 | tr -d "\r")
     if ! [ "${num_hypervisors}" ] || ! [ ${num_hypervisors} -eq ${expected_num_hypervisors} ]; then
         echo "Error: Only $num_hypervisors hypervisors detected, expected $expected_num_hypervisors"
-        collect_logs
         exit 1
     fi
 
@@ -1165,7 +1160,6 @@ ssh ${ODL_SYSTEM_IP} "ls -altr /tmp/${BUNDLEFOLDER}/data/log/"
 ssh ${ODL_SYSTEM_IP} "du -hs /tmp/${BUNDLEFOLDER}/data/log/*"
 
 echo "Tests Executed"
-collect_logs
 
 true  # perhaps Jenkins is testing last exit code
 # vim: ts=4 sw=4 sts=4 et ft=sh :

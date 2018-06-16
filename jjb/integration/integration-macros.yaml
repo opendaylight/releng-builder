@@ -585,3 +585,24 @@
                     fi
                     rm ${HOME}/.netrc
           mark-unstable-if-failed: true
+
+- publisher:
+    name: integration-csit-collect-logs
+    publishers:
+      - postbuildscript:
+          builders:
+            - role: BOTH
+              build-on:
+                - ABORTED
+                - FAILURE
+                - NOT_BUILT
+                - SUCCESS
+                - UNSTABLE
+              build-steps:
+                - inject:
+                    properties-file: 'slave_addresses.txt'
+                - shell: |
+                    #!/bin/bash
+                    source /tmp/common-functions.sh ${BUNDLEFOLDER}
+                    collect_logs
+          mark-unstable-if-failed: true
