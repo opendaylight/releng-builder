@@ -3,13 +3,14 @@
     name: bgpcep-csit-bgp-ingest-mixed
     jobs:
       - inttest-csit-1node
-      # FIXME: Rename job to drop -periodic- and unify job definition with -gate- functionality.
 
     # The project name
     project: 'bgpcep'
 
     # The functionality under test
-    functionality: 'bgp-ingest-mixed'
+    functionality:
+      - bgp-ingest-mixed
+      - gate-bgp-ingest-mixed
 
     # Project branches
     stream:
@@ -42,7 +43,7 @@
         -v TEST_DURATION_MULTIPLIER:4
 
     # Controller configuration
-    odl_system_flavor: odl-standard-2
+    odl_system_flavor: odl-standard-4
 
     # Plot Info
     01-plot-title: 'Number of generated updates'
