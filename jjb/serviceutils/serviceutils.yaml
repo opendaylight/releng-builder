@@ -1,0 +1,41 @@
+---
+- project:
+    name: serviceutils-fluorine
+    jobs:
+      - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-maven-javadoc-jobs'
+      #- '{project-name}-rtd-jobs':
+      #    build-node: centos7-builder-2c-2g
+      #    project-pattern: serviceutils
+      #    rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-serviceutils/????/
+      #    rtd-token: ???
+      - odl-maven-jobs
+
+    stream: fluorine
+    project: 'serviceutils'
+    project-name: 'serviceutils'
+    branch: 'master'
+    build-node: centos7-builder-2c-8g
+    mvn-settings: 'serviceutils-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    build-timeout: 90
+    dependencies: >
+        controller-merge-{stream},
+        yangtools-merge-{stream},
+        odlparent-merge-{stream},
+        infrautils-merge-{stream}
+    email-upstream: '[serviceutils] [controller] [yangtools] [odlparent] [infrautils]'
+
+    # Used by the release job
+    # staging-profile-id: ???
+
+- project:
+    name: serviceutils-sonar
+    jobs:
+      - gerrit-maven-sonar
+    project: 'serviceutils'
+    project-name: 'serviceutils'
+    branch: 'master'
+    build-node: centos7-builder-2c-8g
+    mvn-settings: 'serviceutils-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
