@@ -587,7 +587,7 @@
           mark-unstable-if-failed: true
 
 - publisher:
-    name: integration-csit-collect-logs
+    name: integration-csit-collect-netvirt-logs
     publishers:
       - postbuildscript:
           builders:
@@ -604,5 +604,5 @@
                 - shell: |
                     #!/bin/bash
                     source /tmp/common-functions.sh ${BUNDLEFOLDER}
-                    collect_logs
+                    collect_netvirt_logs
           mark-unstable-if-failed: true
