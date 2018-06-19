@@ -225,7 +225,7 @@ EOF
     fi # if [ "${OPENSTACK_BRANCH}" = "stable/queens" ]; then
 }
 
-function collect_logs() {
+function collect_netvirt_logs() {
     set +e  # We do not want to create red dot just because something went wrong while fetching logs.
 
     cat > extra_debug.sh << EOF
@@ -408,4 +408,4 @@ EOF
     else
         echo "tempest results not found in ${DEVSTACK_TEMPEST_DIR}/${TESTREPO}/0"
     fi
-} # collect_logs()
+} # collect_netvirt_logs()
