@@ -563,6 +563,12 @@
     <<: *releng_view_common
 
 - view:
+    name: serviceutils
+    description: 'List of serviceutils jobs'
+    regex: '^serviceutils-.*'
+    <<: *releng_view_common
+
+- view:
     name: sfc
     description: 'List of sfc jobs'
     regex: '^sfc-.*'

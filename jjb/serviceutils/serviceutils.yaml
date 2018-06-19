@@ -1,6 +1,6 @@
 ---
 - project:
-    name: serviceutils-fluorine
+    name: serviceutils
     jobs:
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-maven-javadoc-jobs'
@@ -11,10 +11,14 @@
           rtd-token: 866f76be38ed7efc7027b9c52e7ad869e523e7c4
       - odl-maven-jobs
 
-    stream: fluorine
+    stream:
+      - fluorine:
+          branch: 'master'
+      - oxygen:
+          branch: 'stable/oxygen'
+
     project: 'serviceutils'
     project-name: 'serviceutils'
-    branch: 'master'
     build-node: centos7-builder-2c-2g
     mvn-settings: 'serviceutils-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
@@ -39,9 +43,3 @@
     build-node: centos7-builder-4c-4g
     mvn-settings: 'serviceutils-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-
-- view:
-    name: serviceutils
-    description: 'List of serviceutils jobs'
-    regex: '^serviceutils-.*'
-    <<: *releng_view_common
