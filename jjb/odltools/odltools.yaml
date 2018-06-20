@@ -1,0 +1,14 @@
+---
+- project:
+    name: odltools
+    jobs:
+      - gerrit-tox-verify
+
+    stream:
+      - fluorine:
+          branch: 'master'
+
+    project: odltools
+    project-name: odltools
+    build-node: centos7-builder-2c-2g
+    build-timeout: 60
