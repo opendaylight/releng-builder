@@ -3,6 +3,12 @@
     name: odltools
     jobs:
       - gerrit-tox-verify
+      - '{project-name}-rtd-jobs':
+          build-node: centos7-builder-2c-2g
+          doc-dir: .tox/docs/tmp/html
+          project-pattern: odltools
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/odltools/40832/
+          rtd-token: 225d4ef64e1efce4fe3ba4c9c4fe772355d3c8b2
 
     stream:
       - fluorine:
