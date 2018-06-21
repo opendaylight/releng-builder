@@ -16,6 +16,23 @@
       "revId": "3c8ef1c5aa7d60bbd7993efd1b0253fd16f20806",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c37e5ea3_619fec9d",
+        "filename": "jjb/serviceutils/serviceutils.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 7689
+      },
+      "writtenOn": "2018-06-21T10:04:17Z",
+      "side": 0,
+      "message": "We either put something like this here:\n- view:\n    name: serviceutils\n    description: \u0027List of serviceutils jobs\u0027\n    regex: \u0027^serviceutils-.*\u0027\n    view-type: list\n    filter-executors: false\n    filter-queue: false\n    columns:\n      - status\n      - weather\n      - job\n      - last-success\n      - last-failure\n      - last-duration\n      - build-button\n      - jacoco\n      - find-bugs\n      - robot-list\n    recurse: false\n\nor whatever shorter version, or we put it into releng-views.yaml, it\u0027s just the \u003c\u003c has to go away since it\u0027s pointing to mapping in different file",
+      "revId": "3c8ef1c5aa7d60bbd7993efd1b0253fd16f20806",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
