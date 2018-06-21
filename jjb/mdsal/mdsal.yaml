@@ -4,7 +4,8 @@
     jobs:
       - '{project-name}-distribution-check-{stream}':
           mvn-version: 'mvn35'
-      - '{project-name}-maven-javadoc-jobs'
+      - '{project-name}-maven-javadoc-jobs':
+          mvn-version: 'mvn33'
       - odl-maven-jobs
 
     stream: fluorine
@@ -27,7 +28,8 @@
     jobs:
       - '{project-name}-distribution-check-{stream}':
           mvn-version: 'mvn35'
-      - '{project-name}-maven-javadoc-jobs'
+      - '{project-name}-maven-javadoc-jobs':
+          mvn-version: 'mvn33'
       - odl-maven-jobs
 
     stream: oxygen
