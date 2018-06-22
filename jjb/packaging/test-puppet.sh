@@ -15,7 +15,7 @@ sudo yum install -y ruby-devel gcc-c++ zlib-devel patch redhat-rpm-config make r
 
 # Install RVM to help build recent version of Ruby
 # The ruby_dep gem requires >=2.2.5, 2.0.0 is the latest pre-packaged for CentOS
-gpg2 --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
+gpg2 --keyserver hkp://pool.sks-keyservers.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
 curl -L get.rvm.io | bash -s stable
 # Expected by RVM, seems required to make RVM functions (`rvm use`) available
 # Silence absurdly verbose rvm output by temporally not echoing commands
