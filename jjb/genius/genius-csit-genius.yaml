@@ -1,9 +1,8 @@
 ---
 - project:
-    name: genius-csit-genius-oxygen-fluorine
+    name: genius-csit-1node-genius-oxygen-fluorine
     jobs:
       - inttest-csit-1node
-      - inttest-csit-3node
 
     project: 'genius'
 
@@ -31,14 +30,69 @@
     robot-options: '-v FAIL_ON_EXCEPTIONS:False'
 
 - project:
-    name: genius-csit-genius-verify
+    name: genius-csit-3node-genius-oxygen-fluorine
+    jobs:
+      - inttest-csit-3node
+
+    project: 'genius'
+
+    testplan: '{project}-3node.txt'
+
+    functionality:
+      - 'upstream'
+      - 'gate'
+      - 'tdd-wip':
+          testplan: '{project}-tdd-wip.txt'
+
+    stream:
+      - fluorine:
+          branch: 'master'
+      - oxygen:
+          branch: 'stable/oxygen'
+
+    install:
+      - all:
+          scope: 'all'
+
+    tools_system_count: 3
+
+    install-features: 'odl-genius-rest'
+
+- project:
+    name: genius-csit-1node-genius-verify
     jobs:
       - inttest-csit-verify-1node
+
+    project: 'genius'
+
+    functionality: 'verify'
+
+    stream:
+      - fluorine:
+          branch: 'master'
+
+    verify-stream: 'oxygen'
+    verify-branch: 'stable/oxygen'
+    verify-karaf-version: 'karaf4'
+
+    install:
+      - all:
+          scope: 'all'
+
+    tools_system_count: 3
+
+    install-features: 'odl-genius-rest'
+
+- project:
+    name: genius-csit-3node-genius-verify
+    jobs:
       - inttest-csit-verify-3node
 
     project: 'genius'
 
     functionality: 'verify'
+
+    testplan: '{project}-verify3node.txt'
 
     stream:
       - fluorine:
