@@ -3,10 +3,36 @@
     name: genius-csit-genius-oxygen-fluorine
     jobs:
       - inttest-csit-1node
+      
+    project: 'genius_1'
+      
+    functionality:
+      - 'upstream'
+      - 'gate'
+      - 'tdd-wip':
+          testplan: '{project}-tdd-wip.txt'
+
+    stream:
+      - fluorine:
+          branch: 'master'
+      - oxygen:
+          branch: 'stable/oxygen'
+
+    install:
+      - all:
+          scope: 'all'
+
+    tools_system_count: 3
+
+    install-features: 'odl-genius-rest'
+
+- project:
+    name: genius-csit-genius-oxygen-fluorine
+    jobs:
       - inttest-csit-3node
-
-    project: 'genius'
-
+      
+    project: 'genius_3'
+      
     functionality:
       - 'upstream'
       - 'gate'
