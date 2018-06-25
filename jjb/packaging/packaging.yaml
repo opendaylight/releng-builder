@@ -77,6 +77,10 @@
           name: CHANGELOG_EMAIL
           default: 'jenkins-donotreply@opendaylight.org'
           description: 'Email of person who defined RPM'
+      - string:
+          name: DEPLOY_TO_REPO
+          default: 'opendaylight-{stream}-epel-7-x86_64-devel'
+          description: 'Repository to deploy resulting package to'
 
     scm:
       - integration-gerrit-scm:
@@ -95,7 +99,7 @@
           global-settings-file: 'global-settings'
           settings-file: 'packaging-settings'
           mvn-version: '{mvn-version}'
-          repo-id: 'opendaylight-{stream}-epel-7-x86_64-devel'
+          repo-id: '$DEPLOY_TO_REPO'
           group-id: '{group-id}'
           upload-files-dir: '{upload-files-dir}'
           maven-repo-url: '{maven-repo-url}'
