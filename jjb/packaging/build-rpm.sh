@@ -48,16 +48,28 @@ fi
                                          direct \
                                          --download_url "$DOWNLOAD_URL"
 
-# Publish RPMs to Nexus if in production Jenkins, else host on sandbox Jenkins
-if [ "$SILO" == "sandbox" ]; then
-  echo "Not uploading RPMs to Nexus because running in sandbox"
-elif  [ "$SILO" == "releng" ]; then
+echo "DEPLOY_TO_REPO:"
+echo "$DEPLOY_TO_REPO"
+
+# Always allow push to scratch repos, only push to CD repos in RelEng Jenkins
+if [ "$DEPLOY_TO_REPO" == "opendaylight-epel-7-x86_64-devel" ]; then
   # Move RPMs (SRPM and noarch) to dir of files that will be uploaded to Nexus
   UPLOAD_FILES_PATH="$WORKSPACE/upload_files"
   mkdir -p "$UPLOAD_FILES_PATH"
   cp "$HOME/rpmbuild/RPMS/noarch/"*.rpm "$_"
   cp "$HOME/rpmbuild/SRPMS/"*.rpm "$_"
 else
-  echo "Unknown Jenkins silo: $SILO"
-  exit 1
+    # Publish RPMs to CD repos if in production Jenkins, not in sandbox Jenkins
+    if [ "$SILO" == "sandbox" ]; then
+      echo "Not uploading RPMs to Nexus because running in sandbox"
+    elif  [ "$SILO" == "releng" ]; then
+      # Move RPMs (SRPM+noarch) to dir of files that will be uploaded to Nexus
+      UPLOAD_FILES_PATH="$WORKSPACE/upload_files"
+      mkdir -p "$UPLOAD_FILES_PATH"
+      cp "$HOME/rpmbuild/RPMS/noarch/"*.rpm "$_"
+      cp "$HOME/rpmbuild/SRPMS/"*.rpm "$_"
+    else
+      echo "Unknown Jenkins silo: $SILO"
+      exit 1
+    fi
 fi
