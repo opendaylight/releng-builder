@@ -44,6 +44,20 @@
       - gate-tdd-wip:
           testplan: '{project}-{topology}-tdd-wip-openstack.txt'
           schedule: ''
+      - tempest-stateful:
+          test-suites: 'openstack/tempest/tempest.robot'
+          testplan: '{project}-{topology}-openstack-tempest.txt'
+      - tempest-stateful-snat-conntrack:
+          test-suites: 'openstack/tempest/tempest.robot'
+          testplan: '{project}-{topology}-openstack-tempest.txt'
+          odl-snat-mode: 'conntrack'
+      - gate-tempest-stateful:
+          test-suites: 'openstack/tempest/tempest.robot'
+          testplan: '{project}-{topology}-openstack-tempest.txt'
+      - gate-tempest-stateful-snat-conntrack:
+          test-suites: 'openstack/tempest/tempest.robot'
+          testplan: '{project}-{topology}-openstack-tempest.txt'
+          odl-snat-mode: 'conntrack'
 
     openstack:
       - pike:
