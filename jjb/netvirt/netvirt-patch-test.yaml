@@ -47,3 +47,15 @@
       - upgrade:
           csit-list: >
               netvirt-csit-1node-openstack-{os-branch}-upgrade-{stream}
+      - tempest:
+          csit-list: >
+              netvirt-csit-1node-openstack-{os-branch}-gate-tempest-stateful-{stream}
+      - cluster-tempest:
+          csit-list: >
+              netvirt-csit-3node-openstack-{os-branch}-gate-tempest-stateful-{stream}
+      - tempest-snat-conntrack:
+          csit-list: >
+              netvirt-csit-1node-openstack-{os-branch}-gate-tempest-stateful-snat-conntrack-{stream}
+      - cluster-tempest-snat-conntrack:
+          csit-list: >
+              netvirt-csit-3node-openstack-{os-branch}-gate-tempest-stateful-snat-conntrack-{stream}
