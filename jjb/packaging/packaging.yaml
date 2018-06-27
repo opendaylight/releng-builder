@@ -235,20 +235,11 @@
       - install-test-uninstall-rpm
 
     triggers:
-      - gerrit:
-          server-name: '{gerrit-server-name}'
-          trigger-on:
-            - comment-added-contains-event:
-                comment-contains-value: 'rpm-verify'
-          projects:
-            - project-compare-type: ANT
-              project-pattern: '{project}'
-              branches:
-                - branch-compare-type: ANT
-                  branch-pattern: '**/{branch}'
-              file-paths:
-                - compare-type: ANT
-                  pattern: 'packages/**'
+      - gerrit-trigger-patch-submitted:
+          gerrit-server-name: '{gerrit-server-name}'
+          project: '{project}'
+          branch: '{branch}'
+          files: 'packages/**'
 
     publishers:
       - lf-infra-publish
