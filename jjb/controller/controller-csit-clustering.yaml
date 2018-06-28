@@ -3,15 +3,10 @@
     name: controller-csit-clustering
     jobs:
       - inttest-csit-3node
-      - inttest-csit-verify-3node
 
-    # The project name
     project: 'controller'
-
-    # The functionality under test
     functionality: 'clustering'
 
-    # Project branches
     stream:
       - fluorine:
           branch: 'master'
@@ -22,10 +17,8 @@
       - all:
           scope: 'all'
 
-    # No tools system VMs needed in JCloud configuration
     tools_system_count: 0
 
-    # Features to install
     # We do not need to explicitly install restconf here (which is not brought in by the clustering-test-app)
     # because this project will only create the -all- job which will automatically install the compatible with
     # all feature set. That feature set will bring in restconf, which is required by the CSIT suites. If/When
@@ -33,5 +26,27 @@
     install-features: >
         odl-clustering-test-app
 
-    # Robot custom options
-    robot-options: ''
+- project:
+    name: controller-csit-verify-clustering
+    jobs:
+      - inttest-csit-verify-3node
+
+    project: 'controller'
+    functionality: 'clustering'
+
+    stream:
+      - fluorine:
+          branch: 'master'
+      - oxygen:
+          branch: 'stable/oxygen'
+
+    install:
+      - all:
+          scope: 'only'
+
+    tools_system_count: 0
+
+    install-features: >
+        odl-restconf-noauth,
+        odl-clustering-test-app
+
