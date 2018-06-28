@@ -47,10 +47,12 @@
       - tempest-stateful:
           test-suites: 'openstack/tempest/tempest.robot'
           testplan: '{project}-{topology}-openstack-tempest.txt'
+          schedule: '{schedule-daily}'
       - tempest-stateful-snat-conntrack:
           test-suites: 'openstack/tempest/tempest.robot'
           testplan: '{project}-{topology}-openstack-tempest.txt'
           odl-snat-mode: 'conntrack'
+          schedule: '{schedule-daily}'
       - gate-tempest-stateful:
           test-suites: 'openstack/tempest/tempest.robot'
           testplan: '{project}-{topology}-openstack-tempest.txt'
