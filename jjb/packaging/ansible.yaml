@@ -45,6 +45,7 @@
 
     builders:
       - shell: !include-raw: test-ansible-rpm.sh
+      - shell: !include-raw: test-ansible-odl-user.sh
 
     triggers:
       - timed: '@daily'
@@ -88,6 +89,7 @@
 
     builders:
       - shell: !include-raw: test-ansible-deb.sh
+      - shell: !include-raw: test-ansible-odl-user.sh
 
     triggers:
       - timed: '@daily'
