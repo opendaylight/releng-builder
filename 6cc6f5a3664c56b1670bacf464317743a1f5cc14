@@ -46,6 +46,30 @@
       "revId": "6cc6f5a3664c56b1670bacf464317743a1f5cc14",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c79ecb25_71f14cc1",
+        "filename": "jjb/packaging/packaging.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2018-06-28T16:47:55Z",
+      "side": 0,
+      "message": "So the reason it was not triggering on every patchset is because it\u0027s missing the \"trigger-on\" configuration to tell it to do just that:\n\n - patchset-created-event:\n     exclude-drafts: true\n     exclude-trivial-rebase: false\n     exclude-no-code-change: false\n\nThe current trigger is only on comments for \"rpm-verify\" which means this job will only ever run if someone explicitly types that.\n\nThe current patch proposal will resolve this because the macro has the missing trigger options. but does change your manual comment trigger from \"rpm-verify\" to \"recheck\" (which is probably a good thing if you want to run together with all the verify jobs anyway).",
+      "parentUuid": "c20ebb60_c8540f95",
+      "range": {
+        "startLine": 241,
+        "startChar": 12,
+        "endLine": 242,
+        "endChar": 52
+      },
+      "revId": "6cc6f5a3664c56b1670bacf464317743a1f5cc14",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
