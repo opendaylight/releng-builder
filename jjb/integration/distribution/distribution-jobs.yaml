@@ -390,3 +390,8 @@
       - integration-csit-archive-build
       - lf-infra-publish
 
+- view:
+    name: distribution
+    description: 'List of distribution jobs'
+    regex: '^(integration-)?distribution-.*'
+    <<: *releng_view_common

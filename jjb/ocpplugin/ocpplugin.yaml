@@ -43,3 +43,9 @@
     branch: 'master'
     mvn-settings: 'ocpplugin-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+
+- view:
+    name: ocpplugin
+    description: 'List of ocpplugin jobs'
+    regex: '^ocpplugin-.*'
+    <<: *releng_view_common

@@ -43,3 +43,9 @@
     branch: 'master'
     mvn-settings: 'next-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+
+- view:
+    name: next
+    description: 'List of next jobs'
+    regex: '^next-.*'
+    <<: *releng_view_common

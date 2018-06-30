@@ -58,3 +58,9 @@
     branch: 'master'
     mvn-settings: 'infrautils-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+
+- view:
+    name: infrautils
+    description: 'List of infrautils jobs'
+    regex: '^infrautils-.*'
+    <<: *releng_view_common

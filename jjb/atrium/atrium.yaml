@@ -43,3 +43,9 @@
     branch: 'master'
     mvn-settings: 'atrium-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+
+- view:
+    name: atrium
+    description: 'List of atrium jobs'
+    regex: '^atrium-.*'
+    <<: *releng_view_common

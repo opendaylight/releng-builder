@@ -62,3 +62,15 @@
     branch: 'master'
     mvn-settings: 'netvirt-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+
+- view:
+    name: netvirt
+    description: 'List of netvirt jobs'
+    regex: '^netvirt-.*'
+    <<: *releng_view_common
+
+- view:
+    name: netvirt-csit
+    description: 'List of netvirt-csit jobs'
+    regex: 'netvirt-csit(?!(.*gate)|(.*hwvtep)).*'
+    <<: *integration_view_csit

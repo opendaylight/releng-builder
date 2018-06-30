@@ -43,3 +43,9 @@
     branch: 'master'
     mvn-settings: 'sxp-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+
+- view:
+    name: sxp
+    description: 'List of sxp jobs'
+    regex: '^sxp-.*'
+    <<: *releng_view_common

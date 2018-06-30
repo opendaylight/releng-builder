@@ -1,11 +1,11 @@
 ---
 - project:
-    name: lf-infra-lfn-process
+    name: lfn-process
     jobs:
       - '{project-name}-rtd-jobs'
       - gerrit-tox-verify
 
-    project-name: lf-infra-lfn-process
+    project-name: lfn-process
     project: lfn/process
     project-pattern: lfn/process
     build-node: centos7-builder-2c-1g
@@ -17,3 +17,8 @@
     git-url: https://gerrit.linuxfoundation.org/infra/$GERRIT_PROJECT
     gerrit-server-name: LinuxFoundation
 
+- view:
+    name: lfn
+    description: 'List of LF Networking jobs'
+    regex: '^lfn-.*'
+    <<: *releng_view_common

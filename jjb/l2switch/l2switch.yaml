@@ -53,3 +53,9 @@
     branch: 'master'
     mvn-settings: 'l2switch-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
+
+- view:
+    name: l2switch
+    description: 'List of l2switch jobs'
+    regex: '^l2switch-.*'
+    <<: *releng_view_common

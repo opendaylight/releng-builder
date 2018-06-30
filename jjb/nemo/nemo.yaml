@@ -43,3 +43,9 @@
     branch: 'master'
     mvn-settings: 'nemo-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+
+- view:
+    name: nemo
+    description: 'List of nemo jobs'
+    regex: '^nemo-.*'
+    <<: *releng_view_common
