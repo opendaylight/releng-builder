@@ -2,14 +2,6 @@
 
 set -e
 
-# TODO: 1) clean up inline todo's below :)
-# TODO: 2) Use just a topic branch to create a distribution.  see this email:
-#          https://lists.opendaylight.org/pipermail/discuss/2015-December/006040.html
-# TODO: 3) Bubble up CSIT jobs that are triggered by the multipatch job to a jenkins
-#          parameter.  the default can be distribution-test which calls all CSIT jobs
-#          but being able to easily override it to a smaller subset (or none) will be
-#          helpful
-
 # create a fresh empty place to build this custom distribution
 BUILD_DIR=${WORKSPACE}/patch_tester
 DISTRIBUTION_BRANCH_TO_BUILD=$DISTROBRANCH  #renaming variable for clarity
@@ -29,8 +21,6 @@ export EMAIL="sandbox@jenkins.opendaylight.org"
 export GIT_COMMITTER_NAME="Multipatch Job"
 
 # Extract a list of patches per project from an comment trigger. An example is:
-# Patch Set 1:
-#
 # multipatch-build:openflowplugin:45/69445/1,genius:46/69446/1,netvirt:47/69447/1
 if [ -n "$GERRIT_EVENT_COMMENT_TEXT" ]; then
     if [[ "$GERRIT_EVENT_COMMENT_TEXT" == *fast* ]]; then
@@ -57,15 +47,18 @@ if [[ "${PATCHES_TO_BUILD}" == *topic* ]]; then
         # get all patches number for a topic for a given project
         IFS=$'\n' read -rd '' -a GERRIT_PATCH_LIST <<< "$(ssh -p 29418 jenkins-$SILO@git.opendaylight.org gerrit query status:open topic:${TOPIC} project:${PROJECT} \
         | grep 'number:' | awk '{{ print $2 }}')" || true
-        echo "Add ${PROJECT}:${GERRIT_PATCH_LIST[*]}"
         # add project if it is the first with patches or it is not the first
         if [[ -z "${PATCHES_TO_BUILD}" && ! -z "${GERRIT_PATCH_LIST[*]}" ]]; then
             PATCHES_TO_BUILD="${PROJECT}"
         elif [[ ! -z "${PATCHES_TO_BUILD}" ]]; then
+            if [[ ! -z "${GERRIT_PATCH_LIST[*]}" ]]; then
+                echo "Add ${PROJECT}:${DISTRIBUTION_BRANCH_TO_BUILD}"
+            fi
             PATCHES_TO_BUILD="${PATCHES_TO_BUILD},${PROJECT}"
         fi
         # sort project patches
         if [[ ! -z "${GERRIT_PATCH_LIST[*]}" ]]; then
+            echo "Add ${PROJECT}:${GERRIT_PATCH_LIST[*]}"
             REF_LIST=()
             # create reference list with patch number-refspec
             for PATCH in "${GERRIT_PATCH_LIST[@]}"; do
@@ -92,32 +85,28 @@ IFS=',' read -ra PATCHES <<< "${PATCHES_TO_BUILD}"
 declare -a PROJECTS
 
 # For each patch:
-# * Clone the project.
-# * Optionally, checkout a specific (typically unmerged) Gerrit patch. If none,
+# 1. Clone the project.
+# 2. Optionally, checkout a specific (typically unmerged) Gerrit patch. If none,
 #   default to Integration/Distribution branch via {branch} JJB param.
-# * Also optionally, cherry-pick series of patches on top of the checkout.
-# * Final option: perform a 'release' by removing "-SNAPSHOT" everywhere within the project.
+# 3. Also optionally, cherry-pick series of patches on top of the checkout.
 #
 # Each patch is found in the ${PATCHES_TO_BUILD} variable as a comma separated
-# list of project[=checkout][:cherry-pick]* values.
+# list of project[=checkout][:cherry-pick]* values. Examples:
 #
 # Checkout a (typically unmerged) Gerrit patch on top of odlparent's git clone:
-#
 # PATCHES_TO_BUILD='odlparent=45/30045/2'
 #
 # Checkout patches for both odlparent and yangtools:
-#
 # PATCHES_TO_BUILD='odlparent=45/30045/2,yangtools:53/26853/25'
 #
 # Checkout a patch for controller, cherry-pick another patch on top of it:
-#
 # PATCHES_TO_BUILD='controller=61/29761/5:45/29645/6'
 distribution_status="not_included"
-for proto_patch in "${PATCHES[@]}"
+for patch in "${PATCHES[@]}"
 do
-    echo "working on ${proto_patch}"
+    echo "working on ${patch}"
     # For patch=controller=61/29761/5:45/29645/6, this gives controller
-    PROJECT="$(echo ${proto_patch} | cut -d\: -f 1 | cut -d\= -f 1)"
+    PROJECT="$(echo ${patch} | cut -d\: -f 1 | cut -d\= -f 1)"
     if [ "${PROJECT}" == "integration/distribution" ]; then
         distribution_status="included"
     fi
@@ -126,24 +115,27 @@ do
     echo "cloning project ${PROJECT}"
     git clone "https://git.opendaylight.org/gerrit/p/${PROJECT}"
     cd ${PROJECT_SHORTNAME}
-    if [ "$(echo -n ${proto_patch} | tail -c 1)" == 'r' ]; then
-        pure_patch="$(echo -n $proto_patch | head -c -1)"
-    else
-        pure_patch="$proto_patch"
-    fi
     # For patch = controller=61/29761/5:45/29645/6, this gives 61/29761/5
-    CHECKOUT="$(echo ${pure_patch} | cut -d\= -s -f 2 | cut -d\: -f 1)"
+    CHECKOUT="$(echo ${patch} | cut -d\= -s -f 2 | cut -d\: -f 1)"
+    # If project has a patch, checkout patch, otherwise use distribution branch
     if [ "x${CHECKOUT}" != "x" ]; then
         echo "checking out ${CHECKOUT}"
         # TODO: Make this script accept "29645/6" as a shorthand for "45/29645/6".
         git fetch "https://git.opendaylight.org/gerrit/${PROJECT}" "refs/changes/$CHECKOUT"
         git checkout FETCH_HEAD
+
     else
-        echo "checking out ${DISTRIBUTION_BRANCH_TO_BUILD}"
-        git checkout "${DISTRIBUTION_BRANCH_TO_BUILD}"
+        # If project with no patch = yangtools, download master branch
+        if [ "${PROJECT}" == "yangtools" ]; then
+            echo "checking out master"
+            git checkout master
+        else
+            echo "checking out ${DISTRIBUTION_BRANCH_TO_BUILD}"
+            git checkout "${DISTRIBUTION_BRANCH_TO_BUILD}"
+        fi
     fi
     # For patch=controller=61/29761/5:45/29645/6, this gives 45/29645/6
-    PICK_SEGMENT="$(echo "${pure_patch}" | cut -d\: -s -f 2-)"
+    PICK_SEGMENT="$(echo "${patch}" | cut -d\: -s -f 2-)"
     IFS=':' read -ra PICKS <<< "${PICK_SEGMENT}"
     for pick in "${PICKS[@]}"
     do
@@ -151,15 +143,10 @@ do
         git fetch "https://git.opendaylight.org/gerrit/${PROJECT}" "refs/changes/${pick}"
         git cherry-pick --ff --keep-redundant-commits FETCH_HEAD
     done
-    # Check whether the patch ends with 'r', and the patch isn't the project
-    # (to avoid releasing controller...)
-    if [ "${proto_patch: -1}" = "r" ] && [ "${proto_patch}" != "${PROJECT}" ]; then
-        # Here 'r' means release. Useful for testing Nitrogen Odlparent changes.
-        find . -name "*.xml" -print0 | xargs -0 sed -i 's/-SNAPSHOT//g'
-    fi
     cd "${BUILD_DIR}"
 done
 
+# Finally add distribution if there is no int/dist patch
 if [ "${distribution_status}" == "not_included" ]; then
     echo "adding integration/distribution"
     PROJECTS+=(distribution)
@@ -168,6 +155,36 @@ if [ "${distribution_status}" == "not_included" ]; then
     cd distribution
     git checkout "${DISTRIBUTION_BRANCH_TO_BUILD}"
     cd "${BUILD_DIR}"
+fi
+
+# If there is a patch for odlparent or yangtools (MRI projects), adjust version to mdsal project:
+# 1. Extract project version in patch
+# 2. Extract project MSI version from mdsal project
+# 3. Replace version in patch by MSI version
+# Otherwise release the MRI project
+if [[ -d "odlparent" ]]; then
+    if [[ -d "mdsal" ]]; then
+        # Extract patch and MSI used version
+        patch_version="$(xpath ./odlparent/odlparent-lite/pom.xml '/project/version/text()' 2> /dev/null)"
+        msi_version="$(xpath ./mdsal/pom.xml '/project/parent/version/text()' 2> /dev/null)"
+        # Replace version
+        find ./odlparent -name "*.xml" -print0 | xargs -0 sed -i "s/${patch_version}/${msi_version}/g"
+    else
+        # Release project
+        find ./odlparent -name "*.xml" -print0 | xargs -0 sed -i 's/-SNAPSHOT//g'
+    fi
+fi
+if [[ -d "yangtools" ]]; then
+        if [[ -d "mdsal" ]]; then
+        # Extract patch and MSI used version
+        patch_version="$(xpath ./yangtools/pom.xml '/project/version/text()' 2> /dev/null)"
+        msi_version="$(xpath ./mdsal/binding/yang-binding/pom.xml '/project/dependencyManagement/dependencies/dependency/version/text()' 2> /dev/null)"
+        # Replace version
+        find ./yangtools -name "*.xml" -print0 | xargs -0 sed -i "s/${patch_version}/${msi_version}/g"
+    else
+        # Release project
+        find ./yangtools -name "*.xml" -print0 | xargs -0 sed -i 's/-SNAPSHOT//g'
+    fi
 fi
 
 # Second phase: build everything
