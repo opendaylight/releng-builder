@@ -3,7 +3,9 @@
 
 - defaults:
     name: global
-    prefix: ''  # A prefix for job names sandbox for example: user-
+    prefix: 'jamo-tester-'  # A prefix for job names sandbox for example: user-
+
+    testplan: '$PROJECT.txt'
 
     karaf-version: karaf4
     build-days-to-keep: 30
