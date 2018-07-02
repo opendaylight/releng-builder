@@ -132,24 +132,6 @@
       apt: name=vlan state=present
       become: true
 
-    - name: Install Quagga
-      block:
-        - name: Fetch Quagga git repo
-          git:
-            repo: https://github.com/6WIND/zrpcd.git
-            dest: /tmp/build_quagga/zrpcd
-            version: 20170731
-        - name: Set compile script executable
-          file:
-            path: /tmp/build_quagga/zrpcd/pkgsrc/dev_compile_script.sh
-            mode: 0755
-        - name: Compile Quagga
-          shell: /tmp/build_quagga/zrpcd/pkgsrc/dev_compile_script.sh -d -b -t
-          args:
-            chdir: /tmp/build_quagga/zrpcd
-            executable: /bin/bash
-          become: true
-
   post_tasks:
     - name: System Reseal
       script: ../common-packer/provision/system-reseal.sh
