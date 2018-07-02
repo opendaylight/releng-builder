@@ -47,6 +47,10 @@
       "execute_command": "chmod +x {{ .Path }}; if [ \"$UID\" == \"0\" ]; then {{ .Vars }} '{{ .Path }}'; else {{ .Vars }} sudo -E '{{ .Path }}'; fi"
     },
     {
+      "type": "shell-local",
+      "command": "./common-packer/ansible-galaxy.sh {{user `ansible_roles_path`}}"
+    },
+    {
       "type": "ansible",
       "playbook_file": "provision/mininet-ovs-2.8.yaml",
       "ansible_env_vars": [
