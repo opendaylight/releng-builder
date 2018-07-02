@@ -34,6 +34,24 @@
       "revId": "c3dd35904df5608ca27abbf8ef2789792bc32a24",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "57c45211_08d9c9f8",
+        "filename": "jjb/integration/multipatch-distribution.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 797
+      },
+      "writtenOn": "2018-07-02T17:56:34Z",
+      "side": 0,
+      "message": "So with this patch the version of odlparent project gets automatically adjusted to the odlparent version in mdsal project, so in case you have all bump patches queued (mdsal included), the odlparent version will be set to release automatically, hence no need for \u0027r\u0027 option. With this patch you can also verify the bump patches using a topic instead of a patch list: once all bump patches are created under the same topic, just create a \"dummy\" patch in odlparent with same topic and run multipatch on the topic, same as before the script will automatically adjust the odlparent project version to the odlparent release version in mdsal project.",
+      "parentUuid": "ff33f63f_59efe6c0",
+      "revId": "c3dd35904df5608ca27abbf8ef2789792bc32a24",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
