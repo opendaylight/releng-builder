@@ -92,7 +92,7 @@ do
     ssh ${!CONTROLLERIP} "sudo ps aux" > ${WORKSPACE}/ps_before.log
     pid=$(grep org.apache.karaf.main.Main ${WORKSPACE}/ps_before.log | grep -v grep | tr -s ' ' | cut -f2 -d' ')
     echo "karaf main: org.apache.karaf.main.Main, pid:${pid}"
-    ssh ${!CONTROLLERIP} "jstack ${pid}" > ${WORKSPACE}/karaf_${i}_${pid}_threads_before.log || true
+    ssh ${!CONTROLLERIP} "${JAVA_HOME}/bin/jstack -l ${pid}" > ${WORKSPACE}/karaf_${i}_${pid}_threads_before.log || true
 done
 
 echo "Generating mininet variables..."
@@ -175,7 +175,7 @@ do
     ssh ${!CONTROLLERIP} "sudo ps aux" > ${WORKSPACE}/ps_after.log
     pid=$(grep org.apache.karaf.main.Main ${WORKSPACE}/ps_after.log | grep -v grep | tr -s ' ' | cut -f2 -d' ')
     echo "karaf main: org.apache.karaf.main.Main, pid:${pid}"
-    ssh ${!CONTROLLERIP} "jstack ${pid}" > ${WORKSPACE}/karaf_${i}_${pid}_threads_after.log || true
+    ssh ${!CONTROLLERIP} "${JAVA_HOME}/bin/jstack -l ${pid}" > ${WORKSPACE}/karaf_${i}_${pid}_threads_after.log || true
     echo "killing karaf process..."
     ssh "${!CONTROLLERIP}" bash -c 'ps axf | grep karaf | grep -v grep | awk '"'"'{print "kill -9 " $1}'"'"' | sh'
 done

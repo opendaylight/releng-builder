@@ -55,6 +55,7 @@ function set_java_vars() {
 
     echo "Set JAVA_HOME"
     export JAVA_HOME="${java_home}"
+
     # shellcheck disable=SC2037
     JAVA_RESOLVED=$(readlink -e "${java_home}/bin/java")
     echo "Java binary pointed at by JAVA_HOME: ${JAVA_RESOLVED}"
@@ -275,7 +276,7 @@ EOF
         ssh ${!CONTROLLERIP} "sudo ps aux" > ${WORKSPACE}/ps_after.log
         pid=$(grep org.apache.karaf.main.Main ${WORKSPACE}/ps_after.log | grep -v grep | tr -s ' ' | cut -f2 -d' ')
         echo "karaf main: org.apache.karaf.main.Main, pid:${pid}"
-        ssh ${!CONTROLLERIP} "jstack ${pid}" > ${WORKSPACE}/karaf_${i}_${pid}_threads_after.log || true
+        ssh ${!CONTROLLERIP} "${JAVA_HOME}/bin/jstack -l ${pid}" > ${WORKSPACE}/karaf_${i}_${pid}_threads_after.log || true
         echo "killing karaf process..."
         ${SSH} "${!CONTROLLERIP}" bash -c 'ps axf | grep karaf | grep -v grep | awk '"'"'{print "kill -9 " $1}'"'"' | sh'
         ${SSH} ${!CONTROLLERIP} "sudo journalctl > /tmp/journalctl.log"
