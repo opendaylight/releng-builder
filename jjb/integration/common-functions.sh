@@ -53,8 +53,11 @@ function set_java_vars() {
     echo "JDK default version ..."
     java -version
 
-    echo "Set JAVA_HOME"
+    echo "Set JAVA_HOME and append bin/ to PATH"
     export JAVA_HOME="${java_home}"
+    export PATH=$JAVA_HOME/bin:$PATH
+    which jstack # give the full path location of jstack
+
     # shellcheck disable=SC2037
     JAVA_RESOLVED=$(readlink -e "${java_home}/bin/java")
     echo "Java binary pointed at by JAVA_HOME: ${JAVA_RESOLVED}"
