@@ -10,7 +10,8 @@
     "cloud_tenant": null,
     "cloud_user_data": null,
     "ssh_user": null,
-    "ssh_proxy_host": ""
+    "ssh_proxy_host": "",
+    "cloud_image": "false"
   },
   "builders": [
     {
@@ -36,6 +37,21 @@
       "metadata": {
         "ci_managed": "yes"
       }
+    },
+    {
+      "name": "docker-local",
+      "type": "docker",
+      "pull": "true",
+      "image": "askb/centos7:latest",
+      "run_command": [ "-d", "-t", "-i", "{{.Image}}", "/bin/bash"],
+      "changes": [
+        "WORKDIR /tmp",
+        "EXPOSE 8080",
+        "USER jenkins",
+        "LABEL buildtime {{isotime \"20060102-150405.000\"}}"
+      ],
+      "author": "abelur <abelur@linux.com>",
+      "commit": true
     }
   ],
   "provisioners": [
@@ -59,7 +75,34 @@
         "ANSIBLE_ROLES_PATH={{user `ansible_roles_path`}}",
         "ANSIBLE_CALLBACK_WHITELIST=profile_tasks",
         "ANSIBLE_STDOUT_CALLBACK=debug"
-      ]
+      ],
+      "extra_arguments": [
+        "--extra-vars",
+        "haveged_service_enable={{user `cloud_image`}} sysstat_service_enable={{user `cloud_image`}}"
+      ],
+      "only": ["docker-local"]
+    },
+    {
+      "type": "ansible",
+      "playbook_file": "provision/robot.yaml",
+      "ansible_env_vars": [
+        "ANSIBLE_NOCOWS=1",
+        "ANSIBLE_PIPELINING=True",
+        "ANSIBLE_ROLES_PATH={{user `ansible_roles_path`}}",
+        "ANSIBLE_CALLBACK_WHITELIST=profile_tasks",
+        "ANSIBLE_STDOUT_CALLBACK=debug"
+      ],
+      "only": ["vexxhost"]
     }
-  ]
+  ],
+  "post-processors": [
+   [
+     {
+       "type": "docker-tag",
+       "repository": "docker.io/askb/DDCI-{{user `distro` | lower}}-robot-{{isotime \"20060102-150405.000\"}}",
+       "tag": "latest",
+       "only": ["docker-local"]
+     }
+   ]
+ ]
 }
