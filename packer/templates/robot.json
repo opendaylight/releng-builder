@@ -36,6 +36,21 @@
       "metadata": {
         "ci_managed": "yes"
       }
+    },
+    {
+      "name": "docker-local",
+      "type": "docker",
+      "pull": "true",
+      "image": "askb/centos7:latest",
+      "run_command": [ "-d", "-t", "-i", "{{.Image}}", "/bin/bash"],
+      "changes": [
+        "WORKDIR /tmp",
+        "EXPOSE 8080",
+        "USER jenkins",
+        "LABEL buildtime {{isotime \"20060102-150405.000\"}}"
+      ],
+      "author": "abelur <abelur@linux.com>",
+      "commit": true
     }
   ],
   "provisioners": [
@@ -61,5 +76,14 @@
         "ANSIBLE_STDOUT_CALLBACK=debug"
       ]
     }
-  ]
+  ],
+  "post-processors": [
+   [
+     {
+       "type": "docker-tag",
+       "repository": "askb",
+       "tag": "0.1"
+     }
+   ]
+ ]
 }
