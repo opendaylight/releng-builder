@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91a742af_8784a327",
+        "filename": "jjb/genius/genius-patch-test.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-07-04T21:58:30Z",
+      "side": 1,
+      "message": "we want to do this with a -gate- job I think.\n\nthe logic here is that all patch tests will run in the -gate-\njob and those are potentially going to be unstable as\npatches are not always right. the -upstream- job only runs\non good/merged code and ideally will always pass. if we\nrun a patch test job on -upstream- and it\u0027s bad, then our\nhistory will show what looks like broken csit on merged\ncode.\n\nat least that\u0027s the way we are trying to do it in other\nplaces.",
+      "range": {
+        "startLine": 30,
+        "startChar": 55,
+        "endLine": 30,
+        "endChar": 63
+      },
+      "revId": "071cee77bbda9a5dddd5e762b6cc3af67b8884b7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
