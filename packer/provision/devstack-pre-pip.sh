@@ -52,13 +52,15 @@ sudo rm -rf /usr/lib/python2.7/site-packages/PyYAML-*
 sudo rm -rf /usr/lib/python3.4/site-packages/yaml
 sudo rm -rf /usr/lib/python3.4/site-packages/PyYAML-*
 
+yum install PyYAML
 base_url=https://github.com/openstack/
 for proj in $projs
 do
     git clone "${base_url}${proj}"
     (cd "${proj}" && git checkout "${branch}")
-    pip install -c requirements/upper-constraints.txt -e "${proj}" --ignore-installed PyYAML
-    pip install -c requirements/upper-constraints.txt -r "${proj}/test-requirements.txt" --ignore-installed PyYAML
+    # sed -i s/PyYAML===3.12/PyYAML===3.10/ requirements/upper-constraints.txt
+    pip install -c requirements/upper-constraints.txt -e "${proj}"
+    pip install -c requirements/upper-constraints.txt -r "${proj}/test-requirements.txt"
 done
 
 echo '---> Installing openvswitch from relevant openstack branch'
