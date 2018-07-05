@@ -37,15 +37,18 @@ git clone https://github.com/openstack-dev/devstack.git
 (cd devstack && git checkout "${branch}")
 sed -e 's/#.*//' devstack/files/rpms/general | xargs yum install -y
 
+sudo find / -type d -name "PyYAML-*"
 sudo ls -al /usr/lib/py*
-
-sudo rm -rf /usr/lib/python3/dist-packages/yaml
-sudo rm -rf /usr/lib/python3/dist-packages/PyYAML-*
+sudo ls -al /usr/lib/python2.7/site-packages
+sudo ls -al /usr/lib/python3.4/site-packages
+echo "shague test pyyaml"
+sudo rm -rf /usr/lib/python2.7/dist-packages/yaml
+sudo rm -rf /usr/lib/python2.7/dist-packages/PyYAML-*
 sudo rm -rf /usr/lib/python3.4/dist-packages/yaml
 sudo rm -rf /usr/lib/python3.4/dist-packages/PyYAML-*
 
-sudo rm -rf /usr/lib/python3/site-packages/yaml
-sudo rm -rf /usr/lib/python3/site-packages/PyYAML-*
+sudo rm -rf /usr/lib/python2.7/site-packages/yaml
+sudo rm -rf /usr/lib/python2.7/site-packages/PyYAML-*
 sudo rm -rf /usr/lib/python3.4/site-packages/yaml
 sudo rm -rf /usr/lib/python3.4/site-packages/PyYAML-*
 
