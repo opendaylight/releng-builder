@@ -57,8 +57,8 @@ for proj in $projs
 do
     git clone "${base_url}${proj}"
     (cd "${proj}" && git checkout "${branch}")
-    pip install -c requirements/upper-constraints.txt -e "${proj}"
-    pip install -c requirements/upper-constraints.txt -r "${proj}/test-requirements.txt"
+    pip install -c requirements/upper-constraints.txt -e "${proj}" --ignore-installed PyYAML
+    pip install -c requirements/upper-constraints.txt -r "${proj}/test-requirements.txt" --ignore-installed PyYAML
 done
 
 echo '---> Installing openvswitch from relevant openstack branch'
