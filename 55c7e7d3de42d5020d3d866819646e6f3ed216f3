@@ -1,0 +1,158 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48207713_dbbc7531",
+        "filename": "jjb/netvirt/netvirt-dependencies.yaml",
+        "patchSetId": 10
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-07-06T23:53:55Z",
+      "side": 1,
+      "message": "is this a god name for the job or should it have quagga in it?",
+      "range": {
+        "startLine": 3,
+        "startChar": 10,
+        "endLine": 3,
+        "endChar": 17
+      },
+      "revId": "55c7e7d3de42d5020d3d866819646e6f3ed216f3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2b4bc46c_c3038e05",
+        "filename": "jjb/netvirt/netvirt-dependencies.yaml",
+        "patchSetId": 10
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-07-06T23:53:55Z",
+      "side": 1,
+      "message": "rm this line.",
+      "revId": "55c7e7d3de42d5020d3d866819646e6f3ed216f3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc685a4f_a6c35d48",
+        "filename": "jjb/netvirt/netvirt-dependencies.yaml",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-07-06T23:53:55Z",
+      "side": 1,
+      "message": "move quagga-version up since it is common",
+      "revId": "55c7e7d3de42d5020d3d866819646e6f3ed216f3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "77e10894_751f6c4a",
+        "filename": "jjb/netvirt/netvirt-dependencies.yaml",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-07-06T23:53:55Z",
+      "side": 1,
+      "message": "these are only used by the following template so maybe they don\u0027t need to be defined here?\n\nAlso the rst indicates that the default are \u0027\u0027 for opts and params and mvn35 for version, so maybe these fields are not needed at all. could likely be removed from the down below also if that is true.",
+      "revId": "55c7e7d3de42d5020d3d866819646e6f3ed216f3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "68c8fec8_92b37749",
+        "filename": "jjb/netvirt/netvirt-dependencies.yaml",
+        "patchSetId": 10
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-07-06T23:53:55Z",
+      "side": 1,
+      "message": "not needed with such a short line right?",
+      "range": {
+        "startLine": 55,
+        "startChar": 11,
+        "endLine": 55,
+        "endChar": 50
+      },
+      "revId": "55c7e7d3de42d5020d3d866819646e6f3ed216f3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c4435800_29b8fdbe",
+        "filename": "jjb/netvirt/netvirt-dependencies.yaml",
+        "patchSetId": 10
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-07-06T23:53:55Z",
+      "side": 1,
+      "message": "where is this defined?",
+      "range": {
+        "startLine": 56,
+        "startChar": 21,
+        "endLine": 56,
+        "endChar": 35
+      },
+      "revId": "55c7e7d3de42d5020d3d866819646e6f3ed216f3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "69d18e6d_c900d741",
+        "filename": "jjb/netvirt/netvirt-dependencies.yaml",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-07-06T23:53:55Z",
+      "side": 1,
+      "message": "rm since this just repeats the already well-named variable",
+      "revId": "55c7e7d3de42d5020d3d866819646e6f3ed216f3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a89558bd_6cb00b18",
+        "filename": "jjb/netvirt/quagga-build.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-07-06T23:53:55Z",
+      "side": 1,
+      "message": "if the script blows up earlier, will the popd happen?",
+      "revId": "55c7e7d3de42d5020d3d866819646e6f3ed216f3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
