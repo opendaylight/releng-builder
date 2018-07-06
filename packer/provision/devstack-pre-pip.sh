@@ -27,8 +27,13 @@ branch=${os_branch}
 # strip the "stable" off of the branch
 branch_name=$(cut -d'/' -f2 <<< "${branch}")
 
-wget https://bootstrap.pypa.io/get-pip.py
-python get-pip.py
+# Do not upgrade pip to v10. v10 does not allow uninstalling
+# distutils installed packages. This fails the openstack pip installs
+# below when it attempts to uninstall packages.
+# devstack patch that is trying to get pip 10 working:
+# https://review.openstack.org/#/c/561597/
+# wget https://bootstrap.pypa.io/get-pip.py
+# python get-pip.py
 
 mkdir tmp
 cd tmp
@@ -36,18 +41,6 @@ cd tmp
 git clone https://github.com/openstack-dev/devstack.git
 (cd devstack && git checkout "${branch}")
 sed -e 's/#.*//' devstack/files/rpms/general | xargs yum install -y
-
-sudo ls -al /usr/lib/py*
-
-sudo rm -rf /usr/lib/python3/dist-packages/yaml
-sudo rm -rf /usr/lib/python3/dist-packages/PyYAML-*
-sudo rm -rf /usr/lib/python3.4/dist-packages/yaml
-sudo rm -rf /usr/lib/python3.4/dist-packages/PyYAML-*
-
-sudo rm -rf /usr/lib/python3/site-packages/yaml
-sudo rm -rf /usr/lib/python3/site-packages/PyYAML-*
-sudo rm -rf /usr/lib/python3.4/site-packages/yaml
-sudo rm -rf /usr/lib/python3.4/site-packages/PyYAML-*
 
 base_url=https://github.com/openstack/
 for proj in $projs
