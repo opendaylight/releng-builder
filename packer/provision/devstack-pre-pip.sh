@@ -27,8 +27,52 @@ branch=${os_branch}
 # strip the "stable" off of the branch
 branch_name=$(cut -d'/' -f2 <<< "${branch}")
 
-wget https://bootstrap.pypa.io/get-pip.py
-python get-pip.py
+set +e
+echo "shague test pyyaml"
+which python
+whereis python
+pip -V
+pip show PyYAML
+pip show requests
+
+sudo find / -name "*PyYAML*"
+sudo find / -name "*egg-info*"
+sudo ls -al /usr/lib/py*
+sudo ls -al /usr/lib/python2.7/site-packages
+sudo ls -al /usr/lib/python3.4/site-packages
+
+#pip uninstall -y PyYAML
+#pip uninstall -y requests
+#pip uninstall -y ipaddress
+#pip uninstall -y pyOpenSSL
+
+#sudo rm -rf /usr/lib/python2.7/dist-packages/yaml
+#sudo rm -rf /usr/lib/python2.7/dist-packages/PyYAML-*
+#sudo rm -rf /usr/lib/python3.4/dist-packages/yaml
+#sudo rm -rf /usr/lib/python3.4/dist-packages/PyYAML-*
+
+#sudo rm -rf /usr/lib/python2.7/site-packages/yaml
+#sudo rm -rf /usr/lib/python2.7/site-packages/PyYAML-*
+#sudo rm -rf /usr/lib64/python2.7/site-packages/PyYAML-*
+#sudo rm -rf /usr/lib/python3.4/site-packages/yaml
+#sudo rm -rf /usr/lib/python3.4/site-packages/PyYAML-*
+
+sudo find / -name "*PyYAML*"
+sudo find / -name "*egg-info*"
+sudo ls -al /usr/lib/py*
+sudo ls -al /usr/lib/python2.7/site-packages
+sudo ls -al /usr/lib/python3.4/site-packages
+set -e
+
+#yum install PyYAML
+#wget http://pyyaml.org/download/pyyaml/PyYAML-3.12.tar.gz
+#tar -xzf PyYAML-3.12.tar.gz
+#cd PyYAML-3.12
+#python setup.py --without-libyaml install
+#cd -
+
+#wget https://bootstrap.pypa.io/get-pip.py
+#python get-pip.py
 
 mkdir tmp
 cd tmp
@@ -36,28 +80,6 @@ cd tmp
 git clone https://github.com/openstack-dev/devstack.git
 (cd devstack && git checkout "${branch}")
 sed -e 's/#.*//' devstack/files/rpms/general | xargs yum install -y
-
-sudo find / -type d -name "PyYAML-*"
-sudo ls -al /usr/lib/py*
-sudo ls -al /usr/lib/python2.7/site-packages
-sudo ls -al /usr/lib/python3.4/site-packages
-echo "shague test pyyaml"
-sudo rm -rf /usr/lib/python2.7/dist-packages/yaml
-sudo rm -rf /usr/lib/python2.7/dist-packages/PyYAML-*
-sudo rm -rf /usr/lib/python3.4/dist-packages/yaml
-sudo rm -rf /usr/lib/python3.4/dist-packages/PyYAML-*
-
-sudo rm -rf /usr/lib/python2.7/site-packages/yaml
-sudo rm -rf /usr/lib/python2.7/site-packages/PyYAML-*
-sudo rm -rf /usr/lib/python3.4/site-packages/yaml
-sudo rm -rf /usr/lib/python3.4/site-packages/PyYAML-*
-
-#yum install PyYAML
-wget http://pyyaml.org/download/pyyaml/PyYAML-3.12.tar.gz
-tar -xzf PyYAML-3.12.tar.gz
-cd PyYAML-3.12
-python setup.py --without-libyaml install
-cd -
 
 base_url=https://github.com/openstack/
 for proj in $projs
