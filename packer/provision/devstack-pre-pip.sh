@@ -57,6 +57,8 @@ yum install -y "centos-release-openstack-${branch_name}"
 # install 2.8.2 for queens.
 # 2.9.0 is the current version in openstack-queens, but it is buggy.
 # Remove this when https://review.rdoproject.org/r/#/c/13839/ merges and 2.9.2 is in the repo.
+yum repolist
+yum list available | grep openvswitch
 if [ "${branch}" == "stable/queens" ]; then
     yum install -y --nogpgcheck openvswitch-1:2.8.2
 else
