@@ -1,0 +1,42 @@
+---
+- project:
+    name: netvirt-apex-image-management
+    jobs:
+      - 'netvirt-apex-image-management-{stream}'
+
+    project: 'netvirt'
+    stream:
+      - pike:
+          branch: 'stable/pike'
+
+    os-cloud: vex
+
+- job-template:
+    name: 'netvirt-apex-image-management-{stream}'
+    node: 'centos7-builder-2c-1g'
+    stream: '{stream}'
+
+
+    parameters:
+      - string:
+          name: OS_CLOUD
+          default: '{os-cloud}'
+          description: |
+              The name of a cloud configuration in clouds.yaml. OS_CLOUD is a
+              variable name that is significant to openstack client as a
+              environment variable. Please refer to the documentation for
+              further details.
+              https://docs.openstack.org/developer/python-openstackclient/
+
+    wrappers:
+      # Listed after to override openstack-infra-wrappers clouds.yaml definition
+      - config-file-provider:
+          files:
+            - file-id: clouds-yaml
+              target: '$HOME/.config/openstack/clouds.yaml'
+
+    builders:
+      - integration-apex-image-deploy
+
+    triggers:
+      - timed: '@weekly'
