@@ -1,0 +1,21 @@
+---
+- project:
+    name: netvirt-apex-image-management
+    jobs:
+      - 'netvirt-apex-image-management-{stream}'
+
+    project: 'netvirt'
+    stream:
+      - pike:
+          branch: 'stable/pike'
+
+- job-template:
+    name: 'netvirt-apex-image-management-{stream}'
+
+    stream: '{stream}'
+
+    builders:
+      - integration-apex-image-deploy
+
+    triggers:
+      - timed: '@weekly'
