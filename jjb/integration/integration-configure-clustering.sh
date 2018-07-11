@@ -42,6 +42,8 @@ nodes_list=$(join "${nodes[@]}")
 
 echo ${nodes_list}
 
+run_plan "script"
+
 # Run script plan in case it exists
 if [ -f ${WORKSPACE}/test/csit/scriptplans/${TESTPLAN} ]; then
     echo "scriptplan exists!!!"
@@ -139,22 +141,7 @@ do
     ssh ${!CONTROLLERIP} "bash /tmp/configuration-script.sh ${i}"
 done
 
-# Run config plan in case it exists
-configplan_filepath="${WORKSPACE}/test/csit/configplans/${STREAMTESTPLAN}"
-if [ ! -f "${configplan_filepath}" ]; then
-    configplan_filepath="${WORKSPACE}/test/csit/configplans/${TESTPLAN}"
-fi
-
-if [ -f ${configplan_filepath} ]; then
-    echo "configplan exists!!!"
-    echo "Reading the configplan:"
-    cat ${configplan_filepath} | sed "s:integration:${WORKSPACE}:" > configplan.txt
-    cat configplan.txt
-    for line in $( egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' configplan.txt ); do
-        echo "Executing ${line}..."
-        source ${line}
-    done
-fi
+run_plan "config"
 
 # Copy over the startup script to each controller and execute it.
 for i in `seq 1 ${NUM_ODL_SYSTEM}`
