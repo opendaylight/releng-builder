@@ -117,6 +117,41 @@ function configure_karaf_log() {
     cat ${LOGCONF}
 } # function configure_karaf_log()
 
+function run_plan() {
+    local -r type=$1
+
+    case ${type} in
+    script)
+        plan=$SCRIPTPLAN
+        ;;
+    config|*)
+        plan=$CONFIGPLAN
+        ;;
+    esac
+
+    printf "Locating ${type} plan to use...\n"
+    plan_filepath="${WORKSPACE}/test/csit/${type}plans/$plan"
+    if [ ! -f "${plan_filepath}" ]; then
+        plan_filepath="${WORKSPACE}/test/csit/${type}plans/${STREAMTESTPLAN}"
+        if [ ! -f "${plan_filepath}" ]; then
+            plan_filepath="${WORKSPACE}/test/csit/${type}plans/${TESTPLAN}"
+        fi
+    fi
+
+    if [ -f "${plan_filepath}" ]; then
+        printf "${type} plan exists!!!\n"
+        printf "Changing the ${type} plan path...\n"
+        cat ${plan_filepath} | sed "s:integration:${WORKSPACE}:" > ${type}plan.txt
+        cat ${type}plan.txt
+        for line in $( egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' ${type}plan.txt ); do
+            printf "Executing ${line}...\n"
+            # shellcheck source=${line} disable=SC1091
+            source ${line}
+        done
+    fi
+    printf "Finished running ${type} plans\n"
+} # function run_plan()
+
 # convert commas in csv strings to spaces (ssv)
 function csv2ssv() {
     local csv=$1
