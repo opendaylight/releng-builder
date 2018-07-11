@@ -11,8 +11,10 @@
     stream:
       - fluorine:
           branch: 'master'
+          os-branch: 'queens'
       - oxygen:
           branch: 'stable/oxygen'
+          os-branch: 'queens'
 
     feature:
       - basic:
@@ -22,3 +24,7 @@
       - full:
           csit-list: >
               sfc-csit-3node-docker-full-deploy-all-{stream}
+
+      - netvirt:
+          csit-list: >
+              netvirt-csit-1node-openstack-{os-branch}-sfc-{stream}
