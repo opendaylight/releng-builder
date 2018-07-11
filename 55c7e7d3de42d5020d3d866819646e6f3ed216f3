@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6b762c93_21eb72c6",
+        "filename": "jjb/netvirt/netvirt-dependencies.yaml",
+        "patchSetId": 10
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2018-07-11T23:46:46Z",
+      "side": 1,
+      "message": "the names of jobs are in the next line. \n\nAre these dependencies required for netvirt project, if not please suggest a more suitable name, I\u0027d be happy change it?",
+      "parentUuid": "48207713_dbbc7531",
+      "range": {
+        "startLine": 3,
+        "startChar": 10,
+        "endLine": 3,
+        "endChar": 17
+      },
+      "revId": "55c7e7d3de42d5020d3d866819646e6f3ed216f3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b4bc46c_c3038e05",
         "filename": "jjb/netvirt/netvirt-dependencies.yaml",
         "patchSetId": 10
@@ -36,6 +60,24 @@
       "writtenOn": "2018-07-06T23:53:55Z",
       "side": 1,
       "message": "rm this line.",
+      "revId": "55c7e7d3de42d5020d3d866819646e6f3ed216f3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b0fdb271_a453f7a5",
+        "filename": "jjb/netvirt/netvirt-dependencies.yaml",
+        "patchSetId": 10
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2018-07-11T23:46:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b4bc46c_c3038e05",
       "revId": "55c7e7d3de42d5020d3d866819646e6f3ed216f3",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "5e7dc939_e5506628",
+        "filename": "jjb/netvirt/netvirt-dependencies.yaml",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2018-07-11T23:46:46Z",
+      "side": 1,
+      "message": "I had sorted this asciibetically.",
+      "parentUuid": "fc685a4f_a6c35d48",
+      "revId": "55c7e7d3de42d5020d3d866819646e6f3ed216f3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77e10894_751f6c4a",
         "filename": "jjb/netvirt/netvirt-dependencies.yaml",
         "patchSetId": 10
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "790796ca_b97b8ee5",
+        "filename": "jjb/netvirt/netvirt-dependencies.yaml",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2018-07-11T23:46:46Z",
+      "side": 1,
+      "message": "I belive, these are required for `lf-infra-maven-parameters` and setting it here in the projects is common to both job templates.",
+      "parentUuid": "77e10894_751f6c4a",
+      "revId": "55c7e7d3de42d5020d3d866819646e6f3ed216f3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68c8fec8_92b37749",
         "filename": "jjb/netvirt/netvirt-dependencies.yaml",
         "patchSetId": 10
@@ -87,6 +165,30 @@
       "writtenOn": "2018-07-06T23:53:55Z",
       "side": 1,
       "message": "not needed with such a short line right?",
+      "range": {
+        "startLine": 55,
+        "startChar": 11,
+        "endLine": 55,
+        "endChar": 50
+      },
+      "revId": "55c7e7d3de42d5020d3d866819646e6f3ed216f3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63879dbf_34b7a582",
+        "filename": "jjb/netvirt/netvirt-dependencies.yaml",
+        "patchSetId": 10
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2018-07-11T23:46:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68c8fec8_92b37749",
       "range": {
         "startLine": 55,
         "startChar": 11,
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "850c416c_1c7c47f6",
+        "filename": "jjb/netvirt/netvirt-dependencies.yaml",
+        "patchSetId": 10
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2018-07-11T23:46:46Z",
+      "side": 1,
+      "message": "Its defined under the project -\u003e stream\n\n    stream:\n      - fluorine:\n          quagga-version: \u00274\u0027\n          branch: \u0027master\u0027\n      - oxygen:\n          quagga-version: \u00274\u0027\n          branch: \u0027stable/oxygen\u0027\n\nWe can just have a single line here the version is the same common across.",
+      "parentUuid": "c4435800_29b8fdbe",
+      "range": {
+        "startLine": 56,
+        "startChar": 21,
+        "endLine": 56,
+        "endChar": 35
+      },
+      "revId": "55c7e7d3de42d5020d3d866819646e6f3ed216f3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69d18e6d_c900d741",
         "filename": "jjb/netvirt/netvirt-dependencies.yaml",
         "patchSetId": 10
@@ -139,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "02ec4a28_921e08be",
+        "filename": "jjb/netvirt/netvirt-dependencies.yaml",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2018-07-11T23:46:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69d18e6d_c900d741",
+      "revId": "55c7e7d3de42d5020d3d866819646e6f3ed216f3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a89558bd_6cb00b18",
         "filename": "jjb/netvirt/quagga-build.sh",
         "patchSetId": 10
@@ -150,6 +294,24 @@
       "writtenOn": "2018-07-06T23:53:55Z",
       "side": 1,
       "message": "if the script blows up earlier, will the popd happen?",
+      "revId": "55c7e7d3de42d5020d3d866819646e6f3ed216f3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ef5bcf06_10d37214",
+        "filename": "jjb/netvirt/quagga-build.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2018-07-11T23:46:46Z",
+      "side": 1,
+      "message": "The script was written by zrpcd repo maintainer and not fully familar with it. But from the looks of it the script is never meant to fail because it always returns true. :)",
+      "parentUuid": "a89558bd_6cb00b18",
       "revId": "55c7e7d3de42d5020d3d866819646e6f3ed216f3",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
