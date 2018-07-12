@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c90d4cbb_9e6bd031",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-07-12T13:11:54Z",
+      "side": 1,
+      "message": "Can you check the code around lines 839-842 where there is configuration for flat networks. It would be nice if we didn\u0027t need those lines, but need to make sure this config here does not impact that if it is still needed. Also adding Venkat to review since he added those lines.",
+      "range": {
+        "startLine": 393,
+        "startChar": 21,
+        "endLine": 393,
+        "endChar": 25
+      },
+      "revId": "a43b68d42105e989369384ab3738f75a30518877",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cf00d5cf_8d43b91f",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-07-12T13:11:54Z",
+      "side": 1,
+      "message": "does this range overlap with anything or would it better to use a unique range that might help when debugging, as we could easily identify gre by seeing unique values?",
+      "range": {
+        "startLine": 396,
+        "startChar": 19,
+        "endLine": 396,
+        "endChar": 25
+      },
+      "revId": "a43b68d42105e989369384ab3738f75a30518877",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
