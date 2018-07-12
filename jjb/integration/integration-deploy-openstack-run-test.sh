@@ -318,7 +318,13 @@ minimize_polling=True
 physical_network_mtus = ${PUBLIC_PHYSICAL_NETWORK}:1400
 path_mtu = 1458
 EOF
-
+    if [ "${ENABLE_GRE_TYPE_DRIVERS}" == "yes" ]; then
+        cat >> ${local_conf_file_name} << EOF
+type_drivers = local,flat,vlan,gre,vxlan
+[ml2_type_gre]
+tunnel_id_ranges = 1:1000
+EOF
+    fi
     if [ "${ENABLE_NETWORKING_L2GW}" == "yes" ]; then
         cat >> ${local_conf_file_name} << EOF
 
