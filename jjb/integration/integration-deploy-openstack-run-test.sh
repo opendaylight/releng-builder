@@ -391,7 +391,6 @@ minimize_polling=True
 physical_network_mtus = ${PUBLIC_PHYSICAL_NETWORK}:1400
 path_mtu = 1458
 EOF
-
     if [ "${ENABLE_NETWORKING_L2GW}" == "yes" ]; then
         cat >> ${local_conf_file_name} << EOF
 
