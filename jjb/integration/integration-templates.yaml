@@ -1118,6 +1118,10 @@
           description: 'Method of networking-odl port-binding (pseudo-agentdb-binding or legacy-port-binding or
           network-topology)'
       - string:
+          name: ENABLE_GRE_TYPE_DRIVERS
+          default: '{enable-gre-type-driver}'
+          description: 'Enable gre tunnel'
+      - string:
           name: DEVSTACK_KUBERNETES_PLUGIN_REPO
           default: '{devstack-kubernetes-plugin-repo}'
           description: 'URL to fetch kubernetes devstack plugin'
