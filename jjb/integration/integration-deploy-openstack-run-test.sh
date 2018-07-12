@@ -390,6 +390,10 @@ minimize_polling=True
 # MTU(1400) + VXLAN(50) + VLAN(4) = 1454 < MTU eth0/br-physnet1(1458)
 physical_network_mtus = ${PUBLIC_PHYSICAL_NETWORK}:1400
 path_mtu = 1458
+type_drivers = local,flat,vlan,gre,vxlan
+
+[ml2_type_gre]
+tunnel_id_ranges = 1:1000
 EOF
 
     if [ "${ENABLE_NETWORKING_L2GW}" == "yes" ]; then
