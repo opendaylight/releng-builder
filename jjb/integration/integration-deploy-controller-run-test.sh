@@ -30,17 +30,7 @@ echo "ACTUALFEATURES: ${ACTUALFEATURES}"
 SPACE_SEPARATED_FEATURES=$(echo "${ACTUALFEATURES}" | tr ',' ' ')
 echo "SPACE_SEPARATED_FEATURES: ${SPACE_SEPARATED_FEATURES}"
 
-if [ -f "${WORKSPACE}/test/csit/scriptplans/${TESTPLAN}" ]; then
-    echo "scriptplan exists!!!"
-    echo "Changing the scriptplan path..."
-    cat ${WORKSPACE}/test/csit/scriptplans/${TESTPLAN} | sed "s:integration:${WORKSPACE}:" > scriptplan.txt
-    cat scriptplan.txt
-    for line in $( egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' scriptplan.txt ); do
-        echo "Executing ${line}..."
-        # shellcheck source=${line} disable=SC1091
-        source ${line}
-    done
-fi
+run_plan "script"
 
 cat > ${WORKSPACE}/configuration-script.sh <<EOF
 set -x
@@ -223,23 +213,7 @@ do
     done
 done
 
-echo "Locating config plan to use..."
-configplan_filepath="${WORKSPACE}/test/csit/configplans/${STREAMTESTPLAN}"
-if [ ! -f "${configplan_filepath}" ]; then
-    configplan_filepath="${WORKSPACE}/test/csit/configplans/${TESTPLAN}"
-fi
-
-if [ -f "${configplan_filepath}" ]; then
-    echo "configplan exists!!!"
-    echo "Changing the configplan path..."
-    cat ${configplan_filepath} | sed "s:integration:${WORKSPACE}:" > configplan.txt
-    cat configplan.txt
-    for line in $( egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' configplan.txt ); do
-        echo "Executing ${line}..."
-        # shellcheck source=${line} disable=SC1091
-        source ${line}
-    done
-fi
+run_plan "config"
 
 # Copy over the startup script to controller and execute it.
 for i in `seq 1 ${NUM_ODL_SYSTEM}`

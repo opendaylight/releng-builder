@@ -80,6 +80,22 @@
           description: 'Distribution stream string, for suites to know which behavior to expect'
 
 - parameter:
+    name: integration-script-plan
+    parameters:
+      - string:
+          name: SCRIPTPLAN
+          default: '{script-plan}'
+          description: 'Script plan we will run before downloading and un-archiving am ODL distribution'
+
+- parameter:
+    name: integration-config-plan
+    parameters:
+      - string:
+          name: CONFIGPLAN
+          default: '{config-plan}'
+          description: 'Config plan we will run after un-archiving and starting an ODL distribution'
+
+- parameter:
     name: integration-stream-test-plan
     parameters:
       - string:
