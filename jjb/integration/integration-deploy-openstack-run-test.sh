@@ -354,7 +354,8 @@ EOF
 
 PUBLIC_BRIDGE=${PUBLIC_BRIDGE}
 PUBLIC_PHYSICAL_NETWORK=${PUBLIC_PHYSICAL_NETWORK}
-ML2_VLAN_RANGES=${PUBLIC_PHYSICAL_NETWORK}
+Q_ML2_PLUGIN_VLAN_TYPE_OPTIONS=(network_vlan_ranges=physnet1:1:4094)
+Q_ML2_PLUGIN_FLAT_TYPE_OPTIONS=(flat_networks=physnet1)
 ODL_PROVIDER_MAPPINGS=${ODL_PROVIDER_MAPPINGS}
 EOF
 
@@ -689,25 +690,8 @@ function retry() {
     return ${rc}
 }
 
-# if we are using the new netvirt impl, as determined by the feature name
-# odl-netvirt-openstack (note: old impl is odl-ovsdb-openstack) then we
-# want PROVIDER_MAPPINGS to be used -- this should be fixed if we want to support
-# external networks in legacy netvirt
-if [[ ${CONTROLLERFEATURES} == *"odl-netvirt-openstack"* ]]; then
-  ODL_PROVIDER_MAPPINGS="\${PUBLIC_PHYSICAL_NETWORK}:${PUBLIC_BRIDGE}"
-else
-  ODL_PROVIDER_MAPPINGS=
-fi
-
-# if we are using the old netvirt impl, as determined by the feature name
-# odl-ovsdb-openstack (note: new impl is odl-netvirt-openstack) then we
-# want ODL_L3 to be True.  New impl wants it False
-if [[ ${CONTROLLERFEATURES} == *"odl-ovsdb-openstack"* ]]; then
-    ODL_L3=True
-else
-    ODL_L3=False
-fi
-
+ODL_PROVIDER_MAPPINGS="${PUBLIC_PHYSICAL_NETWORK}:${PUBLIC_BRIDGE}"
+ODL_L3=False
 RECLONE=False
 ODL_PORT=8181
 
@@ -829,13 +813,7 @@ for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
     scp ${WORKSPACE}/get_devstack.sh ${!CONTROLIP}:/tmp
     # devstack Master is yet to migrate fully to lib/neutron, there are some ugly hacks that is
     # affecting the stacking.
-    #Workaround For Queens, Make the physical Network as physnet1 in lib/neutron
-    #Workaround Comment out creating initial Networks in lib/neutron
     ${SSH} ${!CONTROLIP} "bash /tmp/get_devstack.sh > /tmp/get_devstack.sh.txt 2>&1"
-    if [ "${ODL_ML2_BRANCH}" == "stable/queens" ]; then
-       ssh ${!CONTROLIP} "sed -i 's/flat_networks public/flat_networks public,physnet1/' /opt/stack/devstack/lib/neutron"
-       ssh ${!CONTROLIP} "sed -i '186i iniset \$NEUTRON_CORE_PLUGIN_CONF ml2_type_vlan network_vlan_ranges public:1:4094,physnet1:1:4094' /opt/stack/devstack/lib/neutron"
-    fi
     create_control_node_local_conf ${!CONTROLIP} ${ODLMGRIP[$i]} "${ODL_OVS_MGRS[$i]}"
     scp ${WORKSPACE}/local.conf_control_${!CONTROLIP} ${!CONTROLIP}:/opt/stack/devstack/local.conf
     echo "Install rdo release to avoid incompatible Package versions"
