@@ -6,6 +6,9 @@
 source ${ROBOT_VENV}/bin/activate
 source /tmp/common-functions.sh ${BUNDLEFOLDER}
 
+# Ensure we fail the job if any steps fail.
+set -ex -o pipefail
+
 PYTHON="${ROBOT_VENV}/bin/python"
 SSH="ssh -t -t"
 ADMIN_PASSWORD="admin"
@@ -54,8 +57,7 @@ function create_etc_hosts() {
     NODE_IP=$1
     CTRL_IP=$2
     : > ${WORKSPACE}/hosts_file
-    for iter in `seq 1 ${NUM_OPENSTACK_COMPUTE_NODES}`
-    do
+    for iter in `seq 1 ${NUM_OPENSTACK_COMPUTE_NODES}`; do
         COMPUTE_IP=OPENSTACK_COMPUTE_NODE_${iter}_IP
         if [ "${!COMPUTE_IP}" == "${NODE_IP}" ]; then
            CONTROL_HNAME=$(${SSH}  ${CTRL_IP}  "hostname")
@@ -65,6 +67,11 @@ function create_etc_hosts() {
            echo "${!COMPUTE_IP}   ${COMPUTE_HNAME}" >> ${WORKSPACE}/hosts_file
         fi
     done
+
+    if [ "$(is_openstack_feature_enabled n-cpu)" == "1" ] && [ -z "${CTRL_IP}" ]; then
+        CONTROL_HNAME=$(${SSH}  ${NODE_IP}  "hostname")
+        echo "${NODE_IP}   ${CONTROL_HNAME}" >> ${WORKSPACE}/hosts_file
+    fi
 
     echo "Created the hosts file for ${NODE_IP}:"
     cat ${WORKSPACE}/hosts_file
@@ -100,18 +107,6 @@ function install_openstack_clients_in_robot_vm() {
         #networking-l2gw is not officially available in any release yet. Getting the latest stable version.
         $PYTHON -m pip install networking-l2gw==11.0.0
     fi
-}
-
-function is_openstack_feature_enabled() {
-    local feature=$1
-    for enabled_feature in $(csv2ssv ${ENABLE_OS_SERVICES})
-    do
-        if [ "${enabled_feature}" == "${feature}" ]; then
-           echo 1
-           return
-        fi
-    done
-    echo 0
 }
 
 #Function to install rdo release
@@ -349,16 +344,32 @@ enable_isolated_metadata = True
 log_dir = /opt/stack/logs
 
 [[post-config|/etc/nova/nova.conf]]
+[scheduler]
+discover_hosts_in_cells_interval = 30
+
 [DEFAULT]
 force_config_drive = False
 force_raw_images = False
 log_dir = /opt/stack/logs
 
-[scheduler]
-discover_hosts_in_cells_interval = 30
 EOF
 
-    echo "Control local.conf created:"
+    if [ "$(is_openstack_feature_enabled n-cpu)" == "1" ]; then
+        cat >> ${local_conf_file_name} << EOF
+use_neutron = True
+force_raw_images = False
+log_dir = /opt/stack/logs
+[libvirt]
+live_migration_uri = qemu+tcp://%s/system
+virt_type = qemu
+EOF
+    fi
+
+    if [ "$(is_openstack_feature_enabled n-cpu)" == "1" ]; then
+        echo "Combo local.conf created:"
+    else
+        echo "Control local.conf created:"
+    fi
     cat ${local_conf_file_name}
 } # create_control_node_local_conf()
 
@@ -805,7 +816,7 @@ for i in `seq 1 ${NUM_OPENSTACK_COMPUTE_NODES}`; do
     echo "Install rdo release to avoid incompatible Package versions"
     install_rdo_release ${!COMPUTEIP}
     setup_live_migration_compute ${!COMPUTEIP} ${!CONTROLIP}
-    echo "Stack the compute node ${i} of ${NUM_OPENSTACK_COMPUTE_NODES}: ${COMPUTEIP}"
+    echo "Stack the compute node ${i} of ${NUM_OPENSTACK_COMPUTE_NODES}: ${!COMPUTEIP}"
     ssh ${!COMPUTEIP} "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
     ssh ${!COMPUTEIP} "ps -ef | grep stack.sh"
     os_node_list+=("${!COMPUTEIP}")
@@ -893,6 +904,9 @@ for i in `seq 1 ${NUM_OPENSTACK_SITES}`; do
         expected_num_hypervisors=1
     else
         expected_num_hypervisors=${NUM_COMPUTES_PER_SITE}
+        if [ "$(is_openstack_feature_enabled n-cpu)" == "1" ]; then
+            expected_num_hypervisors=$((expected_num_hypervisors + 1))
+        fi
     fi
     num_hypervisors=$(${SSH} ${!CONTROLIP} "cd /opt/stack/devstack; source openrc admin admin; openstack hypervisor list -f value | wc -l" | tail -1 | tr -d "\r")
     if ! [ "${num_hypervisors}" ] || ! [ ${num_hypervisors} -eq ${expected_num_hypervisors} ]; then
