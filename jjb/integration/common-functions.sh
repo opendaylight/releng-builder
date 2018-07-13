@@ -162,6 +162,17 @@ function csv2ssv() {
     echo "${ssv}"
 } # csv2ssv
 
+function is_openstack_feature_enabled() {
+    local feature=$1
+    for enabled_feature in $(csv2ssv ${ENABLE_OS_SERVICES}); do
+        if [ "${enabled_feature}" == "${feature}" ]; then
+           echo 1
+           return
+        fi
+    done
+    echo 0
+}
+
 SSH="ssh -t -t"
 
 # shellcheck disable=SC2153
@@ -390,10 +401,22 @@ EOF
     # Control Node
     for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
         OSIP=OPENSTACK_CONTROL_NODE_${i}_IP
-        echo "collect_logs: for openstack control node ip: ${!OSIP}"
-        NODE_FOLDER="control_${i}"
+        if [ "$(is_openstack_feature_enabled n-cpu)" == "1" ]; then
+            echo "collect_logs: for openstack combo node ip: ${!OSIP}"
+            NODE_FOLDER="combo_${i}"
+        else
+            echo "collect_logs: for openstack control node ip: ${!OSIP}"
+            NODE_FOLDER="control_${i}"
+        fi
         mkdir -p ${NODE_FOLDER}
         scp extra_debug.sh ${!OSIP}:/tmp
+        # Capture compute logs if this is a combo node
+        if [ "$(is_openstack_feature_enabled n-cpu)" == "1" ]; then
+            scp ${!OSIP}:/etc/nova/nova.conf ${NODE_FOLDER}
+            scp ${!OSIP}:/etc/nova/nova-cpu.conf ${NODE_FOLDER}
+            scp ${!OSIP}:/etc/openstack/clouds.yaml ${NODE_FOLDER}
+            rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/nova-agent.log ${NODE_FOLDER}
+        fi
         ${SSH} ${!OSIP} "bash /tmp/extra_debug.sh > /tmp/extra_debug.log 2>&1"
         scp ${!OSIP}:/etc/dnsmasq.conf ${NODE_FOLDER}
         scp ${!OSIP}:/etc/keystone/keystone.conf ${NODE_FOLDER}
