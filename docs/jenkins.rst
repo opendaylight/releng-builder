@@ -880,6 +880,9 @@ example is provided by releng/builder at `example-jenkins.ini`_.
     # Edit jenkins.ini with your username, API token and ODL's sandbox URL
     $ cat jenkins.ini
     <snip>
+    [job_builder]
+    retain_anchors=True
+
     [jenkins]
     user=<your ODL username>
     password=<your ODL Jenkins sandbox API token>
@@ -937,6 +940,9 @@ Once you've `configured your \`jenkins.ini\` <Configuration_>`_ and `verified yo
 JJB jobs <Testing Jobs_>`_ produce valid XML descriptions of Jenkins jobs you
 can push them to the Jenkins sandbox.
 
+Add the --jobs-only (-j) option to push only jobs to Jenkins sandbox. Pushing
+views to Jenkins sandbox requires admin access.
+
 .. important::
 
     When pushing with `jenkins-jobs`, a log message with the number
@@ -956,7 +962,7 @@ can push them to the Jenkins sandbox.
     .. code-block:: bash
 
         # Don't push all jobs by omitting the final param! (ctrl+c to abort)
-        jenkins-jobs --conf jenkins.ini update jjb/ <job-name>
+        jenkins-jobs --conf jenkins.ini update -j jjb/ <job-name>
 
 Alternatively, you can push a job to the Jenkins sandbox with a special comment in a
 releng/builder gerrit patch. The job will be based off of the code your patch is
