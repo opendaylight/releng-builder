@@ -44,18 +44,6 @@ echo ${nodes_list}
 
 run_plan "script"
 
-# Run script plan in case it exists
-if [ -f ${WORKSPACE}/test/csit/scriptplans/${TESTPLAN} ]; then
-    echo "scriptplan exists!!!"
-    echo "Reading the scriptplan:"
-    cat ${WORKSPACE}/test/csit/scriptplans/${TESTPLAN} | sed "s:integration:${WORKSPACE}:" > scriptplan.txt
-    cat scriptplan.txt
-    for line in $( egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' scriptplan.txt ); do
-        echo "Executing ${line}..."
-        source ${line}
-    done
-fi
-
 # Create the configuration script to be run on controllers.
 cat > ${WORKSPACE}/configuration-script.sh <<EOF
 set -x
