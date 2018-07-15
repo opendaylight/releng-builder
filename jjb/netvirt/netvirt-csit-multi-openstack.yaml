@@ -12,9 +12,9 @@
     enable-openstack-services: 'placement-api,tempest'
     enable-openstack-compute-services: 'placement-client'
     security-group-mode: 'stateful'
-    odl_system_flavor: odl-standard-8
-    openstack_system_flavor: odl-standard-8
-    openstack_system2_flavor: odl-standard-4
+    odl_system_flavor: odl-highcpu-8
+    openstack_system_flavor: odl-highcpu-8
+    openstack_system2_flavor: odl-highcpu-4
 
     topology:
       - 1node:
@@ -91,9 +91,9 @@
     enable-openstack-services: 'placement-api,tempest'
     enable-openstack-compute-services: 'placement-client'
     security-group-mode: 'stateful'
-    odl_system_flavor: odl-standard-8
-    openstack_system_flavor: odl-standard-8
-    openstack_system2_flavor: odl-standard-4
+    odl_system_flavor: odl-highcpu-8
+    openstack_system_flavor: odl-highcpu-8
+    openstack_system2_flavor: odl-highcpu-4
 
     topology:
       - 1node:
@@ -164,8 +164,8 @@
 
     project: 'netvirt'
     security-group-mode: 'stateful'
-    odl_system_flavor: odl-standard-4
-    openstack_system2_flavor: odl-standard-2
+    odl_system_flavor: odl-highcpu-4
+    openstack_system2_flavor: odl-highcpu-2
 
     topology:
       - 1node:
