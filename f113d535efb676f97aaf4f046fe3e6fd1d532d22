@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ccc74d6_a74320cd",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-07-15T13:06:50Z",
+      "side": 1,
+      "message": "use the devstack var: Q_ML2_PLUGIN_TYPE_DRIVERS to pass the whole list. Set this var up above near the ODL_PROVIDER_MAPPINGS. Are the gre tests for all the csit jobs or just some? If the latter then wrap the  value with a check to only add gre for those tests.\n\nThe tunnel_id_ranges are set by default to 1:1000 so you shouldn\u0027t need to add that value.",
+      "revId": "f113d535efb676f97aaf4f046fe3e6fd1d532d22",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8637368b_899f85ac",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-07-15T13:06:50Z",
+      "side": 1,
+      "message": "this line is not needed. The cat and EOF are always in pairs. The EOF on the line above closes the previous cat. The if on the line below is followed by a cat for the next here doc.",
+      "revId": "f113d535efb676f97aaf4f046fe3e6fd1d532d22",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
