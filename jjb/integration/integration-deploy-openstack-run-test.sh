@@ -144,7 +144,7 @@ function install_openstack_clients_in_robot_vm() {
     done
 
     if [ "${ENABLE_NETWORKING_L2GW}" == "yes" ]; then
-        #networking-l2gw is not officially available in any release yet. Gettting the latest stable version.
+        #networking-l2gw is not officially available in any release yet. Getting the latest stable version.
         $PYTHON -m pip install networking-l2gw==11.0.0
     fi
 }
@@ -159,17 +159,6 @@ function is_openstack_feature_enabled() {
         fi
     done
     echo 0
-}
-
-function fix_libvirt_version_n_cpu_pike() {
-    local ip=$1
-    ${SSH} ${ip} "
-        cd /opt/stack;
-        git clone https://git.openstack.org/openstack/requirements;
-        cd requirements;
-        git checkout stable/pike;
-        sed -i s/libvirt-python===3.5.0/libvirt-python===4.2.0/ upper-constraints.txt
-   "
 }
 
 #Function to install rdo release
@@ -872,12 +861,6 @@ for i in `seq 1 ${NUM_OPENSTACK_COMPUTE_NODES}`; do
     scp ${WORKSPACE}/hosts_file ${!COMPUTEIP}:/tmp/hosts
     scp ${WORKSPACE}/get_devstack.sh  ${!COMPUTEIP}:/tmp
     ${SSH} ${!COMPUTEIP} "bash /tmp/get_devstack.sh > /tmp/get_devstack.sh.txt 2>&1"
-    if [ "${ODL_ML2_BRANCH}" == "stable/pike" ]; then
-        echo "Updating requirements for ${ODL_ML2_BRANCH}"
-        echo "Workaround for libvirt-python failing installation"
-        echo "Modify upper-constraints to use libvirt-python 4.2.0"
-        fix_libvirt_version_n_cpu_pike ${!COMPUTEIP}
-    fi
     create_compute_node_local_conf ${!COMPUTEIP} ${!CONTROLIP} ${ODLMGRIP[$SITE_INDEX]} "${ODL_OVS_MGRS[$SITE_INDEX]}"
     scp ${WORKSPACE}/local.conf_compute_${!COMPUTEIP} ${!COMPUTEIP}:/opt/stack/devstack/local.conf
     echo "Install rdo release to avoid incompatible Package versions"
