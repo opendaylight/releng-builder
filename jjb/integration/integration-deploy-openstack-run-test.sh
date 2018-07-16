@@ -689,25 +689,8 @@ function retry() {
     return ${rc}
 }
 
-# if we are using the new netvirt impl, as determined by the feature name
-# odl-netvirt-openstack (note: old impl is odl-ovsdb-openstack) then we
-# want PROVIDER_MAPPINGS to be used -- this should be fixed if we want to support
-# external networks in legacy netvirt
-if [[ ${CONTROLLERFEATURES} == *"odl-netvirt-openstack"* ]]; then
-  ODL_PROVIDER_MAPPINGS="\${PUBLIC_PHYSICAL_NETWORK}:${PUBLIC_BRIDGE}"
-else
-  ODL_PROVIDER_MAPPINGS=
-fi
-
-# if we are using the old netvirt impl, as determined by the feature name
-# odl-ovsdb-openstack (note: new impl is odl-netvirt-openstack) then we
-# want ODL_L3 to be True.  New impl wants it False
-if [[ ${CONTROLLERFEATURES} == *"odl-ovsdb-openstack"* ]]; then
-    ODL_L3=True
-else
-    ODL_L3=False
-fi
-
+ODL_PROVIDER_MAPPINGS="\${PUBLIC_PHYSICAL_NETWORK}:${PUBLIC_BRIDGE}"
+ODL_L3=False
 RECLONE=False
 ODL_PORT=8181
 
