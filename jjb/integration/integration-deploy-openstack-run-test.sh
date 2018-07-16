@@ -829,8 +829,10 @@ for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
     scp ${WORKSPACE}/get_devstack.sh ${!CONTROLIP}:/tmp
     # devstack Master is yet to migrate fully to lib/neutron, there are some ugly hacks that is
     # affecting the stacking.
-    #Workaround For Queens, Make the physical Network as physnet1 in lib/neutron
-    #Workaround Comment out creating initial Networks in lib/neutron
+    # Workaround For Queens, Make the physical Network as physnet1 in lib/neutron
+    # In Queens the neutron new libs are used and do not have the following options from Pike and earlier:
+    # Q_ML2_PLUGIN_FLAT_TYPE_OPTIONS could be used for the flat_networks
+    # and Q_ML2_PLUGIN_VLAN_TYPE_OPTIONS could be used for the ml2_type_vlan
     ${SSH} ${!CONTROLIP} "bash /tmp/get_devstack.sh > /tmp/get_devstack.sh.txt 2>&1"
     if [ "${ODL_ML2_BRANCH}" == "stable/queens" ]; then
        ssh ${!CONTROLIP} "sed -i 's/flat_networks public/flat_networks public,physnet1/' /opt/stack/devstack/lib/neutron"
