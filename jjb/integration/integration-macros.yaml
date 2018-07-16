@@ -558,9 +558,11 @@
                     #!/bin/bash
                     cd $WORKSPACE
                     mkdir -p ./archives
+                    mkdir -p ./archives/jvmplots
                     curl --output robot-plugin.zip "$BUILD_URL/robot/report/*zip*/robot-plugin.zip"
                     unzip -d ./archives robot-plugin.zip
-                    mv *.log *.log.gz *.csv *.png ./archives || true  # Don't fail if file missing
+                    mv *.png ./archives/jvmplots || true  # Don't fail if file missing
+                    mv *.log *.log.gz *.csv ./archives || true  # Don't fail if file missing
                     # TODO: Can the following line ever fail?
                     find . -type f -name *.hprof -print0 \
                         | tar -cvf - --null -T - | xz --threads=0 > ./archives/hprof.tar.xz
