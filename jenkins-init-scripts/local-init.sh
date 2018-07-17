@@ -9,7 +9,8 @@
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
 
-./system_type.sh
+INIT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
+"${INIT_DIR}/system_type.sh"
 # shellcheck disable=SC1091
 source /tmp/system_type.sh
-"./${SYSTEM_TYPE}.sh"
+"${INIT_DIR}/${SYSTEM_TYPE}.sh"
