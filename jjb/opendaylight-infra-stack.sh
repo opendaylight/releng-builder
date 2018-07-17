@@ -18,7 +18,12 @@ pip install --upgrade "pip<10.0.0" setuptools
 pip install --upgrade cmd2==0.8.5 python-openstackclient python-heatclient
 pip freeze
 
-cd /builder/openstack-hot || exit 1
+# TODO: Remove the if-statement once we have fully migrated to /opt/ciman
+if [ -d "/opt/ciman" ]; then
+    cd /opt/ciman || exit 1
+else
+    cd /builder/openstack-hot || exit 1
+fi
 
 JOB_SUM=$(echo "$JOB_NAME" | sum | awk '{{ print $1 }}')
 VM_NAME="$JOB_SUM-$BUILD_NUMBER"
