@@ -1045,8 +1045,7 @@
       - lf-infra-publish
 
 - job-template:
-    name: '{prefix}{project}-csit-{topology}-
-    {os-cmb-cnt}cmb-{os-ctl-cnt}ctl-{os-cmp-cnt}cmp-openstack-{openstack}-{functionality}-{stream}'
+    name: '{prefix}{project}-csit-{topology}-{os-cmb-cnt}cmb-{os-ctl-cnt}ctl-{os-cmp-cnt}cmp-openstack-{openstack}-{functionality}-{stream}'
     id: inttest-csit-openstack
     disabled: false
 
