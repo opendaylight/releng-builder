@@ -66,6 +66,9 @@
     odl-snat-mode: 'controller'
     enable-itm-direct-tunnels: 'false'
     openstack_legacy_default_network_services: 'q-dhcp,q-meta,q-svc'
+    os-cmb-cnt: 1
+    os-ctl-cnt: 0
+    os-cmp-cnt: 0
 
     # openstack-infra-parameters defaults
     archive-artifacts: ''
@@ -194,9 +197,9 @@
 
     # Manual CSIT job lists used by sanity or periodic in nature.
     csit-high-frequency-list-fluorine: >
-        netvirt-csit-1node-openstack-queens-upstream-stateful-fluorine
+        netvirt-csit-1node-0cmb-1ctl-2cmp-openstack-queens-upstream-stateful-fluorine
     csit-high-frequency-list-oxygen: >
-        netvirt-csit-1node-openstack-queens-upstream-stateful-oxygen
+        netvirt-csit-1node-0cmb-1ctl-2cmp-openstack-queens-upstream-stateful-oxygen
     csit-sanity-list-fluorine: >
         openflowplugin-csit-1node-sanity-only-fluorine,
         distribution-sanity-fluorine
