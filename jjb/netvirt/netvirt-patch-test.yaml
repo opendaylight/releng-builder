@@ -18,8 +18,9 @@
 
     feature:
       - current:
+          test-suites: 'openstack/connectivity/l2.robot'
           csit-list: >
-              netvirt-csit-1node-openstack-{os-branch}-gate-stateful-{stream}
+              netvirt-csit-1node-{os-flex}-openstack-{os-branch}-gate-stateful-{stream}
       - cluster-current:
           csit-list: >
               netvirt-csit-3node-openstack-{os-branch}-gate-stateful-{stream}
