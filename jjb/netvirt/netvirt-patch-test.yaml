@@ -1,4 +1,14 @@
 ---
+- nv-features:
+    name: nv-features
+    nv-features: &nv-features
+      current:
+        csit-list: >
+            netvirt-csit-1node-{os-std-topo}-openstack-{os-branch}-gate-stateful-{stream}
+      upgrade:
+        csit-list: >
+            netvirt-csit-1node-{os-std-topo}-openstack-{os-branch}-upgrade-{stream}
+
 - project:
     name: netvirt-patch-test
     jobs:
@@ -17,9 +27,10 @@
     jdk: 'openjdk8'
 
     feature:
-      - current:
-          csit-list: >
-              netvirt-csit-1node-{os-std-topo}-openstack-{os-branch}-gate-stateful-{stream}
+      - *nv-features
+      # - current:
+      #     csit-list: >
+      #         netvirt-csit-1node-{os-std-topo}-openstack-{os-branch}-gate-stateful-{stream}
       - cluster-current:
           csit-list: >
               netvirt-csit-3node-{os-std-topo}-openstack-{os-branch}-gate-stateful-{stream}
@@ -44,9 +55,9 @@
       - itm-direct-tunnels:
           csit-list: >
               netvirt-csit-1node-{os-std-topo}-openstack-{os-branch}-gate-stateful-itm-direct-tunnels-{stream}
-      - upgrade:
-          csit-list: >
-              netvirt-csit-1node-{os-std-topo}-openstack-{os-branch}-upgrade-{stream}
+      #- upgrade:
+      #    csit-list: >
+      #        netvirt-csit-1node-{os-std-topo}-openstack-{os-branch}-upgrade-{stream}
       - tempest:
           csit-list: >
               netvirt-csit-1node-{os-std-topo}-openstack-{os-branch}-gate-tempest-stateful-{stream}
