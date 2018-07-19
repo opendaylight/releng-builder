@@ -1,19 +1,13 @@
 ---
-#nv-features2: &nv-features2
-#  - current:
-#      key1: value1
-#  - current2:
-#      key2: value2
-
-- nv-features: &nv-features
+- nv-features:
     name: nv-features
-    features:
-      - current:
-          csit-list: >
-              netvirt-csit-1node-{os-std-topo}-openstack-{os-branch}-upstream-stateful-{stream}
-#      - current2:
-#          csit-list: >
-#              netvirt-csit-1node-{os-std-topo}-openstack-{os-branch}-gate-stateful-{stream}
+    features: &nv-features
+        current:
+            csit-list: >
+                netvirt-csit-1node-{os-std-topo}-openstack-{os-branch}-upstream-stateful-{stream}
+        current2:
+            csit-list: >
+                netvirt-csit-1node-{os-std-topo}-openstack-{os-branch}-gate-stateful-{stream}
 
 - project:
     name: netvirt-patch-test
@@ -32,10 +26,8 @@
 
     jdk: 'openjdk8'
 
-    feature3: &feature3
+    feature:
       - snat-conntrack:
           csit-list: >
               netvirt-csit-1node-{os-std-topo}-openstack-{os-branch}-gate-stateful-snat-conntrack-{stream}
-
-    feature:
-      <<: [*nv-features, *feature3]
+      - *nv-features
