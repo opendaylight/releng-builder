@@ -1,4 +1,29 @@
 ---
+- nv-current: &nv-current
+    name: nv-current
+    current:
+        csit-list: >
+            netvirt-csit-1node-{os-std-topo}-openstack-{os-branch}-upstream-stateful-{stream}
+- nv-current2: &nv-current2
+    name: nv-current
+    current2:
+        csit-list: >
+            netvirt-csit-1node-{os-std-topo}-openstack-{os-branch}-gate-stateful-{stream}
+
+- netvirt_patch_test_features: &netvirt_patch_test_features
+    name: netvirt_patch_test_features
+    <<: *nv-current
+    <<: *nv-current2
+
+- nv-features: &nv-features
+    name: nv-features
+    current:
+        csit-list: >
+            netvirt-csit-1node-{os-std-topo}-openstack-{os-branch}-upstream-stateful-{stream}
+    current2:
+        csit-list: >
+            netvirt-csit-1node-{os-std-topo}-openstack-{os-branch}-gate-stateful-{stream}
+
 - project:
     name: netvirt-patch-test
     jobs:
@@ -17,45 +42,7 @@
     jdk: 'openjdk8'
 
     feature:
-      - current:
-          csit-list: >
-              netvirt-csit-1node-{os-std-topo}-openstack-{os-branch}-gate-stateful-{stream}
-      - cluster-current:
-          csit-list: >
-              netvirt-csit-3node-{os-std-topo}-openstack-{os-branch}-gate-stateful-{stream}
-      - cluster-minimal-current:
-          csit-list: >
-               netvirt-csit-3node-{os-std-topo}-openstack-{os-branch}-gate-minimal-cluster-{stream}
       - snat-conntrack:
           csit-list: >
               netvirt-csit-1node-{os-std-topo}-openstack-{os-branch}-gate-stateful-snat-conntrack-{stream}
-      - cluster-snat-conntrack:
-          csit-list: >
-              netvirt-csit-3node-{os-std-topo}-openstack-{os-branch}-gate-stateful-snat-conntrack-{stream}
-      - l2gw:
-          csit-list: >
-              netvirt-csit-hwvtep-1node-openstack-{os-branch}-gate-stateful-{stream}
-      - tdd-wip:
-          csit-list: >
-              netvirt-csit-1node-{os-std-topo}-openstack-{os-branch}-gate-tdd-wip-{stream}
-      - coe:
-          csit-list: >
-              coe-csit-1node-container-networking-all-{stream}
-      - itm-direct-tunnels:
-          csit-list: >
-              netvirt-csit-1node-{os-std-topo}-openstack-{os-branch}-gate-stateful-itm-direct-tunnels-{stream}
-      - upgrade:
-          csit-list: >
-              netvirt-csit-1node-{os-std-topo}-openstack-{os-branch}-upgrade-{stream}
-      - tempest:
-          csit-list: >
-              netvirt-csit-1node-{os-std-topo}-openstack-{os-branch}-gate-tempest-stateful-{stream}
-      - cluster-tempest:
-          csit-list: >
-              netvirt-csit-3node-{os-std-topo}-openstack-{os-branch}-gate-tempest-stateful-{stream}
-      - tempest-snat-conntrack:
-          csit-list: >
-              netvirt-csit-1node-{os-std-topo}-openstack-{os-branch}-gate-tempest-stateful-snat-conntrack-{stream}
-      - cluster-tempest-snat-conntrack:
-          csit-list: >
-              netvirt-csit-3node-{os-std-topo}-openstack-{os-branch}-gate-tempest-stateful-snat-conntrack-{stream}
+      - <<: *nv-features
