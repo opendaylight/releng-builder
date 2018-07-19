@@ -27,7 +27,10 @@
     tools_system_image: 'ZZCI - Ubuntu 16.04 - mininet-ovs-28 - 20180301-1041'
 
     # Features to install
-    install-features: 'odl-openflowplugin-flow-services-rest,odl-openflowplugin-app-table-miss-enforcer'
+    install-features: >
+        odl-openflowplugin-flow-services-rest,
+        odl-openflowplugin-app-table-miss-enforcer,
+        odl-infrautils-metrics
 
     # Robot custom options
     robot-options: '-v ODL_OF_PLUGIN:lithium'
