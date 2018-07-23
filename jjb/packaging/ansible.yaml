@@ -54,6 +54,8 @@
           project: '{project}'
           branch: '{branch}'
           files: '**'
+          forbidden-files: ''
+
 
     publishers:
       - lf-infra-publish
@@ -97,6 +99,7 @@
           project: '{project}'
           branch: '{branch}'
           files: '**'
+          forbidden-files: ''
 
     publishers:
       - lf-infra-publish
