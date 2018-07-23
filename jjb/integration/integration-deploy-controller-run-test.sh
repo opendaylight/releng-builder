@@ -65,12 +65,6 @@ if [[ ! -z "${REPO_URL}" ]]; then
 fi
 cat ${FEATURESCONF}
 
-if [ "${ODL_ENABLE_L3_FWD}" == "yes" ]; then
-    echo "Enable the l3.fwd in custom.properties..."
-    echo "ovsdb.l3.fwd.enabled=yes" >> ${CUSTOMPROP}
-fi
-cat ${CUSTOMPROP}
-
 configure_karaf_log "${KARAF_VERSION}" "${CONTROLLERDEBUGMAP}"
 
 set_java_vars "${JAVA_HOME}" "${CONTROLLERMEM}" "${MEMCONF}"

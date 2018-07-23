@@ -250,6 +250,10 @@ NEUTRON_LBAAS_SERVICE_PROVIDERV2=${LBAAS_SERVICE_PROVIDER} # Only relevant if ne
 NEUTRON_SFC_DRIVERS=${ODL_SFC_DRIVER} # Only relevant if networking-sfc plugin is enabled
 NEUTRON_FLOWCLASSIFIER_DRIVERS=${ODL_SFC_DRIVER} # Only relevant if networking-sfc plugin is enabled
 ETCD_PORT=2379
+PUBLIC_BRIDGE=${PUBLIC_BRIDGE}
+PUBLIC_PHYSICAL_NETWORK=${PUBLIC_PHYSICAL_NETWORK}
+ML2_VLAN_RANGES=${PUBLIC_PHYSICAL_NETWORK}
+ODL_PROVIDER_MAPPINGS=${ODL_PROVIDER_MAPPINGS}
 EOF
     if [ "${TENANT_NETWORK_TYPE}" == "local" ]; then
         cat >> ${local_conf_file_name} << EOF
@@ -291,30 +295,20 @@ NETWORKING_L2GW_SERVICE_DRIVER=L2GW:OpenDaylight:networking_odl.l2gateway.driver
 EOF
     fi
 
-    if [ "${ODL_ENABLE_L3_FWD}" == "yes" ]; then
-        cat >> ${local_conf_file_name} << EOF
-
-PUBLIC_BRIDGE=${PUBLIC_BRIDGE}
-PUBLIC_PHYSICAL_NETWORK=${PUBLIC_PHYSICAL_NETWORK}
-ML2_VLAN_RANGES=${PUBLIC_PHYSICAL_NETWORK}
-ODL_PROVIDER_MAPPINGS=${ODL_PROVIDER_MAPPINGS}
-EOF
-
-        if [ "${ODL_ML2_DRIVER_VERSION}" == "v2" ]; then
-           SERVICE_PLUGINS="odl-router_v2"
-        else
-           SERVICE_PLUGINS="odl-router"
-        fi
-        if [ "${ENABLE_NETWORKING_L2GW}" == "yes" ]; then
-            SERVICE_PLUGINS+=", networking_l2gw.services.l2gateway.plugin.L2GatewayPlugin"
-        fi
-        if [ "${IS_LBAAS_PLUGIN_ENABLED}" == "yes" ]; then
-            SERVICE_PLUGINS+=", lbaasv2"
-        fi
-        if [ "${IS_SFC_PLUGIN_ENABLED}" == "yes" ]; then
-            SERVICE_PLUGINS+=", networking_sfc.services.flowclassifier.plugin.FlowClassifierPlugin,networking_sfc.services.sfc.plugin.SfcPlugin"
-        fi
-    fi #check for ODL_ENABLE_L3_FWD
+    if [ "${ODL_ML2_DRIVER_VERSION}" == "v2" ]; then
+       SERVICE_PLUGINS="odl-router_v2"
+    else
+       SERVICE_PLUGINS="odl-router"
+    fi
+    if [ "${ENABLE_NETWORKING_L2GW}" == "yes" ]; then
+        SERVICE_PLUGINS+=", networking_l2gw.services.l2gateway.plugin.L2GatewayPlugin"
+    fi
+    if [ "${IS_LBAAS_PLUGIN_ENABLED}" == "yes" ]; then
+        SERVICE_PLUGINS+=", lbaasv2"
+    fi
+    if [ "${IS_SFC_PLUGIN_ENABLED}" == "yes" ]; then
+        SERVICE_PLUGINS+=", networking_sfc.services.flowclassifier.plugin.FlowClassifierPlugin,networking_sfc.services.sfc.plugin.SfcPlugin"
+    fi
 
     cat >> ${local_conf_file_name} << EOF
 
@@ -412,23 +406,18 @@ DATABASE_PASSWORD=${ADMIN_PASSWORD}
 RABBIT_PASSWORD=${ADMIN_PASSWORD}
 SERVICE_TOKEN=${ADMIN_PASSWORD}
 SERVICE_PASSWORD=${ADMIN_PASSWORD}
-EOF
-
-    if [[ "${ENABLE_OS_PLUGINS}" =~ networking-odl ]]; then
-        cat >> ${local_conf_file_name} << EOF
-
-enable_plugin networking-odl ${ODL_ML2_DRIVER_REPO} ${ODL_ML2_BRANCH}
-EOF
-    fi
-
-    if [ "${ODL_ENABLE_L3_FWD}" == "yes" ]; then
-        cat >> ${local_conf_file_name} << EOF
 
 PUBLIC_BRIDGE=${PUBLIC_BRIDGE}
 PUBLIC_PHYSICAL_NETWORK=${PUBLIC_PHYSICAL_NETWORK}
 ODL_PROVIDER_MAPPINGS=${ODL_PROVIDER_MAPPINGS}
 Q_L3_ENABLED=True
 ODL_L3=${ODL_L3}
+EOF
+
+    if [[ "${ENABLE_OS_PLUGINS}" =~ networking-odl ]]; then
+        cat >> ${local_conf_file_name} << EOF
+
+enable_plugin networking-odl ${ODL_ML2_DRIVER_REPO} ${ODL_ML2_BRANCH}
 EOF
     fi
 
@@ -1108,7 +1097,6 @@ for suite in ${SUITES}; do
     -v NUM_OS_SYSTEM:${NUM_OPENSTACK_SYSTEM} \
     -v NUM_TOOLS_SYSTEM:${NUM_TOOLS_SYSTEM} \
     -v ODL_SNAT_MODE:${ODL_SNAT_MODE} \
-    -v ODL_ENABLE_L3_FWD:${ODL_ENABLE_L3_FWD} \
     -v ODL_STREAM:${DISTROSTREAM} \
     -v ODL_SYSTEM_IP:${ODL_SYSTEM_IP} \
     -v ODL_SYSTEM_1_IP:${ODL_SYSTEM_1_IP} \
