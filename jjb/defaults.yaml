@@ -15,6 +15,10 @@
     build-days-to-keep: 30
     use-features-boot: 'True'
 
+    # File triggers
+    files: '**'
+    forbidden-files: 'empty'
+
     # Timeout in minutes
     build-timeout: 360
     build-node: centos7-builder-4c-4g
