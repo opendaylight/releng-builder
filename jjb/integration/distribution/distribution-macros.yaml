@@ -16,9 +16,16 @@
           echo "detecting distribution allowed projects"
           # Some allowed projects cannot be detected in distribution because they do not produce features.
           ALLOW_PROJECTS=(yangtools mdsal openflowjava)
+          if [[ "$KARAF_VERSION" == "odl" ]]; then
           ALLOW_PROJECTS+=(`grep '<groupId>org.opendaylight.' -Rh distribution \
           | sed -e 's%^[ \t]*<groupId>org.opendaylight.%%' \
           | sed -e 's%</groupId>%%' | sort -u`)
+          else
+          # For Managed distro we only look at the features folder
+          ALLOW_PROJECTS+=(`grep '<groupId>org.opendaylight.' -Rh distribution/features \
+          | sed -e 's%^[ \t]*<groupId>org.opendaylight.%%' \
+          | sed -e 's%</groupId>%%' | sort -u`)
+          fi
           echo "Allowed projects are ${ALLOW_PROJECTS[@]}"
           echo "ALLOW_PROJECTS=${ALLOW_PROJECTS[@]}" > allowed_projects.txt
 
@@ -35,7 +42,7 @@
           goals: |
               clean deploy
               dependency:tree -DoutputFile=dependency_tree.txt
-              -Pq -Pmanaged -Punmanaged
+              -Pq
               -DaltDeploymentRepository=fake-nexus::default::file:///tmp/n/
               {mvn-opts}
           java-opts:
@@ -87,7 +94,7 @@
           goals: |
               clean install
               dependency:tree -DoutputFile=dependency_tree.txt
-              -Pq -Pmanaged -Punmanaged
+              -Pq
               {mvn-opts}
           java-opts:
             - '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
@@ -192,7 +199,7 @@
               clean install
               dependency:tree -DoutputFile=dependency_tree.txt
               -s fake_remotes.xml
-              -Pq -Pmanaged -Punmanaged
+              -Pq
               {mvn-opts}
           java-opts:
             - '-Xmx4096m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
@@ -218,7 +225,7 @@
               clean install
               dependency:tree -DoutputFile=dependency_tree.txt
               -s fake_remotes.xml
-              -Pq -Pmananaged -Punmanaged
+              -Pq
               -Dsft.heap.max=4g
               -DskipTests=false
               {mvn-opts}
