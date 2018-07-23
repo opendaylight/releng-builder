@@ -71,6 +71,7 @@
           project: '{project}'
           branch: '{branch}'
           files: '**'
+          forbidden-files: ''
 
     builders:
       - opflex-build:
@@ -130,6 +131,8 @@
           gerrit-server-name: '{gerrit-server-name}'
           name: 'opflex'
           branch: '{branch}'
+          files: '**'
+          forbidden-files: ''
 
     builders:
       - opflex-build:
