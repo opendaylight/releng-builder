@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5dbf56bf_ed69c0f4",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 6230
+      },
+      "writtenOn": "2018-07-23T11:56:20Z",
+      "side": 1,
+      "message": "If you do\n\n\u0027yum update -y centos-release\u0027\n\nit will update the repos, adding all missing up to current release, and you wont need to add them yourself with a hardcoded version.\n\nAdded vault repos are disabled by default, so you can then either enable them globally\n\nyum-config-manager --enable C${C_VERSION}-base\n\nor do so just per specific request\n\nyum install --enablerepo\u003dC${C_VERSION}-base\n\nyou can get the version with\n\nC_VERSION\u003d$(grep -oP \u0027\\d+\\.\\d+.\\d+\u0027 /etc/centos-release)",
+      "range": {
+        "startLine": 261,
+        "startChar": 0,
+        "endLine": 265,
+        "endChar": 65
+      },
+      "revId": "079453ca6cb90b6174f54c3517db2d564129ad7b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "29fc09b9_a18e293c",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 6230
+      },
+      "writtenOn": "2018-07-23T11:56:20Z",
+      "side": 1,
+      "message": "FYI: \u0027git apply\u0027 might work just as well and you won need to set user/email",
+      "range": {
+        "startLine": 275,
+        "startChar": 0,
+        "endLine": 277,
+        "endChar": 14
+      },
+      "revId": "079453ca6cb90b6174f54c3517db2d564129ad7b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ae0d0fd0_b793bd08",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 6230
+      },
+      "writtenOn": "2018-07-23T11:56:20Z",
+      "side": 1,
+      "message": "I never used these to build, what are they used for?",
+      "range": {
+        "startLine": 279,
+        "startChar": 0,
+        "endLine": 283,
+        "endChar": 8
+      },
+      "revId": "079453ca6cb90b6174f54c3517db2d564129ad7b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7cf6a1a3_6e2d2c18",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 6230
+      },
+      "writtenOn": "2018-07-23T11:56:20Z",
+      "side": 1,
+      "message": "out of my curiosity also: not enough with versionlock?",
+      "range": {
+        "startLine": 295,
+        "startChar": 0,
+        "endLine": 295,
+        "endChar": 69
+      },
+      "revId": "079453ca6cb90b6174f54c3517db2d564129ad7b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0b434872_e512129c",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 6230
+      },
+      "writtenOn": "2018-07-23T11:56:20Z",
+      "side": 1,
+      "message": "Better not to hardcode kernel version, use \nK_VERSION\u003d$(uname -r)",
+      "range": {
+        "startLine": 268,
+        "startChar": 0,
+        "endLine": 297,
+        "endChar": 3
+      },
+      "revId": "079453ca6cb90b6174f54c3517db2d564129ad7b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
