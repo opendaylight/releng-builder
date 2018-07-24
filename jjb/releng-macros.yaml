@@ -218,6 +218,9 @@
               file-paths:
                 - compare-type: ANT
                   pattern: '{files}'
+              forbidden-file-paths:
+                - compare-type: ANT
+                  pattern: '{forbidden-files}'
 
 # TODO: Unify argument names across gerrit-trigger-* macros.
 - trigger:
@@ -235,6 +238,12 @@
               branches:
                 - branch-compare-type: 'ANT'
                   branch-pattern: '**/{branch}'
+              file-paths:
+                - compare-type: ANT
+                  pattern: '{files}'
+              forbidden-file-paths:
+                - compare-type: ANT
+                  pattern: '{forbidden-files}'
           skip-vote:
             successful: true
             failed: true

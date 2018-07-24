@@ -158,6 +158,8 @@
           gerrit-server-name: '{gerrit-server-name}'
           name: '{project}'
           branch: '{branch}'
+          files: '**'
+          forbidden-files: ''
 
     prebuilders:
       - jacoco-nojava-workaround
@@ -195,6 +197,3 @@
           deploy-unstable: false
       - lf-jacoco-report
       - lf-infra-publish
-      - trigger:
-          project: 'distribution-merge-{stream}'
-          threshold: SUCCESS
