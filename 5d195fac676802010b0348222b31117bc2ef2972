@@ -22,6 +22,30 @@
       "revId": "5d195fac676802010b0348222b31117bc2ef2972",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "90cc8c5d_d2ae9931",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 797
+      },
+      "writtenOn": "2018-07-24T01:16:19Z",
+      "side": 1,
+      "message": "Very good question, forbidden file path trigger works the opposite as file path trigger which means jenkins will ignore any change happening in this path. This was the only way to cleanly separate the 2 triggers for distribution: 1) full distro jobs are fired when something changes in opendaylight folder (full distro code) while 2) managed distro jobs are fired when something changes any place except opendaylight folder. This last condition is expressed as files\u003d\u0027**\u0027 and forbidden-files\u003d\u0027opendaylight/**\u0027.",
+      "parentUuid": "d9a730b2_b7061ed9",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 34
+      },
+      "revId": "5d195fac676802010b0348222b31117bc2ef2972",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
