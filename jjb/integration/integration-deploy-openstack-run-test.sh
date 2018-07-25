@@ -782,6 +782,13 @@ for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
     if [ "$(is_openstack_feature_enabled n-cpu)" == "1" ]; then
         setup_live_migration_compute ${!CONTROLIP} ${!CONTROLIP}
     fi
+    if [ "${ODL_ML2_BRANCH}" == "stable/pike" ] && [[ "${ENABLE_OS_PLUGINS}" =~ networking-sfc ]]; then
+        echo "Installing OVS with NSH in ${!CONTROLIP}"
+        build_install_ovs ${!CONTROLIP} 2.6.1
+    elif [ "${ODL_ML2_BRANCH}" == "stable/queens" ]; then
+        echo "Installing OVS 2.9.2 in ${!CONTROLIP}"
+        build_install_ovs ${!CONTROLIP} 2.9.2
+    fi
     echo "Stack the control node ${i} of ${NUM_OPENSTACK_CONTROL_NODES}: ${CONTROLIP}"
     ssh ${!CONTROLIP} "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
     ssh ${!CONTROLIP} "ps -ef | grep stack.sh"
@@ -833,6 +840,13 @@ for i in `seq 1 ${NUM_OPENSTACK_COMPUTE_NODES}`; do
     echo "Install rdo release to avoid incompatible Package versions"
     install_rdo_release ${!COMPUTEIP}
     setup_live_migration_compute ${!COMPUTEIP} ${!CONTROLIP}
+    if [ "${ODL_ML2_BRANCH}" == "stable/pike" ] && [[ "${ENABLE_OS_PLUGINS}" =~ networking-sfc ]]; then
+        echo "Installing OVS with NSH in ${!COMPUTEIP}"
+        build_install_ovs ${!COMPUTEIP} 2.6.1
+    elif [ "${ODL_ML2_BRANCH}" == "stable/queens" ]; then
+        echo "Installing OVS 2.9.2 in ${!COMPUTEIP}"
+        build_install_ovs ${!COMPUTEIP} 2.9.2
+    fi
     echo "Stack the compute node ${i} of ${NUM_OPENSTACK_COMPUTE_NODES}: ${!COMPUTEIP}"
     ssh ${!COMPUTEIP} "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
     ssh ${!COMPUTEIP} "ps -ef | grep stack.sh"
