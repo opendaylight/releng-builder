@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "29ff28f6_4ca537a6",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 6230
+      },
+      "writtenOn": "2018-07-25T13:02:48Z",
+      "side": 1,
+      "message": "The kmod package should be built against the running kernel and the rpms of that specific kernel version should be used. Those rpms might be available only through the vault repo and I guess this is what you do here. What I proposed achieves exactly the same thing without hardcoding.",
+      "parentUuid": "ed845af8_8932bb92",
+      "range": {
+        "startLine": 261,
+        "startChar": 0,
+        "endLine": 265,
+        "endChar": 65
+      },
+      "revId": "079453ca6cb90b6174f54c3517db2d564129ad7b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29fc09b9_a18e293c",
         "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
         "patchSetId": 10
@@ -225,6 +249,30 @@
       "side": 1,
       "message": "The OVS 2.6.1 build having some problems with the latest kernel-dev rpms. So we are resorting to some older version.",
       "parentUuid": "0b434872_e512129c",
+      "range": {
+        "startLine": 268,
+        "startChar": 0,
+        "endLine": 297,
+        "endChar": 3
+      },
+      "revId": "079453ca6cb90b6174f54c3517db2d564129ad7b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "889af48b_4d22eea3",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 6230
+      },
+      "writtenOn": "2018-07-25T13:02:48Z",
+      "side": 1,
+      "message": "As a mentioned previously, the kmod package should be built against the running kernel, which I guess is what you do here. `uname -r` achieves the same thing without hardcoding.",
+      "parentUuid": "a9889d5b_ac15bd08",
       "range": {
         "startLine": 268,
         "startChar": 0,
