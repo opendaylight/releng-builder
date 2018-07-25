@@ -989,6 +989,11 @@
           name: ODL_SNAT_MODE
           default: '{odl-snat-mode}'
           description: 'The SNAT mode to be configured - options are conntrack/controller.'
+      - string:
+          name: OVS_INSTALL
+          default: '{ovs-install}'
+          description: 'Install a custom OVS. It can be an OVS version to build (like v2.9.2 or v2.6.1-nsh) or a yum
+          repo url to pull from.'
     scm:
       - integration-gerrit-scm:
           basedir: 'test'
@@ -1203,7 +1208,11 @@
           name: ODL_SNAT_MODE
           default: '{odl-snat-mode}'
           description: 'The SNAT mode to be configured - options are conntrack/controller.'
-
+      - string:
+          name: OVS_INSTALL
+          default: '{ovs-install}'
+          description: 'Install a custom OVS. It can be an OVS version to build (like v2.9.2 or v2.6.1-nsh) or a yum
+          repo url to pull from.'
     scm:
       - integration-gerrit-scm:
           basedir: 'test'
