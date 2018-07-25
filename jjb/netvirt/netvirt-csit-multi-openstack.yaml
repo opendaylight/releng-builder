@@ -275,8 +275,12 @@
     stream:
       - fluorine:
           branch: 'master'
+          ovs-install-mode: 'BUILD'
+          ovs-custom-version: '2.9.2'
       - oxygen:
           branch: 'stable/oxygen'
+          ovs-install-mode: 'BUILD'
+          ovs-custom-version: '2.6.1_NSH'
 
     openstack:
       - queens:

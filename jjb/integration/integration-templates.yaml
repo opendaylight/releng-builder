@@ -988,6 +988,22 @@
           name: ODL_SNAT_MODE
           default: '{odl-snat-mode}'
           description: 'The SNAT mode to be configured - options are conntrack/controller.'
+      - string:
+          name: OVS_INSTALL_MODE
+          default: '{ovs-install-mode}'
+          description: 'Mode in which OVS needs to be installed, either BUILD or YUMREPO Empty for Neither'
+      - string:
+          name: OVS_CUSTOM_VERSION
+          default: '{ovs-custom-version}'
+          description: 'Version of OVS to be installed'
+      - string:
+          name: OVS_YUM_REPO_URL
+          default: '{ovs-yum-repo-url}'
+          description: 'Repo to use for fetching OVS'
+      - string:
+          name: OVS_ENABLE_DPDK
+          default: '{ovs-enable-dpdk}'
+          description: 'YES/NO to Enable DPDK in OVS'
     scm:
       - integration-gerrit-scm:
           basedir: 'test'
@@ -1206,7 +1222,22 @@
           name: ODL_SNAT_MODE
           default: '{odl-snat-mode}'
           description: 'The SNAT mode to be configured - options are conntrack/controller.'
-
+      - string:
+          name: OVS_INSTALL_MODE
+          default: '{ovs-install-mode}'
+          description: 'Mode in which OVS needs to be installed, either BUILD or YUMREPO Empty for Neither'
+      - string:
+          name: OVS_CUSTOM_VERSION
+          default: '{ovs-custom-version}'
+          description: 'Version of OVS to be installed'
+      - string:
+          name: OVS_YUM_REPO_URL
+          default: '{ovs-yum-repo-url}'
+          description: 'Repo to use for fetching OVS'
+      - string:
+          name: OVS_ENABLE_DPDK
+          default: '{ovs-enable-dpdk}'
+          description: 'YES/NO to Enable DPDK in OVS'
     scm:
       - integration-gerrit-scm:
           basedir: 'test'
