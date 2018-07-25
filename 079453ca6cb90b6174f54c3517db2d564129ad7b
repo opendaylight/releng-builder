@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ed845af8_8932bb92",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 7779
+      },
+      "writtenOn": "2018-07-25T06:44:20Z",
+      "side": 1,
+      "message": "The current centos kernel rpms are causing this build to fail. So by trial and error I have identified that it only works with some older kernel rpms. Hence updating to that version.\n\nThis patch works is tested in sandbox",
+      "parentUuid": "5dbf56bf_ed69c0f4",
+      "range": {
+        "startLine": 261,
+        "startChar": 0,
+        "endLine": 265,
+        "endChar": 65
+      },
+      "revId": "079453ca6cb90b6174f54c3517db2d564129ad7b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29fc09b9_a18e293c",
         "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
         "patchSetId": 10
@@ -36,6 +60,30 @@
       "writtenOn": "2018-07-23T11:56:20Z",
       "side": 1,
       "message": "FYI: \u0027git apply\u0027 might work just as well and you won need to set user/email",
+      "range": {
+        "startLine": 275,
+        "startChar": 0,
+        "endLine": 277,
+        "endChar": 14
+      },
+      "revId": "079453ca6cb90b6174f54c3517db2d564129ad7b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "03542877_49036848",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 7779
+      },
+      "writtenOn": "2018-07-25T06:44:20Z",
+      "side": 1,
+      "message": "okay, will use that",
+      "parentUuid": "29fc09b9_a18e293c",
       "range": {
         "startLine": 275,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "576985bd_528ed22f",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 7779
+      },
+      "writtenOn": "2018-07-25T06:44:20Z",
+      "side": 1,
+      "message": "Steps shared by Tim, I have not analyzed. Currently used in Apex installer",
+      "parentUuid": "ae0d0fd0_b793bd08",
+      "range": {
+        "startLine": 279,
+        "startChar": 0,
+        "endLine": 283,
+        "endChar": 8
+      },
+      "revId": "079453ca6cb90b6174f54c3517db2d564129ad7b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cf6a1a3_6e2d2c18",
         "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
         "patchSetId": 10
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "3534287a_5ba1c22d",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 7779
+      },
+      "writtenOn": "2018-07-25T06:44:20Z",
+      "side": 1,
+      "message": "I think versionlock is enough. This was from my local testing. I will remove the lines.",
+      "parentUuid": "7cf6a1a3_6e2d2c18",
+      "range": {
+        "startLine": 295,
+        "startChar": 0,
+        "endLine": 295,
+        "endChar": 69
+      },
+      "revId": "079453ca6cb90b6174f54c3517db2d564129ad7b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b434872_e512129c",
         "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
         "patchSetId": 10
@@ -105,6 +201,30 @@
       "writtenOn": "2018-07-23T11:56:20Z",
       "side": 1,
       "message": "Better not to hardcode kernel version, use \nK_VERSION\u003d$(uname -r)",
+      "range": {
+        "startLine": 268,
+        "startChar": 0,
+        "endLine": 297,
+        "endChar": 3
+      },
+      "revId": "079453ca6cb90b6174f54c3517db2d564129ad7b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a9889d5b_ac15bd08",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 7779
+      },
+      "writtenOn": "2018-07-25T06:44:20Z",
+      "side": 1,
+      "message": "The OVS 2.6.1 build having some problems with the latest kernel-dev rpms. So we are resorting to some older version.",
+      "parentUuid": "0b434872_e512129c",
       "range": {
         "startLine": 268,
         "startChar": 0,
