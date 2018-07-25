@@ -622,6 +622,26 @@ function retry() {
     return ${rc}
 }
 
+function install_ovs() {
+    local -r node=${1}
+    local -r rpm_path=${2}
+
+    if [ "${OVS_INSTALL:0:1}" = "v" ]; then
+       # An OVS version was given, so we build it ourselves from OVS git repo.
+       # Only on the first node though, consecutive nodes will use RPMs
+       # built for the first one.
+       [ ! -d "${rpm_path}" ] && mkdir -p "${rpm_path}" && build_ovs ${node} ${OVS_INSTALL} "${rpm_path}"
+       # Install OVS from path
+       install_ovs_from_path ${node} "${rpm_path}"
+    elif [ "${OVS_INSTALL:0:4}" = "http" ]; then
+       # Otherwise, install from rpm repo directly.
+       install_ovs_from_repo ${node} ${OVS_INSTALL}
+    else
+       echo "Expected either an OVS version git tag or a repo http url"
+       exit 1
+    fi
+}
+
 ODL_PROVIDER_MAPPINGS="\${PUBLIC_PHYSICAL_NETWORK}:${PUBLIC_BRIDGE}"
 RECLONE=False
 ODL_PORT=8181
@@ -741,6 +761,7 @@ for i in "${!os_ip_list[@]}"; do
     tcpdump_start "${i}" "${ip}" "port 6653"
 done
 
+
 # Begin stacking the nodes, starting with the controller(s) and then the compute(s)
 
 for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
@@ -770,6 +791,7 @@ for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
     if [ "$(is_openstack_feature_enabled n-cpu)" == "1" ]; then
         setup_live_migration_compute ${!CONTROLIP} ${!CONTROLIP}
     fi
+    [ -n "${OVS_INSTALL}" ] && install_ovs ${!CONTROLIP} /tmp/ovs_rpms
     echo "Stack the control node ${i} of ${NUM_OPENSTACK_CONTROL_NODES}: ${CONTROLIP}"
     ssh ${!CONTROLIP} "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
     ssh ${!CONTROLIP} "ps -ef | grep stack.sh"
@@ -819,6 +841,7 @@ for i in `seq 1 ${NUM_OPENSTACK_COMPUTE_NODES}`; do
     echo "Install rdo release to avoid incompatible Package versions"
     install_rdo_release ${!COMPUTEIP}
     setup_live_migration_compute ${!COMPUTEIP} ${!CONTROLIP}
+    [ -n "${OVS_INSTALL}" ] && install_ovs ${!COMPUTEIP} /tmp/ovs_rpms
     echo "Stack the compute node ${i} of ${NUM_OPENSTACK_COMPUTE_NODES}: ${!COMPUTEIP}"
     ssh ${!COMPUTEIP} "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
     ssh ${!COMPUTEIP} "ps -ef | grep stack.sh"
