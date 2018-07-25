@@ -753,6 +753,38 @@ for i in "${!os_ip_list[@]}"; do
     tcpdump_start "${i}" "${ip}" "port 6653"
 done
 
+
+#Installing Custom OVS version based on settings
+print_job_ovs_parameters
+if [ "${OVS_INSTALL_MODE}" == "BUILD" ]; then
+   case ${OVS_CUSTOM_VERSION} in
+    2.6.1_NSH)
+       # Build in 1 node only and install in the rest by copying rpms
+       build_install_ovs_2.6.1_with_nsh ${os_ip_list[0]}
+       scp ${os_ip_list[0]}:/tmp/ovs_rpms/*.rpm  /tmp
+       for i in "${!os_ip_list[@]}"; do
+          ip=${os_ip_list[i]}
+          scp /tmp/*.rpm ${ip}:/tmp
+          install_ovs ${ip} /tmp
+       done
+    ;;
+    *)
+       # Build in 1 node only and install in the rest by copying rpms
+       build_install_ovs ${os_ip_list[0]}
+       scp ${os_ip_list[0]}:/tmp/ovs_rpms/*.rpm  /tmp
+       for i in "${!os_ip_list[@]}"; do
+          ip=${os_ip_list[i]}
+          scp /tmp/*.rpm ${ip}:/tmp
+          install_ovs ${ip} /tmp
+       done
+   esac
+elif [ "${OVS_INSTALL_MODE}" == "YUMREPO" ]; then
+   for i in "${!os_ip_list[@]}"; do
+      install_ovs_from_repo ${os_ip_list[i]}
+   done
+fi
+
+
 # Begin stacking the nodes, starting with the controller(s) and then the compute(s)
 
 for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
