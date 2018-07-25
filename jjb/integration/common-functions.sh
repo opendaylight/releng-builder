@@ -152,6 +152,31 @@ function run_plan() {
     printf "Finished running ${type} plans\n"
 } # function run_plan()
 
+# Return elapsed time. Usage:
+# - Call first time with no arguments and a new timer is returned.
+# - Next call with the first argument as the timer and the elapsed time is returned.
+function timer()
+{
+    if [ $# -eq 0 ]; then
+        # return the current time
+        printf "$(date "+%s")"
+    else
+        local start_time=$1
+        end_time=$(date "+%s")
+
+        if [ -z "$start_time" ]; then
+            start_time=$end_time;
+        fi
+
+        delta_time=$((end_time - start_time))
+        ds=$((delta_time % 60))
+        dm=$(((delta_time / 60) % 60))
+        dh=$((delta_time / 3600))
+        # return the elapsed time
+        printf "%d:%02d:%02d" $dh $dm $ds
+    fi
+}
+
 # convert commas in csv strings to spaces (ssv)
 function csv2ssv() {
     local csv=$1
