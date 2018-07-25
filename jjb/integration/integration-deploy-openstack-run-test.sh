@@ -5,7 +5,7 @@
 # shellcheck source=${ROBOT_VENV}/bin/activate disable=SC1091
 source ${ROBOT_VENV}/bin/activate
 source /tmp/common-functions.sh ${BUNDLEFOLDER}
-
+totaltmr=$(timer)
 # Ensure we fail the job if any steps fail.
 set -ex -o pipefail
 
@@ -1068,6 +1068,9 @@ echo "neutron --version"
 which neutron
 neutron --version
 
+stacktime=$(timer $totaltmr)
+printf "Stacking elapsed time: %s\n" ${stacktime}
+
 echo "Starting Robot test suites ${SUITES} ..."
 # please add pybot -v arguments on a single line and alphabetized
 suite_num=0
@@ -1144,6 +1147,6 @@ ssh ${ODL_SYSTEM_IP} "ls -altr /tmp/${BUNDLEFOLDER}/data/log/"
 ssh ${ODL_SYSTEM_IP} "du -hs /tmp/${BUNDLEFOLDER}/data/log/*"
 
 echo "Tests Executed"
-
+printf "Total elapsed time: %s, stacking time: %s\n" $(timer $totaltmr) ${stacktime}
 true  # perhaps Jenkins is testing last exit code
 # vim: ts=4 sw=4 sts=4 et ft=sh :
