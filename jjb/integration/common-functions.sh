@@ -508,6 +508,7 @@ EOF
         scp ${!OSIP}:/tmp/dmesg.log ${NODE_FOLDER}
         scp ${!OSIP}:/tmp/extra_debug.log ${NODE_FOLDER}
         scp ${!OSIP}:/tmp/get_devstack.sh.txt ${NODE_FOLDER}
+        scp ${!OSIP}:/tmp/install_ovs.txt ${NODE_FOLDER}
         scp ${!OSIP}:/tmp/journalctl.log ${NODE_FOLDER}
         scp ${!OSIP}:/tmp/ovsdb-tool.log ${NODE_FOLDER}
         scp ${!OSIP}:/tmp/tcpdump_start.log ${NODE_FOLDER}
@@ -550,6 +551,7 @@ EOF
         scp ${!OSIP}:/tmp/dmesg.log ${NODE_FOLDER}
         scp ${!OSIP}:/tmp/extra_debug.log ${NODE_FOLDER}
         scp ${!OSIP}:/tmp/get_devstack.sh.txt ${NODE_FOLDER}
+        scp ${!OSIP}:/tmp/install_ovs.txt ${NODE_FOLDER}
         scp ${!OSIP}:/tmp/journalctl.log ${NODE_FOLDER}
         scp ${!OSIP}:/tmp/ovsdb-tool.log ${NODE_FOLDER}
         scp ${!OSIP}:/tmp/tcpdump_start.log ${NODE_FOLDER}
@@ -582,3 +584,135 @@ EOF
         echo "tempest results not found in ${DEVSTACK_TEMPEST_DIR}/${TESTREPO}/0"
     fi
 } # collect_netvirt_logs()
+
+
+# Function to build OVS from git repo
+function build_ovs() {
+    local -r ip=$1
+    local -r version=$2
+
+    cat > ${WORKSPACE}/build_ovs.sh << EOF
+set -ex -o pipefail
+
+echo '---> Building openvswitch version ${version}'
+
+# install running kernel devel packages
+K_VERSION=\$(uname -r)
+sudo yum -y install centos-release yum-utils @'Development Tools' rpm-build
+REPO=\$(repoquery --enablerepo=C* --qf "%{repoid} kernel-devel-\${K_VERSION})
+sudo yum -y --enablerepo=\${REPO} install kernel-{devel,debug-devel,headers}-\${K_VERSION}
+
+TMP=\$(mktemp -d)
+pushd \${TMP}
+
+git clone https://github.com/openvswitch/ovs.git
+cd ovs
+
+if [ "${version}" = "v2.6.1-nsh" ]; then
+    git checkout v2.6.1 
+    echo "Will apply nsh patches for OVS version 2.6.1"
+    git clone https://github.com/yyang13/ovs_nsh_patches.git ../ovs_nsh_patches
+    git apply ../ovs_nsh_patches/v2.6.1_centos7/*.patch
+else
+    git checkout ${version}
+fi
+
+sed -e 's/@VERSION@/0.0.1/' rhel/openvswitch-fedora.spec.in > /tmp/ovs.spec
+sudo yum-builddep -y /tmp/ovs.spec
+rm /tmp/ovs.spec
+./boot.sh
+./configure --build=x86_64-redhat-linux-gnu --host=x86_64-redhat-linux-gnu --with-linux=/lib/modules/\${K_VERSION}/build--program-prefix= --disable-dependency-tracking --prefix=/usr --exec-prefix=/usr --bindir=/usr/bin --sbindir=/usr/sbin --sysconfdir=/etc --datadir=/usr/share --includedir=/usr/include --libdir=/usr/lib64 --libexecdir=/usr/libexec --localstatedir=/var --sharedstatedir=/var/lib --mandir=/usr/share/man --infodir=/usr/share/info --enable-libcapng --enable-ssl --with-pkidir=/var/lib/openvswitch/pki PYTHON=/usr/bin/python2
+make rpm-fedora RPMBUILD_OPT="--without check"
+make rpm-fedora-kmod RPMBUILD_OPT='-D "kversion \${K_VERSION}"'
+
+cd rpm/rpmbuild/RPMS/x86_64/
+sudo mkdir -p /tmp/ovs_rpms
+sudo cp openvswitch{,-kmod}-*.rpm /tmp/ovs_rpms/
+
+popd
+rm -rf \${TMP}
+EOF
+
+    scp ${WORKSPACE}/build_ovs.sh ${ip}:/tmp
+    ${SSH} ${ip} "sudo bash -x /tmp/build_ovs.sh  >> /tmp/install_ovs.txt 2>&1"
+}
+
+# Install OVS RPMS from path
+function install_ovs_from_path() {
+    local -r ip=$1
+    local -r rpm_path=$2
+
+    ${SSH} ${ip} "mkdir -p ${rpm_path}"
+    scp "${rpm_path}/*.rpm" "${ip}:${rpm_path}/"
+
+    cat > ${WORKSPACE}/install_ovs.sh << EOF
+set -ex -o pipefail
+
+echo '---> Installing openvswitch from ${rpm_path}'
+
+sudo yum -y install yum-plugin-versionlock
+yum -y versionlock delete openvswitch{,-kmod,-dkms}
+yum -y remove openvswitch{,-kmod,-dkms}
+sudo yum -y install ${rpm_path}/openvswitch{,-kmod}-*.rpm
+sudo yum -y versionlock openvswitch openvswitch-kmod
+
+# print installed module details
+modinfo openvswitch
+EOF
+    scp ${WORKSPACE}/install_ovs.sh ${ip}:/tmp
+    ${SSH} ${ip} "sudo bash -x /tmp/install_ovs.sh >> /tmp/install_ovs.txt 2>&1"
+}
+
+# Install OVS RPMs from yum repo
+function install_ovs_from_repo() {
+    local -r ip=$1
+    local -r rpm_repo=$2
+
+    cat > ${WORKSPACE}/install_ovs.sh << EOF
+set -ex -o pipefail
+
+echo '---> Installing openvswitch from ${rpm_repo}'
+
+# We need repoquery from yum-utils.
+yum -y install yum-utils
+
+# Get openvswitch packages offered by custom repo.
+# dkms package will have priority over kmod.
+OVS_REPO_OPTS="--repofrompath=ovs-repo,${rpm_repo} --disablerepo=* --enablerepo=ovs-repo --archlist=\$(arch)"
+OVS_PKGS=\$(repoquery \${OVS_REPO_OPTS} openvswitch)
+OVS_DKMS_PKG=\$(repoquery \${OVS_REPO_OPTS} openvswitch-dkms)
+OVS_KMOD_PKG=\$(repoquery \${OVS_REPO_OPTS} openvswitch-kmod)
+[ -n "\${OVS_DKMS_PKG}" ] && OVS_PKGS="\${OVS_PKGS} \${OVS_DKMS_PKG}"
+[ -z "\${OVS_DKMS_PKG}" ] && [ -n "\${OVS_KMOD_PKG}" ] && OVS_PKGS="\${OVS_PKGS} \${OVS_KMOD_PKG}"
+
+# Bail with error if custom repo was provided but we could not
+# find suitable packages there.
+[ -z "\${OVS_PKGS}" ] && echo "No OVS packages found in custom repo." && exit 1
+
+# Install kernel devel packages for the openvswitch dkms package.
+if [ -n "\${OVS_DKMS_PKG}" ]; then
+    # we might be running on old kernel, updating centos-release
+    # adds vault repos previous centos releases that might match
+    # our kernel.
+    yum -y install centos-release
+    K_VERSION=\$(uname -r)
+    BASE_REPOS_OPTS="--disablerepo=* --enablerepo=base,updates,C*"
+    K_REPO=\$(repoquery \${BASE_REPOS_OPTS} --qf "%{repoid}" kernel-devel-\${K_VERSION})
+    yum -y --enablerepo=\${K_REPO} install kernel-{headers,devel}-\${K_VERSION}
+fi
+
+# Install OVS offered by custom repo.
+yum-config-manager --add-repo ${rpm_repo}
+yum versionlock delete openvswitch{,-kmod,-dkms}
+yum -y remove openvswitch{,-kmod,-dkms}
+yum -y --nogpgcheck install \${OVS_PKGS}
+yum versionlock add \${OVS_PKGS}
+
+# print installed module details
+modinfo openvswitch
+EOF
+
+    scp ${WORKSPACE}/install_ovs.sh ${ip}:/tmp
+    ${SSH} ${ip} "sudo bash -x /tmp/install_ovs.sh >> /tmp/install_ovs.txt 2>&1"
+}
+
