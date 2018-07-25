@@ -201,6 +201,57 @@ EOF
     fi
 }
 
+function build_install_ovs() {
+    OSNODE=$1
+    OVS_VERSION=$2
+
+    cat > ${WORKSPACE}/install_ovs_with_nsh.sh << EOF
+OVS_VERSION=\$1
+EL_VERSION=\$(grep -oP '\d+\.\d+.\d+' /etc/centos-release)
+K_VERSION=\$(uname -r)
+
+if [[ "\${OVS_VERSION}" != "2.6.1" && "\${OVS_VERSION}" != "2.9.2" ]]; then
+    echo "Unsupported OVS version \${OVS_VERSION}"
+    exit 1
+fi
+
+TMP=$(mktemp -d)
+pushd ${TMP}
+
+git clone https://github.com/openvswitch/ovs.git
+cd ovs && git checkout v\${OVS_VERSION} || (echo "Could not checkout OVS version \${OVS_VERSION}" && exit 1) && cd ..
+
+if [[ "\${OVS_VERSION}" == "2.6.1" ]]; then
+    echo "Will apply nsh patches for OVS version \${OVS_VERSION}"
+    git clone https://github.com/yyang13/ovs_nsh_patches.git
+    cd ovs && git apply ../ovs_nsh_patches/v2.6.1_centos7/*.patch || (echo "Failed to apply nsh patches" && exit 1) && cd ..
+fi
+
+sudo yum update -y centos-release
+sudo yum install -y --enablerepo=C\${EL_VERSION}-base --enablerepo=C\${EL_VERSION}-updates kernel-devel-\${K_VERSION} kernel-debug-devel-\${K_VERSION} kernel-headers-\${K_VERSION}
+sudo yum install -y @'Development Tools' rpm-build yum-utils
+
+cd ovs
+sed -e 's/@VERSION@/0.0.1/' rhel/openvswitch-fedora.spec.in > /tmp/ovs.spec
+sudo yum-builddep /tmp/ovs.spec
+rm /tmp/ovs.spec
+./boot.sh
+./configure --build=x86_64-redhat-linux-gnu --host=x86_64-redhat-linux-gnu --program-prefix= --disable-dependency-tracking --prefix=/usr --exec-prefix=/usr --bindir=/usr/bin --sbindir=/usr/sbin --sysconfdir=/etc --datadir=/usr/share --includedir=/usr/include --libdir=/usr/lib64 --libexecdir=/usr/libexec --localstatedir=/var --sharedstatedir=/var/lib --mandir=/usr/share/man --infodir=/usr/share/info --enable-libcapng --enable-ssl --with-pkidir=/var/lib/openvswitch/pki PYTHON=/usr/bin/python2
+make rpm-fedora RPMBUILD_OPT="--without check"
+make rpm-fedora-kmod RPMBUILD_OPT='-D "kversion \${K_VERSION}"'
+
+cd rpm/rpmbuild/RPMS/x86_64/
+sudo yum localinstall -y openvswitch-${OVS_VERSION}-*.rpm openvswitch-kmod-${OVS_VERSION}-*.rpm
+
+popd
+rm -rf ${TMP}
+EOF
+
+    scp ${WORKSPACE}/install_ovs_with_nsh.sh ${OSNODE}:/tmp
+    ${SSH} ${OSNODE} "sudo bash -x /tmp/install_ovs_with_nsh.sh ${OVS_VERSION} > /tmp/install_ovs_nsh.txt 2>&1"
+
+}
+
 function create_control_node_local_conf() {
     HOSTIP=$1
     MGRIP=$2
@@ -754,6 +805,13 @@ for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
     echo "Install rdo release to avoid incompatible Package versions"
     install_rdo_release ${!CONTROLIP}
     setup_live_migration_control ${!CONTROLIP}
+    if [ "${ODL_ML2_BRANCH}" == "stable/pike" ] && [[ "${ENABLE_OS_PLUGINS}" =~ networking-sfc ]]; then
+        echo "Installing OVS with NSH in ${!CONTROLIP}"
+        build_install_ovs ${!CONTROLIP} 2.6.1
+    elif [ "${ODL_ML2_BRANCH}" == "stable/queens" ]
+        echo "Installing OVS 2.9.2 in ${!CONTROLIP}"
+        build_install_ovs ${!CONTROLIP} 2.9.2
+    fi
     echo "Stack the control node ${i} of ${NUM_OPENSTACK_CONTROL_NODES}: ${CONTROLIP}"
     ssh ${!CONTROLIP} "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
     ssh ${!CONTROLIP} "ps -ef | grep stack.sh"
@@ -805,6 +863,13 @@ for i in `seq 1 ${NUM_OPENSTACK_COMPUTE_NODES}`; do
     echo "Install rdo release to avoid incompatible Package versions"
     install_rdo_release ${!COMPUTEIP}
     setup_live_migration_compute ${!COMPUTEIP} ${!CONTROLIP}
+    if [ "${ODL_ML2_BRANCH}" == "stable/pike" ] && [[ "${ENABLE_OS_PLUGINS}" =~ networking-sfc ]]; then
+        echo "Installing OVS with NSH in ${!COMPUTEIP}"
+        build_install_ovs ${!COMPUTEIP} 2.6.1
+    elif [ "${ODL_ML2_BRANCH}" == "stable/queens" ]
+        echo "Installing OVS 2.9.2 in ${!COMPUTEIP}"
+        build_install_ovs ${!COMPUTEIP} 2.9.2
+    fi
     echo "Stack the compute node ${i} of ${NUM_OPENSTACK_COMPUTE_NODES}: ${COMPUTEIP}"
     ssh ${!COMPUTEIP} "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
     ssh ${!COMPUTEIP} "ps -ef | grep stack.sh"
