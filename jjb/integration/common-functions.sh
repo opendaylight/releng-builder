@@ -421,6 +421,7 @@ EOF
         scp ${!OSIP}:/tmp/dmesg.log ${NODE_FOLDER}
         scp ${!OSIP}:/tmp/extra_debug.log ${NODE_FOLDER}
         scp ${!OSIP}:/tmp/get_devstack.sh.txt ${NODE_FOLDER}
+        scp ${!OSIP}:/tmp/build_install_ovs.txt ${NODE_FOLDER}
         scp ${!OSIP}:/tmp/journalctl.log ${NODE_FOLDER}
         scp ${!OSIP}:/tmp/ovsdb-tool.log ${NODE_FOLDER}
         collect_files "${!OSIP}" "${NODE_FOLDER}"
@@ -461,6 +462,7 @@ EOF
         scp ${!OSIP}:/tmp/dmesg.log ${NODE_FOLDER}
         scp ${!OSIP}:/tmp/extra_debug.log ${NODE_FOLDER}
         scp ${!OSIP}:/tmp/get_devstack.sh.txt ${NODE_FOLDER}
+        scp ${!OSIP}:/tmp/build_install_ovs.txt ${NODE_FOLDER}
         scp ${!OSIP}:/tmp/journalctl.log ${NODE_FOLDER}
         scp ${!OSIP}:/tmp/ovsdb-tool.log ${NODE_FOLDER}
         collect_files "${!OSIP}" "${NODE_FOLDER}"
