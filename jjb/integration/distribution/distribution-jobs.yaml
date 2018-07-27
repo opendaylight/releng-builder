@@ -23,8 +23,12 @@
           branch: 'master'
           karaf-version: odl
           # Self-Managed projects repos and features:
-          sm-repos: mvn:org.opendaylight.sxp/features-sxp//xml/features
-          sm-features: odl-sxp-routing
+          sm-repos: >
+            mvn:org.opendaylight.sxp/features-sxp//xml/features,
+            mvn:org.opendaylight.unimgr/features4-unimgr//xml/features
+          sm-features: >
+            odl-sxp-routing,
+            odl-unimgr-rest
       - oxygen:
           branch: 'stable/oxygen'
           karaf-version: karaf4
@@ -133,7 +137,8 @@
           karaf-version: odl
           dependencies: >
               distribution-merge-managed-{stream},
-              sxp-merge-{stream}
+              sxp-merge-{stream},
+              unimgr-merge-{stream}
 
 - project:
     name: distribution-sonar
