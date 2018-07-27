@@ -247,6 +247,28 @@ ODL_SNAT_MODE: ${ODL_SNAT_MODE}
 EOF
 }
 
+function tcpdump_start() {
+    local -r prefix=$1
+    local -r ip=$2
+    local -r filter=$3
+    filter_=${filter// /_}
+
+    printf "node ${ip}, ${prefix}_${ip}__${filter}: starting tcpdump\n"
+    ssh ${ip} "nohup sudo /usr/sbin/tcpdump -vvv -ni eth0 ${filter} -w /tmp/tcpdump_${prefix}_${ip}__${filter_}.pcap > /tmp/tcpdump_start.log 2>&1 &"
+    ${SSH} ${ip} "ps -ef | grep tcpdump"
+}
+
+function tcpdump_stop() {
+    local -r ip=$1
+
+    printf "node $ip: stopping tcpdump\n"
+    ${SSH} ${ip} "ps -ef | grep tcpdump.sh"
+    ${SSH} ${ip} "sudo pkill -f tcpdump"
+    ${SSH} ${ip} "sudo xz -9ekvvf /tmp/*.pcap"
+    ${SSH} ${ip} "sudo ls -al /tmp/*.pcap"
+    # copy_logs will copy any *.xz files
+}
+
 # Collect the list of files on the hosts
 function collect_files() {
     local -r ip=$1
@@ -434,6 +456,7 @@ EOF
             NODE_FOLDER="control_${i}"
         fi
         mkdir -p ${NODE_FOLDER}
+        tcpdump_stop "${!OSIP}"
         scp extra_debug.sh ${!OSIP}:/tmp
         # Capture compute logs if this is a combo node
         if [ "$(is_openstack_feature_enabled n-cpu)" == "1" ]; then
@@ -471,6 +494,7 @@ EOF
         scp ${!OSIP}:/tmp/get_devstack.sh.txt ${NODE_FOLDER}
         scp ${!OSIP}:/tmp/journalctl.log ${NODE_FOLDER}
         scp ${!OSIP}:/tmp/ovsdb-tool.log ${NODE_FOLDER}
+        scp ${!OSIP}:/tmp/tcpdump_start.log ${NODE_FOLDER}
         collect_files "${!OSIP}" "${NODE_FOLDER}"
         ${SSH} ${!OSIP} "sudo tar -cf - -C /var/log rabbitmq | xz -T 0 > /tmp/rabbitmq.tar.xz "
         scp ${!OSIP}:/tmp/rabbitmq.tar.xz ${NODE_FOLDER}
@@ -496,6 +520,7 @@ EOF
         echo "collect_logs: for openstack compute node ip: ${!OSIP}"
         NODE_FOLDER="compute_${i}"
         mkdir -p ${NODE_FOLDER}
+        tcpdump_stop "${!OSIP}"
         scp extra_debug.sh ${!OSIP}:/tmp
         ${SSH} ${!OSIP} "bash /tmp/extra_debug.sh > /tmp/extra_debug.log 2>&1"
         scp ${!OSIP}:/etc/nova/nova.conf ${NODE_FOLDER}
@@ -511,6 +536,7 @@ EOF
         scp ${!OSIP}:/tmp/get_devstack.sh.txt ${NODE_FOLDER}
         scp ${!OSIP}:/tmp/journalctl.log ${NODE_FOLDER}
         scp ${!OSIP}:/tmp/ovsdb-tool.log ${NODE_FOLDER}
+        scp ${!OSIP}:/tmp/tcpdump_start.log ${NODE_FOLDER}
         collect_files "${!OSIP}" "${NODE_FOLDER}"
         ${SSH} ${!OSIP} "sudo tar -cf - -C /var/log libvirt | xz -T 0 > /tmp/libvirt.tar.xz "
         scp ${!OSIP}:/tmp/libvirt.tar.xz ${NODE_FOLDER}

@@ -734,6 +734,24 @@ for i in `seq 1 ${NUM_OPENSTACK_SITES}`; do
     fi
 done
 
+os_ip_list=()
+for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
+    cip=OPENSTACK_CONTROL_NODE_${i}_IP
+    ip=${!cip}
+    os_ip_list+=("${ip}")
+done
+
+for i in `seq 1 ${NUM_OPENSTACK_COMPUTE_NODES}`; do
+    cip=OPENSTACK_COMPUTE_NODE_${i}_IP
+    ip=${!cip}
+    os_ip_list+=("${ip}")
+done
+
+for i in "${!os_ip_list[@]}"; do
+    ip=${os_ip_list[i]}
+    tcpdump_start "${i}" "${ip}" "port 6653"
+done
+
 # Begin stacking the nodes, starting with the controller(s) and then the compute(s)
 
 for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
