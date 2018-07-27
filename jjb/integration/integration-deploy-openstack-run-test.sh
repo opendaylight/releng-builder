@@ -819,6 +819,11 @@ done
 
 echo "nodelist: ${os_node_list[*]}"
 
+for index in "${!os_node_list[@]}"; do
+    ip=${os_node_list[index]}
+    tcpdump_start "${index}" "${ip}" "port 6653"
+done
+
 # This script runs on the openstack nodes. It greps for a string that devstack writes when stacking is complete.
 # The script then writes a status depending on the grep output that is later scraped by the robot vm to control
 # the status polling.

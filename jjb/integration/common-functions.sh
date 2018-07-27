@@ -247,6 +247,31 @@ ODL_SNAT_MODE: ${ODL_SNAT_MODE}
 EOF
 }
 
+function tcpdump_start() {
+    local -r prefix=$1
+    local -r ip=$2
+    local -r filter=$3
+    filter_=${filter/ /_}
+
+    cat > "${WORKSPACE}/tcpdump_start.sh" << EOF
+sudo /usr/sbin/tcpdump -vvv -ni eth0 ${filter} -w /tmp/tcpdump_${prefix}_${ip}_${filter_}.pcap
+EOF
+    echo "node $prefix $ip: starting tcpdump"
+    scp ${WORKSPACE}/tcpdump_start.sh ${ip}:/tmp/tcpdump_start.sh
+    ${SSH} ${ip} nohup /tmp/start_tcpdump.sh < /dev/null > tcpdump_start.log 2>&1 &
+    ${SSH} ${ip} "ps -ef | grep tcpdump_start.sh"
+}
+
+function tcpdump_stop() {
+    local -r ip=$1
+
+    echo "node $prefix $ip: stopping tcpdump"
+    ${SSH} ${ip} tcpdump_start.sh
+    ${SSH} ${ip} "ps -ef | grep tcpdump_start.sh"
+    ${SSH} ${ip} sudo xz -9ekvv /tmp/*.pcap
+    # copy_logs will copy any *.xz files
+}
+
 # Collect the list of files on the hosts
 function collect_files() {
     local -r ip=$1
@@ -434,6 +459,7 @@ EOF
             NODE_FOLDER="control_${i}"
         fi
         mkdir -p ${NODE_FOLDER}
+        tcpdump_stop "${!OSIP}"
         scp extra_debug.sh ${!OSIP}:/tmp
         # Capture compute logs if this is a combo node
         if [ "$(is_openstack_feature_enabled n-cpu)" == "1" ]; then
@@ -496,6 +522,7 @@ EOF
         echo "collect_logs: for openstack compute node ip: ${!OSIP}"
         NODE_FOLDER="compute_${i}"
         mkdir -p ${NODE_FOLDER}
+        tcpdump_stop "${!OSIP}"
         scp extra_debug.sh ${!OSIP}:/tmp
         ${SSH} ${!OSIP} "bash /tmp/extra_debug.sh > /tmp/extra_debug.log 2>&1"
         scp ${!OSIP}:/etc/nova/nova.conf ${NODE_FOLDER}
