@@ -117,6 +117,22 @@ function configure_karaf_log() {
     cat ${LOGCONF}
 } # function configure_karaf_log()
 
+function get_os_deploy() {
+    case ${NUM_OS_SYSTEM} in
+    1)
+        OS_DEPLOY="1cmb-0ctl-0cmp"
+        ;;
+    2)
+        OS_DEPLOY="1cmb-0ctl-1cmp"
+        ;;
+    3)
+        OS_DEPLOY="0cmb-1ctl-2cmp"
+        ;;
+    *)
+        printf "Error: Unsupported system configuration, NUM_OS_SYSTEM: ${NUM_OS_SYSTEM}"
+    esac
+}
+
 function run_plan() {
     local -r type=$1
 
