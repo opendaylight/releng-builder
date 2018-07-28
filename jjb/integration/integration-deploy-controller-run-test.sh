@@ -305,6 +305,7 @@ pybot -N ${TESTPLAN} \
       -v ODL_SYSTEM_1_IP:${ODL_SYSTEM_IP} \
       -v ODL_SYSTEM_IP:${ODL_SYSTEM_IP} \
       -v ODL_SYSTEM_USER:${USER} \
+      -v SUITES:"${SUITES}" \
       -v TOOLS_SYSTEM_1_IP:${TOOLS_SYSTEM_IP} \
       -v TOOLS_SYSTEM_2_IP:${TOOLS_SYSTEM_2_IP} \
       -v TOOLS_SYSTEM_3_IP:${TOOLS_SYSTEM_3_IP} \
