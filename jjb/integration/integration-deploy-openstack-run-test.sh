@@ -5,9 +5,10 @@
 # shellcheck source=${ROBOT_VENV}/bin/activate disable=SC1091
 source ${ROBOT_VENV}/bin/activate
 source /tmp/common-functions.sh ${BUNDLEFOLDER}
-totaltmr=$(timer)
 # Ensure we fail the job if any steps fail.
 set -ex -o pipefail
+totaltmr=$(timer)
+get_os_deploy
 
 PYTHON="${ROBOT_VENV}/bin/python"
 SSH="ssh -t -t"
@@ -778,6 +779,9 @@ for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
     echo "Install rdo release to avoid incompatible Package versions"
     install_rdo_release ${!CONTROLIP}
     setup_live_migration_control ${!CONTROLIP}
+    if [ "$(is_openstack_feature_enabled n-cpu)" == "1" ]; then
+        setup_live_migration_compute ${!CONTROLIP} ${!CONTROLIP}
+    fi
     echo "Stack the control node ${i} of ${NUM_OPENSTACK_CONTROL_NODES}: ${CONTROLIP}"
     ssh ${!CONTROLIP} "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
     ssh ${!CONTROLIP} "ps -ef | grep stack.sh"
@@ -1108,6 +1112,7 @@ for suite in ${SUITES}; do
     --removekeywords name:OpenStackOperations.Add_OVS_Logging_On_All_OpenStack_Nodes \
     -v BUNDLEFOLDER:${BUNDLEFOLDER} \
     -v BUNDLE_URL:${ACTUAL_BUNDLE_URL} \
+    -v CMP_INSTANCES_SHARED_PATH:/var/instances \
     -v CONTROLLERFEATURES:"${CONTROLLERFEATURES}" \
     -v CONTROLLER_USER:${USER} \
     -v DEVSTACK_DEPLOY_PATH:/opt/stack/devstack \
@@ -1146,7 +1151,7 @@ for suite in ${SUITES}; do
     -v OS_COMPUTE_4_IP:${OPENSTACK_COMPUTE_NODE_4_IP} \
     -v OS_COMPUTE_5_IP:${OPENSTACK_COMPUTE_NODE_5_IP} \
     -v OS_COMPUTE_6_IP:${OPENSTACK_COMPUTE_NODE_6_IP} \
-    -v CMP_INSTANCES_SHARED_PATH:/var/instances \
+    -v OS_DEPLOY:${OS_DEPLOY} \
     -v OS_USER:${USER} \
     -v PUBLIC_PHYSICAL_NETWORK:${PUBLIC_PHYSICAL_NETWORK} \
     -v SECURITY_GROUP_MODE:${SECURITY_GROUP_MODE} \

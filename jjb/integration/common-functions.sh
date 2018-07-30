@@ -117,6 +117,22 @@ function configure_karaf_log() {
     cat ${LOGCONF}
 } # function configure_karaf_log()
 
+function get_os_deploy() {
+    local -r num_systems=${1:-$NUM_OPENSTACK_SYSTEM}
+    case ${num_systems} in
+    1)
+        OS_DEPLOY="1cmb-0ctl-0cmp"
+        ;;
+    2)
+        OS_DEPLOY="1cmb-0ctl-1cmp"
+        ;;
+    3|*)
+        OS_DEPLOY="0cmb-1ctl-2cmp"
+        ;;
+    esac
+    export OS_DEPLOY
+}
+
 function run_plan() {
     local -r type=$1
 
