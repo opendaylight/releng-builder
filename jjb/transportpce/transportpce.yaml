@@ -3,6 +3,11 @@
     name: transportpce-fluorine
     jobs:
       - odl-maven-jobs
+      #- test-transportpce
+      #- gerrit-tox-sonar
+      #- gerrit-tox-verify
+      - gerrit-transportpce-tox-verify
+      #- transportpce-maven-clm
 
     project: 'transportpce'
     project-name: 'transportpce'
@@ -12,6 +17,9 @@
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
     email-upstream: '[transportpce] [odlparent] [yangtools] [controller]'
+    tox-dir: 'tests'
+    tox-envs: 'portmapping,topoPortMapping,topology,pce,servicehandler'
+    #'[portmapping] [topoPortMapping] [topology,pce] [servicehandler]'
 
     # Used by the release job
     staging-profile-id: a6927323fa3d4
@@ -20,6 +28,7 @@
     name: transportpce-oxygen
     jobs:
       - odl-maven-jobs
+      - gerrit-transportpce-tox-verify
 
     project: 'transportpce'
     project-name: 'transportpce'
@@ -29,6 +38,8 @@
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
     email-upstream: '[transportpce] [odlparent] [yangtools] [controller]'
+    tox-dir: 'tests'
+    tox-envs: 'portmapping,topoPortMapping,topology,pce,servicehandler'  #portmapping' #
 
     # Used by the release job
     staging-profile-id: a6927323fa3d4
