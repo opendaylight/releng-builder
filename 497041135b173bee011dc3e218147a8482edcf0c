@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4fb786b4_6210e33e",
+        "filename": "jjb/integration/common-functions.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-07-31T13:06:01Z",
+      "side": 1,
+      "message": "move this up to be in alpha order",
+      "revId": "497041135b173bee011dc3e218147a8482edcf0c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cfda0ef4_6a534891",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-07-31T13:06:01Z",
+      "side": 1,
+      "message": "make these lowercase since they are local. Add -r for read only. And call it ovsip. we use just ip in most places but I guess ovsip is better, but just ip is fine since we use that already.",
+      "range": {
+        "startLine": 196,
+        "startChar": 4,
+        "endLine": 196,
+        "endChar": 10
+      },
+      "revId": "497041135b173bee011dc3e218147a8482edcf0c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2f300088_6afa0595",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-07-31T13:06:01Z",
+      "side": 1,
+      "message": "just one line: set -ex -o pipefail",
+      "revId": "497041135b173bee011dc3e218147a8482edcf0c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8cdcd1d2_c1117893",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-07-31T13:06:01Z",
+      "side": 1,
+      "message": "would it be cleaner to have a different install script for each version and then just a case/if here to choose between them? if there are just minor differences then one function with if/then\u0027s as it is now is fine.",
+      "revId": "497041135b173bee011dc3e218147a8482edcf0c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aff64919_9e4a272c",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-07-31T13:06:01Z",
+      "side": 1,
+      "message": "just add this in the function",
+      "range": {
+        "startLine": 848,
+        "startChar": 8,
+        "endLine": 848,
+        "endChar": 30
+      },
+      "revId": "497041135b173bee011dc3e218147a8482edcf0c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
