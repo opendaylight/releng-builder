@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ef71079_c286f995",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 7779
+      },
+      "writtenOn": "2018-07-31T10:16:37Z",
+      "side": 1,
+      "message": "We can consider making OVS_VERSION as a job paramter so that differnt jobs can choose their own OVS as needed.",
+      "revId": "9c57ef1f26413b4acbd3fcf2c325cd76e3f73526",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "254fa44a_9f53bff6",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 7779
+      },
+      "writtenOn": "2018-07-31T10:16:37Z",
+      "side": 1,
+      "message": "The three commands can be combined as \ngit clone https://github.com/openvswitch/ovs.git --branch  v\\${OVS_VERSION} \n\njust a suggestion though",
+      "revId": "9c57ef1f26413b4acbd3fcf2c325cd76e3f73526",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a301768_4bd45cf0",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 7779
+      },
+      "writtenOn": "2018-07-31T10:16:37Z",
+      "side": 1,
+      "message": "We need to handle this as a special case in VERSION value, I think like 2.6.1_NSH or something and also check the centos-release version, the 2.6.1 with NSH does not work with Centos 7.5 (As far my repeated testing indicates). So, to be safer we can restrict to CentOS 7.4 for 2.6.1+NSH",
+      "revId": "9c57ef1f26413b4acbd3fcf2c325cd76e3f73526",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1f8fdb26_bb703ae7",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 7779
+      },
+      "writtenOn": "2018-07-31T10:16:37Z",
+      "side": 1,
+      "message": "I think this wil lfail, the rpm file generated has a n additional \"version.1\".rpm",
+      "revId": "9c57ef1f26413b4acbd3fcf2c325cd76e3f73526",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a9374087_334bb1ce",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 7779
+      },
+      "writtenOn": "2018-07-31T10:16:37Z",
+      "side": 1,
+      "message": "We may need to add some commands to check if they actually got installed.",
+      "revId": "9c57ef1f26413b4acbd3fcf2c325cd76e3f73526",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
