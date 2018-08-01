@@ -1105,7 +1105,7 @@ for suite in ${SUITES}; do
     log_name="${suite_index}_${suite_name}"
     pybot -N ${log_name} \
     -c critical -e exclude -e skip_if_${DISTROSTREAM} \
-    --log log_${log_name}.html --report None --output output_${log_name}.xml \
+    --log log_${log_name}.html --report report_${log_name}.html --output output_${log_name}.xml \
     --removekeywords wuks \
     --removekeywords name:SetupUtils.Setup_Utils_For_Setup_And_Teardown \
     --removekeywords name:SetupUtils.Setup_Test_With_Logging_And_Without_Fast_Failing \
