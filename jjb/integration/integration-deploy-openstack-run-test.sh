@@ -1105,7 +1105,7 @@ for suite in ${SUITES}; do
     log_name="${suite_index}_${suite_name}"
     pybot -N ${log_name} \
     -c critical -e exclude -e skip_if_${DISTROSTREAM} \
-    --log log_${log_name}.html --report None --output output_${log_name}.xml \
+    --log log_${log_name}.html --report report_${log_name}.html --output output_${log_name}.xml \
     --removekeywords wuks \
     --removekeywords name:SetupUtils.Setup_Utils_For_Setup_And_Teardown \
     --removekeywords name:SetupUtils.Setup_Test_With_Logging_And_Without_Fast_Failing \
@@ -1163,7 +1163,7 @@ for suite in ${SUITES}; do
     ${TESTOPTIONS} ${suite} || true
 done
 #rebot exit codes seem to be different
-rebot --output ${WORKSPACE}/output.xml --log log_full.html --report None -N openstack output_*.xml || true
+rebot --output ${WORKSPACE}/output.xml --log log_full.html --report report.html -N openstack output_*.xml || true
 
 echo "Examining the files in data/log and checking file size"
 ssh ${ODL_SYSTEM_IP} "ls -altr /tmp/${BUNDLEFOLDER}/data/log/"
