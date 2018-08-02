@@ -31,7 +31,8 @@ fi
 sed -ie "s%\(featuresRepositories= \|featuresRepositories = \)%featuresRepositories = mvn:org.opendaylight.integration/${FEATURE_TEST_STRING}/${BUNDLE_VERSION}/xml/features,%g" ${FEATURESCONF}
 
 if [[ ! -z "${REPO_URL}" ]]; then
-   sed -ie "s%featuresRepositories = %featuresRepositories = ${REPO_URL},%g" ${FEATURESCONF}
+   REPO_URL_NO_SPACE="$(echo -e "${REPO_URL}" | tr -d '[:space:]')"
+   sed -ie "s%featuresRepositories = %featuresRepositories = ${REPO_URL_NO_SPACE},%g" ${FEATURESCONF}
 fi
 
 # Add actual boot features.
