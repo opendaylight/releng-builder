@@ -24,11 +24,29 @@
           karaf-version: odl
           # Self-Managed projects repos and features:
           sm-repos: >
+<<<<<<< HEAD
             mvn:org.opendaylight.sxp/features-sxp//xml/features,
             mvn:org.opendaylight.unimgr/features4-unimgr//xml/features
           sm-features: >
             odl-sxp-routing,
             odl-unimgr-rest
+=======
+              mvn:org.opendaylight.sxp/features-sxp//xml/features,
+              mvn:org.opendaylight.tsdr/features-tsdr//xml/features
+          sm-features: >
+              odl-sxp-routing,
+              odl-tsdr-core,
+              odl-tsdr-openflow-statistics-collector,
+              odl-tsdr-netflow-statistics-collector,
+              odl-tsdr-restconf-collector,
+              odl-tsdr-syslog-collector,
+              odl-tsdr-controller-metrics-collector,
+              odl-tsdr-cassandra,
+              odl-tsdr-hbase,
+              odl-tsdr-hsqldb,
+              odl-tsdr-elasticsearch
+
+>>>>>>> 4de9e0b... Add TSDR to Distribution Sanity Test
       - oxygen:
           branch: 'stable/oxygen'
           karaf-version: karaf4
