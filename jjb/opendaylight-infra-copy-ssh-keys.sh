@@ -24,6 +24,11 @@ function copy-ssh-keys-to-slave() {
             break
         elif [ "$j" -eq $RETRIES ]; then
             echo "SSH not responding on ${i} after $RETIRES tries. Giving up."
+
+            server=$(openstack port list -f value -c device_id --fixed-ip ip-address="${i}")
+            echo "Dumping console logs for $server ${i}"
+            openstack console log show "$server"
+
             exit 1
         else
             echo "SSH not responding on ${i}. Retrying in 10 seconds..."
