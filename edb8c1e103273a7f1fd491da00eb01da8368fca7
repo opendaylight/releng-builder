@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb959212_28768b0c",
+        "filename": "jjb/integration/integration-install-robotframework.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2018-08-04T19:24:52Z",
+      "side": 1,
+      "message": "sudo pip install should never be used together imo as it really does break system level packages.\n\nHmm.... another idea I have is to use the user flag. How about you try this:\n\n pip3 install --user \u003cpython-3-packages\u003e\n\nThis way it will install python 3 stuff to ~/.local/share/python instead of the system level.\n\nEffectively it should work similar to system level install packages but without having to `sudo pip install` stuff.",
+      "revId": "edb8c1e103273a7f1fd491da00eb01da8368fca7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
