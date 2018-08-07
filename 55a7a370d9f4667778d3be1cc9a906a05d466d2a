@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8207b9ea_e77e5bf9",
+        "filename": "jjb/netvirt/netvirt-job-reports.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2018-08-07T15:20:11Z",
+      "side": 1,
+      "message": "Do we need 8GB to generate the reports?",
+      "revId": "55a7a370d9f4667778d3be1cc9a906a05d466d2a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "adf32356_d7e601d6",
+        "filename": "jjb/netvirt/netvirt-job-reports.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2018-08-07T15:20:11Z",
+      "side": 1,
+      "message": "I would put underscores for these variables to make it really clear. JOB_NAMES, NUM_JOBS, REPORT_PATH, LOG_URL, etc...",
+      "range": {
+        "startLine": 35,
+        "startChar": 16,
+        "endLine": 35,
+        "endChar": 24
+      },
+      "revId": "55a7a370d9f4667778d3be1cc9a906a05d466d2a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a297c813_397cb94f",
+        "filename": "jjb/netvirt/netvirt-job-reports.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2018-08-07T15:20:11Z",
+      "side": 1,
+      "message": "I usually don\u0027t recommend inlining bash scripts like this. It would be better to create a \"jjb/netvirt/shell\" and putting all the netvirt managed scripts in there with a filename suffix of \u0027.sh\u0027 so that the ShellCheck linter can pick it up.",
+      "range": {
+        "startLine": 70,
+        "startChar": 6,
+        "endLine": 70,
+        "endChar": 16
+      },
+      "revId": "55a7a370d9f4667778d3be1cc9a906a05d466d2a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b2e3b66f_6a080445",
+        "filename": "jjb/netvirt/netvirt-job-reports.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2018-08-07T15:20:11Z",
+      "side": 1,
+      "message": "We shouldn\u0027t use $WORKSPACE or we will hit that character limit issue we ran into before. Use /tmp/v/odltools instead for example.",
+      "range": {
+        "startLine": 75,
+        "startChar": 10,
+        "endLine": 77,
+        "endChar": 45
+      },
+      "revId": "55a7a370d9f4667778d3be1cc9a906a05d466d2a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
