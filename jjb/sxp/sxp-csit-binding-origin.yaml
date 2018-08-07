@@ -1,0 +1,29 @@
+---
+- project:
+    name: sxp-csit-binding-origin
+    jobs:
+      - inttest-csit-1node
+
+    # The project name
+    project: 'sxp'
+
+    # The functionality under test
+    functionality: 'binding-origin'
+
+    # Project branches
+    stream:
+      - fluorine:
+          branch: 'master'
+          trigger-jobs: '{project}-merge-{stream}'
+          # yamllint disable-line rule:line-length
+          repo-url: 'mvn:org.opendaylight.sxp/features-sxp/1.7.0-SNAPSHOT/xml/features'
+
+    install:
+      - all:
+          scope: 'all'
+
+    # Features to install
+    install-features: 'odl-restconf,odl-sxp-controller'
+
+    # Robot custom options
+    robot-options: ''
