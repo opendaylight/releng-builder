@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "9810ba2c_363245b6",
+        "filename": "jjb/integration/integration-install-robotframework.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2018-08-08T23:59:19Z",
+      "side": 1,
+      "message": "#!/bin/bash -l\n\nThat is the lower case L.\n\nI found out recently that if we want to use --user we need bash -l to ensure that the path ~/.local/bin is set. Jenkins agent does not start an interactive shell so does not set the PATH variable the same way an interactive shell would set.\n\nThis means any scripts that need to use a tool that comes from the `pip install --user` calls here need to also initiate their shell with the -l parameter.",
+      "revId": "255dd62562978fed806631c28387ebf92bae6672",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d4137a6_53dd4a93",
         "filename": "jjb/integration/integration-install-robotframework.sh",
         "patchSetId": 7
