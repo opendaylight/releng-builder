@@ -40,7 +40,7 @@
 - job-template:
     name: 'packaging-build-rpm-{stream}'
 
-    node: centos7-builder-2c-8g
+    node: centos7-builder-2c-2g
 
     project-type: freestyle
 
@@ -111,7 +111,7 @@
 - job-template:
     name: 'packaging-build-rpm-{distro}-snap-{stream}'
 
-    node: centos7-docker-2c-8g
+    node: centos7-docker-2c-2g
 
     project-type: freestyle
 
@@ -180,7 +180,7 @@
 - job-template:
     name: 'packaging-verify-rpm-master'
 
-    node: centos7-builder-2c-8g
+    node: centos7-builder-2c-2g
 
     project-type: freestyle
 
@@ -253,7 +253,7 @@
 - job-template:
     name: 'packaging-verify-full-rpm-master'
 
-    node: centos7-builder-2c-8g
+    node: centos7-builder-2c-2g
 
     project-type: freestyle
 
@@ -348,7 +348,7 @@
 - job-template:
     name: 'packaging-test-rpm-master'
 
-    node: centos7-builder-2c-8g
+    node: centos7-builder-2c-2g
 
     parameters:
       - opendaylight-infra-parameters:
@@ -402,7 +402,7 @@
 - job-template:
     name: 'packaging-test-rpm-upgrade-master'
 
-    node: centos7-builder-2c-8g
+    node: centos7-builder-2c-2g
 
     parameters:
       - opendaylight-infra-parameters:
