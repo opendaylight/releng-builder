@@ -19,8 +19,11 @@
     functionality: 'openstack'
 
     stream:
-      - fluorine:
+      - neon:
           branch: 'master'
+          install-features: 'odl-groupbasedpolicy-neutron-and-ofoverlay,odl-restconf'
+      - fluorine:
+          branch: 'stable/fluorine'
           install-features: 'odl-groupbasedpolicy-neutron-and-ofoverlay,odl-restconf'
       - oxygen:
           branch: 'stable/oxygen'

@@ -13,8 +13,10 @@
       - gerrit-tox-verify
 
     stream:
-      - fluorine:
+      - neon:
           branch: 'master'
+      - fluorine:
+          branch: 'stable/fluorine'
           integration-test: fluorine
           extra-mvn-opts: -P!karaf -Pignore-lispflowmapping-integrationtest -Dsft.heap.max=4g
               -Dskip.karaf.featureTest=true
