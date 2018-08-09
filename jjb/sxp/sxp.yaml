@@ -1,5 +1,22 @@
 ---
 - project:
+    name: sxp-neon
+    jobs:
+      - odl-maven-jobs
+
+    stream: neon
+    project: 'sxp'
+    project-name: 'sxp'
+    branch: 'master'
+    mvn-settings: 'sxp-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: 'odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream}'
+    email-upstream: '[sxp] [odlparent] [controller] [yangtools]'
+
+    # Used by the release job
+    staging-profile-id: a6909c75719b7
+
+- project:
     name: sxp-fluorine
     jobs:
       - odl-maven-jobs
@@ -7,7 +24,7 @@
     stream: fluorine
     project: 'sxp'
     project-name: 'sxp'
-    branch: 'master'
+    branch: 'stable/fluorine'
     mvn-settings: 'sxp-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream}'
