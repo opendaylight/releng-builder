@@ -19,8 +19,10 @@
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     email-upstream: '[int/dist]'
     stream:
-      - fluorine:
+      - neon:
           branch: 'master'
+      - fluorine:
+          branch: 'stable/fluorine'
           karaf-version: odl
           # Self-Managed projects repos and features:
           sm-repos: >

@@ -1,5 +1,23 @@
 ---
 - project:
+    name: unimgr-neon
+    jobs:
+      - odl-maven-jobs
+
+    stream: neon
+    project: 'unimgr'
+    project-name: 'unimgr'
+    branch: 'master'
+    mvn-settings: 'unimgr-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: 'ovsdb-merge-{stream}'
+    email-upstream: '[unimgr] [ovsdb]'
+    build-node: centos7-builder-4c-16g
+
+    # Used by the release job
+    staging-profile-id: a695d0a0b8d51
+
+- project:
     name: unimgr-fluorine
     jobs:
       - odl-maven-jobs
@@ -7,7 +25,7 @@
     stream: fluorine
     project: 'unimgr'
     project-name: 'unimgr'
-    branch: 'master'
+    branch: 'stable/fluorine'
     mvn-settings: 'unimgr-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'ovsdb-merge-{stream}'

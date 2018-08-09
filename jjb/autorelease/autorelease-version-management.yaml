@@ -11,7 +11,9 @@
     build-node: centos7-builder-2c-8g
 
     stream:
-      - fluorine:
+      - neon:
           branch: 'master'
+      - fluorine:
+          branch: 'stable/fluorine'
       - oxygen:
           branch: 'stable/oxygen'
