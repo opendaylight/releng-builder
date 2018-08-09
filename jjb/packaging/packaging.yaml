@@ -441,7 +441,7 @@
       - string:
           name: URL
           # yamllint disable-line rule:line-length
-          default: 'https://raw.githubusercontent.com/opendaylight/integration-packaging/master/packages/rpm/example_repo_configs/opendaylight-8-release.repo'
+          default: 'https://raw.githubusercontent.com/opendaylight/integration-packaging/master/packages/rpm/example_repo_configs/opendaylight-80-release.repo'
           description: 'Link to .repo or .rpm file'
       - string:
           name: UPGRADE_URL
@@ -460,20 +460,59 @@
           build-timeout: '{build-timeout}'
 
     builders:
-      - shell: !include-raw-escape: install-rpm.sh
-      - shell: !include-raw: start-odl.sh
+      # Tests (current and future):
+      #   * TODO: Install latest release, stop/uninstall, install latest CD
+      #   * Upgrade from latest release latest CD
+      #   * TODO: Upgrade from latest release to proposed packaging/** logic
+      #   * TODO: Upgrade from CD to proposed packaging/** logic
+      #   * TODO: Upgrade from proposed packaging/** logic (older ODL) to
+      #     proposed packaging logic (latest ODL)
+
+      # Install latest release, stop/uninstall, install latest CD
+      - inject:
+          # yamllint disable-line rule:line-length
+          properties-content: 'URL=https://raw.githubusercontent.com/opendaylight/integration-packaging/master/packages/rpm/example_repo_configs/opendaylight-80-release.repo'
+      - install-start-test-stop-uninstall-rpm
+      - inject:
+          # yamllint disable-line rule:line-length
+          properties-content: 'URL=https://raw.githubusercontent.com/opendaylight/integration-packaging/master/packages/rpm/example_repo_configs/opendaylight-8-devel.repo'
+      - install-start-test-stop-uninstall-rpm
+
       - shell: |
-          # Install expect to interact with Karaf shell
-          sudo yum install -y expect
-          # Install nmap to check status of ODL's SSH port
-          sudo yum install -y nmap
-      - shell: !include-raw: test-karaf-oxygensafe.expect
-      - shell: !include-raw: stop-odl.sh
-      - shell: !include-raw: test-rpm-upgrade.sh
-      - shell: !include-raw: start-odl.sh
-      - shell: !include-raw: test-karaf-oxygensafe.expect
-      - shell: !include-raw: stop-odl.sh
-      - shell: !include-raw: uninstall-rpm.sh
+          echo "End of under-dev test"
+          exit 1
+
+      # Upgrade from latest release to latest CD
+      - inject:
+          # yamllint disable-line rule:line-length
+          properties-content: 'URL=https://raw.githubusercontent.com/opendaylight/integration-packaging/master/packages/rpm/example_repo_configs/opendaylight-80-release.repo'
+      - install-rpm
+      - start-odl
+      - test-odl
+      - stop-odl
+      - inject:
+          # yamllint disable-line rule:line-length
+          properties-content: 'REPO_CFG_FILE_URL=https://raw.githubusercontent.com/opendaylight/integration-packaging/master/packages/rpm/example_repo_configs/opendaylight-8-devel.repo'
+      - install-repo-cfg-rpm
+      - upgrade-odl
+      - start-odl
+      - test-odl
+      - stop-odl
+
+      # Cleanup
+      - uninstall-rpm
+      - shell: |
+          echo "End of under-dev test"
+          exit 1
+
+
+    triggers:
+      - gerrit-trigger-patch-submitted:
+          gerrit-server-name: '{gerrit-server-name}'
+          project: '{project}'
+          branch: '{branch}'
+          files: 'packages/**'
+          forbidden-files: ''
 
     publishers:
       - lf-infra-publish
