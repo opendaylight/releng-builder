@@ -41,6 +41,11 @@ for module in "${modules[@]}"; do
     echo "Include $module"
     echo "      - ${module//\//-}:" >> "$YAML_FILE"
     echo "          project: $module" >> "$YAML_FILE"
+
+    # TODO: Remove this once mdsal fully becomes an MRI project.
+    if [ "$module" == "mdsal" ]; then
+        echo "          branch: v2.6.x" >> "$YAML_FILE"
+    fi
 done
 
 git add "${YAML_FILE}"
