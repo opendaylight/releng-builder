@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ae31cc6_035c2f2d",
+        "filename": "jjb/autorelease/update-validate-autorelease-projects.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 8231
+      },
+      "writtenOn": "2018-08-09T22:14:27Z",
+      "side": 1,
+      "message": "\u0027[[]]\u0027 understands \u0027\u0026\u0026\u0027 plus \u0027[[]]\u0027 handles case where $module contains spaces (or is empty) so this is just as robust :\nif [[ $module \u003d\u003d mdsal \u0026\u0026 $BRANCH \u003d\u003d master ]]; then\n\nThis has already been merged, but you might consider this approach in the future. The \u0027[]\u0027 was to provide backward compatibility for the Bourne shell. Unless you need to support \u0027dash\u0027 (which does not support \u0027[[]]\u0027)",
+      "revId": "01795e45f5f4878079d099ca6fb756bdedd34ee5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
