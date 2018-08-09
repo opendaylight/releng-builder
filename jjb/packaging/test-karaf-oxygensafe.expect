@@ -18,6 +18,7 @@ send_user "Waiting on OpenDaylight to start listening for SSH on port 8101\n"
 exec bash -c "while ! nmap -Pn -p8101 localhost | grep -q open; do sleep 0.1; done"
 
 # SSH into Karaf shell
+send_user "SSH into ODL Karaf shell\n"
 spawn ssh -p 8101 -o StrictHostKeyChecking=no karaf@127.0.0.1
 
 # Auth to Karaf shell
@@ -26,8 +27,18 @@ expect "Password: "
 send "$password\r"
 
 # Show features to make debugging easier
+# Check for "No features available" error message
 expect "$prompt"
 send "feature:list\r"
+expect {{
+  timeout {{
+    send_user "\nFeatures seem to be available\n"
+  }}
+  "No features available" {{
+    send_user "\nNo features available, error\n"
+    exit 1
+  }}
+}}
 
 # Verify that a major feature is present
 expect "$prompt"
@@ -66,3 +77,5 @@ expect {{
 #     send_user "\nTest feature installed successfully\n"
 #   }}
 # }}
+
+send_user "End of Karaf shell tests\n"
