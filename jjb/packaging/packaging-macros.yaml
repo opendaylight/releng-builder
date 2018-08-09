@@ -1,6 +1,75 @@
 # Integration/Packaging macros
 ---
 - builder:
+    name: install-rpm
+    builders:
+      - shell: !include-raw: install-rpm.sh
+
+- builder:
+    name: install-repo-cfg-rpm
+    builders:
+      - shell: |
+          # shellcheck disable=SC2154
+          repo_file="${REPO_CFG_FILE_URL##*/}"
+          sudo curl -s -o /etc/yum.repos.d/"$repo_file" "$REPO_CFG_FILE_URL"
+
+- builder:
+    name: start-odl
+    builders:
+      - shell: !include-raw: start-odl.sh
+
+- builder:
+    name: test-odl
+    builders:
+      - shell: |
+          # Install expect to interact with Karaf shell
+          # Install nmap to check status of ODL's SSH port
+          sudo yum install -y expect nmap
+      - shell: !include-raw: test-ports-nofeature.sh
+      - shell: !include-raw: test-karaf-oxygensafe.expect
+      # Disable this test until ODLPARENT-139 is fixed
+      # - shell: !include-raw: test-rest-ok.sh
+
+- builder:
+    name: stop-odl
+    builders:
+      - shell: !include-raw: stop-odl.sh
+
+- builder:
+    name: uninstall-rpm
+    builders:
+      - shell: !include-raw: uninstall-rpm.sh
+
+- builder:
+    name: upgrade-odl
+    builders:
+      - shell: |
+          sudo yum upgrade -y opendaylight
+
+- builder:
+    name: install-start-test-stop-rpm
+    builders:
+      - install-rpm
+      - start-odl
+      - test-odl
+      - stop-odl
+
+- builder:
+    name: install-start-test-stop-uninstall-rpm
+    builders:
+      - install-start-test-stop-rpm
+      - uninstall-rpm
+
+- builder:
+    name: installrepcfg-upgrade-start-test-stop-rpm
+    builders:
+      - install-repo-cfg-rpm
+      - upgrade-odl
+      - start-odl
+      - test-odl
+      - stop-odl
+
+- builder:
     name: install-test-uninstall-rpm
     builders:
       - inject:
