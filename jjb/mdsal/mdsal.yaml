@@ -52,7 +52,7 @@
     branch: 'v2.6.x'
     mvn-settings: 'mdsal-settings'
     mvn-goals: '-Dmaven.compile.fork=true clean deploy -Dintegrationtests'
-    mvn-opts: '-Xmx2048m -XX:MaxPermSize=1024m'
+    mvn-opts: '-Xmx2048m'
     build-node: centos7-builder-8c-8g
     build-timeout: 90
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream}'
@@ -81,7 +81,7 @@
     branch: 'stable/fluorine'
     mvn-settings: 'mdsal-settings'
     mvn-goals: '-Dmaven.compile.fork=true clean deploy -Dintegrationtests'
-    mvn-opts: '-Xmx2048m -XX:MaxPermSize=1024m'
+    mvn-opts: '-Xmx2048m'
     build-node: centos7-builder-8c-8g
     build-timeout: 90
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream}'
@@ -110,7 +110,7 @@
     branch: 'stable/oxygen'
     mvn-settings: 'mdsal-settings'
     mvn-goals: '-Dmaven.compile.fork=true clean deploy -Dintegrationtests'
-    mvn-opts: '-Xmx2048m -XX:MaxPermSize=1024m'
+    mvn-opts: '-Xmx2048m'
     build-node: centos7-builder-8c-8g
     build-timeout: 90
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream}'
@@ -129,7 +129,7 @@
     build-node: centos7-builder-8c-8g
     mvn-settings: 'mdsal-settings'
     mvn-goals: '-Dmaven.compile.fork=true clean deploy -Dintegrationtests'
-    mvn-opts: '-Xmx2048m -XX:MaxPermSize=1024m'
+    mvn-opts: '-Xmx2048m'
 
 - view:
     name: mdsal
