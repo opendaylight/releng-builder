@@ -19,8 +19,8 @@ pip install --upgrade cmd2==0.8.5 python-openstackclient python-heatclient
 pip freeze
 
 # TODO: Remove the if-statement once we have fully migrated to /opt/ciman
-if [ -d "/opt/ciman" ]; then
-    cd /opt/ciman || exit 1
+if [ -d "/opt/ciman/openstack-hot" ]; then
+    cd /opt/ciman/openstack-hot || exit 1
 else
     cd /builder/openstack-hot || exit 1
 fi
