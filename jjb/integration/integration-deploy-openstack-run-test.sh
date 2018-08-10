@@ -265,7 +265,7 @@ EOF
             ENABLE_PLUGIN_ARGS="${DEVSTACK_LBAAS_PLUGIN_REPO} ${OPENSTACK_BRANCH}"
             IS_LBAAS_PLUGIN_ENABLED="yes"
         elif [ "$plugin_name" == "networking-sfc" ]; then
-            ENABLE_PLUGIN_ARGS="${DEVSTACK_NETWORKING_SFC_PLUGIN_REPO} master"
+            ENABLE_PLUGIN_ARGS="${DEVSTACK_NETWORKING_SFC_PLUGIN_REPO} ${OPENSTACK_BRANCH}"
             IS_SFC_PLUGIN_ENABLED="yes"
         else
             echo "Error: Invalid plugin $plugin_name, unsupported"
