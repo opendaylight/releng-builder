@@ -21,6 +21,25 @@
     stream:
       - neon:
           branch: 'master'
+          karaf-version: odl
+          # Self-Managed projects repos and features:
+          sm-repos: >
+              mvn:org.opendaylight.sxp/features-sxp//xml/features,
+              mvn:org.opendaylight.tsdr/features-tsdr//xml/features,
+              mvn:org.opendaylight.unimgr/features4-unimgr//xml/features
+          sm-features: >
+              odl-sxp-routing,
+              odl-tsdr-core,
+              odl-tsdr-openflow-statistics-collector,
+              odl-tsdr-netflow-statistics-collector,
+              odl-tsdr-restconf-collector,
+              odl-tsdr-syslog-collector,
+              odl-tsdr-controller-metrics-collector,
+              odl-tsdr-cassandra,
+              odl-tsdr-hbase,
+              odl-tsdr-hsqldb,
+              odl-tsdr-elasticsearch,
+              odl-unimgr-rest
       - fluorine:
           branch: 'stable/fluorine'
           karaf-version: odl
