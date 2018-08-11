@@ -499,8 +499,6 @@
           settings-type: cfp
           global-settings: global-settings
           global-settings-type: cfp
-      # Hack to workaround the duplicate-finder plugin in odlparent breaking validate-autorelease
-      - shell: sed -i 's/validate/none/' /tmp/r/org/opendaylight/odlparent/odlparent/3.0.2/odlparent-3.0.2.pom || true
       - maven-target:
           maven-version: mvn35
           pom: pom.xml
