@@ -556,14 +556,16 @@
               build-steps:
                 - shell: |
                     #!/bin/bash
+                    echo "Archiving csit artifacts"
                     cd $WORKSPACE
                     mkdir -p ./archives
                     for i in `seq 1 ${NUM_ODL_SYSTEM}`; do
                         NODE_FOLDER="./archives/odl_${i}"
                         mkdir -p ${NODE_FOLDER}
-                        mv odl${i}_karaf* ${NODE_FOLDER} || true
+                        mv odl${i}_* ${NODE_FOLDER} || true
                         mv karaf_${i}_*_threads* ${NODE_FOLDER} || true
                         mv *_${i}.png ${NODE_FOLDER} || true
+                        mv /tmp/odl${i}_* ${NODE_FOLDER} || true
                     done
                     curl --output robot-plugin.zip "$BUILD_URL/robot/report/*zip*/robot-plugin.zip"
                     unzip -d ./archives robot-plugin.zip
