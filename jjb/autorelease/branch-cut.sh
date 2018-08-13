@@ -34,6 +34,10 @@ if [ -z "$RELEASE" ]; then
     exit 1
 fi
 
+git config gitreview.username jenkins-releng
+git submodule foreach git review -s
+git review -s
+
 # --- Start create new maintenance branch
 echo "---> Creating new mainenance branch"
 git submodule foreach git fetch origin
