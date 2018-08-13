@@ -561,7 +561,7 @@
                     for i in `seq 1 ${NUM_ODL_SYSTEM}`; do
                         NODE_FOLDER="./archives/odl_${i}"
                         mkdir -p ${NODE_FOLDER}
-                        mv odl${i}_karaf* ${NODE_FOLDER} || true
+                        mv odl${i}_* ${NODE_FOLDER} || true
                         mv karaf_${i}_*_threads* ${NODE_FOLDER} || true
                         mv *_${i}.png ${NODE_FOLDER} || true
                     done
