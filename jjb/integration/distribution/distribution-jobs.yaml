@@ -86,8 +86,27 @@
     karaf-version: karaf4
 
     stream:
-      - fluorine:
+      - neon:
           branch: 'master'
+          dependencies: >
+              aaa-merge-{stream},
+              bgpcep-merge-{stream},
+              coe-merge-{stream},
+              controller-merge-{stream},
+              daexim-merge-{stream},
+              genius-merge-{stream},
+              infrautils-merge-{stream},
+              lispflowmapping-merge-{stream},
+              mdsal-merge-{stream},
+              netconf-merge-{stream},
+              netvirt-merge-{stream}
+              neutron-merge-{stream},
+              openflowplugin-merge-{stream},
+              ovsdb-merge-{stream},
+              serviceutils-merge-{stream},
+              sfc-merge-{stream}
+      - fluorine:
+          branch: 'stable/fluorine'
           dependencies: >
               aaa-merge-{stream},
               bgpcep-merge-{stream},
@@ -164,8 +183,16 @@
     karaf-version: odl
 
     stream:
-      - fluorine:
+      - neon:
           branch: 'master'
+          karaf-version: odl
+          dependencies: >
+              distribution-merge-managed-{stream},
+              sxp-merge-{stream},
+              tsdr-merge-{stream},
+              unimgr-merge-{stream}
+      - fluorine:
+          branch: 'stable/fluorine'
           karaf-version: odl
           dependencies: >
               distribution-merge-managed-{stream},

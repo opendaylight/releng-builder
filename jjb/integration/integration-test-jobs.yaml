@@ -53,8 +53,17 @@
 
     # CSIT Lists in defaults.yaml
     stream:
-      - fluorine:
+      - neon:
           branch: 'master'
+          csit-blacklist: >
+              alto bier capwap centinel didm dluxapps groupbasedpolicy iotdm jsonrpc lacp
+              l2switch messaging4transport nemo netide nic ocpplugin of-config p4plugin packetcable
+              sdninterfaceapp sxp tsdr unimgr usc usecplugin vtn gate longevity sanity tdd tempest wip
+          csit-list: !include: csit-jobs-neon.lst
+          csit-weekly-list: '{csit-weekly-list-neon}'
+          csit-high-frequency-list: '{csit-high-frequency-list-neon}'
+      - fluorine:
+          branch: 'stable/fluorine'
           csit-blacklist: >
               alto bier capwap centinel didm dluxapps groupbasedpolicy iotdm jsonrpc lacp
               l2switch messaging4transport nemo netide nic ocpplugin of-config p4plugin packetcable
@@ -79,8 +88,12 @@
       - 'integration-sanity-test-{stream}'
 
     stream:
-      - fluorine:
+      - neon:
           branch: 'master'
+          karaf-version: odl
+          csit-sanity-list: '{csit-sanity-list-neon}'
+      - fluorine:
+          branch: 'stable/fluorine'
           karaf-version: odl
           csit-sanity-list: '{csit-sanity-list-fluorine}'
       - oxygen:
