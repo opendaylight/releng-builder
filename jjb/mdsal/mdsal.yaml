@@ -37,6 +37,7 @@
     jobs:
       - '{project-name}-distribution-check-{stream}':
           mvn-version: 'mvn35'
+          distribution_branch: master
       - '{project-name}-maven-javadoc-jobs':
           mvn-version: 'mvn33'
       - '{project-name}-rtd-jobs':
