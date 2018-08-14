@@ -20,27 +20,7 @@ fi
 # and ending in newline. Remove all that.
 ACTUALFEATURES=`echo "${ACTUALFEATURES}" | tr -d '\n \r'`
 
-# Utility function for joining strings.
-function join {
-    delim=' '
-    final=$1; shift
-
-    for str in "$@" ; do
-        final=${final}${delim}${str}
-    done
-
-    echo ${final}
-}
-
-# Create the string for nodes
-for i in `seq 1 ${NUM_ODL_SYSTEM}` ; do
-    CONTROLLERIP=ODL_SYSTEM_${i}_IP
-    nodes[$i]=${!CONTROLLERIP}
-done
-
-nodes_list=$(join "${nodes[@]}")
-
-echo ${nodes_list}
+nodes_list=${get_node_list}
 
 run_plan "script"
 

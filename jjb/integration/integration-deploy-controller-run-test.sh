@@ -30,6 +30,8 @@ echo "ACTUALFEATURES: ${ACTUALFEATURES}"
 SPACE_SEPARATED_FEATURES=$(echo "${ACTUALFEATURES}" | tr ',' ' ')
 echo "SPACE_SEPARATED_FEATURES: ${SPACE_SEPARATED_FEATURES}"
 
+nodes_list=${get_node_list}
+
 run_plan "script"
 
 cat > ${WORKSPACE}/configuration-script.sh <<EOF
@@ -72,27 +74,24 @@ set_java_vars "${JAVA_HOME}" "${CONTROLLERMEM}" "${MEMCONF}"
 echo "Listing all open ports on controller system..."
 netstat -pnatu
 
-if [ "${ENABLE_HAPROXY_FOR_NEUTRON}" == "yes" ]; then
-
-    # Copy shard file if exists
-    if [ -f /tmp/custom_shard_config.txt ]; then
-        echo "Custom shard config exists!!!"
-        echo "Copying the shard config..."
-        cp /tmp/custom_shard_config.txt /tmp/${BUNDLEFOLDER}/bin/
-    fi
-
-    echo "Configuring cluster"
-    /tmp/${BUNDLEFOLDER}/bin/configure_cluster.sh \$1 \$2
-
-    echo "Dump akka.conf"
-    cat ${AKKACONF}
-
-    echo "Dump modules.conf"
-    cat ${MODULESCONF}
-
-     echo "Dump module-shards.conf"
-     cat ${MODULESHARDSCONF}
+# Copy shard file if exists
+if [ -f /tmp/custom_shard_config.txt ]; then
+    echo "Custom shard config exists!!!"
+    echo "Copying the shard config..."
+    cp /tmp/custom_shard_config.txt /tmp/${BUNDLEFOLDER}/bin/
 fi
+
+echo "Configuring cluster"
+/tmp/${BUNDLEFOLDER}/bin/configure_cluster.sh \$1 ${nodes_list}
+
+echo "Dump akka.conf"
+cat ${AKKACONF}
+
+echo "Dump modules.conf"
+cat ${MODULESCONF}
+
+ echo "Dump module-shards.conf"
+ cat ${MODULESHARDSCONF}
 
 EOF
 # cat > ${WORKSPACE}/configuration-script.sh <<EOF
