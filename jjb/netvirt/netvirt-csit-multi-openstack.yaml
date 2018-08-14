@@ -253,14 +253,14 @@
     project: 'netvirt'
     security-group-mode: 'stateful'
     odl_system_flavor: odl-highcpu-4
-    openstack_system2_flavor: odl-highcpu-2
+    openstack_system2_flavor: odl-highcpu-8
     os-cmb-cnt: 0
     os-ctl-cnt: 1
-    os-cmp-cnt: 2
+    os-cmp-cnt: 1
 
     topology:
       - 1node:
-          openstack_system2_count: 2
+          openstack_system2_count: 1
           odl_system_count: 1
           enable-haproxy: 'no'
           install-features: 'odl-netvirt-sfc'
@@ -275,8 +275,10 @@
     stream:
       - fluorine:
           branch: 'master'
+          ovs-install: 'v2.9.2'    
       - oxygen:
           branch: 'stable/oxygen'
+          ovs-install: 'v2.6.1-nsh'
 
     openstack:
       - queens:
