@@ -697,7 +697,7 @@ echo "::1         localhost \${HOSTNAME}" >> /tmp/hosts
 sudo mv /tmp/hosts /etc/hosts
 sudo mkdir /opt/stack
 echo "Create RAM disk for /opt/stack"
-sudo mount -t tmpfs -o size=2G tmpfs /opt/stack
+sudo mount -t tmpfs -o size=12G tmpfs /opt/stack
 sudo chmod 777 /opt/stack
 cd /opt/stack
 echo "git clone https://git.openstack.org/openstack-dev/devstack --branch ${OPENSTACK_BRANCH}"
@@ -726,6 +726,17 @@ sudo nova-manage db sync
 sudo nova-manage cell_v2 discover_hosts
 EOF
 
+cat > "${WORKSPACE}/workaround_networking_sfc.sh" << EOF
+cd /opt/stack
+git clone https://git.openstack.org/openstack/networking-sfc
+cd networking-sfc
+git checkout ${OPENSTACK_BRANCH}
+git checkout master -- devstack/plugin.sh
+EOF
+
+NUM_OPENSTACK_SITES=${NUM_OPENSTACK_SITES:-1}
+compute_index=1
+odl_index=1
 os_node_list=()
 
 if [ "${ENABLE_HAPROXY_FOR_NEUTRON}" == "yes" ]; then
@@ -782,6 +793,10 @@ for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
     if [ "${ODL_ML2_BRANCH}" == "stable/queens" ]; then
        ssh ${!CONTROLIP} "sed -i 's/flat_networks public/flat_networks public,physnet1/' /opt/stack/devstack/lib/neutron"
        ssh ${!CONTROLIP} "sed -i '186i iniset \$NEUTRON_CORE_PLUGIN_CONF ml2_type_vlan network_vlan_ranges public:1:4094,physnet1:1:4094' /opt/stack/devstack/lib/neutron"
+       if [[ "${ENABLE_OS_PLUGINS}" =~ networking-sfc ]]; then
+           scp ${WORKSPACE}/workaround_networking_sfc.sh ${!CONTROLIP}:/tmp/
+           ssh ${!CONTROLIP} "bash -x /tmp/workaround_networking_sfc.sh"
+       fi
     fi
     create_control_node_local_conf ${!CONTROLIP} ${ODLMGRIP} "${ODL_OVS_MGRS}"
     scp ${WORKSPACE}/local.conf_control_${!CONTROLIP} ${!CONTROLIP}:/opt/stack/devstack/local.conf
