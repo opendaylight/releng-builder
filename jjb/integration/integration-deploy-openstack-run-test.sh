@@ -14,6 +14,8 @@ PYTHON="${ROBOT_VENV}/bin/python"
 SSH="ssh -t -t"
 ADMIN_PASSWORD="admin"
 OPENSTACK_MASTER_CLIENTS_VERSION="queens"
+#Size of the partition to /opt/stack in control and compute nodes
+TMPFS_SIZE=2G
 
 # TODO: remove this work to run changes.py if/when it's moved higher up to be visible at the Robot level
 printf "\nshowing recent changes that made it into the distribution used by this job:\n"
@@ -683,6 +685,10 @@ sudo iptables --line-numbers -nvL
 true
 EOF
 
+#For SFC Tests a larger partition is required for creating instances with Ubuntu
+if [[ "${ENABLE_OS_PLUGINS}" =~ networking-sfc ]]; then
+   TMPFS_SIZE=12G
+fi
 cat > ${WORKSPACE}/get_devstack.sh << EOF
 sudo systemctl stop firewalld
 sudo yum install bridge-utils python-pip -y
@@ -697,7 +703,7 @@ echo "::1         localhost \${HOSTNAME}" >> /tmp/hosts
 sudo mv /tmp/hosts /etc/hosts
 sudo mkdir /opt/stack
 echo "Create RAM disk for /opt/stack"
-sudo mount -t tmpfs -o size=2G tmpfs /opt/stack
+sudo mount -t tmpfs -o size=${TMPFS_SIZE} tmpfs /opt/stack
 sudo chmod 777 /opt/stack
 cd /opt/stack
 echo "git clone https://git.openstack.org/openstack-dev/devstack --branch ${OPENSTACK_BRANCH}"
@@ -726,6 +732,16 @@ sudo nova-manage db sync
 sudo nova-manage cell_v2 discover_hosts
 EOF
 
+cat > "${WORKSPACE}/workaround_networking_sfc.sh" << EOF
+cd /opt/stack
+git clone https://git.openstack.org/openstack/networking-sfc
+cd networking-sfc
+git checkout ${OPENSTACK_BRANCH}
+git checkout master -- devstack/plugin.sh
+EOF
+
+NUM_OPENSTACK_SITES=${NUM_OPENSTACK_SITES:-1}
+compute_index=1
 os_node_list=()
 
 if [ "${ENABLE_HAPROXY_FOR_NEUTRON}" == "yes" ]; then
@@ -782,6 +798,13 @@ for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
     if [ "${ODL_ML2_BRANCH}" == "stable/queens" ]; then
        ssh ${!CONTROLIP} "sed -i 's/flat_networks public/flat_networks public,physnet1/' /opt/stack/devstack/lib/neutron"
        ssh ${!CONTROLIP} "sed -i '186i iniset \$NEUTRON_CORE_PLUGIN_CONF ml2_type_vlan network_vlan_ranges public:1:4094,physnet1:1:4094' /opt/stack/devstack/lib/neutron"
+       #Workaround for networking-sfc to configure the paramaters in neutron.conf if the
+       # services used are neutron-api, neutron-dhcp etc instead of q-agt.
+       # Can be removed if the patch https://review.openstack.org/#/c/596287/ gets merged
+       if [[ "${ENABLE_OS_PLUGINS}" =~ networking-sfc ]]; then
+           scp ${WORKSPACE}/workaround_networking_sfc.sh ${!CONTROLIP}:/tmp/
+           ssh ${!CONTROLIP} "bash -x /tmp/workaround_networking_sfc.sh"
+       fi
     fi
     create_control_node_local_conf ${!CONTROLIP} ${ODLMGRIP} "${ODL_OVS_MGRS}"
     scp ${WORKSPACE}/local.conf_control_${!CONTROLIP} ${!CONTROLIP}:/opt/stack/devstack/local.conf
