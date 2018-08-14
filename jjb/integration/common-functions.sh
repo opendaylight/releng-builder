@@ -582,3 +582,26 @@ EOF
         echo "tempest results not found in ${DEVSTACK_TEMPEST_DIR}/${TESTREPO}/0"
     fi
 } # collect_netvirt_logs()
+
+# Utility function for joining strings.
+function join() {
+    delim=' '
+    final=$1; shift
+
+    for str in "$@" ; do
+        final=${final}${delim}${str}
+    done
+
+    echo ${final}
+}
+
+function get_nodes_list() {
+    # Create the string for nodes
+    for i in `seq 1 ${NUM_ODL_SYSTEM}` ; do
+        CONTROLLERIP=ODL_SYSTEM_${i}_IP
+        nodes[$i]=${!CONTROLLERIP}
+    done
+
+    nodes_list=$(join "${nodes[@]}")
+    echo ${nodes_list}
+}
