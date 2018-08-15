@@ -709,31 +709,22 @@ sudo nova-manage db sync
 sudo nova-manage cell_v2 discover_hosts
 EOF
 
-NUM_OPENSTACK_SITES=${NUM_OPENSTACK_SITES:-1}
-compute_index=1
-odl_index=1
 os_node_list=()
-os_interval=$(( ${NUM_OPENSTACK_SYSTEM} / ${NUM_OPENSTACK_SITES} ))
-ha_proxy_index=${os_interval}
 
-for i in `seq 1 ${NUM_OPENSTACK_SITES}`; do
-    if [ "${ENABLE_HAPROXY_FOR_NEUTRON}" == "yes" ]; then
-        echo "Configure HAProxy"
-        ODL_HAPROXYIP_PARAM=OPENSTACK_HAPROXY_${i}_IP
-        ha_proxy_index=$(( $ha_proxy_index + $os_interval ))
-        odl_index=$(((i - 1) * 3 + 1))
-        ODL_IP_PARAM1=ODL_SYSTEM_$((odl_index++))_IP
-        ODL_IP_PARAM2=ODL_SYSTEM_$((odl_index++))_IP
-        ODL_IP_PARAM3=ODL_SYSTEM_$((odl_index++))_IP
-        ODLMGRIP[$i]=${!ODL_HAPROXYIP_PARAM} # ODL Northbound uses HAProxy VIP
-        ODL_OVS_MGRS[$i]="${!ODL_IP_PARAM1},${!ODL_IP_PARAM2},${!ODL_IP_PARAM3}" # OVSDB connects to all ODL IPs
-        configure_haproxy_for_neutron_requests ${!ODL_HAPROXYIP_PARAM} "${ODL_OVS_MGRS[$i]}"
-    else
-        ODL_IP_PARAM=ODL_SYSTEM_${i}_IP
-        ODL_OVS_MGRS[$i]="${!ODL_IP_PARAM}" # ODL Northbound uses ODL IP
-        ODLMGRIP[$i]=${!ODL_IP_PARAM} # OVSDB connects to ODL IP
-    fi
-done
+if [ "${ENABLE_HAPROXY_FOR_NEUTRON}" == "yes" ]; then
+    echo "Configure HAProxy"
+    ODL_HAPROXYIP_PARAM=OPENSTACK_HAPROXY_${i}_IP
+    ODL_IP_PARAM1=ODL_SYSTEM_1_IP
+    ODL_IP_PARAM2=ODL_SYSTEM_2_IP
+    ODL_IP_PARAM3=ODL_SYSTEM_3_IP
+    ODLMGRIP[$i]=${!ODL_HAPROXYIP_PARAM} # ODL Northbound uses HAProxy VIP
+    ODL_OVS_MGRS[$i]="${!ODL_IP_PARAM1},${!ODL_IP_PARAM2},${!ODL_IP_PARAM3}" # OVSDB connects to all ODL IPs
+    configure_haproxy_for_neutron_requests ${!ODL_HAPROXYIP_PARAM} "${ODL_OVS_MGRS[$i]}"
+else
+    ODL_IP_PARAM=ODL_SYSTEM_${i}_IP
+    ODL_OVS_MGRS[$i]="${!ODL_IP_PARAM}" # ODL Northbound uses ODL IP
+    ODLMGRIP[$i]=${!ODL_IP_PARAM} # OVSDB connects to ODL IP
+fi
 
 os_ip_list=()
 for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
@@ -817,10 +808,8 @@ if [ ${NUM_OPENSTACK_COMPUTE_NODES} -gt 0 ]; then
 fi
 
 for i in `seq 1 ${NUM_OPENSTACK_COMPUTE_NODES}`; do
-    NUM_COMPUTES_PER_SITE=$((NUM_OPENSTACK_COMPUTE_NODES / NUM_OPENSTACK_SITES))
-    SITE_INDEX=$((((i - 1) / NUM_COMPUTES_PER_SITE) + 1)) # We need the site index to infer the control node IP for this compute
     COMPUTEIP=OPENSTACK_COMPUTE_NODE_${i}_IP
-    CONTROLIP=OPENSTACK_CONTROL_NODE_${SITE_INDEX}_IP
+    CONTROLIP=OPENSTACK_CONTROL_NODE_1_IP
     echo "Configure the stack of the compute node ${i} of ${NUM_OPENSTACK_COMPUTE_NODES}: ${!COMPUTEIP}"
     scp ${WORKSPACE}/disable_firewall.sh "${!COMPUTEIP}:/tmp"
     ${SSH} "${!COMPUTEIP}" "sudo bash /tmp/disable_firewall.sh"
@@ -828,7 +817,7 @@ for i in `seq 1 ${NUM_OPENSTACK_COMPUTE_NODES}`; do
     scp ${WORKSPACE}/hosts_file ${!COMPUTEIP}:/tmp/hosts
     scp ${WORKSPACE}/get_devstack.sh  ${!COMPUTEIP}:/tmp
     ${SSH} ${!COMPUTEIP} "bash /tmp/get_devstack.sh > /tmp/get_devstack.sh.txt 2>&1"
-    create_compute_node_local_conf ${!COMPUTEIP} ${!CONTROLIP} ${ODLMGRIP[$SITE_INDEX]} "${ODL_OVS_MGRS[$SITE_INDEX]}"
+    create_compute_node_local_conf ${!COMPUTEIP} ${!CONTROLIP} ${ODLMGRIP[1]} "${ODL_OVS_MGRS[1]}"
     scp ${WORKSPACE}/local.conf_compute_${!COMPUTEIP} ${!COMPUTEIP}:/opt/stack/devstack/local.conf
     echo "Install rdo release to avoid incompatible Package versions"
     install_rdo_release ${!COMPUTEIP}
@@ -899,122 +888,111 @@ while [ ${in_progress} -eq 1 ]; do
 done
 
 # Further configuration now that stacking is complete.
-NUM_COMPUTES_PER_SITE=$((NUM_OPENSTACK_COMPUTE_NODES / NUM_OPENSTACK_SITES))
-for i in `seq 1 ${NUM_OPENSTACK_SITES}`; do
-    echo "Configure the Control Node"
-    CONTROLIP=OPENSTACK_CONTROL_NODE_${i}_IP
-    # Gather Compute IPs for the site
-    for j in `seq 1 ${NUM_COMPUTES_PER_SITE}`; do
-        COMPUTE_INDEX=$(((i-1) * NUM_COMPUTES_PER_SITE + j))
-        IP_VAR=OPENSTACK_COMPUTE_NODE_${COMPUTE_INDEX}_IP
-        COMPUTE_IPS[$((j-1))]=${!IP_VAR}
+echo "Configure the Control Node"
+CONTROLIP=OPENSTACK_CONTROL_NODE_1_IP
+# Gather Compute IPs for the site
+for j in `seq 1 $(NUM_OPENSTACK_COMPUTE_NODES)`; do
+    IP_VAR=OPENSTACK_COMPUTE_NODE_${j}_IP
+    COMPUTE_IPS[$((j-1))]=${!IP_VAR}
+done
+
+echo "sleep for 60s and print hypervisor-list"
+sleep 60
+${SSH} ${!CONTROLIP} "cd /opt/stack/devstack; source openrc admin admin; nova hypervisor-list"
+# in the case that we are doing openstack (control + compute) all in one node, then the number of hypervisors
+# will be the same as the number of openstack systems. However, if we are doing multinode openstack then the
+# assumption is we have a single control node and the rest are compute nodes, so the number of expected hypervisors
+# is one less than the total number of openstack systems
+if [ $(NUM_OPENSTACK_SYSTEM) -eq 1 ]; then
+    expected_num_hypervisors=1
+else
+    expected_num_hypervisors=$(NUM_OPENSTACK_COMPUTE_NODES)
+    if [ "$(is_openstack_feature_enabled n-cpu)" == "1" ]; then
+        expected_num_hypervisors=$((expected_num_hypervisors + 1))
+    fi
+fi
+num_hypervisors=$(${SSH} ${!CONTROLIP} "cd /opt/stack/devstack; source openrc admin admin; openstack hypervisor list -f value | wc -l" | tail -1 | tr -d "\r")
+if ! [ "${num_hypervisors}" ] || ! [ ${num_hypervisors} -eq ${expected_num_hypervisors} ]; then
+    echo "Error: Only $num_hypervisors hypervisors detected, expected $expected_num_hypervisors"
+    exit 1
+fi
+
+# External Network
+echo "prepare external networks by adding vxlan tunnels between all nodes on a separate bridge..."
+# FIXME Should there be a unique gateway IP and devstack index for each site?
+devstack_index=1
+for ip in ${!CONTROLIP} ${COMPUTE_IPS[*]}; do
+    # FIXME - Workaround, ODL (new netvirt) currently adds PUBLIC_BRIDGE as a port in br-int since it doesn't see such a bridge existing when we stack
+    ${SSH} $ip "sudo ovs-vsctl --if-exists del-port br-int $PUBLIC_BRIDGE"
+    ${SSH} $ip "sudo ovs-vsctl --may-exist add-br $PUBLIC_BRIDGE -- set bridge $PUBLIC_BRIDGE other-config:disable-in-band=true other_config:hwaddr=f6:00:00:ff:01:0$((devstack_index++))"
+done
+
+# ipsec support
+if [ "${IPSEC_VXLAN_TUNNELS_ENABLED}" == "yes" ]; then
+    # shellcheck disable=SC2206
+    ALL_NODES=(${!CONTROLIP} ${COMPUTE_IPS[*]})
+    for ((inx_ip1=0; inx_ip1<$((${#ALL_NODES[@]} - 1)); inx_ip1++)); do
+        for ((inx_ip2=$((inx_ip1 + 1)); inx_ip2<${#ALL_NODES[@]}; inx_ip2++)); do
+            KEY1=0x$(dd if=/dev/urandom count=32 bs=1 2> /dev/null| xxd -p -c 64)
+            KEY2=0x$(dd if=/dev/urandom count=32 bs=1 2> /dev/null| xxd -p -c 64)
+            ID=0x$(dd if=/dev/urandom count=4 bs=1 2> /dev/null| xxd -p -c 8)
+            ip1=${ALL_NODES[$inx_ip1]}
+            ip2=${ALL_NODES[$inx_ip2]}
+            ${SSH} $ip1 "sudo ip xfrm state add src $ip1 dst $ip2 proto esp spi $ID reqid $ID mode transport auth sha256 $KEY1 enc aes $KEY2"
+            ${SSH} $ip1 "sudo ip xfrm state add src $ip2 dst $ip1 proto esp spi $ID reqid $ID mode transport auth sha256 $KEY1 enc aes $KEY2"
+            ${SSH} $ip1 "sudo ip xfrm policy add src $ip1 dst $ip2 proto udp dir out tmpl src $ip1 dst $ip2 proto esp reqid $ID mode transport"
+            ${SSH} $ip1 "sudo ip xfrm policy add src $ip2 dst $ip1 proto udp dir in tmpl src $ip2 dst $ip1 proto esp reqid $ID mode transport"
+
+            ${SSH} $ip2 "sudo ip xfrm state add src $ip2 dst $ip1 proto esp spi $ID reqid $ID mode transport auth sha256 $KEY1 enc aes $KEY2"
+            ${SSH} $ip2 "sudo ip xfrm state add src $ip1 dst $ip2 proto esp spi $ID reqid $ID mode transport auth sha256 $KEY1 enc aes $KEY2"
+            ${SSH} $ip2 "sudo ip xfrm policy add src $ip2 dst $ip1 proto udp dir out tmpl src $ip2 dst $ip1 proto esp reqid $ID mode transport"
+            ${SSH} $ip2 "sudo ip xfrm policy add src $ip1 dst $ip2 proto udp dir in tmpl src $ip1 dst $ip2 proto esp reqid $ID mode transport"
+        done
     done
 
-    echo "sleep for 60s and print hypervisor-list"
-    sleep 60
-    ${SSH} ${!CONTROLIP} "cd /opt/stack/devstack; source openrc admin admin; nova hypervisor-list"
-    # in the case that we are doing openstack (control + compute) all in one node, then the number of hypervisors
-    # will be the same as the number of openstack systems. However, if we are doing multinode openstack then the
-    # assumption is we have a single control node and the rest are compute nodes, so the number of expected hypervisors
-    # is one less than the total number of openstack systems
-    if [ $((NUM_OPENSTACK_SYSTEM / NUM_OPENSTACK_SITES)) -eq 1 ]; then
-        expected_num_hypervisors=1
-    else
-        expected_num_hypervisors=${NUM_COMPUTES_PER_SITE}
-        if [ "$(is_openstack_feature_enabled n-cpu)" == "1" ]; then
-            expected_num_hypervisors=$((expected_num_hypervisors + 1))
-        fi
-    fi
-    num_hypervisors=$(${SSH} ${!CONTROLIP} "cd /opt/stack/devstack; source openrc admin admin; openstack hypervisor list -f value | wc -l" | tail -1 | tr -d "\r")
-    if ! [ "${num_hypervisors}" ] || ! [ ${num_hypervisors} -eq ${expected_num_hypervisors} ]; then
-        echo "Error: Only $num_hypervisors hypervisors detected, expected $expected_num_hypervisors"
-        exit 1
-    fi
-
-    # Gather Compute IPs for the site
-    for j in `seq 1 ${NUM_COMPUTES_PER_SITE}`; do
-        COMPUTE_INDEX=$(((i-1) * NUM_COMPUTES_PER_SITE + j))
-        IP_VAR=OPENSTACK_COMPUTE_NODE_${COMPUTE_INDEX}_IP
-        COMPUTE_IPS[$((j-1))]=${!IP_VAR}
-    done
-
-    # External Network
-    echo "prepare external networks by adding vxlan tunnels between all nodes on a separate bridge..."
-    # FIXME Should there be a unique gateway IP and devstack index for each site?
-    devstack_index=1
     for ip in ${!CONTROLIP} ${COMPUTE_IPS[*]}; do
-        # FIXME - Workaround, ODL (new netvirt) currently adds PUBLIC_BRIDGE as a port in br-int since it doesn't see such a bridge existing when we stack
-        ${SSH} $ip "sudo ovs-vsctl --if-exists del-port br-int $PUBLIC_BRIDGE"
-        ${SSH} $ip "sudo ovs-vsctl --may-exist add-br $PUBLIC_BRIDGE -- set bridge $PUBLIC_BRIDGE other-config:disable-in-band=true other_config:hwaddr=f6:00:00:ff:01:0$((devstack_index++))"
+        echo "ip xfrm configuration for node $ip:"
+        ${SSH} $ip "sudo ip xfrm policy list"
+        ${SSH} $ip "sudo ip xfrm state list"
     done
+fi
 
-    # ipsec support
-    if [ "${IPSEC_VXLAN_TUNNELS_ENABLED}" == "yes" ]; then
-        # shellcheck disable=SC2206
-        ALL_NODES=(${!CONTROLIP} ${COMPUTE_IPS[*]})
-        for ((inx_ip1=0; inx_ip1<$((${#ALL_NODES[@]} - 1)); inx_ip1++)); do
-            for ((inx_ip2=$((inx_ip1 + 1)); inx_ip2<${#ALL_NODES[@]}; inx_ip2++)); do
-                KEY1=0x$(dd if=/dev/urandom count=32 bs=1 2> /dev/null| xxd -p -c 64)
-                KEY2=0x$(dd if=/dev/urandom count=32 bs=1 2> /dev/null| xxd -p -c 64)
-                ID=0x$(dd if=/dev/urandom count=4 bs=1 2> /dev/null| xxd -p -c 8)
-                ip1=${ALL_NODES[$inx_ip1]}
-                ip2=${ALL_NODES[$inx_ip2]}
-                ${SSH} $ip1 "sudo ip xfrm state add src $ip1 dst $ip2 proto esp spi $ID reqid $ID mode transport auth sha256 $KEY1 enc aes $KEY2"
-                ${SSH} $ip1 "sudo ip xfrm state add src $ip2 dst $ip1 proto esp spi $ID reqid $ID mode transport auth sha256 $KEY1 enc aes $KEY2"
-                ${SSH} $ip1 "sudo ip xfrm policy add src $ip1 dst $ip2 proto udp dir out tmpl src $ip1 dst $ip2 proto esp reqid $ID mode transport"
-                ${SSH} $ip1 "sudo ip xfrm policy add src $ip2 dst $ip1 proto udp dir in tmpl src $ip2 dst $ip1 proto esp reqid $ID mode transport"
+# Control Node - PUBLIC_BRIDGE will act as the external router
+# Parameter values below are used in integration/test - changing them requires updates in intergration/test as well
+EXTNET_GATEWAY_IP="10.10.10.250"
+EXTNET_INTERNET_IP="10.9.9.9"
+EXTNET_PNF_IP="10.10.10.253"
+${SSH} ${!CONTROLIP} "sudo ifconfig ${PUBLIC_BRIDGE} up ${EXTNET_GATEWAY_IP}/24"
 
-                ${SSH} $ip2 "sudo ip xfrm state add src $ip2 dst $ip1 proto esp spi $ID reqid $ID mode transport auth sha256 $KEY1 enc aes $KEY2"
-                ${SSH} $ip2 "sudo ip xfrm state add src $ip1 dst $ip2 proto esp spi $ID reqid $ID mode transport auth sha256 $KEY1 enc aes $KEY2"
-                ${SSH} $ip2 "sudo ip xfrm policy add src $ip2 dst $ip1 proto udp dir out tmpl src $ip2 dst $ip1 proto esp reqid $ID mode transport"
-                ${SSH} $ip2 "sudo ip xfrm policy add src $ip1 dst $ip2 proto udp dir in tmpl src $ip1 dst $ip2 proto esp reqid $ID mode transport"
-            done
-        done
+# Control Node - external net PNF simulation
+${SSH} ${!CONTROLIP} "
+    sudo ip netns add pnf_ns;
+    sudo ip link add pnf_veth0 type veth peer name pnf_veth1;
+    sudo ip link set pnf_veth1 netns pnf_ns;
+    sudo ip link set pnf_veth0 up;
+    sudo ip netns exec pnf_ns ifconfig pnf_veth1 up ${EXTNET_PNF_IP}/24;
+    sudo ovs-vsctl add-port ${PUBLIC_BRIDGE} pnf_veth0;
+"
 
-        for ip in ${!CONTROLIP} ${COMPUTE_IPS[*]}; do
-            echo "ip xfrm configuration for node $ip:"
-            ${SSH} $ip "sudo ip xfrm policy list"
-            ${SSH} $ip "sudo ip xfrm state list"
-        done
-    fi
+# Control Node - external net internet address simulation
+${SSH} ${!CONTROLIP} "
+    sudo ip tuntap add dev internet_tap mode tap;
+    sudo ifconfig internet_tap up ${EXTNET_INTERNET_IP}/24;
+"
 
-    # Control Node - PUBLIC_BRIDGE will act as the external router
-    # Parameter values below are used in integration/test - changing them requires updates in intergration/test as well
-    EXTNET_GATEWAY_IP="10.10.10.250"
-    EXTNET_INTERNET_IP="10.9.9.9"
-    EXTNET_PNF_IP="10.10.10.253"
-    ${SSH} ${!CONTROLIP} "sudo ifconfig ${PUBLIC_BRIDGE} up ${EXTNET_GATEWAY_IP}/24"
-
-    # Control Node - external net PNF simulation
+# Computes
+compute_index=1
+for compute_ip in ${COMPUTE_IPS[*]}; do
+    # Tunnel from controller to compute
+    COMPUTEPORT=compute$(( compute_index++ ))_vxlan
     ${SSH} ${!CONTROLIP} "
-        sudo ip netns add pnf_ns;
-        sudo ip link add pnf_veth0 type veth peer name pnf_veth1;
-        sudo ip link set pnf_veth1 netns pnf_ns;
-        sudo ip link set pnf_veth0 up;
-        sudo ip netns exec pnf_ns ifconfig pnf_veth1 up ${EXTNET_PNF_IP}/24;
-        sudo ovs-vsctl add-port ${PUBLIC_BRIDGE} pnf_veth0;
+        sudo ovs-vsctl add-port $PUBLIC_BRIDGE $COMPUTEPORT -- set interface $COMPUTEPORT type=vxlan options:local_ip=${!CONTROLIP} options:remote_ip=$compute_ip options:dst_port=9876 options:key=flow
     "
-
-    # Control Node - external net internet address simulation
-    ${SSH} ${!CONTROLIP} "
-        sudo ip tuntap add dev internet_tap mode tap;
-        sudo ifconfig internet_tap up ${EXTNET_INTERNET_IP}/24;
+    # Tunnel from compute to controller
+    CONTROLPORT="control_vxlan"
+    ${SSH} $compute_ip "
+        sudo ovs-vsctl add-port $PUBLIC_BRIDGE $CONTROLPORT -- set interface $CONTROLPORT type=vxlan options:local_ip=$compute_ip options:remote_ip=${!CONTROLIP} options:dst_port=9876 options:key=flow
     "
-
-    # Computes
-    compute_index=1
-    for compute_ip in ${COMPUTE_IPS[*]}; do
-        # Tunnel from controller to compute
-        COMPUTEPORT=compute$(( compute_index++ ))_vxlan
-        ${SSH} ${!CONTROLIP} "
-            sudo ovs-vsctl add-port $PUBLIC_BRIDGE $COMPUTEPORT -- set interface $COMPUTEPORT type=vxlan options:local_ip=${!CONTROLIP} options:remote_ip=$compute_ip options:dst_port=9876 options:key=flow
-        "
-        # Tunnel from compute to controller
-        CONTROLPORT="control_vxlan"
-        ${SSH} $compute_ip "
-            sudo ovs-vsctl add-port $PUBLIC_BRIDGE $CONTROLPORT -- set interface $CONTROLPORT type=vxlan options:local_ip=$compute_ip options:remote_ip=${!CONTROLIP} options:dst_port=9876 options:key=flow
-        "
-    done
 done
 
 if [ "${ENABLE_HAPROXY_FOR_NEUTRON}" == "yes" ]; then
@@ -1125,7 +1103,6 @@ for suite in ${SUITES}; do
     -v JENKINS_WORKSPACE:${WORKSPACE} \
     -v NEXUSURL_PREFIX:${NEXUSURL_PREFIX} \
     -v NUM_ODL_SYSTEM:${NUM_ODL_SYSTEM} \
-    -v NUM_OPENSTACK_SITES:${NUM_OPENSTACK_SITES} \
     -v NUM_OS_SYSTEM:${NUM_OPENSTACK_SYSTEM} \
     -v NUM_TOOLS_SYSTEM:${NUM_TOOLS_SYSTEM} \
     -v ODL_SNAT_MODE:${ODL_SNAT_MODE} \
