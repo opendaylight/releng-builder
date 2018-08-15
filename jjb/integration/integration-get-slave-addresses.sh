@@ -7,7 +7,6 @@ ODL_SYSTEM=()
 TOOLS_SYSTEM=()
 OPENSTACK_SYSTEM=()
 OPENSTACK_CONTROLLERS=()
-[ "$NUM_OPENSTACK_SITES" ] || NUM_OPENSTACK_SITES=1
 
 OPENSTACK_VENV="/tmp/v/openstack"
 # shellcheck source=/tmp/v/openstack/bin/activate disable=SC1091
@@ -54,7 +53,7 @@ echo "NUM_TOOLS_SYSTEM=${#TOOLS_SYSTEM[@]}" >> slave_addresses.txt
 #if HA Proxy is requested the last devstack node will be configured as haproxy
 if [ "${ENABLE_HAPROXY_FOR_NEUTRON}" == "yes" ]; then
    # HA Proxy is installed on one OPENSTACK_SYSTEM VM on each site
-   NUM_OPENSTACK_SYSTEM=$(( ${#OPENSTACK_SYSTEM[@]} - NUM_OPENSTACK_SITES ))
+   NUM_OPENSTACK_SYSTEM=$(( ${#OPENSTACK_SYSTEM[@]} ))
 else
    NUM_OPENSTACK_SYSTEM=${#OPENSTACK_SYSTEM[@]}
 fi
@@ -91,7 +90,7 @@ done
 
 openstack_index=0
 # Assuming number of openstack control nodes equals number of openstack sites
-NUM_OPENSTACK_CONTROL_NODES=$(( NUM_OPENSTACK_SITES ))
+NUM_OPENSTACK_CONTROL_NODES=1
 echo "NUM_OPENSTACK_CONTROL_NODES=${NUM_OPENSTACK_CONTROL_NODES}" >> slave_addresses.txt
 for i in $(seq 0 $((NUM_OPENSTACK_CONTROL_NODES - 1)))
 do
