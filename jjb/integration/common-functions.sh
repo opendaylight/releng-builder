@@ -605,3 +605,222 @@ function get_nodes_list() {
     nodes_list=$(join "${nodes[@]}")
     echo ${nodes_list}
 }
+
+function get_features() {
+    if [ ${CONTROLLERSCOPE} == 'all' ]; then
+        ACTUALFEATURES="odl-integration-compatible-with-all,${CONTROLLERFEATURES}"
+        export CONTROLLERMEM="3072m"
+    else
+        ACTUALFEATURES="odl-infrautils-ready,${CONTROLLERFEATURES}"
+    fi
+
+    # Some versions of jenkins job builder result in feature list containing spaces
+    # and ending in newline. Remove all that.
+    ACTUALFEATURES=`echo "${ACTUALFEATURES}" | tr -d '\n \r'`
+    echo "ACTUALFEATURES: ${ACTUALFEATURES}"
+
+    # In the case that we want to install features via karaf shell, a space separated list of
+    # ACTUALFEATURES IS NEEDED
+    SPACE_SEPARATED_FEATURES=$(echo "${ACTUALFEATURES}" | tr ',' ' ')
+    echo "SPACE_SEPARATED_FEATURES: ${SPACE_SEPARATED_FEATURES}"
+
+    export ACTUALFEATURES
+    export SPACE_SEPARATED_FEATURES
+}
+
+# Create the configuration script to be run on controllers.
+function create_configuration_sctipt() {
+    cat > ${WORKSPACE}/configuration-script.sh <<EOF
+set -x
+source /tmp/common-functions.sh ${BUNDLEFOLDER}
+
+echo "Changing to /tmp"
+cd /tmp
+
+echo "Downloading the distribution from ${ACTUAL_BUNDLE_URL}"
+wget --progress=dot:mega '${ACTUAL_BUNDLE_URL}'
+
+echo "Extracting the new controller..."
+unzip -q ${BUNDLE}
+
+echo "Adding external repositories..."
+sed -ie "s%org.ops4j.pax.url.mvn.repositories=%org.ops4j.pax.url.mvn.repositories=https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot@id=opendaylight-snapshot@snapshots, https://nexus.opendaylight.org/content/repositories/public@id=opendaylight-mirror, http://repo1.maven.org/maven2@id=central, http://repository.springsource.com/maven/bundles/release@id=spring.ebr.release, http://repository.springsource.com/maven/bundles/external@id=spring.ebr.external, http://zodiac.springsource.com/maven/bundles/release@id=gemini, http://repository.apache.org/content/groups/snapshots-group@id=apache@snapshots@noreleases, https://oss.sonatype.org/content/repositories/snapshots@id=sonatype.snapshots.deploy@snapshots@noreleases, https://oss.sonatype.org/content/repositories/ops4j-snapshots@id=ops4j.sonatype.snapshots.deploy@snapshots@noreleases%g" ${MAVENCONF}
+cat ${MAVENCONF}
+
+if [[ "$USEFEATURESBOOT" == "True" ]]; then
+    echo "Configuring the startup features..."
+    sed -ie "s/\(featuresBoot=\|featuresBoot =\)/featuresBoot = ${ACTUALFEATURES},/g" ${FEATURESCONF}
+fi
+
+FEATURE_TEST_STRING="features-integration-test"
+if [[ "$KARAF_VERSION" == "karaf4" ]]; then
+    FEATURE_TEST_STRING="features-test"
+fi
+
+sed -ie "s%\(featuresRepositories=\|featuresRepositories =\)%featuresRepositories = mvn:org.opendaylight.integration/\${FEATURE_TEST_STRING}/${BUNDLE_VERSION}/xml/features,mvn:org.apache.karaf.decanter/apache-karaf-decanter/1.0.0/xml/features,%g" ${FEATURESCONF}
+if [[ ! -z "${REPO_URL}" ]]; then
+   sed -ie "s%featuresRepositories =%featuresRepositories = ${REPO_URL},%g" ${FEATURESCONF}
+fi
+cat ${FEATURESCONF}
+
+configure_karaf_log "${KARAF_VERSION}" "${CONTROLLERDEBUGMAP}"
+
+set_java_vars "${JAVA_HOME}" "${CONTROLLERMEM}" "${MEMCONF}"
+
+echo "Listing all open ports on controller system..."
+netstat -pnatu
+
+# Copy shard file if exists
+if [ -f /tmp/custom_shard_config.txt ]; then
+    echo "Custom shard config exists!!!"
+    echo "Copying the shard config..."
+    cp /tmp/custom_shard_config.txt /tmp/${BUNDLEFOLDER}/bin/
+fi
+
+echo "Configuring cluster"
+/tmp/${BUNDLEFOLDER}/bin/configure_cluster.sh \$1 ${nodes_list}
+
+echo "Dump akka.conf"
+cat ${AKKACONF}
+
+echo "Dump modules.conf"
+cat ${MODULESCONF}
+
+echo "Dump module-shards.conf"
+cat ${MODULESHARDSCONF}
+EOF
+# cat > ${WORKSPACE}/configuration-script.sh <<EOF
+}
+
+# Create the startup script to be run on controllers.
+function create_startup_script() {
+    cat > ${WORKSPACE}/startup-script.sh <<EOF
+echo "Redirecting karaf console output to karaf_console.log"
+export KARAF_REDIRECT="/tmp/${BUNDLEFOLDER}/data/log/karaf_console.log"
+mkdir -p /tmp/${BUNDLEFOLDER}/data/log
+
+echo "Starting controller..."
+/tmp/${BUNDLEFOLDER}/bin/start
+EOF
+# cat > ${WORKSPACE}/startup-script.sh <<EOF
+}
+
+function create_post_startup_script() {
+    cat > ${WORKSPACE}/post-startup-script.sh <<EOF
+if [[ "$USEFEATURESBOOT" != "True" ]]; then
+
+    # wait up to 60s for karaf port 8101 to be opened, polling every 5s
+    loop_count=0;
+    until [[ \$loop_count -ge 12 ]]; do
+        netstat -na | grep 8101 && break;
+        loop_count=\$[\$loop_count+1];
+        sleep 5;
+    done
+
+    echo "going to feature:install --no-auto-refresh ${SPACE_SEPARATED_FEATURES} one at a time"
+    for feature in ${SPACE_SEPARATED_FEATURES}; do
+        sshpass -p karaf ssh -o StrictHostKeyChecking=no \
+                             -o UserKnownHostsFile=/dev/null \
+                             -o LogLevel=error \
+                             -p 8101 karaf@localhost \
+                             feature:install --no-auto-refresh \$feature;
+    done
+
+    echo "ssh to karaf console to list -i installed features"
+    sshpass -p karaf ssh -o StrictHostKeyChecking=no \
+                         -o UserKnownHostsFile=/dev/null \
+                         -o LogLevel=error \
+                         -p 8101 karaf@localhost \
+                         feature:list -i
+fi
+
+echo "Waiting up to 3 minutes for controller to come up, checking every 5 seconds..."
+for i in {1..36}; do
+    sleep 5;
+    grep 'org.opendaylight.infrautils.ready-impl.*System ready' /tmp/${BUNDLEFOLDER}/data/log/karaf.log
+    if [ \$? -eq 0 ]; then
+        echo "Controller is UP"
+        break
+    fi
+done;
+
+# if we ended up not finding ready status in the above loop, we can output some debugs
+grep 'org.opendaylight.infrautils.ready-impl.*System ready' /tmp/${BUNDLEFOLDER}/data/log/karaf.log
+if [ $? -ne 0 ]; then
+    echo "Timeout Controller DOWN"
+    echo "Dumping first 500K bytes of karaf log..."
+    head --bytes=500K "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
+    echo "Dumping last 500K bytes of karaf log..."
+    tail --bytes=500K "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
+    echo "Listing all open ports on controller system"
+    netstat -pnatu
+    exit 1
+fi
+
+echo "Listing all open ports on controller system..."
+netstat -pnatu
+
+function exit_on_log_file_message {
+    echo "looking for \"\$1\" in log file"
+    if grep --quiet "\$1" "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"; then
+        echo ABORTING: found "\$1"
+        echo "Dumping first 500K bytes of karaf log..."
+        head --bytes=500K "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
+        echo "Dumping last 500K bytes of karaf log..."
+        tail --bytes=500K "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
+        exit 1
+    fi
+}
+
+exit_on_log_file_message 'BindException: Address already in use'
+exit_on_log_file_message 'server is unhealthy'
+EOF
+# cat > ${WORKSPACE}/post-startup-script.sh <<EOF
+}
+
+# Copy over the configuration script and configuration files to each controller
+# Execute the configuration script on each controller.
+function copy_and_run_configuration_script() {
+    for i in `seq 1 ${NUM_ODL_SYSTEM}`; do
+        CONTROLLERIP=ODL_SYSTEM_${i}_IP
+        echo "Configuring member-${i} with IP address ${!CONTROLLERIP}"
+        scp ${WORKSPACE}/configuration-script.sh ${!CONTROLLERIP}:/tmp/
+        ssh ${!CONTROLLERIP} "bash /tmp/configuration-script.sh ${i}"
+    done
+}
+
+# Copy over the startup script to each controller and execute it.
+function copy_and_run_startup_script() {
+    for i in `seq 1 ${NUM_ODL_SYSTEM}`; do
+        CONTROLLERIP=ODL_SYSTEM_${i}_IP
+        echo "Starting member-${i} with IP address ${!CONTROLLERIP}"
+        scp ${WORKSPACE}/startup-script.sh ${!CONTROLLERIP}:/tmp/
+        ssh ${!CONTROLLERIP} "bash /tmp/startup-script.sh"
+    done
+}
+
+function copy_and_run_post_startup_script() {
+    seed_index=1
+    for i in `seq 1 ${NUM_ODL_SYSTEM}`; do
+        CONTROLLERIP=ODL_SYSTEM_${i}_IP
+        echo "Execute the post startup script on controller ${!CONTROLLERIP}"
+        scp ${WORKSPACE}/post-startup-script.sh ${!CONTROLLERIP}:/tmp
+        ssh ${!CONTROLLERIP} "bash /tmp/post-startup-script.sh $(( seed_index++ ))"
+        if [ $(( $i % (${NUM_ODL_SYSTEM} / ${NUM_OPENSTACK_SITES}) )) == 0 ]; then
+            seed_index=1
+        fi
+    done
+}
+
+function create_controller_variables() {
+    echo "Generating controller variables..."
+    for i in `seq 1 ${NUM_ODL_SYSTEM}`; do
+        CONTROLLERIP=ODL_SYSTEM_${i}_IP
+        odl_variables=${odl_variables}" -v ${CONTROLLERIP}:${!CONTROLLERIP}"
+        echo "Lets's take the karaf thread dump"
+        ssh ${!CONTROLLERIP} "sudo ps aux" > ${WORKSPACE}/ps_before.log
+        pid=$(grep org.apache.karaf.main.Main ${WORKSPACE}/ps_before.log | grep -v grep | tr -s ' ' | cut -f2 -d' ')
+        echo "karaf main: org.apache.karaf.main.Main, pid:${pid}"
+        ssh ${!CONTROLLERIP} "${JAVA_HOME}/bin/jstack -l ${pid}" > ${WORKSPACE}/karaf_${i}_${pid}_threads_before.log || true
+    done
+}
