@@ -22,6 +22,30 @@
       "revId": "521a38028d3ad2e3512bc48997fe81667b657356",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0cdad24e_a802da79",
+        "filename": "jjb/integration/common-functions.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-08-15T16:41:47Z",
+      "side": 1,
+      "message": "no, because of the bash substitution. We first have to get the variable name, ODL_SYSTEM_1_IP. Then we use ! to get it\u0027s value. You can\u0027t add the ! and the ${i} in the same {}. I also tried that in another place and had to keep this pattern here.\n\nAlso copied this function directly from the cluster.sh so left it as is.",
+      "parentUuid": "b6cda603_96307f67",
+      "range": {
+        "startLine": 601,
+        "startChar": 8,
+        "endLine": 601,
+        "endChar": 39
+      },
+      "revId": "521a38028d3ad2e3512bc48997fe81667b657356",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
