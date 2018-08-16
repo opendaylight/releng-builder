@@ -128,7 +128,7 @@
 - job-template:
     name: '{prefix}{project}-csit-1node-{functionality}-{install}-{stream}'
     id: inttest-csit-1node
-    disabled: false
+    disabled: {disable-job}
 
     project-type: freestyle
     node: centos7-robot-2c-8g
