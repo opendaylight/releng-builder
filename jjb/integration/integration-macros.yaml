@@ -327,6 +327,36 @@
       - opendaylight-infra-stack:
           stack-template: 'csit-3-instance-type.yaml'
 
+# Macro: integration-apex-stack-3-type
+# Operation: Sets environment and then calls opendaylight-apex-stack to spin
+#            up csit lab using openstack-heat.
+# Used by: {project}-csit-* apex related job templates
+
+- builder:
+    name: integration-apex-stack-3-type
+    builders:
+      - integration-cleanup-workspace
+      - shell: |
+          #!/bin/bash
+          # Setup openstack envirnoment file for use by
+          # the opendaylight-infra-stack macro
+          cat > $WORKSPACE/opendaylight-infra-environment.yaml << EOF
+          parameters:
+              vm_0_count: {vm_0_count}
+              vm_0_flavor: {vm_0_flavor}
+              vm_0_image: {vm_0_image}
+              vm_1_count: {vm_1_count}
+              vm_1_flavor: {vm_1_flavor}
+              vm_1_image: {vm_1_image}
+              vm_2_count: {vm_2_count}
+              vm_2_flavor: {vm_2_flavor}
+              vm_2_image: {vm_2_image}
+          EOF
+          echo "Contents of opendaylight-infra-environment.yaml ..."
+          cat $WORKSPACE/opendaylight-infra-environment.yaml
+      - opendaylight-apex-stack:
+          stack-template: 'csit-3-instance-type.yaml'
+
 # Macro: integration-infra-stack-4-type
 # Operation: Sets environment and then calls opendaylight-infra-stack to spin
 #            up csit lab using openstack-heat.
@@ -359,6 +389,15 @@
           cat $WORKSPACE/opendaylight-infra-environment.yaml
       - opendaylight-infra-stack:
           stack-template: 'csit-4-instance-type.yaml'
+
+# Macro: integration-get-apex-addresses
+# Operation: this macro gets the IP addresses of the dynamic vms from apex snapshots
+# Used by: {project}-csit-* apex related job templates
+
+- builder:
+    name: integration-get-apex-addresses
+    builders:
+      - shell: !include-raw: integration-get-apex-addresses.sh
 
 # Macro: integration-get-slave-addresses
 # Operation: this macro gets the IP addresses of the dynamic vms
