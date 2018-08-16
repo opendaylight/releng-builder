@@ -1,0 +1,40 @@
+- project:
+    name: netvirt-csit-apex-integration-oxygen
+    jobs:
+      - inttest-csit-apex
+
+    project: 'netvirt'
+    stream: 'oxygen'
+    branch: 'stable/oxygen'
+    testplan: '{project}-{topology}-openstack.txt'
+
+    test-suites: 'openstack/connectivity/l2.robot
+                  openstack/connectivity/l3.robot
+                  openstack/connectivity/external_network.robot'
+
+    topology: '1node'
+
+    public-bridge: 'br-datacentre'
+    public-physical-network: 'datacentre'
+
+    apex_controller_count: '1'
+    apex_controller_flavor: 'v1-standard-8'
+    apex_controller_image: 'ZZCI - OPNFV - apex - controller - 0'
+
+    apex_compute_0_flavor: 'v1-standard-4'
+    apex_compute_0_image: 'ZZCI - OPNFV - apex - compute - 0'
+
+    apex_compute_1_flavor: 'v1-standard-4'
+    apex_compute_1_image: 'ZZCI - OPNFV - apex - compute - 1'
+
+    os-cmb-cnt: 0
+    os-ctl-cnt: 1
+    os-cmp-cnt: 2
+
+    functionality:
+      - upstream-snat-conntrack
+      - upstream-stateful
+
+    openstack:
+      - queens:
+          openstack-branch: 'stable/queens'
