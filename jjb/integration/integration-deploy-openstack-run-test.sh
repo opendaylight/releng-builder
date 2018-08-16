@@ -45,7 +45,7 @@ function trap_handler() {
     local prog="$0"
     local lastline="$1"
     local lasterr="$2"
-    echo "trap_hanlder: ${prog}: line ${lastline}: exit status of last command: ${lasterr}"
+    echo "trap_handler: ${prog}: line ${lastline}: exit status of last command: ${lasterr}"
     echo "trap_handler: command: ${BASH_COMMAND}"
     exit 1
 } # trap_handler()
@@ -906,7 +906,7 @@ ${SSH} ${!CONTROLIP} "cd /opt/stack/devstack; source openrc admin admin; nova hy
 if [ ${NUM_OPENSTACK_SYSTEM} -eq 1 ]; then
     expected_num_hypervisors=1
 else
-    expected_num_hypervisors=$(NUM_OPENSTACK_COMPUTE_NODES)
+    expected_num_hypervisors=${NUM_OPENSTACK_COMPUTE_NODES}
     if [ "$(is_openstack_feature_enabled n-cpu)" == "1" ]; then
         expected_num_hypervisors=$((expected_num_hypervisors + 1))
     fi
