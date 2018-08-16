@@ -347,6 +347,13 @@
       - shell: !include-raw-escape: opendaylight-infra-copy-ssh-keys.sh
 
 - builder:
+    name: opendaylight-apex-stack
+    # opendaylight-apex-stack.sh has a required variable {stack-template} that
+    # must be passed into this macro.
+    builders:
+      - shell: !include-raw: opendaylight-infra-stack.sh
+
+- builder:
     name: distribute-build-url
     # Place URL of the current run of a build job to a file at given path.
     builders:
