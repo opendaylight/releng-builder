@@ -22,7 +22,9 @@ jobs=($(xmlstarlet sel -t -m '//hudson/job' \
 job_list="${WORKSPACE}/jjb/integration/csit-jobs-${STREAM}.lst"
 rm "$job_list"
 for job in "${jobs[@]}"; do
+    echo "$job"
     if [[ ! $job =~ update-csit-tests|${CSIT_BLACKLIST// /\|} ]]; then
+        echo "    Not blacklisted, adding to ${job_list}."
         echo "${job}," >> "$job_list"
     fi
 done
