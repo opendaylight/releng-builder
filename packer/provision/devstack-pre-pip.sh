@@ -59,10 +59,13 @@ yum install -y "centos-release-openstack-${branch_name}"
 # Remove this when https://review.rdoproject.org/r/#/c/13839/ merges and 2.9.2 is in the repo.
 yum repolist
 yum --showduplicates list openvswitch
-if [ "${branch}" == "stable/queens" ]; then
-    yum install -y --nogpgcheck openvswitch-2.8.2-1.el7
-else
-    yum install -y --nogpgcheck openvswitch
+
+if [ "${install_ovs}" == "yes" ]; then
+    if [ "${branch}" == "stable/queens" ]; then
+        yum install -y --nogpgcheck openvswitch-2.8.2-1.el7
+    else
+        yum install -y --nogpgcheck openvswitch
+    fi
 fi
 cd "$OLDPWD"
 rm -fr tmp
