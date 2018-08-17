@@ -3,6 +3,12 @@
 # force any errors to cause the script and job to end in failure
 set -xeu -o pipefail
 
+# add in a test copr repo
+#wget http://copr.fedoraproject.org/coprs/tykeal/odl-updates/repo/epel-7/tykeal-odl-updates-epel-7.repo -O /etc/yum.repos.d/tykeal-odl-updates-epel-7.repo
+
+#Upgrade to latest version of CentOS
+#yum update -y
+
 # Install xpath
 yum install -y perl-XML-XPath python-pip python-six
 
@@ -57,10 +63,13 @@ yum install -y "centos-release-openstack-${branch_name}"
 # Remove this when https://review.rdoproject.org/r/#/c/13839/ merges and 2.9.2 is in the repo.
 yum repolist
 yum --showduplicates list openvswitch
-if [ "${branch}" == "stable/queens" ]; then
-    yum install -y --nogpgcheck openvswitch-2.8.2-1.el7
-else
-    yum install -y --nogpgcheck openvswitch
+
+if [ "${install_ovs}" == "yes" ]; then
+    if [ "${branch}" == "stable/queens" ]; then
+        yum install -y --nogpgcheck openvswitch-2.8.2-1.el7
+    else
+        yum install -y --nogpgcheck openvswitch
+    fi
 fi
 cd "$OLDPWD"
 rm -fr tmp
