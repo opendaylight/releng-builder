@@ -63,6 +63,10 @@ pip3 install --user https://files.pythonhosted.org/packages/b8/f7/3bb4d18c234a8c
 pip3 install --user https://files.pythonhosted.org/packages/c3/e3/146b675e6d0138a49c4b817b4e68170eb9b75cee7e71fa3ec69624c4f467/elasticsearch-6.2.0-py2.py3-none-any.whl
 pip3 install --user https://files.pythonhosted.org/packages/75/5e/b84feba55e20f8da46ead76f14a3943c8cb722d40360702b2365b91dec00/PyYAML-3.11.tar.gz
 
+# odltools for extra debugging
+pip install odltools
+odltools -V
+
 # Print installed versions.
 pip install --upgrade pipdeptree
 pipdeptree

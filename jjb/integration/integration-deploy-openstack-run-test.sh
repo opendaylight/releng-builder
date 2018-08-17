@@ -15,9 +15,6 @@ SSH="ssh -t -t"
 ADMIN_PASSWORD="admin"
 OPENSTACK_MASTER_CLIENTS_VERSION="queens"
 
-pip install odltools
-odltools -V
-
 # TODO: remove this work to run changes.py if/when it's moved higher up to be visible at the Robot level
 printf "\nshowing recent changes that made it into the distribution used by this job:\n"
 $PYTHON -m pip install --upgrade urllib3
