@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c798b170_078fb845",
+        "filename": "jjb/netvirt/netvirt-apex-images.yaml",
+        "patchSetId": 19
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 5089
+      },
+      "writtenOn": "2018-08-20T19:23:50Z",
+      "side": 1,
+      "message": "Do you want there to be multiple jobs based on OS version? So one job for each branch to update all the images? Or do we want a single job that updates the images for all branches?\n\nIf we go with the former, then I think we also want a job per branch *and* topology (ha/noha/noha-allinone).",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 31
+      },
+      "revId": "2e18ff3da78bae298c2613af634ca3ed937a5b1f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5d745552_f72add85",
+        "filename": "jjb/opendaylight-infra-apex-image-management.sh",
+        "patchSetId": 19
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5089
+      },
+      "writtenOn": "2018-08-20T19:23:50Z",
+      "side": 1,
+      "message": "add:\nset -o errexit\nset -o nounset\nset -o pipefail",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 11
+      },
+      "revId": "2e18ff3da78bae298c2613af634ca3ed937a5b1f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e461ce4_1de785d3",
+        "filename": "jjb/opendaylight-infra-apex-image-management.sh",
+        "patchSetId": 19
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 5089
+      },
+      "writtenOn": "2018-08-20T19:23:50Z",
+      "side": 1,
+      "message": "here you need to download the latest properties and check if the checksum is different from the local checksum:\nhttps://github.com/opnfv/releng/blob/master/jjb/apex/apex-snapshot-deploy.sh#L28:L75",
+      "revId": "2e18ff3da78bae298c2613af634ca3ed937a5b1f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9b110194_387fb5f4",
+        "filename": "jjb/opendaylight-infra-apex-image-management.sh",
+        "patchSetId": 19
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 5089
+      },
+      "writtenOn": "2018-08-20T19:23:50Z",
+      "side": 1,
+      "message": "This should be the value determined from the properties file:\nhttps://github.com/opnfv/releng/blob/master/jjb/apex/apex-snapshot-deploy.sh#L63",
+      "range": {
+        "startLine": 25,
+        "startChar": 25,
+        "endLine": 25,
+        "endChar": 89
+      },
+      "revId": "2e18ff3da78bae298c2613af634ca3ed937a5b1f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "33697c96_a2ec6eff",
+        "filename": "jjb/opendaylight-infra-apex-image-management.sh",
+        "patchSetId": 19
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 5089
+      },
+      "writtenOn": "2018-08-20T19:23:50Z",
+      "side": 1,
+      "message": "you could save disk space by not decompressing this?",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 39
+      },
+      "revId": "2e18ff3da78bae298c2613af634ca3ed937a5b1f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6a6b3cbb_d99ccaf4",
+        "filename": "jjb/opendaylight-infra-apex-image-management.sh",
+        "patchSetId": 19
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5089
+      },
+      "writtenOn": "2018-08-20T19:23:50Z",
+      "side": 1,
+      "message": "need to change this logic to list the files in the archive\nThen iterate. Or if that takes too long, then can just decide on disk names based on topology type (ha, noha, etc).\n\nAlso need to pull out the node.yaml id_rsa and overcloudrc and push them into swift.",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 68
+      },
+      "revId": "2e18ff3da78bae298c2613af634ca3ed937a5b1f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8b9f0d59_f3911e8f",
+        "filename": "jjb/opendaylight-infra-apex-image-management.sh",
+        "patchSetId": 19
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 5089
+      },
+      "writtenOn": "2018-08-20T19:23:50Z",
+      "side": 1,
+      "message": "what if disk images already exist? Don\u0027t you need to delete them first, or use update command? Can you include the snapshot date in the image name so we know the latest in glance?",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 84
+      },
+      "revId": "2e18ff3da78bae298c2613af634ca3ed937a5b1f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
