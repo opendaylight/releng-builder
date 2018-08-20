@@ -25,6 +25,53 @@
     },
     {
       "key": {
+        "uuid": "c10c4a6d_a35ea3e2",
+        "filename": "jjb/netvirt/netvirt-apex-images.yaml",
+        "patchSetId": 19
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-08-20T23:57:31Z",
+      "side": 1,
+      "message": "Do we continue with the upstream terminology or the downstream? Upstream there is no openstack ha, just odl ha and that is 3node or 1node.\n\nGuessing jamo only included pike for initial testing but will include queens also.\n\nI think it will be easiest if the image is promoted based on the OS branch - and nothing else. ODL will only promote a pike image if it passed all the topologies from apex - ha/no-ha/allinone - and then we bring that image in. Repeat for queens. This is only if we are not testing these images on the odl side, but if we do want to test on the odl side then I could see different topology jobs also.",
+      "parentUuid": "c798b170_078fb845",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 31
+      },
+      "revId": "2e18ff3da78bae298c2613af634ca3ed937a5b1f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2d1ac50a_aae46016",
+        "filename": "jjb/netvirt/netvirt-apex-images.yaml",
+        "patchSetId": 19
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-08-20T23:57:31Z",
+      "side": 1,
+      "message": "weekly? or daily so we can pick up images quicker? Would be nice to also have a push notification from opnfv.",
+      "range": {
+        "startLine": 42,
+        "startChar": 17,
+        "endLine": 42,
+        "endChar": 23
+      },
+      "revId": "2e18ff3da78bae298c2613af634ca3ed937a5b1f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d745552_f72add85",
         "filename": "jjb/opendaylight-infra-apex-image-management.sh",
         "patchSetId": 19
@@ -41,6 +88,53 @@
         "startChar": 0,
         "endLine": 1,
         "endChar": 11
+      },
+      "revId": "2e18ff3da78bae298c2613af634ca3ed937a5b1f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b934ed28_e1d5f03c",
+        "filename": "jjb/opendaylight-infra-apex-image-management.sh",
+        "patchSetId": 19
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-08-20T23:57:31Z",
+      "side": 1,
+      "message": "we usually use set -ex -o pipefail or set -xeu -o pipefail. Thought I see you copied an existing sh script which doesn\u0027t have it, so not biggie for now.",
+      "parentUuid": "5d745552_f72add85",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 11
+      },
+      "revId": "2e18ff3da78bae298c2613af634ca3ed937a5b1f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6de5ecd1_15a4156f",
+        "filename": "jjb/opendaylight-infra-apex-image-management.sh",
+        "patchSetId": 19
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-08-20T23:57:31Z",
+      "side": 1,
+      "message": "2018 and Red Hat. Guess the first few lines are copied but the rest all seems new so the copyright should reflect that.",
+      "range": {
+        "startLine": 4,
+        "startChar": 16,
+        "endLine": 4,
+        "endChar": 21
       },
       "revId": "2e18ff3da78bae298c2613af634ca3ed937a5b1f",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
