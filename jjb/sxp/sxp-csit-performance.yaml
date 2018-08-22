@@ -14,6 +14,9 @@
     stream:
       - neon:
           branch: 'master'
+          trigger-jobs: '{project}-merge-{stream}'
+          # yamllint disable-line rule:line-length
+          repo-url: 'mvn:org.opendaylight.sxp/features-sxp/1.8.0-SNAPSHOT/xml/features'
       - fluorine:
           branch: 'stable/fluorine'
           trigger-jobs: '{project}-merge-{stream}'
