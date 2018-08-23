@@ -263,27 +263,6 @@
           gerrit-build-unstable-codereview-value: 0
           gerrit-build-notbuilt-codereview-value: 0
 
-# TODO: Unify argument names across gerrit-trigger-* macros.
-- trigger:
-    name: gerrit-trigger-patch-sonar
-    triggers:
-      - gerrit:
-          server-name: '{gerrit-server-name}'
-          trigger-on:
-            - comment-added-contains-event:
-                comment-contains-value: 'run-sonar'
-          projects:
-            - project-compare-type: 'ANT'
-              project-pattern: '{name}'
-              branches:
-                - branch-compare-type: 'ANT'
-                  branch-pattern: '**/master'
-          skip-vote:
-            successful: true
-            failed: true
-            unstable: true
-            notbuilt: true
-
 - publisher:
     name: email-notification
     publishers:
