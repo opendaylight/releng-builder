@@ -37,9 +37,22 @@
 
     triggers:
       - timed: '{schedule-saturday}'
-      - gerrit-trigger-patch-sonar:
-          gerrit-server-name: '{gerrit-server-name}'
-          name: 'ovsdb'
+      - gerrit:
+          server-name: '{gerrit-server-name}'
+          trigger-on:
+            - comment-added-contains-event:
+                comment-contains-value: 'run-sonar$'
+          projects:
+            - project-compare-type: 'ANT'
+              project-pattern: '{project}'
+              branches:
+                - branch-compare-type: 'ANT'
+                  branch-pattern: '**/master'
+          skip-vote:
+            successful: true
+            failed: true
+            unstable: true
+            notbuilt: true
 
     builders:
       - shell: !include-raw-escape: setup-docker.sh
