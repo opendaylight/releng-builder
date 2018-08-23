@@ -71,7 +71,12 @@ if [[ "${PATCHES_TO_BUILD}" == *topic* ]]; then
             read -rd '' -a SORT_REF_LIST <<< "${SORT_REF[*]}" || true
             # add refspec to patches to build list
             for PATCH in "${SORT_REF_LIST[@]}"; do
-                PATCHES_TO_BUILD="${PATCHES_TO_BUILD}:${PATCH/*-/}"
+                # if project is odlparent or yangtools, do not cherry-pick
+                if [[ "${PROJECT}" == "odlparent" || "${PROJECT}" == "yangtools" ]]; then
+                    PATCHES_TO_BUILD="${PATCHES_TO_BUILD}=${PATCH/*-/}"
+                else
+                    PATCHES_TO_BUILD="${PATCHES_TO_BUILD}:${PATCH/*-/}"
+                fi
             done
         fi
     done
