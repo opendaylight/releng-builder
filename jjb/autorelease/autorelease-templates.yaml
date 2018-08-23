@@ -205,6 +205,65 @@
       - lf-infra-publish
 
 - job-template:
+    name: 'autorelease-update-submodules-{stream}'
+
+    ######################
+    # Default parameters #
+    ######################
+
+    cron: 'H 0 * * *'
+
+    #####################
+    # Job configuration #
+    #####################
+
+    project-type: freestyle
+    node: ubuntu1604-docker-2c-2g
+
+    properties:
+      - lf-infra-properties:
+          build-days-to-keep: 7
+
+    parameters:
+      - lf-infra-parameters:
+          project: releng/autorelease
+          branch: '{branch}'
+          stream: '{stream}'
+          refspec: 'refs/heads/{branch}'
+          lftools-version: '{lftools-version}'
+
+    scm:
+      - lf-infra-gerrit-scm:
+          git-url: '$GIT_URL/$GERRIT_PROJECT'
+          branch: '{branch}'
+          refspec: 'refs/heads/{branch}'
+          jenkins-ssh-credential: opendaylight-jenkins-ssh
+          submodule-recursive: true
+          choosing-strategy: default
+
+    wrappers:
+      - lf-infra-wrappers:
+          build-timeout: 10
+          jenkins-ssh-credential: opendaylight-jenkins-ssh
+
+    triggers:
+      - timed: '{obj:cron}'
+
+    builders:
+      # Fetch latest head of branch
+      - shell: git submodule update --remote && git add .
+      - lf-infra-push-gerrit-patch:
+          project: '{project}'
+          gerrit-user: 'jenkins-$SILO'
+          gerrit-host: 'git.opendaylight.org'
+          gerrit-topic: 'autorelease-update-submodules'
+          gerrit-commit-message: 'Update submodules to latest HEAD of branch'
+          reviewers-email: ''
+
+    publishers:
+      - lf-infra-publish
+
+- job-template:
     name: autorelease-update-validate-jobs-{stream}
 
     ######################
