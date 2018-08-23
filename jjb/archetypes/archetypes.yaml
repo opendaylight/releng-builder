@@ -2,7 +2,9 @@
 - project:
     name: archetypes-neon
     jobs:
-      - gerrit-maven-clm
+      # TODO: Add CLM jobs back once issue is resolved:
+      #       https://jira.linuxfoundation.org/browse/RELENG-1165
+      # - gerrit-maven-clm
       - '{project-name}-merge-{stream}':
           build-timeout: 180
           cron: '@daily'
