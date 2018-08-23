@@ -110,7 +110,7 @@
       **/target/**/feature.xml
       **/target/failsafe-reports/failsafe-summary.xml
       **/target/surefire-reports/*-output.txt
-    cron: 'H H * * 0'
+    cron: '@daily'
     mvn-opts: ''
     mvn-version: mvn35
     java-version: openjdk8
