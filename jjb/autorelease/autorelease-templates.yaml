@@ -130,6 +130,14 @@
           mvn-version: '{mvn-version}'
       - wipe-local-maven-repo
       - jacoco-nojava-workaround
+      # Fetch latest head of branch
+      - shell: git submodule update --remote && git add .
+      - lf-infra-push-gerrit-patch:
+          project: '{project}'
+          gerrit-user: 'jenkins-$SILO'
+          gerrit-host: 'git.opendaylight.org'
+          gerrit-topic: 'autorelease-update-submodules'
+          gerrit-commit-message: 'Update submodules to latest HEAD of branch'
       - shell: "./scripts/list-project-dependencies.sh"
       - autorelease-determine-merge-order
       - autorelease-cfp:
