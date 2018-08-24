@@ -4,6 +4,7 @@
     jobs:
       - odl-maven-jobs
 
+    disabled: true
     stream: neon
     project: 'topoprocessing'
     project-name: 'topoprocessing'
@@ -21,6 +22,7 @@
     jobs:
       - odl-maven-jobs
 
+    disabled: true
     stream: fluorine
     project: 'topoprocessing'
     project-name: 'topoprocessing'
@@ -39,6 +41,7 @@
       - '{project-name}-distribution-check-{stream}'
       - odl-maven-jobs
 
+    disabled: true
     stream: oxygen
     project: 'topoprocessing'
     project-name: 'topoprocessing'
@@ -55,6 +58,8 @@
     name: topoprocessing-sonar
     jobs:
       - gerrit-maven-sonar
+
+    disabled: true
     project: 'topoprocessing'
     project-name: 'topoprocessing'
     branch: 'master'
