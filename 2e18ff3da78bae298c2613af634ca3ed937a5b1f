@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "26185ac9_d9665067",
+        "filename": "jjb/netvirt/netvirt-apex-images.yaml",
+        "patchSetId": 19
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-08-25T00:57:05Z",
+      "side": 1,
+      "message": "I think it probably makes sense to not over-engineer this\njob in to all the different branches and topologies. We\ncan just have this one job that handles it all for now. We\ncan optimize it later.",
+      "parentUuid": "c10c4a6d_a35ea3e2",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 31
+      },
+      "revId": "2e18ff3da78bae298c2613af634ca3ed937a5b1f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d1ac50a_aae46016",
         "filename": "jjb/netvirt/netvirt-apex-images.yaml",
         "patchSetId": 19
@@ -60,6 +84,30 @@
       "writtenOn": "2018-08-20T23:57:31Z",
       "side": 1,
       "message": "weekly? or daily so we can pick up images quicker? Would be nice to also have a push notification from opnfv.",
+      "range": {
+        "startLine": 42,
+        "startChar": 17,
+        "endLine": 42,
+        "endChar": 23
+      },
+      "revId": "2e18ff3da78bae298c2613af634ca3ed937a5b1f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "40160845_c81859ab",
+        "filename": "jjb/netvirt/netvirt-apex-images.yaml",
+        "patchSetId": 19
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-08-25T00:57:05Z",
+      "side": 1,
+      "message": "I don\u0027t know how interested we are in the quick updates or not. It doesn\u0027t hurt to run more or less frequently. it\u0027s\njust a VM in vexxhost running for a few cycles. You decide.",
+      "parentUuid": "2d1ac50a_aae46016",
       "range": {
         "startLine": 42,
         "startChar": 17,
@@ -119,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "62eb885b_8566d5ed",
+        "filename": "jjb/opendaylight-infra-apex-image-management.sh",
+        "patchSetId": 19
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-08-25T00:57:05Z",
+      "side": 1,
+      "message": "check new ps.\n\nbut, the nounset flag has trouble with a venv, so can\u0027t use\nthat. I\u0027m no expert with these flags though, so maybe\nI\u0027m missing something.\n\nerror is:\n/tmp/v/openstack/bin/activate: line 57: PS1: unbound variable",
+      "parentUuid": "b934ed28_e1d5f03c",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 11
+      },
+      "revId": "2e18ff3da78bae298c2613af634ca3ed937a5b1f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6de5ecd1_15a4156f",
         "filename": "jjb/opendaylight-infra-apex-image-management.sh",
         "patchSetId": 19
@@ -130,6 +202,30 @@
       "writtenOn": "2018-08-20T23:57:31Z",
       "side": 1,
       "message": "2018 and Red Hat. Guess the first few lines are copied but the rest all seems new so the copyright should reflect that.",
+      "range": {
+        "startLine": 4,
+        "startChar": 16,
+        "endLine": 4,
+        "endChar": 21
+      },
+      "revId": "2e18ff3da78bae298c2613af634ca3ed937a5b1f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3b205c70_e4c68a5c",
+        "filename": "jjb/opendaylight-infra-apex-image-management.sh",
+        "patchSetId": 19
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-08-25T00:57:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6de5ecd1_15a4156f",
       "range": {
         "startLine": 4,
         "startChar": 16,
@@ -159,6 +255,24 @@
     },
     {
       "key": {
+        "uuid": "94a73649_51a6ed36",
+        "filename": "jjb/opendaylight-infra-apex-image-management.sh",
+        "patchSetId": 19
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-08-25T00:57:05Z",
+      "side": 1,
+      "message": "added the checksum stuff as as TODO for now.",
+      "parentUuid": "6e461ce4_1de785d3",
+      "revId": "2e18ff3da78bae298c2613af634ca3ed937a5b1f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b110194_387fb5f4",
         "filename": "jjb/opendaylight-infra-apex-image-management.sh",
         "patchSetId": 19
@@ -170,6 +284,30 @@
       "writtenOn": "2018-08-20T19:23:50Z",
       "side": 1,
       "message": "This should be the value determined from the properties file:\nhttps://github.com/opnfv/releng/blob/master/jjb/apex/apex-snapshot-deploy.sh#L63",
+      "range": {
+        "startLine": 25,
+        "startChar": 25,
+        "endLine": 25,
+        "endChar": 89
+      },
+      "revId": "2e18ff3da78bae298c2613af634ca3ed937a5b1f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cd20a27d_fea0e7f2",
+        "filename": "jjb/opendaylight-infra-apex-image-management.sh",
+        "patchSetId": 19
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-08-25T00:57:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b110194_387fb5f4",
       "range": {
         "startLine": 25,
         "startChar": 25,
@@ -205,6 +343,30 @@
     },
     {
       "key": {
+        "uuid": "eef00d8e_9ceb3d36",
+        "filename": "jjb/opendaylight-infra-apex-image-management.sh",
+        "patchSetId": 19
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-08-25T00:57:05Z",
+      "side": 1,
+      "message": "gotta uncompress so I can do the --delete trick below. it\ndoesn\u0027t work on compressed archives.",
+      "parentUuid": "33697c96_a2ec6eff",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 39
+      },
+      "revId": "2e18ff3da78bae298c2613af634ca3ed937a5b1f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a6b3cbb_d99ccaf4",
         "filename": "jjb/opendaylight-infra-apex-image-management.sh",
         "patchSetId": 19
@@ -228,6 +390,30 @@
     },
     {
       "key": {
+        "uuid": "8cbdddfb_f128f510",
+        "filename": "jjb/opendaylight-infra-apex-image-management.sh",
+        "patchSetId": 19
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-08-25T00:57:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a6b3cbb_d99ccaf4",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 68
+      },
+      "revId": "2e18ff3da78bae298c2613af634ca3ed937a5b1f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b9f0d59_f3911e8f",
         "filename": "jjb/opendaylight-infra-apex-image-management.sh",
         "patchSetId": 19
@@ -239,6 +425,30 @@
       "writtenOn": "2018-08-20T19:23:50Z",
       "side": 1,
       "message": "what if disk images already exist? Don\u0027t you need to delete them first, or use update command? Can you include the snapshot date in the image name so we know the latest in glance?",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 84
+      },
+      "revId": "2e18ff3da78bae298c2613af634ca3ed937a5b1f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5193c8fb_d4816240",
+        "filename": "jjb/opendaylight-infra-apex-image-management.sh",
+        "patchSetId": 19
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-08-25T00:57:05Z",
+      "side": 1,
+      "message": "we need to atomically (as best as possible) upload these\nimages to have the same name. The name needs to be generic\nthough, so no timestamp, because we would then have to go\nfile patches in our jobs to pick these new images based on\nthe new name. OR, make more complex logic in our stack create\nscripts.\n\nBUT, we can tag the images with dates. If we add an image\nshow command in the right places it will be fairly easy\nto figure it out whenever we need to. I\u0027ll add the name\nof the archive file (which has the date apex made it, as\nwell as the actual date we uploaded these in to vexxhost)",
+      "parentUuid": "8b9f0d59_f3911e8f",
       "range": {
         "startLine": 58,
         "startChar": 0,
