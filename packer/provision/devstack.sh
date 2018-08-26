@@ -3,8 +3,6 @@
 # force any errors to cause the script and job to end in failure
 set -xeu -o pipefail
 
-# add in a test copr repo
-wget http://copr.fedoraproject.org/coprs/tykeal/odl-updates/repo/epel-7/tykeal-odl-updates-epel-7.repo -O /etc/yum.repos.d/tykeal-odl-updates-epel-7.repo
 # Install xpath
 yum install -y perl-XML-XPath python-pip python-six
 
