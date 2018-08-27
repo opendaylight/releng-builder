@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5e783fde_0f67a250",
+        "filename": "jjb/netvirt/netvirt-job-reports.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-08-27T19:30:19Z",
+      "side": 1,
+      "message": "Probably not, I think this is just what I cut and pasted. I will drop to the 2c-2g and see what happens.",
+      "parentUuid": "8207b9ea_e77e5bf9",
+      "revId": "55a7a370d9f4667778d3be1cc9a906a05d466d2a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "adf32356_d7e601d6",
         "filename": "jjb/netvirt/netvirt-job-reports.yaml",
         "patchSetId": 1
@@ -76,6 +94,30 @@
       "writtenOn": "2018-08-07T15:20:11Z",
       "side": 1,
       "message": "We shouldn\u0027t use $WORKSPACE or we will hit that character limit issue we ran into before. Use /tmp/v/odltools instead for example.",
+      "range": {
+        "startLine": 75,
+        "startChar": 10,
+        "endLine": 77,
+        "endChar": 45
+      },
+      "revId": "55a7a370d9f4667778d3be1cc9a906a05d466d2a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "73f99256_52e3a20c",
+        "filename": "jjb/netvirt/netvirt-job-reports.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-08-27T19:30:19Z",
+      "side": 1,
+      "message": "I was reusing the venv that the job uses. To use /tmp - would I need to create a venv first?",
+      "parentUuid": "b2e3b66f_6a080445",
       "range": {
         "startLine": 75,
         "startChar": 10,
