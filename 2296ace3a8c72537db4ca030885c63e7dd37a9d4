@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0803e1a_18211821",
+        "filename": "jjb/opendaylight-infra-apex-image-management.sh",
+        "patchSetId": 25
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2018-08-28T11:19:02Z",
+      "side": 1,
+      "message": "You do not need this if you only want to read. \"tar -xf\" can extract from .tar.gz directly.",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 6
+      },
+      "revId": "2296ace3a8c72537db4ca030885c63e7dd37a9d4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "03259245_12498d18",
+        "filename": "jjb/opendaylight-infra-apex-image-management.sh",
+        "patchSetId": 25
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2018-08-28T11:19:02Z",
+      "side": 1,
+      "message": "How many images are there?\nI see you only need 3 of them, and you known their filenames after line 55.",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 6
+      },
+      "revId": "2296ace3a8c72537db4ca030885c63e7dd37a9d4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a0418d46_07dd8496",
+        "filename": "jjb/opendaylight-infra-apex-image-management.sh",
+        "patchSetId": 25
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2018-08-28T11:19:02Z",
+      "side": 1,
+      "message": "In lines 63-102 you are processing all three images \"in parallel\".\nYou could extract the first, do the processing, delete it, only then extract the second one and so on.\n\nIn any case, you will need a robust way to roll-back when something fails. I imagine it will use \"trap EXIT\" a lot.",
+      "range": {
+        "startLine": 41,
+        "startChar": 13,
+        "endLine": 41,
+        "endChar": 20
+      },
+      "revId": "2296ace3a8c72537db4ca030885c63e7dd37a9d4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f7798d57_6622d607",
+        "filename": "jjb/opendaylight-infra-apex-image-management.sh",
+        "patchSetId": 25
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2018-08-28T11:19:02Z",
+      "side": 1,
+      "message": "If you keep the original tar gzipped, perhaps you have enough free space so that you do not need to delete.",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 14
+      },
+      "revId": "2296ace3a8c72537db4ca030885c63e7dd37a9d4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
