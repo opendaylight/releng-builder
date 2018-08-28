@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "37bd24b5_2dfd3d4e",
+        "filename": "jjb/opendaylight-infra-apex-image-management.sh",
+        "patchSetId": 25
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-08-28T18:04:14Z",
+      "side": 1,
+      "message": "correct, but as you saw below I can\u0027t do the --delete\nunless it\u0027s uncompressed.",
+      "parentUuid": "f0803e1a_18211821",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 6
+      },
+      "revId": "2296ace3a8c72537db4ca030885c63e7dd37a9d4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03259245_12498d18",
         "filename": "jjb/opendaylight-infra-apex-image-management.sh",
         "patchSetId": 25
@@ -36,6 +60,30 @@
       "writtenOn": "2018-08-28T11:19:02Z",
       "side": 1,
       "message": "How many images are there?\nI see you only need 3 of them, and you known their filenames after line 55.",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 6
+      },
+      "revId": "2296ace3a8c72537db4ca030885c63e7dd37a9d4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f0145609_cce8f591",
+        "filename": "jjb/opendaylight-infra-apex-image-management.sh",
+        "patchSetId": 25
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-08-28T18:04:14Z",
+      "side": 1,
+      "message": "now just 3, but there will be future archives with at least\n5 (3 node cluster, plus 2 compute nodes).",
+      "parentUuid": "03259245_12498d18",
       "range": {
         "startLine": 40,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d32fa483_9ecd3aa0",
+        "filename": "jjb/opendaylight-infra-apex-image-management.sh",
+        "patchSetId": 25
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-08-28T18:04:14Z",
+      "side": 1,
+      "message": "good point. that would save some disk space.",
+      "parentUuid": "a0418d46_07dd8496",
+      "range": {
+        "startLine": 41,
+        "startChar": 13,
+        "endLine": 41,
+        "endChar": 20
+      },
+      "revId": "2296ace3a8c72537db4ca030885c63e7dd37a9d4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7798d57_6622d607",
         "filename": "jjb/opendaylight-infra-apex-image-management.sh",
         "patchSetId": 25
@@ -82,6 +154,30 @@
       "writtenOn": "2018-08-28T11:19:02Z",
       "side": 1,
       "message": "If you keep the original tar gzipped, perhaps you have enough free space so that you do not need to delete.",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 14
+      },
+      "revId": "2296ace3a8c72537db4ca030885c63e7dd37a9d4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "adb52bb3_389dcaed",
+        "filename": "jjb/opendaylight-infra-apex-image-management.sh",
+        "patchSetId": 25
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-08-28T18:04:14Z",
+      "side": 1,
+      "message": "there wasn\u0027t enough space when I tried this. I think the original archive is in the 10GB range. Each image inside\nis in the 9GB range (there is good compression happening\nhere I guess), so I think it will even be cutting it close\nto the 40GB limit even if I extract, delete one at a time,\nbecause the archive will always be 9BG+ and 3 images at 9GB+\n\nonce we know we need more than 40GB we no longer need to\nworry about being tricky, since we have to get a new\nnon-default flavor and in the end, these systems are \npretty cheap ($0.07 / hr) is what I\u0027m told.",
+      "parentUuid": "f7798d57_6622d607",
       "range": {
         "startLine": 43,
         "startChar": 2,
