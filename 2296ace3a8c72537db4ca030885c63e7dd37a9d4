@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "137c0032_5a5fac4a",
+        "filename": "jjb/opendaylight-infra-apex-image-management.sh",
+        "patchSetId": 25
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2018-08-30T08:12:40Z",
+      "side": 1,
+      "message": "I still think you do not need to delete.\n\nAlternatively, you could do \"gunzip | tar --delete | gzip\"; depending on disk and CPU this might be faster than \"tar --delete\" on uncompressed archive.",
+      "parentUuid": "37bd24b5_2dfd3d4e",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 6
+      },
+      "revId": "2296ace3a8c72537db4ca030885c63e7dd37a9d4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03259245_12498d18",
         "filename": "jjb/opendaylight-infra-apex-image-management.sh",
         "patchSetId": 25
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "there wasn\u0027t enough space when I tried this. I think the original archive is in the 10GB range. Each image inside\nis in the 9GB range (there is good compression happening\nhere I guess), so I think it will even be cutting it close\nto the 40GB limit even if I extract, delete one at a time,\nbecause the archive will always be 9BG+ and 3 images at 9GB+\n\nonce we know we need more than 40GB we no longer need to\nworry about being tricky, since we have to get a new\nnon-default flavor and in the end, these systems are \npretty cheap ($0.07 / hr) is what I\u0027m told.",
       "parentUuid": "f7798d57_6622d607",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 14
+      },
+      "revId": "2296ace3a8c72537db4ca030885c63e7dd37a9d4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "225224e9_874b49ca",
+        "filename": "jjb/opendaylight-infra-apex-image-management.sh",
+        "patchSetId": 25
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2018-08-30T08:12:40Z",
+      "side": 1,
+      "message": "I count one original archive (10GB), plus one currently processed .qcow2 image (9GB, probably less depending on internal structure), plus one converted raw image (9GB). That is 28GB (or less), so it should fit into 40GB.",
+      "parentUuid": "adb52bb3_389dcaed",
       "range": {
         "startLine": 43,
         "startChar": 2,
