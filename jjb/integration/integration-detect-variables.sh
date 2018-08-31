@@ -7,7 +7,11 @@ DISTROBRANCH="${DISTROBRANCH:-$GERRIT_BRANCH}"
 
 if [ ${BUNDLE_URL} == 'last' ]; then
     # Obtain current pom.xml of integration/distribution, correct branch.
-    wget "http://${GERRIT_PATH}/gitweb?p=integration/distribution.git;a=blob_plain;f=pom.xml;hb=refs/heads/$DISTROBRANCH" -O "pom.xml"
+    if [[ "$KARAF_ARTIFACT" == "opendaylight" ]]; then
+        wget "http://${GERRIT_PATH}/gitweb?p=integration/distribution.git;a=blob_plain;f=opendaylight/pom.xml;hb=refs/heads/$DISTROBRANCH" -O "pom.xml"
+    else
+        wget "http://${GERRIT_PATH}/gitweb?p=integration/distribution.git;a=blob_plain;f=pom.xml;hb=refs/heads/$DISTROBRANCH" -O "pom.xml"
+    fi
     # Extract the BUNDLE_VERSION from the pom.xml
     BUNDLE_VERSION="$(xpath pom.xml '/project/version/text()' 2> /dev/null)"
     echo "Bundle version is ${BUNDLE_VERSION}"
