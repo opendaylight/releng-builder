@@ -46,10 +46,15 @@
           # Self-Managed projects repos and features:
           sm-repos: >
               mvn:org.opendaylight.sxp/features-sxp//xml/features,
+              mvn:org.opendaylight.transportpce/features-transportpce//xml/features,
               mvn:org.opendaylight.tsdr/features-tsdr//xml/features,
               mvn:org.opendaylight.unimgr/features4-unimgr//xml/features
           sm-features: >
               odl-sxp-routing,
+              odl-transportpce,
+              odl-transportpce-api,
+              odl-transportpce-ordmodels,
+              odl-transportpce-stubmodels,
               odl-tsdr-core,
               odl-tsdr-openflow-statistics-collector,
               odl-tsdr-netflow-statistics-collector,
