@@ -26,7 +26,6 @@
           sm-repos: >
               mvn:org.opendaylight.sxp/features-sxp//xml/features,
               mvn:org.opendaylight.tsdr/features-tsdr//xml/features,
-              mvn:org.opendaylight.unimgr/features4-unimgr//xml/features
           sm-features: >
               odl-sxp-routing,
               odl-tsdr-core,
@@ -39,7 +38,6 @@
               odl-tsdr-hbase,
               odl-tsdr-hsqldb,
               odl-tsdr-elasticsearch,
-              odl-unimgr-rest
       - fluorine:
           branch: 'stable/fluorine'
           karaf-version: odl
@@ -47,7 +45,6 @@
           sm-repos: >
               mvn:org.opendaylight.sxp/features-sxp//xml/features,
               mvn:org.opendaylight.tsdr/features-tsdr//xml/features,
-              mvn:org.opendaylight.unimgr/features4-unimgr//xml/features
           sm-features: >
               odl-sxp-routing,
               odl-tsdr-core,
@@ -60,7 +57,6 @@
               odl-tsdr-hbase,
               odl-tsdr-hsqldb,
               odl-tsdr-elasticsearch,
-              odl-unimgr-rest
       - oxygen:
           branch: 'stable/oxygen'
           karaf-version: karaf4
@@ -192,7 +188,6 @@
               distribution-merge-managed-{stream},
               sxp-merge-{stream},
               tsdr-merge-{stream},
-              unimgr-merge-{stream}
       - fluorine:
           branch: 'stable/fluorine'
           karaf-version: odl
@@ -200,7 +195,6 @@
               distribution-merge-managed-{stream},
               sxp-merge-{stream},
               tsdr-merge-{stream},
-              unimgr-merge-{stream}
 
 - project:
     name: distribution-sonar
