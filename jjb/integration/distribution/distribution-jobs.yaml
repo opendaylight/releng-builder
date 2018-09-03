@@ -203,6 +203,30 @@
               tsdr-merge-{stream},
 
 - project:
+    name: distribution-release
+    jobs:
+      - gerrit-maven-release
+
+    stream: fluorine
+    project: 'integration/distribution'
+    project-name: 'distribution'
+    branch: 'stable/fluorine'
+    mvn-goals: 'clean install dependency:tree -DoutputFile=dependency_tree.txt'
+    mvn-settings: 'integration-distribution-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m -Punmanaged'
+    email-upstream: '[int/dist]'
+
+    # Used by the release job
+    staging-profile-id: a123456789012
+
+    stream:
+      - neon:
+          branch: 'master'
+
+      - fluorine:
+          branch: 'stable/fluorine'
+
+- project:
     name: distribution-sonar
     jobs:
       - gerrit-maven-sonar
