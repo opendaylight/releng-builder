@@ -203,6 +203,28 @@
               tsdr-merge-{stream},
 
 - project:
+    name: distribution-release
+    jobs:
+      - gerrit-maven-release
+
+    project: 'integration/distribution'
+    project-name: 'distribution'
+    mvn-goals: 'clean install dependency:tree -DoutputFile=dependency_tree.txt -Punmanaged -f opendaylight/pom.xml'
+    mvn-settings: 'integration-distribution-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    email-upstream: '[int/dist]'
+
+    # Used by the release job
+    staging-profile-id: 2af042ed81d5e2
+
+    stream:
+      - neon:
+          branch: 'master'
+
+      - fluorine:
+          branch: 'stable/fluorine'
+
+- project:
     name: distribution-sonar
     jobs:
       - gerrit-maven-sonar
