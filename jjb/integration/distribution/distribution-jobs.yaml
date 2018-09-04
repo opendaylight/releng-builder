@@ -26,6 +26,7 @@
           sm-repos: >
               mvn:org.opendaylight.sxp/features-sxp//xml/features,
               mvn:org.opendaylight.tsdr/features-tsdr//xml/features,
+              mvn:org.opendaylight.unimgr/features4-unimgr//xml/features,
           sm-features: >
               odl-sxp-routing,
               odl-tsdr-core,
@@ -38,6 +39,10 @@
               odl-tsdr-hbase,
               odl-tsdr-hsqldb,
               odl-tsdr-elasticsearch,
+              odl-unimgr,
+              odl-unimgr-template-driver,
+              odl-unimgr-cisco-xr-driver,
+              odl-unimgr-ovs-driver,
       - fluorine:
           branch: 'stable/fluorine'
           karaf-version: odl
@@ -46,6 +51,7 @@
               mvn:org.opendaylight.sxp/features-sxp//xml/features,
               mvn:org.opendaylight.transportpce/features-transportpce//xml/features,
               mvn:org.opendaylight.tsdr/features-tsdr//xml/features,
+              mvn:org.opendaylight.unimgr/features4-unimgr//xml/features,
           sm-features: >
               odl-sxp-routing,
               odl-transportpce,
@@ -62,6 +68,10 @@
               odl-tsdr-hbase,
               odl-tsdr-hsqldb,
               odl-tsdr-elasticsearch,
+              odl-unimgr,
+              odl-unimgr-template-driver,
+              odl-unimgr-cisco-xr-driver,
+              odl-unimgr-ovs-driver,
       - oxygen:
           branch: 'stable/oxygen'
           karaf-version: karaf4
@@ -193,6 +203,7 @@
               distribution-merge-managed-{stream},
               sxp-merge-{stream},
               tsdr-merge-{stream},
+              unimgr-merge-{stream},
       - fluorine:
           branch: 'stable/fluorine'
           karaf-version: odl
@@ -201,6 +212,7 @@
               sxp-merge-{stream},
               transportpce-merge-{stream},
               tsdr-merge-{stream},
+              unimgr-merge-{stream},
 
 - project:
     name: distribution-release
