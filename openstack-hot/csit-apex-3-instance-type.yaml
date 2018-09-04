@@ -1,0 +1,113 @@
+---
+heat_template_version: 2016-04-08
+
+parameters:
+    job_name:
+        type: string
+        description: Name of job running this template
+    silo:
+        type: string
+        description: Jenkins Silo job is running in (typically releng|sandbox)
+    vm_0_count:
+        type: number
+        description: Number of VMs for 1st VM type
+    vm_0_flavor:
+        type: string
+        default: v1-standard-1
+        description: Flavor to run instance on for 1st VM type
+    vm_0_image:
+        type: string
+        description: Image to run instance on for 1st VM type
+    vm_1_count:
+        type: number
+        description: Number of VMs for 2nd VM type
+    vm_1_flavor:
+        type: string
+        default: v1-standard-1
+        description: Flavor to run instance on for 2nd VM type
+    vm_1_image:
+        type: string
+        description: Image to run instance on for 2nd VM type
+    vm_2_count:
+        type: number
+        description: Number of VMs for 3rd VM type
+    vm_2_flavor:
+        type: string
+        default: v1-standard-1
+        description: Flavor to run instance on for 3rd VM type
+    vm_2_image:
+        type: string
+
+resources:
+
+    192_network:
+        type: OS::Neutron::Net
+        properties:
+            name: APEX_192_network
+            port_security_enabled: false
+
+    192_subnet:
+        type: OS::Neutron::Subnet
+        properties:
+            network_id: {get_resource: 192_network}
+            cidr: 192.0.2.0/24
+            gateway_ip: 192.0.2.1
+            allocation_pools:
+                - start: 192.0.2.2
+                  end: 192.0.2.50
+
+    vm_0_group:
+        type: "OS::Heat::ResourceGroup"
+        properties:
+            count: {get_param: vm_0_count}
+            resource_def:
+                type: generic-server.yaml
+                properties:
+                    job_name: {get_param: job_name}
+                    silo: {get_param: silo}
+                    ssh_key: {get_param: silo}
+                    index: "%index%"
+                    group: "0"
+                    vm_flavor: {get_param: vm_0_flavor}
+                    vm_image: {get_param: vm_0_image}
+
+    vm_1_group:
+        type: "OS::Heat::ResourceGroup"
+        properties:
+            count: {get_param: vm_1_count}
+            resource_def:
+                type: generic-server.yaml
+                properties:
+                    job_name: {get_param: job_name}
+                    silo: {get_param: silo}
+                    ssh_key: {get_param: silo}
+                    index: "%index%"
+                    group: "1"
+                    vm_flavor: {get_param: vm_1_flavor}
+                    vm_image: {get_param: vm_1_image}
+
+    vm_2_group:
+        type: "OS::Heat::ResourceGroup"
+        properties:
+            count: {get_param: vm_2_count}
+            resource_def:
+                type: generic-server.yaml
+                properties:
+                    job_name: {get_param: job_name}
+                    silo: {get_param: silo}
+                    ssh_key: {get_param: silo}
+                    index: "%index%"
+                    group: "2"
+                    vm_flavor: {get_param: vm_2_flavor}
+                    vm_image: {get_param: vm_2_image}
+
+outputs:
+    vm_0_ips:
+        description: IP addresses of the 1st vm types
+        value: {get_attr: [vm_0_group, ip]}
+    vm_1_ips:
+        description: IP addresses of the 2nd vm types
+        value: {get_attr: [vm_1_group, ip]}
+    vm_2_ips:
+        description: IP addresses of the 3rd vm types
+        value: {get_attr: [vm_2_group, ip]}
