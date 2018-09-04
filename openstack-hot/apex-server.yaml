@@ -1,0 +1,58 @@
+---
+heat_template_version: 2016-04-08
+
+parameters:
+    job_name:
+        type: string
+        description: Name of job running this template
+    silo:
+        type: string
+        default: vm
+        description: |
+            String to identify a Jenkins Master
+
+            Useful in scenarios where multiple Jenkins Masters might be
+            creating VMs in the same cloud to uniquely distinguish them.
+
+            TODO we should move to using tags once OpenStack Ocata which is
+            available to us with support for server tags properties.
+    index:
+        type: number
+    group:
+        type: number
+        default: "0"
+    vm_flavor:
+        type: string
+        default: v1-standard-4
+        description: OpenStack Flavor to use
+    vm_image:
+        type: string
+        description: VM Image to spin up
+
+resources:
+    port:
+        type: "OS::Neutron::Port"
+        properties:
+            allowed_address_pairs:
+                - ip_address: 192.0.2/24
+            network: APEX_192_network
+    instance:
+        type: "OS::Nova::Server"
+        properties:
+            image: {get_param: vm_image}
+            flavor: {get_param: vm_flavor}
+            name:
+                str_replace:
+                    template: SILO-JOB_NAME-GROUP-VM_TYPE-INDEX
+                    params:
+                        "SILO": {get_param: silo}
+                        "JOB_NAME": {get_param: job_name}
+                        "VM_TYPE":
+                            str_split:
+                                - ' - '
+                                - {get_param: vm_image}
+                                - 2
+                        "GROUP": {get_param: group}
+                        "INDEX": {get_param: index}
+            networks:
+                - port: {get_resource: port}
