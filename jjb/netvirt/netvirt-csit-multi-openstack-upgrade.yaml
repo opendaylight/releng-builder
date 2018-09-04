@@ -1,12 +1,17 @@
 ---
 - project:
-    name: netvirt-csit-upgrade-openstack-integration-oxygen
+    name: netvirt-csit-upgrade-openstack-integration
     jobs:
       - inttest-csit-openstack
 
     project: 'netvirt'
-    stream: 'fluorine'
-    branch: 'master'
+
+    stream:
+      - neon:
+          branch: 'master'
+      - fluorine:
+          branch: 'stable/fluorine'
+
     testplan: '{project}-{topology}-openstack-upgrade.txt'
     odl-ml2-driver-version: 'v2'
     enable-openstack-services: 'placement-api,l2gw-plugin'
