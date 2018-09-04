@@ -49,7 +49,8 @@ resources:
     192_subnet:
         type: OS::Neutron::Subnet
         properties:
-            network_id: {get_resource: 192_network}
+            name: APEX_192_subnet
+            network_id: {get_resource: APEX_192_network}
             cidr: 192.0.2.0/24
             gateway_ip: 192.0.2.1
             allocation_pools:
@@ -61,7 +62,7 @@ resources:
         properties:
             count: {get_param: vm_0_count}
             resource_def:
-                type: generic-server.yaml
+                type: apex-server.yaml
                 properties:
                     job_name: {get_param: job_name}
                     silo: {get_param: silo}
@@ -76,7 +77,7 @@ resources:
         properties:
             count: {get_param: vm_1_count}
             resource_def:
-                type: generic-server.yaml
+                type: apex-server.yaml
                 properties:
                     job_name: {get_param: job_name}
                     silo: {get_param: silo}
@@ -91,7 +92,7 @@ resources:
         properties:
             count: {get_param: vm_2_count}
             resource_def:
-                type: generic-server.yaml
+                type: apex-server.yaml
                 properties:
                     job_name: {get_param: job_name}
                     silo: {get_param: silo}
@@ -100,14 +101,3 @@ resources:
                     group: "2"
                     vm_flavor: {get_param: vm_2_flavor}
                     vm_image: {get_param: vm_2_image}
-
-outputs:
-    vm_0_ips:
-        description: IP addresses of the 1st vm types
-        value: {get_attr: [vm_0_group, ip]}
-    vm_1_ips:
-        description: IP addresses of the 2nd vm types
-        value: {get_attr: [vm_1_group, ip]}
-    vm_2_ips:
-        description: IP addresses of the 3rd vm types
-        value: {get_attr: [vm_2_group, ip]}
