@@ -39,11 +39,16 @@ parameters:
         type: string
 
 resources:
-
     192_network:
         type: OS::Neutron::Net
         properties:
-            name: APEX_192_network
+            name:
+                str_replace:
+                    template: SILO-JOB_NAME-NET
+                    params:
+                        "SILO": {get_param: silo}
+                        "JOB_NAME": {get_param: job_name}
+                        "NET": 'APEX_192'
             port_security_enabled: false
 
     192_subnet:
