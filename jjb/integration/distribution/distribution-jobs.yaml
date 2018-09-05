@@ -221,7 +221,7 @@
 
     project: 'integration/distribution'
     project-name: 'distribution'
-    mvn-goals: 'clean install dependency:tree -DoutputFile=dependency_tree.txt -Punmanaged -f opendaylight/pom.xml'
+    mvn-goals: 'clean deploy -f opendaylight/pom.xml'
     mvn-settings: 'integration-distribution-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     email-upstream: '[int/dist]'
