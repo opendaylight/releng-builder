@@ -39,17 +39,28 @@ parameters:
         type: string
 
 resources:
-
     192_network:
         type: OS::Neutron::Net
         properties:
-            name: APEX_192_network
+            name:
+                str_replace:
+                    template: SILO-JOB_NAME-NET
+                    params:
+                        "SILO": {get_param: silo}
+                        "JOB_NAME": {get_param: job_name}
+                        "NET": 'APEX_192_network'
             port_security_enabled: false
 
     192_subnet:
         type: OS::Neutron::Subnet
         properties:
-            name: APEX_192_subnet
+            name:
+                str_replace:
+                    template: SILO-JOB_NAME-SUBNET
+                    params:
+                        "SILO": {get_param: silo}
+                        "JOB_NAME": {get_param: job_name}
+                        "SUBNET": 'APEX_192_subnet'
             network_id: {get_resource: 192_network}
             cidr: 192.0.2.0/24
             allocation_pools:
