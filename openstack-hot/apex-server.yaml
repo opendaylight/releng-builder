@@ -34,7 +34,7 @@ resources:
         type: "OS::Neutron::Port"
         properties:
             allowed_address_pairs:
-                - ip_address: 192.0.2/24
+                - ip_address: 192.0.2.0/24
             network: APEX_192_network
     instance:
         type: "OS::Nova::Server"
