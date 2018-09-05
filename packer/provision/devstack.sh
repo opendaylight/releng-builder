@@ -4,7 +4,7 @@
 set -xeu -o pipefail
 
 # Install xpath
-yum install -y perl-XML-XPath python-pip python-six
+yum install -y perl-XML-XPath python-pip
 
 # install crudini command line tool for editing config files
 yum install -y crudini
