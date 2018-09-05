@@ -52,7 +52,6 @@ resources:
             name: APEX_192_subnet
             network_id: {get_resource: 192_network}
             cidr: 192.0.2.0/24
-            gateway_ip: 192.0.2.1
             allocation_pools:
                 - start: 192.0.2.2
                   end: 192.0.2.50
@@ -70,6 +69,7 @@ resources:
                     group: "0"
                     vm_flavor: {get_param: vm_0_flavor}
                     vm_image: {get_param: vm_0_image}
+                    vm_network: {get_resource: 192_network}
 
     vm_1_group:
         type: "OS::Heat::ResourceGroup"
@@ -84,6 +84,7 @@ resources:
                     group: "1"
                     vm_flavor: {get_param: vm_1_flavor}
                     vm_image: {get_param: vm_1_image}
+                    vm_network: {get_resource: 192_network}
 
     vm_2_group:
         type: "OS::Heat::ResourceGroup"
@@ -98,3 +99,4 @@ resources:
                     group: "2"
                     vm_flavor: {get_param: vm_2_flavor}
                     vm_image: {get_param: vm_2_image}
+                    vm_network: {get_resource: 192_network}
