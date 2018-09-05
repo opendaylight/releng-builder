@@ -28,14 +28,11 @@ parameters:
     vm_image:
         type: string
         description: VM Image to spin up
+    vm_network:
+        type: string
+        description: VM network
 
 resources:
-    port:
-        type: "OS::Neutron::Port"
-        properties:
-            allowed_address_pairs:
-                - ip_address: 192.0.2.0/24
-            network: APEX_192_network
     instance:
         type: "OS::Nova::Server"
         properties:
@@ -55,4 +52,4 @@ resources:
                         "GROUP": {get_param: group}
                         "INDEX": {get_param: index}
             networks:
-                - port: {get_resource: port}
+                - network: {get_param: vm_network}
