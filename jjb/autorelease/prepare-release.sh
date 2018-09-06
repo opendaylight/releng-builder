@@ -39,6 +39,10 @@ git submodule foreach "echo \$path \$(git rev-parse --verify HEAD) ${RELEASE_TAG
 echo "$RELEASE_TAG"
 find . -name "*.xml" -print0 | xargs -0 sed -i 's/-SNAPSHOT//'
 
+# Ignore changes to Final distribution since that will be released separately
+pushd integration/distribution || exit 1
+    git checkout -f opendaylight/pom.xml
+popd || exit 1
 git submodule foreach "git commit -am \"Release $RELEASE_TAG\" || true"
 git commit -am "Release $RELEASE_TAG"
 
