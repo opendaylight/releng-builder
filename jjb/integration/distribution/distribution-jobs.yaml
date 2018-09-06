@@ -48,11 +48,13 @@
           karaf-version: odl
           # Self-Managed projects repos and features:
           sm-repos: >
+              mvn:org.opendaylight.snmp4sdn/features-snmp4sdn//xml/features,
               mvn:org.opendaylight.sxp/features-sxp//xml/features,
               mvn:org.opendaylight.transportpce/features-transportpce//xml/features,
               mvn:org.opendaylight.tsdr/features-tsdr//xml/features,
               mvn:org.opendaylight.unimgr/features4-unimgr//xml/features,
           sm-features: >
+              odl-snmp4sdn-snmp4sdn
               odl-sxp-routing,
               odl-transportpce,
               odl-transportpce-api,
@@ -209,6 +211,7 @@
           karaf-version: odl
           dependencies: >
               distribution-merge-managed-{stream},
+              snmp4sdn-merge-{stream},
               sxp-merge-{stream},
               transportpce-merge-{stream},
               tsdr-merge-{stream},
