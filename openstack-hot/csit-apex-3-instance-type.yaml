@@ -66,8 +66,8 @@ resources:
             cidr: 192.0.2.0/24
             gateway_ip: 192.0.2.1
             allocation_pools:
-                - start: 192.0.2.2
-                  end: 192.0.2.50
+                - start: 192.0.2.51
+                  end: 192.0.2.100
 
     vm_0_group:
         type: "OS::Heat::ResourceGroup"
