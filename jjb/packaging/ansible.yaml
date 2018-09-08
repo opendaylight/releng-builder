@@ -62,6 +62,50 @@
       - lf-infra-publish
 
 - job-template:
+    name: '{project-name}-test-rpm-upgrade-{stream}'
+
+    node: centos7-builder-2c-2g
+
+    project-type: freestyle
+
+    properties:
+      - opendaylight-infra-parameters:
+          builde-days-to-keep: 7
+
+    parameters:
+      - opendaylight-infra-parameters:
+          os-cloud: '{os-cloud}'
+          project: '{project}'
+          branch: '{branch}'
+          refspec: 'refs/head/{branch}'
+          artifacts: '{archive-artifacts}'
+
+     scm:
+       - integration-gerrit-scm:
+           basedir: '{project-name}'
+           refspec: '$GERRIT_REFSPEC'
+           branch: '{branch}'
+
+    wrappers:
+      - opendaylight-infra-wrappers:
+          build-timeout: '{build-timeout}'
+
+    builders:
+      - shell: !include-raw: test-ansible-rpm-upgrade.sh
+
+    triggers:
+      - timed: '@daily'
+      - gerrit-trigger-patch-submitted:
+          gerrit-server-name: '{gerrit-server-name}'
+          project: '{project}'
+          branch: '{branch}'
+          files: '**'
+          forbidden-files: ''
+
+    publishers:
+      - lf-infra-publish
+
+- job-template:
     name: '{project-name}-test-deb-{stream}'
 
     node: ubuntu1604-mininet-ovs-25-1c-4g
