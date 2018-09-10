@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f95566cc_d393789c",
+        "filename": "jjb/integration/multipatch-distribution.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 4540
+      },
+      "writtenOn": "2018-09-10T07:38:41Z",
+      "side": 1,
+      "message": "We\u0027ll run into trouble here if the same snapshot version ends up being used in two different projects (released or otherwise). I use\n\n    xmlstarlet ed -P -N mvn\u003dhttp://maven.apache.org/POM/4.0.0 -u //mvn:version[../mvn:groupId\u003d\\\"org.opendaylight.${project}\\\"] -v ${target} ${file} \u003e ${file}.new\n    mv ${file}.new ${file}\n\n(${file} is the file to process, ${project} the project whose version we want to change, and ${target} the version we want to use).\n\nThat only deals with a single version for all the artifacts of a given project, which will fail for MD-SAL dependencies IIRC. It is possible to determine the correct version to use for any dependency, given a Maven tree, but it takes a *long* time (we need to calculate the effective POM of the root module, process that, and recurse for all modules discovered; calculating large numbers of effective POMs takes a while).",
+      "revId": "9c934f12ba4dedc53c0ae1c8ecfcb53e986c7c15",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
