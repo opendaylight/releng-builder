@@ -34,6 +34,24 @@
       "revId": "9c934f12ba4dedc53c0ae1c8ecfcb53e986c7c15",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1b9f9a42_76e756ac",
+        "filename": "jjb/integration/multipatch-distribution.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 797
+      },
+      "writtenOn": "2018-09-10T16:01:57Z",
+      "side": 1,
+      "message": "It makes sense to use $project-artifacts to hide all the different versions within a project but for mdsal some MSI projects are using at least 2 versions of the same project (e.g. binding-parent and artifacts). This complicates the version adjustment in mdsal project as Stephen points outs.",
+      "parentUuid": "d5996293_dec22e31",
+      "revId": "9c934f12ba4dedc53c0ae1c8ecfcb53e986c7c15",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
