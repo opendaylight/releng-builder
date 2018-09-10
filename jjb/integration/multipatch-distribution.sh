@@ -71,9 +71,13 @@ if [[ "${PATCHES_TO_BUILD}" == *topic* ]]; then
             read -rd '' -a SORT_REF_LIST <<< "${SORT_REF[*]}" || true
             # add refspec to patches to build list
             for PATCH in "${SORT_REF_LIST[@]}"; do
-                # if project is odlparent or yangtools, do not cherry-pick
+                # if project is odlparent or yangtools (MRI), do not cherry-pick topic patch
                 if [[ "${PROJECT}" == "odlparent" || "${PROJECT}" == "yangtools" ]]; then
                     PATCHES_TO_BUILD="${PATCHES_TO_BUILD}=${PATCH/*-/}"
+                # if project is mdsal in neon (MRI), do not cherry-pick topic patch
+                elif [[ "${PROJECT}" == "mdsal" && "${DISTROSTREAM}" == "neon" ]]; then
+                    PATCHES_TO_BUILD="${PATCHES_TO_BUILD}=${PATCH/*-/}"
+                # else cherry-pick topic patch
                 else
                     PATCHES_TO_BUILD="${PATCHES_TO_BUILD}:${PATCH/*-/}"
                 fi
@@ -128,12 +132,15 @@ do
         # TODO: Make this script accept "29645/6" as a shorthand for "45/29645/6".
         git fetch "https://git.opendaylight.org/gerrit/${PROJECT}" "refs/changes/$CHECKOUT"
         git checkout FETCH_HEAD
-
     else
-        # If project with no patch = yangtools, download master branch
+        # If project with no patch = yangtools, download v2.0.x branch
         if [ "${PROJECT}" == "yangtools" ]; then
-            echo "checking out master"
-            git checkout master
+            echo "checking out v2.0.x"
+            git checkout v2.0.x
+        # If project with no patch = mdsal in neon, download v2.6.x branch
+        elif [[ "${PROJECT}" == "mdsal" && "${DISTROSTREAM}" == "neon" ]]; then
+            echo "checking out v2.6.x"
+            git checkout v2.6.x
         else
             echo "checking out ${DISTRIBUTION_BRANCH_TO_BUILD}"
             git checkout "${DISTRIBUTION_BRANCH_TO_BUILD}"
@@ -162,34 +169,88 @@ if [ "${distribution_status}" == "not_included" ]; then
     cd "${BUILD_DIR}"
 fi
 
-# If there is a patch for odlparent or yangtools (MRI projects), adjust version to mdsal project:
+# If there is a patch for odlparent, yangtools or mdsal in neon (MRI projects), adjust version to controller project:
 # 1. Extract project version in patch
-# 2. Extract project MSI version from mdsal project
+# 2. Extract project MSI version from controller project
 # 3. Replace version in patch by MSI version
 # Otherwise release the MRI project
+
 if [[ -d "odlparent" ]]; then
-    if [[ -d "mdsal" ]]; then
+    if [[ -d "controller" ]]; then
         # Extract patch and MSI used version
         patch_version="$(xpath ./odlparent/odlparent-lite/pom.xml '/project/version/text()' 2> /dev/null)"
-        msi_version="$(xpath ./mdsal/pom.xml '/project/parent/version/text()' 2> /dev/null)"
+        msi_version="$(xpath ./controller/pom.xml '/project/parent/version/text()' 2> /dev/null)"
         # Replace version
         find ./odlparent -name "*.xml" -print0 | xargs -0 sed -i "s/${patch_version}/${msi_version}/g"
+        odlparent_version="${msi_version}"
     else
         # Release project
         find ./odlparent -name "*.xml" -print0 | xargs -0 sed -i 's/-SNAPSHOT//g'
+        odlparent_version=${patch_version%"-SNAPSHOT"}
     fi
+    echo "odlparent project version changed to ${odlparent_version}"
 fi
 if [[ -d "yangtools" ]]; then
-        if [[ -d "mdsal" ]]; then
+    # Adjust odlparent version if required
+    if [[ -d "odlparent" ]]; then
+        # Extract odlparent version
+        patch_version="$(xpath ./yangtools/pom.xml '/project/parent/version/text()' 2> /dev/null)"
+        # Replace odlparent version
+        find ./yangtools -name "*.xml" -print0 | xargs -0 sed -i "s/${patch_version}/${odlparent_version}/g"
+        echo "yangtools project odlparent version changed to ${odlparent_version}"
+    fi
+    # Adjust yangtools version
+    if [[ -d "controller" ]]; then
         # Extract patch and MSI used version
         patch_version="$(xpath ./yangtools/pom.xml '/project/version/text()' 2> /dev/null)"
-        msi_version="$(xpath ./mdsal/binding/yang-binding/pom.xml '/project/dependencyManagement/dependencies/dependency/version/text()' 2> /dev/null)"
+        msi_version="$(xpath ./controller/opendaylight/md-sal/sal-binding-dom-it/pom.xml '/project/dependencyManagement/dependencies/dependency[1]/version/text()' 2> /dev/null)"
         # Replace version
         find ./yangtools -name "*.xml" -print0 | xargs -0 sed -i "s/${patch_version}/${msi_version}/g"
+        yangtools_version="${msi_version}"
     else
         # Release project
         find ./yangtools -name "*.xml" -print0 | xargs -0 sed -i 's/-SNAPSHOT//g'
+        yangtools_version=${patch_version%"-SNAPSHOT"}
     fi
+    echo "yangtools project version changed to ${yangtools_version}"
+fi
+if [[ -d "mdsal" && "${DISTROSTREAM}" == "neon" ]]; then
+    # Adjust odlparent version if required
+    if [[ -d "odlparent" ]]; then
+        # Extract odlparent version
+        patch_version="$(xpath ./mdsal/pom.xml '/project/parent/version/text()' 2> /dev/null)"
+        # Replace odlparent version
+        find ./mdsal -name "*.xml" -print0 | xargs -0 sed -i "s/${patch_version}/${odlparent_version}/g"
+        echo "mdsal project odlparent version changed to ${odlparent_version}"
+    fi
+    # Adjust yangtools version if required
+    if [[ -d "yangtools" ]]; then
+        # Extract yangtools version
+        patch_version="$(xpath ./mdsal/binding/yang-binding/pom.xml '/project/dependencyManagement/dependencies/dependency/version/text()' 2> /dev/null)"
+        # Replace yangtools version
+        find ./mdsal -name "*.xml" -print0 | xargs -0 sed -i "s/${patch_version}/${yangtools_version}/g"
+        echo "mdsal project yangtools version changed to ${yangtools_version}"
+    fi
+    # Adjust mdsal version
+    if [[ -d "controller" ]]; then
+        # Extract patch and MSI used version
+        patch_version_1="$(xpath ./mdsal/common/parent/pom.xml '/project/version/text()' 2> /dev/null)"
+        patch_version_2="$(xpath ./mdsal/model/pom.xml '/project/version/text()' 2> /dev/null)"
+        msi_version_1="$(xpath ./controller/karaf/pom.xml '/project/dependencies/dependency[4]/version/text()' 2> /dev/null)"
+        msi_version_2="$(xpath ./controller/karaf/pom.xml '/project/dependencies/dependency[5]/version/text()' 2> /dev/null)"
+        # Replace version
+        find ./mdsal -name "*.xml" -print0 | xargs -0 sed -i "s/${patch_version_1}/${msi_version_1}/g"
+        find ./mdsal -name "*.xml" -print0 | xargs -0 sed -i "s/${patch_version_2}/${msi_version_2}/g"
+        mdsal_version_1="${msi_version_1}"
+        mdsal_version_2="${msi_version_2}"
+    else
+        # Release project
+        find ./mdsal -name "*.xml" -print0 | xargs -0 sed -i 's/-SNAPSHOT//g'
+        mdsal_version_1=${patch_version_1%"-SNAPSHOT"}
+        mdsal_version_2=${patch_version_1%"-SNAPSHOT"}
+    fi
+    echo "mdsal project artifacts version changed to ${mdsal_version_1}"
+    echo "mdsal project model version changed to ${mdsal_version_2}"
 fi
 
 # Second phase: build everything
