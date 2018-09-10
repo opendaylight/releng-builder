@@ -21,7 +21,7 @@ pip freeze
 
 df -h
 
-cd /builder/openstack-hot || exit 1
+cd /opt/ciman/openstack-hot || exit 1
 mkdir -p /tmp/apex_snapshots
 pushd /tmp/apex_snapshots
 
