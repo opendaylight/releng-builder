@@ -46,6 +46,7 @@ done
 # get the ssh keys and node.yaml for uploading to swift at the end
 tar -xf snapshots.tar ./id_rsa
 tar -xf snapshots.tar ./node.yaml
+tar -xf snapshots.tar ./overcloudrc
 
 ls -altr
 
@@ -108,6 +109,7 @@ openstack image set --tag "Apex Archive: $(basename $OPNFV_SNAP_URL)" "$COMPUTE_
 openstack container create OPNFV-APEX-SNAPSHOTS
 openstack object create OPNFV-APEX-SNAPSHOTS /tmp/apex_snapshots/node.yaml --name node.yaml
 openstack object create OPNFV-APEX-SNAPSHOTS /tmp/apex_snapshots/id_rsa --name id_rsa
+openstack object create OPNFV-APEX-SNAPSHOTS /tmp/apex_snapshots/overcloudrc --name overcloudrc
 openstack object list OPNFV-APEX-SNAPSHOTS
 
 openstack image list
