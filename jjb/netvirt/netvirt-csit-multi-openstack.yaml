@@ -273,8 +273,11 @@
           testplan: '{project}-extensions-sfc.txt'
 
     stream:
-      - fluorine:
+      - neon:
           branch: 'master'
+          ovs-install: 'v2.9.2'
+      - fluorine:
+          branch: 'stable/fluorine'
           ovs-install: 'v2.9.2'
       - oxygen:
           branch: 'stable/oxygen'
