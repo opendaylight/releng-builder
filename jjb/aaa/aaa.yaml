@@ -3,6 +3,11 @@
     name: aaa-neon
     jobs:
       - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-rtd-jobs':
+          build-node: centos7-builder-2c-2g
+          project-pattern: aaa
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-aaa/47615/
+          rtd-token: 621132230e1307d38f4aaf27e669d7dfdf98532f
       - odl-maven-jobs
 
     stream: neon
@@ -21,6 +26,11 @@
     name: aaa-fluorine
     jobs:
       - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-rtd-jobs':
+          build-node: centos7-builder-2c-2g
+          project-pattern: aaa
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-aaa/47615/
+          rtd-token: 621132230e1307d38f4aaf27e669d7dfdf98532f
       - odl-maven-jobs
 
     stream: fluorine
