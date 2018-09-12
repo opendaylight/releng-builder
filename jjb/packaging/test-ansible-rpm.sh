@@ -23,6 +23,6 @@ sudo yum install -y ansible
 sudo cp -R $WORKSPACE/ansible /etc/ansible/roles/opendaylight
 
 # Install OpenDaylight via repo using example Ansible playbook
-sudo ansible-playbook -i "localhost," -c local $WORKSPACE/ansible/examples/rpm_8_devel_odl_api.yml
+sudo ansible-playbook -i "localhost," -c local $WORKSPACE/ansible/examples/rpm_8_devel_odl_api.yml --extra-vars "@$WORKSPACE/ansible/examples/logs_vars.json"
 
 # Add more tests
