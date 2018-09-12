@@ -2,6 +2,11 @@
 - project:
     name: sxp-neon
     jobs:
+      - '{project-name}-rtd-jobs':
+          build-node: centos7-builder-2c-2g
+          project-pattern: sxp
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-sxp/47573/
+          rtd-token: 4a78556e59ce3ef35e61e2fa19ebae049acf6d5d
       - odl-maven-jobs
 
     stream: neon
@@ -19,6 +24,11 @@
 - project:
     name: sxp-fluorine
     jobs:
+      - '{project-name}-rtd-jobs':
+          build-node: centos7-builder-2c-2g
+          project-pattern: sxp
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-sxp/47573/
+          rtd-token: 4a78556e59ce3ef35e61e2fa19ebae049acf6d5d
       - odl-maven-jobs
 
     stream: fluorine
