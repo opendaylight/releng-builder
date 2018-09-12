@@ -256,11 +256,11 @@
     openstack_system2_flavor: odl-highcpu-8
     os-cmb-cnt: 0
     os-ctl-cnt: 1
-    os-cmp-cnt: 1
+    os-cmp-cnt: 2
 
     topology:
       - 1node:
-          openstack_system2_count: 1
+          openstack_system2_count: 2
           odl_system_count: 1
           enable-haproxy: 'no'
           install-features: 'odl-netvirt-sfc'
@@ -271,6 +271,7 @@
           enable-openstack-compute-services: 'placement-client'
           enable-openstack-plugins: 'networking-odl,networking-sfc'
           testplan: '{project}-extensions-sfc.txt'
+          configplan: '{project}-extensions-sfc.txt'
 
     stream:
       - neon:
