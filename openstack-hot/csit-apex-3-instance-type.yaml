@@ -51,6 +51,7 @@ resources:
                         "JOB_NAME": {get_param: job_name}
                         "NET": 'APEX_192_network'
             port_security_enabled: false
+            mtu: 1500
 
     192_subnet:
         type: OS::Neutron::Subnet
