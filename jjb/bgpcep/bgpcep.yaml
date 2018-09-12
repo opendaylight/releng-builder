@@ -4,6 +4,11 @@
     jobs:
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-maven-javadoc-jobs'
+      - '{project-name}-rtd-jobs':
+          build-node: centos7-builder-2c-2g
+          project-pattern: bgpcep
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-bgpcep/47576/
+          rtd-token: dbe9d1aabbe8812a26b428908f6613c28e3191fc
       - odl-maven-jobs
 
     stream: neon
@@ -30,6 +35,11 @@
     jobs:
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-maven-javadoc-jobs'
+      - '{project-name}-rtd-jobs':
+          build-node: centos7-builder-2c-2g
+          project-pattern: bgpcep
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-bgpcep/47576/
+          rtd-token: dbe9d1aabbe8812a26b428908f6613c28e3191fc
       - odl-maven-jobs
 
     stream: fluorine
