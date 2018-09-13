@@ -84,6 +84,7 @@
     name: yangtools-sonar
     jobs:
       - gerrit-maven-sonar
+          mvn-params: -Dodl.jacoco.aggregateFile=$WORKSPACE/target/jacoco.exec
 
     project: 'yangtools'
     project-name: 'yangtools'
