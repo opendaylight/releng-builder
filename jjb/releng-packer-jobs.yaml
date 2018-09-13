@@ -39,8 +39,8 @@
     build-timeout: 90
     cron: '00 H 1 * *'
 
-    templates: devstack
     platforms: centos-7
+    templates: devstack
 
 - project:
     name: packer-devstack-pre-pip-pike-jobs
@@ -56,8 +56,8 @@
     build-timeout: 75
     cron: '00 H 1 * *'
 
-    templates: devstack-pre-pip-pike
     platforms: centos-7
+    templates: devstack-pre-pip-pike
 
 - project:
     name: packer-devstack-pre-pip-queens-jobs
@@ -73,8 +73,8 @@
     build-timeout: 75
     cron: '00 H 1 * *'
 
-    templates: devstack-pre-pip-queens
     platforms: centos-7
+    templates: devstack-pre-pip-queens
 
 - project:
     name: packer-docker-jobs
@@ -90,7 +90,9 @@
     build-timeout: 60
     cron: '00 H 1 * *'
 
-    platforms: centos-7
+    platforms:
+      - centos-7
+      - ubuntu-16.04
     templates: docker
 
 - project:
@@ -107,10 +109,10 @@
     build-timeout: 90
     cron: '00 H 1 * *'
 
-    templates: gbp
     platforms:
       - ubuntu-14.04
       - ubuntu-16.04
+    templates: gbp
 
 - project:
     name: packer-mininet-ovs-2.5-jobs
@@ -126,8 +128,8 @@
     build-timeout: 60
     cron: '00 H 1 * *'
 
-    templates: mininet-ovs-2.5
     platforms: ubuntu-16.04
+    templates: mininet-ovs-2.5
 
 - project:
     name: packer-mininet-ovs-2.6-jobs
@@ -143,8 +145,8 @@
     build-timeout: 75
     cron: '00 H 1 * *'
 
-    templates: mininet-ovs-2.6
     platforms: ubuntu-16.04
+    templates: mininet-ovs-2.6
 
 - project:
     name: packer-mininet-ovs-2.8-jobs
@@ -160,8 +162,8 @@
     build-timeout: 90
     cron: '00 H 1 * *'
 
-    templates: mininet-ovs-2.8
     platforms: ubuntu-16.04
+    templates: mininet-ovs-2.8
 
 - project:
     name: packer-robot-jobs
