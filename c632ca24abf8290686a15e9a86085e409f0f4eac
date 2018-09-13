@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60f9bc01_b173ab3d",
+        "filename": "jjb/yangtools/yangtools.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2018-09-13T22:02:13Z",
+      "side": 1,
+      "message": "paremeter is `mvn-params`:\n\nConsidering this project section only has the 1 job template definition I\u0027d move this to below the mvn-opts definition below.\n\nIf you want to keep it here under the job then we need to add a colon to the job. so would looks something like this.\n\n - gerrit-maven-sonar:\n     mvn-params: \u003e\n       -Dodl.jacoco.aggregateFile\u003d$WORKSPACE/target/jacoco.exec\n       -Dsonar.jacoco.reportPaths\u003d$WORKSPACE/target/jacoco.exec\n\nAlso the trick here with \": \u003e\" is a YAML syntax to say the multi-line below should be folded into spaces. So we don\u0027t have to have very long single lines.",
+      "revId": "c632ca24abf8290686a15e9a86085e409f0f4eac",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
