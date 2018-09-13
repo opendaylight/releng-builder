@@ -16,7 +16,7 @@
           build-timeout: 180
           mvn-goals: clean install -V -Dmaven.compile.fork=true -Dintegrationtests -Dvtn.build.jobs=2
 
-      - gerrit-maven-release
+      - gerrit-maven-stage
       - gerrit-maven-verify
       - gerrit-maven-verify-dependencies:
           build-timeout: 180
