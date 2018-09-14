@@ -22,11 +22,20 @@ source "${ROBOT_VENV}/bin/activate"
 set -exu
 
 # Make sure pip itself us up-to-date.
-pip install --upgrade pip
-pip3 install --upgrade pip
+python -m pip install --user --upgrade pip
+python3 -m pip install --user --upgrade pip
 
-pip install --upgrade docker-py importlib requests scapy netifaces netaddr ipaddr pyhocon
-pip install --upgrade robotframework-httplibrary \
+python -m pip install --upgrade \
+    docker-py \
+    importlib \
+    requests \
+    scapy \
+    netifaces \
+    netaddr \
+    ipaddr \
+    pyhocon
+
+python -m pip install --upgrade robotframework-httplibrary \
     requests==2.15.1 \
     robotframework-requests \
     robotframework-sshlibrary \
@@ -34,33 +43,34 @@ pip install --upgrade robotframework-httplibrary \
     robotframework-pycurllibrary
 
 # Module jsonpath is needed by current AAA idmlite suite.
-pip install --upgrade jsonpath-rw
+python -m pip install --upgrade jsonpath-rw
 
 # Modules for longevity framework robot library
-pip install --upgrade elasticsearch==1.7.0 elasticsearch-dsl==0.0.11
+python -m pip install --upgrade elasticsearch==1.7.0 elasticsearch-dsl==0.0.11
 
 # Module for pyangbind used by lispflowmapping project
-pip install --upgrade pyangbind
+python -m pip install --upgrade pyangbind
 
 # Module for iso8601 datetime format
-pip install --upgrade isodate
+python -m pip install --upgrade isodate
 
 # Modules for tornado and jsonpointer used by client libraries of IoTDM project
 # Note: Could be removed when client running on tools VM is used instead
 #       of client libraries only.
-pip install --upgrade tornado jsonpointer
+python -m pip install --upgrade tornado jsonpointer
 
 # Module for TemplatedRequests.robot library
-pip install --upgrade jmespath
+python -m pip install --upgrade jmespath
 
 # Module for backup-restore support library
-pip install --upgrade jsonpatch
+python -m pip install --upgrade jsonpatch
 
 #Module for elasticsearch python client
-pip3 install --user urllib3==1.22
-pip3 install --user requests==2.9.1
-pip3 install --user elasticsearch==6.2.0
-pip3 install --user PyYAML==3.11
+python3 -m pip install --user \
+    urllib3==1.22 \
+    requests==2.9.1 \
+    elasticsearch==6.2.0 \
+    PyYAML==3.11
 
 # odltools for extra debugging
 pip install odltools
