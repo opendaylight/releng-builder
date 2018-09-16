@@ -292,13 +292,11 @@
           openstack_system2_image: '{openstack_system_image_queens}'
 
 - project:
-    name: netvirt-csit-1cmb-0ctl-0cmp-openstack-integration-fluorine
+    name: netvirt-csit-1cmb-0ctl-0cmp-openstack-integration
     jobs:
       - inttest-csit-openstack
 
     project: 'netvirt'
-    stream: 'fluorine'
-    branch: 'master'
     testplan: '{project}-{topology}-openstack.txt'
     odl-ml2-driver-version: 'v2'
     enable-openstack-services: 'n-cpu,placement-api,tempest'
@@ -308,6 +306,14 @@
     os-cmb-cnt: 1
     os-ctl-cnt: 0
     os-cmp-cnt: 0
+
+    stream:
+      - neon:
+          branch: 'master'
+      - fluorine:
+          branch: 'stable/fluorine'
+      - oxygen:
+          branch: 'stable/oxygen'
 
     topology:
       - 1node:
