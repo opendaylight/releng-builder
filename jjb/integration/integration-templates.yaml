@@ -94,6 +94,7 @@
           files: 'csit/suites/{project}/**'
 
     builders:
+      - lf-infra-pre-build
       - integration-infra-stack:
           stack-template: '{stack-template}'
           vm_0_count: '1'
@@ -196,6 +197,7 @@
           build-timeout: '{build-timeout}'
 
     builders:
+      - lf-infra-pre-build
       - integration-infra-stack:
           stack-template: '{stack-template}'
           vm_0_count: '1'
@@ -436,6 +438,7 @@
           files: 'csit/suites/{project}/**'
 
     builders:
+      - lf-infra-pre-build
       - integration-infra-stack:
           stack-template: '{stack-template}'
           vm_0_count: '3'
@@ -533,6 +536,7 @@
           build-timeout: '{build-timeout}'
 
     builders:
+      - lf-infra-pre-build
       - integration-infra-stack:
           stack-template: '{stack-template}'
           vm_0_count: '3'
@@ -767,6 +771,7 @@
           build-timeout: '{build-timeout}'
 
     builders:
+      - lf-infra-pre-build
       - integration-infra-stack:
           stack-template: '{stack-template}'
           vm_0_count: '3'
@@ -1008,6 +1013,7 @@
       - timed: '{schedule}'
 
     builders:
+      - lf-infra-pre-build
       - integration-infra-stack-4-type:
           stack-template: '{stack-template}'
           vm_0_count: '{odl_system_count}'
@@ -1231,6 +1237,7 @@
       - timed: '{schedule}'
 
     builders:
+      - lf-infra-pre-build
       - integration-infra-stack-3-type:
           stack-template: '{stack-template}'
           vm_0_count: '{odl_system_count}'
