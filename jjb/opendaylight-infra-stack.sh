@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -l
 # SPDX-License-Identifier: EPL-1.0
 ##############################################################################
 # Copyright (c) 2017 The Linux Foundation and others.
@@ -8,15 +8,6 @@
 # which accompanies this distribution, and is available at
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
-
-virtualenv "/tmp/v/openstack"
-# shellcheck source=/tmp/v/openstack/bin/activate disable=SC1091
-source "/tmp/v/openstack/bin/activate"
-pip install --upgrade "pip<10.0.0" setuptools
-# hardcoding cmd2 version as the most recent version seems to be broken.
-# reference: https://pypi.org/project/cmd2/#history
-pip install --upgrade cmd2==0.8.5 python-openstackclient python-heatclient
-pip freeze
 
 # TODO: Remove the if-statement once we have fully migrated to /opt/ciman
 if [ -d "/opt/ciman/openstack-hot" ]; then
