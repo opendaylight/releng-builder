@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -l
 
 # Copy the whole script to /tmp/common-functions.sh and to remote nodes but
 # only if this script itself is executing and not sourced. jenkins prepends this
@@ -11,7 +11,6 @@ if [ "${BASH_SOURCE[0]}" == "${0}" ]; then
     echo "Copying common-functions.sh to /tmp"
     cp "${0}" /tmp/common-functions.sh
 
-    source /tmp/v/openstack/bin/activate
     mapfile -t ips <<< "$(openstack stack show -f json -c outputs "$STACK_NAME" | jq -r '.outputs[] | select(.output_key | match("^vm_[0-9]+_ips$")) | .output_value | .[]')"
     for ip in "${ips[@]}"; do
         echo "Copying common-functions.sh to ${ip}:/tmp"

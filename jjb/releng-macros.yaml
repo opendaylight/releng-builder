@@ -454,9 +454,8 @@
                 - UNSTABLE
               build-steps:
                 - shell: |
-                    #!/bin/bash
+                    #!/bin/bash -l
                     echo "Deleting $STACK_NAME"
-                    source "/tmp/v/openstack/bin/activate"
                     openstack stack delete --yes "$STACK_NAME"
           mark-unstable-if-failed: false
 

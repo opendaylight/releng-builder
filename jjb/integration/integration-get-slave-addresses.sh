@@ -8,9 +8,6 @@ TOOLS_SYSTEM=()
 OPENSTACK_SYSTEM=()
 OPENSTACK_CONTROLLERS=()
 
-OPENSTACK_VENV="/tmp/v/openstack"
-# shellcheck source=/tmp/v/openstack/bin/activate disable=SC1091
-source $OPENSTACK_VENV/bin/activate
 mapfile -t ADDR <<< "$(openstack stack show -f json -c outputs "$STACK_NAME" | jq -r '.outputs[] | select(.output_key | match("^vm_[0-9]+_ips$")) | .output_value | .[]')"
 
 # The next two blocks of code will parse the list of vm IP's hostnames to determine which type of node
