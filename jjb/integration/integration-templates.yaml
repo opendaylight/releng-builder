@@ -531,6 +531,11 @@
           refspec: '$PATCHREFSPEC'
           branch: 'master'
 
+    triggers:
+      # we need this for not SR projects
+      - integration-csit-trigger:
+          jobs: '{trigger-jobs}'
+
     wrappers:
       - opendaylight-infra-wrappers:
           build-timeout: '{build-timeout}'
