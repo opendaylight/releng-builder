@@ -86,7 +86,7 @@
       - gerrit-maven-sonar:
           mvn-params: >
             -Dodl.jacoco.aggregateFile=$WORKSPACE/target/jacoco.exec
-            -Dsonar.jacoco.reportPaths=$WORKSPACE/target/jacoco.exec
+            -Dsonar.jacoco.reportPath=$WORKSPACE/target/jacoco.exec
 
     project: 'yangtools'
     project-name: 'yangtools'
