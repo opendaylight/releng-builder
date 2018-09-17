@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -l
 # SPDX-License-Identifier: EPL-1.0
 ##############################################################################
 # Copyright (c) 2017 - 2018 The Linux Foundation and others.
@@ -43,9 +43,6 @@ minion_in_jenkins() {
 # Fetch server list before fetching active minions to minimize race condition
 # where we might be trying to delete servers while jobs are trying to start
 
-# shellcheck source=/tmp/v/openstack/bin/activate disable=SC1091
-source "/tmp/v/openstack/bin/activate"
-
 # We purposely need word splitting here to create the OS_SERVERS array.
 # shellcheck disable=SC2207
 mapfile -t OS_SERVERS < <(openstack server list -f value -c "Name" | grep -E 'prd|snd')
@@ -69,5 +66,3 @@ for server in "${OS_SERVERS[@]}"; do
             server remove --minutes 15 "$server"
     fi
 done
-
-deactivate

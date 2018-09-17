@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -l
 # SPDX-License-Identifier: EPL-1.0
 ##############################################################################
 # Copyright (c) 2018 The Linux Foundation and others.
@@ -10,8 +10,6 @@
 ##############################################################################
 # Scans OpenStack for orphaned volumes
 
-# shellcheck source=/tmp/v/openstack/bin/activate disable=SC1091
-source "/tmp/v/openstack/bin/activate"
 mapfile -t os_volumes < <(openstack volume list -f value -c ID --status Available)
 
 echo "---> Orphaned volumes"
@@ -23,5 +21,3 @@ else
         lftools openstack --os-cloud vex volume remove --minutes 15 "$volume"
     done
 fi
-
-deactivate

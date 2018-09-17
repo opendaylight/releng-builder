@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -l
 # SPDX-License-Identifier: EPL-1.0
 ##############################################################################
 # Copyright (c) 2017 - 2018 The Linux Foundation and others.
@@ -9,9 +9,6 @@
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
 echo "---> Cleanup stale nodes"
-
-# shellcheck source=/tmp/v/openstack/bin/activate disable=SC1091
-source "/tmp/v/openstack/bin/activate"
 
 # Todo: As a safe check we could obtain the list of active jobs from Jenkins and
 # compute the checksum from $JOB_NAME to check if any active nodes exist and

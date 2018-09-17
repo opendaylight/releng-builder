@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -l
 # SPDX-License-Identifier: EPL-1.0
 ##############################################################################
 # Copyright (c) 2017 The Linux Foundation and others.
@@ -12,9 +12,6 @@
 # Requires the variable JENKINS_URLS declared in the job as a space separated
 # list of Jenkins instances to check for active builds.
 echo "---> Cleanup stale stacks"
-
-# shellcheck source=/tmp/v/openstack/bin/activate disable=SC1091
-source "/tmp/v/openstack/bin/activate"
 
 stack_in_jenkins() {
     # Usage: check_stack_in_jenkins STACK_NAME JENKINS_URL [JENKINS_URL...]
