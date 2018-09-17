@@ -59,10 +59,7 @@
               alto bier capwap centinel didm dluxapps groupbasedpolicy iotdm jsonrpc lacp
               l2switch messaging4transport nemo netide nic ocpplugin of-config p4plugin packetcable
               sdninterfaceapp sxp tsdr unimgr usc usecplugin vtn gate longevity sanity tdd tempest wip
-              aaa-csit-1node-keystone-all
-              netvirt-csit-1node-1cmb-0ctl-0cmp-openstack-pike
-              netvirt-csit-1node-1cmb-0ctl-0cmp-openstack-queens-upstream-stateful-itm-direct
-              netvirt-csit-3node-1cmb
+              aaa-csit-1node-keystone-all 1cmb
           csit-list: !include: csit-jobs-neon.lst
           csit-weekly-list: '{csit-weekly-list-neon}'
           csit-high-frequency-list: '{csit-high-frequency-list-neon}'
@@ -72,10 +69,7 @@
               alto bier capwap centinel didm dluxapps groupbasedpolicy iotdm jsonrpc lacp
               l2switch messaging4transport nemo netide nic ocpplugin of-config p4plugin packetcable
               sdninterfaceapp sxp tsdr unimgr usc usecplugin vtn gate longevity sanity tdd tempest wip
-              aaa-csit-1node-keystone-all
-              netvirt-csit-1node-1cmb-0ctl-0cmp-openstack-pike
-              netvirt-csit-1node-1cmb-0ctl-0cmp-openstack-queens-upstream-stateful-itm-direct
-              netvirt-csit-3node-1cmb
+              aaa-csit-1node-keystone-all 1cmb
           csit-list: !include: csit-jobs-fluorine.lst
           csit-weekly-list: '{csit-weekly-list-fluorine}'
           csit-high-frequency-list: '{csit-high-frequency-list-fluorine}'
@@ -84,8 +78,7 @@
           csit-blacklist: >
               capwap centinel didm iotdm jsonrpc lacp messaging4transport netide nic
               ocpplugin sdninterfaceapp unimgr usecplugin gate longevity sanity tdd tempest wip
-              aaa-csit-1node-keystone-all
-              groupbasedpolicy-csit-1node-1cmb-0ctl-0cmp-openstack-pike-openstack
+              aaa-csit-1node-keystone-all 1cmb
           csit-list: !include: csit-jobs-oxygen.lst
           csit-weekly-list: '{csit-weekly-list-oxygen}'
           csit-high-frequency-list: '{csit-high-frequency-list-oxygen}'
