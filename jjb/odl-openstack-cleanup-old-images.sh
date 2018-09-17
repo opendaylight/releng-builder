@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -l
 # SPDX-License-Identifier: EPL-1.0
 ##############################################################################
 # Copyright (c) 2017 - 2018 The Linux Foundation and others.
@@ -11,6 +11,4 @@
 # Removes openstack images older than 30 days in the cloud
 echo "---> Cleanup old images"
 
-# shellcheck source=/tmp/v/openstack/bin/activate disable=SC1091
-source "/tmp/v/openstack/bin/activate"
 lftools openstack --os-cloud vex image cleanup --days=30

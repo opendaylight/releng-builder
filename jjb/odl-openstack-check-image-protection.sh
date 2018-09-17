@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -l
 # SPDX-License-Identifier: EPL-1.0
 ##############################################################################
 # Copyright (c) 2017 The Linux Foundation and others.
@@ -16,9 +16,6 @@
 # image protect setting to "True" to prevent the image from getting purged
 # by the cleanup old images job.
 echo "---> Check image protection"
-
-# shellcheck source=/tmp/v/openstack/bin/activate disable=SC1091
-source "/tmp/v/openstack/bin/activate"
 
 declare -a yaml_images
 readarray -t yaml_images <<< "$(grep -r _system_image: --include \*.yaml \
