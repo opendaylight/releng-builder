@@ -419,6 +419,7 @@ EOF
 
     mv /tmp/changes.txt ${WORKSPACE}/archives
     mv ${WORKSPACE}/rabbit.txt ${WORKSPACE}/archives
+    mv ${WORKSPACE}/haproxy.cfg ${WORKSPACE}/archives
 
     sleep 5
     # FIXME: Do not create .tar and gzip before copying.

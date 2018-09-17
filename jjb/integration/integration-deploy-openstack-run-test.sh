@@ -450,16 +450,16 @@ EOF
 } # create_compute_node_local_conf()
 
 function configure_haproxy_for_neutron_requests() {
-    MGRIP=$1
+    local -r haproxy_ip=$1
     # shellcheck disable=SC2206
-    ODL_IPS=(${2//,/ })
+    local -r odl_ips=(${2//,/ })
 
     cat > ${WORKSPACE}/install_ha_proxy.sh<< EOF
 sudo systemctl stop firewalld
 sudo yum -y install policycoreutils-python haproxy
 EOF
 
-cat > ${WORKSPACE}/haproxy.cfg << EOF
+    cat > ${WORKSPACE}/haproxy.cfg << EOF
 global
   daemon
   group  haproxy
@@ -481,27 +481,38 @@ defaults
   timeout  check 10s
 
 listen opendaylight
-  bind ${MGRIP}:8080
+  bind ${haproxy_ip}:8181 transparent
+  mode http
+  http-request set-header X-Forwarded-Proto https if { ssl_fc }
+  http-request set-header X-Forwarded-Proto http if !{ ssl_fc }
+  option httpchk GET /diagstatus
+  option httplog
   balance source
-
-listen opendaylight_rest
-  bind ${MGRIP}:8181
-  balance source
-
-listen opendaylight_websocket
-  bind ${MGRIP}:8185
-  balance source
-
 EOF
 
     odlindex=1
-    for odlip in ${ODL_IPS[*]}; do
-        sed -i "/listen opendaylight$/a server controller-${odlindex} ${odlip}:8080 check fall 5 inter 2000 rise 2" ${WORKSPACE}/haproxy.cfg
-        sed -i "/listen opendaylight_rest$/a server controller-rest-${odlindex} ${odlip}:8181 check fall 5 inter 2000 rise 2" ${WORKSPACE}/haproxy.cfg
-        sed -i "/listen opendaylight_websocket$/a server controller-websocket-${odlindex} ${odlip}:8185 check fall 5 inter 2000 rise 2" ${WORKSPACE}/haproxy.cfg
+    for odlip in ${odl_ips[*]}; do
+        echo "  server opendaylight-rest-${odlindex} ${odlip}:8181 check fall 5 inter 2000 rise 2" >> ${WORKSPACE}/haproxy.cfg
         odlindex=$((odlindex+1))
     done
 
+    cat >> ${WORKSPACE}/haproxy.cfg << EOF
+
+listen opendaylight_ws
+  bind ${haproxy_ip}:8185 transparent
+  mode http
+  timeout connect 5s
+  timeout client 25s
+  timeout server 25s
+  timeout tunnel 3600s
+  balance source
+EOF
+
+    odlindex=1
+    for odlip in ${odl_ips[*]}; do
+        echo "  server opendaylight-ws-${odlindex} ${odlip}:8185 check fall 5 inter 2000 rise 2" >> ${WORKSPACE}/haproxy.cfg
+        odlindex=$((odlindex+1))
+    done
 
     echo "Dump haproxy.cfg"
     cat ${WORKSPACE}/haproxy.cfg
@@ -517,11 +528,11 @@ sudo systemctl status haproxy
 true
 EOF
 
-    scp ${WORKSPACE}/install_ha_proxy.sh ${MGRIP}:/tmp
-    ${SSH} ${MGRIP} "sudo bash /tmp/install_ha_proxy.sh"
-    scp ${WORKSPACE}/haproxy.cfg ${MGRIP}:/tmp
-    scp ${WORKSPACE}/deploy_ha_proxy.sh ${MGRIP}:/tmp
-    ${SSH} ${MGRIP} "sudo bash /tmp/deploy_ha_proxy.sh"
+    scp ${WORKSPACE}/install_ha_proxy.sh ${haproxy_ip}:/tmp
+    ${SSH} ${haproxy_ip} "sudo bash /tmp/install_ha_proxy.sh"
+    scp ${WORKSPACE}/haproxy.cfg ${haproxy_ip}:/tmp
+    scp ${WORKSPACE}/deploy_ha_proxy.sh ${haproxy_ip}:/tmp
+    ${SSH} ${haproxy_ip} "sudo bash /tmp/deploy_ha_proxy.sh"
 } # configure_haproxy_for_neutron_requests()
 
 # Following three functions are debugging helpers when debugging devstack changes.
