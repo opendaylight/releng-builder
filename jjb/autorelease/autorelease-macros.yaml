@@ -122,7 +122,6 @@
     name: autorelease-generate-release-patches
     builders:
       - shell: !include-raw:
-          - ../global-jjb/shell/lftools-install.sh
           - prepare-release.sh
 
 - builder:

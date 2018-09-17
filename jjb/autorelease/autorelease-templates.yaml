@@ -536,6 +536,7 @@
           forbidden-files: ''
 
     builders:
+      - lf-infra-pre-build
       - autorelease-checkout-gerrit-patch
       - autorelease-compare-projects
       - jacoco-nojava-workaround
