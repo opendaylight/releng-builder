@@ -730,6 +730,8 @@ if [ -n "${DEVSTACK_HASH}" ]; then
     echo "git checkout ${DEVSTACK_HASH}"
     git checkout ${DEVSTACK_HASH}
 fi
+wget https://raw.githubusercontent.com/shague/odl_tools/master/fix-logging.patch.txt -O /tmp/fix-logging.patch.txt
+patch --verbose -p1 -i /tmp/fix-logging.patch.txt
 git --no-pager log --pretty=format:'%h %<(13)%ar%<(13)%cr %<(20,trunc)%an%d %s%b' -n20
 echo
 
