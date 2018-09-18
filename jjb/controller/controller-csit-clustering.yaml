@@ -6,7 +6,9 @@
       - inttest-csit-verify-3node
 
     project: 'controller'
-    functionality: 'clustering'
+    functionality:
+      - 'clustering-ask'
+      - 'clustering-tell'
 
     stream:
       - neon:
