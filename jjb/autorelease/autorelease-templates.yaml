@@ -125,6 +125,7 @@
       - timed: '{cron}'
 
     builders:
+      - lf-infra-pre-build
       # force jenkins install of maven version before any shell scripts use it
       - lf-maven-install:
           mvn-version: '{mvn-version}'
@@ -250,6 +251,7 @@
       - timed: '{obj:cron}'
 
     builders:
+      - lf-infra-pre-build
       # Fetch latest head of branch
       - shell: |
           git checkout $GERRIT_BRANCH
@@ -326,6 +328,7 @@
           jenkins-ssh-credential: opendaylight-jenkins-ssh
 
     builders:
+      - lf-infra-pre-build
       - autorelease-update-project-views
       - autorelease-update-validate-projects
       - lf-infra-push-gerrit-patch:
@@ -394,6 +397,7 @@
           jenkins-ssh-credential: opendaylight-jenkins-ssh
 
     builders:
+      - lf-infra-pre-build
       # force jenkins install of maven version before any shell scripts use it
       - maven-target:
           maven-version: mvn35
@@ -404,7 +408,6 @@
           global-settings-type: cfp
       - autorelease-cfp
       - shell: !include-raw-escape:
-          - ../global-jjb/shell/lftools-install.sh
           - version-bump.sh
 
     publishers:
@@ -468,6 +471,7 @@
                   branch-pattern: '**/{branch}'
 
     builders:
+      - lf-infra-pre-build
       - autorelease-generate-release-notes
 
     publishers:
