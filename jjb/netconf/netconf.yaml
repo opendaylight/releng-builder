@@ -3,6 +3,11 @@
     name: netconf-neon
     jobs:
       - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-rtd-jobs':
+          build-node: centos7-builder-2c-2g
+          project-pattern: netconf
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-netconf/48397/
+          rtd-token: aee2df909686ab7ba36f2ed08d90bdcf81f7b8dc
       - odl-maven-jobs
 
     stream: neon
@@ -24,6 +29,11 @@
     name: netconf-fluorine
     jobs:
       - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-rtd-jobs':
+          build-node: centos7-builder-2c-2g
+          project-pattern: netconf
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-netconf/48397/
+          rtd-token: aee2df909686ab7ba36f2ed08d90bdcf81f7b8dc
       - odl-maven-jobs
 
     stream: fluorine
