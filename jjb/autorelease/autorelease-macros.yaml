@@ -20,7 +20,7 @@
     name: autorelease-checkout-gerrit-patch
     builders:
       - shell: |
-          #!/bin/bash
+          #!/bin/bash -l
           set -eu -o pipefail
 
           # If the project is autorelease then we do not need to cd
@@ -53,10 +53,10 @@
     name: autorelease-determine-merge-order
     builders:
       - shell: |
+          #!/bin/bash -l
           virtualenv --system-site-packages $WORKSPACE/venv
           source $WORKSPACE/venv/bin/activate
           PYTHON="$WORKSPACE/venv/bin/python"
-          $PYTHON -m pip install --upgrade "pip<10.0.0" setuptools
           $PYTHON -m pip install --upgrade networkx
           $PYTHON -m pip freeze
           ./scripts/determine-merge-order.py
@@ -98,7 +98,7 @@
     builders:
       - integration-set-variables
       - shell: |
-          #!/bin/bash
+          #!/bin/bash -l
           set +e  # DO NOT fail build if copying fails.
 
           cp -vf "$WORKSPACE/archives/patches/taglist.log" \
@@ -112,7 +112,7 @@
     # Generate versions.csv containing version of all mvn artifacts in this build.
     builders:
       - shell: |
-          #!/bin/bash
+          #!/bin/bash -l
           set -eu -o pipefail
           ./scripts/generate-artifact-versions.sh
           mkdir -p "$WORKSPACE/archives"

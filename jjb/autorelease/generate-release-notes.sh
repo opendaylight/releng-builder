@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash -l
 # SPDX-License-Identifier: EPL-1.0
 ##############################################################################
 # Copyright (c) 2017 The Linux Foundation and others.
@@ -10,6 +10,8 @@
 ##############################################################################
 # This script generates Service Release notes and appends them to the release
 # notes in the docs project and submits a patch.
+
+set -x
 
 RELEASE=${RELEASE:-$(echo "$GERRIT_EVENT_COMMENT_TEXT" | grep generate-release-notes | awk '{print $2}')}
 if [ -z "$RELEASE" ]; then

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -l
 # @License EPL-1.0 <http://spdx.org/licenses/EPL-1.0>
 ##############################################################################
 # Copyright (c) 2017 The Linux Foundation and others.
