@@ -112,6 +112,7 @@
     platforms:
       - ubuntu-14.04
       - ubuntu-16.04
+      - ubuntu-18.04
     templates: gbp
 
 - project:
@@ -128,7 +129,9 @@
     build-timeout: 60
     cron: '00 H 1 * *'
 
-    platforms: ubuntu-16.04
+    platforms:
+      - ubuntu-16.04
+      - ubuntu-18.04
     templates: mininet-ovs-2.5
 
 - project:
@@ -145,7 +148,9 @@
     build-timeout: 75
     cron: '00 H 1 * *'
 
-    platforms: ubuntu-16.04
+    platforms:
+      - ubuntu-16.04
+      - ubuntu-18.04
     templates: mininet-ovs-2.6
 
 - project:
@@ -162,7 +167,9 @@
     build-timeout: 90
     cron: '00 H 1 * *'
 
-    platforms: ubuntu-16.04
+    platforms:
+      - ubuntu-16.04
+      - ubuntu-18.04
     templates: mininet-ovs-2.8
 
 - project:
@@ -196,5 +203,7 @@
     build-timeout: 90
     cron: '00 H 1 * *'
 
-    platforms: ubuntu-16.04
+    platforms:
+      - ubuntu-16.04
+      - ubuntu-18.04
     templates: kubernetes
