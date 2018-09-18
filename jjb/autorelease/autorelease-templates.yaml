@@ -125,6 +125,7 @@
       - timed: '{cron}'
 
     builders:
+      - lf-infra-pre-build
       # force jenkins install of maven version before any shell scripts use it
       - lf-maven-install:
           mvn-version: '{mvn-version}'
