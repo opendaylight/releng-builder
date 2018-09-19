@@ -110,10 +110,6 @@ function install_openstack_clients_in_robot_vm() {
 function install_rdo_release() {
     local ip=$1
     case ${OPENSTACK_BRANCH} in
-       *pike*)
-          ${SSH} ${ip} "sudo yum install -y https://repos.fedorapeople.org/repos/openstack/openstack-pike/rdo-release-pike-1.noarch.rpm"
-          ;;
-
        *queens*)
           ${SSH} ${ip} "sudo yum install -y https://repos.fedorapeople.org/repos/openstack/openstack-queens/rdo-release-queens-1.noarch.rpm"
           ;;
@@ -738,10 +734,6 @@ echo
 echo "workaround: do not upgrade openvswitch"
 sudo yum install -y yum-plugin-versionlock
 sudo yum versionlock add openvswitch
-
-#Install qemu-img command in Control Node for Pike
-echo "Install qemu-img application"
-sudo yum install -y qemu-img
 EOF
 
 cat > "${WORKSPACE}/setup_host_cell_mapping.sh" << EOF
