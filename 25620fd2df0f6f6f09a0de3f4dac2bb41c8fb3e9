@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5091d033_129396ab",
+        "filename": "jjb/integration/integration-test-jobs.yaml",
+        "patchSetId": 5
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2018-09-20T15:23:17Z",
+      "side": 1,
+      "message": "Add config-file-provider into the builder section to inject the config file instead of using the wrapper in the macros file would be even better:\n\n - config-file-provider:\n     files:\n       - file-id: odl-elastic-cloud\n         target: \u0027$HOME/.netrc\u0027\n\nA lot shorter and it\u0027s more specific for this job.",
+      "revId": "25620fd2df0f6f6f09a0de3f4dac2bb41c8fb3e9",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "81aaca7c_aecf18b4",
+        "filename": "jjb/releng-macros.yaml",
+        "patchSetId": 5
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2018-09-20T15:23:17Z",
+      "side": 1,
+      "message": "Instead of redefining everythign we can inherit:\n\n wrappers:\n   - opendaylight-infra-wrappers:\n       build-timeout: \u0027{build-timeout}\u0027\n   - config-file-provider:\n       files:\n         - file-id: npmrc\n           target: \u0027$HOME/.npmrc\u0027\n         - file-id: pipconf\n           target: \u0027$HOME/.config/pip/pip.conf\u0027\n         - file-id: clouds-yaml\n           target: \u0027$HOME/.config/openstack/clouds.yaml\u0027\n         - file-id: odl-elastic-cloud\n           target: \u0027$HOME/.netrc\u0027\n\nHowever instead of adding a new wrapper. I think we should inject config-file-provider in the builder step. then we don\u0027t need to edit this file at all.",
+      "range": {
+        "startLine": 498,
+        "startChar": 0,
+        "endLine": 519,
+        "endChar": 26
+      },
+      "revId": "25620fd2df0f6f6f09a0de3f4dac2bb41c8fb3e9",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
