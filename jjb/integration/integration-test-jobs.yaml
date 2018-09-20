@@ -6,6 +6,7 @@
     jobs:
       - 'integration-patch-test-{stream}'
       - 'integration-multipatch-test-{stream}'
+      - 'integration-merge-dashboard'
       - '{project-name}-rtd-jobs':
           build-node: centos7-builder-2c-2g
           project-pattern: integration/test
@@ -115,6 +116,53 @@
           branch: 'stable/oxygen'
           karaf-version: karaf4
           csit-sanity-list: '{csit-sanity-list-oxygen}'
+
+- job-template:
+    name: 'integration-merge-dashboard'
+    project-type: freestyle
+    node: centos7-builder-2c-1g
+
+    properties:
+      - opendaylight-infra-properties:
+          build-days-to-keep: '{build-days-to-keep}'
+
+    parameters:
+      - opendaylight-infra-parameters:
+          os-cloud: '{os-cloud}'
+          project: '{project}'
+          branch: 'master'
+          refspec: 'refs/heads/master'
+          artifacts: '{archive-artifacts}'
+
+    scm:
+      - integration-gerrit-scm:
+          basedir: 'test'
+          refspec: '$GERRIT_REFSPEC'
+          branch: 'master'
+
+    wrappers:
+      - opendaylight-infra-wrappers:
+          build-timeout: '{build-timeout}'
+
+    triggers:
+      - gerrit-trigger-patch-merged:
+          gerrit-server-name: '{gerrit-server-name}'
+          name: '{project}'
+          branch: 'master'
+          files: 'dashboard/**'
+          forbidden-files: ''
+
+    builders:
+      - integration-install-robotframework
+      # yamllint disable-line rule:line-length
+      - shell: |
+          python3 $WORKSPACE/test/csit/scripts/push_dashboard.py a4ff38b99ef2c7626450543021b4c134.us-east-1.aws.found.io:9243
+
+    publishers:
+      - lf-infra-publish
+      - email-notification:
+          email-recipients: '{email-recipients}'
+          email-prefix: '[{project-name}]'
 
 - job-template:
     name: 'integration-distribution-test-{stream}'
