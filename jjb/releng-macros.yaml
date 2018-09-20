@@ -490,6 +490,34 @@
       - openstack:
           single-use: true
 
+- wrapper:
+    # This wrapper is required for all jobs as it configures the wrappers
+    # needed by OpenDaylight infra.
+    name: opendaylight-infra-wrappers-netrc
+    wrappers:
+      - mask-passwords
+      - config-file-provider:
+          files:
+            - file-id: npmrc
+              target: '$HOME/.npmrc'
+            - file-id: pipconf
+              target: '$HOME/.config/pip/pip.conf'
+            - file-id: clouds-yaml
+              target: '$HOME/.config/openstack/clouds.yaml'
+            - file-id: odl-elastic-cloud
+              target: '$HOME/.netrc'
+      - timeout:
+          type: absolute
+          timeout: '{build-timeout}'
+          timeout-var: 'BUILD_TIMEOUT'
+          fail: true
+      - timestamps
+      - ssh-agent-credentials:
+          users:
+            - 'opendaylight-jenkins-ssh'
+      - openstack:
+          single-use: true
+
 - publisher:
     name: opendaylight-infra-generate-csit-status-report
     publishers:
