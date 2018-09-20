@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a68e36b6_ddf68fab",
+        "filename": "jjb/integration/integration-test-jobs.yaml",
+        "patchSetId": 6
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2018-09-20T15:58:41Z",
+      "side": 1,
+      "message": "Remove these 3 files.",
+      "range": {
+        "startLine": 148,
+        "startChar": 0,
+        "endLine": 153,
+        "endChar": 59
+      },
+      "revId": "d3c5667dba773999b93fd99b5f71b182cec4151d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2539f560_dfab5c74",
+        "filename": "jjb/integration/integration-test-jobs.yaml",
+        "patchSetId": 6
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2018-09-20T15:58:41Z",
+      "side": 1,
+      "message": "Keep this file.\n\nBut move the - config-file-provider section to the builders section.\n\nThis way there\u0027s no duplicating of config file management. The final product should look something like this:\n\n wrappers:\n   - opendaylight-infra-wrappers:\n       build-timeout: \u0027{build-timeout}\u0027\n\n builders:\n   - config-file-provider:\n       files:\n         - file-id: odl-elastic-cloud\n           target: \u0027$HOME/.netrc\u0027\n   - integration-install-robotframework\n   - shell: python3 $WORKSPACE ....",
+      "range": {
+        "startLine": 154,
+        "startChar": 0,
+        "endLine": 155,
+        "endChar": 36
+      },
+      "revId": "d3c5667dba773999b93fd99b5f71b182cec4151d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
