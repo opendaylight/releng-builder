@@ -462,6 +462,10 @@ global
   log  /dev/log local0
   maxconn  20480
   pidfile  /tmp/haproxy.pid
+  ssl-default-bind-ciphers  !SSLv2:kEECDH:kRSA:kEDH:kPSK:+3DES:!aNULL:!eNULL:!MD5:!EXP:!RC4:!SEED:!IDEA:!DES
+  ssl-default-bind-options  no-sslv3 no-tlsv10
+  stats  socket /var/lib/haproxy/stats mode 600 level user
+  stats  timeout 2m
   user  haproxy
 
 defaults
@@ -470,10 +474,10 @@ defaults
   mode  tcp
   retries  3
   timeout  http-request 10s
-  timeout  queue 1m
+  timeout  queue 2m
   timeout  connect 10s
-  timeout  client 1m
-  timeout  server 1m
+  timeout  client 2m
+  timeout  server 2m
   timeout  check 10s
 
 listen opendaylight
@@ -483,7 +487,6 @@ listen opendaylight
   http-request set-header X-Forwarded-Proto http if !{ ssl_fc }
   option httpchk GET /diagstatus
   option httplog
-  balance source
 EOF
 
     odlindex=1
@@ -501,7 +504,6 @@ listen opendaylight_ws
   timeout client 25s
   timeout server 25s
   timeout tunnel 3600s
-  balance source
 EOF
 
     odlindex=1
