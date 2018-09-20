@@ -46,24 +46,10 @@
           description: 'The confidence level the published artifact gained'
 
     builders:
-      # first build step in the job executes create-ape.sh to construct the
-      # ArtifactPublishedEvent (ape)
+      # this build step in the job executes create-ape.sh to construct the
+      # ArtifactPublishedEvent (ape) and publishes it using the python utility
       - shell:
           !include-raw-escape: ./create-ape.sh
-      # constructed event gets injected into environment so JME Messaging
-      # plugin can publish the event and its properties in post-build step
-      - inject:
-          properties-file: "$WORKSPACE/event.properties"
-
-    publishers:
-      - jms-messaging:
-          provider-name: openci.activemq
-          msg-type: Custom
-          msg-props: |
-            type=$type
-            origin=$origin
-          msg-content:
-            $eventBody
 
 # This job gets triggered by a ConfidenceLevelModifiedEvent published
 # by OPNFV jobs so ODL can promote the autorelease artifact even further.
@@ -82,14 +68,7 @@
     triggers:
       - jms-messaging:
           provider-name: openci.activemq
-          selector: CI_TYPE = 'custom'
-          checks:
-            - field: origin
-              expected-value: 'OPNFV'
-            - field: type
-              expected-value: 'ConfidenceLevelModifiedEvent'
-            - field: scenario
-              expected-value: 'os-odl-nofeature'
+          selector: JMSType = 'ConfidenceLevelModifiedEvent' and JMSOrigin = 'OPNFV' and JMSScenario = 'os-odl-nofeature-ha'
 
     builders:
       - shell: |
