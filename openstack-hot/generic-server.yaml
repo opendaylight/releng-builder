@@ -67,7 +67,8 @@ resources:
                     echo "Waiting until devvexx.opendaylight.org is resolvable..."
                 done
                 git clone --recurse-submodules git://devvexx.opendaylight.org/mirror/releng/builder /opt/ciman
-                /opt/ciman/jjb/global-jjb/jenkins-init-scripts/init.sh
+                /opt/ciman/global-jjb/jenkins-init-scripts/init.sh
+                ln -s /opt/ciman/global-jjb/jenkins-init-scripts /opt/ciman/jjb/global-jjb/jenkins-init-scripts
 
 outputs:
     ip:
