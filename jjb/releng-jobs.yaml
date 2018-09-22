@@ -167,6 +167,9 @@
 
     builders:
       - lf-infra-pre-build
+      - shell: |
+          #!/bin/bash -l
+          pip install --user --upgrade lftools[openstack]~=0.17.1
       # Servers
       - odl-openstack-cleanup-stale-stacks
       - odl-openstack-cleanup-stale-nodes
