@@ -18,6 +18,7 @@
 
     mvn-settings: 'mdsal-settings'
     mvn-opts: '-Xmx2048m'
+    sign-artifacts: true
 
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream}'
     email-upstream: '[mdsal] [odlparent] [yangtools]'
@@ -54,6 +55,7 @@
     mvn-settings: 'mdsal-settings'
     mvn-goals: '-Dmaven.compile.fork=true clean deploy -Dintegrationtests'
     mvn-opts: '-Xmx2048m'
+    sign-artifacts: true
     build-node: centos7-builder-8c-8g
     build-timeout: 90
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream}'
