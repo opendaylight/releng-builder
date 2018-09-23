@@ -123,7 +123,11 @@
 - project:
     name: mdsal-sonar
     jobs:
-      - gerrit-maven-sonar
+      - gerrit-maven-sonar:
+          mvn-params: >
+            -Dodl.jacoco.aggregateFile=$WORKSPACE/target/jacoco.exec
+            -Dsonar.jacoco.reportPath=$WORKSPACE/target/jacoco.exec
+
     project: 'mdsal'
     project-name: 'mdsal'
     branch: 'master'
