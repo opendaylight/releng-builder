@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "343f1b78_43ba4cb6",
+        "filename": "jjb/packaging/test-ansible-odl-user.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2018-09-24T12:45:08Z",
+      "side": 0,
+      "message": "I think we should keep the shebangs in all scripts.",
+      "revId": "845ddf2f9e3694cc4b4202186de6274c1e4c836a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f594f48b_8241f751",
+        "filename": "jjb/packaging/test-ansible-rpm.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2018-09-24T12:45:08Z",
+      "side": 0,
+      "message": "Can you verify that this carries-over between scripts? I\u0027m not sure if it does or not. Can test by adding a call to /bin/false (just returns non-zero) and verifying that the script stops running, test fails.",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 19
+      },
+      "revId": "845ddf2f9e3694cc4b4202186de6274c1e4c836a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
