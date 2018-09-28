@@ -54,6 +54,24 @@ CONTROLLER_NODE=$(egrep 'type|vNode-name' node.yaml | egrep -A1 controller | tai
 COMPUTE_0_NODE=$(egrep 'type|vNode-name' node.yaml | egrep -A1 compute | tail -n1 | awk '{print $2}')
 COMPUTE_1_NODE=$(egrep 'type|vNode-name' node.yaml | egrep -A1 compute | head -n2 | tail -n1 | awk '{print $2}')
 
+# Customize images to work in ODL Vexxhost infra
+LIBGUESTFS_BACKEND=direct
+virt-customize -a $CONTROLLER_NODE --run-command \
+  "crudini --set /var/lib/config-data/puppet-generated/neutron/etc/neutron/plugins/ml2/ml2_conf.ini ml2 physical_network_mtus datacentre:1458"
+virt-customize -a $CONTROLLER_NODE --run-command \
+  "crudini --set /var/lib/config-data/puppet-generated/neutron/etc/neutron/plugins/ml2/ml2_conf.ini ml2 path_mtu 1458"
+virt-customize -a $CONTROLLER_NODE --run-command \
+  "crudini --set /var/lib/config-data/puppet-generated/neutron/etc/neutron/neutron.conf '' global_physnet_mtu 1458"
+virt-customize -a $CONTROLLER_NODE --run-command \
+  "crudini --set /var/lib/config-data/puppet-generated/neutron/etc/neutron/dhcp_agent.ini '' debug true"
+
+virt-customize -a $OPENSTACK_COMPUTE_NODE_1_IP --run-command \
+  "crudini --set /var/lib/config-data/puppet-generated/nova_libvirt/etc/nova/nova.conf libvirt virt_type qemu"
+
+virt-customize -a $OPENSTACK_COMPUTE_NODE_2_IP --run-command \
+  "crudini --set /var/lib/config-data/puppet-generated/nova_libvirt/etc/nova/nova.conf libvirt virt_type qemu"
+
+
 popd
 
 openstack image list
