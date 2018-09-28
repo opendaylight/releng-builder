@@ -58,10 +58,10 @@ COMPUTE_1_NODE=$(egrep 'type|vNode-name' node.yaml | egrep -A1 compute | head -n
 sudo yum install -y libguestfs-tools
 export LIBGUESTFS_BACKEND=direct
 virt-customize -a $CONTROLLER_NODE \
-  --run-command "crudini --set /var/lib/config-data/puppet-generated/neutron/etc/neutron/plugins/ml2/ml2_conf.ini ml2 physical_network_mtus datacentre:1458"
-  --run-command "crudini --set /var/lib/config-data/puppet-generated/neutron/etc/neutron/plugins/ml2/ml2_conf.ini ml2 path_mtu 1458"
-  --run-command "crudini --set /var/lib/config-data/puppet-generated/neutron/etc/neutron/neutron.conf '' global_physnet_mtu 1458"
-  --run-command "crudini --set /var/lib/config-data/puppet-generated/neutron/etc/neutron/dhcp_agent.ini '' debug true"
+  --run-command "crudini --set /var/lib/config-data/puppet-generated/neutron/etc/neutron/plugins/ml2/ml2_conf.ini ml2 physical_network_mtus datacentre:1458" \
+  --run-command "crudini --set /var/lib/config-data/puppet-generated/neutron/etc/neutron/plugins/ml2/ml2_conf.ini ml2 path_mtu 1458" \
+  --run-command "crudini --set /var/lib/config-data/puppet-generated/neutron/etc/neutron/neutron.conf '' global_physnet_mtu 1458" \
+  --run-command "crudini --set /var/lib/config-data/puppet-generated/neutron/etc/neutron/dhcp_agent.ini '' debug true" \
 
 virt-customize -a $OPENSTACK_COMPUTE_NODE_1_IP \
   --run-command "crudini --set /var/lib/config-data/puppet-generated/nova_libvirt/etc/nova/nova.conf libvirt virt_type qemu"
@@ -69,6 +69,18 @@ virt-customize -a $OPENSTACK_COMPUTE_NODE_1_IP \
 virt-customize -a $OPENSTACK_COMPUTE_NODE_2_IP \
   --run-command "crudini --set /var/lib/config-data/puppet-generated/nova_libvirt/etc/nova/nova.conf libvirt virt_type qemu"
 
+for image in $CONTROLLER_NODE $COMPUTE_0_NODE $COMPUTE_1_NODE
+do
+  # Change interface MTU to account for default network mtu of 1458
+  virt-customize -a $image \
+    --run-command "sudo echo \"MTU=\"1458\" >> /etc/sysconfig/network-scripts/ifcfg-eth0" \
+    --run-command "sudo echo \"MTU=\"1458\" >> /etc/sysconfig/network-scripts/ifcfg-br-int" \
+    --run-command "sudo echo \"MTU=\"1458\" >> /etc/sysconfig/network-scripts/ifcfg-ovs-system" \
+    --run-command "sudo crudini --set /etc/selinux/config '' SELINUX disabled" \
+    --run-command "sudo iptables -I INPUT -p udp -m multiport --dports 4789,9876,12345 -j ACCEPT" \
+    --run-command "sudo iptables -I INPUT -p tcp --dport 12345 -j ACCEPT" \
+    --run-command "sudo iptables-save"
+done
 
 popd
 
