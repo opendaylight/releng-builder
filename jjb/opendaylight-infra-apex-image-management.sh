@@ -55,6 +55,8 @@ COMPUTE_0_NODE=$(egrep 'type|vNode-name' node.yaml | egrep -A1 compute | tail -n
 COMPUTE_1_NODE=$(egrep 'type|vNode-name' node.yaml | egrep -A1 compute | head -n2 | tail -n1 | awk '{print $2}')
 
 # Customize images to work in ODL Vexxhost infra
+# ensure mtu settings are 1458 on interfaces and appropriate openstack configs
+# create vxlan tunnels between nodes since vlan networks are broken
 LIBGUESTFS_BACKEND=direct
 virt-customize -a $CONTROLLER_NODE --run-command \
   "crudini --set /var/lib/config-data/puppet-generated/neutron/etc/neutron/plugins/ml2/ml2_conf.ini ml2 physical_network_mtus datacentre:1458"
@@ -70,6 +72,24 @@ virt-customize -a $OPENSTACK_COMPUTE_NODE_1_IP --run-command \
 
 virt-customize -a $OPENSTACK_COMPUTE_NODE_2_IP --run-command \
   "crudini --set /var/lib/config-data/puppet-generated/nova_libvirt/etc/nova/nova.conf libvirt virt_type qemu"
+
+PHYSNET_WORK=datacentre
+BR_WORK=br-${PHYSNET_WORK}
+virt-customize -a $CONTROLLER_NODE --run-command \
+  "ovs-vsctl --if-exists del-port br-int ${BR_WORK};
+   ovs-vsctl --may-exist add-br ${BR_WORK} -- set bridge ${BR_WORK} other-config:disable-in-band=true other_config:hwaddr=f6:00:00:ff:01:01;
+   ovs-vsctl add-port ${BR_WORK} compute_1_vxlan -- set interface compute_1_vxlan type=vxlan options:local_ip=${OPENSTACK_CONTROL_NODE_1_IP} options:remote_ip=${OPENSTACK_COMPUTE_NODE_1_IP} options:dst_port=9876 options:key=flow;
+   ovs-vsctl add-port ${BR_WORK} compute_2_vxlan -- set interface compute_2_vxlan type=vxlan options:local_ip=${OPENSTACK_CONTROL_NODE_1_IP} options:remote_ip=${OPENSTACK_COMPUTE_NODE_2_IP} options:dst_port=9876 options:key=flow;"
+
+virt-customize -a $OPENSTACK_COMPUTE_NODE_1_IP --run-command \
+  "ovs-vsctl --if-exists del-port br-int ${BR_WORK};
+   ovs-vsctl --may-exist add-br ${BR_WORK} -- set bridge ${BR_WORK} other-config:disable-in-band=true other_config:hwaddr=f6:00:00:ff:01:02;
+   ovs-vsctl add-port ${BR_WORK} control_1_vxlan -- set interface control_1_vxlan type=vxlan options:local_ip=${OPENSTACK_COMPUTE_NODE_1_IP} options:remote_ip=${OPENSTACK_CONTROL_NODE_1_IP} options:dst_port=9876 options:key=flow;"
+
+virt-customize -a $OPENSTACK_COMPUTE_NODE_2_IP --run-command \
+  "ovs-vsctl --if-exists del-port br-int ${BR_WORK};
+   ovs-vsctl --may-exist add-br ${BR_WORK} -- set bridge ${BR_WORK} other-config:disable-in-band=true other_config:hwaddr=f6:00:00:ff:01:03;
+   ovs-vsctl add-port ${BR_WORK} control_1_vxlan -- set interface control_1_vxlan type=vxlan options:local_ip=${OPENSTACK_COMPUTE_NODE_2_IP} options:remote_ip=${OPENSTACK_CONTROL_NODE_1_IP} options:dst_port=9876 options:key=flow;"
 
 for image in $CONTROLLER_NODE $COMPUTE_0_NODE $COMPUTE_1_NODE
 do
