@@ -69,6 +69,17 @@ virt-customize -a $OPENSTACK_COMPUTE_NODE_1_IP \
 virt-customize -a $OPENSTACK_COMPUTE_NODE_2_IP \
   --run-command "crudini --set /var/lib/config-data/puppet-generated/nova_libvirt/etc/nova/nova.conf libvirt virt_type qemu"
 
+for image in $CONTROLLER_NODE $COMPUTE_0_NODE $COMPUTE_1_NODE
+do
+  # Change interface MTU to account for default network mtu of 1458
+  virt-customize -a $image --run-command \
+    "sudo /usr/sbin/ip link set dev eth0 mtu 1458;
+     sudo /usr/sbin/ip link set dev br-int mtu 1458;
+     sudo /usr/sbin/ip link set dev br-ex mtu 1458;
+     sudo /usr/sbin/ip link set dev ovs-system mtu 1458;
+     sudo setenforce 0;
+     sudo iptables -I INPUT -p udp -m multiport --dports 4789,9876 -j ACCEPT;"
+done
 
 popd
 
