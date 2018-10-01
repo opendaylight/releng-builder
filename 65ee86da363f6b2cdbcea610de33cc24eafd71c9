@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "cf8f617c_1c9f5e52",
+        "filename": "jjb/opendaylight-infra-apex-image-management.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5089
+      },
+      "writtenOn": "2018-10-01T18:33:15Z",
+      "side": 1,
+      "message": "this needs to be exported I think",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 25
+      },
+      "revId": "65ee86da363f6b2cdbcea610de33cc24eafd71c9",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ccbb23f2_2511eb98",
         "filename": "jjb/opendaylight-infra-apex-image-management.sh",
         "patchSetId": 1
@@ -37,6 +60,98 @@
     },
     {
       "key": {
+        "uuid": "85062141_acb27c39",
+        "filename": "jjb/opendaylight-infra-apex-image-management.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 5089
+      },
+      "writtenOn": "2018-10-01T18:33:15Z",
+      "side": 1,
+      "message": "I don\u0027t think this will survive the snapshot boot. I think you need to change the ifcfg file with a crudini call.",
+      "range": {
+        "startLine": 78,
+        "startChar": 5,
+        "endLine": 78,
+        "endChar": 49
+      },
+      "revId": "65ee86da363f6b2cdbcea610de33cc24eafd71c9",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6333412a_9402f37d",
+        "filename": "jjb/opendaylight-infra-apex-image-management.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5089
+      },
+      "writtenOn": "2018-10-01T18:33:15Z",
+      "side": 1,
+      "message": "you dont need to set MTU on the bridges. OVS will automatically use the MTU set on teh interfaces attached to the bridge.",
+      "range": {
+        "startLine": 79,
+        "startChar": 5,
+        "endLine": 79,
+        "endChar": 52
+      },
+      "revId": "65ee86da363f6b2cdbcea610de33cc24eafd71c9",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6cd85089_2a7316b1",
+        "filename": "jjb/opendaylight-infra-apex-image-management.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 5089
+      },
+      "writtenOn": "2018-10-01T18:33:15Z",
+      "side": 1,
+      "message": "note when you are doing separate commands, just do another --run-command. This makes it more obvious when a command fails",
+      "range": {
+        "startLine": 79,
+        "startChar": 5,
+        "endLine": 81,
+        "endChar": 56
+      },
+      "revId": "65ee86da363f6b2cdbcea610de33cc24eafd71c9",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "760a9a56_5ff83d60",
+        "filename": "jjb/opendaylight-infra-apex-image-management.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 5089
+      },
+      "writtenOn": "2018-10-01T18:33:15Z",
+      "side": 1,
+      "message": "this wont survive a boot/reboot. I think you need to change the /etc/selinux/config file",
+      "range": {
+        "startLine": 82,
+        "startChar": 5,
+        "endLine": 82,
+        "endChar": 23
+      },
+      "revId": "65ee86da363f6b2cdbcea610de33cc24eafd71c9",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72f202c7_f25aef57",
         "filename": "jjb/opendaylight-infra-apex-image-management.sh",
         "patchSetId": 1
@@ -66,6 +181,29 @@
       "side": 1,
       "message": "not following. what do you want here?\n\nthis was a line you gave me when you updated my csit\njob patch.",
       "parentUuid": "72f202c7_f25aef57",
+      "revId": "65ee86da363f6b2cdbcea610de33cc24eafd71c9",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "81d0f830_b96826c9",
+        "filename": "jjb/opendaylight-infra-apex-image-management.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 5089
+      },
+      "writtenOn": "2018-10-01T18:33:15Z",
+      "side": 1,
+      "message": "need to issue iptables-save",
+      "range": {
+        "startLine": 83,
+        "startChar": 4,
+        "endLine": 83,
+        "endChar": 76
+      },
       "revId": "65ee86da363f6b2cdbcea610de33cc24eafd71c9",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
