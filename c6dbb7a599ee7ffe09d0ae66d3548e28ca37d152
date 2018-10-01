@@ -16,6 +16,24 @@
       "revId": "c6dbb7a599ee7ffe09d0ae66d3548e28ca37d152",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba2bbe13_e5171e39",
+        "filename": "jjb/opendaylight-infra-apex-image-management.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-10-01T15:11:43Z",
+      "side": 1,
+      "message": "thats my plan. I have other patches to do move\nother things over to this side as well:\n\nhttps://git.opendaylight.org/gerrit/#/q/topic:extra-apex-image-configs+(status:open+OR+status:merged)\n\nit\u0027s just so the csit jobs will run faster. The big one\nto figure out is the puppet apply, which takes ~4m to\nrun. Getting that figured out in the apex image management\njob will really help speed things up",
+      "parentUuid": "4b417961_c71bd845",
+      "revId": "c6dbb7a599ee7ffe09d0ae66d3548e28ca37d152",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
