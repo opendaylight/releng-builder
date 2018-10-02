@@ -96,7 +96,7 @@ while true; do
     if grep --quiet 'org.opendaylight.infrautils.ready-impl.*System ready' "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log"; then
         echo "Controller is UP"
         break
-    elif (( "${COUNT}" > "360" )); then
+    elif (( "${COUNT}" >= "360" )); then
         echo "Timeout Controller DOWN"
         dump_log_and_exit
     fi
