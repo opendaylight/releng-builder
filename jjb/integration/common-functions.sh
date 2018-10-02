@@ -740,7 +740,7 @@ fi
 echo "Waiting up to 3 minutes for controller to come up, checking every 5 seconds..."
 for i in {1..36}; do
     sleep 5;
-    grep 'org.opendaylight.infrautils.ready-impl.*System ready' /tmp/${BUNDLEFOLDER}/data/log/karaf.log
+    grep 'org.opendaylight.infrautils.*System ready' /tmp/${BUNDLEFOLDER}/data/log/karaf.log
     if [ \$? -eq 0 ]; then
         echo "Controller is UP"
         break
@@ -748,7 +748,7 @@ for i in {1..36}; do
 done;
 
 # if we ended up not finding ready status in the above loop, we can output some debugs
-grep 'org.opendaylight.infrautils.ready-impl.*System ready' /tmp/${BUNDLEFOLDER}/data/log/karaf.log
+grep 'org.opendaylight.infrautils.*System ready' /tmp/${BUNDLEFOLDER}/data/log/karaf.log
 if [ $? -ne 0 ]; then
     echo "Timeout Controller DOWN"
     echo "Dumping first 500K bytes of karaf log..."
