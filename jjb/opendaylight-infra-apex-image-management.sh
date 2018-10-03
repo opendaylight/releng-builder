@@ -69,6 +69,18 @@ virt-customize -a $COMPUTE_0_NODE.qcow2 \
 virt-customize -a $COMPUTE_1_NODE.qcow2 \
   --run-command "crudini --set /var/lib/config-data/puppet-generated/nova_libvirt/etc/nova/nova.conf libvirt virt_type qemu"
 
+for image in $CONTROLLER_NODE $COMPUTE_0_NODE $COMPUTE_1_NODE
+do
+  # Change interface MTU to account for default network mtu of 1458
+  virt-customize -a $image.qcow2 \
+    --run-command "sudo echo \"MTU=\"1458\" >> /etc/sysconfig/network-scripts/ifcfg-eth0\"" \
+    --run-command "sudo echo \"MTU=\"1458\" >> /etc/sysconfig/network-scripts/ifcfg-br-int\"" \
+    --run-command "sudo echo \"MTU=\"1458\" >> /etc/sysconfig/network-scripts/ifcfg-ovs-system\"" \
+    --run-command "sudo crudini --set /etc/selinux/config '' SELINUX disabled" \
+    --run-command "sudo iptables -I INPUT -p udp -m multiport --dports 4789,9876,12345 -j ACCEPT" \
+    --run-command "sudo iptables -I INPUT -p tcp --dport 12345 -j ACCEPT" \
+    --run-command "sudo iptables-save"
+done
 
 popd
 
