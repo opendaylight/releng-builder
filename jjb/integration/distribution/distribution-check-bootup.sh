@@ -93,7 +93,7 @@ while true; do
     COUNT=$(( ${COUNT} + 5 ))
     sleep 5
     echo "already waited ${COUNT} seconds..."
-    if grep --quiet 'org.opendaylight.infrautils.ready-impl.*System ready' "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log"; then
+    if grep --quiet 'org.opendaylight.infrautils.*System ready' "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log"; then
         echo "Controller is UP"
         break
     elif (( "${COUNT}" >= "360" )); then
