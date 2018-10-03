@@ -118,6 +118,30 @@
       "revId": "b75a49337da65fd75e93eb01412946148c913b6e",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "89c59bf2_4d79072f",
+        "filename": "jjb/packaging/test-ansible-deb.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2018-10-03T13:28:20Z",
+      "side": 1,
+      "message": "The test structure should be like this:\n\nDeploy with default everything, test result\nDeploy changing default X, test result\nDeploy changing default Y, test result\n...\n\nSo the first deploy is with the default config, yes, and that\u0027s desirable. We expect many deployments will use the default config, we of course need to test it. We also want to verify that our various config knobs work, so we need to do additional deployments that change those knobs and assert they changed as expected.",
+      "parentUuid": "7d559ea3_d49fad85",
+      "range": {
+        "startLine": 4,
+        "startChar": 105,
+        "endLine": 4,
+        "endChar": 149
+      },
+      "revId": "b75a49337da65fd75e93eb01412946148c913b6e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
