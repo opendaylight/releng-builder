@@ -22,6 +22,30 @@
       "revId": "1893a7591b532f5a7c71c7472afe624dfe3c99d3",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "33a2445c_206b6685",
+        "filename": "jjb/packaging/test-ansible-deb.sh",
+        "patchSetId": 8
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 8162
+      },
+      "writtenOn": "2018-10-03T21:18:33Z",
+      "side": 1,
+      "message": "Yes, I get your point, that their should be an installation with the default variables. So their should be tests covering default installation as well as overridden configuration.\n\nBut customization can only be done by overriding these variables in the tasks playbook, \"configure_odl_logs.yml\". Tests are only asserting the expected behavior. They won\u0027t override the configuration if we provide them with these variables. If we want that, it would mean repeating the tasks in the above playbook again in the tests.\n\nSo rather I think that there should be separate jobs, one for testing the default configuration, and another one that should test the other aspects.\n\nDon\u0027t know if it makes sense!",
+      "parentUuid": "c82bd860_c54c5f92",
+      "range": {
+        "startLine": 4,
+        "startChar": 105,
+        "endLine": 4,
+        "endChar": 149
+      },
+      "revId": "1893a7591b532f5a7c71c7472afe624dfe3c99d3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
