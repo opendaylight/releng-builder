@@ -20,8 +20,9 @@
       - shell: !include-raw: stop-odl.sh
       - shell: !include-raw: uninstall-rpm.sh
       - shell: |
-          # Remove old host key so future installs don't fail to SSH
-          rm /home/jenkins/.ssh/known_hosts || echo "No known_hosts file"
+          # Remove old host key (if exists) so future installs don't fail SSH
+          rm /home/jenkins/.ssh/known_hosts || \
+            echo "No known_hosts file to clean up, which is fine"
 
 - builder:
     name: install-test-uninstall-deb
@@ -43,5 +44,6 @@
       - shell: !include-raw: stop-odl.sh
       - shell: !include-raw: uninstall-deb.sh
       - shell: |
-          # Remove old host key so future installs don't fail to SSH
-          rm /home/jenkins/.ssh/known_hosts || echo "No known_hosts file"
+          # Remove old host key (if exists) so future installs don't fail SSH
+          rm /home/jenkins/.ssh/known_hosts || \
+            echo "No known_hosts file to clean up, which is fine"
