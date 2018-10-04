@@ -23,24 +23,27 @@
           mvn-version: 'mvn35'
           csit-list: !include: csit-jobs-neon.lst
           build-order: >
-              odlparent yangtools infrautils mdsal controller aaa netconf daexim bgpcep
-              ovsdb neutron lispflowmapping openflowplugin coe genius sfc netvirt
+              odlparent yangtools infrautils mdsal controller serviceutils aaa netconf
+              daexim bgpcep ovsdb neutron lispflowmapping openflowplugin coe genius sfc
+              netvirt
 
       - fluorine:
           branch: 'stable/fluorine'
           mvn-version: 'mvn35'
           csit-list: !include: csit-jobs-fluorine.lst
           build-order: >
-              odlparent yangtools infrautils mdsal controller aaa netconf daexim bgpcep
-              ovsdb neutron lispflowmapping openflowplugin coe genius sfc netvirt
+              odlparent yangtools infrautils mdsal controller serviceutils aaa netconf
+              daexim bgpcep ovsdb neutron lispflowmapping openflowplugin coe genius sfc
+              netvirt
 
       - oxygen:
           branch: 'stable/oxygen'
           mvn-version: 'mvn35'
           csit-list: !include: csit-jobs-oxygen.lst
           build-order: >
-              odlparent yangtools infrautils mdsal controller aaa netconf daexim bgpcep
-              ovsdb neutron lispflowmapping openflowplugin coe genius sfc netvirt
+              odlparent yangtools infrautils mdsal controller serviceutils aaa netconf
+              daexim bgpcep ovsdb neutron lispflowmapping openflowplugin coe genius sfc
+              netvirt
 
 - project:
     name: integration-distribution
