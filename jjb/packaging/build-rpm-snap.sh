@@ -19,6 +19,8 @@ if [ "$STREAM" == "oxygen" ]; then
   VERSION_MAJOR=8
 elif [ "$STREAM" == "fluorine" ]; then
   VERSION_MAJOR=9
+elif [ "$STREAM" == "neon" ]; then
+  VERSION_MAJOR=10
 else
   echo "Unable to convert stream to major version"
   exit 1
