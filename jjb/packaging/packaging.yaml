@@ -239,6 +239,28 @@
       - shell: !include-raw: build-rpm-snap.sh
       - install-test-uninstall-rpm
 
+      # Test Neon pre-release autorelease tarball
+      # NB: This will need to be updated as old builds expire
+      - inject:
+          # yamllint disable-line rule:line-length
+          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/autorelease-2393/org/opendaylight/integration/karaf/0.10.0/karaf-0.10.0.tar.gz'
+      - shell: !include-raw-escape: build-rpm.sh
+      - install-test-uninstall-rpm
+
+      # Test Neon multipatch zip (no parallel tarball available)
+      # NB: This will need to be updated as old builds expire
+      - inject:
+          # yamllint disable-line rule:line-length
+          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/org/opendaylight/integration/integration/distribution/karaf/0.10.0-SNAPSHOT/karaf-0.10.0-20180925.093600-5.zip'
+      - shell: !include-raw-escape: build-rpm.sh
+      - install-test-uninstall-rpm
+
+      # Test latest Neon snapshot
+      - inject:
+          properties-content: 'STREAM=neon'
+      - shell: !include-raw: build-rpm-snap.sh
+      - install-test-uninstall-rpm
+
     triggers:
       - gerrit-trigger-patch-submitted:
           gerrit-server-name: '{gerrit-server-name}'
@@ -317,6 +339,28 @@
       # Test latest Fluorine snapshot
       - inject:
           properties-content: 'STREAM=fluorine'
+      - shell: !include-raw: build-rpm-snap.sh
+      - install-test-uninstall-rpm
+
+      # Test Neon pre-release autorelease tarball
+      # NB: This will need to be updated as old builds expire
+      - inject:
+          # yamllint disable-line rule:line-length
+          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/autorelease-2393/org/opendaylight/integration/karaf/0.10.0/karaf-0.10.0.tar.gz'
+      - shell: !include-raw-escape: build-rpm.sh
+      - install-test-uninstall-rpm
+
+      # Test Neon multipatch zip (no parallel tarball available)
+      # NB: This will need to be updated as old builds expire
+      - inject:
+          # yamllint disable-line rule:line-length
+          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/org/opendaylight/integration/integration/distribution/karaf/0.10.0-SNAPSHOT/karaf-0.10.0-20180925.093600-5.zip'
+      - shell: !include-raw-escape: build-rpm.sh
+      - install-test-uninstall-rpm
+
+      # Test latest Neon snapshot
+      - inject:
+          properties-content: 'STREAM=neon'
       - shell: !include-raw: build-rpm-snap.sh
       - install-test-uninstall-rpm
 
