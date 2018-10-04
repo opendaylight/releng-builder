@@ -217,6 +217,13 @@
       - shell: !include-raw: build-rpm-snap.sh
       - install-test-uninstall-rpm
 
+      # Test Fluorine ('Managed Release Common Distro') release tarball
+      - inject:
+          # yamllint disable-line rule:line-length
+          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/public/org/opendaylight/integration/opendaylight/0.9.0/opendaylight-0.9.0.tar.gz'
+      - shell: !include-raw-escape: build-rpm.sh
+      - install-test-uninstall-rpm
+
       # Test Fluorine pre-release autorelease tarball
       # NB: This will need to be updated as old builds expire
       - inject:
@@ -318,6 +325,13 @@
       - inject:
           properties-content: 'STREAM=oxygen'
       - shell: !include-raw: build-rpm-snap.sh
+      - install-test-uninstall-rpm
+
+      # Test Fluorine ('Managed Release Common Distro') release tarball
+      - inject:
+          # yamllint disable-line rule:line-length
+          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/public/org/opendaylight/integration/opendaylight/0.9.0/opendaylight-0.9.0.tar.gz'
+      - shell: !include-raw-escape: build-rpm.sh
       - install-test-uninstall-rpm
 
       # Test Fluorine pre-release autorelease tarball
