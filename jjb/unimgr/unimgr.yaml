@@ -2,6 +2,11 @@
 - project:
     name: unimgr-neon
     jobs:
+      - '{project-name}-rtd-jobs':
+          build-node: centos7-builder-2c-2g
+          project-pattern: unimgr
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-unimgr/49748/
+          rtd-token: e12225e9b9ac67f5439c1619dcad342393b7ea31
       - odl-maven-jobs
 
     stream: neon
@@ -20,6 +25,11 @@
 - project:
     name: unimgr-fluorine
     jobs:
+      - '{project-name}-rtd-jobs':
+          build-node: centos7-builder-2c-2g
+          project-pattern: unimgr
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-unimgr/49748/
+          rtd-token: e12225e9b9ac67f5439c1619dcad342393b7ea31
       - odl-maven-jobs
 
     stream: fluorine
