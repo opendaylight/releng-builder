@@ -69,6 +69,6 @@ odltools -V
 
 # Print installed versions.
 pip install --upgrade pipdeptree
-pipdeptree
+pip freeze
 
 # vim: sw=4 ts=4 sts=4 et ft=sh :
