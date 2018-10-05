@@ -44,7 +44,7 @@
           build-timeout: '{build-timeout}'
 
     builders:
-      - shell: !include-raw: setup-ansible.sh
+      - shell: !include-raw: setup-ansible-rpm.sh
       - shell: !include-raw: test-ansible-rpm.sh
       - shell: !include-raw: test-ansible-odl-user.sh
       - shell: !include-raw: test-odl-logs.sh
@@ -92,7 +92,10 @@
           build-timeout: '{build-timeout}'
 
     builders:
+      - shell: !include-raw: setup-ansible-deb.sh
       - shell: !include-raw: test-ansible-deb.sh
+      - shell: !include-raw: test-ansible-odl-user.sh
+      - shell: !include-raw: test-odl-logs.sh
 
     triggers:
       - timed: '@daily'
