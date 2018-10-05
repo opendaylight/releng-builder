@@ -46,6 +46,30 @@
       "revId": "1893a7591b532f5a7c71c7472afe624dfe3c99d3",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "af99ebe5_21f7e52d",
+        "filename": "jjb/packaging/test-ansible-deb.sh",
+        "patchSetId": 8
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2018-10-05T00:08:34Z",
+      "side": 1,
+      "message": "Ah, yes, I think I understand what you\u0027re saying. I assumed we were already re-applying config before running tests, but it looks like we actually are not.\n\nI was imagining that each builder script would have two Ansible calls:\n\n* Provision/re-provision ODL overriding params to tweak config knobs. \n* Run the relevant tests to verify config knobs.\n\nI\u0027d like to avoid creating many individual jobs because I think that would consume more infra resources and add to the already somewhat difficult to manage large number of jobs. These different config knob provision/test steps are suites in one job, imho.",
+      "parentUuid": "33a2445c_206b6685",
+      "range": {
+        "startLine": 4,
+        "startChar": 105,
+        "endLine": 4,
+        "endChar": 149
+      },
+      "revId": "1893a7591b532f5a7c71c7472afe624dfe3c99d3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
