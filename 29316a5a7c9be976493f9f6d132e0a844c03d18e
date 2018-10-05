@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f4a2d95b_cc6d1abe",
+        "filename": "jjb/integration/integration-apex-run-tests.sh",
+        "patchSetId": 30
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-10-05T16:45:52Z",
+      "side": 1,
+      "message": "yeah, this comes in as a job parameter. we set it in\nnetvirt-csit-multi-apex.yaml",
+      "parentUuid": "a05daf2b_6975e164",
+      "range": {
+        "startLine": 70,
+        "startChar": 50,
+        "endLine": 70,
+        "endChar": 66
+      },
+      "revId": "29316a5a7c9be976493f9f6d132e0a844c03d18e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "389946a1_5f79828c",
         "filename": "jjb/integration/integration-get-apex-addresses.sh",
         "patchSetId": 30
@@ -36,6 +60,30 @@
       "writtenOn": "2018-10-04T12:54:34Z",
       "side": 1,
       "message": "one option instead of doing this, is I could modify the sdvpn odl_reinstaller to do have an argument to do this there? Maybe an improvement for the future.",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 93
+      },
+      "revId": "29316a5a7c9be976493f9f6d132e0a844c03d18e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "10195203_f69c939a",
+        "filename": "jjb/integration/integration-get-apex-addresses.sh",
+        "patchSetId": 30
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-10-05T16:45:52Z",
+      "side": 1,
+      "message": "maybe, but I was thinking about all of this and I predict\nthat this odl_reinstaller is going to be an important\npart of the workflow and possibly a place we spend a lot\nof time working with when debugging issues. We need to make\nit as clear and helpful as possible, especially when it\nfails. It might make sense to port it over to releng/builder instead of in opnfv\u0027s sdnvpn\u0027s project",
+      "parentUuid": "389946a1_5f79828c",
       "range": {
         "startLine": 70,
         "startChar": 0,
