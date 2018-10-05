@@ -391,6 +391,15 @@
       - inject:
           properties-file: detect_variables.env
 
+# Macro: integration-deploy-simple-controller-run-test
+# Operation: this macro deploys single contoller and runs test
+# Used by: {project}-csit-1node-simple-* job templates
+
+- builder:
+    name: integration-deploy-simple-controller-run-test
+    builders:
+      - shell: !include-raw: integration-deploy-simple-controller-run-test.sh
+
 # Macro: integration-deply-controller-run-test
 # Operation: this macro deploys single contoller and runs test
 # Used by: {project}-csit-1node-* job templates

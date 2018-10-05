@@ -1,0 +1,21 @@
+---
+- project:
+    name: genius-csit-simple
+    jobs:
+      - inttest-csit-1node-simple
+
+    project: genius
+    functionality:
+      - upstream
+
+    stream:
+      - neon:
+          branch: master
+
+    install:
+      - all:
+          scope: all
+
+    tools_system_count: 3
+    install-features: 'odl-genius-rest'
+    robot-options: '-v FAIL_ON_EXCEPTIONS:False'

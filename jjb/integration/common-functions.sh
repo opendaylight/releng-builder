@@ -631,6 +631,29 @@ function get_features() {
 }
 
 # Create the configuration script to be run on controllers.
+function create_simple_configuration_script() {
+    cat > ${WORKSPACE}/configuration-script.sh <<EOF
+set -x
+source /tmp/common-functions.sh ${BUNDLEFOLDER}
+
+echo "Changing to /tmp"
+cd /tmp
+
+echo "Downloading the distribution from https://github.com/shague/opendaylight-simple/releases/download/0.1.2/poc-1.5.0-SNAPSHOT-simple.tar"
+wget --progress=dot:mega https://github.com/shague/opendaylight-simple/releases/download/0.1.2/poc-1.5.0-SNAPSHOT-simple.tar
+
+echo "Extracting the new controller..."
+tar -xf poc-1.5.0-SNAPSHOT-simple.tar
+
+set_java_vars "${JAVA_HOME}" "${CONTROLLERMEM}" "${MEMCONF}"
+
+echo "Listing all open ports on controller system..."
+netstat -punta
+EOF
+# cat > ${WORKSPACE}/configuration-script.sh <<EOF
+} # function create_simple_configuration_script() {
+
+# Create the configuration script to be run on controllers.
 function create_configuration_script() {
     cat > ${WORKSPACE}/configuration-script.sh <<EOF
 set -x
@@ -696,6 +719,16 @@ EOF
 }
 
 # Create the startup script to be run on controllers.
+function create_simple_startup_script() {
+    cat > ${WORKSPACE}/startup-script.sh <<EOF
+echo "Starting controller..."
+cd /tmp/${BUNDLEFOLDER}
+java -cp "lib/*" org.opendaylight.genius.simple.GeniusMain
+EOF
+# cat > ${WORKSPACE}/startup-script.sh <<EOF
+} # function create_simple_startup_script() {
+
+# Create the startup script to be run on controllers.
 function create_startup_script() {
     cat > ${WORKSPACE}/startup-script.sh <<EOF
 echo "Redirecting karaf console output to karaf_console.log"
@@ -707,6 +740,56 @@ echo "Starting controller..."
 EOF
 # cat > ${WORKSPACE}/startup-script.sh <<EOF
 }
+
+function create_simple_post_startup_script() {
+    cat > ${WORKSPACE}/post-startup-script.sh <<EOF
+
+echo "Waiting up to 3 minutes for controller to come up, checking every 5 seconds..."
+for i in {1..36}; do
+    sleep 5;
+    # grep 'org.opendaylight.infrautils.*System ready' /tmp/${BUNDLEFOLDER}/data/log/karaf.log
+    grep 'Completed invoking PostFullSystemInjectionListener.onFullSystemInjected' /tmp/${BUNDLEFOLDER}/data/log/opendaylight.log
+    if [ \$? -eq 0 ]; then
+        echo "Controller is UP"
+        break
+    fi
+done;
+
+# if we ended up not finding ready status in the above loop, we can output some debugs
+# grep 'org.opendaylight.infrautils.*System ready' /tmp/${BUNDLEFOLDER}/data/log/karaf.log
+grep 'Completed invoking PostFullSystemInjectionListener.onFullSystemInjected' /tmp/${BUNDLEFOLDER}/data/log/opendaylight.log
+if [ $? -ne 0 ]; then
+    echo "Timeout Controller DOWN"
+    echo "Dumping first 500K bytes of karaf log..."
+    head --bytes=500K "/tmp/${BUNDLEFOLDER}/data/log/opendaylight.log"
+    echo "Dumping last 500K bytes of karaf log..."
+    tail --bytes=500K "/tmp/${BUNDLEFOLDER}/data/log/opendaylight.log"
+    echo "Listing all open ports on controller system"
+    netstat -punta
+    exit 1
+fi
+
+echo "Listing all open ports on controller system..."
+netstat -punta
+
+function exit_on_log_file_message {
+    echo "looking for \"\$1\" in log file"
+    if grep --quiet "\$1" "/tmp/${BUNDLEFOLDER}/data/log/opendaylight.log"; then
+        echo ABORTING: found "\$1"
+        echo "Dumping first 500K bytes of karaf log..."
+        head --bytes=500K "/tmp/${BUNDLEFOLDER}/data/log/opendaylight.log"
+        echo "Dumping last 500K bytes of karaf log..."
+        tail --bytes=500K "/tmp/${BUNDLEFOLDER}/data/log/opendaylight.log"
+        exit 1
+    fi
+}
+
+exit_on_log_file_message 'BindException: Address already in use'
+exit_on_log_file_message 'server is unhealthy'
+EOF
+# cat > ${WORKSPACE}/post-startup-script.sh <<EOF
+} # function create_post_startup_script() {
+
 
 function create_post_startup_script() {
     cat > ${WORKSPACE}/post-startup-script.sh <<EOF
