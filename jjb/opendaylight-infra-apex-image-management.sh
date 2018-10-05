@@ -89,8 +89,6 @@ openstack image list
 # clean out any zombie OPNFV - apex images that *may* be left over from troubled jobs
 openstack image list | egrep 'OPNFV - apex.*new ' | awk '{print "openstack image delete",$2}' | sh || true
 
-sudo yum install -y qemu-img
-
 qemu-img convert -f qcow2 -O raw /tmp/apex_snapshots/$CONTROLLER_NODE.qcow2 /tmp/apex_snapshots/$CONTROLLER_NODE.raw
 rm /tmp/apex_snapshots/$CONTROLLER_NODE.qcow2
 qemu-img convert -f qcow2 -O raw /tmp/apex_snapshots/$COMPUTE_0_NODE.qcow2 /tmp/apex_snapshots/$COMPUTE_0_NODE.raw
