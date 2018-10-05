@@ -11,7 +11,9 @@ set -ex -o pipefail
 
 # Install system-wide dependencies
 # TODO: Are all of these still needed?
-sudo yum install -y ruby-devel gcc-c++ zlib-devel patch redhat-rpm-config make rubygems
+# net-tools: Needed for netstat, used by acceptance test that checks bind IPs
+sudo yum install -y ruby-devel gcc-c++ zlib-devel patch redhat-rpm-config \
+                    make rubygems net-tools
 
 # Install RVM to help build recent version of Ruby
 # The ruby_dep gem requires >=2.2.5, 2.0.0 is the latest pre-packaged for CentOS
