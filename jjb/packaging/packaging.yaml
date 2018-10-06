@@ -82,6 +82,10 @@
           name: DEPLOY_TO_REPO
           default: 'opendaylight-{stream}-epel-7-x86_64-devel'
           description: 'Repository to deploy resulting package to'
+      - string:
+          name: PKG_VERSION_OVERRIDE
+          default: ''
+          description: 'Override autodetected package component of RPM version (maj.min.pat-pkg)'
 
     scm:
       - integration-gerrit-scm:
@@ -589,6 +593,10 @@
           name: CHANGELOG_EMAIL
           default: 'jenkins-donotreply@opendaylight.org'
           description: 'Email of person who defined .deb'
+      - string:
+          name: PKG_VERSION_OVERRIDE
+          default: ''
+          description: 'Override autodetected package component of RPM version (maj.min.pat-pkg)'
 
     scm:
       - integration-gerrit-scm:

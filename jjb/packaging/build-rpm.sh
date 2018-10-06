@@ -46,7 +46,8 @@ fi
                                          --changelog_name "$CHANGELOG_NAME" \
                                          --changelog_email "$CHANGELOG_EMAIL" \
                                          direct \
-                                         --download_url "$DOWNLOAD_URL"
+                                         --download_url "$DOWNLOAD_URL" \
+                                         --pkg_version "$PKG_VERSION_OVERRIDE"
 
 # Always allow push to scratch repos, only push to CD repos in RelEng Jenkins
 if [ "$DEPLOY_TO_REPO" == "opendaylight-epel-7-x86_64-devel" ]; then
