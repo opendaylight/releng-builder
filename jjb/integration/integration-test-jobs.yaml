@@ -24,8 +24,8 @@
           csit-list: !include: csit-jobs-neon.lst
           build-order: >
               odlparent yangtools infrautils mdsal controller serviceutils aaa netconf
-              daexim bgpcep ovsdb neutron lispflowmapping openflowplugin coe genius sfc
-              netvirt
+              daexim ovsdb neutron openflowplugin coe genius lispflowmapping sfc netvirt
+              bgpcep
 
       - fluorine:
           branch: 'stable/fluorine'
@@ -33,8 +33,8 @@
           csit-list: !include: csit-jobs-fluorine.lst
           build-order: >
               odlparent yangtools infrautils mdsal controller serviceutils aaa netconf
-              daexim bgpcep ovsdb neutron lispflowmapping openflowplugin coe genius sfc
-              netvirt
+              daexim ovsdb neutron openflowplugin coe genius lispflowmapping sfc netvirt
+              bgpcep
 
       - oxygen:
           branch: 'stable/oxygen'
@@ -42,8 +42,8 @@
           csit-list: !include: csit-jobs-oxygen.lst
           build-order: >
               odlparent yangtools infrautils mdsal controller serviceutils aaa netconf
-              daexim bgpcep ovsdb neutron lispflowmapping openflowplugin coe genius sfc
-              netvirt
+              daexim ovsdb neutron openflowplugin coe genius lispflowmapping sfc netvirt
+              bgpcep
 
 - project:
     name: integration-distribution
