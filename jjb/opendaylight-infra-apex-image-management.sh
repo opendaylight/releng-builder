@@ -73,8 +73,15 @@ for image in $CONTROLLER_NODE $COMPUTE_0_NODE $COMPUTE_1_NODE
 do
   # Change interface MTU to account for default network mtu of 1458
   virt-customize -a $image.qcow2 \
-    --run-command 'sudo echo "MTU=\"1458\"" >> /etc/sysconfig/network-scripts/ifcfg-eth0' \
+    --run-command 'sudo echo "DEVICE=br-int" >> /etc/sysconfig/network-scripts/ifcfg-br-int' \
+    --run-command 'sudo echo "ONBOOT=yes" >> /etc/sysconfig/network-scripts/ifcfg-br-int' \
+    --run-command 'sudo echo "HOTPLUG=no" >> /etc/sysconfig/network-scripts/ifcfg-br-int' \
+    --run-command 'sudo echo "NM_CONTROLLED=no" >> /etc/sysconfig/network-scripts/ifcfg-br-int' \
+    --run-command 'sudo echo "DEVICETYPE=ovs" >> /etc/sysconfig/network-scripts/ifcfg-br-int' \
+    --run-command 'sudo echo "TYPE=OVSBridge" >> /etc/sysconfig/network-scripts/ifcfg-br-int' \
+    --run-command 'sudo echo "OVS_EXTRA=\"set Open_vSwitch . other-config:provider_mappings=datacentre:br-datacentre\"" >> /etc/sysconfig/network-scripts/ifcfg-br-int' \
     --run-command 'sudo echo "MTU=\"1458\"" >> /etc/sysconfig/network-scripts/ifcfg-br-int' \
+    --run-command 'sudo echo "MTU=\"1458\"" >> /etc/sysconfig/network-scripts/ifcfg-eth0' \
     --run-command 'sudo echo "MTU=\"1458\"" >> /etc/sysconfig/network-scripts/ifcfg-ovs-system' \
     --run-command "sudo crudini --set /etc/selinux/config '' SELINUX disabled" \
     --run-command "sudo iptables -I INPUT -p udp -m multiport --dports 4789,9876,12345 -j ACCEPT" \
