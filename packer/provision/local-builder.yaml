@@ -11,6 +11,9 @@
     elastic_search_version: 1.7.5
     hbase_checksum: sha256:9cd990939403fd43dfb665b14603e3772ca3ed813a6e21a81de1778583b35eb8
     hbase_version: 0.94.27
+    openjdk10_version: 10.0.2
+    openjdk10_checksum: 'sha256:f3b26abc9990a0b8929781310e14a339a7542adfd6596afb842fa0dd7e3848b2'
+    openjdk10_url: https://download.java.net/java/GA/jdk10/{{openjdk10_version}}/19aef61b38124481863b1413dce1855f/13/openjdk-{{openjdk10_version}}_linux-x64_bin.tar.gz
 
   pre_tasks:
     - include_role: name=lfit.system-update
@@ -19,6 +22,21 @@
     - lfit.mono-install
 
   tasks:
+    - name: Install OpenJDK 10
+      block:
+        - name: 'Fetch OpenJDK 10 to /tmp/jdk-{{openjdk10_version}}_linux-x64_bin.tar.gz'
+          get_url:
+            url: "{{openjdk10_url}}"
+            headers: 'Cookie: oraclelicense=accept-securebackup-cookie'
+            dest: '/tmp/jdk-{{openjdk10_version}}_linux-x64_bin.tar.gz'
+            checksum: '{{openjdk10_checksum}}'
+        - name: Untar OpenJDK 10 in /opt/
+          unarchive:
+            src: '/tmp/jdk-{{openjdk10_version}}_linux-x64_bin.tar.gz'
+            dest: /opt/
+            mode: 0755
+            remote_src: true
+          become: true
     - name: Install Cassandra Server
       block:
         - name: 'Fetch Cassandra Server to /tmp/apache-cassandra-{{cassandra_version}}-bin.tar.gz'
