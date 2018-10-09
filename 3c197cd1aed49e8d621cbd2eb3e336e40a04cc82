@@ -1,0 +1,197 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc4d3950_7cd99a3f",
+        "filename": "jjb/integration/integration-apex-run-tests.sh",
+        "patchSetId": 31
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-10-09T01:08:58Z",
+      "side": 1,
+      "message": "move this block down to just above the pybot",
+      "revId": "3c197cd1aed49e8d621cbd2eb3e336e40a04cc82",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6d738863_ca1f46bf",
+        "filename": "jjb/integration/integration-apex-run-tests.sh",
+        "patchSetId": 31
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-10-09T01:08:58Z",
+      "side": 1,
+      "message": "add a echo here so we know what is dummped, even though the -x is logging the steps",
+      "revId": "3c197cd1aed49e8d621cbd2eb3e336e40a04cc82",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "308d58c7_9e3eb34f",
+        "filename": "jjb/integration/integration-apex-run-tests.sh",
+        "patchSetId": 31
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-10-09T01:08:58Z",
+      "side": 1,
+      "message": "no need for it here, but we should start adding a doc section at the top of the script that shows where these global vars are likely to come from so it is easier for newcomers and oldtimers to follow.",
+      "revId": "3c197cd1aed49e8d621cbd2eb3e336e40a04cc82",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "74cd04b8_5f415e82",
+        "filename": "jjb/integration/integration-apex-run-tests.sh",
+        "patchSetId": 31
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-10-09T01:08:58Z",
+      "side": 1,
+      "message": "these are good blocks to throw into a function and add loops.",
+      "revId": "3c197cd1aed49e8d621cbd2eb3e336e40a04cc82",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ca4c8fec_c7b5c000",
+        "filename": "jjb/integration/integration-apex-run-tests.sh",
+        "patchSetId": 31
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-10-09T01:08:58Z",
+      "side": 1,
+      "message": "and move this to a macro. I think we did that in the current job so that we could always ensure that we collect logs even if the deployment fails - which means this script would exit and not get logs.",
+      "revId": "3c197cd1aed49e8d621cbd2eb3e336e40a04cc82",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a8539c01_3f575e93",
+        "filename": "jjb/integration/integration-apex-run-tests.sh",
+        "patchSetId": 31
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-10-09T01:08:58Z",
+      "side": 1,
+      "message": "in a latter patch or a tweak to sosreport, but I recall in Tim\u0027s logs that files from the host were copied and also files in the container, it was misleading as to what it was. Also there were softlinks to other files but the links didn\u0027t work so you had to know where to find the real files.",
+      "revId": "3c197cd1aed49e8d621cbd2eb3e336e40a04cc82",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9456fcf4_eb4b9f87",
+        "filename": "jjb/integration/integration-get-apex-addresses.sh",
+        "patchSetId": 31
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-10-09T01:08:58Z",
+      "side": 1,
+      "message": "any reason not to make this match the previous file? I think the previous file is what Thanh suggests and uses.",
+      "revId": "3c197cd1aed49e8d621cbd2eb3e336e40a04cc82",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fdf02036_af90e2e4",
+        "filename": "jjb/integration/integration-macros.yaml",
+        "patchSetId": 31
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-10-09T01:08:58Z",
+      "side": 1,
+      "message": "want to add deploy to macro name to match the other macros? or does apex imply deploy?",
+      "revId": "3c197cd1aed49e8d621cbd2eb3e336e40a04cc82",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "72996eef_a74ce50d",
+        "filename": "jjb/integration/integration-templates.yaml",
+        "patchSetId": 31
+      },
+      "lineNbr": 1406,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-10-09T01:08:58Z",
+      "side": 1,
+      "message": "guess the old template should have devstack here and in the name instead of openstack - but that is for another day...",
+      "range": {
+        "startLine": 1406,
+        "startChar": 21,
+        "endLine": 1406,
+        "endChar": 25
+      },
+      "revId": "3c197cd1aed49e8d621cbd2eb3e336e40a04cc82",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c3f33911_193cf2be",
+        "filename": "jjb/integration/integration-templates.yaml",
+        "patchSetId": 31
+      },
+      "lineNbr": 1510,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-10-09T01:08:58Z",
+      "side": 1,
+      "message": "why is this moved around? In the existing templates this is later in the list",
+      "revId": "3c197cd1aed49e8d621cbd2eb3e336e40a04cc82",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4da00c61_9af97c16",
+        "filename": "jjb/netvirt/netvirt-csit-multi-apex.yaml",
+        "patchSetId": 31
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-10-09T01:08:58Z",
+      "side": 1,
+      "message": "do these need to be new vars? Seems like they do the same as the existing openstack_* vars, just need to be set as they are different.",
+      "revId": "3c197cd1aed49e8d621cbd2eb3e336e40a04cc82",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
