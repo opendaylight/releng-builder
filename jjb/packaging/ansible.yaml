@@ -45,9 +45,8 @@
 
     builders:
       - shell: !include-raw: setup-ansible-rpm.sh
-      - shell: !include-raw: test-ansible-rpm.sh
-      - shell: !include-raw: test-ansible-odl-user.sh
-      - shell: !include-raw: test-odl-logs.sh
+      - shell: !include-raw: test-ansible-rpm-default-config.sh
+      - shell: !include-raw: test-ansible-rpm-custom-config.sh
 
     triggers:
       - timed: '@daily'
