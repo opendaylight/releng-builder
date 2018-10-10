@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b06f84d9_84c6381a",
+        "filename": "jjb/integration/integration-apex-run-tests.sh",
+        "patchSetId": 31
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-10-10T23:13:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc4d3950_7cd99a3f",
+      "revId": "3c197cd1aed49e8d621cbd2eb3e336e40a04cc82",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d738863_ca1f46bf",
         "filename": "jjb/integration/integration-apex-run-tests.sh",
         "patchSetId": 31
@@ -30,6 +48,24 @@
       "writtenOn": "2018-10-09T01:08:58Z",
       "side": 1,
       "message": "add a echo here so we know what is dummped, even though the -x is logging the steps",
+      "revId": "3c197cd1aed49e8d621cbd2eb3e336e40a04cc82",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1d679672_07793825",
+        "filename": "jjb/integration/integration-apex-run-tests.sh",
+        "patchSetId": 31
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-10-10T23:13:23Z",
+      "side": 1,
+      "message": "echo what though? do you mean to do an \"env\" so we know\nthat line 32 worked?",
+      "parentUuid": "6d738863_ca1f46bf",
       "revId": "3c197cd1aed49e8d621cbd2eb3e336e40a04cc82",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "f8411516_0d5c0aa3",
+        "filename": "jjb/integration/integration-apex-run-tests.sh",
+        "patchSetId": 31
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-10-10T23:13:23Z",
+      "side": 1,
+      "message": "I\u0027m planning to move these lines (hopefully all of 42-63)\nin to the apex-image-management job so we\u0027ll never have to\nlook at them here again.",
+      "parentUuid": "74cd04b8_5f415e82",
+      "revId": "3c197cd1aed49e8d621cbd2eb3e336e40a04cc82",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca4c8fec_c7b5c000",
         "filename": "jjb/integration/integration-apex-run-tests.sh",
         "patchSetId": 31
@@ -81,6 +135,24 @@
       "writtenOn": "2018-10-09T01:08:58Z",
       "side": 1,
       "message": "and move this to a macro. I think we did that in the current job so that we could always ensure that we collect logs even if the deployment fails - which means this script would exit and not get logs.",
+      "revId": "3c197cd1aed49e8d621cbd2eb3e336e40a04cc82",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1cd0883d_6d3b3592",
+        "filename": "jjb/integration/integration-apex-run-tests.sh",
+        "patchSetId": 31
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-10-10T23:13:23Z",
+      "side": 1,
+      "message": "yes, the log collection needs to happen no matter what. I\u0027ll try to get that figured out.",
+      "parentUuid": "ca4c8fec_c7b5c000",
       "revId": "3c197cd1aed49e8d621cbd2eb3e336e40a04cc82",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "07578809_b71033e7",
+        "filename": "jjb/integration/integration-apex-run-tests.sh",
+        "patchSetId": 31
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-10-10T23:13:23Z",
+      "side": 1,
+      "message": "oh yeah, sosreport gives a lot of stuff, so it might be\nconfusing. we\u0027ll have to learn as we go. *BUT* the main\nthings we care about seem to be in /var/log/containers/*\nand that\u0027s easy to find",
+      "parentUuid": "a8539c01_3f575e93",
+      "revId": "3c197cd1aed49e8d621cbd2eb3e336e40a04cc82",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9456fcf4_eb4b9f87",
         "filename": "jjb/integration/integration-get-apex-addresses.sh",
         "patchSetId": 31
@@ -121,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "b3c343f6_fbb66867",
+        "filename": "jjb/integration/integration-get-apex-addresses.sh",
+        "patchSetId": 31
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-10-10T23:13:23Z",
+      "side": 1,
+      "message": "they are the same, just different format. I\u0027ll make them\nall look like the previous file.",
+      "parentUuid": "9456fcf4_eb4b9f87",
+      "revId": "3c197cd1aed49e8d621cbd2eb3e336e40a04cc82",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fdf02036_af90e2e4",
         "filename": "jjb/integration/integration-macros.yaml",
         "patchSetId": 31
@@ -132,6 +240,24 @@
       "writtenOn": "2018-10-09T01:08:58Z",
       "side": 1,
       "message": "want to add deploy to macro name to match the other macros? or does apex imply deploy?",
+      "revId": "3c197cd1aed49e8d621cbd2eb3e336e40a04cc82",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "234befe0_65a3bb33",
+        "filename": "jjb/integration/integration-macros.yaml",
+        "patchSetId": 31
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-10-10T23:13:23Z",
+      "side": 1,
+      "message": "I really only wanted this macro to *just* run the tests.\nthe little deploy tweaking that is still there is\nhopefully getting moved to image-management eventually.",
+      "parentUuid": "fdf02036_af90e2e4",
       "revId": "3c197cd1aed49e8d621cbd2eb3e336e40a04cc82",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -161,6 +287,30 @@
     },
     {
       "key": {
+        "uuid": "885224b3_d9295629",
+        "filename": "jjb/integration/integration-templates.yaml",
+        "patchSetId": 31
+      },
+      "lineNbr": 1406,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-10-10T23:13:23Z",
+      "side": 1,
+      "message": "yeah. or maybe down the road there will be no more devstack\nand we\u0027ll just s/apex/openstack at that point.",
+      "parentUuid": "72996eef_a74ce50d",
+      "range": {
+        "startLine": 1406,
+        "startChar": 21,
+        "endLine": 1406,
+        "endChar": 25
+      },
+      "revId": "3c197cd1aed49e8d621cbd2eb3e336e40a04cc82",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3f33911_193cf2be",
         "filename": "jjb/integration/integration-templates.yaml",
         "patchSetId": 31
@@ -178,6 +328,24 @@
     },
     {
       "key": {
+        "uuid": "6047d28e_a612eb6a",
+        "filename": "jjb/integration/integration-templates.yaml",
+        "patchSetId": 31
+      },
+      "lineNbr": 1510,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-10-10T23:13:23Z",
+      "side": 1,
+      "message": "good question, but I\u0027ve forgotten why I ended up this\nway. I remember having some big troubles in the beginning\nwhen I was figuring out all the things I did or didn\u0027t\nneed between the templates.\n\nI can play with it again to figure out why.",
+      "parentUuid": "c3f33911_193cf2be",
+      "revId": "3c197cd1aed49e8d621cbd2eb3e336e40a04cc82",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4da00c61_9af97c16",
         "filename": "jjb/netvirt/netvirt-csit-multi-apex.yaml",
         "patchSetId": 31
@@ -189,6 +357,24 @@
       "writtenOn": "2018-10-09T01:08:58Z",
       "side": 1,
       "message": "do these need to be new vars? Seems like they do the same as the existing openstack_* vars, just need to be set as they are different.",
+      "revId": "3c197cd1aed49e8d621cbd2eb3e336e40a04cc82",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "56b63d16_1fdb25b4",
+        "filename": "jjb/netvirt/netvirt-csit-multi-apex.yaml",
+        "patchSetId": 31
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-10-10T23:13:23Z",
+      "side": 1,
+      "message": "I can name these whatever. they are only going to be\nhere and in the integration-templates.yaml file.\n\nThink it\u0027s better to make them be like:\n\nodl_system_flavor\nopenstack_system_flavor\nopenstack_system2_flavor\n\netc?",
+      "parentUuid": "4da00c61_9af97c16",
       "revId": "3c197cd1aed49e8d621cbd2eb3e336e40a04cc82",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
