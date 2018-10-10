@@ -72,6 +72,7 @@
                     --slave "/usr/bin/javah" "javah" "/opt/jdk-{{openjdk11_version}}/bin/javah" \
                     --slave "/usr/bin/javap" "javap" "/opt/jdk-{{openjdk11_version}}/bin/javap" \
                     --slave "/usr/bin/javaws" "javaws" "/opt/jdk-{{openjdk11_version}}/bin/javaws"'
+          become: true
     - name: Install Cassandra Server
       block:
         - name: 'Fetch Cassandra Server to /tmp/apache-cassandra-{{cassandra_version}}-bin.tar.gz'
