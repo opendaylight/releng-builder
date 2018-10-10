@@ -76,10 +76,7 @@ do
     --run-command 'sudo echo "MTU=\"1458\"" >> /etc/sysconfig/network-scripts/ifcfg-eth0' \
     --run-command 'sudo echo "MTU=\"1458\"" >> /etc/sysconfig/network-scripts/ifcfg-br-int' \
     --run-command 'sudo echo "MTU=\"1458\"" >> /etc/sysconfig/network-scripts/ifcfg-ovs-system' \
-    --run-command "sudo crudini --set /etc/selinux/config '' SELINUX permissive" \
-    --run-command "sudo iptables -I INPUT -p udp -m multiport --dports 4789,9876,12345 -j ACCEPT" \
-    --run-command "sudo iptables -I INPUT -p tcp --dport 12345 -j ACCEPT" \
-    --run-command "sudo iptables-save"
+    --run-command "sudo crudini --set /etc/selinux/config '' SELINUX permissive"
 done
 
 popd
