@@ -42,7 +42,7 @@ if [[ "${PATCHES_TO_BUILD}" == *topic* ]]; then
     TOPIC="${PATCHES_TO_BUILD#*=}"
     echo "Create topic ${TOPIC} patch list"
     PATCHES_TO_BUILD=""
-    read -ra PROJECT_LIST <<< "${BUILD_ORDER}"
+    read -ra PROJECT_LIST <<< "${BUILD_ORDER} integration/distribution"
     for PROJECT in "${PROJECT_LIST[@]}"; do
         # get all patches number for a topic for a given project
         IFS=$'\n' read -rd '' -a GERRIT_PATCH_LIST <<< "$(ssh -p 29418 jenkins-$SILO@git.opendaylight.org gerrit query status:open topic:${TOPIC} project:${PROJECT} \
