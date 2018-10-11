@@ -15,11 +15,16 @@
     stream:
       - neon:
           branch: 'master'
+          trigger-jobs: '{project}-merge-{stream}'
+          karaf-version: 'odl'
+          # yamllint disable-line rule:line-length
+          repo-url: 'mvn:org.opendaylight.tsdr/features-tsdr//xml/features'
       - fluorine:
           branch: 'stable/fluorine'
           trigger-jobs: '{project}-merge-{stream}'
+          karaf-version: 'odl'
           # yamllint disable-line rule:line-length
-          repo-url: 'mvn:org.opendaylight.tsdr/features-tsdr/1.6.0-SNAPSHOT/xml/features'
+          repo-url: 'mvn:org.opendaylight.tsdr/features-tsdr//xml/features'
       - oxygen:
           branch: 'stable/oxygen'
 
