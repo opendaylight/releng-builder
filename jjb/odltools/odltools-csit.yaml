@@ -1,0 +1,23 @@
+---
+- project:
+    name: odltools-csit
+    jobs:
+      - inttest-csit-1node
+      - inttest-csit-verify-1node
+
+    project: odltools
+    tools_system_count: 0
+
+    functionality:
+      - 'upstream'
+      - 'gate'
+
+    stream:
+      - neon:
+          branch: 'master'
+      - fluorine:
+          branch: 'stable/fluorine'
+
+    install:
+      - all:
+          scope: 'all'
