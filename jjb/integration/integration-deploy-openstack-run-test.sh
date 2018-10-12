@@ -459,7 +459,7 @@ EOF
 global
   daemon
   group  haproxy
-  log  /dev/log local0
+  log  /dev/log local0 debug
   maxconn  20480
   pidfile  /tmp/haproxy.pid
   ssl-default-bind-ciphers  !SSLv2:kEECDH:kRSA:kEDH:kPSK:+3DES:!aNULL:!eNULL:!MD5:!EXP:!RC4:!SEED:!IDEA:!DES
@@ -1211,6 +1211,10 @@ rebot --output ${WORKSPACE}/output.xml --log log_full.html --report report.html 
 echo "Examining the files in data/log and checking file size"
 ssh ${ODL_SYSTEM_IP} "ls -altr /tmp/${BUNDLEFOLDER}/data/log/"
 ssh ${ODL_SYSTEM_IP} "du -hs /tmp/${BUNDLEFOLDER}/data/log/*"
+
+mkdir -p ${WORKSPACE}/archives
+ssh ${HA_PROXY_IP} "sudo journalctl -u haproxy > /tmp/haproxy.log"
+scp ${HA_PROXY_IP} /tmp/haproxy.log ${WORKSPACE}/archives/
 
 echo "Tests Executed"
 printf "Total elapsed time: %s, stacking time: %s\n" "$(timer $totaltmr)" "${stacktime}"
