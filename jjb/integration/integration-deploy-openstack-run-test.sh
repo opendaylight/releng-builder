@@ -450,6 +450,16 @@ function configure_haproxy_for_neutron_requests() {
     # shellcheck disable=SC2206
     local -r odl_ips=(${2//,/ })
 
+    # create external health check script
+    cat > ${WORKSPACE}/health_check.sh << EOF
+RESP=$( curl --user admin:admin -sL -w %{http_code} http://\${HAPROXY_SERVER_ADDR}:8181/diagstatus -o /dev/null )
+if [ $RESP == "200" ]; then
+        exit 0
+else
+        exit 1
+fi
+EOF
+
     cat > ${WORKSPACE}/install_ha_proxy.sh<< EOF
 sudo systemctl stop firewalld
 sudo yum -y install policycoreutils-python haproxy
@@ -459,7 +469,7 @@ EOF
 global
   daemon
   group  haproxy
-  log  /dev/log local0
+  log  /dev/log local0 debug
   maxconn  20480
   pidfile  /tmp/haproxy.pid
   ssl-default-bind-ciphers  !SSLv2:kEECDH:kRSA:kEDH:kPSK:+3DES:!aNULL:!eNULL:!MD5:!EXP:!RC4:!SEED:!IDEA:!DES
@@ -470,6 +480,7 @@ global
 
 defaults
   log  global
+  option  log-health-checks
   maxconn  4096
   mode  tcp
   retries  3
@@ -482,10 +493,13 @@ defaults
 
 listen opendaylight
   bind ${haproxy_ip}:8181 transparent
+  balance source
   mode http
   http-request set-header X-Forwarded-Proto https if { ssl_fc }
   http-request set-header X-Forwarded-Proto http if !{ ssl_fc }
-  option httpchk GET /diagstatus
+  #option httpchk GET /diagstatus
+  option external-check
+  external-check command /tmp/health_check.sh
   option httplog
 EOF
 
@@ -499,11 +513,14 @@ EOF
 
 listen opendaylight_ws
   bind ${haproxy_ip}:8185 transparent
+  balance source
   mode http
   timeout connect 5s
   timeout client 25s
   timeout server 25s
   timeout tunnel 3600s
+  option external-check
+  external-check command /tmp/health_check.sh
 EOF
 
     odlindex=1
@@ -511,6 +528,9 @@ EOF
         echo "  server opendaylight-ws-${odlindex} ${odlip}:8185 check fall 5 inter 2000 rise 2" >> ${WORKSPACE}/haproxy.cfg
         odlindex=$((odlindex+1))
     done
+
+    echo "Dump health_check.sh"
+    cat ${WORKSPACE}/health_check.sh
 
     echo "Dump haproxy.cfg"
     cat ${WORKSPACE}/haproxy.cfg
@@ -529,6 +549,7 @@ EOF
     scp ${WORKSPACE}/install_ha_proxy.sh ${haproxy_ip}:/tmp
     ${SSH} ${haproxy_ip} "sudo bash /tmp/install_ha_proxy.sh"
     scp ${WORKSPACE}/haproxy.cfg ${haproxy_ip}:/tmp
+    scp ${WORKSPACE}/health_check.sh ${haproxy_ip}:/tmp
     scp ${WORKSPACE}/deploy_ha_proxy.sh ${haproxy_ip}:/tmp
     ${SSH} ${haproxy_ip} "sudo bash /tmp/deploy_ha_proxy.sh"
 } # configure_haproxy_for_neutron_requests()
