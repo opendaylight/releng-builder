@@ -459,7 +459,7 @@ EOF
 global
   daemon
   group  haproxy
-  log  /dev/log local0
+  log  /dev/log local0 debug
   maxconn  20480
   pidfile  /tmp/haproxy.pid
   ssl-default-bind-ciphers  !SSLv2:kEECDH:kRSA:kEDH:kPSK:+3DES:!aNULL:!eNULL:!MD5:!EXP:!RC4:!SEED:!IDEA:!DES
@@ -470,6 +470,7 @@ global
 
 defaults
   log  global
+  option  log-health-checks
   maxconn  4096
   mode  tcp
   retries  3
@@ -482,6 +483,7 @@ defaults
 
 listen opendaylight
   bind ${haproxy_ip}:8181 transparent
+  balance source
   mode http
   http-request set-header X-Forwarded-Proto https if { ssl_fc }
   http-request set-header X-Forwarded-Proto http if !{ ssl_fc }
@@ -499,6 +501,7 @@ EOF
 
 listen opendaylight_ws
   bind ${haproxy_ip}:8185 transparent
+  balance source
   mode http
   timeout connect 5s
   timeout client 25s
