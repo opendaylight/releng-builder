@@ -234,7 +234,7 @@
       # NB: This will need to be updated as old builds expire
       - inject:
           # yamllint disable-line rule:line-length
-          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/org/opendaylight/integration/integration/distribution/karaf/0.10.0-SNAPSHOT/karaf-0.10.0-20180925.093600-5.zip'
+          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/org/opendaylight/integration/integration/distribution/karaf/0.10.0-SNAPSHOT/karaf-0.10.0-20181011.124523-10.zip'
       - shell: !include-raw-escape: build-rpm.sh
       - install-test-uninstall-rpm
 
@@ -344,7 +344,7 @@
       # NB: This will need to be updated as old builds expire
       - inject:
           # yamllint disable-line rule:line-length
-          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/org/opendaylight/integration/integration/distribution/karaf/0.10.0-SNAPSHOT/karaf-0.10.0-20180925.093600-5.zip'
+          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/org/opendaylight/integration/integration/distribution/karaf/0.10.0-SNAPSHOT/karaf-0.10.0-20181011.124523-10.zip'
       - shell: !include-raw-escape: build-rpm.sh
       - install-test-uninstall-rpm
 
