@@ -1,0 +1,19 @@
+---
+- project:
+    name: odltools-patch-test
+    jobs:
+      - inttest-patch-test
+
+    project: odltools
+    jdk: openjdk8
+
+    stream:
+      - neon:
+          branch: 'master'
+      - fluorine:
+          branch: 'stable/fluorine'
+
+    feature:
+      - current:
+          csit-list: >
+              odltools-csit-1node-gate-all-{stream}
