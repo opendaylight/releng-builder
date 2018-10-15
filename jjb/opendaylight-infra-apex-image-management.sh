@@ -112,7 +112,7 @@ openstack image create \
 # clean out any non ".new" OPNFV - apex images. In the case of a previously failed
 # or aborted apex management job, we can end up with multiple images with the same
 # name so being thorough here.
-openstack image list | egrep 'OPNFV - apex' | egrep -v 'new' | awk '{print "openstack image delete",$2}' | sh || true
+openstack image list | egrep 'OPNFV - apex' | egrep -v 'new' | awk '{print "openstack image delete",$2}' | sh
 
 openstack image set --name "$CONTROLLER_IMAGE_NAME" "$CONTROLLER_IMAGE_NAME.new"
 openstack image set --tag "Date Uploaded: $(date)" "$CONTROLLER_IMAGE_NAME"
