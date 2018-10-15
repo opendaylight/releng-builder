@@ -126,7 +126,7 @@ for suite in ${SUITES}; do
     suite_name="$(basename ${suite} | cut -d. -f1)"
     log_name="${suite_index}_${suite_name}"
     pybot -N ${log_name} \
-    -c critical -e exclude -e skip_if_${DISTROSTREAM} \
+    -c critical -e exclude -e skip_if_${DISTROSTREAM} -e NON_GATE \
     --log log_${log_name}.html --report report_${log_name}.html --output output_${log_name}.xml \
     --removekeywords wuks \
     --removekeywords name:SetupUtils.Setup_Utils_For_Setup_And_Teardown \
@@ -141,7 +141,6 @@ for suite in ${SUITES}; do
     -v DEFAULT_LINUX_PROMPT_STRICT:]\$ \
     -v DEFAULT_USER:${USER} \
     -v ENABLE_ITM_DIRECT_TUNNELS:${ENABLE_ITM_DIRECT_TUNNELS} \
-    -v GATE_JOB:${GATE_JOB} \
     -v HA_PROXY_IP:$ODL_SYSTEM_IP \
     -v JDKVERSION:${JDKVERSION} \
     -v JENKINS_WORKSPACE:${WORKSPACE} \
