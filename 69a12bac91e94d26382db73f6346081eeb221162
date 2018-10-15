@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e334425e_0c242ac8",
+        "filename": "jjb/packaging/test-ansible-rpm-custom-config.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2018-10-15T23:17:11Z",
+      "side": 1,
+      "message": "Maybe should do a systemctl stop opendaylight before this, to close the ODL process cleanly",
+      "revId": "69a12bac91e94d26382db73f6346081eeb221162",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6d8b9361_77ed64f0",
+        "filename": "jjb/packaging/test-ansible-rpm-custom-config.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2018-10-15T23:17:11Z",
+      "side": 1,
+      "message": "Do you know of something yum remove leaves behind that might cause problems? It might be a better test not to do this, so if there\u0027s a problem with yum remove we catch it.",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 29
+      },
+      "revId": "69a12bac91e94d26382db73f6346081eeb221162",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ecbd388_1fce5e71",
+        "filename": "jjb/packaging/test-ansible-rpm-custom-config.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1723
+      },
+      "writtenOn": "2018-10-15T23:17:11Z",
+      "side": 1,
+      "message": "Maybe should move to 9 or 10, but not blocking",
+      "range": {
+        "startLine": 10,
+        "startChar": 79,
+        "endLine": 10,
+        "endChar": 80
+      },
+      "revId": "69a12bac91e94d26382db73f6346081eeb221162",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
