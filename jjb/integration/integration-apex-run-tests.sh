@@ -144,6 +144,7 @@ for suite in ${SUITES}; do
     -v HA_PROXY_IP:$ODL_SYSTEM_IP \
     -v JDKVERSION:${JDKVERSION} \
     -v JENKINS_WORKSPACE:${WORKSPACE} \
+    -v KARAF_LOG:/opt/opendaylight/data/log/karaf.log \
     -v NEXUSURL_PREFIX:${NEXUSURL_PREFIX} \
     -v NUM_ODL_SYSTEM:${NUM_ODL_SYSTEM} \
     -v NUM_OS_SYSTEM:${NUM_OPENSTACK_SYSTEM} \
