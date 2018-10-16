@@ -3,7 +3,8 @@
     name: odl-maven-jobs
 
     jobs:
-      - gerrit-maven-clm
+      - gerrit-maven-clm:
+          nexus-iq-namespace: odl-
 
       # TODO: Figure out what's wrong with the gerrit-maven-merge job.
       # - gerrit-maven-merge:
