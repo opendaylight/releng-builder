@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "059b6076_7fc2f542",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-10-16T18:29:50Z",
+      "side": 1,
+      "message": "we\u0027ll see. testing in sandbox now, but I did read that it\nworks like this.",
+      "parentUuid": "91c9c2b2_94c0b0f9",
+      "revId": "544181a5409b5797de094b6c494d3309e351e2f1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd6ee04f_a64ad1eb",
         "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "6860be09_ddb8b64c",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-10-16T18:29:50Z",
+      "side": 1,
+      "message": "I was thinking that we don\u0027t want to wait for 25s for\nhaproxy to realize ODL was down, while neutron is waiting,\nfinally to be switched over.\n\nbtw, when debugging some of these 3node failures I was seeing\n10s read timeouts in neutron server logs. I wonder if that\u0027s\njust for a single request and then neutron will have multiple\nretries per request? if so, then no problem, but if neutron\nis giving up after 10s, then we need haproxy to figure it out\nsooner than that, right?",
+      "parentUuid": "dd6ee04f_a64ad1eb",
+      "range": {
+        "startLine": 487,
+        "startChar": 18,
+        "endLine": 487,
+        "endChar": 20
+      },
+      "revId": "544181a5409b5797de094b6c494d3309e351e2f1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f00da11_22ed5d3b",
         "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
         "patchSetId": 2
@@ -53,6 +95,24 @@
       "writtenOn": "2018-10-16T18:17:02Z",
       "side": 1,
       "message": "should put this over in common-functions.sh with all the other logging.",
+      "revId": "544181a5409b5797de094b6c494d3309e351e2f1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "11fe2a95_b7916e76",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 1209,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-10-16T18:29:50Z",
+      "side": 1,
+      "message": "yes, I will. This is just my quick and dirty way to see if\nthis really does give us what we want. If it works, I\u0027ll\nget it moved to common functions (in this patch). I\u0027ll -2\nfor now.",
+      "parentUuid": "4f00da11_22ed5d3b",
       "revId": "544181a5409b5797de094b6c494d3309e351e2f1",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
