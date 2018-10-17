@@ -5,12 +5,14 @@
     jobs:
       - netvirt-job-reports
     report-jobnames: >
+        netvirt-csit-1node-0cmb-1ctl-2cmp-openstack-queens-upstream-stateful-neon
+        netvirt-csit-1node-0cmb-1ctl-2cmp-openstack-queens-upstream-stateful-snat-conntrack-neon
         netvirt-csit-1node-0cmb-1ctl-2cmp-openstack-queens-upstream-stateful-fluorine
         netvirt-csit-1node-0cmb-1ctl-2cmp-openstack-queens-upstream-stateful-snat-conntrack-fluorine
         netvirt-csit-1node-0cmb-1ctl-2cmp-openstack-queens-upstream-stateful-oxygen
         netvirt-csit-1node-0cmb-1ctl-2cmp-openstack-queens-upstream-stateful-snat-conntrack-oxygen
     report-logurl: 'https://logs.opendaylight.org/releng/vex-yul-odl-jenkins-1'
-    report-numjobs: 50
+    report-numjobs: 100
     report-path: '/tmp/jobreports'
 
 - job-template:
