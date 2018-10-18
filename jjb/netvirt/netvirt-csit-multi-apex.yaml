@@ -5,8 +5,13 @@
       - inttest-csit-apex
 
     project: 'netvirt'
-    stream: 'oxygen'
-    branch: 'stable/oxygen'
+    stream:
+      - neon:
+          branch: 'master'
+      - fluorine:
+          branch: 'stable/fluorine'
+      - oxygen:
+          branch: 'stable/oxygen'
     testplan: '{project}-{topology}-openstack.txt'
 
     test-suites: 'openstack/connectivity/l2.robot
