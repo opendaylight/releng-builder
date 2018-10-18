@@ -40,22 +40,6 @@
     staging-profile-id: a67da0ffbb1ba
 
 - project:
-    name: netvirt-vpp
-    jobs:
-      - gerrit-maven-verify
-
-    stream: vpp
-    project: 'netvirt'
-    project-name: 'netvirt'
-    branch: 'topic/vpp'
-    karaf-version: karaf3
-    distribution_branch: 'master'
-    mvn-settings: 'netvirt-settings'
-    mvn-opts: '-Xmx2048m -XX:MaxPermSize=512m'
-    dependencies:
-    email-upstream: '[netvirt]'
-
-- project:
     name: netvirt-sonar
     jobs:
       - gerrit-maven-sonar
