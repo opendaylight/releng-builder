@@ -17,8 +17,8 @@ virtualenv --quiet "/tmp/v/odltools"
 source /tmp/v/odltools/bin/activate
 pip install odltools
 mkdir $REPORT_PATH
-python -m odltools csit reports --numjobs $NUM_JOBS --path $REPORT_PATH --url $LOG_URL --jobnames $JOB_NAMES
-python -m odltools csit exceptions --numjobs $NUM_JOBS --path $REPORT_PATH --url $LOG_URL --jobnames $JOB_NAMES
+python -m odltools csit reports --numjobs $NUM_JOBS --path $REPORT_PATH --url $LOG_URL --jobnames $JOB_NAMES || true
+python -m odltools csit exceptions --numjobs $NUM_JOBS --path $REPORT_PATH --url $LOG_URL --jobnames $JOB_NAMES || true
 mkdir -p $WORKSPACE/archives
-cp $REPORT_PATH/*.txt $WORKSPACE/archives
+cp $REPORT_PATH/*.txt $WORKSPACE/archives || true
 exit 0
