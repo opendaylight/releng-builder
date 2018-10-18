@@ -45,6 +45,30 @@
       "revId": "9adebb37c349831f72965e7ed6c653acbadb4b91",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c0e24695_3f099847",
+        "filename": "jjb/netvirt/quagga-build.sh",
+        "patchSetId": 18
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2018-10-18T09:04:39Z",
+      "side": 1,
+      "message": "Sorry, dint get the comment above. \n\nIMO, I\u0027m invoking the script provided in the zrpcd repo. We are already doing pushd in Line 18. How is `cd $(pwd) \u0026\u0026 sudo ./pkgsrc/...` going to make a diff. Do we need to fix any relative paths in the scripts.",
+      "parentUuid": "62d2e93a_48cbec2d",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 72
+      },
+      "revId": "9adebb37c349831f72965e7ed6c653acbadb4b91",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
