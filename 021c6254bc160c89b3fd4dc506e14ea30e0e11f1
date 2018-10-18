@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e2fedfa3_38d46d8b",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 11
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-10-18T23:10:07Z",
+      "side": 1,
+      "message": "ack, but this file is not going to be part of the final patch. doing an external health check is not available in\nhaproxy 1.5 which is what we have. it was introduced in\n1.6+",
+      "parentUuid": "0823f430_d6417a3d",
+      "range": {
+        "startLine": 455,
+        "startChar": 0,
+        "endLine": 455,
+        "endChar": 4
+      },
+      "revId": "021c6254bc160c89b3fd4dc506e14ea30e0e11f1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c1b12a2_b216a031",
         "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
         "patchSetId": 11
@@ -36,6 +60,24 @@
       "writtenOn": "2018-10-18T22:12:14Z",
       "side": 1,
       "message": "does it matter if a exit code is returned",
+      "revId": "021c6254bc160c89b3fd4dc506e14ea30e0e11f1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2d84b2d2_d7fbdc4e",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 11
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-10-18T23:10:07Z",
+      "side": 1,
+      "message": "yeah. that\u0027s how the healthcheck knows if it passed or\nfailed. unless you say exit 0 is going to happen implicitly\nanyway when the script ends.",
+      "parentUuid": "6c1b12a2_b216a031",
       "revId": "021c6254bc160c89b3fd4dc506e14ea30e0e11f1",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "0dea53db_f207ed5a",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 11
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-10-18T23:10:07Z",
+      "side": 1,
+      "message": "this is saying to use the server at port 8185 for this\nlisten (opendaylight_ws) section, but do send it\u0027s \nhealth\"check\" stuff on port 8181.\n\nmy first thought was to use that external script (you\nsaw it above) and that would explicitly just go to 8181\nand can be used for any server, but when that failed\nI stumbled upon this option to use a different port\nfor the health check messages.",
+      "parentUuid": "cdf36779_cd99712e",
+      "revId": "021c6254bc160c89b3fd4dc506e14ea30e0e11f1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "094ec3dd_f0d8eb86",
         "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
         "patchSetId": 11
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "7599d50a_eb0a0e85",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 11
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-10-18T23:10:07Z",
+      "side": 1,
+      "message": "right, but anyway the external script is going away so this\npart will too.",
+      "parentUuid": "094ec3dd_f0d8eb86",
+      "revId": "021c6254bc160c89b3fd4dc506e14ea30e0e11f1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29e2b177_ab534962",
         "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
         "patchSetId": 11
@@ -87,6 +165,24 @@
       "writtenOn": "2018-10-18T22:12:14Z",
       "side": 1,
       "message": "where do you call the health_check.sh to run?",
+      "revId": "021c6254bc160c89b3fd4dc506e14ea30e0e11f1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e930a219_aac00a06",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 11
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-10-18T23:10:07Z",
+      "side": 1,
+      "message": "it\u0027s not here in ps10. but you can see how it\u0027s supposed\nto be used in ps9.\n\nanyway, obviously this patch set was not in sync with itself.\n\n:)",
+      "parentUuid": "29e2b177_ab534962",
       "revId": "021c6254bc160c89b3fd4dc506e14ea30e0e11f1",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
