@@ -137,6 +137,24 @@
     },
     {
       "key": {
+        "uuid": "993eb690_23a67cc2",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 11
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-10-19T15:12:07Z",
+      "side": 1,
+      "message": "this line is saying this:\n\nuse a server with ${odlip}:8185 to loadbalance with\n\nBUT, in order to \"check\" if that server @ :8185 is healthy,\nsend the healthcheck request on port 8181. The listen\nsection tells it to send that request to /diagstatus\n\nwithout the \"port 8181\" piece, the healthcheck request\nwould go to port 8185 and 8185 does not respond to\n/diagstatus",
+      "parentUuid": "b0f34757_4411d09a",
+      "revId": "021c6254bc160c89b3fd4dc506e14ea30e0e11f1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "094ec3dd_f0d8eb86",
         "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
         "patchSetId": 11
