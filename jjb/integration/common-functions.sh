@@ -420,6 +420,8 @@ EOF
     mv /tmp/changes.txt ${WORKSPACE}/archives
     mv ${WORKSPACE}/rabbit.txt ${WORKSPACE}/archives
     mv ${WORKSPACE}/haproxy.cfg ${WORKSPACE}/archives
+    ssh ${OPENSTACK_HAPROXY_1_IP} "sudo journalctl -u haproxy > /tmp/haproxy.log"
+    scp ${OPENSTACK_HAPROXY_1_IP}:/tmp/haproxy.log ${WORKSPACE}/archives/
 
     sleep 5
     # FIXME: Do not create .tar and gzip before copying.
