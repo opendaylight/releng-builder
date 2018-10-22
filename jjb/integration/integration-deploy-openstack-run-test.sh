@@ -484,6 +484,7 @@ defaults
 listen opendaylight
   bind ${haproxy_ip}:8181 transparent
   mode http
+  balance source
   http-request set-header X-Forwarded-Proto https if { ssl_fc }
   http-request set-header X-Forwarded-Proto http if !{ ssl_fc }
   option httpchk GET /diagstatus
@@ -501,6 +502,7 @@ EOF
 listen opendaylight_ws
   bind ${haproxy_ip}:8185 transparent
   mode http
+  balance source
   timeout connect 5s
   timeout client 25s
   timeout server 25s
