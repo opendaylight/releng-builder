@@ -507,12 +507,14 @@ listen opendaylight_ws
   timeout client 25s
   timeout server 25s
   timeout tunnel 3600s
+  option httpchk GET /data-change-event-subscription/neutron:neutron/neutron:ports/datastore=OPERATIONAL/scope=SUBTREE
+  http-check expect status 000
   option httpchk GET /diagstatus
 EOF
 
     odlindex=1
     for odlip in ${odl_ips[*]}; do
-        echo "  server opendaylight-ws-${odlindex} ${odlip}:8185 check port 8181 fall 5 inter 2000 rise 2" >> ${WORKSPACE}/haproxy.cfg
+        echo "  server opendaylight-ws-${odlindex} ${odlip}:8185 check fall 5 inter 2000 rise 2" >> ${WORKSPACE}/haproxy.cfg
         odlindex=$((odlindex+1))
     done
 
