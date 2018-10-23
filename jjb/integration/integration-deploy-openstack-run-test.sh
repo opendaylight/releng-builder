@@ -476,15 +476,14 @@ defaults
   retries  3
   timeout  http-request 10s
   timeout  queue 2m
-  timeout  connect 10s
-  timeout  client 2m
-  timeout  server 2m
-  timeout  check 10s
+  timeout  connect 5s
+  timeout  client 30s
+  timeout  server 30s
+  timeout  check 3s
 
 listen opendaylight
   bind ${haproxy_ip}:8181 transparent
   mode http
-  balance source
   http-request set-header X-Forwarded-Proto https if { ssl_fc }
   http-request set-header X-Forwarded-Proto http if !{ ssl_fc }
   option httpchk GET /diagstatus
@@ -502,17 +501,17 @@ EOF
 listen opendaylight_ws
   bind ${haproxy_ip}:8185 transparent
   mode http
-  balance source
-  timeout connect 5s
-  timeout client 25s
-  timeout server 25s
+  timeout connect 3s
+  timeout client 5s
+  timeout server 5s
   timeout tunnel 3600s
-  option httpchk GET /diagstatus
+  option httpchk GET /data-change-event-subscription/neutron:neutron/neutron:ports/datastore=OPERATIONAL/scope=SUBTREE HTTP/1.1\r\nHost:\ ws.opendaylight.org\r\nConnection:\ Upgrade\r\nUpgrade:\ websocket\r\nSec-WebSocket-Key:\ haproxy\r\nSec-WebSocket-Version:\ 13\r\nSec-WebSocket-Protocol:\ echo-protocol
+  http-check expect status 101
 EOF
 
     odlindex=1
     for odlip in ${odl_ips[*]}; do
-        echo "  server opendaylight-ws-${odlindex} ${odlip}:8185 check port 8181 fall 5 inter 2000 rise 2" >> ${WORKSPACE}/haproxy.cfg
+        echo "  server opendaylight-ws-${odlindex} ${odlip}:8185 check fall 3 inter 1000 rise 2" >> ${WORKSPACE}/haproxy.cfg
         odlindex=$((odlindex+1))
     done
 
