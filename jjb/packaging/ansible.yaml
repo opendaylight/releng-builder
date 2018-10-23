@@ -92,9 +92,8 @@
 
     builders:
       - shell: !include-raw: setup-ansible-deb.sh
-      - shell: !include-raw: test-ansible-deb.sh
-      - shell: !include-raw: test-ansible-odl-user.sh
-      - shell: !include-raw: test-odl-logs.sh
+      - shell: !include-raw: test-ansible-deb-default-config.sh
+      - shell: !include-raw: test-ansible-deb-custom-config.sh
 
     triggers:
       - timed: '@daily'
