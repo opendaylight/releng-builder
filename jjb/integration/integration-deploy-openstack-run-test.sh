@@ -507,12 +507,13 @@ listen opendaylight_ws
   timeout client 25s
   timeout server 25s
   timeout tunnel 3600s
-  option httpchk GET /diagstatus
+  option httpchk GET /data-change-event-subscription/neutron:neutron/neutron:ports/datastore=OPERATIONAL/scope=SUBTREE HTTP/1.1\r\nHost:\ ws.opendaylight.org\r\nConnection:\ Upgrade\r\nUpgrade:\ websocket\r\nSec-WebSocket-Key:\ haproxy\r\nSec-WebSocket-Version:\ 13\r\nSec-WebSocket-Protocol:\ echo-protocol
+  http-check expect status 101
 EOF
 
     odlindex=1
     for odlip in ${odl_ips[*]}; do
-        echo "  server opendaylight-ws-${odlindex} ${odlip}:8185 check port 8181 fall 5 inter 2000 rise 2" >> ${WORKSPACE}/haproxy.cfg
+        echo "  server opendaylight-ws-${odlindex} ${odlip}:8185 check fall 5 inter 2000 rise 2" >> ${WORKSPACE}/haproxy.cfg
         odlindex=$((odlindex+1))
     done
 
