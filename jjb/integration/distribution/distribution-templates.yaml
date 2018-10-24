@@ -11,6 +11,8 @@
 
     java-version: openjdk8
     mvn-version: mvn35
+    csit-gate-list: ''
+    voting: 'true'
 
     #####################
     # Job Configuration #
@@ -105,6 +107,18 @@
       - integration-upload-distribution:
           dist-pom: distribution/pom.xml
       - distribution-check-bootup
+
+      - trigger-builds:
+          - project: '{csit-gate-list}'
+            block: true
+            predefined-parameters: |
+              BUNDLE_URL=$BUNDLE_URL
+              KARAF_VERSION=$KARAF_VERSION
+          - skip-vote:
+            successful: '{voting}'
+            failed: '{voting}'
+            unstable: '{voting}'
+            notbuilt: '{voting}'
 
     publishers:
       - email-notification:
