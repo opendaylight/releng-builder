@@ -13,6 +13,10 @@
       - gerrit-tox-verify
       - odl-maven-jobs
 
+    csit-gate-list: 'netvirt-csit-1node-0cmb-1ctl-2cmp-apex-queens-gate-snat-conntrack-{stream}'
+    block_on_csit: true
+    failure-threshold: 'UNSTABLE'
+
     stream:
       - neon:
           branch: 'master'

@@ -11,6 +11,9 @@
 
     java-version: openjdk8
     mvn-version: mvn35
+    csit-gate-list: ''
+    block_on_csit: false
+    failure-threshold: 'never'
 
     #####################
     # Job Configuration #
@@ -105,6 +108,15 @@
       - integration-upload-distribution:
           dist-pom: distribution/pom.xml
       - distribution-check-bootup
+
+      - trigger-builds:
+          - project: '{csit-gate-list}'
+            block: '{obj:block_on_csit}'
+            block-thresholds:
+              failure-threshold: '{failure-threshold}'
+            predefined-parameters: |
+              BUNDLE_URL=$BUNDLE_URL
+              KARAF_VERSION=$KARAF_VERSION
 
     publishers:
       - email-notification:
