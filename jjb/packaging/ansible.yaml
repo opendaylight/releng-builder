@@ -24,6 +24,9 @@
     properties:
       - opendaylight-infra-properties:
           build-days-to-keep: 7
+      - inject:
+          properties-content:
+            UPGRADE_URL=https://git.opendaylight.org/gerrit/gitweb?p=integration/packaging.git;a=blob_plain;f=packages/rpm/example_repo_configs/opendaylight-9-devel.repo
 
     parameters:
       - opendaylight-infra-parameters:
@@ -47,6 +50,7 @@
       - shell: !include-raw: setup-ansible-rpm.sh
       - shell: !include-raw: test-ansible-rpm-default-config.sh
       - shell: !include-raw: test-ansible-rpm-custom-config.sh
+      - shell: !include-raw: test-rpm-upgrade.sh
 
     triggers:
       - timed: '@daily'
