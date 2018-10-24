@@ -124,6 +124,14 @@
                openstack/tempest/tempest.robot netvirt/elan/elan.robot).
 
 - parameter:
+    name: csit-gate-list
+    parameters:
+      - string:
+          name: CSIT_GATE_LIST
+          default: ''
+          description: 'List of CSIT jobs. Used in distribution-check to trigger csit with the produced distribution'
+
+- parameter:
     name: integration-test-options
     parameters:
       - string:

@@ -45,6 +45,7 @@
           karaf-version: '{karaf-version}'
       - maven-exec:
           maven-version: '{mvn-version}'
+      - csit-gate-list: '{csit-gate-list}'
 
     scm:
       - integration-gerrit-scm:
@@ -105,6 +106,13 @@
       - integration-upload-distribution:
           dist-pom: distribution/pom.xml
       - distribution-check-bootup
+
+      - trigger-builds:
+          - project: '{csit-gate-list}'
+            block: true
+            predefined-parameters: |
+              BUNDLE_URL=$BUNDLE_URL
+              KARAF_VERSION=$KARAF_VERSION
 
     publishers:
       - email-notification:
