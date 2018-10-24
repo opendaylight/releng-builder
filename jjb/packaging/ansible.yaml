@@ -47,6 +47,7 @@
       - shell: !include-raw: setup-ansible-rpm.sh
       - shell: !include-raw: test-ansible-rpm-default-config.sh
       - shell: !include-raw: test-ansible-rpm-custom-config.sh
+      - shell: !include-raw: test-rpm-upgrade.sh
 
     triggers:
       - timed: '@daily'
