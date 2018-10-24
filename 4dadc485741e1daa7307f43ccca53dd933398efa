@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6ab91251_1f8f48bd",
+        "filename": "jjb/netvirt/netvirt-dependencies.yaml",
+        "patchSetId": 19
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2018-10-24T03:09:30Z",
+      "side": 1,
+      "message": "Initially, this was designed because we had diff versions of the quagga (1,2,4,5) for each stream. Now looks like only version is what the script builds for the more recent streams. I\u0027ll need to confirm with what\u0027s required for the CSIT jobs which are pulling them in.",
+      "parentUuid": "5165cd22_136b6378",
+      "range": {
+        "startLine": 5,
+        "startChar": 33,
+        "endLine": 5,
+        "endChar": 39
+      },
+      "revId": "4dadc485741e1daa7307f43ccca53dd933398efa",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "304e59bc_68a5b968",
         "filename": "jjb/netvirt/netvirt-dependencies.yaml",
         "patchSetId": 19
@@ -36,6 +60,24 @@
       "writtenOn": "2018-10-19T00:40:26Z",
       "side": 1,
       "message": "is there a need for a branch or stream? this package should be build regardless of the branch right?",
+      "revId": "4dadc485741e1daa7307f43ccca53dd933398efa",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "22a88d29_0bc94cdc",
+        "filename": "jjb/netvirt/netvirt-dependencies.yaml",
+        "patchSetId": 19
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2018-10-24T03:09:30Z",
+      "side": 1,
+      "message": "response above.",
+      "parentUuid": "304e59bc_68a5b968",
       "revId": "4dadc485741e1daa7307f43ccca53dd933398efa",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "d2bad73c_d75c71ae",
+        "filename": "jjb/netvirt/netvirt-dependencies.yaml",
+        "patchSetId": 19
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2018-10-24T03:09:30Z",
+      "side": 1,
+      "message": "will fix in the next patch",
+      "parentUuid": "b28a4b51_a401b816",
+      "revId": "4dadc485741e1daa7307f43ccca53dd933398efa",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c1c28ab_ab70f97f",
         "filename": "jjb/netvirt/netvirt-dependencies.yaml",
         "patchSetId": 19
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "86529ac9_8621e321",
+        "filename": "jjb/netvirt/netvirt-dependencies.yaml",
+        "patchSetId": 19
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2018-10-24T03:09:30Z",
+      "side": 1,
+      "message": "yes, to deploy to nexus.",
+      "parentUuid": "6c1c28ab_ab70f97f",
+      "revId": "4dadc485741e1daa7307f43ccca53dd933398efa",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1b189b2_d1591521",
         "filename": "jjb/netvirt/netvirt-dependencies.yaml",
         "patchSetId": 19
@@ -87,6 +165,30 @@
       "writtenOn": "2018-10-19T00:40:26Z",
       "side": 1,
       "message": "looks like we could have a single job-template and make this a param also. So set stream (if really needed), distro and node in the project definition.",
+      "range": {
+        "startLine": 83,
+        "startChar": 26,
+        "endLine": 83,
+        "endChar": 36
+      },
+      "revId": "4dadc485741e1daa7307f43ccca53dd933398efa",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "89a01b7f_ac1a6a33",
+        "filename": "jjb/netvirt/netvirt-dependencies.yaml",
+        "patchSetId": 19
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2018-10-24T03:09:30Z",
+      "side": 1,
+      "message": "This is required to be built for each platform/flavor since we are build rpms/debs.",
+      "parentUuid": "f1b189b2_d1591521",
       "range": {
         "startLine": 83,
         "startChar": 26,
