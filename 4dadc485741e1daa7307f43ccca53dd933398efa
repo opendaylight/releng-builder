@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "86464fef_b8cab245",
+        "filename": "jjb/netvirt/netvirt-dependencies.yaml",
+        "patchSetId": 19
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-10-24T16:29:04Z",
+      "side": 1,
+      "message": "so today there is not difference in the streams so this doesn\u0027t add much. If there was a need to use something different, then in the stream section we would also need a value there to set the quagga branch version so that we would actually build a different package. I would vote to remove the stream stuff for now.\n\nBut then I think I would add a different value for ubuntu and centos if we think there are differences needed. Then we can collapse the template to a single template.",
+      "parentUuid": "2853ebb7_87895ce9",
+      "range": {
+        "startLine": 5,
+        "startChar": 33,
+        "endLine": 5,
+        "endChar": 39
+      },
+      "revId": "4dadc485741e1daa7307f43ccca53dd933398efa",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "304e59bc_68a5b968",
         "filename": "jjb/netvirt/netvirt-dependencies.yaml",
         "patchSetId": 19
@@ -202,6 +226,24 @@
     },
     {
       "key": {
+        "uuid": "7c66fdc2_9ec8b2a9",
+        "filename": "jjb/netvirt/netvirt-dependencies.yaml",
+        "patchSetId": 19
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-10-24T16:29:04Z",
+      "side": 1,
+      "message": "are they defaulted already to empty? would be better to remove this here for clarity if they are already the defaults.",
+      "parentUuid": "86529ac9_8621e321",
+      "revId": "4dadc485741e1daa7307f43ccca53dd933398efa",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1b189b2_d1591521",
         "filename": "jjb/netvirt/netvirt-dependencies.yaml",
         "patchSetId": 19
@@ -237,6 +279,30 @@
       "side": 1,
       "message": "This is required to be built for each platform/flavor since we are build rpms/debs.",
       "parentUuid": "f1b189b2_d1591521",
+      "range": {
+        "startLine": 83,
+        "startChar": 26,
+        "endLine": 83,
+        "endChar": 36
+      },
+      "revId": "4dadc485741e1daa7307f43ccca53dd933398efa",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "04351df2_4dfa55cb",
+        "filename": "jjb/netvirt/netvirt-dependencies.yaml",
+        "patchSetId": 19
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-10-24T16:29:04Z",
+      "side": 1,
+      "message": "That still means you can have a single template - but pass in the distro/platform type.",
+      "parentUuid": "89a01b7f_ac1a6a33",
       "range": {
         "startLine": 83,
         "startChar": 26,
