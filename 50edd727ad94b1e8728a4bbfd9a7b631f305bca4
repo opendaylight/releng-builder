@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "736b76b4_f3b64ff6",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 5089
+      },
+      "writtenOn": "2018-10-25T14:39:52Z",
+      "side": 1,
+      "message": "It is a good practice to cover one or several TCP packet\nlosses by specifying timeouts that are slightly above multiples of 3 seconds\n(eg: 4 or 5 seconds).\n\nhttps://cbonte.github.io/haproxy-dconv/configuration-1.5.html#4-timeout%20client",
+      "range": {
+        "startLine": 480,
+        "startChar": 0,
+        "endLine": 481,
+        "endChar": 21
+      },
+      "revId": "50edd727ad94b1e8728a4bbfd9a7b631f305bca4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "304d6831_1dc1ab27",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 5089
+      },
+      "writtenOn": "2018-10-25T14:39:52Z",
+      "side": 1,
+      "message": "this doesnt really do anything because the value used is the minimum of this and inter\nhttps://cbonte.github.io/haproxy-dconv/configuration-1.5.html#4.2-timeout%20check",
+      "range": {
+        "startLine": 482,
+        "startChar": 1,
+        "endLine": 482,
+        "endChar": 19
+      },
+      "revId": "50edd727ad94b1e8728a4bbfd9a7b631f305bca4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
