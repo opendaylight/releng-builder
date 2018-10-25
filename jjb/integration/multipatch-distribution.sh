@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -ex
+set -e
 
 # create a fresh empty place to build this custom distribution
 BUILD_DIR=${WORKSPACE}/patch_tester
@@ -42,8 +42,8 @@ if [[ "${PATCHES_TO_BUILD}" == *topic* ]]; then
     TOPIC="${PATCHES_TO_BUILD#*=}"
     echo "Create topic ${TOPIC} patch list"
     PATCHES_TO_BUILD=""
-    read -ra PROJECT_LIST <<< "${BUILD_ORDER} integration/distribution"
-    echo "${PROJECT_LIST[@]}"
+    read -ra PROJECT_LIST <<< "${BUILD_ORDER}"
+    echo "List of projects to check patch in topic: ${PROJECT_LIST[@]}"
     for PROJECT in "${PROJECT_LIST[@]}"; do
         # get all patches number for a topic for a given project
         IFS=$'\n' read -rd '' -a GERRIT_PATCH_LIST <<< "$(ssh -p 29418 jenkins-$SILO@git.opendaylight.org gerrit query status:open topic:${TOPIC} project:${PROJECT} \
@@ -82,7 +82,6 @@ if [[ "${PATCHES_TO_BUILD}" == *topic* ]]; then
         fi
     done
 fi
-set +e
 echo "Patches to build: ${PATCHES_TO_BUILD}"
 IFS=',' read -ra PATCHES <<< "${PATCHES_TO_BUILD}"
 
