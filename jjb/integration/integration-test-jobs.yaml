@@ -615,3 +615,43 @@
       - sfc-csit-3node-docker-full-deploy-all-fluorine
       - sfc-csit-3node-rest-basic-all-fluorine
     <<: *releng_view_common
+
+- view:
+    name: csit-stable-neon
+    description: 'List of stable integration jobs for managed projects'
+    job-name:
+      - aaa-csit-1node-authn-all-neon
+      - bgpcep-csit-1node-throughpcep-all-neon
+      - coe-csit-1node-container-networking-all-neon
+      - controller-csit-1node-akka1-all-neon
+      - controller-csit-1node-benchmark-all-neon
+      - controller-csit-1node-notifications-longevity-only-neon
+      - controller-csit-1node-rest-cars-perf-all-neon
+      - controller-csit-3node-benchmark-all-neon
+      - controller-csit-3node-drb-precedence-longevity-only-neon
+      - controller-csit-3node-rest-clust-cars-perf-ask-only-neon
+      - controller-csit-3node-rest-clust-cars-perf-tell-only-neon
+      - daexim-csit-1node-basic-only-neon
+      - daexim-csit-3node-clustering-basic-only-neon
+      - distribution-csit-1node-userfeatures-all-neon
+      - genius-csit-1node-upstream-all-neon
+      - genius-csit-3node-upstream-all-neon
+      - lispflowmapping-csit-1node-msmr-all-neon
+      - netconf-csit-1node-callhome-only-neon
+      - netconf-csit-1node-userfeatures-all-neon
+      - netvirt-csit-1node-0cmb-1ctl-2cmp-openstack-queens-sfc-neon
+      - netvirt-csit-1node-0cmb-1ctl-2cmp-openstack-queens-upstream-stateful-neon
+      - openflowplugin-csit-1node-flow-services-all-neon
+      - openflowplugin-csit-1node-longevity-only-neon
+      - openflowplugin-csit-1node-perf-bulkomatic-only-neon
+      - openflowplugin-csit-1node-perf-stats-collection-only-neon
+      - openflowplugin-csit-1node-sanity-only-neon
+      - openflowplugin-csit-1node-scale-link-only-neon
+      - openflowplugin-csit-1node-scale-only-neon
+      - openflowplugin-csit-1node-scale-switch-only-neon
+      - openflowplugin-csit-3node-clustering-bulkomatic-only-neon
+      - openflowplugin-csit-3node-clustering-only-neon
+      - ovsdb-csit-3node-upstream-clustering-only-neon
+      - sfc-csit-3node-docker-full-deploy-all-neon
+      - sfc-csit-3node-rest-basic-all-neon
+    <<: *releng_view_common
