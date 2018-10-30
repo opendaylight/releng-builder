@@ -93,6 +93,30 @@
       "revId": "1344e3acbf7ea3fecc2bc611fb5be9fb9aa9fe49",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "62a3dcad_83369884",
+        "filename": "jjb/netvirt/netvirt.yaml",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 773
+      },
+      "writtenOn": "2018-10-30T20:17:13Z",
+      "side": 1,
+      "message": "your last point is what I was thinking - if the default is false no need to show it. Only users that want to fail will add the value here as true. not such a biggie for netvirt since we know we will flip this on. But other projects will look at this patch and think they need the var and ask questions. so it is fine here since we will switch it to true.",
+      "parentUuid": "366e5904_6cd5c0f1",
+      "range": {
+        "startLine": 17,
+        "startChar": 4,
+        "endLine": 17,
+        "endChar": 17
+      },
+      "revId": "1344e3acbf7ea3fecc2bc611fb5be9fb9aa9fe49",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
