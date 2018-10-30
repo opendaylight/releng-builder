@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "32a594c0_43f31fa9",
+        "filename": "jjb/integration/distribution/distribution-templates.yaml",
+        "patchSetId": 10
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-10-30T16:21:44Z",
+      "side": 1,
+      "message": "I think the terminology for this is \"block\" because\nthat\u0027s just a flag to tell distro-check to \"not finish\"\nuntil the triggered csit jobs report back. Whether we\nfail or not then depends on these threshold flags, which\ncould (in theory) be set to \"never\", although our\ndefault here is to always fail.",
+      "parentUuid": "b0a8348b_356ec335",
+      "range": {
+        "startLine": 15,
+        "startChar": 4,
+        "endLine": 15,
+        "endChar": 17
+      },
+      "revId": "1344e3acbf7ea3fecc2bc611fb5be9fb9aa9fe49",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9207836_5e49e202",
         "filename": "jjb/netvirt/netvirt.yaml",
         "patchSetId": 10
@@ -36,6 +60,30 @@
       "writtenOn": "2018-10-30T14:41:27Z",
       "side": 1,
       "message": "would this be better over in defaults?",
+      "range": {
+        "startLine": 17,
+        "startChar": 4,
+        "endLine": 17,
+        "endChar": 17
+      },
+      "revId": "1344e3acbf7ea3fecc2bc611fb5be9fb9aa9fe49",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "366e5904_6cd5c0f1",
+        "filename": "jjb/netvirt/netvirt.yaml",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2018-10-30T16:21:44Z",
+      "side": 1,
+      "message": "not sure what\u0027s better. you pick.\n\nI put it here, thinking each project might want to control\nthis differently.\n\nactually, no, we don\u0027t need it in defaults. It\u0027s already\ndefaulted to \u0027false\u0027 in the template. Having it here is\nnot even needed, but makes it more clear where we need\nto change it later.",
+      "parentUuid": "e9207836_5e49e202",
       "range": {
         "startLine": 17,
         "startChar": 4,
