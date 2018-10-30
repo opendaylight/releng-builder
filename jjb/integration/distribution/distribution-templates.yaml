@@ -11,6 +11,13 @@
 
     java-version: openjdk8
     mvn-version: mvn35
+    csit-gate-list: ''
+    block_on_csit: false
+    # Unless block_on_csit is true, the failure-threshold will be ignored. For project jobs that
+    # want to fail distribution check on csit jobs, they will only need a list of jobs to run
+    # plus the change of block_on_csit to true, and this failure-threshold: 'UNSTABLE' will take
+    # effect
+    failure-threshold: 'UNSTABLE'
 
     #####################
     # Job Configuration #
@@ -105,6 +112,15 @@
       - integration-upload-distribution:
           dist-pom: distribution/pom.xml
       - distribution-check-bootup
+
+      - trigger-builds:
+          - project: '{csit-gate-list}'
+            block: '{obj:block_on_csit}'
+            block-thresholds:
+              failure-threshold: '{failure-threshold}'
+            predefined-parameters: |
+              BUNDLE_URL=$BUNDLE_URL
+              KARAF_VERSION=$KARAF_VERSION
 
     publishers:
       - email-notification:
