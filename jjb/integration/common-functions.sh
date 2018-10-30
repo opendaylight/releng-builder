@@ -418,6 +418,7 @@ EOF
     mkdir -p ${WORKSPACE}/archives
 
     mv /tmp/changes.txt ${WORKSPACE}/archives
+    mv /tmp/validations.txt ${WORKSPACE}/archives
     mv ${WORKSPACE}/rabbit.txt ${WORKSPACE}/archives
     mv ${WORKSPACE}/haproxy.cfg ${WORKSPACE}/archives
     ssh ${OPENSTACK_HAPROXY_1_IP} "sudo journalctl -u haproxy > /tmp/haproxy.log"
