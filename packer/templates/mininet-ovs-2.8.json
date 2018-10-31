@@ -3,11 +3,7 @@
     "ansible_roles_path": ".galaxy",
     "base_image": null,
     "distro": null,
-    "cloud_auth_url": null,
-    "cloud_user": null,
-    "cloud_pass": null,
     "cloud_network": null,
-    "cloud_tenant": null,
     "cloud_user_data": null,
     "ssh_user": null,
     "ssh_proxy_host": ""
@@ -19,11 +15,6 @@
       "instance_name": "{{user `distro`}}-mininet-ovs-28-{{uuid}}",
       "source_image_name": "{{user `base_image`}}",
       "type": "openstack",
-      "identity_endpoint": "{{user `cloud_auth_url`}}",
-      "username": "{{user `cloud_user`}}",
-      "password": "{{user `cloud_pass`}}",
-      "tenant_name": "{{user `cloud_tenant`}}",
-      "domain_name": "Default",
       "region": "ca-ymq-1",
       "availability_zone": "ca-ymq-2",
       "networks": [
