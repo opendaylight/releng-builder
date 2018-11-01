@@ -32,7 +32,6 @@ for project in "${PROJECTS_INT_DIST[@]}"; do
     fi
 done
 
-project_int_dist+=("mdsal")
 project_int_dist+=("integration/distribution")
 
 # Get a list of all the projects from releng/autorelease repo
