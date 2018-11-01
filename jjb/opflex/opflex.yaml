@@ -2,6 +2,11 @@
 - project:
     name: opflex-release
     jobs:
+      - '{project-name}-rtd-jobs':
+          build-node: centos7-builder-2c-2g
+          project-pattern: opflex
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-opflex/52373/
+          rtd-token: bf99281866a176904cf12861789deaf04d4b0c45
       - 'opflex-release-{stream}'
 
     stream:
