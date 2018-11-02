@@ -29,7 +29,7 @@ pip install --upgrade docker-py importlib requests scapy netifaces netaddr ipadd
 pip install --upgrade robotframework-httplibrary \
     requests==2.15.1 \
     robotframework-requests \
-    robotframework-sshlibrary==2.1.1 \
+    robotframework-sshlibrary==3.1.1 \
     robotframework-selenium2library \
     robotframework-pycurllibrary
 
