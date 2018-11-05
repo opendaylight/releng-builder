@@ -22,8 +22,8 @@
           branch: 'stable/oxygen'
 
     install:
-      - all:
-          scope: 'all'
+      - only:
+          scope: 'only'
 
     tools_system_count: 3
 
@@ -49,8 +49,8 @@
     verify-karaf-version: 'karaf4'
 
     install:
-      - all:
-          scope: 'all'
+      - only:
+          scope: 'only'
 
     tools_system_count: 3
 
