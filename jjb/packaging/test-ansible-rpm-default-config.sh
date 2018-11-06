@@ -7,7 +7,7 @@ sudo yum remove opendaylight -y
 sudo rm -rf /opt/opendaylight
 
 # Install OpenDaylight with custom config via repo using example Ansible playbook
-sudo ansible-playbook -i "localhost," -c local $WORKSPACE/ansible/examples/rpm_8_devel_odl_api.yml
+sudo ansible-playbook -i "localhost," -c local $WORKSPACE/ansible/examples/rpm_10_devel_odl_api.yml
 
 # Create Ansible custom module directories
 sudo mkdir -p /usr/share/ansible/plugins/modules
