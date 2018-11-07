@@ -18,7 +18,9 @@
           build-timeout: 180
           mvn-goals: clean install -V -Dmaven.compile.fork=true -Dintegrationtests -Dvtn.build.jobs=2
 
-      - gerrit-maven-stage
+      - gerrit-maven-stage:
+          mvn-central: true
+          ossrh-profile-id: 7edbe315063867
       - gerrit-maven-verify
       - gerrit-maven-verify-dependencies:
           build-timeout: 180
