@@ -8,7 +8,6 @@
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-sxp/47573/
           rtd-token: 4a78556e59ce3ef35e61e2fa19ebae049acf6d5d
       - odl-maven-jobs
-
     stream: neon
     project: 'sxp'
     project-name: 'sxp'
@@ -30,7 +29,6 @@
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-sxp/47573/
           rtd-token: 4a78556e59ce3ef35e61e2fa19ebae049acf6d5d
       - odl-maven-jobs
-
     stream: fluorine
     project: 'sxp'
     project-name: 'sxp'
@@ -48,7 +46,6 @@
     jobs:
       - '{project-name}-distribution-check-{stream}'
       - odl-maven-jobs
-
     stream: oxygen
     project: 'sxp'
     project-name: 'sxp'
@@ -71,8 +68,8 @@
     mvn-settings: 'sxp-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
 
-- view:
-    name: sxp
-    description: 'List of sxp jobs'
-    regex: '^sxp-.*'
-    <<: *releng_view_common
+- project:
+    name: sxp-view
+    views:
+      - project-view
+    project-name: sxp

@@ -65,8 +65,8 @@
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     build-timeout: 120
 
-- view:
-    name: coretutorials
-    description: 'List of coretutorials jobs'
-    regex: '^coretutorials-.*'
-    <<: *releng_view_common
+- project:
+    name: coretutorials-view
+    views:
+      - project-view
+    project-name: coretutorials

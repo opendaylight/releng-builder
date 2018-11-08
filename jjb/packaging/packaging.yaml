@@ -38,6 +38,12 @@
     upload-files-dir: '$WORKSPACE/upload_files'
     maven-repo-url: '$NEXUS_URL/content/repositories/$REPO_ID'
 
+- project:
+    name: packaging-view
+    views:
+      - project-view
+    project-name: packaging
+
 - job-template:
     name: 'packaging-build-rpm-{stream}'
 
@@ -605,9 +611,3 @@
 
     publishers:
       - lf-infra-publish
-
-- view:
-    name: packaging
-    description: 'List of packaging, ansible and puppet jobs'
-    regex: '^packaging.*|ansible.*|puppet.*'
-    <<: *releng_view_common

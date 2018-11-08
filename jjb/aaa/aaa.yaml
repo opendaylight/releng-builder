@@ -67,15 +67,14 @@
     name: aaa-sonar
     jobs:
       - gerrit-maven-sonar
-
     project: 'aaa'
     project-name: 'aaa'
     branch: 'master'
     mvn-settings: 'aaa-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
 
-- view:
-    name: aaa
-    description: 'List of aaa jobs'
-    regex: '^aaa-.*'
-    <<: *releng_view_common
+- project:
+    name: aaa-view
+    views:
+      - project-view
+    project-name: aaa
