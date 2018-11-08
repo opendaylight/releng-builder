@@ -69,8 +69,8 @@
     mvn-settings: 'bier-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
 
-- view:
-    name: bier
-    description: 'List of bier jobs'
-    regex: '^bier-.*'
-    <<: *releng_view_common
+- project:
+    name: bier-view
+    views:
+      - project-view
+    project-name: bier

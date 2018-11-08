@@ -99,8 +99,8 @@
     mvn-settings: 'bgpcep-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
 
-- view:
-    name: bgpcep
-    description: 'List of bgpcep jobs'
-    regex: '^bgpcep-.*'
-    <<: *releng_view_common
+- project:
+    name: bgpcep-view
+    views:
+      - project-view
+    project-name: bgpcep

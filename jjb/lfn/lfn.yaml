@@ -17,8 +17,8 @@
     git-url: https://gerrit.linuxfoundation.org/infra/$GERRIT_PROJECT
     gerrit-server-name: lf-releng
 
-- view:
-    name: lfn
-    description: 'List of LF Networking jobs'
-    regex: '^lfn-.*'
-    <<: *releng_view_common
+- project:
+    name: lfn-view
+    views:
+      - project-view
+    project-name: lfn-process

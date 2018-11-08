@@ -55,14 +55,15 @@
     name: snmp4sdn-sonar
     jobs:
       - gerrit-maven-sonar
+
     project: 'snmp4sdn'
     project-name: 'snmp4sdn'
     branch: 'master'
     mvn-settings: 'snmp4sdn-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
 
-- view:
-    name: snmp4sdn
-    description: 'List of snmp4sdn jobs'
-    regex: '^snmp4sdn-.*'
-    <<: *releng_view_common
+- project:
+    name: snmp4sdn-view
+    views:
+      - project-view
+    project-name: snmp4sdn
