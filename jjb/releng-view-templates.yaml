@@ -1,0 +1,116 @@
+---
+# TODO: Remove this files after the next global-jjb 2.6.x release
+# which supports the view-templates.
+# This file is temporariy added here from the below changes from global-jjb.
+# This file is included here to avoid rebases.
+# https://gerrit.linuxfoundation.org/infra/#/c/13268
+# https://gerrit.linuxfoundation.org/infra/#/c/12989
+
+########################
+# common view template #
+########################
+
+- lf_view_common_columns: &lf_view_common_columns
+    name: lf-view-common-columns
+
+    columns:
+      - status
+      - weather
+      - job
+      - last-success
+      - last-failure
+      - last-duration
+      - build-button
+      - jacoco
+      - find-bugs
+
+- view-template:
+    id: 'common-view'
+    name: '{view-name}'
+
+    ######################
+    # Default parameters #
+    ######################
+
+    view-description: 'View using common-view template.'
+    view-filter-executors: false
+    view-filter-queue: false
+    view-recurse: false
+
+    ######################
+    # view Configuration #
+    ######################
+
+    view-type: list
+    description: '{view-description}'
+    filter-executors: '{view-filter-executors}'
+    filter-queue: '{view-filter-queue}'
+    recurse: '{view-recurse}'
+    regex: '{view-regex}'
+    <<: *lf_view_common_columns
+
+######################
+# CSIT view template #
+######################
+
+- view-template:
+    id: 'csit-view'
+    name: '{view-name}'
+
+    ######################
+    # Default parameters #
+    ######################
+
+    view-description: 'CSIT jobs.'
+    view-filter-executors: false
+    view-filter-queue: false
+    view-recurse: false
+
+    ######################
+    # view Configuration #
+    ######################
+
+    view-type: list
+    description: '{view-description}'
+    filter-executors: '{view-filter-executors}'
+    filter-queue: '{view-filter-queue}'
+    recurse: '{view-recurse}'
+    regex: '{view-regex}'
+    columns:
+      - status
+      - weather
+      - job
+      - last-success
+      - last-failure
+      - last-duration
+      - build-button
+      - robot-list
+
+#########################
+# project view template #
+#########################
+
+- view-template:
+    id: 'project-view'
+    name: '{project-name}'
+
+    ######################
+    # Default parameters #
+    ######################
+
+    view-filter-executors: false
+    view-filter-queue: false
+    view-recurse: false
+
+    ######################
+    # view Configuration #
+    ######################
+
+    view-type: list
+    description: 'List of jobs for {project-name}.'
+    filter-executors: '{view-filter-executors}'
+    filter-queue: '{view-filter-queue}'
+    recurse: '{view-recurse}'
+    regex: '^{project-name}-.*'
+    <<: *lf_view_common_columns
+

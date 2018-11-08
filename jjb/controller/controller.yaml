@@ -88,8 +88,8 @@
     mvn-goals: 'clean deploy -Pintegrationtests,docs'
     mvn-opts: '-Xmx4096m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
 
-- view:
-    name: controller
-    description: 'List of controller jobs'
-    regex: '^controller-.*'
-    <<: *releng_view_common
+- project:
+    name: controller-view
+    views:
+      - project-view
+    project-name: controller

@@ -65,8 +65,8 @@
     mvn-settings: 'federation-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
 
-- view:
-    name: federation
-    description: 'List of federation jobs'
-    regex: '^federation-.*'
-    <<: *releng_view_common
+- project:
+    name: federation-view
+    views:
+      - project-view
+    project-name: federation

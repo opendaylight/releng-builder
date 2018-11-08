@@ -62,8 +62,8 @@
     mvn-settings: 'centinel-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
 
-- view:
-    name: centinel
-    description: 'List of centinel jobs'
-    regex: '^centinel-.*'
-    <<: *releng_view_common
+- project:
+    name: centinel-view
+    views:
+      - project-view
+    project-name: centinel

@@ -251,8 +251,9 @@
     mvn-goals: clean install dependency:tree -DoutputFile=dependency_tree.txt
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
 
-- view:
-    name: distribution
-    description: 'List of distribution jobs'
-    regex: '^(integration-)?distribution-.*'
-    <<: *releng_view_common
+- project:
+    name: distribution-view
+    views:
+      - common-view
+    view-name: distribution
+    view-regex: '^(integration-)?distribution-.*'

@@ -69,8 +69,8 @@
     mvn-settings: 'neutron-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
 
-- view:
-    name: neutron
-    description: 'List of neutron jobs'
-    regex: '^neutron-.*'
-    <<: *releng_view_common
+- project:
+    name: neutron-view
+    views:
+      - project-view
+    project-name: neutron
