@@ -6,7 +6,7 @@
 
     stream: neon
     project: 'honeycomb/vbd'
-    project-name: 'vbd'
+    project-name: 'honeycomb/vbd'
     branch: 'master'
     mvn-settings: 'honeycomb-vbd-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
@@ -23,7 +23,7 @@
 
     stream: fluorine
     project: 'honeycomb/vbd'
-    project-name: 'vbd'
+    project-name: 'honeycomb/vbd'
     branch: 'stable/fluorine'
     mvn-settings: 'honeycomb-vbd-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
@@ -41,7 +41,7 @@
 
     stream: oxygen
     project: 'honeycomb/vbd'
-    project-name: 'vbd'
+    project-name: 'honeycomb/vbd'
     branch: 'stable/oxygen'
     mvn-settings: 'honeycomb-vbd-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
@@ -56,13 +56,14 @@
     jobs:
       - gerrit-maven-sonar
     project: 'honeycomb/vbd'
-    project-name: 'vbd'
+    project-name: 'honeycomb/vbd'
     branch: 'master'
     mvn-settings: 'honeycomb-vbd-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
 
-- view:
-    name: vbd
-    description: 'List of vbd jobs'
-    regex: '^vbd-.*'
-    <<: *releng_view_common
+- project:
+    name: vbd-view
+    project: vbd
+    project-name: vbd
+    views:
+      - project-view

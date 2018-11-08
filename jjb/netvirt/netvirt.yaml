@@ -46,20 +46,26 @@
     name: netvirt-sonar
     jobs:
       - gerrit-maven-sonar
+
     project: 'netvirt'
     project-name: 'netvirt'
     branch: 'master'
     mvn-settings: 'netvirt-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
 
-- view:
-    name: netvirt
-    description: 'List of netvirt jobs'
-    regex: '^netvirt-.*'
-    <<: *releng_view_common
+- project:
+    name: netvirt-csit-view
+    project: netvirt
+    project-name: netvirt-csit
+    view-name: netvirt-csit
+    views:
+      - csit-view
+    view-description: 'List of netvirt-csit jobs'
+    view-regex: 'netvirt-csit(?!(.*gate)|(.*hwvtep)).*'
 
-- view:
-    name: netvirt-csit
-    description: 'List of netvirt-csit jobs'
-    regex: 'netvirt-csit(?!(.*gate)|(.*hwvtep)).*'
-    <<: *integration_view_csit
+- project:
+    name: netvirt-view
+    project: netvirt
+    project-name: netvirt
+    views:
+      - project-view

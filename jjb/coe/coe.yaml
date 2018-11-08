@@ -82,8 +82,9 @@
     mvn-settings: 'coe-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
 
-- view:
-    name: coe
-    description: 'List of coe jobs'
-    regex: '^coe-.*'
-    <<: *releng_view_common
+- project:
+    name: coe-view
+    project: coe
+    project-name: coe
+    views:
+      - project-view

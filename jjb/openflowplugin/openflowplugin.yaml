@@ -76,6 +76,8 @@
           rtd-token: 86ce095922558b890c61b1b05d682521d1d66d5f
       - odl-maven-jobs
 
+    view-description: 'List of openflowplugin oxygen jobs'
+    view-regex: 'openflowplugin-.*-oxygen'
     stream: oxygen
     project: 'openflowplugin'
     project-name: 'openflowplugin'
@@ -99,6 +101,7 @@
     name: openflowplugin-sonar
     jobs:
       - gerrit-maven-sonar
+
     project: 'openflowplugin'
     project-name: 'openflowplugin'
     branch: 'master'
@@ -108,14 +111,18 @@
     mvn-goals: 'clean deploy javadoc:aggregate'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
 
-- view:
-    name: openflowplugin
-    description: 'List of openflowplugin jobs'
-    regex: '^openflowplugin-.*'
-    <<: *releng_view_common
+- project:
+    name: openflowplugin-view
+    project: 'openflowplugin'
+    project-name: 'openflowplugin'
+    views:
+      - project-view
 
-- view:
-    name: openflowplugin-oxygen
-    description: 'List of openflowplugin oxygen jobs'
-    regex: 'openflowplugin-.*-oxygen'
-    <<: *releng_view_common
+- project:
+    name: openflowplugin-oxygen-view
+    project: 'openflowplugin'
+    project-name: 'openflowplugin'
+    views:
+      - common-view
+    view-name: 'openflowplugin-oxygen'
+    view-regex: '^openflowplugin-.*-oxygen'

@@ -3,7 +3,6 @@
     name: systemmetrics-neon
     jobs:
       - odl-maven-jobs
-
     project: 'systemmetrics'
     project-name: 'systemmetrics'
     stream: neon
@@ -20,7 +19,6 @@
     name: systemmetrics-fluorine
     jobs:
       - odl-maven-jobs
-
     project: 'systemmetrics'
     project-name: 'systemmetrics'
     stream: fluorine
@@ -37,15 +35,15 @@
     name: systemmetrics-sonar
     jobs:
       - gerrit-maven-sonar
-
     project: 'systemmetrics'
     project-name: 'systemmetrics'
     branch: 'master'
     mvn-settings: 'systemmetrics-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
 
-- view:
-    name: systemmetrics
-    description: 'List of systemmetrics jobs'
-    regex: '^systemmetrics-.*'
-    <<: *releng_view_common
+- project:
+    name: systemmetrics-view
+    project: systemmetrics
+    project-name: systemmetrics
+    views:
+      - project-view

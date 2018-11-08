@@ -3,7 +3,6 @@
     name: packetcable-neon
     jobs:
       - odl-maven-jobs
-
     stream: neon
     project: 'packetcable'
     project-name: 'packetcable'
@@ -20,7 +19,6 @@
     name: packetcable-fluorine
     jobs:
       - odl-maven-jobs
-
     stream: fluorine
     project: 'packetcable'
     project-name: 'packetcable'
@@ -38,7 +36,6 @@
     jobs:
       - '{project-name}-distribution-check-{stream}'
       - odl-maven-jobs
-
     stream: oxygen
     project: 'packetcable'
     project-name: 'packetcable'
@@ -61,8 +58,9 @@
     mvn-settings: 'packetcable-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
 
-- view:
-    name: packetcable
-    description: 'List of packetcable jobs'
-    regex: '^packetcable-.*'
-    <<: *releng_view_common
+- project:
+    name: packetcable-view
+    project: packetcable
+    project-name: packetcable
+    views:
+      - project-view

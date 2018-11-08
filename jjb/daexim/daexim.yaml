@@ -74,8 +74,9 @@
     mvn-settings: 'daexim-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
 
-- view:
-    name: daexim
-    description: 'List of daexim jobs'
-    regex: '^daexim-.*'
-    <<: *releng_view_common
+- project:
+    name: daexim-view
+    project: daexim
+    project-name: daexim
+    views:
+      - project-view

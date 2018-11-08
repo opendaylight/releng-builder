@@ -570,11 +570,12 @@
     publishers:
       - lf-infra-publish
 
-- view:
-    name: integration
-    description: 'List of integration jobs'
-    regex: '^integration-.*'
-    <<: *releng_view_common
+- project:
+    name: integration-view
+    project: integration
+    project-name: integration
+    views:
+      - project-view
 
 - view:
     name: csit-stable-f

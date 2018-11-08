@@ -21,8 +21,9 @@
     build-node: centos7-builder-2c-2g
     build-timeout: 60
 
-- view:
-    name: odltools
-    description: 'List of odltools jobs'
-    regex: '^odltools-.*'
-    <<: *releng_view_common
+- project:
+    name: odltools-view
+    project: odltools
+    project-name: odltools
+    views:
+      - project-view

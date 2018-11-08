@@ -8,7 +8,6 @@
           rtd-build-url: https://readthedocs.org/api/v2/webhook/opendaylight-tsdr/47532/
           rtd-token: 96c97641155132afcc5900bafc68af3364d91c99
       - odl-maven-jobs
-
     stream: neon
     project: 'tsdr'
     project-name: 'tsdr'
@@ -30,7 +29,6 @@
           rtd-build-url: https://readthedocs.org/api/v2/webhook/opendaylight-tsdr/47532/
           rtd-token: 96c97641155132afcc5900bafc68af3364d91c99
       - odl-maven-jobs
-
     stream: fluorine
     project: 'tsdr'
     project-name: 'tsdr'
@@ -48,7 +46,6 @@
     jobs:
       - '{project-name}-distribution-check-{stream}'
       - odl-maven-jobs
-
     stream: oxygen
     project: 'tsdr'
     project-name: 'tsdr'
@@ -71,8 +68,9 @@
     mvn-settings: 'tsdr-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
 
-- view:
-    name: tsdr
-    description: 'List of tsdr jobs'
-    regex: '^tsdr-.*'
-    <<: *releng_view_common
+- project:
+    name: tsdr-view
+    project: tsdr
+    project-name: tsdr
+    views:
+      - project-view

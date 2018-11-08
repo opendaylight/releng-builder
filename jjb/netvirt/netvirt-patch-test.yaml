@@ -4,7 +4,11 @@
     jobs:
       - inttest-patch-test
 
+    view-description: 'List of netvirt-csit jobs'
+    view-regex: 'netvirt-csit(?!(.*gate)|(.*hwvtep)).*'
+
     project: 'netvirt'
+    project-name: 'netvirt'
 
     stream:
       - neon:
@@ -18,6 +22,7 @@
           os-branch: 'queens'
 
     jdk: 'openjdk8'
+    os-branch: 'queens'
 
     feature:
       - current:

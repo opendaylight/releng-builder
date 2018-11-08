@@ -8,7 +8,6 @@
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-transportpce/47688/
           rtd-token: 6f37ba63226bdcc6c823ee455e62237cf68813fd
       - odl-maven-jobs
-
     project: 'transportpce'
     project-name: 'transportpce'
     stream: neon
@@ -30,7 +29,6 @@
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-transportpce/47688/
           rtd-token: 6f37ba63226bdcc6c823ee455e62237cf68813fd
       - odl-maven-jobs
-
     project: 'transportpce'
     project-name: 'transportpce'
     stream: fluorine
@@ -47,7 +45,6 @@
     name: transportpce-oxygen
     jobs:
       - odl-maven-jobs
-
     project: 'transportpce'
     project-name: 'transportpce'
     stream: oxygen
@@ -64,15 +61,15 @@
     name: transportpce-sonar
     jobs:
       - gerrit-maven-sonar
-
     project: 'transportpce'
     project-name: 'transportpce'
     branch: 'master'
     mvn-settings: 'transportpce-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
 
-- view:
-    name: transportpce
-    description: 'List of transportpce jobs'
-    regex: '^transportpce-.*'
-    <<: *releng_view_common
+- project:
+    name: transportpce-view
+    project: transportpce
+    project-name: transportpce
+    views:
+      - project-view

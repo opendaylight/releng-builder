@@ -55,15 +55,15 @@
     name: jsonrpc-sonar
     jobs:
       - gerrit-maven-sonar
-
     project: 'jsonrpc'
     project-name: 'jsonrpc'
     branch: 'master'
     mvn-settings: 'jsonrpc-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
 
-- view:
-    name: jsonrpc
-    description: 'List of jsonrpc jobs'
-    regex: '^jsonrpc-.*'
-    <<: *releng_view_common
+- project:
+    name: jsonrpc-view
+    project: jsonrpc
+    project-name: jsonrpc
+    views:
+      - project-view

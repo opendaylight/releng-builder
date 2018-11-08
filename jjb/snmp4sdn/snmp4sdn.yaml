@@ -3,7 +3,6 @@
     name: snmp4sdn-neon
     jobs:
       - odl-maven-jobs
-
     stream: neon
     project: 'snmp4sdn'
     project-name: 'snmp4sdn'
@@ -20,7 +19,6 @@
     name: snmp4sdn-fluorine
     jobs:
       - odl-maven-jobs
-
     stream: fluorine
     project: 'snmp4sdn'
     project-name: 'snmp4sdn'
@@ -38,7 +36,6 @@
     jobs:
       - '{project-name}-distribution-check-{stream}'
       - odl-maven-jobs
-
     stream: oxygen
     project: 'snmp4sdn'
     project-name: 'snmp4sdn'
@@ -61,8 +58,9 @@
     mvn-settings: 'snmp4sdn-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
 
-- view:
-    name: snmp4sdn
-    description: 'List of snmp4sdn jobs'
-    regex: '^snmp4sdn-.*'
-    <<: *releng_view_common
+- project:
+    name: snmp4sdn-view
+    project: snmp4sdn
+    project-name: snmp4sdn
+    views:
+      - project-view

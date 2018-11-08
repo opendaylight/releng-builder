@@ -3,7 +3,6 @@
     name: snmp-neon
     jobs:
       - odl-maven-jobs
-
     stream: neon
     project: 'snmp'
     project-name: 'snmp'
@@ -20,7 +19,6 @@
     name: snmp-fluorine
     jobs:
       - odl-maven-jobs
-
     stream: fluorine
     project: 'snmp'
     project-name: 'snmp'
@@ -38,7 +36,6 @@
     jobs:
       - '{project-name}-distribution-check-{stream}'
       - odl-maven-jobs
-
     stream: oxygen
     project: 'snmp'
     project-name: 'snmp'
@@ -61,8 +58,9 @@
     mvn-settings: 'snmp-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
 
-- view:
-    name: snmp
-    description: 'List of snmp jobs'
-    regex: '^snmp-.*'
-    <<: *releng_view_common
+- project:
+    name: snmp-view
+    project: snmp
+    project-name: snmp
+    views:
+      - project-view

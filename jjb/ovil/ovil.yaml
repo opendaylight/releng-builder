@@ -4,7 +4,6 @@
     jobs:
       - odl-maven-jobs
       - gerrit-tox-verify
-
     stream: neon
     project: ovil
     project-name: ovil
@@ -23,7 +22,6 @@
     jobs:
       - odl-maven-jobs
       - gerrit-tox-verify
-
     stream: fluorine
     project: ovil
     project-name: ovil
@@ -42,7 +40,6 @@
     jobs:
       - odl-maven-jobs
       - gerrit-tox-verify
-
     stream: oxygen
     project: ovil
     project-name: ovil
@@ -66,8 +63,9 @@
     mvn-settings: 'ovil-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
 
-- view:
-    name: ovil
-    description: 'List of ovil jobs'
-    regex: '^ovil-.*'
-    <<: *releng_view_common
+- project:
+    name: ovil-view
+    project: ovil
+    project-name: ovil
+    views:
+      - project-view

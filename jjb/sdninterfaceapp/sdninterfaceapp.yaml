@@ -3,7 +3,6 @@
     name: sdninterfaceapp-neon
     jobs:
       - odl-maven-jobs
-
     stream: neon
     project: 'sdninterfaceapp'
     project-name: 'sdninterfaceapp'
@@ -21,7 +20,6 @@
     name: sdninterfaceapp-fluorine
     jobs:
       - odl-maven-jobs
-
     stream: fluorine
     project: 'sdninterfaceapp'
     project-name: 'sdninterfaceapp'
@@ -40,7 +38,6 @@
     jobs:
       - '{project-name}-distribution-check-{stream}'
       - odl-maven-jobs
-
     stream: oxygen
     project: 'sdninterfaceapp'
     project-name: 'sdninterfaceapp'
@@ -65,8 +62,9 @@
     mvn-settings: 'sdninterfaceapp-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
 
-- view:
-    name: sdninterfaceapp
-    description: 'List of sdninterfaceapp jobs'
-    regex: '^sdninterfaceapp-.*'
-    <<: *releng_view_common
+- project:
+    name: sdninterfaceapp-view
+    project: sdninterfaceapp
+    project-name: sdninterfaceapp
+    views:
+      - project-view

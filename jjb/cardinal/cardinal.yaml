@@ -62,8 +62,9 @@
     mvn-settings: 'cardinal-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
 
-- view:
-    name: cardinal
-    description: 'List of cardinal jobs'
-    regex: '^cardinal-.*'
-    <<: *releng_view_common
+- project:
+    name: cardinal-view
+    project: cardinal
+    project-name: cardinal
+    views:
+      - project-view

@@ -18,6 +18,13 @@
       - oxygen:
           branch: 'stable/oxygen'
 
+- project:
+    name: puppet-view
+    project: puppet
+    project-name: puppet
+    views:
+      - project-view
+
 - job-template:
     name: '{project-name}-test-sanity-{stream}'
 

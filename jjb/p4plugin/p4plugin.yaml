@@ -4,7 +4,6 @@
     jobs:
       - '{project-name}-maven-javadoc-jobs'
       - odl-maven-jobs
-
     stream: neon
     project: 'p4plugin'
     project-name: 'p4plugin'
@@ -22,7 +21,6 @@
     jobs:
       - '{project-name}-maven-javadoc-jobs'
       - odl-maven-jobs
-
     stream: fluorine
     project: 'p4plugin'
     project-name: 'p4plugin'
@@ -41,7 +39,6 @@
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-maven-javadoc-jobs'
       - odl-maven-jobs
-
     stream: oxygen
     project: 'p4plugin'
     project-name: 'p4plugin'
@@ -58,15 +55,15 @@
     name: p4plugin-sonar
     jobs:
       - gerrit-maven-sonar
-
     project: 'p4plugin'
     project-name: 'p4plugin'
     branch: 'master'
     mvn-settings: 'p4plugin-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
 
-- view:
-    name: p4plugin
-    description: 'List of p4plugin jobs'
-    regex: '^p4plugin-.*'
-    <<: *releng_view_common
+- project:
+    name: p4plugin-view
+    project: p4plugin
+    project-name: p4plugin
+    views:
+      - project-view

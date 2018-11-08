@@ -66,8 +66,9 @@
     mvn-settings: 'alto-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
 
-- view:
-    name: alto
-    description: 'List of alto jobs'
-    regex: '^alto-.*'
-    <<: *releng_view_common
+- project:
+    name: alto-view
+    project: alto
+    project-name: alto
+    views:
+      - project-view

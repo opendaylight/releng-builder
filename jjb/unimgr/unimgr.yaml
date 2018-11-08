@@ -8,7 +8,6 @@
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-unimgr/49748/
           rtd-token: e12225e9b9ac67f5439c1619dcad342393b7ea31
       - odl-maven-jobs
-
     stream: neon
     project: 'unimgr'
     project-name: 'unimgr'
@@ -31,7 +30,6 @@
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-unimgr/49748/
           rtd-token: e12225e9b9ac67f5439c1619dcad342393b7ea31
       - odl-maven-jobs
-
     stream: fluorine
     project: 'unimgr'
     project-name: 'unimgr'
@@ -55,8 +53,9 @@
     mvn-settings: 'unimgr-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
 
-- view:
-    name: unimgr
-    description: 'List of unimgr jobs'
-    regex: '^unimgr-.*'
-    <<: *releng_view_common
+- project:
+    name: unimgr-view
+    project: unimgr
+    project-name: unimgr
+    views:
+      - project-view

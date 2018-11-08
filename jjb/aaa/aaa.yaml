@@ -74,8 +74,9 @@
     mvn-settings: 'aaa-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
 
-- view:
-    name: aaa
-    description: 'List of aaa jobs'
-    regex: '^aaa-.*'
-    <<: *releng_view_common
+- project:
+    name: aaa-view
+    project: aaa
+    project-name: aaa
+    views:
+      - project-view

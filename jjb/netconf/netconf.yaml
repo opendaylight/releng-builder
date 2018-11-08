@@ -84,8 +84,9 @@
     mvn-goals: 'clean deploy -Pintegrationtests'
     mvn-opts: '-Xmx2048m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
 
-- view:
-    name: netconf
-    description: 'List of netconf jobs'
-    regex: '^netconf-.*'
-    <<: *releng_view_common
+- project:
+    name: netconf-view
+    project: netconf
+    project-name: netconf
+    views:
+      - project-view

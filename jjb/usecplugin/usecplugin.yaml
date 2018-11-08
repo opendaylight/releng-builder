@@ -3,7 +3,6 @@
     name: usecplugin-neon
     jobs:
       - odl-maven-jobs
-
     stream: neon
     project: 'usecplugin'
     project-name: 'usecplugin'
@@ -20,7 +19,6 @@
     name: usecplugin-fluorine
     jobs:
       - odl-maven-jobs
-
     stream: fluorine
     project: 'usecplugin'
     project-name: 'usecplugin'
@@ -61,8 +59,9 @@
     mvn-settings: 'usecplugin-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
 
-- view:
-    name: usecplugin
-    description: 'List of usecplugin jobs'
-    regex: '^usecplugin-.*'
-    <<: *releng_view_common
+- project:
+    name: usecplugin-view
+    project: usecplugin
+    project-name: usecplugin
+    views:
+      - project-view

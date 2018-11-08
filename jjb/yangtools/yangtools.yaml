@@ -97,8 +97,9 @@
     mvn-settings: 'yangtools-settings'
     mvn-opts: '-Xmx1024m'
 
-- view:
-    name: yangtools
-    description: 'List of yangtools jobs'
-    regex: '^yangtools-.*'
-    <<: *releng_view_common
+- project:
+    name: yangtools-view
+    project: yangtools
+    project-name: yangtools
+    views:
+      - project-view

@@ -10,7 +10,6 @@
           rtd-build-url: https://readthedocs.org/api/v2/webhook/opendaylight-ovsdb/35667/
           rtd-token: 46030df8681cf7fc857aa80c1a7695f46ed252be
       - odl-maven-jobs
-
     stream: neon
     project: 'ovsdb'
     project-name: 'ovsdb'
@@ -35,7 +34,6 @@
           rtd-build-url: https://readthedocs.org/api/v2/webhook/opendaylight-ovsdb/35667/
           rtd-token: 46030df8681cf7fc857aa80c1a7695f46ed252be
       - odl-maven-jobs
-
     stream: fluorine
     project: 'ovsdb'
     project-name: 'ovsdb'
@@ -55,7 +53,6 @@
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-maven-javadoc-jobs'
       - odl-maven-jobs
-
     stream: oxygen
     project: 'ovsdb'
     project-name: 'ovsdb'
@@ -69,8 +66,9 @@
     # Used by the release job
     staging-profile-id: a68b188166958
 
-- view:
-    name: ovsdb
-    description: 'List of ovsdb jobs'
-    regex: '^ovsdb-.*'
-    <<: *releng_view_common
+- project:
+    name: ovsdb-view
+    project: ovsdb
+    project-name: ovsdb
+    views:
+      - project-view

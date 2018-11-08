@@ -4,7 +4,6 @@
     jobs:
       - 'odl-maven-jobs'
       - '{project-name}-integration-{stream}'
-
     stream: neon
     project: 'telemetry'
     project-name: 'telemetry'
@@ -29,7 +28,6 @@
     jobs:
       - 'odl-maven-jobs'
       - '{project-name}-integration-{stream}'
-
     stream: fluorine
     project: 'telemetry'
     project-name: 'telemetry'
@@ -53,7 +51,6 @@
     name: telemetry-sonar
     jobs:
       - gerrit-maven-sonar
-
     project: 'telemetry'
     project-name: 'telemetry'
     branch: 'master'
@@ -61,8 +58,9 @@
     mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
 
-- view:
-    name: telemetry
-    description: 'List of telemetry jobs'
-    regex: '^telemetry-.*'
-    <<: *releng_view_common
+- project:
+    name: telemetry-view
+    project: telemetry
+    project-name: telemetry
+    views:
+      - project-view

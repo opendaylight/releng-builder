@@ -8,7 +8,6 @@
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-opflex/52373/
           rtd-token: bf99281866a176904cf12861789deaf04d4b0c45
       - 'opflex-release-{stream}'
-
     stream:
       - neon:
           branch: 'master'
@@ -40,6 +39,13 @@
 
     # Used by the release job
     staging-profile-id: 906b0d53d714e
+
+- project:
+    name: opflex-view
+    project: opflex
+    project-name: opflex
+    views:
+      - project-view
 
 - job-template:
     name: 'opflex-release-{stream}'
@@ -125,9 +131,3 @@
           email-recipients: '{email-recipients}'
           email-prefix: '[opflex]'
       - lf-infra-publish
-
-- view:
-    name: opflex
-    description: 'List of opflex jobs'
-    regex: '^opflex-.*'
-    <<: *releng_view_common

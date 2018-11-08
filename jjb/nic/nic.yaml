@@ -58,6 +58,7 @@
     name: nic-sonar
     jobs:
       - gerrit-maven-sonar
+
     project: 'nic'
     project-name: 'nic'
     branch: 'master'
@@ -65,8 +66,9 @@
     mvn-settings: 'nic-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
 
-- view:
-    name: nic
-    description: 'List of nic jobs'
-    regex: '^nic-.*'
-    <<: *releng_view_common
+- project:
+    name: nic-view
+    project: nic
+    project-name: nic
+    views:
+      - project-view

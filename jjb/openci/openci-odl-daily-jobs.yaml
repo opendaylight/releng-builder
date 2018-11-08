@@ -3,6 +3,7 @@
     name: openci-odl
 
     project: '{name}'
+    project-name: '{name}'
 
     stream:
       - master:
@@ -13,6 +14,8 @@
     jobs:
       - 'openci-odl-autorelease-daily-{stream}'
       - 'openci-odl-promote-daily-{stream}'
+    views:
+      - project-view
 
 # This job gets triggered manually for the demo purposes.
 #
@@ -91,9 +94,3 @@
           echo $CI_MESSAGE
           echo "----------------------------------"
           echo " Promoted ODL Autorelease artifact as release candidate!"
-
-- view:
-    name: openci
-    description: 'List of openci jobs'
-    regex: '^openci-.*'
-    <<: *releng_view_common

@@ -3,7 +3,6 @@
     name: snbi-neon
     jobs:
       - odl-maven-jobs
-
     stream: neon
     project: 'snbi'
     project-name: 'snbi'
@@ -20,7 +19,6 @@
     name: snbi-fluorine
     jobs:
       - odl-maven-jobs
-
     stream: fluorine
     project: 'snbi'
     project-name: 'snbi'
@@ -38,7 +36,6 @@
     jobs:
       - '{project-name}-distribution-check-{stream}'
       - odl-maven-jobs
-
     stream: oxygen
     project: 'snbi'
     project-name: 'snbi'
@@ -61,8 +58,9 @@
     mvn-settings: 'snbi-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
 
-- view:
-    name: snbi
-    description: 'List of snbi jobs'
-    regex: '^snbi-.*'
-    <<: *releng_view_common
+- project:
+    name: snbi-view
+    project: snbi
+    project-name: snbi
+    views:
+      - project-view

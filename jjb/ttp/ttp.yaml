@@ -3,7 +3,6 @@
     name: ttp-neon
     jobs:
       - odl-maven-jobs
-
     stream: neon
     project: 'ttp'
     project-name: 'ttp'
@@ -20,7 +19,6 @@
     name: ttp-fluorine
     jobs:
       - odl-maven-jobs
-
     stream: fluorine
     project: 'ttp'
     project-name: 'ttp'
@@ -38,7 +36,6 @@
     jobs:
       - '{project-name}-distribution-check-{stream}'
       - odl-maven-jobs
-
     stream: oxygen
     project: 'ttp'
     project-name: 'ttp'
@@ -61,8 +58,9 @@
     mvn-settings: 'ttp-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
 
-- view:
-    name: ttp
-    description: 'List of ttp jobs'
-    regex: '^ttp-.*'
-    <<: *releng_view_common
+- project:
+    name: ttp-view
+    project: ttp
+    project-name: ttp
+    views:
+      - project-view

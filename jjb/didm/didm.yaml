@@ -61,8 +61,9 @@
     mvn-settings: 'didm-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
 
-- view:
-    name: didm
-    description: 'List of didm jobs'
-    regex: '^didm-.*'
-    <<: *releng_view_common
+- project:
+    name: didm-view
+    project: didm
+    project-name: didm
+    views:
+      - project-view
