@@ -55,14 +55,13 @@
     name: usecplugin-sonar
     jobs:
       - gerrit-maven-sonar
-
     project: 'usecplugin'
     project-name: 'usecplugin'
     mvn-settings: 'usecplugin-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
 
-- view:
-    name: usecplugin
-    description: 'List of usecplugin jobs'
-    regex: '^usecplugin-.*'
-    <<: *releng_view_common
+- project:
+    name: usecplugin-view
+    views:
+      - project-view
+    project-name: usecplugin

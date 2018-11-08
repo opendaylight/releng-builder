@@ -103,8 +103,8 @@
     mvn-settings: 'genius-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
 
-- view:
-    name: genius
-    description: 'List of genius jobs'
-    regex: '^genius-.*'
-    <<: *releng_view_common
+- project:
+    name: genius-view
+    views:
+      - project-view
+    project-name: genius

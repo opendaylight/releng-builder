@@ -55,14 +55,15 @@
     name: ocpplugin-sonar
     jobs:
       - gerrit-maven-sonar
+
     project: 'ocpplugin'
     project-name: 'ocpplugin'
     branch: 'master'
     mvn-settings: 'ocpplugin-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
 
-- view:
-    name: ocpplugin
-    description: 'List of ocpplugin jobs'
-    regex: '^ocpplugin-.*'
-    <<: *releng_view_common
+- project:
+    name: ocpplugin-view
+    views:
+      - project-view
+    project-name: ocpplugin

@@ -34,18 +34,6 @@
     recurse: false
 
 - view:
-    name: '00-Empty View'
-    description: >
-      Empty job view. This is used as the default landing view to keep the
-      Jenkins UI responding better while a) under high load and b) when there
-      are a lot of jobs defined in the system'
-    view-type: list
-    filter-executors: false
-    filter-queue: false
-    recurse: false
-    regex: ''
-
-- view:
     name: 01-Recent
     regex: '.*'
     description: 'List of most recent jobs'
@@ -53,12 +41,6 @@
       most-recent:
         max-to-include: 25
         check-start-time: true
-    <<: *releng_view_common
-
-- view:
-    name: All-Sonar
-    regex: '.*-sonar$'
-    description: 'List of Sonar jobs'
     <<: *releng_view_common
 
 - view:
@@ -79,105 +61,158 @@
       - policy-violations
     recurse: false
 
-- view:
+- project:
+    name: '00-Empty View'
+    views:
+      - common-view
+    view-name: '00-Empty View'
+    view-description: >
+      Empty job view. This is used as the default landing view to keep the
+      Jenkins UI responding better while a) under high load and b) when there
+      are a lot of jobs defined in the system
+    view-regex: ''
+
+- project:
+    name: All-Sonar
+    views:
+      - common-view
+    view-name: All-Sonar
+    view-regex: '.*-sonar$'
+    view-description: 'List of Sonar jobs'
+
+- project:
     name: CSIT-1node
-    description: 'List of CSIT 1node jobs'
-    regex: '^.*-csit-1node.*'
-    <<: *integration_view_csit
+    views:
+      - csit-view
+    view-name: CSIT-1node
+    view-description: 'List of CSIT 1node jobs'
+    view-regex: '^.*-csit-1node.*'
 
-- view:
+- project:
     name: CSIT-3node
-    description: 'List of CSIT 3node jobs'
-    regex: '^.*-csit-3node.*'
-    <<: *integration_view_csit
+    views:
+      - csit-view
+    view-name: CSIT-3node
+    view-description: 'List of CSIT 3node jobs'
+    view-regex: '^.*-csit-3node.*'
 
-- view:
+- project:
     name: CSIT
-    description: 'List of CSIT jobs'
-    regex: '^.*-csit-.*'
-    <<: *integration_view_csit
+    views:
+      - csit-view
+    view-name: CSIT
+    view-description: 'List of CSIT jobs'
+    view-regex: '^.*-csit-.*'
 
-- view:
+- project:
     name: CSIT-Verify
-    description: 'List of CSIT Verify jobs'
-    regex: '^.*-csit-verify.*'
-    <<: *integration_view_csit
+    views:
+      - csit-view
+    view-name: CSIT-Verify
+    view-description: 'List of CSIT Verify jobs'
+    view-regex: '^.*-csit-verify.*'
 
-- view:
+- project:
     name: Distribution-Check
-    description: 'List of Distribution Check jobs'
-    regex: '.*-distribution.*-check-.*'
-    <<: *releng_view_common
+    views:
+      - common-view
+    view-name: Distribution-Check
+    view-description: 'List of Distribution Check jobs'
+    view-regex: '.*-distribution.*-check-.*'
 
-- view:
+- project:
     name: Distribution-Jobs
-    description: >
+    views:
+      - common-view
+    view-name: Distribution-Jobs
+    view-description: >
         List of Distribution jobs (test, check, merge, deploy, offline, verify)
-    regex: '^.*-distribution-(?!(test|check|merge|deploy|offline|verify)).*'
-    <<: *releng_view_common
+    view-regex: '^.*-distribution-(?!(test|check|merge|deploy|offline|verify)).*'
 
-- view:
+- project:
     name: Gate
-    description: 'List of Gate jobs'
-    regex: '.*-gate-.*'
-    <<: *releng_view_common
+    views:
+      - common-view
+    view-name: Gate
+    view-description: 'List of Gate jobs'
+    view-regex: '.*-gate-.*'
 
-- view:
+- project:
     name: Integration
-    description: 'List of Integration jobs'
-    regex: '.*-integration-.*'
-    <<: *releng_view_common
+    views:
+      - common-view
+    view-name: Integration
+    view-description: 'List of Integration jobs'
+    view-regex: '.*-integration-.*'
 
-- view:
+- project:
     name: Merge-Jobs
-    description: 'List of Merge jobs'
-    regex: '.*-merge-.*'
-    <<: *releng_view_common
+    views:
+      - common-view
+    view-name: Merge-Jobs
+    view-description: 'List of Merge jobs'
+    view-regex: '.*-merge-.*'
 
-- view:
+- project:
     name: Patch-Test
-    description: 'List of Patch-Test jobs, for prioritizing jobs via the Job Priorities plugin'
-    regex: '.*-patch-test-.*'
-    <<: *releng_view_common
+    views:
+      - common-view
+    view-name: Patch-Test
+    view-description: 'List of Patch-Test jobs, for prioritizing jobs via the Job Priorities plugin'
+    view-regex: '.*-patch-test-.*'
 
-- view:
+- project:
     name: Periodic
-    description: 'List of Periodic jobs'
-    regex: '[a-zA-Z0-9]+-periodic-[a-zA-Z0-9]+'
-    <<: *releng_view_common
+    project: Periodic
+    project-name: Periodic
+    view-name: Periodic
+    views:
+      - common-view
+    view-description: 'List of Periodic jobs'
+    view-regex: '[a-zA-Z0-9]+-periodic-[a-zA-Z0-9]+'
 
-- view:
+- project:
     name: Release
-    description: 'List of Release jobs'
-    regex: '.*-release-.*'
-    <<: *releng_view_common
+    views:
+      - common-view
+    view-name: Release
+    view-description: 'List of Release jobs'
+    view-regex: '.*-release-.*'
 
-- view:
+- project:
     name: Sanity
-    description: 'List of Sanity jobs'
-    regex: '.*-sanity-.*'
-    <<: *releng_view_common
+    views:
+      - common-view
+    view-name: Sanity
+    view-description: 'List of Sanity jobs'
+    view-regex: '.*-sanity-.*'
 
-- view:
+- project:
     name: Thirdparty
-    description: 'List of ODL Nexus Thirdparty dependencies jobs'
-    regex: '.*-thirdparty-.*'
-    <<: *releng_view_common
+    views:
+      - common-view
+    view-name: Thirdparty
+    view-description: 'List of ODL Nexus Thirdparty dependencies jobs'
+    view-regex: '.*-thirdparty-.*'
 
-- view:
-    name: Validate
-    description: 'List of Validate jobs'
-    regex: '.*-validate-autorelease-.*'
-    <<: *releng_view_common
+- project:
+    name: Validate-AR
+    views:
+      - common-view
+    view-name: Validate-AR
+    view-description: 'List of Validate jobs'
+    view-regex: '.*-validate-autorelease-.*'
 
-- view:
+- project:
     name: Verify
-    description: 'List of Verify jobs, exluding CSIT jobs'
-    regex: '^(?!.*-csit).*-verify-.*'
-    <<: *releng_view_common
+    views:
+      - common-view
+    view-name: Verify
+    view-description: 'List of Verify jobs, exluding CSIT jobs'
+    view-regex: '^(?!.*-csit).*-verify-.*'
 
-- view:
+- project:
     name: builder
-    description: 'List of builder jobs'
-    regex: '^builder-.*'
-    <<: *releng_view_common
+    views:
+      - project-view
+    project-name: builder

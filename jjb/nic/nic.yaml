@@ -65,8 +65,8 @@
     mvn-settings: 'nic-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
 
-- view:
-    name: nic
-    description: 'List of nic jobs'
-    regex: '^nic-.*'
-    <<: *releng_view_common
+- project:
+    name: nic-view
+    views:
+      - project-view
+    project-name: nic

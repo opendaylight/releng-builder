@@ -41,6 +41,12 @@
     # Used by the release job
     staging-profile-id: 906b0d53d714e
 
+- project:
+    name: opflex-view
+    views:
+      - project-view
+    project-name: opflex
+
 - job-template:
     name: 'opflex-release-{stream}'
 
@@ -125,9 +131,3 @@
           email-recipients: '{email-recipients}'
           email-prefix: '[opflex]'
       - lf-infra-publish
-
-- view:
-    name: opflex
-    description: 'List of opflex jobs'
-    regex: '^opflex-.*'
-    <<: *releng_view_common

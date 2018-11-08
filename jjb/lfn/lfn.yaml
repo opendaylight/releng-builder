@@ -4,6 +4,8 @@
     jobs:
       - '{project-name}-rtd-jobs'
       - gerrit-tox-verify
+    views:
+      - project-view
 
     project-name: lfn-process
     project: lfn/process
@@ -16,9 +18,3 @@
 
     git-url: https://gerrit.linuxfoundation.org/infra/$GERRIT_PROJECT
     gerrit-server-name: lf-releng
-
-- view:
-    name: lfn
-    description: 'List of LF Networking jobs'
-    regex: '^lfn-.*'
-    <<: *releng_view_common
