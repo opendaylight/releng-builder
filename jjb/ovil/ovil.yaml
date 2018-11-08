@@ -66,8 +66,8 @@
     mvn-settings: 'ovil-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
 
-- view:
-    name: ovil
-    description: 'List of ovil jobs'
-    regex: '^ovil-.*'
-    <<: *releng_view_common
+- project:
+    name: ovil-view
+    views:
+      - project-view
+    project-name: ovil

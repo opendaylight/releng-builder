@@ -49,14 +49,15 @@
     name: unimgr-sonar
     jobs:
       - gerrit-maven-sonar
+
     project: 'unimgr'
     project-name: 'unimgr'
     branch: 'master'
     mvn-settings: 'unimgr-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
 
-- view:
-    name: unimgr
-    description: 'List of unimgr jobs'
-    regex: '^unimgr-.*'
-    <<: *releng_view_common
+- project:
+    name: unimgr-view
+    views:
+      - project-view
+    project-name: unimgr

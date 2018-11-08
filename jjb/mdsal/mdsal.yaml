@@ -138,8 +138,8 @@
     mvn-goals: '-Dmaven.compile.fork=true clean deploy -Dintegrationtests'
     mvn-opts: '-Xmx2048m'
 
-- view:
-    name: mdsal
-    description: 'List of mdsal jobs'
-    regex: '^mdsal-.*'
-    <<: *releng_view_common
+- project:
+    name: mdsal-view
+    views:
+      - project-view
+    project-name: mdsal

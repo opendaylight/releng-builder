@@ -99,6 +99,7 @@
     name: openflowplugin-sonar
     jobs:
       - gerrit-maven-sonar
+
     project: 'openflowplugin'
     project-name: 'openflowplugin'
     branch: 'master'
@@ -108,14 +109,15 @@
     mvn-goals: 'clean deploy javadoc:aggregate'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
 
-- view:
-    name: openflowplugin
-    description: 'List of openflowplugin jobs'
-    regex: '^openflowplugin-.*'
-    <<: *releng_view_common
+- project:
+    name: openflowplugin-view
+    views:
+      - project-view
+    project-name: 'openflowplugin'
 
-- view:
-    name: openflowplugin-oxygen
-    description: 'List of openflowplugin oxygen jobs'
-    regex: 'openflowplugin-.*-oxygen'
-    <<: *releng_view_common
+- project:
+    name: openflowplugin-oxygen-view
+    views:
+      - common-view
+    view-name: 'openflowplugin-oxygen'
+    view-regex: '^openflowplugin-.*-oxygen'

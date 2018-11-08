@@ -103,8 +103,8 @@
     mvn-settings: 'odlparent-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
 
-- view:
-    name: odlparent
-    description: 'List of odlparent jobs'
-    regex: '^odlparent-.*'
-    <<: *releng_view_common
+- project:
+    name: odlparent-view
+    views:
+      - project-view
+    project-name: odlparent

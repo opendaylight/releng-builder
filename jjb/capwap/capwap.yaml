@@ -62,8 +62,9 @@
     mvn-settings: 'capwap-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
 
-- view:
-    name: capwap
-    description: 'List of capwap jobs'
-    regex: '^capwap-.*'
-    <<: *releng_view_common
+
+- project:
+    name: capwap-view
+    views:
+      - project-view
+    project-name: capwap
