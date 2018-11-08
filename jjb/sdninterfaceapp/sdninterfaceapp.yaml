@@ -58,6 +58,7 @@
     name: sdninterfaceapp-sonar
     jobs:
       - gerrit-maven-sonar
+
     project: 'sdninterfaceapp'
     project-name: 'sdninterfaceapp'
     branch: 'master'
@@ -65,8 +66,8 @@
     mvn-settings: 'sdninterfaceapp-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
 
-- view:
-    name: sdninterfaceapp
-    description: 'List of sdninterfaceapp jobs'
-    regex: '^sdninterfaceapp-.*'
-    <<: *releng_view_common
+- project:
+    name: sdninterfaceapp-view
+    views:
+      - project-view
+    project-name: sdninterfaceapp

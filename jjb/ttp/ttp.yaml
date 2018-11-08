@@ -55,14 +55,15 @@
     name: ttp-sonar
     jobs:
       - gerrit-maven-sonar
+
     project: 'ttp'
     project-name: 'ttp'
     branch: 'master'
     mvn-settings: 'ttp-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
 
-- view:
-    name: ttp
-    description: 'List of ttp jobs'
-    regex: '^ttp-.*'
-    <<: *releng_view_common
+- project:
+    name: ttp-view
+    views:
+      - project-view
+    project-name: ttp
