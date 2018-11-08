@@ -12,6 +12,7 @@ Following are the list of published images available to be used with Jenkins job
 * ZZCI - CentOS 7 - devstack - 20180911-204116.460
 * ZZCI - CentOS 7 - devstack-ocata - 20171208-1649
 * ZZCI - CentOS 7 - devstack-pike - 20171208-1649
+* ZZCI - CentOS 7 - devstack-queens - 20181101-190143.891
 * ZZCI - CentOS 7 - docker - 20171209-0317
 * ZZCI - CentOS 7 - docker - 20180109-0346
 * ZZCI - CentOS 7 - docker - 20180110-1659
@@ -20,6 +21,9 @@ Following are the list of published images available to be used with Jenkins job
 * ZZCI - CentOS 7 - java-builder - 20171206-1842
 * ZZCI - CentOS 7 - java-builder - 20171209-0032
 * ZZCI - CentOS 7 - robot - 20180601-2050
+* ZZCI - OPNFV - apex - compute - 0
+* ZZCI - OPNFV - apex - compute - 1
+* ZZCI - OPNFV - apex - controller - 0
 * ZZCI - Ubuntu 14.04 - gbp - 20171208-2336
 * ZZCI - Ubuntu 14.04 - gbp - 20180723-235516.505
 * ZZCI - Ubuntu 16.04 - docker - 20180601-2047
@@ -29,7 +33,10 @@ Following are the list of published images available to be used with Jenkins job
 * ZZCI - Ubuntu 16.04 - kubernetes - 20180723-235526.580
 * ZZCI - Ubuntu 16.04 - mininet-ovs-25 - 20171208-1847
 * ZZCI - Ubuntu 16.04 - mininet-ovs-25 - 20180723-235543.682
+* ZZCI - Ubuntu 16.04 - mininet-ovs-25 - 20181029-223449.514
 * ZZCI - Ubuntu 16.04 - mininet-ovs-26 - 20171208-1847
 * ZZCI - Ubuntu 16.04 - mininet-ovs-26 - 20180723-235543.774
+* ZZCI - Ubuntu 16.04 - mininet-ovs-26 - 20181029-223513.438
 * ZZCI - Ubuntu 16.04 - mininet-ovs-28 - 20180301-1041
 * ZZCI - Ubuntu 16.04 - mininet-ovs-28 - 20180723-235605.507
+* ZZCI - Ubuntu 16.04 - mininet-ovs-28 - 20181001-220228.326
