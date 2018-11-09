@@ -15,6 +15,7 @@
     odl_system_flavor: odl-highcpu-8
     openstack_system_flavor: odl-highcpu-8
     openstack_system2_flavor: odl-highcpu-4
+    tools_system_count: 0
     os-cmb-cnt: 0
     os-ctl-cnt: 1
     os-cmp-cnt: 2
@@ -49,6 +50,7 @@
       - gate-tdd-wip:
           testplan: '{project}-{topology}-tdd-wip-openstack.txt'
           schedule: ''
+          tools_system_count: 3
       - tempest-stateful:
           test-suites: 'openstack/tempest/tempest.robot'
           testplan: '{project}-{topology}-openstack-tempest.txt'
@@ -90,6 +92,7 @@
     odl_system_flavor: odl-highcpu-8
     openstack_system_flavor: odl-highcpu-8
     openstack_system2_flavor: odl-highcpu-4
+    tools_system_count: 0
     os-cmb-cnt: 0
     os-ctl-cnt: 1
     os-cmp-cnt: 2
@@ -124,6 +127,7 @@
       - gate-tdd-wip:
           testplan: '{project}-{topology}-tdd-wip-openstack.txt'
           schedule: ''
+          tools_system_count: 3
       - tempest-stateful:
           test-suites: 'openstack/tempest/tempest.robot'
           testplan: '{project}-{topology}-openstack-tempest.txt'
@@ -165,6 +169,7 @@
     odl_system_flavor: odl-highcpu-8
     openstack_system_flavor: odl-highcpu-8
     openstack_system2_flavor: odl-highcpu-4
+    tools_system_count: 0
     os-cmb-cnt: 0
     os-ctl-cnt: 1
     os-cmp-cnt: 2
@@ -199,6 +204,7 @@
       - gate-tdd-wip:
           testplan: '{project}-{topology}-tdd-wip-openstack.txt'
           schedule: ''
+          tools_system_count: 3
       - tempest-stateful:
           test-suites: 'openstack/tempest/tempest.robot'
           testplan: '{project}-{topology}-openstack-tempest.txt'
