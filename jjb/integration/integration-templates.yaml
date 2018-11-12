@@ -37,6 +37,11 @@
     project-type: freestyle
     node: centos7-robot-2c-8g
 
+    scriptplan: '{project}.txt'
+    configplan: '{project}.txt'
+    testplan: '{project}-{functionality}.txt'
+    streamtestplan: '{project}-{functionality}-{verify-stream}.txt'
+
     properties:
       - opendaylight-infra-properties:
           build-days-to-keep: '{build-days-to-keep}'
@@ -67,9 +72,9 @@
       - integration-config-plan:
           config-plan: '{configplan}'
       - integration-stream-test-plan:
-          stream-test-plan: '{project}-{functionality}-{verify-stream}.txt'
+          stream-test-plan: '{streamtestplan}'
       - integration-test-plan:
-          test-plan: '{project}-{functionality}.txt'
+          test-plan: '{testplan}'
       - integration-jdk-version:
           jdkversion: '{verify-jdkversion}'
       - distribution-karaf-version:
@@ -134,6 +139,11 @@
 
     project-type: freestyle
     node: centos7-robot-2c-8g
+
+    scriptplan: '{project}.txt'
+    configplan: '{project}.txt'
+    testplan: '{project}-{functionality}.txt'
+    streamtestplan: '{project}-{functionality}-{stream}.txt'
 
     properties:
       - opendaylight-infra-properties:
@@ -378,6 +388,11 @@
     project-type: freestyle
     node: centos7-robot-2c-8g
 
+    scriptplan: '{project}.txt'
+    configplan: '{project}.txt'
+    testplan: '{project}-{functionality}.txt'
+    streamtestplan: '{project}-{functionality}-{verify-stream}.txt'
+
     properties:
       - opendaylight-infra-properties:
           build-days-to-keep: '{build-days-to-keep}'
@@ -408,9 +423,9 @@
       - integration-config-plan:
           config-plan: '{configplan}'
       - integration-stream-test-plan:
-          stream-test-plan: '{project}-{functionality}-{verify-stream}.txt'
+          stream-test-plan: '{streamtestplan}'
       - integration-test-plan:
-          test-plan: '{project}-{functionality}.txt'
+          test-plan: '{testplan}'
       - integration-test-suites:
           test-suites: '{test-suites}'
       - integration-jdk-version:
@@ -478,6 +493,11 @@
 
     project-type: freestyle
     node: centos7-robot-2c-8g
+
+    scriptplan: '{project}.txt'
+    configplan: '{project}.txt'
+    testplan: '{project}-{functionality}.txt'
+    streamtestplan: '{project}-{functionality}-{stream}.txt'
 
     properties:
       - opendaylight-infra-properties:
@@ -723,6 +743,11 @@
     project-type: freestyle
     node: centos7-robot-2c-8g
 
+    scriptplan: '{project}.txt'
+    configplan: '{project}.txt'
+    testplan: '{project}-{functionality}.txt'
+    streamtestplan: '{project}-{functionality}-{stream}.txt'
+
     properties:
       - opendaylight-infra-properties:
           build-days-to-keep: '{build-days-to-keep}'
@@ -753,9 +778,9 @@
       - integration-config-plan:
           config-plan: '{configplan}'
       - integration-stream-test-plan:
-          stream-test-plan: '{project}-{functionality}-{stream}.txt'
+          stream-test-plan: '{streamtestplan}'
       - integration-test-plan:
-          test-plan: '{project}-{functionality}.txt'
+          test-plan: '{testplan}'
       - integration-patch-refspec:
           branch: 'master'
       - integration-jdk-version:
@@ -847,6 +872,10 @@
     project-type: freestyle
     node: centos7-robot-2c-8g
     concurrent: true
+
+    scriptplan: '{project}.txt'
+    configplan: '{project}.txt'
+    testplan: '{project}-{functionality}.txt'
 
     properties:
       - opendaylight-infra-properties:
@@ -1067,6 +1096,10 @@
     project-type: freestyle
     node: centos7-robot-2c-8g
     concurrent: true
+
+    scriptplan: '{project}.txt'
+    configplan: '{project}.txt'
+    testplan: '{project}-{functionality}.txt'
 
     properties:
       - opendaylight-infra-properties:
@@ -1412,6 +1445,8 @@
     project-type: freestyle
     node: centos7-robot-2c-8g
     concurrent: true
+
+    testplan: '{project}-{functionality}.txt'
 
     properties:
       - opendaylight-infra-properties:
