@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "016d977e_385c3841",
+        "filename": "jjb/integration/integration-templates.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2018-11-12T09:32:17Z",
+      "side": 1,
+      "message": "I suspect these lines will break the integration jobs.\n\nI believe streamtestplan will result in a literal \u0027{project}-{functionaility}-{verify-stream}.txt\u0027 and same with the variables above it. I\u0027m not sure the nested variables here will be parsed. We should verify that before merging this patch otherwise all the csit jobs could break.",
+      "revId": "516f5c41bce0e5d0168e616a7c6e6fc18e5783f8",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
