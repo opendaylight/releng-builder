@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "bebb46c4_b4f7d2db",
+        "filename": "jjb/autorelease/autorelease-projects.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2018-11-13T05:11:56Z",
+      "side": 1,
+      "message": "Why? it\u0027s an autorelease project view.",
+      "parentUuid": "6c268de0_480fe1dc",
+      "revId": "1a2e66febf6250e7143c09bd39f757ecf555cddd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6301d350_ee839294",
         "filename": "jjb/defaults.yaml",
         "patchSetId": 3
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "This is temporarly added. Without this line the verify job fails unless we define this in all the var \u0027project\u0027 in all project view sections.\n\nLets work on this as a part of this change collectively:\nhttps://git.opendaylight.org/gerrit/#/c/77674/",
       "parentUuid": "6301d350_ee839294",
+      "revId": "1a2e66febf6250e7143c09bd39f757ecf555cddd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "70c02a25_31d8063d",
+        "filename": "jjb/defaults.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2018-11-13T05:11:56Z",
+      "side": 1,
+      "message": "No this is not required. It is being pulled in because you defined jobs and views in the same project section. They need to be completely separate from each other. Make the patch work without this.",
+      "parentUuid": "ba518178_a88cb617",
       "revId": "1a2e66febf6250e7143c09bd39f757ecf555cddd",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
