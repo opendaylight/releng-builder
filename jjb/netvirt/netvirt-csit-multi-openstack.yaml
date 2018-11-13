@@ -2,7 +2,7 @@
 - project:
     name: netvirt-csit-openstack-integration-neon
     jobs:
-      - inttest-csit-openstack
+      - inttest-csit-openstack-custom
 
     project: 'netvirt'
     stream: 'neon'
@@ -79,7 +79,7 @@
 - project:
     name: netvirt-csit-openstack-integration-fluorine
     jobs:
-      - inttest-csit-openstack
+      - inttest-csit-openstack-custom
 
     project: 'netvirt'
     stream: 'fluorine'
@@ -156,7 +156,7 @@
 - project:
     name: netvirt-csit-openstack-integration-oxygen
     jobs:
-      - inttest-csit-openstack
+      - inttest-csit-openstack-custom
 
     project: 'netvirt'
     stream: 'oxygen'
@@ -233,7 +233,7 @@
 - project:
     name: netvirt-csit-sfc-openstack-integration
     jobs:
-      - inttest-csit-openstack
+      - inttest-csit-openstack-custom
 
     project: 'netvirt'
     security-group-mode: 'stateful'
@@ -283,7 +283,7 @@
 - project:
     name: netvirt-csit-1cmb-0ctl-0cmp-openstack-integration
     jobs:
-      - inttest-csit-openstack
+      - inttest-csit-openstack-custom
 
     project: 'netvirt'
     testplan: '{project}-{topology}-openstack.txt'

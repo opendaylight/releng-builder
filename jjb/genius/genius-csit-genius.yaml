@@ -2,8 +2,8 @@
 - project:
     name: genius-csit-genius-oxygen-fluorine
     jobs:
-      - inttest-csit-1node
-      - inttest-csit-3node
+      - inttest-csit-1node-custom
+      - inttest-csit-3node-custom
 
     project: 'genius'
 
@@ -12,6 +12,8 @@
       - 'gate'
       - 'tdd-wip':
           testplan: '{project}-tdd-wip.txt'
+
+    testplan: '{project}-{functionality}.txt'
 
     stream:
       - neon:
