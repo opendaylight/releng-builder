@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "8e993702_f5c0f5ba",
+        "filename": "jjb/autorelease/autorelease-projects.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2018-11-13T06:46:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bebb46c4_b4f7d2db",
+      "revId": "1a2e66febf6250e7143c09bd39f757ecf555cddd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6301d350_ee839294",
         "filename": "jjb/defaults.yaml",
         "patchSetId": 3
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "No this is not required. It is being pulled in because you defined jobs and views in the same project section. They need to be completely separate from each other. Make the patch work without this.",
       "parentUuid": "ba518178_a88cb617",
+      "revId": "1a2e66febf6250e7143c09bd39f757ecf555cddd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "efcdbf58_b417e1fd",
+        "filename": "jjb/defaults.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2018-11-13T06:46:12Z",
+      "side": 1,
+      "message": "We\u0027ve had this discussion earlier. This is required because of the nested vars in the lines L11-L14 OR we\u0027ll have to add the \"project: \u003cproject-name\u003e\" for each views we are defining.",
+      "parentUuid": "70c02a25_31d8063d",
       "revId": "1a2e66febf6250e7143c09bd39f757ecf555cddd",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
