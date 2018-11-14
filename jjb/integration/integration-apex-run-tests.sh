@@ -10,6 +10,34 @@ set -ex -o pipefail
 
 get_os_deploy
 
+# Modify ODL Log Levels, if needed, for new distribution. This will modify the
+# control nodes hiera data which will be used during the puppet deploy
+# CONTROLLERDEBUGMAP is expected to be a key:value map of space separated values like "module:level module2:level2"
+# where module is abbreviated and does not include "org.opendaylight."
+unset IFS
+echo "CONTROLLERDEBUGMAP: ${CONTROLLERDEBUGMAP}"
+if [ -n "${CONTROLLERDEBUGMAP}" ]; then
+    logging_config='\"opendaylight::log_levels\": {'
+    for kv in ${CONTROLLERDEBUGMAP}; do
+        module="${kv%%:*}"
+        level="${kv#*:}"
+        echo "module: $module, level: $level"
+        # shellcheck disable=SC2157
+        if [ -n "${module}" ] && [ -n "${level}" ]; then
+            orgmodule="org.opendaylight.${module}"
+            logging_config="${logging_config} \\\"${orgmodule}\\\": \\\"${level}\\\","
+        fi
+    done
+    # replace the trailing comma with a closing brace followed by trailing comma
+    logging_config=${logging_config%,}" },"
+    echo $logging_config
+
+    # fine a sane line number to inject the custom logging json
+    lineno=$(ssh $OPENSTACK_CONTROL_NODE_1_IP "sudo grep -Fn 'opendaylight::log_mechanism' /etc/puppet/hieradata/service_configs.json" | awk -F: '{print $1}')
+    ssh $OPENSTACK_CONTROL_NODE_1_IP "sudo sed -i \"${lineno}i ${logging_config}\" /etc/puppet/hieradata/service_configs.json"
+    ssh $OPENSTACK_CONTROL_NODE_1_IP "sudo cat /etc/puppet/hieradata/service_configs.json"
+fi
+
 # Swap out the ODL distribution
 DISTRO_UNDER_TEST=/tmp/odl.tar.gz
 wget --progress=dot:mega ${ACTUAL_BUNDLE_URL}
