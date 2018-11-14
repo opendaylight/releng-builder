@@ -40,6 +40,7 @@
     #####################
 
     build-days-to-keep: 30
+    build-timeout: 360  # Time in minutes
     disable-job: false
 
     #####################
@@ -55,6 +56,9 @@
       - opendaylight-infra-properties:
           build-days-to-keep: '{build-days-to-keep}'
 
+    wrappers:
+      - opendaylight-infra-wrappers:
+          build-timeout: '{build-timeout}'
 
 #################
 # Job Templates #
@@ -105,10 +109,6 @@
           basedir: 'test'
           refspec: '$GERRIT_REFSPEC'
           branch: 'master'
-
-    wrappers:
-      - opendaylight-infra-wrappers:
-          build-timeout: '{build-timeout}'
 
     triggers:
       - integration-trigger-patch-submitted:
@@ -220,10 +220,6 @@
       # we need this for not SR projects
       - integration-csit-trigger:
           jobs: '{trigger-jobs}'
-
-    wrappers:
-      - opendaylight-infra-wrappers:
-          build-timeout: '{build-timeout}'
 
     builders:
       - lf-infra-pre-build
@@ -515,10 +511,6 @@
           refspec: '$GERRIT_REFSPEC'
           branch: 'master'
 
-    wrappers:
-      - opendaylight-infra-wrappers:
-          build-timeout: '{build-timeout}'
-
     triggers:
       - integration-trigger-patch-submitted:
           gerrit-server-name: '{gerrit-server-name}'
@@ -630,10 +622,6 @@
       # we need this for not SR projects
       - integration-csit-trigger:
           jobs: '{trigger-jobs}'
-
-    wrappers:
-      - opendaylight-infra-wrappers:
-          build-timeout: '{build-timeout}'
 
     builders:
       - lf-infra-pre-build
@@ -926,10 +914,6 @@
           refspec: '$PATCHREFSPEC'
           branch: 'master'
 
-    wrappers:
-      - opendaylight-infra-wrappers:
-          build-timeout: '{build-timeout}'
-
     builders:
       - lf-infra-pre-build
       - integration-infra-stack:
@@ -1169,10 +1153,6 @@
           basedir: 'test'
           refspec: '$PATCHREFSPEC'
           branch: 'master'
-
-    wrappers:
-      - opendaylight-infra-wrappers:
-          build-timeout: '{build-timeout}'
 
     triggers:
       - timed: '{schedule}'
@@ -1568,10 +1548,6 @@
           refspec: '$PATCHREFSPEC'
           branch: 'master'
 
-    wrappers:
-      - opendaylight-infra-wrappers:
-          build-timeout: '{build-timeout}'
-
     triggers:
       - timed: '{schedule}'
 
@@ -1827,10 +1803,6 @@
       - integration-distribution-scm:
           branch: '{branch}'
 
-    wrappers:
-      - opendaylight-infra-wrappers:
-          build-timeout: '{build-timeout}'
-
     triggers:
       - gerrit:
           server-name: '{gerrit-server-name}'
@@ -1987,10 +1959,6 @@
           basedir: 'test'
           refspec: '$PATCHREFSPEC'
           branch: 'master'
-
-    wrappers:
-      - opendaylight-infra-wrappers:
-          build-timeout: '{build-timeout}'
 
     triggers:
       - timed: '{schedule}'
