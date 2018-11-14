@@ -130,7 +130,7 @@
       - lf-maven-install:
           mvn-version: '{mvn-version}'
       - wipe-local-maven-repo
-      - jacoco-nojava-workaround
+      - lf-jacoco-nojava-workaround
       - shell: "./scripts/list-project-dependencies.sh"
       - autorelease-determine-merge-order
       - autorelease-cfp:
@@ -543,7 +543,7 @@
       - lf-infra-pre-build
       - autorelease-checkout-gerrit-patch
       - autorelease-compare-projects
-      - jacoco-nojava-workaround
+      - lf-jacoco-nojava-workaround
       - shell: "./scripts/list-project-dependencies.sh"
       - autorelease-determine-merge-order
       - autorelease-generate-release-patches

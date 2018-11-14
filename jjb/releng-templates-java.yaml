@@ -77,7 +77,7 @@
           result: 'success'
 
     builders:
-      - jacoco-nojava-workaround
+      - lf-jacoco-nojava-workaround
       - provide-maven-settings:
           global-settings-file: 'global-settings'
           settings-file: '{mvn-settings}'
@@ -166,7 +166,7 @@
           forbidden-files: ''
 
     prebuilders:
-      - jacoco-nojava-workaround
+      - lf-jacoco-nojava-workaround
       - provide-maven-settings:
           global-settings-file: 'global-settings'
           settings-file: '{mvn-settings}'

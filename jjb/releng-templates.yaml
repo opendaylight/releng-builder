@@ -40,7 +40,7 @@
 
     builders:
       - wipe-org-opendaylight-repo
-      - jacoco-nojava-workaround
+      - lf-jacoco-nojava-workaround
       - provide-maven-settings:
           global-settings-file: 'global-settings'
           settings-file: 'autorelease-settings'
@@ -92,7 +92,7 @@
 
     builders:
       - wipe-org-opendaylight-repo
-      - jacoco-nojava-workaround
+      - lf-jacoco-nojava-workaround
       - releng-fetch-p2zip-if-necessary:
           maven-version: 'mvn35'
           settings: '{mvn-settings}'
