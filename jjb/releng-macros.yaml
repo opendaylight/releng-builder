@@ -337,11 +337,6 @@
       - shell: 'if [ -d /tmp/r ]; then rm -rf /tmp/r; fi'
 
 - builder:
-    name: jacoco-nojava-workaround
-    builders:
-      - shell: 'mkdir -p $WORKSPACE/target/classes $WORKSPACE/jacoco/classes'
-
-- builder:
     name: provide-maven-settings
     builders:
       - config-file-provider:
