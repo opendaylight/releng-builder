@@ -123,7 +123,7 @@ function install_rdo_release() {
 # Involves just setting up the shared directory
 function setup_live_migration_control() {
     local control_ip=$1
-    printf "${control_ip}:Setup directory Share with NFS"
+    printf "%s:Setup directory Share with NFS" "${control_ip}"
     cat > ${WORKSPACE}/setup_live_migration_control.sh << EOF
 sudo mkdir --mode=777 /vm_instances
 sudo chown -R jenkins:jenkins /vm_instances
@@ -140,8 +140,8 @@ EOF
 function setup_live_migration_compute() {
     local compute_ip=$1
     local control_ip=$2
-    printf "${compute_ip}:Mount Shared directory from ${control_ip}"
-    printf "${compute_ip}:Configure libvirt in listen mode"
+    printf "%s:Mount Shared directory from ${control_ip}" "${compute_ip}"
+    printf "%s:Configure libvirt in listen mode" "${compute_ip}"
     cat >  ${WORKSPACE}/setup_live_migration_compute.sh << EOF
 sudo yum install -y libvirt libvirt-devel nfs-utils
 sudo crudini --verbose  --set --inplace /etc/libvirt/libvirtd.conf '' listen_tls 0
