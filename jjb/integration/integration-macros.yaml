@@ -1,6 +1,28 @@
 ---
 # TODO: Make all bash constants more readable.
 # e.g.: DISTRIBUTION_BRANCH instead of DISTROBRANCH.
+
+- parameter:
+    name: integration-csit-parameters
+    parameters:
+      - opendaylight-infra-parameters:
+          os-cloud: '{os-cloud}'
+          project: 'integration/test'
+          branch: '{branch}'
+          refspec: 'refs/heads/{branch}'
+          artifacts: '{archive-artifacts}'
+      - integration-bundle-url:
+          bundle-url: '{bundle-url}'
+      - integration-repo-url:
+          repo-url: '{repo-url}'
+      - integration-controller-features:
+          controller-features: '{install-features}'
+      - integration-test-options:
+          test-options: '{robot-options}'
+      - integration-use-features-boot:
+          use-features-boot: '{use-features-boot}'
+
+
 - parameter:
     name: integration-distribution-branch
     parameters:
