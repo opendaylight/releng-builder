@@ -247,13 +247,6 @@
           send-to:
             - recipients
 
-
-- builder:
-    # Installs the openstack cli into a virtualenv at /tmp/v/openstack
-    name: odl-openstack-install
-    builders:
-      - shell: !include-raw: odl-openstack-install.sh
-
 - builder:
     name: odl-openstack-check-image-protection
     builders:
