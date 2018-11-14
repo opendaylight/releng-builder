@@ -180,14 +180,6 @@
           skip-tag: true
           choosing-strategy: '{choosing-strategy}'
 
-- wrapper:
-    name: build-timeout
-    wrappers:
-      - timeout:
-          type: absolute
-          timeout: 360
-          fail: true
-
 # This is a single macro to use for all jobs who vote on every (relevant) patch set.
 # Only 'recheck' trigger word is supported, it always triggers the full set of relevant jobs,
 # in order to prevent Jenkins from starting only a subset and still voting Verified+1.
@@ -380,18 +372,6 @@
     name: jacoco-nojava-workaround
     builders:
       - shell: 'mkdir -p $WORKSPACE/target/classes $WORKSPACE/jacoco/classes'
-
-- builder:
-    name: check-clm
-    builders:
-      - sonatype-clm:
-          application-name: '{application-name}'
-
-- builder:
-    name: releng-check-unicode
-    builders:
-      - shell: |
-          $WORKSPACE/scripts/check-unicode.sh jjb/
 
 - builder:
     name: provide-maven-settings
