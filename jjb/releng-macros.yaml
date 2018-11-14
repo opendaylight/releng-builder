@@ -336,16 +336,6 @@
     builders:
       - shell: 'if [ -d /tmp/r ]; then rm -rf /tmp/r; fi'
 
-- builder:
-    name: provide-maven-settings
-    builders:
-      - config-file-provider:
-          files:
-            - file-id: '{global-settings-file}'
-              variable: 'GLOBAL_SETTINGS_FILE'
-            - file-id: '{settings-file}'
-              variable: 'SETTINGS_FILE'
-
 - publisher:
     name: releng-openstack-stack-delete
     publishers:
