@@ -18,15 +18,38 @@
           repo-url: '{repo-url}'
       - integration-test-options:
           test-options: '{robot-options}'
-      # Controller
-      - integration-controller-scope:
-          controller-scope: '{controller-scope}'
-      - integration-controller-debug-map:
+      - integration-controller-parameters:
           controller-debug-map: '{debug-map}'
-      - integration-controller-features:
           controller-features: '{install-features}'
-            - integration-use-features-boot:
-          use-features-boot: '{use-features-boot}'
+          controller-scope: '{controller-scope}'
+          controller-use-features-boot: '{use-features-boot}'
+
+- parameter:
+    name: integration-controller-parameters
+    parameters:
+      - string:
+          name: CONTROLLERSCOPE
+          default: '{controller-scope}'
+          description: 'Feature Only or Feature All test'
+
+      - string:
+          name: CONTROLLERFEATURES
+          default: '{controller-features}'
+          description: 'Features to install in the controller separated by comma'
+
+      - string:
+          name: CONTROLLERDEBUGMAP
+          default: '{controller-debug-map}'
+          description: |
+              Key:Value map of debugs to enable on the controller separated by spaces.
+              The module should not include org.opendaylight.
+              The levels must be one of: ERROR, WARN, INFO, DEBUG, TRACE.
+              (ex. ovsdb.lib:ERROR netvirt.vpnservice:INFO)
+
+      - string:
+          name: USEFEATURESBOOT
+          default: '{controller-use-features-boot}'
+          description: 'Boolean to toggle whether featuresBoot is appended or ignored'
 
 
 - parameter:
@@ -70,34 +93,6 @@
           name: JDKVERSION
           default: '{jdkversion}'
           description: 'Parameter to indicate JAVA Version'
-
-- parameter:
-    name: integration-controller-scope
-    parameters:
-      - string:
-          name: CONTROLLERSCOPE
-          default: '{controller-scope}'
-          description: 'Feature Only or Feature All test'
-
-- parameter:
-    name: integration-controller-features
-    parameters:
-      - string:
-          name: CONTROLLERFEATURES
-          default: '{controller-features}'
-          description: 'Features to install in the controller separated by comma'
-
-- parameter:
-    name: integration-controller-debug-map
-    parameters:
-      - string:
-          name: CONTROLLERDEBUGMAP
-          default: '{controller-debug-map}'
-          description: |
-              Key:Value map of debugs to enable on the controller separated by spaces.
-              The module should not include org.opendaylight.
-              The levels must be one of: ERROR, WARN, INFO, DEBUG, TRACE.
-              (ex. ovsdb.lib:ERROR netvirt.vpnservice:INFO)
 
 - parameter:
     name: integration-distribution-stream
@@ -174,14 +169,6 @@
           name: PATCHREFSPEC
           default: '{branch}'
           description: 'Integration Patch Refspec'
-
-- parameter:
-    name: integration-use-features-boot
-    parameters:
-      - string:
-          name: USEFEATURESBOOT
-          default: '{use-features-boot}'
-          description: 'Boolean to toggle whether featuresBoot is appended or ignored'
 
 # Macro: integration-gerrit-scm
 # Operation: this macro downloads a project gerrit
