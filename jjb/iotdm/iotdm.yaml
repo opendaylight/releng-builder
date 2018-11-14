@@ -65,8 +65,8 @@
     mvn-settings: 'iotdm-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
 
-- view:
-    name: iotdm
-    description: 'List of iotdm jobs'
-    regex: '^iotdm-.*'
-    <<: *releng_view_common
+- project:
+    name: iotdm-view
+    views:
+      - project-view
+    project-name: iotdm

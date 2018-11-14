@@ -39,6 +39,7 @@
     name: serviceutils-sonar
     jobs:
       - gerrit-maven-sonar
+
     project: 'serviceutils'
     project-name: 'serviceutils'
     branch: 'master'
@@ -46,8 +47,8 @@
     mvn-settings: 'serviceutils-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
 
-- view:
-    name: serviceutils
-    description: 'List of serviceutils jobs'
-    regex: '^serviceutils-.*'
-    <<: *releng_view_common
+- project:
+    name: serviceutils-view
+    views:
+      - project-view
+    project-name: serviceutils

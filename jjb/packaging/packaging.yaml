@@ -606,8 +606,8 @@
     publishers:
       - lf-infra-publish
 
-- view:
-    name: packaging
-    description: 'List of packaging, ansible and puppet jobs'
-    regex: '^packaging.*|ansible.*|puppet.*'
-    <<: *releng_view_common
+- project:
+    name: packaging-view
+    views:
+      - project-view
+    project-name: packaging
