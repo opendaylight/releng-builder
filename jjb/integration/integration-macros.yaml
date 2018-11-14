@@ -570,30 +570,18 @@
 # Publishers #
 ##############
 
-# Macro: integration-robot
-# Operation: this macro publishes robot results
-# Used by: {project}-csit-* job templates
-
 - publisher:
-    name: integration-robot
+    name: integration-csit-publish
     publishers:
       - robot:
           output-path: ''
-          other-files: ''
-          unstable-threshold: '{unstable-if}'
-          pass-threshold: '{pass-if}'
+          other-files: '{obj:robot_other_files}'
+          unstable-threshold: '{robot-unstable-threshold}'
+          pass-threshold: '{robot-pass-threshold}'
           only-critical: false
-
-- publisher:
-    name: integration-robot-tempest
-    publishers:
-      - robot:
-          output-path: ''
-          other-files:
-            - tempest_results.html
-          unstable-threshold: '{unstable-if}'
-          pass-threshold: '{pass-if}'
-          only-critical: false
+      - integration-csit-archive-build
+      - integration-csit-run-postscript
+      - releng-openstack-stack-delete
 
 - publisher:
     name: integration-csit-archive-build
