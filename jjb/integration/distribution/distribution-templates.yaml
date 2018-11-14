@@ -1,7 +1,4 @@
 ---
-- project:
-    name: distribution-templates
-
 - job-template:
     name: '{project-name}-distribution-check-{stream}'
 
@@ -481,4 +478,3 @@
           email-prefix: '[{project-name}]'
       - integration-csit-archive-build
       - lf-infra-publish
-
