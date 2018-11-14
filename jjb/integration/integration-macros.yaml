@@ -570,6 +570,17 @@
 # Publishers #
 ##############
 
+- publisher:
+    name: integration-csit-publish
+    publishers:
+      - integration-robot-tempest:
+          unstable-if: 0.0
+          pass-if: 100.0
+      - integration-csit-archive-build
+      - integration-csit-run-postscript
+      - releng-openstack-stack-delete
+
+
 # Macro: integration-robot
 # Operation: this macro publishes robot results
 # Used by: {project}-csit-* job templates
