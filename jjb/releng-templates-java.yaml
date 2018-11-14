@@ -78,7 +78,7 @@
 
     builders:
       - lf-jacoco-nojava-workaround
-      - provide-maven-settings:
+      - lf-provide-maven-settings:
           global-settings-file: 'global-settings'
           settings-file: '{mvn-settings}'
       - maven-target:
@@ -167,7 +167,7 @@
 
     prebuilders:
       - lf-jacoco-nojava-workaround
-      - provide-maven-settings:
+      - lf-provide-maven-settings:
           global-settings-file: 'global-settings'
           settings-file: '{mvn-settings}'
       - lf-maven-install:

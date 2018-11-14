@@ -389,16 +389,6 @@
           $WORKSPACE/scripts/check-unicode.sh jjb/
 
 - builder:
-    name: provide-maven-settings
-    builders:
-      - config-file-provider:
-          files:
-            - file-id: '{global-settings-file}'
-              variable: 'GLOBAL_SETTINGS_FILE'
-            - file-id: '{settings-file}'
-              variable: 'SETTINGS_FILE'
-
-- builder:
     name: releng-fetch-p2zip-if-necessary
     builders:
       - shell: |
