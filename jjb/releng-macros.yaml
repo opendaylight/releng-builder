@@ -60,22 +60,6 @@
               https://docs.openstack.org/developer/python-openstackclient/
 
 - parameter:
-    name: build-tag
-    parameters:
-      - string:
-          name: BUILD_TAG
-          default: ''
-          description: 'Tag in Git to checkout'
-
-- parameter:
-    name: controller-version-parameter
-    parameters:
-      - string:
-          name: ODL_VERSION
-          default: '{odl_version}'
-          description: 'Controller version (for use with openstacks networking_odl project)'
-
-- parameter:
     name: patches-to-build-parameter
     parameters:
       - string:
@@ -179,14 +163,6 @@
             - 'origin/$GERRIT_BRANCH'
           skip-tag: true
           choosing-strategy: '{choosing-strategy}'
-
-- wrapper:
-    name: build-timeout
-    wrappers:
-      - timeout:
-          type: absolute
-          timeout: 360
-          fail: true
 
 # This is a single macro to use for all jobs who vote on every (relevant) patch set.
 # Only 'recheck' trigger word is supported, it always triggers the full set of relevant jobs,
@@ -380,18 +356,6 @@
     name: jacoco-nojava-workaround
     builders:
       - shell: 'mkdir -p $WORKSPACE/target/classes $WORKSPACE/jacoco/classes'
-
-- builder:
-    name: check-clm
-    builders:
-      - sonatype-clm:
-          application-name: '{application-name}'
-
-- builder:
-    name: releng-check-unicode
-    builders:
-      - shell: |
-          $WORKSPACE/scripts/check-unicode.sh jjb/
 
 - builder:
     name: provide-maven-settings
