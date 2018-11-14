@@ -70,26 +70,23 @@
     <<: *inttest_csit_common
 
     parameters:
-      - opendaylight-infra-parameters:
-          os-cloud: '{os-cloud}'
-          project: 'integration/test'
+      - integration-csit-parameters:
+          archive-artifacts: '{archive-artifacts}'
           branch: '{branch}'
-          refspec: 'refs/heads/{branch}'
-          artifacts: '{archive-artifacts}'
+          os-cloud: '{os-cloud}'
+          # CSIT
+          bundle-url: '{bundle-url}'
+          repo-url: '{repo-url}'
+          robot-options: '{robot-options}'
+          # Controller
+          install-features: '{install-features}'
+          use-features-boot: 'True'
       - integration-distribution-branch:
           branch: '{verify-branch}'
       - integration-distribution-stream:
           stream: '{verify-stream}'
-      - integration-bundle-url:
-          bundle-url: '{bundle-url}'
-      - integration-repo-url:
-          repo-url: '{repo-url}'
       - integration-controller-scope:
           controller-scope: 'only'
-      - integration-controller-features:
-          controller-features: '{install-features}'
-      - integration-test-options:
-          test-options: '{robot-options}'
       - integration-script-plan:
           script-plan: '{project}.txt'
       - integration-config-plan:
@@ -102,8 +99,7 @@
           jdkversion: '{verify-jdkversion}'
       - distribution-karaf-version:
           karaf-version: '{verify-karaf-version}'
-      - integration-use-features-boot:
-          use-features-boot: 'True'
+
     scm:
       - integration-gerrit-scm:
           basedir: 'test'
@@ -164,28 +160,25 @@
     #####################
 
     parameters:
-      - opendaylight-infra-parameters:
-          os-cloud: '{os-cloud}'
-          project: 'integration/test'
+      - integration-csit-parameters:
+          archive-artifacts: '{archive-artifacts}'
           branch: '{branch}'
-          refspec: 'refs/heads/{branch}'
-          artifacts: '{archive-artifacts}'
+          os-cloud: '{os-cloud}'
+          # CSIT
+          bundle-url: '{bundle-url}'
+          repo-url: '{repo-url}'
+          robot-options: '{robot-options}'
+          # Controller
+          install-features: '{install-features}'
+          use-features-boot: 'True'
       - integration-distribution-branch:
           branch: '{branch}'
       - integration-distribution-stream:
           stream: '{stream}'
-      - integration-bundle-url:
-          bundle-url: '{bundle-url}'
-      - integration-repo-url:
-          repo-url: '{repo-url}'
       - integration-controller-scope:
           controller-scope: '{scope}'
-      - integration-controller-features:
-          controller-features: '{install-features}'
       - integration-controller-debug-map:
           controller-debug-map: '{debug-map}'
-      - integration-test-options:
-          test-options: '{robot-options}'
       - integration-script-plan:
           script-plan: '{project}.txt'
       - integration-config-plan:
@@ -202,8 +195,6 @@
           jdkversion: '{jre}'
       - distribution-karaf-version:
           karaf-version: '{karaf-version}'
-      - integration-use-features-boot:
-          use-features-boot: 'True'
 
     scm:
       - integration-gerrit-scm:
@@ -400,28 +391,25 @@
     <<: *inttest_csit_1node
 
     parameters:
-      - opendaylight-infra-parameters:
-          os-cloud: '{os-cloud}'
-          project: 'integration/test'
+      - integration-csit-parameters:
+          archive-artifacts: '{archive-artifacts}'
           branch: '{branch}'
-          refspec: 'refs/heads/{branch}'
-          artifacts: '{archive-artifacts}'
+          os-cloud: '{os-cloud}'
+          # CSIT
+          bundle-url: '{bundle-url}'
+          repo-url: '{repo-url}'
+          robot-options: '{robot-options}'
+          # Controller
+          install-features: '{install-features}'
+          use-features-boot: 'True'
       - integration-distribution-branch:
           branch: '{branch}'
       - integration-distribution-stream:
           stream: '{stream}'
-      - integration-bundle-url:
-          bundle-url: '{bundle-url}'
-      - integration-repo-url:
-          repo-url: '{repo-url}'
       - integration-controller-scope:
           controller-scope: '{scope}'
-      - integration-controller-features:
-          controller-features: '{install-features}'
       - integration-controller-debug-map:
           controller-debug-map: '{debug-map}'
-      - integration-test-options:
-          test-options: '{robot-options}'
       - integration-script-plan:
           script-plan: '{project}.txt'
       - integration-config-plan:
@@ -438,8 +426,6 @@
           jdkversion: '{jre}'
       - distribution-karaf-version:
           karaf-version: '{karaf-version}'
-      - integration-use-features-boot:
-          use-features-boot: 'True'
 
 
 - job-template:
@@ -458,26 +444,23 @@
     #####################
 
     parameters:
-      - opendaylight-infra-parameters:
-          os-cloud: '{os-cloud}'
-          project: 'integration/test'
+      - integration-csit-parameters:
+          archive-artifacts: '{archive-artifacts}'
           branch: '{branch}'
-          refspec: 'refs/heads/{branch}'
-          artifacts: '{archive-artifacts}'
+          os-cloud: '{os-cloud}'
+          # CSIT
+          bundle-url: '{bundle-url}'
+          repo-url: '{repo-url}'
+          robot-options: '{robot-options}'
+          # Controller
+          install-features: 'odl-jolokia,{install-features}'
+          use-features-boot: 'True'
       - integration-distribution-branch:
           branch: '{verify-branch}'
       - integration-distribution-stream:
           stream: '{verify-stream}'
-      - integration-bundle-url:
-          bundle-url: '{bundle-url}'
-      - integration-repo-url:
-          repo-url: '{repo-url}'
       - integration-controller-scope:
           controller-scope: 'only'
-      - integration-controller-features:
-          controller-features: 'odl-jolokia,{install-features}'
-      - integration-test-options:
-          test-options: '{robot-options}'
       - integration-script-plan:
           script-plan: '{project}.txt'
       - integration-config-plan:
@@ -492,8 +475,6 @@
           jdkversion: '{verify-jdkversion}'
       - distribution-karaf-version:
           karaf-version: '{verify-karaf-version}'
-      - integration-use-features-boot:
-          use-features-boot: 'True'
 
     scm:
       - integration-gerrit-scm:
@@ -556,28 +537,25 @@
     #####################
 
     parameters:
-      - opendaylight-infra-parameters:
-          os-cloud: '{os-cloud}'
-          project: 'integration/test'
+      - integration-csit-parameters:
+          archive-artifacts: '{archive-artifacts}'
           branch: '{branch}'
-          refspec: 'refs/heads/{branch}'
-          artifacts: '{archive-artifacts}'
+          os-cloud: '{os-cloud}'
+          # CSIT
+          bundle-url: '{bundle-url}'
+          repo-url: '{repo-url}'
+          robot-options: '{robot-options}'
+          # Controller
+          install-features: 'odl-jolokia,{install-features}'
+          use-features-boot: 'True'
       - integration-distribution-branch:
           branch: '{branch}'
       - integration-distribution-stream:
           stream: '{stream}'
-      - integration-bundle-url:
-          bundle-url: '{bundle-url}'
-      - integration-repo-url:
-          repo-url: '{repo-url}'
       - integration-controller-scope:
           controller-scope: '{scope}'
-      - integration-controller-features:
-          controller-features: 'odl-jolokia,{install-features}'
       - integration-controller-debug-map:
           controller-debug-map: '{debug-map}'
-      - integration-test-options:
-          test-options: '{robot-options}'
       - integration-script-plan:
           script-plan: '{project}.txt'
       - integration-config-plan:
@@ -594,8 +572,6 @@
           jdkversion: '{jre}'
       - distribution-karaf-version:
           karaf-version: '{karaf-version}'
-      - integration-use-features-boot:
-          use-features-boot: 'True'
 
     scm:
       - integration-gerrit-scm:
@@ -793,28 +769,25 @@
     <<: *inttest_csit_3node
 
     parameters:
-      - opendaylight-infra-parameters:
-          os-cloud: '{os-cloud}'
-          project: 'integration/test'
+      - integration-csit-parameters:
+          archive-artifacts: '{archive-artifacts}'
           branch: '{branch}'
-          refspec: 'refs/heads/{branch}'
-          artifacts: '{archive-artifacts}'
+          os-cloud: '{os-cloud}'
+          # CSIT
+          bundle-url: '{bundle-url}'
+          repo-url: '{repo-url}'
+          robot-options: '{robot-options}'
+          # Controller
+          install-features: 'odl-jolokia,{install-features}'
+          use-features-boot: 'True'
       - integration-distribution-branch:
           branch: '{branch}'
       - integration-distribution-stream:
           stream: '{stream}'
-      - integration-bundle-url:
-          bundle-url: '{bundle-url}'
-      - integration-repo-url:
-          repo-url: '{repo-url}'
       - integration-controller-scope:
           controller-scope: '{scope}'
-      - integration-controller-features:
-          controller-features: 'odl-jolokia,{install-features}'
       - integration-controller-debug-map:
           controller-debug-map: '{debug-map}'
-      - integration-test-options:
-          test-options: '{robot-options}'
       - integration-script-plan:
           script-plan: '{project}.txt'
       - integration-config-plan:
@@ -831,8 +804,6 @@
           jdkversion: '{jre}'
       - distribution-karaf-version:
           karaf-version: '{karaf-version}'
-      - integration-use-features-boot:
-          use-features-boot: 'True'
 
 
 - job-template:
@@ -851,26 +822,23 @@
     #####################
 
     parameters:
-      - opendaylight-infra-parameters:
-          os-cloud: '{os-cloud}'
-          project: 'integration/test'
+      - integration-csit-parameters:
+          archive-artifacts: '{archive-artifacts}'
           branch: '{branch}'
-          refspec: 'refs/heads/{branch}'
-          artifacts: '{archive-artifacts}'
+          os-cloud: '{os-cloud}'
+          # CSIT
+          bundle-url: '{bundle-url}'
+          repo-url: '{repo-url}'
+          robot-options: '{robot-options}'
+          # Controller
+          install-features: 'odl-jolokia,{install-features}'
+          use-features-boot: 'True'
       - integration-distribution-branch:
           branch: '{branch}'
       - integration-distribution-stream:
           stream: '{stream}'
-      - integration-bundle-url:
-          bundle-url: '{bundle-url}'
-      - integration-repo-url:
-          repo-url: '{repo-url}'
       - integration-controller-scope:
           controller-scope: '{scope}'
-      - integration-controller-features:
-          controller-features: 'odl-jolokia,{install-features}'
-      - integration-test-options:
-          test-options: '{robot-options}'
       - integration-script-plan:
           script-plan: '{project}.txt'
       - integration-config-plan:
@@ -885,8 +853,6 @@
           jdkversion: '{jre}'
       - distribution-karaf-version:
           karaf-version: '{karaf-version}'
-      - integration-use-features-boot:
-          use-features-boot: 'True'
 
     scm:
       - integration-gerrit-scm:
@@ -971,26 +937,23 @@
     #####################
 
     parameters:
-      - opendaylight-infra-parameters:
-          os-cloud: '{os-cloud}'
-          project: 'integration/test'
+      - integration-csit-parameters:
+          archive-artifacts: '{archive-artifacts}'
           branch: '{branch}'
-          refspec: 'refs/heads/{branch}'
-          artifacts: '{archive-artifacts}'
+          os-cloud: '{os-cloud}'
+          # CSIT
+          bundle-url: '{bundle-url}'
+          repo-url: '{repo-url}'
+          robot-options: '{robot-options}'
+          # Controller
+          install-features: '{install-features}'
+          use-features-boot: '{use-features-boot}'
       - integration-distribution-branch:
           branch: '{branch}'
       - integration-distribution-stream:
           stream: '{stream}'
-      - integration-bundle-url:
-          bundle-url: '{bundle-url}'
-      - integration-repo-url:
-          repo-url: '{repo-url}'
-      - integration-controller-features:
-          controller-features: '{install-features}'
       - integration-controller-debug-map:
           controller-debug-map: '{debug-map}'
-      - integration-test-options:
-          test-options: '{robot-options}'
       - integration-script-plan:
           script-plan: '{project}.txt'
       - integration-config-plan:
@@ -1005,8 +968,6 @@
           jdkversion: '{jre}'
       - distribution-karaf-version:
           karaf-version: '{karaf-version}'
-      - integration-use-features-boot:
-          use-features-boot: '{use-features-boot}'
       - string:
           name: OPENSTACK_BRANCH
           default: '{openstack-branch}'
@@ -1184,26 +1145,23 @@
     <<: *inttest_csit_hwvtep_openstack
 
     parameters:
-      - opendaylight-infra-parameters:
-          os-cloud: '{os-cloud}'
-          project: 'integration/test'
+      - integration-csit-parameters:
+          archive-artifacts: '{archive-artifacts}'
           branch: '{branch}'
-          refspec: 'refs/heads/{branch}'
-          artifacts: '{archive-artifacts}'
+          os-cloud: '{os-cloud}'
+          # CSIT
+          bundle-url: '{bundle-url}'
+          repo-url: '{repo-url}'
+          robot-options: '{robot-options}'
+          # Controller
+          install-features: '{install-features}'
+          use-features-boot: '{use-features-boot}'
       - integration-distribution-branch:
           branch: '{branch}'
       - integration-distribution-stream:
           stream: '{stream}'
-      - integration-bundle-url:
-          bundle-url: '{bundle-url}'
-      - integration-repo-url:
-          repo-url: '{repo-url}'
-      - integration-controller-features:
-          controller-features: '{install-features}'
       - integration-controller-debug-map:
           controller-debug-map: '{debug-map}'
-      - integration-test-options:
-          test-options: '{robot-options}'
       - integration-script-plan:
           script-plan: '{project}.txt'
       - integration-config-plan:
@@ -1218,8 +1176,6 @@
           jdkversion: '{jre}'
       - distribution-karaf-version:
           karaf-version: '{karaf-version}'
-      - integration-use-features-boot:
-          use-features-boot: '{use-features-boot}'
       - string:
           name: OPENSTACK_BRANCH
           default: '{openstack-branch}'
@@ -1355,26 +1311,23 @@
     #####################
 
     parameters:
-      - opendaylight-infra-parameters:
-          os-cloud: '{os-cloud}'
-          project: 'integration/test'
+      - integration-csit-parameters:
+          archive-artifacts: '{archive-artifacts}'
           branch: '{branch}'
-          refspec: 'refs/heads/{branch}'
-          artifacts: '{archive-artifacts}'
+          os-cloud: '{os-cloud}'
+          # CSIT
+          bundle-url: '{bundle-url}'
+          repo-url: '{repo-url}'
+          robot-options: '{robot-options}'
+          # Controller
+          install-features: '{install-features}'
+          use-features-boot: '{use-features-boot}'
       - integration-distribution-branch:
           branch: '{branch}'
       - integration-distribution-stream:
           stream: '{stream}'
-      - integration-bundle-url:
-          bundle-url: '{bundle-url}'
-      - integration-repo-url:
-          repo-url: '{repo-url}'
-      - integration-controller-features:
-          controller-features: '{install-features}'
       - integration-controller-debug-map:
           controller-debug-map: '{debug-map}'
-      - integration-test-options:
-          test-options: '{robot-options}'
       - integration-script-plan:
           script-plan: '{project}.txt'
       - integration-config-plan:
@@ -1389,8 +1342,6 @@
           jdkversion: '{jre}'
       - distribution-karaf-version:
           karaf-version: '{karaf-version}'
-      - integration-use-features-boot:
-          use-features-boot: '{use-features-boot}'
       - string:
           name: OPENSTACK_BRANCH
           default: '{openstack-branch}'
@@ -1572,26 +1523,23 @@
     <<: *inttest_csit_openstack
 
     parameters:
-      - opendaylight-infra-parameters:
-          os-cloud: '{os-cloud}'
-          project: 'integration/test'
+      - integration-csit-parameters:
+          archive-artifacts: '{archive-artifacts}'
           branch: '{branch}'
-          refspec: 'refs/heads/{branch}'
-          artifacts: '{archive-artifacts}'
+          os-cloud: '{os-cloud}'
+          # CSIT
+          bundle-url: '{bundle-url}'
+          repo-url: '{repo-url}'
+          robot-options: '{robot-options}'
+          # Controller
+          install-features: '{install-features}'
+          use-features-boot: '{use-features-boot}'
       - integration-distribution-branch:
           branch: '{branch}'
       - integration-distribution-stream:
           stream: '{stream}'
-      - integration-bundle-url:
-          bundle-url: '{bundle-url}'
-      - integration-repo-url:
-          repo-url: '{repo-url}'
-      - integration-controller-features:
-          controller-features: '{install-features}'
       - integration-controller-debug-map:
           controller-debug-map: '{debug-map}'
-      - integration-test-options:
-          test-options: '{robot-options}'
       - integration-script-plan:
           script-plan: '{project}.txt'
       - integration-config-plan:
@@ -1606,8 +1554,6 @@
           jdkversion: '{jre}'
       - distribution-karaf-version:
           karaf-version: '{karaf-version}'
-      - integration-use-features-boot:
-          use-features-boot: '{use-features-boot}'
       - string:
           name: OPENSTACK_BRANCH
           default: '{openstack-branch}'
@@ -1856,26 +1802,23 @@
     #####################
 
     parameters:
-      - opendaylight-infra-parameters:
-          os-cloud: '{os-cloud}'
-          project: 'integration/test'
+      - integration-csit-parameters:
+          archive-artifacts: '{archive-artifacts}'
           branch: '{branch}'
-          refspec: 'refs/heads/{branch}'
-          artifacts: '{archive-artifacts}'
+          os-cloud: '{os-cloud}'
+          # CSIT
+          bundle-url: '{bundle-url}'
+          repo-url: '{repo-url}'
+          robot-options: '{robot-options}'
+          # Controller
+          install-features: '{install-features}'
+          use-features-boot: '{use-features-boot}'
       - integration-distribution-branch:
           branch: '{branch}'
       - integration-distribution-stream:
           stream: '{stream}'
-      - integration-bundle-url:
-          bundle-url: '{bundle-url}'
-      - integration-repo-url:
-          repo-url: '{repo-url}'
-      - integration-controller-features:
-          controller-features: '{install-features}'
       - integration-controller-debug-map:
           controller-debug-map: '{debug-map}'
-      - integration-test-options:
-          test-options: '{robot-options}'
       - integration-test-plan:
           test-plan: '{project}-{functionality}.txt'
       - integration-test-suites:
@@ -1886,8 +1829,6 @@
           jdkversion: '{jre}'
       - distribution-karaf-version:
           karaf-version: '{karaf-version}'
-      - integration-use-features-boot:
-          use-features-boot: '{use-features-boot}'
       - string:
           name: OPENSTACK_BRANCH
           default: '{openstack-branch}'
@@ -1974,26 +1915,23 @@
     <<: *inttest_csit_apex
 
     parameters:
-      - opendaylight-infra-parameters:
-          os-cloud: '{os-cloud}'
-          project: 'integration/test'
+      - integration-csit-parameters:
+          archive-artifacts: '{archive-artifacts}'
           branch: '{branch}'
-          refspec: 'refs/heads/{branch}'
-          artifacts: '{archive-artifacts}'
+          os-cloud: '{os-cloud}'
+          # CSIT
+          bundle-url: '{bundle-url}'
+          repo-url: '{repo-url}'
+          robot-options: '{robot-options}'
+          # Controller
+          install-features: '{install-features}'
+          use-features-boot: '{use-features-boot}'
       - integration-distribution-branch:
           branch: '{branch}'
       - integration-distribution-stream:
           stream: '{stream}'
-      - integration-bundle-url:
-          bundle-url: '{bundle-url}'
-      - integration-repo-url:
-          repo-url: '{repo-url}'
-      - integration-controller-features:
-          controller-features: '{install-features}'
       - integration-controller-debug-map:
           controller-debug-map: '{debug-map}'
-      - integration-test-options:
-          test-options: '{robot-options}'
       - integration-test-plan:
           test-plan: '{testplan}'
       - integration-test-suites:
@@ -2004,8 +1942,6 @@
           jdkversion: '{jre}'
       - distribution-karaf-version:
           karaf-version: '{karaf-version}'
-      - integration-use-features-boot:
-          use-features-boot: '{use-features-boot}'
       - string:
           name: OPENSTACK_BRANCH
           default: '{openstack-branch}'
