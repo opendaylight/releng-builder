@@ -1,0 +1,25 @@
+---
+- project:
+    name: ansible
+    jobs:
+      - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-maven-javadoc-jobs'
+      - gerrit-tox-verify
+      - odl-maven-jobs
+
+    stream:
+      - neon:
+          branch: 'master'
+      - fluorine:
+          branch: 'stable/fluorine'
+
+    project: ansible
+    project-name: ansible
+    build-node: centos7-builder-2c-2g
+    build-timeout: 60
+
+- project:
+    name: ansible-view
+    views:
+      - project-view
+    project-name: ansible
