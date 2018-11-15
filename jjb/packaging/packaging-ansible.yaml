@@ -1,7 +1,7 @@
 ---
 - project:
-    name: ansible
-    project-name: ansible
+    name: packaging-ansible
+    project-name: packaging-ansible
 
     jobs:
       - '{project-name}-test-rpm-{stream}'
@@ -109,7 +109,7 @@
       - lf-infra-publish
 
 - project:
-    name: ansible-view
+    name: packaging-ansible-view
     views:
       - project-view
-    project-name: ansible
+    project-name: packaging-ansible
