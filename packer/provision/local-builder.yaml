@@ -1,5 +1,5 @@
 ---
-- import_playbook: ../common-packer/provision/baseline.yaml
+#- import_playbook: ../common-packer/provision/baseline.yaml
 
 - hosts: all
   become_user: root
@@ -19,7 +19,10 @@
     openjdk11_version: 11
 
   pre_tasks:
-    - include_role: name=lfit.system-update
+    - name: 'Fail build'
+      yum:
+        name: git
+        state: present
 
   roles:
     - lfit.mono-install
