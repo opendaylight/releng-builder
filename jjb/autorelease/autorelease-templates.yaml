@@ -38,6 +38,7 @@
           refspec: 'refs/heads/master'
           jenkins-ssh-credential: opendaylight-jenkins-ssh
           submodule-recursive: true
+          subomdule-timeout: 10
           choosing-strategy: default
 
     wrappers:
@@ -240,6 +241,7 @@
           refspec: 'refs/heads/{branch}'
           jenkins-ssh-credential: opendaylight-jenkins-ssh
           submodule-recursive: true
+          subomdule-timeout: 10
           choosing-strategy: default
 
     wrappers:
@@ -302,6 +304,7 @@
           refspec: 'refs/heads/master'
           jenkins-ssh-credential: opendaylight-jenkins-ssh
           submodule-recursive: true
+          subomdule-timeout: 10
           choosing-strategy: default
 
     triggers:
@@ -389,6 +392,7 @@
           refspec: 'refs/heads/{branch}'
           jenkins-ssh-credential: opendaylight-jenkins-ssh
           submodule-recursive: true
+          subomdule-timeout: 10
           choosing-strategy: default
 
     wrappers:
@@ -452,6 +456,7 @@
           refspec: '$GERRIT_REFSPEC'
           jenkins-ssh-credential: opendaylight-jenkins-ssh
           submodule-recursive: true
+          subomdule-timeout: 10
           choosing-strategy: default
 
     wrappers:
