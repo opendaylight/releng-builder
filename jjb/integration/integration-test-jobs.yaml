@@ -513,6 +513,7 @@
 
     git-url: '$GIT_URL/$PROJECT'
     submodule-recursive: true
+    submodule-timeout: 10
 
     #####################
     # Job Configuration #
@@ -543,6 +544,7 @@
           refspec: '$GERRIT_REFSPEC'
           branch: '$GERRIT_BRANCH'
           submodule-recursive: '{submodule-recursive}'
+          submodule-timeout: '{submodule-timeout}'
           choosing-strategy: default
 
     wrappers:
