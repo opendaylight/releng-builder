@@ -16,7 +16,6 @@
       - gerrit-jjb-verify
       - builder-check-poms
       - builder-copy-sandbox-logs
-      - builder-openstack-cron
       - gerrit-tox-verify
       # Automation for docs and jobs
       - 'builder-update-image-list'
@@ -34,6 +33,20 @@
     jenkins-urls: >
       https://jenkins.opendaylight.org/releng
       https://jenkins.opendaylight.org/sandbox
+
+- project:
+    name: builder-openstack
+    jobs:
+      - gerrit-openstack-cron
+
+    project: 'releng/builder'
+    project-name: builder
+    build-node: centos7-builder-2c-2g
+
+    jenkins-urls: >
+        https://jenkins.opendaylight.org
+        https://jenkins.opendaylight.org/sandbox
+    openstack-cloud: vex
 
 - job-template:
     name: builder-check-poms
@@ -110,79 +123,6 @@
     publishers:
       - lf-infra-publish
 
-
-- job-template:
-    name: builder-openstack-cron
-    project-type: freestyle
-    node: '{build-node}'
-    concurrent: true
-
-    properties:
-      - lf-infra-properties:
-          build-days-to-keep: 7
-
-    parameters:
-      - lf-infra-parameters:
-          project: '{project}'
-          stream: '{stream}'
-          branch: '{branch}'
-          lftools-version: '{lftools-version}'
-      - string:
-          name: OS_CLOUD
-          default: '{os-cloud}'
-          description: |
-              The name of a cloud configuration in clouds.yaml. OS_CLOUD is a
-              variable name that is significant to openstack client as a
-              environment variable. Please refer to the documentation for
-              further details.
-              https://docs.openstack.org/developer/python-openstackclient/
-      - string:
-          name: ARCHIVE_ARTIFACTS
-          default: '{archive-artifacts}'
-          description: Artifacts to archive to the logs server.
-      - string:
-          name: JENKINS_URLS
-          default: '{jenkins-urls}'
-          description: 'Space separated list of Jenkins URLs to check for active builds'
-
-    scm:
-      - git-scm:
-          branch: '{branch}'
-
-    wrappers:
-      - lf-infra-wrappers:
-          build-timeout: '{build-timeout}'
-          jenkins-ssh-credential: '{jenkins-ssh-credential}'
-      # Listed after to override openstack-infra-wrappers clouds.yaml definition
-      - config-file-provider:
-          files:
-            - file-id: clouds-yaml
-              target: '$HOME/.config/openstack/clouds.yaml'
-            - file-id: npmrc
-              target: '$HOME/.npmrc'
-            - file-id: pipconf
-              target: '$HOME/.config/pip/pip.conf'
-
-    triggers:
-      - timed: '0,30 * * * *'
-
-    builders:
-      - lf-infra-pre-build
-      - shell: |
-          #!/bin/bash -l
-          pip install --user --upgrade lftools[openstack]~=0.17.1
-      # Servers
-      - odl-openstack-cleanup-stale-stacks
-      - odl-openstack-cleanup-stale-nodes
-      - odl-openstack-cleanup-orphaned-nodes
-      # Volumes
-      - odl-openstack-cleanup-stale-volumes
-      # Images
-      - odl-openstack-check-image-protection
-      - odl-openstack-cleanup-old-images
-
-    publishers:
-      - lf-infra-publish
 
 - job-template:
     name: 'builder-update-image-list'

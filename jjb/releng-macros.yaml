@@ -248,36 +248,6 @@
             - recipients
 
 - builder:
-    name: odl-openstack-check-image-protection
-    builders:
-      - shell: !include-raw: odl-openstack-check-image-protection.sh
-
-- builder:
-    name: odl-openstack-cleanup-old-images
-    builders:
-      - shell: !include-raw: odl-openstack-cleanup-old-images.sh
-
-- builder:
-    name: odl-openstack-cleanup-orphaned-nodes
-    builders:
-      - shell: !include-raw: odl-openstack-cleanup-orphaned-nodes.sh
-
-- builder:
-    name: odl-openstack-cleanup-stale-nodes
-    builders:
-      - shell: !include-raw: odl-openstack-cleanup-stale-nodes.sh
-
-- builder:
-    name: odl-openstack-cleanup-stale-stacks
-    builders:
-      - shell: !include-raw: odl-openstack-cleanup-stale-stacks.sh
-
-- builder:
-    name: odl-openstack-cleanup-stale-volumes
-    builders:
-      - shell: !include-raw: odl-openstack-cleanup-stale-volumes.sh
-
-- builder:
     name: opendaylight-infra-stack
     # opendaylight-infra-stack.sh has a required variable {stack-template} that
     # must be passed into this macro.
