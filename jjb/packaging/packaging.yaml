@@ -98,6 +98,7 @@
           build-timeout: '{build-timeout}'
 
     builders:
+      - lf-infra-pre-build
       - shell: !include-raw-escape: build-rpm.sh
       - install-test-uninstall-rpm
       - lf-infra-deploy-maven-file:
