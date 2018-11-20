@@ -26,7 +26,7 @@
           sm-repos: >
               mvn:org.opendaylight.sxp/features-sxp//xml/features,
               mvn:org.opendaylight.tsdr/features-tsdr//xml/features,
-              mvn:org.opendaylight.unimgr/features4-unimgr//xml/features,
+              mvn:org.opendaylight.unimgr/features4-unimgr//xml/features
           sm-features: >
               odl-sxp-routing,
               odl-tsdr-core,
@@ -38,11 +38,7 @@
               odl-tsdr-cassandra,
               odl-tsdr-hbase,
               odl-tsdr-hsqldb,
-              odl-tsdr-elasticsearch,
-              odl-unimgr,
-              odl-unimgr-template-driver,
-              odl-unimgr-cisco-xr-driver,
-              odl-unimgr-ovs-driver,
+              odl-tsdr-elasticsearch
       - fluorine:
           branch: 'stable/fluorine'
           karaf-version: odl
@@ -52,7 +48,7 @@
               mvn:org.opendaylight.sxp/features-sxp//xml/features,
               mvn:org.opendaylight.transportpce/features-transportpce//xml/features,
               mvn:org.opendaylight.tsdr/features-tsdr//xml/features,
-              mvn:org.opendaylight.unimgr/features4-unimgr//xml/features,
+              mvn:org.opendaylight.unimgr/features4-unimgr//xml/features
           sm-features: >
               odl-snmp4sdn-snmp4sdn
               odl-sxp-routing,
@@ -73,7 +69,7 @@
               odl-unimgr,
               odl-unimgr-template-driver,
               odl-unimgr-cisco-xr-driver,
-              odl-unimgr-ovs-driver,
+              odl-unimgr-ovs-driver
       - oxygen:
           branch: 'stable/oxygen'
           karaf-version: karaf4
