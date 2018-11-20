@@ -49,7 +49,7 @@
       - shell: !include-raw: test-ansible-rpm-custom-config.sh
 
     triggers:
-      - timed: '@daily'
+      - timed: '@weekly'
       - gerrit-trigger-patch-submitted:
           gerrit-server-name: '{gerrit-server-name}'
           project: '{project}'
@@ -96,7 +96,7 @@
       - shell: !include-raw: test-ansible-deb-custom-config.sh
 
     triggers:
-      - timed: '@daily'
+      - timed: '@weekly'
       - gerrit-trigger-patch-submitted:
           gerrit-server-name: '{gerrit-server-name}'
           project: '{project}'
