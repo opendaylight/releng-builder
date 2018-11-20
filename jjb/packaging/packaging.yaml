@@ -245,6 +245,7 @@
       - install-test-uninstall-rpm
 
     triggers:
+      - timed: '@weekly'
       - gerrit-trigger-patch-submitted:
           gerrit-server-name: '{gerrit-server-name}'
           project: '{project}'
@@ -355,7 +356,7 @@
       - install-test-uninstall-rpm
 
     triggers:
-      - timed: '@daily'
+      - timed: '@weekly'
       - gerrit:
           server-name: '{gerrit-server-name}'
           trigger-on:
@@ -413,6 +414,9 @@
       # - shell: !include-raw-escape: test-rest-ok.sh
       - shell: !include-raw: stop-odl.sh
       - shell: !include-raw: uninstall-rpm.sh
+
+    triggers:
+      - timed: '@monthly'
 
     publishers:
       # TODO: Remove the archive publisher
@@ -479,6 +483,7 @@
       - installrepcfg-upgrade-start-test-stop-rpm
 
     triggers:
+      - timed: '@weekly'
       - gerrit-trigger-patch-submitted:
           gerrit-server-name: '{gerrit-server-name}'
           project: '{project}'
@@ -530,6 +535,9 @@
       # - shell: !include-raw-escape: test-rest-ok.sh
       - shell: !include-raw: stop-odl.sh
       - shell: !include-raw-escape: uninstall-deb.sh
+
+    triggers:
+      - timed: '@monthly'
 
     publishers:
       - lf-infra-publish
@@ -602,6 +610,9 @@
           group-id: '{group-id}'
           upload-files-dir: '{upload-files-dir}'
           maven-repo-url: '{maven-repo-url}'
+
+    triggers:
+      - timed: '@monthly'
 
     publishers:
       - lf-infra-publish
