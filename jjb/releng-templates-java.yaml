@@ -19,6 +19,7 @@
           mvn-goals: clean install -V -Dmaven.compile.fork=true -Dintegrationtests -Dvtn.build.jobs=2
 
       - gerrit-maven-stage:
+          sign-artifacts: true
           mvn-central: true
           ossrh-profile-id: 7edbe315063867
       - gerrit-maven-verify
