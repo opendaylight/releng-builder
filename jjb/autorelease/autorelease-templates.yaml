@@ -79,7 +79,7 @@
 
     parameters:
       - maven-exec:
-          maven-version: 'mvn35'
+          maven-version: '{mvn-version}'
       - lf-infra-parameters:
           project: '{project}'
           stream: '{stream}'
@@ -148,7 +148,7 @@
       # to enable building in a single maven reactor afterwards.
       - autorelease-fix-relative-paths
       - maven-target:
-          maven-version: 'mvn35'
+          maven-version: '{mvn-version}'
           pom: 'pom.xml'
           goals: |
               clean deploy
@@ -167,7 +167,7 @@
       - autorelease-get-integration-test-variables
       - autorelease-maven-sources:
           opendaylight-infra-mvn-opts: '{opendaylight-infra-mvn-opts}'
-          maven-version: 'mvn35'
+          maven-version: '{mvn-version}'
           settings: 'autorelease-settings'
           global-settings: 'global-settings'
       - shell: |
