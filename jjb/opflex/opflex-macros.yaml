@@ -48,7 +48,6 @@
               GROUP_ID={group-id}
               UPLOAD_FILES_PATH={upload-files-dir}
       - shell: !include-raw-escape:
-          - ../global-jjb/shell/lftools-install.sh
           - ../global-jjb/shell/common-variables.sh
           - scripts/deploy-opflex.sh
 

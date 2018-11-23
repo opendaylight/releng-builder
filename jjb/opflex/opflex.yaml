@@ -100,6 +100,7 @@
           build-timeout: '{build-timeout}'
 
     builders:
+      - lf-infra-pre-build
       - opflex-build:
           mvn33: '{mvn-version}'
           stream: '{stream}'
