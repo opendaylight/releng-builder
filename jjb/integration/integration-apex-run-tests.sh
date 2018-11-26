@@ -8,6 +8,8 @@ source /tmp/common-functions.sh ${BUNDLEFOLDER}
 # Ensure we fail the job if any steps fail.
 set -ex -o pipefail
 
+print_job_parameters
+
 get_os_deploy
 
 # Swap out the ODL distribution
@@ -98,22 +100,7 @@ ssh ${OPENSTACK_CONTROL_NODE_1_IP} "sudo ovs-vsctl show"
 ssh ${OPENSTACK_COMPUTE_NODE_1_IP} "sudo ovs-vsctl show"
 ssh ${OPENSTACK_COMPUTE_NODE_2_IP} "sudo ovs-vsctl show"
 
-# Use the testplan if specific SUITES are not defined.
-if [ -z "${SUITES}" ]; then
-    SUITES=`egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' testplan.txt | tr '\012' ' '`
-else
-    newsuites=""
-    workpath="${WORKSPACE}/test/csit/suites"
-    for suite in ${SUITES}; do
-        fullsuite="${workpath}/${suite}"
-        if [ -z "${newsuites}" ]; then
-            newsuites+=${fullsuite}
-        else
-            newsuites+=" "${fullsuite}
-        fi
-    done
-    SUITES=${newsuites}
-fi
+SUITES=$(get_test_suites)
 
 echo "Starting Robot test suites ${SUITES} ..."
 # please add pybot -v arguments on a single line and alphabetized
