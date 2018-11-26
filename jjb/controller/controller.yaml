@@ -78,7 +78,10 @@
 - project:
     name: controller-sonar
     jobs:
-      - gerrit-maven-sonar
+      - gerrit-maven-sonar:
+          mvn-params: >
+            -Dodl.jacoco.aggregateFile=$WORKSPACE/target/jacoco.exec
+            -Dsonar.jacoco.reportPath=$WORKSPACE/target/jacoco.exec
 
     project: 'controller'
     project-name: 'controller'
