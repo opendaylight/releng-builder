@@ -72,7 +72,6 @@
           properties-content: |
               STAGING_PROFILE_ID={staging-profile-id}
       - shell: !include-raw-escape:
-          - ../global-jjb/shell/lftools-install.sh
           - ../global-jjb/shell/maven-stage.sh
 
 - scm:
