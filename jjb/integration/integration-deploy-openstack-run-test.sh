@@ -1075,32 +1075,7 @@ else
     HA_PROXY_3_IP=${ODL_SYSTEM_3_IP}
 fi
 
-echo "Locating test plan to use..."
-testplan_filepath="${WORKSPACE}/test/csit/testplans/${STREAMTESTPLAN}"
-if [ ! -f "${testplan_filepath}" ]; then
-    testplan_filepath="${WORKSPACE}/test/csit/testplans/${TESTPLAN}"
-fi
-
-echo "Changing the testplan path..."
-cat "${testplan_filepath}" | sed "s:integration:${WORKSPACE}:" > testplan.txt
-cat testplan.txt
-
-# Use the testplan if specific SUITES are not defined.
-if [ -z "${SUITES}" ]; then
-    SUITES=`egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' testplan.txt | tr '\012' ' '`
-else
-    newsuites=""
-    workpath="${WORKSPACE}/test/csit/suites"
-    for suite in ${SUITES}; do
-        fullsuite="${workpath}/${suite}"
-        if [ -z "${newsuites}" ]; then
-            newsuites+=${fullsuite}
-        else
-            newsuites+=" "${fullsuite}
-        fi
-    done
-    SUITES=${newsuites}
-fi
+SUITES=$(get_test_suites)
 
 #install all client versions required for this job testing
 install_openstack_clients_in_robot_vm

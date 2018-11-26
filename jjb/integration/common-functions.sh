@@ -133,6 +133,38 @@ function get_os_deploy() {
     export OPENSTACK_TOPO
 }
 
+function get_test_suites() {
+
+    # Locating test plan to use...
+    testplan_filepath="${WORKSPACE}/test/csit/testplans/${STREAMTESTPLAN}"
+    if [ ! -f "${testplan_filepath}" ]; then
+        testplan_filepath="${WORKSPACE}/test/csit/testplans/${TESTPLAN}"
+    fi
+
+    # Changing the testplan path...
+    cat "${testplan_filepath}" | sed "s:integration:${WORKSPACE}:" > testplan.txt
+    cat testplan.txt
+
+    # Use the testplan if specific SUITES are not defined.
+    if [ -z "${SUITES}" ]; then
+        suites=`egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' testplan.txt | tr '\012' ' '`
+    else
+        newsuites=""
+        workpath="${WORKSPACE}/test/csit/suites"
+        for suite in ${suites}; do
+            fullsuite="${workpath}/${suite}"
+            if [ -z "${newsuites}" ]; then
+                newsuites+=${fullsuite}
+            else
+                newsuites+=" "${fullsuite}
+            fi
+        done
+        suites=${newsuites}
+    fi
+
+    echo ${suites}
+}
+
 function run_plan() {
     local -r type=$1
 
