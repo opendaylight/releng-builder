@@ -104,6 +104,10 @@
           name: ARCHIVE_ARTIFACTS
           default: '{archive-artifacts}'
           description: Artifacts to archive to the logs server.
+      - string:
+          name: STAGING_PROFILE_ID
+          default: '{staging-profile-id}'
+          description: Nexus staging profile ID.
 
     scm:
       - git:
@@ -155,7 +159,7 @@
               $EXTRA_MVN_OPTS
               -Pintegrationtests,repoBuild
               -Dcheckstyle.skip=true
-              -DaltDeploymentRepository=staging::default::file:hide/from/pom/files/stage
+              -DaltDeploymentRepository=staging::default::file:"$WORKSPACE"/m2repo
               {opendaylight-infra-mvn-opts}
           java-opts:
             - '-Xmx8g -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
@@ -163,7 +167,7 @@
           settings-type: cfp
           global-settings: 'global-settings'
           global-settings-type: cfp
-      - autorelease-maven-deploy
+      - lf-maven-stage
       - autorelease-get-integration-test-variables
       - autorelease-maven-sources:
           opendaylight-infra-mvn-opts: '{opendaylight-infra-mvn-opts}'
