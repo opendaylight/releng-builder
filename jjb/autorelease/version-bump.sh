@@ -58,6 +58,11 @@ if [ "$BRANCH_CUT" = "false" ]; then
 fi
 lftools version bump "$RELEASE_TAG"
 
+# The OpenDaylight artifact needs to be ignored in int/dist as it releases separately from autorelease
+pushd "integration/distribution"
+git checkout -f opendaylight/pom.xml
+popd
+
 git submodule foreach "git commit -asm 'Bump versions by x.y.(z+1)'"
 # Only submodules need to be bumped, we can ignore autorelease's bump information
 git checkout -f
