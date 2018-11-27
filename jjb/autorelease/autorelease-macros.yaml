@@ -40,16 +40,6 @@
           fi
 
 - builder:
-    name: autorelease-cfp
-    builders:
-      - config-file-provider:
-          files:
-            - file-id: 'autorelease-settings'
-              variable: 'SETTINGS_FILE'
-            - file-id: 'global-settings'
-              variable: 'GLOBAL_SETTINGS_FILE'
-
-- builder:
     name: autorelease-determine-merge-order
     builders:
       - shell: |
