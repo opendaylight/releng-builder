@@ -362,6 +362,7 @@
 
     mvn-global-settings: global-settings
     mvn-settings: autorelease-settings
+    mvn-version: mvn35
 
     #####################
     # Job configuration #
@@ -402,7 +403,7 @@
               and artifacts are not pushed to Nexus. Instead the build will be
               performed using the goals "clean install".
       - maven-exec:
-          maven-version: mvn35
+          maven-version: '{mvn-version}'
 
     scm:
       - lf-infra-gerrit-scm:
@@ -423,7 +424,7 @@
       - lf-infra-pre-build
       # force jenkins install of maven version before any shell scripts use it
       - lf-maven-install:
-          mvn-version: mvn35
+          mvn-version: '{mvn-version}'
       - lf-provide-maven-settings:
           global-settings-file: '{mvn-global-settings}'
           settings-file: '{mvn-settings}'
@@ -501,13 +502,14 @@
 - job-template:
     name: '{project-name}-validate-autorelease-{stream}'
 
-    ############
-    # Defaults #
-    ############
+    #####################
+    # Default variables #
+    #####################
 
     java-version: openjdk8
     mvn-global-settings: global-settings
     mvn-settings: autorelease-settings
+    mvn-version: mvn35
 
     #####################
     # Job Configuration #
@@ -576,7 +578,7 @@
       # to enable building in a single maven reactor afterwards.
       - autorelease-fix-relative-paths
       - maven-target:
-          maven-version: mvn35
+          maven-version: '{mvn-version}'
           pom: validate-pom.xml
           goals: |
               clean install dependency:tree
@@ -590,7 +592,7 @@
           global-settings: '{mvn-global-settings}'
           global-settings-type: cfp
       - maven-target:
-          maven-version: mvn35
+          maven-version: '{mvn-version}'
           pom: pom.xml
           goals: |
               clean validate
