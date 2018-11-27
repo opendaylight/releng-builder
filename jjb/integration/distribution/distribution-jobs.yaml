@@ -25,8 +25,7 @@
           # Self-Managed projects repos and features:
           sm-repos: >
               mvn:org.opendaylight.sxp/features-sxp//xml/features,
-              mvn:org.opendaylight.tsdr/features-tsdr//xml/features,
-              mvn:org.opendaylight.unimgr/features4-unimgr//xml/features
+              mvn:org.opendaylight.tsdr/features-tsdr//xml/features
           sm-features: >
               odl-sxp-routing,
               odl-tsdr-core,
@@ -44,32 +43,15 @@
           karaf-version: odl
           # Self-Managed projects repos and features:
           sm-repos: >
-              mvn:org.opendaylight.snmp4sdn/features-snmp4sdn//xml/features,
               mvn:org.opendaylight.sxp/features-sxp//xml/features,
               mvn:org.opendaylight.transportpce/features-transportpce//xml/features,
-              mvn:org.opendaylight.tsdr/features-tsdr//xml/features,
-              mvn:org.opendaylight.unimgr/features4-unimgr//xml/features
           sm-features: >
-              odl-snmp4sdn-snmp4sdn
               odl-sxp-routing,
               odl-transportpce,
               odl-transportpce-api,
               odl-transportpce-ordmodels,
-              odl-transportpce-stubmodels,
-              odl-tsdr-core,
-              odl-tsdr-openflow-statistics-collector,
-              odl-tsdr-netflow-statistics-collector,
-              odl-tsdr-restconf-collector,
-              odl-tsdr-syslog-collector,
-              odl-tsdr-controller-metrics-collector,
-              odl-tsdr-cassandra,
-              odl-tsdr-hbase,
-              odl-tsdr-hsqldb,
-              odl-tsdr-elasticsearch,
-              odl-unimgr,
-              odl-unimgr-template-driver,
-              odl-unimgr-cisco-xr-driver,
-              odl-unimgr-ovs-driver
+              odl-transportpce-stubmodels
+
       - oxygen:
           branch: 'stable/oxygen'
           karaf-version: karaf4
