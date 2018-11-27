@@ -422,13 +422,8 @@
     builders:
       - lf-infra-pre-build
       # force jenkins install of maven version before any shell scripts use it
-      - maven-target:
-          maven-version: mvn35
-          goals: '-version'
-          settings: '{mvn-settings}'
-          settings-type: cfp
-          global-settings: '{mvn-global-settings}'
-          global-settings-type: cfp
+      - lf-maven-install:
+          mvn-version: mvn35
       - lf-provide-maven-settings:
           global-settings-file: '{mvn-global-settings}'
           settings-file: '{mvn-settings}'
