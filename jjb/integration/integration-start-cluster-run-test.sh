@@ -4,6 +4,9 @@
 # script.
 # shellcheck source=${ROBOT_VENV}/bin/activate disable=SC1091
 source ${ROBOT_VENV}/bin/activate
+source /tmp/common-functions.sh ${BUNDLEFOLDER}
+# Ensure we fail the job if any steps fail.
+set -ex -o pipefail
 
 echo "#################################################"
 echo "##         Verify Cluster is UP                ##"
