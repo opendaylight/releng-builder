@@ -152,6 +152,7 @@ for suite in ${SUITES}; do
     -v RESTCONFPORT:8081 \
     -v SECURITY_GROUP_MODE:${SECURITY_GROUP_MODE} \
     -v SSH_KEY:robot_id_rsa \
+    -v TOOLS_SYSTEM_IP: \
     -v USER_HOME:${HOME} \
     -v WORKSPACE:/tmp \
     ${TESTOPTIONS} ${suite} || true
