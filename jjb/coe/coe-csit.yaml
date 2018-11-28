@@ -5,9 +5,9 @@
       - inttest-csit-1node
 
     project: 'coe'
-    functionality: 'container-networking'
-
     install-features: 'odl-netvirt-coe'
+    tools_system_count: 5
+    tools_system_image: ZZCI - Ubuntu 16.04 - kubernetes - 20180723-235526.580
 
     stream:
       - neon:
@@ -18,8 +18,9 @@
           branch: 'stable/oxygen'
 
     install:
-      - all:
-          scope: 'all'
+      - only:
+          scope: 'only'
 
-    tools_system_count: 5
-    tools_system_image: ZZCI - Ubuntu 16.04 - kubernetes - 20180723-235526.580
+    functionality:
+      - 'gate-container-networking'
+      - 'container-networking'
