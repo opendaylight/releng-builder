@@ -69,6 +69,24 @@
     id: inttest-csit-verify-1node
     <<: *inttest_csit_common
 
+    #####################
+    # Default variables #
+    #####################
+
+    openstack-cloud: vex
+    openstack-heat-template: csit-2-instance-type.yaml
+    openstack-heat-template-dir: openstack-hot
+
+    odl_system_flavor: 'odl-highcpu-4'
+    odl_system_image: 'ZZCI - CentOS 7 - builder - x86_64 - 20181010-215635.956'
+    tools_system_count: 1
+    tools_system_flavor: 'odl-highcpu-2'
+    tools_system_image: 'ZZCI - Ubuntu 16.04 - mininet-ovs-25 - 20181029-223449.514'
+
+    #####################
+    # Job configuration #
+    #####################
+
     parameters:
       - integration-csit-parameters:
           archive-artifacts: '{archive-artifacts}'
@@ -83,6 +101,13 @@
           debug-map: '{debug-map}'
           install-features: '{install-features}'
           use-features-boot: 'True'
+      - integration-stack-2-type:
+          vm_0_count: 1
+          vm_0_flavor: '{odl_system_flavor}'
+          vm_0_image: '{odl_system_image}'
+          vm_1_count: '{tools_system_count}'
+          vm_1_flavor: '{tools_system_flavor}'
+          vm_1_image: '{tools_system_image}'
       - integration-distribution-branch:
           branch: '{verify-branch}'
       - integration-distribution-stream:
@@ -115,14 +140,10 @@
 
     builders:
       - lf-infra-pre-build
-      - integration-infra-stack:
-          stack-template: '{stack-template}'
-          vm_0_count: '1'
-          vm_0_flavor: '{odl_system_flavor}'
-          vm_0_image: '{odl_system_image}'
-          vm_1_count: '{tools_system_count}'
-          vm_1_flavor: '{tools_system_flavor}'
-          vm_1_image: '{tools_system_image}'
+      - integration-stack-2-type:
+          openstack-cloud: '{openstack-cloud}'
+          openstack-heat-template: '{openstack-heat-template}'
+          openstack-heat-template-dir: '{openstack-heat-template-dir}'
       - integration-install-robotframework
       - inject:
           properties-file: 'env.properties'
@@ -142,6 +163,8 @@
           robot_other_files: ''
           robot-pass-threshold: 100.0
           robot-unstable-threshold: 0.0
+      - lf-stack-delete:
+          openstack-cloud: '{openstack-cloud}'
       - lf-infra-publish
 
 
@@ -156,7 +179,15 @@
     # Default variables #
     #####################
 
-    # TODO: Add default variables here.
+    openstack-cloud: vex
+    openstack-heat-template: csit-2-instance-type.yaml
+    openstack-heat-template-dir: openstack-hot
+
+    odl_system_flavor: 'odl-highcpu-4'
+    odl_system_image: 'ZZCI - CentOS 7 - builder - x86_64 - 20181010-215635.956'
+    tools_system_count: 1
+    tools_system_flavor: 'odl-highcpu-2'
+    tools_system_image: 'ZZCI - Ubuntu 16.04 - mininet-ovs-25 - 20181029-223449.514'
 
     #####################
     # Job configuration #
@@ -176,6 +207,13 @@
           debug-map: '{debug-map}'
           install-features: '{install-features}'
           use-features-boot: 'True'
+      - integration-stack-2-type:
+          vm_0_count: 1
+          vm_0_flavor: '{odl_system_flavor}'
+          vm_0_image: '{odl_system_image}'
+          vm_1_count: '{tools_system_count}'
+          vm_1_flavor: '{tools_system_flavor}'
+          vm_1_image: '{tools_system_image}'
       - integration-distribution-branch:
           branch: '{branch}'
       - integration-distribution-stream:
@@ -210,14 +248,10 @@
 
     builders:
       - lf-infra-pre-build
-      - integration-infra-stack:
-          stack-template: '{stack-template}'
-          vm_0_count: '1'
-          vm_0_flavor: '{odl_system_flavor}'
-          vm_0_image: '{odl_system_image}'
-          vm_1_count: '{tools_system_count}'
-          vm_1_flavor: '{tools_system_flavor}'
-          vm_1_image: '{tools_system_image}'
+      - integration-stack-2-type:
+          openstack-cloud: '{openstack-cloud}'
+          openstack-heat-template: '{openstack-heat-template}'
+          openstack-heat-template-dir: '{openstack-heat-template-dir}'
       - integration-install-robotframework
       - inject:
           properties-file: 'env.properties'
@@ -378,6 +412,8 @@
           robot_other_files: ''
           robot-pass-threshold: 100.0
           robot-unstable-threshold: 0.0
+      - lf-stack-delete:
+          openstack-cloud: '{openstack-cloud}'
       - lf-infra-publish
 
 - job-template:
@@ -408,6 +444,13 @@
           debug-map: '{debug-map}'
           install-features: '{install-features}'
           use-features-boot: 'True'
+      - integration-stack-2-type:
+          vm_0_count: 1
+          vm_0_flavor: '{odl_system_flavor}'
+          vm_0_image: '{odl_system_image}'
+          vm_1_count: '{tools_system_count}'
+          vm_1_flavor: '{tools_system_flavor}'
+          vm_1_image: '{tools_system_image}'
       - integration-distribution-branch:
           branch: '{branch}'
       - integration-distribution-stream:
