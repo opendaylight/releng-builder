@@ -1,0 +1,51 @@
+---
+################
+# Stack 2 Type #
+################
+
+# The parameter and builder macros are meant to be used together. Job templates
+# that want to use the Stack 2 Type must declare both the parameter and builder
+# component.
+
+- parameter:
+    name: integration-stack-2-type
+    parameters:
+      - string:
+          name: ODL_SYSTEM_COUNT
+          default: '{odl_system_count}'
+          description: 'Number of OpenDaylight controllers to spawn'
+      - string:
+          name: ODL_SYSTEM_FLAVOR
+          default: '{odl_system_flavor}'
+          description: 'VM flavor to use for the ODL system'
+      - string:
+          name: ODL_SYSTEM_IMAGE
+          default: '{odl_system_image}'
+          description: 'VM image to use for the ODL system'
+      - string:
+          name: TOOLS_SYSTEM_COUNT
+          default: '{tools_system_count}'
+          description: 'Number of tools systems to spawn'
+      - string:
+          name: TOOLS_SYSTEM_FLAVOR
+          default: '{tools_system_flavor}'
+          description: 'VM flavor to use for the tools system'
+      - string:
+          name: TOOLS_SYSTEM_IMAGE
+          default: '{tools_system_image}'
+          description: 'VM image to use for the tools system'
+
+- builder:
+    name: integration-stack-2-type
+    builders:
+      - lf-stack-create:
+          openstack-cloud: '{openstack-cloud}'
+          openstack-heat-template: '{openstack-heat-template}'
+          openstack-heat-template-dir: '{openstack-heat-template-dir}'
+          openstack-heat-parameters: |
+              vm_0_count: '$ODL_SYSTEM_COUNT'
+              vm_0_flavor: '$ODL_SYSTEM_FLAVOR'
+              vm_0_image: '$ODL_SYSTEM_IMAGE'
+              vm_1_count: '$TOOLS_SYSTEM_COUNT'
+              vm_1_flavor: '$TOOLS_SYSTEM_FLAVOR'
+              vm_1_image: '$TOOLS_SYSTEM_IMAGE'
