@@ -179,7 +179,7 @@ function run_plan() {
         ;;
     esac
 
-    printf "Locating ${type} plan to use...\n"
+    printf "Locating %s plan to use...\n" "${type}"
     plan_filepath="${WORKSPACE}/test/csit/${type}plans/$plan"
     if [ ! -f "${plan_filepath}" ]; then
         plan_filepath="${WORKSPACE}/test/csit/${type}plans/${STREAMTESTPLAN}"
@@ -189,17 +189,17 @@ function run_plan() {
     fi
 
     if [ -f "${plan_filepath}" ]; then
-        printf "${type} plan exists!!!\n"
-        printf "Changing the ${type} plan path...\n"
+        printf "%s plan exists!!!\n" "${type}"
+        printf "Changing the %s plan path...\n" "${type}"
         cat ${plan_filepath} | sed "s:integration:${WORKSPACE}:" > ${type}plan.txt
         cat ${type}plan.txt
         for line in $( egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' ${type}plan.txt ); do
-            printf "Executing ${line}...\n"
+            printf "Executing %s...\n" "${line}"
             # shellcheck source=${line} disable=SC1091
             source ${line}
         done
     fi
-    printf "Finished running ${type} plans\n"
+    printf "Finished running %s plans\n" "${type}"
 } # function run_plan()
 
 # Return elapsed time. Usage:
@@ -209,7 +209,7 @@ function timer()
 {
     if [ $# -eq 0 ]; then
         # return the current time
-        printf "$(date "+%s")"
+        printf "%s" "$(date "+%s")"
     else
         local start_time=$1
         end_time=$(date "+%s")
@@ -302,7 +302,7 @@ function tcpdump_start() {
     local -r filter=$3
     filter_=${filter// /_}
 
-    printf "node ${ip}, ${prefix}_${ip}__${filter}: starting tcpdump\n"
+    printf "node %s, %s_%s__%s: starting tcpdump\n" "${ip}" "${prefix}" "${ip}" "${filter}"
     ssh ${ip} "nohup sudo /usr/sbin/tcpdump -vvv -ni eth0 ${filter} -w /tmp/tcpdump_${prefix}_${ip}__${filter_}.pcap > /tmp/tcpdump_start.log 2>&1 &"
     ${SSH} ${ip} "ps -ef | grep tcpdump"
 }
@@ -310,7 +310,7 @@ function tcpdump_start() {
 function tcpdump_stop() {
     local -r ip=$1
 
-    printf "node $ip: stopping tcpdump\n"
+    printf "node %s: stopping tcpdump\n" "$ip"
     ${SSH} ${ip} "ps -ef | grep tcpdump.sh"
     ${SSH} ${ip} "sudo pkill -f tcpdump"
     ${SSH} ${ip} "sudo xz -9ekvvf /tmp/*.pcap"
@@ -366,7 +366,7 @@ function collect_openstack_logs() {
     local -r node_type=${3}
     local oslogs="${folder}/oslogs"
 
-    printf "collect_openstack_logs for ${node_type} node: ${ip} into ${oslogs}\n"
+    printf "collect_openstack_logs for %s node: %s into %s\n" "${node_type}" "${ip}" "${oslogs}"
     rm -rf ${oslogs}
     mkdir -p ${oslogs}
     # There are always some logs in /opt/stack/logs and this also covers the
@@ -406,7 +406,7 @@ fi
 ls -al /tmp/oslogs
 EOF
 # cat > ${WORKSPACE}/collect_openstack_logs.sh << EOF
-        printf "collect_openstack_logs for ${node_type} node: ${ip} into ${oslogs}, executing script\n"
+        printf "collect_openstack_logs for %s node: %s into %s, executing script\n" "${node_type}" "${ip}" "${oslogs}"
         cat ${WORKSPACE}/collect_openstack_logs.sh
         scp ${WORKSPACE}/collect_openstack_logs.sh ${ip}:/tmp
         ${SSH} ${ip} "bash /tmp/collect_openstack_logs.sh > /tmp/collect_openstack_logs.log 2>&1"
