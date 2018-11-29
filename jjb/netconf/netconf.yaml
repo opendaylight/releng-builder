@@ -87,6 +87,7 @@
     mvn-settings: 'netconf-settings'
     mvn-goals: 'clean deploy -Pintegrationtests'
     mvn-opts: '-Xmx2048m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
+    build-timeout: 90
 
 - project:
     name: netconf-view
