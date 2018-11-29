@@ -75,7 +75,11 @@
 - project:
     name: netconf-sonar
     jobs:
-      - gerrit-maven-sonar
+      - gerrit-maven-sonar:
+          mvn-params: >
+            -Dodl.jacoco.aggregateFile=$WORKSPACE/target/jacoco.exec
+            -Dsonar.jacoco.reportPath=$WORKSPACE/target/jacoco.exec
+
     project: 'netconf'
     project-name: 'netconf'
     branch: 'master'
