@@ -27,19 +27,43 @@
 # integration-use-features-boot: bool to toggle use of featuresBoot ($USEFEATURESBOOT)
 
 
-# New templates
+###########
+# Anchors #
+###########
 
-- job-template:
-    name: '{prefix}{project}-csit-verify-1node-{functionality}'
-    id: inttest-csit-verify-1node
-    disabled: false
+- inttest_csit_common: &inttest_csit_common
+    name: inttest-csit-common
+    # Defines common configuration to all CSIT jobs
+
+    #####################
+    # Default variables #
+    #####################
+
+    build-days-to-keep: 30
+    disable-job: false
+
+    #####################
+    # Job configuration #
+    #####################
 
     project-type: freestyle
     node: centos7-robot-2c-8g
+    concurrent: true
+    disabled: '{disable-job}'
 
     properties:
       - opendaylight-infra-properties:
           build-days-to-keep: '{build-days-to-keep}'
+
+
+#################
+# Job Templates #
+#################
+
+- job-template:
+    name: '{prefix}{project}-csit-verify-1node-{functionality}'
+    id: inttest-csit-verify-1node
+    <<: *inttest_csit_common
 
     parameters:
       - opendaylight-infra-parameters:
@@ -138,20 +162,11 @@
     # Default variables #
     #####################
 
-    disable-job: false
+    # TODO: Add default variables here.
 
     #####################
     # Job configuration #
     #####################
-
-    project-type: freestyle
-    node: centos7-robot-2c-8g
-    concurrent: true
-    disabled: '{disable-job}'
-
-    properties:
-      - opendaylight-infra-properties:
-          build-days-to-keep: '{build-days-to-keep}'
 
     parameters:
       - opendaylight-infra-parameters:
@@ -387,11 +402,15 @@
 - job-template:
     name: '{prefix}{project}-csit-1node-{functionality}-{install}-{stream}'
     id: inttest-csit-1node
+    <<: *inttest_csit_common
+    # yamllint disable-line rule:key-duplicates
     <<: *inttest_csit_1node
 
 - job-template:
     name: '{prefix}{project}-csit-1node-{functionality}-{install}-{stream}'
     id: inttest-csit-1node-custom
+    <<: *inttest_csit_common
+    # yamllint disable-line rule:key-duplicates
     <<: *inttest_csit_1node
 
     parameters:
@@ -440,14 +459,17 @@
 - job-template:
     name: '{prefix}{project}-csit-verify-3node-{functionality}'
     id: inttest-csit-verify-3node
-    disabled: false
+    <<: *inttest_csit_common
 
-    project-type: freestyle
-    node: centos7-robot-2c-8g
+    #####################
+    # Default variables #
+    #####################
 
-    properties:
-      - opendaylight-infra-properties:
-          build-days-to-keep: '{build-days-to-keep}'
+    # TODO: Add default variables here
+
+    #####################
+    # Job Configuration #
+    #####################
 
     parameters:
       - opendaylight-infra-parameters:
@@ -550,20 +572,11 @@
     # Default variables #
     #####################
 
-    disable-job: false
+    # TODO: Add default variables here
 
     #####################
     # Job configuration #
     #####################
-
-    project-type: freestyle
-    node: centos7-robot-2c-8g
-    concurrent: true
-    disabled: '{disable-job}'
-
-    properties:
-      - opendaylight-infra-properties:
-          build-days-to-keep: '{build-days-to-keep}'
 
     parameters:
       - opendaylight-infra-parameters:
@@ -800,11 +813,15 @@
 - job-template:
     name: '{prefix}{project}-csit-3node-{functionality}-{install}-{stream}'
     id: inttest-csit-3node
+    <<: *inttest_csit_common
+    # yamllint disable-line rule:key-duplicates
     <<: *inttest_csit_3node
 
 - job-template:
     name: '{prefix}{project}-csit-3node-{functionality}-{install}-{stream}'
     id: inttest-csit-3node-custom
+    <<: *inttest_csit_common
+    # yamllint disable-line rule:key-duplicates
     <<: *inttest_csit_3node
 
     parameters:
@@ -853,14 +870,17 @@
 - job-template:
     name: '{prefix}{project}-csit-3node-docker-{functionality}-{install}-{stream}'
     id: inttest-csit-3node-docker
-    disabled: false
+    <<: *inttest_csit_common
 
-    project-type: freestyle
-    node: centos7-robot-2c-8g
+    #####################
+    # Default variables #
+    #####################
 
-    properties:
-      - opendaylight-infra-properties:
-          build-days-to-keep: '{build-days-to-keep}'
+    # TODO: Add default variables here
+
+    #####################
+    # Job Configuration #
+    #####################
 
     parameters:
       - opendaylight-infra-parameters:
@@ -985,20 +1005,11 @@
     # Default variables #
     #####################
 
-    disable-job: false
+    # TODO: Add default variables here
 
     #####################
     # Job configuration #
     #####################
-
-    project-type: freestyle
-    node: centos7-robot-2c-8g
-    concurrent: true
-    disabled: '{disable-job}'
-
-    properties:
-      - opendaylight-infra-properties:
-          build-days-to-keep: '{build-days-to-keep}'
 
     parameters:
       - opendaylight-infra-parameters:
@@ -1211,12 +1222,16 @@
     # yamllint disable-line rule:line-length
     name: '{prefix}{project}-csit-hwvtep-{topology}-{os-cmb-cnt}cmb-{os-ctl-cnt}ctl-{os-cmp-cnt}cmp-openstack-{openstack}-{functionality}-{stream}'
     id: inttest-csit-hwvtep-openstack
+    <<: *inttest_csit_common
+    # yamllint disable-line rule:key-duplicates
     <<: *inttest_csit_hwvtep_openstack
 
 - job-template:
     # yamllint disable-line rule:line-length
     name: '{prefix}{project}-csit-hwvtep-{topology}-{os-cmb-cnt}cmb-{os-ctl-cnt}ctl-{os-cmp-cnt}cmp-openstack-{openstack}-{functionality}-{stream}'
     id: inttest-csit-hwvtep-openstack-custom
+    <<: *inttest_csit_common
+    # yamllint disable-line rule:key-duplicates
     <<: *inttest_csit_hwvtep_openstack
 
     parameters:
@@ -1384,20 +1399,11 @@
     # Default variables #
     #####################
 
-    disable-job: false
+    # TODO: Add default variables here
 
     #####################
     # Job configuration #
     #####################
-
-    project-type: freestyle
-    node: centos7-robot-2c-8g
-    concurrent: true
-    disabled: '{disable-job}'
-
-    properties:
-      - opendaylight-infra-properties:
-          build-days-to-keep: '{build-days-to-keep}'
 
     parameters:
       - opendaylight-infra-parameters:
@@ -1614,12 +1620,16 @@
     # yamllint disable-line rule:line-length
     name: '{prefix}{project}-csit-{topology}-{os-cmb-cnt}cmb-{os-ctl-cnt}ctl-{os-cmp-cnt}cmp-openstack-{openstack}-{functionality}-{stream}'
     id: inttest-csit-openstack
+    <<: *inttest_csit_common
+    # yamllint disable-line rule:key-duplicates
     <<: *inttest_csit_openstack
 
 - job-template:
     # yamllint disable-line rule:line-length
     name: '{prefix}{project}-csit-{topology}-{os-cmb-cnt}cmb-{os-ctl-cnt}ctl-{os-cmp-cnt}cmp-openstack-{openstack}-{functionality}-{stream}'
     id: inttest-csit-openstack-custom
+    <<: *inttest_csit_common
+    # yamllint disable-line rule:key-duplicates
     <<: *inttest_csit_openstack
 
     parameters:
@@ -1787,15 +1797,7 @@
 - job-template:
     name: '{prefix}{project}-patch-test-{feature}-{stream}'
     id: inttest-patch-test
-
-    project-type: freestyle
-    node: centos7-builder-2c-8g
-    concurrent: true
-    jdk: '{java-version}'
-
-    properties:
-      - opendaylight-infra-properties:
-          build-days-to-keep: '{build-days-to-keep}'
+    <<: *inttest_csit_common
 
     parameters:
       - opendaylight-infra-parameters:
@@ -1914,20 +1916,11 @@
     # Default variables #
     #####################
 
-    disable-job: false
+    # TODO: Add default variables here
 
     #####################
     # Job configuration #
     #####################
-
-    project-type: freestyle
-    node: centos7-robot-2c-8g
-    concurrent: true
-    disabled: '{disable-job}'
-
-    properties:
-      - opendaylight-infra-properties:
-          build-days-to-keep: '{build-days-to-keep}'
 
     parameters:
       - opendaylight-infra-parameters:
@@ -2044,12 +2037,16 @@
     # yamllint disable-line rule:line-length
     name: '{prefix}{project}-csit-{topology}-{os-cmb-cnt}cmb-{os-ctl-cnt}ctl-{os-cmp-cnt}cmp-apex-{openstack}-{functionality}-{stream}'
     id: inttest-csit-apex
+    <<: *inttest_csit_common
+    # yamllint disable-line rule:key-duplicates
     <<: *inttest_csit_apex
 
 - job-template:
     # yamllint disable-line rule:line-length
     name: '{prefix}{project}-csit-{topology}-{os-cmb-cnt}cmb-{os-ctl-cnt}ctl-{os-cmp-cnt}cmp-apex-{openstack}-{functionality}-{stream}'
     id: inttest-csit-apex-custom
+    <<: *inttest_csit_common
+    # yamllint disable-line rule:key-duplicates
     <<: *inttest_csit_apex
 
     parameters:
