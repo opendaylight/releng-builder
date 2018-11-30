@@ -139,15 +139,13 @@
       - integration-cleanup-tmp
 
     publishers:
-      - integration-robot:
-          unstable-if: 0.0
-          pass-if: 100.0
       - email-notification:
           email-recipients: '{email-recipients}'
           email-prefix: '[{project}]'
-      - integration-csit-archive-build
-      - integration-csit-run-postscript
-      - releng-openstack-stack-delete
+      - integration-csit-publish:
+          robot_other_files: ''
+          robot-pass-threshold: 100.0
+          robot-unstable-threshold: 0.0
       - lf-infra-publish
 
 
@@ -243,9 +241,6 @@
       - integration-cleanup-tmp
 
     publishers:
-      - integration-robot:
-          unstable-if: 0.0
-          pass-if: 100.0
       - email-notification:
           email-recipients: '{email-recipients}'
           email-prefix: '[{project}]'
@@ -390,9 +385,10 @@
                 inclusion-flag: '{10-inclusion-flag}'
                 exclude: '{10-exclude-value}'
                 format: csv
-      - integration-csit-archive-build
-      - integration-csit-run-postscript
-      - releng-openstack-stack-delete
+      - integration-csit-publish:
+          robot_other_files: ''
+          robot-pass-threshold: 100.0
+          robot-unstable-threshold: 0.0
       - lf-infra-publish
 
 - job-template:
@@ -541,15 +537,13 @@
       - integration-cleanup-tmp
 
     publishers:
-      - integration-robot:
-          unstable-if: 0.0
-          pass-if: 100.0
       - email-notification:
           email-recipients: '{email-recipients}'
           email-prefix: '[{project}]'
-      - integration-csit-archive-build
-      - integration-csit-run-postscript
-      - releng-openstack-stack-delete
+      - integration-csit-publish:
+          robot_other_files: ''
+          robot-pass-threshold: 100.0
+          robot-unstable-threshold: 0.0
       - lf-infra-publish
 
 
@@ -646,9 +640,6 @@
       - integration-cleanup-tmp
 
     publishers:
-      - integration-robot:
-          unstable-if: 0.0
-          pass-if: 100.0
       - email-notification:
           email-recipients: '{email-recipients}'
           email-prefix: '[{project}]'
@@ -793,9 +784,10 @@
                 inclusion-flag: '{10-inclusion-flag}'
                 exclude: '{10-exclude-value}'
                 format: csv
-      - integration-csit-archive-build
-      - integration-csit-run-postscript
-      - releng-openstack-stack-delete
+      - integration-csit-publish:
+          robot_other_files: ''
+          robot-pass-threshold: 100.0
+          robot-unstable-threshold: 0.0
       - lf-infra-publish
 
 - job-template:
@@ -937,9 +929,6 @@
       - integration-cleanup-tmp
 
     publishers:
-      - integration-robot:
-          unstable-if: 0.0
-          pass-if: 100.0
       - email-notification:
           email-recipients: '{email-recipients}'
           email-prefix: '[{project}]'
@@ -972,9 +961,10 @@
                 inclusion-flag: 'off'
                 display-table: true
                 format: csv
-      - integration-csit-archive-build
-      - integration-csit-run-postscript
-      - releng-openstack-stack-delete
+      - integration-csit-publish:
+          robot_other_files: ''
+          robot-pass-threshold: 100.0
+          robot-unstable-threshold: 0.0
       - lf-infra-publish
 
 
@@ -1186,16 +1176,14 @@
       - integration-cleanup-tmp
 
     publishers:
-      - integration-robot-tempest:
-          unstable-if: 0.0
-          pass-if: 100.0
       - email-notification:
           email-recipients: '{email-recipients}'
           email-prefix: '[{project}]'
-      - integration-csit-collect-netvirt-logs
-      - integration-csit-archive-build
-      - integration-csit-run-postscript
-      - releng-openstack-stack-delete
+      - integration-csit-publish:
+          robot_other_files:
+            - tempest_results.html
+          robot-pass-threshold: 100.0
+          robot-unstable-threshold: 0.0
       - lf-infra-publish
 
 - job-template:
@@ -1580,16 +1568,14 @@
       - integration-cleanup-tmp
 
     publishers:
-      - integration-robot-tempest:
-          unstable-if: 0.0
-          pass-if: 100.0
       - email-notification:
           email-recipients: '{email-recipients}'
           email-prefix: '[{project}]'
-      - integration-csit-collect-netvirt-logs
-      - integration-csit-archive-build
-      - integration-csit-run-postscript
-      - releng-openstack-stack-delete
+      - integration-csit-publish:
+          robot_other_files:
+            - tempest_results.html
+          robot-pass-threshold: 100.0
+          robot-unstable-threshold: 0.0
       - lf-infra-publish
 
 - job-template:
@@ -1990,15 +1976,14 @@
       - integration-cleanup-tmp
 
     publishers:
-      - integration-robot-tempest:
-          unstable-if: 0.0
-          pass-if: 100.0
       - email-notification:
           email-recipients: '{email-recipients}'
           email-prefix: '[{project}]'
-      - integration-csit-archive-build
-      - integration-csit-run-postscript
-      - releng-openstack-stack-delete
+      - integration-csit-publish:
+          robot_other_files:
+            - tempest_results.html
+          robot-pass-threshold: 100.0
+          robot-unstable-threshold: 0.0
       - lf-infra-publish
 
 - job-template:
