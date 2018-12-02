@@ -48,6 +48,7 @@
       - shell: !include-raw: test-ansible-rpm-default-config.sh
       - shell: !include-raw: test-ansible-rpm-custom-config.sh
       - shell: !include-raw: test-ansible-rpm-upgrade.sh
+      - shell: !include-raw: test-ansible-cluster.sh
 
     triggers:
       - timed: '@weekly'
