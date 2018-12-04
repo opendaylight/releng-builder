@@ -36,7 +36,7 @@ gem install bundler
 echo export PATH="\\$PATH:/usr/local/bin" >> "$HOME/.bashrc"
 # RVM's loaded functions print lots of output at this step, silence them
 set +x
-pushd "$WORKSPACE/puppet"
+pushd "$WORKSPACE/packaging-puppet"
 set -x
 bundle install
 bundle update
