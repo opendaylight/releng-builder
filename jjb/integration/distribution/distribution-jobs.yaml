@@ -198,7 +198,10 @@
 - project:
     name: distribution-release
     jobs:
-      - gerrit-maven-stage
+      - gerrit-maven-stage:
+          sign-artifacts: true
+          mvn-central: true
+          ossrh-profile-id: 7edbe315063867
 
     project: 'integration/distribution'
     project-name: 'distribution'
