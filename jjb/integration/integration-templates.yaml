@@ -1027,7 +1027,22 @@
     # Default variables #
     #####################
 
-    # TODO: Add default variables here
+    openstack-cloud: vex
+    openstack-heat-template: csit-4-instance-type.yaml
+    openstack-heat-template-dir: openstack-hot
+
+    odl_system_count: 1
+    odl_system_flavor: 'odl-highcpu-4'
+    odl_system_image: 'ZZCI - CentOS 7 - builder - x86_64 - 20181010-215635.956'
+    openstack_system_count: 1
+    openstack_system_flavor: 'odl-standard-4'
+    openstack_system_image: 'ZZCI - CentOS 7 - devstack - 20180911-204116.460'
+    openstack_system2_count: 0
+    openstack_system2_flavor: 'odl-standard-1'
+    openstack_system2_image: 'ZZCI - CentOS 7 - devstack - 20180911-204116.460'
+    tools_system_count: 1
+    tools_system_flavor: 'odl-highcpu-2'
+    tools_system_image: 'ZZCI - Ubuntu 16.04 - mininet-ovs-25 - 20181029-223449.514'
 
     #####################
     # Job configuration #
@@ -1047,6 +1062,19 @@
           debug-map: '{debug-map}'
           install-features: '{install-features}'
           use-features-boot: '{use-features-boot}'
+      - integration-stack-4-type:
+          odl_system_count: '{odl_system_count}'
+          odl_system_flavor: '{odl_system_flavor}'
+          odl_system_image: '{odl_system_image}'
+          openstack_system_count: '{openstack_system_count}'
+          openstack_system_flavor: '{openstack_system_flavor}'
+          openstack_system_image: '{openstack_system_image}'
+          openstack_system2_count: '{openstack_system2_count}'
+          openstack_system2_flavor: '{openstack_system2_flavor}'
+          openstack_system2_image: '{openstack_system2_image}'
+          tools_system_count: '{tools_system_count}'
+          tools_system_flavor: '{tools_system_flavor}'
+          tools_system_image: '{tools_system_image}'
       - integration-distribution-branch:
           branch: '{branch}'
       - integration-distribution-stream:
@@ -1192,20 +1220,10 @@
 
     builders:
       - lf-infra-pre-build
-      - integration-infra-stack-4-type:
-          stack-template: '{stack-template}'
-          vm_0_count: '{odl_system_count}'
-          vm_0_flavor: '{odl_system_flavor}'
-          vm_0_image: '{odl_system_image}'
-          vm_1_count: '{openstack_system_count}'
-          vm_1_flavor: '{openstack_system_flavor}'
-          vm_1_image: '{openstack_system_image}'
-          vm_2_count: '{openstack_system2_count}'
-          vm_2_flavor: '{openstack_system2_flavor}'
-          vm_2_image: '{openstack_system2_image}'
-          vm_3_count: '{tools_system_count}'
-          vm_3_flavor: '{tools_system_flavor}'
-          vm_3_image: '{tools_system_image}'
+      - integration-stack-4-type:
+          openstack-cloud: '{openstack-cloud}'
+          openstack-heat-template: '{openstack-heat-template}'
+          openstack-heat-template-dir: '{openstack-heat-template-dir}'
       - integration-install-robotframework
       - inject:
           properties-file: 'env.properties'
@@ -1227,6 +1245,8 @@
             - tempest_results.html
           robot-pass-threshold: 100.0
           robot-unstable-threshold: 0.0
+      - lf-stack-delete:
+          openstack-cloud: '{openstack-cloud}'
       - lf-infra-publish
 
 - job-template:
@@ -1259,6 +1279,19 @@
           debug-map: '{debug-map}'
           install-features: '{install-features}'
           use-features-boot: '{use-features-boot}'
+      - integration-stack-4-type:
+          odl_system_count: '{odl_system_count}'
+          odl_system_flavor: '{odl_system_flavor}'
+          odl_system_image: '{odl_system_image}'
+          openstack_system_count: '{openstack_system_count}'
+          openstack_system_flavor: '{openstack_system_flavor}'
+          openstack_system_image: '{openstack_system_image}'
+          openstack_system2_count: '{openstack_system2_count}'
+          openstack_system2_flavor: '{openstack_system2_flavor}'
+          openstack_system2_image: '{openstack_system2_image}'
+          tools_system_count: '{tools_system_count}'
+          tools_system_flavor: '{tools_system_flavor}'
+          tools_system_image: '{tools_system_image}'
       - integration-distribution-branch:
           branch: '{branch}'
       - integration-distribution-stream:
@@ -1405,7 +1438,18 @@
     # Default variables #
     #####################
 
-    # TODO: Add default variables here
+    odl_system_count: 1
+    odl_system_flavor: 'odl-highcpu-4'
+    odl_system_image: 'ZZCI - CentOS 7 - builder - x86_64 - 20181010-215635.956'
+    openstack_system_count: 1
+    openstack_system_flavor: 'odl-standard-4'
+    openstack_system_image: 'ZZCI - CentOS 7 - devstack - 20180911-204116.460'
+    openstack_system2_count: 0
+    openstack_system2_flavor: 'odl-standard-1'
+    openstack_system2_image: 'ZZCI - CentOS 7 - devstack - 20180911-204116.460'
+    tools_system_count: 1
+    tools_system_flavor: 'odl-highcpu-2'
+    tools_system_image: 'ZZCI - Ubuntu 16.04 - mininet-ovs-25 - 20181029-223449.514'
 
     #####################
     # Job configuration #
@@ -1425,6 +1469,19 @@
           debug-map: '{debug-map}'
           install-features: '{install-features}'
           use-features-boot: '{use-features-boot}'
+      - integration-stack-4-type:
+          odl_system_count: '{odl_system_count}'
+          odl_system_flavor: '{odl_system_flavor}'
+          odl_system_image: '{odl_system_image}'
+          openstack_system_count: '{openstack_system_count}'
+          openstack_system_flavor: '{openstack_system_flavor}'
+          openstack_system_image: '{openstack_system_image}'
+          openstack_system2_count: '{openstack_system2_count}'
+          openstack_system2_flavor: '{openstack_system2_flavor}'
+          openstack_system2_image: '{openstack_system2_image}'
+          tools_system_count: '{tools_system_count}'
+          tools_system_flavor: '{tools_system_flavor}'
+          tools_system_image: '{tools_system_image}'
       - integration-distribution-branch:
           branch: '{branch}'
       - integration-distribution-stream:
@@ -1574,20 +1631,10 @@
 
     builders:
       - lf-infra-pre-build
-      - integration-infra-stack-4-type:
-          stack-template: '{stack-template}'
-          vm_0_count: '{odl_system_count}'
-          vm_0_flavor: '{odl_system_flavor}'
-          vm_0_image: '{odl_system_image}'
-          vm_1_count: '{openstack_system_count}'
-          vm_1_flavor: '{openstack_system_flavor}'
-          vm_1_image: '{openstack_system_image}'
-          vm_2_count: '{openstack_system2_count}'
-          vm_2_flavor: '{openstack_system2_flavor}'
-          vm_2_image: '{openstack_system2_image}'
-          vm_3_count: '{tools_system_count}'
-          vm_3_flavor: '{tools_system_flavor}'
-          vm_3_image: '{tools_system_image}'
+      - integration-stack-4-type:
+          openstack-cloud: '{openstack-cloud}'
+          openstack-heat-template: '{openstack-heat-template}'
+          openstack-heat-template-dir: '{openstack-heat-template-dir}'
       - integration-install-robotframework
       - inject:
           properties-file: 'env.properties'
@@ -1609,6 +1656,8 @@
             - tempest_results.html
           robot-pass-threshold: 100.0
           robot-unstable-threshold: 0.0
+      - lf-stack-delete:
+          openstack-cloud: '{openstack-cloud}'
       - lf-infra-publish
 
 - job-template:
@@ -1641,6 +1690,19 @@
           debug-map: '{debug-map}'
           install-features: '{install-features}'
           use-features-boot: '{use-features-boot}'
+      - integration-stack-4-type:
+          odl_system_count: '{odl_system_count}'
+          odl_system_flavor: '{odl_system_flavor}'
+          odl_system_image: '{odl_system_image}'
+          openstack_system_count: '{openstack_system_count}'
+          openstack_system_flavor: '{openstack_system_flavor}'
+          openstack_system_image: '{openstack_system_image}'
+          openstack_system2_count: '{openstack_system2_count}'
+          openstack_system2_flavor: '{openstack_system2_flavor}'
+          openstack_system2_image: '{openstack_system2_image}'
+          tools_system_count: '{tools_system_count}'
+          tools_system_flavor: '{tools_system_flavor}'
+          tools_system_image: '{tools_system_image}'
       - integration-distribution-branch:
           branch: '{branch}'
       - integration-distribution-stream:
