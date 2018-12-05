@@ -64,6 +64,11 @@
           rm -rf $WORKSPACE/venv
 
 - builder:
+    name: autorelease-maven-deploy
+    builders:
+      - shell: !include-raw: autorelease-maven-deploy.sh
+
+- builder:
     name: autorelease-maven-sources
     builders:
       - maven-target:
