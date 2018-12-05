@@ -895,7 +895,16 @@
     # Default variables #
     #####################
 
-    # TODO: Add default variables here
+    openstack-cloud: vex
+    openstack-heat-template: csit-2-instance-type.yaml
+    openstack-heat-template-dir: openstack-hot
+
+    odl_system_count: 1
+    odl_system_flavor: 'odl-highcpu-4'
+    odl_system_image: 'ZZCI - CentOS 7 - builder - x86_64 - 20181010-215635.956'
+    docker_system_count: 1
+    docker_system_flavor: 'odl-standard-1'
+    docker_system_image: 'ZZCI - CentOS 7 - docker - 20180723-235456.035'
 
     #####################
     # Job Configuration #
@@ -915,6 +924,13 @@
           debug-map: '{debug-map}'
           install-features: 'odl-jolokia,{install-features}'
           use-features-boot: 'True'
+      - integration-stack-2-type:
+          odl_system_count: 3
+          odl_system_flavor: '{odl_system_flavor}'
+          odl_system_image: '{odl_system_image}'
+          tools_system_count: '{docker_system_count}'
+          tools_system_flavor: '{docker_system_flavor}'
+          tools_system_image: '{docker_system_image}'
       - integration-distribution-branch:
           branch: '{branch}'
       - integration-distribution-stream:
@@ -942,14 +958,10 @@
 
     builders:
       - lf-infra-pre-build
-      - integration-infra-stack:
-          stack-template: '{stack-template}'
-          vm_0_count: '3'
-          vm_0_flavor: '{odl_system_flavor}'
-          vm_0_image: '{odl_system_image}'
-          vm_1_count: '{docker_system_count}'
-          vm_1_flavor: '{docker_system_flavor}'
-          vm_1_image: '{docker_system_image}'
+      - integration-stack-2-type:
+          openstack-cloud: '{openstack-cloud}'
+          openstack-heat-template: '{openstack-heat-template}'
+          openstack-heat-template-dir: '{openstack-heat-template-dir}'
       - integration-install-robotframework
       - inject:
           properties-file: 'env.properties'
@@ -999,6 +1011,8 @@
           robot_other_files: ''
           robot-pass-threshold: 100.0
           robot-unstable-threshold: 0.0
+      - lf-stack-delete:
+          openstack-cloud: '{openstack-cloud}'
       - lf-infra-publish
 
 
