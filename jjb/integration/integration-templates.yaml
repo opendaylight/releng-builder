@@ -1964,7 +1964,9 @@
     # Default variables #
     #####################
 
-    # TODO: Add default variables here
+    openstack-cloud: vex
+    openstack-heat-template: csit-apex-3-instance-type.yaml
+    openstack-heat-template-dir: openstack-hot
 
     #####################
     # Job configuration #
@@ -1984,6 +1986,16 @@
           debug-map: '{debug-map}'
           install-features: '{install-features}'
           use-features-boot: '{use-features-boot}'
+      - integration-stack-3-type:
+          vm_0_count: '{apex_controller_count}'
+          vm_0_flavor: '{apex_controller_flavor}'
+          vm_0_image: '{apex_controller_image}'
+          vm_1_count: 1
+          vm_1_flavor: '{apex_compute_0_flavor}'
+          vm_1_image: '{apex_compute_0_image}'
+          vm_2_count: 1
+          vm_2_flavor: '{apex_compute_1_flavor}'
+          vm_2_image: '{apex_compute_1_image}'
       - integration-distribution-branch:
           branch: '{branch}'
       - integration-distribution-stream:
@@ -2038,15 +2050,15 @@
 
     builders:
       - lf-infra-pre-build
-      - integration-apex-stack-3-type:
-          stack-template: '{stack-template}'
+      - integration-stack-3-type:
+          stack-template: 'csit-apex-3-instance-type.yaml'
           vm_0_count: '{apex_controller_count}'
           vm_0_flavor: '{apex_controller_flavor}'
           vm_0_image: '{apex_controller_image}'
-          vm_1_count: '1'
+          vm_1_count: 1
           vm_1_flavor: '{apex_compute_0_flavor}'
           vm_1_image: '{apex_compute_0_image}'
-          vm_2_count: '1'
+          vm_2_count: 1
           vm_2_flavor: '{apex_compute_1_flavor}'
           vm_2_image: '{apex_compute_1_image}'
       - integration-install-robotframework
