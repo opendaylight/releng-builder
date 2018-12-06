@@ -1132,6 +1132,7 @@
       - email-notification:
           email-recipients: '{email-recipients}'
           email-prefix: '[{project}]'
+      - integration-csit-collect-netvirt-logs
       - integration-csit-publish:
           robot_other_files:
             - tempest_results.html
@@ -1514,6 +1515,7 @@
       - email-notification:
           email-recipients: '{email-recipients}'
           email-prefix: '[{project}]'
+      - integration-csit-collect-netvirt-logs
       - integration-csit-publish:
           robot_other_files:
             - tempest_results.html
