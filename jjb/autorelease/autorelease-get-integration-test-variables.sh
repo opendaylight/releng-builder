@@ -19,7 +19,7 @@ NEXUS_STAGING_URL="${ODLNEXUS_STAGING_URL:-$ODLNEXUSPROXY}"
 NEXUSURL="${NEXUS_STAGING_URL}/content/repositories/"
 VERSION=$(grep -m2 '<version>' "${WORKSPACE}/integration/distribution/${KARAF_ARTIFACT}/pom.xml" | tail -n1 | awk -F'[<|>]' '/version/ { printf $3 }')
 echo "VERSION: ${VERSION}"
-STAGING_REPO_ID=$(grep "Created staging repository with ID" "$WORKSPACE/deploy-staged-repository.log" | cut -d '"' -f2)
+STAGING_REPO_ID=$(grep "$NEXUS_STAGING_URL" "$WORKSPACE/archives/staging-repo.txt" | awk '{print $1}')
 BUNDLE_URL="${NEXUSURL}/${STAGING_REPO_ID}/org/opendaylight/integration/${KARAF_ARTIFACT}/${VERSION}/${KARAF_ARTIFACT}-${VERSION}.zip"
 echo STAGING_REPO_ID="$STAGING_REPO_ID" >> "$WORKSPACE/variables.prop"
 echo BUNDLE_URL="$BUNDLE_URL" >> "$WORKSPACE/variables.prop"
