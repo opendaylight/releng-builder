@@ -136,6 +136,24 @@ EOF
     ssh ${control_ip} "bash /tmp/setup_live_migration_control.sh"
 }
 
+#Fix Problem caused due to new libvirt version in CentOS repo.
+#The libvirt-python 3.10 does not support all the new API exposed
+#This fix will force devstack to use latest libvirt-python
+#from pypi.org (latest version as of 06-Dec-2018)
+function fix_libvirt_python_build() {
+    local ip=$1
+
+    if [ "${ODL_ML2_BRANCH}" == "stable/queens" ]; then
+        ${SSH} ${ip} "
+            cd /opt/stack;
+            git clone https://git.openstack.org/openstack/requirements;
+            cd requirements;
+            git checkout stable/queens;
+            sed -i s/libvirt-python===3.10.0/libvirt-python===4.10.0/ upper-constraints.txt
+        "
+   fi
+}
+
 # Involves mounting the share and configuring the libvirtd
 function setup_live_migration_compute() {
     local compute_ip=$1
@@ -887,6 +905,7 @@ for i in `seq 1 ${NUM_OPENSTACK_COMPUTE_NODES}`; do
         # but in the meantime do it ourselves
         ssh ${!COMPUTEIP} "sudo ovs-vsctl set Open_vSwitch . external_ids:of-tunnel=true"
     fi
+    fix_libvirt_python_build ${!COMPUTEIP}
     echo "Stack the compute node ${i} of ${NUM_OPENSTACK_COMPUTE_NODES}: ${!COMPUTEIP}"
     ssh ${!COMPUTEIP} "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
     ssh ${!COMPUTEIP} "ps -ef | grep stack.sh"
