@@ -1116,7 +1116,7 @@ EOF
 
 source /tmp/os_netvirt_client_rc
 
-echo "Get all versions before executing pybot"
+echo "Get all versions before executing robot"
 echo "openstack --version"
 which openstack
 openstack --version
@@ -1131,7 +1131,7 @@ stacktime=$(timer $totaltmr)
 printf "Stacking elapsed time: %s\n" "${stacktime}"
 
 echo "Starting Robot test suites ${SUITES} ..."
-# please add pybot -v arguments on a single line and alphabetized
+# please add robot -v arguments on a single line and alphabetized
 suite_num=0
 for suite in ${SUITES}; do
     # prepend an incremental counter to the suite name so that the full robot log combining all the suites as is done
@@ -1140,7 +1140,7 @@ for suite in ${SUITES}; do
     suite_index="$(printf %02d ${suite_num})"
     suite_name="$(basename ${suite} | cut -d. -f1)"
     log_name="${suite_index}_${suite_name}"
-    pybot -N ${log_name} \
+    robot -N ${log_name} \
     -c critical -e exclude -e skip_if_${DISTROSTREAM} \
     --log log_${log_name}.html --report report_${log_name}.html --output output_${log_name}.xml \
     --removekeywords wuks \

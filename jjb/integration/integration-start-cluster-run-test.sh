@@ -108,7 +108,7 @@ done
 get_test_suites SUITES
 
 echo "Starting Robot test suites ${SUITES} ..."
-pybot -N ${TESTPLAN} \
+robot -N ${TESTPLAN} \
       --removekeywords wuks -c critical -e exclude -e skip_if_${DISTROSTREAM} \
       -v BUNDLEFOLDER:${BUNDLEFOLDER} \
       -v BUNDLE_URL:${ACTUAL_BUNDLE_URL} \
