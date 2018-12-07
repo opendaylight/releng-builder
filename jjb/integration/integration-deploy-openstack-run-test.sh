@@ -850,6 +850,7 @@ for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
         # but in the meantime do it ourselves
         ssh ${!CONTROLIP} "sudo ovs-vsctl set Open_vSwitch . external_ids:of-tunnel=true"
     fi
+    fix_libvirt_python_build ${!CONTROLIP}
     echo "Stack the control node ${i} of ${NUM_OPENSTACK_CONTROL_NODES}: ${CONTROLIP}"
     ssh ${!CONTROLIP} "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
     ssh ${!CONTROLIP} "ps -ef | grep stack.sh"
