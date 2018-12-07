@@ -146,6 +146,14 @@
     view-regex: '.*-integration-.*'
 
 - project:
+    name: Javadoc
+    views:
+      - common-view
+    view-name: Javadoc
+    view-description: 'List of Javadoc jobs'
+    view-regex: '.*-javadoc-.*'
+
+- project:
     name: Merge-Jobs
     views:
       - common-view
