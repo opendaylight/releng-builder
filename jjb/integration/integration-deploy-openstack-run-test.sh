@@ -717,6 +717,15 @@ sudo iptables --line-numbers -nvL
 true
 EOF
 
+cat > ${WORKSPACE}/enable_internet_access_for_instances.sh << EOF
+sudo sysctl -w net.ipv4.ip_forward=1
+sudo iptables -t nat -A POSTROUTING 1 -s 10.0.0.0/24 -j MASQUERADE
+sudo iptables-save > /etc/sysconfig/iptables
+sudo systemctl restart iptables
+sudo iptables --line-numbers -nvL
+sudo iptables --line-numbers -nvL -t nat
+EOF
+
 #For SFC Tests a larger partition is required for creating instances with Ubuntu
 if [[ "${ENABLE_OS_PLUGINS}" =~ networking-sfc ]]; then
    TMPFS_SIZE=12G
@@ -814,6 +823,7 @@ for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
     CONTROLIP=OPENSTACK_CONTROL_NODE_${i}_IP
     echo "Configure the stack of the control node ${i} of ${NUM_OPENSTACK_CONTROL_NODES}: ${!CONTROLIP}"
     scp ${WORKSPACE}/disable_firewall.sh ${!CONTROLIP}:/tmp
+    scp ${WORKSPACE}/enable_internet_access_for_instances.sh ${!CONTROLIP}:/tmp
     ${SSH} ${!CONTROLIP} "sudo bash /tmp/disable_firewall.sh"
     create_etc_hosts ${!CONTROLIP}
     scp ${WORKSPACE}/hosts_file ${!CONTROLIP}:/tmp/hosts
@@ -1064,6 +1074,7 @@ ${SSH} ${!CONTROLIP} "
     sudo ip tuntap add dev internet_tap mode tap;
     sudo ifconfig internet_tap up ${EXTNET_INTERNET_IP}/24;
 "
+${SSH} ${!CONTROLIP} "sudo bash /tmp/enable_internet_access_for_instances.sh"
 
 # Computes
 compute_index=1
