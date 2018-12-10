@@ -161,6 +161,7 @@
           build-timeout: '{build-timeout}'
 
     builders:
+      - lf-infra-pre-build
       - inject:
           properties-content: |
               STREAM={stream}
@@ -615,6 +616,7 @@
           build-timeout: '{build-timeout}'
 
     builders:
+      - lf-infra-pre-build
       - shell: !include-raw: build-deb.sh
       - install-test-uninstall-deb
       - lf-infra-deploy-maven-file:
