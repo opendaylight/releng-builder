@@ -741,7 +741,7 @@ TODO: Document test-{project}-{feature} and test-{project}-all.
       </tr>
 
       <tr class="warning">
-        <td><b>Job Template</b><br/>{project}-verify-python-{stream} | {project}-verify-tox-{stream}</td>
+        <td><b>Job Template</b><br/>{project}-python-verify-{stream} | {project}-tox-verify-{stream}</td>
         <td><b>Gerrit Trigger</b><br/>recheck</td>
       </tr>
       <tr>
@@ -752,7 +752,7 @@ TODO: Document test-{project}-{feature} and test-{project}-all.
           other than the project's repo root, the path to its directory
           relative to the project's repo root should be passed as {toxdir}.
 
-          The 2 template names verify-python & verify-tox are identical and are
+          The 2 template names python-verify & tox-verify are identical and are
           aliases to each other. This allows the project to use the naming that
           is most reasonable for them.
         </td>
