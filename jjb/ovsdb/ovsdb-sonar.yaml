@@ -60,7 +60,7 @@
           properties-file: env.properties
       - shell: !include-raw-escape: include-setup-hwvtep-docker.sh
       - maven-target:
-          maven-version: 'mvn33'
+          maven-version: 'mvn35'
           pom: 'pom.xml'
           goals: >
               clean install dependency:tree -V -B -Dsonar
