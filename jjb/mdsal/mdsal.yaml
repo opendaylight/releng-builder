@@ -96,6 +96,7 @@
           mvn-params: >
             -Dodl.jacoco.aggregateFile=$WORKSPACE/target/jacoco.exec
             -Dsonar.jacoco.reportPath=$WORKSPACE/target/jacoco.exec
+            -Dskip.karaf.featureTest=true
 
     project: 'mdsal'
     project-name: 'mdsal'
