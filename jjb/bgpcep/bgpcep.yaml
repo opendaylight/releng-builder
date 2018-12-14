@@ -91,6 +91,7 @@
           mvn-params: >
             -Dodl.jacoco.aggregateFile=$WORKSPACE/target/jacoco.exec
             -Dsonar.jacoco.reportPath=$WORKSPACE/target/jacoco.exec
+            -P!karaf
 
     project: 'bgpcep'
     project-name: 'bgpcep'
