@@ -22,8 +22,12 @@ curl -L get.rvm.io | bash -s stable
 # Expected by RVM, seems required to make RVM functions (`rvm use`) available
 # Silence absurdly verbose rvm output by temporally not echoing commands
 set +x
+# Source line has a non-zero exit somewhere, that RVM doesn't mean to indicate
+# a real failure, but causes our jobs to fail when fail-on-errors is enabled.
+set +e
 # shellcheck disable=SC1090
 source "$HOME/.rvm/scripts/rvm"
+set -e
 rvm install 2.4.0
 set -x
 ruby --version
