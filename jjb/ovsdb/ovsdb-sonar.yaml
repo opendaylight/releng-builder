@@ -81,7 +81,7 @@
               verify -V -B -Pintegrationtest -Dsonar
               -Dskip.karaf.featureTest=true
               -Dovsdb.controller.address=${{CONTROLLER_IP}}
-              Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r
+              -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r
           properties:
             - 'ovsdbserver.ipaddress=127.0.0.1'
             - 'ovsdbserver.port=6641'
