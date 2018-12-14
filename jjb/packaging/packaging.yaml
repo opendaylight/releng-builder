@@ -68,7 +68,7 @@
       - string:
           name: DOWNLOAD_URL
           # yamllint disable-line rule:line-length
-          default: 'https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/integration/karaf/0.8.2/karaf-0.8.2.tar.gz'
+          default: 'https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/integration/karaf/0.8.4/karaf-0.8.4.tar.gz'
           description: 'URL to ODL tarball artifact to repackage into RPM'
       - string:
           name: CHANGELOG_NAME
@@ -210,10 +210,10 @@
           build-timeout: '{build-timeout}'
 
     builders:
-      # Test Oxygen SR3 release tarball
+      # Test Oxygen SR4 release tarball
       - inject:
           # yamllint disable-line rule:line-length
-          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/integration/karaf/0.8.3/karaf-0.8.3.tar.gz'
+          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/integration/karaf/0.8.4/karaf-0.8.4.tar.gz'
       - shell: !include-raw-escape: build-rpm.sh
       - install-test-uninstall-rpm
 
@@ -292,10 +292,10 @@
           build-timeout: '{build-timeout}'
 
     builders:
-      # Test Oxygen SR3 release tarball
+      # Test Oxygen SR4 release tarball
       - inject:
           # yamllint disable-line rule:line-length
-          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/integration/karaf/0.8.3/karaf-0.8.3.tar.gz'
+          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/integration/karaf/0.8.4/karaf-0.8.4.tar.gz'
       - shell: !include-raw-escape: build-rpm.sh
       - install-test-uninstall-rpm
 
