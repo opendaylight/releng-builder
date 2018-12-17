@@ -75,7 +75,7 @@
       - inject:
           properties-file: env.properties
       - maven-target:
-          maven-version: 'mvn33'
+          maven-version: 'mvn35'
           pom: 'pom.xml'
           goals: >
               verify -V -B -Pintegrationtest -Dsonar
@@ -91,7 +91,7 @@
           global-settings: 'global-settings'
           global-settings-type: cfp
       - maven-target:
-          maven-version: 'mvn33'
+          maven-version: 'mvn35'
           # We should switch to the recommended configuration of sonar once
           # JJB adds support for configurating the Sonar wrapper:
           #    http://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner+for+Jenkins
