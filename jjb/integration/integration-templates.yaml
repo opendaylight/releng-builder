@@ -1701,6 +1701,8 @@
     id: inttest-patch-test
     <<: *inttest_csit_common
 
+    build-timeout: 720
+
     parameters:
       - opendaylight-infra-parameters:
           os-cloud: '{os-cloud}'
