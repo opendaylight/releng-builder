@@ -13,6 +13,8 @@ print_job_parameters
 get_os_deploy
 
 configure_karaf_log_for_apex $OPENSTACK_CONTROL_NODE_1_IP
+get_features
+configure_odl_features_for_apex $OPENSTACK_CONTROL_NODE_1_IP
 
 # Swap out the ODL distribution
 DISTRO_UNDER_TEST=/tmp/odl.tar.gz
