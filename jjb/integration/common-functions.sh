@@ -21,6 +21,7 @@ function print_common_env() {
     cat << EOF
 common-functions environment:
 MAVENCONF: ${MAVENCONF}
+ACTUALFEATURES: ${ACTUALFEATURES}
 FEATURESCONF: ${FEATURESCONF}
 CUSTOMPROP: ${CUSTOMPROP}
 LOGCONF: ${LOGCONF}
@@ -156,6 +157,25 @@ function configure_karaf_log_for_apex() {
         ssh $controller_ip "sudo cat /etc/puppet/hieradata/service_configs.json"
     fi
 } # function configure_karaf_log_for_apex()
+
+function configure_odl_features_for_apex() {
+
+    # if the environment variable $ACUTALFEATURES is not null, then rewrite
+    # the puppet config file with the features given in that variable, otherwise
+    # this function is a noop
+
+    local -r config_file=/etc/puppet/hieradata/service_configs.json
+
+    if [ -n "${ACTUALFEATURES}" ]; then
+        jq '.["opendaylight::extra_features"] |= []' $config_file > tmp.json && mv tmp.json $config_file
+        for feature in $(echo $ACTUALFEATURES | sed "s/,/ /g"); do
+            jq --arg jq_arg $feature '.["opendaylight::extra_features"] |= . + [$jq_arg]' $config_file > tmp && mv tmp $config_file;
+        done
+    fi
+
+    cat $config_file
+
+} # function configure_odl_features_for_apex()
 
 function get_os_deploy() {
     local -r num_systems=${1:-$NUM_OPENSTACK_SYSTEM}
