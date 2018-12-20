@@ -181,7 +181,6 @@
       - shell: |
           mkdir -p archives/
           cp *.log *.prop $_
-      - lf-provide-maven-settings-cleanup
 
     publishers:
       - opendaylight-infra-notify-status
