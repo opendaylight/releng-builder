@@ -60,7 +60,10 @@ function exit_on_log_file_message {
     fi
 }
 
-exit_on_log_file_message 'BindException: Address already in use'
+# skip this step to let CSIT jobs run
+# see email thread here:
+#   https://lists.opendaylight.org/pipermail/release/2018-December/016763.html
+# exit_on_log_file_message 'BindException: Address already in use'
 exit_on_log_file_message 'server is unhealthy'
 
 EOF
