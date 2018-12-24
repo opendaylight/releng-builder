@@ -4,6 +4,11 @@
     jobs:
       - 'odl-maven-jobs'
       - '{project-name}-integration-{stream}'
+      - '{project-name}-rtd-jobs':
+          build-node: centos7-builder-2c-2g
+          project-pattern: telemetry
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-telemetry/57583/
+          rtd-token: 694bcbf8e0b45b3c4e53174c6e5773ca351e1efb
 
     stream: neon
     project: 'telemetry'
