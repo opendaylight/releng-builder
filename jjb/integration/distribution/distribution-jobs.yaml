@@ -25,30 +25,19 @@
           # Self-Managed projects repos and features:
           sm-repos: >
               mvn:org.opendaylight.sxp/features-sxp//xml/features,
-              mvn:org.opendaylight.telemetry/features-telemetry//xml/features,
-              mvn:org.opendaylight.tsdr/features-tsdr//xml/features
+              mvn:org.opendaylight.telemetry/features-telemetry//xml/features
           sm-features: >
               odl-sxp-routing,
               odl-telemetry-collector,
               odl-telemetry-configurator,
-              odl-telemetry-all,
-              odl-tsdr-core,
-              odl-tsdr-openflow-statistics-collector,
-              odl-tsdr-netflow-statistics-collector,
-              odl-tsdr-restconf-collector,
-              odl-tsdr-syslog-collector,
-              odl-tsdr-controller-metrics-collector,
-              odl-tsdr-cassandra,
-              odl-tsdr-hbase,
-              odl-tsdr-hsqldb,
-              odl-tsdr-elasticsearch
+              odl-telemetry-all
       - fluorine:
           branch: 'stable/fluorine'
           karaf-version: odl
           # Self-Managed projects repos and features:
           sm-repos: >
               mvn:org.opendaylight.sxp/features-sxp//xml/features,
-              mvn:org.opendaylight.transportpce/features-transportpce//xml/features,
+              mvn:org.opendaylight.transportpce/features-transportpce//xml/features
           sm-features: >
               odl-sxp-routing,
               odl-transportpce,
@@ -188,7 +177,7 @@
               sxp-merge-{stream},
               telemetry-merge-{stream},
               tsdr-merge-{stream},
-              unimgr-merge-{stream},
+              unimgr-merge-{stream}
       - fluorine:
           branch: 'stable/fluorine'
           karaf-version: odl
@@ -198,7 +187,7 @@
               sxp-merge-{stream},
               transportpce-merge-{stream},
               tsdr-merge-{stream},
-              unimgr-merge-{stream},
+              unimgr-merge-{stream}
 
 - project:
     name: distribution-release
