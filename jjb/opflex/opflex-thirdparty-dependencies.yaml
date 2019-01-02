@@ -7,7 +7,12 @@
       - 'opflex-thirdparty-openvswitch-{stream}'
 
     stream:
-      - oxygen:
+      - neon:
+          branch: 'master'
+          libuv-version: '1.8.0'
+          rapidjson-version: '1.0.2'
+          openvswitch-version: '2.6.0'
+      - fluorine:
           branch: 'master'
           libuv-version: '1.8.0'
           rapidjson-version: '1.0.2'
