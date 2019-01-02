@@ -34,24 +34,6 @@
     staging-profile-id: 96bd6b5bf86e3
 
 - project:
-    name: capwap-oxygen
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - odl-maven-jobs
-
-    stream: oxygen
-    project: 'capwap'
-    project-name: 'capwap'
-    branch: 'stable/oxygen'
-    mvn-settings: 'capwap-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: ''
-    email-upstream: '[capwap]'
-
-    # Used by the release job
-    staging-profile-id: 96bd6b5bf86e3
-
-- project:
     name: capwap
     jobs:
       - gerrit-maven-sonar
