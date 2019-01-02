@@ -196,6 +196,11 @@
               BUNDLE_URL=$BUNDLE_URL
               KARAF_VERSION=$KARAF_VERSION
 
+    wrappers:
+      - lf-infra-wrappers:
+          build-timeout: 1440
+          jenkins-ssh-credential: '{jenkins-ssh-credential}'
+
     publishers:
       - opendaylight-infra-generate-csit-status-report
       - email-notification:
