@@ -37,6 +37,10 @@ ruby --version
 bash -lc "rvm use 2.4.0 --default"
 ruby --version
 
+# Update RubyGems using itself, as OS package may be old
+# Ran into RubyGems 2.x installed by OS, 3.x required by Bundler in INTPAK-230
+gem update --system
+
 # Install gems dependencies of puppet-opendaylight via Bundler
 gem install bundler
 echo export PATH="\\$PATH:/usr/local/bin" >> "$HOME/.bashrc"
