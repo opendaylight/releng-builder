@@ -5,12 +5,13 @@ set -e
 # create a fresh empty place to build this custom distribution
 BUILD_DIR=${WORKSPACE}/patch_tester
 DISTRIBUTION_BRANCH_TO_BUILD=$DISTROBRANCH  #renaming variable for clarity
-MAVEN_OPTIONS="$(echo --show-version \
+MAVEN_OPTIONS="${MAVEN_PARAMS} \
+    --show-version \
     --batch-mode \
     -Djenkins \
     -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn \
     -Dmaven.repo.local=/tmp/r \
-    -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r)"
+    -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r"
 
 rm -rf $BUILD_DIR
 mkdir -p $BUILD_DIR
