@@ -181,10 +181,10 @@ if [[ -d "odlparent" ]]; then
     fi
 fi
 if [[ -d "yangtools" ]]; then
-        if [[ -d "mdsal" ]]; then
+    if [[ -d "mdsal" ]]; then
         # Extract patch and MSI used version
         patch_version="$(xpath ./yangtools/pom.xml '/project/version/text()' 2> /dev/null)"
-        msi_version="$(xpath ./mdsal/binding/yang-binding/pom.xml '/project/dependencyManagement/dependencies/dependency/version/text()' 2> /dev/null)"
+        msi_version="$(xpath ./mdsal/dom/dom-parent/pom.xml '/project/dependencyManagement/dependencies/dependency[artifactId="yangtools-artifacts"]/version/text()' 2> /dev/null)"
         # Replace version
         find ./yangtools -name "*.xml" -print0 | xargs -0 sed -i "s/${patch_version}/${msi_version}/g"
     else
