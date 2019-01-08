@@ -28,13 +28,13 @@ set +e
 # shellcheck disable=SC1090
 source "$HOME/.rvm/scripts/rvm"
 set -e
-rvm install 2.4.0
+rvm install 2.6.0
 set -x
 ruby --version
 # This has to be done as a login shell to get rvm fns
 # https://rvm.io/support/faq#what-shell-login-means-bash-l
 # http://superuser.com/questions/306530/run-remote-ssh-command-with-full-login-shell
-bash -lc "rvm use 2.4.0 --default"
+bash -lc "rvm use 2.6.0 --default"
 ruby --version
 
 # Update RubyGems using itself, as OS package may be old
