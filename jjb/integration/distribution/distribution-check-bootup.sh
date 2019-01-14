@@ -55,7 +55,10 @@ cat "${MEMCONF}"
 echo "Listing all open ports on controller system"
 netstat -pnatu
 
-if [ "${JDKVERSION}" == 'openjdk8' ]; then
+if [ "$JDKVERSION" == 'openjdk11' ]; then
+    echo "Preparing for JRE Version 11"
+    JAVA_HOME="/opt/jdk-11"
+elif [ "${JDKVERSION}" == 'openjdk8' ]; then
     echo "Setting the JRE Version to 8"
     # dynamic_verify does not allow sudo, JAVA_HOME should be enough for karaf start.
     # sudo /usr/sbin/alternatives --set java /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.60-2.b27.el7_1.x86_64/jre/bin/java
