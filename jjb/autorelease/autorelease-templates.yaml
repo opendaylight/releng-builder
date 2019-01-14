@@ -53,6 +53,169 @@
       - lf-infra-publish
 
 - job-template:
+    name: 'autorelease-release-{stream}-openjdk11'
+
+    ######################
+    # Default parameters #
+    ######################
+
+    build-node: '{build-node}'
+    cron: 'H 0 * * *'
+    java-version: openjdk11
+    mvn-global-settings: global-settings
+    mvn-settings: autorelease-settings
+    mvn-version: mvn35
+    extra-mvn-opts: ''
+
+    #####################
+    # Job Configuration #
+    #####################
+
+    project-type: freestyle
+    node: '{build-node}'
+    jdk: '{java-version}'
+
+    properties:
+      - lf-infra-properties:
+          build-days-to-keep: 30
+
+    parameters:
+      - maven-exec:
+          maven-version: '{mvn-version}'
+      - lf-infra-parameters:
+          project: '{project}'
+          stream: '{stream}'
+          branch: '{branch}'
+          lftools-version: '{lftools-version}'
+      - distribution-karaf-version:
+          karaf-version: '{karaf-version}'
+      - autorelease-release-tag:
+          release-tag: '{stream}'
+      - string:
+          name: EXTRA_MVN_OPTS
+          default: '{extra-mvn-opts}'
+          description: |
+              Additional optional Maven Options to pass to the Maven Goals
+              parameter.
+
+              Examples:
+              -Dskip.karaf.featureTest=true  # To disable karaf SingleFeatureTests
+              --fail-never   # NEVER fail the build, regardless of project result
+              --fail-at-end  # Only fail the build afterwards; allow all non-impacted builds to continue
+      - string:
+          name: ARCHIVE_ARTIFACTS
+          default: '{archive-artifacts}'
+          description: Artifacts to archive to the logs server.
+      - string:
+          name: STAGING_PROFILE_ID
+          default: '{staging-profile-id}'
+          description: Nexus staging profile ID.
+
+    scm:
+      - git:
+          credentials-id: 'opendaylight-jenkins-ssh'
+          url: '$GIT_BASE'
+          refspec: '$GERRIT_REFSPEC'
+          branches:
+            - '$GERRIT_BRANCH'
+          choosing-strategy: default
+          skip-tag: true
+          submodule:
+            recursive: true
+            timeout: 60
+
+    wrappers:
+      - opendaylight-infra-wrappers:
+          build-timeout: '900'
+
+    triggers:
+      - timed: '{cron}'
+
+    builders:
+      - lf-infra-pre-build
+      # force jenkins install of maven version before any shell scripts use it
+      - lf-maven-install:
+          mvn-version: '{mvn-version}'
+      - wipe-local-maven-repo
+      - lf-jacoco-nojava-workaround
+      - shell: "./scripts/list-project-dependencies.sh"
+      - autorelease-determine-merge-order
+      - lf-provide-maven-settings:
+          global-settings-file: '{mvn-global-settings}'
+          settings-file: '{mvn-settings}'
+      - lf-infra-create-netrc:
+          server-id: '{mvn-staging-id}'
+      - autorelease-generate-release-patches
+      - autorelease-generate-artifact-versions
+      - lf-update-java-alternatives:
+          java-version: '{java-version}'
+      - autorelease-distribute-taglist
+      - distribute-build-url:
+          path: 'integration/distribution/$KARAF_ARTIFACT/src/main/assembly'
+      # In a perfect world projects should be releasing separately and we consume them
+      # via a project that pulls the release bits from each project from Nexus.
+      # Keep the patches compatible with that ideal, but apply an edit
+      # to enable building in a single maven reactor afterwards.
+      - autorelease-fix-relative-paths
+      - maven-target:
+          maven-version: '{mvn-version}'
+          pom: 'pom.xml'
+          goals: |
+              clean deploy
+              $EXTRA_MVN_OPTS
+              -Pintegrationtests,repoBuild
+              -Dcheckstyle.skip=true
+              -DaltDeploymentRepository=staging::default::file:"$WORKSPACE"/m2repo
+              {opendaylight-infra-mvn-opts}
+          java-opts:
+            - '-Xmx8g -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
+          settings: '{mvn-settings}'
+          settings-type: cfp
+          global-settings: '{mvn-global-settings}'
+          global-settings-type: cfp
+      - lf-maven-stage
+      - autorelease-get-integration-test-variables
+      - autorelease-maven-sources:
+          opendaylight-infra-mvn-opts: '{opendaylight-infra-mvn-opts}'
+          maven-version: '{mvn-version}'
+          settings: '{mvn-settings}'
+          global-settings: '{mvn-global-settings}'
+      - shell: |
+          mkdir -p archives/
+          cp *.log *.prop $_
+
+    publishers:
+      - opendaylight-infra-notify-status
+      - trigger-parameterized-builds:
+          - project: 'integration-distribution-test-{integration-test}'
+            condition: UNSTABLE_OR_BETTER
+            property-file: variables.jenkins-trigger
+            fail-on-missing: true
+          - project: 'integration-distribution-test-{integration-test}'
+            condition: FAILED
+            trigger-with-no-params: true
+          - project: 'packaging-build-rpm-{stream}'
+            condition: UNSTABLE_OR_BETTER
+            predefined-parameters: DOWNLOAD_URL=$BUNDLE_URL
+            property-file: variables.jenkins-trigger
+            fail-on-missing: true
+          - project: 'packaging-build-deb-{stream}'
+            condition: UNSTABLE_OR_BETTER
+            predefined-parameters: DOWNLOAD_URL=$BUNDLE_URL
+            property-file: variables.jenkins-trigger
+            fail-on-missing: true
+      # Critical component of the OpenDaylight community
+      - postbuildscript:
+          builders:
+            - role: BOTH
+              build-on:
+                - SUCCESS
+              build-steps:
+                - shell: echo '#topic cookies'
+          mark-unstable-if-failed: false
+      - lf-infra-publish
+
+- job-template:
     name: 'autorelease-release-{stream}'
 
     ######################
@@ -147,6 +310,8 @@
           server-id: '{mvn-staging-id}'
       - autorelease-generate-release-patches
       - autorelease-generate-artifact-versions
+      - lf-update-java-alternatives:
+          java-version: '{java-version}'
       - autorelease-distribute-taglist
       - distribute-build-url:
           path: 'integration/distribution/$KARAF_ARTIFACT/src/main/assembly'
