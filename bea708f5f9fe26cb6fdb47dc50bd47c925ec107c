@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3da83e63_8d612e79",
+        "filename": "jjb/ansible/ansible.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2019-01-15T14:29:43Z",
+      "side": 1,
+      "message": "Max permsize was removed in openjdk8 and I do not believe we still have openjdk 7 builds anywhere so I think we should remove this too.",
+      "range": {
+        "startLine": 19,
+        "startChar": 25,
+        "endLine": 19,
+        "endChar": 45
+      },
+      "revId": "bea708f5f9fe26cb6fdb47dc50bd47c925ec107c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "702c25db_ea2b2e4d",
+        "filename": "jjb/ansible/ansible.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2019-01-15T14:29:43Z",
+      "side": 1,
+      "message": "Increasing JVM memory won\u0027t help if we don\u0027t also increase the physical memory on the VM too. Build node is currently set to a 2 GB machine so we cannot allocate 4 GB of memory to the JVM.",
+      "revId": "bea708f5f9fe26cb6fdb47dc50bd47c925ec107c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
