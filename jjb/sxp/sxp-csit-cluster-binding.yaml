@@ -1,0 +1,38 @@
+---
+- project:
+    name: sxp-csit-cluster-binding
+    jobs:
+      - inttest-csit-3node
+
+    # The project name
+    project: 'sxp'
+
+    # The functionality under test
+    functionality: 'cluster-binding'
+
+    # Project branches
+    stream:
+      - neon:
+          branch: 'master'
+          trigger-jobs: '{project}-merge-{stream}'
+          karaf-version: 'odl'
+          # yamllint disable-line rule:line-length
+          repo-url: 'mvn:org.opendaylight.sxp/features-sxp/1.8.0-SNAPSHOT/xml/features'
+      - fluorine:
+          branch: 'stable/fluorine'
+          trigger-jobs: '{project}-merge-{stream}'
+          karaf-version: 'odl'
+          # yamllint disable-line rule:line-length
+          repo-url: 'mvn:org.opendaylight.sxp/features-sxp/1.7.2-SNAPSHOT/xml/features'
+      - oxygen:
+          branch: 'stable/oxygen'
+
+    install:
+      - all:
+          scope: 'all'
+
+    # Features to install
+    install-features: 'odl-restconf,odl-sxp-controller'
+
+    # Robot custom options:
+    robot-options: ''
