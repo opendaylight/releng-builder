@@ -168,6 +168,7 @@ fi
 # 2. Extract project MSI version from mdsal project
 # 3. Replace version in patch by MSI version
 # Otherwise release the MRI project
+
 if [[ -d "odlparent" ]]; then
     if [[ -d "mdsal" ]]; then
         # Extract patch and MSI used version
@@ -175,22 +176,37 @@ if [[ -d "odlparent" ]]; then
         msi_version="$(xpath ./mdsal/pom.xml '/project/parent/version/text()' 2> /dev/null)"
         # Replace version
         find ./odlparent -name "*.xml" -print0 | xargs -0 sed -i "s/${patch_version}/${msi_version}/g"
+        odlparent_version="${msi_version}"
     else
         # Release project
         find ./odlparent -name "*.xml" -print0 | xargs -0 sed -i 's/-SNAPSHOT//g'
+        odlparent_version=${patch_version%"-SNAPSHOT"}
     fi
+    echo "odlparent project version changed to ${odlparent_version}"
 fi
 if [[ -d "yangtools" ]]; then
+    # Adjust odlparent version if required
+    if [[ -d "odlparent" ]]; then
+        # Extract odlparent version
+        patch_version="$(xpath ./yangtools/pom.xml '/project/parent/version/text()' 2> /dev/null)"
+        # Replace odlparent version
+        find ./yangtools -name "*.xml" -print0 | xargs -0 sed -i "s/${patch_version}/${odlparent_version}/g"
+        echo "yangtools project odlparent version changed to ${odlparent_version}"
+    fi
+    # Adjust yangtools version
     if [[ -d "mdsal" ]]; then
         # Extract patch and MSI used version
         patch_version="$(xpath ./yangtools/pom.xml '/project/version/text()' 2> /dev/null)"
         msi_version="$(xpath ./mdsal/dom/dom-parent/pom.xml '/project/dependencyManagement/dependencies/dependency[artifactId="yangtools-artifacts"]/version/text()' 2> /dev/null)"
         # Replace version
         find ./yangtools -name "*.xml" -print0 | xargs -0 sed -i "s/${patch_version}/${msi_version}/g"
+        yangtools_version="${msi_version}"
     else
         # Release project
         find ./yangtools -name "*.xml" -print0 | xargs -0 sed -i 's/-SNAPSHOT//g'
+        yangtools_version=${patch_version%"-SNAPSHOT"}
     fi
+    echo "yangtools project version changed to ${yangtools_version}"
 fi
 
 # Second phase: build everything
