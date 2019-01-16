@@ -168,28 +168,49 @@ fi
 # 2. Extract project MSI version from mdsal project
 # 3. Replace version in patch by MSI version
 # Otherwise release the MRI project
+
 if [[ -d "odlparent" ]]; then
     if [[ -d "mdsal" ]]; then
-        # Extract patch and MSI used version
+        # Extract patch and MSI used odlparent version
         patch_version="$(xpath ./odlparent/odlparent-lite/pom.xml '/project/version/text()' 2> /dev/null)"
         msi_version="$(xpath ./mdsal/pom.xml '/project/parent/version/text()' 2> /dev/null)"
-        # Replace version
+        # Replace odlparent version
         find ./odlparent -name "*.xml" -print0 | xargs -0 sed -i "s/${patch_version}/${msi_version}/g"
+        echo "odlparent project version changed to ${msi_version}"
     else
-        # Release project
+        # Release odlparent
         find ./odlparent -name "*.xml" -print0 | xargs -0 sed -i 's/-SNAPSHOT//g'
+        odlparent_version=${patch_version%"-SNAPSHOT"}
+        echo "odlparent project version changed to ${odlparent_version}"
     fi
 fi
 if [[ -d "yangtools" ]]; then
     if [[ -d "mdsal" ]]; then
-        # Extract patch and MSI used version
+        # Adjust yangtools and odlparent version to mdsal
+        # Extract patch and MSI used yangtools version
         patch_version="$(xpath ./yangtools/pom.xml '/project/version/text()' 2> /dev/null)"
         msi_version="$(xpath ./mdsal/dom/dom-parent/pom.xml '/project/dependencyManagement/dependencies/dependency[artifactId="yangtools-artifacts"]/version/text()' 2> /dev/null)"
-        # Replace version
+        # Replace yangtools version
         find ./yangtools -name "*.xml" -print0 | xargs -0 sed -i "s/${patch_version}/${msi_version}/g"
+        echo "yangtools project version changed to ${msi_version}"
+        # Extract patch and MSI used odlparent version
+        patch_version="$(xpath ./yangtools/pom.xml '/project/parent/version/text()' 2> /dev/null)"
+        msi_version="$(xpath ./mdsal/pom.xml '/project/parent/version/text()' 2> /dev/null)"
+        # Replace odlparent version
+        find ./yangtools -name "*.xml" -print0 | xargs -0 sed -i "s/${patch_version}/${msi_version}/g"
+        echo "yangtools project odlparent version changed to ${msi_version}"
     else
-        # Release project
+        # Release yangtools and adjust odlparent version if required
         find ./yangtools -name "*.xml" -print0 | xargs -0 sed -i 's/-SNAPSHOT//g'
+        yangtools_version=${patch_version%"-SddNAPSHOT"}
+        echo "yangtools project version changed to ${yangtools_version}"
+        if [[ -d "odlparent" ]]; then
+            # Extract odlparent version from odlparent
+            patch_version="$(xpath ./yangtools/pom.xml '/project/parent/version/text()' 2> /dev/null)"
+            # Replace odlparent version
+            find ./yangtools -name "*.xml" -print0 | xargs -0 sed -i "s/${patch_version}/${odlparent_version}/g"
+            echo "yangtools project odlparent version changed to ${odlparent_version}"
+        fi
     fi
 fi
 
