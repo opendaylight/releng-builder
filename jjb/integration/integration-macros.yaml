@@ -76,7 +76,9 @@
       - string:
           name: BUNDLE_URL
           default: '{bundle-url}'
-          description: 'URL to karaf distribution zip'
+          description: |
+              Karaf distribution zip URL. Use last for last distribution in Nexus,
+              use autorelease for last stable AR job distribution.
 
 - parameter:
     name: integration-repo-url
