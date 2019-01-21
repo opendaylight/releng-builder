@@ -47,9 +47,8 @@ NEW_DISTRO="$(find $WORKSPACE -name "${KARAF_ARTIFACT}*.zip")"
 NEW_DISTRO_BASENAME="$(basename "$NEW_DISTRO")"
 cp $NEW_DISTRO /tmp/
 cd /tmp/ || exit
-# get the name of the folder which will be extracted to
-EXTRACTED_FOLDER=$(unzip $NEW_DISTRO_BASENAME | grep 'creating:' | grep -v '/.' | cut -d' ' -f5-)
-mv $EXTRACTED_FOLDER distro_new
+unzip $NEW_DISTRO_BASENAME
+mv $BUNDLEFOLDER distro_new
 
 git clone https://git.opendaylight.org/gerrit/p/integration/test.git
 cd test/tools/distchanges || exit
