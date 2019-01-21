@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d3e47f5_21e2da55",
+        "filename": "jjb/autorelease/autorelease-templates.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2019-01-21T20:10:50Z",
+      "side": 1,
+      "message": "Why create a whole new template when the existing autorelease-release-{stream} template accepts a java-version parameter?\n\nI think we can do what the maven-verify jobs do and have a template:\n\nautorelease-release-{stream}-{mvn-version}-{java-version}\n\nThis way we can simultaniously have multiple combinations in the using the same template rather then duplicating one template multiple times.",
+      "revId": "cf8f4e086e5d21e7d9cdce29f4e29bfdb14dccb6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
