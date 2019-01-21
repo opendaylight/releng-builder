@@ -189,11 +189,12 @@
           karaf-version: '{karaf-version}'
 
     builders:
+      - integration-detect-variables
       - trigger-builds:
           - project: '{csit-list}'
             block: true
             predefined-parameters: |
-              BUNDLE_URL=$BUNDLE_URL
+              BUNDLE_URL=$ACTUAL_BUNDLE_URL
               KARAF_VERSION=$KARAF_VERSION
 
     wrappers:
