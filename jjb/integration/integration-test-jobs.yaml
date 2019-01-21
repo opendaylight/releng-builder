@@ -338,7 +338,9 @@
           global-settings: global-settings
           global-settings-type: cfp
       - integration-upload-distribution:
+          dist-project: integration
           dist-pom: distribution/pom.xml
+          dist-artifact: '$KARAF_ARTIFACT'
       - trigger-builds:
           - project: '{csit-list}'
             block: true
@@ -422,7 +424,9 @@
           settings-file: 'integration-distribution-settings'
       - integration-multipatch-builder
       - integration-upload-distribution:
+          dist-project: integration
           dist-pom: patch_tester/distribution/pom.xml
+          dist-artifact: '$KARAF_ARTIFACT'
       - conditional-step:
           condition-kind: boolean-expression
           condition-expression: $RUN_TEST

@@ -3,6 +3,7 @@
     name: odlparent-master
     jobs:
       - '{project-name}-maven-javadoc-jobs'
+      - '{project-name}-local-distribution-check-{stream}'
       - odl-maven-jobs
       - gerrit-tox-verify
 
@@ -25,6 +26,10 @@
         **/target/failsafe-reports/failsafe-summary.xml
         **/hs_err_*.log
         **/target/feature/feature.xml
+
+    # Used by local distribution check
+    dist-pom: karaf/test-distribution/pom.xml
+    dist-artifact: test-distribution
 
     # Used by the release job
     staging-profile-id: 880d5ac25eaa

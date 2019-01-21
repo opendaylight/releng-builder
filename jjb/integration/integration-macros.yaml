@@ -456,7 +456,10 @@
               variable: SETTINGS_FILE
       - integration-set-variables
       - inject:
-          properties-content: BUNDLE_POM={dist-pom}
+          properties-content: |
+            BUNDLE_PROJECT={dist-project}
+            BUNDLE_POM={dist-pom}
+            BUNDLE_ARTIFACT={dist-artifact}
       - shell: !include-raw-escape: integration-upload-distribution.sh
       - inject:
           properties-file: integration-upload-distribution.env

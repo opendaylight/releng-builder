@@ -278,3 +278,13 @@
     #     Use distribution-karaf-version macro to customize.
     builders:
       - shell: !include-raw: distribution-check-bootup.sh
+
+- builder:
+    name: distribution-check-bootup-local
+    # Operation: Locally deploy ODL with all fetures, check it is not broken.
+    # Required bash variables:
+    #   KARAF_VERSION: 'karaf4' or 'karaf3'.
+    #     Use distribution-karaf-version macro to customize.
+    builders:
+      - shell: !include-raw: distribution-check-bootup-local.sh
+

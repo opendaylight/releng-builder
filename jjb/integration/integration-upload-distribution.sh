@@ -2,9 +2,9 @@
 set -xeu -o pipefail
 
 BUNDLE_VERSION=$(xpath "${BUNDLE_POM}" '/project/version/text()' 2> /dev/null)
-BUNDLEFOLDER="${KARAF_ARTIFACT}-${BUNDLE_VERSION}"
+BUNDLEFOLDER="${BUNDLE_ARTIFACT}-${BUNDLE_VERSION}"
 BUNDLE="${BUNDLEFOLDER}.zip"
-BUNDLE_PATH="/tmp/r/org/opendaylight/integration/${KARAF_ARTIFACT}/${BUNDLE_VERSION}/${BUNDLE}"
+BUNDLE_PATH="/tmp/r/org/opendaylight/${BUNDLE_PROJECT}/${BUNDLE_ARTIFACT}/${BUNDLE_VERSION}/${BUNDLE}"
 ls -l "${BUNDLE_PATH}"
 LOG_FILE='integration-upload-distribution.log'
 echo "Uploading distribution to Nexus..."
@@ -16,14 +16,14 @@ echo "Uploading distribution to Nexus..."
     -DrepositoryId=opendaylight-snapshot \
     -Durl="$ODLNEXUSPROXY/content/repositories/opendaylight.snapshot/" \
     -DgroupId="org.opendaylight.integration.${GERRIT_PROJECT//\//.}" \
-    -DartifactId=${KARAF_ARTIFACT} \
+    -DartifactId=${BUNDLE_ARTIFACT} \
     -Dversion="${BUNDLE_VERSION}" \
     -Dpackaging=zip \
     || true  # Sandbox is not allowed to uplad to Nexus.
 
 cat "${LOG_FILE}"
 
-BUNDLE_URL=$(grep "Uploaded.*${KARAF_ARTIFACT}/${BUNDLE_VERSION}.*.zip" ${LOG_FILE} | awk '{print $5}') || true
+BUNDLE_URL=$(grep "Uploaded.*${BUNDLE_ARTIFACT}/${BUNDLE_VERSION}.*.zip" ${LOG_FILE} | awk '{print $5}') || true
 echo "Bundle uploaded to ${BUNDLE_URL}"
 
 # Re-inject the new BUNDLE_URL for downstream jobs to pull from Nexus
