@@ -27,15 +27,15 @@
     staging-profile-id: 1271cf710cc09d
 
 - project:
-    name: yangtools-v2.0.x
+    name: yangtools-v2.1.x
     jobs:
       - '{project-name}-maven-javadoc-jobs'
       - odl-maven-jobs
 
     project: yangtools
     project-name: yangtools
-    branch: v2.0.x
-    stream: v2.0.x
+    branch: v2.1.x
+    stream: v2.1.x
 
     mvn-settings: 'yangtools-settings'
     mvn-opts: '-Xmx1024m'
@@ -54,15 +54,15 @@
     staging-profile-id: 1271cf710cc09d
 
 - project:
-    name: yangtools-v2.0.6.x
+    name: yangtools-v2.0.x
     jobs:
       - '{project-name}-maven-javadoc-jobs'
       - odl-maven-jobs
 
     project: yangtools
     project-name: yangtools
-    branch: v2.0.6.x
-    stream: v2.0.6.x
+    branch: v2.0.x
+    stream: v2.0.x
 
     mvn-settings: 'yangtools-settings'
     mvn-opts: '-Xmx1024m'
