@@ -192,7 +192,6 @@
             predefined-parameters: |
               BUNDLE_URL=autorelease
               KARAF_VERSION=$KARAF_VERSION
-            fail-on-missing: true
           - project: 'packaging-build-rpm-{stream}'
             condition: UNSTABLE_OR_BETTER
             predefined-parameters: DOWNLOAD_URL=$BUNDLE_URL
