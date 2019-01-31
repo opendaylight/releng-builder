@@ -183,22 +183,17 @@
           build-days-to-keep: '{build-days-to-keep}'
 
     parameters:
-      - integration-distribution-branch:
-          branch: '{branch}'
-      - integration-distribution-stream:
-          stream: '{stream}'
       - integration-bundle-url:
           bundle-url: '{bundle-url}'
       - distribution-karaf-version:
           karaf-version: '{karaf-version}'
 
     builders:
-      - integration-detect-variables
       - trigger-builds:
           - project: '{csit-list}'
             block: true
             predefined-parameters: |
-              BUNDLE_URL=$ACTUAL_BUNDLE_URL
+              BUNDLE_URL=$BUNDLE_URL
               KARAF_VERSION=$KARAF_VERSION
 
     wrappers:
