@@ -24,15 +24,7 @@ if [ ${BUNDLE_URL} == 'last' ]; then
     BUNDLEFOLDER="${KARAF_ARTIFACT}-${BUNDLE_VERSION}"
     BUNDLE="${KARAF_ARTIFACT}-${TIMESTAMP}.zip"
     ACTUAL_BUNDLE_URL="${NEXUSPATH}/${BUNDLE_VERSION}/${BUNDLE}"
-elif [ ${BUNDLE_URL} == 'autorelease' ]; then
-    # Use latest stable AR job distribution URL
-    ACTUAL_BUNDLE_URL="$(curl -sL -X GET -H 'Accept:text/plain' https://jenkins.opendaylight.org/releng/view/autorelease/job/autorelease-release-$DISTROSTREAM/lastStableBuild/injectedEnvVars/export | grep BUNDLE_URL | tr -d 'BUNDLE_URL=')"
-    BUNDLE="${ACTUAL_BUNDLE_URL##*/}"
-    ARTIFACT="$(basename "$(dirname "$(dirname "${ACTUAL_BUNDLE_URL}")")")"
-    BUNDLE_VERSION="$(basename "$(dirname "${ACTUAL_BUNDLE_URL}")")"
-    BUNDLEFOLDER="${ARTIFACT}-${BUNDLE_VERSION}"
 else
-    # Use provided BUNDLE_URL
     ACTUAL_BUNDLE_URL="${BUNDLE_URL}"
     BUNDLE="${BUNDLE_URL##*/}"
     ARTIFACT="$(basename "$(dirname "$(dirname "${BUNDLE_URL}")")")"
