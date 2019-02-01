@@ -65,7 +65,7 @@ if [ "$DRY_RUN" = false ]
 then
     echo "Pushing stable/${RELEASE,,} branches to Gerrit"
     git submodule foreach git push gerrit "stable/${RELEASE,,}"
-    git push gerrit "stable/$RELEASE"
+    git push gerrit "stable/${RELEASE,,}"
 fi
 # --- End create new maintenance branch
 
