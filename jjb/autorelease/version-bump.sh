@@ -43,8 +43,7 @@ if [ "$BRANCH_CUT" = "false" ]; then
     done
 fi
 
-
-# Setup Gerrit remove to ensure Change-Id gets set on commit.
+# Setup Gerrit remote to ensure Change-Id gets set on commit.
 git config --global --add gitreview.username "jenkins-$SILO"
 git review -s
 git remote -v
