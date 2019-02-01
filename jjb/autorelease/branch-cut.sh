@@ -34,7 +34,9 @@ if [ -z "$RELEASE" ]; then
     exit 1
 fi
 
-git config gitreview.username jenkins-releng
+# Setup Gerrit remote to ensure Change-Id gets set on commit.
+git config --global --add gitreview.username "jenkins-$SILO"
+git remote -v
 git submodule foreach git review -s
 git review -s
 
