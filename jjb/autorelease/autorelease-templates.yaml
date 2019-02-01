@@ -189,9 +189,7 @@
       - trigger-parameterized-builds:
           - project: 'integration-distribution-test-{integration-test}'
             condition: STABLE
-            predefined-parameters: |
-              BUNDLE_URL=autorelease
-              KARAF_VERSION=$KARAF_VERSION
+            predefined-parameters: BUNDLE_URL=autorelease
           - project: 'packaging-build-rpm-{stream}'
             condition: UNSTABLE_OR_BETTER
             predefined-parameters: DOWNLOAD_URL=$BUNDLE_URL
