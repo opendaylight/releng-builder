@@ -17,6 +17,10 @@ rm -rf $BUILD_DIR
 mkdir -p $BUILD_DIR
 cd $BUILD_DIR
 
+# Download distribution pom.xml
+wget "http://git.opendaylight.org/gerrit/gitweb?p=integration/distribution.git;a=blob_plain;f=artifacts/upstream/properties/pom.xml;hb=refs/heads/$DISTROBRANCH" -O "pom.xml"
+cat pom.xml
+
 # Set up git committer name and email, needed for commit creation when cherry-picking.
 export EMAIL="sandbox@jenkins.opendaylight.org"
 export GIT_COMMITTER_NAME="Multipatch Job"
@@ -47,7 +51,7 @@ if [[ "${PATCHES_TO_BUILD}" == *topic* ]]; then
     echo "List of projects to check patch in topic: ${PROJECT_LIST[*]}"
     for PROJECT in "${PROJECT_LIST[@]}"; do
         # get all patches number for a topic for a given project
-        IFS=$'\n' read -rd '' -a GERRIT_PATCH_LIST <<< "$(ssh -p 29418 jenkins-$SILO@git.opendaylight.org gerrit query status:open topic:${TOPIC} project:${PROJECT} \
+        IFS=$'\n' read -rd '' -a GERRIT_PATCH_LIST <<< "$(ssh -p 29418 jenkins-$SILO@git.opendaylight.org gerrit query status:open topic:${TOPIC} project:${PROJECT} 2> /dev/null \
         | grep 'number:' | awk '{{ print $2 }}')" || true
         # add project if it is the first with patches or it is not the first
         if [[ -z "${PATCHES_TO_BUILD}" && ! -z "${GERRIT_PATCH_LIST[*]}" ]]; then
@@ -92,9 +96,10 @@ declare -a PROJECTS
 
 # For each patch:
 # 1. Clone the project.
-# 2. Optionally, checkout a specific (typically unmerged) Gerrit patch. If none,
-#   default to Integration/Distribution branch via {branch} JJB param.
-# 3. Also optionally, cherry-pick series of patches on top of the checkout.
+# 2. Checkout an specific (typically unmerged) Gerrit patch. If none,
+# use distribution pom.xml file to figure out right branch or tag to checkout.
+# In case of Gerrit patch in MRI project, adjust version for the stream.
+# 3. Optionally, cherry-pick series of patches on top of the checkout.
 #
 # Each patch is found in the ${PATCHES_TO_BUILD} variable as a comma separated
 # list of project[=checkout][:cherry-pick]* values. Examples:
@@ -110,33 +115,51 @@ declare -a PROJECTS
 distribution_status="not_included"
 for patch in "${PATCHES[@]}"
 do
-    echo "working on ${patch}"
-    # For patch=controller=61/29761/5:45/29645/6, this gives controller
+    echo "-- working on ${patch} --"
+    # For patch=controller=61/29761/5:45/29645/6, this gives controller.
     PROJECT="$(echo ${patch} | cut -d\: -f 1 | cut -d\= -f 1)"
     if [ "${PROJECT}" == "integration/distribution" ]; then
         distribution_status="included"
     fi
     PROJECT_SHORTNAME="${PROJECT##*/}"  # http://stackoverflow.com/a/3162500
     PROJECTS+=("${PROJECT_SHORTNAME}")
-    echo "cloning project ${PROJECT}"
+    echo "1. cloning project ${PROJECT}"
     git clone "https://git.opendaylight.org/gerrit/p/${PROJECT}"
     cd ${PROJECT_SHORTNAME}
-    # For patch = controller=61/29761/5:45/29645/6, this gives 61/29761/5
+    # For patch = controller=61/29761/5:45/29645/6, this gives 61/29761/5.
     CHECKOUT="$(echo ${patch} | cut -d\= -s -f 2 | cut -d\: -f 1)"
-    # If project has a patch, checkout patch, otherwise use distribution branch
+    # If there is a base patch for this project, checkout patch, otherwise use
+    # distribution pom.xml file to figure out right branch or tag to checkout.
     if [ "x${CHECKOUT}" != "x" ]; then
-        echo "checking out ${CHECKOUT}"
+        echo "2. checking out patch ${CHECKOUT}"
         # TODO: Make this script accept "29645/6" as a shorthand for "45/29645/6".
         git fetch "https://git.opendaylight.org/gerrit/${PROJECT}" "refs/changes/$CHECKOUT"
         git checkout FETCH_HEAD
-
+        # If the patch is for MRI project, adjust the MRI versions
+        if [ "${PROJECT}" == "odlparent" ] || [ "${PROJECT}" == "yangtools" ] || ([ "${PROJECT}" == "mdsal" ] && [ "${DISTROSTREAM}" != "fluorine" ]); then
+            ODLPARENT_VERSION="$(xmlstarlet sel -N x=http://maven.apache.org/POM/4.0.0 -t -v //x:odlparent.version ../pom.xml)"
+            echo "change odlparent version to ${ODLPARENT_VERSION}"
+            find . -name "*.xml" -print0 | xargs -0 xmlstarlet ed --inplace -P -N x=http://maven.apache.org/POM/4.0.0 -u //x:version\[../x:groupId=\"org.opendaylight.odlparent\"\] -v "${ODLPARENT_VERSION}" 2> /dev/null
+        fi
+        if [ "${PROJECT}" == "yangtools" ] || ([ "${PROJECT}" == "mdsal" ] && [ "${DISTROSTREAM}" != "fluorine" ]); then
+            YANGTOOLS_VERSION="$(xmlstarlet sel -N x=http://maven.apache.org/POM/4.0.0 -t -v //x:yangtools.version ../pom.xml)"
+            echo "change yangtools version to ${YANGTOOLS_VERSION}"
+            find -name "*.xml" -print0 | xargs -0 xmlstarlet ed --inplace -P -N x=http://maven.apache.org/POM/4.0.0 -u //x:version\[../x:groupId=\"org.opendaylight.yangtools\"\] -v "${YANGTOOLS_VERSION}" 2> /dev/null
+        fi
+        if [ "${PROJECT}" == "mdsal" ] && [ "${DISTROSTREAM}" != "fluorine" ]; then
+            MDSAL_VERSION="$(xmlstarlet sel -N x=http://maven.apache.org/POM/4.0.0 -t -v //x:mdsal.version ../pom.xml)"
+            echo "change mdsal version to ${MDSAL_VERSION}"
+            find -name "*.xml" -print0 | xargs -0 xmlstarlet ed --inplace -P -N x=http://maven.apache.org/POM/4.0.0 -u //x:version\[../x:groupId=\"org.opendaylight.mdsal\"\] -v "${MDSAL_VERSION}" 2> /dev/null
+        fi
     else
-        # If project with no patch = yangtools, download master branch
-        if [ "${PROJECT}" == "yangtools" ]; then
-            echo "checking out master"
-            git checkout master
+        # If project with no patch is MRI, download release tag:
+        if [ "${PROJECT}" == "odlparent" ] || [ "${PROJECT}" == "yangtools" ] || ([ "${PROJECT}" == "mdsal" ] && [ "${DISTROSTREAM}" != "fluorine" ]); then
+            PROJECT_VERSION="$(xmlstarlet sel -N x=http://maven.apache.org/POM/4.0.0 -t -v //x:${PROJECT_SHORTNAME}.version ../pom.xml)"
+            echo "2. checking out tag v${PROJECT_VERSION}"
+            git checkout tags/v${PROJECT_VERSION}
+        # Otherwise download distribution branch:
         else
-            echo "checking out ${DISTRIBUTION_BRANCH_TO_BUILD}"
+            echo "2. checking out branch ${DISTRIBUTION_BRANCH_TO_BUILD}"
             git checkout "${DISTRIBUTION_BRANCH_TO_BUILD}"
         fi
     fi
@@ -145,7 +168,7 @@ do
     IFS=':' read -ra PICKS <<< "${PICK_SEGMENT}"
     for pick in "${PICKS[@]}"
     do
-        echo "cherry-picking ${pick}"
+        echo "3. cherry-picking ${pick}"
         git fetch "https://git.opendaylight.org/gerrit/${PROJECT}" "refs/changes/${pick}"
         git cherry-pick --ff --keep-redundant-commits FETCH_HEAD
     done
@@ -161,57 +184,6 @@ if [ "${distribution_status}" == "not_included" ]; then
     cd distribution
     git checkout "${DISTRIBUTION_BRANCH_TO_BUILD}"
     cd "${BUILD_DIR}"
-fi
-
-# If there is a patch for odlparent or yangtools (MRI projects), adjust version to mdsal project:
-# 1. Extract project version in patch
-# 2. Extract project MSI version from mdsal project
-# 3. Replace version in patch by MSI version
-# Otherwise release the MRI project
-
-if [[ -d "odlparent" ]]; then
-    if [[ -d "mdsal" ]]; then
-        # Extract patch and MSI used odlparent version
-        patch_version="$(xpath ./odlparent/odlparent-lite/pom.xml '/project/version/text()' 2> /dev/null)"
-        msi_version="$(xpath ./mdsal/pom.xml '/project/parent/version/text()' 2> /dev/null)"
-        # Replace odlparent version
-        find ./odlparent -name "*.xml" -print0 | xargs -0 sed -i "s/${patch_version}/${msi_version}/g"
-        echo "odlparent project version changed to ${msi_version}"
-    else
-        # Release odlparent
-        find ./odlparent -name "*.xml" -print0 | xargs -0 sed -i 's/-SNAPSHOT//g'
-        odlparent_version=${patch_version%"-SNAPSHOT"}
-        echo "odlparent project version changed to ${odlparent_version}"
-    fi
-fi
-if [[ -d "yangtools" ]]; then
-    if [[ -d "mdsal" ]]; then
-        # Adjust yangtools and odlparent version to mdsal
-        # Extract patch and MSI used yangtools version
-        patch_version="$(xpath ./yangtools/pom.xml '/project/version/text()' 2> /dev/null)"
-        msi_version="$(xpath ./mdsal/dom/dom-parent/pom.xml '/project/dependencyManagement/dependencies/dependency[artifactId="yangtools-artifacts"]/version/text()' 2> /dev/null)"
-        # Replace yangtools version
-        find ./yangtools -name "*.xml" -print0 | xargs -0 sed -i "s/${patch_version}/${msi_version}/g"
-        echo "yangtools project version changed to ${msi_version}"
-        # Extract patch and MSI used odlparent version
-        patch_version="$(xpath ./yangtools/pom.xml '/project/parent/version/text()' 2> /dev/null)"
-        msi_version="$(xpath ./mdsal/pom.xml '/project/parent/version/text()' 2> /dev/null)"
-        # Replace odlparent version
-        find ./yangtools -name "*.xml" -print0 | xargs -0 sed -i "s/${patch_version}/${msi_version}/g"
-        echo "yangtools project odlparent version changed to ${msi_version}"
-    else
-        # Release yangtools and adjust odlparent version if required
-        find ./yangtools -name "*.xml" -print0 | xargs -0 sed -i 's/-SNAPSHOT//g'
-        yangtools_version=${patch_version%"-SddNAPSHOT"}
-        echo "yangtools project version changed to ${yangtools_version}"
-        if [[ -d "odlparent" ]]; then
-            # Extract odlparent version from odlparent
-            patch_version="$(xpath ./yangtools/pom.xml '/project/parent/version/text()' 2> /dev/null)"
-            # Replace odlparent version
-            find ./yangtools -name "*.xml" -print0 | xargs -0 sed -i "s/${patch_version}/${odlparent_version}/g"
-            echo "yangtools project odlparent version changed to ${odlparent_version}"
-        fi
-    fi
 fi
 
 # Second phase: build everything
