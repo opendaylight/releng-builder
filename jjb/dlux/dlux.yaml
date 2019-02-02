@@ -1,5 +1,22 @@
 ---
 - project:
+    name: dlux-sodium
+    jobs:
+      - odl-maven-jobs
+
+    stream: sodium
+    project: 'dlux'
+    project-name: 'dlux'
+    branch: 'master'
+    mvn-settings: 'dlux-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: 'odlparent-merge-{stream}'
+    email-upstream: '[dlux] [odlparent]'
+
+    # Used by the release job
+    staging-profile-id: 96e6a0327484f
+
+- project:
     name: dlux-neon
     jobs:
       - odl-maven-jobs
@@ -7,7 +24,7 @@
     stream: neon
     project: 'dlux'
     project-name: 'dlux'
-    branch: 'master'
+    branch: 'stable/neon'
     mvn-settings: 'dlux-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream}'

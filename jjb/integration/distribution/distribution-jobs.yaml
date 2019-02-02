@@ -19,8 +19,20 @@
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     email-upstream: '[int/dist]'
     stream:
-      - neon:
+      - sodium:
           branch: 'master'
+          karaf-version: odl
+          # Self-Managed projects repos and features:
+          sm-repos: >
+              mvn:org.opendaylight.sxp/features-sxp//xml/features,
+              mvn:org.opendaylight.telemetry/features-telemetry//xml/features
+          sm-features: >
+              odl-sxp-routing,
+              odl-telemetry-collector,
+              odl-telemetry-configurator,
+              odl-telemetry-all
+      - neon:
+          branch: 'stable/neon'
           karaf-version: odl
           # Self-Managed projects repos and features:
           sm-repos: >
@@ -71,8 +83,27 @@
     dist-pom: 'distribution/pom.xml'
 
     stream:
-      - neon:
+      - sodium:
           branch: 'master'
+          dependencies: >
+              aaa-merge-{stream},
+              bgpcep-merge-{stream},
+              coe-merge-{stream},
+              controller-merge-{stream},
+              daexim-merge-{stream},
+              genius-merge-{stream},
+              infrautils-merge-{stream},
+              lispflowmapping-merge-{stream},
+              mdsal-merge-{stream},
+              netconf-merge-{stream},
+              netvirt-merge-{stream}
+              neutron-merge-{stream},
+              openflowplugin-merge-{stream},
+              ovsdb-merge-{stream},
+              serviceutils-merge-{stream},
+              sfc-merge-{stream}
+      - neon:
+          branch: 'stable/neon'
           dependencies: >
               aaa-merge-{stream},
               bgpcep-merge-{stream},
@@ -169,8 +200,17 @@
     dist-pom: 'distribution/opendaylight/pom.xml'
 
     stream:
-      - neon:
+      - sodium:
           branch: 'master'
+          karaf-version: odl
+          dependencies: >
+              distribution-merge-managed-{stream},
+              sxp-merge-{stream},
+              telemetry-merge-{stream},
+              tsdr-merge-{stream},
+              unimgr-merge-{stream}
+      - neon:
+          branch: 'stable/neon'
           karaf-version: odl
           dependencies: >
               distribution-merge-managed-{stream},
@@ -208,8 +248,11 @@
     staging-profile-id: 2af042ed81d5e2
 
     stream:
-      - neon:
+      - sodium:
           branch: 'master'
+
+      - neon:
+          branch: 'stable/neon'
 
       - fluorine:
           branch: 'stable/fluorine'

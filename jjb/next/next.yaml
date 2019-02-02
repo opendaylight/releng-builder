@@ -1,5 +1,22 @@
 ---
 - project:
+    name: next-sodium
+    jobs:
+      - odl-maven-jobs
+
+    stream: sodium
+    project: 'next'
+    project-name: 'next'
+    branch: 'master'
+    mvn-settings: 'next-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: ''
+    email-upstream: '[next]'
+
+    # Used by the release job
+    staging-profile-id: a67e7c516f385
+
+- project:
     name: next-neon
     jobs:
       - odl-maven-jobs
@@ -7,7 +24,7 @@
     stream: neon
     project: 'next'
     project-name: 'next'
-    branch: 'master'
+    branch: 'stable/neon'
     mvn-settings: 'next-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: ''

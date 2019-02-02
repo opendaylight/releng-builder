@@ -1,5 +1,23 @@
 ---
 - project:
+    name: sdninterfaceapp-sodium
+    jobs:
+      - odl-maven-jobs
+
+    stream: sodium
+    project: 'sdninterfaceapp'
+    project-name: 'sdninterfaceapp'
+    branch: 'master'
+    build-node: centos7-builder-2c-8g
+    mvn-settings: 'sdninterfaceapp-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: 'bgpcep-merge-{stream}'
+    email-upstream: '[sdninterfaceapp] [bgpcep]'
+
+    # Used by the release job
+    staging-profile-id: a68e3d1ff55e3
+
+- project:
     name: sdninterfaceapp-neon
     jobs:
       - odl-maven-jobs
@@ -7,7 +25,7 @@
     stream: neon
     project: 'sdninterfaceapp'
     project-name: 'sdninterfaceapp'
-    branch: 'master'
+    branch: 'stable/neon'
     build-node: centos7-builder-2c-8g
     mvn-settings: 'sdninterfaceapp-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'

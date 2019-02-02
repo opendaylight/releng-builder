@@ -1,5 +1,22 @@
 ---
 - project:
+    name: netide-sodium
+    jobs:
+      - odl-maven-jobs
+
+    stream: sodium
+    project: 'netide'
+    project-name: 'netide'
+    branch: 'master'
+    mvn-settings: 'netide-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: 'openflowjava-merge-{stream}'
+    email-upstream: '[netide] [openflowjava]'
+
+    # Used by the release job
+    staging-profile-id: a67bab3755815
+
+- project:
     name: netide-neon
     jobs:
       - odl-maven-jobs
@@ -7,7 +24,7 @@
     stream: neon
     project: 'netide'
     project-name: 'netide'
-    branch: 'master'
+    branch: 'stable/neon'
     mvn-settings: 'netide-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'openflowjava-merge-{stream}'

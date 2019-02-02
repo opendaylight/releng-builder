@@ -1,5 +1,23 @@
 ---
 - project:
+    name: coretutorials-sodium
+    jobs:
+      - odl-maven-jobs
+
+    stream: sodium
+    project: 'coretutorials'
+    project-name: 'coretutorials'
+    branch: 'master'
+    mvn-settings: 'coretutorials-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: ''
+    email-upstream: '[coretutorials]'
+    build-timeout: 120
+
+    # Used by the release job
+    staging-profile-id: 96cd299563ec6
+
+- project:
     name: coretutorials-neon
     jobs:
       - odl-maven-jobs
@@ -7,7 +25,7 @@
     stream: neon
     project: 'coretutorials'
     project-name: 'coretutorials'
-    branch: 'master'
+    branch: 'stable/neon'
     mvn-settings: 'coretutorials-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: ''

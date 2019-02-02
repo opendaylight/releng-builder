@@ -1,5 +1,23 @@
 ---
 - project:
+    name: dluxapps-sodium
+    jobs:
+      - odl-maven-jobs
+
+    project: 'dluxapps'
+    project-name: 'dluxapps'
+    stream: sodium
+    branch: 'master'
+    build-node: centos7-builder-2c-8g
+    mvn-settings: 'dluxapps-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
+    email-upstream: '[dluxapps] [odlparent] [yangtools] [controller]'
+
+    # Used by the release job
+    staging-profile-id: 96e6fb1e65bf9
+
+- project:
     name: dluxapps-neon
     jobs:
       - odl-maven-jobs
@@ -7,7 +25,7 @@
     project: 'dluxapps'
     project-name: 'dluxapps'
     stream: neon
-    branch: 'master'
+    branch: 'stable/neon'
     build-node: centos7-builder-2c-8g
     mvn-settings: 'dluxapps-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'

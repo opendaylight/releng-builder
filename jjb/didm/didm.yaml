@@ -1,5 +1,22 @@
 ---
 - project:
+    name: didm-sodium
+    jobs:
+      - odl-maven-jobs
+
+    stream: sodium
+    project: 'didm'
+    project-name: 'didm'
+    branch: 'master'
+    mvn-settings: 'didm-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: ''
+    email-upstream: '[didm]'
+
+    # Used by the release job
+    staging-profile-id: 96e6338c870f5
+
+- project:
     name: didm-neon
     jobs:
       - odl-maven-jobs
@@ -7,7 +24,7 @@
     stream: neon
     project: 'didm'
     project-name: 'didm'
-    branch: 'master'
+    branch: 'stable/neon'
     mvn-settings: 'didm-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: ''

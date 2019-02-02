@@ -1,5 +1,24 @@
 ---
 - project:
+    name: ovil-sodium
+    jobs:
+      - odl-maven-jobs
+      - gerrit-tox-verify
+
+    stream: sodium
+    project: ovil
+    project-name: ovil
+    branch: 'master'
+    mvn-settings: ovil-settings
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+
+    dependencies: ''
+    email-upstream: '[ovil]'
+
+    # Used by the release job
+    staging-profile-id: 7b48866c207d8
+
+- project:
     name: ovil-neon
     jobs:
       - odl-maven-jobs
@@ -8,7 +27,7 @@
     stream: neon
     project: ovil
     project-name: ovil
-    branch: 'master'
+    branch: 'stable/neon'
     mvn-settings: ovil-settings
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
 

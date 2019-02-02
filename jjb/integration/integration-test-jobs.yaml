@@ -18,8 +18,17 @@
 
     # CSIT Lists in defaults.yaml
     stream:
-      - neon:
+      - sodium:
           branch: 'master'
+          mvn-version: 'mvn35'
+          csit-list: !include: csit-jobs-neon.lst
+          build-order: >
+              odlparent yangtools infrautils mdsal controller serviceutils aaa netconf
+              daexim ovsdb neutron openflowplugin coe genius lispflowmapping sfc netvirt
+              bgpcep integration/distribution
+
+      - neon:
+          branch: 'stable/neon'
           mvn-version: 'mvn35'
           csit-list: !include: csit-jobs-neon.lst
           build-order: >

@@ -1,5 +1,22 @@
 ---
 - project:
+    name: snmp-sodium
+    jobs:
+      - odl-maven-jobs
+
+    stream: sodium
+    project: 'snmp'
+    project-name: 'snmp'
+    branch: 'master'
+    mvn-settings: 'snmp-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: 'odlparent-merge-{stream}'
+    email-upstream: '[snmp] [odlparent]'
+
+    # Used by the release job
+    staging-profile-id: a68fb236b93a6
+
+- project:
     name: snmp-neon
     jobs:
       - odl-maven-jobs
@@ -7,7 +24,7 @@
     stream: neon
     project: 'snmp'
     project-name: 'snmp'
-    branch: 'master'
+    branch: 'stable/neon'
     mvn-settings: 'snmp-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream}'

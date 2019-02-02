@@ -1,5 +1,32 @@
 ---
 - project:
+    name: controller-sodium
+    jobs:
+      - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-maven-javadoc-jobs'
+      - '{project-name}-rtd-jobs':
+          build-node: centos7-builder-2c-2g
+          project-pattern: controller
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-controller/48288/
+          rtd-token: b8440116c823a80c0fb0479eb7448a9196e6932f
+      - odl-maven-jobs
+
+    stream: sodium
+    project: 'controller'
+    project-name: 'controller'
+    branch: 'master'
+    mvn-settings: 'controller-settings'
+    mvn-goals: 'clean deploy -Pintegrationtests,docs'
+    mvn-opts: '-Xmx4096m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
+    build-node: centos7-builder-8c-8g
+    build-timeout: 90
+    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},aaa-merge-{stream}'
+    email-upstream: '[controller] [odlparent] [yangtools] [aaa]'
+
+    # Used by the release job
+    staging-profile-id: 96c1c9177efdd
+
+- project:
     name: controller-neon
     jobs:
       - '{project-name}-distribution-check-{stream}'
@@ -14,7 +41,7 @@
     stream: neon
     project: 'controller'
     project-name: 'controller'
-    branch: 'master'
+    branch: 'stable/neon'
     mvn-settings: 'controller-settings'
     mvn-goals: 'clean deploy -Pintegrationtests,docs'
     mvn-opts: '-Xmx4096m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'

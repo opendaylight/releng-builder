@@ -1,5 +1,22 @@
 ---
 - project:
+    name: jsonrpc-sodium
+    jobs:
+      - odl-maven-jobs
+
+    project: 'jsonrpc'
+    project-name: 'jsonrpc'
+    stream: sodium
+    branch: 'master'
+    mvn-settings: 'jsonrpc-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream},mdsal-merge-{stream}'
+    email-upstream: '[jsonrpc] [odlparent] [yangtools] [controller] [mdsal]'
+
+    # Used by the release job
+    staging-profile-id: 96fdf4408765d
+
+- project:
     name: jsonrpc-neon
     jobs:
       - odl-maven-jobs
@@ -7,7 +24,7 @@
     project: 'jsonrpc'
     project-name: 'jsonrpc'
     stream: neon
-    branch: 'master'
+    branch: 'stable/neon'
     mvn-settings: 'jsonrpc-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream},mdsal-merge-{stream}'

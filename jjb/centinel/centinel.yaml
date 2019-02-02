@@ -1,5 +1,22 @@
 ---
 - project:
+    name: centinel-sodium
+    jobs:
+      - odl-maven-jobs
+
+    stream: sodium
+    project: 'centinel'
+    project-name: 'centinel'
+    branch: 'master'
+    mvn-settings: 'centinel-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: ''
+    email-upstream: '[centinel]'
+
+    # Used by the release job
+    staging-profile-id: 96bf9b3fefd8a
+
+- project:
     name: centinel-neon
     jobs:
       - odl-maven-jobs
@@ -7,7 +24,7 @@
     stream: neon
     project: 'centinel'
     project-name: 'centinel'
-    branch: 'master'
+    branch: 'stable/neon'
     mvn-settings: 'centinel-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: ''

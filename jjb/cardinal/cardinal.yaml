@@ -1,5 +1,22 @@
 ---
 - project:
+    name: cardinal-sodium
+    jobs:
+      - odl-maven-jobs
+
+    stream: sodium
+    project: 'cardinal'
+    project-name: 'cardinal'
+    branch: 'master'
+    mvn-settings: 'cardinal-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: 'openflowplugin-merge-{stream},iotdm-merge-{stream},sfc-merge-{stream}'
+    email-upstream: '[cardinal] [openflowplugin] [iotdm] [sfc]'
+
+    # Used by the release job
+    staging-profile-id: 96be20348f0f2
+
+- project:
     name: cardinal-neon
     jobs:
       - odl-maven-jobs
@@ -7,7 +24,7 @@
     stream: neon
     project: 'cardinal'
     project-name: 'cardinal'
-    branch: 'master'
+    branch: 'stable/neon'
     mvn-settings: 'cardinal-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'openflowplugin-merge-{stream},iotdm-merge-{stream},sfc-merge-{stream}'

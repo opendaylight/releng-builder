@@ -1,5 +1,35 @@
 ---
 - project:
+    name: telemetry-sodium
+    jobs:
+      - 'odl-maven-jobs'
+      - '{project-name}-integration-{stream}'
+      - '{project-name}-rtd-jobs':
+          build-node: centos7-builder-2c-2g
+          project-pattern: telemetry
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-telemetry/57583/
+          rtd-token: 694bcbf8e0b45b3c4e53174c6e5773ca351e1efb
+
+    stream: sodium
+    project: 'telemetry'
+    project-name: 'telemetry'
+    branch: 'master'
+    jdks:
+      - openjdk8
+    maven:
+      - mvn33:
+          mvn-version: 'mvn33'
+    mvn-settings: 'telemetry-settings'
+    mvn-goals: 'clean install'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: ''
+    email-upstream: '[telemetry]'
+    archive-artifacts: ''
+
+    # Used by the release job
+    staging-profile-id: 8ed9c52266504
+
+- project:
     name: telemetry-neon
     jobs:
       - 'odl-maven-jobs'
@@ -13,7 +43,7 @@
     stream: neon
     project: 'telemetry'
     project-name: 'telemetry'
-    branch: 'master'
+    branch: 'stable/neon'
     jdks:
       - openjdk8
     maven:

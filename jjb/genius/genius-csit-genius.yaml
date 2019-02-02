@@ -16,8 +16,10 @@
     testplan: '{project}-{functionality}.txt'
 
     stream:
-      - neon:
+      - sodium:
           branch: 'master'
+      - neon:
+          branch: 'stable/neon'
       - fluorine:
           branch: 'stable/fluorine'
       - oxygen:

@@ -1,5 +1,24 @@
 ---
 - project:
+    name: eman-sodium
+    jobs:
+      - '{project-name}-maven-javadoc-jobs'
+      - odl-maven-jobs
+
+    stream: sodium
+    project: 'eman'
+    project-name: 'eman'
+    branch: 'master'
+    mvn-settings: 'eman-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: ''
+    email-upstream: '[eman]'
+    build-node: centos7-builder-4c-16g
+
+    # Used by the release job
+    staging-profile-id: 96e9352979521
+
+- project:
     name: eman-neon
     jobs:
       - '{project-name}-maven-javadoc-jobs'
@@ -8,7 +27,7 @@
     stream: neon
     project: 'eman'
     project-name: 'eman'
-    branch: 'master'
+    branch: 'stable/neon'
     mvn-settings: 'eman-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: ''

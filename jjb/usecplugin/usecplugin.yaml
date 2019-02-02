@@ -1,5 +1,22 @@
 ---
 - project:
+    name: usecplugin-sodium
+    jobs:
+      - odl-maven-jobs
+
+    stream: sodium
+    project: 'usecplugin'
+    project-name: 'usecplugin'
+    branch: 'master'
+    mvn-settings: 'usecplugin-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: 'openflowplugin-merge-{stream}'
+    email-upstream: '[usecplugin] [openflowplugin]'
+
+    # Used by the release job
+    staging-profile-id: a69902281e037
+
+- project:
     name: usecplugin-neon
     jobs:
       - odl-maven-jobs
@@ -7,7 +24,7 @@
     stream: neon
     project: 'usecplugin'
     project-name: 'usecplugin'
-    branch: 'master'
+    branch: 'stable/neon'
     mvn-settings: 'usecplugin-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'openflowplugin-merge-{stream}'

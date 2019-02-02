@@ -1,5 +1,22 @@
 ---
 - project:
+    name: faas-sodium
+    jobs:
+      - odl-maven-jobs
+
+    stream: sodium
+    project: 'faas'
+    project-name: 'faas'
+    branch: 'master'
+    mvn-settings: 'faas-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: ''
+    email-upstream: '[faas]'
+
+    # Used by the release job
+    staging-profile-id: 96f5ac591d858
+
+- project:
     name: faas-neon
     jobs:
       - odl-maven-jobs
@@ -7,7 +24,7 @@
     stream: neon
     project: 'faas'
     project-name: 'faas'
-    branch: 'master'
+    branch: 'stable/neon'
     mvn-settings: 'faas-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: ''

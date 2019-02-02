@@ -8,8 +8,11 @@
     project: 'ovsdb'
 
     stream:
-      - neon:
+      - sodium:
           branch: 'master'
+          os-branch: 'queens'
+      - neon:
+          branch: 'stable/neon'
           os-branch: 'queens'
       - fluorine:
           branch: 'stable/fluorine'

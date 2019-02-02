@@ -1,5 +1,22 @@
 ---
 - project:
+    name: capwap-sodium
+    jobs:
+      - odl-maven-jobs
+
+    stream: sodium
+    project: 'capwap'
+    project-name: 'capwap'
+    branch: 'master'
+    mvn-settings: 'capwap-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: ''
+    email-upstream: '[capwap]'
+
+    # Used by the release job
+    staging-profile-id: 96bd6b5bf86e3
+
+- project:
     name: capwap-neon
     jobs:
       - odl-maven-jobs
@@ -7,7 +24,7 @@
     stream: neon
     project: 'capwap'
     project-name: 'capwap'
-    branch: 'master'
+    branch: 'stable/neon'
     mvn-settings: 'capwap-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: ''

@@ -1,5 +1,22 @@
 ---
 - project:
+    name: ocpplugin-sodium
+    jobs:
+      - odl-maven-jobs
+
+    stream: sodium
+    project: 'ocpplugin'
+    project-name: 'ocpplugin'
+    branch: 'master'
+    mvn-settings: 'ocpplugin-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
+    email-upstream: '[ocpplugin] [odlparent] [yangtools] [controller]'
+
+    # Used by the release job
+    staging-profile-id: a687673279f9c
+
+- project:
     name: ocpplugin-neon
     jobs:
       - odl-maven-jobs
@@ -7,7 +24,7 @@
     stream: neon
     project: 'ocpplugin'
     project-name: 'ocpplugin'
-    branch: 'master'
+    branch: 'stable/neon'
     mvn-settings: 'ocpplugin-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'

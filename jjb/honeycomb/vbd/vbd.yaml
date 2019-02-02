@@ -1,5 +1,22 @@
 ---
 - project:
+    name: vbd-sodium
+    jobs:
+      - odl-maven-jobs
+
+    stream: sodium
+    project: 'honeycomb/vbd'
+    project-name: 'vbd'
+    branch: 'master'
+    mvn-settings: 'honeycomb-vbd-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: ''
+    email-upstream: '[vbd]'
+
+    # Used by the release job
+    staging-profile-id: 96fc362c36862
+
+- project:
     name: vbd-neon
     jobs:
       - odl-maven-jobs
@@ -7,7 +24,7 @@
     stream: neon
     project: 'honeycomb/vbd'
     project-name: 'vbd'
-    branch: 'master'
+    branch: 'stable/neon'
     mvn-settings: 'honeycomb-vbd-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: ''

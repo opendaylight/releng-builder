@@ -12,8 +12,10 @@
 
     # Project branches
     stream:
-      - neon:
+      - sodium:
           branch: 'master'
+      - neon:
+          branch: 'stable/neon'
           trigger-jobs: '{project}-merge-{stream}'
           karaf-version: 'odl'
           # yamllint disable-line rule:line-length

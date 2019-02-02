@@ -1,5 +1,28 @@
 ---
 - project:
+    name: daexim-sodium
+    jobs:
+      - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-rtd-jobs':
+          build-node: centos7-builder-2c-2g
+          project-pattern: daexim
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-daexim/47611/
+          rtd-token: 76284f12638574f131cdccdf257d852d07c195fc
+      - odl-maven-jobs
+
+    project: 'daexim'
+    project-name: 'daexim'
+    stream: sodium
+    branch: 'master'
+    mvn-settings: 'daexim-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
+    email-upstream: '[daexim] [odlparent] [yangtools] [controller]'
+
+    # Used by the release job
+    staging-profile-id: 96e4dade34bd7
+
+- project:
     name: daexim-neon
     jobs:
       - '{project-name}-distribution-check-{stream}'
@@ -13,7 +36,7 @@
     project: 'daexim'
     project-name: 'daexim'
     stream: neon
-    branch: 'master'
+    branch: 'stable/neon'
     mvn-settings: 'daexim-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'

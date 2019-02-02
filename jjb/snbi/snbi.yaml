@@ -1,5 +1,22 @@
 ---
 - project:
+    name: snbi-sodium
+    jobs:
+      - odl-maven-jobs
+
+    stream: sodium
+    project: 'snbi'
+    project-name: 'snbi'
+    branch: 'master'
+    mvn-settings: 'snbi-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: ''
+    email-upstream: '[snbi]'
+
+    # Used by the release job
+    staging-profile-id: a68f328cefed6
+
+- project:
     name: snbi-neon
     jobs:
       - odl-maven-jobs
@@ -7,7 +24,7 @@
     stream: neon
     project: 'snbi'
     project-name: 'snbi'
-    branch: 'master'
+    branch: 'stable/neon'
     mvn-settings: 'snbi-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: ''

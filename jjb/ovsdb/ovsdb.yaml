@@ -1,5 +1,33 @@
 ---
 - project:
+    name: ovsdb-sodium
+    jobs:
+      - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-maven-javadoc-jobs'
+      - '{project-name}-rtd-jobs':
+          build-node: centos7-builder-2c-2g
+          project-pattern: ovsdb
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/opendaylight-ovsdb/35667/
+          rtd-token: 46030df8681cf7fc857aa80c1a7695f46ed252be
+      - odl-maven-jobs
+
+    csit-gate-list: 'netvirt-csit-1node-0cmb-1ctl-2cmp-apex-queens-gate-snat-conntrack-{stream}'
+    block_on_csit: false
+
+    stream: sodium
+    project: 'ovsdb'
+    project-name: 'ovsdb'
+    branch: 'master'
+    build-node: centos7-builder-2c-8g
+    mvn-settings: 'ovsdb-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: 'odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream}'
+    email-upstream: '[ovsdb] [odlparent] [controller] [yangtools]'
+
+    # Used by the release job
+    staging-profile-id: a68b188166958
+
+- project:
     name: ovsdb-neon
     jobs:
       - '{project-name}-distribution-check-{stream}'
@@ -17,7 +45,7 @@
     stream: neon
     project: 'ovsdb'
     project-name: 'ovsdb'
-    branch: 'master'
+    branch: 'stable/neon'
     build-node: centos7-builder-2c-8g
     mvn-settings: 'ovsdb-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'

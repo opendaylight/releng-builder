@@ -6,8 +6,13 @@
       - 'opflex-merge-{stream}'
 
     stream:
-      - neon:
+      - sodium:
           branch: 'master'
+          libuv-version: '1.8.0'
+          rapidjson-version: '1.0.2'
+          openvswitch-version: '2.6.0'
+      - neon:
+          branch: 'stable/neon'
           libuv-version: '1.8.0'
           rapidjson-version: '1.0.2'
           openvswitch-version: '2.6.0'

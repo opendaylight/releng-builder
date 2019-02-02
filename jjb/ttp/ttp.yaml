@@ -1,5 +1,22 @@
 ---
 - project:
+    name: ttp-sodium
+    jobs:
+      - odl-maven-jobs
+
+    stream: sodium
+    project: 'ttp'
+    project-name: 'ttp'
+    branch: 'master'
+    mvn-settings: 'ttp-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: 'odlparent-merge-{stream}'
+    email-upstream: '[ttp] [odlparent]'
+
+    # Used by the release job
+    staging-profile-id: a693f948563d5
+
+- project:
     name: ttp-neon
     jobs:
       - odl-maven-jobs
@@ -7,7 +24,7 @@
     stream: neon
     project: 'ttp'
     project-name: 'ttp'
-    branch: 'master'
+    branch: 'stable/neon'
     mvn-settings: 'ttp-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream}'

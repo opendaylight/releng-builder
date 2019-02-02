@@ -1,5 +1,30 @@
 ---
 - project:
+    name: transportpce-sodium
+    jobs:
+      - '{project-name}-rtd-jobs':
+          build-node: centos7-builder-2c-2g
+          project-pattern: transportpce
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-transportpce/47688/
+          rtd-token: 6f37ba63226bdcc6c823ee455e62237cf68813fd
+      - gerrit-tox-verify:
+          build-timeout: 120
+          build-node: centos7-builder-8c-8g
+      - odl-maven-jobs
+
+    project: 'transportpce'
+    project-name: 'transportpce'
+    stream: sodium
+    branch: 'master'
+    mvn-settings: 'transportpce-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
+    email-upstream: '[transportpce] [odlparent] [yangtools] [controller]'
+
+    # Used by the release job
+    staging-profile-id: a6927323fa3d4
+
+- project:
     name: transportpce-neon
     jobs:
       - '{project-name}-rtd-jobs':
@@ -15,7 +40,7 @@
     project: 'transportpce'
     project-name: 'transportpce'
     stream: neon
-    branch: 'master'
+    branch: 'stable/neon'
     mvn-settings: 'transportpce-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'

@@ -1,5 +1,31 @@
 ---
 - project:
+    name: netconf-sodium
+    jobs:
+      - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-rtd-jobs':
+          build-node: centos7-builder-2c-2g
+          project-pattern: netconf
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-netconf/48397/
+          rtd-token: aee2df909686ab7ba36f2ed08d90bdcf81f7b8dc
+      - odl-maven-jobs
+
+    stream: sodium
+    project: 'netconf'
+    project-name: 'netconf'
+    branch: 'master'
+    build-node: centos7-builder-2c-8g
+    mvn-settings: 'netconf-settings'
+    mvn-goals: 'clean deploy -Pintegrationtests'
+    mvn-opts: '-Xmx2048m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
+    build-timeout: 90
+    dependencies: 'aaa-merge-{stream},controller-merge-{stream},odlparent-merge-{stream},yangtools-merge-{stream}'
+    email-upstream: '[netconf] [aaa] [controller] [odlparent] [yangtools]'
+
+    # Used by the release job
+    staging-profile-id: a67b22fc3663f
+
+- project:
     name: netconf-neon
     jobs:
       - '{project-name}-distribution-check-{stream}'
@@ -13,7 +39,7 @@
     stream: neon
     project: 'netconf'
     project-name: 'netconf'
-    branch: 'master'
+    branch: 'stable/neon'
     build-node: centos7-builder-2c-8g
     mvn-settings: 'netconf-settings'
     mvn-goals: 'clean deploy -Pintegrationtests'

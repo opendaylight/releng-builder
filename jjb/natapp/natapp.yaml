@@ -1,5 +1,23 @@
 ---
 - project:
+    name: natapp-sodium
+    jobs:
+      - '{project-name}-maven-javadoc-jobs'
+      - odl-maven-jobs
+
+    stream: sodium
+    project: 'natapp'
+    project-name: 'natapp'
+    branch: 'master'
+    mvn-settings: 'natapp-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: 'openflowplugin-merge-{stream}'
+    email-upstream: '[natapp] [openflowplugin]'
+
+    # Used by the release job
+    staging-profile-id: a679c0f4f08a8
+
+- project:
     name: natapp-neon
     jobs:
       - '{project-name}-maven-javadoc-jobs'
@@ -8,7 +26,7 @@
     stream: neon
     project: 'natapp'
     project-name: 'natapp'
-    branch: 'master'
+    branch: 'stable/neon'
     mvn-settings: 'natapp-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'openflowplugin-merge-{stream}'

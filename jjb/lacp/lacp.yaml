@@ -1,5 +1,22 @@
 ---
 - project:
+    name: lacp-sodium
+    jobs:
+      - odl-maven-jobs
+
+    stream: sodium
+    project: 'lacp'
+    project-name: 'lacp'
+    branch: 'master'
+    mvn-settings: 'lacp-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: 'openflowjava-merge-{stream},openflowplugin-merge-{stream}'
+    email-upstream: '[lacp] [openflowjava] [openflowplugin]'
+
+    # Used by the release job
+    staging-profile-id: 96ff6c0ff6ab1
+
+- project:
     name: lacp-neon
     jobs:
       - odl-maven-jobs
@@ -7,7 +24,7 @@
     stream: neon
     project: 'lacp'
     project-name: 'lacp'
-    branch: 'master'
+    branch: 'stable/neon'
     mvn-settings: 'lacp-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'openflowjava-merge-{stream},openflowplugin-merge-{stream}'

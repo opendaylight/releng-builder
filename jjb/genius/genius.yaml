@@ -1,5 +1,39 @@
 ---
 - project:
+    name: genius-sodium
+    jobs:
+      - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-maven-javadoc-jobs'
+      - '{project-name}-rtd-jobs':
+          build-node: centos7-builder-2c-2g
+          project-pattern: genius
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-genius/34944/
+          rtd-token: 7ba691afb89bd53d19fd7d8585fdd8bd6620de7f
+      - odl-maven-jobs
+
+    csit-gate-list: 'netvirt-csit-1node-0cmb-1ctl-2cmp-apex-queens-gate-snat-conntrack-{stream}'
+    block_on_csit: false
+
+    stream: sodium
+    project: 'genius'
+    project-name: 'genius'
+    branch: 'master'
+    build-node: centos7-builder-2c-8g
+    mvn-settings: 'genius-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    build-timeout: 90
+    dependencies: >
+        controller-merge-{stream},
+        yangtools-merge-{stream},
+        odlparent-merge-{stream},
+        openflowplugin-merge-{stream},
+        neutron-merge-{stream}
+    email-upstream: '[genius] [controller] [yangtools] [odlparent] [openflowplugin] [neutron]'
+
+    # Used by the release job
+    staging-profile-id: 96fb4b6d9d1ee
+
+- project:
     name: genius-neon
     jobs:
       - '{project-name}-distribution-check-{stream}'
@@ -17,7 +51,7 @@
     stream: neon
     project: 'genius'
     project-name: 'genius'
-    branch: 'master'
+    branch: 'stable/neon'
     build-node: centos7-builder-2c-8g
     mvn-settings: 'genius-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'

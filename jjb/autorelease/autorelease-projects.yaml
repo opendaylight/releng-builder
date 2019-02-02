@@ -14,8 +14,13 @@
       - gerrit-tox-verify
 
     stream:
-      - neon:
+      - sodium:
           branch: 'master'
+          integration-test: sodium
+          extra-mvn-opts: -P!karaf -Pignore-lispflowmapping-integrationtest -Dsft.heap.max=4g
+              -Dskip.karaf.featureTest=true
+      - neon:
+          branch: 'stable/neon'
           integration-test: neon
           extra-mvn-opts: -P!karaf -Pignore-lispflowmapping-integrationtest -Dsft.heap.max=4g
               -Dskip.karaf.featureTest=true

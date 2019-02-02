@@ -1,5 +1,22 @@
 ---
 - project:
+    name: of-config-sodium
+    jobs:
+      - odl-maven-jobs
+
+    stream: sodium
+    project: 'of-config'
+    project-name: 'of-config'
+    branch: 'master'
+    mvn-settings: 'of-config-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: netconf-merge-{stream}'
+    email-upstream: '[of-config] [netconf]'
+
+    # Used by the release job
+    staging-profile-id: a6880455efe67
+
+- project:
     name: of-config-neon
     jobs:
       - odl-maven-jobs
@@ -7,7 +24,7 @@
     stream: neon
     project: 'of-config'
     project-name: 'of-config'
-    branch: 'master'
+    branch: 'stable/neon'
     mvn-settings: 'of-config-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: netconf-merge-{stream}'

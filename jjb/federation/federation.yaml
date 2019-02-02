@@ -1,5 +1,23 @@
 ---
 - project:
+    name: federation-sodium
+    jobs:
+      - '{project-name}-maven-javadoc-jobs'
+      - odl-maven-jobs
+
+    project: 'federation'
+    project-name: 'federation'
+    stream: sodium
+    branch: 'master'
+    mvn-settings: 'federation-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
+    email-upstream: '[federation] [odlparent] [yangtools] [controller]'
+
+    # Used by the release job
+    staging-profile-id: 96f78c7a40a24
+
+- project:
     name: federation-neon
     jobs:
       - '{project-name}-maven-javadoc-jobs'
@@ -8,7 +26,7 @@
     project: 'federation'
     project-name: 'federation'
     stream: neon
-    branch: 'master'
+    branch: 'stable/neon'
     mvn-settings: 'federation-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
