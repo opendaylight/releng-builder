@@ -11,12 +11,6 @@
     elastic_search_version: 1.7.5
     hbase_checksum: sha256:9cd990939403fd43dfb665b14603e3772ca3ed813a6e21a81de1778583b35eb8
     hbase_version: 0.94.27
-    openjdk10_checksum: 'sha256:f3b26abc9990a0b8929781310e14a339a7542adfd6596afb842fa0dd7e3848b2'
-    openjdk10_url: https://download.java.net/java/GA/jdk10/{{openjdk10_version}}/19aef61b38124481863b1413dce1855f/13/openjdk-{{openjdk10_version}}_linux-x64_bin.tar.gz
-    openjdk10_version: 10.0.2
-    openjdk11_checksum: 'sha256:3784cfc4670f0d4c5482604c7c513beb1a92b005f569df9bf100e8bef6610f2e'
-    openjdk11_url: https://download.java.net/java/ga/jdk11/openjdk-{{openjdk11_version}}_linux-x64_bin.tar.gz
-    openjdk11_version: 11
 
   pre_tasks:
     - include_role: name=lfit.system-update
@@ -25,54 +19,6 @@
     - lfit.mono-install
 
   tasks:
-    - name: 'Install OpenJDK {{openjdk10_version}}'
-      block:
-        - name: 'Fetch OpenJDK {{openjdk10_version}} to /tmp/jdk-{{openjdk10_version}}_linux-x64_bin.tar.gz'
-          get_url:
-            url: "{{openjdk10_url}}"
-            dest: '/tmp/jdk-{{openjdk10_version}}_linux-x64_bin.tar.gz'
-            checksum: '{{openjdk10_checksum}}'
-        - name: 'Untar OpenJDK {{openjdk10_version}} in /opt/'
-          unarchive:
-            src: '/tmp/jdk-{{openjdk10_version}}_linux-x64_bin.tar.gz'
-            dest: /opt/
-            mode: 0755
-            remote_src: true
-          become: true
-        - name: 'Setup Java master and slave links for OpenJDK {{openjdk10_version}}'
-          command: 'alternatives --install "/usr/bin/java" "java" "/opt/jdk-{{openjdk10_version}}/bin/java" 10 \
-                    --slave "/usr/bin/jar" "jar" "/opt/jdk-{{openjdk10_version}}/bin/jar" \
-                    --slave "/usr/bin/jarsigner" "jarsigner" "/opt/jdk-{{openjdk10_version}}/bin/jarsigner" \
-                    --slave "/usr/bin/javac" "javac" "/opt/jdk-{{openjdk10_version}}/bin/javac" \
-                    --slave "/usr/bin/javadoc" "javadoc" "/opt/jdk-{{openjdk10_version}}/bin/javadoc" \
-                    --slave "/usr/bin/javah" "javah" "/opt/jdk-{{openjdk10_version}}/bin/javah" \
-                    --slave "/usr/bin/javap" "javap" "/opt/jdk-{{openjdk10_version}}/bin/javap" \
-                    --slave "/usr/bin/javaws" "javaws" "/opt/jdk-{{openjdk10_version}}/bin/javaws"'
-          become: true
-    - name: 'Install OpenJDK {{openjdk11_version}}'
-      block:
-        - name: 'Fetch OpenJDK 11 to /tmp/jdk-{{openjdk11_version}}_linux-x64_bin.tar.gz'
-          get_url:
-            url: "{{openjdk11_url}}"
-            dest: '/tmp/jdk-{{openjdk11_version}}_linux-x64_bin.tar.gz'
-            checksum: '{{openjdk11_checksum}}'
-        - name: 'Untar OpenJDK {{openjdk11_version}} in /opt/'
-          unarchive:
-            src: '/tmp/jdk-{{openjdk11_version}}_linux-x64_bin.tar.gz'
-            dest: /opt/
-            mode: 0755
-            remote_src: true
-          become: true
-        - name: 'Setup Java master and slave links for OpenJDK {{openjdk11_version}}'
-          command: 'alternatives --install "/usr/bin/java" "java" "/opt/jdk-{{openjdk11_version}}/bin/java" 10 \
-                    --slave "/usr/bin/jar" "jar" "/opt/jdk-{{openjdk11_version}}/bin/jar" \
-                    --slave "/usr/bin/jarsigner" "jarsigner" "/opt/jdk-{{openjdk11_version}}/bin/jarsigner" \
-                    --slave "/usr/bin/javac" "javac" "/opt/jdk-{{openjdk11_version}}/bin/javac" \
-                    --slave "/usr/bin/javadoc" "javadoc" "/opt/jdk-{{openjdk11_version}}/bin/javadoc" \
-                    --slave "/usr/bin/javah" "javah" "/opt/jdk-{{openjdk11_version}}/bin/javah" \
-                    --slave "/usr/bin/javap" "javap" "/opt/jdk-{{openjdk11_version}}/bin/javap" \
-                    --slave "/usr/bin/javaws" "javaws" "/opt/jdk-{{openjdk11_version}}/bin/javaws"'
-          become: true
     - name: Install Cassandra Server
       block:
         - name: 'Fetch Cassandra Server to /tmp/apache-cassandra-{{cassandra_version}}-bin.tar.gz'
