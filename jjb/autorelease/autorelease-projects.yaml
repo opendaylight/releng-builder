@@ -19,27 +19,30 @@
           integration-test: sodium
           extra-mvn-opts: -P!karaf -Pignore-lispflowmapping-integrationtest -Dsft.heap.max=4g
               -Dskip.karaf.featureTest=true
+          java-version: openjdk11
       - neon:
           branch: 'stable/neon'
           integration-test: neon
           extra-mvn-opts: -P!karaf -Pignore-lispflowmapping-integrationtest -Dsft.heap.max=4g
               -Dskip.karaf.featureTest=true
+          java-version: openjdk8
       - fluorine:
           branch: 'stable/fluorine'
           integration-test: fluorine
           extra-mvn-opts: -P!karaf -Pignore-lispflowmapping-integrationtest -Dsft.heap.max=4g
               -Dskip.karaf.featureTest=true
+          java-version: openjdk8
       - oxygen:
           branch: 'stable/oxygen'
           integration-test: oxygen
           extra-mvn-opts: -P!karaf -Pignore-lispflowmapping-integrationtest -Dsft.heap.max=4g
               -Dskip.karaf.featureTest=true
           disable-job: 'true'
+          java-version: openjdk8
 
     project: releng/autorelease
     project-name: autorelease
     build-node: centos7-builder-2c-8g
-    java-version: openjdk8
     # Before adding more here, beware of https://jira.linuxfoundation.org/browse/RELENG-280
     archive-artifacts: >
         **/*.prop
@@ -50,35 +53,6 @@
         **/target/feature/feature.xml
     staging-profile-id: 425e43800fea70
     # TODO: **/*.hprof is too large, compress with xz first
-
-- project:
-    name: autorelease-projects-openjdk11
-    jobs:
-      - 'autorelease-release-{stream}-{mvn-version}-{java-version}':
-          build-node: centos7-autorelease-8c-32g
-
-    stream:
-      - neon:
-          branch: 'master'
-          integration-test: neon
-          extra-mvn-opts: -P!karaf -Pignore-lispflowmapping-integrationtest -Dsft.heap.max=4g
-              -Dskip.karaf.featureTest=true
-
-    project: releng/autorelease
-    project-name: autorelease
-    build-node: centos7-builder-2c-8g
-    java-version: openjdk11
-    # Before adding more here, beware of https://jira.linuxfoundation.org/browse/RELENG-280
-    archive-artifacts: >
-        **/*.prop
-        **/*.log
-        **/target/surefire-reports/*-output.txt
-        **/target/failsafe-reports/failsafe-summary.xml
-        **/hs_err_*.log
-        **/target/feature/feature.xml
-    staging-profile-id: 425e43800fea70
-    # TODO: **/*.hprof is too large, compress with xz first
-
 
 - project:
     name: autorelease-view
