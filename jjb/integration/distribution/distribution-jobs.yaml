@@ -60,6 +60,7 @@
       - oxygen:
           branch: 'stable/oxygen'
           karaf-version: karaf4
+          disable-job: 'true'
 
 - project:
     name: distribution-managed
@@ -143,6 +144,7 @@
 
       - oxygen:
           branch: 'stable/oxygen'
+          disable-job: true
           dependencies: >
               aaa-merge-{stream},
               alto-merge-{stream},

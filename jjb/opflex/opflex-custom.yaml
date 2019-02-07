@@ -26,6 +26,8 @@
           libuv-version: '1.8.0'
           rapidjson-version: '1.0.2'
           openvswitch-version: '2.6.0'
+          disable-job: true
+
 
     project: 'opflex'
     archive-artifacts: '**/*.tar.gz'
@@ -34,10 +36,13 @@
 - job-template:
     name: 'opflex-verify-{stream}'
 
+    disable-job: false
+
     project-type: freestyle
     node: centos7-builder-2c-8g
     concurrent: true
     jdk: '{java-version}'
+    disabled: '{disable-job}'
 
     properties:
       - opendaylight-infra-properties:

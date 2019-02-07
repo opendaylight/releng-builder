@@ -17,6 +17,7 @@
       - '{project-name}-merge-{stream}':
           build-timeout: 180
           mvn-goals: clean install -V -Dmaven.compile.fork=true -Dintegrationtests -Dvtn.build.jobs=2
+          disable-job: '{disable-job}'
 
       - gerrit-maven-stage:
           sign-artifacts: true
@@ -27,6 +28,7 @@
           build-timeout: 180
 
     mvn-version: mvn35
+    disable-job: '{disable-job}'
 
 - job-template:
     name: '{project-name}-integration-{stream}'
@@ -42,6 +44,7 @@
       **/target/failsafe-reports/failsafe-summary.xml
       **/target/surefire-reports/*-output.txt
     mvn-goals: clean install
+    disable-job: false
 
     #####################
     # Job Configuration #
@@ -50,6 +53,7 @@
     project-type: freestyle
     node: '{build-node}'
     jdk: '{java-version}'
+    disabled: '{disable-job}'
 
     properties:
       - opendaylight-infra-properties:
@@ -108,6 +112,7 @@
     ######################
     # Default parameters #
     ######################
+    disable-job: 'false'
 
     archive-artifacts: >
       **/*.log
@@ -131,6 +136,7 @@
     project-type: maven
     node: '{build-node}'
     jdk: '{java-version}'
+    disabled: '{disable-job}'
 
     properties:
       - opendaylight-infra-properties:

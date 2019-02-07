@@ -173,6 +173,7 @@
     os-cmb-cnt: 0
     os-ctl-cnt: 1
     os-cmp-cnt: 2
+    disable-job: true
 
     topology:
       - 1node:
@@ -279,6 +280,7 @@
           openstack_system2_count: 1
           openstack_system_image: '{openstack_pike_system_image}'
           openstack_system2_image: '{openstack_pike_system_image}'
+          disable-job: true
 
 - project:
     name: netvirt-csit-1cmb-0ctl-0cmp-openstack-integration
@@ -303,6 +305,7 @@
           branch: 'stable/fluorine'
       - oxygen:
           branch: 'stable/oxygen'
+          disable-job: true
 
     topology:
       - 1node:

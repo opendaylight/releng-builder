@@ -30,6 +30,7 @@
           libuv-version: '1.8.0'
           rapidjson-version: '1.0.2'
           openvswitch-version: '2.6.0'
+          disable-job: true
 
     project: 'opflex'
     project-name: 'opflex'
@@ -51,11 +52,13 @@
 
     node: centos7-builder-2c-8g
     jdk: '{java-version}'
+    disabled: '{disable-job}'
 
     ######################
     # Default parameters #
     ######################
 
+    disable-job: false
     build-timeout: 30
     java-version: openjdk8
     mvn-opts: ''

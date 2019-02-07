@@ -13,6 +13,7 @@
           branch: 'stable/fluorine'
       - oxygen:
           branch: 'stable/oxygen'
+          disable-job: true
 
     project: 'ovsdb'
     archive-artifacts: '*.log'
@@ -94,12 +95,15 @@
 - job-template:
     name: 'ovsdb-daily-full-integration-{stream}'
 
+    disable-job: false
+
     project-type: freestyle
     node: centos7-docker-1c-4g
     jdk: '{java-version}'
     description: >
         Integration tests for the OVSDB project against different versions of
         OVS and branches. This job runs nightly.
+    disabled: '{disable-job}'
 
     properties:
       - opendaylight-infra-properties:

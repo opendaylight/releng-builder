@@ -66,6 +66,7 @@
     mvn-settings: autorelease-settings
     mvn-version: mvn35
     extra-mvn-opts: ''
+    disable-job: 'false'
 
     #####################
     # Job Configuration #
@@ -74,6 +75,7 @@
     project-type: freestyle
     node: '{build-node}'
     jdk: '{java-version}'
+    disabled: '{disable-job}'
 
     properties:
       - lf-infra-properties:
@@ -223,6 +225,7 @@
     ######################
 
     cron: 'H 0 * * *'
+    disable-job: 'false'
 
     #####################
     # Job configuration #
@@ -230,6 +233,7 @@
 
     project-type: freestyle
     node: centos7-builder-2c-2g
+    disabled: '{disable-job}'
 
     properties:
       - lf-infra-properties:
@@ -287,6 +291,7 @@
     ######################
 
     cron: '@weekly'
+    disable-job: 'false'
 
     #####################
     # Job configuration #
@@ -294,6 +299,7 @@
 
     project-type: freestyle
     node: centos7-builder-2c-1g
+    disabled: '{disable-job}'
 
     properties:
       - lf-infra-properties:
@@ -365,6 +371,7 @@
     mvn-global-settings: global-settings
     mvn-settings: autorelease-settings
     mvn-version: mvn35
+    disable-job: 'false'
 
     #####################
     # Job configuration #
@@ -372,6 +379,7 @@
 
     project-type: freestyle
     node: '{build-node}'
+    disabled: '{disable-job}'
 
     properties:
       - opendaylight-infra-properties:
@@ -442,6 +450,7 @@
     ######################
     # Default parameters #
     ######################
+    disable-job: 'false'
 
     gerrit_merge_triggers:
       - comment-added-contains-event:
@@ -453,6 +462,7 @@
 
     project-type: freestyle
     node: centos7-builder-2c-8g
+    disabled: '{disable-job}'
 
     properties:
       - lf-infra-properties:
@@ -513,18 +523,19 @@
     mvn-global-settings: global-settings
     mvn-settings: autorelease-settings
     mvn-version: mvn35
+    disable-job: 'false'
 
     #####################
     # Job Configuration #
     #####################
 
-    disabled: false
     project-type: freestyle
     # Note: This NEEDS to be hardcoded as projects should NOT be allowed to
     #       override the build node.
     node: centos7-builder-2c-8g
     concurrent: true
     jdk: '{java-version}'
+    disabled: '{disable-job}'
 
     properties:
       - lf-infra-properties:

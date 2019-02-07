@@ -17,13 +17,16 @@
           branch: 'stable/fluorine'
       - oxygen:
           branch: 'stable/oxygen'
+          disable-job: true
 
 - job-template:
     name: '{project-name}-test-sanity-{stream}'
 
     node: centos7-docker-1c-4g
+    disable-job: false
 
     project-type: freestyle
+    disabled: '{disable-job}'
 
     properties:
       - opendaylight-infra-properties:
@@ -70,8 +73,10 @@
     name: '{project-name}-test-full-{stream}'
 
     node: centos7-docker-1c-4g
+    disable-job: false
 
     project-type: freestyle
+    disabled: '{disable-job}'
 
     properties:
       - opendaylight-infra-properties:
