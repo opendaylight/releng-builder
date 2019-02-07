@@ -27,7 +27,9 @@
     stream:
       - neon
       - fluorine
-      - oxygen
+      - oxygen:
+          disable-job: 'true'
+
     distro:
       - opensuse-42
       - epel-7
@@ -41,9 +43,12 @@
 - job-template:
     name: 'packaging-build-rpm-{stream}'
 
+    disable-job: false
+
     node: centos7-builder-2c-2g
 
     project-type: freestyle
+    disabled: '{disable-job}'
 
     mvn-opts: ''
     mvn-params: ''
@@ -118,8 +123,10 @@
     name: 'packaging-build-rpm-{distro}-snap-{stream}'
 
     node: centos7-docker-2c-2g
+    disable-job: false
 
     project-type: freestyle
+    disabled: '{disable-job}'
 
     mvn-opts: ''
     mvn-params: ''
@@ -188,8 +195,10 @@
     name: 'packaging-verify-rpm-master'
 
     node: centos7-builder-2c-2g
+    disable-job: false
 
     project-type: freestyle
+    disabled: '{disable-job}'
 
     parameters:
       - opendaylight-infra-parameters:
@@ -270,8 +279,10 @@
     name: 'packaging-verify-full-rpm-master'
 
     node: centos7-builder-2c-2g
+    disable-job: false
 
     project-type: freestyle
+    disabled: '{disable-job}'
 
     parameters:
       - opendaylight-infra-parameters:
@@ -393,6 +404,9 @@
     name: 'packaging-test-rpm-master'
 
     node: centos7-builder-2c-2g
+    disable-job: false
+
+    disabled: '{disable-job}'
 
     parameters:
       - opendaylight-infra-parameters:
@@ -449,7 +463,10 @@
 - job-template:
     name: 'packaging-test-rpm-upgrade-master'
 
+    disable-job: false
+
     node: centos7-builder-2c-2g
+    disabled: '{disable-job}'
 
     parameters:
       - opendaylight-infra-parameters:
@@ -515,6 +532,9 @@
     name: 'packaging-test-deb-master'
 
     node: ubuntu1604-mininet-ovs-25-1c-4g
+    disable-job: false
+
+    disabled: '{disable-job}'
 
     parameters:
       - opendaylight-infra-parameters:
@@ -563,8 +583,10 @@
     name: 'packaging-build-deb-{stream}'
 
     node: ubuntu1604-mininet-ovs-25-1c-4g
+    disable-job: false
 
     project-type: freestyle
+    disabled: '{disable-job}'
 
     mvn-opts: ''
     mvn-params: ''

@@ -34,6 +34,7 @@
           integration-test: oxygen
           extra-mvn-opts: -P!karaf -Pignore-lispflowmapping-integrationtest -Dsft.heap.max=4g
               -Dskip.karaf.featureTest=true
+          disable-job: 'true'
 
     project: releng/autorelease
     project-name: autorelease
