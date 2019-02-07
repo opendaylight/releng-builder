@@ -12,6 +12,7 @@
           libuv-version: '1.8.0'
           rapidjson-version: '1.0.2'
           openvswitch-version: '2.6.0'
+          disable-job: true
 
     project: 'opflex'
 
@@ -26,9 +27,12 @@
 - job-template:
     name: 'opflex-thirdparty-libuv-{stream}'
 
+    disable-job: false
+
     project-type: freestyle
     node: centos7-builder-2c-8g
     concurrent: true
+    disabled: '{disable-job}'
 
     group-id: 'libuv'
 

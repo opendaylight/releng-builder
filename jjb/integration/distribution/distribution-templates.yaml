@@ -15,6 +15,7 @@
     # plus the change of block_on_csit to true, and this failure-threshold: 'UNSTABLE' will take
     # effect
     failure-threshold: 'UNSTABLE'
+    disable-job: false
 
     #####################
     # Job Configuration #
@@ -23,7 +24,7 @@
     # Operation: This job template builds a patch, creates a distribution containing
     #            the patch (making sure dependencies are specified),
     #            and performs the distribution deploy test.
-    disabled: false
+    disabled: '{disable-job}'
 
     project-type: freestyle
     node: 'centos7-builder-8c-8g'
@@ -129,10 +130,13 @@
 - job-template:
     name: 'distribution-verify-{type}-{stream}'
 
+    disable-job: 'false'
+
     project-type: freestyle
     node: centos7-builder-8c-8g
     concurrent: true
     jdk: '{java-version}'
+    disabled: '{disable-job}'
 
     properties:
       - opendaylight-infra-properties:
@@ -201,9 +205,12 @@
     # separate lifecycle:
     #     https://issues.apache.org/jira/browse/MNG-5666
 
+    disable-job: false
+
     project-type: maven
     node: 'centos7-builder-8c-8g'
     jdk: '{java-version}'
+    disabled: '{disable-job}'
 
     properties:
       - opendaylight-infra-properties:
@@ -289,7 +296,7 @@
     ######################
     # Default parameters #
     ######################
-
+    disable-job: false
     mvn-version: mvn35
 
     #####################
@@ -297,7 +304,7 @@
     #####################
 
     # Like a {project}-distribution-check, but few steps less as there is no upstream project involved.
-    disabled: false
+    disabled: '{disable-job}'
 
     project-type: freestyle
     node: 'centos7-builder-8c-8g'
@@ -442,9 +449,12 @@
     # Operation: This job deploys odl-integration-all.
     # This job works for just managed distro.
 
+    disable-job: false
+
     project-type: freestyle
     node: centos7-builder-4c-4g
     concurrent: false
+    disabled: '{disable-job}'
 
     properties:
       - opendaylight-infra-properties:
