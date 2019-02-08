@@ -166,6 +166,7 @@
           forbidden-files: ''
 
     builders:
+      - lf-infra-pre-build
       - config-file-provider:
           files:
             - file-id: odl-elastic-cloud
@@ -199,6 +200,7 @@
           karaf-version: '{karaf-version}'
 
     builders:
+      - lf-infra-pre-build
       - trigger-builds:
           - project: '{csit-list}'
             block: true
@@ -241,6 +243,7 @@
       - timed: '{schedule-daily}'
 
     builders:
+      - lf-infra-pre-build
       - trigger-builds:
           - project: '{csit-sanity-list}'
             block: true
@@ -314,6 +317,7 @@
             notbuilt: true
 
     builders:
+      - lf-infra-pre-build
       - integration-rebase-gerrit-patch
       - wipe-org-opendaylight-repo
       - lf-provide-maven-settings:
@@ -424,6 +428,7 @@
                   branch-pattern: '**/{branch}'
 
     builders:
+      - lf-infra-pre-build
       - wipe-org-opendaylight-repo
       - lf-maven-install:
           mvn-version: '{mvn-version}'
@@ -502,6 +507,7 @@
       - timed: '{schedule-high-frequency}'
 
     builders:
+      - lf-infra-pre-build
       - trigger-builds:
           - project: '{csit-high-frequency-list}'
             block: true
@@ -572,6 +578,7 @@
           jobs: builder-jjb-merge
 
     builders:
+      - lf-infra-pre-build
       - shell: !include-raw-escape: update-csit-tests.sh
       - shell: |
           git status
