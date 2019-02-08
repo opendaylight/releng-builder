@@ -13,7 +13,7 @@
     - include_role: name=lfit.system-update
 
   roles:
-    - lfit.docker-install
+    - {role: lfit.docker-install, ubuntu_docker_version: 18.06.0~ce~3-0~ubuntu}
     - fkautz.bridge-utils-install
     - fkautz.golang-install
     - fkautz.kubernetes-install
