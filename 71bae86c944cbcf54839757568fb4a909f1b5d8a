@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58bf2abc_9f21b656",
+        "filename": "packer/provision/kubernetes.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2019-02-08T14:37:06Z",
+      "side": 1,
+      "message": "lfit.docker-install supports a docker version parameter. You should be able to override with:\n\n - role: lfit.docker-install\n   vars:\n     ubuntu_docker_version: latest\n     centos_docker_version: latest\n\nEvery one of the defaults declared here https://github.com/lfit/ansible-roles-docker-install/blob/master/defaults/main.yml can be overrided.\n\nNo need to maintain a separate docker-install role imo.",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 27
+      },
+      "revId": "71bae86c944cbcf54839757568fb4a909f1b5d8a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
