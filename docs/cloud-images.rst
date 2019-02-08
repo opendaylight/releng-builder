@@ -31,6 +31,7 @@ Following are the list of published images available to be used with Jenkins job
 * ZZCI - Ubuntu 16.04 - gbp - 20180723-235534.431
 * ZZCI - Ubuntu 16.04 - kubernetes - 20180527-1344
 * ZZCI - Ubuntu 16.04 - kubernetes - 20180723-235526.580
+* ZZCI - Ubuntu 16.04 - kubernetes - 20190206-080347.936
 * ZZCI - Ubuntu 16.04 - mininet-ovs-25 - 20171208-1847
 * ZZCI - Ubuntu 16.04 - mininet-ovs-25 - 20180723-235543.682
 * ZZCI - Ubuntu 16.04 - mininet-ovs-25 - 20181029-223449.514
