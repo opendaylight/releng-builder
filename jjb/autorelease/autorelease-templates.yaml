@@ -67,6 +67,8 @@
     mvn-version: mvn35
     extra-mvn-opts: ''
     sign-artifacts: true
+    mvn-central: true
+    ossrh-profile-id: 6386ebbbf3a563
     disable-job: 'false'
 
     #####################
@@ -180,6 +182,9 @@
           sign-artifacts: '{sign-artifacts}'
           sign-dir: '$WORKSPACE/m2repo'
       - lf-maven-stage
+      - lf-maven-central:
+          mvn-central: '{mvn-central}'
+          ossrh-profile-id: '{ossrh-profile-id}'
       - autorelease-get-integration-test-variables
       - autorelease-maven-sources:
           opendaylight-infra-mvn-opts: '{opendaylight-infra-mvn-opts}'
