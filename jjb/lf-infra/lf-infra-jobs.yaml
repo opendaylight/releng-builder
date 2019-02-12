@@ -43,6 +43,19 @@
     gerrit-server-name: lf-releng
 
 - project:
+    name: lf-infra-info-master
+    jobs:
+      - gerrit-tox-verify
+
+    project-name: lf-test-release-tox-verify
+    project: zzz-test-release
+    build-node: centos7-builder-2c-2g
+    stream: any
+    branch: '*'
+
+    git-url: https://git.opendaylight.org/gerrit/$GERRIT_PROJECT
+
+- project:
     name: lf-infra-common-packer
     jobs:
       - '{project-name}-rtd-jobs'
