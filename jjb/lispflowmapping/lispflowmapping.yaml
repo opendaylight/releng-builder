@@ -9,11 +9,11 @@
           project-pattern: lispflowmapping
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-lispflowmapping/47783/
           rtd-token: 181be9dd804e4969b9f318a6f1988e3cbee9d9a8
-      - odl-maven-jobs
+      - odl-maven-jobs:
+          java-version:
+            - openjdk8
+            - openjdk11
 
-    java-version:
-      - openjdk8
-      - openjdk11
     stream: sodium
     project: 'lispflowmapping'
     project-name: 'lispflowmapping'
@@ -42,11 +42,11 @@
           project-pattern: lispflowmapping
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-lispflowmapping/47783/
           rtd-token: 181be9dd804e4969b9f318a6f1988e3cbee9d9a8
-      - odl-maven-jobs
+      - odl-maven-jobs:
+          java-version:
+            - openjdk8
+            - openjdk11
 
-    java-version:
-      - openjdk8
-      - openjdk11
     stream: neon
     project: 'lispflowmapping'
     project-name: 'lispflowmapping'
