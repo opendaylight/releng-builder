@@ -179,12 +179,17 @@
     10-exclude-value: ''
 
     # Manual CSIT job lists used by sanity or periodic in nature.
+    csit-high-frequency-list-sodium: >
+        netvirt-csit-1node-0cmb-1ctl-2cmp-openstack-queens-upstream-stateful-sodium
     csit-high-frequency-list-neon: >
         netvirt-csit-1node-0cmb-1ctl-2cmp-openstack-queens-upstream-stateful-neon
     csit-high-frequency-list-fluorine: >
         netvirt-csit-1node-0cmb-1ctl-2cmp-openstack-queens-upstream-stateful-fluorine
     csit-high-frequency-list-oxygen: >
         netvirt-csit-1node-0cmb-1ctl-2cmp-openstack-queens-upstream-stateful-oxygen
+    csit-sanity-list-sodium: >
+        openflowplugin-csit-1node-sanity-only-sodium,
+        distribution-sanity-sodium
     csit-sanity-list-neon: >
         openflowplugin-csit-1node-sanity-only-neon,
         distribution-sanity-neon
@@ -194,6 +199,15 @@
     csit-sanity-list-oxygen: >
         openflowplugin-csit-1node-sanity-only-oxygen,
         distribution-sanity-oxygen
+    csit-weekly-list-sodium: >
+        controller-csit-1node-notifications-longevity-only-sodium,
+        controller-csit-3node-drb-partnheal-longevity-only-sodium,
+        controller-csit-3node-drb-precedence-longevity-only-sodium,
+        controller-csit-3node-ddb-expl-lead-movement-longevity-only-sodium,
+        bgpcep-csit-3node-bgpclustering-longevity-only-sodium,
+        distribution-deploy-sodium,
+        distribution-offline-sodium,
+        openflowplugin-csit-1node-longevity-only-sodium
     csit-weekly-list-neon: >
         controller-csit-1node-notifications-longevity-only-neon,
         controller-csit-3node-drb-partnheal-longevity-only-neon,

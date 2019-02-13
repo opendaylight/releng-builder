@@ -21,7 +21,7 @@
       - sodium:
           branch: 'master'
           mvn-version: 'mvn35'
-          csit-list: !include: csit-jobs-neon.lst
+          csit-list: !include: csit-jobs-sodium.lst
           build-order: >
               odlparent yangtools infrautils mdsal controller serviceutils aaa netconf
               daexim ovsdb neutron openflowplugin coe genius lispflowmapping sfc netvirt
@@ -67,8 +67,22 @@
 
     # CSIT Lists in defaults.yaml
     stream:
-      - neon:
+      - sodium:
           branch: 'master'
+          csit-blacklist: >
+              alto bier capwap centinel didm dluxapps groupbasedpolicy iotdm jsonrpc lacp
+              l2switch messaging4transport nemo netide nic ocpplugin of-config p4plugin packetcable
+              sdninterfaceapp sxp tsdr unimgr usc usecplugin vtn gate longevity sanity tdd tempest wip
+              aaa-csit-1node-keystone-all
+              netvirt-csit-1node-1cmb-0ctl-0cmp-openstack-pike
+              netvirt-csit-1node-1cmb-0ctl-0cmp-openstack-queens-upstream-stateful-itm-direct
+              netvirt-csit-3node-1cmb
+              last-line-is-ignored-so-we-need-something-dummy-here-to-make-sure-the-real-last-line-is-used
+          csit-list: !include: csit-jobs-sodium.lst
+          csit-weekly-list: '{csit-weekly-list-sodium}'
+          csit-high-frequency-list: '{csit-high-frequency-list-sodium}'
+      - neon:
+          branch: 'stable/neon'
           csit-blacklist: >
               alto bier capwap centinel didm dluxapps groupbasedpolicy iotdm jsonrpc lacp
               l2switch messaging4transport nemo netide nic ocpplugin of-config p4plugin packetcable
@@ -117,8 +131,12 @@
       - 'integration-sanity-test-{stream}'
 
     stream:
-      - neon:
+      - sodium:
           branch: 'master'
+          karaf-version: odl
+          csit-sanity-list: '{csit-sanity-list-sodium}'
+      - neon:
+          branch: 'stable/neon'
           karaf-version: odl
           csit-sanity-list: '{csit-sanity-list-neon}'
       - fluorine:
