@@ -66,6 +66,7 @@
     mvn-settings: autorelease-settings
     mvn-version: mvn35
     extra-mvn-opts: ''
+    sign-artifacts: false
     disable-job: 'false'
 
     #####################
@@ -175,6 +176,9 @@
           settings-type: cfp
           global-settings: '{mvn-global-settings}'
           global-settings-type: cfp
+      - lf-sigul-sign-dir:
+          sign-artifacts: '{sign-artifacts}'
+          sign-dir: '$WORKSPACE/m2repo'
       - lf-maven-stage
       - autorelease-get-integration-test-variables
       - autorelease-maven-sources:
