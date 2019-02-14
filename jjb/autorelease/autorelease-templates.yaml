@@ -63,9 +63,11 @@
     cron: 'H 0 * * *'
     java-version: '{java-version}'
     mvn-global-settings: global-settings
+    mvn-goals: clean deploy
+    mvn-opts: '-Xmx8g -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
+    mvn-params: '-Pintegrationtests,repoBuild -Dcheckstyle.skip=true'
     mvn-settings: autorelease-settings
     mvn-version: mvn35
-    extra-mvn-opts: ''
     sign-artifacts: false
     mvn-central: false
     ossrh-profile-id: 6386ebbbf3a563
@@ -77,7 +79,6 @@
 
     project-type: freestyle
     node: '{build-node}'
-    jdk: '{java-version}'
     disabled: '{disable-job}'
 
     properties:
@@ -85,28 +86,19 @@
           build-days-to-keep: 30
 
     parameters:
-      - maven-exec:
-          maven-version: '{mvn-version}'
       - lf-infra-parameters:
           project: '{project}'
           stream: '{stream}'
           branch: '{branch}'
           lftools-version: '{lftools-version}'
+      - lf-infra-maven-parameters:
+          mvn-opts: '{mvn-opts}'
+          mvn-params: '{mvn-params}'
+          mvn-version: '{mvn-version}'
       - distribution-karaf-version:
           karaf-version: '{karaf-version}'
       - autorelease-release-tag:
           release-tag: '{stream}'
-      - string:
-          name: EXTRA_MVN_OPTS
-          default: '{extra-mvn-opts}'
-          description: |
-              Additional optional Maven Options to pass to the Maven Goals
-              parameter.
-
-              Examples:
-              -Dskip.karaf.featureTest=true  # To disable karaf SingleFeatureTests
-              --fail-never   # NEVER fail the build, regardless of project result
-              --fail-at-end  # Only fail the build afterwards; allow all non-impacted builds to continue
       - string:
           name: ARCHIVE_ARTIFACTS
           default: '{archive-artifacts}'
@@ -162,22 +154,8 @@
       # Keep the patches compatible with that ideal, but apply an edit
       # to enable building in a single maven reactor afterwards.
       - autorelease-fix-relative-paths
-      - maven-target:
-          maven-version: '{mvn-version}'
-          pom: 'pom.xml'
-          goals: |
-              clean deploy
-              $EXTRA_MVN_OPTS
-              -Pintegrationtests,repoBuild
-              -Dcheckstyle.skip=true
-              -DaltDeploymentRepository=staging::default::file:"$WORKSPACE"/m2repo
-              {opendaylight-infra-mvn-opts}
-          java-opts:
-            - '-Xmx8g -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
-          settings: '{mvn-settings}'
-          settings-type: cfp
-          global-settings: '{mvn-global-settings}'
-          global-settings-type: cfp
+      - lf-maven-build:
+          mvn-goals: '{mvn-goals}'
       - lf-sigul-sign-dir:
           sign-artifacts: '{sign-artifacts}'
           sign-dir: '$WORKSPACE/m2repo'
