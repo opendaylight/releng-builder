@@ -961,15 +961,23 @@ pushd \${TMP}
 git clone https://github.com/openvswitch/ovs.git
 cd ovs
 
-if [ "${version}" = "v2.6.1-nsh" ]; then
+case ${version} in
+  *-nsh)
     git checkout v2.6.1
     echo "Will apply nsh patches for OVS version 2.6.1"
     git clone https://github.com/yyang13/ovs_nsh_patches.git ../ovs_nsh_patches
     git apply ../ovs_nsh_patches/v2.6.1_centos7/*.patch
-else
+    ;;
+  *-dpdk)
+    ovs_version=\$(echo ${version} | cut -d- -f1)
+    git checkout \${ovs_version}
+    sudo yum \${YUM_OPTS} install dpdk dpdk-devel
+    ADDITIONAL_CONFIG_ARGS="--with-dpdk"
+    ;;
+  *)
     git checkout ${version}
-fi
-
+    ;;
+esac
 # On early versions of OVS, flake warnings would fail the build.
 # Remove it.
 sudo pip uninstall -y flake8
@@ -984,7 +992,7 @@ sed -e 's/@VERSION@/0.0.1/' rhel/openvswitch-dkms.spec.in > /tmp/ovs-dkms.spec
 sudo yum-builddep \${YUM_OPTS} /tmp/ovs.spec /tmp/ovs-kmod.spec /tmp/ovs-dkms.spec
 rm /tmp/ovs.spec /tmp/ovs-kmod.spec /tmp/ovs-dkms.spec
 ./boot.sh
-./configure --build=x86_64-redhat-linux-gnu --host=x86_64-redhat-linux-gnu --with-linux=/lib/modules/\${K_VERSION}/build --program-prefix= --disable-dependency-tracking --prefix=/usr --exec-prefix=/usr --bindir=/usr/bin --sbindir=/usr/sbin --sysconfdir=/etc --datadir=/usr/share --includedir=/usr/include --libdir=/usr/lib64 --libexecdir=/usr/libexec --localstatedir=/var --sharedstatedir=/var/lib --mandir=/usr/share/man --infodir=/usr/share/info --enable-libcapng --enable-ssl --with-pkidir=/var/lib/openvswitch/pki PYTHON=/usr/bin/python2
+./configure --build=x86_64-redhat-linux-gnu --host=x86_64-redhat-linux-gnu --with-linux=/lib/modules/\${K_VERSION}/build \${ADDITIONAL_CONFIG_ARGS} --program-prefix= --disable-dependency-tracking --prefix=/usr --exec-prefix=/usr --bindir=/usr/bin --sbindir=/usr/sbin --sysconfdir=/etc --datadir=/usr/share --includedir=/usr/include --libdir=/usr/lib64 --libexecdir=/usr/libexec --localstatedir=/var --sharedstatedir=/var/lib --mandir=/usr/share/man --infodir=/usr/share/info --enable-libcapng --enable-ssl --with-pkidir=/var/lib/openvswitch/pki PYTHON=/usr/bin/python2
 make rpm-fedora RPMBUILD_OPT="--without check"
 # Build dkms only for now
 # make rpm-fedora-kmod RPMBUILD_OPT='-D "kversion \${K_VERSION}"'
@@ -1039,7 +1047,7 @@ if [ -n "\${OVS_DKMS_PKG}" ]; then
     sudo yum -y install centos-release
     K_VERSION=\$(uname -r)
     YUM_OPTS="-y --disablerepo=* --enablerepo=base,updates,extra,C*-base,C*-updates,C*-extras"
-    sudo yum \${YUM_OPTS} install kernel-{headers,devel}-\${K_VERSION} @'Development Tools' python-six
+    sudo yum \${YUM_OPTS} install kernel-{headers,devel}-\${K_VERSION} @'Development Tools' python-six dpdk dpdk-devel
 fi
 
 PREV_MOD=\$(sudo modinfo -n openvswitch || echo '')
