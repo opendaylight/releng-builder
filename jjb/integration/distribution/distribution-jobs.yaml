@@ -24,10 +24,8 @@
           karaf-version: odl
           # Self-Managed projects repos and features:
           sm-repos: >
-              mvn:org.opendaylight.sxp/features-sxp//xml/features,
               mvn:org.opendaylight.telemetry/features-telemetry//xml/features
           sm-features: >
-              odl-sxp-routing,
               odl-telemetry-collector,
               odl-telemetry-configurator,
               odl-telemetry-all
@@ -36,10 +34,8 @@
           karaf-version: odl
           # Self-Managed projects repos and features:
           sm-repos: >
-              mvn:org.opendaylight.sxp/features-sxp//xml/features,
               mvn:org.opendaylight.telemetry/features-telemetry//xml/features
           sm-features: >
-              odl-sxp-routing,
               odl-telemetry-collector,
               odl-telemetry-configurator,
               odl-telemetry-all
@@ -48,10 +44,8 @@
           karaf-version: odl
           # Self-Managed projects repos and features:
           sm-repos: >
-              mvn:org.opendaylight.sxp/features-sxp//xml/features,
               mvn:org.opendaylight.transportpce/features-transportpce//xml/features
           sm-features: >
-              odl-sxp-routing,
               odl-transportpce,
               odl-transportpce-api,
               odl-transportpce-ordmodels,
@@ -207,29 +201,19 @@
           karaf-version: odl
           dependencies: >
               distribution-merge-managed-{stream},
-              sxp-merge-{stream},
-              telemetry-merge-{stream},
-              tsdr-merge-{stream},
-              unimgr-merge-{stream}
+              telemetry-merge-{stream}
       - neon:
           branch: 'stable/neon'
           karaf-version: odl
           dependencies: >
               distribution-merge-managed-{stream},
-              sxp-merge-{stream},
-              telemetry-merge-{stream},
-              tsdr-merge-{stream},
-              unimgr-merge-{stream}
+              telemetry-merge-{stream}
       - fluorine:
           branch: 'stable/fluorine'
           karaf-version: odl
           dependencies: >
               distribution-merge-managed-{stream},
-              snmp4sdn-merge-{stream},
-              sxp-merge-{stream},
-              transportpce-merge-{stream},
-              tsdr-merge-{stream},
-              unimgr-merge-{stream}
+              transportpce-merge-{stream}
 
 - project:
     name: distribution-release
