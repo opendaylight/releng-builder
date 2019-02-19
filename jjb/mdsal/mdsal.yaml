@@ -2,7 +2,8 @@
 - project:
     name: mdsal-master
     jobs:
-      - '{project-name}-maven-javadoc-jobs'
+      - '{project-name}-maven-javadoc-jobs':
+          disable-job: true
       - '{project-name}-rtd-jobs':
           build-node: centos7-builder-2c-2g
           project-pattern: mdsal
@@ -38,6 +39,7 @@
           mvn-version: 'mvn35'
       - '{project-name}-maven-javadoc-jobs':
           mvn-version: 'mvn33'
+          disable-job: true
       - '{project-name}-rtd-jobs':
           build-node: centos7-builder-2c-2g
           project-pattern: mdsal
