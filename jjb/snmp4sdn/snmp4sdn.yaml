@@ -2,6 +2,11 @@
 - project:
     name: snmp4sdn-sodium
     jobs:
+      - '{project-name}-rtd-jobs':
+          build-node: centos7-builder-2c-2g
+          project-pattern: snmp4sdn
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-snmp4sdn/75649/
+          rtd-token: 55ee5e520f96e1fa691b277b2919e8d62cb0b71f
       - odl-maven-jobs
 
     stream: sodium
@@ -19,6 +24,11 @@
 - project:
     name: snmp4sdn-neon
     jobs:
+      - '{project-name}-rtd-jobs':
+          build-node: centos7-builder-2c-2g
+          project-pattern: snmp4sdn
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-snmp4sdn/75649/
+          rtd-token: 55ee5e520f96e1fa691b277b2919e8d62cb0b71f
       - odl-maven-jobs
 
     stream: neon
@@ -36,6 +46,11 @@
 - project:
     name: snmp4sdn-fluorine
     jobs:
+      - '{project-name}-rtd-jobs':
+          build-node: centos7-builder-2c-2g
+          project-pattern: snmp4sdn
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-snmp4sdn/75649/
+          rtd-token: 55ee5e520f96e1fa691b277b2919e8d62cb0b71f
       - odl-maven-jobs
 
     stream: fluorine
