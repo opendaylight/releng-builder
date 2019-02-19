@@ -1,0 +1,20 @@
+---
+- project:
+    name: '{project-name}-maven-stage-{stream}'
+    jobs:
+      - gerrit-maven-stage
+    project: zzz-test-release
+    project-name: zzz-test-release
+    stream: master
+    branch: master
+    distribution_branch: master
+    mvn-settings: autorelease-settings
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    mvn-version: mvn35
+    dependencies: ''
+    email-upstream: '[odlparent]'
+    archive-artifacts: >
+        **/*.pom
+        **/*.xml
+    # Used by the release job
+    staging-profile-id: 615fb2f4e0adf
