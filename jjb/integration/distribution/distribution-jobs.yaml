@@ -34,8 +34,10 @@
           karaf-version: odl
           # Self-Managed projects repos and features:
           sm-repos: >
+              mvn:org.opendaylight.snmp4sdn/features-snmp4sdn//xml/features
               mvn:org.opendaylight.telemetry/features-telemetry//xml/features
           sm-features: >
+              odl-snmp4sdn-snmp4sdn,
               odl-telemetry-collector,
               odl-telemetry-configurator,
               odl-telemetry-all
@@ -207,6 +209,7 @@
           karaf-version: odl
           dependencies: >
               distribution-merge-managed-{stream},
+              snmp4sdn-merged-{stream},
               telemetry-merge-{stream}
       - fluorine:
           branch: 'stable/fluorine'
