@@ -19,4 +19,4 @@ sudo cp $WORKSPACE/packaging-ansible/library/odl_usermod.py /usr/share/ansible/p
 sudo ansible-playbook -i "localhost," -c local $WORKSPACE/packaging-ansible/tests/test-odl-users.yaml -v
 
 # Test the custom log configurations
-sudo ansible-playbook -i "localhost," -c local $WORKSPACE/packaging-ansible/tests/test-odl-logs.yaml -e test_log_level=INFO -e test_log_mechanism=file -v
+#sudo ansible-playbook -i "localhost," -c local $WORKSPACE/packaging-ansible/tests/test-odl-logs.yaml -e test_log_level=INFO -e test_log_mechanism=file -v
