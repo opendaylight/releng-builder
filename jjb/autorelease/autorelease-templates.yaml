@@ -65,11 +65,11 @@
     mvn-global-settings: global-settings
     mvn-goals: clean deploy
     mvn-opts: '-Xmx8g -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
-    mvn-params: '-Pintegrationtests,repoBuild -Dcheckstyle.skip=true'
+    mvn-params: ''
     mvn-settings: autorelease-settings
     mvn-version: mvn35
-    sign-artifacts: false
-    mvn-central: false
+    sign-artifacts: true
+    mvn-central: true
     ossrh-profile-id: 6386ebbbf3a563
     disable-job: 'false'
 
