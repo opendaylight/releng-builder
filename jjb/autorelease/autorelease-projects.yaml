@@ -17,26 +17,46 @@
       - sodium:
           branch: 'master'
           integration-test: sodium
-          extra-mvn-opts: -P!karaf -Pignore-lispflowmapping-integrationtest -Dsft.heap.max=4g
+          mvn-parms: >
+              -Pintegrationtests,repoBuild
+              -P!karaf
+              -Pignore-lispflowmapping-integrationtest
+              -Dcheckstyle.skip=true
               -Dskip.karaf.featureTest=true
+              -Dsft.heap.max=4g
           java-version: openjdk11
       - neon:
           branch: 'stable/neon'
           integration-test: neon
-          extra-mvn-opts: -P!karaf -Pignore-lispflowmapping-integrationtest -Dsft.heap.max=4g
+          mvn-params: >
+              -Pintegrationtests,repoBuild
+              -P!karaf
+              -Pignore-lispflowmapping-integrationtest
+              -Dcheckstyle.skip=true
               -Dskip.karaf.featureTest=true
+              -Dsft.heap.max=4g
           java-version: openjdk8
       - fluorine:
           branch: 'stable/fluorine'
           integration-test: fluorine
-          extra-mvn-opts: -P!karaf -Pignore-lispflowmapping-integrationtest -Dsft.heap.max=4g
+          mvn-params: >
+              -Pintegrationtests,repoBuild
+              -P!karaf
+              -Pignore-lispflowmapping-integrationtest
+              -Dcheckstyle.skip=true
               -Dskip.karaf.featureTest=true
+              -Dsft.heap.max=4g
           java-version: openjdk8
       - oxygen:
           branch: 'stable/oxygen'
           integration-test: oxygen
-          extra-mvn-opts: -P!karaf -Pignore-lispflowmapping-integrationtest -Dsft.heap.max=4g
+          mvn-params: >
+              -Pintegrationtests,repoBuild
+              -P!karaf
+              -Pignore-lispflowmapping-integrationtest
+              -Dcheckstyle.skip=true
               -Dskip.karaf.featureTest=true
+              -Dsft.heap.max=4g
           disable-job: 'true'
           java-version: openjdk8
 
