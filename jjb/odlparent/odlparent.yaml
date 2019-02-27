@@ -30,6 +30,36 @@
     staging-profile-id: 880d5ac25eaa
 
 - project:
+    name: odlparent-4.0.x
+    jobs:
+      - '{project-name}-maven-javadoc-jobs'
+      - odl-maven-jobs
+      - gerrit-tox-verify
+
+    project: odlparent
+    project-name: odlparent
+    stream: 4.0.x
+    branch: 4.0.x
+    distribution_branch: master
+
+    mvn-settings: odlparent-settings
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+
+    dependencies: ''
+    email-upstream: '[odlparent]'
+    archive-artifacts: >
+        **/*.prop
+        **/*.log
+        **/target/surefire-reports/*-output.txt
+        **/target/failsafe-reports/failsafe-summary.xml
+        **/hs_err_*.log
+        **/target/feature/feature.xml
+
+    # Used by the release job
+    javadoc-path: org.opendaylight.$PROJECT/$STREAM
+    staging-profile-id: 880d5ac25eaa
+
+- project:
     name: odlparent-3.1.x
     jobs:
       - '{project-name}-maven-javadoc-jobs'
