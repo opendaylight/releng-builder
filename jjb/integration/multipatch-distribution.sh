@@ -42,9 +42,19 @@ if ${BUILD_FAST}; then
 else
     fast_option=""
 fi
-# check if topic exists, e.g. topic=binding-tlc-rpc
-if [[ "${PATCHES_TO_BUILD}" == *topic* ]]; then
-    TOPIC="${PATCHES_TO_BUILD#*=}"
+# check if topic exists:
+# if topic=binding-rpc, then checkout first odlparent patch in binding-rpc topic (if it exists)
+# if topic:binding-rpc, then cherry-pick first odlparent patch in binding-rpc topic (if it exists)
+if [[ "${PATCHES_TO_BUILD}" == *"topic"* ]]; then
+    if [[ "${PATCHES_TO_BUILD}" == *"topic="* ]]; then
+        CHERRY_PICK="false"
+        TOPIC="${PATCHES_TO_BUILD#*=}"
+    elif [[ "${PATCHES_TO_BUILD}" == *"topic:"* ]]; then
+        CHERRY_PICK="true"
+        TOPIC="${PATCHES_TO_BUILD#*:}"
+    else
+        echo "ERROR: Topic has wrong format" && exit 1
+    fi
     echo "Create topic ${TOPIC} patch list"
     PATCHES_TO_BUILD=""
     read -ra PROJECT_LIST <<< "${BUILD_ORDER}"
@@ -76,9 +86,16 @@ if [[ "${PATCHES_TO_BUILD}" == *topic* ]]; then
             IFS=$'\n' SORT_REF=$(sort <<<"${REF_LIST[*]}") && unset IFS
             read -rd '' -a SORT_REF_LIST <<< "${SORT_REF[*]}" || true
             # add refspec to patches to build list
+            COUNT=0
             for PATCH in "${SORT_REF_LIST[@]}"; do
-                # cherry-pick is better than checkout patch
-                PATCHES_TO_BUILD="${PATCHES_TO_BUILD}:${PATCH/*-/}"
+                COUNT=$((COUNT+1))
+                if [ "${PROJECT}" == "odlparent" ] && [ "${CHERRY_PICK}" == "false" ]; then
+                    # checkout patch
+                    PATCHES_TO_BUILD="${PATCHES_TO_BUILD}=${PATCH/*-/}"
+                else
+                    # cherry-pick is better than checkout patch
+                    PATCHES_TO_BUILD="${PATCHES_TO_BUILD}:${PATCH/*-/}"
+                fi
             done
         fi
     done
