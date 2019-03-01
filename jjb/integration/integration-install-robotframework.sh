@@ -45,11 +45,6 @@ pip install --upgrade pyangbind
 # Module for iso8601 datetime format
 pip install --upgrade isodate
 
-# Modules for tornado and jsonpointer used by client libraries of IoTDM project
-# Note: Could be removed when client running on tools VM is used instead
-#       of client libraries only.
-pip install --upgrade tornado jsonpointer
-
 # Module for TemplatedRequests.robot library
 pip install --upgrade jmespath
 
