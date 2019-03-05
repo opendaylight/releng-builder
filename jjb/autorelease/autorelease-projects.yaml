@@ -24,9 +24,7 @@
               -Dcheckstyle.skip=true
               -Dskip.karaf.featureTest=true
               -Dsft.heap.max=4g
-          java-version:
-            - openjdk8
-            - openjdk11
+          java-version: openjdk11
       - neon:
           branch: 'stable/neon'
           integration-test: neon
