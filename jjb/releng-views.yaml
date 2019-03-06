@@ -170,24 +170,6 @@
     view-regex: '.*-patch-test-.*'
 
 - project:
-    name: Periodic
-    project: Periodic
-    project-name: Periodic
-    view-name: Periodic
-    views:
-      - common-view
-    view-description: 'List of Periodic jobs'
-    view-regex: '[a-zA-Z0-9]+-periodic-[a-zA-Z0-9]+'
-
-- project:
-    name: Release
-    views:
-      - common-view
-    view-name: Release
-    view-description: 'List of Release jobs'
-    view-regex: '.*-release-.*'
-
-- project:
     name: Sanity
     views:
       - common-view
