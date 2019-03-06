@@ -54,7 +54,7 @@ EOF
 
 for module in "${modules[@]}"; do
     echo "Include project:$module to autorelease view"
-    echo "      - '$module-maven-merge-${STREAM}'" >> "$VIEWS_AR_YAML_FILE"
+    echo "      - '$module-merge-${STREAM}'" >> "$VIEWS_AR_YAML_FILE"
 done
 echo "    <<: *releng_autorelease_view_common_${STREAM}" >> "$VIEWS_AR_YAML_FILE"
 
