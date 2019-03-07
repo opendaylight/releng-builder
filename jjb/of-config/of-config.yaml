@@ -12,6 +12,7 @@
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: netconf-merge-{stream}'
     email-upstream: '[of-config] [netconf]'
+    disable-job: true
 
     # Used by the release job
     staging-profile-id: a6880455efe67
@@ -29,6 +30,7 @@
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: netconf-merge-{stream}'
     email-upstream: '[of-config] [netconf]'
+    disable-job: true
 
     # Used by the release job
     staging-profile-id: a6880455efe67
@@ -46,6 +48,7 @@
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: netconf-merge-{stream}'
     email-upstream: '[of-config] [netconf]'
+    disable-job: true
 
     # Used by the release job
     staging-profile-id: a6880455efe67
@@ -64,8 +67,8 @@
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: netconf-merge-{stream}'
     email-upstream: '[of-config] [netconf]'
-
     disable-job: true
+
     # Used by the release job
     staging-profile-id: a6880455efe67
 
@@ -78,6 +81,7 @@
     branch: 'master'
     mvn-settings: 'of-config-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    disable-job: true
 
 - project:
     name: of-config-view

@@ -17,6 +17,7 @@
         openflowjava-merge-{stream},
         openflowplugin-merge-{stream}
     email-upstream: '[l2switch] [odlparent] [yangtools] [controller] [openflowjava] [openflowplugin]'
+    disable-job: true
 
     # Used by the release job
     staging-profile-id: 96fee85953ca0
@@ -39,6 +40,7 @@
         openflowjava-merge-{stream},
         openflowplugin-merge-{stream}
     email-upstream: '[l2switch] [odlparent] [yangtools] [controller] [openflowjava] [openflowplugin]'
+    disable-job: true
 
     # Used by the release job
     staging-profile-id: 96fee85953ca0
@@ -61,6 +63,7 @@
         openflowjava-merge-{stream},
         openflowplugin-merge-{stream}
     email-upstream: '[l2switch] [odlparent] [yangtools] [controller] [openflowjava] [openflowplugin]'
+    disable-job: true
 
     # Used by the release job
     staging-profile-id: 96fee85953ca0
@@ -98,6 +101,7 @@
     branch: 'master'
     mvn-settings: 'l2switch-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m -Dmaven.compile.fork=true'
+    disable-job: true
 
 - project:
     name: l2switch-view

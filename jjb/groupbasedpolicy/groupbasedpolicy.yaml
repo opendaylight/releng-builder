@@ -20,6 +20,7 @@
         sfc-merge-{stream},
         ovsdb-merge-{stream}
     email-upstream: '[groupbasedpolicy] [openflowjava] [openflowplugin] [neutron] [sfc] [ovsdb]'
+    disable-job: true
 
     # Used by the release job
     staging-profile-id: 96fbb93f95a76
@@ -45,6 +46,7 @@
         sfc-merge-{stream},
         ovsdb-merge-{stream}
     email-upstream: '[groupbasedpolicy] [openflowjava] [openflowplugin] [neutron] [sfc] [ovsdb]'
+    disable-job: true
 
     # Used by the release job
     staging-profile-id: 96fbb93f95a76
@@ -70,6 +72,7 @@
         sfc-merge-{stream},
         ovsdb-merge-{stream}
     email-upstream: '[groupbasedpolicy] [openflowjava] [openflowplugin] [neutron] [sfc] [ovsdb]'
+    disable-job: true
 
     # Used by the release job
     staging-profile-id: 96fbb93f95a76
@@ -112,6 +115,7 @@
     mvn-settings: 'groupbasedpolicy-settings'
     mvn-goals: '-U clean deploy findbugs:findbugs'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    disable-job: true
 
 - project:
     name: groupbasedpolicy-view
