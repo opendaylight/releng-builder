@@ -32,7 +32,7 @@
         odl-mdsal-benchmark
 
     # Robot custom options
-    robot-options: '--exclude singlenode_setup'
+    robot-options: '--exclude singlenode_setup -v WARMUPS:1 -v RUNS:3'
 
     # ODL system image to use
     # The job uses scriptplan to set heap to 4GB, so 4GB RAM is not enough.
