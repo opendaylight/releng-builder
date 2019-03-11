@@ -1,0 +1,124 @@
+---
+- import_playbook: ../common-packer/provision/baseline.yaml
+
+- hosts: all
+  become_user: root
+  become_method: sudo
+  vars:
+    ovs_version: 2.6.1
+    ovs_checksum: sha256:307b20aba6a179bf13e5da9ac242933c31349073762473a9d4782619c8c1cf0c
+
+  pre_tasks:
+    - include_role: name=lfit.system-update
+
+  tasks:
+    - name: 'Install OpenVSwitch {{ovs_version}}'
+      block:
+        - name: 'Install dependencies required for OpenVSwitch {{ovs_version}}'
+          apt: 'name={{item}} state=present'
+          with_items:
+            - dh-autoreconf
+            - debhelper
+            - autoconf
+            - automake
+            - libssl-dev
+            - pkg-config
+            - bzip2
+            - openssl
+            - python-all
+            - procps
+            - python-qt4
+            - python-zopeinterface
+            - python-twisted-conch
+          become: true
+        - name: Create OVS root
+          file:
+            path: /tmp/ovs
+            state: directory
+            mode: 0755
+        - name: 'Fetch OpenVSwitch {{ovs_version}} to /tmp'
+          get_url:
+            url: 'http://openvswitch.org/releases/openvswitch-2.6.1.tar.gz'
+            dest: '/tmp/openvswitch-2.6.1.tar.gz'
+            checksum: '{{ovs_checksum}}'
+        - name: 'Unarchive OpenVSwitch {{ovs_version}}'
+          unarchive:
+            src: '/tmp/openvswitch-{{ovs_version}}.tar.gz'
+            dest: /tmp/ovs
+            remote_src: true
+        - name: 'Build OpenVSwitch {{ovs_version}}'
+          shell: DEB_BUILD_OPTIONS='parallel=8 nocheck' fakeroot debian/rules binary
+          args:
+            chdir: '/tmp/ovs/openvswitch-{{ovs_version}}'
+        - name: 'Install OpenVSwitch {{ovs_version}}'
+          apt: 'deb={{item}}'
+          with_items:
+            - /tmp/ovs/libopenvswitch_2.6.1-1_amd64.deb
+            - /tmp/ovs/openvswitch-common_2.6.1-1_amd64.deb
+            - /tmp/ovs/openvswitch-switch_2.6.1-1_amd64.deb
+            - /tmp/ovs/python-openvswitch_2.6.1-1_all.deb
+            - /tmp/ovs/openvswitch-vtep_2.6.1-1_amd64.deb
+          become: true
+        - name: Enable openvswitch-switch service
+          systemd:
+            name: openvswitch-switch
+            enabled: true
+            masked: false
+          become: true
+        - name: Enable openvswitch-vtep service
+          systemd:
+            name: openvswitch-vtep
+            enabled: true
+            masked: false
+          become: true
+
+    - name: Install Mininet
+      apt: name=mininet state=present
+      become: true
+
+    - name: 'Install mtcbench'
+      block:
+        - name: 'Clone mtcbench repository'
+          git:
+            repo: 'https://github.com/intracom-telecom-sdn/mtcbench.git'
+            dest: /tmp/ovs
+        - name: Provision mtcbench
+          command: ./mtcbench/deploy/docker/provision.sh
+          args:
+            chdir: /tmp/ovs
+        # TODO: remove workaround for build issue with mtcbench
+        # when mtcbench dependency build correctly
+        # https://github.com/intracom-telecom-sdn/mtcbench/issues/10
+        - name: 'Build mtcbench'
+          command: ./mtcbench/build_mtcbench.sh || true
+          args:
+            chdir: /tmp/ovs
+          ignore_errors: True
+        - name: 'Run make mtcbench'
+          command: make
+          args:
+            chdir: /tmp/ovs/mtcbench/oflops/cbench
+        - name: 'Install cbench to /usr/local/bin'
+          copy:
+            src: /tmp/ovs/mtcbench/oflops/cbench/cbench
+            dest: /usr/local/bin
+            mode: 0755
+            remote_src: true
+          become: true
+
+    - name: Install exabgp
+      apt: name=exabgp state=present
+      become: true
+
+    - name: Install vlan for vlan based tests in VTN suites
+      apt: name=vlan state=present
+      become: true
+
+    - name: Install python-netaddr for custom mininet topologies
+      apt: name=python-netaddr state=present
+      become: true
+
+  post_tasks:
+    - name: System Reseal
+      script: ../common-packer/provision/system-reseal.sh
+      become: true
