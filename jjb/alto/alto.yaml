@@ -13,6 +13,7 @@
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'l2switch-merge-{stream}'
     email-upstream: '[alto] [l2switch]'
+    disable-job: true
 
     # Used by the release job
     staging-profile-id: 931eabae9693c
@@ -31,6 +32,7 @@
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'l2switch-merge-{stream}'
     email-upstream: '[alto] [l2switch]'
+    disable-job: true
 
     # Used by the release job
     staging-profile-id: 931eabae9693c
@@ -49,6 +51,7 @@
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'l2switch-merge-{stream}'
     email-upstream: '[alto] [l2switch]'
+    disable-job: true
 
     # Used by the release job
     staging-profile-id: 931eabae9693c
@@ -84,6 +87,7 @@
     build-node: centos7-builder-2c-8g
     mvn-settings: 'alto-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    disable-job: true
 
 - project:
     name: alto-view

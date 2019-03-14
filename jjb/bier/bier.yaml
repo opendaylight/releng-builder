@@ -14,6 +14,7 @@
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: ''
     email-upstream: '[bier]'
+    disable-job: true
 
     # Used by the release job
     staging-profile-id: 942a8075b1f2a
@@ -33,6 +34,7 @@
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: ''
     email-upstream: '[bier]'
+    disable-job: true
 
     # Used by the release job
     staging-profile-id: 942a8075b1f2a
@@ -52,6 +54,7 @@
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: ''
     email-upstream: '[bier]'
+    disable-job: true
 
     # Used by the release job
     staging-profile-id: 942a8075b1f2a
@@ -88,6 +91,7 @@
     build-node: centos7-builder-2c-8g
     mvn-settings: 'bier-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    disable-job: true
 
 - project:
     name: bier-view
