@@ -33,6 +33,39 @@
     staging-profile-id: a674173c7b29d
 
 - project:
+    name: mdsal-3.0.x
+    jobs:
+      - '{project-name}-maven-javadoc-jobs':
+          disable-job: true
+      - '{project-name}-rtd-jobs':
+          build-node: centos7-builder-2c-2g
+          project-pattern: mdsal
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-mdsal/44052/
+          rtd-token: a56d6212dd3de3eef12642affe8a6100cc8bc002
+      - odl-maven-jobs
+
+    project: mdsal
+    project-name: mdsal
+    branch: 3.0.x
+    stream: 3.0.x
+
+    mvn-settings: 'mdsal-settings'
+    mvn-opts: '-Xmx2048m'
+
+    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream}'
+    email-upstream: '[mdsal] [odlparent] [yangtools]'
+    archive-artifacts: >
+        **/*.prop
+        **/*.log
+        **/target/surefire-reports/*-output.txt
+        **/target/failsafe-reports/failsafe-summary.xml
+        **/hs_err_*.log
+        **/target/feature/feature.xml
+
+    # Used by the release job
+    staging-profile-id: a674173c7b29d
+
+- project:
     name: mdsal-fluorine
     jobs:
       - '{project-name}-distribution-check-{stream}':
