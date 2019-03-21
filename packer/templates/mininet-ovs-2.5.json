@@ -1,5 +1,6 @@
 {
   "variables": {
+    "ansible_roles_path": ".galaxy",
     "base_image": null,
     "distro": null,
     "cloud_network": null,
@@ -9,19 +10,20 @@
   },
   "builders": [
     {
-      "type": "openstack",
-      "region": "ca-ymq-1",
-      "availability_zone": "ca-ymq-2",
-      "ssh_username": "{{user `ssh_user`}}",
-      "ssh_proxy_host": "{{user `ssh_proxy_host`}}",
+      "name": "vexxhost",
       "image_name": "ZZCI - {{user `distro`}} - mininet-ovs-25 - {{isotime \"20060102-150405.000\"}}",
       "instance_name": "{{user `distro`}}-mininet-ovs-25-{{uuid}}",
       "source_image_name": "{{user `base_image`}}",
-      "flavor": "v1-standard-1",
+      "type": "openstack",
+      "region": "ca-ymq-1",
+      "availability_zone": "ca-ymq-2",
       "networks": [
         "{{user `cloud_network`}}"
       ],
       "user_data_file": "{{user `cloud_user_data`}}",
+      "ssh_username": "{{user `ssh_user`}}",
+      "ssh_proxy_host": "{{user `ssh_proxy_host`}}",
+      "flavor": "v1-standard-1",
       "metadata": {
         "ci_managed": "yes"
       }
@@ -31,12 +33,24 @@
     {
       "type": "shell",
       "scripts": [
-        "provision/baseline.sh",
-        "provision/mininet-ovs-2.5.sh",
-        "provision/system_reseal_local_env.sh",
-        "provision/system_reseal.sh"
+        "common-packer/provision/install-python.sh"
       ],
       "execute_command": "chmod +x {{ .Path }}; if [ \"$UID\" == \"0\" ]; then {{ .Vars }} '{{ .Path }}'; else {{ .Vars }} sudo -E '{{ .Path }}'; fi"
+    },
+    {
+      "type": "shell-local",
+      "command": "./common-packer/ansible-galaxy.sh {{user `ansible_roles_path`}}"
+    },
+    {
+      "type": "ansible",
+      "playbook_file": "provision/mininet-ovs-2.5.yaml",
+      "ansible_env_vars": [
+        "ANSIBLE_NOCOWS=1",
+        "ANSIBLE_PIPELINING=True",
+        "ANSIBLE_ROLES_PATH={{user `ansible_roles_path`}}",
+        "ANSIBLE_CALLBACK_WHITELIST=profile_tasks",
+        "ANSIBLE_STDOUT_CALLBACK=debug"
+      ]
     }
   ]
 }
