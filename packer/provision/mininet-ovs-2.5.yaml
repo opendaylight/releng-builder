@@ -11,23 +11,6 @@
   tasks:
     - name: 'Install OpenVSwitch {{ovs_version}}'
       block:
-        - name: 'Install dependencies required for OpenVSwitch {{ovs_version}}'
-          apt: 'name={{item}} state=present'
-          with_items:
-            - dh-autoreconf
-            - debhelper
-            - autoconf
-            - automake
-            - libssl-dev
-            - pkg-config
-            - bzip2
-            - openssl
-            - python-all
-            - procps
-            - python-qt4
-            - python-zopeinterface
-            - python-twisted-conch
-          become: true
         - name: 'Install OpenVSwitch {{ovs_version}}'
           apt: 'name={{item}} state=present'
           with_items:
@@ -53,24 +36,6 @@
 
     - name: 'Install mtcbench'
       block:
-        - name: 'Install dependencies required to build mtcbench'
-          apt: 'name={{item}} state=present'
-          with_items:
-            - autoconf
-            - automake
-            - build-essential
-            - libconfig-dev
-            - libffi-dev
-            - libpcap-dev
-            - libssl-dev
-            - libssl-doc
-            - libsnmp-dev
-            - libtool
-            - make
-            - snmp
-            - snmpd
-            - pkg-config
-          become: true
         - name: Create mtcbench in /tmp
           file:
             path: /tmp/mtcbench
@@ -107,10 +72,6 @@
 
     - name: Install exabgp
       apt: name=exabgp state=present
-      become: true
-
-    - name: Install vlan for vlan based tests in VTN suites
-      apt: name=vlan state=present
       become: true
 
     - name: Install python-netaddr for custom mininet topologies
