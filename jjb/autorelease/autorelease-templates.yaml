@@ -159,9 +159,12 @@
       - lf-sigul-sign-dir:
           sign-artifacts: '{sign-artifacts}'
           sign-dir: '$WORKSPACE/m2repo'
+          sign-mode: serial
       - lf-maven-stage
       - lf-maven-central:
           mvn-central: '{mvn-central}'
+          mvn-global-settings: '{mvn-global-settings}'
+          mvn-settings: '{mvn-settings}'
           ossrh-profile-id: '{ossrh-profile-id}'
       - autorelease-get-integration-test-variables
       - autorelease-maven-sources:
