@@ -112,7 +112,18 @@
 - project:
     name: lf-infra-global-jjb
     jobs:
-      - '{project-name}-rtd-jobs'
+      - '{project-name}-rtd-jobs':
+          gerrit_trigger_file_paths:
+            - compare-type: REG_EXP
+              pattern: '.*\.css'
+            - compare-type: REG_EXP
+              pattern: '.*\.html'
+            - compare-type: REG_EXP
+              pattern: '.*\.rst'
+            - compare-type: REG_EXP
+              pattern: '.*\/conf.py'
+            - compare-type: REG_EXP
+              pattern: 'releasenotes/.*'
       - gerrit-tox-verify
 
     project-name: lf-infra-global-jjb
@@ -126,18 +137,6 @@
 
     git-url: https://gerrit.linuxfoundation.org/infra/$GERRIT_PROJECT
     gerrit-server-name: lf-releng
-
-    gerrit_trigger_file_paths:
-      - compare-type: REG_EXP
-        pattern: '.*\.css'
-      - compare-type: REG_EXP
-        pattern: '.*\.html'
-      - compare-type: REG_EXP
-        pattern: '.*\.rst'
-      - compare-type: REG_EXP
-        pattern: '.*\/conf.py'
-      - compare-type: REG_EXP
-        pattern: 'releasenotes/.*'
 
 - project:
     name: lf-infra-lftools
