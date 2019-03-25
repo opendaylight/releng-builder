@@ -34,12 +34,8 @@
           karaf-version: odl
           # Self-Managed projects repos and features:
           sm-repos: >
-              mvn:org.opendaylight.telemetry/features-telemetry//xml/features
               mvn:org.opendaylight.transportpce/features-transportpce//xml/features
           sm-features: >
-              odl-telemetry-collector,
-              odl-telemetry-configurator,
-              odl-telemetry-all,
               odl-transportpce,
               odl-transportpce-api,
               odl-transportpce-ordmodels
@@ -211,7 +207,6 @@
           karaf-version: odl
           dependencies: >
               distribution-merge-managed-{stream},
-              telemetry-merge-{stream},
               transportpce-merge-{stream}
       - fluorine:
           branch: 'stable/fluorine'
