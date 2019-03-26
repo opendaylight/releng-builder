@@ -160,7 +160,10 @@
           sign-artifacts: '{sign-artifacts}'
           sign-dir: '$WORKSPACE/m2repo'
           sign-mode: serial
-      - lf-maven-stage
+      - lf-maven-stage:
+          mvn-global-settings: '{mvn-global-settings}'
+          mvn-settings: '{mvn-settings}'
+          mvn-staging-id: '{mvn-staging-id}'
       - lf-maven-central:
           mvn-central: '{mvn-central}'
           mvn-global-settings: '{mvn-global-settings}'
