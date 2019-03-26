@@ -852,6 +852,8 @@ for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
     fi
     fix_libvirt_python_build ${!CONTROLIP}
     echo "Stack the control node ${i} of ${NUM_OPENSTACK_CONTROL_NODES}: ${CONTROLIP}"
+    # Workaround: fixing boneheaded polkit issue, to be removed later
+    ssh ${!CONTROLIP} "sudo bash -c 'echo deltarpm=0 >> /etc/yum.conf && yum -y update polkit'"
     ssh ${!CONTROLIP} "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
     ssh ${!CONTROLIP} "ps -ef | grep stack.sh"
     ssh ${!CONTROLIP} "ls -lrt /opt/stack/devstack/nohup.out"
