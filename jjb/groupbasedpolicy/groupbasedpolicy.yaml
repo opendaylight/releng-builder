@@ -78,33 +78,6 @@
     staging-profile-id: 96fbb93f95a76
 
 - project:
-    name: groupbasedpolicy-oxygen
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - odl-maven-jobs
-
-    stream: oxygen
-    project: 'groupbasedpolicy'
-    project-name: 'groupbasedpolicy'
-    branch: 'stable/oxygen'
-    build-node: centos7-builder-2c-8g
-    mvn-settings: 'groupbasedpolicy-settings'
-    mvn-goals: '-U clean deploy findbugs:findbugs'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    build-timeout: 90
-    dependencies: >
-        openflowjava-merge-{stream},
-        openflowplugin-merge-{stream},
-        neutron-merge-{stream},
-        sfc-merge-{stream},
-        ovsdb-merge-{stream}
-    email-upstream: '[groupbasedpolicy] [openflowjava] [openflowplugin] [neutron] [sfc] [ovsdb]'
-    disable-job: 'true'
-
-    # Used by the release job
-    staging-profile-id: 96fbb93f95a76
-
-- project:
     name: groupbasedpolicy-sonar
     jobs:
       - gerrit-maven-sonar

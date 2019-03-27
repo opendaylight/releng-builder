@@ -20,12 +20,9 @@
           branch: 'stable/neon'
       - fluorine:
           branch: 'stable/fluorine'
-      - oxygen:
-          branch: 'stable/oxygen'
-          disable-job: 'true'
 
-    verify-stream: 'oxygen'
-    verify-branch: 'stable/oxygen'
+    verify-stream: 'fluorine'
+    verify-branch: 'stable/fluorine'
     verify-karaf-version: 'karaf4'
 
     install:

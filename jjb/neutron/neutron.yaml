@@ -61,26 +61,6 @@
     staging-profile-id: a67e1b40d7419
 
 - project:
-    name: neutron-oxygen
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-maven-javadoc-jobs'
-      - odl-maven-jobs
-
-    stream: oxygen
-    project: 'neutron'
-    project-name: 'neutron'
-    build-timeout: 90
-    branch: 'stable/oxygen'
-    mvn-settings: 'neutron-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: 'odlparent-merge-{stream},aaa-merge-{stream}'
-    email-upstream: '[neutron] [odlparent] [aaa]'
-
-    # Used by the release job
-    staging-profile-id: a67e1b40d7419
-
-- project:
     name: neutron-sonar
     jobs:
       - gerrit-maven-sonar

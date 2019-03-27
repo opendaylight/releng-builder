@@ -78,27 +78,6 @@
     staging-profile-id: a6909c75719b7
 
 - project:
-    name: sxp-oxygen
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - odl-maven-jobs
-
-    stream: oxygen
-    project: 'sxp'
-    project-name: 'sxp'
-    branch: 'stable/oxygen'
-
-    mvn-settings: 'sxp-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-
-    dependencies: 'odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream}'
-    email-upstream: '[sxp] [odlparent] [controller] [yangtools]'
-    disable-job: true
-
-    # Used by the release job
-    staging-profile-id: a6909c75719b7
-
-- project:
     name: sxp-sonar
     jobs:
       - gerrit-maven-sonar

@@ -57,26 +57,6 @@
     staging-profile-id: 931eabae9693c
 
 - project:
-    name: alto-oxygen
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - odl-maven-jobs
-
-    stream: oxygen
-    project: 'alto'
-    project-name: 'alto'
-    branch: 'stable/oxygen'
-    build-node: centos7-builder-2c-8g
-    mvn-settings: 'alto-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: 'l2switch-merge-{stream}'
-    email-upstream: '[alto] [l2switch]'
-    disable-job: 'true'
-
-    # Used by the release job
-    staging-profile-id: 931eabae9693c
-
-- project:
     name: alto-sonar
     jobs:
       - gerrit-maven-sonar

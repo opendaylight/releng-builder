@@ -54,26 +54,6 @@
     staging-profile-id: a697b633b3ffe
 
 - project:
-    name: usc-oxygen
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-maven-javadoc-jobs'
-      - odl-maven-jobs
-
-    stream: oxygen
-    project: 'usc'
-    project-name: 'usc'
-    branch: 'stable/oxygen'
-    mvn-settings: 'usc-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: 'controller-merge-{stream},yangtools-merge-{stream},odlparent-merge-{stream}'
-    email-upstream: '[usc] [controller] [yangtools] [odlparent]'
-    disable-job: true
-
-    # Used by the release job
-    staging-profile-id: a697b633b3ffe
-
-- project:
     name: usc-sonar
     jobs:
       - gerrit-maven-sonar

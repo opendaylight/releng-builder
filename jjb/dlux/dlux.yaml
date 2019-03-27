@@ -54,25 +54,6 @@
     staging-profile-id: 96e6a0327484f
 
 - project:
-    name: dlux-oxygen
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - odl-maven-jobs
-
-    stream: oxygen
-    project: 'dlux'
-    project-name: 'dlux'
-    branch: 'stable/oxygen'
-    mvn-settings: 'dlux-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: 'odlparent-merge-{stream}'
-    email-upstream: '[dlux] [odlparent]'
-    disable-job: 'true'
-
-    # Used by the release job
-    staging-profile-id: 96e6a0327484f
-
-- project:
     name: dlux-sonar
     jobs:
       - gerrit-maven-sonar

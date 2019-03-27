@@ -90,32 +90,6 @@
     staging-profile-id: 9427a05049030
 
 - project:
-    name: bgpcep-oxygen
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-maven-javadoc-jobs'
-      - odl-maven-jobs
-
-    stream: oxygen
-    project: 'bgpcep'
-    project-name: 'bgpcep'
-    build-node: centos7-builder-8c-8g
-    build-timeout: 120
-    branch: 'stable/oxygen'
-    mvn-settings: 'bgpcep-settings'
-    mvn-opts: '-Xmx2048m -XX:MaxPermSize=256m'
-    dependencies: >
-        odlparent-merge-{stream},
-        yangtools-merge-{stream},
-        controller-merge-{stream},
-        mdsal-merge-{stream}
-    email-upstream: '[bgpcep] [odlparent] [yangtools] [controller] [mdsal]'
-    disable-job: 'true'
-
-    # Used by the release job
-    staging-profile-id: 9427a05049030
-
-- project:
     name: bgpcep-sonar
     jobs:
       - gerrit-maven-sonar:

@@ -81,27 +81,6 @@
     staging-profile-id: a68b188166958
 
 - project:
-    name: ovsdb-oxygen
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-maven-javadoc-jobs'
-      - odl-maven-jobs
-
-    stream: oxygen
-    project: 'ovsdb'
-    project-name: 'ovsdb'
-    branch: 'stable/oxygen'
-    build-node: centos7-builder-2c-8g
-    mvn-settings: 'ovsdb-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: 'odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream}'
-    email-upstream: '[ovsdb] [odlparent] [controller] [yangtools]'
-    disable-job: true
-
-    # Used by the release job
-    staging-profile-id: a68b188166958
-
-- project:
     name: ovsdb-view
     views:
       - project-view

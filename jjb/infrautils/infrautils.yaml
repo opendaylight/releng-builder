@@ -75,32 +75,6 @@
     staging-profile-id: 96fca0367756c
 
 - project:
-    name: infrautils-oxygen
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-maven-javadoc-jobs'
-      - '{project-name}-rtd-jobs':
-          build-node: centos7-builder-2c-2g
-          doc-dir: .tox/docs/tmp/html
-          project-pattern: infrautils
-          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-infrautils/38993/
-          rtd-token: 294c76173237e3a088365c31012cf4ddaa767dc9
-      - odl-maven-jobs
-
-    stream: oxygen
-    project: 'infrautils'
-    project-name: 'infrautils'
-    branch: 'stable/oxygen'
-    mvn-settings: 'infrautils-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: 'odlparent-merge-{stream}'
-    email-upstream: '[infrautils] [odlparent]'
-    disable-job: 'true'
-
-    # Used by the release job
-    staging-profile-id: 96fca0367756c
-
-- project:
     name: infrautils-sonar
     jobs:
       - gerrit-maven-sonar

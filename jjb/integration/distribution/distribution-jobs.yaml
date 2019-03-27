@@ -51,11 +51,6 @@
               odl-transportpce-ordmodels,
               odl-transportpce-stubmodels
 
-      - oxygen:
-          branch: 'stable/oxygen'
-          karaf-version: karaf4
-          disable-job: 'true'
-
 - project:
     name: distribution-managed
     jobs:
@@ -135,45 +130,6 @@
               ovsdb-merge-{stream},
               serviceutils-merge-{stream},
               sfc-merge-{stream}
-
-      - oxygen:
-          branch: 'stable/oxygen'
-          disable-job: true
-          dependencies: >
-              aaa-merge-{stream},
-              alto-merge-{stream},
-              bgpcep-merge-{stream},
-              bier-merge-{stream},
-              coe-merge-{stream},
-              controller-merge-{stream},
-              daexim-merge-{stream},
-              dluxapps-merge-{stream},
-              dlux-merge-{stream},
-              faas-merge-{stream},
-              genius-merge-{stream},
-              groupbasedpolicy-merge-{stream},
-              infrautils-merge-{stream},
-              jsonrpc-merge-{stream},
-              l2switch-merge-{stream},
-              lispflowmapping-merge-{stream},
-              mdsal-merge-{stream},
-              nemo-merge-{stream},
-              netconf-merge-{stream},
-              netvirt-merge-{stream},
-              neutron-merge-{stream},
-              of-config-merge-{stream},
-              openflowplugin-merge-{stream},
-              ovsdb-merge-{stream},
-              p4plugin-merge-{stream},
-              packetcable-merge-{stream},
-              serviceutils-merge-{stream},
-              sfc-merge-{stream},
-              snmp4sdn-merge-{stream},
-              snmp-merge-{stream},
-              sxp-merge-{stream},
-              tsdr-merge-{stream},
-              usc-merge-{stream},
-              vbd-merge-{stream}
 
 - project:
     name: distribution-full

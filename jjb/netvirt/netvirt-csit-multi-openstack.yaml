@@ -231,84 +231,6 @@
           openstack_system2_image: '{openstack_queens_system_image}'
 
 - project:
-    name: netvirt-csit-openstack-integration-oxygen
-    jobs:
-      - inttest-csit-openstack-custom
-
-    project: 'netvirt'
-    stream: 'oxygen'
-    branch: 'stable/oxygen'
-    testplan: '{project}-{topology}-openstack.txt'
-    odl-ml2-driver-version: 'v2'
-    enable-openstack-services: 'placement-api,tempest'
-    enable-openstack-compute-services: 'placement-client'
-    security-group-mode: 'stateful'
-    odl_system_flavor: odl-highcpu-8
-    openstack_system_flavor: odl-highcpu-8
-    openstack_system2_flavor: odl-highcpu-4
-    tools_system_count: 0
-    os-cmb-cnt: 0
-    os-ctl-cnt: 1
-    os-cmp-cnt: 2
-    disable-job: true
-
-    topology:
-      - 1node:
-          openstack_system2_count: 2
-          odl_system_count: 1
-          enable-haproxy: 'no'
-          install-features: 'odl-netvirt-openstack,decanter-collector-jmx,decanter-appender-elasticsearch'
-          robot-options: '-v FAIL_ON_EXCEPTIONS:True'
-      - 3node:
-          openstack_system2_count: 3
-          odl_system_count: 3
-          enable-haproxy: 'yes'
-          install-features: 'odl-jolokia,odl-netvirt-openstack,decanter-collector-jmx,decanter-appender-elasticsearch'
-
-    functionality:
-      - upstream-stateful
-      - upstream-stateful-itm-direct-tunnels:
-          enable-itm-direct-tunnels: 'true'
-      - upstream-stateful-snat-conntrack:
-          odl-snat-mode: 'conntrack'
-      - gate-stateful
-      - gate-stateful-snat-conntrack:
-          odl-snat-mode: 'conntrack'
-      - gate-stateful-itm-direct-tunnels:
-          enable-itm-direct-tunnels: 'true'
-      - gate-minimal-cluster:
-          testplan: '{project}-{topology}-minimal-openstack.txt'
-      # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
-      - gate-tdd-wip:
-          testplan: '{project}-{topology}-tdd-wip-openstack.txt'
-          schedule: ''
-          tools_system_count: 3
-      - tempest-stateful:
-          test-suites: 'openstack/tempest/tempest.robot'
-          testplan: '{project}-{topology}-openstack-tempest.txt'
-          schedule: '{schedule-daily}'
-      - tempest-stateful-snat-conntrack:
-          test-suites: 'openstack/tempest/tempest.robot'
-          testplan: '{project}-{topology}-openstack-tempest.txt'
-          odl-snat-mode: 'conntrack'
-          schedule: '{schedule-daily}'
-      - gate-tempest-stateful:
-          test-suites: 'openstack/tempest/tempest.robot'
-          testplan: '{project}-{topology}-openstack-tempest.txt'
-      - gate-tempest-stateful-snat-conntrack:
-          test-suites: 'openstack/tempest/tempest.robot'
-          testplan: '{project}-{topology}-openstack-tempest.txt'
-          odl-snat-mode: 'conntrack'
-
-    openstack:
-      - queens:
-          openstack-branch: 'stable/queens'
-          odl-ml2-branch: 'stable/queens'
-          odl-ml2-port-binding: 'pseudo-agentdb-binding'
-          openstack_system_image: '{openstack_queens_system_image}'
-          openstack_system2_image: '{openstack_queens_system_image}'
-
-- project:
     name: netvirt-csit-sfc-openstack-integration
     jobs:
       - inttest-csit-openstack-custom
@@ -353,14 +275,6 @@
       - fluorine:
           branch: 'stable/fluorine'
           ovs-install: 'v2.9.2'
-      - oxygen:
-          branch: 'stable/oxygen'
-          ovs-install: 'v2.6.1-nsh'
-          os-cmp-cnt: 1
-          openstack_system2_count: 1
-          openstack_system_image: '{openstack_pike_system_image}'
-          openstack_system2_image: '{openstack_pike_system_image}'
-          disable-job: true
 
 - project:
     name: netvirt-csit-1cmb-0ctl-0cmp-openstack-integration
@@ -385,9 +299,6 @@
           branch: 'stable/neon'
       - fluorine:
           branch: 'stable/fluorine'
-      - oxygen:
-          branch: 'stable/oxygen'
-          disable-job: true
 
     topology:
       - 1node:

@@ -81,29 +81,6 @@
     staging-profile-id: 96c1c9177efdd
 
 - project:
-    name: controller-oxygen
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-maven-javadoc-jobs'
-      - odl-maven-jobs
-
-    stream: oxygen
-    project: 'controller'
-    project-name: 'controller'
-    branch: 'stable/oxygen'
-    mvn-settings: 'controller-settings'
-    mvn-goals: 'clean deploy -Pintegrationtests,docs'
-    mvn-opts: '-Xmx4096m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
-    build-node: centos7-builder-8c-8g
-    build-timeout: 90
-    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},aaa-merge-{stream}'
-    email-upstream: '[controller] [odlparent] [yangtools] [aaa]'
-    disable-job: 'true'
-
-    # Used by the release job
-    staging-profile-id: 96c1c9177efdd
-
-- project:
     name: controller-sonar
     jobs:
       - gerrit-maven-sonar:

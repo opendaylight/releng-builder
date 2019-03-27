@@ -96,36 +96,6 @@
     staging-profile-id: a674173c7b29d
 
 - project:
-    name: mdsal-oxygen
-    jobs:
-      - '{project-name}-distribution-check-{stream}':
-          mvn-version: 'mvn35'
-      - '{project-name}-maven-javadoc-jobs':
-          mvn-version: 'mvn33'
-      - '{project-name}-rtd-jobs':
-          build-node: centos7-builder-2c-2g
-          project-pattern: mdsal
-          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-mdsal/44052/
-          rtd-token: a56d6212dd3de3eef12642affe8a6100cc8bc002
-      - odl-maven-jobs
-
-    stream: oxygen
-    project: 'mdsal'
-    project-name: 'mdsal'
-    branch: 'stable/oxygen'
-    mvn-settings: 'mdsal-settings'
-    mvn-goals: '-Dmaven.compile.fork=true clean deploy -Dintegrationtests'
-    mvn-opts: '-Xmx2048m'
-    build-node: centos7-builder-8c-8g
-    build-timeout: 90
-    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream}'
-    email-upstream: '[mdsal] [odlparent] [yangtools]'
-    disable-job: true
-
-    # Used by the release job
-    staging-profile-id: a674173c7b29d
-
-- project:
     name: mdsal-sonar
     jobs:
       - gerrit-maven-sonar:

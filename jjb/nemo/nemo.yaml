@@ -54,25 +54,6 @@
     staging-profile-id: a67a9890f6202
 
 - project:
-    name: nemo-oxygen
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - odl-maven-jobs
-
-    stream: oxygen
-    project: 'nemo'
-    project-name: 'nemo'
-    branch: 'stable/oxygen'
-    mvn-settings: 'nemo-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: ''
-    email-upstream: '[nemo]'
-    disable-job: true
-
-    # Used by the release job
-    staging-profile-id: a67a9890f6202
-
-- project:
     name: nemo-sonar
     jobs:
       - gerrit-maven-sonar

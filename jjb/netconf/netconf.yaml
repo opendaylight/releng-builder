@@ -78,28 +78,6 @@
     staging-profile-id: a67b22fc3663f
 
 - project:
-    name: netconf-oxygen
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - odl-maven-jobs
-
-    stream: oxygen
-    project: 'netconf'
-    project-name: 'netconf'
-    branch: 'stable/oxygen'
-    build-node: centos7-builder-2c-8g
-    mvn-settings: 'netconf-settings'
-    mvn-goals: 'clean deploy -Pintegrationtests'
-    mvn-opts: '-Xmx2048m -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
-    build-timeout: 90
-    dependencies: 'aaa-merge-{stream},controller-merge-{stream},odlparent-merge-{stream},yangtools-merge-{stream}'
-    email-upstream: '[netconf] [aaa] [controller] [odlparent] [yangtools]'
-    disable-job: true
-
-    # Used by the release job
-    staging-profile-id: a67b22fc3663f
-
-- project:
     name: netconf-sonar
     jobs:
       - gerrit-maven-sonar:

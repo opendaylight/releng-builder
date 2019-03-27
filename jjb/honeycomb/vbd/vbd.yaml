@@ -51,25 +51,6 @@
     staging-profile-id: 96fc362c36862
 
 - project:
-    name: vbd-oxygen
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - odl-maven-jobs
-
-    stream: oxygen
-    project: 'honeycomb/vbd'
-    project-name: 'vbd'
-    branch: 'stable/oxygen'
-    mvn-settings: 'honeycomb-vbd-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: ''
-    email-upstream: '[vbd]'
-    disable-job: 'true'
-
-    # Used by the release job
-    staging-profile-id: 96fc362c36862
-
-- project:
     name: vbd-sonar
     jobs:
       - gerrit-maven-sonar

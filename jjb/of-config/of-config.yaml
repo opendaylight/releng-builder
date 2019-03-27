@@ -54,25 +54,6 @@
     staging-profile-id: a6880455efe67
 
 - project:
-    name: of-config-oxygen
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - odl-maven-jobs
-
-    stream: oxygen
-    project: 'of-config'
-    project-name: 'of-config'
-    branch: 'stable/oxygen'
-    mvn-settings: 'of-config-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: netconf-merge-{stream}'
-    email-upstream: '[of-config] [netconf]'
-    disable-job: true
-
-    # Used by the release job
-    staging-profile-id: a6880455efe67
-
-- project:
     name: of-config-sonar
     jobs:
       - gerrit-maven-sonar

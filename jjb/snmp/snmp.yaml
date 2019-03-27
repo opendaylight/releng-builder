@@ -51,25 +51,6 @@
     staging-profile-id: a68fb236b93a6
 
 - project:
-    name: snmp-oxygen
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - odl-maven-jobs
-
-    stream: oxygen
-    project: 'snmp'
-    project-name: 'snmp'
-    branch: 'stable/oxygen'
-    mvn-settings: 'snmp-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: 'odlparent-merge-{stream}'
-    email-upstream: '[snmp] [odlparent]'
-    disable-job: true
-
-    # Used by the release job
-    staging-profile-id: a68fb236b93a6
-
-- project:
     name: snmp-sonar
     jobs:
       - gerrit-maven-sonar

@@ -54,26 +54,6 @@
     staging-profile-id: a68bf26e208d4
 
 - project:
-    name: p4plugin-oxygen
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-maven-javadoc-jobs'
-      - odl-maven-jobs
-
-    stream: oxygen
-    project: 'p4plugin'
-    project-name: 'p4plugin'
-    branch: 'stable/oxygen'
-    mvn-settings: 'p4plugin-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: ''
-    email-upstream: '[p4plugin]'
-    disable-job: true
-
-    # Used by the release job
-    staging-profile-id: a68bf26e208d4
-
-- project:
     name: p4plugin-sonar
     jobs:
       - gerrit-maven-sonar

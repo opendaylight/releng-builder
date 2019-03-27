@@ -72,31 +72,6 @@
     staging-profile-id: 96c0be46aac33
 
 - project:
-    name: coe-oxygen
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-rtd-jobs':
-          build-node: centos7-builder-2c-2g
-          project-pattern: coe
-          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-coe/34924/
-          rtd-token: 95a5a8fed43b75c6be8432a2643f20a344ba5155
-      - odl-maven-jobs
-
-    project: 'coe'
-    project-name: 'coe'
-    stream: oxygen
-    branch: 'stable/oxygen'
-    mvn-settings: 'coe-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
-    email-upstream: '[coe] [odlparent] [yangtools] [controller]'
-    build-node: centos7-docker-2c-8g
-    disable-job: 'true'
-
-    # Used by the release job
-    staging-profile-id: 96c0be46aac33
-
-- project:
     name: coe-sonar
     jobs:
       - gerrit-maven-sonar

@@ -51,25 +51,6 @@
     staging-profile-id: 96fdf4408765d
 
 - project:
-    name: jsonrpc-oxygen
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - odl-maven-jobs
-
-    project: 'jsonrpc'
-    project-name: 'jsonrpc'
-    stream: oxygen
-    branch: 'stable/oxygen'
-    mvn-settings: 'jsonrpc-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream},mdsal-merge-{stream}'
-    email-upstream: '[jsonrpc] [odlparent] [yangtools] [controller] [mdsal]'
-    disable-job: true
-
-    # Used by the release job
-    staging-profile-id: 96fdf4408765d
-
-- project:
     name: jsonrpc-sonar
     jobs:
       - gerrit-maven-sonar

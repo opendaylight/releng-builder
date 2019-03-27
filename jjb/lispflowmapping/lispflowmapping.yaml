@@ -96,31 +96,6 @@
     staging-profile-id: 96fff2503b766
 
 - project:
-    name: lispflowmapping-oxygen
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-maven-javadoc-jobs'
-      - odl-maven-jobs
-
-    stream: oxygen
-    project: 'lispflowmapping'
-    project-name: 'lispflowmapping'
-    branch: 'stable/oxygen'
-    mvn-settings: 'lispflowmapping-settings'
-    mvn-goals: 'clean deploy findbugs:findbugs javadoc:aggregate -DrepoBuild'
-    mvn-opts: '-Xmx2048m -XX:MaxPermSize=512m -Dmaven.compile.fork=true'
-    dependencies: 'controller-merge-{stream},odlparent-merge-{stream},yangtools-merge-{stream},neutron-merge-{stream}'
-    email-upstream: '[lispflowmapping] [controller] [odlparent] [yangtools] [neutron]'
-    archive-artifacts: >
-        **/*.log
-        **/target/surefire-reports/*-output.txt
-
-    build-node: centos7-builder-8c-8g
-    disable-job: true
-    # Used by the release job
-    staging-profile-id: 96fff2503b766
-
-- project:
     name: lispflowmapping-sonar
     jobs:
       - gerrit-maven-sonar

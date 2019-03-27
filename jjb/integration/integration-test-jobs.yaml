@@ -45,16 +45,6 @@
               daexim ovsdb neutron openflowplugin coe genius lispflowmapping sfc netvirt
               bgpcep integration/distribution
 
-      - oxygen:
-          branch: 'stable/oxygen'
-          mvn-version: 'mvn35'
-          csit-list: !include: csit-jobs-oxygen.lst
-          build-order: >
-              odlparent yangtools infrautils mdsal controller serviceutils aaa netconf
-              daexim ovsdb neutron openflowplugin coe genius lispflowmapping sfc netvirt
-              bgpcep integration/distribution
-          disable-job: true
-
 - project:
     name: integration-distribution
     project: integration/test
@@ -109,19 +99,6 @@
           csit-list: !include: csit-jobs-fluorine.lst
           csit-weekly-list: '{csit-weekly-list-fluorine}'
           csit-high-frequency-list: '{csit-high-frequency-list-fluorine}'
-      - oxygen:
-          branch: 'stable/oxygen'
-          csit-blacklist: >
-              capwap centinel didm iotdm jsonrpc lacp messaging4transport netide nic
-              ocpplugin sdninterfaceapp unimgr usecplugin gate longevity sanity tdd tempest wip
-              aaa-csit-1node-keystone-all groupbasedpolicy-csit-1node-1cmb-0ctl-0cmp-openstack-pike-openstack
-              netvirt-csit-1node-1cmb-0ctl-0cmp-openstack-pike
-              netvirt-csit-1node-1cmb-0ctl-0cmp-openstack-queens-upstream-stateful-itm-direct
-              netvirt-csit-3node-1cmb
-              last-line-is-ignored-so-we-need-something-dummy-here-to-make-sure-the-real-last-line-is-used
-          csit-list: !include: csit-jobs-oxygen.lst
-          csit-weekly-list: '{csit-weekly-list-oxygen}'
-          csit-high-frequency-list: '{csit-high-frequency-list-oxygen}'
 
 - project:
     name: integration-sanity
@@ -143,10 +120,6 @@
           branch: 'stable/fluorine'
           karaf-version: odl
           csit-sanity-list: '{csit-sanity-list-fluorine}'
-      - oxygen:
-          branch: 'stable/oxygen'
-          karaf-version: karaf4
-          csit-sanity-list: '{csit-sanity-list-oxygen}'
 
 - job-template:
     name: 'integration-merge-dashboard'
