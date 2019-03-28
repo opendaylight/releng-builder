@@ -224,6 +224,13 @@
       - shell: !include-raw-escape: build-rpm.sh
       - install-test-uninstall-rpm
 
+      # Test Neon ('Managed Release Common Distro') release tarball
+      - inject:
+          # yamllint disable-line rule:line-length
+          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/public/org/opendaylight/integration/opendaylight/0.10.0/opendaylight-0.10.0.tar.gz'
+      - shell: !include-raw-escape: build-rpm.sh
+      - install-test-uninstall-rpm
+
       # Test Fluorine ('Managed Release Common Distro') release tarball
       - inject:
           # yamllint disable-line rule:line-length
@@ -347,6 +354,13 @@
       - inject:
           # yamllint disable-line rule:line-length
           properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/integration/karaf/0.9.2/karaf-0.9.2.tar.gz'
+      - shell: !include-raw-escape: build-rpm.sh
+      - install-test-uninstall-rpm
+
+      # Test Neon release tarball
+      - inject:
+          # yamllint disable-line rule:line-length
+          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/integration/karaf/0.10.0/karaf-0.10.0.tar.gz'
       - shell: !include-raw-escape: build-rpm.sh
       - install-test-uninstall-rpm
 
