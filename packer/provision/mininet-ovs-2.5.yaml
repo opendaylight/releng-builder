@@ -1,0 +1,69 @@
+---
+- import_playbook: ../common-packer/provision/baseline.yaml
+
+- hosts: all
+  become_user: root
+  become_method: sudo
+
+  pre_tasks:
+    - include_role: name=lfit.system-update
+
+  tasks:
+    - name: 'Install OpenVSwitch {{ovs_version}}'
+      block:
+        - name: 'Install dependencies required for OpenVSwitch {{ovs_version}}'
+          apt: 'name={{item}} state=present'
+          with_items:
+            - dh-autoreconf
+            - debhelper
+            - autoconf
+            - automake
+            - libssl-dev
+            - pkg-config
+            - bzip2
+            - openssl
+            - python-all
+            - procps
+            - python-qt4
+            - python-zopeinterface
+            - python-twisted-conch
+          become: true
+        - name: 'Install OpenVSwitch {{ovs_version}}'
+          apt: 'name={{item}} state=present'
+          with_items:
+            - openvswitch-switch
+            - openvswitch-vtep
+          become: true
+        - name: Enable openvswitch-switch service
+          systemd:
+            name: openvswitch-switch
+            enabled: true
+            masked: false
+          become: true
+        - name: Enable openvswitch-vtep service
+          systemd:
+            name: openvswitch-vtep
+            enabled: true
+            masked: false
+          become: true
+
+    - name: Install Mininet
+      apt: name=mininet state=present
+      become: true
+
+    - name: Install exabgp
+      apt: name=exabgp state=present
+      become: true
+
+    - name: Install vlan for vlan based tests in VTN suites
+      apt: name=vlan state=present
+      become: true
+
+    - name: Install python-netaddr for custom mininet topologies
+      apt: name=python-netaddr state=present
+      become: true
+
+  post_tasks:
+    - name: System Reseal
+      script: ../common-packer/provision/system-reseal.sh
+      become: true
