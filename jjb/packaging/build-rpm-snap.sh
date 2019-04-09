@@ -19,8 +19,17 @@ if [ "$STREAM" == "fluorine" ]; then
   VERSION_MAJOR=9
 elif [ "$STREAM" == "neon" ]; then
   VERSION_MAJOR=10
+elif [ "$STREAM" == "sodium" ]; then
+  VERSION_MAJOR=11
+elif [ "$STREAM" == "magnesium" ]; then
+  VERSION_MAJOR=12
+elif [ "$STREAM" == "aluminium" ]; then
+  VERSION_MAJOR=13
+elif [ "$STREAM" == "silicon" ]; then
+  VERSION_MAJOR=14
 else
   echo "Unable to convert stream to major version"
+  echo "MAINTAINER: Update if/else switch above with recent stream/ver pairs"
   exit 1
 fi
 

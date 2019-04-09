@@ -26,7 +26,7 @@ sudo docker exec $docker_id /bin/bash $scripts_path/start-odl.sh
 sudo docker exec $docker_id /bin/bash $scripts_path/test-ports-nofeature.sh
 
 # Don't install test feature and check REST for Oxygen, ODLPARENT-139 breaks it
-if [ "$STREAM" == "fluorine" ] || [ "$STREAM" == "neon" ]; then
+if [ "$STREAM" == "fluorine" ] || [ "$STREAM" == "neon" ] || [ "$STREAM" == "sodium" ]; then
   sudo docker exec $docker_id /usr/bin/expect $scripts_path/test-karaf-oxygensafe.expect
 else
   sudo docker exec $docker_id /usr/bin/expect $scripts_path/test-karaf.expect
