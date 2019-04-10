@@ -1,38 +1,4 @@
 ---
-- integration_view_csit: &integration_view_csit
-    name: integration-view-csit
-    view-type: list
-    filter-executors: false
-    filter-queue: false
-    columns:
-      - status
-      - weather
-      - job
-      - last-success
-      - last-failure
-      - last-duration
-      - build-button
-      - robot-list
-    recurse: false
-
-- releng_view: &releng_view_common
-    name: releng-view-common
-    view-type: list
-    filter-executors: false
-    filter-queue: false
-    columns:
-      - status
-      - weather
-      - job
-      - last-success
-      - last-failure
-      - last-duration
-      - build-button
-      - jacoco
-      - find-bugs
-      - robot-list
-    recurse: false
-
 - project:
     name: '00-Empty View'
     views:
@@ -52,7 +18,21 @@
       most-recent:
         max-to-include: 25
         check-start-time: true
-    <<: *releng_view_common
+    view-type: list
+    filter-executors: false
+    filter-queue: false
+    columns:
+      - status
+      - weather
+      - job
+      - last-success
+      - last-failure
+      - last-duration
+      - build-button
+      - jacoco
+      - find-bugs
+      - robot-list
+    recurse: false
 
 - project:
     name: All-Sonar

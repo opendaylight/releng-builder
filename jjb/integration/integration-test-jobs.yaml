@@ -629,7 +629,21 @@
       - ovsdb-csit-3node-upstream-clustering-only-fluorine
       - sfc-csit-3node-docker-full-deploy-all-fluorine
       - sfc-csit-3node-rest-basic-all-fluorine
-    <<: *releng_view_common
+    view-type: list
+    filter-executors: false
+    filter-queue: false
+    columns:
+      - status
+      - weather
+      - job
+      - last-success
+      - last-failure
+      - last-duration
+      - build-button
+      - jacoco
+      - find-bugs
+      - robot-list
+    recurse: false
 
 - view:
     name: csit-stable-ne
@@ -669,4 +683,18 @@
       - ovsdb-csit-3node-upstream-clustering-only-neon
       - sfc-csit-3node-docker-full-deploy-all-neon
       - sfc-csit-3node-rest-basic-all-neon
-    <<: *releng_view_common
+    view-type: list
+    filter-executors: false
+    filter-queue: false
+    columns:
+      - status
+      - weather
+      - job
+      - last-success
+      - last-failure
+      - last-duration
+      - build-button
+      - jacoco
+      - find-bugs
+      - robot-list
+    recurse: false
