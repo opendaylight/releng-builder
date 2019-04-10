@@ -23,7 +23,7 @@
           mvn-version: 'mvn35'
           csit-list: !include: csit-jobs-sodium.lst
           build-order: >
-              odlparent yangtools infrautils mdsal controller serviceutils aaa netconf
+              odlparent yangtools mdsal infrautils controller serviceutils aaa netconf
               daexim ovsdb neutron openflowplugin coe genius lispflowmapping sfc netvirt
               bgpcep integration/distribution
 
@@ -32,7 +32,7 @@
           mvn-version: 'mvn35'
           csit-list: !include: csit-jobs-neon.lst
           build-order: >
-              odlparent yangtools infrautils mdsal controller serviceutils aaa netconf
+              odlparent yangtools mdsal infrautils controller serviceutils aaa netconf
               daexim ovsdb neutron openflowplugin coe genius lispflowmapping sfc netvirt
               bgpcep integration/distribution
 
