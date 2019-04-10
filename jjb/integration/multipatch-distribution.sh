@@ -152,17 +152,20 @@ do
         if [ "${PROJECT}" == "odlparent" ] || [ "${PROJECT}" == "yangtools" ] || ([ "${PROJECT}" == "mdsal" ] && [ "${DISTROSTREAM}" != "fluorine" ]); then
             ODLPARENT_VERSION="$(xmlstarlet sel -N x=http://maven.apache.org/POM/4.0.0 -t -v //x:odlparent.version ../pom.xml)"
             echo "change odlparent version to ${ODLPARENT_VERSION}"
-            find . -name "*.xml" -print0 | xargs -0 xmlstarlet ed --inplace -P -N x=http://maven.apache.org/POM/4.0.0 -u //x:version\[../x:groupId=\"org.opendaylight.odlparent\"\] -v "${ODLPARENT_VERSION}" 2> /dev/null
+            find . -name "pom.xml" -print0 | xargs -0 xmlstarlet ed --inplace -P -N x=http://maven.apache.org/POM/4.0.0 -u //x:version\[../x:parent/x:groupId=\"org.opendaylight.odlparent\"\] -v "${ODLPARENT_VERSION}"
+            find . -name "pom.xml" -print0 | xargs -0 xmlstarlet ed --inplace -P -N x=http://maven.apache.org/POM/4.0.0 -u //x:version\[../x:groupId=\"org.opendaylight.odlparent\"\] -v "${ODLPARENT_VERSION}"
         fi
         if [ "${PROJECT}" == "yangtools" ] || ([ "${PROJECT}" == "mdsal" ] && [ "${DISTROSTREAM}" != "fluorine" ]); then
             YANGTOOLS_VERSION="$(xmlstarlet sel -N x=http://maven.apache.org/POM/4.0.0 -t -v //x:yangtools.version ../pom.xml)"
             echo "change yangtools version to ${YANGTOOLS_VERSION}"
-            find -name "*.xml" -print0 | xargs -0 xmlstarlet ed --inplace -P -N x=http://maven.apache.org/POM/4.0.0 -u //x:version\[../x:groupId=\"org.opendaylight.yangtools\"\] -v "${YANGTOOLS_VERSION}" 2> /dev/null
+            find . -name "pom.xml" -print0 | xargs -0 xmlstarlet ed --inplace -P -N x=http://maven.apache.org/POM/4.0.0 -u //x:version\[../x:parent/x:groupId=\"org.opendaylight.yangtools\"\] -v "${YANGTOOLS_VERSION}"
+            find . -name "pom.xml" -print0 | xargs -0 xmlstarlet ed --inplace -P -N x=http://maven.apache.org/POM/4.0.0 -u //x:version\[../x:groupId=\"org.opendaylight.yangtools\"\] -v "${YANGTOOLS_VERSION}"
         fi
         if [ "${PROJECT}" == "mdsal" ] && [ "${DISTROSTREAM}" != "fluorine" ]; then
             MDSAL_VERSION="$(xmlstarlet sel -N x=http://maven.apache.org/POM/4.0.0 -t -v //x:mdsal.version ../pom.xml)"
             echo "change mdsal version to ${MDSAL_VERSION}"
-            find -name "*.xml" -print0 | xargs -0 xmlstarlet ed --inplace -P -N x=http://maven.apache.org/POM/4.0.0 -u //x:version\[../x:groupId=\"org.opendaylight.mdsal\"\] -v "${MDSAL_VERSION}" 2> /dev/null
+            find . -name "pom.xml" -print0 | xargs -0 xmlstarlet ed --inplace -P -N x=http://maven.apache.org/POM/4.0.0 -u //x:version\[../x:parent/x:groupId=\"org.opendaylight.mdsal\"\] -v "${MDSAL_VERSION}"
+            find . -name "pom.xml" -print0 | xargs -0 xmlstarlet ed --inplace -P -N x=http://maven.apache.org/POM/4.0.0 -u //x:version\[../x:groupId=\"org.opendaylight.mdsal\"\] -v "${MDSAL_VERSION}"
         fi
     else
         # If project with no patch is MRI, download release tag:
