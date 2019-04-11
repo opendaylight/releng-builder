@@ -60,41 +60,6 @@
               https://docs.openstack.org/developer/python-openstackclient/
 
 - parameter:
-    name: patches-to-build-parameter
-    parameters:
-      - string:
-          name: PATCHES_TO_BUILD
-          default: ''
-          description: |
-              Ordered list of patches to build in the format of project=changeset (checkout) or
-              project:changeset (cherry-pick) for example: genius=32/53632/9,netvirt:59/50259/47.
-              A topic is also allowed, for example: topic=binding-tlc-rpc
-
-- parameter:
-    name: build-order-parameter
-    parameters:
-      - string:
-          name: BUILD_ORDER
-          default: '{build-order}'
-          description: 'Build order for multipatch test when topic is used'
-
-- parameter:
-    name: build-fast-parameter
-    parameters:
-      - string:
-          name: BUILD_FAST
-          default: '{build-fast}'
-          description: 'Set true to build fast -Pq'
-
-- parameter:
-    name: run-test-parameter
-    parameters:
-      - string:
-          name: RUN_TEST
-          default: '{run-test}'
-          description: 'Set true to run test after build'
-
-- parameter:
     name: distribution-branch-to-build-parameter
     parameters:
       - string:
