@@ -87,6 +87,14 @@
           description: 'Set true to build fast -Pq'
 
 - parameter:
+    name: build-normal-parameter
+    parameters:
+      - string:
+          name: BUILD_NORMAL
+          default: '{build-normal}'
+          description: 'List of projects to build normal (no -Pq) when BUILD_FAST=true'
+
+- parameter:
     name: run-test-parameter
     parameters:
       - string:
