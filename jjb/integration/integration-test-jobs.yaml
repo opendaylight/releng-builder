@@ -375,14 +375,28 @@
           build-days-to-keep: '{build-days-to-keep}'
 
     parameters:
-      - patches-to-build-parameter:
-          patches_to_build: '$PATCHES_TO_BUILD'
-      - build-order-parameter:
-          build-order: '{build-order}'
-      - build-fast-parameter:
-          build-fast: 'false'
-      - run-test-parameter:
-          run-test: 'false'
+      - string:
+          name: PATCHES_TO_BUILD
+          default: '$PATCHES_TO_BUILD'
+          description: |
+              Ordered list of patches to build in the format of project=changeset (checkout) or
+              project:changeset (cherry-pick) for example: genius=32/53632/9,netvirt:59/50259/47.
+      - string:
+          name: BUILD_ORDER
+          default: '{build-order}'
+          description: 'Build order for multipatch test when topic is used'
+      - string:
+          name: BUILD_FAST
+          default: 'true'
+          description: 'Set true to build fast -Pq'
+      - string:
+          name: BUILD_NORMAL
+          default: ''
+          description: 'List of projects to build normal (no -Pq) when BUILD_FAST=true'
+      - string:
+          name: RUN_TEST
+          default: 'false'
+          description: 'Set true to run test after build'
       - integration-distribution-branch:
           branch: '{branch}'
       - integration-distribution-stream:

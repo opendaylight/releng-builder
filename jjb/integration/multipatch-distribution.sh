@@ -37,11 +37,6 @@ if [ -n "$GERRIT_EVENT_COMMENT_TEXT" ]; then
     fi
     PATCHES_TO_BUILD=${PATCHES_TO_BUILD#*:}
 fi
-if ${BUILD_FAST}; then
-    fast_option="-Pq"
-else
-    fast_option=""
-fi
 # check if topic exists:
 # if topic=binding-rpc, then checkout first patch in binding-rpc topic (if it exists)
 # if topic:binding-rpc, then cherry-pick first patch in binding-rpc topic (if it exists)
@@ -205,6 +200,12 @@ fi
 # Second phase: build everything
 
 for PROJECT_SHORTNAME in "${PROJECTS[@]}"; do
+    # Set Fast build if project is not in BUILD_NORMAL and BUILD_FAST is true
+    if [[ "${BUILD_NORMAL}" != *"${PROJECT_SHORTNAME}"* ]] && ${BUILD_FAST}; then
+        fast_option="-Pq"
+    else
+        fast_option=""
+    fi
     pushd "${PROJECT_SHORTNAME}"
     # Build project
     "$MVN" clean install \
