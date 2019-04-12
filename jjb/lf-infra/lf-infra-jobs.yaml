@@ -145,7 +145,8 @@
     name: lf-infra-lftools
     jobs:
       - '{project-name}-rtd-jobs'
-      - gerrit-release-announce
+      - gerrit-release-announce:
+          build-node: centos7-builder-2c-1g
       - gerrit-tox-verify
 
     project-name: lf-infra-lftools
