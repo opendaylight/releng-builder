@@ -132,7 +132,7 @@
     project-name: lf-infra-global-jjb
     project: releng/global-jjb
     project-pattern: releng/global-jjb
-    build-node: centos7-builder-2c-8g
+    build-node: centos7-builder-2c-1g
     rtd-build-url: https://readthedocs.org/api/v2/webhook/lf-releng-global-jjb/32932/
     rtd-token: f19058af6f90e04dff828e3eec5e2f0990895a7b
     stream: any
@@ -145,7 +145,8 @@
     name: lf-infra-lftools
     jobs:
       - '{project-name}-rtd-jobs'
-      - gerrit-release-announce
+      - gerrit-release-announce:
+          build-node: centos7-builder-2c-8g
       - gerrit-tox-verify
 
     project-name: lf-infra-lftools
