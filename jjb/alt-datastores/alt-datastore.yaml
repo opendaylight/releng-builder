@@ -1,0 +1,66 @@
+---
+- project:
+    name: alt-datastores-sodium
+    jobs:
+      - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-rtd-jobs':
+          build-node: centos7-builder-2c-2g
+          project-pattern: alt-datastores
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/opendaylight-alt-datastores/82146/
+          rtd-token: ea1d83487d47ead46fa99256fad3213ec30c8c43
+      - odl-maven-jobs
+
+    stream: sodium
+    project: 'alt-datastores'
+    project-name: 'alt-datastores'
+    branch: 'master'
+    mvn-settings: 'alt-datastores-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
+    email-upstream: '[alt-datastores] [odlparent] [yangtools] [controller]'
+
+    # Used by the release job
+    staging-profile-id: daa2b00117ed6
+
+- project:
+    name: alt-datastores-neon
+    jobs:
+      - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-rtd-jobs':
+          build-node: centos7-builder-2c-2g
+          project-pattern: alt-datastores
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/opendaylight-alt-datastores/82146/
+          rtd-token: ea1d83487d47ead46fa99256fad3213ec30c8c43
+      - odl-maven-jobs
+
+    stream: sodium
+    project: 'alt-datastores'
+    project-name: 'alt-datastores'
+    branch: 'master'
+    mvn-settings: 'alt-datastores-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
+    email-upstream: '[alt-datastores] [odlparent] [yangtools] [controller]'
+
+    # Used by the release job
+    staging-profile-id: daa2b00117ed6
+
+- project:
+    name: alt-datastores-sonar
+    jobs:
+      - gerrit-maven-sonar:
+          mvn-params: >
+            -Dodl.jacoco.aggregateFile=$WORKSPACE/target/jacoco.exec
+            -Dsonar.jacoco.reportPath=$WORKSPACE/target/jacoco.exec
+
+    project: 'alt-datastores'
+    project-name: 'alt-datastores'
+    branch: 'master'
+    mvn-settings: 'alt-datastores-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+
+- project:
+    name: alt-datastores-view
+    views:
+      - project-view
+    project-name: alt-datastores
