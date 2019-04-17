@@ -18,6 +18,7 @@
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
     email-upstream: '[alt-datastores] [odlparent] [yangtools] [controller]'
+    build-node: centos7-docker-2c-8g
 
     # Used by the release job
     staging-profile-id: daa2b00117ed6
@@ -41,6 +42,7 @@
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
     email-upstream: '[alt-datastores] [odlparent] [yangtools] [controller]'
+    build-node: centos7-docker-2c-8g
 
     # Used by the release job
     staging-profile-id: daa2b00117ed6
