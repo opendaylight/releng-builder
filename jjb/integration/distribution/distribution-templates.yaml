@@ -1,6 +1,6 @@
 ---
 - job-template:
-    name: '{project-name}-distribution-check-{stream}'
+    name: '{prefix}{project-name}-distribution-check-{stream}'
 
     ######################
     # Default parameters #
@@ -128,7 +128,7 @@
       - lf-infra-publish
 
 - job-template:
-    name: 'distribution-verify-{type}-{stream}'
+    name: '{prefix}distribution-verify-{type}-{stream}'
 
     disable-job: 'false'
 
@@ -198,7 +198,7 @@
           email-prefix: '[{project-name}]'
 
 - job-template:
-    name: 'distribution-merge-{type}-{stream}'
+    name: '{prefix}distribution-merge-{type}-{stream}'
 
     # Need to keep jobs that deploy to Nexus at end of build as Maven
     # projects. Maybe reconsider this once upstream moves deploy to a
@@ -291,7 +291,7 @@
           email-prefix: '[{project-name}]'
 
 - job-template:
-    name: 'distribution-check-{type}-{stream}'
+    name: '{prefix}distribution-check-{type}-{stream}'
 
     ######################
     # Default parameters #
@@ -389,7 +389,7 @@
       - lf-infra-publish
 
 - job-template:
-    name: 'distribution-sanity-{stream}'
+    name: '{prefix}distribution-sanity-{stream}'
     # Goal: Verify distribution starts with no issues when all features are loaded.
     # Operation: This job deploys odl-integration-all + list of UM features.
     # This job works for both managed & self-managed distro.
@@ -444,7 +444,7 @@
       - lf-infra-publish
 
 - job-template:
-    name: 'distribution-csit-managed-{stream}'
+    name: '{prefix}distribution-csit-managed-{stream}'
     # Goal: Verify distribution starts with no issues when all features are loaded.
     # Operation: This job deploys odl-integration-all.
     # This job works for just managed distro.

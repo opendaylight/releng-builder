@@ -117,7 +117,7 @@
           csit-sanity-list: '{csit-sanity-list-fluorine}'
 
 - job-template:
-    name: 'integration-merge-dashboard'
+    name: '{prefix}integration-merge-dashboard'
     project-type: freestyle
     node: centos7-builder-2c-1g
 
@@ -168,7 +168,7 @@
           email-prefix: '[{project-name}]'
 
 - job-template:
-    name: 'integration-distribution-test-{stream}'
+    name: '{prefix}integration-distribution-test-{stream}'
     # Goal: Verify a distribution through all system test available
     # Operation: This template takes a distribution and passes all available system test
 
@@ -207,7 +207,7 @@
       - lf-infra-publish
 
 - job-template:
-    name: 'integration-sanity-test-{stream}'
+    name: '{prefix}integration-sanity-test-{stream}'
     # Goal: Verify a distribution through sanity test
     # Operation: This template takes a distribution and passes sanity test
     # This jobs works for both managed & unmanaged distro.
@@ -243,7 +243,7 @@
           email-prefix: '[integration]'
 
 - job-template:
-    name: 'integration-patch-test-{stream}'
+    name: '{prefix}integration-patch-test-{stream}'
     # Template: integration-patch-test-{stream}
     # Goal: Build a patch and run all available system test on a distribution containing the change
     # Operation: This job template builds a patch, creates a distribution containing the patch, and
@@ -354,7 +354,7 @@
 
 
 - job-template:
-    name: 'integration-multipatch-test-{stream}'
+    name: '{prefix}integration-multipatch-test-{stream}'
     # Goal: Build one or more patches and run all available system test on a distribution containing the change.
     # Operation: This job template checks out and builds in order each patch provided in job parameters, finally
     # it creates a distribution containing all patches and triggers the distribution test job which includes most
@@ -456,7 +456,7 @@
           email-prefix: '[int/dist]'
 
 - job-template:
-    name: 'integration-distribution-weekly-test-trigger-{stream}'
+    name: '{prefix}integration-distribution-weekly-test-trigger-{stream}'
 
     project-type: freestyle
     node: queue-intque-2c-1g
@@ -488,7 +488,7 @@
           email-prefix: '[integration]'
 
 - job-template:
-    name: 'integration-distribution-high-frequency-test-trigger-{stream}'
+    name: '{prefix}integration-distribution-high-frequency-test-trigger-{stream}'
 
     project-type: freestyle
     node: queue-intque-2c-1g
@@ -521,7 +521,7 @@
           email-prefix: '[integration]'
 
 - job-template:
-    name: 'integration-update-csit-tests-{stream}'
+    name: '{prefix}integration-update-csit-tests-{stream}'
 
     # This job's purpose is to update csit
     # tests to run in integration-distribution-test-{stream}
