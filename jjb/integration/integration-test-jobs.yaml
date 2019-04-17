@@ -5,7 +5,7 @@
     project-name: integration-test
     jobs:
       - 'integration-patch-test-{stream}'
-      - 'integration-multipatch-test-{stream}'
+      - 'inttest-multipatch'
       - 'integration-merge-dashboard'
       - '{project-name}-rtd-jobs':
           build-node: centos7-builder-2c-2g
@@ -354,12 +354,13 @@
 
 
 - job-template:
-    name: 'integration-multipatch-test-{stream}'
+    name: '{prefix}integration-multipatch-test-{stream}'
     # Goal: Build one or more patches and run all available system test on a distribution containing the change.
     # Operation: This job template checks out and builds in order each patch provided in job parameters, finally
     # it creates a distribution containing all patches and triggers the distribution test job which includes most
     # (if not all) available CSIT jobs.
 
+    id: inttest-multipatch
     project-type: freestyle
     node: centos7-builder-8c-8g
     concurrent: true
