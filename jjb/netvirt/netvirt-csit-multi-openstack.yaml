@@ -49,7 +49,7 @@
       # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
       - gate-tdd-wip:
           testplan: '{project}-{topology}-tdd-wip-openstack.txt'
-          schedule: ''
+          schedule: '{schedule-weekly}'
           tools_system_count: 3
       - tempest-stateful:
           test-suites: 'openstack/tempest/tempest.robot'
