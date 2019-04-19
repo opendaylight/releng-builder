@@ -1,8 +1,13 @@
-CONTROLLERMEM="3072m"
-ACTUALFEATURES="odl-integration-all"
-
 if [[ ! -z "${CONTROLLERFEATURES}" ]]; then
     ACTUALFEATURES="odl-integration-all,${CONTROLLERFEATURES}"
+else
+    ACTUALFEATURES="odl-integration-all"
+fi
+
+if [[ "${JOB_NAME}" == *"distribution-sanity"* ]]; then
+    CONTROLLERMEM="4096m"
+else
+    CONTROLLERMEM="3072m"
 fi
 
 echo "Kill any controller running"
