@@ -46,10 +46,13 @@
           odl-snat-mode: 'conntrack'
       - gate-minimal-cluster:
           testplan: '{project}-{topology}-minimal-openstack.txt'
+      - dcgw:
+          testplan: '{project}-{topology}-dcgw-openstack.txt'
+          tools_system_count: 3
       # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
       - gate-tdd-wip:
           testplan: '{project}-{topology}-tdd-wip-openstack.txt'
-          schedule: '{schedule-weekly}'
+          schedule: '@weekly'
           tools_system_count: 3
       - tempest-stateful:
           test-suites: 'openstack/tempest/tempest.robot'
