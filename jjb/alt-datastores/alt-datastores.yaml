@@ -2,7 +2,6 @@
 - project:
     name: alt-datastores-sodium
     jobs:
-      - '{project-name}-distribution-check-{stream}'
       - '{project-name}-rtd-jobs':
           build-node: centos7-builder-2c-2g
           project-pattern: alt-datastores
@@ -26,7 +25,6 @@
 - project:
     name: alt-datastores-neon
     jobs:
-      - '{project-name}-distribution-check-{stream}'
       - '{project-name}-rtd-jobs':
           build-node: centos7-builder-2c-2g
           project-pattern: alt-datastores
