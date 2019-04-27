@@ -77,6 +77,23 @@
     templates: devstack-pre-pip-queens
 
 - project:
+        name: packer-devstack-pre-pip-rocky-jobs
+        jobs:
+            - gerrit-packer-merge
+
+        project: releng/builder
+        project-name: builder
+        branch: master
+        archive-artifacts: '**/*.log'
+
+        build-node: centos7-builder-2c-1g
+        build-timeout: 75
+        cron: '00 H 1 * *'
+
+        platforms: centos-7
+        templates: devstack-pre-pip-rocky
+
+- project:
     name: packer-docker-jobs
     jobs:
       - gerrit-packer-merge
