@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0117521_eb9a0b01",
+        "filename": "jjb/netvirt/netvirt-csit-multi-openstack.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2019-04-29T10:30:40Z",
+      "side": 1,
+      "message": "openstack_rocky_system_image variable needs to be defined in defaults.yaml.\n\nhttps://github.com/opendaylight/releng-builder/blob/master/jjb/defaults.yaml#L85-L88\n\nBut you won\u0027t have the parameter to put it there until the packer merge job passes and gives you the value. I would split the change in this file out to a separate patch that is merged later when we have the value available.",
+      "range": {
+        "startLine": 86,
+        "startChar": 37,
+        "endLine": 86,
+        "endChar": 65
+      },
+      "revId": "c91584ff6b9d70537da45092d14592b965095594",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
