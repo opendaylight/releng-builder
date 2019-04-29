@@ -14,8 +14,8 @@
       "availability_zone": "ca-ymq-2",
       "ssh_username": "{{user `ssh_user`}}",
       "ssh_proxy_host": "{{user `ssh_proxy_host`}}",
-      "image_name": "ZZCI - {{user `distro`}} - devstack-queens - {{isotime \"20060102-150405.000\"}}",
-      "instance_name": "{{user `distro`}}-devstack-queens-{{uuid}}",
+      "image_name": "ZZCI - {{user `distro`}} - devstack-rocky - {{isotime \"20060102-150405.000\"}}",
+      "instance_name": "{{user `distro`}}-devstack-rocky-{{uuid}}",
       "source_image_name": "{{user `base_image`}}",
       "flavor": "v1-standard-1",
       "networks": [
@@ -31,8 +31,8 @@
     {
       "type": "shell",
       "environment_vars": [
-        "os_branch=stable/queens",
-        "rdo_branch=queens"
+        "os_branch=stable/rocky",
+        "rdo_branch=rocky"
       ],
       "scripts": [
         "provision/baseline.sh",
