@@ -15,21 +15,22 @@
     - name: 'Install OpenVSwitch {{ovs_version}}'
       block:
         - name: 'Install dependencies required for OpenVSwitch {{ovs_version}}'
-          apt: 'name={{item}} state=present'
-          with_items:
-            - dh-autoreconf
-            - debhelper
-            - autoconf
-            - automake
-            - libssl-dev
-            - pkg-config
-            - bzip2
-            - openssl
-            - python-all
-            - procps
-            - python-qt4
-            - python-zopeinterface
-            - python-twisted-conch
+          apt:
+            name:
+              - dh-autoreconf
+              - debhelper
+              - autoconf
+              - automake
+              - libssl-dev
+              - pkg-config
+              - bzip2
+              - openssl
+              - python-all
+              - procps
+              - python-qt4
+              - python-zopeinterface
+              - python-twisted-conch
+            state: present
           become: true
         - name: Create OVS root
           file:
