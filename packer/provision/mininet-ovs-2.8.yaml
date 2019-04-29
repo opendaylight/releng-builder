@@ -15,21 +15,22 @@
     - name: 'Install OpenVSwitch {{ovs_version}}'
       block:
         - name: Install OpenVSwitch dependencies
-          apt: 'name={{item}} state=present'
-          with_items:
-            - autoconf
-            - automake
-            - bzip2
-            - debhelper
-            - dh-autoreconf
-            - libssl-dev
-            - openssl
-            - pkg-config
-            - procps
-            - python-all
-            - python-qt4
-            - python-twisted-conch
-            - python-zopeinterface
+          apt:
+            name:
+              - autoconf
+              - automake
+              - bzip2
+              - debhelper
+              - dh-autoreconf
+              - libssl-dev
+              - openssl
+              - pkg-config
+              - procps
+              - python-all
+              - python-qt4
+              - python-twisted-conch
+              - python-zopeinterface
+            state: present
           become: true
         - name: 'Fetch OpenVSwitch {{ovs_version}}'
           get_url:
@@ -79,21 +80,22 @@
     - name: Install mtcbench
       block:
         - name: Install mtcbench dependencies
-          apt: 'name={{item}} state=present'
-          with_items:
-            - autoconf
-            - automake
-            - build-essential
-            - libconfig-dev
-            - libffi-dev
-            - libpcap-dev
-            - libsnmp-dev
-            - libtool
-            - libssl-doc
-            - make
-            - pkg-config
-            - snmp
-            - snmpd
+          apt:
+            name:
+              - autoconf
+              - automake
+              - build-essential
+              - libconfig-dev
+              - libffi-dev
+              - libpcap-dev
+              - libsnmp-dev
+              - libtool
+              - libssl-doc
+              - make
+              - pkg-config
+              - snmp
+              - snmpd
+            state: present
           become: true
         - name: Fetch mtcbench git repo
           git:
