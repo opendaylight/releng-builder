@@ -10,35 +10,38 @@
 
   tasks:
     - name: Install robot dependencies
-      yum: 'name={{item}} state=present'
-      with_items:
-        - postgresql-devel
-        - python-docker-py
-        - python-matplotlib
-        - python-netaddr
-        - python36-pip
+      yum:
+        name:
+          - postgresql-devel
+          - python-docker-py
+          - python-matplotlib
+          - python-netaddr
+          - python36-pip
+        state: present
       become: true
 
     - name: Install dlux dependencies
       block:
         - name: Install dlux dependencies
-          yum: 'name={{item}} state=present'
-          with_items:
-            - firefox
-            - xorg-x11-server-Xvfb
+          yum:
+            name:
+              - firefox
+              - xorg-x11-server-Xvfb
+            state: present
       become: true
 
     - name: Install lispflowmapping dependencies
       block:
         - name: Install lispflowmapping dependencies
-          yum: 'name={{item}} state=present'
-          with_items:
-            - boost-devel
-            - libpcap-devel
-            - libxml2-devel
-            - libxslt-devel
-            - python-docker-py
-            - python-netaddr
+          yum:
+            name:
+              - boost-devel
+              - libpcap-devel
+              - libxml2-devel
+              - libxslt-devel
+              - python-docker-py
+              - python-netaddr
+            state: present
           become: true
         - name: Install udpreplay
           block:
