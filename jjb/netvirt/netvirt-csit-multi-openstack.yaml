@@ -54,6 +54,7 @@
           testplan: '{project}-{topology}-tdd-wip-openstack.txt'
           schedule: '{schedule-weekly}'
           tools_system_count: 3
+          enable-gre-type-drivers: 'yes'
       - tempest-stateful:
           test-suites: 'openstack/tempest/tempest.robot'
           testplan: '{project}-{topology}-openstack-tempest.txt'
@@ -137,6 +138,7 @@
           testplan: '{project}-{topology}-tdd-wip-openstack.txt'
           schedule: ''
           tools_system_count: 3
+          enable-gre-type-drivers: 'yes'
       - tempest-stateful:
           test-suites: 'openstack/tempest/tempest.robot'
           testplan: '{project}-{topology}-openstack-tempest.txt'
@@ -214,6 +216,7 @@
           testplan: '{project}-{topology}-tdd-wip-openstack.txt'
           schedule: ''
           tools_system_count: 3
+          enable-gre-type-drivers: 'yes'
       - tempest-stateful:
           test-suites: 'openstack/tempest/tempest.robot'
           testplan: '{project}-{topology}-openstack-tempest.txt'
