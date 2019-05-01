@@ -1,0 +1,49 @@
+---
+- import_playbook: ../common-packer/provision/baseline.yaml
+
+- hosts: all
+  become_user: root
+  become_method: sudo
+
+  pre_tasks:
+    - include_role: name=lfit.system-update
+
+  tasks:
+    - name: 'Install devstack dependencies'
+      block:
+        - name: Install xpath dependencies
+          yum:
+            name:
+              - perl-XML-XPath
+              - python-pip
+              - crudini
+            state: present
+          become: true
+        - name: Installing non-baseline requirements
+          yum:
+            name:
+              - deltarpm
+              - python
+              - python-crypto
+              - python-devel
+              - python-lxml
+              - python-setuptools
+              - libxml2-devel
+              - libxslt-devel
+              - libffi-devel
+              - openssl-devel
+              - "@development"
+            state: present
+          become: true
+        - name: check if net link setup exists
+          stat:
+            path: /etc/udev/rules.d/80-net-setup-link.rules
+          register: rules_file_exists
+        - name: Update net link setup
+          file:
+            src: /dev/null
+            dest: /etc/udev/rules.d/80-net-setup-link.rules
+            state: link
+            force: yes
+          become: true
+          when: rules_file_exists.stat.exists == true
