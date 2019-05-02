@@ -43,23 +43,6 @@
     templates: devstack
 
 - project:
-    name: packer-devstack-pre-pip-pike-jobs
-    jobs:
-      - gerrit-packer-merge
-
-    project: releng/builder
-    project-name: builder
-    branch: master
-    archive-artifacts: '**/*.log'
-
-    build-node: centos7-builder-2c-1g
-    build-timeout: 75
-    cron: '00 H 1 * *'
-
-    platforms: centos-7
-    templates: devstack-pre-pip-pike
-
-- project:
     name: packer-devstack-pre-pip-queens-jobs
     jobs:
       - gerrit-packer-merge
