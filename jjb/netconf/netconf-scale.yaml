@@ -35,3 +35,43 @@
 
     # ODL system configuration
     odl_system_flavor: odl-standard-4
+
+- project:
+      name: netconf-csit-scale-max-devices
+      jobs:
+          - inttest-csit-1node
+
+      # The project name
+      project: 'netconf'
+
+      # The functionality under test
+      functionality: 'scale-max-devices'
+
+      # Project branches
+      stream:
+          - sodium:
+                branch: 'master'
+          - neon:
+                branch: 'stable/neon'
+          - fluorine:
+                branch: 'stable/fluorine'
+
+      install:
+          - only:
+                scope: 'only'
+
+      # Features to install
+      install-features: >
+          odl-restconf,
+          odl-clustering-test-app,
+          odl-netconf-mdsal,
+          odl-netconf-topology,
+          odl-jolokia,
+          decanter-collector-jmx,
+          decanter-appender-elasticsearch
+
+      # Robot custom options
+      robot-options: '-v USE_NETCONF_CONNECTOR:False'
+
+      # ODL system configuration
+      odl_system_flavor: odl-standard-8
