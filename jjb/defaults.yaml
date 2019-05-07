@@ -20,7 +20,6 @@
     schedule-daily: 'H H * * *'
     schedule-saturday: 'H H * * 6'
     schedule-weekly: 'H 23 * * 6'
-    schedule-high-frequency: 'H H/4 * * *'
 
     email-recipients: 'jenkins@lists.opendaylight.org'
     odl-ml2-driver-repo: 'https://github.com/openstack/networking-odl'
@@ -180,12 +179,6 @@
     10-exclude-value: ''
 
     # Manual CSIT job lists used by sanity or periodic in nature.
-    csit-high-frequency-list-sodium: >
-        netvirt-csit-1node-0cmb-1ctl-2cmp-openstack-queens-upstream-stateful-sodium
-    csit-high-frequency-list-neon: >
-        netvirt-csit-1node-0cmb-1ctl-2cmp-openstack-queens-upstream-stateful-neon
-    csit-high-frequency-list-fluorine: >
-        netvirt-csit-1node-0cmb-1ctl-2cmp-openstack-queens-upstream-stateful-fluorine
     csit-sanity-list-sodium: >
         openflowplugin-csit-1node-sanity-only-sodium,
         distribution-sanity-sodium

@@ -52,7 +52,6 @@
     jobs:
       - 'integration-distribution-test-{stream}'
       - 'integration-distribution-weekly-test-trigger-{stream}'
-      - 'integration-distribution-high-frequency-test-trigger-{stream}'
       - 'integration-update-csit-tests-{stream}'
 
     # CSIT Lists in defaults.yaml
@@ -69,7 +68,6 @@
               last-line-is-ignored-so-we-need-something-dummy-here-to-make-sure-the-real-last-line-is-used
           csit-list: !include: csit-jobs-sodium.lst
           csit-weekly-list: '{csit-weekly-list-sodium}'
-          csit-high-frequency-list: '{csit-high-frequency-list-sodium}'
       - neon:
           branch: 'stable/neon'
           csit-blacklist: >
@@ -82,7 +80,6 @@
               last-line-is-ignored-so-we-need-something-dummy-here-to-make-sure-the-real-last-line-is-used
           csit-list: !include: csit-jobs-neon.lst
           csit-weekly-list: '{csit-weekly-list-neon}'
-          csit-high-frequency-list: '{csit-high-frequency-list-neon}'
       - fluorine:
           branch: 'stable/fluorine'
           csit-blacklist: >
@@ -95,7 +92,6 @@
               last-line-is-ignored-so-we-need-something-dummy-here-to-make-sure-the-real-last-line-is-used
           csit-list: !include: csit-jobs-fluorine.lst
           csit-weekly-list: '{csit-weekly-list-fluorine}'
-          csit-high-frequency-list: '{csit-high-frequency-list-fluorine}'
 
 - project:
     name: integration-sanity
@@ -480,39 +476,6 @@
     builders:
       - trigger-builds:
           - project: '{csit-weekly-list}'
-            block: true
-            predefined-parameters: |
-              BUNDLE_URL=$BUNDLE_URL
-              KARAF_VERSION=$KARAF_VERSION
-
-    publishers:
-      - email-notification:
-          email-recipients: '{email-recipients}'
-          email-prefix: '[integration]'
-
-- job-template:
-    name: 'integration-distribution-high-frequency-test-trigger-{stream}'
-
-    project-type: freestyle
-    node: queue-intque-2c-1g
-
-    properties:
-      - opendaylight-infra-properties:
-          build-days-to-keep: '{build-days-to-keep}'
-
-    parameters:
-      - integration-bundle-url:
-          bundle-url: '{bundle-url}'
-      - distribution-karaf-version:
-          karaf-version: '{karaf-version}'
-
-    triggers:
-      - timed: '{schedule-high-frequency}'
-
-    builders:
-      - lf-infra-pre-build
-      - trigger-builds:
-          - project: '{csit-high-frequency-list}'
             block: true
             predefined-parameters: |
               BUNDLE_URL=$BUNDLE_URL
