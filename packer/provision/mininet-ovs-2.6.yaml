@@ -34,9 +34,10 @@
           become: true
         - name: Create OVS root
           file:
-            path: /tmp/ovs
+            path: /opt/ovs
             state: directory
             mode: 0755
+          become: true
         - name: 'Fetch OpenVSwitch {{ovs_version}} to /tmp'
           get_url:
             url: 'http://openvswitch.org/releases/openvswitch-2.6.1.tar.gz'
@@ -45,19 +46,21 @@
         - name: 'Unarchive OpenVSwitch {{ovs_version}}'
           unarchive:
             src: '/tmp/openvswitch-{{ovs_version}}.tar.gz'
-            dest: /tmp/ovs
+            dest: /opt/ovs
             remote_src: true
+          become: true
         - name: 'Build OpenVSwitch {{ovs_version}}'
           shell: DEB_BUILD_OPTIONS='parallel=8 nocheck' fakeroot debian/rules binary
           args:
-            chdir: '/tmp/ovs/openvswitch-{{ovs_version}}'
+            chdir: '/opt/ovs/openvswitch-{{ovs_version}}'
+          become: true
         - name: 'Install OpenVSwitch {{ovs_version}}'
           apt: 'deb={{item}}'
           with_items:
-            - /tmp/ovs/openvswitch-common_2.6.1-1_amd64.deb
-            - /tmp/ovs/openvswitch-switch_2.6.1-1_amd64.deb
-            - /tmp/ovs/python-openvswitch_2.6.1-1_all.deb
-            - /tmp/ovs/openvswitch-vtep_2.6.1-1_amd64.deb
+            - /opt/ovs/openvswitch-common_2.6.1-1_amd64.deb
+            - /opt/ovs/openvswitch-switch_2.6.1-1_amd64.deb
+            - /opt/ovs/python-openvswitch_2.6.1-1_all.deb
+            - /opt/ovs/openvswitch-vtep_2.6.1-1_amd64.deb
           become: true
         - name: Enable openvswitch-switch service
           systemd:
