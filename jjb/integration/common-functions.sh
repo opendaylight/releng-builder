@@ -79,7 +79,7 @@ function configure_karaf_log() {
     echo "Configuring the karaf log... karaf_version: ${karaf_version}, logapi: ${logapi}"
     if [ "${logapi}" == "log4j2" ]; then
         # FIXME: Make log size limit configurable from build parameter.
-        sed -ie 's/log4j2.appender.rolling.policies.size.size = 16MB/log4j2.appender.rolling.policies.size.size = 1GB/g' ${LOGCONF}
+        sed -ie 's/log4j2.appender.rolling.policies.size.size = 64MB/log4j2.appender.rolling.policies.size.size = 1GB/g' ${LOGCONF}
         orgmodule="org.opendaylight.yangtools.yang.parser.repo.YangTextSchemaContextResolver"
         orgmodule_="${orgmodule//./_}"
         echo "${logapi}.logger.${orgmodule_}.name = WARN" >> ${LOGCONF}
