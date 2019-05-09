@@ -1,0 +1,36 @@
+---
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.2.1
+    hooks:
+      - id: check-json
+      - id: flake8
+        args: ['--max-line-length=88']
+        exclude: docs/*
+      - id: trailing-whitespace
+
+  - repo: https://github.com/amperser/proselint
+    rev: v0.10.2
+    hooks:
+      - id: proselint
+        files: docs/.*
+
+  - repo: https://github.com/jorisroovers/gitlint
+    rev: v0.11.0
+    hooks:
+      - id: gitlint
+
+  - repo: https://github.com/jumanjihouse/pre-commit-hooks
+    sha: 1.11.0
+    hooks:
+      - id: shellcheck
+        exclude: >
+            (?x)^(
+                jjb/global-jjb/.*|
+                jenkins-config/.*
+            )$
+
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.15.0
+    hooks:
+      - id: yamllint
