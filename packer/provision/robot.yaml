@@ -67,8 +67,8 @@
                 dest: /usr/local/bin/udpreplay
                 mode: 0755
                 owner: root
-                remote_src: yes
-              become: yes
+                remote_src: true
+              become: true
 
   post_tasks:
     - name: System Reseal
