@@ -92,6 +92,7 @@ function install_openstack_clients_in_robot_vm() {
     for package in ${packages[*]}; do
        echo "Get the current support version of the package ${package}"
        wget https://raw.githubusercontent.com/openstack/requirements/stable/${openstack_version}/upper-constraints.txt -O /tmp/constraints.txt 2>/dev/null
+       sed -i s/python-openstackclient===3.16.2/python-openstackclient===3.14.0/ /tmp/constraints.txt
        echo "$PYTHON -m pip install --upgrade --no-deps ${package} --no-cache-dir -c /tmp/constraints.txt"
        $PYTHON -m pip install --upgrade --no-deps ${package} --no-cache-dir -c /tmp/constraints.txt
        echo "$PYTHON -m pip install ${package} --no-cache-dir -c /tmp/constraints.txt"
@@ -110,6 +111,10 @@ function install_openstack_clients_in_robot_vm() {
 function install_rdo_release() {
     local ip=$1
     case ${OPENSTACK_BRANCH} in
+       *rocky*)
+          ${SSH} ${ip} "sudo yum install -y https://repos.fedorapeople.org/repos/openstack/openstack-rocky/rdo-release-rocky-1.noarch.rpm"
+          ;;
+        
        *queens*)
           ${SSH} ${ip} "sudo yum install -y https://repos.fedorapeople.org/repos/openstack/openstack-queens/rdo-release-queens-1.noarch.rpm"
           ;;
@@ -143,7 +148,7 @@ EOF
 function fix_libvirt_python_build() {
     local ip=$1
 
-    if [ "${ODL_ML2_BRANCH}" == "stable/queens" ]; then
+    if [ "${ODL_ML2_BRANCH}" == "stable/queens" || "stable/rocky" ]; then
         ${SSH} ${ip} "
             cd /opt/stack;
             git clone https://git.openstack.org/openstack/requirements;
@@ -825,7 +830,7 @@ for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
     # Q_ML2_PLUGIN_FLAT_TYPE_OPTIONS could be used for the flat_networks
     # and Q_ML2_PLUGIN_VLAN_TYPE_OPTIONS could be used for the ml2_type_vlan
     ${SSH} ${!CONTROLIP} "bash /tmp/get_devstack.sh > /tmp/get_devstack.sh.txt 2>&1"
-    if [ "${ODL_ML2_BRANCH}" == "stable/queens" ]; then
+    if [ "${ODL_ML2_BRANCH}" == "stable/queens" || "stable/rocky" || "master" ]; then
        ssh ${!CONTROLIP} "sed -i 's/flat_networks public/flat_networks public,physnet1/' /opt/stack/devstack/lib/neutron"
        ssh ${!CONTROLIP} "sed -i '186i iniset \$NEUTRON_CORE_PLUGIN_CONF ml2_type_vlan network_vlan_ranges public:1:4094,physnet1:1:4094' /opt/stack/devstack/lib/neutron"
        #Workaround for networking-sfc to configure the paramaters in neutron.conf if the
