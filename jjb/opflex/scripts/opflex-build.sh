@@ -27,13 +27,13 @@ mkdir -p "$ROOT"
 trap cleanup EXIT
 
 # Download the artifacts from nexus thirdparty
-wget -nv ${NEXUS_URL}/service/local/repositories/thirdparty/content/openvswitch/openvswitch/${OPENVSWITCH_VERSION}/openvswitch-${OPENVSWITCH_VERSION}.tar.gz
-wget -nv ${NEXUS_URL}/service/local/repositories/thirdparty/content/rapidjson/rapidjson/${RAPIDJSON_VERSION}/rapidjson-${RAPIDJSON_VERSION}.tar.gz
-wget -nv ${NEXUS_URL}/service/local/repositories/thirdparty/content/libuv/libuv/${LIBUV_VERSION}/libuv-${LIBUV_VERSION}.tar.gz
+wget -nv "${NEXUS_URL}/service/local/repositories/thirdparty/content/openvswitch/openvswitch/${OPENVSWITCH_VERSION}/openvswitch-${OPENVSWITCH_VERSION}.tar.gz"
+wget -nv "${NEXUS_URL}/service/local/repositories/thirdparty/content/rapidjson/rapidjson/${RAPIDJSON_VERSION}/rapidjson-${RAPIDJSON_VERSION}.tar.gz"
+wget -nv "${NEXUS_URL}/service/local/repositories/thirdparty/content/libuv/libuv/${LIBUV_VERSION}/libuv-${LIBUV_VERSION}.tar.gz"
 
-tar -xz -C "$ROOT" --strip-components=2 -f libuv-${LIBUV_VERSION}.tar.gz
-tar -xz -C "$ROOT" --strip-components=2 -f rapidjson-${RAPIDJSON_VERSION}.tar.gz
-tar -xz -C "$ROOT" --strip-components=2 -f openvswitch-${OPENVSWITCH_VERSION}.tar.gz
+tar -xz -C "$ROOT" --strip-components=2 -f "libuv-${LIBUV_VERSION}.tar.gz"
+tar -xz -C "$ROOT" --strip-components=2 -f "rapidjson-${RAPIDJSON_VERSION}.tar.gz"
+tar -xz -C "$ROOT" --strip-components=2 -f "openvswitch-${OPENVSWITCH_VERSION}.tar.gz"
 
 export PATH="$ROOT/bin:$PATH"
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$ROOT/lib"
@@ -47,14 +47,14 @@ mkdir -p "$UPLOAD_FILES_PATH"
 pushd libopflex
 ./autogen.sh
 ./configure --prefix="$ROOT" \
-    --with-buildversion=$BUILD_NUMBER \
+    --with-buildversion="$BUILD_NUMBER" \
     CPPFLAGS="-isystem $ROOT/include" \
     CXXFLAGS="-Wall"
 make -j4
 if ! make check; then find . -name test-suite.log -exec cat {} \; && false; fi
 make install
 make dist
-mv *.tar.gz "$UPLOAD_FILES_PATH"
+mv -- *.tar.gz "$UPLOAD_FILES_PATH"
 popd
 
 # build libmodelgbp
@@ -66,7 +66,7 @@ bash autogen.sh
 make -j2
 make install
 make dist
-mv *.tar.gz "$UPLOAD_FILES_PATH"
+mv -- *.tar.gz "$UPLOAD_FILES_PATH"
 popd
 popd
 
@@ -74,11 +74,11 @@ popd
 pushd agent-ovs
 ./autogen.sh
 ./configure --prefix="$ROOT" \
-    --with-buildversion=$BUILD_NUMBER \
+    --with-buildversion="$BUILD_NUMBER" \
     CPPFLAGS="-isystem $ROOT/include" \
     CXXFLAGS="-Wall"
 make -j4
 if ! make check; then find . -name test-suite.log -exec cat {} \; && false; fi
 make dist
-mv *.tar.gz "$UPLOAD_FILES_PATH"
+mv -- *.tar.gz "$UPLOAD_FILES_PATH"
 popd

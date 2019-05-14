@@ -22,7 +22,7 @@ while true; do
     closed_ports=()
     for port in "${expected_ports[@]}"
     do
-        if nmap -Pn -p$port localhost | grep -q open; then
+        if nmap -Pn -p"$port" localhost | grep -q open; then
             echo "Port $port is open"
             open_ports+=("$port")
         else
@@ -55,7 +55,7 @@ open_ports=()
 closed_ports=()
 for port in "${unexpected_ports[@]}"
 do
-    if nmap -Pn -p$port localhost | grep -q open; then
+    if nmap -Pn -p"$port" localhost | grep -q open; then
         echo "Port $port is open"
         open_ports+=("$port")
     else
