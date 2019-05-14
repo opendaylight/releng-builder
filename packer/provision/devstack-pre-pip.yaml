@@ -1,0 +1,135 @@
+---
+- import_playbook: ../common-packer/provision/baseline.yaml
+
+- hosts: all
+  become_user: root
+  become_method: sudo
+
+  pre_tasks:
+    - include_role: name=lfit.system-update
+
+  tasks:
+    - name: 'Install devstack dependencies'
+      block:
+        - name: Install xpath dependencies
+          yum:
+            name:
+              - perl-XML-XPath
+              - python-pip
+              - crudini
+            state: present
+          become: true
+        - name: Install non-baseline requirements
+          yum:
+            name:
+              - deltarpm
+              - python
+              - python-crypto
+              - python-devel
+              - python-lxml
+              - python-setuptools
+              - libxml2-devel
+              - libxslt-devel
+              - libffi-devel
+              - openssl-devel
+              - "@development"
+            state: present
+          become: true
+        - name: check if net link setup exists
+          stat:
+            path: /etc/udev/rules.d/80-net-setup-link.rules
+          register: rules_file_exists
+        - name: Update net link setup
+          file:
+            src: /dev/null
+            dest: /etc/udev/rules.d/80-net-setup-link.rules
+            state: link
+            force: yes
+          become: true
+          when: rules_file_exists.stat.exists == true
+    - name: 'Pre-Install yum and pip packages'
+      block:
+        - name: Create /tmp/devstack directory
+          file:
+            path: /tmp/devstack
+            state: directory
+            mode: 0755
+        - name: Fetch openstack devstack-dev repo
+          git:
+            repo: https://github.com/openstack-dev/devstack.git
+            dest: /tmp/devstack
+            version: '{{ os_branch }}'
+        - name: "Read openstack devstack dependencies"
+          shell: "sed -e 's/#.*//' /tmp/devstack/files/rpms/general"
+          register: sed_output
+          args:
+            warn: False
+        - name: "Install non-baseline requirements for {{ os_branch }}"
+          yum: 'name={{item}} state=present'
+          with_items:
+            - "{{ sed_output.stdout_lines }}"
+          become: true
+        - name: git clone openstack core projects
+          git: repo='https://github.com/openstack/{{ item }}.git'
+               dest='/tmp/devstack/{{ item }}'
+               version='{{ os_branch }}'
+          with_items:
+            - requirements
+            - keystone
+            - glance
+            - cinder
+            - neutron
+            - nova
+            - horizon
+        - name: Install pip dependencies
+          shell: |
+            cd "{{ item }}"
+            git branch -a
+            cd ..
+            pwd
+            pip install -c requirements/upper-constraints.txt -e "{{ item }}"
+            pip install -c requirements/upper-constraints.txt -r "{{ item }}/test-requirements.txt"
+            # ignore non-zero return code
+            exit 0
+          args:
+            chdir: /tmp/devstack
+            warn: False
+          with_items:
+            - requirements
+            - keystone
+            - glance
+            - cinder
+            - neutron
+            - nova
+            - horizon
+          become: true
+
+    - name: 'Install openvswitch from relevant openstack branch'
+      block:
+        - name: 'Install CentOS openstack release {{ rdo_branch }}'
+          yum:
+            name: 'centos-release-openstack-{{ rdo_branch }}'
+            state: present
+          become: true
+        - name: 'Install openvswitch 2.8.2 for stable/queens'
+          yum:
+            name: openvswitch-2.8.2-1.el7
+            state: present
+            disable_gpg_check: yes
+          when: rdo_branch == 'queens'
+          become: true
+        - name: 'Install openvswitch latest for stable/rocky'
+          yum:
+            name: openvswitch
+            state: present
+            disable_gpg_check: yes
+          when: rdo_branch == 'rocky'
+          become: true
+
+    - name: 'Cleanup devstack directory'
+      block:
+        - name: "Removing /tmp/devstack"
+          file:
+            path: /tmp/devstack
+            state: absent
+          become: true
