@@ -119,7 +119,7 @@
             dest: /usr/local/bin/cbench
             mode: 0755
             owner: root
-            remote_src: yes
+            remote_src: true
           become: true
 
     - name: Install exabgp
