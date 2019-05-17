@@ -17,6 +17,8 @@
     mvn-settings: integration-distribution-settings
     mvn-goals: 'clean install dependency:tree -DoutputFile=dependency_tree.txt'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    nexus-iq-namespace: odl-
+    nexus-iq-stage: release
     email-upstream: '[int/dist]'
     stream:
       - sodium:
