@@ -1,0 +1,43 @@
+---
+- project:
+    name: detnet-sodium
+    jobs:
+      - '{project-name}-rtd-jobs':
+          build-node: centos7-builder-2c-2g
+          project-pattern: detnet
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-detnet/86479/
+          rtd-token: 5195d77d11453a03e4b4ad3688b7026ab02cfcce
+      - odl-maven-jobs
+
+    stream: sodium
+    project: 'detnet'
+    project-name: 'detnet'
+    branch: 'master'
+    mvn-settings: 'detnet-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
+    email-upstream: '[detnet] [odlparent] [yangtools] [controller]'
+    build-node: centos7-docker-2c-8g
+
+    # Used by the release job
+    staging-profile-id: 8981976d0fea7
+
+- project:
+    name: detnet-sonar
+    jobs:
+      - gerrit-maven-sonar:
+          mvn-params: >
+            -Dodl.jacoco.aggregateFile=$WORKSPACE/target/jacoco.exec
+            -Dsonar.jacoco.reportPath=$WORKSPACE/target/jacoco.exec
+
+    project: 'detnet'
+    project-name: 'detnet'
+    branch: 'master'
+    mvn-settings: 'detnet-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+
+- project:
+    name: detnet-view
+    views:
+      - project-view
+    project-name: detnet
