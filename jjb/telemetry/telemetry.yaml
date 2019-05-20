@@ -14,13 +14,7 @@
     project: 'telemetry'
     project-name: 'telemetry'
     branch: 'master'
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
     mvn-settings: 'telemetry-settings'
-    mvn-goals: 'clean deploy'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: ''
     email-upstream: '[telemetry]'
@@ -44,13 +38,7 @@
     project: 'telemetry'
     project-name: 'telemetry'
     branch: 'stable/neon'
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
     mvn-settings: 'telemetry-settings'
-    mvn-goals: 'clean deploy'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: ''
     email-upstream: '[telemetry]'
@@ -69,13 +57,7 @@
     project: 'telemetry'
     project-name: 'telemetry'
     branch: 'stable/fluorine'
-    jdks:
-      - openjdk8
-    maven:
-      - mvn33:
-          mvn-version: 'mvn33'
     mvn-settings: 'telemetry-settings'
-    mvn-goals: 'clean install'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: ''
     email-upstream: '[telemetry]'
