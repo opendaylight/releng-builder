@@ -134,6 +134,22 @@
     view-regex: '.*-javadoc-.*'
 
 - project:
+    name: Maven-Stage
+    views:
+      - common-view
+    view-name: Maven-Stage
+    view-description: 'List of Maven Stage jobs'
+    view-regex: '.*-maven-stage-.*'
+
+- project:
+    name: Maven-Verify-Deps
+    views:
+      - common-view
+    view-name: Maven-Verify-Deps
+    view-description: 'List of Maven Verify Deps jobs'
+    view-regex: '.*-maven-verify-deps-.*'
+
+- project:
     name: Merge-Jobs
     views:
       - common-view
