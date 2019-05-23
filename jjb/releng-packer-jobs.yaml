@@ -112,7 +112,8 @@
     platforms:
       - ubuntu-14.04
       - ubuntu-16.04
-      - ubuntu-18.04
+      - ubuntu-18.04:
+          disable-job: true
     templates: gbp
 
 - project:
@@ -131,7 +132,8 @@
 
     platforms:
       - ubuntu-16.04
-      - ubuntu-18.04
+      - ubuntu-18.04:
+          disable-job: true
     templates: mininet-ovs-2.5
 
 - project:
@@ -150,7 +152,8 @@
 
     platforms:
       - ubuntu-16.04
-      - ubuntu-18.04
+      - ubuntu-18.04:
+          disable-job: true
     templates: mininet-ovs-2.6
 
 - project:
@@ -169,7 +172,8 @@
 
     platforms:
       - ubuntu-16.04
-      - ubuntu-18.04
+      - ubuntu-18.04:
+          disable-job: true
     templates: mininet-ovs-2.8
 
 - project:
@@ -205,5 +209,6 @@
 
     platforms:
       - ubuntu-16.04
-      - ubuntu-18.04
+      - ubuntu-18.04:
+          disable-job: true
     templates: kubernetes
