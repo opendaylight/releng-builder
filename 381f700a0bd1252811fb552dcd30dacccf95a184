@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a52f9c2_87460d27",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2019-05-24T16:35:02Z",
+      "side": 1,
+      "message": "why do we have to do this? this could bite us in the future as versions\nincrease. at the least note in the commit msg why this is here so we can have a clue when searching through git logs.",
+      "range": {
+        "startLine": 97,
+        "startChar": 7,
+        "endLine": 97,
+        "endChar": 101
+      },
+      "revId": "381f700a0bd1252811fb552dcd30dacccf95a184",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ccaeb6a_df0466d5",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2019-05-24T16:35:02Z",
+      "side": 1,
+      "message": "would this work with ${OPENSTACK_BRANCH} here? if so, we can remove the entire case logic and just have a single line that uses\nthe variable. right?",
+      "range": {
+        "startLine": 117,
+        "startChar": 119,
+        "endLine": 117,
+        "endChar": 124
+      },
+      "revId": "381f700a0bd1252811fb552dcd30dacccf95a184",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "30f16cd4_2a3496e7",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2019-05-24T16:35:02Z",
+      "side": 1,
+      "message": "whitespace to clean up",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 119,
+        "endChar": 8
+      },
+      "revId": "381f700a0bd1252811fb552dcd30dacccf95a184",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f882e2b9_825be805",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2019-05-24T16:35:02Z",
+      "side": 1,
+      "message": "this seems wrong now",
+      "range": {
+        "startLine": 124,
+        "startChar": 0,
+        "endLine": 126,
+        "endChar": 12
+      },
+      "revId": "381f700a0bd1252811fb552dcd30dacccf95a184",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0d2213a1_34c577b0",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2019-05-24T16:35:02Z",
+      "side": 1,
+      "message": "so do we ever NOT run queens || rocky?\n\nasking because if that\u0027s the case, it seems we can remove this\nwhole if condition and make this overly complicated script a tiny\nbit less complicated.",
+      "range": {
+        "startLine": 153,
+        "startChar": 0,
+        "endLine": 153,
+        "endChar": 73
+      },
+      "revId": "381f700a0bd1252811fb552dcd30dacccf95a184",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d77df183_dfc46517",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2019-05-24T16:35:02Z",
+      "side": 1,
+      "message": "same question here as above",
+      "range": {
+        "startLine": 835,
+        "startChar": 0,
+        "endLine": 835,
+        "endChar": 75
+      },
+      "revId": "381f700a0bd1252811fb552dcd30dacccf95a184",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
