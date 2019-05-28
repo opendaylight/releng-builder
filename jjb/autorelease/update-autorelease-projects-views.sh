@@ -8,6 +8,7 @@
 # which accompanies this distribution, and is available at
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
+echo "---> update-autorelease-projects-views.sh"
 
 VIEWS_AR_YAML_FILE="${WORKSPACE}/jjb/autorelease/view-autorelease-${STREAM}.yaml"
 BRANCH="stable/${STREAM}"
@@ -60,4 +61,4 @@ echo "    <<: *releng_autorelease_view_common_${STREAM}" >> "$VIEWS_AR_YAML_FILE
 
 git add "${VIEWS_AR_YAML_FILE}"
 
-cp "${VIEWS_AR_YAML_FILE}" $WORKSPACE/archives
+cp "${VIEWS_AR_YAML_FILE}" $WORKSPACE/
