@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a77e2472_7fad9738",
+        "filename": "jjb/autorelease/update-autorelease-projects-views.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2019-05-28T12:23:50Z",
+      "side": 1,
+      "message": "Add `mkdir -p $WORKSKPACE/archives` just before this call and it will guarantee that the archives directory is created.\n\nThere is no \"order\" of when the archives directory gets created, it can be created at any point in time. It\u0027s the responsibility of the scripts to make sure the directory is available to them when they need it.",
+      "revId": "646a79bf72f3a00756c0bf52f7568a1528e897ed",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
