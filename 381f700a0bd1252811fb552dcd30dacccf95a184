@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "15743edb_34ae72f7",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2019-05-29T16:09:31Z",
+      "side": 1,
+      "message": "this is all you need to get rid of the stable/ part:\n\nrelease_name\u003d$(echo $OPENSTACK_BRANCH | cut -d\\/ -f2)\n\nBUT, I realize it won\u0027t work for master. I guess it\u0027s just easier to leave as\n is for now.",
+      "parentUuid": "f827f764_b399a98f",
+      "range": {
+        "startLine": 117,
+        "startChar": 119,
+        "endLine": 117,
+        "endChar": 124
+      },
+      "revId": "381f700a0bd1252811fb552dcd30dacccf95a184",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30f16cd4_2a3496e7",
         "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
         "patchSetId": 3
@@ -225,6 +249,30 @@
       "side": 1,
       "message": "Yes, absolutely, changing it.",
       "parentUuid": "0d2213a1_34c577b0",
+      "range": {
+        "startLine": 153,
+        "startChar": 0,
+        "endLine": 153,
+        "endChar": 73
+      },
+      "revId": "381f700a0bd1252811fb552dcd30dacccf95a184",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63a96b20_42003474",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2019-05-29T16:09:31Z",
+      "side": 1,
+      "message": "nice. one little complication removed from this messy script :)",
+      "parentUuid": "37a05abb_b6186cae",
       "range": {
         "startLine": 153,
         "startChar": 0,
