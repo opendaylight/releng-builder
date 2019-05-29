@@ -3,7 +3,8 @@
     name: controller-sodium
     jobs:
       - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-maven-javadoc-jobs'
+      - '{project-name}-maven-javadoc-jobs':
+          disable-job: true
       - '{project-name}-rtd-jobs':
           build-node: centos7-builder-2c-2g
           project-pattern: controller
