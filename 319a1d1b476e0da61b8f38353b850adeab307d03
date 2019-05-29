@@ -46,6 +46,30 @@
       "revId": "319a1d1b476e0da61b8f38353b850adeab307d03",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8f4e1db5_09ec94f6",
+        "filename": "jjb/controller/controller.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2019-05-29T19:49:12Z",
+      "side": 1,
+      "message": "disable-job is useful if the intent is to temporarily turn it off with the intent to turn it back on at a later point in time. If the intent is to never use the job at all then it is better to just remove it.\n\nIt will also save a little bit of resources as the ci management job won\u0027t have to parse the job.",
+      "parentUuid": "14f93143_8f3f0c57",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 27
+      },
+      "revId": "319a1d1b476e0da61b8f38353b850adeab307d03",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
