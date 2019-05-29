@@ -34,6 +34,24 @@
       "revId": "646a79bf72f3a00756c0bf52f7568a1528e897ed",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c5f1534d_0836d338",
+        "filename": "jjb/autorelease/update-autorelease-projects-views.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2019-05-29T12:20:29Z",
+      "side": 1,
+      "message": "I disagree. If mkdir fails when directory exists then it is not passing \u0027-p\u0027 as it should be passing. \"mkdir -p\" will not fail, anytime we call mkdir we should be passing \u0027-p\u0027.\n\nThe intent of the feature of $WORKSPACE/archives when I designed it was that you can create it at any point in time because during a build job you might want to archive things off without using $ARCHIVE_ARTIFACTS pattern based approach.\n\nThe problem with a pattern based approach is it\u0027s inaccurate and copying things to archives directory is a much better method if you know exactly what you need to archive.",
+      "parentUuid": "d8bee3fa_bf81966d",
+      "revId": "646a79bf72f3a00756c0bf52f7568a1528e897ed",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
