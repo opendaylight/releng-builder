@@ -704,7 +704,7 @@ function join() {
         final=${final}${delim}${str}
     done
 
-    echo ${final}
+    echo "${final}"
 }
 
 function get_nodes_list() {
@@ -715,11 +715,11 @@ function get_nodes_list() {
     done
 
     nodes_list=$(join "${nodes[@]}")
-    echo ${nodes_list}
+    echo "${nodes_list}"
 }
 
 function get_features() {
-    if [ ${CONTROLLERSCOPE} == 'all' ]; then
+    if [ "${CONTROLLERSCOPE}" == 'all' ]; then
         ACTUALFEATURES="odl-integration-compatible-with-all,${CONTROLLERFEATURES}"
         export CONTROLLERMEM="3072m"
     else
@@ -742,7 +742,7 @@ function get_features() {
 
 # Create the configuration script to be run on controllers.
 function create_configuration_script() {
-    cat > ${WORKSPACE}/configuration-script.sh <<EOF
+    cat > "${WORKSPACE}"/configuration-script.sh <<EOF
 set -x
 source /tmp/common-functions.sh ${BUNDLEFOLDER}
 
@@ -807,7 +807,7 @@ EOF
 
 # Create the startup script to be run on controllers.
 function create_startup_script() {
-    cat > ${WORKSPACE}/startup-script.sh <<EOF
+    cat > "${WORKSPACE}"/startup-script.sh <<EOF
 echo "Redirecting karaf console output to karaf_console.log"
 export KARAF_REDIRECT="/tmp/${BUNDLEFOLDER}/data/log/karaf_console.log"
 mkdir -p /tmp/${BUNDLEFOLDER}/data/log
@@ -819,7 +819,7 @@ EOF
 }
 
 function create_post_startup_script() {
-    cat > ${WORKSPACE}/post-startup-script.sh <<EOF
+    cat > "${WORKSPACE}"/post-startup-script.sh <<EOF
 if [[ "$USEFEATURESBOOT" != "True" ]]; then
 
     # wait up to 60s for karaf port 8101 to be opened, polling every 5s
@@ -895,30 +895,34 @@ EOF
 # Execute the configuration script on each controller.
 function copy_and_run_configuration_script() {
     for i in $(seq 1 "${NUM_ODL_SYSTEM}"); do
-        CONTROLLERIP=ODL_SYSTEM_${i}_IP
+        CONTROLLERIP="ODL_SYSTEM_${i}_IP"
         echo "Configuring member-${i} with IP address ${!CONTROLLERIP}"
-        scp ${WORKSPACE}/configuration-script.sh ${!CONTROLLERIP}:/tmp/
-        ssh ${!CONTROLLERIP} "bash /tmp/configuration-script.sh ${i}"
+        scp "${WORKSPACE}"/configuration-script.sh "${!CONTROLLERIP}":/tmp/
+        # $i needs to be parsed client-side
+        # shellcheck disable=SC2029
+        ssh "${!CONTROLLERIP}" "bash /tmp/configuration-script.sh ${i}"
     done
 }
 
 # Copy over the startup script to each controller and execute it.
 function copy_and_run_startup_script() {
     for i in $(seq 1 "${NUM_ODL_SYSTEM}"); do
-        CONTROLLERIP=ODL_SYSTEM_${i}_IP
+        CONTROLLERIP="ODL_SYSTEM_${i}_IP"
         echo "Starting member-${i} with IP address ${!CONTROLLERIP}"
-        scp ${WORKSPACE}/startup-script.sh ${!CONTROLLERIP}:/tmp/
-        ssh ${!CONTROLLERIP} "bash /tmp/startup-script.sh"
+        scp "${WORKSPACE}"/startup-script.sh "${!CONTROLLERIP}":/tmp/
+        ssh "${!CONTROLLERIP}" "bash /tmp/startup-script.sh"
     done
 }
 
 function copy_and_run_post_startup_script() {
     seed_index=1
     for i in $(seq 1 "${NUM_ODL_SYSTEM}"); do
-        CONTROLLERIP=ODL_SYSTEM_${i}_IP
+        CONTROLLERIP="ODL_SYSTEM_${i}_IP"
         echo "Execute the post startup script on controller ${!CONTROLLERIP}"
-        scp ${WORKSPACE}/post-startup-script.sh ${!CONTROLLERIP}:/tmp
-        ssh ${!CONTROLLERIP} "bash /tmp/post-startup-script.sh $(( seed_index++ ))"
+        scp "${WORKSPACE}"/post-startup-script.sh "${!CONTROLLERIP}":/
+        # $seed_index needs to be parsed client-side
+        # shellcheck disable=SC2029
+        ssh "${!CONTROLLERIP}" "bash /tmp/post-startup-script.sh $(( seed_index++ ))"
         if [ $(( i % NUM_ODL_SYSTEM )) == 0 ]; then
             seed_index=1
         fi
@@ -928,13 +932,15 @@ function copy_and_run_post_startup_script() {
 function create_controller_variables() {
     echo "Generating controller variables..."
     for i in $(seq 1 "${NUM_ODL_SYSTEM}"); do
-        CONTROLLERIP=ODL_SYSTEM_${i}_IP
+        CONTROLLERIP="ODL_SYSTEM_${i}_IP"
         odl_variables=${odl_variables}" -v ${CONTROLLERIP}:${!CONTROLLERIP}"
         echo "Lets's take the karaf thread dump"
-        ssh ${!CONTROLLERIP} "sudo ps aux" > ${WORKSPACE}/ps_before.log
-        pid=$(grep org.apache.karaf.main.Main ${WORKSPACE}/ps_before.log | grep -v grep | tr -s ' ' | cut -f2 -d' ')
+        ssh "${!CONTROLLERIP}" "sudo ps aux" > "${WORKSPACE}"/ps_before.log
+        pid=$(grep org.apache.karaf.main.Main "${WORKSPACE}"/ps_before.log | grep -v grep | tr -s ' ' | cut -f2 -d' ')
         echo "karaf main: org.apache.karaf.main.Main, pid:${pid}"
-        ssh ${!CONTROLLERIP} "${JAVA_HOME}/bin/jstack -l ${pid}" > ${WORKSPACE}/karaf_${i}_${pid}_threads_before.log || true
+        # $i needs to be parsed client-side
+        # shellcheck disable=SC2029
+        ssh "${!CONTROLLERIP}" "${JAVA_HOME}/bin/jstack -l ${pid}" > "${WORKSPACE}/karaf_${i}_${pid}_threads_before.log" || true
     done
 }
 
