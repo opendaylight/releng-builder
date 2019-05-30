@@ -945,7 +945,7 @@ function build_ovs() {
     local -r rpm_path="$3"
 
     echo "Building OVS ${version} on ${ip} ..."
-    cat > ${WORKSPACE}/build_ovs.sh << EOF
+    cat > "${WORKSPACE}"/build_ovs.sh << EOF
 set -ex -o pipefail
 
 echo '---> Building openvswitch version ${version}'
@@ -1000,10 +1000,10 @@ popd
 rm -rf \${TMP}
 EOF
 
-    scp ${WORKSPACE}/build_ovs.sh ${ip}:/tmp
-    ${SSH} ${ip} " bash /tmp/build_ovs.sh >> /tmp/install_ovs.txt 2>&1"
-    scp -r ${ip}:/tmp/ovs_rpms/* "${rpm_path}/"
-    ${SSH} ${ip} "rm -rf /tmp/ovs_rpms"
+    scp "${WORKSPACE}"/build_ovs.sh "${ip}":/tmp
+    ${SSH} "${ip}" " bash /tmp/build_ovs.sh >> /tmp/install_ovs.txt 2>&1"
+    scp -r "${ip}":/tmp/ovs_rpms/* "${rpm_path}/"
+    ${SSH} "${ip}" "rm -rf /tmp/ovs_rpms"
 }
 
 # Install OVS RPMs from yum repo
@@ -1012,7 +1012,7 @@ function install_ovs_from_repo() {
     local -r rpm_repo="$2"
 
     echo "Installing OVS from repo ${rpm_repo} on ${ip} ..."
-    cat > ${WORKSPACE}/install_ovs.sh << EOF
+    cat > "${WORKSPACE}"/install_ovs.sh << EOF
 set -ex -o pipefail
 
 echo '---> Installing openvswitch from ${rpm_repo}'
@@ -1070,8 +1070,8 @@ NEW_MOD=\$(sudo modinfo -n openvswitch || echo '')
 [ "\${PREV_MOD}" != "\${NEW_MOD}" ] || (echo "Kernel module was not updated" && exit 1)
 EOF
 
-    scp ${WORKSPACE}/install_ovs.sh ${ip}:/tmp
-    ${SSH} ${ip} "bash /tmp/install_ovs.sh >> /tmp/install_ovs.txt 2>&1"
+    scp "${WORKSPACE}"/install_ovs.sh "${ip}":/tmp
+    ${SSH} "${ip}" "bash /tmp/install_ovs.sh >> /tmp/install_ovs.txt 2>&1"
 }
 
 # Install OVS RPMS from path
@@ -1080,10 +1080,10 @@ function install_ovs_from_path() {
     local -r rpm_path="$2"
 
     echo "Creating OVS RPM repo on ${ip} ..."
-    ${SSH} ${ip} "mkdir -p /tmp/ovs_rpms"
-    scp -r "${rpm_path}"/* ${ip}:/tmp/ovs_rpms
-    ${SSH} ${ip} "sudo yum -y install createrepo && createrepo --database /tmp/ovs_rpms"
-    install_ovs_from_repo ${ip} file:/tmp/ovs_rpms
+    ${SSH} "${ip}" "mkdir -p /tmp/ovs_rpms"
+    scp -r "${rpm_path}"/* "${ip}":/tmp/ovs_rpms
+    ${SSH} "${ip}" "sudo yum -y install createrepo && createrepo --database /tmp/ovs_rpms"
+    install_ovs_from_repo "${ip}" file:/tmp/ovs_rpms
 }
 
 
