@@ -304,7 +304,7 @@ function timer()
 function csv2ssv() {
     local csv=$1
     if [ -n "${csv}" ]; then
-        ssv=$(echo ${csv} | sed 's/,/ /g' | sed 's/\ \ */\ /g')
+        ssv=$(echo "${csv}" | sed 's/,/ /g' | sed 's/\ \ */\ /g')
     fi
 
     echo "${ssv}"
@@ -312,7 +312,7 @@ function csv2ssv() {
 
 function is_openstack_feature_enabled() {
     local feature=$1
-    for enabled_feature in $(csv2ssv ${ENABLE_OS_SERVICES}); do
+    for enabled_feature in $(csv2ssv "${ENABLE_OS_SERVICES}"); do
         if [ "${enabled_feature}" == "${feature}" ]; then
            echo 1
            return
@@ -376,18 +376,20 @@ function tcpdump_start() {
     filter_=${filter// /_}
 
     printf "node %s, %s_%s__%s: starting tcpdump\n" "${ip}" "${prefix}" "${ip}" "${filter}"
-    ssh ${ip} "nohup sudo /usr/sbin/tcpdump -vvv -ni eth0 ${filter} -w /tmp/tcpdump_${prefix}_${ip}__${filter_}.pcap > /tmp/tcpdump_start.log 2>&1 &"
-    ${SSH} ${ip} "ps -ef | grep tcpdump"
+    # $fileter needs to be parsed client-side
+    # shellcheck disable=SC2029
+    ssh "${ip}" "nohup sudo /usr/sbin/tcpdump -vvv -ni eth0 ${filter} -w /tmp/tcpdump_${prefix}_${ip}__${filter_}.pcap > /tmp/tcpdump_start.log 2>&1 &"
+    ${SSH} "${ip}" "ps -ef | grep tcpdump"
 }
 
 function tcpdump_stop() {
     local -r ip=$1
 
     printf "node %s: stopping tcpdump\n" "$ip"
-    ${SSH} ${ip} "ps -ef | grep tcpdump.sh"
-    ${SSH} ${ip} "sudo pkill -f tcpdump"
-    ${SSH} ${ip} "sudo xz -9ekvvf /tmp/*.pcap"
-    ${SSH} ${ip} "sudo ls -al /tmp/*.pcap"
+    ${SSH} "${ip}" "ps -ef | grep tcpdump.sh"
+    ${SSH} "${ip}" "sudo pkill -f tcpdump"
+    ${SSH} "${ip}" "sudo xz -9ekvvf /tmp/*.pcap"
+    ${SSH} "${ip}" "sudo ls -al /tmp/*.pcap"
     # copy_logs will copy any *.xz files
 }
 
@@ -396,19 +398,19 @@ function collect_files() {
     local -r ip=$1
     local -r folder=$2
     finddir=/tmp/finder
-    ${SSH} ${ip} "mkdir -p ${finddir}"
-    ${SSH} ${ip} "sudo find /etc > ${finddir}/find.etc.txt"
-    ${SSH} ${ip} "sudo find /opt/stack > ${finddir}/find.opt.stack.txt"
-    ${SSH} ${ip} "sudo find /var > ${finddir}/find2.txt"
-    ${SSH} ${ip} "sudo find /var > ${finddir}/find.var.txt"
-    ${SSH} ${ip} "sudo tar -cf - -C /tmp finder | xz -T 0 > /tmp/find.tar.xz"
-    scp ${ip}:/tmp/find.tar.xz ${folder}
-    mkdir -p ${finddir}
-    rsync --rsync-path="sudo rsync" --list-only -arvhe ssh ${ip}:/etc/ > ${finddir}/rsync.etc.txt
-    rsync --rsync-path="sudo rsync" --list-only -arvhe ssh ${ip}:/opt/stack/ > ${finddir}/rsync.opt.stack.txt
-    rsync --rsync-path="sudo rsync" --list-only -arvhe ssh ${ip}:/var/ > ${finddir}/rsync.var.txt
+    ${SSH} "${ip}" "mkdir -p ${finddir}"
+    ${SSH} "${ip}" "sudo find /etc > ${finddir}/find.etc.txt"
+    ${SSH} "${ip}" "sudo find /opt/stack > ${finddir}/find.opt.stack.txt"
+    ${SSH} "${ip}" "sudo find /var > ${finddir}/find2.txt"
+    ${SSH} "${ip}" "sudo find /var > ${finddir}/find.var.txt"
+    ${SSH} "${ip}" "sudo tar -cf - -C /tmp finder | xz -T 0 > /tmp/find.tar.xz"
+    scp "${ip}":/tmp/find.tar.xz "${folder}"
+    mkdir -p "${finddir}"
+    rsync --rsync-path="sudo rsync" --list-only -arvhe ssh "${ip}":/etc/ > "${finddir}"/rsync.etc.txt
+    rsync --rsync-path="sudo rsync" --list-only -arvhe ssh "${ip}":/opt/stack/ > "${finddir}"/rsync.opt.stack.txt
+    rsync --rsync-path="sudo rsync" --list-only -arvhe ssh "${ip}":/var/ > "${finddir}"/rsync.var.txt
     tar -cf - -C /tmp finder | xz -T 0 > /tmp/rsync.tar.xz
-    cp /tmp/rsync.tar.xz ${folder}
+    cp /tmp/rsync.tar.xz "${folder}"
 }
 
 # List of extra services to extract from journalctl
@@ -440,15 +442,15 @@ function collect_openstack_logs() {
     local oslogs="${folder}/oslogs"
 
     printf "collect_openstack_logs for %s node: %s into %s\n" "${node_type}" "${ip}" "${oslogs}"
-    rm -rf ${oslogs}
-    mkdir -p ${oslogs}
+    rm -rf "${oslogs}"
+    mkdir -p "${oslogs}"
     # There are always some logs in /opt/stack/logs and this also covers the
     # pre-queens branches which always use /opt/stack/logs
-    rsync -avhe ssh ${ip}:/opt/stack/logs/* ${oslogs} # rsync to prevent copying of symbolic links
+    rsync -avhe ssh "${ip}":/opt/stack/logs/* "${oslogs}" # rsync to prevent copying of symbolic links
 
     # Starting with queens break out the logs from journalctl
     if [ "${OPENSTACK_BRANCH}" = "stable/queens" ]; then
-        cat > ${WORKSPACE}/collect_openstack_logs.sh << EOF
+        cat > "${WORKSPACE}"/collect_openstack_logs.sh << EOF
 extra_services_cntl="${extra_services_cntl}"
 extra_services_cmp="${extra_services_cmp}"
 
@@ -480,11 +482,11 @@ ls -al /tmp/oslogs
 EOF
 # cat > ${WORKSPACE}/collect_openstack_logs.sh << EOF
         printf "collect_openstack_logs for %s node: %s into %s, executing script\n" "${node_type}" "${ip}" "${oslogs}"
-        cat ${WORKSPACE}/collect_openstack_logs.sh
-        scp ${WORKSPACE}/collect_openstack_logs.sh ${ip}:/tmp
-        ${SSH} ${ip} "bash /tmp/collect_openstack_logs.sh > /tmp/collect_openstack_logs.log 2>&1"
-        rsync -avhe ssh ${ip}:/tmp/oslogs/* ${oslogs}
-        scp ${ip}:/tmp/collect_openstack_logs.log ${oslogs}
+        cat "${WORKSPACE}"/collect_openstack_logs.sh
+        scp "${WORKSPACE}"/collect_openstack_logs.sh "${ip}":/tmp
+        ${SSH} "${ip}" "bash /tmp/collect_openstack_logs.sh > /tmp/collect_openstack_logs.log 2>&1"
+        rsync -avhe ssh "${ip}":/tmp/oslogs/* "${oslogs}"
+        scp "${ip}":/tmp/collect_openstack_logs.log "${oslogs}"
     fi # if [ "${OPENSTACK_BRANCH}" = "stable/queens" ]; then
 }
 
