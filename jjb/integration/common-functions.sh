@@ -919,7 +919,7 @@ function copy_and_run_post_startup_script() {
         echo "Execute the post startup script on controller ${!CONTROLLERIP}"
         scp ${WORKSPACE}/post-startup-script.sh ${!CONTROLLERIP}:/tmp
         ssh ${!CONTROLLERIP} "bash /tmp/post-startup-script.sh $(( seed_index++ ))"
-        if [ $(( $i % ${NUM_ODL_SYSTEM} )) == 0 ]; then
+        if [ $(( i % NUM_ODL_SYSTEM )) == 0 ]; then
             seed_index=1
         fi
     done
