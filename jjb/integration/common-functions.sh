@@ -223,7 +223,7 @@ function get_test_suites() {
 
     # Use the testplan if specific SUITES are not defined.
     if [ -z "${SUITES}" ]; then
-        suite_list=`egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' testplan.txt | tr '\012' ' '`
+        suite_list=$(egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' testplan.txt | tr '\012' ' ')
     else
         suite_list=""
         workpath="${WORKSPACE}/test/csit/suites"
@@ -533,7 +533,7 @@ EOF
 
     sleep 5
     # FIXME: Do not create .tar and gzip before copying.
-    for i in `seq 1 ${NUM_ODL_SYSTEM}`; do
+    for i in $(seq 1 "${NUM_ODL_SYSTEM}"); do
         CONTROLLERIP=ODL_SYSTEM_${i}_IP
         echo "collect_logs: for opendaylight controller ip: ${!CONTROLLERIP}"
         NODE_FOLDER="odl_${i}"
@@ -572,7 +572,7 @@ EOF
     print_job_parameters > ${WORKSPACE}/archives/params.txt
 
     # Control Node
-    for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
+    for i in $(seq 1 "${NUM_OPENSTACK_CONTROL_NODES}"); do
         OSIP=OPENSTACK_CONTROL_NODE_${i}_IP
         if [ "$(is_openstack_feature_enabled n-cpu)" == "1" ]; then
             echo "collect_logs: for openstack combo node ip: ${!OSIP}"
@@ -642,7 +642,7 @@ EOF
     done
 
     # Compute Nodes
-    for i in `seq 1 ${NUM_OPENSTACK_COMPUTE_NODES}`; do
+    for i in $(seq 1 "${NUM_OPENSTACK_COMPUTE_NODES}"); do
         OSIP=OPENSTACK_COMPUTE_NODE_${i}_IP
         echo "collect_logs: for openstack compute node ip: ${!OSIP}"
         NODE_FOLDER="compute_${i}"
@@ -709,7 +709,7 @@ function join() {
 
 function get_nodes_list() {
     # Create the string for nodes
-    for i in `seq 1 ${NUM_ODL_SYSTEM}` ; do
+    for i in $(seq 1 "${NUM_ODL_SYSTEM}") ; do
         CONTROLLERIP=ODL_SYSTEM_${i}_IP
         nodes[$i]=${!CONTROLLERIP}
     done
@@ -728,7 +728,7 @@ function get_features() {
 
     # Some versions of jenkins job builder result in feature list containing spaces
     # and ending in newline. Remove all that.
-    ACTUALFEATURES=`echo "${ACTUALFEATURES}" | tr -d '\n \r'`
+    ACTUALFEATURES=$(echo "${ACTUALFEATURES}" | tr -d '\n \r')
     echo "ACTUALFEATURES: ${ACTUALFEATURES}"
 
     # In the case that we want to install features via karaf shell, a space separated list of
@@ -894,7 +894,7 @@ EOF
 # Copy over the configuration script and configuration files to each controller
 # Execute the configuration script on each controller.
 function copy_and_run_configuration_script() {
-    for i in `seq 1 ${NUM_ODL_SYSTEM}`; do
+    for i in $(seq 1 "${NUM_ODL_SYSTEM}"); do
         CONTROLLERIP=ODL_SYSTEM_${i}_IP
         echo "Configuring member-${i} with IP address ${!CONTROLLERIP}"
         scp ${WORKSPACE}/configuration-script.sh ${!CONTROLLERIP}:/tmp/
@@ -904,7 +904,7 @@ function copy_and_run_configuration_script() {
 
 # Copy over the startup script to each controller and execute it.
 function copy_and_run_startup_script() {
-    for i in `seq 1 ${NUM_ODL_SYSTEM}`; do
+    for i in $(seq 1 "${NUM_ODL_SYSTEM}"); do
         CONTROLLERIP=ODL_SYSTEM_${i}_IP
         echo "Starting member-${i} with IP address ${!CONTROLLERIP}"
         scp ${WORKSPACE}/startup-script.sh ${!CONTROLLERIP}:/tmp/
@@ -914,7 +914,7 @@ function copy_and_run_startup_script() {
 
 function copy_and_run_post_startup_script() {
     seed_index=1
-    for i in `seq 1 ${NUM_ODL_SYSTEM}`; do
+    for i in $(seq 1 "${NUM_ODL_SYSTEM}"); do
         CONTROLLERIP=ODL_SYSTEM_${i}_IP
         echo "Execute the post startup script on controller ${!CONTROLLERIP}"
         scp ${WORKSPACE}/post-startup-script.sh ${!CONTROLLERIP}:/tmp
@@ -927,7 +927,7 @@ function copy_and_run_post_startup_script() {
 
 function create_controller_variables() {
     echo "Generating controller variables..."
-    for i in `seq 1 ${NUM_ODL_SYSTEM}`; do
+    for i in $(seq 1 "${NUM_ODL_SYSTEM}"); do
         CONTROLLERIP=ODL_SYSTEM_${i}_IP
         odl_variables=${odl_variables}" -v ${CONTROLLERIP}:${!CONTROLLERIP}"
         echo "Lets's take the karaf thread dump"
