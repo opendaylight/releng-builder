@@ -581,115 +581,115 @@ EOF
             echo "collect_logs: for openstack control node ip: ${!OSIP}"
             NODE_FOLDER="control_${i}"
         fi
-        mkdir -p ${NODE_FOLDER}
+        mkdir -p "${NODE_FOLDER}"
         tcpdump_stop "${!OSIP}"
-        scp extra_debug.sh ${!OSIP}:/tmp
+        scp extra_debug.sh "${!OSIP}":/tmp
         # Capture compute logs if this is a combo node
         if [ "$(is_openstack_feature_enabled n-cpu)" == "1" ]; then
-            scp ${!OSIP}:/etc/nova/nova.conf ${NODE_FOLDER}
-            scp ${!OSIP}:/etc/nova/nova-cpu.conf ${NODE_FOLDER}
-            scp ${!OSIP}:/etc/openstack/clouds.yaml ${NODE_FOLDER}
-            rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/nova-agent.log ${NODE_FOLDER}
+            scp "${!OSIP}":/etc/nova/nova.conf "${NODE_FOLDER}"
+            scp "${!OSIP}":/etc/nova/nova-cpu.conf "${NODE_FOLDER}"
+            scp "${!OSIP}":/etc/openstack/clouds.yaml "${NODE_FOLDER}"
+            rsync --rsync-path="sudo rsync" -avhe ssh "${!OSIP}":/var/log/nova-agent.log "${NODE_FOLDER}"
         fi
-        ${SSH} ${!OSIP} "bash /tmp/extra_debug.sh > /tmp/extra_debug.log 2>&1"
-        scp ${!OSIP}:/etc/dnsmasq.conf ${NODE_FOLDER}
-        scp ${!OSIP}:/etc/keystone/keystone.conf ${NODE_FOLDER}
-        scp ${!OSIP}:/etc/keystone/keystone-uwsgi-admin.ini ${NODE_FOLDER}
-        scp ${!OSIP}:/etc/keystone/keystone-uwsgi-public.ini ${NODE_FOLDER}
-        scp ${!OSIP}:/etc/kuryr/kuryr.conf ${NODE_FOLDER}
-        scp ${!OSIP}:/etc/neutron/dhcp_agent.ini ${NODE_FOLDER}
-        scp ${!OSIP}:/etc/neutron/metadata_agent.ini ${NODE_FOLDER}
-        scp ${!OSIP}:/etc/neutron/neutron.conf ${NODE_FOLDER}
-        scp ${!OSIP}:/etc/neutron/neutron_lbaas.conf ${NODE_FOLDER}
-        scp ${!OSIP}:/etc/neutron/plugins/ml2/ml2_conf.ini ${NODE_FOLDER}
-        scp ${!OSIP}:/etc/neutron/services/loadbalancer/haproxy/lbaas_agent.ini ${NODE_FOLDER}
-        scp ${!OSIP}:/etc/nova/nova.conf ${NODE_FOLDER}
-        scp ${!OSIP}:/etc/nova/nova-api-uwsgi.ini ${NODE_FOLDER}
-        scp ${!OSIP}:/etc/nova/nova_cell1.conf ${NODE_FOLDER}
-        scp ${!OSIP}:/etc/nova/nova-cpu.conf ${NODE_FOLDER}
-        scp ${!OSIP}:/etc/nova/placement-uwsgi.ini ${NODE_FOLDER}
-        scp ${!OSIP}:/etc/openstack/clouds.yaml ${NODE_FOLDER}
-        scp ${!OSIP}:/opt/stack/devstack/.stackenv ${NODE_FOLDER}
-        scp ${!OSIP}:/opt/stack/devstack/nohup.out ${NODE_FOLDER}/stack.log
-        scp ${!OSIP}:/opt/stack/devstack/openrc ${NODE_FOLDER}
-        scp ${!OSIP}:/opt/stack/requirements/upper-constraints.txt ${NODE_FOLDER}
-        scp ${!OSIP}:/opt/stack/tempest/etc/tempest.conf ${NODE_FOLDER}
-        scp ${!OSIP}:/tmp/*.xz ${NODE_FOLDER}
-        scp ${!OSIP}:/tmp/dmesg.log ${NODE_FOLDER}
-        scp ${!OSIP}:/tmp/extra_debug.log ${NODE_FOLDER}
-        scp ${!OSIP}:/tmp/get_devstack.sh.txt ${NODE_FOLDER}
-        scp ${!OSIP}:/tmp/install_ovs.txt ${NODE_FOLDER}
-        scp ${!OSIP}:/tmp/journalctl.log ${NODE_FOLDER}
-        scp ${!OSIP}:/tmp/ovsdb-tool.log ${NODE_FOLDER}
-        scp ${!OSIP}:/tmp/tcpdump_start.log ${NODE_FOLDER}
+        ${SSH} "${!OSIP}" "bash /tmp/extra_debug.sh > /tmp/extra_debug.log 2>&1"
+        scp "${!OSIP}":/etc/dnsmasq.conf "${NODE_FOLDER}"
+        scp "${!OSIP}":/etc/keystone/keystone.conf "${NODE_FOLDER}"
+        scp "${!OSIP}":/etc/keystone/keystone-uwsgi-admin.ini "${NODE_FOLDER}"
+        scp "${!OSIP}":/etc/keystone/keystone-uwsgi-public.ini "${NODE_FOLDER}"
+        scp "${!OSIP}":/etc/kuryr/kuryr.conf "${NODE_FOLDER}"
+        scp "${!OSIP}":/etc/neutron/dhcp_agent.ini "${NODE_FOLDER}"
+        scp "${!OSIP}":/etc/neutron/metadata_agent.ini "${NODE_FOLDER}"
+        scp "${!OSIP}":/etc/neutron/neutron.conf "${NODE_FOLDER}"
+        scp "${!OSIP}":/etc/neutron/neutron_lbaas.conf "${NODE_FOLDER}"
+        scp "${!OSIP}":/etc/neutron/plugins/ml2/ml2_conf.ini "${NODE_FOLDER}"
+        scp "${!OSIP}":/etc/neutron/services/loadbalancer/haproxy/lbaas_agent.ini "${NODE_FOLDER}"
+        scp "${!OSIP}":/etc/nova/nova.conf "${NODE_FOLDER}"
+        scp "${!OSIP}":/etc/nova/nova-api-uwsgi.ini "${NODE_FOLDER}"
+        scp "${!OSIP}":/etc/nova/nova_cell1.conf "${NODE_FOLDER}"
+        scp "${!OSIP}":/etc/nova/nova-cpu.conf "${NODE_FOLDER}"
+        scp "${!OSIP}":/etc/nova/placement-uwsgi.ini "${NODE_FOLDER}"
+        scp "${!OSIP}":/etc/openstack/clouds.yaml "${NODE_FOLDER}"
+        scp "${!OSIP}":/opt/stack/devstack/.stackenv "${NODE_FOLDER}"
+        scp "${!OSIP}":/opt/stack/devstack/nohup.out "${NODE_FOLDER}"/stack.log
+        scp "${!OSIP}":/opt/stack/devstack/openrc "${NODE_FOLDER}"
+        scp "${!OSIP}":/opt/stack/requirements/upper-constraints.txt "${NODE_FOLDER}"
+        scp "${!OSIP}":/opt/stack/tempest/etc/tempest.conf "${NODE_FOLDER}"
+        scp "${!OSIP}":/tmp/*.xz "${NODE_FOLDER}"
+        scp "${!OSIP}":/tmp/dmesg.log "${NODE_FOLDER}"
+        scp "${!OSIP}":/tmp/extra_debug.log "${NODE_FOLDER}"
+        scp "${!OSIP}":/tmp/get_devstack.sh.txt "${NODE_FOLDER}"
+        scp "${!OSIP}":/tmp/install_ovs.txt "${NODE_FOLDER}"
+        scp "${!OSIP}":/tmp/journalctl.log "${NODE_FOLDER}"
+        scp "${!OSIP}":/tmp/ovsdb-tool.log "${NODE_FOLDER}"
+        scp "${!OSIP}":/tmp/tcpdump_start.log "${NODE_FOLDER}"
         collect_files "${!OSIP}" "${NODE_FOLDER}"
-        ${SSH} ${!OSIP} "sudo tar -cf - -C /var/log rabbitmq | xz -T 0 > /tmp/rabbitmq.tar.xz "
-        scp ${!OSIP}:/tmp/rabbitmq.tar.xz ${NODE_FOLDER}
-        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/etc/hosts ${NODE_FOLDER}
-        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/usr/lib/systemd/system/haproxy.service ${NODE_FOLDER}
-        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/audit/audit.log ${NODE_FOLDER}
-        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/httpd/keystone_access.log ${NODE_FOLDER}
-        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/httpd/keystone.log ${NODE_FOLDER}
-        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/messages* ${NODE_FOLDER}
-        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/openvswitch/ovs-vswitchd.log ${NODE_FOLDER}
-        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/openvswitch/ovsdb-server.log ${NODE_FOLDER}
+        ${SSH} "${!OSIP}" "sudo tar -cf - -C /var/log rabbitmq | xz -T 0 > /tmp/rabbitmq.tar.xz "
+        scp "${!OSIP}":/tmp/rabbitmq.tar.xz "${NODE_FOLDER}"
+        rsync --rsync-path="sudo rsync" -avhe ssh "${!OSIP}":/etc/hosts "${NODE_FOLDER}"
+        rsync --rsync-path="sudo rsync" -avhe ssh "${!OSIP}":/usr/lib/systemd/system/haproxy.service "${NODE_FOLDER}"
+        rsync --rsync-path="sudo rsync" -avhe ssh "${!OSIP}":/var/log/audit/audit.log "${NODE_FOLDER}"
+        rsync --rsync-path="sudo rsync" -avhe ssh "${!OSIP}":/var/log/httpd/keystone_access.log "${NODE_FOLDER}"
+        rsync --rsync-path="sudo rsync" -avhe ssh "${!OSIP}":/var/log/httpd/keystone.log "${NODE_FOLDER}"
+        rsync --rsync-path="sudo rsync" -avhe ssh "${!OSIP}":/var/log/messages* "${NODE_FOLDER}"
+        rsync --rsync-path="sudo rsync" -avhe ssh "${!OSIP}":/var/log/openvswitch/ovs-vswitchd.log "${NODE_FOLDER}"
+        rsync --rsync-path="sudo rsync" -avhe ssh "${!OSIP}":/var/log/openvswitch/ovsdb-server.log "${NODE_FOLDER}"
         collect_openstack_logs "${!OSIP}" "${NODE_FOLDER}" "control"
-        mv local.conf_control_${!OSIP} ${NODE_FOLDER}/local.conf
+        mv "local.conf_control_${!OSIP}" "${NODE_FOLDER}/local.conf"
         # qdhcp files are created by robot tests and copied into /tmp/qdhcp during the test
         tar -cf - -C /tmp qdhcp | xz -T 0 > /tmp/qdhcp.tar.xz
-        mv /tmp/qdhcp.tar.xz ${NODE_FOLDER}
-        mv ${NODE_FOLDER} ${WORKSPACE}/archives/
+        mv /tmp/qdhcp.tar.xz "${NODE_FOLDER}"
+        mv "${NODE_FOLDER}" "${WORKSPACE}"/archives/
     done
 
     # Compute Nodes
     for i in $(seq 1 "${NUM_OPENSTACK_COMPUTE_NODES}"); do
-        OSIP=OPENSTACK_COMPUTE_NODE_${i}_IP
+        OSIP="OPENSTACK_COMPUTE_NODE_${i}_IP"
         echo "collect_logs: for openstack compute node ip: ${!OSIP}"
         NODE_FOLDER="compute_${i}"
-        mkdir -p ${NODE_FOLDER}
+        mkdir -p "${NODE_FOLDER}"
         tcpdump_stop "${!OSIP}"
-        scp extra_debug.sh ${!OSIP}:/tmp
-        ${SSH} ${!OSIP} "bash /tmp/extra_debug.sh > /tmp/extra_debug.log 2>&1"
-        scp ${!OSIP}:/etc/nova/nova.conf ${NODE_FOLDER}
-        scp ${!OSIP}:/etc/nova/nova-cpu.conf ${NODE_FOLDER}
-        scp ${!OSIP}:/etc/openstack/clouds.yaml ${NODE_FOLDER}
-        scp ${!OSIP}:/opt/stack/devstack/.stackenv ${NODE_FOLDER}
-        scp ${!OSIP}:/opt/stack/devstack/nohup.out ${NODE_FOLDER}/stack.log
-        scp ${!OSIP}:/opt/stack/devstack/openrc ${NODE_FOLDER}
-        scp ${!OSIP}:/opt/stack/requirements/upper-constraints.txt ${NODE_FOLDER}
-        scp ${!OSIP}:/tmp/*.xz ${NODE_FOLDER}/
-        scp ${!OSIP}:/tmp/dmesg.log ${NODE_FOLDER}
-        scp ${!OSIP}:/tmp/extra_debug.log ${NODE_FOLDER}
-        scp ${!OSIP}:/tmp/get_devstack.sh.txt ${NODE_FOLDER}
-        scp ${!OSIP}:/tmp/install_ovs.txt ${NODE_FOLDER}
-        scp ${!OSIP}:/tmp/journalctl.log ${NODE_FOLDER}
-        scp ${!OSIP}:/tmp/ovsdb-tool.log ${NODE_FOLDER}
-        scp ${!OSIP}:/tmp/tcpdump_start.log ${NODE_FOLDER}
+        scp extra_debug.sh "${!OSIP}":/tmp
+        ${SSH} "${!OSIP}" "bash /tmp/extra_debug.sh > /tmp/extra_debug.log 2>&1"
+        scp "${!OSIP}":/etc/nova/nova.conf "${NODE_FOLDER}"
+        scp "${!OSIP}":/etc/nova/nova-cpu.conf "${NODE_FOLDER}"
+        scp "${!OSIP}":/etc/openstack/clouds.yaml "${NODE_FOLDER}"
+        scp "${!OSIP}":/opt/stack/devstack/.stackenv "${NODE_FOLDER}"
+        scp "${!OSIP}":/opt/stack/devstack/nohup.out "${NODE_FOLDER}"/stack.log
+        scp "${!OSIP}":/opt/stack/devstack/openrc "${NODE_FOLDER}"
+        scp "${!OSIP}":/opt/stack/requirements/upper-constraints.txt "${NODE_FOLDER}"
+        scp "${!OSIP}":/tmp/*.xz "${NODE_FOLDER}"/
+        scp "${!OSIP}":/tmp/dmesg.log "${NODE_FOLDER}"
+        scp "${!OSIP}":/tmp/extra_debug.log "${NODE_FOLDER}"
+        scp "${!OSIP}":/tmp/get_devstack.sh.txt "${NODE_FOLDER}"
+        scp "${!OSIP}":/tmp/install_ovs.txt "${NODE_FOLDER}"
+        scp "${!OSIP}":/tmp/journalctl.log "${NODE_FOLDER}"
+        scp "${!OSIP}":/tmp/ovsdb-tool.log "${NODE_FOLDER}"
+        scp "${!OSIP}":/tmp/tcpdump_start.log "${NODE_FOLDER}"
         collect_files "${!OSIP}" "${NODE_FOLDER}"
-        ${SSH} ${!OSIP} "sudo tar -cf - -C /var/log libvirt | xz -T 0 > /tmp/libvirt.tar.xz "
-        scp ${!OSIP}:/tmp/libvirt.tar.xz ${NODE_FOLDER}
-        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/etc/hosts ${NODE_FOLDER}
-        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/audit/audit.log ${NODE_FOLDER}
-        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/messages* ${NODE_FOLDER}
-        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/nova-agent.log ${NODE_FOLDER}
-        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/openvswitch/ovs-vswitchd.log ${NODE_FOLDER}
-        rsync --rsync-path="sudo rsync" -avhe ssh ${!OSIP}:/var/log/openvswitch/ovsdb-server.log ${NODE_FOLDER}
+        ${SSH} "${!OSIP}" "sudo tar -cf - -C /var/log libvirt | xz -T 0 > /tmp/libvirt.tar.xz "
+        scp "${!OSIP}":/tmp/libvirt.tar.xz "${NODE_FOLDER}"
+        rsync --rsync-path="sudo rsync" -avhe ssh "${!OSIP}":/etc/hosts "${NODE_FOLDER}"
+        rsync --rsync-path="sudo rsync" -avhe ssh "${!OSIP}":/var/log/audit/audit.log "${NODE_FOLDER}"
+        rsync --rsync-path="sudo rsync" -avhe ssh "${!OSIP}":/var/log/messages* "${NODE_FOLDER}"
+        rsync --rsync-path="sudo rsync" -avhe ssh "${!OSIP}":/var/log/nova-agent.log "${NODE_FOLDER}"
+        rsync --rsync-path="sudo rsync" -avhe ssh "${!OSIP}":/var/log/openvswitch/ovs-vswitchd.log "${NODE_FOLDER}"
+        rsync --rsync-path="sudo rsync" -avhe ssh "${!OSIP}":/var/log/openvswitch/ovsdb-server.log "${NODE_FOLDER}"
         collect_openstack_logs "${!OSIP}" "${NODE_FOLDER}" "compute"
-        mv local.conf_compute_${!OSIP} ${NODE_FOLDER}/local.conf
-        mv ${NODE_FOLDER} ${WORKSPACE}/archives/
+        mv "local.conf_compute_${!OSIP}" "${NODE_FOLDER}"/local.conf
+        mv "${NODE_FOLDER}" "${WORKSPACE}"/archives/
     done
 
     # Tempest
     DEVSTACK_TEMPEST_DIR="/opt/stack/tempest"
     TESTREPO=".stestr"
-    TEMPEST_LOGS_DIR=${WORKSPACE}/archives/tempest
+    TEMPEST_LOGS_DIR="${WORKSPACE}/archives/tempest"
     # Look for tempest test results in the $TESTREPO dir and copy if found
-    if ${SSH} ${OPENSTACK_CONTROL_NODE_1_IP} "sudo sh -c '[ -f ${DEVSTACK_TEMPEST_DIR}/${TESTREPO}/0 ]'"; then
-        ${SSH} ${OPENSTACK_CONTROL_NODE_1_IP} "for I in \$(sudo ls ${DEVSTACK_TEMPEST_DIR}/${TESTREPO}/ | grep -E '^[0-9]+$'); do sudo sh -c \"${DEVSTACK_TEMPEST_DIR}/.tox/tempest/bin/subunit-1to2 < ${DEVSTACK_TEMPEST_DIR}/${TESTREPO}/\${I} >> ${DEVSTACK_TEMPEST_DIR}/subunit_log.txt\"; done"
-        ${SSH} ${OPENSTACK_CONTROL_NODE_1_IP} "sudo sh -c '${DEVSTACK_TEMPEST_DIR}/.tox/tempest/bin/python ${DEVSTACK_TEMPEST_DIR}/.tox/tempest/lib/python2.7/site-packages/os_testr/subunit2html.py ${DEVSTACK_TEMPEST_DIR}/subunit_log.txt ${DEVSTACK_TEMPEST_DIR}/tempest_results.html'"
-        mkdir -p ${TEMPEST_LOGS_DIR}
-        scp ${OPENSTACK_CONTROL_NODE_1_IP}:${DEVSTACK_TEMPEST_DIR}/tempest_results.html ${TEMPEST_LOGS_DIR}
-        scp ${OPENSTACK_CONTROL_NODE_1_IP}:${DEVSTACK_TEMPEST_DIR}/tempest.log ${TEMPEST_LOGS_DIR}
+    if ${SSH} "${OPENSTACK_CONTROL_NODE_1_IP}" "sudo sh -c '[ -f ${DEVSTACK_TEMPEST_DIR}/${TESTREPO}/0 ]'"; then
+        ${SSH} "${OPENSTACK_CONTROL_NODE_1_IP}" "for I in \$(sudo ls ${DEVSTACK_TEMPEST_DIR}/${TESTREPO}/ | grep -E '^[0-9]+$'); do sudo sh -c \"${DEVSTACK_TEMPEST_DIR}/.tox/tempest/bin/subunit-1to2 < ${DEVSTACK_TEMPEST_DIR}/${TESTREPO}/\${I} >> ${DEVSTACK_TEMPEST_DIR}/subunit_log.txt\"; done"
+        ${SSH} "${OPENSTACK_CONTROL_NODE_1_IP}" "sudo sh -c '${DEVSTACK_TEMPEST_DIR}/.tox/tempest/bin/python ${DEVSTACK_TEMPEST_DIR}/.tox/tempest/lib/python2.7/site-packages/os_testr/subunit2html.py ${DEVSTACK_TEMPEST_DIR}/subunit_log.txt ${DEVSTACK_TEMPEST_DIR}/tempest_results.html'"
+        mkdir -p "${TEMPEST_LOGS_DIR}"
+        scp "${OPENSTACK_CONTROL_NODE_1_IP}:${DEVSTACK_TEMPEST_DIR}/tempest_results.html" "${TEMPEST_LOGS_DIR}"
+        scp "${OPENSTACK_CONTROL_NODE_1_IP}:${DEVSTACK_TEMPEST_DIR}/tempest.log" "${TEMPEST_LOGS_DIR}"
     else
         echo "tempest results not found in ${DEVSTACK_TEMPEST_DIR}/${TESTREPO}/0"
     fi
