@@ -44,14 +44,14 @@ function set_java_vars() {
 
     echo "Configure\n    java home: ${java_home}\n    max memory: ${controllermem}\n    memconf: ${memconf}"
 
-    sed -ie 's%^# export JAVA_HOME%export JAVA_HOME=${JAVA_HOME:-'"${java_home}"'}%g' ${memconf}
-    sed -ie 's/JAVA_MAX_MEM="2048m"/JAVA_MAX_MEM='"${controllermem}"'/g' ${memconf}
+    sed -ie 's%^# export JAVA_HOME%export JAVA_HOME=${JAVA_HOME:-'"${java_home}"'}%g' "${memconf}"
+    sed -ie 's/JAVA_MAX_MEM="2048m"/JAVA_MAX_MEM='"${controllermem}"'/g' "${memconf}"
     echo "cat ${memconf}"
-    cat ${memconf}
+    cat "${memconf}"
 
     echo "Set Java version"
-    sudo /usr/sbin/alternatives --install /usr/bin/java java ${java_home}/bin/java 1
-    sudo /usr/sbin/alternatives --set java ${java_home}/bin/java
+    sudo /usr/sbin/alternatives --install /usr/bin/java java "${java_home}/bin/java" 1
+    sudo /usr/sbin/alternatives --set java "${java_home}/bin/java"
     echo "JDK default version ..."
     java -version
 
@@ -71,7 +71,7 @@ function configure_karaf_log() {
     local logapi=log4j
 
     # Check what the logging.cfg file is using for the logging api: log4j or log4j2
-    grep "log4j2" ${LOGCONF}
+    grep "log4j2" "${LOGCONF}"
     if [ $? -eq 0 ]; then
         logapi=log4j2
     fi
@@ -80,18 +80,18 @@ function configure_karaf_log() {
     if [ "${logapi}" == "log4j2" ]; then
         # FIXME: Make log size limit configurable from build parameter.
         # From Neon the default karaf file size is 64 MB
-        sed -ie 's/log4j2.appender.rolling.policies.size.size = 64MB/log4j2.appender.rolling.policies.size.size = 1GB/g' ${LOGCONF}
+        sed -ie 's/log4j2.appender.rolling.policies.size.size = 64MB/log4j2.appender.rolling.policies.size.size = 1GB/g' "${LOGCONF}"
         # Flourine still uses 16 MB
-        sed -ie 's/log4j2.appender.rolling.policies.size.size = 16MB/log4j2.appender.rolling.policies.size.size = 1GB/g' ${LOGCONF}
+        sed -ie 's/log4j2.appender.rolling.policies.size.size = 16MB/log4j2.appender.rolling.policies.size.size = 1GB/g' "${LOGCONF}"
         orgmodule="org.opendaylight.yangtools.yang.parser.repo.YangTextSchemaContextResolver"
         orgmodule_="${orgmodule//./_}"
-        echo "${logapi}.logger.${orgmodule_}.name = WARN" >> ${LOGCONF}
-        echo "${logapi}.logger.${orgmodule_}.level = WARN" >> ${LOGCONF}
+        echo "${logapi}.logger.${orgmodule_}.name = WARN" >> "${LOGCONF}"
+        echo "${logapi}.logger.${orgmodule_}.level = WARN" >> "${LOGCONF}"
     else
-        sed -ie 's/log4j.appender.out.maxBackupIndex=10/log4j.appender.out.maxBackupIndex=1/g' ${LOGCONF}
+        sed -ie 's/log4j.appender.out.maxBackupIndex=10/log4j.appender.out.maxBackupIndex=1/g' "${LOGCONF}"
         # FIXME: Make log size limit configurable from build parameter.
-        sed -ie 's/log4j.appender.out.maxFileSize=1MB/log4j.appender.out.maxFileSize=30GB/g' ${LOGCONF}
-        echo "${logapi}.logger.org.opendaylight.yangtools.yang.parser.repo.YangTextSchemaContextResolver = WARN" >> ${LOGCONF}
+        sed -ie 's/log4j.appender.out.maxFileSize=1MB/log4j.appender.out.maxFileSize=30GB/g' "${LOGCONF}"
+        echo "${logapi}.logger.org.opendaylight.yangtools.yang.parser.repo.YangTextSchemaContextResolver = WARN" >> "${LOGCONF}"
     fi
 
     # Add custom logging levels
@@ -110,17 +110,17 @@ function configure_karaf_log() {
                 orgmodule="org.opendaylight.${module}"
                 if [ "${logapi}" == "log4j2" ]; then
                     orgmodule_="${orgmodule//./_}"
-                    echo "${logapi}.logger.${orgmodule_}.name = ${orgmodule}" >> ${LOGCONF}
-                    echo "${logapi}.logger.${orgmodule_}.level = ${level}" >> ${LOGCONF}
+                    echo "${logapi}.logger.${orgmodule_}.name = ${orgmodule}" >> "${LOGCONF}"
+                    echo "${logapi}.logger.${orgmodule_}.level = ${level}" >> "${LOGCONF}"
                 else
-                    echo "${logapi}.logger.${orgmodule} = ${level}" >> ${LOGCONF}
+                    echo "${logapi}.logger.${orgmodule} = ${level}" >> "${LOGCONF}"
                 fi
             fi
         done
     fi
 
     echo "cat ${LOGCONF}"
-    cat ${LOGCONF}
+    cat "${LOGCONF}"
 } # function configure_karaf_log()
 
 function configure_karaf_log_for_apex() {
@@ -153,12 +153,12 @@ function configure_karaf_log_for_apex() {
         done
         # replace the trailing comma with a closing brace followed by trailing comma
         logging_config=${logging_config%,}" },"
-        echo $logging_config
+        echo "$logging_config"
 
         # fine a sane line number to inject the custom logging json
         lineno=$(ssh $OPENSTACK_CONTROL_NODE_1_IP "sudo grep -Fn 'opendaylight::log_mechanism' /etc/puppet/hieradata/service_configs.json" | awk -F: '{print $1}')
-        ssh $controller_ip "sudo sed -i \"${lineno}i ${logging_config}\" /etc/puppet/hieradata/service_configs.json"
-        ssh $controller_ip "sudo cat /etc/puppet/hieradata/service_configs.json"
+        ssh "$controller_ip" "sudo sed -i \"${lineno}i ${logging_config}\" /etc/puppet/hieradata/service_configs.json"
+        ssh "$controller_ip" "sudo cat /etc/puppet/hieradata/service_configs.json"
     fi
 } # function configure_karaf_log_for_apex()
 
@@ -173,7 +173,7 @@ function configure_odl_features_for_apex() {
 
 cat > /tmp/set_odl_features.sh << EOF
 sudo jq '.["opendaylight::extra_features"] |= []' $config_file > tmp.json && mv tmp.json $config_file
-for feature in $(echo $ACTUALFEATURES | sed "s/,/ /g"); do
+for feature in $(echo "$ACTUALFEATURES" | sed "s/,/ /g"); do
     sudo jq --arg jq_arg \$feature '.["opendaylight::extra_features"] |= . + [\$jq_arg]' $config_file > tmp && mv tmp $config_file;
 done
 echo "Modified puppet-opendaylight service_configs.json..."
@@ -184,8 +184,8 @@ EOF
     cat /tmp/set_odl_features.sh
 
     if [ -n "${ACTUALFEATURES}" ]; then
-        scp /tmp/set_odl_features.sh $controller_ip:/tmp/set_odl_features.sh
-        ssh $controller_ip "sudo bash /tmp/set_odl_features.sh"
+        scp /tmp/set_odl_features.sh "$controller_ip":/tmp/set_odl_features.sh
+        ssh "$controller_ip" "sudo bash /tmp/set_odl_features.sh"
     fi
 
 } # function configure_odl_features_for_apex()
@@ -223,7 +223,7 @@ function get_test_suites() {
 
     # Use the testplan if specific SUITES are not defined.
     if [ -z "${SUITES}" ]; then
-        suite_list=$(egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' testplan.txt | tr '\012' ' ')
+        suite_list=$(grep -E -v '(^[[:space:]]*#|^[[:space:]]*$)' testplan.txt | tr '\012' ' ')
     else
         suite_list=""
         workpath="${WORKSPACE}/test/csit/suites"
@@ -264,12 +264,12 @@ function run_plan() {
     if [ -f "${plan_filepath}" ]; then
         printf "%s plan exists!!!\n" "${type}"
         printf "Changing the %s plan path...\n" "${type}"
-        cat ${plan_filepath} | sed "s:integration:${WORKSPACE}:" > ${type}plan.txt
-        cat ${type}plan.txt
-        for line in $( egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' ${type}plan.txt ); do
+        cat "${plan_filepath}" | sed "s:integration:${WORKSPACE}:" > "${type}plan.txt"
+        cat "${type}plan.txt"
+        for line in $( grep -E -v '(^[[:space:]]*#|^[[:space:]]*$)' "${type}plan.txt" ); do
             printf "Executing %s...\n" "${line}"
             # shellcheck source=${line} disable=SC1091
-            source ${line}
+            source "${line}"
         done
     fi
     printf "Finished running %s plans\n" "${type}"
