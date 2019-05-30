@@ -522,14 +522,14 @@ EOF
     # Since this log collection work is happening before the archive build macro which also
     # creates the ${WORKSPACE}/archives dir, we have to do it here first.  The mkdir in the
     # archives build step will essentially be a noop.
-    mkdir -p ${WORKSPACE}/archives
+    mkdir -p "${WORKSPACE}"/archives
 
-    mv /tmp/changes.txt ${WORKSPACE}/archives
-    mv /tmp/validations.txt ${WORKSPACE}/archives
-    mv ${WORKSPACE}/rabbit.txt ${WORKSPACE}/archives
-    mv ${WORKSPACE}/haproxy.cfg ${WORKSPACE}/archives
-    ssh ${OPENSTACK_HAPROXY_1_IP} "sudo journalctl -u haproxy > /tmp/haproxy.log"
-    scp ${OPENSTACK_HAPROXY_1_IP}:/tmp/haproxy.log ${WORKSPACE}/archives/
+    mv /tmp/changes.txt "${WORKSPACE}"/archives
+    mv /tmp/validations.txt "${WORKSPACE}"/archives
+    mv "${WORKSPACE}"/rabbit.txt "${WORKSPACE}"/archives
+    mv "${WORKSPACE}"/haproxy.cfg "${WORKSPACE}"/archives
+    ssh "${OPENSTACK_HAPROXY_1_IP}" "sudo journalctl -u haproxy > /tmp/haproxy.log"
+    scp "${OPENSTACK_HAPROXY_1_IP}":/tmp/haproxy.log "${WORKSPACE}"/archives/
 
     sleep 5
     # FIXME: Do not create .tar and gzip before copying.
@@ -537,39 +537,42 @@ EOF
         CONTROLLERIP=ODL_SYSTEM_${i}_IP
         echo "collect_logs: for opendaylight controller ip: ${!CONTROLLERIP}"
         NODE_FOLDER="odl_${i}"
-        mkdir -p ${NODE_FOLDER}
+        mkdir -p "${NODE_FOLDER}"
         echo "Lets's take the karaf thread dump again..."
-        ssh ${!CONTROLLERIP} "sudo ps aux" > ${WORKSPACE}/ps_after.log
-        pid=$(grep org.apache.karaf.main.Main ${WORKSPACE}/ps_after.log | grep -v grep | tr -s ' ' | cut -f2 -d' ')
+        ssh "${!CONTROLLERIP}" "sudo ps aux" > "${WORKSPACE}"/ps_after.log
+        pid=$(grep org.apache.karaf.main.Main "${WORKSPACE}"/ps_after.log | grep -v grep | tr -s ' ' | cut -f2 -d' ')
         echo "karaf main: org.apache.karaf.main.Main, pid:${pid}"
-        ssh ${!CONTROLLERIP} "${JAVA_HOME}/bin/jstack -l ${pid}" > ${WORKSPACE}/karaf_${i}_${pid}_threads_after.log || true
+        # $pid needs to be parsed client-side
+        # shellcheck disable=SC2029
+        ssh "${!CONTROLLERIP}" "${JAVA_HOME}/bin/jstack -l ${pid}" > "${WORKSPACE}/karaf_${i}_${pid}_threads_after.log" || true
         echo "killing karaf process..."
+        # shellcheck disable=SC2016
         ${SSH} "${!CONTROLLERIP}" bash -c 'ps axf | grep karaf | grep -v grep | awk '"'"'{print "kill -9 " $1}'"'"' | sh'
-        ${SSH} ${!CONTROLLERIP} "sudo journalctl > /tmp/journalctl.log"
-        scp ${!CONTROLLERIP}:/tmp/journalctl.log ${NODE_FOLDER}
-        ${SSH} ${!CONTROLLERIP} "dmesg -T > /tmp/dmesg.log"
-        scp ${!CONTROLLERIP}:/tmp/dmesg.log ${NODE_FOLDER}
-        ${SSH} ${!CONTROLLERIP} "tar -cf - -C /tmp/${BUNDLEFOLDER} etc | xz -T 0 > /tmp/etc.tar.xz"
-        scp ${!CONTROLLERIP}:/tmp/etc.tar.xz ${NODE_FOLDER}
-        ${SSH} ${!CONTROLLERIP} "cp -r /tmp/${BUNDLEFOLDER}/data/log /tmp/odl_log"
-        ${SSH} ${!CONTROLLERIP} "tar -cf /tmp/odl${i}_karaf.log.tar /tmp/odl_log/*"
-        scp ${!CONTROLLERIP}:/tmp/odl${i}_karaf.log.tar ${NODE_FOLDER}
-        ${SSH} ${!CONTROLLERIP} "tar -cf /tmp/odl${i}_zrpcd.log.tar /tmp/zrpcd.init.log"
-        scp ${!CONTROLLERIP}:/tmp/odl${i}_zrpcd.log.tar ${NODE_FOLDER}
-        tar -xvf ${NODE_FOLDER}/odl${i}_karaf.log.tar -C ${NODE_FOLDER} --strip-components 2 --transform s/karaf/odl${i}_karaf/g
-        grep "ROBOT MESSAGE\| ERROR " ${NODE_FOLDER}/odl${i}_karaf.log > ${NODE_FOLDER}/odl${i}_err.log
+        ${SSH} "${!CONTROLLERIP}" "sudo journalctl > /tmp/journalctl.log"
+        scp "${!CONTROLLERIP}":/tmp/journalctl.log "${NODE_FOLDER}"
+        ${SSH} "${!CONTROLLERIP}" "dmesg -T > /tmp/dmesg.log"
+        scp "${!CONTROLLERIP}":/tmp/dmesg.log "${NODE_FOLDER}"
+        ${SSH} "${!CONTROLLERIP}" "tar -cf - -C /tmp/${BUNDLEFOLDER} etc | xz -T 0 > /tmp/etc.tar.xz"
+        scp "${!CONTROLLERIP}":/tmp/etc.tar.xz "${NODE_FOLDER}"
+        ${SSH} "${!CONTROLLERIP}" "cp -r /tmp/${BUNDLEFOLDER}/data/log /tmp/odl_log"
+        ${SSH} "${!CONTROLLERIP}" "tar -cf /tmp/odl${i}_karaf.log.tar /tmp/odl_log/*"
+        scp "${!CONTROLLERIP}:/tmp/odl${i}_karaf.log.tar" "${NODE_FOLDER}"
+        ${SSH} "${!CONTROLLERIP}" "tar -cf /tmp/odl${i}_zrpcd.log.tar /tmp/zrpcd.init.log"
+        scp "${!CONTROLLERIP}:/tmp/odl${i}_zrpcd.log.tar" "${NODE_FOLDER}"
+        tar -xvf "${NODE_FOLDER}/odl${i}_karaf.log.tar" -C "${NODE_FOLDER}" --strip-components 2 --transform "s/karaf/odl${i}_karaf/g"
+        grep "ROBOT MESSAGE\| ERROR " "${NODE_FOLDER}/odl${i}_karaf.log" > "${NODE_FOLDER}/odl${i}_err.log"
         grep "ROBOT MESSAGE\| ERROR \| WARN \|Exception" \
-            ${NODE_FOLDER}/odl${i}_karaf.log > ${NODE_FOLDER}/odl${i}_err_warn_exception.log
+            "${NODE_FOLDER}/odl${i}_karaf.log" > "${NODE_FOLDER}/odl${i}_err_warn_exception.log"
         # Print ROBOT lines and print Exception lines. For exception lines also print the previous line for context
-        sed -n -e '/ROBOT MESSAGE/P' -e '$!N;/Exception/P;D' ${NODE_FOLDER}/odl${i}_karaf.log > ${NODE_FOLDER}/odl${i}_exception.log
-        mv /tmp/odl${i}_exceptions.txt ${NODE_FOLDER}
-        rm ${NODE_FOLDER}/odl${i}_karaf.log.tar
-        mv *_threads* ${NODE_FOLDER}
-        mv ps_* ${NODE_FOLDER}
-        mv ${NODE_FOLDER} ${WORKSPACE}/archives/
+        sed -n -e '/ROBOT MESSAGE/P' -e '$!N;/Exception/P;D' "${NODE_FOLDER}/odl${i}_karaf.log" > "${NODE_FOLDER}/odl${i}_exception.log"
+        mv "/tmp/odl${i}_exceptions.txt" "${NODE_FOLDER}"
+        rm "${NODE_FOLDER}/odl${i}_karaf.log.tar"
+        mv -- *_threads* "${NODE_FOLDER}"
+        mv ps_* "${NODE_FOLDER}"
+        mv "${NODE_FOLDER}" "${WORKSPACE}"/archives/
     done
 
-    print_job_parameters > ${WORKSPACE}/archives/params.txt
+    print_job_parameters > "${WORKSPACE}"/archives/params.txt
 
     # Control Node
     for i in $(seq 1 "${NUM_OPENSTACK_CONTROL_NODES}"); do
