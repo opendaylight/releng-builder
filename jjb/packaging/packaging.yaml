@@ -225,10 +225,10 @@
       - shell: !include-raw-escape: build-rpm.sh
       - install-test-uninstall-rpm
 
-      # Test Neon ('Managed Release Common Distro') release tarball
+      # Test Neon SR1 ('Managed Release Common Distro') release tarball
       - inject:
           # yamllint disable-line rule:line-length
-          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/public/org/opendaylight/integration/opendaylight/0.10.0/opendaylight-0.10.0.tar.gz'
+          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/public/org/opendaylight/integration/opendaylight/0.10.1/opendaylight-0.10.1.tar.gz'
       - shell: !include-raw-escape: build-rpm.sh
       - install-test-uninstall-rpm
 
@@ -330,10 +330,10 @@
       - shell: !include-raw: build-rpm-snap.sh
       - install-test-uninstall-rpm
 
-      # Test Neon release tarball
+      # Test Neon SR1 release tarball
       - inject:
           # yamllint disable-line rule:line-length
-          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/integration/karaf/0.10.0/karaf-0.10.0.tar.gz'
+          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/integration/karaf/0.10.1/karaf-0.10.1.tar.gz'
       - shell: !include-raw-escape: build-rpm.sh
       - install-test-uninstall-rpm
 
