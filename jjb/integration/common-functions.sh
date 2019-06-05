@@ -924,7 +924,7 @@ function copy_and_run_post_startup_script() {
     for i in $(seq 1 "${NUM_ODL_SYSTEM}"); do
         CONTROLLERIP="ODL_SYSTEM_${i}_IP"
         echo "Execute the post startup script on controller ${!CONTROLLERIP}"
-        scp "${WORKSPACE}"/post-startup-script.sh "${!CONTROLLERIP}":/
+        scp "${WORKSPACE}"/post-startup-script.sh "${!CONTROLLERIP}":/tmp/
         # $seed_index needs to be parsed client-side
         # shellcheck disable=SC2029
         ssh "${!CONTROLLERIP}" "bash /tmp/post-startup-script.sh $(( seed_index++ ))"
