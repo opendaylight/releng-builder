@@ -42,8 +42,13 @@ function set_java_vars() {
     local -r controllermem=$2
     local -r memconf=$3
 
-    echo "Configure\n    java home: ${java_home}\n    max memory: ${controllermem}\n    memconf: ${memconf}"
+    echo "Configure"
+    echo "    java home: ${java_home}"
+    echo "    max memory: ${controllermem}"
+    echo "    memconf: ${memconf}"
 
+    # We do not want expressions to expand here.
+    # shellcheck disable=SC2016
     sed -ie 's%^# export JAVA_HOME%export JAVA_HOME=${JAVA_HOME:-'"${java_home}"'}%g' "${memconf}"
     sed -ie 's/JAVA_MAX_MEM="2048m"/JAVA_MAX_MEM='"${controllermem}"'/g' "${memconf}"
     echo "cat ${memconf}"
@@ -71,8 +76,7 @@ function configure_karaf_log() {
     local logapi=log4j
 
     # Check what the logging.cfg file is using for the logging api: log4j or log4j2
-    grep "log4j2" "${LOGCONF}"
-    if [ $? -eq 0 ]; then
+    if grep "log4j2" "${LOGCONF}"; then
         logapi=log4j2
     fi
 
@@ -156,7 +160,9 @@ function configure_karaf_log_for_apex() {
         echo "$logging_config"
 
         # fine a sane line number to inject the custom logging json
-        lineno=$(ssh $OPENSTACK_CONTROL_NODE_1_IP "sudo grep -Fn 'opendaylight::log_mechanism' /etc/puppet/hieradata/service_configs.json" | awk -F: '{print $1}')
+        lineno=$(ssh "$OPENSTACK_CONTROL_NODE_1_IP" "sudo grep -Fn 'opendaylight::log_mechanism' /etc/puppet/hieradata/service_configs.json" | awk -F: '{print $1}')
+        # We purposely want these variables to expand client-side
+        # shellcheck disable=SC2029
         ssh "$controller_ip" "sudo sed -i \"${lineno}i ${logging_config}\" /etc/puppet/hieradata/service_configs.json"
         ssh "$controller_ip" "sudo cat /etc/puppet/hieradata/service_configs.json"
     fi
@@ -173,7 +179,7 @@ function configure_odl_features_for_apex() {
 
 cat > /tmp/set_odl_features.sh << EOF
 sudo jq '.["opendaylight::extra_features"] |= []' $config_file > tmp.json && mv tmp.json $config_file
-for feature in $(echo "$ACTUALFEATURES" | sed "s/,/ /g"); do
+for feature in "\${ACTUALFEATURES//,/ }"; do
     sudo jq --arg jq_arg \$feature '.["opendaylight::extra_features"] |= . + [\$jq_arg]' $config_file > tmp && mv tmp $config_file;
 done
 echo "Modified puppet-opendaylight service_configs.json..."
@@ -218,7 +224,7 @@ function get_test_suites() {
     fi
 
     echo "Changing the testplan path..."
-    cat "${testplan_filepath}" | sed "s:integration:${WORKSPACE}:" > testplan.txt
+    sed "s:integration:${WORKSPACE}:" "${testplan_filepath}" > testplan.txt
     cat testplan.txt
 
     # Use the testplan if specific SUITES are not defined.
@@ -237,7 +243,7 @@ function get_test_suites() {
         done
     fi
 
-    eval $__suite_list="'$suite_list'"
+    eval "$__suite_list='$suite_list'"
 }
 
 function run_plan() {
@@ -252,7 +258,7 @@ function run_plan() {
         ;;
     esac
 
-    printf "Locating %s plan to use...\n" "${type}"
+    printf "Locating %s plan to use...\\n" "${type}"
     plan_filepath="${WORKSPACE}/test/csit/${type}plans/$plan"
     if [ ! -f "${plan_filepath}" ]; then
         plan_filepath="${WORKSPACE}/test/csit/${type}plans/${STREAMTESTPLAN}"
@@ -262,17 +268,18 @@ function run_plan() {
     fi
 
     if [ -f "${plan_filepath}" ]; then
-        printf "%s plan exists!!!\n" "${type}"
-        printf "Changing the %s plan path...\n" "${type}"
-        cat "${plan_filepath}" | sed "s:integration:${WORKSPACE}:" > "${type}plan.txt"
+        printf "%s plan exists!!!\\n" "${type}"
+        printf "Changing the %s plan path...\\n" "${type}"
+        sed "s:integration:${WORKSPACE}:" "${plan_filepath}" > "${type}plan.txt"
         cat "${type}plan.txt"
+        # shellcheck disable=SC2013
         for line in $( grep -E -v '(^[[:space:]]*#|^[[:space:]]*$)' "${type}plan.txt" ); do
-            printf "Executing %s...\n" "${line}"
+            printf "Executing %s...\\n" "${line}"
             # shellcheck source=${line} disable=SC1091
             source "${line}"
         done
     fi
-    printf "Finished running %s plans\n" "${type}"
+    printf "Finished running %s plans\\n" "${type}"
 } # function run_plan()
 
 # Return elapsed time. Usage:
@@ -375,7 +382,7 @@ function tcpdump_start() {
     local -r filter=$3
     filter_=${filter// /_}
 
-    printf "node %s, %s_%s__%s: starting tcpdump\n" "${ip}" "${prefix}" "${ip}" "${filter}"
+    printf "node %s, %s_%s__%s: starting tcpdump\\n" "${ip}" "${prefix}" "${ip}" "${filter}"
     # $fileter needs to be parsed client-side
     # shellcheck disable=SC2029
     ssh "${ip}" "nohup sudo /usr/sbin/tcpdump -vvv -ni eth0 ${filter} -w /tmp/tcpdump_${prefix}_${ip}__${filter_}.pcap > /tmp/tcpdump_start.log 2>&1 &"
@@ -385,7 +392,7 @@ function tcpdump_start() {
 function tcpdump_stop() {
     local -r ip=$1
 
-    printf "node %s: stopping tcpdump\n" "$ip"
+    printf "node %s: stopping tcpdump\\n" "$ip"
     ${SSH} "${ip}" "ps -ef | grep tcpdump.sh"
     ${SSH} "${ip}" "sudo pkill -f tcpdump"
     ${SSH} "${ip}" "sudo xz -9ekvvf /tmp/*.pcap"
@@ -441,7 +448,7 @@ function collect_openstack_logs() {
     local -r node_type=${3}
     local oslogs="${folder}/oslogs"
 
-    printf "collect_openstack_logs for %s node: %s into %s\n" "${node_type}" "${ip}" "${oslogs}"
+    printf "collect_openstack_logs for %s node: %s into %s\\n" "${node_type}" "${ip}" "${oslogs}"
     rm -rf "${oslogs}"
     mkdir -p "${oslogs}"
     # There are always some logs in /opt/stack/logs and this also covers the
@@ -458,7 +465,7 @@ function extract_from_journal() {
     local -r services=\${1}
     local -r folder=\${2}
     local -r node_type=\${3}
-    printf "extract_from_journal folder: \${folder}, services: \${services}\n"
+    printf "extract_from_journal folder: \${folder}, services: \${services}\\n"
     for service in \${services}; do
         # strip anything before @ and anything after .
         # devstack@g-api.service will end as g-api
@@ -481,7 +488,7 @@ fi
 ls -al /tmp/oslogs
 EOF
 # cat > ${WORKSPACE}/collect_openstack_logs.sh << EOF
-        printf "collect_openstack_logs for %s node: %s into %s, executing script\n" "${node_type}" "${ip}" "${oslogs}"
+        printf "collect_openstack_logs for %s node: %s into %s, executing script\\n" "${node_type}" "${ip}" "${oslogs}"
         cat "${WORKSPACE}"/collect_openstack_logs.sh
         scp "${WORKSPACE}"/collect_openstack_logs.sh "${ip}":/tmp
         ${SSH} "${ip}" "bash /tmp/collect_openstack_logs.sh > /tmp/collect_openstack_logs.log 2>&1"
@@ -494,30 +501,30 @@ function collect_netvirt_logs() {
     set +e  # We do not want to create red dot just because something went wrong while fetching logs.
 
     cat > extra_debug.sh << EOF
-echo -e "/usr/sbin/lsmod | /usr/bin/grep openvswitch\n"
+echo -e "/usr/sbin/lsmod | /usr/bin/grep openvswitch\\n"
 /usr/sbin/lsmod | /usr/bin/grep openvswitch
-echo -e "\nsudo grep ct_ /var/log/openvswitch/ovs-vswitchd.log\n"
+echo -e "\\nsudo grep ct_ /var/log/openvswitch/ovs-vswitchd.log\\n"
 sudo grep "Datapath supports" /var/log/openvswitch/ovs-vswitchd.log
-echo -e "\nsudo netstat -punta\n"
+echo -e "\\nsudo netstat -punta\\n"
 sudo netstat -punta
-echo -e "\nsudo getenforce\n"
+echo -e "\\nsudo getenforce\\n"
 sudo getenforce
-echo -e "\nsudo systemctl status httpd\n"
+echo -e "\\nsudo systemctl status httpd\\n"
 sudo systemctl status httpd
-echo -e "\nenv\n"
+echo -e "\\nenv\\n"
 env
 source /opt/stack/devstack/openrc admin admin
-echo -e "\nenv after openrc\n"
+echo -e "\\nenv after openrc\\n"
 env
-echo -e "\nsudo du -hs /opt/stack"
+echo -e "\\nsudo du -hs /opt/stack"
 sudo du -hs /opt/stack
-echo -e "\nsudo mount"
+echo -e "\\nsudo mount"
 sudo mount
-echo -e "\ndmesg -T > /tmp/dmesg.log"
+echo -e "\\ndmesg -T > /tmp/dmesg.log"
 dmesg -T > /tmp/dmesg.log
-echo -e "\njournalctl > /tmp/journalctl.log\n"
+echo -e "\\njournalctl > /tmp/journalctl.log\\n"
 sudo journalctl > /tmp/journalctl.log
-echo -e "\novsdb-tool -mm show-log > /tmp/ovsdb-tool.log"
+echo -e "\\novsdb-tool -mm show-log > /tmp/ovsdb-tool.log"
 ovsdb-tool -mm show-log > /tmp/ovsdb-tool.log
 EOF
 
@@ -562,8 +569,8 @@ EOF
         ${SSH} "${!CONTROLLERIP}" "tar -cf /tmp/odl${i}_zrpcd.log.tar /tmp/zrpcd.init.log"
         scp "${!CONTROLLERIP}:/tmp/odl${i}_zrpcd.log.tar" "${NODE_FOLDER}"
         tar -xvf "${NODE_FOLDER}/odl${i}_karaf.log.tar" -C "${NODE_FOLDER}" --strip-components 2 --transform "s/karaf/odl${i}_karaf/g"
-        grep "ROBOT MESSAGE\| ERROR " "${NODE_FOLDER}/odl${i}_karaf.log" > "${NODE_FOLDER}/odl${i}_err.log"
-        grep "ROBOT MESSAGE\| ERROR \| WARN \|Exception" \
+        grep "ROBOT MESSAGE\\| ERROR " "${NODE_FOLDER}/odl${i}_karaf.log" > "${NODE_FOLDER}/odl${i}_err.log"
+        grep "ROBOT MESSAGE\\| ERROR \\| WARN \\|Exception" \
             "${NODE_FOLDER}/odl${i}_karaf.log" > "${NODE_FOLDER}/odl${i}_err_warn_exception.log"
         # Print ROBOT lines and print Exception lines. For exception lines also print the previous line for context
         sed -n -e '/ROBOT MESSAGE/P' -e '$!N;/Exception/P;D' "${NODE_FOLDER}/odl${i}_karaf.log" > "${NODE_FOLDER}/odl${i}_exception.log"
@@ -766,7 +773,7 @@ cat ${MAVENCONF}
 
 if [[ "$USEFEATURESBOOT" == "True" ]]; then
     echo "Configuring the startup features..."
-    sed -ie "s/\(featuresBoot=\|featuresBoot =\)/featuresBoot = ${ACTUALFEATURES},/g" ${FEATURESCONF}
+    sed -ie "s/\\(featuresBoot=\\|featuresBoot =\\)/featuresBoot = ${ACTUALFEATURES},/g" ${FEATURESCONF}
 fi
 
 FEATURE_TEST_STRING="features-integration-test"
@@ -775,7 +782,7 @@ if [[ "$KARAF_VERSION" == "karaf4" ]]; then
     FEATURE_TEST_STRING="features-test"
 fi
 
-sed -ie "s%\(featuresRepositories=\|featuresRepositories =\)%featuresRepositories = mvn:org.opendaylight.integration/\${FEATURE_TEST_STRING}/${BUNDLE_VERSION}/xml/features,mvn:org.apache.karaf.decanter/apache-karaf-decanter/1.0.0/xml/features,%g" ${FEATURESCONF}
+sed -ie "s%\\(featuresRepositories=\\|featuresRepositories =\\)%featuresRepositories = mvn:org.opendaylight.integration/\${FEATURE_TEST_STRING}/${BUNDLE_VERSION}/xml/features,mvn:org.apache.karaf.decanter/apache-karaf-decanter/1.0.0/xml/features,%g" ${FEATURESCONF}
 if [[ ! -z "${REPO_URL}" ]]; then
    sed -ie "s%featuresRepositories =%featuresRepositories = ${REPO_URL},%g" ${FEATURESCONF}
 fi
