@@ -42,8 +42,13 @@ function set_java_vars() {
     local -r controllermem=$2
     local -r memconf=$3
 
-    echo "Configure\n    java home: ${java_home}\n    max memory: ${controllermem}\n    memconf: ${memconf}"
+    echo "Configure"
+    echo "    java home: ${java_home}"
+    echo "    max memory: ${controllermem}"
+    echo "    memconf: ${memconf}"
 
+    # We do not want expressions to expand here.
+    # shellcheck disable=SC2016
     sed -ie 's%^# export JAVA_HOME%export JAVA_HOME=${JAVA_HOME:-'"${java_home}"'}%g' "${memconf}"
     sed -ie 's/JAVA_MAX_MEM="2048m"/JAVA_MAX_MEM='"${controllermem}"'/g' "${memconf}"
     echo "cat ${memconf}"
@@ -71,8 +76,7 @@ function configure_karaf_log() {
     local logapi=log4j
 
     # Check what the logging.cfg file is using for the logging api: log4j or log4j2
-    grep "log4j2" "${LOGCONF}"
-    if [ $? -eq 0 ]; then
+    if grep "log4j2" "${LOGCONF}"; then
         logapi=log4j2
     fi
 
@@ -156,7 +160,9 @@ function configure_karaf_log_for_apex() {
         echo "$logging_config"
 
         # fine a sane line number to inject the custom logging json
-        lineno=$(ssh $OPENSTACK_CONTROL_NODE_1_IP "sudo grep -Fn 'opendaylight::log_mechanism' /etc/puppet/hieradata/service_configs.json" | awk -F: '{print $1}')
+        lineno=$(ssh "$OPENSTACK_CONTROL_NODE_1_IP" "sudo grep -Fn 'opendaylight::log_mechanism' /etc/puppet/hieradata/service_configs.json" | awk -F: '{print $1}')
+        # We purposely want these variables to expand client-side
+        # shellcheck disable=SC2029
         ssh "$controller_ip" "sudo sed -i \"${lineno}i ${logging_config}\" /etc/puppet/hieradata/service_configs.json"
         ssh "$controller_ip" "sudo cat /etc/puppet/hieradata/service_configs.json"
     fi
@@ -173,7 +179,7 @@ function configure_odl_features_for_apex() {
 
 cat > /tmp/set_odl_features.sh << EOF
 sudo jq '.["opendaylight::extra_features"] |= []' $config_file > tmp.json && mv tmp.json $config_file
-for feature in $(echo "$ACTUALFEATURES" | sed "s/,/ /g"); do
+for feature in "\${ACTUALFEATURES//,/ }"; do
     sudo jq --arg jq_arg \$feature '.["opendaylight::extra_features"] |= . + [\$jq_arg]' $config_file > tmp && mv tmp $config_file;
 done
 echo "Modified puppet-opendaylight service_configs.json..."
@@ -218,7 +224,7 @@ function get_test_suites() {
     fi
 
     echo "Changing the testplan path..."
-    cat "${testplan_filepath}" | sed "s:integration:${WORKSPACE}:" > testplan.txt
+    sed "s:integration:${WORKSPACE}:" "${testplan_filepath}" > testplan.txt
     cat testplan.txt
 
     # Use the testplan if specific SUITES are not defined.
@@ -237,7 +243,7 @@ function get_test_suites() {
         done
     fi
 
-    eval $__suite_list="'$suite_list'"
+    eval "$__suite_list='$suite_list'"
 }
 
 function run_plan() {
@@ -264,8 +270,9 @@ function run_plan() {
     if [ -f "${plan_filepath}" ]; then
         printf "%s plan exists!!!\n" "${type}"
         printf "Changing the %s plan path...\n" "${type}"
-        cat "${plan_filepath}" | sed "s:integration:${WORKSPACE}:" > "${type}plan.txt"
+        sed "s:integration:${WORKSPACE}:" "${plan_filepath}" > "${type}plan.txt"
         cat "${type}plan.txt"
+        # shellcheck disable=SC2013
         for line in $( grep -E -v '(^[[:space:]]*#|^[[:space:]]*$)' "${type}plan.txt" ); do
             printf "Executing %s...\n" "${line}"
             # shellcheck source=${line} disable=SC1091
