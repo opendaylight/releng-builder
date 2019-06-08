@@ -503,6 +503,7 @@
                         mv karaf_${i}_*_threads* ${NODE_FOLDER} || true
                         mv *_${i}.png ${NODE_FOLDER} || true
                         mv /tmp/odl${i}_* ${NODE_FOLDER} || true
+                        mv gclogs-${i} ${NODE_FOLDER} || true
                     done
                     curl --output robot-plugin.zip "$BUILD_URL/robot/report/*zip*/robot-plugin.zip"
                     unzip -d ./archives robot-plugin.zip
