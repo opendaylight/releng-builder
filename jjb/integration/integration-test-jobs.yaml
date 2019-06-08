@@ -499,7 +499,6 @@
     ######################
 
     git-url: '$GIT_URL/$PROJECT'
-    submodule-recursive: true
     submodule-timeout: 10
 
     #####################
@@ -530,6 +529,7 @@
           git-url: '{git-url}'
           refspec: '$GERRIT_REFSPEC'
           branch: '$GERRIT_BRANCH'
+          submodule-disable: '{submodule-disable}'
           submodule-recursive: '{submodule-recursive}'
           submodule-timeout: '{submodule-timeout}'
           choosing-strategy: default
