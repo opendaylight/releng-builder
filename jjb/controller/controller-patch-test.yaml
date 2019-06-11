@@ -20,6 +20,13 @@
     jdk: 'openjdk8'
 
     feature:
+      - core:
+          csit-list: >
+              controller-csit-1node-akka1-all-{stream},
+              controller-csit-1node-rest-cars-perf-all-{stream},
+              controller-csit-3node-clustering-ask-all-{stream},
+              controller-csit-3node-clustering-tell-all-{stream}
+
       - netvirt:
           csit-list: >
               netvirt-csit-1node-{os-std-topo}-openstack-{os-branch}-gate-stateful-{stream}
