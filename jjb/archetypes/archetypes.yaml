@@ -7,7 +7,10 @@
           build-timeout: 180
           cron: '@daily'
           mvn-goals: clean install -V -Dmaven.compile.fork=true
-      - gerrit-maven-stage
+      - gerrit-maven-stage:
+          sign-artifacts: true
+          mvn-central: true
+          ossrh-profile-id: 6386ebbbf3a563
       - gerrit-maven-verify
       - gerrit-maven-verify-dependencies:
           build-timeout: 180
@@ -31,7 +34,10 @@
           build-timeout: 180
           cron: '@daily'
           mvn-goals: clean install -V -Dmaven.compile.fork=true
-      - gerrit-maven-stage
+      - gerrit-maven-stage:
+          sign-artifacts: true
+          mvn-central: true
+          ossrh-profile-id: 6386ebbbf3a563
       - gerrit-maven-verify
       - gerrit-maven-verify-dependencies:
           build-timeout: 180
@@ -55,7 +61,10 @@
           build-timeout: 180
           cron: '@daily'
           mvn-goals: clean install -V -Dmaven.compile.fork=true
-      - gerrit-maven-stage
+      - gerrit-maven-stage:
+          sign-artifacts: true
+          mvn-central: true
+          ossrh-profile-id: 6386ebbbf3a563
       - gerrit-maven-verify
       - gerrit-maven-verify-dependencies:
           build-timeout: 180
