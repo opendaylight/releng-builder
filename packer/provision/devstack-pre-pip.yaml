@@ -65,9 +65,9 @@
           args:
             warn: False
         - name: "Install non-baseline requirements for {{ os_branch }}"
-          yum: 'name={{item}} state=present'
-          with_items:
-            - "{{ sed_output.stdout_lines }}"
+          yum:
+            name: "{{ sed_output.stdout_lines }}"
+            state: present
           become: true
         - name: git clone openstack core projects
           git: repo='https://github.com/openstack/{{ item }}.git'
