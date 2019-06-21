@@ -28,6 +28,8 @@
               - python-devel
               - python-lxml
               - python-setuptools
+              - libibverbs
+              - libmlx5
               - libxml2-devel
               - libxslt-devel
               - libffi-devel
@@ -47,6 +49,13 @@
             force: yes
           become: true
           when: rules_file_exists.stat.exists == true
+        - name: Install RDMA (InfiniBand/iWARP/RoCE) requirements
+          yum:
+            name:
+              - libibverbs
+              - libmlx5
+            state: present
+          become: true
     - name: 'Pre-Install yum and pip packages'
       block:
         - name: Create /tmp/devstack directory
