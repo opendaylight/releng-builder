@@ -135,6 +135,18 @@
           when: rdo_branch == 'rocky'
           become: true
 
+    - name: 'Workaround for git deps conflict'
+      block:
+        - name: 'Stripe git2u* rpms on {{ rdo_branch }}'
+          yum:
+            name:
+              - git2u
+              - git2u-core
+              - git2u-core-doc
+              - git2u-perl-Git
+            state: removed
+          become: true
+
     - name: 'Cleanup devstack directory'
       block:
         - name: "Removing /tmp/devstack"
