@@ -133,6 +133,17 @@
           when: rdo_branch == 'rocky'
           become: true
 
+    # Workaround for git deps conflict on rocky
+    - name: Swap to git
+      block:
+        - name: Gather rpm package facts
+          package_facts:
+            manager: auto
+        - name: Replace git2u with git
+          command: yum replace -y git2u --replace-with git
+          when: ansible_facts.packages['git2u'] is defined
+      become: true
+
     - name: 'Cleanup devstack directory'
       block:
         - name: "Removing /tmp/devstack"
