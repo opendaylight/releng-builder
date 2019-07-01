@@ -6,6 +6,7 @@
     jobs:
       - '{project-name}-test-rpm-{stream}'
       - '{project-name}-test-deb-{stream}'
+          disable-job: true
       - gerrit-tox-verify
 
     project: 'integration/packaging/ansible-opendaylight'

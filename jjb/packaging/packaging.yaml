@@ -13,11 +13,13 @@
       - 'packaging-build-rpm-{stream}'
       - 'packaging-build-rpm-{distro}-snap-{stream}'
       - 'packaging-build-deb-{stream}'
+          disable-job: true
       - 'packaging-verify-full-rpm-master'
       - 'packaging-verify-rpm-master'
       - 'packaging-test-rpm-master'
       - 'packaging-test-rpm-upgrade-master'
       - 'packaging-test-deb-master'
+          disable-job: true
       - gerrit-tox-verify:
           branch: master
           stream: master
