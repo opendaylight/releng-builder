@@ -49,12 +49,13 @@
       - dcgw:
           testplan: '{project}-{topology}-dcgw-openstack.txt'
           tools_system_count: 3
+          enable-gre-type-driver: 'yes'
       # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
       - gate-tdd-wip:
           testplan: '{project}-{topology}-tdd-wip-openstack.txt'
           schedule: '{schedule-weekly}'
           tools_system_count: 3
-          enable-gre-type-drivers: 'yes'
+          enable-gre-type-driver: 'yes'
       - tempest-stateful:
           test-suites: 'openstack/tempest/tempest.robot'
           testplan: '{project}-{topology}-openstack-tempest.txt'
@@ -138,7 +139,7 @@
           testplan: '{project}-{topology}-tdd-wip-openstack.txt'
           schedule: ''
           tools_system_count: 3
-          enable-gre-type-drivers: 'yes'
+          enable-gre-type-driver: 'yes'
       - tempest-stateful:
           test-suites: 'openstack/tempest/tempest.robot'
           testplan: '{project}-{topology}-openstack-tempest.txt'
@@ -216,7 +217,7 @@
           testplan: '{project}-{topology}-tdd-wip-openstack.txt'
           schedule: ''
           tools_system_count: 3
-          enable-gre-type-drivers: 'yes'
+          enable-gre-type-driver: 'yes'
       - tempest-stateful:
           test-suites: 'openstack/tempest/tempest.robot'
           testplan: '{project}-{topology}-openstack-tempest.txt'
