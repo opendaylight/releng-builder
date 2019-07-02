@@ -19,10 +19,11 @@
     name: '{project-name}-test-rpm-{stream}'
 
     node: centos7-builder-2c-2g
+    disable-job: false
 
     project-type: freestyle
 
-    disable-job: '{disable-job}'
+    disabled: '{disable-job}'
 
     properties:
       - opendaylight-infra-properties:
@@ -69,10 +70,11 @@
     name: '{project-name}-test-deb-{stream}'
 
     node: ubuntu1604-mininet-ovs-25-1c-4g
+    disable-job: false
 
     project-type: freestyle
 
-    disable-job: '{disable-job}'
+    disabled: '{disable-job}'
 
     properties:
       - opendaylight-infra-properties:
