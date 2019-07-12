@@ -242,7 +242,12 @@
           odl-ml2-port-binding: 'pseudo-agentdb-binding'
           openstack_system_image: '{openstack_queens_system_image}'
           openstack_system2_image: '{openstack_queens_system_image}'
-
+      - rocky:
+          openstack-branch: 'stable/rocky'
+          odl-ml2-branch: 'stable/rocky'
+          odl-ml2-port-binding: 'pseudo-agentdb-binding'
+          openstack_system_image: '{openstack_rocky_system_image}'
+          openstack_system2_image: '{openstack_rocky_system_image}'
 - project:
     name: netvirt-csit-sfc-openstack-integration
     jobs:
@@ -367,3 +372,9 @@
           odl-ml2-port-binding: 'pseudo-agentdb-binding'
           openstack_system_image: '{openstack_queens_system_image}'
           openstack_system2_image: '{openstack_queens_system_image}'
+      - rocky:
+          openstack-branch: 'stable/rocky'
+          odl-ml2-branch: 'stable/rocky'
+          odl-ml2-port-binding: 'pseudo-agentdb-binding'
+          openstack_system_image: '{openstack_rocky_system_image}'
+          openstack_system2_image: '{openstack_rocky_system_image}'
