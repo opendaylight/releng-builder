@@ -50,7 +50,7 @@ cd /tmp/ || exit
 unzip $NEW_DISTRO_BASENAME
 mv $BUNDLEFOLDER distro_new
 
-git clone https://git.opendaylight.org/gerrit/p/integration/test.git
+git clone https://git.opendaylight.org/gerrit/integration/test.git
 cd test/tools/distchanges || exit
 mkdir -p $WORKSPACE/archives
 

@@ -22,7 +22,7 @@ wget --progress=dot:mega ${ACTUAL_BUNDLE_URL}
 UNZIPPED_DIR=`dirname "$(unzip -qql ${BUNDLE} | head -n1 | tr -s ' ' | cut -d' ' -f5-)"`
 unzip -q ${BUNDLE}
 tar czf ${DISTRO_UNDER_TEST} ${UNZIPPED_DIR}
-git clone https://gerrit.opnfv.org/gerrit/p/sdnvpn.git /tmp/sdnvpn
+git clone https://gerrit.opnfv.org/gerrit/sdnvpn.git /tmp/sdnvpn
 pushd /tmp/sdnvpn; git fetch https://gerrit.opnfv.org/gerrit/sdnvpn refs/changes/93/63293/1 && git checkout FETCH_HEAD; popd
 /tmp/sdnvpn/odl-pipeline/lib/odl_reinstaller.sh --pod-config ${WORKSPACE}/node.yaml --odl-artifact ${DISTRO_UNDER_TEST} --ssh-key-file ~/.ssh/robot_id_rsa
 

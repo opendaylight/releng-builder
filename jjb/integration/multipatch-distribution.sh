@@ -132,7 +132,7 @@ do
     PROJECT_SHORTNAME="${PROJECT##*/}"  # http://stackoverflow.com/a/3162500
     PROJECTS+=("${PROJECT_SHORTNAME}")
     echo "1. cloning project ${PROJECT}"
-    git clone "https://git.opendaylight.org/gerrit/p/${PROJECT}"
+    git clone "https://git.opendaylight.org/gerrit/${PROJECT}"
     cd ${PROJECT_SHORTNAME}
     # For patch = controller=61/29761/5:45/29645/6, this gives 61/29761/5.
     CHECKOUT="$(echo ${patch} | cut -d\= -s -f 2 | cut -d\: -f 1)"
@@ -191,7 +191,7 @@ if [ "${distribution_status}" == "not_included" ]; then
     echo "adding integration/distribution"
     PROJECTS+=(distribution)
     # clone distribution and add it as a module in root pom
-    git clone "https://git.opendaylight.org/gerrit/p/integration/distribution"
+    git clone "https://git.opendaylight.org/gerrit/integration/distribution"
     cd distribution
     git checkout "${DISTRIBUTION_BRANCH_TO_BUILD}"
     cd "${BUILD_DIR}"
