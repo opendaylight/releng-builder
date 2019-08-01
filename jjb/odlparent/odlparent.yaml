@@ -3,7 +3,9 @@
     name: odlparent-master
     jobs:
       - '{project-name}-maven-javadoc-jobs'
-      - odl-maven-jobs
+      - odl-maven-jobs:
+          java-version:
+            - openjdk11
       - gerrit-tox-verify
 
     project: odlparent
