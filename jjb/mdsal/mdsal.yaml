@@ -7,7 +7,9 @@
           project-pattern: mdsal
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-mdsal/44052/
           rtd-token: a56d6212dd3de3eef12642affe8a6100cc8bc002
-      - odl-maven-jobs
+      - odl-maven-jobs:
+          java-version:
+            - openjdk11
 
     project: mdsal
     project-name: mdsal
