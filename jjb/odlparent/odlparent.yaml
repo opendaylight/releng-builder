@@ -3,7 +3,6 @@
     name: odlparent-master
     jobs:
       - '{project-name}-gerrit-release-jobs'
-      - '{project-name}-maven-javadoc-jobs'
       - odl-maven-jobs:
           java-version:
             - openjdk11
