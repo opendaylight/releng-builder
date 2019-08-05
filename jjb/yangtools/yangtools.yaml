@@ -2,7 +2,9 @@
 - project:
     name: yangtools-master
     jobs:
-      - odl-maven-jobs
+      - odl-maven-jobs:
+          java-version:
+            - openjdk11
 
     project: yangtools
     project-name: yangtools
