@@ -18,6 +18,7 @@
           build-timeout: 180
           mvn-goals: clean install -V -Dmaven.compile.fork=true -Dintegrationtests -Dvtn.build.jobs=2
           disable-job: '{disable-job}'
+          java-version: '{java-version}'
 
       - gerrit-maven-stage:
           sign-artifacts: true
