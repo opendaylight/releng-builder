@@ -14,7 +14,7 @@ if [ "${BASH_SOURCE[0]}" == "${0}" ]; then
     mapfile -t ips <<< "$(openstack stack show -f json -c outputs "$STACK_NAME" | jq -r '.outputs[] | select(.output_key | match("^vm_[0-9]+_ips$")) | .output_value | .[]')"
     for ip in "${ips[@]}"; do
         echo "Copying common-functions.sh to ${ip}:/tmp"
-        scp /tmp/common-functions.sh ${ip}:/tmp
+        scp /tmp/common-functions.sh "${ip}:/tmp"
     done
     exit 0
 fi

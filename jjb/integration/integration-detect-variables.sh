@@ -1,11 +1,11 @@
-
+#!/bin/bash
 # TODO: Document the default values.
 NEXUSURL_PREFIX="${ODLNEXUSPROXY:-https://nexus.opendaylight.org}"
 ODL_NEXUS_REPO="${ODL_NEXUS_REPO:-content/repositories/opendaylight.snapshot}"
 GERRIT_PATH="${GERRIT_PATH:-git.opendaylight.org/gerrit}"
 DISTROBRANCH="${DISTROBRANCH:-$GERRIT_BRANCH}"
 
-if [ ${BUNDLE_URL} == 'last' ]; then
+if [ "${BUNDLE_URL}" == 'last' ]; then
     # Obtain current pom.xml of integration/distribution, correct branch.
     if [[ "$KARAF_ARTIFACT" == "opendaylight" ]]; then
         wget "http://${GERRIT_PATH}/gitweb?p=integration/distribution.git;a=blob_plain;f=opendaylight/pom.xml;hb=refs/heads/$DISTROBRANCH" -O "pom.xml"
