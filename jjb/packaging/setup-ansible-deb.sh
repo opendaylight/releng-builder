@@ -8,6 +8,7 @@ set -ex -o pipefail
 
 # Install required packages
 virtualenv deb_build
+# shellcheck disable=SC1091
 source deb_build/bin/activate
 PYTHON="deb_build/bin/python"
 $PYTHON -m pip install --upgrade pip
@@ -27,4 +28,4 @@ sudo apt-get install -y ansible
 # expects the dir containing the role to have the name of role. The JJB project
 # is called "ansible", which causes the cloned repo name to not match the role
 # name "opendaylight". So we need a cp/mv either way and this is simplest.
-sudo cp -R $WORKSPACE/packaging-ansible /etc/ansible/roles/opendaylight
+sudo cp -R "$WORKSPACE"/packaging-ansible /etc/ansible/roles/opendaylight

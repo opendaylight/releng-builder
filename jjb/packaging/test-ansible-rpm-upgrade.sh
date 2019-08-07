@@ -9,4 +9,4 @@ sudo yum remove opendaylight -y
 sudo rm -rf /opt/opendaylight
 
 # Execute the upgrade tests
-sudo ansible-playbook -i "localhost," -c local $WORKSPACE/packaging-ansible/tests/test-odl-upgrade.yaml -v
+sudo ansible-playbook -i "localhost," -c local "$WORKSPACE"/packaging-ansible/tests/test-odl-upgrade.yaml -v

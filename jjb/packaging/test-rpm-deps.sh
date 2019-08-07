@@ -7,7 +7,7 @@
 set -ex -o pipefail
 
 # Verify exactly 1 RPM is in the path we expect
-set -- $HOME/rpmbuild/RPMS/noarch/*.rpm
+set -- "$HOME"/rpmbuild/RPMS/noarch/*.rpm
 if [ $# -eq 1 ]; then
     echo "Found one RPM in build out dir, as expected"
 else
@@ -16,10 +16,10 @@ else
 fi
 
 # If path is globbed (/path/to/*.rpm), expand it
-path=$(sudo find / -wholename $HOME/rpmbuild/RPMS/noarch/*.rpm)
+path=$(sudo find / -wholename "$HOME"/rpmbuild/RPMS/noarch/*.rpm)
 
 # If no RPM found, fail clearly
-if [ -z $path ]; then
+if [ -z "$path" ]; then
     echo "RPM not found"
     exit 1
 fi
@@ -56,12 +56,12 @@ if [[ ! $path == *opendaylight-6*  ]]; then
 fi
 
 # shellcheck disable=SC2034
-mapfile -t actual_deps < <( rpm -qp $HOME/rpmbuild/RPMS/noarch/*.rpm --requires )
+mapfile -t actual_deps < <( rpm -qp "$HOME"/rpmbuild/RPMS/noarch/*.rpm --requires )
 # shellcheck disable=SC2154 disable=SC2145
 printf 'Dependency found: %s\n' "${actual_deps[@]}"
 
 # shellcheck disable=SC2154,SC2145,SC2034,SC2207
-diff_deps=(`echo "${expected_deps[@]}" "${actual_deps[@]}" | tr ' ' '\n' | sort | uniq -u`)
+diff_deps=($(echo "${expected_deps[@]}" "${actual_deps[@]}" | tr ' ' '\n' | sort | uniq -u))
 
 # shellcheck disable=SC2154 disable=SC2145 disable=SC2068 disable=SC2170 disable=SC1083
 if [ ${#diff_deps[*]} -eq 0 ]; then

@@ -17,7 +17,7 @@ if [ -f /usr/bin/yum ]; then
   # NB: Paths must be anchored at root
   if [[ $URL == /*  ]]; then
     # If path is globbed (/path/to/*.rpm), expand it
-    path=$(sudo find / -wholename $URL)
+    path=$(sudo find / -wholename "$URL")
     sudo yum install -y "$path"
   elif [[ $URL == *.rpm ]]; then
     sudo yum install -y "$URL"
@@ -35,7 +35,7 @@ elif [ -f /usr/bin/zypper ]; then
   # NB: Paths must be anchored at root
   if [[ $URL == /*  ]]; then
     # If path is globbed (/path/to/*.rpm), expand it
-    path=$(sudo find /root -wholename $URL)
+    path=$(sudo find /root -wholename "$URL")
     sudo zypper -n --no-gpg-checks install "$path"
   elif [[ $URL == *.rpm ]]; then
     sudo zypper -n --no-gpg-checks install "$URL"
