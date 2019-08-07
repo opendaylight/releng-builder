@@ -3,8 +3,8 @@
 # ${ROBOT_VENV} comes from the integration-install-robotframework.sh
 # script.
 # shellcheck source=${ROBOT_VENV}/bin/activate disable=SC1091
-source ${ROBOT_VENV}/bin/activate
-source /tmp/common-functions.sh ${BUNDLEFOLDER}
+source "${ROBOT_VENV}/bin/activate"
+source /tmp/common-functions.sh "${BUNDLEFOLDER}"
 # Ensure we fail the job if any steps fail.
 set -ex -o pipefail
 totaltmr=$(timer)
@@ -22,17 +22,18 @@ fi
 # TODO: remove this work to run changes.py if/when it's moved higher up to be visible at the Robot level
 printf "\nshowing recent changes that made it into the distribution used by this job:\n"
 $PYTHON -m pip install --upgrade urllib3
-python ${WORKSPACE}/test/tools/distchanges/changes.py -d /tmp/distribution_folder \
-                  -u ${ACTUAL_BUNDLE_URL} -b ${DISTROBRANCH} \
-                  -r ssh://jenkins-${SILO}@git.opendaylight.org:29418 || true
+python "${WORKSPACE}/test/tools/distchanges/changes.py" -d /tmp/distribution_folder \
+                  -u "${ACTUAL_BUNDLE_URL}" -b "${DISTROBRANCH}" \
+                  -r "ssh://jenkins-${SILO}@git.opendaylight.org:29418" || true
 
 printf "\nshowing recent changes that made it into integration/test used by this job:\n"
-cd ${WORKSPACE}/test
-printf "Hash    Author Date                    Commit Date                    Author               Subject\n"
-printf "%s\n" "------- ------------------------------ ------------------------------ -------------------- -----------------------------"
-git --no-pager log --pretty=format:'%h %<(30)%ad %<(30)%cd %<(20,trunc)%an%d %s' -n20
-printf "\n"
-cd -
+(
+    cd "${WORKSPACE}/test"
+    printf "Hash    Author Date                    Commit Date                    Author               Subject\n"
+    printf "%s\n" "------- ------------------------------ ------------------------------ -------------------- -----------------------------"
+    git --no-pager log --pretty=format:'%h %<(30)%ad %<(30)%cd %<(20,trunc)%an%d %s' -n20
+    printf "\n"
+)
 
 cat << EOF
 #################################################
@@ -58,20 +59,20 @@ print_job_parameters
 function create_etc_hosts() {
     NODE_IP=$1
     CTRL_IP=$2
-    : > ${WORKSPACE}/hosts_file
-    for iter in `seq 1 ${NUM_OPENSTACK_COMPUTE_NODES}`; do
+    : > "${WORKSPACE}/hosts_file"
+    for iter in $(seq 1 "${NUM_OPENSTACK_COMPUTE_NODES}"); do
         COMPUTE_IP=OPENSTACK_COMPUTE_NODE_${iter}_IP
         if [ "${!COMPUTE_IP}" == "${NODE_IP}" ]; then
-           CONTROL_HNAME=$(${SSH}  ${CTRL_IP}  "hostname")
-           echo "${CTRL_IP}   ${CONTROL_HNAME}" >> ${WORKSPACE}/hosts_file
+           CONTROL_HNAME=$(${SSH}  "${CTRL_IP}"  "hostname")
+           echo "${CTRL_IP}   ${CONTROL_HNAME}" >> "${WORKSPACE}/hosts_file"
         else
-           COMPUTE_HNAME=$(${SSH}  ${!COMPUTE_IP}  "hostname")
-           echo "${!COMPUTE_IP}   ${COMPUTE_HNAME}" >> ${WORKSPACE}/hosts_file
+           COMPUTE_HNAME=$(${SSH}  "${!COMPUTE_IP}"  "hostname")
+           echo "${!COMPUTE_IP}   ${COMPUTE_HNAME}" >> "${WORKSPACE}/hosts_file"
         fi
     done
 
     echo "Created the hosts file for ${NODE_IP}:"
-    cat ${WORKSPACE}/hosts_file
+    cat "${WORKSPACE}/hosts_file"
 } # create_etc_hosts()
 
 #function to install Openstack Clients for Testing
@@ -86,20 +87,20 @@ function install_openstack_clients_in_robot_vm() {
             packages+=("networking-sfc")
         fi
     done
-    openstack_version=$(echo ${OPENSTACK_BRANCH} | cut -d/ -f2)
+    openstack_version=$(echo "${OPENSTACK_BRANCH}" | cut -d/ -f2)
     #If the job tests "master", we will use the clients from previous released stable version to avoid failures
     if [ "${openstack_version}" == "master" ]; then
        openstack_version=${OPENSTACK_MASTER_CLIENTS_VERSION}
     fi
     for package in ${packages[*]}; do
        echo "Get the current support version of the package ${package}"
-       wget https://raw.githubusercontent.com/openstack/requirements/stable/${openstack_version}/upper-constraints.txt -O /tmp/constraints.txt 2>/dev/null
+       wget "https://raw.githubusercontent.com/openstack/requirements/stable/${openstack_version}/upper-constraints.txt" -O /tmp/constraints.txt 2>/dev/null
        #python openstackclient version in rocky contradicts with version in global-jjb and stops openstackclient installation in rocky. Will be removed based on version change in global-jjb.
        sed -i s/python-openstackclient===3.16.2/python-openstackclient===3.14.0/ /tmp/constraints.txt
        echo "$PYTHON -m pip install --upgrade --no-deps ${package} --no-cache-dir -c /tmp/constraints.txt"
-       $PYTHON -m pip install --upgrade --no-deps ${package} --no-cache-dir -c /tmp/constraints.txt
+       $PYTHON -m pip install --upgrade --no-deps "${package}" --no-cache-dir -c /tmp/constraints.txt
        echo "$PYTHON -m pip install ${package} --no-cache-dir -c /tmp/constraints.txt"
-       $PYTHON -m pip install ${package} --no-cache-dir -c /tmp/constraints.txt
+       $PYTHON -m pip install "${package}" --no-cache-dir -c /tmp/constraints.txt
     done
 
     if [ "${ENABLE_NETWORKING_L2GW}" == "yes" ]; then
@@ -115,15 +116,15 @@ function install_rdo_release() {
     local ip=$1
     case ${OPENSTACK_BRANCH} in
        *rocky*)
-          ${SSH} ${ip} "sudo yum install -y https://repos.fedorapeople.org/repos/openstack/openstack-rocky/rdo-release-rocky-1.noarch.rpm"
+          ${SSH} "${ip}" "sudo yum install -y https://repos.fedorapeople.org/repos/openstack/openstack-rocky/rdo-release-rocky-1.noarch.rpm"
           ;;
 
        *queens*)
-          ${SSH} ${ip} "sudo yum install -y https://repos.fedorapeople.org/repos/openstack/openstack-queens/rdo-release-queens-1.noarch.rpm"
+          ${SSH} "${ip}" "sudo yum install -y https://repos.fedorapeople.org/repos/openstack/openstack-queens/rdo-release-queens-1.noarch.rpm"
           ;;
 
        master)
-          ${SSH} ${ip} "sudo yum install -y https://repos.fedorapeople.org/repos/openstack/openstack-rocky/rdo-release-rocky-1.noarch.rpm"
+          ${SSH} "${ip}" "sudo yum install -y https://repos.fedorapeople.org/repos/openstack/openstack-rocky/rdo-release-rocky-1.noarch.rpm"
           ;;
     esac
 }
@@ -132,7 +133,7 @@ function install_rdo_release() {
 function setup_live_migration_control() {
     local control_ip=$1
     printf "%s:Setup directory Share with NFS" "${control_ip}"
-    cat > ${WORKSPACE}/setup_live_migration_control.sh << EOF
+    cat > "${WORKSPACE}/setup_live_migration_control.sh" << EOF
 sudo mkdir --mode=777 /vm_instances
 sudo chown -R jenkins:jenkins /vm_instances
 sudo yum install -y nfs-utils
@@ -140,8 +141,8 @@ printf "/vm_instances *(rw,no_root_squash)" | sudo tee -a /etc/exports
 sudo systemctl start rpcbind nfs-server
 sudo exportfs
 EOF
-    scp ${WORKSPACE}/setup_live_migration_control.sh ${control_ip}:/tmp/setup_live_migration_control.sh
-    ssh ${control_ip} "bash /tmp/setup_live_migration_control.sh"
+    scp "${WORKSPACE}/setup_live_migration_control.sh" "${control_ip}:/tmp/setup_live_migration_control.sh"
+    ssh "${control_ip}" "bash /tmp/setup_live_migration_control.sh"
 }
 
 #Fix Problem caused due to new libvirt version in CentOS repo.
@@ -150,7 +151,7 @@ EOF
 #from pypi.org (latest version as of 06-Dec-2018)
 function fix_libvirt_python_build() {
     local ip=$1
-    ${SSH} ${ip} "
+    ${SSH} "${ip}" "
         cd /opt/stack;
         git clone https://git.openstack.org/openstack/requirements;
         cd requirements;
@@ -165,7 +166,7 @@ function setup_live_migration_compute() {
     local control_ip=$2
     printf "%s:Mount Shared directory from ${control_ip}" "${compute_ip}"
     printf "%s:Configure libvirt in listen mode" "${compute_ip}"
-    cat >  ${WORKSPACE}/setup_live_migration_compute.sh << EOF
+    cat > "${WORKSPACE}/setup_live_migration_compute.sh" << EOF
 sudo yum install -y libvirt libvirt-devel nfs-utils
 sudo crudini --verbose  --set --inplace /etc/libvirt/libvirtd.conf '' listen_tls 0
 sudo crudini --verbose  --set --inplace /etc/libvirt/libvirtd.conf '' listen_tcp 1
@@ -178,8 +179,8 @@ sudo systemctl start rpcbind
 sudo mount -t nfs ${control_ip}:/vm_instances /var/instances
 sudo mount
 EOF
-    scp ${WORKSPACE}/setup_live_migration_compute.sh ${compute_ip}:/tmp/setup_live_migration_compute.sh
-    ssh ${compute_ip} "bash /tmp/setup_live_migration_compute.sh"
+    scp "${WORKSPACE}/setup_live_migration_compute.sh" "${compute_ip}:/tmp/setup_live_migration_compute.sh"
+    ssh "${compute_ip}" "bash /tmp/setup_live_migration_compute.sh"
 }
 
 # Add enable_services and disable_services to the local.conf
@@ -190,21 +191,21 @@ function add_os_services() {
     local local_conf_file_name=$4
     local enable_network_services=$5
 
-    cat >> ${local_conf_file_name} << EOF
+    cat >> "${local_conf_file_name}" << EOF
 enable_service $(csv2ssv "${core_services}")
 EOF
     if [ -n "${enable_services}" ]; then
-        cat >> ${local_conf_file_name} << EOF
+        cat >> "${local_conf_file_name}" << EOF
 enable_service $(csv2ssv "${enable_services}")
 EOF
     fi
     if [ -n "${disable_services}" ]; then
-        cat >> ${local_conf_file_name} << EOF
+        cat >> "${local_conf_file_name}" << EOF
 disable_service $(csv2ssv "${disable_services}")
 EOF
     fi
     if [ -n "${enable_network_services}" ]; then
-        cat >> ${local_conf_file_name} << EOF
+        cat >> "${local_conf_file_name}" << EOF
 enable_service $(csv2ssv "${enable_network_services}")
 EOF
     fi
@@ -216,7 +217,7 @@ function create_control_node_local_conf() {
     ODL_OVS_MANAGERS="$3"
 
     local_conf_file_name=${WORKSPACE}/local.conf_control_${HOSTIP}
-    cat > ${local_conf_file_name} << EOF
+    cat > "${local_conf_file_name}" << EOF
 [[local|localrc]]
 LOGFILE=stack.sh.log
 LOG_COLOR=False
@@ -230,7 +231,7 @@ EOF
 
     add_os_services "${CORE_OS_CONTROL_SERVICES}" "${ENABLE_OS_SERVICES}" "${DISABLE_OS_SERVICES}" "${local_conf_file_name}" "${ENABLE_OS_NETWORK_SERVICES}"
 
-    cat >> ${local_conf_file_name} << EOF
+    cat >> "${local_conf_file_name}" << EOF
 
 HOST_IP=${HOSTIP}
 SERVICE_HOST=\$HOST_IP
@@ -265,13 +266,13 @@ ML2_VLAN_RANGES=${PUBLIC_PHYSICAL_NETWORK}
 ODL_PROVIDER_MAPPINGS=${ODL_PROVIDER_MAPPINGS}
 EOF
     if [ "${TENANT_NETWORK_TYPE}" == "local" ]; then
-        cat >> ${local_conf_file_name} << EOF
+        cat >> "${local_conf_file_name}" << EOF
 ENABLE_TENANT_TUNNELS=false
 EOF
     fi
 
     if [ "${ODL_ML2_DRIVER_VERSION}" == "v2" ]; then
-        echo "ODL_V2DRIVER=True" >> ${local_conf_file_name}
+        echo "ODL_V2DRIVER=True" >> "${local_conf_file_name}"
     fi
     IFS=,
     for plugin_name in ${ENABLE_OS_PLUGINS}; do
@@ -289,7 +290,7 @@ EOF
             echo "Error: Invalid plugin $plugin_name, unsupported"
             continue
         fi
-        cat >> ${local_conf_file_name} << EOF
+        cat >> "${local_conf_file_name}" << EOF
 
 enable_plugin ${plugin_name} ${ENABLE_PLUGIN_ARGS}
 EOF
@@ -297,7 +298,7 @@ EOF
     unset IFS
 
     if [ "${ENABLE_NETWORKING_L2GW}" == "yes" ]; then
-        cat >> ${local_conf_file_name} << EOF
+        cat >> "${local_conf_file_name}" << EOF
 
 enable_plugin networking-l2gw ${NETWORKING_L2GW_DRIVER} ${ODL_ML2_BRANCH}
 NETWORKING_L2GW_SERVICE_DRIVER=L2GW:OpenDaylight:networking_odl.l2gateway.driver_v2.OpenDaylightL2gwDriver:default
@@ -319,7 +320,7 @@ EOF
         SERVICE_PLUGINS+=", networking_sfc.services.flowclassifier.plugin.FlowClassifierPlugin,networking_sfc.services.sfc.plugin.SfcPlugin"
     fi
 
-    cat >> ${local_conf_file_name} << EOF
+    cat >> "${local_conf_file_name}" << EOF
 
 [[post-config|\$NEUTRON_CONF]]
 [DEFAULT]
@@ -337,21 +338,21 @@ physical_network_mtus = ${PUBLIC_PHYSICAL_NETWORK}:1400
 path_mtu = 1458
 EOF
     if [ "${ENABLE_GRE_TYPE_DRIVERS}" == "yes" ]; then
-        cat >> ${local_conf_file_name} << EOF
+        cat >> "${local_conf_file_name}" << EOF
 type_drivers = local,flat,vlan,gre,vxlan
 [ml2_type_gre]
 tunnel_id_ranges = 1:1000
 EOF
     fi
     if [ "${ENABLE_NETWORKING_L2GW}" == "yes" ]; then
-        cat >> ${local_conf_file_name} << EOF
+        cat >> "${local_conf_file_name}" << EOF
 
 [ml2_odl]
 enable_dhcp_service = True
 EOF
     fi
 
-    cat >> ${local_conf_file_name} << EOF
+    cat >> "${local_conf_file_name}" << EOF
 
 [ml2_odl]
 # Trigger n-odl full sync every 30 secs.
@@ -375,7 +376,7 @@ log_dir = /opt/stack/logs
 EOF
 
     if [ "$(is_openstack_feature_enabled n-cpu)" == "1" ]; then
-        cat >> ${local_conf_file_name} << EOF
+        cat >> "${local_conf_file_name}" << EOF
 use_neutron = True
 force_raw_images = False
 log_dir = /opt/stack/logs
@@ -390,7 +391,7 @@ EOF
     else
         echo "Control local.conf created:"
     fi
-    cat ${local_conf_file_name}
+    cat "${local_conf_file_name}"
 } # create_control_node_local_conf()
 
 function create_compute_node_local_conf() {
@@ -400,7 +401,7 @@ function create_compute_node_local_conf() {
     ODL_OVS_MANAGERS="$4"
 
     local_conf_file_name=${WORKSPACE}/local.conf_compute_${HOSTIP}
-    cat > ${local_conf_file_name} << EOF
+    cat > "${local_conf_file_name}" << EOF
 [[local|localrc]]
 LOGFILE=stack.sh.log
 LOG_COLOR=False
@@ -414,7 +415,7 @@ EOF
 
     add_os_services "${CORE_OS_COMPUTE_SERVICES}" "${ENABLE_OS_COMPUTE_SERVICES}" "${DISABLE_OS_SERVICES}" "${local_conf_file_name}"
 
-    cat >> ${local_conf_file_name} << EOF
+    cat >> "${local_conf_file_name}" << EOF
 HOST_IP=${HOSTIP}
 SERVICE_HOST=${SERVICEHOST}
 Q_ML2_TENANT_NETWORK_TYPE=${TENANT_NETWORK_TYPE}
@@ -444,13 +445,13 @@ ODL_PROVIDER_MAPPINGS=${ODL_PROVIDER_MAPPINGS}
 EOF
 
     if [[ "${ENABLE_OS_PLUGINS}" =~ networking-odl ]]; then
-        cat >> ${local_conf_file_name} << EOF
+        cat >> "${local_conf_file_name}" << EOF
 
 enable_plugin networking-odl ${ODL_ML2_DRIVER_REPO} ${ODL_ML2_BRANCH}
 EOF
     fi
 
-    cat >> ${local_conf_file_name} << EOF
+    cat >> "${local_conf_file_name}" << EOF
 
 [[post-config|/etc/nova/nova.conf]]
 [api]
@@ -465,7 +466,7 @@ virt_type = qemu
 EOF
 
     echo "Compute local.conf created:"
-    cat ${local_conf_file_name}
+    cat "${local_conf_file_name}"
 } # create_compute_node_local_conf()
 
 function configure_haproxy_for_neutron_requests() {
@@ -473,12 +474,12 @@ function configure_haproxy_for_neutron_requests() {
     # shellcheck disable=SC2206
     local -r odl_ips=(${2//,/ })
 
-    cat > ${WORKSPACE}/install_ha_proxy.sh<< EOF
+    cat > "${WORKSPACE}/install_ha_proxy.sh" << EOF
 sudo systemctl stop firewalld
 sudo yum -y install policycoreutils-python haproxy
 EOF
 
-    cat > ${WORKSPACE}/haproxy.cfg << EOF
+    cat > "${WORKSPACE}/haproxy.cfg" << EOF
 global
   daemon
   group  haproxy
@@ -514,11 +515,11 @@ EOF
 
     odlindex=1
     for odlip in ${odl_ips[*]}; do
-        echo "  server opendaylight-rest-${odlindex} ${odlip}:8181 check fall 5 inter 2000 rise 2" >> ${WORKSPACE}/haproxy.cfg
+        echo "  server opendaylight-rest-${odlindex} ${odlip}:8181 check fall 5 inter 2000 rise 2" >> "${WORKSPACE}/haproxy.cfg"
         odlindex=$((odlindex+1))
     done
 
-    cat >> ${WORKSPACE}/haproxy.cfg << EOF
+    cat >> "${WORKSPACE}/haproxy.cfg" << EOF
 
 listen opendaylight_ws
   bind ${haproxy_ip}:8185 transparent
@@ -530,14 +531,14 @@ EOF
 
     odlindex=1
     for odlip in ${odl_ips[*]}; do
-        echo "  server opendaylight-ws-${odlindex} ${odlip}:8185 check fall 3 inter 1000 rise 2" >> ${WORKSPACE}/haproxy.cfg
+        echo "  server opendaylight-ws-${odlindex} ${odlip}:8185 check fall 3 inter 1000 rise 2" >> "${WORKSPACE}/haproxy.cfg"
         odlindex=$((odlindex+1))
     done
 
     echo "Dump haproxy.cfg"
-    cat ${WORKSPACE}/haproxy.cfg
+    cat "${WORKSPACE}/haproxy.cfg"
 
-    cat > ${WORKSPACE}/deploy_ha_proxy.sh<< EOF
+    cat > "${WORKSPACE}/deploy_ha_proxy.sh" << EOF
 sudo chown haproxy:haproxy /tmp/haproxy.cfg
 sudo sed -i 's/\\/etc\\/haproxy\\/haproxy.cfg/\\/tmp\\/haproxy.cfg/g' /usr/lib/systemd/system/haproxy.service
 sudo /usr/sbin/semanage permissive -a haproxy_t
@@ -548,11 +549,11 @@ sudo systemctl status haproxy
 true
 EOF
 
-    scp ${WORKSPACE}/install_ha_proxy.sh ${haproxy_ip}:/tmp
-    ${SSH} ${haproxy_ip} "sudo bash /tmp/install_ha_proxy.sh"
-    scp ${WORKSPACE}/haproxy.cfg ${haproxy_ip}:/tmp
-    scp ${WORKSPACE}/deploy_ha_proxy.sh ${haproxy_ip}:/tmp
-    ${SSH} ${haproxy_ip} "sudo bash /tmp/deploy_ha_proxy.sh"
+    scp "${WORKSPACE}/install_ha_proxy.sh" "${haproxy_ip}:/tmp"
+    ${SSH} "${haproxy_ip}" "sudo bash /tmp/install_ha_proxy.sh"
+    scp "${WORKSPACE}/haproxy.cfg" "${haproxy_ip}:/tmp"
+    scp "${WORKSPACE}/deploy_ha_proxy.sh" "${haproxy_ip}:/tmp"
+    ${SSH} "${haproxy_ip}" "sudo bash /tmp/deploy_ha_proxy.sh"
 } # configure_haproxy_for_neutron_requests()
 
 # Following three functions are debugging helpers when debugging devstack changes.
@@ -565,9 +566,9 @@ function get_hostnames () {
     local ctrlip=${OPENSTACK_CONTROL_NODE_1_IP}
     local comp1ip=${OPENSTACK_COMPUTE_NODE_1_IP}
     local comp2ip=${OPENSTACK_COMPUTE_NODE_2_IP}
-    ctrlhn=$(${SSH} ${ctrlip} "hostname")
-    comp1hn=$(${SSH} ${comp1ip} "hostname")
-    comp2hn=$(${SSH} ${comp2ip} "hostname")
+    ctrlhn=$(${SSH} "${ctrlip}" "hostname")
+    comp1hn=$(${SSH} "${comp1ip}" "hostname")
+    comp2hn=$(${SSH} "${comp2ip}" "hostname")
     echo "hostnames: ${ctrlhn}, ${comp1hn}, ${comp2hn}"
     set -e
 }
@@ -580,19 +581,19 @@ function check_firewall() {
     local comp2ip=${OPENSTACK_COMPUTE_NODE_2_IP}
 
     echo "check_firewall on control"
-    ${SSH} ${ctrlip} "
+    ${SSH} "${ctrlip}" "
         sudo systemctl status firewalld
         sudo systemctl -l status iptables
         sudo iptables --line-numbers -nvL
     " || true
     echo "check_firewall on compute 1"
-    ${SSH} ${comp1ip} "
+    ${SSH} "${comp1ip}" "
         sudo systemctl status firewalld
         sudo systemctl -l status iptables
         sudo iptables --line-numbers -nvL
     " || true
     echo "check_firewall on compute 2"
-    ${SSH} ${comp2ip} "
+    ${SSH} "${comp2ip}" "
         sudo systemctl status firewalld
         sudo systemctl -l status iptables
         sudo iptables --line-numbers -nvL
@@ -607,11 +608,11 @@ function get_service () {
     local comp1ip=${OPENSTACK_COMPUTE_NODE_1_IP}
 
     #if [ ${idx} -eq 1 ]; then
-        if [ ${iter} -eq 1 ] || [ ${iter} -gt 16 ]; then
-            curl http://${ctrlip}:5000
-            curl http://${ctrlip}:35357
-            curl http://${ctrlip}/identity
-            ${SSH} ${ctrlip} "
+        if [ "${iter}" -eq 1 ] || [ "${iter}" -gt 16 ]; then
+            curl "http://${ctrlip}:5000"
+            curl "http://${ctrlip}:35357"
+            curl "http://${ctrlip}/identity"
+            ${SSH} "${ctrlip}" "
                 source /opt/stack/devstack/openrc admin admin;
                 env
                 openstack configuration show --unmask;
@@ -631,8 +632,8 @@ function is_rabbitmq_ready() {
     local -r ip=${1}
     local grepfor="nova_cell1"
     rm -f rabbit.txt
-    ${SSH} ${ip} "sudo rabbitmqctl list_vhosts" > rabbit.txt
-    grep ${grepfor} rabbit.txt
+    ${SSH} "${ip}" "sudo rabbitmqctl list_vhosts" > rabbit.txt
+    grep "${grepfor}" rabbit.txt
 }
 
 # retry the given command ($3) until success for a number of iterations ($1)
@@ -647,14 +648,16 @@ function retry() {
         echo "retry ${cmd}: attempt: ${retries}"
         ${cmd}
         rc=$?
+        # shellcheck disable=SC2004
         if ((${rc} == 0)); then
             break;
         else
+            # shellcheck disable=SC2004
             if ((${retries} == ${max_tries})); then
                 break
             else
                 ((retries++))
-                sleep ${sleep_time}
+                sleep "${sleep_time}"
             fi
         fi
     done
@@ -669,12 +672,12 @@ function install_ovs() {
        # An OVS version was given, so we build it ourselves from OVS git repo.
        # Only on the first node though, consecutive nodes will use RPMs
        # built for the first one.
-       [ ! -d "${rpm_path}" ] && mkdir -p "${rpm_path}" && build_ovs ${node} ${OVS_INSTALL} "${rpm_path}"
+       [ ! -d "${rpm_path}" ] && mkdir -p "${rpm_path}" && build_ovs "${node}" "${OVS_INSTALL}" "${rpm_path}"
        # Install OVS from path
-       install_ovs_from_path ${node} "${rpm_path}"
+       install_ovs_from_path "${node}" "${rpm_path}"
     elif [ "${OVS_INSTALL:0:4}" = "http" ]; then
        # Otherwise, install from rpm repo directly.
-       install_ovs_from_repo ${node} ${OVS_INSTALL}
+       install_ovs_from_repo "${node}" "${OVS_INSTALL}"
     else
        echo "Expected either an OVS version git tag or a repo http url"
        exit 1
@@ -706,7 +709,7 @@ CORE_OS_COMPUTE_SERVICES="dstat"
 # computes only need nova and odl
 CORE_OS_COMPUTE_SERVICES+=",n-cpu,odl-compute"
 
-cat > ${WORKSPACE}/disable_firewall.sh << EOF
+cat > "${WORKSPACE}/disable_firewall.sh" << EOF
 sudo systemctl stop firewalld
 # Open these ports to match the tutorial vms
 # http/https (80/443), samba (445), netbios (137,138,139)
@@ -726,7 +729,7 @@ EOF
 if [[ "${ENABLE_OS_PLUGINS}" =~ networking-sfc ]]; then
    TMPFS_SIZE=12G
 fi
-cat > ${WORKSPACE}/get_devstack.sh << EOF
+cat > "${WORKSPACE}/get_devstack.sh" << EOF
 sudo systemctl stop firewalld
 sudo yum install bridge-utils python-pip -y
 #sudo systemctl stop  NetworkManager
@@ -795,13 +798,13 @@ else
 fi
 
 os_ip_list=()
-for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
+for i in $(seq 1 "${NUM_OPENSTACK_CONTROL_NODES}"); do
     cip=OPENSTACK_CONTROL_NODE_${i}_IP
     ip=${!cip}
     os_ip_list+=("${ip}")
 done
 
-for i in `seq 1 ${NUM_OPENSTACK_COMPUTE_NODES}`; do
+for i in $(seq 1 "${NUM_OPENSTACK_COMPUTE_NODES}"); do
     cip=OPENSTACK_COMPUTE_NODE_${i}_IP
     ip=${!cip}
     os_ip_list+=("${ip}")
@@ -815,51 +818,51 @@ done
 
 # Begin stacking the nodes, starting with the controller(s) and then the compute(s)
 
-for i in `seq 1 ${NUM_OPENSTACK_CONTROL_NODES}`; do
-    CONTROLIP=OPENSTACK_CONTROL_NODE_${i}_IP
+for i in $(seq 1 "${NUM_OPENSTACK_CONTROL_NODES}"); do
+    CONTROLIP="OPENSTACK_CONTROL_NODE_${i}_IP"
     echo "Configure the stack of the control node ${i} of ${NUM_OPENSTACK_CONTROL_NODES}: ${!CONTROLIP}"
-    scp ${WORKSPACE}/disable_firewall.sh ${!CONTROLIP}:/tmp
-    ${SSH} ${!CONTROLIP} "sudo bash /tmp/disable_firewall.sh"
-    create_etc_hosts ${!CONTROLIP}
-    scp ${WORKSPACE}/hosts_file ${!CONTROLIP}:/tmp/hosts
-    scp ${WORKSPACE}/get_devstack.sh ${!CONTROLIP}:/tmp
+    scp "${WORKSPACE}/disable_firewall.sh" "${!CONTROLIP}":/tmp
+    ${SSH} "${!CONTROLIP}" "sudo bash /tmp/disable_firewall.sh"
+    create_etc_hosts "${!CONTROLIP}"
+    scp "${WORKSPACE}/hosts_file" "${!CONTROLIP}":/tmp/hosts
+    scp "${WORKSPACE}/get_devstack.sh" "${!CONTROLIP}":/tmp
     # devstack Master is yet to migrate fully to lib/neutron, there are some ugly hacks that is
     # affecting the stacking.
     # Workaround For Queens, Make the physical Network as physnet1 in lib/neutron
     # In Queens the neutron new libs are used and do not have the following options from Pike and earlier:
     # Q_ML2_PLUGIN_FLAT_TYPE_OPTIONS could be used for the flat_networks
     # and Q_ML2_PLUGIN_VLAN_TYPE_OPTIONS could be used for the ml2_type_vlan
-    ${SSH} ${!CONTROLIP} "bash /tmp/get_devstack.sh > /tmp/get_devstack.sh.txt 2>&1"
-    ssh ${!CONTROLIP} "sed -i 's/flat_networks public/flat_networks public,physnet1/' /opt/stack/devstack/lib/neutron"
-    ssh ${!CONTROLIP} "sed -i '186i iniset \$NEUTRON_CORE_PLUGIN_CONF ml2_type_vlan network_vlan_ranges public:1:4094,physnet1:1:4094' /opt/stack/devstack/lib/neutron"
+    ${SSH} "${!CONTROLIP}" "bash /tmp/get_devstack.sh > /tmp/get_devstack.sh.txt 2>&1"
+    ssh "${!CONTROLIP}" "sed -i 's/flat_networks public/flat_networks public,physnet1/' /opt/stack/devstack/lib/neutron"
+    ssh "${!CONTROLIP}" "sed -i '186i iniset \$NEUTRON_CORE_PLUGIN_CONF ml2_type_vlan network_vlan_ranges public:1:4094,physnet1:1:4094' /opt/stack/devstack/lib/neutron"
     #Workaround for networking-sfc to configure the paramaters in neutron.conf if the
     # services used are neutron-api, neutron-dhcp etc instead of q-agt.
     # Can be removed if the patch https://review.openstack.org/#/c/596287/ gets merged
     if [[ "${ENABLE_OS_PLUGINS}" =~ networking-sfc ]]; then
-       scp ${WORKSPACE}/workaround_networking_sfc.sh ${!CONTROLIP}:/tmp/
-       ssh ${!CONTROLIP} "bash -x /tmp/workaround_networking_sfc.sh"
+       scp "${WORKSPACE}/workaround_networking_sfc.sh" "${!CONTROLIP}":/tmp/
+       ssh "${!CONTROLIP}" "bash -x /tmp/workaround_networking_sfc.sh"
     fi
-    create_control_node_local_conf ${!CONTROLIP} ${ODLMGRIP} "${ODL_OVS_MGRS}"
-    scp ${WORKSPACE}/local.conf_control_${!CONTROLIP} ${!CONTROLIP}:/opt/stack/devstack/local.conf
+    create_control_node_local_conf "${!CONTROLIP}" ${ODLMGRIP} "${ODL_OVS_MGRS}"
+    scp "${WORKSPACE}/local.conf_control_${!CONTROLIP}" "${!CONTROLIP}":/opt/stack/devstack/local.conf
     echo "Install rdo release to avoid incompatible Package versions"
-    install_rdo_release ${!CONTROLIP}
-    setup_live_migration_control ${!CONTROLIP}
+    install_rdo_release "${!CONTROLIP}"
+    setup_live_migration_control "${!CONTROLIP}"
     if [ "$(is_openstack_feature_enabled n-cpu)" == "1" ]; then
-        setup_live_migration_compute ${!CONTROLIP} ${!CONTROLIP}
+        setup_live_migration_compute "${!CONTROLIP}" "${!CONTROLIP}"
     fi
-    [ -n "${OVS_INSTALL}" ] && install_ovs ${!CONTROLIP} /tmp/ovs_rpms
+    [ -n "${OVS_INSTALL}" ] && install_ovs "${!CONTROLIP}" /tmp/ovs_rpms
     if [[ "${ENABLE_OS_PLUGINS}" =~ networking-sfc ]]; then
         # This should be really done by networking-odl devstack plugin,
         # but in the meantime do it ourselves
-        ssh ${!CONTROLIP} "sudo ovs-vsctl set Open_vSwitch . external_ids:of-tunnel=true"
+        ssh "${!CONTROLIP}" "sudo ovs-vsctl set Open_vSwitch . external_ids:of-tunnel=true"
     fi
-    fix_libvirt_python_build ${!CONTROLIP}
+    fix_libvirt_python_build "${!CONTROLIP}"
     echo "Stack the control node ${i} of ${NUM_OPENSTACK_CONTROL_NODES}: ${CONTROLIP}"
     # Workaround: fixing boneheaded polkit issue, to be removed later
-    ssh ${!CONTROLIP} "sudo bash -c 'echo deltarpm=0 >> /etc/yum.conf && yum -y update polkit'"
-    ssh ${!CONTROLIP} "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
-    ssh ${!CONTROLIP} "ps -ef | grep stack.sh"
-    ssh ${!CONTROLIP} "ls -lrt /opt/stack/devstack/nohup.out"
+    ssh "${!CONTROLIP}" "sudo bash -c 'echo deltarpm=0 >> /etc/yum.conf && yum -y update polkit'"
+    ssh "${!CONTROLIP}" "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
+    ssh "${!CONTROLIP}" "ps -ef | grep stack.sh"
+    ssh "${!CONTROLIP}" "ls -lrt /opt/stack/devstack/nohup.out"
     os_node_list+=("${!CONTROLIP}")
 done
 
@@ -875,13 +878,14 @@ done
 # AccessRefused: (0, 0): (403) ACCESS_REFUSED - Login was refused using authentication mechanism AMQPLAIN. For details see the broker logfile.
 # Compare that timestamp to this log in the control stack.log: sudo rabbitmqctl set_permissions -p nova_cell1 stackrabbit
 # If the n-cpu.log is earlier than the control stack.log timestamp then the failure condition is likely hit.
-if [ ${NUM_OPENSTACK_COMPUTE_NODES} -gt 0 ]; then
+if [ "${NUM_OPENSTACK_COMPUTE_NODES}" -gt 0 ]; then
     WAIT_FOR_RABBITMQ_MINUTES=60
     echo "Wait a maximum of ${WAIT_FOR_RABBITMQ_MINUTES}m until rabbitmq is ready and nova_cell1 created to allow the controller to create nova_cell1 before the computes need it"
     set +e
     retry ${WAIT_FOR_RABBITMQ_MINUTES} 60 "is_rabbitmq_ready ${OPENSTACK_CONTROL_NODE_1_IP}"
     rc=$?
     set -e
+    # shellcheck disable=SC2004
     if ((${rc} == 0)); then
       echo "rabbitmq is ready, starting ${NUM_OPENSTACK_COMPUTE_NODES} compute(s)"
     else
@@ -890,31 +894,31 @@ if [ ${NUM_OPENSTACK_COMPUTE_NODES} -gt 0 ]; then
     fi
 fi
 
-for i in `seq 1 ${NUM_OPENSTACK_COMPUTE_NODES}`; do
+for i in $(seq 1 "${NUM_OPENSTACK_COMPUTE_NODES}"); do
     COMPUTEIP=OPENSTACK_COMPUTE_NODE_${i}_IP
     CONTROLIP=OPENSTACK_CONTROL_NODE_1_IP
     echo "Configure the stack of the compute node ${i} of ${NUM_OPENSTACK_COMPUTE_NODES}: ${!COMPUTEIP}"
-    scp ${WORKSPACE}/disable_firewall.sh "${!COMPUTEIP}:/tmp"
+    scp "${WORKSPACE}/disable_firewall.sh" "${!COMPUTEIP}:/tmp"
     ${SSH} "${!COMPUTEIP}" "sudo bash /tmp/disable_firewall.sh"
-    create_etc_hosts ${!COMPUTEIP} ${!CONTROLIP}
-    scp ${WORKSPACE}/hosts_file ${!COMPUTEIP}:/tmp/hosts
-    scp ${WORKSPACE}/get_devstack.sh  ${!COMPUTEIP}:/tmp
-    ${SSH} ${!COMPUTEIP} "bash /tmp/get_devstack.sh > /tmp/get_devstack.sh.txt 2>&1"
-    create_compute_node_local_conf ${!COMPUTEIP} ${!CONTROLIP} ${ODLMGRIP} "${ODL_OVS_MGRS}"
-    scp ${WORKSPACE}/local.conf_compute_${!COMPUTEIP} ${!COMPUTEIP}:/opt/stack/devstack/local.conf
+    create_etc_hosts "${!COMPUTEIP}" "${!CONTROLIP}"
+    scp "${WORKSPACE}/hosts_file" "${!COMPUTEIP}":/tmp/hosts
+    scp "${WORKSPACE}/get_devstack.sh" "${!COMPUTEIP}":/tmp
+    ${SSH} "${!COMPUTEIP}" "bash /tmp/get_devstack.sh > /tmp/get_devstack.sh.txt 2>&1"
+    create_compute_node_local_conf "${!COMPUTEIP}" "${!CONTROLIP}" "${ODLMGRIP}" "${ODL_OVS_MGRS}"
+    scp "${WORKSPACE}"/local.conf_compute_"${!COMPUTEIP}" "${!COMPUTEIP}":/opt/stack/devstack/local.conf
     echo "Install rdo release to avoid incompatible Package versions"
-    install_rdo_release ${!COMPUTEIP}
-    setup_live_migration_compute ${!COMPUTEIP} ${!CONTROLIP}
-    [ -n "${OVS_INSTALL}" ] && install_ovs ${!COMPUTEIP} /tmp/ovs_rpms
+    install_rdo_release "${!COMPUTEIP}"
+    setup_live_migration_compute "${!COMPUTEIP}" "${!CONTROLIP}"
+    [ -n "${OVS_INSTALL}" ] && install_ovs "${!COMPUTEIP}" /tmp/ovs_rpms
     if [[ "${ENABLE_OS_PLUGINS}" =~ networking-sfc ]]; then
         # This should be really done by networking-odl devstack plugin,
         # but in the meantime do it ourselves
-        ssh ${!COMPUTEIP} "sudo ovs-vsctl set Open_vSwitch . external_ids:of-tunnel=true"
+        ssh "${!COMPUTEIP}" "sudo ovs-vsctl set Open_vSwitch . external_ids:of-tunnel=true"
     fi
-    fix_libvirt_python_build ${!COMPUTEIP}
+    fix_libvirt_python_build "${!COMPUTEIP}"
     echo "Stack the compute node ${i} of ${NUM_OPENSTACK_COMPUTE_NODES}: ${!COMPUTEIP}"
-    ssh ${!COMPUTEIP} "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
-    ssh ${!COMPUTEIP} "ps -ef | grep stack.sh"
+    ssh "${!COMPUTEIP} ""cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
+    ssh "${!COMPUTEIP}" "ps -ef | grep stack.sh"
     os_node_list+=("${!COMPUTEIP}")
 done
 
@@ -923,7 +927,7 @@ echo "nodelist: ${os_node_list[*]}"
 # This script runs on the openstack nodes. It greps for a string that devstack writes when stacking is complete.
 # The script then writes a status depending on the grep output that is later scraped by the robot vm to control
 # the status polling.
-cat > ${WORKSPACE}/check_stacking.sh << EOF
+cat > "${WORKSPACE}/check_stacking.sh" << EOF
 > /tmp/stack_progress
 ps -ef | grep "stack.sh" | grep -v grep
 ret=\$?
@@ -946,14 +950,15 @@ EOF
 iteration=0
 in_progress=1
 while [ ${in_progress} -eq 1 ]; do
+    # shellcheck disable=SC2004
     iteration=$(($iteration + 1))
     for index in "${!os_node_list[@]}"; do
         echo "node $index ${os_node_list[index]}: checking stacking status attempt ${iteration} of 60"
-        scp ${WORKSPACE}/check_stacking.sh  ${os_node_list[index]}:/tmp
-        ${SSH} ${os_node_list[index]} "bash /tmp/check_stacking.sh"
-        scp ${os_node_list[index]}:/tmp/stack_progress .
+        scp "${WORKSPACE}/check_stacking.sh" "${os_node_list[index]}:/tmp"
+        ${SSH} "${os_node_list[index]}" "bash /tmp/check_stacking.sh"
+        scp "${os_node_list[index]}":/tmp/stack_progress .
         cat stack_progress
-        stacking_status=`cat stack_progress`
+        stacking_status=$(cat stack_progress)
         # devstack debugging
         # get_service "${iteration}" "${index}"
         if [ "$stacking_status" == "Still Stacking" ]; then
@@ -981,7 +986,7 @@ done
 echo "Configure the Control Node"
 CONTROLIP=OPENSTACK_CONTROL_NODE_1_IP
 # Gather Compute IPs for the site
-for i in `seq 1 ${NUM_OPENSTACK_COMPUTE_NODES}`; do
+for i in $(seq 1 "${NUM_OPENSTACK_COMPUTE_NODES}"); do
     IP_VAR=OPENSTACK_COMPUTE_NODE_${i}_IP
     COMPUTE_IPS[$((i-1))]=${!IP_VAR}
 done
@@ -993,7 +998,7 @@ ${SSH} ${!CONTROLIP} "cd /opt/stack/devstack; source openrc admin admin; nova hy
 # will be the same as the number of openstack systems. However, if we are doing multinode openstack then the
 # assumption is we have a single control node and the rest are compute nodes, so the number of expected hypervisors
 # is one less than the total number of openstack systems
-if [ ${NUM_OPENSTACK_SYSTEM} -eq 1 ]; then
+if [ "${NUM_OPENSTACK_SYSTEM}" -eq 1 ]; then
     expected_num_hypervisors=1
 else
     expected_num_hypervisors=${NUM_OPENSTACK_COMPUTE_NODES}
@@ -1002,7 +1007,7 @@ else
     fi
 fi
 num_hypervisors=$(${SSH} ${!CONTROLIP} "cd /opt/stack/devstack; source openrc admin admin; openstack hypervisor list -f value | wc -l" | tail -1 | tr -d "\r")
-if ! [ "${num_hypervisors}" ] || ! [ ${num_hypervisors} -eq ${expected_num_hypervisors} ]; then
+if ! [ "${num_hypervisors}" ] || ! [ "${num_hypervisors}" -eq ${expected_num_hypervisors} ]; then
     echo "Error: Only $num_hypervisors hypervisors detected, expected $expected_num_hypervisors"
     exit 1
 fi
@@ -1013,8 +1018,8 @@ echo "prepare external networks by adding vxlan tunnels between all nodes on a s
 devstack_index=1
 for ip in ${!CONTROLIP} ${COMPUTE_IPS[*]}; do
     # FIXME - Workaround, ODL (new netvirt) currently adds PUBLIC_BRIDGE as a port in br-int since it doesn't see such a bridge existing when we stack
-    ${SSH} $ip "sudo ovs-vsctl --if-exists del-port br-int $PUBLIC_BRIDGE"
-    ${SSH} $ip "sudo ovs-vsctl --may-exist add-br $PUBLIC_BRIDGE -- set bridge $PUBLIC_BRIDGE other-config:disable-in-band=true other_config:hwaddr=f6:00:00:ff:01:0$((devstack_index++))"
+    ${SSH} "$ip" "sudo ovs-vsctl --if-exists del-port br-int $PUBLIC_BRIDGE"
+    ${SSH} "$ip" "sudo ovs-vsctl --may-exist add-br $PUBLIC_BRIDGE -- set bridge $PUBLIC_BRIDGE other-config:disable-in-band=true other_config:hwaddr=f6:00:00:ff:01:0$((devstack_index++))"
 done
 
 # ipsec support
@@ -1028,22 +1033,22 @@ if [ "${IPSEC_VXLAN_TUNNELS_ENABLED}" == "yes" ]; then
             ID=0x$(dd if=/dev/urandom count=4 bs=1 2> /dev/null| xxd -p -c 8)
             ip1=${ALL_NODES[$inx_ip1]}
             ip2=${ALL_NODES[$inx_ip2]}
-            ${SSH} $ip1 "sudo ip xfrm state add src $ip1 dst $ip2 proto esp spi $ID reqid $ID mode transport auth sha256 $KEY1 enc aes $KEY2"
-            ${SSH} $ip1 "sudo ip xfrm state add src $ip2 dst $ip1 proto esp spi $ID reqid $ID mode transport auth sha256 $KEY1 enc aes $KEY2"
-            ${SSH} $ip1 "sudo ip xfrm policy add src $ip1 dst $ip2 proto udp dir out tmpl src $ip1 dst $ip2 proto esp reqid $ID mode transport"
-            ${SSH} $ip1 "sudo ip xfrm policy add src $ip2 dst $ip1 proto udp dir in tmpl src $ip2 dst $ip1 proto esp reqid $ID mode transport"
+            ${SSH} "$ip1" "sudo ip xfrm state add src $ip1 dst $ip2 proto esp spi $ID reqid $ID mode transport auth sha256 $KEY1 enc aes $KEY2"
+            ${SSH} "$ip1" "sudo ip xfrm state add src $ip2 dst $ip1 proto esp spi $ID reqid $ID mode transport auth sha256 $KEY1 enc aes $KEY2"
+            ${SSH} "$ip1" "sudo ip xfrm policy add src $ip1 dst $ip2 proto udp dir out tmpl src $ip1 dst $ip2 proto esp reqid $ID mode transport"
+            ${SSH} "$ip1" "sudo ip xfrm policy add src $ip2 dst $ip1 proto udp dir in tmpl src $ip2 dst $ip1 proto esp reqid $ID mode transport"
 
-            ${SSH} $ip2 "sudo ip xfrm state add src $ip2 dst $ip1 proto esp spi $ID reqid $ID mode transport auth sha256 $KEY1 enc aes $KEY2"
-            ${SSH} $ip2 "sudo ip xfrm state add src $ip1 dst $ip2 proto esp spi $ID reqid $ID mode transport auth sha256 $KEY1 enc aes $KEY2"
-            ${SSH} $ip2 "sudo ip xfrm policy add src $ip2 dst $ip1 proto udp dir out tmpl src $ip2 dst $ip1 proto esp reqid $ID mode transport"
-            ${SSH} $ip2 "sudo ip xfrm policy add src $ip1 dst $ip2 proto udp dir in tmpl src $ip1 dst $ip2 proto esp reqid $ID mode transport"
+            ${SSH} "$ip2" "sudo ip xfrm state add src $ip2 dst $ip1 proto esp spi $ID reqid $ID mode transport auth sha256 $KEY1 enc aes $KEY2"
+            ${SSH} "$ip2" "sudo ip xfrm state add src $ip1 dst $ip2 proto esp spi $ID reqid $ID mode transport auth sha256 $KEY1 enc aes $KEY2"
+            ${SSH} "$ip2" "sudo ip xfrm policy add src $ip2 dst $ip1 proto udp dir out tmpl src $ip2 dst $ip1 proto esp reqid $ID mode transport"
+            ${SSH} "$ip2" "sudo ip xfrm policy add src $ip1 dst $ip2 proto udp dir in tmpl src $ip1 dst $ip2 proto esp reqid $ID mode transport"
         done
     done
 
     for ip in ${!CONTROLIP} ${COMPUTE_IPS[*]}; do
         echo "ip xfrm configuration for node $ip:"
-        ${SSH} $ip "sudo ip xfrm policy list"
-        ${SSH} $ip "sudo ip xfrm state list"
+        ${SSH} "$ip" "sudo ip xfrm policy list"
+        ${SSH} "$ip" "sudo ip xfrm state list"
     done
 fi
 
@@ -1080,7 +1085,7 @@ for compute_ip in ${COMPUTE_IPS[*]}; do
     "
     # Tunnel from compute to controller
     CONTROLPORT="control_vxlan"
-    ${SSH} $compute_ip "
+    ${SSH} "$compute_ip" "
         sudo ovs-vsctl add-port $PUBLIC_BRIDGE $CONTROLPORT -- set interface $CONTROLPORT type=vxlan options:local_ip=$compute_ip options:remote_ip=${!CONTROLIP} options:dst_port=9876 options:key=flow
     "
 done
@@ -1124,16 +1129,16 @@ source /tmp/os_netvirt_client_rc
 
 echo "Get all versions before executing robot"
 echo "openstack --version"
-which openstack
+command -v openstack
 openstack --version
 echo "nova --version"
-which nova
+command -v nova
 nova --version
 echo "neutron --version"
-which neutron
+command -v neutron
 neutron --version
 
-stacktime=$(timer $totaltmr)
+stacktime=$(timer "$totaltmr")
 printf "Stacking elapsed time: %s\n" "${stacktime}"
 
 echo "Starting Robot test suites ${SUITES} ..."
@@ -1142,77 +1147,79 @@ suite_num=0
 for suite in ${SUITES}; do
     # prepend an incremental counter to the suite name so that the full robot log combining all the suites as is done
     # in the rebot step below will list all the suites in chronological order as rebot seems to alphabetize them
-    let "suite_num = suite_num + 1"
-    suite_index="$(printf %02d ${suite_num})"
-    suite_name="$(basename ${suite} | cut -d. -f1)"
+    (( suite_num = suite_num + 1 ))
+    suite_index="$(printf %02d "${suite_num}")"
+    suite_name="$(basename "${suite}" | cut -d. -f1)"
     log_name="${suite_index}_${suite_name}"
-    robot -N ${log_name} \
-    -c critical -e exclude -e skip_if_${DISTROSTREAM} \
-    --log log_${log_name}.html --report report_${log_name}.html --output output_${log_name}.xml \
+    robot -N "${log_name}" \
+    -c critical -e exclude -e "skip_if_${DISTROSTREAM}" \
+    --log "log_${log_name}.html" --report "report_${log_name}.html" --output "output_${log_name}.xml" \
     --removekeywords wuks \
     --removekeywords name:SetupUtils.Setup_Utils_For_Setup_And_Teardown \
     --removekeywords name:SetupUtils.Setup_Test_With_Logging_And_Without_Fast_Failing \
     --removekeywords name:OpenStackOperations.Add_OVS_Logging_On_All_OpenStack_Nodes \
-    -v BUNDLEFOLDER:${BUNDLEFOLDER} \
-    -v BUNDLE_URL:${ACTUAL_BUNDLE_URL} \
+    -v BUNDLEFOLDER:"${BUNDLEFOLDER}" \
+    -v BUNDLE_URL:"${ACTUAL_BUNDLE_URL}" \
     -v CMP_INSTANCES_SHARED_PATH:/var/instances \
     -v CONTROLLERFEATURES:"${CONTROLLERFEATURES}" \
-    -v CONTROLLER_USER:${USER} \
+    -v CONTROLLER_USER:"${USER}" \
     -v DEVSTACK_DEPLOY_PATH:/opt/stack/devstack \
-    -v ENABLE_ITM_DIRECT_TUNNELS:${ENABLE_ITM_DIRECT_TUNNELS} \
-    -v HA_PROXY_IP:${HA_PROXY_IP} \
-    -v HA_PROXY_1_IP:${HA_PROXY_1_IP} \
-    -v HA_PROXY_2_IP:${HA_PROXY_2_IP} \
-    -v HA_PROXY_3_IP:${HA_PROXY_3_IP} \
-    -v JDKVERSION:${JDKVERSION} \
-    -v JENKINS_WORKSPACE:${WORKSPACE} \
-    -v NEXUSURL_PREFIX:${NEXUSURL_PREFIX} \
-    -v NUM_ODL_SYSTEM:${NUM_ODL_SYSTEM} \
-    -v NUM_OS_SYSTEM:${NUM_OPENSTACK_SYSTEM} \
-    -v NUM_TOOLS_SYSTEM:${NUM_TOOLS_SYSTEM} \
-    -v ODL_SNAT_MODE:${ODL_SNAT_MODE} \
-    -v ODL_STREAM:${DISTROSTREAM} \
-    -v ODL_SYSTEM_IP:${ODL_SYSTEM_IP} \
-    -v ODL_SYSTEM_1_IP:${ODL_SYSTEM_1_IP} \
-    -v ODL_SYSTEM_2_IP:${ODL_SYSTEM_2_IP} \
-    -v ODL_SYSTEM_3_IP:${ODL_SYSTEM_3_IP} \
-    -v ODL_SYSTEM_4_IP:${ODL_SYSTEM_4_IP} \
-    -v ODL_SYSTEM_5_IP:${ODL_SYSTEM_5_IP} \
-    -v ODL_SYSTEM_6_IP:${ODL_SYSTEM_6_IP} \
-    -v ODL_SYSTEM_7_IP:${ODL_SYSTEM_7_IP} \
-    -v ODL_SYSTEM_8_IP:${ODL_SYSTEM_8_IP} \
-    -v ODL_SYSTEM_9_IP:${ODL_SYSTEM_9_IP} \
-    -v OS_CONTROL_NODE_IP:${OPENSTACK_CONTROL_NODE_1_IP} \
-    -v OS_CONTROL_NODE_1_IP:${OPENSTACK_CONTROL_NODE_1_IP} \
-    -v OS_CONTROL_NODE_2_IP:${OPENSTACK_CONTROL_NODE_2_IP} \
-    -v OS_CONTROL_NODE_3_IP:${OPENSTACK_CONTROL_NODE_3_IP} \
-    -v OPENSTACK_BRANCH:${OPENSTACK_BRANCH} \
-    -v OS_COMPUTE_1_IP:${OPENSTACK_COMPUTE_NODE_1_IP} \
-    -v OS_COMPUTE_2_IP:${OPENSTACK_COMPUTE_NODE_2_IP} \
-    -v OS_COMPUTE_3_IP:${OPENSTACK_COMPUTE_NODE_3_IP} \
-    -v OS_COMPUTE_4_IP:${OPENSTACK_COMPUTE_NODE_4_IP} \
-    -v OS_COMPUTE_5_IP:${OPENSTACK_COMPUTE_NODE_5_IP} \
-    -v OS_COMPUTE_6_IP:${OPENSTACK_COMPUTE_NODE_6_IP} \
-    -v OPENSTACK_TOPO:${OPENSTACK_TOPO} \
-    -v OS_USER:${USER} \
-    -v PUBLIC_PHYSICAL_NETWORK:${PUBLIC_PHYSICAL_NETWORK} \
-    -v SECURITY_GROUP_MODE:${SECURITY_GROUP_MODE} \
-    -v TOOLS_SYSTEM_IP:${TOOLS_SYSTEM_1_IP} \
-    -v TOOLS_SYSTEM_1_IP:${TOOLS_SYSTEM_1_IP} \
-    -v TOOLS_SYSTEM_2_IP:${TOOLS_SYSTEM_2_IP} \
-    -v TOOLS_SYSTEM_3_IP:${TOOLS_SYSTEM_3_IP} \
-    -v USER_HOME:${HOME} \
+    -v ENABLE_ITM_DIRECT_TUNNELS:"${ENABLE_ITM_DIRECT_TUNNELS}" \
+    -v HA_PROXY_IP:"${HA_PROXY_IP}" \
+    -v HA_PROXY_1_IP:"${HA_PROXY_1_IP}" \
+    -v HA_PROXY_2_IP:"${HA_PROXY_2_IP}" \
+    -v HA_PROXY_3_IP:"${HA_PROXY_3_IP}" \
+    -v JDKVERSION:"${JDKVERSION}" \
+    -v JENKINS_WORKSPACE:"${WORKSPACE}" \
+    -v NEXUSURL_PREFIX:"${NEXUSURL_PREFIX}" \
+    -v NUM_ODL_SYSTEM:"${NUM_ODL_SYSTEM}" \
+    -v NUM_OS_SYSTEM:"${NUM_OPENSTACK_SYSTEM}" \
+    -v NUM_TOOLS_SYSTEM:"${NUM_TOOLS_SYSTEM}" \
+    -v ODL_SNAT_MODE:"${ODL_SNAT_MODE}" \
+    -v ODL_STREAM:"${DISTROSTREAM}" \
+    -v ODL_SYSTEM_IP:"${ODL_SYSTEM_IP}" \
+    -v ODL_SYSTEM_1_IP:"${ODL_SYSTEM_1_IP}" \
+    -v ODL_SYSTEM_2_IP:"${ODL_SYSTEM_2_IP}" \
+    -v ODL_SYSTEM_3_IP:"${ODL_SYSTEM_3_IP}" \
+    -v ODL_SYSTEM_4_IP:"${ODL_SYSTEM_4_IP}" \
+    -v ODL_SYSTEM_5_IP:"${ODL_SYSTEM_5_IP}" \
+    -v ODL_SYSTEM_6_IP:"${ODL_SYSTEM_6_IP}" \
+    -v ODL_SYSTEM_7_IP:"${ODL_SYSTEM_7_IP}" \
+    -v ODL_SYSTEM_8_IP:"${ODL_SYSTEM_8_IP}" \
+    -v ODL_SYSTEM_9_IP:"${ODL_SYSTEM_9_IP}" \
+    -v OS_CONTROL_NODE_IP:"${OPENSTACK_CONTROL_NODE_1_IP}" \
+    -v OS_CONTROL_NODE_1_IP:"${OPENSTACK_CONTROL_NODE_1_IP}" \
+    -v OS_CONTROL_NODE_2_IP:"${OPENSTACK_CONTROL_NODE_2_IP}" \
+    -v OS_CONTROL_NODE_3_IP:"${OPENSTACK_CONTROL_NODE_3_IP}" \
+    -v OPENSTACK_BRANCH:"${OPENSTACK_BRANCH}" \
+    -v OS_COMPUTE_1_IP:"${OPENSTACK_COMPUTE_NODE_1_IP}" \
+    -v OS_COMPUTE_2_IP:"${OPENSTACK_COMPUTE_NODE_2_IP}" \
+    -v OS_COMPUTE_3_IP:"${OPENSTACK_COMPUTE_NODE_3_IP}" \
+    -v OS_COMPUTE_4_IP:"${OPENSTACK_COMPUTE_NODE_4_IP}" \
+    -v OS_COMPUTE_5_IP:"${OPENSTACK_COMPUTE_NODE_5_IP}" \
+    -v OS_COMPUTE_6_IP:"${OPENSTACK_COMPUTE_NODE_6_IP}" \
+    -v OPENSTACK_TOPO:"${OPENSTACK_TOPO}" \
+    -v OS_USER:"${USER}" \
+    -v PUBLIC_PHYSICAL_NETWORK:"${PUBLIC_PHYSICAL_NETWORK}" \
+    -v SECURITY_GROUP_MODE:"${SECURITY_GROUP_MODE}" \
+    -v TOOLS_SYSTEM_IP:"${TOOLS_SYSTEM_1_IP}" \
+    -v TOOLS_SYSTEM_1_IP:"${TOOLS_SYSTEM_1_IP}" \
+    -v TOOLS_SYSTEM_2_IP:"${TOOLS_SYSTEM_2_IP}" \
+    -v TOOLS_SYSTEM_3_IP:"${TOOLS_SYSTEM_3_IP}" \
+    -v USER_HOME:"${HOME}" \
     -v WORKSPACE:/tmp \
-    ${TESTOPTIONS} ${suite} || true
+    "${TESTOPTIONS}" "${suite}" || true
 done
 #rebot exit codes seem to be different
-rebot --output ${WORKSPACE}/output.xml --log log_full.html --report report.html -N openstack output_*.xml || true
+rebot --output "${WORKSPACE}/output.xml" --log log_full.html --report report.html -N openstack output_*.xml || true
 
 echo "Examining the files in data/log and checking file size"
-ssh ${ODL_SYSTEM_IP} "ls -altr /tmp/${BUNDLEFOLDER}/data/log/"
-ssh ${ODL_SYSTEM_IP} "du -hs /tmp/${BUNDLEFOLDER}/data/log/*"
+# shellcheck disable=SC2029
+ssh "${ODL_SYSTEM_IP}" "ls -altr /tmp/${BUNDLEFOLDER}/data/log/"
+# shellcheck disable=SC2029
+ssh "${ODL_SYSTEM_IP}" "du -hs /tmp/${BUNDLEFOLDER}/data/log/*"
 
 echo "Tests Executed"
-printf "Total elapsed time: %s, stacking time: %s\n" "$(timer $totaltmr)" "${stacktime}"
+printf "Total elapsed time: %s, stacking time: %s\n" "$(timer "$totaltmr")" "${stacktime}"
 true  # perhaps Jenkins is testing last exit code
 # vim: ts=4 sw=4 sts=4 et ft=sh :
