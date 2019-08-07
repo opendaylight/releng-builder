@@ -1,10 +1,11 @@
+#!/bin/bash
 #@IgnoreInspection BashAddShebang
 # Activate robotframework virtualenv
 # ${ROBOT_VENV} comes from the integration-install-robotframework.sh
 # script.
-# shellcheck source=${ROBOT_VENV}/bin/activate disable=SC1091
-source ${ROBOT_VENV}/bin/activate
-source /tmp/common-functions.sh ${BUNDLEFOLDER}
+# shellcheck disable=SC1090,SC1091
+source "${ROBOT_VENV}/bin/activate"
+source /tmp/common-functions.sh "${BUNDLEFOLDER}"
 
 echo "#################################################"
 echo "##         Configure Cluster and Start         ##"
