@@ -1,4 +1,5 @@
-if [[ ! -z "${CONTROLLERFEATURES}" ]]; then
+#!/bin/bash
+if [[ -n "${CONTROLLERFEATURES}" ]]; then
     ACTUALFEATURES="odl-integration-all,${CONTROLLERFEATURES}"
 else
     ACTUALFEATURES="odl-integration-all"
@@ -11,10 +12,11 @@ else
 fi
 
 echo "Kill any controller running"
+# shellcheck disable=SC2009
 ps axf | grep karaf | grep -v grep | awk '{print "kill -9 " $1}' | sh
 
 echo "Clean Existing distribution"
-rm -rf ${BUNDLEFOLDER}
+rm -rf "${BUNDLEFOLDER}"
 
 echo "Fetch the distribution..."
 if  [[ -z "${BUNDLE_PATH}" ]]; then
@@ -33,12 +35,12 @@ if [[ "$KARAF_VERSION" == "karaf3" ]]; then
     FEATURE_TEST_STRING="features-integration-test"
 fi
 
-sed -ie "s%\(featuresRepositories= \|featuresRepositories = \)%featuresRepositories = mvn:org.opendaylight.integration/${FEATURE_TEST_STRING}/${BUNDLE_VERSION}/xml/features,%g" ${FEATURESCONF}
+sed -ie "s%\(featuresRepositories= \|featuresRepositories = \)%featuresRepositories = mvn:org.opendaylight.integration/${FEATURE_TEST_STRING}/${BUNDLE_VERSION}/xml/features,%g" "${FEATURESCONF}"
 
-if [[ ! -z "${REPO_URL}" ]]; then
+if [[ -n "${REPO_URL}" ]]; then
    # sed below will fail if it finds space between feature repos.
    REPO_URL_NO_SPACE="$(echo -e "${REPO_URL}" | tr -d '[:space:]')"
-   sed -ie "s%featuresRepositories = %featuresRepositories = ${REPO_URL_NO_SPACE},%g" ${FEATURESCONF}
+   sed -ie "s%featuresRepositories = %featuresRepositories = ${REPO_URL_NO_SPACE},%g" "${FEATURESCONF}"
 fi
 
 # Add actual boot features.
@@ -80,10 +82,10 @@ java -version
 
 echo "Redirecting karaf console output to karaf_console.log"
 export KARAF_REDIRECT="${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log"
-mkdir -p ${WORKSPACE}/${BUNDLEFOLDER}/data/log
+mkdir -p "${WORKSPACE}/${BUNDLEFOLDER}/data/log"
 
 echo "Starting controller..."
-${WORKSPACE}/${BUNDLEFOLDER}/bin/start
+"${WORKSPACE}/${BUNDLEFOLDER}/bin/start"
 
 function dump_log_and_exit {
     echo "Dumping first 500K bytes of karaf log..."
@@ -98,7 +100,7 @@ function dump_log_and_exit {
 echo "Waiting up to 6 minutes for controller to come up, checking every 5 seconds..."
 COUNT="0"
 while true; do
-    COUNT=$(( ${COUNT} + 5 ))
+    COUNT=$(( COUNT + 5 ))
     sleep 5
     echo "already waited ${COUNT} seconds..."
     if grep --quiet 'org.opendaylight.infrautils.*System ready' "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log"; then
@@ -141,11 +143,12 @@ cp "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log" .
 cp "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log" .
 
 echo "Kill controller"
+# shellcheck disable=SC2009
 ps axf | grep karaf | grep -v grep | awk '{print "kill -9 " $1}' | sh
 
 echo "Bug 4628: Detecting misplaced config files"
 pushd "${WORKSPACE}/${BUNDLEFOLDER}" || exit
-XMLS_FOUND="$(echo *.xml)"
+XMLS_FOUND="$(echo -- *.xml)"
 popd || exit
 if [ "$XMLS_FOUND" != "*.xml" ]; then
     echo "Bug 4628 confirmed."
