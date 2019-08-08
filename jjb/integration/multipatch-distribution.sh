@@ -13,9 +13,9 @@ MAVEN_OPTIONS="${MAVEN_PARAMS} \
     -Dmaven.repo.local=/tmp/r \
     -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r"
 
-rm -rf $BUILD_DIR
-mkdir -p $BUILD_DIR
-cd $BUILD_DIR
+rm -rf "$BUILD_DIR"
+mkdir -p "$BUILD_DIR"
+cd "$BUILD_DIR"
 
 # Download distribution pom.xml
 wget "http://git.opendaylight.org/gerrit/gitweb?p=integration/distribution.git;a=blob_plain;f=artifacts/upstream/properties/pom.xml;hb=refs/heads/$DISTROBRANCH" -O "pom.xml"
@@ -56,24 +56,24 @@ if [[ "${PATCHES_TO_BUILD}" == *"topic"* ]]; then
     echo "List of projects to check patch in topic: ${PROJECT_LIST[*]}"
     for PROJECT in "${PROJECT_LIST[@]}"; do
         # get all patches number for a topic for a given project
-        IFS=$'\n' read -rd '' -a GERRIT_PATCH_LIST <<< "$(ssh -p 29418 jenkins-$SILO@git.opendaylight.org gerrit query status:open topic:${TOPIC} project:${PROJECT} 2> /dev/null \
+        IFS=$'\n' read -rd '' -a GERRIT_PATCH_LIST <<< "$(ssh -p 29418 "jenkins-$SILO@git.opendaylight.org" gerrit query status:open "topic:${TOPIC}" "project:${PROJECT}" 2> /dev/null \
         | grep 'number:' | awk '{{ print $2 }}')" || true
         # add project if it is the first with patches or it is not the first
-        if [[ -z "${PATCHES_TO_BUILD}" && ! -z "${GERRIT_PATCH_LIST[*]}" ]]; then
+        if [[ -z "${PATCHES_TO_BUILD}" && -n "${GERRIT_PATCH_LIST[*]}" ]]; then
             PATCHES_TO_BUILD="${PROJECT}"
-        elif [[ ! -z "${PATCHES_TO_BUILD}" ]]; then
-            if [[ ! -z "${GERRIT_PATCH_LIST[*]}" ]]; then
+        elif [[ -n "${PATCHES_TO_BUILD}" ]]; then
+            if [[ -n "${GERRIT_PATCH_LIST[*]}" ]]; then
                 echo "Add ${PROJECT}:${DISTRIBUTION_BRANCH_TO_BUILD}"
             fi
             PATCHES_TO_BUILD="${PATCHES_TO_BUILD},${PROJECT}"
         fi
         # sort project patches
-        if [[ ! -z "${GERRIT_PATCH_LIST[*]}" ]]; then
+        if [[ -n "${GERRIT_PATCH_LIST[*]}" ]]; then
             echo "Add ${PROJECT}:${GERRIT_PATCH_LIST[*]}"
             REF_LIST=()
             # create reference list with patch number-refspec
             for PATCH in "${GERRIT_PATCH_LIST[@]}"; do
-                REFSPEC=$(ssh -p 29418 jenkins-$SILO@git.opendaylight.org gerrit query change:${PATCH} --current-patch-set \
+                REFSPEC=$(ssh -p 29418 "jenkins-$SILO@git.opendaylight.org" gerrit query "change:${PATCH}" --current-patch-set \
                 | grep 'ref:' | awk '{{ print $2 }}')
                 REF_LIST+=("${PATCH}-${REFSPEC/refs\/changes\/}")
             done
@@ -125,7 +125,7 @@ for patch in "${PATCHES[@]}"
 do
     echo "-- working on ${patch} --"
     # For patch=controller=61/29761/5:45/29645/6, this gives controller.
-    PROJECT="$(echo ${patch} | cut -d\: -f 1 | cut -d\= -f 1)"
+    PROJECT="$(echo "${patch}" | cut -d':' -f 1 | cut -d'=' -f 1)"
     if [ "${PROJECT}" == "integration/distribution" ]; then
         distribution_status="included"
     fi
@@ -133,9 +133,9 @@ do
     PROJECTS+=("${PROJECT_SHORTNAME}")
     echo "1. cloning project ${PROJECT}"
     git clone "https://git.opendaylight.org/gerrit/${PROJECT}"
-    cd ${PROJECT_SHORTNAME}
+    cd "${PROJECT_SHORTNAME}"
     # For patch = controller=61/29761/5:45/29645/6, this gives 61/29761/5.
-    CHECKOUT="$(echo ${patch} | cut -d\= -s -f 2 | cut -d\: -f 1)"
+    CHECKOUT="$(echo "${patch}" | cut -d'=' -s -f 2 | cut -d':' -f 1)"
     # If there is a base patch for this project, checkout patch, otherwise use
     # distribution pom.xml file to figure out right branch or tag to checkout.
     if [ "x${CHECKOUT}" != "x" ]; then
@@ -144,12 +144,14 @@ do
         git fetch "https://git.opendaylight.org/gerrit/${PROJECT}" "refs/changes/$CHECKOUT"
         git checkout FETCH_HEAD
         # If the patch is for MRI project, adjust the MRI versions
+        # shellcheck disable=SC2235
         if [ "${PROJECT}" == "odlparent" ] || [ "${PROJECT}" == "yangtools" ] || ([ "${PROJECT}" == "mdsal" ] && [ "${DISTROSTREAM}" != "fluorine" ]); then
             ODLPARENT_VERSION="$(xmlstarlet sel -N x=http://maven.apache.org/POM/4.0.0 -t -v //x:odlparent.version ../pom.xml)"
             echo "change odlparent version to ${ODLPARENT_VERSION}"
             find . -name "pom.xml" -print0 | xargs -0 xmlstarlet ed --inplace -P -N x=http://maven.apache.org/POM/4.0.0 -u //x:version\[../x:parent/x:groupId=\"org.opendaylight.odlparent\"\] -v "${ODLPARENT_VERSION}"
             find . -name "pom.xml" -print0 | xargs -0 xmlstarlet ed --inplace -P -N x=http://maven.apache.org/POM/4.0.0 -u //x:version\[../x:groupId=\"org.opendaylight.odlparent\"\] -v "${ODLPARENT_VERSION}"
         fi
+        # shellcheck disable=SC2235
         if [ "${PROJECT}" == "yangtools" ] || ([ "${PROJECT}" == "mdsal" ] && [ "${DISTROSTREAM}" != "fluorine" ]); then
             YANGTOOLS_VERSION="$(xmlstarlet sel -N x=http://maven.apache.org/POM/4.0.0 -t -v //x:yangtools.version ../pom.xml)"
             echo "change yangtools version to ${YANGTOOLS_VERSION}"
@@ -164,10 +166,12 @@ do
         fi
     else
         # If project with no patch is MRI, download release tag:
+        # shellcheck disable=SC2235
         if [ "${PROJECT}" == "odlparent" ] || [ "${PROJECT}" == "yangtools" ] || ([ "${PROJECT}" == "mdsal" ] && [ "${DISTROSTREAM}" != "fluorine" ]); then
+            # shellcheck disable=SC2086
             PROJECT_VERSION="$(xmlstarlet sel -N x=http://maven.apache.org/POM/4.0.0 -t -v //x:${PROJECT_SHORTNAME}.version ../pom.xml)"
             echo "2. checking out tag v${PROJECT_VERSION}"
-            git checkout tags/v${PROJECT_VERSION}
+            git checkout "tags/v${PROJECT_VERSION}"
         # Otherwise download distribution branch:
         else
             echo "2. checking out branch ${DISTRIBUTION_BRANCH_TO_BUILD}"
@@ -175,7 +179,7 @@ do
         fi
     fi
     # For patch=controller=61/29761/5:45/29645/6, this gives 45/29645/6
-    PICK_SEGMENT="$(echo "${patch}" | cut -d\: -s -f 2-)"
+    PICK_SEGMENT="$(echo "${patch}" | cut -d: -s -f 2-)"
     IFS=':' read -ra PICKS <<< "${PICK_SEGMENT}"
     for pick in "${PICKS[@]}"
     do
@@ -207,25 +211,25 @@ for PROJECT_SHORTNAME in "${PROJECTS[@]}"; do
         fast_option=""
     fi
     pushd "${PROJECT_SHORTNAME}"
-    # Build project
-    "$MVN" clean install \
-    -e ${fast_option} \
-    -Dstream="$DISTROSTREAM" \
-    -Dgitid.skip=false \
-    -Dmaven.gitcommitid.skip=false \
-    --global-settings "$GLOBAL_SETTINGS_FILE" \
-    --settings "$SETTINGS_FILE" \
-    $MAVEN_OPTIONS
-    # Since we've installed the artifacts, we can clean the build and save
-    # disk space
-    "$MVN" clean \
-    -e ${fast_option} \
-    -Dstream="$DISTROSTREAM" \
-    -Dgitid.skip=false \
-    -Dmaven.gitcommitid.skip=false \
-    --global-settings "$GLOBAL_SETTINGS_FILE" \
-    --settings "$SETTINGS_FILE" \
-    $MAVEN_OPTIONS
+        # Build project
+        "$MVN" clean install \
+            -e ${fast_option} \
+            -Dstream="$DISTROSTREAM" \
+            -Dgitid.skip=false \
+            -Dmaven.gitcommitid.skip=false \
+            --global-settings "$GLOBAL_SETTINGS_FILE" \
+            --settings "$SETTINGS_FILE" \
+            "$MAVEN_OPTIONS"
+        # Since we've installed the artifacts, we can clean the build and save
+        # disk space
+        "$MVN" clean \
+            -e ${fast_option} \
+            -Dstream="$DISTROSTREAM" \
+            -Dgitid.skip=false \
+            -Dmaven.gitcommitid.skip=false \
+            --global-settings "$GLOBAL_SETTINGS_FILE" \
+            --settings "$SETTINGS_FILE" \
+            "$MAVEN_OPTIONS"
     popd
 done
 
