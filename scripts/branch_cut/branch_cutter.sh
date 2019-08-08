@@ -24,7 +24,7 @@ mod=0
 count=0
 
 function usage {
-    echo "Usage: $(basename $0) options (-c [current release]) (-n [next release]) (-p [previous release]) -h for help";
+    echo "Usage: $(basename "$0") options (-c [current release]) (-n [next release]) (-p [previous release]) -h for help";
     echo "example:"
     echo "branch_cutter.sh -n oxygen -c nitrogen -p carbon"
     exit 0;
@@ -74,8 +74,8 @@ while IFS="" read -r file; do
     else
         ./branch_cut.awk -v new_reltag="$new_reltag" -v curr_reltag="$curr_reltag" -v prev_reltag="$prev_reltag" "$file" > "$TEMP"
         [[ ! -s "$TEMP" ]] && echo "$file: excluded"
-        [[ -s "$TEMP" ]] && mv "$TEMP" "$file" && echo "$file: Done" && let "mod++"
-        let "count++"
+        [[ -s "$TEMP" ]] && mv "$TEMP" "$file" && echo "$file: Done" && (( mod++ ))
+        (( count++ ))
     fi
 done < <(find ../../jjb -name "*.yaml")
 
