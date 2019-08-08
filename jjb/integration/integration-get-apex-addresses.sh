@@ -23,6 +23,7 @@ OPENSTACK_COMPUTE_NODE_2_IP=$(python /tmp/opnfv_releng/jjb/cperf/parse-node-yaml
 OPENSTACK_CONTROL_NODE_1_IP=$ODL_SYSTEM_IP
 ODL_SYSTEM_1_IP=$ODL_SYSTEM_IP
 
+# shellcheck disable=SC2129
 echo "NUM_OPENSTACK_SYSTEM=$NUM_OPENSTACK_SYSTEM" >> slave_addresses.txt
 echo "NUM_ODL_SYSTEM=$NUM_ODL_SYSTEM" >> slave_addresses.txt
 echo "ODL_SYSTEM_IP=$ODL_SYSTEM_IP" >> slave_addresses.txt
@@ -46,7 +47,7 @@ JOB_SUM=$(echo "$JOB_NAME" | sum | awk '{ print $1 }')
 VM_NAME="$JOB_SUM-$BUILD_NUMBER"
 SERVER_ID="$(openstack server show -f value -c id "$(hostname -s)")"
 NETWORK_ID="$(openstack network show -f value -c id "$SILO-$VM_NAME-APEX_192_network")"
-openstack server add network $SERVER_ID $NETWORK_ID
+openstack server add network "$SERVER_ID" "$NETWORK_ID"
 ETH1_MAC=$(ip address show eth1 | grep ether | awk -F' ' '{print $2}')
 ETH1_SCRIPT="/etc/sysconfig/network-scripts/ifcfg-eth1"
 sudo cp /etc/sysconfig/network-scripts/ifcfg-eth0 "$ETH1_SCRIPT"

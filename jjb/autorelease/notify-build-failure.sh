@@ -60,7 +60,7 @@ ARTIFACT_ID=$(awk -F: '/\[ERROR\].*mvn <goals> -rf :/ { print $2}' $CONSOLE_LOG)
 #     project.groupId is not set but IS inherited from project.parent.groupId
 # else
 #     exclude project mailing list
-if [ ! -z "$ARTIFACT_ID" ]; then
+if [ -n "$ARTIFACT_ID" ]; then
     grouplist=()
     while IFS="" read -r p; do
         GROUP=$(xmlstarlet sel\
@@ -72,7 +72,7 @@ if [ ! -z "$ARTIFACT_ID" ]; then
               -v "/x:project/x:parent/x:groupId"\
               --else -o ""\
               "$p" 2>/dev/null)
-        if [ ! -z "${GROUP}" ]; then
+        if [ -n "${GROUP}" ]; then
             # shellcheck disable=SC2207
             grouplist+=($(echo "${GROUP}" | awk -F'.' '{ print $3 }'))
         fi
@@ -122,7 +122,8 @@ ODL releng/autorelease team
 BUILD_STATUS=$(awk '/\[INFO\] Remote staging finished/{flag=1;next}/Total time:/{flag=0}flag' $CONSOLE_LOG \
                    | grep '\] BUILD' | awk '{print $3}')
 
-if ([ ! -z "${NAME}" ] || [ ! -z "${ARTIFACT_ID}" ]) && [[ "${BUILD_STATUS}" != "SUCCESS" ]]; then
+# shellcheck disable=SC2235
+if ([ -n "${NAME}" ] || [ -n "${ARTIFACT_ID}" ]) && [[ "${BUILD_STATUS}" != "SUCCESS" ]]; then
     # project search pattern should handle both scenarios
     # 1. Full format:    ODL :: $PROJECT :: $ARTIFACT_ID
     # 2. Partial format: Building $ARTIFACT_ID

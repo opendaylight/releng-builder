@@ -21,8 +21,8 @@ then
   sudo dpkg --install ./"$pkg_basename"
 elif [[ $PACKAGE == *.deb ]]
 then
-  echo $PACKAGE
-  sudo dpkg --install $PACKAGE
+  echo "$PACKAGE"
+  sudo dpkg --install "$PACKAGE"
 elif [[ $PACKAGE == ppa:* ]]
 then
   sudo add-apt-repository "$PACKAGE"

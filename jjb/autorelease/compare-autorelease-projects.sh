@@ -27,8 +27,8 @@ for project in "${PROJECTS_INT_DIST[@]}"; do
     if [[ $project =~ project.groupId ]] || [[ $project =~ odlparent ]]; then
         continue
     elif [[ $project =~ org.opendaylight ]]; then
-        project=$(echo "${project/org.opendaylight./}")
-        project_int_dist+=( "$(echo "${project/.//}" )" )
+        project=${project/org.opendaylight./}
+        project_int_dist+=("${project/.//}")
     fi
 done
 

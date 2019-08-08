@@ -61,5 +61,5 @@ echo "    <<: *releng_autorelease_view_common_${STREAM}" >> "$VIEWS_AR_YAML_FILE
 
 git add "${VIEWS_AR_YAML_FILE}"
 
-mkdir -p ${WORKSPACE}/archives
-cp "${VIEWS_AR_YAML_FILE}" ${WORKSPACE}/archives
+mkdir -p "${WORKSPACE}/archives"
+cp "${VIEWS_AR_YAML_FILE}" "${WORKSPACE}/archives"

@@ -22,6 +22,7 @@ fi
 set -e
 
 # Verify Java process is not running
+# shellcheck disable=SC2009
 if ps aux | grep "[o]pendaylight"; then
   # Fail if exit code 0, ie Java process is running
   echo "OpenDaylight process unexpectedly still running"

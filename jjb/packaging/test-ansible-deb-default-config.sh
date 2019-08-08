@@ -7,16 +7,16 @@ sudo apt-get remove opendaylight && sudo apt-get purge opendaylight
 sudo rm -rf /opt/opendaylight
 
 # Install OpenDaylight via repo using example Ansible playbook
-sudo ansible-playbook -i "localhost," -c local $WORKSPACE/packaging-ansible/examples/deb_repo_api.yml
+sudo ansible-playbook -i "localhost," -c local "$WORKSPACE"/packaging-ansible/examples/deb_repo_api.yml
 
 # Create Ansible custom module directories
 sudo mkdir -p /usr/share/ansible/plugins/modules
 
 # Copy the custom module to the directory above
-sudo cp $WORKSPACE/packaging-ansible/library/odl_usermod.py /usr/share/ansible/plugins/modules/
+sudo cp "$WORKSPACE"/packaging-ansible/library/odl_usermod.py /usr/share/ansible/plugins/modules/
 
 # Execute the odl-user-test playbook
-sudo ansible-playbook -i "localhost," -c local $WORKSPACE/packaging-ansible/tests/test-odl-users.yaml -v
+sudo ansible-playbook -i "localhost," -c local "$WORKSPACE"/packaging-ansible/tests/test-odl-users.yaml -v
 
 # Test the custom log configurations
-#sudo ansible-playbook -i "localhost," -c local $WORKSPACE/packaging-ansible/tests/test-odl-logs.yaml -e test_log_level=INFO -e test_log_mechanism=file -v
+#sudo ansible-playbook -i "localhost," -c local "$WORKSPACE"/packaging-ansible/tests/test-odl-logs.yaml -e test_log_level=INFO -e test_log_mechanism=file -v

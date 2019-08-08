@@ -16,7 +16,7 @@ echo "Uploading distribution to Nexus..."
     -DrepositoryId=opendaylight-snapshot \
     -Durl="$ODLNEXUSPROXY/content/repositories/opendaylight.snapshot/" \
     -DgroupId="org.opendaylight.integration.${GERRIT_PROJECT//\//.}" \
-    -DartifactId=${KARAF_ARTIFACT} \
+    -DartifactId="${KARAF_ARTIFACT}" \
     -Dversion="${BUNDLE_VERSION}" \
     -Dpackaging=zip \
     || true  # Sandbox is not allowed to uplad to Nexus.

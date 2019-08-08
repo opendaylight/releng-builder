@@ -22,8 +22,9 @@ BUNDLE_VERSION=$(xpath pom.xml '/project/version/text()' 2> /dev/null)
 echo "Bundle version is ${BUNDLE_VERSION}"
 # Acquire the timestamp information from maven-metadata.xml
 NEXUSPATH="${NEXUSURL_PREFIX}/${ODL_NEXUS_REPO}/org/opendaylight/integration/${KARAF_ARTIFACT}"
-wget ${NEXUSPATH}/${BUNDLE_VERSION}/maven-metadata.xml
+wget "${NEXUSPATH}/${BUNDLE_VERSION}/maven-metadata.xml"
 
+# shellcheck disable=SC2181
 if [ $? -ne 0 ]; then
   echo "unable to find maven-metadata.xml. no need to continue..."
   exit 0
@@ -36,27 +37,27 @@ BUNDLEFOLDER="${KARAF_ARTIFACT}-${BUNDLE_VERSION}"
 BUNDLE="${KARAF_ARTIFACT}-${TIMESTAMP}.zip"
 ACTUAL_BUNDLE_URL="${NEXUSPATH}/${BUNDLE_VERSION}/${BUNDLE}"
 
-wget --progress=dot:mega $ACTUAL_BUNDLE_URL
+wget --progress=dot:mega "$ACTUAL_BUNDLE_URL"
 echo "Extracting the last distribution found on nexus..."
-unzip -q $BUNDLE
-mv $BUNDLEFOLDER /tmp/distro_old
-rm $BUNDLE
+unzip -q "$BUNDLE"
+mv "$BUNDLEFOLDER" /tmp/distro_old
+rm "$BUNDLE"
 
 echo "Extracting the distribution just created by this job..."
-NEW_DISTRO="$(find $WORKSPACE -name "${KARAF_ARTIFACT}*.zip")"
+NEW_DISTRO="$(find "$WORKSPACE" -name "${KARAF_ARTIFACT}*.zip")"
 NEW_DISTRO_BASENAME="$(basename "$NEW_DISTRO")"
-cp $NEW_DISTRO /tmp/
+cp "$NEW_DISTRO" /tmp/
 cd /tmp/ || exit
-unzip $NEW_DISTRO_BASENAME
-mv $BUNDLEFOLDER distro_new
+unzip "$NEW_DISTRO_BASENAME"
+mv "$BUNDLEFOLDER" distro_new
 
 git clone https://git.opendaylight.org/gerrit/integration/test.git
 cd test/tools/distchanges || exit
-mkdir -p $WORKSPACE/archives
+mkdir -p "$WORKSPACE"/archives
 
 # Full output of compare tool will be in temp file /tmp/dist_diff.txt
 # The file/report to be archived will only list the distribution in the comparison and the patches that
 # are different.
-python distcompare.py -r ssh://jenkins-$SILO@git.opendaylight.org:29418 | tee /tmp/dist_diff.txt
-echo -e "Patch differences listed are in comparison to:\n\t$ACTUAL_BUNDLE_URL\n\n" > $WORKSPACE/archives/distribution_differences.txt
-sed -ne '/Patch differences/,$ p' /tmp/dist_diff.txt >> $WORKSPACE/archives/distribution_differences.txt
+python distcompare.py -r "ssh://jenkins-$SILO@git.opendaylight.org:29418" | tee /tmp/dist_diff.txt
+echo -e "Patch differences listed are in comparison to:\n\t$ACTUAL_BUNDLE_URL\n\n" > "$WORKSPACE"/archives/distribution_differences.txt
+sed -ne '/Patch differences/,$ p' /tmp/dist_diff.txt >> "$WORKSPACE"/archives/distribution_differences.txt
