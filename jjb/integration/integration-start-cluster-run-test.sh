@@ -111,6 +111,7 @@ done
 get_test_suites SUITES
 
 echo "Starting Robot test suites ${SUITES} ..."
+# shellcheck disable=SC2086
 robot -N "${TESTPLAN}" \
       --removekeywords wuks -c critical -e exclude -e "skip_if_${DISTROSTREAM}" \
       -v BUNDLEFOLDER:"${BUNDLEFOLDER}" \
@@ -136,7 +137,7 @@ robot -N "${TESTPLAN}" \
       -v TOOLS_SYSTEM_USER:"${USER}" \
       -v USER_HOME:"${HOME}" \
       -v WORKSPACE:/tmp \
-      "${TESTOPTIONS}" "${SUITES}" || true
+      "${TESTOPTIONS}" ${SUITES} || true
 
 
 
