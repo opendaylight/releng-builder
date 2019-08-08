@@ -20,6 +20,7 @@ git clone https://gitlab.openci.io/openci/prototypes.git
 cd prototypes/federated-cicd
 virtualenv openci_publish
 cd openci_publish
+# shellcheck disable=SC1091
 source bin/activate
 python setup.py install
 
@@ -42,6 +43,6 @@ echo "--------------------------------------------"
 cat  ./json_body.txt
 echo "--------------------------------------------"
 
-python openci_publish -H 129.192.69.55 -U ${ACTIVEMQ_USER} -p ${ACTIVEMQ_PASSWORD} -n openci.prototype -B ./json_body.txt
+python openci_publish -H 129.192.69.55 -U "${ACTIVEMQ_USER}" -p "${ACTIVEMQ_PASSWORD}" -n openci.prototype -B ./json_body.txt
 
 deactivate
