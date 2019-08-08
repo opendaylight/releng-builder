@@ -14,11 +14,12 @@ set -e -o pipefail # Fail on errors, give stacktrace
 set -x # Enable trace
 
 virtualenv --quiet "/tmp/v/odltools"
+# shellcheck disable=SC1091
 source /tmp/v/odltools/bin/activate
 pip install odltools
-mkdir $REPORT_PATH
-python -m odltools csit reports --numjobs $NUM_JOBS --path $REPORT_PATH --url $LOG_URL --jobnames $JOB_NAMES || true
-python -m odltools csit exceptions --numjobs $NUM_JOBS --path $REPORT_PATH --url $LOG_URL --jobnames $JOB_NAMES || true
-mkdir -p $WORKSPACE/archives
-cp $REPORT_PATH/*.txt $WORKSPACE/archives || true
+mkdir "$REPORT_PATH"
+python -m odltools csit reports --numjobs "$NUM_JOBS" --path "$REPORT_PATH" --url "$LOG_URL" --jobnames "$JOB_NAMES" || true
+python -m odltools csit exceptions --numjobs "$NUM_JOBS" --path "$REPORT_PATH" --url "$LOG_URL" --jobnames "$JOB_NAMES" || true
+mkdir -p "$WORKSPACE/archives"
+cp "$REPORT_PATH"/*.txt "$WORKSPACE/archives" || true
 exit 0
