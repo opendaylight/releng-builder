@@ -21,6 +21,7 @@ VERSION=$(grep -m2 '<version>' "${WORKSPACE}/integration/distribution/${KARAF_AR
 echo "VERSION: ${VERSION}"
 STAGING_REPO_ID=$(grep "$NEXUS_STAGING_URL" "$WORKSPACE/archives/staging-repo.txt" | awk '{print $1}')
 BUNDLE_URL="${NEXUSURL}/${STAGING_REPO_ID}/org/opendaylight/integration/${KARAF_ARTIFACT}/${VERSION}/${KARAF_ARTIFACT}-${VERSION}.zip"
+# shellcheck disable=SC2129
 echo STAGING_REPO_ID="$STAGING_REPO_ID" >> "$WORKSPACE/variables.prop"
 echo BUNDLE_URL="$BUNDLE_URL" >> "$WORKSPACE/variables.prop"
 echo KARAF_VERSION="$KARAF_VERSION" >> "$WORKSPACE/variables.prop"
