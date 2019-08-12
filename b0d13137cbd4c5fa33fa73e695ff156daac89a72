@@ -16,6 +16,24 @@
       "revId": "b0d13137cbd4c5fa33fa73e695ff156daac89a72",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51e2d8a3_094a3e51",
+        "filename": "jjb/integration/integration-deploy-controller-run-test.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2019-08-12T14:59:29Z",
+      "side": 1,
+      "message": "I think the breakage is from the quoted ${TESTOPTIONS} this job passes multiple arguments so the quote causes shell to think of them as 1 option. This was caused by a prior patch which I didn\u0027t realize also needed to be unquoted. Sorry about that I\u0027ll propose a patch today.",
+      "parentUuid": "5a1d7472_db51e287",
+      "revId": "b0d13137cbd4c5fa33fa73e695ff156daac89a72",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
     }
   ]
 }
