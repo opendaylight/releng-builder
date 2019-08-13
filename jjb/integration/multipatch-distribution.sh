@@ -212,6 +212,7 @@ for PROJECT_SHORTNAME in "${PROJECTS[@]}"; do
     fi
     pushd "${PROJECT_SHORTNAME}"
         # Build project
+        # shellcheck disable=SC2086
         "$MVN" clean install \
             -e ${fast_option} \
             -Dstream="$DISTROSTREAM" \
@@ -219,9 +220,9 @@ for PROJECT_SHORTNAME in "${PROJECTS[@]}"; do
             -Dmaven.gitcommitid.skip=false \
             --global-settings "$GLOBAL_SETTINGS_FILE" \
             --settings "$SETTINGS_FILE" \
-            "$MAVEN_OPTIONS"
-        # Since we've installed the artifacts, we can clean the build and save
-        # disk space
+            $MAVEN_OPTIONS
+        # Since we've installed the artifacts, we can clean the build and save disk space
+        # shellcheck disable=SC2086
         "$MVN" clean \
             -e ${fast_option} \
             -Dstream="$DISTROSTREAM" \
@@ -229,7 +230,7 @@ for PROJECT_SHORTNAME in "${PROJECTS[@]}"; do
             -Dmaven.gitcommitid.skip=false \
             --global-settings "$GLOBAL_SETTINGS_FILE" \
             --settings "$SETTINGS_FILE" \
-            "$MAVEN_OPTIONS"
+            $MAVEN_OPTIONS
     popd
 done
 
