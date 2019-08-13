@@ -1,5 +1,23 @@
 ---
 - project:
+    name: nemo-magnesium
+    jobs:
+      - odl-maven-jobs
+
+    stream: magnesium
+    project: 'nemo'
+    project-name: 'nemo'
+    branch: 'master'
+    mvn-settings: 'nemo-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: ''
+    email-upstream: '[nemo]'
+    disable-job: true
+
+    # Used by the release job
+    staging-profile-id: a67a9890f6202
+
+- project:
     name: nemo-sodium
     jobs:
       - odl-maven-jobs
@@ -7,7 +25,7 @@
     stream: sodium
     project: 'nemo'
     project-name: 'nemo'
-    branch: 'master'
+    branch: 'stable/sodium'
     mvn-settings: 'nemo-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: ''

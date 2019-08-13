@@ -18,8 +18,17 @@
 
     # CSIT Lists in defaults.yaml
     stream:
-      - sodium:
+      - magnesium:
           branch: 'master'
+          mvn-version: 'mvn35'
+          csit-list: !include: csit-jobs-magnesium.lst
+          build-order: >
+              odlparent yangtools mdsal infrautils controller serviceutils aaa netconf
+              daexim ovsdb neutron openflowplugin coe genius lispflowmapping sfc netvirt
+              bgpcep integration/distribution
+
+      - sodium:
+          branch: 'stable/sodium'
           mvn-version: 'mvn35'
           csit-list: !include: csit-jobs-sodium.lst
           build-order: >
