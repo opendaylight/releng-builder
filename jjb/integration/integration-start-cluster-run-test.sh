@@ -132,9 +132,9 @@ robot -N "${TESTPLAN}" \
       -v NUM_ODL_SYSTEM:"${NUM_ODL_SYSTEM}" \
       -v NUM_TOOLS_SYSTEM:"${NUM_TOOLS_SYSTEM}" \
       -v ODL_STREAM:"${DISTROSTREAM}" \
-      -v ODL_SYSTEM_IP:"${ODL_SYSTEM_IP}" "${odl_variables}" \
+      -v ODL_SYSTEM_IP:"${ODL_SYSTEM_IP}" ${odl_variables} \
       -v ODL_SYSTEM_USER:"${USER}" \
-      -v TOOLS_SYSTEM_IP:"${TOOLS_SYSTEM_IP}" "${tools_variables}" \
+      -v TOOLS_SYSTEM_IP:"${TOOLS_SYSTEM_IP}" ${tools_variables} \
       -v TOOLS_SYSTEM_USER:"${USER}" \
       -v USER_HOME:"${HOME}" \
       -v WORKSPACE:/tmp \
