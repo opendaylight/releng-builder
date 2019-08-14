@@ -14,8 +14,11 @@
       - gerrit-tox-verify
 
     stream:
-      - sodium:
+      - magnesium:
           branch: 'master'
+          integration-test: magnesium
+      - sodium:
+          branch: 'stable/sodium'
           integration-test: sodium
       - neon:
           branch: 'stable/neon'

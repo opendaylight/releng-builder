@@ -20,8 +20,10 @@
     functionality: 'openstack'
 
     stream:
-      - sodium:
+      - magnesium:
           branch: 'master'
+      - sodium:
+          branch: 'stable/sodium'
       - neon:
           branch: 'stable/neon'
           install-features: 'odl-groupbasedpolicy-neutron-and-ofoverlay,odl-restconf'

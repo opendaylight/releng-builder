@@ -1,5 +1,25 @@
 ---
 - project:
+    name: bier-magnesium
+    jobs:
+      - odl-maven-jobs
+
+    stream: magnesium
+    project: 'bier'
+    project-name: 'bier'
+    branch: 'master'
+    build-node: centos7-builder-2c-8g
+    build-timeout: 90
+    mvn-settings: 'bier-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: ''
+    email-upstream: '[bier]'
+    disable-job: true
+
+    # Used by the release job
+    staging-profile-id: 942a8075b1f2a
+
+- project:
     name: bier-sodium
     jobs:
       - odl-maven-jobs
@@ -7,7 +27,7 @@
     stream: sodium
     project: 'bier'
     project-name: 'bier'
-    branch: 'master'
+    branch: 'stable/sodium'
     build-node: centos7-builder-2c-8g
     build-timeout: 90
     mvn-settings: 'bier-settings'

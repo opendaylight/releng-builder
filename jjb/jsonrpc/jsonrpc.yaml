@@ -1,5 +1,27 @@
 ---
 - project:
+    name: jsonrpc-magnesium
+    jobs:
+      - '{project-name}-rtd-jobs':
+          build-node: centos7-builder-2c-2g
+          project-pattern: jsonrpc
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-jsonrpc/91870/
+          rtd-token: 04d31d4414734686d63f9b160e974fe5a18d031d
+      - odl-maven-jobs
+
+    project: 'jsonrpc'
+    project-name: 'jsonrpc'
+    stream: magnesium
+    branch: 'master'
+    mvn-settings: 'jsonrpc-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream},mdsal-merge-{stream}'
+    email-upstream: '[jsonrpc] [odlparent] [yangtools] [controller] [mdsal]'
+
+    # Used by the release job
+    staging-profile-id: 96fdf4408765d
+
+- project:
     name: jsonrpc-sodium
     jobs:
       - '{project-name}-rtd-jobs':
@@ -12,7 +34,7 @@
     project: 'jsonrpc'
     project-name: 'jsonrpc'
     stream: sodium
-    branch: 'master'
+    branch: 'stable/sodium'
     mvn-settings: 'jsonrpc-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream},mdsal-merge-{stream}'

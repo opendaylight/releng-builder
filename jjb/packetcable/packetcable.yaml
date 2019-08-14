@@ -1,5 +1,23 @@
 ---
 - project:
+    name: packetcable-magnesium
+    jobs:
+      - odl-maven-jobs
+
+    stream: magnesium
+    project: 'packetcable'
+    project-name: 'packetcable'
+    branch: 'master'
+    mvn-settings: 'packetcable-settings'
+    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    dependencies: ''
+    email-upstream: '[packetcable]'
+    disable-job: true
+
+    # Used by the release job
+    staging-profile-id: a68ca4a24655c
+
+- project:
     name: packetcable-sodium
     jobs:
       - odl-maven-jobs
@@ -7,7 +25,7 @@
     stream: sodium
     project: 'packetcable'
     project-name: 'packetcable'
-    branch: 'master'
+    branch: 'stable/sodium'
     mvn-settings: 'packetcable-settings'
     mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
     dependencies: ''
