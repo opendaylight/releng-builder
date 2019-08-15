@@ -14,9 +14,6 @@
       - gerrit-tox-verify
 
     stream:
-      - magnesium:
-          branch: 'master'
-          integration-test: magnesium
       - sodium:
           branch: 'stable/sodium'
           integration-test: sodium
@@ -57,10 +54,12 @@
           build-node: centos7-autorelease-4c-16g
 
     stream:
+      - magnesium:
+          branch: 'master'
+          integration-test: magnesium
       - sodium:
           branch: 'master'
           integration-test: sodium
-          java-version: openjdk11
 
     project: releng/autorelease
     project-name: autorelease
@@ -82,7 +81,7 @@
         -Dcheckstyle.skip=true
         -Dskip.karaf.featureTest=true
         -Dsft.heap.max=4g
-    java-version: openjdk8
+    java-version: openjdk11
 
 - project:
     name: autorelease-view
