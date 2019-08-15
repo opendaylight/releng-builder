@@ -11,9 +11,7 @@
           sign-artifacts: true
           mvn-central: true
           ossrh-profile-id: 6386ebbbf3a563
-      - gerrit-maven-verify
-      - gerrit-maven-verify-dependencies:
-          build-timeout: 180
+      - odl-maven-verify-jobs
 
     stream: magnesium
     project: 'archetypes'
@@ -38,9 +36,7 @@
           sign-artifacts: true
           mvn-central: true
           ossrh-profile-id: 6386ebbbf3a563
-      - gerrit-maven-verify
-      - gerrit-maven-verify-dependencies:
-          build-timeout: 180
+      - odl-maven-verify-jobs
 
     stream: sodium
     project: 'archetypes'
@@ -65,9 +61,7 @@
           sign-artifacts: true
           mvn-central: true
           ossrh-profile-id: 6386ebbbf3a563
-      - gerrit-maven-verify
-      - gerrit-maven-verify-dependencies:
-          build-timeout: 180
+      - odl-maven-verify-jobs
 
     stream: neon
     project: 'archetypes'
@@ -92,9 +86,7 @@
           sign-artifacts: true
           mvn-central: true
           ossrh-profile-id: 6386ebbbf3a563
-      - gerrit-maven-verify
-      - gerrit-maven-verify-dependencies:
-          build-timeout: 180
+      - odl-maven-verify-jobs
 
     stream: fluorine
     project: 'archetypes'

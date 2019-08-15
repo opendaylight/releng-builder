@@ -9,7 +9,8 @@
           project-pattern: lispflowmapping
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-lispflowmapping/47783/
           rtd-token: 181be9dd804e4969b9f318a6f1988e3cbee9d9a8
-      - odl-maven-jobs:
+      - odl-maven-jobs
+      - odl-maven-verify-jobs:
           java-version:
             - openjdk8
             - openjdk11
@@ -42,7 +43,8 @@
           project-pattern: lispflowmapping
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-lispflowmapping/47783/
           rtd-token: 181be9dd804e4969b9f318a6f1988e3cbee9d9a8
-      - odl-maven-jobs:
+      - odl-maven-jobs
+      - odl-maven-verify-jobs:
           java-version:
             - openjdk8
             - openjdk11
@@ -75,7 +77,8 @@
           project-pattern: lispflowmapping
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-lispflowmapping/47783/
           rtd-token: 181be9dd804e4969b9f318a6f1988e3cbee9d9a8
-      - odl-maven-jobs:
+      - odl-maven-jobs
+      - odl-maven-verify-jobs:
           java-version:
             - openjdk8
             - openjdk11
@@ -109,6 +112,7 @@
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-lispflowmapping/47783/
           rtd-token: 181be9dd804e4969b9f318a6f1988e3cbee9d9a8
       - odl-maven-jobs
+      - odl-maven-verify-jobs
 
     stream: fluorine
     project: 'lispflowmapping'

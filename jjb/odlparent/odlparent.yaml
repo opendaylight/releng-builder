@@ -8,7 +8,8 @@
           project-pattern: odlparent
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-odlparent/50830/
           rtd-token: e5afd4ac1ead64408d9e13cd1f628ade55512f8f
-      - odl-maven-jobs:
+      - odl-maven-jobs
+      - odl-maven-verify-jobs:
           java-version:
             - openjdk11
       - gerrit-tox-verify
@@ -40,6 +41,7 @@
     jobs:
       - '{project-name}-maven-javadoc-jobs'
       - odl-maven-jobs
+      - odl-maven-verify-jobs
       - gerrit-tox-verify
 
     project: odlparent
@@ -69,6 +71,7 @@
     jobs:
       - '{project-name}-maven-javadoc-jobs'
       - odl-maven-jobs
+      - odl-maven-verify-jobs
       - gerrit-tox-verify
 
     project: odlparent
@@ -98,6 +101,7 @@
     jobs:
       - '{project-name}-maven-javadoc-jobs'
       - odl-maven-jobs
+      - odl-maven-verify-jobs
       - gerrit-tox-verify
 
     project: odlparent

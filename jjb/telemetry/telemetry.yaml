@@ -3,6 +3,7 @@
     name: telemetry-magnesium
     jobs:
       - 'odl-maven-jobs'
+      - odl-maven-verify-jobs
       - '{project-name}-integration-{stream}'
       - '{project-name}-rtd-jobs':
           build-node: centos7-builder-2c-2g
@@ -27,6 +28,7 @@
     name: telemetry-sodium
     jobs:
       - 'odl-maven-jobs'
+      - odl-maven-verify-jobs
       - '{project-name}-integration-{stream}'
       - '{project-name}-rtd-jobs':
           build-node: centos7-builder-2c-2g
@@ -51,6 +53,7 @@
     name: telemetry-neon
     jobs:
       - 'odl-maven-jobs'
+      - odl-maven-verify-jobs
       - '{project-name}-integration-{stream}'
       - '{project-name}-rtd-jobs':
           build-node: centos7-builder-2c-2g
@@ -75,6 +78,7 @@
     name: telemetry-fluorine
     jobs:
       - 'odl-maven-jobs'
+      - odl-maven-verify-jobs
       - '{project-name}-integration-{stream}'
 
     stream: fluorine

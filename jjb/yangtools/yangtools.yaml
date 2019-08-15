@@ -2,7 +2,8 @@
 - project:
     name: yangtools-master
     jobs:
-      - odl-maven-jobs:
+      - odl-maven-jobs
+      - odl-maven-verify-jobs:
           java-version:
             - openjdk11
 
@@ -30,6 +31,7 @@
     name: yangtools-v3.0.x
     jobs:
       - odl-maven-jobs
+      - odl-maven-verify-jobs
 
     project: yangtools
     project-name: yangtools
@@ -56,6 +58,7 @@
     name: yangtools-v2.1.x
     jobs:
       - odl-maven-jobs
+      - odl-maven-verify-jobs
 
     project: yangtools
     project-name: yangtools
@@ -82,6 +85,7 @@
     name: yangtools-v2.0.x
     jobs:
       - odl-maven-jobs
+      - odl-maven-verify-jobs
 
     project: yangtools
     project-name: yangtools
