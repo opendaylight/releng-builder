@@ -23,12 +23,19 @@
           sign-artifacts: true
           mvn-central: true
           ossrh-profile-id: 6386ebbbf3a563
+
+    mvn-version: mvn35
+    disable-job: '{disable-job}'
+
+- job-group:
+    name: odl-maven-verify-jobs
+
+    jobs:
       - gerrit-maven-verify
       - gerrit-maven-verify-dependencies:
           build-timeout: 180
 
     mvn-version: mvn35
-    disable-job: '{disable-job}'
 
 - job-template:
     name: '{project-name}-integration-{stream}'
