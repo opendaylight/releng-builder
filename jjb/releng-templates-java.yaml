@@ -1,5 +1,32 @@
 ---
 - job-group:
+    name: odl-maven-jobs-jdk11
+
+    jobs:
+      - gerrit-maven-clm:
+          nexus-iq-namespace: odl-
+          nexus-iq-stage: release
+
+      # TODO: Figure out what's wrong with the gerrit-maven-merge job.
+      # - gerrit-maven-merge:
+      #     post_build_trigger:
+      #       - project:
+      #           - 'distribution-merge-{stream}'
+      #         condition: SUCCESS
+      #         trigger-with-no-params: true
+      - '{project-name}-merge-{stream}':
+          build-timeout: 180
+          mvn-goals: clean install -V -Dmaven.compile.fork=true -Dintegrationtests -Dvtn.build.jobs=2
+
+      - gerrit-maven-stage:
+          sign-artifacts: true
+          mvn-central: true
+          ossrh-profile-id: 6386ebbbf3a563
+
+    java-version: openjdk11
+    mvn-version: mvn35
+
+- job-group:
     name: odl-maven-jobs
 
     jobs:
@@ -24,6 +51,7 @@
           mvn-central: true
           ossrh-profile-id: 6386ebbbf3a563
 
+    java-version: openjdk8
     mvn-version: mvn35
     disable-job: '{disable-job}'
 
