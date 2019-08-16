@@ -7,13 +7,12 @@
           nexus-iq-namespace: odl-
           nexus-iq-stage: release
 
-      # TODO: Figure out what's wrong with the gerrit-maven-merge job.
-      # - gerrit-maven-merge:
-      #     post_build_trigger:
-      #       - project:
-      #           - 'distribution-merge-{stream}'
-      #         condition: SUCCESS
-      #         trigger-with-no-params: true
+      - gerrit-maven-merge:
+          post_build_trigger:
+            - project:
+                - 'distribution-merge-{stream}'
+              condition: SUCCESS
+              trigger-with-no-params: true
       - '{project-name}-merge-{stream}':
           build-timeout: 180
           mvn-goals: clean install -V -Dmaven.compile.fork=true -Dintegrationtests -Dvtn.build.jobs=2
