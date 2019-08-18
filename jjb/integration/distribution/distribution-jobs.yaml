@@ -23,16 +23,10 @@
     stream:
       - magnesium:
           branch: 'master'
+          karaf-version: odl
       - sodium:
           branch: 'stable/sodium'
           karaf-version: odl
-          # Self-Managed projects repos and features:
-          sm-repos: >
-              mvn:org.opendaylight.telemetry/features-telemetry//xml/features
-          sm-features: >
-              odl-telemetry-collector,
-              odl-telemetry-configurator,
-              odl-telemetry-all
       - neon:
           branch: 'stable/neon'
           karaf-version: odl
@@ -81,8 +75,26 @@
     dist-pom: 'distribution/pom.xml'
 
     stream:
-      - sodium:
+      - magnesium:
           branch: 'master'
+          dependencies: >
+              aaa-merge-{stream},
+              bgpcep-merge-{stream},
+              coe-merge-{stream},
+              controller-merge-{stream},
+              daexim-merge-{stream},
+              genius-merge-{stream},
+              infrautils-merge-{stream},
+              lispflowmapping-merge-{stream},
+              mdsal-merge-{stream},
+              netconf-merge-{stream},
+              netvirt-merge-{stream}
+              neutron-merge-{stream},
+              openflowplugin-merge-{stream},
+              ovsdb-merge-{stream},
+              serviceutils-merge-{stream},
+      - sodium:
+          branch: 'stable/sodium'
           dependencies: >
               aaa-merge-{stream},
               bgpcep-merge-{stream},
@@ -160,12 +172,16 @@
     dist-pom: 'distribution/opendaylight/pom.xml'
 
     stream:
-      - sodium:
+      - magnesium:
           branch: 'master'
           karaf-version: odl
           dependencies: >
               distribution-merge-managed-{stream},
-              telemetry-merge-{stream}
+      - sodium:
+          branch: 'stable/sodium'
+          karaf-version: odl
+          dependencies: >
+              distribution-merge-managed-{stream},
       - neon:
           branch: 'stable/neon'
           karaf-version: odl
@@ -199,12 +215,12 @@
     staging-profile-id: 2af042ed81d5e2
 
     stream:
-      - sodium:
+      - magnesium:
           branch: 'master'
-
+      - sodium:
+          branch: 'stable/sodium'
       - neon:
           branch: 'stable/neon'
-
       - fluorine:
           branch: 'stable/fluorine'
 
