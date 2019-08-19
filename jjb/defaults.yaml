@@ -179,6 +179,9 @@
     10-exclude-value: ''
 
     # Manual CSIT job lists used by sanity or periodic in nature.
+    csit-sanity-list-magnesium: >
+        openflowplugin-csit-1node-sanity-only-magnesium,
+        distribution-sanity-magnesium
     csit-sanity-list-sodium: >
         openflowplugin-csit-1node-sanity-only-sodium,
         distribution-sanity-sodium
@@ -188,6 +191,15 @@
     csit-sanity-list-fluorine: >
         openflowplugin-csit-1node-sanity-only-fluorine,
         distribution-sanity-fluorine
+    csit-weekly-list-magnesium: >
+        controller-csit-1node-notifications-longevity-only-magnesium,
+        controller-csit-3node-drb-partnheal-longevity-only-magnesium,
+        controller-csit-3node-drb-precedence-longevity-only-magnesium,
+        controller-csit-3node-ddb-expl-lead-movement-longevity-only-magnesium,
+        bgpcep-csit-3node-bgpclustering-longevity-only-magnesium,
+        distribution-deploy-magnesium,
+        distribution-offline-magnesium,
+        openflowplugin-csit-1node-longevity-only-magnesium
     csit-weekly-list-sodium: >
         controller-csit-1node-notifications-longevity-only-sodium,
         controller-csit-3node-drb-partnheal-longevity-only-sodium,
