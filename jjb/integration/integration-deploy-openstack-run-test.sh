@@ -1144,6 +1144,8 @@ printf "Stacking elapsed time: %s\n" "${stacktime}"
 echo "Starting Robot test suites ${SUITES} ..."
 # please add robot -v arguments on a single line and alphabetized
 suite_num=0
+# ${TESTOPTIONS}, ${SUITES} are space-separated parameters and should not be quoted.
+ # shellcheck disable=SC2086
 for suite in ${SUITES}; do
     # prepend an incremental counter to the suite name so that the full robot log combining all the suites as is done
     # in the rebot step below will list all the suites in chronological order as rebot seems to alphabetize them
@@ -1208,7 +1210,7 @@ for suite in ${SUITES}; do
     -v TOOLS_SYSTEM_3_IP:"${TOOLS_SYSTEM_3_IP}" \
     -v USER_HOME:"${HOME}" \
     -v WORKSPACE:/tmp \
-    "${TESTOPTIONS}" "${suite}" || true
+    ${TESTOPTIONS} ${suite} || true
 done
 #rebot exit codes seem to be different
 rebot --output "${WORKSPACE}/output.xml" --log log_full.html --report report.html -N openstack output_*.xml || true
