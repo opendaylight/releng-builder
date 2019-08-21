@@ -917,7 +917,7 @@ for i in $(seq 1 "${NUM_OPENSTACK_COMPUTE_NODES}"); do
     fi
     fix_libvirt_python_build "${!COMPUTEIP}"
     echo "Stack the compute node ${i} of ${NUM_OPENSTACK_COMPUTE_NODES}: ${!COMPUTEIP}"
-    ssh "${!COMPUTEIP} ""cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
+    ssh "${!COMPUTEIP}" "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
     ssh "${!COMPUTEIP}" "ps -ef | grep stack.sh"
     os_node_list+=("${!COMPUTEIP}")
 done
