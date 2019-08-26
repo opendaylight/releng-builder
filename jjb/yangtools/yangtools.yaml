@@ -112,6 +112,7 @@
     name: yangtools-sonar
     jobs:
       - gerrit-maven-sonar:
+          java-version: openjdk11
           mvn-params: >
             -Dodl.jacoco.aggregateFile=$WORKSPACE/target/jacoco.exec
             -Dsonar.jacoco.reportPath=$WORKSPACE/target/jacoco.exec
