@@ -2,6 +2,7 @@
 - project:
     name: yangtools-master
     jobs:
+      - '{project-name}-gerrit-release-jobs'
       - odl-maven-jobs-jdk11
       - odl-maven-verify-jobs:
           java-version:

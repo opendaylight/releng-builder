@@ -2,6 +2,7 @@
 - project:
     name: mdsal-master
     jobs:
+      - '{project-name}-gerrit-release-jobs'
       - '{project-name}-rtd-jobs':
           build-node: centos7-builder-2c-2g
           project-pattern: mdsal
