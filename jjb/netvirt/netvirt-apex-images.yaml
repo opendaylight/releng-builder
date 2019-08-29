@@ -6,10 +6,14 @@
 
     project: 'netvirt'
     os-cloud: vex
+    disable-job: true
 
 - job-template:
     name: 'netvirt-apex-image-management'
+    disable-job: false
+
     node: 'centos7-apex-2c-2g'
+    disabled: '{disable-job}'
 
     parameters:
       - string:
