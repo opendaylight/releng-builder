@@ -2,7 +2,7 @@
 - project:
     name: odlparent-master
     jobs:
-      - '{project-name}-gerrit-release-jobs'
+      - 'gerrit-release-merge'
       - '{project-name}-rtd-jobs':
           build-node: centos7-builder-2c-2g
           project-pattern: odlparent
