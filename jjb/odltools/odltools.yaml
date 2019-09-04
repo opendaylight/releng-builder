@@ -2,6 +2,7 @@
 - project:
     name: odltools
     jobs:
+      - gerrit-release-merge
       - gerrit-tox-verify
       - '{project-name}-rtd-jobs':
           build-node: centos7-builder-2c-2g

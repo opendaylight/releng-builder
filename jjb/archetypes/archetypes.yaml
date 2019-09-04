@@ -2,6 +2,7 @@
 - project:
     name: archetypes-magnesium
     jobs:
+      - gerrit-release-merge
       - gerrit-maven-clm
       - '{project-name}-merge-{stream}':
           build-timeout: 180
