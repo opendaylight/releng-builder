@@ -10,8 +10,6 @@
           mvn-goals: clean install -V -Dmaven.compile.fork=true
       - gerrit-maven-stage:
           sign-artifacts: true
-          mvn-central: true
-          ossrh-profile-id: 6386ebbbf3a563
       - odl-maven-verify-jobs
 
     stream: magnesium
@@ -35,8 +33,6 @@
           mvn-goals: clean install -V -Dmaven.compile.fork=true
       - gerrit-maven-stage:
           sign-artifacts: true
-          mvn-central: true
-          ossrh-profile-id: 6386ebbbf3a563
       - odl-maven-verify-jobs
 
     stream: sodium
@@ -60,8 +56,6 @@
           mvn-goals: clean install -V -Dmaven.compile.fork=true
       - gerrit-maven-stage:
           sign-artifacts: true
-          mvn-central: true
-          ossrh-profile-id: 6386ebbbf3a563
       - odl-maven-verify-jobs
 
     stream: neon
@@ -85,8 +79,6 @@
           mvn-goals: clean install -V -Dmaven.compile.fork=true
       - gerrit-maven-stage:
           sign-artifacts: true
-          mvn-central: true
-          ossrh-profile-id: 6386ebbbf3a563
       - odl-maven-verify-jobs
 
     stream: fluorine
