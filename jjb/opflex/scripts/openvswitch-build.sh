@@ -36,7 +36,7 @@ elif [[ $OPENVSWITCH_VERSION =~ noiro ]]; then
 fi
 
 pushd $DESTDIR
-tar -cvzf -- "openvswitch-$OPENVSWITCH_VERSION.tar.gz" *
+tar cvzf "openvswitch-$OPENVSWITCH_VERSION.tar.gz" -- *
 # Move tarball to dir of files that will be uploaded to Nexus
 UPLOAD_FILES_PATH="$WORKSPACE/upload_files"
 mkdir -p "$UPLOAD_FILES_PATH"
