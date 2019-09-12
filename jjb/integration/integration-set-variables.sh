@@ -14,9 +14,6 @@ if [ "$JDKVERSION" == 'openjdk11' ]; then
 elif [ "$JDKVERSION" == 'openjdk8' ]; then
     echo "Preparing for JRE Version 8"
     JAVA_HOME="/usr/lib/jvm/java-1.8.0"
-elif [ "$JDKVERSION" == 'openjdk7' ]; then
-    echo "Preparing for JRE Version 7"
-    JAVA_HOME="/usr/lib/jvm/java-1.7.0"
 fi
 
 echo "Karaf artifact is ${KARAF_ARTIFACT}"
