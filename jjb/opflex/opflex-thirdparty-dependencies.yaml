@@ -66,6 +66,7 @@
           build-timeout: '{build-timeout}'
 
     builders:
+      - lf-infra-pre-build
       - opflex-build-libuv
       - lf-infra-deploy-maven-file:
           global-settings-file: 'global-settings'
@@ -121,6 +122,7 @@
           build-timeout: '{build-timeout}'
 
     builders:
+      - lf-infra-pre-build
       - opflex-build-rapidjson
       - lf-infra-deploy-maven-file:
           global-settings-file: 'global-settings'
@@ -176,6 +178,7 @@
           build-timeout: '{build-timeout}'
 
     builders:
+      - lf-infra-pre-build
       - opflex-build-openvswitch
       - lf-infra-deploy-maven-file:
           global-settings-file: 'global-settings'
