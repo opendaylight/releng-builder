@@ -27,6 +27,13 @@
       - sodium:
           branch: 'stable/sodium'
           karaf-version: odl
+          # Self-Managed projects repos and features:
+          sm-repos: >
+              mvn:org.opendaylight.transportpce/features-transportpce//xml/features
+          sm-features: >
+              odl-transportpce,
+              odl-transportpce-api,
+              odl-transportpce-ordmodels
       - neon:
           branch: 'stable/neon'
           karaf-version: odl
@@ -178,6 +185,7 @@
           karaf-version: odl
           dependencies: >
               distribution-merge-managed-{stream},
+              transportpce-merge-{stream}
       - neon:
           branch: 'stable/neon'
           karaf-version: odl
