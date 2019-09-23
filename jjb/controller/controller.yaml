@@ -8,8 +8,10 @@
           project-pattern: controller
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-controller/48288/
           rtd-token: b8440116c823a80c0fb0479eb7448a9196e6932f
-      - odl-maven-jobs
-      - odl-maven-verify-jobs
+      - odl-maven-jobs-jdk11
+      - odl-maven-verify-jobs:
+          java-version:
+            - openjdk11
 
     stream: magnesium
     project: 'controller'
