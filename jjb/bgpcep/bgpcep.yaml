@@ -9,8 +9,10 @@
           project-pattern: bgpcep
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-bgpcep/47576/
           rtd-token: dbe9d1aabbe8812a26b428908f6613c28e3191fc
-      - odl-maven-jobs
-      - odl-maven-verify-jobs
+      - odl-maven-jobs-jdk11
+      - odl-maven-verify-jobs:
+          java-version:
+            - openjdk11
 
     stream: magnesium
     project: 'bgpcep'

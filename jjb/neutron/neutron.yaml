@@ -4,8 +4,10 @@
     jobs:
       - '{project-name}-distribution-check-{stream}'
       - '{project-name}-maven-javadoc-jobs'
-      - odl-maven-jobs
-      - odl-maven-verify-jobs
+      - odl-maven-jobs-jdk11
+      - odl-maven-verify-jobs:
+          java-version:
+            - openjdk11
 
     stream: magnesium
     project: 'neutron'
