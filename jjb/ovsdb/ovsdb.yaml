@@ -21,7 +21,7 @@
     branch: 'master'
     build-node: centos7-builder-2c-8g
     mvn-settings: 'ovsdb-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    mvn-opts: '-Xmx1024m'
     dependencies: 'odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream}'
     email-upstream: '[ovsdb] [odlparent] [controller] [yangtools]'
 
@@ -50,7 +50,7 @@
     branch: 'stable/sodium'
     build-node: centos7-builder-2c-8g
     mvn-settings: 'ovsdb-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    mvn-opts: '-Xmx1024m'
     dependencies: 'odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream}'
     email-upstream: '[ovsdb] [odlparent] [controller] [yangtools]'
 
@@ -79,7 +79,7 @@
     branch: 'stable/neon'
     build-node: centos7-builder-2c-8g
     mvn-settings: 'ovsdb-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    mvn-opts: '-Xmx1024m'
     dependencies: 'odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream}'
     email-upstream: '[ovsdb] [odlparent] [controller] [yangtools]'
 
@@ -105,7 +105,7 @@
     branch: 'stable/fluorine'
     build-node: centos7-builder-2c-8g
     mvn-settings: 'ovsdb-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    mvn-opts: '-Xmx1024m'
     dependencies: 'odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream}'
     email-upstream: '[ovsdb] [odlparent] [controller] [yangtools]'
 

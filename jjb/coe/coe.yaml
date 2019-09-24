@@ -16,7 +16,7 @@
     stream: magnesium
     branch: 'master'
     mvn-settings: 'coe-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    mvn-opts: '-Xmx1024m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
     email-upstream: '[coe] [odlparent] [yangtools] [controller]'
     build-node: centos7-docker-2c-8g
@@ -41,7 +41,7 @@
     stream: sodium
     branch: 'stable/sodium'
     mvn-settings: 'coe-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    mvn-opts: '-Xmx1024m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
     email-upstream: '[coe] [odlparent] [yangtools] [controller]'
     build-node: centos7-docker-2c-8g
@@ -66,7 +66,7 @@
     stream: neon
     branch: 'stable/neon'
     mvn-settings: 'coe-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    mvn-opts: '-Xmx1024m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
     email-upstream: '[coe] [odlparent] [yangtools] [controller]'
     build-node: centos7-docker-2c-8g
@@ -91,7 +91,7 @@
     stream: fluorine
     branch: 'stable/fluorine'
     mvn-settings: 'coe-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    mvn-opts: '-Xmx1024m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
     email-upstream: '[coe] [odlparent] [yangtools] [controller]'
     build-node: centos7-docker-2c-8g
@@ -108,7 +108,7 @@
     project-name: 'coe'
     branch: 'master'
     mvn-settings: 'coe-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    mvn-opts: '-Xmx1024m'
 
 - project:
     name: coe-view

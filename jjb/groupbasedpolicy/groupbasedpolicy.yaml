@@ -13,7 +13,7 @@
     build-node: centos7-builder-2c-8g
     mvn-settings: 'groupbasedpolicy-settings'
     mvn-goals: '-U clean deploy findbugs:findbugs'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    mvn-opts: '-Xmx1024m'
     build-timeout: 90
     dependencies: >
         openflowjava-merge-{stream},
@@ -40,7 +40,7 @@
     build-node: centos7-builder-2c-8g
     mvn-settings: 'groupbasedpolicy-settings'
     mvn-goals: '-U clean deploy findbugs:findbugs'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    mvn-opts: '-Xmx1024m'
     build-timeout: 90
     dependencies: >
         openflowjava-merge-{stream},
@@ -67,7 +67,7 @@
     build-node: centos7-builder-2c-8g
     mvn-settings: 'groupbasedpolicy-settings'
     mvn-goals: '-U clean deploy findbugs:findbugs'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    mvn-opts: '-Xmx1024m'
     build-timeout: 90
     dependencies: >
         openflowjava-merge-{stream},
@@ -94,7 +94,7 @@
     build-node: centos7-builder-2c-8g
     mvn-settings: 'groupbasedpolicy-settings'
     mvn-goals: '-U clean deploy findbugs:findbugs'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    mvn-opts: '-Xmx1024m'
     build-timeout: 90
     dependencies: >
         openflowjava-merge-{stream},
@@ -118,7 +118,7 @@
     build-node: centos7-builder-2c-8g
     mvn-settings: 'groupbasedpolicy-settings'
     mvn-goals: '-U clean deploy findbugs:findbugs'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    mvn-opts: '-Xmx1024m'
     disable-job: true
 
 - project:

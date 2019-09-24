@@ -16,7 +16,7 @@
     project-name: 'detnet'
     branch: 'master'
     mvn-settings: 'detnet-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    mvn-opts: '-Xmx1024m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
     email-upstream: '[detnet] [odlparent] [yangtools] [controller]'
     build-node: centos7-docker-2c-8g
@@ -40,7 +40,7 @@
     project-name: 'detnet'
     branch: 'stable/sodium'
     mvn-settings: 'detnet-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    mvn-opts: '-Xmx1024m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
     email-upstream: '[detnet] [odlparent] [yangtools] [controller]'
     build-node: centos7-docker-2c-8g
@@ -60,7 +60,7 @@
     project-name: 'detnet'
     branch: 'master'
     mvn-settings: 'detnet-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    mvn-opts: '-Xmx1024m'
 
 - project:
     name: detnet-view

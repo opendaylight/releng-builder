@@ -24,7 +24,7 @@
     build-timeout: 90
     mvn-settings: 'openflowplugin-settings'
     mvn-goals: 'clean deploy javadoc:aggregate'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    mvn-opts: '-Xmx1024m'
     dependencies: >
         odlparent-merge-{stream},
         yangtools-merge-{stream},
@@ -60,7 +60,7 @@
     build-timeout: 90
     mvn-settings: 'openflowplugin-settings'
     mvn-goals: 'clean deploy javadoc:aggregate'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    mvn-opts: '-Xmx1024m'
     dependencies: >
         odlparent-merge-{stream},
         yangtools-merge-{stream},
@@ -96,7 +96,7 @@
     build-timeout: 90
     mvn-settings: 'openflowplugin-settings'
     mvn-goals: 'clean deploy javadoc:aggregate'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    mvn-opts: '-Xmx1024m'
     dependencies: >
         odlparent-merge-{stream},
         yangtools-merge-{stream},
@@ -129,7 +129,7 @@
     build-timeout: 90
     mvn-settings: 'openflowplugin-settings'
     mvn-goals: 'clean deploy javadoc:aggregate'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    mvn-opts: '-Xmx1024m'
     dependencies: >
         odlparent-merge-{stream},
         yangtools-merge-{stream},
@@ -152,7 +152,7 @@
     build-timeout: 90
     mvn-settings: 'openflowplugin-settings'
     mvn-goals: 'clean deploy javadoc:aggregate'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    mvn-opts: '-Xmx1024m'
 
 - project:
     name: openflowplugin-view

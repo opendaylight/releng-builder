@@ -19,7 +19,7 @@
     build-timeout: 120
     branch: 'master'
     mvn-settings: 'bgpcep-settings'
-    mvn-opts: '-Xmx2048m -XX:MaxPermSize=256m'
+    mvn-opts: '-Xmx2048m'
     dependencies: >
         odlparent-merge-{stream},
         yangtools-merge-{stream},
@@ -50,7 +50,7 @@
     build-timeout: 120
     branch: 'stable/sodium'
     mvn-settings: 'bgpcep-settings'
-    mvn-opts: '-Xmx2048m -XX:MaxPermSize=256m'
+    mvn-opts: '-Xmx2048m'
     dependencies: >
         odlparent-merge-{stream},
         yangtools-merge-{stream},
@@ -81,7 +81,7 @@
     build-timeout: 120
     branch: 'stable/neon'
     mvn-settings: 'bgpcep-settings'
-    mvn-opts: '-Xmx2048m -XX:MaxPermSize=256m'
+    mvn-opts: '-Xmx2048m'
     dependencies: >
         odlparent-merge-{stream},
         yangtools-merge-{stream},
@@ -112,7 +112,7 @@
     build-timeout: 120
     branch: 'stable/fluorine'
     mvn-settings: 'bgpcep-settings'
-    mvn-opts: '-Xmx2048m -XX:MaxPermSize=256m'
+    mvn-opts: '-Xmx2048m'
     dependencies: >
         odlparent-merge-{stream},
         yangtools-merge-{stream},
@@ -138,7 +138,7 @@
     build-timeout: 120
     branch: 'master'
     mvn-settings: 'bgpcep-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    mvn-opts: '-Xmx1024m'
 
 - project:
     name: bgpcep-view

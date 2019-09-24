@@ -16,7 +16,7 @@
     project-name: 'alt-datastores'
     branch: 'master'
     mvn-settings: 'alt-datastores-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    mvn-opts: '-Xmx1024m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
     email-upstream: '[alt-datastores] [odlparent] [yangtools] [controller]'
     build-node: centos7-docker-2c-8g
@@ -40,7 +40,7 @@
     project-name: 'alt-datastores'
     branch: 'stable/sodium'
     mvn-settings: 'alt-datastores-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    mvn-opts: '-Xmx1024m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
     email-upstream: '[alt-datastores] [odlparent] [yangtools] [controller]'
     build-node: centos7-docker-2c-8g
@@ -64,7 +64,7 @@
     project-name: 'alt-datastores'
     branch: 'stable/neon'
     mvn-settings: 'alt-datastores-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    mvn-opts: '-Xmx1024m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
     email-upstream: '[alt-datastores] [odlparent] [yangtools] [controller]'
     build-node: centos7-docker-2c-8g
@@ -84,7 +84,7 @@
     project-name: 'alt-datastores'
     branch: 'master'
     mvn-settings: 'alt-datastores-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    mvn-opts: '-Xmx1024m'
 
 - project:
     name: alt-datastores-view

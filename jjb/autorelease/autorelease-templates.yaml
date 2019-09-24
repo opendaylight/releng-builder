@@ -65,7 +65,7 @@
     java-version: '{java-version}'
     mvn-global-settings: global-settings
     mvn-goals: clean deploy
-    mvn-opts: '-Xmx8g -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
+    mvn-opts: '-Xmx8g -Dmaven.compile.fork=true'
     mvn-params: ''
     mvn-settings: autorelease-settings
     mvn-version: mvn35
@@ -602,7 +602,7 @@
               -Pq
               {opendaylight-infra-mvn-opts}
           java-opts:
-            - '-Xmx8g -XX:MaxPermSize=1024m -Dmaven.compile.fork=true'
+            - '-Xmx8g -Dmaven.compile.fork=true'
           settings: '{mvn-settings}'
           settings-type: cfp
           global-settings: '{mvn-global-settings}'

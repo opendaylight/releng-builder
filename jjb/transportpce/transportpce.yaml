@@ -19,7 +19,7 @@
     stream: magnesium
     branch: 'master'
     mvn-settings: 'transportpce-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    mvn-opts: '-Xmx1024m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
     email-upstream: '[transportpce] [odlparent] [yangtools] [controller]'
 
@@ -45,7 +45,7 @@
     stream: sodium
     branch: 'stable/sodium'
     mvn-settings: 'transportpce-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    mvn-opts: '-Xmx1024m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
     email-upstream: '[transportpce] [odlparent] [yangtools] [controller]'
 
@@ -71,7 +71,7 @@
     stream: neon
     branch: 'stable/neon'
     mvn-settings: 'transportpce-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    mvn-opts: '-Xmx1024m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
     email-upstream: '[transportpce] [odlparent] [yangtools] [controller]'
 
@@ -94,7 +94,7 @@
     stream: fluorine
     branch: 'stable/fluorine'
     mvn-settings: 'transportpce-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    mvn-opts: '-Xmx1024m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
     email-upstream: '[transportpce] [odlparent] [yangtools] [controller]'
 
@@ -110,7 +110,7 @@
     project-name: 'transportpce'
     branch: 'master'
     mvn-settings: 'transportpce-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    mvn-opts: '-Xmx1024m'
 
 - project:
     name: transportpce-view

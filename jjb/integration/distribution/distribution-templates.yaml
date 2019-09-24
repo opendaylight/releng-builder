@@ -183,7 +183,7 @@
               {profile}
           # {opendaylight-infra-parallel-mvn-opts} is bad when there are multiple big features in SFT.
           java-opts:
-            - '-Xmx1024m -XX:MaxPermSize=256m'
+            - '-Xmx1024m'
           settings: integration-settings
           settings-type: cfp
           global-settings: global-settings
@@ -264,7 +264,7 @@
           -Dsft.heap.max=4g
           -Djenkins -Dmerge -Dstream={stream}
           {profile}
-      maven-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+      maven-opts: '-Xmx1024m'
       settings: integration-settings
       settings-type: cfp
       global-settings: global-settings

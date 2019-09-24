@@ -67,7 +67,7 @@
               -Dskip.karaf.featureTest=true -Dmaven.compile.fork=true
               -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r
           java-opts:
-            - '-Xmx1024m -XX:MaxPermSize=256m'
+            - '-Xmx1024m'
           settings: 'ovsdb-settings'
           settings-type: cfp
           global-settings: 'global-settings'

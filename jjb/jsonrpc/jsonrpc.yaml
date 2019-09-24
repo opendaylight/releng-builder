@@ -16,7 +16,7 @@
     stream: magnesium
     branch: 'master'
     mvn-settings: 'jsonrpc-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    mvn-opts: '-Xmx1024m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream},mdsal-merge-{stream}'
     email-upstream: '[jsonrpc] [odlparent] [yangtools] [controller] [mdsal]'
 
@@ -39,7 +39,7 @@
     stream: sodium
     branch: 'stable/sodium'
     mvn-settings: 'jsonrpc-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    mvn-opts: '-Xmx1024m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream},mdsal-merge-{stream}'
     email-upstream: '[jsonrpc] [odlparent] [yangtools] [controller] [mdsal]'
 
@@ -62,7 +62,7 @@
     stream: neon
     branch: 'stable/neon'
     mvn-settings: 'jsonrpc-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    mvn-opts: '-Xmx1024m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream},mdsal-merge-{stream}'
     email-upstream: '[jsonrpc] [odlparent] [yangtools] [controller] [mdsal]'
 
@@ -80,7 +80,7 @@
     stream: fluorine
     branch: 'stable/fluorine'
     mvn-settings: 'jsonrpc-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    mvn-opts: '-Xmx1024m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream},mdsal-merge-{stream}'
     email-upstream: '[jsonrpc] [odlparent] [yangtools] [controller] [mdsal]'
 
@@ -96,7 +96,7 @@
     project-name: 'jsonrpc'
     branch: 'master'
     mvn-settings: 'jsonrpc-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    mvn-opts: '-Xmx1024m'
 
 - project:
     name: jsonrpc-view

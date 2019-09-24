@@ -13,7 +13,7 @@
     build-timeout: 90
     branch: 'master'
     mvn-settings: 'neutron-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    mvn-opts: '-Xmx1024m'
     dependencies: 'odlparent-merge-{stream},aaa-merge-{stream}'
     email-upstream: '[neutron] [odlparent] [aaa]'
 
@@ -34,7 +34,7 @@
     build-timeout: 90
     branch: 'stable/sodium'
     mvn-settings: 'neutron-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    mvn-opts: '-Xmx1024m'
     dependencies: 'odlparent-merge-{stream},aaa-merge-{stream}'
     email-upstream: '[neutron] [odlparent] [aaa]'
 
@@ -55,7 +55,7 @@
     build-timeout: 90
     branch: 'stable/neon'
     mvn-settings: 'neutron-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    mvn-opts: '-Xmx1024m'
     dependencies: 'odlparent-merge-{stream},aaa-merge-{stream}'
     email-upstream: '[neutron] [odlparent] [aaa]'
 
@@ -76,7 +76,7 @@
     build-timeout: 90
     branch: 'stable/fluorine'
     mvn-settings: 'neutron-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    mvn-opts: '-Xmx1024m'
     dependencies: 'odlparent-merge-{stream},aaa-merge-{stream}'
     email-upstream: '[neutron] [odlparent] [aaa]'
     disable-job: true
@@ -92,7 +92,7 @@
     project-name: 'neutron'
     branch: 'master'
     mvn-settings: 'neutron-settings'
-    mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+    mvn-opts: '-Xmx1024m'
 
 - project:
     name: neutron-view
