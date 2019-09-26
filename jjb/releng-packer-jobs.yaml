@@ -24,6 +24,7 @@
 
     platforms: centos-7
     templates: builder
+    update-cloud-image: true
 
 - project:
     name: packer-devstack-jobs
@@ -41,6 +42,7 @@
 
     platforms: centos-7
     templates: devstack
+    update-cloud-image: true
 
 - project:
     name: packer-devstack-pre-pip-queens-jobs
@@ -58,6 +60,7 @@
 
     platforms: centos-7
     templates: devstack-pre-pip-queens
+    update-cloud-image: true
 
 - project:
     name: packer-devstack-pre-pip-rocky-jobs
@@ -75,6 +78,7 @@
 
     platforms: centos-7
     templates: devstack-pre-pip-rocky
+    update-cloud-image: true
 
 - project:
     name: packer-devstack-pre-pip-stein-jobs
@@ -92,6 +96,7 @@
 
     platforms: centos-7
     templates: devstack-pre-pip-stein
+    update-cloud-image: true
 
 - project:
     name: packer-docker-jobs
@@ -111,6 +116,7 @@
       - centos-7
       - ubuntu-16.04
     templates: docker
+    update-cloud-image: true
 
 - project:
     name: packer-gbp-jobs
@@ -131,6 +137,7 @@
       - ubuntu-18.04:
           disable-job: true
     templates: gbp
+    update-cloud-image: true
 
 - project:
     name: packer-mininet-ovs-2.5-jobs
@@ -151,6 +158,7 @@
       - ubuntu-18.04:
           disable-job: true
     templates: mininet-ovs-2.5
+    update-cloud-image: true
 
 - project:
     name: packer-mininet-ovs-2.6-jobs
@@ -171,6 +179,7 @@
       - ubuntu-18.04:
           disable-job: true
     templates: mininet-ovs-2.6
+    update-cloud-image: true
 
 - project:
     name: packer-mininet-ovs-2.8-jobs
@@ -191,6 +200,7 @@
       - ubuntu-18.04:
           disable-job: true
     templates: mininet-ovs-2.8
+    update-cloud-image: true
 
 - project:
     name: packer-robot-jobs
@@ -208,6 +218,7 @@
 
     platforms: centos-7
     templates: robot
+    update-cloud-image: true
 
 - project:
     name: packer-kubernetes-jobs
@@ -228,3 +239,24 @@
       - ubuntu-18.04:
           disable-job: true
     templates: kubernetes
+    update-cloud-image: true
+
+- project:
+    name: openstack-update-cloud-images
+    jobs:
+      - gerrit-openstack-update-cloud-image
+
+    project: releng/builder
+    project-name: builder
+    branch: master
+    archive-artifacts: '**/*.log'
+    jenkins-ssh-credential: 'opendaylight-jenkins-ssh'
+
+    build-node: centos7-builder-2c-1g
+    # update-cloud-image: true
+    build-timeout: 10
+
+    gerrit-user: "jenkins-$SILO"
+    gerrit-host: "git.opendaylight.org"
+    gerrit-topic: "update-cloud-image"
+    reviewers-email: "jenkins-releng@opendaylight.org"
