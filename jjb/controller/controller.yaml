@@ -2,7 +2,8 @@
 - project:
     name: controller-magnesium
     jobs:
-      - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-distribution-check-{stream}':
+          java-version: openjdk11
       - '{project-name}-rtd-jobs':
           build-node: centos7-builder-2c-2g
           project-pattern: controller
