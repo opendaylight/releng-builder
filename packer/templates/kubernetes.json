@@ -1,17 +1,24 @@
 {
   "variables": {
     "ansible_roles_path": "roles/coe",
+    "arch": "x86_64",
     "base_image": null,
-    "distro": null,
     "cloud_network": null,
     "cloud_user_data": null,
+    "cloud_region": "ca-ymq-1",
+    "cloud_availability_zone": "ca-ymq-2",
+    "vm_use_block_storage": "true",
+    "vm_volume_size": "20",
+    "vm_image_disk_format": "",
+    "distro": null,
+    "flavor": "v2-highcpu-1",
     "ssh_user": null,
     "ssh_proxy_host": ""
   },
   "builders": [
     {
       "name": "vexxhost",
-      "image_name": "ZZCI - {{user `distro`}} - kubernetes - {{isotime \"20060102-150405.000\"}}",
+      "image_name": "ZZCI - {{user `distro`}} - kubernetes - {{user `arch`}} - {{isotime \"20060102-150405.000\"}}",
       "instance_name": "{{user `distro`}}-kubernetes-{{uuid}}",
       "source_image_name": "{{user `base_image`}}",
       "type": "openstack",
