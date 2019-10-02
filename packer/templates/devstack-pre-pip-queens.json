@@ -1,32 +1,40 @@
 {
   "variables": {
     "ansible_roles_path": ".galaxy",
+    "arch": "x86_64",
     "base_image": null,
-    "distro": null,
     "cloud_network": null,
     "cloud_user_data": null,
+    "cloud_region": "ca-ymq-1",
+    "cloud_availability_zone": "ca-ymq-2",
+    "vm_use_block_storage": "true",
+    "vm_volume_size": "20",
+    "vm_image_disk_format": "",
+    "distro": null,
+    "flavor": "v2-highcpu-1",
     "ssh_user": null,
     "ssh_proxy_host": ""
   },
   "builders": [
     {
       "name": "vexxhost",
-      "image_name": "ZZCI - {{user `distro`}} - devstack-queens - {{isotime \"20060102-150405.000\"}}",
+      "image_name": "ZZCI - {{user `distro`}} - devstack-queens - {{user `arch`}} - {{isotime \"20060102-150405.000\"}}",
       "instance_name": "{{user `distro`}}-devstack-queens-{{uuid}}",
       "source_image_name": "{{user `base_image`}}",
       "type": "openstack",
-      "region": "ca-ymq-1",
-      "availability_zone": "ca-ymq-2",
-      "networks": [
-        "{{user `cloud_network`}}"
-      ],
+      "region": "{{user `cloud_region`}}",
+      "availability_zone": "{{user `cloud_availability_zone`}}",
+      "networks": ["{{user `cloud_network`}}"],
       "user_data_file": "{{user `cloud_user_data`}}",
       "ssh_username": "{{user `ssh_user`}}",
       "ssh_proxy_host": "{{user `ssh_proxy_host`}}",
-      "flavor": "v1-standard-1",
+      "flavor": "{{user `flavor`}}",
       "metadata": {
         "ci_managed": "yes"
-      }
+      },
+      "use_blockstorage_volume": "{{user `vm_use_block_storage`}}",
+      "volume_size": "{{user `vm_volume_size`}}",
+      "image_disk_format": "{{user `vm_image_disk_format`}}"
     }
   ],
   "provisioners": [
