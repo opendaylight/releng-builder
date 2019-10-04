@@ -10,6 +10,7 @@ Following are the list of published images available to be used with Jenkins job
 * ZZCI - CentOS 7 - builder - x86_64 - 20190403-205252.587
 * ZZCI - CentOS 7 - builder - x86_64 - 20190723-062027.340
 * ZZCI - CentOS 7 - builder - x86_64 - 20190822-081553.740
+* ZZCI - CentOS 7 - builder - x86_64 - 20190924-232354.381
 * ZZCI - CentOS 7 - devstack - 20171208-1648
 * ZZCI - CentOS 7 - devstack - 20180723-235345.727
 * ZZCI - CentOS 7 - devstack - 20180911-204116.460
@@ -23,6 +24,7 @@ Following are the list of published images available to be used with Jenkins job
 * ZZCI - CentOS 7 - docker - 20180110-1659
 * ZZCI - CentOS 7 - docker - 20180417-0311
 * ZZCI - CentOS 7 - docker - 20180723-235456.035
+* ZZCI - CentOS 7 - docker - x86_64 - 20190924-232930.807
 * ZZCI - CentOS 7 - java-builder - 20171206-1842
 * ZZCI - CentOS 7 - java-builder - 20171209-0032
 * ZZCI - CentOS 7 - robot - 20180601-2050
