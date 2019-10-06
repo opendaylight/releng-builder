@@ -1910,6 +1910,8 @@
     builders:
       - integration-rebase-gerrit-patch
       - wipe-org-opendaylight-repo
+      - lf-update-java-alternatives:
+          java-version: '{java-version}'
       - maven-target:
           maven-version: mvn35
           pom: '{project}/pom.xml'
