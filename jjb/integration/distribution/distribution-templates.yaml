@@ -28,7 +28,6 @@
     project-type: freestyle
     node: 'centos7-builder-8c-8g'
     concurrent: true
-    jdk: '{java-version}'
 
     properties:
       - opendaylight-infra-properties:
@@ -77,6 +76,8 @@
 
     builders:
       - distribution-check-wipe
+      - lf-update-java-alternatives:
+          java-version: '{java-version}'
       - inject:
           properties-file: 'allowed_projects.txt'
       - distribution-check-build-project:
@@ -134,7 +135,6 @@
     project-type: freestyle
     node: centos7-builder-8c-8g
     concurrent: true
-    jdk: '{java-version}'
     disabled: '{disable-job}'
 
     properties:
@@ -171,6 +171,8 @@
       - lf-provide-maven-settings:
           global-settings-file: 'global-settings'
           settings-file: 'integration-settings'
+      - lf-update-java-alternatives:
+          java-version: '{java-version}'
       - maven-target:
           maven-version: mvn35
           pom: pom.xml
@@ -208,7 +210,6 @@
 
     project-type: maven
     node: 'centos7-builder-8c-8g'
-    jdk: '{java-version}'
     disabled: '{disable-job}'
 
     properties:
@@ -250,6 +251,8 @@
       - lf-provide-maven-settings:
           global-settings-file: 'global-settings'
           settings-file: 'integration-settings'
+      - lf-update-java-alternatives:
+          java-version: '{java-version}'
       - integration-set-variables
       - distribute-build-url:
           path: '$KARAF_ARTIFACT/src/main/assembly'
@@ -308,7 +311,6 @@
     project-type: freestyle
     node: 'centos7-builder-8c-8g'
     concurrent: true
-    jdk: '{java-version}'
 
     properties:
       - opendaylight-infra-properties:
@@ -353,6 +355,8 @@
 
     builders:
       - distribution-check-wipe
+      - lf-update-java-alternatives:
+          java-version: '{java-version}'
       - inject:
           properties-file: 'allowed_projects.txt'
       - distribution-check-build-project:

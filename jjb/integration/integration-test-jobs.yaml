@@ -333,6 +333,8 @@
       - lf-provide-maven-settings:
           global-settings-file: 'global-settings'
           settings-file: 'integration-settings'
+      - lf-update-java-alternatives:
+          java-version: '{java-version}'
       - maven-target:
           maven-version: 'mvn35'
           pom: '$GERRIT_PROJECT/pom.xml'
@@ -388,7 +390,6 @@
     project-type: freestyle
     node: centos7-builder-8c-8g
     concurrent: true
-    jdk: '{java-version}'
 
     properties:
       - opendaylight-infra-properties:
@@ -460,6 +461,8 @@
       - lf-provide-maven-settings:
           global-settings-file: 'global-settings'
           settings-file: 'integration-distribution-settings'
+      - lf-update-java-alternatives:
+          java-version: '{java-version}'
       - integration-multipatch-builder
       - integration-upload-distribution:
           dist-pom: patch_tester/distribution/pom.xml
