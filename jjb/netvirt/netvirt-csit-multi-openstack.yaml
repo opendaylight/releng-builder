@@ -7,6 +7,7 @@
     project: 'netvirt'
     stream: 'magnesium'
     branch: 'master'
+    jre: 'openjdk11'
     testplan: '{project}-{topology}-openstack.txt'
     odl-ml2-driver-version: 'v2'
     enable-openstack-services: 'placement-api,tempest'
@@ -376,6 +377,7 @@
       - magnesium:
           branch: 'master'
           ovs-install: 'v2.9.2'
+          jre: 'openjdk11'
       - sodium:
           branch: 'stable/sodium'
           ovs-install: 'v2.9.2'

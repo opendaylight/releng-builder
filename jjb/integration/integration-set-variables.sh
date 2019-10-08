@@ -10,7 +10,7 @@ fi
 
 if [ "$JDKVERSION" == 'openjdk11' ]; then
     echo "Preparing for JRE Version 11"
-    JAVA_HOME="/opt/jdk-11"
+    JAVA_HOME="/usr/lib/jvm/java-11-openjdk"
 elif [ "$JDKVERSION" == 'openjdk8' ]; then
     echo "Preparing for JRE Version 8"
     JAVA_HOME="/usr/lib/jvm/java-1.8.0"
