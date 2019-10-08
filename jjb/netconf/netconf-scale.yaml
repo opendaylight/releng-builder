@@ -14,6 +14,7 @@
     stream:
       - magnesium:
           branch: 'master'
+          jre: 'openjdk11'
       - sodium:
           branch: 'stable/sodium'
       - neon:
@@ -51,8 +52,11 @@
 
     # Project branches
     stream:
-      - sodium:
+      - magnesium:
           branch: 'master'
+          jre: 'openjdk11'
+      - sodium:
+          branch: 'stable/sodium'
       - neon:
           branch: 'stable/neon'
       - fluorine:
