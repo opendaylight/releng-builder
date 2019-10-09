@@ -26,6 +26,8 @@ BRANCH="$GERRIT_BRANCH"
 # Ensure we fail the job if any steps fail.
 set -eu -o pipefail
 
+pip install --user --upgrade git-review
+
 # Fail if branch cutting is not on master
 if [ "$BRANCH_CUT" = "true" ] && [ "$BRANCH" != "master" ]; then
     echo "ERROR: Cannot branch cut on $BRANCH, its required to be on the master branch."
