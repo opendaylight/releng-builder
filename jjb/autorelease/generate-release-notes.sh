@@ -13,6 +13,14 @@
 
 set -x
 
+set +u  # Allow unbound variables for virtualenv
+virtualenv --quiet "/tmp/v/git-review"
+# shellcheck source=/tmp/v/git-review/bin/activate disable=SC1091
+source "/tmp/v/git-review/bin/activate"
+pip install --quiet --upgrade "pip==9.0.3" setuptools
+pip install --quiet --upgrade git-review
+set -u
+
 RELEASE=${RELEASE:-$(echo "$GERRIT_EVENT_COMMENT_TEXT" | grep generate-release-notes | awk '{print $2}')}
 if [ -z "$RELEASE" ]; then
     echo "ERROR: The RELEASE variable is not set."
