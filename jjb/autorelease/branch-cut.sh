@@ -28,6 +28,8 @@ LOG_FILE="$WORKSPACE/archives/branch-cut.log"
 
 set -eu -o pipefail
 
+pip install --user --quiet --upgrade git-review
+
 # Validate inputs
 if [ -z "$RELEASE" ]; then
     echo "ERROR: RELEASE variable must be set to a release name. Eg Carbon"
