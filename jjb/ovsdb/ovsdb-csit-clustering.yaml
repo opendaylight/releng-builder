@@ -3,7 +3,7 @@
     name: ovsdb-csit-clustering
     jobs:
       - inttest-csit-3node
-      - inttest-csit-verify-3node
+
     # The project name
     project: 'ovsdb'
 
@@ -16,6 +16,7 @@
     stream:
       - magnesium:
           branch: 'master'
+          jre: 'openjdk11'
       - sodium:
           branch: 'stable/sodium'
       - neon:
