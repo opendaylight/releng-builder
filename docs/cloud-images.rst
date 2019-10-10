@@ -14,21 +14,26 @@ Following are the list of published images available to be used with Jenkins job
 * ZZCI - CentOS 7 - devstack - 20171208-1648
 * ZZCI - CentOS 7 - devstack - 20180723-235345.727
 * ZZCI - CentOS 7 - devstack - 20180911-204116.460
+* ZZCI - CentOS 7 - devstack - x86_64 - 20191004-045548.485
 * ZZCI - CentOS 7 - devstack-ocata - 20171208-1649
 * ZZCI - CentOS 7 - devstack-pike - 20171208-1649
 * ZZCI - CentOS 7 - devstack-queens - 20181101-190143.891
+* ZZCI - CentOS 7 - devstack-queens - x86_64 - 20191004-045555.756
 * ZZCI - CentOS 7 - devstack-rocky - 20190601-000116.015
 * ZZCI - CentOS 7 - devstack-rocky - 20190628-065204.973
+* ZZCI - CentOS 7 - devstack-rocky - x86_64 - 20191002-183226.559
 * ZZCI - CentOS 7 - docker - 20171209-0317
 * ZZCI - CentOS 7 - docker - 20180109-0346
 * ZZCI - CentOS 7 - docker - 20180110-1659
 * ZZCI - CentOS 7 - docker - 20180417-0311
 * ZZCI - CentOS 7 - docker - 20180723-235456.035
 * ZZCI - CentOS 7 - docker - x86_64 - 20190924-232930.807
+* ZZCI - CentOS 7 - docker - x86_64 - 20191004-045622.840
 * ZZCI - CentOS 7 - java-builder - 20171206-1842
 * ZZCI - CentOS 7 - java-builder - 20171209-0032
 * ZZCI - CentOS 7 - robot - 20180601-2050
 * ZZCI - CentOS 7 - robot - 20190430-080312.962
+* ZZCI - CentOS 7 - robot - x86_64 - 20191002-145719.577
 * ZZCI - OPNFV - apex - compute - 0
 * ZZCI - OPNFV - apex - compute - 1
 * ZZCI - OPNFV - apex - controller - 0
