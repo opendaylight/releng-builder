@@ -61,3 +61,15 @@ mkdir -p "$WORKSPACE"/archives
 python distcompare.py -r "ssh://jenkins-$SILO@git.opendaylight.org:29418" | tee /tmp/dist_diff.txt
 echo -e "Patch differences listed are in comparison to:\n\t$ACTUAL_BUNDLE_URL\n\n" > "$WORKSPACE"/archives/distribution_differences.txt
 sed -ne '/Patch differences/,$ p' /tmp/dist_diff.txt >> "$WORKSPACE"/archives/distribution_differences.txt
+
+# Check OpenDaylight YANG modules:
+echo "Installing pyang"
+sudo python3 -m pip install pyang
+if [ -f /tmp/distro_new/bin/extract_modules.sh ]; then
+    echo "Extracting YANG modules"
+    /tmp/distro_new/bin/extract_modules.sh
+    echo "Checking YANG modules"
+    /tmp/distro_new/bin/check_modules.sh
+    mv /tmp/distro_new/opendaylight-models "$WORKSPACE"/archives
+fi
+
