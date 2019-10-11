@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dde79c3c_2dde0084",
+        "filename": "jjb/integration/integration-compare-distributions.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2019-10-11T12:31:05Z",
+      "side": 1,
+      "message": "`sudo pip` is not good practice as it overwrites python files that\u0027s supposed to be managed by the distro.\n\nI\u0027d recommend instead to make sure that the shebang line above passes the `-l` option and instead do `pip install --user pyang` or use a virtualenv instead. It\u0027s better for the stability of the VM.",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 33
+      },
+      "revId": "3f3079c6c857ddaa1150238e0d8839571c5d8041",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    }
+  ]
+}
