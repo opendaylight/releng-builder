@@ -10,7 +10,9 @@
           mvn-goals: clean install -V -Dmaven.compile.fork=true
       - gerrit-maven-stage:
           sign-artifacts: true
-      - odl-maven-verify-jobs
+      - odl-maven-verify-jobs:
+          java-version:
+            - openjdk11
 
     stream: magnesium
     project: 'archetypes'
