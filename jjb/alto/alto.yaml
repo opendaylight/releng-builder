@@ -61,26 +61,6 @@
     staging-profile-id: 931eabae9693c
 
 - project:
-    name: alto-fluorine
-    jobs:
-      - odl-maven-jobs
-      - odl-maven-verify-jobs
-
-    stream: fluorine
-    project: 'alto'
-    project-name: 'alto'
-    branch: 'stable/fluorine'
-    build-node: centos7-builder-2c-8g
-    mvn-settings: 'alto-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: 'l2switch-merge-{stream}'
-    email-upstream: '[alto] [l2switch]'
-    disable-job: true
-
-    # Used by the release job
-    staging-profile-id: 931eabae9693c
-
-- project:
     name: alto-sonar
     jobs:
       - gerrit-maven-sonar

@@ -23,12 +23,6 @@
           karaf-version: 'odl'
           # yamllint disable-line rule:line-length
           repo-url: 'mvn:org.opendaylight.sxp/features-sxp/1.8.0-SNAPSHOT/xml/features'
-      - fluorine:
-          branch: 'stable/fluorine'
-          trigger-jobs: '{project}-merge-{stream}'
-          karaf-version: 'odl'
-          # yamllint disable-line rule:line-length
-          repo-url: 'mvn:org.opendaylight.sxp/features-sxp/1.7.2-SNAPSHOT/xml/features'
 
     install:
       - all:

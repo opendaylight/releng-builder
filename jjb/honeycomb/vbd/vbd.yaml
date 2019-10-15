@@ -55,24 +55,6 @@
     staging-profile-id: 96fc362c36862
 
 - project:
-    name: vbd-fluorine
-    jobs:
-      - odl-maven-jobs
-      - odl-maven-verify-jobs
-
-    stream: fluorine
-    project: 'honeycomb/vbd'
-    project-name: 'vbd'
-    branch: 'stable/fluorine'
-    mvn-settings: 'honeycomb-vbd-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: ''
-    email-upstream: '[vbd]'
-
-    # Used by the release job
-    staging-profile-id: 96fc362c36862
-
-- project:
     name: vbd-sonar
     jobs:
       - gerrit-maven-sonar

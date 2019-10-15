@@ -76,26 +76,6 @@
     staging-profile-id: 8ed9c52266504
 
 - project:
-    name: telemetry-fluorine
-    jobs:
-      - 'odl-maven-jobs'
-      - odl-maven-verify-jobs
-      - '{project-name}-integration-{stream}'
-
-    stream: fluorine
-    project: 'telemetry'
-    project-name: 'telemetry'
-    branch: 'stable/fluorine'
-    mvn-settings: 'telemetry-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: ''
-    email-upstream: '[telemetry]'
-    archive-artifacts: ''
-
-    # Used by the release job
-    staging-profile-id: 8ed9c52266504
-
-- project:
     name: telemetry-sonar
     jobs:
       - gerrit-maven-sonar

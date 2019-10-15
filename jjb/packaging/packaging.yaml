@@ -28,7 +28,6 @@
 
     stream:
       - neon
-      - fluorine
       - sodium
 
     distro:
@@ -220,20 +219,6 @@
           build-timeout: '{build-timeout}'
 
     builders:
-      # Test Fluorine SR2 release tarball
-      - inject:
-          # yamllint disable-line rule:line-length
-          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/integration/karaf/0.9.2/karaf-0.9.2.tar.gz'
-      - shell: !include-raw-escape: build-rpm.sh
-      - install-test-uninstall-rpm
-
-      # Test Fluorine SR3 release tarball
-      - inject:
-          # yamllint disable-line rule:line-length
-          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/integration/karaf/0.9.3/karaf-0.9.3.tar.gz'
-      - shell: !include-raw-escape: build-rpm.sh
-      - install-test-uninstall-rpm
-
       # Test Neon SR2 ('Managed Release Common Distro') release tarball
       - inject:
           # yamllint disable-line rule:line-length
@@ -301,58 +286,6 @@
           build-timeout: '{build-timeout}'
 
     builders:
-      # Test Fluorine ('Managed Release Common Distro') release tarball
-      - inject:
-          # yamllint disable-line rule:line-length
-          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/public/org/opendaylight/integration/opendaylight/0.9.0/opendaylight-0.9.0.tar.gz'
-      - shell: !include-raw-escape: build-rpm.sh
-      - install-test-uninstall-rpm
-
-      # Test Fluorine SR1 release tarball
-      - inject:
-          # yamllint disable-line rule:line-length
-          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/integration/karaf/0.9.1/karaf-0.9.1.tar.gz'
-      - shell: !include-raw-escape: build-rpm.sh
-      - install-test-uninstall-rpm
-
-      # Test Fluorine SR2 release tarball
-      - inject:
-          # yamllint disable-line rule:line-length
-          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/integration/karaf/0.9.2/karaf-0.9.2.tar.gz'
-      - shell: !include-raw-escape: build-rpm.sh
-      - install-test-uninstall-rpm
-
-      # Test Fluorine SR3 release tarball
-      - inject:
-          # yamllint disable-line rule:line-length
-          properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/integration/karaf/0.9.3/karaf-0.9.3.tar.gz'
-      - shell: !include-raw-escape: build-rpm.sh
-      - install-test-uninstall-rpm
-
-      # Test Fluorine pre-release autorelease tarball
-      # NB: This will need to be updated as old builds expire
-      # NB: Commented out to reduce maintenance
-      # - inject:
-      # yamllint disable-line rule:line-length
-      #     properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/autorelease-2621/org/opendaylight/integration/karaf/0.9.2/karaf-0.9.2.tar.gz'
-      # - shell: !include-raw-escape: build-rpm.sh
-      # - install-test-uninstall-rpm
-
-      # Test Fluorine multipatch zip (no parallel tarball available)
-      # NB: This will need to be updated as old builds expire
-      # NB: Commented out to reduce maintenance
-      # - inject:
-      # yamllint disable-line rule:line-length
-      #     properties-content: 'DOWNLOAD_URL=https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/org/opendaylight/integration/integration/distribution/karaf/0.9.2-SNAPSHOT/karaf-0.9.2-20181222.162905-8.zip'
-      # - shell: !include-raw-escape: build-rpm.sh
-      # - install-test-uninstall-rpm
-
-      # Test latest Fluorine snapshot
-      - inject:
-          properties-content: 'STREAM=fluorine'
-      - shell: !include-raw: build-rpm-snap.sh
-      - install-test-uninstall-rpm
-
       # Test Neon SR2 release tarball
       - inject:
           # yamllint disable-line rule:line-length

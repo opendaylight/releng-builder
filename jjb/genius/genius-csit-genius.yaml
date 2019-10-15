@@ -23,8 +23,6 @@
           branch: 'stable/sodium'
       - neon:
           branch: 'stable/neon'
-      - fluorine:
-          branch: 'stable/fluorine'
 
     install:
       - only:
@@ -34,29 +32,3 @@
 
     install-features: 'odl-genius-rest'
     robot-options: '-v FAIL_ON_EXCEPTIONS:False'
-
-- project:
-    name: genius-csit-genius-verify
-    jobs:
-      - inttest-csit-verify-1node
-      - inttest-csit-verify-3node
-
-    project: 'genius'
-
-    functionality: 'verify'
-
-    stream:
-      - fluorine:
-          branch: 'master'
-
-    verify-stream: 'neon'
-    verify-branch: 'stable/neon'
-    verify-karaf-version: 'karaf4'
-
-    install:
-      - only:
-          scope: 'only'
-
-    tools_system_count: 3
-
-    install-features: 'odl-genius-rest'

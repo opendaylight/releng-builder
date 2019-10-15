@@ -46,15 +46,6 @@
               daexim ovsdb neutron openflowplugin coe genius lispflowmapping sfc netvirt
               bgpcep integration/distribution
 
-      - fluorine:
-          branch: 'stable/fluorine'
-          mvn-version: 'mvn35'
-          csit-list: !include: csit-jobs-fluorine.lst
-          build-order: >
-              odlparent yangtools infrautils mdsal controller serviceutils aaa netconf
-              daexim ovsdb neutron openflowplugin coe genius lispflowmapping sfc netvirt
-              bgpcep integration/distribution
-
 - project:
     name: integration-distribution
     project: integration/test
@@ -102,18 +93,6 @@
               last-line-is-ignored-so-we-need-something-dummy-here-to-make-sure-the-real-last-line-is-used
           csit-list: !include: csit-jobs-neon.lst
           csit-weekly-list: '{csit-weekly-list-neon}'
-      - fluorine:
-          branch: 'stable/fluorine'
-          csit-blacklist: >
-              alto bier didm dluxapps groupbasedpolicy jsonrpc l2switch nemo
-              of-config p4plugin packetcable sxp telemetry tsdr unimgr usc
-              gate longevity sanity tdd tempest wip
-              netvirt-csit-1node-1cmb-0ctl-0cmp-openstack-pike
-              netvirt-csit-1node-1cmb-0ctl-0cmp-openstack-queens-upstream-stateful-itm-direct
-              netvirt-csit-3node-1cmb
-              last-line-is-ignored-so-we-need-something-dummy-here-to-make-sure-the-real-last-line-is-used
-          csit-list: !include: csit-jobs-fluorine.lst
-          csit-weekly-list: '{csit-weekly-list-fluorine}'
 
 - project:
     name: integration-sanity
@@ -135,10 +114,6 @@
           branch: 'stable/neon'
           karaf-version: odl
           csit-sanity-list: '{csit-sanity-list-neon}'
-      - fluorine:
-          branch: 'stable/fluorine'
-          karaf-version: odl
-          csit-sanity-list: '{csit-sanity-list-fluorine}'
 
 - job-template:
     name: 'integration-merge-dashboard'
@@ -596,60 +571,6 @@
     views:
       - project-view
     project-name: integration
-
-- view:
-    name: csit-stable-f
-    description: 'List of stable integration jobs for managed projects'
-    job-name:
-      - aaa-csit-1node-authn-all-fluorine
-      - bgpcep-csit-1node-throughpcep-all-fluorine
-      - coe-csit-1node-container-networking-only-fluorine
-      - controller-csit-1node-akka1-all-fluorine
-      - controller-csit-1node-benchmark-all-fluorine
-      - controller-csit-1node-notifications-longevity-only-fluorine
-      - controller-csit-1node-rest-cars-perf-all-fluorine
-      - controller-csit-3node-benchmark-all-fluorine
-      - controller-csit-3node-drb-precedence-longevity-only-fluorine
-      - controller-csit-3node-rest-clust-cars-perf-ask-only-fluorine
-      - controller-csit-3node-rest-clust-cars-perf-tell-only-fluorine
-      - daexim-csit-1node-basic-only-fluorine
-      - daexim-csit-3node-clustering-basic-only-fluorine
-      - distribution-csit-1node-userfeatures-all-fluorine
-      - genius-csit-1node-upstream-only-fluorine
-      - genius-csit-3node-upstream-only-fluorine
-      - lispflowmapping-csit-1node-msmr-all-fluorine
-      - netconf-csit-1node-callhome-only-fluorine
-      - netconf-csit-1node-userfeatures-all-fluorine
-      - netvirt-csit-1node-0cmb-1ctl-2cmp-openstack-queens-sfc-fluorine
-      - netvirt-csit-1node-0cmb-1ctl-2cmp-openstack-queens-upstream-stateful-fluorine
-      - openflowplugin-csit-1node-flow-services-all-fluorine
-      - openflowplugin-csit-1node-longevity-only-fluorine
-      - openflowplugin-csit-1node-perf-bulkomatic-only-fluorine
-      - openflowplugin-csit-1node-perf-stats-collection-only-fluorine
-      - openflowplugin-csit-1node-sanity-only-fluorine
-      - openflowplugin-csit-1node-scale-link-only-fluorine
-      - openflowplugin-csit-1node-scale-only-fluorine
-      - openflowplugin-csit-1node-scale-switch-only-fluorine
-      - openflowplugin-csit-3node-clustering-bulkomatic-only-fluorine
-      - openflowplugin-csit-3node-clustering-only-fluorine
-      - ovsdb-csit-3node-upstream-clustering-only-fluorine
-      - sfc-csit-3node-docker-full-deploy-all-fluorine
-      - sfc-csit-3node-rest-basic-all-fluorine
-    view-type: list
-    filter-executors: false
-    filter-queue: false
-    columns:
-      - status
-      - weather
-      - job
-      - last-success
-      - last-failure
-      - last-duration
-      - build-button
-      - jacoco
-      - find-bugs
-      - robot-list
-    recurse: false
 
 - view:
     name: csit-stable-ne

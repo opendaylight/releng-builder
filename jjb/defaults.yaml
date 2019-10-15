@@ -95,9 +95,9 @@
 
     # Data for csit-verify jobs
     # Branch for "last" version detection
-    verify-branch: stable/fluorine
+    verify-branch: stable/neon
     # Value for ODL_STREAM
-    verify-stream: fluorine
+    verify-stream: neon
     verify-karaf-version: karaf4
     verify-jdkversion: openjdk8
 
@@ -188,9 +188,6 @@
     csit-sanity-list-neon: >
         openflowplugin-csit-1node-sanity-only-neon,
         distribution-sanity-neon
-    csit-sanity-list-fluorine: >
-        openflowplugin-csit-1node-sanity-only-fluorine,
-        distribution-sanity-fluorine
     csit-weekly-list-magnesium: >
         controller-csit-1node-notifications-longevity-only-magnesium,
         controller-csit-3node-drb-partnheal-longevity-only-magnesium,
@@ -218,12 +215,3 @@
         distribution-deploy-neon,
         distribution-offline-neon,
         openflowplugin-csit-1node-longevity-only-neon
-    csit-weekly-list-fluorine: >
-        controller-csit-1node-notifications-longevity-only-fluorine,
-        controller-csit-3node-drb-partnheal-longevity-only-fluorine,
-        controller-csit-3node-drb-precedence-longevity-only-fluorine,
-        controller-csit-3node-ddb-expl-lead-movement-longevity-only-fluorine,
-        bgpcep-csit-3node-bgpclustering-longevity-only-fluorine,
-        distribution-deploy-fluorine,
-        distribution-offline-fluorine,
-        openflowplugin-csit-1node-longevity-only-fluorine
