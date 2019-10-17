@@ -10,9 +10,7 @@
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-odlparent/50830/
           rtd-token: e5afd4ac1ead64408d9e13cd1f628ade55512f8f
       - odl-maven-jobs-jdk11
-      - odl-maven-verify-jobs:
-          java-version:
-            - openjdk11
+      - odl-maven-verify-jobs
       - gerrit-tox-verify
 
     project: odlparent
@@ -20,6 +18,7 @@
     stream: master
     branch: master
 
+    java-version: 'openjdk11'
     mvn-settings: odlparent-settings
     mvn-opts: '-Xmx1024m'
     mvn-version: mvn35
@@ -131,7 +130,6 @@
     name: odlparent-sonar
     jobs:
       - gerrit-maven-sonar:
-          java-version: openjdk11
           mvn-params: >
             -Dodl.jacoco.aggregateFile=$WORKSPACE/target/jacoco.exec
             -Dsonar.jacoco.reportPath=$WORKSPACE/target/jacoco.exec
@@ -139,6 +137,7 @@
     project: 'odlparent'
     project-name: 'odlparent'
     branch: 'master'
+    java-version: 'openjdk11'
     mvn-settings: 'odlparent-settings'
     mvn-opts: '-Xmx1024m'
 

@@ -10,14 +10,13 @@
           mvn-goals: clean install -V -Dmaven.compile.fork=true
       - gerrit-maven-stage:
           sign-artifacts: true
-      - odl-maven-verify-jobs:
-          java-version:
-            - openjdk11
+      - odl-maven-verify-jobs
 
     stream: magnesium
     project: 'archetypes'
     project-name: 'archetypes'
     branch: 'master'
+    java-version: 'openjdk11'
     mvn-settings: 'archetypes-settings'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream},mdsal-merge-{stream}'
     email-upstream: '[archetypes] [odlparent] [yangtools] [controller] [mdsal]'
@@ -79,6 +78,7 @@
     project: 'archetypes'
     project-name: 'archetypes'
     branch: 'master'
+    java-version: 'openjdk11'
     mvn-settings: 'archetypes-settings'
 
 - project:
