@@ -4,15 +4,14 @@
     jobs:
       - 'gerrit-release-merge'
       - odl-maven-jobs-jdk11
-      - odl-maven-verify-jobs:
-          java-version:
-            - openjdk11
+      - odl-maven-verify-jobs
 
     project: yangtools
     project-name: yangtools
     branch: master
     stream: master
 
+    java-version: 'openjdk11'
     mvn-settings: 'yangtools-settings'
 
     dependencies: ''
@@ -113,7 +112,6 @@
     name: yangtools-sonar
     jobs:
       - gerrit-maven-sonar:
-          java-version: openjdk11
           mvn-params: >
             -Dodl.jacoco.aggregateFile=$WORKSPACE/target/jacoco.exec
             -Dsonar.jacoco.reportPath=$WORKSPACE/target/jacoco.exec
@@ -122,6 +120,7 @@
     project: 'yangtools'
     project-name: 'yangtools'
     branch: 'master'
+    java-version: 'openjdk11'
     mvn-settings: 'yangtools-settings'
     mvn-opts: '-Xmx1024m'
 

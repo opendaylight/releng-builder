@@ -10,9 +10,7 @@
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-bgpcep/47576/
           rtd-token: dbe9d1aabbe8812a26b428908f6613c28e3191fc
       - odl-maven-jobs-jdk11
-      - odl-maven-verify-jobs:
-          java-version:
-            - openjdk11
+      - odl-maven-verify-jobs
 
     stream: magnesium
     project: 'bgpcep'
@@ -20,6 +18,7 @@
     build-node: centos7-builder-8c-8g
     build-timeout: 120
     branch: 'master'
+    java-version: 'openjdk11'
     mvn-settings: 'bgpcep-settings'
     mvn-opts: '-Xmx2048m'
     dependencies: >
@@ -108,6 +107,7 @@
     build-node: centos7-builder-8c-8g
     build-timeout: 120
     branch: 'master'
+    java-version: 'openjdk11'
     mvn-settings: 'bgpcep-settings'
     mvn-opts: '-Xmx1024m'
 
