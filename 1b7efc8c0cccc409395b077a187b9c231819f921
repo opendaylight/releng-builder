@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c38e99fb_451bbd18",
+        "filename": "jjb/aaa/aaa.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2019-10-17T04:03:44Z",
+      "side": 0,
+      "message": "This change is fine as long as we\u0027re running verify for a single java-version however the reason it\u0027s explicitly listed for verify-jobs is because sometimes projects want to test against more than 1 java-version.\n\nverify jobs is the only job-template that accepts a list of java-versions too so if we put the list outside of verify-jobs it will break other jobs.",
+      "range": {
+        "startLine": 12,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 0
+      },
+      "revId": "1b7efc8c0cccc409395b077a187b9c231819f921",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    }
+  ]
+}
