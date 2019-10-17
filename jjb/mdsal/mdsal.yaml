@@ -9,15 +9,14 @@
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-mdsal/44052/
           rtd-token: a56d6212dd3de3eef12642affe8a6100cc8bc002
       - odl-maven-jobs-jdk11
-      - odl-maven-verify-jobs:
-          java-version:
-            - openjdk11
+      - odl-maven-verify-jobs
 
     project: mdsal
     project-name: mdsal
     branch: master
     stream: master
 
+    java-version: 'openjdk11'
     mvn-settings: 'mdsal-settings'
     mvn-opts: '-Xmx2048m'
 
@@ -102,7 +101,6 @@
     name: mdsal-sonar
     jobs:
       - gerrit-maven-sonar:
-          java-version: openjdk11
           mvn-params: >
             -Dodl.jacoco.aggregateFile=$WORKSPACE/target/jacoco.exec
             -Dsonar.jacoco.reportPath=$WORKSPACE/target/jacoco.exec
@@ -112,6 +110,7 @@
     project-name: 'mdsal'
     branch: 'master'
     build-node: centos7-builder-8c-8g
+    java-version: 'openjdk11'
     mvn-settings: 'mdsal-settings'
     mvn-goals: '-Dmaven.compile.fork=true clean deploy -Dintegrationtests'
     mvn-opts: '-Xmx2048m'

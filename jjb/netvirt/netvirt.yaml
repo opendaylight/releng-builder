@@ -12,9 +12,7 @@
           rtd-token: 7b6a1dcfc729957ace511e016274e253e07a8d6c
       - gerrit-tox-verify
       - odl-maven-jobs-jdk11
-      - odl-maven-verify-jobs:
-          java-version:
-            - openjdk11
+      - odl-maven-verify-jobs
 
     csit-gate-list: 'netvirt-csit-1node-0cmb-1ctl-2cmp-apex-queens-gate-snat-conntrack-{stream}'
     block_on_csit: false
@@ -24,6 +22,8 @@
 
     project: 'netvirt'
     project-name: 'netvirt'
+
+    java-version: 'openjdk11'
     mvn-settings: 'netvirt-settings'
     mvn-opts: '-Xmx2048m'
     build-timeout: 90
@@ -126,6 +126,7 @@
     project: 'netvirt'
     project-name: 'netvirt'
     branch: 'master'
+    java-version: 'openjdk11'
     mvn-settings: 'netvirt-settings'
     mvn-opts: '-Xmx1024m'
 

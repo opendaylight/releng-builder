@@ -9,14 +9,13 @@
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-coe/34924/
           rtd-token: 95a5a8fed43b75c6be8432a2643f20a344ba5155
       - odl-maven-jobs-jdk11
-      - odl-maven-verify-jobs:
-          java-version:
-            - openjdk11
+      - odl-maven-verify-jobs
 
     project: 'coe'
     project-name: 'coe'
     stream: magnesium
     branch: 'master'
+    java-version: 'openjdk11'
     mvn-settings: 'coe-settings'
     mvn-opts: '-Xmx1024m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
@@ -84,6 +83,7 @@
     project: 'coe'
     project-name: 'coe'
     branch: 'master'
+    java-version: 'openjdk11'
     mvn-settings: 'coe-settings'
     mvn-opts: '-Xmx1024m'
 
