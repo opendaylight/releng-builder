@@ -832,15 +832,23 @@ EOF
 
 function create_post_startup_script() {
     cat > "${WORKSPACE}"/post-startup-script.sh <<EOF
-if [[ "$USEFEATURESBOOT" != "True" ]]; then
+# wait up to 60s for karaf port 8101 to be opened, polling every 5s
+loop_count=0;
+until [[ \$loop_count -ge 12 ]]; do
+    netstat -na | grep 8101 && break;
+    loop_count=\$[\$loop_count+1];
+    sleep 5;
+done
 
-    # wait up to 60s for karaf port 8101 to be opened, polling every 5s
-    loop_count=0;
-    until [[ \$loop_count -ge 12 ]]; do
-        netstat -na | grep 8101 && break;
-        loop_count=\$[\$loop_count+1];
-        sleep 5;
-    done
+# This workaround is required for Karaf decanter to work proper. The bundle:refresh does not fail if the decanter bundles are not present
+echo "ssh to karaf console to do bundle refresh of decanter jmx collector"
+sshpass -p karaf ssh -o StrictHostKeyChecking=no \
+                     -o UserKnownHostsFile=/dev/null \
+                     -o LogLevel=error \
+                     -p 8101 karaf@localhost \
+                     "bundle:refresh org.apache.karaf.decanter.collector.jmx && bundle:refresh org.apache.karaf.decanter.appender.elasticsearch"
+
+if [[ "$USEFEATURESBOOT" != "True" ]]; then
 
     echo "going to feature:install --no-auto-refresh ${SPACE_SEPARATED_FEATURES} one at a time"
     for feature in ${SPACE_SEPARATED_FEATURES}; do
