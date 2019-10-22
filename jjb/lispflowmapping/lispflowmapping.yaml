@@ -10,14 +10,13 @@
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-lispflowmapping/47783/
           rtd-token: 181be9dd804e4969b9f318a6f1988e3cbee9d9a8
       - odl-maven-jobs-jdk11
-      - odl-maven-verify-jobs:
-          java-version:
-            - openjdk11
+      - odl-maven-verify-jobs
 
     stream: magnesium
     project: 'lispflowmapping'
     project-name: 'lispflowmapping'
     branch: 'master'
+    java-version: 'openjdk11'
     mvn-settings: 'lispflowmapping-settings'
     mvn-goals: 'clean deploy -DrepoBuild'
     mvn-opts: '-Xmx2048m -Dmaven.compile.fork=true'
@@ -105,6 +104,7 @@
     project: 'lispflowmapping'
     project-name: 'lispflowmapping'
     branch: 'master'
+    java-version: 'openjdk11'
     mvn-settings: 'lispflowmapping-settings'
     mvn-goals: 'clean deploy -DrepoBuild'
     mvn-opts: '-Xmx2048m -Dmaven.compile.fork=true'

@@ -9,14 +9,13 @@
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-daexim/47611/
           rtd-token: 76284f12638574f131cdccdf257d852d07c195fc
       - odl-maven-jobs-jdk11
-      - odl-maven-verify-jobs:
-          java-version:
-            - openjdk11
+      - odl-maven-verify-jobs
 
     project: 'daexim'
     project-name: 'daexim'
     stream: magnesium
     branch: 'master'
+    java-version: 'openjdk11'
     mvn-settings: 'daexim-settings'
     mvn-opts: '-Xmx1024m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
@@ -81,6 +80,7 @@
     project: 'daexim'
     project-name: 'daexim'
     branch: 'master'
+    java-version: 'openjdk11'
     mvn-settings: 'daexim-settings'
     mvn-opts: '-Xmx1024m'
 

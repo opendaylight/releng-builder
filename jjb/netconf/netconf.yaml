@@ -9,15 +9,14 @@
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-netconf/48397/
           rtd-token: aee2df909686ab7ba36f2ed08d90bdcf81f7b8dc
       - odl-maven-jobs-jdk11
-      - odl-maven-verify-jobs:
-          java-version:
-            - openjdk11
+      - odl-maven-verify-jobs
 
     stream: magnesium
     project: 'netconf'
     project-name: 'netconf'
     branch: 'master'
     build-node: centos7-builder-2c-8g
+    java-version: 'openjdk11'
     mvn-settings: 'netconf-settings'
     mvn-goals: 'clean deploy -Pintegrationtests'
     mvn-opts: '-Xmx2048m -Dmaven.compile.fork=true'
@@ -94,6 +93,7 @@
     project-name: 'netconf'
     branch: 'master'
     build-node: centos7-builder-2c-8g
+    java-version: 'openjdk11'
     mvn-settings: 'netconf-settings'
     mvn-goals: 'clean deploy -Pintegrationtests'
     mvn-opts: '-Xmx2048m -Dmaven.compile.fork=true'
