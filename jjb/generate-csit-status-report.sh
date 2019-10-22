@@ -58,7 +58,9 @@ virtualenv --quiet "/tmp/v/jenkins"
 # shellcheck source=/tmp/v/jenkins/bin/activate disable=SC1091
 source "/tmp/v/jenkins/bin/activate"
 pip install --quiet --upgrade "pip<10.0.0" setuptools
-pip install --quiet --upgrade tox beautifulsoup4 requests
+pip install --quiet --upgrade tox
+pip install --quiet --upgrade beautifulsoup4
+pip install --quiet --upgrade requests
 
 echo python "$script" "$BUILD_URL"
 python "$script" "$BUILD_URL"
