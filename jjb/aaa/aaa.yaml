@@ -14,6 +14,8 @@
             - openjdk11
 
     stream: magnesium
+    # Features to install
+    install-features: 'decanter-collector-jmx,decanter-appender-elasticsearch'
     project: 'aaa'
     project-name: 'aaa'
     branch: 'master'
@@ -38,6 +40,8 @@
       - odl-maven-verify-jobs
 
     stream: sodium
+    # Features to install
+    install-features: 'decanter-collector-jmx,decanter-appender-elasticsearch'
     project: 'aaa'
     project-name: 'aaa'
     branch: 'stable/sodium'
@@ -62,6 +66,8 @@
       - odl-maven-verify-jobs
 
     stream: neon
+    # Features to install
+    install-features: 'decanter-collector-jmx,decanter-appender-elasticsearch'
     project: 'aaa'
     project-name: 'aaa'
     branch: 'stable/neon'

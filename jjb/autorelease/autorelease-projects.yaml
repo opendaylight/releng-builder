@@ -21,6 +21,8 @@
           branch: 'stable/neon'
           integration-test: neon
 
+    # Features to install
+    install-features: 'decanter-collector-jmx,decanter-appender-elasticsearch'
     project: releng/autorelease
     project-name: autorelease
     build-node: centos7-builder-2c-8g
@@ -58,6 +60,8 @@
           branch: 'stable/sodium'
           integration-test: sodium-dev-null
 
+    # Features to install
+    install-features: 'decanter-collector-jmx,decanter-appender-elasticsearch'
     project: releng/autorelease
     project-name: autorelease
     build-node: centos7-builder-2c-8g

@@ -7,6 +7,8 @@
       - odl-maven-verify-jobs
 
     stream: magnesium
+    # Features to install
+    install-features: 'decanter-collector-jmx,decanter-appender-elasticsearch'
     project: 'honeycomb/vbd'
     project-name: 'vbd'
     branch: 'master'
@@ -25,6 +27,8 @@
       - odl-maven-verify-jobs
 
     stream: sodium
+    # Features to install
+    install-features: 'decanter-collector-jmx,decanter-appender-elasticsearch'
     project: 'honeycomb/vbd'
     project-name: 'vbd'
     branch: 'stable/sodium'
@@ -43,6 +47,8 @@
       - odl-maven-verify-jobs
 
     stream: neon
+    # Features to install
+    install-features: 'decanter-collector-jmx,decanter-appender-elasticsearch'
     project: 'honeycomb/vbd'
     project-name: 'vbd'
     branch: 'stable/neon'

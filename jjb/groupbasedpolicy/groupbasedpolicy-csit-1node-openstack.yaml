@@ -27,7 +27,9 @@
           branch: 'stable/sodium'
       - neon:
           branch: 'stable/neon'
-          install-features: 'odl-groupbasedpolicy-neutron-and-ofoverlay,odl-restconf'
+          install-features: 'odl-groupbasedpolicy-neutron-and-ofoverlay,odl-restconf,decanter-collector-jmx,decanter-appender-elasticsearch'
+    # Features to install
+    install-features: 'decanter-collector-jmx,decanter-appender-elasticsearch'
 
     openstack:
       - queens:

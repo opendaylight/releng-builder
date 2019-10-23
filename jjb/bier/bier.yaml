@@ -7,6 +7,8 @@
       - odl-maven-verify-jobs
 
     stream: magnesium
+    # Features to install
+    install-features: 'decanter-collector-jmx,decanter-appender-elasticsearch'
     project: 'bier'
     project-name: 'bier'
     branch: 'master'
@@ -28,6 +30,8 @@
       - odl-maven-verify-jobs
 
     stream: sodium
+    # Features to install
+    install-features: 'decanter-collector-jmx,decanter-appender-elasticsearch'
     project: 'bier'
     project-name: 'bier'
     branch: 'stable/sodium'
@@ -49,6 +53,8 @@
       - odl-maven-verify-jobs
 
     stream: neon
+    # Features to install
+    install-features: 'decanter-collector-jmx,decanter-appender-elasticsearch'
     project: 'bier'
     project-name: 'bier'
     branch: 'stable/neon'

@@ -27,7 +27,9 @@
     # Features to install
     install-features: >
         odl-restconf,
-        odl-netconf-clustered-topology
+        odl-netconf-clustered-topology,
+        decanter-collector-jmx,
+        decanter-appender-elasticsearch
 
     # Robot custom options
     robot-options: '-v USE_NETCONF_CONNECTOR:False'
