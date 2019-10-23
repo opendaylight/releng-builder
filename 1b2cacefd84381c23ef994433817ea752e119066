@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ece931e1_0a13282d",
+        "filename": "jjb/generate-csit-status-report.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2019-10-23T17:07:15Z",
+      "side": 1,
+      "message": "What\u0027s the motivation behind doing them one at a time?\n\nPersonally I think having a single requirements.txt with all installs listed is better as it allows pip to take into account cross package dependency rulesets and comes up with a common dependency version that satisfies all constraints.\n\nThe problem with running separate pip installs is subsequent installs could break dependencies of earlier runs because pip does not take into account previous constraints.",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 38
+      },
+      "revId": "1b2cacefd84381c23ef994433817ea752e119066",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    }
+  ]
+}
