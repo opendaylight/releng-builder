@@ -223,6 +223,10 @@ function get_test_suites() {
         testplan_filepath="${WORKSPACE}/test/csit/testplans/${TESTPLAN}"
     fi
 
+    add_test="integration/test/csit/suites/integration/Create_JVM_Plots.robot" # we should always add for preparing JVM monitoring
+    echo >> "$testplan_filepath"
+    echo "${add_test}" >> "$testplan_filepath"
+
     echo "Changing the testplan path..."
     sed "s:integration:${WORKSPACE}:" "${testplan_filepath}" > testplan.txt
     cat testplan.txt
@@ -272,6 +276,7 @@ function run_plan() {
         printf "Changing the %s plan path...\\n" "${type}"
         sed "s:integration:${WORKSPACE}:" "${plan_filepath}" > "${type}plan.txt"
         cat "${type}plan.txt"
+
         # shellcheck disable=SC2013
         for line in $( grep -E -v '(^[[:space:]]*#|^[[:space:]]*$)' "${type}plan.txt" ); do
             printf "Executing %s...\\n" "${line}"
@@ -279,8 +284,27 @@ function run_plan() {
             source "${line}"
         done
     fi
+
     printf "Finished running %s plans\\n" "${type}"
 } # function run_plan()
+
+
+# Run scripts to support JVM monitoring.
+function add_jvm_support()
+{
+    # TODO unite short and long version to one script and parametrize the input: short/long/any number
+    if [ "${ELASTICSEARCHATTRIBUTE}" == "short" ]; then
+        run_script="${WORKSPACE}/test/csit/scripts/set_elasticsearch_attribute_short.sh"
+    else
+        run_script="${WORKSPACE}/test/csit/scripts/set_elasticsearch_attribute_long.sh"
+    fi
+    printf "Executing %s...\\n" "${run_script}"
+    source "${run_script}"
+
+    run_script="${WORKSPACE}/test/csit/scripts/set_jvm_common_attribute.sh"
+    printf "Executing %s...\\n" "${run_script}"
+    source "${run_script}"
+} # function add_jvm_support()
 
 # Return elapsed time. Usage:
 # - Call first time with no arguments and a new timer is returned.
@@ -737,6 +761,9 @@ function get_features() {
     else
         ACTUALFEATURES="odl-infrautils-ready,${CONTROLLERFEATURES}"
     fi
+
+    # Add decanter features to allow JVM monitoring
+    ACTUALFEATURES="${ACTUALFEATURES},decanter-collector-jmx,decanter-appender-elasticsearch"
 
     # Some versions of jenkins job builder result in feature list containing spaces
     # and ending in newline. Remove all that.
