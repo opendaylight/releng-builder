@@ -243,6 +243,9 @@ function get_test_suites() {
         done
     fi
 
+    add_jvm_plots="integration/test/csit/suites/integration/Create_JVM_Plots.robot" # we should always add for preparing JVM monitoring
+    suite_list+=" "${add_jvm_plots}
+
     eval "$__suite_list='$suite_list'"
 }
 
@@ -271,14 +274,38 @@ function run_plan() {
         printf "%s plan exists!!!\\n" "${type}"
         printf "Changing the %s plan path...\\n" "${type}"
         sed "s:integration:${WORKSPACE}:" "${plan_filepath}" > "${type}plan.txt"
-        cat "${type}plan.txt"
-        # shellcheck disable=SC2013
-        for line in $( grep -E -v '(^[[:space:]]*#|^[[:space:]]*$)' "${type}plan.txt" ); do
-            printf "Executing %s...\\n" "${line}"
-            # shellcheck source=${line} disable=SC1091
-            source "${line}"
-        done
+    else
+        printf "%s plan does not exists!!!\\n" "${type}"
     fi
+    cat "${type}plan.txt"
+
+    # we should always run scripts for preparing JVM monitoring - add them to scriptplan
+    # TODO unite short and long version to one script and parametrize the input: short/long/any number
+    if [ ${type} == "script" ]; then
+	# TEST&CHECK here can be a problem when existing scriptplan is not ended by EOL
+        echo -n "# added to support JVM monitoring" >> "${type}plan.txt"
+
+        if [ ${ELASTICSEARCHATTRIBUTE} == "short" ]; then
+	    add_script="${WORKSPACE}/test/csit/scripts/set_elasticsearch_attribute_short.sh"
+	else
+	    add_script="${WORKSPACE}/test/csit/scripts/set_elasticsearch_attribute_long.sh"
+        fi
+	cat "${add_script}" >> "${type}plan.txt"
+        printf "%s was added to scriptplan\\n" "${add_script}"
+
+	add_script="${WORKSPACE}/test/csit/scripts/set_jvm_common_attribute.sh"
+	cat "${add_script}" >> "${type}plan.txt"
+        printf "%s was added to scriptplan\\n" "${add_script}"
+    fi
+    cat "${type}plan.txt"
+
+    # shellcheck disable=SC2013
+    for line in $( grep -E -v '(^[[:space:]]*#|^[[:space:]]*$)' "${type}plan.txt" ); do
+        printf "Executing %s...\\n" "${line}"
+        # shellcheck source=${line} disable=SC1091
+        source "${line}"
+    done
+
     printf "Finished running %s plans\\n" "${type}"
 } # function run_plan()
 
@@ -737,6 +764,9 @@ function get_features() {
     else
         ACTUALFEATURES="odl-infrautils-ready,${CONTROLLERFEATURES}"
     fi
+
+    # Add decanter features to allow JVM monitoring
+    ACTUALFEATURES="${ACTUALFEATURES},decanter-collector-jmx,decanter-appender-elasticsearch"
 
     # Some versions of jenkins job builder result in feature list containing spaces
     # and ending in newline. Remove all that.
