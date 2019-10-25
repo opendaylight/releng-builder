@@ -243,6 +243,9 @@ function get_test_suites() {
         done
     fi
 
+    add_jvm_plots="integration/test/csit/suites/integration/Create_JVM_Plots.robot" # we should always add for preparing JVM monitoring
+    suite_list+=" "${add_jvm_plots}
+
     eval "$__suite_list='$suite_list'"
 }
 
@@ -272,6 +275,13 @@ function run_plan() {
         printf "Changing the %s plan path...\\n" "${type}"
         sed "s:integration:${WORKSPACE}:" "${plan_filepath}" > "${type}plan.txt"
         cat "${type}plan.txt"
+    fi
+
+    if [ "${type}" == "script" ]; then
+        add_jvm_support_to_scriptplan()
+    fi
+
+    if [ -f "${type}plan.txt" ]; then
         # shellcheck disable=SC2013
         for line in $( grep -E -v '(^[[:space:]]*#|^[[:space:]]*$)' "${type}plan.txt" ); do
             printf "Executing %s...\\n" "${line}"
@@ -279,8 +289,36 @@ function run_plan() {
             source "${line}"
         done
     fi
+
     printf "Finished running %s plans\\n" "${type}"
 } # function run_plan()
+
+
+# Add scripts to scriptplan.txt to support JVM monitoring.
+function add_jvm_support_to_scriptplan()
+{
+    # TODO unite short and long version to one script and parametrize the input: short/long/any number
+    if [ ! -f "${type}plan.txt" ]; then
+        printf "Creating scriptplan.txt to allow JVM monitoring support...\\n"
+    else
+        printf "Adding scripts to scriptplan.txt to support JVM monitoring...\\n"
+    fi
+
+    echo "# Place the JVM scripts in run order:" >> "${type}plan.txt"
+
+    if [ "${ELASTICSEARCHATTRIBUTE}" == "short" ]; then
+        add_script="${WORKSPACE}/test/csit/scripts/set_elasticsearch_attribute_short.sh"
+    else
+        add_script="${WORKSPACE}/test/csit/scripts/set_elasticsearch_attribute_long.sh"
+    fi
+    echo "${add_script}" >> "${type}plan.txt"
+
+    add_script="${WORKSPACE}/test/csit/scripts/set_jvm_common_attribute.sh"
+    echo "${add_script}" >> "${type}plan.txt"
+
+    printf "Let us output the modified scriptplan.txt with JVM monitoring support...\\n"
+    cat "${type}plan.txt"
+}
 
 # Return elapsed time. Usage:
 # - Call first time with no arguments and a new timer is returned.
@@ -737,6 +775,9 @@ function get_features() {
     else
         ACTUALFEATURES="odl-infrautils-ready,${CONTROLLERFEATURES}"
     fi
+
+    # Add decanter features to allow JVM monitoring
+    ACTUALFEATURES="${ACTUALFEATURES},decanter-collector-jmx,decanter-appender-elasticsearch"
 
     # Some versions of jenkins job builder result in feature list containing spaces
     # and ending in newline. Remove all that.
