@@ -18,6 +18,8 @@ nodes_list=$(get_nodes_list)
 
 run_plan "script"
 
+add_jvm_support
+
 create_configuration_script
 
 create_startup_script
