@@ -23,6 +23,7 @@
           controller-features: '{install-features}'
           controller-scope: '{controller-scope}'
           controller-use-features-boot: '{use-features-boot}'
+          elasticsearch-attribute: 'short'
 
 - parameter:
     name: integration-controller-parameters
@@ -35,7 +36,7 @@
       - string:
           name: CONTROLLERFEATURES
           default: '{controller-features}'
-          description: 'Features to install in the controller separated by comma'
+          description: 'Features to install in the controller separated by comma (note: extra features such as decanter are inserted in install scripts)'
 
       - string:
           name: CONTROLLERDEBUGMAP
@@ -45,6 +46,16 @@
               The module should not include org.opendaylight.
               The levels must be one of: ERROR, WARN, INFO, DEBUG, TRACE.
               (ex. ovsdb.lib:ERROR netvirt.vpnservice:INFO)
+
+      - string:
+          name: ELASTICSEARCHATTRIBUTE
+          default: '{elasticsearch-attribute}'
+          description: |
+              Configure the period the script should harvest JVM metrics.
+              Default is short.
+              Possible values: long (its value is 120000)
+                               short (its value is 5000)
+                               any number between 5000 and 120000
 
       - string:
           name: USEFEATURESBOOT
