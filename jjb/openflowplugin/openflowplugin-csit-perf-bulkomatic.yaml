@@ -33,9 +33,7 @@
     install-features: >
         odl-openflowplugin-flow-services-rest,
         odl-openflowplugin-app-bulk-o-matic,
-        odl-jolokia,
-        decanter-collector-jmx,
-        decanter-appender-elasticsearch
+        odl-jolokia
 
     # Robot custom options
     robot-options: '-v ODL_OF_PLUGIN:lithium -v switch_count:32 -v flow_count_per_switch:3125'
