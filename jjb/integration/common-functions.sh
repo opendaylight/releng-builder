@@ -950,11 +950,8 @@ function copy_and_run_post_startup_script() {
     done
 }
 
-function create_controller_variables() {
-    echo "Generating controller variables..."
+function dump_controller_threads() {
     for i in $(seq 1 "${NUM_ODL_SYSTEM}"); do
-        CONTROLLERIP="ODL_SYSTEM_${i}_IP"
-        odl_variables=${odl_variables}" -v ${CONTROLLERIP}:${!CONTROLLERIP}"
         echo "Lets's take the karaf thread dump"
         ssh "${!CONTROLLERIP}" "sudo ps aux" > "${WORKSPACE}"/ps_before.log
         pid=$(grep org.apache.karaf.main.Main "${WORKSPACE}"/ps_before.log | grep -v grep | tr -s ' ' | cut -f2 -d' ')
