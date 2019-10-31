@@ -32,7 +32,7 @@ copy_and_run_startup_script
 
 copy_and_run_post_startup_script
 
-create_controller_variables
+dump_controller_threads
 
 if [ "${NUM_OPENSTACK_SYSTEM}" -gt 0 ]; then
    echo "Exiting without running tests to deploy openstack for testing"
@@ -78,13 +78,7 @@ robot -N "${TESTPLAN}" \
       -v ODL_SYSTEM_IP:"${ODL_SYSTEM_IP}" \
       -v ODL_SYSTEM_USER:"${USER}" \
       -v SUITES:"${SUITES}" \
-      -v TOOLS_SYSTEM_1_IP:"${TOOLS_SYSTEM_IP}" \
-      -v TOOLS_SYSTEM_2_IP:"${TOOLS_SYSTEM_2_IP}" \
-      -v TOOLS_SYSTEM_3_IP:"${TOOLS_SYSTEM_3_IP}" \
-      -v TOOLS_SYSTEM_4_IP:"${TOOLS_SYSTEM_4_IP}" \
-      -v TOOLS_SYSTEM_5_IP:"${TOOLS_SYSTEM_5_IP}" \
-      -v TOOLS_SYSTEM_6_IP:"${TOOLS_SYSTEM_6_IP}" \
-      -v TOOLS_SYSTEM_IP:"${TOOLS_SYSTEM_IP}" \
+      -v TOOLS_SYSTEM_IP:"${TOOLS_SYSTEM_IP}" ${tools_variables} \
       -v TOOLS_SYSTEM_USER:"${USER}" \
       -v USER_HOME:"${HOME}" \
       -v WORKSPACE:/tmp \
