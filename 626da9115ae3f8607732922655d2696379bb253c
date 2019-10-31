@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c910f8ec_74519387",
+        "filename": "jjb/integration/common-functions.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 956,
+      "author": {
+        "id": 797
+      },
+      "writtenOn": "2019-10-31T17:53:58Z",
+      "side": 0,
+      "message": "This part is only used by cluster deploy job and if you look it is already in integration-start-cluster-run-test.sh. Otherwise the cluster job in sandbox would never pass.",
+      "parentUuid": "b4d0cf7d_d46fcf75",
+      "revId": "626da9115ae3f8607732922655d2696379bb253c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "163be2ef_9a51a805",
         "filename": "jjb/integration/integration-start-cluster-run-test.sh",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2019-10-31T17:46:27Z",
       "side": 0,
       "message": "so where did all the work go that was removed from this file?",
+      "revId": "626da9115ae3f8607732922655d2696379bb253c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3ed4186_330ea4ea",
+        "filename": "jjb/integration/integration-start-cluster-run-test.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 797
+      },
+      "writtenOn": "2019-10-31T17:53:58Z",
+      "side": 0,
+      "message": "If you see on the right, this is done by 3 common functions: create_post_startup_script, copy_and_run_post_startup_script, dump_controller_threads",
+      "parentUuid": "163be2ef_9a51a805",
       "revId": "626da9115ae3f8607732922655d2696379bb253c",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": true
