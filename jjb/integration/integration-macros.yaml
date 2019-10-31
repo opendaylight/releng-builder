@@ -378,6 +378,14 @@
     name: integration-cleanup-tmp
     builders:
       - shell: !include-raw: integration-cleanup-tmp.sh
+       
+# Macro: integration-cleanup-tmp
+# # Operation: Cleans up temporary files created by build
+# # Used by: {project}-csit-* job templates
+- builder:
+    name: integration-job-cost
+    builders:
+      - shell: !include-raw: integration-job-cost.sh
 
 # Macro: integration-multipatch-builder
 # Operation: checks out multiple patches and builds custom distribution
