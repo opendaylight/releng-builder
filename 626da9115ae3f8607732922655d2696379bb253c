@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "076f01c8_0f374929",
+        "filename": "jjb/integration/common-functions.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 956,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2019-10-31T18:09:50Z",
+      "side": 0,
+      "message": "I think I\u0027m not understanding. this is looping over $NUM_ODL_SYSTEM variable, but you are\nnever using $i below. I thought this line was assigning ODL_SYSTEM_$i_IP to CONTROLLERIP so\nthat it can loop over every controller?",
+      "parentUuid": "c910f8ec_74519387",
+      "revId": "626da9115ae3f8607732922655d2696379bb253c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "163be2ef_9a51a805",
         "filename": "jjb/integration/integration-start-cluster-run-test.sh",
         "patchSetId": 2
@@ -66,6 +84,24 @@
       "side": 0,
       "message": "If you see on the right, this is done by 3 common functions: create_post_startup_script, copy_and_run_post_startup_script, dump_controller_threads",
       "parentUuid": "163be2ef_9a51a805",
+      "revId": "626da9115ae3f8607732922655d2696379bb253c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68b5f5e6_4cd72648",
+        "filename": "jjb/integration/integration-start-cluster-run-test.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2019-10-31T18:09:50Z",
+      "side": 0,
+      "message": "got it",
+      "parentUuid": "a3ed4186_330ea4ea",
       "revId": "626da9115ae3f8607732922655d2696379bb253c",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": true
