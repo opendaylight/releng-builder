@@ -154,6 +154,7 @@
       - integration-install-common-functions
       - integration-deploy-controller-run-test
       - integration-cleanup-tmp
+      - integration-job-cost
 
     publishers:
       - email-notification:
@@ -262,6 +263,7 @@
       - integration-install-common-functions
       - integration-deploy-controller-run-test
       - integration-cleanup-tmp
+      - integration-job-cost
 
     publishers:
       - email-notification:
@@ -566,6 +568,7 @@
       - integration-configure-clustering
       - integration-start-cluster-run-test
       - integration-cleanup-tmp
+      - integration-job-cost
 
     publishers:
       - email-notification:
@@ -675,6 +678,7 @@
       - integration-configure-clustering
       - integration-start-cluster-run-test
       - integration-cleanup-tmp
+      - integration-job-cost
 
     publishers:
       - email-notification:
@@ -973,6 +977,7 @@
       - integration-configure-clustering
       - integration-start-cluster-run-test
       - integration-cleanup-tmp
+      - integration-job-cost
 
     publishers:
       - email-notification:
@@ -1235,6 +1240,7 @@
       - integration-deploy-controller-run-test
       - integration-deploy-openstack-run-test
       - integration-cleanup-tmp
+      - integration-job-cost
 
     publishers:
       - email-notification:
@@ -1651,6 +1657,7 @@
       - integration-deploy-controller-run-test
       - integration-deploy-openstack-run-test
       - integration-cleanup-tmp
+      - integration-job-cost
 
     publishers:
       - email-notification:
@@ -2075,6 +2082,7 @@
           properties-file: 'slave_addresses.txt'
       - integration-apex-run-tests
       - integration-cleanup-tmp
+      - integration-job-cost
 
     publishers:
       - email-notification:
