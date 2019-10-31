@@ -13,93 +13,16 @@ echo "#################################################"
 echo "##         Verify Cluster is UP                ##"
 echo "#################################################"
 
-cat > "${WORKSPACE}/verify-cluster-is-up.sh" <<EOF
+create_post_startup_script
 
-CONTROLLERID="member-\$1"
-ODL_SYSTEM_IP_PATH=\$2
+copy_and_run_post_startup_script
 
-echo "Waiting for controller to come up..."
-COUNT="0"
-while true; do
-    RESP="\$( curl --user admin:admin -sL -w "%{http_code} %{url_effective}\\n" http://localhost:8181/restconf/modules -o /dev/null )"
-    echo \$RESP
-    SHARD="\$( curl --user admin:admin -sL -w "%{http_code} %{url_effective}\\n" http://localhost:8181/jolokia/read/org.opendaylight.controller:Category=Shards,name=\$CONTROLLERID-shard-inventory-config,type=DistributedConfigDatastore)"
-    echo \$SHARD
-    if ([[ \$RESP == *"200"* ]] && [[ \$SHARD  == *'"status":200'* ]]); then
-        echo Controller is UP
-        break
-    elif (( "\$COUNT" > "600" )); then
-        echo Timeout Controller DOWN
-        echo "Dumping first 500K bytes of karaf log..."
-        head --bytes=500K "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
-        echo "Dumping last 500K bytes of karaf log..."
-        tail --bytes=500K "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
-        echo "Listing all open ports on controller system"
-        netstat -pnatu
-        exit 1
-    else
-        COUNT=\$(( \${COUNT} + 1 ))
-        sleep 1
-        if [[ \$((\$COUNT % 5)) == 0 ]]; then
-            echo already waited \${COUNT} seconds...
-        fi
-    fi
-done
-
-echo "Listing all open ports on controller system.."
-netstat -pnatu
-
-function exit_on_log_file_message {
-    echo "looking for \"\$1\" in log file"
-    if grep --quiet "\$1" "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"; then
-        echo ABORTING: found "\$1"
-        echo "Dumping first 500K bytes of karaf log..."
-        head --bytes=500K "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
-        echo "Dumping last 500K bytes of karaf log..."
-        tail --bytes=500K "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
-        exit 1
-    fi
-}
-
-exit_on_log_file_message 'BindException: Address already in use'
-exit_on_log_file_message 'server is unhealthy'
-
-EOF
-
-for i in $(seq 1 "${NUM_ODL_SYSTEM}")
-do
-    CONTROLLERIP=ODL_SYSTEM_${i}_IP
-    echo "Verifying member-${i} with IP address ${!CONTROLLERIP} is UP"
-    scp "${WORKSPACE}/verify-cluster-is-up.sh" "${!CONTROLLERIP}:/tmp"
-    # shellcheck disable=SC2029
-    ssh "${!CONTROLLERIP}" "bash /tmp/verify-cluster-is-up.sh ${i} ${!CONTROLLERIP}"
-done
+create_controller_variables
 
 if [ "${NUM_OPENSTACK_SYSTEM}" -gt 0 ]; then
    echo "Exiting without running tests to deploy openstack for testing"
    exit
 fi
-
-if [ "${CONTROLLERSCOPE}" == 'all' ]; then
-    COOLDOWN_PERIOD="180"
-else
-    COOLDOWN_PERIOD="60"
-fi
-echo "Cool down for ${COOLDOWN_PERIOD} seconds :)..."
-sleep "${COOLDOWN_PERIOD}"
-
-echo "Generating controller variables..."
-for i in $(seq 1 "${NUM_ODL_SYSTEM}")
-do
-    CONTROLLERIP=ODL_SYSTEM_${i}_IP
-    odl_variables=${odl_variables}" -v ${CONTROLLERIP}:${!CONTROLLERIP}"
-    echo "Lets's take the karaf thread dump"
-    ssh "${!CONTROLLERIP}" "sudo ps aux" > "${WORKSPACE}/ps_before.log"
-    pid=$(grep org.apache.karaf.main.Main "${WORKSPACE}/ps_before.log" | grep -v grep | tr -s ' ' | cut -f2 -d' ')
-    echo "karaf main: org.apache.karaf.main.Main, pid:${pid}"
-    # shellcheck disable=SC2029
-    ssh "${!CONTROLLERIP}" "${JAVA_HOME}/bin/jstack -l ${pid}" > "${WORKSPACE}/karaf_${i}_${pid}_threads_before.log" || true
-done
 
 echo "Generating mininet variables..."
 for i in $(seq 1 "${NUM_TOOLS_SYSTEM}")
