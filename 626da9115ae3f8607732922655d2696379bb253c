@@ -127,6 +127,24 @@
     },
     {
       "key": {
+        "uuid": "3bcac296_ac75fe24",
+        "filename": "jjb/integration/common-functions.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 956,
+      "author": {
+        "id": 797
+      },
+      "writtenOn": "2019-10-31T21:48:09Z",
+      "side": 0,
+      "message": "OK, so this function was doing couple of things: 1) generating robot variables (not really needed as this is already in the cluster script), and 2) taking ps and thread dumps before the test starts. What I did in my patch is to remove the first, leave the second and change the function name to more appropriate name.",
+      "parentUuid": "21bf09ae_6997d203",
+      "revId": "626da9115ae3f8607732922655d2696379bb253c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "163be2ef_9a51a805",
         "filename": "jjb/integration/integration-start-cluster-run-test.sh",
         "patchSetId": 2
