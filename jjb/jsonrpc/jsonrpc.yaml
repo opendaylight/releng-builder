@@ -8,13 +8,14 @@
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-jsonrpc/91870/
           rtd-token: 04d31d4414734686d63f9b160e974fe5a18d031d
       - gerrit-release-merge
-      - odl-maven-jobs
+      - odl-maven-jobs-jdk11
       - odl-maven-verify-jobs
 
     project: 'jsonrpc'
     project-name: 'jsonrpc'
     stream: magnesium
     branch: 'master'
+    java-version: 'openjdk11'
     mvn-settings: 'jsonrpc-settings'
     mvn-opts: '-Xmx1024m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream},mdsal-merge-{stream}'
