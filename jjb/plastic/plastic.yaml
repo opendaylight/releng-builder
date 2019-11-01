@@ -1,0 +1,35 @@
+---
+- project:
+    name: plastic-master
+    jobs:
+      - odl-maven-jobs-jdk11
+      - odl-maven-verify-jobs
+
+    stream: master
+    project: plastic
+    project-name: plastic
+    branch: master
+    java-version: openjdk11
+    mvn-settings: plastic-settings
+    mvn-opts: '-Xmx1024m'
+
+    # Used by the release job
+    staging-profile-id: abc123_need_lf_to_give_this_id
+
+- project:
+    name: plastic-sonar
+    jobs:
+      - gerrit-maven-sonar
+
+    project: plastic
+    project-name: plastic
+    branch: master
+    java-version: openjdk11
+    mvn-settings: plastic-settings
+    mvn-opts: '-Xmx1024m'
+
+- project:
+    name: plastic-view
+    views:
+      - project-view
+    project-name: plastic
