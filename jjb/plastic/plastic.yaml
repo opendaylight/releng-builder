@@ -2,14 +2,14 @@
 - project:
     name: plastic-master
     jobs:
-      - odl-maven-jobs-jdk11
+      - odl-maven-jobs
       - odl-maven-verify-jobs
 
     stream: master
     project: plastic
     project-name: plastic
     branch: master
-    java-version: openjdk11
+    java-version: openjdk8
     mvn-settings: plastic-settings
     mvn-opts: '-Xmx1024m'
 
@@ -24,7 +24,7 @@
     project: plastic
     project-name: plastic
     branch: master
-    java-version: openjdk11
+    java-version: openjdk8
     mvn-settings: plastic-settings
     mvn-opts: '-Xmx1024m'
 
