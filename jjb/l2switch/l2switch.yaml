@@ -82,6 +82,10 @@
     mvn-settings: 'l2switch-settings'
     mvn-opts: '-Xmx1024m -Dmaven.compile.fork=true'
     disable-job: true
+    sonarcloud: true
+    sonarcloud-project-organization: '{sonarcloud_project_organization}'
+    sonarcloud-api-token: '{sonarcloud_api_token}'
+    sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
 
 - project:
     name: l2switch-view
