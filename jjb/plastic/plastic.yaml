@@ -35,6 +35,10 @@
     java-version: openjdk8
     mvn-settings: plastic-settings
     mvn-opts: '-Xmx1024m'
+    sonarcloud: true
+    sonarcloud-project-organization: '{sonarcloud_project_organization}'
+    sonarcloud-api-token: '{sonarcloud_api_token}'
+    sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
 
 - project:
     name: plastic-view
