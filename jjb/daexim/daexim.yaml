@@ -84,6 +84,10 @@
     java-version: 'openjdk11'
     mvn-settings: 'daexim-settings'
     mvn-opts: '-Xmx1024m'
+    sonarcloud: true
+    sonarcloud-project-organization: '{sonarcloud_project_organization}'
+    sonarcloud-api-token: '{sonarcloud_api_token}'
+    sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
 
 - project:
     name: daexim-view
