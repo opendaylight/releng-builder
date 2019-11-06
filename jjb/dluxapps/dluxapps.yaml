@@ -71,6 +71,10 @@
     build-node: centos7-builder-2c-8g
     mvn-settings: 'dluxapps-settings'
     mvn-opts: '-Xmx1024m'
+    sonarcloud: true
+    sonarcloud-project-organization: '{sonarcloud_project_organization}'
+    sonarcloud-api-token: '{sonarcloud_api_token}'
+    sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
 
 - project:
     name: dluxapps-view
