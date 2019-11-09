@@ -103,6 +103,14 @@
           description: "karaf3, karaf4, odl, bgpcep, controller, netconf affects ODL deploy scripts"
 
 - parameter:
+    name: push-modules
+    parameters:
+      - string:
+          name: PUSH_MODULES
+          default: 'false'
+          description: 'Set to true if you want to push yang modules to yang github'
+
+- parameter:
     name: integration-bundle-url
     parameters:
       - string:
