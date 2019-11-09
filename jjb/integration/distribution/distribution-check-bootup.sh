@@ -28,6 +28,25 @@ fi
 echo "Extracting the new controller..."
 unzip -q "${BUNDLE}"
 
+if [[ "${PUSH_MODULES}" == "true" ]]; then
+    echo "Extracting YANG modules"
+    "${WORKSPACE}/${BUNDLEFOLDER}/bin/extract_modules.sh"
+    git clone http://github.com/askb/yang "${WORKSPACE}"
+    find "${WORKSPACE}/yang/standard/odp" -name "*.yang" -type f -delete
+    mv -f "${WORKSPACE}/${BUNDLEFOLDER}/opendaylight-models/*" "${WORKSPACE}/yang/standard/odp" && echo "Modules Updated"
+    ( cd "${WORKSPACE}/yang" || exit
+    git add .
+    git commit -m "Yang modules Update"
+    git remote add upstream https://github.com/YangModels/yang.git
+    git fetch upstream
+    git rebase upstream/master
+    git push origin master
+    echo "Modules Pushed to repo"
+    )
+    rm -rf "${WORKSPACE}/yang"
+    exit 0
+fi
+
 echo "Configuring the startup features..."
 FEATURESCONF="${WORKSPACE}/${BUNDLEFOLDER}/etc/org.apache.karaf.features.cfg"
 FEATURE_TEST_STRING="features-test"
