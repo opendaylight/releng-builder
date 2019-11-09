@@ -28,6 +28,13 @@ fi
 echo "Extracting the new controller..."
 unzip -q "${BUNDLE}"
 
+if [[ "${PUSH_MODULES}" == "true" ]]; then
+    echo "Extracting YANG modules"
+    ${WORKSPACE}/${BUNDLEFOLDER}/bin/extract_modules.sh
+    # add push script here
+    exit 0
+fi
+
 echo "Configuring the startup features..."
 FEATURESCONF="${WORKSPACE}/${BUNDLEFOLDER}/etc/org.apache.karaf.features.cfg"
 FEATURE_TEST_STRING="features-test"
