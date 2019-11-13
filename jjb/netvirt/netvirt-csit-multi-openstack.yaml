@@ -5,6 +5,7 @@
       - inttest-csit-openstack-custom
 
     project: 'netvirt'
+    elasticsearch-attribute: 'disabled'
     stream: 'magnesium'
     branch: 'master'
     jre: 'openjdk11'
@@ -94,6 +95,7 @@
       - inttest-csit-openstack-custom
 
     project: 'netvirt'
+    elasticsearch-attribute: 'disabled'
     stream: 'sodium'
     branch: 'stable/sodium'
     testplan: '{project}-{topology}-openstack.txt'
@@ -182,6 +184,7 @@
       - inttest-csit-openstack-custom
 
     project: 'netvirt'
+    elasticsearch-attribute: 'disabled'
     stream: 'neon'
     branch: 'stable/neon'
     testplan: '{project}-{topology}-openstack.txt'
@@ -260,6 +263,7 @@
       - inttest-csit-openstack-custom
 
     project: 'netvirt'
+    elasticsearch-attribute: 'disabled'
     security-group-mode: 'stateful'
     odl_system_flavor: odl-highcpu-4
     openstack_system2_flavor: odl-highcpu-8
@@ -307,6 +311,7 @@
       - inttest-csit-openstack-custom
 
     project: 'netvirt'
+    elasticsearch-attribute: 'disabled'
     testplan: '{project}-{topology}-openstack.txt'
     odl-ml2-driver-version: 'v2'
     enable-openstack-services: 'n-cpu,placement-api,tempest'

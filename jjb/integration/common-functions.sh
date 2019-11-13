@@ -223,9 +223,10 @@ function get_test_suites() {
         testplan_filepath="${WORKSPACE}/test/csit/testplans/${TESTPLAN}"
     fi
 
-    add_test="integration/test/csit/suites/integration/Create_JVM_Plots.robot" # we should always add for preparing JVM monitoring
-    echo >> "$testplan_filepath"
-    echo "${add_test}" >> "$testplan_filepath"
+    if [ "${ELASTICSEARCHATTRIBUTE}" != "disabled" ]; then
+        add_test="integration/test/csit/suites/integration/Create_JVM_Plots.robot"
+        echo "${add_test}" >> "$testplan_filepath"
+    fi
 
     echo "Changing the testplan path..."
     sed "s:integration:${WORKSPACE}:" "${testplan_filepath}" > testplan.txt
@@ -289,21 +290,143 @@ function run_plan() {
 # Run scripts to support JVM monitoring.
 function add_jvm_support()
 {
-    # TODO unite short and long version to one script and parametrize the input: short/long/any number
-    if [ "${ELASTICSEARCHATTRIBUTE}" == "short" ]; then
-        run_script="${WORKSPACE}/test/csit/scripts/set_elasticsearch_attribute_short.sh"
-    else
-        run_script="${WORKSPACE}/test/csit/scripts/set_elasticsearch_attribute_long.sh"
-    fi
-    printf "Executing %s...\\n" "${run_script}"
-    # shellcheck source=${line} disable=SC1091
-    source "${run_script}"
+    if [ "${ELASTICSEARCHATTRIBUTE}" != "disabled" ]; then
+        set_elasticsearch_attribute "${ELASTICSEARCHATTRIBUTE}"
+        #run_script="${WORKSPACE}/test/csit/scripts/set_elasticsearch_attribute.sh ${ELASTICSEARCHATTRIBUTE}"
+        #printf "Executing %s...\\n" "${run_script}"
+        ## shellcheck source=${line} disable=SC1091
+        #source "${run_script}"
 
-    run_script="${WORKSPACE}/test/csit/scripts/set_jvm_common_attribute.sh"
-    printf "Executing %s...\\n" "${run_script}"
-    # shellcheck source=${line} disable=SC1091
-    source "${run_script}"
+        set_jvm_common_attribute
+        #run_script="${WORKSPACE}/test/csit/scripts/set_jvm_common_attribute.sh"
+        #printf "Executing %s...\\n" "${run_script}"
+        ## shellcheck source=${line} disable=SC1091
+        #source "${run_script}"
+    fi
 } # function add_jvm_support()
+
+#Expected input parameter: long/short/a number
+function set_elasticsearch_attribute()
+{
+short=5000
+long=120000
+default=$short
+
+case $1 in
+short)
+  period=$short
+  ;;
+long)
+  period=$long
+  ;;
+*)
+  if [ "$1" =~ ^[0-9]+$ ] && [ "$1" -ge $short -a "$1" -le $long ]; then
+      period=$1
+  else
+      period=$default
+  fi
+  ;;
+esac
+
+cat > "${WORKSPACE}"/org.apache.karaf.decanter.scheduler.simple.cfg <<EOF
+period=$period
+
+EOF
+
+echo "Copying config files to ODL Controller folder"
+
+# shellcheck disable=SC2086
+for i in $(seq 1 ${NUM_ODL_SYSTEM})
+do
+        CONTROLLERIP=ODL_SYSTEM_${i}_IP
+        echo "Setup long duration config to ${!CONTROLLERIP}"
+        ssh "${!CONTROLLERIP}" "mkdir -p /tmp/${BUNDLEFOLDER}/etc/opendaylight/karaf/"
+        scp "${WORKSPACE}"/org.apache.karaf.decanter.scheduler.simple.cfg "${!CONTROLLERIP}":/tmp/"${BUNDLEFOLDER}"/etc/
+done
+} #function set_elasticsearch_attribute
+
+function set_jvm_common_attribute()
+{
+cat > "${WORKSPACE}"/org.apache.karaf.decanter.collector.jmx-local.cfg <<EOF
+type=jmx-local
+url=local
+object.name=java.lang:type=*,name=*
+
+EOF
+
+cat > "${WORKSPACE}"/org.apache.karaf.decanter.collector.jmx-others.cfg <<EOF
+type=jmx-local
+url=local
+object.name=java.lang:type=*
+
+EOF
+
+# shellcheck disable=SC2086
+for i in $(seq 1 ${NUM_ODL_SYSTEM})
+do
+    CONTROLLERIP=ODL_SYSTEM_${i}_IP
+    CLUSTERNAME=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 12)
+
+    cat > "${WORKSPACE}"/elasticsearch.yml <<EOF
+    cluster.name: ${CLUSTERNAME}
+    network.host: ${!CONTROLLERIP}
+    discovery.zen.ping.multicast.enabled: false
+
+EOF
+    cat > "${WORKSPACE}"/org.apache.karaf.decanter.appender.elasticsearch.cfg <<EOF
+    host=${!CONTROLLERIP}
+    port=9300
+    clusterName=${CLUSTERNAME}
+
+EOF
+
+    cat > "${WORKSPACE}"/elasticsearch_startup.sh <<EOF
+    cd /tmp/elasticsearch/elasticsearch-1.7.5
+    ls -al
+
+    if [ -d "data" ]; then
+        echo "data directory exists, deleting...."
+        rm -r data
+    else
+        echo "data directory does not exist"
+    fi
+
+    cd /tmp/elasticsearch
+    ls -al
+
+    echo "Starting Elasticsearch node"
+    sudo /tmp/elasticsearch/elasticsearch-1.7.5/bin/elasticsearch > /dev/null 2>&1 &
+    ls -al /tmp/elasticsearch/elasticsearch-1.7.5/bin/elasticsearch
+
+EOF
+    echo "Setup ODL_SYSTEM_IP specific config files for ${!CONTROLLERIP} "
+
+    cat "${WORKSPACE}"/org.apache.karaf.decanter.appender.elasticsearch.cfg
+    cat "${WORKSPACE}"/org.apache.karaf.decanter.collector.jmx-local.cfg
+    cat "${WORKSPACE}"/org.apache.karaf.decanter.collector.jmx-others.cfg
+    cat "${WORKSPACE}"/elasticsearch.yml
+
+
+    echo "Copying config files to ${!CONTROLLERIP}"
+
+    scp "${WORKSPACE}"/org.apache.karaf.decanter.appender.elasticsearch.cfg "${!CONTROLLERIP}":/tmp/"${BUNDLEFOLDER}"/etc/
+    scp "${WORKSPACE}"/org.apache.karaf.decanter.collector.jmx-local.cfg "${!CONTROLLERIP}":/tmp/"${BUNDLEFOLDER}"/etc/
+    scp "${WORKSPACE}"/org.apache.karaf.decanter.collector.jmx-others.cfg "${!CONTROLLERIP}":/tmp/"${BUNDLEFOLDER}"/etc/
+
+    scp "${WORKSPACE}"/elasticsearch.yml "${!CONTROLLERIP}":/tmp/
+
+    ssh "${!CONTROLLERIP}" "sudo ls -al /tmp/elasticsearch/"
+
+    ssh "${!CONTROLLERIP}" "sudo mv /tmp/elasticsearch.yml /tmp/elasticsearch/elasticsearch-1.7.5/config/"
+    ssh "${!CONTROLLERIP}" "cat /tmp/elasticsearch/elasticsearch-1.7.5/config/elasticsearch.yml"
+
+    echo "Copying the elasticsearch_startup script to ${!CONTROLLERIP}"
+    cat "${WORKSPACE}"/elasticsearch_startup.sh
+    scp "${WORKSPACE}"/elasticsearch_startup.sh "${!CONTROLLERIP}":/tmp
+    ssh "${!CONTROLLERIP}" 'bash /tmp/elasticsearch_startup.sh'
+    ssh "${!CONTROLLERIP}" 'ps aux | grep elasticsearch'
+done
+} #function set_jvm_common_attribute
 
 # Return elapsed time. Usage:
 # - Call first time with no arguments and a new timer is returned.
@@ -761,8 +884,10 @@ function get_features() {
         ACTUALFEATURES="odl-infrautils-ready,${CONTROLLERFEATURES}"
     fi
 
-    # Add decanter features to allow JVM monitoring
-    ACTUALFEATURES="${ACTUALFEATURES},decanter-collector-jmx,decanter-appender-elasticsearch"
+    if [ "${ELASTICSEARCHATTRIBUTE}" != "disabled" ]; then
+        # Add decanter features to allow JVM monitoring
+        ACTUALFEATURES="${ACTUALFEATURES},decanter-collector-jmx,decanter-appender-elasticsearch"
+    fi
 
     # Some versions of jenkins job builder result in feature list containing spaces
     # and ending in newline. Remove all that.
@@ -861,7 +986,7 @@ function create_post_startup_script() {
 # wait up to 60s for karaf port 8101 to be opened, polling every 5s
 loop_count=0;
 until [[ \$loop_count -ge 12 ]]; do
-    netstat -na | grep 8101 && break;
+    netstat -na | grep ":::8101" && break;
     loop_count=\$[\$loop_count+1];
     sleep 5;
 done
