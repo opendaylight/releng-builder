@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aa0d159_fae6ec43",
+        "filename": "jjb/integration/include-raw-integration-deploy-controller.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 797
+      },
+      "writtenOn": "2015-04-22T04:20:24Z",
+      "side": 1,
+      "message": "I would recommend to dump karaf log (cat karaf.log) before exit 1 so that we know what is going on if controller does not go up.",
+      "revId": "9f1bc23fe999801b491353775dd0152c7eb5ebb9",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_7acadca2",
+        "filename": "jjb/integration/include-raw-integration-start-cluster-run-test.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 797
+      },
+      "writtenOn": "2015-04-22T04:20:24Z",
+      "side": 1,
+      "message": "Should this break be here? it seems the deploy will be completed even when the shard is not 200 OK...",
+      "revId": "9f1bc23fe999801b491353775dd0152c7eb5ebb9",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_3add3471",
+        "filename": "jjb/integration/include-raw-integration-start-cluster-run-test.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 797
+      },
+      "writtenOn": "2015-04-22T04:20:24Z",
+      "side": 1,
+      "message": "Why not exit 1 here? also you can dump the karaf log (cat karaf.log) to understand what is the issue.",
+      "revId": "9f1bc23fe999801b491353775dd0152c7eb5ebb9",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_7af3bc0a",
+        "filename": "jjb/integration/include-raw-integration-start-cluster-run-test.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 797
+      },
+      "writtenOn": "2015-04-22T04:20:24Z",
+      "side": 1,
+      "message": "Curiosity: why you use a for loop only to move shell scripts to controllers? in previous steps you use the same for loop to move scripts and execute them.",
+      "revId": "9f1bc23fe999801b491353775dd0152c7eb5ebb9",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_9af808e7",
+        "filename": "jjb/integration/include-raw-integration-start-cluster-run-test.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 797
+      },
+      "writtenOn": "2015-04-22T04:20:24Z",
+      "side": 1,
+      "message": "Why you need to dump karaf log here? just configure jjb template to save all files of the form: *karaf.log",
+      "revId": "9f1bc23fe999801b491353775dd0152c7eb5ebb9",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
