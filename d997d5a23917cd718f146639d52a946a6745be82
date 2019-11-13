@@ -53,6 +53,57 @@
     },
     {
       "key": {
+        "uuid": "3aa0d159_23d2cc00",
+        "filename": "jjb/integration/include-raw-integration-deploy-controller.sh",
+        "patchSetId": 12
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 797
+      },
+      "writtenOn": "2015-05-02T00:23:08Z",
+      "side": 1,
+      "message": "we really need to controller, we cannot wait for proper shutting down",
+      "revId": "d997d5a23917cd718f146639d52a946a6745be82",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_03c0f028",
+        "filename": "jjb/integration/include-raw-integration-get-bundle-vars.sh",
+        "patchSetId": 12
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 797
+      },
+      "writtenOn": "2015-05-02T00:23:08Z",
+      "side": 1,
+      "message": "New variable to set what we are going to load in controller. Has to be different from job parameter variable ${CONTROLLERFEATURES}.",
+      "revId": "d997d5a23917cd718f146639d52a946a6745be82",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_a3dedc0f",
+        "filename": "jjb/integration/include-raw-integration-get-bundle-vars.sh",
+        "patchSetId": 12
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 797
+      },
+      "writtenOn": "2015-05-02T00:23:08Z",
+      "side": 1,
+      "message": "Exporting new variables",
+      "revId": "d997d5a23917cd718f146639d52a946a6745be82",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3aa0d159_a3b7bcd7",
         "filename": "jjb/integration/include-raw-integration-start-cluster-run-test.sh",
         "patchSetId": 12
@@ -70,6 +121,23 @@
     },
     {
       "key": {
+        "uuid": "3aa0d159_c3ba08c0",
+        "filename": "jjb/integration/include-raw-integration-start-cluster-run-test.sh",
+        "patchSetId": 12
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 797
+      },
+      "writtenOn": "2015-05-02T00:23:08Z",
+      "side": 1,
+      "message": "This was failing because a space missing",
+      "revId": "d997d5a23917cd718f146639d52a946a6745be82",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3aa0d159_63b1b4e0",
         "filename": "jjb/integration/include-raw-integration-start-cluster-run-test.sh",
         "patchSetId": 12
@@ -81,6 +149,40 @@
       "writtenOn": "2015-05-02T00:23:08Z",
       "side": 1,
       "message": "we need sshpass with master code",
+      "revId": "d997d5a23917cd718f146639d52a946a6745be82",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_83b400d2",
+        "filename": "jjb/integration/include-raw-integration-start-cluster-run-test.sh",
+        "patchSetId": 12
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 797
+      },
+      "writtenOn": "2015-05-02T00:23:08Z",
+      "side": 1,
+      "message": "better add this at the end so we make sure controller settles down",
+      "revId": "d997d5a23917cd718f146639d52a946a6745be82",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_e3c4e441",
+        "filename": "jjb/integration/include-raw-integration-start-cluster-run-test.sh",
+        "patchSetId": 12
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 797
+      },
+      "writtenOn": "2015-05-02T00:23:08Z",
+      "side": 1,
+      "message": "we pass NEXUS prefix as instructed by releng folks",
       "revId": "d997d5a23917cd718f146639d52a946a6745be82",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -121,6 +223,23 @@
     },
     {
       "key": {
+        "uuid": "3aa0d159_639a1465",
+        "filename": "jjb/integration/integration-templates.yaml",
+        "patchSetId": 12
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 797
+      },
+      "writtenOn": "2015-05-02T00:23:08Z",
+      "side": 1,
+      "message": "Adjusting robot limits to latest",
+      "revId": "d997d5a23917cd718f146639d52a946a6745be82",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3aa0d159_839de05b",
         "filename": "jjb/integration/integration-templates.yaml",
         "patchSetId": 12
@@ -132,6 +251,23 @@
       "writtenOn": "2015-05-02T00:23:08Z",
       "side": 1,
       "message": "Setting 6 months of plot builds",
+      "revId": "d997d5a23917cd718f146639d52a946a6745be82",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_439fd850",
+        "filename": "jjb/integration/integration-templates.yaml",
+        "patchSetId": 12
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 797
+      },
+      "writtenOn": "2015-05-02T00:23:08Z",
+      "side": 1,
+      "message": "Setting the right name for the csv files",
       "revId": "d997d5a23917cd718f146639d52a946a6745be82",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
