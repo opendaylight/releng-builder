@@ -223,9 +223,10 @@ function get_test_suites() {
         testplan_filepath="${WORKSPACE}/test/csit/testplans/${TESTPLAN}"
     fi
 
-    add_test="integration/test/csit/suites/integration/Create_JVM_Plots.robot" # we should always add for preparing JVM monitoring
-    echo >> "$testplan_filepath"
-    echo "${add_test}" >> "$testplan_filepath"
+    if [ "${ELASTICSEARCHATTRIBUTE}" != "disabled" ]; then
+        add_test="integration/test/csit/suites/integration/Create_JVM_Plots.robot"
+        echo "${add_test}" >> "$testplan_filepath"
+    fi
 
     echo "Changing the testplan path..."
     sed "s:integration:${WORKSPACE}:" "${testplan_filepath}" > testplan.txt
@@ -289,20 +290,17 @@ function run_plan() {
 # Run scripts to support JVM monitoring.
 function add_jvm_support()
 {
-    # TODO unite short and long version to one script and parametrize the input: short/long/any number
-    if [ "${ELASTICSEARCHATTRIBUTE}" == "short" ]; then
-        run_script="${WORKSPACE}/test/csit/scripts/set_elasticsearch_attribute_short.sh"
-    else
-        run_script="${WORKSPACE}/test/csit/scripts/set_elasticsearch_attribute_long.sh"
-    fi
-    printf "Executing %s...\\n" "${run_script}"
-    # shellcheck source=${line} disable=SC1091
-    source "${run_script}"
+    if [ "${ELASTICSEARCHATTRIBUTE}" != "disabled" ]; then
+        run_script="${WORKSPACE}/test/csit/scripts/set_elasticsearch_attribute.sh ${ELASTICSEARCHATTRIBUTE}"
+        printf "Executing %s...\\n" "${run_script}"
+        # shellcheck source=${line} disable=SC1091
+        source "${run_script}"
 
-    run_script="${WORKSPACE}/test/csit/scripts/set_jvm_common_attribute.sh"
-    printf "Executing %s...\\n" "${run_script}"
-    # shellcheck source=${line} disable=SC1091
-    source "${run_script}"
+        run_script="${WORKSPACE}/test/csit/scripts/set_jvm_common_attribute.sh"
+        printf "Executing %s...\\n" "${run_script}"
+        # shellcheck source=${line} disable=SC1091
+        source "${run_script}"
+    fi
 } # function add_jvm_support()
 
 # Return elapsed time. Usage:
@@ -761,8 +759,10 @@ function get_features() {
         ACTUALFEATURES="odl-infrautils-ready,${CONTROLLERFEATURES}"
     fi
 
-    # Add decanter features to allow JVM monitoring
-    ACTUALFEATURES="${ACTUALFEATURES},decanter-collector-jmx,decanter-appender-elasticsearch"
+    if [ "${ELASTICSEARCHATTRIBUTE}" != "disabled" ]; then
+        # Add decanter features to allow JVM monitoring
+        ACTUALFEATURES="${ACTUALFEATURES},decanter-collector-jmx,decanter-appender-elasticsearch"
+    fi
 
     # Some versions of jenkins job builder result in feature list containing spaces
     # and ending in newline. Remove all that.
@@ -808,7 +808,7 @@ if [[ "$KARAF_VERSION" == "karaf4" ]]; then
     FEATURE_TEST_STRING="features-test"
 fi
 
-sed -ie "s%\\(featuresRepositories=\\|featuresRepositories =\\)%featuresRepositories = mvn:org.opendaylight.integration/\${FEATURE_TEST_STRING}/${BUNDLE_VERSION}/xml/features,mvn:org.apache.karaf.decanter/apache-karaf-decanter/1.0.0/xml/features,%g" ${FEATURESCONF}
+sed -ie "s%\\(featuresRepositories=\\|featuresRepositories =\\)%featuresRepositories = mvn:org.opendaylight.integration/\${FEATURE_TEST_STRING}/${BUNDLE_VERSION}/xml/features,mvn:org.apache.karaf.decanter/apache-karaf-decanter/1.1.0/xml/features,%g" ${FEATURESCONF}
 if [[ ! -z "${REPO_URL}" ]]; then
    sed -ie "s%featuresRepositories =%featuresRepositories = ${REPO_URL},%g" ${FEATURESCONF}
 fi
@@ -861,7 +861,7 @@ function create_post_startup_script() {
 # wait up to 60s for karaf port 8101 to be opened, polling every 5s
 loop_count=0;
 until [[ \$loop_count -ge 12 ]]; do
-    netstat -na | grep 8101 && break;
+    netstat -na | grep ":::8101" && break;
     loop_count=\$[\$loop_count+1];
     sleep 5;
 done
