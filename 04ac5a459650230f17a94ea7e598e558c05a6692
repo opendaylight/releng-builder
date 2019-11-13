@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aa0d159_22967895",
+        "filename": "jjb/integration/include-raw-integration-start-cluster-run-test.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2015-04-18T16:01:56Z",
+      "side": 1,
+      "message": "I think this is a leftover from other start scripts, but does anyone know what we are reflecting on here?  do we really need it?  If not, we can save 60 precious seconds maybe.",
+      "revId": "04ac5a459650230f17a94ea7e598e558c05a6692",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_028d7c7b",
+        "filename": "jjb/integration/include-raw-integration-start-cluster-run-test.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2015-04-18T16:01:56Z",
+      "side": 1,
+      "message": "this is where we are serially installing and bringing up each controller which is taking the normal time + 60s as seen above.  I wonder if we can modify the above code so that it just starts karaf on each controller, then add another for loop to poll on restconf/modules which should happen pretty quickly in succession.  finally, if that sleep 60 has a good reason for existing, it can just happen once after the 3rd controller is up.\n\nI hope that made sense.  it does in my mind :)",
+      "revId": "04ac5a459650230f17a94ea7e598e558c05a6692",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_627c8073",
+        "filename": "jjb/integration/integration-templates.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2015-04-18T16:01:56Z",
+      "side": 1,
+      "message": "is odl-mdsal-clustering still needed, now that clustering is enabled by default?",
+      "revId": "04ac5a459650230f17a94ea7e598e558c05a6692",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
