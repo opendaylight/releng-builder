@@ -250,24 +250,6 @@
     builders:
       - shell: 'if [ -d /tmp/r ]; then rm -rf /tmp/r; fi'
 
-- publisher:
-    name: releng-openstack-stack-delete
-    publishers:
-      - postbuildscript:
-          builders:
-            - role: BOTH
-              build-on:
-                - ABORTED
-                - FAILURE
-                - SUCCESS
-                - UNSTABLE
-              build-steps:
-                - shell: |
-                    #!/bin/bash -l
-                    echo "Deleting $STACK_NAME"
-                    openstack stack delete --yes "$STACK_NAME"
-          mark-unstable-if-failed: false
-
 - wrapper:
     # This wrapper is required for all jobs as it configures the wrappers
     # needed by OpenDaylight infra.
