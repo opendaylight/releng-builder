@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89f34b5c_6285a841",
+        "filename": "jjb/integration/common-functions.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 864,
+      "author": {
+        "id": 8535
+      },
+      "writtenOn": "2019-11-15T07:08:07Z",
+      "side": 1,
+      "message": "I found in https://jenkins.opendaylight.org/releng/job/openflowplugin-csit-1node-perf-bulkomatic-only-magnesium/67/console:\n19:05:28 Warning: Permanently added \u002710.30.170.63\u0027 (ECDSA) to the list of known hosts.\n19:05:29 unix  3      [ ]         STREAM     CONNECTED     18101    \n19:05:29 ssh to karaf console to do bundle refresh of decanter jmx collector\n19:05:29 ssh: connect to host localhost port 8101: Connection refused\nThis could solve that Connection refused message\nI do not know if it is also solution for https://jira.opendaylight.org/browse/INTTEST-62\nI am not able to check it in sandbox - see here:\nhttps://jenkins.opendaylight.org/sandbox/view/All/job/stanislav-openflowplugin-csit-1node-perf-bulkomatic-only-magnesium/1/",
+      "revId": "527bc39ddafe0e4f006fa27097a1be942c85f7fa",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    }
+  ]
+}
