@@ -1,0 +1,35 @@
+---
+- project:
+    name: test
+    project: docs
+    jobs:
+      - test
+    report-jobnames: >
+        test
+    report-numjobs: 100
+    report-path: '/tmp/jobreports'
+
+- job-template:
+    name: 'test'
+    node: centos7-builder-2c-2g
+    project-type: freestyle
+    disabled: false
+
+
+    parameters:
+      - string:
+          name: RELEASE_TAG
+          description: 'Output path to write files'
+
+    builders:
+      - helloworldbuilder
+
+    triggers:
+      - timed: '@daily'
+
+
+- builder:
+    name: helloworldbuilder
+    builders:
+      - shell: !include-raw-escape:
+          - helloworld.sh
