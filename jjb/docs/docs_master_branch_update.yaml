@@ -1,0 +1,36 @@
+---
+- project:
+    name: docs_master_branch_update
+    project: docs
+    jobs:
+      - docs_master_branch_update
+
+- job-template:
+    name: 'docs_master_branch_update'
+    node: centos7-builder-2c-2g
+    project-type: freestyle
+    disabled: false
+
+    parameters:
+      - string:
+          name: next_release_name
+          description: 'The next release name eg Magnesium'
+      - string:
+          name: release_name
+          description: 'The current release name eg Sodium'       
+      - string:
+          name: publish
+          description: 'The flag to publish or not'
+
+    builders:
+      - docs_master_branch_update_builder
+
+    triggers:
+      - timed: '@daily'
+
+
+- builder:
+    name: docs_master_branch_update_builder
+    builders:
+      - shell: !include-raw :
+          - docs_master_branch_update.sh
