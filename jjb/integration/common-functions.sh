@@ -341,9 +341,7 @@ for i in $(seq 1 ${NUM_ODL_SYSTEM})
 do
         CONTROLLERIP=ODL_SYSTEM_${i}_IP
         echo "Setup long duration config to ${!CONTROLLERIP}"
-        # We purposely want these variables to expand client-side
-        # shellcheck disable=SC2029
-        ssh "${!CONTROLLERIP}" "mkdir -p /tmp/${BUNDLEFOLDER}/etc/opendaylight/karaf/"
+        ssh "${!CONTROLLERIP}" "mkdir -p /tmp/"${BUNDLEFOLDER}"/etc/opendaylight/karaf/"
         scp "${WORKSPACE}"/org.apache.karaf.decanter.scheduler.simple.cfg "${!CONTROLLERIP}":/tmp/"${BUNDLEFOLDER}"/etc/
 done
 } #function set_elasticsearch_attribute
