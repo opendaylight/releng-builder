@@ -292,16 +292,7 @@ function add_jvm_support()
 {
     if [ "${ELASTICSEARCHATTRIBUTE}" != "disabled" ]; then
         set_elasticsearch_attribute "${ELASTICSEARCHATTRIBUTE}"
-        #run_script="${WORKSPACE}/test/csit/scripts/set_elasticsearch_attribute.sh ${ELASTICSEARCHATTRIBUTE}"
-        #printf "Executing %s...\\n" "${run_script}"
-        ## shellcheck source=${line} disable=SC1091
-        #source "${run_script}"
-
         set_jvm_common_attribute
-        #run_script="${WORKSPACE}/test/csit/scripts/set_jvm_common_attribute.sh"
-        #printf "Executing %s...\\n" "${run_script}"
-        ## shellcheck source=${line} disable=SC1091
-        #source "${run_script}"
     fi
 } # function add_jvm_support()
 
@@ -367,18 +358,9 @@ EOF
 for i in $(seq 1 ${NUM_ODL_SYSTEM})
 do
     CONTROLLERIP=ODL_SYSTEM_${i}_IP
-    CLUSTERNAME=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 12)
 
     cat > "${WORKSPACE}"/elasticsearch.yml <<EOF
-    cluster.name: ${CLUSTERNAME}
-    network.host: ${!CONTROLLERIP}
     discovery.zen.ping.multicast.enabled: false
-
-EOF
-    cat > "${WORKSPACE}"/org.apache.karaf.decanter.appender.elasticsearch.cfg <<EOF
-    host=${!CONTROLLERIP}
-    port=9300
-    clusterName=${CLUSTERNAME}
 
 EOF
 
@@ -402,23 +384,17 @@ EOF
 
 EOF
     echo "Setup ODL_SYSTEM_IP specific config files for ${!CONTROLLERIP} "
-
-    cat "${WORKSPACE}"/org.apache.karaf.decanter.appender.elasticsearch.cfg
     cat "${WORKSPACE}"/org.apache.karaf.decanter.collector.jmx-local.cfg
     cat "${WORKSPACE}"/org.apache.karaf.decanter.collector.jmx-others.cfg
     cat "${WORKSPACE}"/elasticsearch.yml
 
 
     echo "Copying config files to ${!CONTROLLERIP}"
-
-    scp "${WORKSPACE}"/org.apache.karaf.decanter.appender.elasticsearch.cfg "${!CONTROLLERIP}":/tmp/"${BUNDLEFOLDER}"/etc/
     scp "${WORKSPACE}"/org.apache.karaf.decanter.collector.jmx-local.cfg "${!CONTROLLERIP}":/tmp/"${BUNDLEFOLDER}"/etc/
     scp "${WORKSPACE}"/org.apache.karaf.decanter.collector.jmx-others.cfg "${!CONTROLLERIP}":/tmp/"${BUNDLEFOLDER}"/etc/
-
     scp "${WORKSPACE}"/elasticsearch.yml "${!CONTROLLERIP}":/tmp/
 
     ssh "${!CONTROLLERIP}" "sudo ls -al /tmp/elasticsearch/"
-
     ssh "${!CONTROLLERIP}" "sudo mv /tmp/elasticsearch.yml /tmp/elasticsearch/elasticsearch-1.7.5/config/"
     ssh "${!CONTROLLERIP}" "cat /tmp/elasticsearch/elasticsearch-1.7.5/config/elasticsearch.yml"
 
@@ -888,7 +864,7 @@ function get_features() {
 
     if [ "${ELASTICSEARCHATTRIBUTE}" != "disabled" ]; then
         # Add decanter features to allow JVM monitoring
-        ACTUALFEATURES="${ACTUALFEATURES},decanter-collector-jmx,decanter-appender-elasticsearch"
+        ACTUALFEATURES="${ACTUALFEATURES},decanter-collector-jmx,decanter-appender-elasticsearch-rest"
     fi
 
     # Some versions of jenkins job builder result in feature list containing spaces
@@ -935,7 +911,7 @@ if [[ "$KARAF_VERSION" == "karaf4" ]]; then
     FEATURE_TEST_STRING="features-test"
 fi
 
-sed -ie "s%\\(featuresRepositories=\\|featuresRepositories =\\)%featuresRepositories = mvn:org.opendaylight.integration/\${FEATURE_TEST_STRING}/${BUNDLE_VERSION}/xml/features,mvn:org.apache.karaf.decanter/apache-karaf-decanter/1.0.0/xml/features,%g" ${FEATURESCONF}
+sed -ie "s%\\(featuresRepositories=\\|featuresRepositories =\\)%featuresRepositories = mvn:org.opendaylight.integration/\${FEATURE_TEST_STRING}/${BUNDLE_VERSION}/xml/features,mvn:org.apache.karaf.decanter/apache-karaf-decanter/1.1.0/xml/features,%g" ${FEATURESCONF}
 if [[ ! -z "${REPO_URL}" ]]; then
    sed -ie "s%featuresRepositories =%featuresRepositories = ${REPO_URL},%g" ${FEATURESCONF}
 fi
@@ -1000,7 +976,7 @@ sshpass -p karaf ssh -o StrictHostKeyChecking=no \
                      -o UserKnownHostsFile=/dev/null \
                      -o LogLevel=error \
                      -p 8101 karaf@localhost \
-                     "bundle:refresh org.apache.karaf.decanter.collector.jmx && bundle:refresh org.apache.karaf.decanter.appender.elasticsearch"
+                     "bundle:refresh org.apache.karaf.decanter.collector.jmx && bundle:refresh org.apache.karaf.decanter.api"
 
 if [[ "$USEFEATURESBOOT" != "True" ]]; then
 
