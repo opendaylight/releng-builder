@@ -1,0 +1,16 @@
+---
+- project:
+    name: docs-update-{stream}
+    jobs:
+      - 'docs-update-{stream}'
+      - gerrit-tox-verify
+
+    stream:
+      - sodium:
+          branch: 'stable/sodium'
+      - sodium:
+          branch: 'master'
+
+    project: docs
+    project-name: docs
+    build-node: centos7-builder-2c-8g
