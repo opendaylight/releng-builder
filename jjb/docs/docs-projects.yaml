@@ -1,0 +1,33 @@
+---
+- project:
+    name: docs-update-{stream}
+    jobs:
+      - 'docs-update-{stream}'
+      - gerrit-tox-verify
+
+    stream:
+      - sodium:
+          branch: 'stable/sodium'
+          integration-test: sodium
+
+    project: docs
+    project-name: docs
+    build-node: centos7-builder-2c-8g
+    # Before adding more here, beware of https://jira.linuxfoundation.org/browse/RELENG-280
+    archive-artifacts: >
+        **/*.prop
+        **/*.log
+        **/target/surefire-reports/*-output.txt
+        **/target/failsafe-reports/failsafe-summary.xml
+        **/hs_err_*.log
+        **/target/feature/feature.xml
+    staging-profile-id: 425e43800fea70
+    # TODO: **/*.hprof is too large, compress with xz first
+    mvn-params: >
+        -Pintegrationtests,repoBuild
+        -P!karaf
+        -Pignore-lispflowmapping-integrationtest
+        -Dcheckstyle.skip=true
+        -Dskip.karaf.featureTest=true
+        -Dsft.heap.max=4g
+    java-version: openjdk8
