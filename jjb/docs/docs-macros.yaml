@@ -1,0 +1,12 @@
+---
+# Macros for the Docs project
+- builder:
+    name: docs-update
+    builders:
+      - shell: !include-raw:
+          - docs_update.sh
+- builder:
+    name: rtd-version-update
+    builders:
+      - shell: !include-raw:
+          - rtd-update-version.sh
