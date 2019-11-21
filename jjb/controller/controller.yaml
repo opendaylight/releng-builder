@@ -99,23 +99,6 @@
     mvn-settings: 'controller-settings'
     mvn-goals: 'clean deploy -Pintegrationtests,docs'
     mvn-opts: '-Xmx4096m -Dmaven.compile.fork=true'
-
-- project:
-    name: controller-sonarcloud
-    jobs:
-      - gerrit-maven-sonar:
-          mvn-params: >
-            -Dodl.jacoco.aggregateFile=$WORKSPACE/target/jacoco.exec
-            -Dsonar.jacoco.reportPath=$WORKSPACE/target/jacoco.exec
-
-    project: 'controller'
-    project-name: 'controller-sonarcloud'
-    branch: master
-    build-node: centos7-builder-8c-8g
-    java-version: 'openjdk11'
-    mvn-settings: 'controller-settings'
-    mvn-goals: 'clean deploy -Pintegrationtests,docs'
-    mvn-opts: '-Xmx4096m -Dmaven.compile.fork=true'
     sonarcloud: true
     sonarcloud-project-organization: '{sonarcloud_project_organization}'
     sonarcloud-api-token: '{sonarcloud_api_token}'
