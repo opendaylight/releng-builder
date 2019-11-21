@@ -1,0 +1,7 @@
+---
+# Macros for the AutoRelease project
+- builder:
+    name: docs-update
+    builders:
+      - shell: !include-raw:
+          - ./docs_master_branch_update.sh $release_name $branch_name $publish
