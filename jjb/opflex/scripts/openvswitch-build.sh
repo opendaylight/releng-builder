@@ -25,7 +25,7 @@ mkdir -p "$DESTDIR"
 make -j4
 DESTDIR=$(pwd)/$DESTDIR make install
 
-if [[ $OPENVSWITCH_VERSION =~ 2.6.7 ]]; then
+if [[ $OPENVSWITCH_VERSION =~ 2.12.0 ]]; then
     mkdir -p $DESTDIR/$ROOT/include/openvswitch/openvswitch
     mv $DESTDIR/$ROOT/include/openvswitch/*.h $DESTDIR/$ROOT/include/openvswitch/openvswitch
     mv $DESTDIR/$ROOT/include/openflow $DESTDIR/$ROOT/include/openvswitch
