@@ -57,10 +57,10 @@ while getopts :h: opts; do
     esac
 done
 
-# User input
 token=$token
 version_name=$STREAM
 stable_release_str=stable-$version_name
+
 ################
 # Start script #
 ###############
