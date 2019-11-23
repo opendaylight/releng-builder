@@ -5,3 +5,13 @@
     builders:
       - shell: !include-raw:
           - docs_update.sh
+- builder:
+    name: rtd-version-update
+    builders:
+      - shell: !include-raw:
+          - rtd-update-version.sh
+- builder:
+    name: rupdate-version-projects
+    builders:
+      - shell: !include-raw:
+          - update_version.sh
