@@ -3,12 +3,34 @@
     name: docs-update-{stream}
     jobs:
       - 'docs-update-{stream}'
-      - gerrit-tox-verify
-
     stream:
       - sodium:
           branch: 'stable/sodium'
 
     project: docs
     project-name: docs
+    build-node: centos7-builder-2c-8g
+
+- project:
+    name: docs-rtd-version-update-{stream}
+    jobs:
+      - 'docs-rtd-version-update-{stream}'
+    stream:
+      - sodium:
+          branch: 'stable/sodium'
+
+    project: releng/autorelease
+    project-name: autorelease
+    build-node: centos7-builder-2c-8g
+
+- project:
+    name: update-version-project-{stream}
+    jobs:
+      - 'update-version-project-{stream}'
+    stream:
+      - sodium:
+          branch: 'stable/sodium'
+
+    project: releng/autorelease
+    project-name: autorelease
     build-node: centos7-builder-2c-8g
