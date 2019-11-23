@@ -12,3 +12,17 @@
     project: docs
     project-name: docs
     build-node: centos7-builder-2c-8g
+
+- project:
+    name: docs-rtd-version-update-{stream}
+    jobs:
+      - 'docs-rtd-version-update-{stream}'
+      - gerrit-tox-verify
+
+    stream:
+      - sodium:
+          branch: 'stable/sodium'
+
+    project: releng/autorelease
+    project-name: autorelease
+    build-node: centos7-builder-2c-8g
