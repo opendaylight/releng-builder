@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "ec10f446_83d75c67",
+        "filename": "jjb/docs/docs-template.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2019-11-25T14:00:12Z",
+      "side": 1,
+      "message": "We typically like all UPPERCASE variables here because it makes it standout in scripts that the variables are coming from outside the script itself.",
+      "range": {
+        "startLine": 93,
+        "startChar": 16,
+        "endLine": 93,
+        "endChar": 21
+      },
+      "revId": "73ccaee66ed5ab40335636f217c3ab21d59b006e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c7eefa7_3f14b1c8",
+        "filename": "jjb/docs/docs-template.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2019-11-25T14:00:12Z",
+      "side": 1,
+      "message": "We typically like all UPPERCASE variables here because it makes it standout in scripts that the variables are coming from outside the script itself.",
+      "range": {
+        "startLine": 96,
+        "startChar": 16,
+        "endLine": 96,
+        "endChar": 23
+      },
+      "revId": "73ccaee66ed5ab40335636f217c3ab21d59b006e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b9064d8b_1ee67b65",
         "filename": "jjb/docs/rtd-update-version.sh",
         "patchSetId": 2
@@ -31,6 +77,24 @@
       "side": 1,
       "message": "No, it shouldn\u0027t be capitalized as it is $publish and $token in the job definition itself.\nAnd Yes, I have tested the Job by setting publish as True and it is getting reflected in the RTD builds.",
       "parentUuid": "b9064d8b_1ee67b65",
+      "revId": "73ccaee66ed5ab40335636f217c3ab21d59b006e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "acec53cf_2d23ba2c",
+        "filename": "jjb/docs/rtd-update-version.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2019-11-25T14:00:12Z",
+      "side": 1,
+      "message": "It\u0027s lowercase because you made them lowercase in the job definition. Our typical practice is to use all UPPERCASE for variables that come from Jenkins parameters and all lowercase for variables that are defined inside the script itself.\n\nSo this line should be:\n\n publish\u003d$PUBLISH\n\nwhich says we are making a new local variable called publish using the external variable from Jenkins parameters called PUBLISH.",
+      "parentUuid": "adb4949d_51a27e5d",
       "revId": "73ccaee66ed5ab40335636f217c3ab21d59b006e",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
