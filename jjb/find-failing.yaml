@@ -1,0 +1,33 @@
+---
+- job:
+    builders:
+      - shell:
+          !include-raw: find-failing.sh
+      - shell:
+          !include-raw: find-failing.py
+    concurrent: false
+    disabled: false
+    name: find-consecutive-job-fails
+    description: "Find jenkins jobs with consecutive failings."
+    node: master
+    parameters:
+      - string:
+          default: '5'
+          description: Number of consecutive failures
+          name: CONSECUTIVEFAILURES
+          trim: 'true'
+    project-type: freestyle
+    properties:
+      - build-discarder:
+          artifact-days-to-keep: -1
+          artifact-num-to-keep: -1
+          days-to-keep: -1
+          num-to-keep: 1
+    publishers:
+      - archive:
+          allow-empty: false
+          artifacts: JobsWithMoreConsecutiveFailures.html
+          case-sensitive: true
+          default-excludes: true
+          fingerprint: false
+          only-if-success: false
