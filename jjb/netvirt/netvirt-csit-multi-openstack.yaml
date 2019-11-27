@@ -247,12 +247,12 @@
           odl-snat-mode: 'conntrack'
 
     openstack:
-      - queens:
-          openstack-branch: 'stable/queens'
-          odl-ml2-branch: 'stable/queens'
+      - stein:
+          openstack-branch: 'stable/stein'
+          odl-ml2-branch: 'stable/stein'
           odl-ml2-port-binding: 'pseudo-agentdb-binding'
-          openstack_system_image: '{openstack_queens_system_image}'
-          openstack_system2_image: '{openstack_queens_system_image}'
+          openstack_system_image: '{openstack_stein_system_image}'
+          openstack_system2_image: '{openstack_stein_system_image}'
 
 - project:
     name: netvirt-csit-sfc-openstack-integration
@@ -385,3 +385,9 @@
           odl-ml2-port-binding: 'pseudo-agentdb-binding'
           openstack_system_image: '{openstack_rocky_system_image}'
           openstack_system2_image: '{openstack_rocky_system_image}'
+      - stein:
+          openstack-branch: 'stable/stein'
+          odl-ml2-branch: 'stable/stein'
+          odl-ml2-port-binding: 'pseudo-agentdb-binding'
+          openstack_system_image: '{openstack_stein_system_image}'
+          openstack_system2_image: '{openstack_stein_system_image}'
