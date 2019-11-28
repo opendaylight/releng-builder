@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65ec4ff2_95aa5c1d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2019-11-28T14:14:13Z",
+      "side": 1,
+      "message": "Please follow git commit message best practices:\n\nhttps://chris.beams.io/posts/git-commit/#seven-rules\n\nThe summary line in here is longer than 50 characters wide so cut that down and move the detailed info into the body.",
+      "revId": "5b6d94a4ea338c8f96d0e310a8f13aa44e17aa35",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbda6cdf_0993556d",
+        "filename": "jjb/FindFailing.yaml",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2019-11-28T14:14:13Z",
+      "side": 1,
+      "message": "I\u0027d recommend using all lowercase for filenames and job name as that\u0027s what our current practice is.",
+      "range": {
+        "startLine": 7,
+        "startChar": 24,
+        "endLine": 7,
+        "endChar": 38
+      },
+      "revId": "5b6d94a4ea338c8f96d0e310a8f13aa44e17aa35",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17a5a8ba_43df8310",
+        "filename": "jjb/FindFailing.yaml",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2019-11-28T14:14:13Z",
+      "side": 1,
+      "message": "I\u0027d recommend using all lowercase for filenames and job name as that\u0027s what our current practice is.",
+      "revId": "5b6d94a4ea338c8f96d0e310a8f13aa44e17aa35",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07ab660d_4a1065f8",
+        "filename": "jjb/FindFailing.yaml",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2019-11-28T14:14:13Z",
+      "side": 1,
+      "message": "I\u0027d recommend using all lowercase for filenames and job name as that\u0027s what our current practice is.\n\nAlso no spaces allowed in job-names, it breaks Jenkins pretty bad in some cases. I think this job name is far too longer anyway, we should use something much shorter for the name like:\n\n builder-find-consecutive-job-fails\n\nYou can move the full text \"Find jenkins jobs with consecutive failures\" to the \"description\" field however.\n\n(All our jobs should have a prefix of the project that is maintaining the job. I used builder here as an example but we should probably pick one based on which team is expected to maintain this job.)",
+      "range": {
+        "startLine": 12,
+        "startChar": 4,
+        "endLine": 12,
+        "endChar": 55
+      },
+      "revId": "5b6d94a4ea338c8f96d0e310a8f13aa44e17aa35",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    }
+  ]
+}
