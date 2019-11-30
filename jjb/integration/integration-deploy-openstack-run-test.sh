@@ -105,7 +105,7 @@ function install_openstack_clients_in_robot_vm() {
 
     if [ "${ENABLE_NETWORKING_L2GW}" == "yes" ]; then
         #networking-l2gw is not officially available in any release yet. Getting the latest stable version.
-        $PYTHON -m pip install networking-l2gw==11.0.0
+        $PYTHON -m pip install networking-l2gw==11.0.0 more-itertools==5.0.0
     fi
 }
 
