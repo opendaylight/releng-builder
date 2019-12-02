@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e3759c0_7760894b",
+        "filename": "jjb/docs/docs-macros.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2019-12-02T17:10:12Z",
+      "side": 1,
+      "message": "Please remove this commented out code.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 14
+      },
+      "revId": "3530f851cb5a93b7c2f84a0fa6cf48273b7aed03",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f188d764_3e07ed8d",
+        "filename": "jjb/docs/docs-projects.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2019-12-02T17:10:12Z",
+      "side": 1,
+      "message": "I don\u0027t think we need a 8 GB system to run this job. Let\u0027s bump this down to 2g. Please use:\n\n centos7-builder-2c-2g",
+      "range": {
+        "startLine": 16,
+        "startChar": 16,
+        "endLine": 16,
+        "endChar": 37
+      },
+      "revId": "3530f851cb5a93b7c2f84a0fa6cf48273b7aed03",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17bd6250_ae3e5d5e",
+        "filename": "jjb/docs/docs-template.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2019-12-02T17:10:12Z",
+      "side": 1,
+      "message": "Doesn\u0027t look like this variable is attached to any build trigger. I don\u0027t think a Gerrit comment trigger makes much sense for this job anyway so let\u0027s just remove this variable that\u0027s not being called in the template.",
+      "range": {
+        "startLine": 11,
+        "startChar": 3,
+        "endLine": 14,
+        "endChar": 0
+      },
+      "revId": "3530f851cb5a93b7c2f84a0fa6cf48273b7aed03",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    }
+  ]
+}
