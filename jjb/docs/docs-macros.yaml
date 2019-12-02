@@ -1,0 +1,8 @@
+---
+# Macros for the Docs project
+- builder:
+    name: docs-update
+    builders:
+      - shell: !include-raw:
+          - docs_version_bump.sh
+          - docs_version_bump_projects.sh
