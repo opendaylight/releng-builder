@@ -1,0 +1,62 @@
+---
+# Autorelease build jobs
+- job-template:
+    name: 'docs-update-{stream}-{project-name}'
+
+    ######################
+    # Default parameters #
+    ######################
+    disable-job: 'false'
+
+    gerrit_merge_triggers:
+      - comment-added-contains-event:
+          comment-contains-value: docs-update .+$
+
+    #####################
+    # Job Configuration #
+    #####################
+
+    project-type: freestyle
+    node: centos7-builder-2c-8g
+    disabled: '{disable-job}'
+
+    properties:
+      - lf-infra-properties:
+          build-days-to-keep: 7
+
+    parameters:
+      - lf-infra-parameters:
+          project: '{project}'
+          project-name: '{project-name}'
+          branch: '{branch}'
+          stream: '{stream}'
+          lftools-version: '{lftools-version}'
+      - string:
+          name: RELEASE_NAME
+          description: 'The next release name eg Magnesium'
+      - bool:
+          name: PUBLISH
+          default: false
+          description: 'The flag to publish or not'
+
+    scm:
+      - lf-infra-gerrit-scm:
+          git-url: '$GIT_URL/$GERRIT_PROJECT'
+          branch: '$GERRIT_BRANCH'
+          refspec: '$GERRIT_REFSPEC'
+          jenkins-ssh-credential: opendaylight-jenkins-ssh
+          submodule-disable: false
+          submodule-recursive: true
+          submodule-timeout: 10
+          choosing-strategy: default
+
+    wrappers:
+      - lf-infra-wrappers:
+          build-timeout: 10
+          jenkins-ssh-credential: opendaylight-jenkins-ssh
+
+    builders:
+      - docs-update
+
+    publishers:
+      - lf-infra-publish
