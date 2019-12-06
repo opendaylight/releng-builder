@@ -37,6 +37,8 @@ if [ "$GERRIT_PROJECT" == "docs" ]; then
     stable_release_str=stable-$release_name
     echo "Start Version Updating in docs project"
     echo "RELEASE_NAME : $Next_release"
+    pip install --user --quiet --upgrade git-review
+    git config --global --add gitreview.username "jenkins-$SILO"
     if [ "$GERRIT_BRANCH" == "master" ]
     then
         # ####################################

@@ -38,7 +38,8 @@ if [ "$GERRIT_PROJECT" == "releng/autorelease" ]; then
     ################
     # Start script #
     ###############
-
+    pip install --user --quiet --upgrade git-review
+    git config --global --add gitreview.username "jenkins-$SILO"
     git submodule update
     #'|| true' for repo like serviceutils where docs/conf.yaml doesn't exist
     command='sed -i ''"s/.*version.*/version: '"$release_name"'/"'' docs/conf.yaml || true'
