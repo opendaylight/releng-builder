@@ -1,7 +1,7 @@
 ---
 # Autorelease build jobs
 - job-template:
-    name: 'docs-update-{stream}-{project-name}'
+    name: 'docs-update-{stream}'
 
     ######################
     # Default parameters #
@@ -22,8 +22,8 @@
 
     parameters:
       - lf-infra-parameters:
-          project: '{project}'
-          project-name: '{project-name}'
+          project: 'releng/autorelease'
+          project-name: 'autorelease'
           branch: '{branch}'
           stream: '{stream}'
           lftools-version: '{lftools-version}'
@@ -36,7 +36,7 @@
           description: 'The flag to publish or not'
 
     scm:
-      - lf-infra-gerrit-scm:
+      - lf-gerrit-clone:
           git-url: '$GIT_URL/$GERRIT_PROJECT'
           branch: '$GERRIT_BRANCH'
           refspec: '$GERRIT_REFSPEC'
@@ -44,7 +44,20 @@
           submodule-disable: false
           submodule-recursive: true
           submodule-timeout: 10
+          basedir: 'autorelease'
           choosing-strategy: default
+          wipe-workspace: true
+      - lf-gerrit-clone:
+          git-url: '$GIT_URL/docs'
+          branch: '$GERRIT_BRANCH'
+          refspec: '$GERRIT_REFSPEC'
+          jenkins-ssh-credential: opendaylight-jenkins-ssh
+          submodule-disable: true
+          basedir: 'docs'
+          submodule-recursive: false
+          submodule-timeout: 10
+          choosing-strategy: default
+          wipe-workspace: false
 
     wrappers:
       - lf-infra-wrappers:
@@ -56,3 +69,21 @@
 
     publishers:
       - lf-infra-publish
+
+- scm:
+    name: lf-gerrit-clone
+    scm:
+      - git:
+          credentials-id: "{jenkins-ssh-credential}"
+          url: "{git-url}"
+          basedir : "{basedir}"
+          refspec: "{refspec}"
+          branches:
+            - "refs/heads/{branch}"
+          skip-tag: true
+          wipe-workspace: "{wipe-workspace}"
+          submodule:
+            disable: "{submodule-disable}"
+            recursive: "{submodule-recursive}"
+            timeout: "{submodule-timeout}"
+          choosing-strategy: "{choosing-strategy}"

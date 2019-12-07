@@ -1,20 +1,11 @@
 ---
 - project:
-    name: docs-update-{stream}-{project-name}
+    name: docs-update-{stream}
     jobs:
-      - 'docs-update-{stream}-{project-name}'
+      - 'docs-update-{stream}'
     stream:
       - master:
           branch: 'master'
-          project: docs
-          project-name: docs
       - sodium:
           branch: 'stable/sodium'
-          project: docs
-          project-name: docs
-      - sodium:
-          branch: 'stable/sodium'
-          project: releng/autorelease
-          project-name: autorelease
-
     build-node: centos7-builder-2c-2g
