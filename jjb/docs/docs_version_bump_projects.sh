@@ -28,6 +28,15 @@ while getopts :h: opts; do
         ;;
   esac
 done
+set +u  # Allow unbound variables for virtualenv
+virtualenv --quiet "/tmp/v/git-review"
+# shellcheck source=/tmp/v/git-review/bin/activate disable=SC1091
+source "/tmp/v/git-review/bin/activate"
+pip install --quiet --upgrade "pip==9.0.3" setuptools
+pip install --quiet --upgrade git-review
+git config --global --add gitreview.username "jenkins-$SILO"
+cd $WORKSPACE/autorelease
+GERRIT_PROJECT="releng/autorelease"
 if [ "$GERRIT_PROJECT" == "releng/autorelease" ]; then
     # User input
     RELEASE_NAME=$RELEASE_NAME
@@ -38,12 +47,13 @@ if [ "$GERRIT_PROJECT" == "releng/autorelease" ]; then
     ################
     # Start script #
     ###############
-    pip install --user --quiet --upgrade git-review
-    git config --global --add gitreview.username "jenkins-$SILO"
     git submodule update
     #'|| true' for repo like serviceutils where docs/conf.yaml doesn't exist
     command='sed -i ''"s/.*version.*/version: '"$release_name"'/"'' docs/conf.yaml || true'
-    git submodule foreach "git checkout $STREAM"
+    echo $command
+    git submodule foreach "git checkout $GERRIT_BRANCH"
+    echo "git checkout $GERRIT_BRANCH"
+    git submodule foreach "git branch"
     git submodule foreach "$command"
     if [ "$PUBLISH" == "true" ]
       then
