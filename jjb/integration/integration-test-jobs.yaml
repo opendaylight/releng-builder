@@ -25,7 +25,7 @@
           csit-list: !include: csit-jobs-magnesium.lst
           build-order: >
               odlparent yangtools mdsal infrautils controller serviceutils aaa netconf
-              daexim ovsdb neutron openflowplugin coe genius lispflowmapping sfc netvirt
+              daexim jsonrpc ovsdb neutron openflowplugin genius lispflowmapping netvirt
               bgpcep integration/distribution
 
       - sodium:
@@ -60,8 +60,8 @@
       - magnesium:
           branch: 'master'
           csit-blacklist: >
-              alto bier didm dluxapps groupbasedpolicy jsonrpc l2switch nemo
-              of-config p4plugin packetcable sxp telemetry tsdr unimgr usc
+              alto bier coe didm dluxapps groupbasedpolicy l2switch nemo
+              of-config p4plugin packetcable sfc sxp telemetry tsdr unimgr usc
               gate longevity sanity tdd tempest wip
               netvirt-csit-1node-1cmb-0ctl-0cmp-openstack-pike
               netvirt-csit-1node-1cmb-0ctl-0cmp-openstack-queens-upstream-stateful-itm-direct
