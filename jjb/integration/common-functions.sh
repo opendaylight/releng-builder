@@ -1009,7 +1009,7 @@ done;
 
 # if we ended up not finding ready status in the above loop, we can output some debugs
 grep 'org.opendaylight.infrautils.*System ready' /tmp/${BUNDLEFOLDER}/data/log/karaf.log
-if [ $? -ne 0 ]; then
+if [ \$? -ne 0 ]; then
     echo "Timeout Controller DOWN"
     echo "Dumping first 500K bytes of karaf log..."
     head --bytes=500K "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
