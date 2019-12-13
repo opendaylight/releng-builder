@@ -221,27 +221,6 @@
     update-cloud-image: true
 
 - project:
-    name: packer-kubernetes-jobs
-    jobs:
-      - gerrit-packer-merge
-
-    project: releng/builder
-    project-name: builder
-    branch: master
-    archive-artifacts: '**/*.log'
-
-    build-node: centos7-builder-2c-1g
-    build-timeout: 90
-    cron: '00 H 1 * *'
-
-    platforms:
-      - ubuntu-16.04
-      - ubuntu-18.04:
-          disable-job: true
-    templates: kubernetes
-    update-cloud-image: true
-
-- project:
     name: openstack-update-cloud-images
     jobs:
       - gerrit-openstack-update-cloud-image
