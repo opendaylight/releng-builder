@@ -3,6 +3,7 @@
     name: jsonrpc-magnesium
     jobs:
       - '{project-name}-rtd-jobs':
+      - '{project-name}-distribution-check-{stream}'
           build-node: centos7-builder-2c-2g
           project-pattern: jsonrpc
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-jsonrpc/91870/
