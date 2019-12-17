@@ -2,6 +2,7 @@
 - project:
     name: jsonrpc-magnesium
     jobs:
+      - '{project-name}-distribution-check-{stream}'
       - '{project-name}-rtd-jobs':
           build-node: centos7-builder-2c-2g
           project-pattern: jsonrpc
