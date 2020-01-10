@@ -18,6 +18,9 @@
           branch: 'stable/sodium'
           integration-test: sodium
       - neon:
+          # Run Neon once a week (on Sunday) since Neon-SR3 is out.
+          # Neon will be EOL-ed once Magnesium is released.
+          cron: 'H 12 * * 6'
           branch: 'stable/neon'
           integration-test: neon
           cron: '@weekly'
