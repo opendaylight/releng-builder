@@ -28,6 +28,34 @@
     staging-profile-id: 1271cf710cc09d
 
 - project:
+    name: yangtools-4.0.x
+    jobs:
+      - 'gerrit-release-merge'
+      - odl-maven-jobs-jdk11
+      - odl-maven-verify-jobs
+
+    project: yangtools
+    project-name: yangtools
+    branch: 4.0.x
+    stream: 4.0.x
+
+    java-version: 'openjdk11'
+    mvn-settings: 'yangtools-settings'
+
+    dependencies: ''
+    email-upstream: '[yangtools]'
+    archive-artifacts: >
+        **/*.prop
+        **/*.log
+        **/target/surefire-reports/*-output.txt
+        **/target/failsafe-reports/failsafe-summary.xml
+        **/hs_err_*.log
+        **/target/feature/feature.xml
+
+    # Used by the release job
+    staging-profile-id: 1271cf710cc09d
+
+- project:
     name: yangtools-v3.0.x
     jobs:
       - odl-maven-jobs
