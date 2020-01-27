@@ -27,12 +27,9 @@
 - job-template:
     name: 'opflex-thirdparty-libuv-{stream}'
 
-    disable-job: false
-
     project-type: freestyle
     node: centos7-builder-2c-8g
     concurrent: true
-    disabled: '{disable-job}'
 
     group-id: 'libuv'
 
