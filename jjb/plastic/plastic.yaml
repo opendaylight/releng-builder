@@ -25,22 +25,6 @@
     staging-profile-id: 380d129f253e1
 
 - project:
-    name: plastic-2.1.6
-    jobs:
-      - odl-maven-jobs
-
-    stream: 2.1.6
-    project: plastic
-    project-name: plastic
-    branch: 2.1.6
-    java-version: openjdk8
-    mvn-settings: plastic-settings
-    mvn-opts: '-Xmx1024m'
-
-    # Used by the release job
-    staging-profile-id: 380d129f253e1
-
-- project:
     name: plastic-sonar
     jobs:
       - gerrit-maven-sonar
