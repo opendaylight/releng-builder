@@ -156,6 +156,7 @@ function fix_libvirt_python_build() {
         git clone https://git.openstack.org/openstack/requirements;
         cd requirements;
         git checkout ${ODL_ML2_BRANCH};
+        sed -i s/oslo.concurrency===4.0.0/oslo.concurrency===3.25.1/ upper-constraints.txt;
         sed -i s/libvirt-python===3.10.0/libvirt-python===4.10.0/ upper-constraints.txt
         "
 }
