@@ -21,6 +21,7 @@
       - integration-controller-parameters:
           controller-debug-map: '{debug-map}'
           controller-features: '{install-features}'
+          controller-max-mem: '{controller-max-mem}'
           controller-scope: '{controller-scope}'
           controller-use-features-boot: '{use-features-boot}'
           feature-elasticsearch-attribute: '{elasticsearch-attribute}'
@@ -37,7 +38,7 @@
           name: CONTROLLERFEATURES
           default: '{controller-features}'
           description: |
-              Features to install in the controller separated by comma
+              Features to install in the controller separated by comma.
               (note: Do not include decanter* features used for harvesting JVM metrics.
                They are inserted in install scripts.)
 
@@ -49,6 +50,12 @@
               The module should not include org.opendaylight.
               The levels must be one of: ERROR, WARN, INFO, DEBUG, TRACE.
               (ex. ovsdb.lib:ERROR netvirt.vpnservice:INFO)
+
+      - string:
+          name: CONTROLLERMAXMEM
+          default: '{controller-max-mem}'
+          description: |
+              Max Heap size to use when starting the controller.
 
       - string:
           name: ELASTICSEARCHATTRIBUTE
