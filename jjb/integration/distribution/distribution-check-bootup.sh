@@ -64,7 +64,7 @@ netstat -pnatu
 
 if [ "$JDKVERSION" == 'openjdk11' ]; then
     echo "Preparing for JRE Version 11"
-    JAVA_HOME="/opt/jdk-11"
+    JAVA_HOME="/usr/lib/jvm/java-11-openjdk"
 elif [ "${JDKVERSION}" == 'openjdk8' ]; then
     echo "Setting the JRE Version to 8"
     # dynamic_verify does not allow sudo, JAVA_HOME should be enough for karaf start.
