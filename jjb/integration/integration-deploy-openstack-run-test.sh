@@ -223,6 +223,7 @@ LOGFILE=stack.sh.log
 LOG_COLOR=False
 USE_SYSTEMD=True
 RECLONE=${RECLONE}
+USE_PYTHON3=True
 # Increase the wait used by stack to poll for services
 SERVICE_TIMEOUT=120
 
@@ -407,6 +408,7 @@ LOGFILE=stack.sh.log
 LOG_COLOR=False
 USE_SYSTEMD=True
 RECLONE=${RECLONE}
+USE_PYTHON3=True
 # Increase the wait used by stack to poll for the nova service on the control node
 NOVA_READY_TIMEOUT=1800
 
@@ -686,6 +688,7 @@ function install_ovs() {
 
 ODL_PROVIDER_MAPPINGS="\${PUBLIC_PHYSICAL_NETWORK}:${PUBLIC_BRIDGE}"
 RECLONE=False
+USE_PYTHON3=True
 ODL_PORT=8181
 
 # Always compare the lists below against the devstack upstream ENABLED_SERVICES in
