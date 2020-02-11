@@ -1,5 +1,45 @@
 ---
 - project:
+    name: netvirt-aluminium
+    jobs:
+      - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-maven-javadoc-jobs'
+      - '{project-name}-rtd-jobs':
+          build-node: centos7-builder-2c-2g
+          doc-dir: .tox/docs/tmp/html
+          project-pattern: netvirt
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-netvirt/32929/
+          rtd-token: 7b6a1dcfc729957ace511e016274e253e07a8d6c
+      - gerrit-tox-verify
+      - odl-maven-jobs-jdk11
+      - odl-maven-verify-jobs
+
+    csit-gate-list: 'netvirt-csit-1node-0cmb-1ctl-2cmp-apex-queens-gate-snat-conntrack-{stream}'
+    block_on_csit: false
+
+    stream: aluminium
+    branch: 'master'
+
+    project: 'netvirt'
+    project-name: 'netvirt'
+
+    java-version: 'openjdk11'
+    mvn-settings: 'netvirt-settings'
+    mvn-opts: '-Xmx2048m'
+    build-timeout: 90
+    build-node: centos7-builder-8c-8g
+    dependencies: >
+        genius-merge-{stream},
+        neutron-merge-{stream},
+        openflowjava-merge-{stream},
+        openflowplugin-merge-{stream},
+        ovsdb-merge-{stream}
+    email-upstream: '[genius] [netvirt] [neutron] [openflowjava] [openflowplugin] [ovsdb]'
+
+    # Used by the release job
+    staging-profile-id: a67da0ffbb1ba
+
+- project:
     name: netvirt-magnesium
     jobs:
       - '{project-name}-distribution-check-{stream}'
@@ -18,7 +58,7 @@
     block_on_csit: false
 
     stream: magnesium
-    branch: 'master'
+    branch: 'stable/magnesium'
 
     project: 'netvirt'
     project-name: 'netvirt'

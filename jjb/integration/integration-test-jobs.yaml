@@ -18,8 +18,18 @@
 
     # CSIT Lists in defaults.yaml
     stream:
-      - magnesium:
+      - aluminium:
           branch: 'master'
+          mvn-version: 'mvn35'
+          java-version: 'openjdk11'
+          csit-list: !include: csit-jobs-aluminium.lst
+          build-order: >
+              odlparent yangtools mdsal infrautils controller serviceutils aaa netconf
+              daexim jsonrpc ovsdb neutron openflowplugin genius lispflowmapping netvirt
+              bgpcep integration/distribution
+
+      - magnesium:
+          branch: 'stable/magnesium'
           mvn-version: 'mvn35'
           java-version: 'openjdk11'
           csit-list: !include: csit-jobs-magnesium.lst

@@ -52,9 +52,12 @@
           build-node: centos7-autorelease-4c-16g
 
     stream:
-      - magnesium:
+      - aluminium:
           branch: 'master'
-          integration-test: magnesium
+          integration-test: aluminium-dev-null
+      - magnesium:
+          branch: 'stable/magnesium'
+          integration-test: magnesium-dev-null
       - sodium:
           branch: 'stable/sodium'
           integration-test: sodium-dev-null

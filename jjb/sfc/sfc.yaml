@@ -1,5 +1,31 @@
 ---
 - project:
+    name: sfc-aluminium
+    jobs:
+      - '{project-name}-rtd-jobs':
+          build-node: centos7-builder-2c-2g
+          project-pattern: sfc
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-sfc/38996/
+          rtd-token: 2fa6c2900bbe181b0427ad65df3dc494ac749edb
+      - odl-maven-jobs-jdk11
+      - odl-maven-verify-jobs
+
+    stream: aluminium
+    project: 'sfc'
+    project-name: 'sfc'
+    branch: 'master'
+    java-version: 'openjdk11'
+    mvn-settings: 'sfc-settings'
+    mvn-opts: '-Xmx2048m -Dmaven.compile.fork=true'
+    build-timeout: 120
+    dependencies: 'openflowplugin-merge-{stream},ovsdb-merge-{stream},lispflowmapping-merge-{stream}'
+    email-upstream: '[sfc] [openflowplugin] [ovsdb] [lispflowmapping]'
+    build-node: centos7-builder-8c-8g
+
+    # Used by the release job
+    staging-profile-id: a68eb361ca48a
+
+- project:
     name: sfc-magnesium
     jobs:
       - '{project-name}-rtd-jobs':
@@ -13,7 +39,7 @@
     stream: magnesium
     project: 'sfc'
     project-name: 'sfc'
-    branch: 'master'
+    branch: 'stable/magnesium'
     java-version: 'openjdk11'
     mvn-settings: 'sfc-settings'
     mvn-opts: '-Xmx2048m -Dmaven.compile.fork=true'

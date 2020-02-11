@@ -5,8 +5,11 @@
       - 'ovsdb-daily-full-integration-{stream}'
 
     stream:
-      - magnesium:
+      - aluminium:
           branch: 'master'
+          java-version: 'openjdk11'
+      - magnesium:
+          branch: 'stable/magnesium'
       - sodium:
           branch: 'stable/sodium'
       - neon:

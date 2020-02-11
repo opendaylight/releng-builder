@@ -1,8 +1,32 @@
 ---
 - project:
-    name: archetypes-magnesium
+    name: archetypes-aluminium
     jobs:
       - gerrit-release-merge
+      - gerrit-maven-clm
+      - '{project-name}-merge-{stream}':
+          build-timeout: 180
+          cron: '@daily'
+          mvn-goals: clean install -V -Dmaven.compile.fork=true
+      - gerrit-maven-stage:
+          sign-artifacts: true
+      - odl-maven-verify-jobs
+
+    stream: aluminium
+    project: 'archetypes'
+    project-name: 'archetypes'
+    branch: 'master'
+    java-version: 'openjdk11'
+    mvn-settings: 'archetypes-settings'
+    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream},mdsal-merge-{stream}'
+    email-upstream: '[archetypes] [odlparent] [yangtools] [controller] [mdsal]'
+
+    # Used by the release job
+    staging-profile-id: d88dcfe6ce48d
+
+- project:
+    name: archetypes-magnesium
+    jobs:
       - gerrit-maven-clm
       - '{project-name}-merge-{stream}':
           build-timeout: 180
@@ -15,7 +39,7 @@
     stream: magnesium
     project: 'archetypes'
     project-name: 'archetypes'
-    branch: 'master'
+    branch: 'stable/magnesium'
     java-version: 'openjdk11'
     mvn-settings: 'archetypes-settings'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream},mdsal-merge-{stream}'

@@ -1,5 +1,27 @@
 ---
 - project:
+    name: neutron-aluminium
+    jobs:
+      - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-maven-javadoc-jobs'
+      - odl-maven-jobs-jdk11
+      - odl-maven-verify-jobs
+
+    stream: aluminium
+    project: 'neutron'
+    project-name: 'neutron'
+    build-timeout: 90
+    branch: 'master'
+    java-version: 'openjdk11'
+    mvn-settings: 'neutron-settings'
+    mvn-opts: '-Xmx1024m'
+    dependencies: 'odlparent-merge-{stream},aaa-merge-{stream}'
+    email-upstream: '[neutron] [odlparent] [aaa]'
+
+    # Used by the release job
+    staging-profile-id: a67e1b40d7419
+
+- project:
     name: neutron-magnesium
     jobs:
       - '{project-name}-distribution-check-{stream}'
@@ -11,7 +33,7 @@
     project: 'neutron'
     project-name: 'neutron'
     build-timeout: 90
-    branch: 'master'
+    branch: 'stable/magnesium'
     java-version: 'openjdk11'
     mvn-settings: 'neutron-settings'
     mvn-opts: '-Xmx1024m'

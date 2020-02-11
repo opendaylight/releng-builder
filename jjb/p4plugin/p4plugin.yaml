@@ -1,16 +1,35 @@
 ---
 - project:
-    name: p4plugin-magnesium
+    name: p4plugin-aluminium
     jobs:
       - '{project-name}-maven-javadoc-jobs'
       - gerrit-release-merge
       - odl-maven-jobs
       - odl-maven-verify-jobs
 
-    stream: magnesium
+    stream: aluminium
     project: 'p4plugin'
     project-name: 'p4plugin'
     branch: 'master'
+    mvn-settings: 'p4plugin-settings'
+    mvn-opts: '-Xmx1024m'
+    dependencies: ''
+    email-upstream: '[p4plugin]'
+
+    # Used by the release job
+    staging-profile-id: a68bf26e208d4
+
+- project:
+    name: p4plugin-magnesium
+    jobs:
+      - '{project-name}-maven-javadoc-jobs'
+      - odl-maven-jobs
+      - odl-maven-verify-jobs
+
+    stream: magnesium
+    project: 'p4plugin'
+    project-name: 'p4plugin'
+    branch: 'stable/magnesium'
     mvn-settings: 'p4plugin-settings'
     mvn-opts: '-Xmx1024m'
     dependencies: ''

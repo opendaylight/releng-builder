@@ -13,8 +13,11 @@
 
     # Project branches
     stream:
-      - magnesium:
+      - aluminium:
           branch: 'master'
+          jre: 'openjdk11'
+      - magnesium:
+          branch: 'stable/magnesium'
           jre: 'openjdk11'
       - sodium:
           branch: 'stable/sodium'
@@ -34,4 +37,3 @@
 
     # Don't spin up mininet vms as aaa-csit-authn jobs don't need them
     tools_system_count: 0
-

@@ -1,6 +1,6 @@
 ---
 - project:
-    name: unimgr-magnesium
+    name: unimgr-aluminium
     jobs:
       - '{project-name}-rtd-jobs':
           build-node: centos7-builder-2c-2g
@@ -11,10 +11,34 @@
       - odl-maven-jobs
       - odl-maven-verify-jobs
 
-    stream: magnesium
+    stream: aluminium
     project: 'unimgr'
     project-name: 'unimgr'
     branch: 'master'
+    mvn-settings: 'unimgr-settings'
+    mvn-opts: '-Xmx1024m'
+    dependencies: 'ovsdb-merge-{stream}'
+    email-upstream: '[unimgr] [ovsdb]'
+    build-node: centos7-builder-4c-16g
+
+    # Used by the release job
+    staging-profile-id: a695d0a0b8d51
+
+- project:
+    name: unimgr-magnesium
+    jobs:
+      - '{project-name}-rtd-jobs':
+          build-node: centos7-builder-2c-2g
+          project-pattern: unimgr
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-unimgr/49748/
+          rtd-token: e12225e9b9ac67f5439c1619dcad342393b7ea31
+      - odl-maven-jobs
+      - odl-maven-verify-jobs
+
+    stream: magnesium
+    project: 'unimgr'
+    project-name: 'unimgr'
+    branch: 'stable/magnesium'
     mvn-settings: 'unimgr-settings'
     mvn-opts: '-Xmx1024m'
     dependencies: 'ovsdb-merge-{stream}'

@@ -7,17 +7,18 @@
     project: 'infrautils'
 
     stream:
-      - magnesium:
+      - aluminium:
           branch: 'master'
-          os-branch: 'queens'
+          jre: 'openjdk11'
+      - magnesium:
+          branch: 'stable/magnesium'
           jre: 'openjdk11'
       - sodium:
           branch: 'stable/sodium'
-          os-branch: 'queens'
       - neon:
           branch: 'stable/neon'
-          os-branch: 'queens'
 
+    os-branch: 'queens'
     jdk: 'openjdk8'
 
     feature:

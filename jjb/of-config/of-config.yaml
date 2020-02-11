@@ -1,15 +1,34 @@
 ---
 - project:
-    name: of-config-magnesium
+    name: of-config-aluminium
     jobs:
       - gerrit-release-merge
+      - odl-maven-jobs
+      - odl-maven-verify-jobs
+
+    stream: aluminium
+    project: 'of-config'
+    project-name: 'of-config'
+    branch: 'master'
+    mvn-settings: 'of-config-settings'
+    mvn-opts: '-Xmx1024m'
+    dependencies: netconf-merge-{stream}'
+    email-upstream: '[of-config] [netconf]'
+    disable-job: true
+
+    # Used by the release job
+    staging-profile-id: a6880455efe67
+
+- project:
+    name: of-config-magnesium
+    jobs:
       - odl-maven-jobs
       - odl-maven-verify-jobs
 
     stream: magnesium
     project: 'of-config'
     project-name: 'of-config'
-    branch: 'master'
+    branch: 'stable/magnesium'
     mvn-settings: 'of-config-settings'
     mvn-opts: '-Xmx1024m'
     dependencies: netconf-merge-{stream}'

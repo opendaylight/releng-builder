@@ -1,5 +1,30 @@
 ---
 - project:
+    name: aaa-aluminium
+    jobs:
+      - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-rtd-jobs':
+          build-node: centos7-builder-2c-2g
+          project-pattern: aaa
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-aaa/47615/
+          rtd-token: 621132230e1307d38f4aaf27e669d7dfdf98532f
+      - odl-maven-jobs-jdk11
+      - odl-maven-verify-jobs
+
+    stream: aluminium
+    project: 'aaa'
+    project-name: 'aaa'
+    branch: 'master'
+    java-version: 'openjdk11'
+    mvn-settings: 'aaa-settings'
+    mvn-opts: '-Xmx1024m'
+    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
+    email-upstream: '[aaa] [odlparent] [yangtools] [controller]'
+
+    # Used by the release job
+    staging-profile-id: 9318cf3c82c33
+
+- project:
     name: aaa-magnesium
     jobs:
       - '{project-name}-distribution-check-{stream}'
@@ -14,7 +39,7 @@
     stream: magnesium
     project: 'aaa'
     project-name: 'aaa'
-    branch: 'master'
+    branch: 'stable/magnesium'
     java-version: 'openjdk11'
     mvn-settings: 'aaa-settings'
     mvn-opts: '-Xmx1024m'

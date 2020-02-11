@@ -1,15 +1,39 @@
 ---
 - project:
-    name: l2switch-magnesium
+    name: l2switch-aluminium
     jobs:
       - gerrit-release-merge
+      - odl-maven-jobs
+      - odl-maven-verify-jobs
+
+    stream: aluminium
+    project: 'l2switch'
+    project-name: 'l2switch'
+    branch: 'master'
+    mvn-settings: 'l2switch-settings'
+    mvn-opts: '-Xmx1024m -Dmaven.compile.fork=true'
+    dependencies: >
+        odlparent-merge-{stream},
+        yangtools-merge-{stream},
+        controller-merge-{stream},
+        openflowjava-merge-{stream},
+        openflowplugin-merge-{stream}
+    email-upstream: '[l2switch] [odlparent] [yangtools] [controller] [openflowjava] [openflowplugin]'
+    disable-job: true
+
+    # Used by the release job
+    staging-profile-id: 96fee85953ca0
+
+- project:
+    name: l2switch-magnesium
+    jobs:
       - odl-maven-jobs
       - odl-maven-verify-jobs
 
     stream: magnesium
     project: 'l2switch'
     project-name: 'l2switch'
-    branch: 'master'
+    branch: 'stable/magnesium'
     mvn-settings: 'l2switch-settings'
     mvn-opts: '-Xmx1024m -Dmaven.compile.fork=true'
     dependencies: >

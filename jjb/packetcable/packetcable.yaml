@@ -1,15 +1,34 @@
 ---
 - project:
-    name: packetcable-magnesium
+    name: packetcable-aluminium
     jobs:
       - gerrit-release-merge
+      - odl-maven-jobs
+      - odl-maven-verify-jobs
+
+    stream: aluminium
+    project: 'packetcable'
+    project-name: 'packetcable'
+    branch: 'master'
+    mvn-settings: 'packetcable-settings'
+    mvn-opts: '-Xmx1024m'
+    dependencies: ''
+    email-upstream: '[packetcable]'
+    disable-job: true
+
+    # Used by the release job
+    staging-profile-id: a68ca4a24655c
+
+- project:
+    name: packetcable-magnesium
+    jobs:
       - odl-maven-jobs
       - odl-maven-verify-jobs
 
     stream: magnesium
     project: 'packetcable'
     project-name: 'packetcable'
-    branch: 'master'
+    branch: 'stable/magnesium'
     mvn-settings: 'packetcable-settings'
     mvn-opts: '-Xmx1024m'
     dependencies: ''

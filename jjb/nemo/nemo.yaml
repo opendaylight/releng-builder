@@ -1,15 +1,34 @@
 ---
 - project:
-    name: nemo-magnesium
+    name: nemo-aluminium
     jobs:
       - odl-maven-jobs
       - odl-maven-verify-jobs
       - gerrit-release-merge
 
-    stream: magnesium
+    stream: aluminium
     project: 'nemo'
     project-name: 'nemo'
     branch: 'master'
+    mvn-settings: 'nemo-settings'
+    mvn-opts: '-Xmx1024m'
+    dependencies: ''
+    email-upstream: '[nemo]'
+    disable-job: true
+
+    # Used by the release job
+    staging-profile-id: a67a9890f6202
+
+- project:
+    name: nemo-magnesium
+    jobs:
+      - odl-maven-jobs
+      - odl-maven-verify-jobs
+
+    stream: magnesium
+    project: 'nemo'
+    project-name: 'nemo'
+    branch: 'stable/magnesium'
     mvn-settings: 'nemo-settings'
     mvn-opts: '-Xmx1024m'
     dependencies: ''

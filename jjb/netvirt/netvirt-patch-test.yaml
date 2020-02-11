@@ -7,16 +7,18 @@
     project: 'netvirt'
 
     stream:
-      - magnesium:
+      - aluminium:
           branch: 'master'
-          os-branch: 'queens'
-          java-version: 'openjdk11'
+          jre: 'openjdk11'
+      - magnesium:
+          branch: 'stable/magnesium'
+          jre: 'openjdk11'
       - sodium:
           branch: 'stable/sodium'
-          os-branch: 'queens'
       - neon:
           branch: 'stable/neon'
-          os-branch: 'queens'
+
+    os-branch: 'queens'
 
     jdk: 'openjdk8'
 

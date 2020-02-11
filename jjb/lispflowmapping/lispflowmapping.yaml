@@ -1,5 +1,37 @@
 ---
 - project:
+    name: lispflowmapping-aluminium
+    jobs:
+      - '{project-name}-distribution-check-{stream}'
+      - '{project-name}-maven-javadoc-jobs'
+      - '{project-name}-rtd-jobs':
+          build-node: centos7-builder-2c-2g
+          project-pattern: lispflowmapping
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-lispflowmapping/47783/
+          rtd-token: 181be9dd804e4969b9f318a6f1988e3cbee9d9a8
+      - odl-maven-jobs-jdk11
+      - odl-maven-verify-jobs
+
+    stream: aluminium
+    project: 'lispflowmapping'
+    project-name: 'lispflowmapping'
+    branch: 'master'
+    java-version: 'openjdk11'
+    mvn-settings: 'lispflowmapping-settings'
+    mvn-goals: 'clean deploy -DrepoBuild'
+    mvn-opts: '-Xmx2048m -Dmaven.compile.fork=true'
+    dependencies: 'controller-merge-{stream},odlparent-merge-{stream},yangtools-merge-{stream},neutron-merge-{stream}'
+    email-upstream: '[lispflowmapping] [controller] [odlparent] [yangtools] [neutron]'
+    archive-artifacts: >
+        **/*.log
+        **/target/surefire-reports/*-output.txt
+
+    build-node: centos7-builder-8c-8g
+
+    # Used by the release job
+    staging-profile-id: 96fff2503b766
+
+- project:
     name: lispflowmapping-magnesium
     jobs:
       - '{project-name}-distribution-check-{stream}'
@@ -15,7 +47,7 @@
     stream: magnesium
     project: 'lispflowmapping'
     project-name: 'lispflowmapping'
-    branch: 'master'
+    branch: 'stable/magnesium'
     java-version: 'openjdk11'
     mvn-settings: 'lispflowmapping-settings'
     mvn-goals: 'clean deploy -DrepoBuild'

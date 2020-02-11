@@ -7,15 +7,16 @@
     project: 'neutron'
 
     stream:
-      - magnesium:
+      - aluminium:
           branch: 'master'
-          os-branch: 'queens'
+      - magnesium:
+          branch: 'stable/magnesium'
       - sodium:
           branch: 'stable/sodium'
-          os-branch: 'queens'
       - neon:
           branch: 'stable/neon'
-          os-branch: 'queens'
+
+    os-branch: 'queens'
 
     jdk: 'openjdk8'
 
