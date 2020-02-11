@@ -37,6 +37,43 @@
     staging-profile-id: 880d5ac25eaa
 
 - project:
+    name: odlparent-6.0.x
+    jobs:
+      - 'gerrit-release-merge'
+      - '{project-name}-rtd-jobs':
+          build-node: centos7-builder-2c-2g
+          doc-dir: .tox/docs/tmp/html
+          project-pattern: odlparent
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-odlparent/50830/
+          rtd-token: e5afd4ac1ead64408d9e13cd1f628ade55512f8f
+      - odl-maven-jobs-jdk11
+      - odl-maven-verify-jobs
+      - gerrit-tox-verify
+
+    project: odlparent
+    project-name: odlparent
+    stream: 6.0.x
+    branch: 6.0.x
+
+    java-version: 'openjdk11'
+    mvn-settings: odlparent-settings
+    mvn-opts: '-Xmx1024m'
+    mvn-version: mvn35
+
+    dependencies: ''
+    email-upstream: '[odlparent]'
+    archive-artifacts: >
+        **/*.prop
+        **/*.log
+        **/target/surefire-reports/*-output.txt
+        **/target/failsafe-reports/failsafe-summary.xml
+        **/hs_err_*.log
+        **/target/feature/feature.xml
+
+    # Used by the release job
+    staging-profile-id: 880d5ac25eaa
+
+- project:
     name: odlparent-5.0.x
     jobs:
       - '{project-name}-maven-javadoc-jobs'
