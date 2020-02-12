@@ -71,11 +71,13 @@
         odl-jolokia
 
     # Robot custom options
-    robot-options: '-v USE_NETCONF_CONNECTOR:False -v SCHEMA_MODEL:juniper'
-
+    robot-options: '-v USE_NETCONF_CONNECTOR:False -v SCHEMA_MODEL:juniper -v INIT_DEVICE_COUNT:50
+                    -v MAX_DEVICE_COUNT:500 -v DEVICE_INCREMENT:50 -v TESTTOOL_BOOT_TIMEOUT:600s
+                    -v MAX_HEAP:4G'
     # ODL system configuration
     odl_system_flavor: odl-standard-8
     controller-max-mem: '12G'
+    tools_system_flavor: odl-standard-8
 
     # Plot Info
     01-plot-title: 'Max Devices'
