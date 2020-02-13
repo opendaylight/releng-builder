@@ -11,13 +11,14 @@
           build-timeout: 120
           build-node: centos7-builder-8c-8g
       - gerrit-release-merge
-      - odl-maven-jobs
+      - odl-maven-jobs-jdk11
       - odl-maven-verify-jobs
 
     project: 'transportpce'
     project-name: 'transportpce'
     stream: magnesium
     branch: 'master'
+    java-version: 'openjdk11'
     mvn-settings: 'transportpce-settings'
     mvn-opts: '-Xmx1024m'
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
