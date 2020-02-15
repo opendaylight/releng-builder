@@ -10,7 +10,7 @@ export FEATURESCONF=/tmp/${BUNDLEFOLDER}/etc/org.apache.karaf.features.cfg
 export CUSTOMPROP=/tmp/${BUNDLEFOLDER}/etc/custom.properties
 export LOGCONF=/tmp/${BUNDLEFOLDER}/etc/org.ops4j.pax.logging.cfg
 export MEMCONF=/tmp/${BUNDLEFOLDER}/bin/setenv
-export CONTROLLERMEM="2048m"
+export CONTROLLERMEM=${CONTROLLERMAXMEM}
 
 # Cluster specific configuration settings
 export AKKACONF=/tmp/${BUNDLEFOLDER}/configuration/initial/akka.conf
@@ -464,6 +464,7 @@ DISTROSTREAM: ${DISTROSTREAM}
 BUNDLE_URL: ${BUNDLE_URL}
 CONTROLLERFEATURES: ${CONTROLLERFEATURES}
 CONTROLLERDEBUGMAP: ${CONTROLLERDEBUGMAP}
+CONTROLLERMAXMEM: ${CONTROLLERMAXMEM}
 SCRIPTPLAN: ${SCRIPTPLAN}
 CONFIGPLAN: ${CONFIGPLAN}
 STREAMTESTPLAN: ${STREAMTESTPLAN}
@@ -857,7 +858,12 @@ function get_nodes_list() {
 function get_features() {
     if [ "${CONTROLLERSCOPE}" == 'all' ]; then
         ACTUALFEATURES="odl-integration-compatible-with-all,${CONTROLLERFEATURES}"
-        export CONTROLLERMEM="3072m"
+        # if CONTROLLERMEM still is the default 2G and was not overridden by a
+        # custom job, then we need to make sure to increase it because "all"
+        # features can be heavy
+        if [ "${CONTROLLERMEM}" == "2048m" ]; then
+            export CONTROLLERMEM="3072m"
+        fi
     else
         ACTUALFEATURES="odl-infrautils-ready,${CONTROLLERFEATURES}"
     fi
