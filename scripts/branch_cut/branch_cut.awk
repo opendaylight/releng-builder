@@ -33,7 +33,8 @@ BEGIN {
     # replace block to add new release
     new_rel_yaml_tag            = "- " new_release ":";
     br_master_yaml_tag          = "    branch: 'master'";
-    jre_yaml_tag                = "    jre: 'openjdk8'";
+    jre_yaml_tag                = "    jre: 'openjdk11'";
+    java_version_yaml_tag       = "    java-version: 'openjdk11'";
     curr_rel_yaml_tag           = "- " curr_release ":";
     br_stable_curr_yaml_tag     = "    branch: 'stable/" curr_release "'";
 
@@ -166,6 +167,7 @@ function process_blk(bs, be, bn,   i, l) {
                 if (stream_found && release_found && !nrt_found) {
                     newblk[++nex3] = indent new_rel_yaml_tag;
                     newblk[++nex3] = indent br_master_yaml_tag;
+                    newblk[++nex3] = indent java_version_yaml_tag;
                     newblk[++nex3] = indent curr_rel_yaml_tag;
                     newblk[++nex3] = indent br_stable_curr_yaml_tag;
                     stream_found = 0;
