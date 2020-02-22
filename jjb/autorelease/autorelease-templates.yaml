@@ -349,7 +349,7 @@
       - lf-infra-publish
 
 - job-template:
-    name: autorelease-version-bump-{stream}
+    name: autorelease-version-bump-{stream}-{mvn-version}-{java-version}
 
     #####################
     # Default variables #
@@ -421,6 +421,8 @@
     builders:
       - lf-infra-pre-build
       # force jenkins install of maven version before any shell scripts use it
+      - lf-update-java-alternatives:
+          java-version: "{java-version}"
       - lf-maven-install:
           mvn-version: '{mvn-version}'
       - lf-provide-maven-settings:
