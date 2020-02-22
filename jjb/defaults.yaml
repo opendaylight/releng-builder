@@ -187,6 +187,9 @@
     10-exclude-value: ''
 
     # Manual CSIT job lists used by sanity or periodic in nature.
+    csit-sanity-list-aluminium: >
+        openflowplugin-csit-1node-sanity-only-aluminium,
+        distribution-sanity-aluminium
     csit-sanity-list-magnesium: >
         openflowplugin-csit-1node-sanity-only-magnesium,
         distribution-sanity-magnesium
@@ -196,6 +199,15 @@
     csit-sanity-list-neon: >
         openflowplugin-csit-1node-sanity-only-neon,
         distribution-sanity-neon
+    csit-weekly-list-aluminium: >
+        controller-csit-1node-notifications-longevity-only-aluminium,
+        controller-csit-3node-drb-partnheal-longevity-only-aluminium,
+        controller-csit-3node-drb-precedence-longevity-only-aluminium,
+        controller-csit-3node-ddb-expl-lead-movement-longevity-only-aluminium,
+        bgpcep-csit-3node-bgpclustering-longevity-only-aluminium,
+        distribution-deploy-aluminium,
+        distribution-offline-aluminium,
+        openflowplugin-csit-1node-longevity-only-aluminium
     csit-weekly-list-magnesium: >
         controller-csit-1node-notifications-longevity-only-magnesium,
         controller-csit-3node-drb-partnheal-longevity-only-magnesium,

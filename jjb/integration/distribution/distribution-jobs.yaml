@@ -72,8 +72,27 @@
     dist-pom: 'distribution/pom.xml'
 
     stream:
-      - magnesium:
+      - aluminium:
           branch: 'master'
+          java-version: 'openjdk11'
+          jre: 'openjdk11'
+          dependencies: >
+              aaa-maven-merge-{stream},
+              bgpcep-maven-merge-{stream},
+              controller-maven-merge-{stream},
+              daexim-maven-merge-{stream},
+              genius-maven-merge-{stream},
+              infrautils-maven-merge-{stream},
+              jsonrpc-maven-merge-{stream},
+              lispflowmapping-maven-merge-{stream},
+              netconf-maven-merge-{stream},
+              netvirt-maven-merge-{stream}
+              neutron-maven-merge-{stream},
+              openflowplugin-maven-merge-{stream},
+              ovsdb-maven-merge-{stream},
+              serviceutils-maven-merge-{stream},
+      - magnesium:
+          branch: 'stable/magnesium'
           java-version: 'openjdk11'
           jre: 'openjdk11'
           dependencies: >
@@ -149,8 +168,14 @@
     dist-pom: 'distribution/opendaylight/pom.xml'
 
     stream:
-      - magnesium:
+      - aluminium:
           branch: 'master'
+          java-version: 'openjdk11'
+          karaf-version: odl
+          dependencies: >
+              distribution-merge-managed-{stream},
+      - magnesium:
+          branch: 'stable/magnesium'
           java-version: 'openjdk11'
           karaf-version: odl
           dependencies: >
@@ -186,8 +211,11 @@
     staging-profile-id: 2af042ed81d5e2
 
     stream:
-      - magnesium:
+      - aluminium:
           branch: 'master'
+          java-version: 'openjdk11'
+      - magnesium:
+          branch: 'stable/magnesium'
           java-version: 'openjdk11'
       - sodium:
           branch: 'stable/sodium'
