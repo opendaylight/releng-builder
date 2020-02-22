@@ -8,18 +8,12 @@
           build-node: centos7-autorelease-4c-16g
       - 'autorelease-update-submodules-{stream}'
       - 'autorelease-update-validate-jobs-{stream}'
-      - 'autorelease-version-bump-{stream}':
+      - 'autorelease-version-bump-{stream}-{mvn-version}-{java-version}':
           build-node: centos7-autorelease-4c-16g
       - '{project-name}-validate-autorelease-{stream}'
       - gerrit-tox-verify
 
     stream:
-      - aluminium:
-          branch: 'master'
-          integration-test: aluminium
-      - magnesium:
-          branch: 'stable/magnesium'
-          integration-test: magnesium
       - sodium:
           branch: 'stable/sodium'
           integration-test: sodium
@@ -56,6 +50,7 @@
     jobs:
       - 'autorelease-release-{stream}-{mvn-version}-{java-version}':
           build-node: centos7-autorelease-4c-16g
+      - 'autorelease-version-bump-{stream}-{mvn-version}-{java-version}':
 
     stream:
       - aluminium:
