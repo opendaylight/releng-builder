@@ -24,7 +24,11 @@
     jdk: 'openjdk8'
 
     feature:
-      - core:
+        - cbench:
+          csit-list: >
+              openflowplugin-csit-1node-cbench-only-{stream}
+
+        - core:
           csit-list: >
               openflowplugin-csit-1node-gate-flow-services-all-{stream},
               openflowplugin-csit-1node-gate-scale-only-{stream},
