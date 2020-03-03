@@ -1,71 +1,16 @@
 ---
 - project:
-    name: vbd-aluminium
+    name: vbd-master
     jobs:
       - gerrit-release-merge
       - odl-maven-jobs
       - odl-maven-verify-jobs
 
-    stream: aluminium
+    stream: master
     project: 'honeycomb/vbd'
     project-name: 'vbd'
     branch: 'master'
     mvn-settings: 'honeycomb-vbd-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: ''
-    email-upstream: '[vbd]'
-
-    # Used by the release job
-    staging-profile-id: 96fc362c36862
-
-- project:
-    name: vbd-magnesium
-    jobs:
-      - odl-maven-jobs
-      - odl-maven-verify-jobs
-
-    stream: magnesium
-    project: 'honeycomb/vbd'
-    project-name: 'vbd'
-    branch: 'stable/magnesium'
-    mvn-settings: 'honeycomb-vbd-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: ''
-    email-upstream: '[vbd]'
-
-    # Used by the release job
-    staging-profile-id: 96fc362c36862
-
-- project:
-    name: vbd-sodium
-    jobs:
-      - odl-maven-jobs
-      - odl-maven-verify-jobs
-
-    stream: sodium
-    project: 'honeycomb/vbd'
-    project-name: 'vbd'
-    branch: 'stable/sodium'
-    mvn-settings: 'honeycomb-vbd-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: ''
-    email-upstream: '[vbd]'
-
-    # Used by the release job
-    staging-profile-id: 96fc362c36862
-
-- project:
-    name: vbd-neon
-    jobs:
-      - odl-maven-jobs
-      - odl-maven-verify-jobs
-
-    stream: neon
-    project: 'honeycomb/vbd'
-    project-name: 'vbd'
-    branch: 'stable/neon'
-    mvn-settings: 'honeycomb-vbd-settings'
-    mvn-opts: '-Xmx1024m'
     dependencies: ''
     email-upstream: '[vbd]'
 
