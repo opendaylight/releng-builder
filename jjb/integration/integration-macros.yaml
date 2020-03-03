@@ -534,6 +534,29 @@
                     # TODO: Tweak the compression level if better ratio (or speed) is needed.
           mark-unstable-if-failed: true
 
+- publisher:
+      name: pin-lftools-to-publish
+      publishers:
+        - postbuildscript:
+            builders:
+              - role: BOTH
+                build-on:
+                  - ABORTED
+                  - FAILURE
+                  - NOT_BUILT
+                  - SUCCESS
+                  - UNSTABLE
+                build-steps:
+                  - shell: |
+                      #!/bin/bash
+                      pip freeze
+                      pip install lftools==0.30.1
+                      pip freeze
+                      nexus_url="${NEXUSPROXY:-$NEXUS_URL}"
+                      nexus_path="${SILO}/${JENKINS_HOSTNAME}/${JOB_NAME}/${BUILD_NUMBER}"
+                      lftools deploy logs "$nexus_url" "$nexus_path" "${BUILD_URL:-}"
+
+
 
 - publisher:
     name: integration-csit-run-postscript
