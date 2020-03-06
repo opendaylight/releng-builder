@@ -29,6 +29,22 @@
           branch: 'stable/magnesium'
           jre: 'openjdk11'
           karaf-version: odl
+          # Self-Managed projects repos and features:
+          sm-repos: >
+              mvn:org.opendaylight.detnet/features-detnet//xml/features
+          sm-features: >
+              odl-detnet-topology,
+              odl-detnet-pce,
+              odl-e2e-service,
+              odl-detnet-models,
+              odl-detnet-bandwidth,
+              odl-detnet-gate,
+              odl-detnet-qos,
+              odl-detnet-clock,
+              odl-detnet-tsn,
+              odl-detnet-service,
+              odl-detnet-driver,
+              odl-detnet-all
       - sodium:
           branch: 'stable/sodium'
           karaf-version: odl
@@ -180,6 +196,7 @@
           karaf-version: odl
           dependencies: >
               distribution-merge-managed-{stream},
+              detnet-merge-{stream}
       - sodium:
           branch: 'stable/sodium'
           karaf-version: odl
