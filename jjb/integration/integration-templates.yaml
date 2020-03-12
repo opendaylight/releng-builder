@@ -80,7 +80,7 @@
     odl_system_flavor: 'odl-highcpu-4'
     odl_system_image: 'ZZCI - CentOS 7 - builder - x86_64 - 20191201-060129.829'
     controller-max-mem: '2048m'
-    tools_system_count: 1
+    tools_system_count: '1'
     tools_system_flavor: 'odl-highcpu-2'
     tools_system_image: 'ZZCI - Ubuntu 16.04 - mininet-ovs-28 - 20190415-091034.881'
 
@@ -189,7 +189,7 @@
     odl_system_flavor: 'odl-highcpu-4'
     odl_system_image: 'ZZCI - CentOS 7 - builder - x86_64 - 20191201-060129.829'
     controller-max-mem: '2048m'
-    tools_system_count: 1
+    tools_system_count: '1'
     tools_system_flavor: 'odl-highcpu-2'
     tools_system_image: 'ZZCI - Ubuntu 16.04 - mininet-ovs-28 - 20190415-091034.881'
 
@@ -498,7 +498,7 @@
     odl_system_flavor: 'odl-highcpu-4'
     odl_system_image: 'ZZCI - CentOS 7 - builder - x86_64 - 20191201-060129.829'
     controller-max-mem: '2048m'
-    tools_system_count: 1
+    tools_system_count: '1'
     tools_system_flavor: 'odl-highcpu-2'
     tools_system_image: 'ZZCI - Ubuntu 16.04 - mininet-ovs-28 - 20190415-091034.881'
 
@@ -610,7 +610,7 @@
     odl_system_flavor: 'odl-highcpu-4'
     odl_system_image: 'ZZCI - CentOS 7 - builder - x86_64 - 20191201-060129.829'
     controller-max-mem: '2048m'
-    tools_system_count: 1
+    tools_system_count: '1'
     tools_system_flavor: 'odl-highcpu-2'
     tools_system_image: 'ZZCI - Ubuntu 16.04 - mininet-ovs-28 - 20190415-091034.881'
 
@@ -920,7 +920,7 @@
     odl_system_flavor: 'odl-highcpu-4'
     odl_system_image: 'ZZCI - CentOS 7 - builder - x86_64 - 20191201-060129.829'
     controller-max-mem: '2048m'
-    docker_system_count: 1
+    docker_system_count: '1'
     docker_system_flavor: 'odl-standard-1'
     docker_system_image: 'ZZCI - CentOS 7 - docker - x86_64 - 20191004-045622.840'
 
@@ -2034,10 +2034,10 @@
           vm_0_count: '{apex_controller_count}'
           vm_0_flavor: '{apex_controller_flavor}'
           vm_0_image: '{apex_controller_image}'
-          vm_1_count: 1
+          vm_1_count: '1'
           vm_1_flavor: '{apex_compute_0_flavor}'
           vm_1_image: '{apex_compute_0_image}'
-          vm_2_count: 1
+          vm_2_count: '1'
           vm_2_flavor: '{apex_compute_1_flavor}'
           vm_2_image: '{apex_compute_1_image}'
       - integration-distribution-branch:
@@ -2158,10 +2158,10 @@
           vm_0_count: '{apex_controller_count}'
           vm_0_flavor: '{apex_controller_flavor}'
           vm_0_image: '{apex_controller_image}'
-          vm_1_count: 1
+          vm_1_count: '1'
           vm_1_flavor: '{apex_compute_0_flavor}'
           vm_1_image: '{apex_compute_0_image}'
-          vm_2_count: 1
+          vm_2_count: '1'
           vm_2_flavor: '{apex_compute_1_flavor}'
           vm_2_image: '{apex_compute_1_image}'
       - integration-distribution-branch:
