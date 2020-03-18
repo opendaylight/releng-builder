@@ -24,6 +24,7 @@ Following are the list of published images available to be used with Jenkins job
 * ZZCI - CentOS 7 - devstack-rocky - 20190628-065204.973
 * ZZCI - CentOS 7 - devstack-rocky - x86_64 - 20191002-183226.559
 * ZZCI - CentOS 7 - devstack-stein - x86_64 - 20200101-010206.159
+* ZZCI - CentOS 7 - devstack-stein - x86_64 - 20200112-040429.851
 * ZZCI - CentOS 7 - docker - 20171209-0317
 * ZZCI - CentOS 7 - docker - 20180109-0346
 * ZZCI - CentOS 7 - docker - 20180110-1659
@@ -54,3 +55,5 @@ Following are the list of published images available to be used with Jenkins job
 * ZZCI - Ubuntu 16.04 - mininet-ovs-26 - 20190521-223726.040
 * ZZCI - Ubuntu 16.04 - mininet-ovs-28 - 20180301-1041
 * ZZCI - Ubuntu 16.04 - mininet-ovs-28 - 20190415-091034.881
+* ZZCI - Ubuntu 18.04 - docker - x86_64 - 20200313-183318.557
+* ZZCI - Ubuntu 18.04 - mininet-ovs-25 - x86_64 - 20200121-232651.765
