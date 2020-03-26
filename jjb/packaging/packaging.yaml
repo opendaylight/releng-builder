@@ -318,9 +318,6 @@
       # - shell: !include-raw-escape: build-rpm.sh
       # - install-test-uninstall-rpm
 
-      # Test latest Neon snapshot
-      - inject:
-          properties-content: 'STREAM=neon'
       - shell: !include-raw: build-rpm-snap.sh
       - install-test-uninstall-rpm
 

@@ -20,12 +20,6 @@
           jre: 'openjdk11'
       - sodium:
           branch: 'stable/sodium'
-      - neon:
-          branch: 'stable/neon'
-          trigger-jobs: '{project}-merge-{stream}'
-          karaf-version: 'odl'
-          # yamllint disable-line rule:line-length
-          repo-url: 'mvn:org.opendaylight.sxp/features-sxp/1.8.0-SNAPSHOT/xml/features'
 
     install:
       - all:

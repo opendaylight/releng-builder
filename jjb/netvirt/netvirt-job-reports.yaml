@@ -5,10 +5,8 @@
     jobs:
       - netvirt-job-reports
     report-jobnames: >
-        netvirt-csit-1node-0cmb-1ctl-2cmp-openstack-queens-upstream-stateful-neon
-        netvirt-csit-1node-0cmb-1ctl-2cmp-openstack-queens-upstream-stateful-snat-conntrack-neon
-        netvirt-csit-1node-0cmb-1ctl-2cmp-openstack-queens-upstream-stateful-fluorine
-        netvirt-csit-1node-0cmb-1ctl-2cmp-openstack-queens-upstream-stateful-snat-conntrack-neon
+        netvirt-csit-1node-0cmb-1ctl-2cmp-openstack-queens-upstream-stateful-sodium
+        netvirt-csit-1node-0cmb-1ctl-2cmp-openstack-queens-upstream-stateful-snat-conntrack-sodium
     report-logurl: 'https://logs.opendaylight.org/releng/vex-yul-odl-jenkins-1'
     report-numjobs: 100
     report-path: '/tmp/jobreports'
@@ -36,8 +34,8 @@
           default: '{report-jobnames}'
           description: |
               Space separated list of job names to process. Example:
-              netvirt-csit-1node-0cmb-1ctl-2cmp-openstack-queens-upstream-stateful-neon
-              netvirt-csit-1node-0cmb-1ctl-2cmp-openstack-queens-upstream-stateful-snat-conntrack-neon
+              netvirt-csit-1node-0cmb-1ctl-2cmp-openstack-queens-upstream-stateful-sodium
+              netvirt-csit-1node-0cmb-1ctl-2cmp-openstack-queens-upstream-stateful-snat-conntrack-sodium
       - string:
           name: LOG_URL
           default: '{report-logurl}'
