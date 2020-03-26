@@ -18,6 +18,7 @@
 
     java-version: 'openjdk11'
     mvn-settings: 'mdsal-settings'
+    build-timeout: 90
 
     archive-artifacts: >
         **/*.prop
@@ -49,6 +50,7 @@
     java-version: 'openjdk11'
     mvn-settings: 'mdsal-settings'
     mvn-opts: '-Xmx2048m'
+    build-timeout: 90
 
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream}'
     email-upstream: '[mdsal] [odlparent] [yangtools]'
@@ -81,6 +83,7 @@
 
     mvn-settings: 'mdsal-settings'
     mvn-opts: '-Xmx2048m'
+    build-timeout: 90
 
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream}'
     email-upstream: '[mdsal] [odlparent] [yangtools]'
