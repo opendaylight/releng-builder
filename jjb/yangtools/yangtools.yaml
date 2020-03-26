@@ -82,33 +82,6 @@
     staging-profile-id: 1271cf710cc09d
 
 - project:
-    name: yangtools-v2.1.x
-    jobs:
-      - odl-maven-jobs
-      - odl-maven-verify-jobs
-
-    project: yangtools
-    project-name: yangtools
-    branch: v2.1.x
-    stream: v2.1.x
-
-    mvn-settings: 'yangtools-settings'
-    mvn-opts: '-Xmx1024m'
-
-    dependencies: ''
-    email-upstream: '[yangtools]'
-    archive-artifacts: >
-        **/*.prop
-        **/*.log
-        **/target/surefire-reports/*-output.txt
-        **/target/failsafe-reports/failsafe-summary.xml
-        **/hs_err_*.log
-        **/target/feature/feature.xml
-
-    # Used by the release job
-    staging-profile-id: 1271cf710cc09d
-
-- project:
     name: yangtools-sonar
     jobs:
       - gerrit-maven-sonar:
