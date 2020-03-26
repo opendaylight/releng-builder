@@ -83,34 +83,6 @@
     staging-profile-id: a6909c75719b7
 
 - project:
-    name: sxp-neon
-    jobs:
-      - '{project-name}-rtd-jobs':
-          build-node: centos7-builder-2c-2g
-          project-pattern: sxp
-          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-sxp/47573/
-          rtd-token: 4a78556e59ce3ef35e61e2fa19ebae049acf6d5d
-      - odl-maven-jobs
-      - odl-maven-verify-jobs
-
-    java-version:
-      - openjdk8
-
-    stream: neon
-    project: 'sxp'
-    project-name: 'sxp'
-    branch: 'stable/neon'
-
-    mvn-settings: 'sxp-settings'
-    mvn-opts: '-Xmx1024m'
-
-    dependencies: 'odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream}'
-    email-upstream: '[sxp] [odlparent] [controller] [yangtools]'
-
-    # Used by the release job
-    staging-profile-id: a6909c75719b7
-
-- project:
     name: sxp-sonar
     jobs:
       - gerrit-maven-sonar

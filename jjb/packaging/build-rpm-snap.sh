@@ -15,9 +15,7 @@ $PYTHON -m pip install --upgrade pip
 $PYTHON -m pip install -r "$WORKSPACE/packaging/packages/requirements.txt"
 
 # Convert stream to numeric ODL major version
-if [ "$STREAM" == "neon" ]; then
-  VERSION_MAJOR=10
-elif [ "$STREAM" == "sodium" ]; then
+if [ "$STREAM" == "sodium" ]; then
   VERSION_MAJOR=11
 elif [ "$STREAM" == "magnesium" ]; then
   VERSION_MAJOR=12

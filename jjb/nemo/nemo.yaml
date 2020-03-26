@@ -58,25 +58,6 @@
     staging-profile-id: a67a9890f6202
 
 - project:
-    name: nemo-neon
-    jobs:
-      - odl-maven-jobs
-      - odl-maven-verify-jobs
-
-    stream: neon
-    project: 'nemo'
-    project-name: 'nemo'
-    branch: 'stable/neon'
-    mvn-settings: 'nemo-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: ''
-    email-upstream: '[nemo]'
-    disable-job: true
-
-    # Used by the release job
-    staging-profile-id: a67a9890f6202
-
-- project:
     name: nemo-sonar
     jobs:
       - gerrit-maven-sonar
