@@ -58,25 +58,6 @@
     staging-profile-id: a68bf26e208d4
 
 - project:
-    name: p4plugin-neon
-    jobs:
-      - '{project-name}-maven-javadoc-jobs'
-      - odl-maven-jobs
-      - odl-maven-verify-jobs
-
-    stream: neon
-    project: 'p4plugin'
-    project-name: 'p4plugin'
-    branch: 'stable/neon'
-    mvn-settings: 'p4plugin-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: ''
-    email-upstream: '[p4plugin]'
-
-    # Used by the release job
-    staging-profile-id: a68bf26e208d4
-
-- project:
     name: p4plugin-sonar
     jobs:
       - gerrit-maven-sonar

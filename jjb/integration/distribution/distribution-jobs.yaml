@@ -39,16 +39,6 @@
               odl-transportpce,
               odl-transportpce-api,
               odl-transportpce-ordmodels
-      - neon:
-          branch: 'stable/neon'
-          karaf-version: odl
-          # Self-Managed projects repos and features:
-          sm-repos: >
-              mvn:org.opendaylight.transportpce/features-transportpce//xml/features
-          sm-features: >
-              odl-transportpce,
-              odl-transportpce-api,
-              odl-transportpce-ordmodels
 
 - project:
     name: distribution-managed
@@ -128,24 +118,6 @@
               ovsdb-merge-{stream},
               serviceutils-merge-{stream},
               sfc-merge-{stream}
-      - neon:
-          branch: 'stable/neon'
-          dependencies: >
-              aaa-merge-{stream},
-              bgpcep-merge-{stream},
-              coe-merge-{stream},
-              controller-merge-{stream},
-              daexim-merge-{stream},
-              genius-merge-{stream},
-              infrautils-merge-{stream},
-              lispflowmapping-merge-{stream},
-              netconf-merge-{stream},
-              netvirt-merge-{stream}
-              neutron-merge-{stream},
-              openflowplugin-merge-{stream},
-              ovsdb-merge-{stream},
-              serviceutils-merge-{stream},
-              sfc-merge-{stream}
 
 - project:
     name: distribution-full
@@ -186,12 +158,6 @@
           dependencies: >
               distribution-merge-managed-{stream},
               transportpce-merge-{stream}
-      - neon:
-          branch: 'stable/neon'
-          karaf-version: odl
-          dependencies: >
-              distribution-merge-managed-{stream},
-              transportpce-merge-{stream}
 
 - project:
     name: distribution-release
@@ -219,8 +185,6 @@
           java-version: 'openjdk11'
       - sodium:
           branch: 'stable/sodium'
-      - neon:
-          branch: 'stable/neon'
 
 - project:
     name: distribution-sonar

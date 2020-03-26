@@ -47,15 +47,6 @@
               daexim ovsdb neutron openflowplugin coe genius lispflowmapping sfc netvirt
               bgpcep integration/distribution
 
-      - neon:
-          branch: 'stable/neon'
-          mvn-version: 'mvn35'
-          csit-list: !include: csit-jobs-neon.lst
-          build-order: >
-              odlparent yangtools mdsal infrautils controller serviceutils aaa netconf
-              daexim ovsdb neutron openflowplugin coe genius lispflowmapping sfc netvirt
-              bgpcep integration/distribution
-
 - project:
     name: integration-distribution
     project: integration/test
@@ -103,18 +94,6 @@
               last-line-is-ignored-so-we-need-something-dummy-here-to-make-sure-the-real-last-line-is-used
           csit-list: !include: csit-jobs-sodium.lst
           csit-weekly-list: '{csit-weekly-list-sodium}'
-      - neon:
-          branch: 'stable/neon'
-          csit-blacklist: >
-              alto bier didm dluxapps groupbasedpolicy jsonrpc l2switch nemo
-              of-config p4plugin packetcable sxp telemetry tsdr unimgr usc
-              gate longevity sanity tdd tempest wip
-              netvirt-csit-1node-1cmb-0ctl-0cmp-openstack-pike
-              netvirt-csit-1node-1cmb-0ctl-0cmp-openstack-queens-upstream-stateful-itm-direct
-              netvirt-csit-3node-1cmb
-              last-line-is-ignored-so-we-need-something-dummy-here-to-make-sure-the-real-last-line-is-used
-          csit-list: !include: csit-jobs-neon.lst
-          csit-weekly-list: '{csit-weekly-list-neon}'
 
 - project:
     name: integration-sanity
@@ -136,10 +115,6 @@
           branch: 'stable/sodium'
           karaf-version: odl
           csit-sanity-list: '{csit-sanity-list-sodium}'
-      - neon:
-          branch: 'stable/neon'
-          karaf-version: odl
-          csit-sanity-list: '{csit-sanity-list-neon}'
 
 - job-template:
     name: 'integration-merge-dashboard'
@@ -597,53 +572,3 @@
     views:
       - project-view
     project-name: integration
-
-- view:
-    name: csit-stable-ne
-    description: 'List of stable integration jobs for managed projects'
-    job-name:
-      - aaa-csit-1node-authn-all-neon
-      - bgpcep-csit-1node-throughpcep-all-neon
-      - controller-csit-1node-akka1-all-neon
-      - controller-csit-1node-benchmark-all-neon
-      - controller-csit-1node-notifications-longevity-only-neon
-      - controller-csit-1node-rest-cars-perf-all-neon
-      - controller-csit-3node-benchmark-all-neon
-      - controller-csit-3node-drb-precedence-longevity-only-neon
-      - controller-csit-3node-rest-clust-cars-perf-ask-only-neon
-      - controller-csit-3node-rest-clust-cars-perf-tell-only-neon
-      - daexim-csit-1node-basic-only-neon
-      - daexim-csit-3node-clustering-basic-only-neon
-      - distribution-csit-1node-userfeatures-all-neon
-      - genius-csit-1node-upstream-only-neon
-      - genius-csit-3node-upstream-only-neon
-      - lispflowmapping-csit-1node-msmr-all-neon
-      - netconf-csit-1node-callhome-only-neon
-      - netconf-csit-1node-userfeatures-all-neon
-      - netvirt-csit-1node-0cmb-1ctl-2cmp-openstack-queens-upstream-stateful-neon
-      - openflowplugin-csit-1node-flow-services-all-neon
-      - openflowplugin-csit-1node-longevity-only-neon
-      - openflowplugin-csit-1node-perf-bulkomatic-only-neon
-      - openflowplugin-csit-1node-perf-stats-collection-only-neon
-      - openflowplugin-csit-1node-sanity-only-neon
-      - openflowplugin-csit-1node-scale-link-only-neon
-      - openflowplugin-csit-1node-scale-only-neon
-      - openflowplugin-csit-1node-scale-switch-only-neon
-      - openflowplugin-csit-3node-clustering-bulkomatic-only-neon
-      - openflowplugin-csit-3node-clustering-only-neon
-      - ovsdb-csit-3node-upstream-clustering-only-neon
-    view-type: list
-    filter-executors: false
-    filter-queue: false
-    columns:
-      - status
-      - weather
-      - job
-      - last-success
-      - last-failure
-      - last-duration
-      - build-button
-      - jacoco
-      - find-bugs
-      - robot-list
-    recurse: false

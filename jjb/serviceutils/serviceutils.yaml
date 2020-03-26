@@ -98,38 +98,6 @@
     staging-profile-id: 12cc4ba8bf01ba
 
 - project:
-    name: serviceutils-neon
-    jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-maven-javadoc-jobs'
-      - '{project-name}-rtd-jobs':
-          build-node: centos7-builder-2c-2g
-          project-pattern: serviceutils
-          rtd-build-url: https://readthedocs.org/api/v2/webhook/opendaylight-serviceutils/40541/
-          rtd-token: 866f76be38ed7efc7027b9c52e7ad869e523e7c4
-      - odl-maven-jobs
-      - odl-maven-verify-jobs
-
-    branch: 'stable/neon'
-    stream: neon
-
-    project: 'serviceutils'
-    project-name: 'serviceutils'
-    build-node: centos7-builder-2c-2g
-    mvn-settings: 'serviceutils-settings'
-    mvn-opts: '-Xmx1024m'
-    build-timeout: 90
-    dependencies: >
-        controller-merge-{stream},
-        yangtools-merge-{stream},
-        odlparent-merge-{stream},
-        infrautils-merge-{stream}
-    email-upstream: '[serviceutils] [controller] [yangtools] [odlparent] [infrautils]'
-
-    # Used by the release job
-    staging-profile-id: 12cc4ba8bf01ba
-
-- project:
     name: serviceutils-sonar
     jobs:
       - gerrit-maven-sonar

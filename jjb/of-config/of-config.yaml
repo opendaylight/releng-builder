@@ -58,25 +58,6 @@
     staging-profile-id: a6880455efe67
 
 - project:
-    name: of-config-neon
-    jobs:
-      - odl-maven-jobs
-      - odl-maven-verify-jobs
-
-    stream: neon
-    project: 'of-config'
-    project-name: 'of-config'
-    branch: 'stable/neon'
-    mvn-settings: 'of-config-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: netconf-merge-{stream}'
-    email-upstream: '[of-config] [netconf]'
-    disable-job: true
-
-    # Used by the release job
-    staging-profile-id: a6880455efe67
-
-- project:
     name: of-config-sonar
     jobs:
       - gerrit-maven-sonar
