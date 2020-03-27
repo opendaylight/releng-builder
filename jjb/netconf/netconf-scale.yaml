@@ -20,8 +20,6 @@
           jre: 'openjdk11'
       - sodium:
           branch: 'stable/sodium'
-      - neon:
-          branch: 'stable/neon'
 
     install:
       - only:
@@ -67,11 +65,6 @@
                           -v MAX_HEAP:4G --flattenkeywords name:*repeat*keyword*'
       - sodium:
           branch: 'stable/sodium'
-          robot-options: '-v USE_NETCONF_CONNECTOR:False -v SCHEMA_MODEL:juniper -v INIT_DEVICE_COUNT:10
-                          -v MAX_DEVICE_COUNT:500 -v DEVICE_INCREMENT:25 -v TESTTOOL_BOOT_TIMEOUT:600s
-                          -v MAX_HEAP:4G --flattenkeywords name:*repeat*keyword*'
-      - neon:
-          branch: 'stable/neon'
           robot-options: '-v USE_NETCONF_CONNECTOR:False -v SCHEMA_MODEL:juniper -v INIT_DEVICE_COUNT:10
                           -v MAX_DEVICE_COUNT:500 -v DEVICE_INCREMENT:25 -v TESTTOOL_BOOT_TIMEOUT:600s
                           -v MAX_HEAP:4G --flattenkeywords name:*repeat*keyword*'

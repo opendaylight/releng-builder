@@ -22,11 +22,9 @@
           jre: 'openjdk11'
       - sodium:
           branch: 'stable/sodium'
-      - neon:
-          branch: 'stable/neon'
 
-    verify-stream: 'neon'
-    verify-branch: 'stable/neon'
+    verify-stream: 'sodium'
+    verify-branch: 'stable/sodium'
     verify-karaf-version: 'karaf4'
 
     install:

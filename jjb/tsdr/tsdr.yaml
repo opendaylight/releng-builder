@@ -70,29 +70,6 @@
     staging-profile-id: a69373036303c
 
 - project:
-    name: tsdr-neon
-    jobs:
-      - '{project-name}-rtd-jobs':
-          build-node: centos7-builder-2c-2g
-          project-pattern: tsdr
-          rtd-build-url: https://readthedocs.org/api/v2/webhook/opendaylight-tsdr/47532/
-          rtd-token: 96c97641155132afcc5900bafc68af3364d91c99
-      - odl-maven-jobs
-      - odl-maven-verify-jobs
-
-    stream: neon
-    project: 'tsdr'
-    project-name: 'tsdr'
-    branch: 'stable/neon'
-    mvn-settings: 'tsdr-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: ''
-    email-upstream: '[tsdr]'
-
-    # Used by the release job
-    staging-profile-id: a69373036303c
-
-- project:
     name: tsdr-sonar
     jobs:
       - gerrit-maven-sonar

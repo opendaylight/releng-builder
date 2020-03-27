@@ -99,9 +99,9 @@
 
     # Data for csit-verify jobs
     # Branch for "last" version detection
-    verify-branch: stable/neon
+    verify-branch: stable/sodium
     # Value for ODL_STREAM
-    verify-stream: neon
+    verify-stream: sodium
     verify-karaf-version: karaf4
     verify-jdkversion: openjdk8
 
@@ -196,9 +196,6 @@
     csit-sanity-list-sodium: >
         openflowplugin-csit-1node-sanity-only-sodium,
         distribution-sanity-sodium
-    csit-sanity-list-neon: >
-        openflowplugin-csit-1node-sanity-only-neon,
-        distribution-sanity-neon
     csit-weekly-list-aluminium: >
         controller-csit-1node-notifications-longevity-only-aluminium,
         controller-csit-3node-drb-partnheal-longevity-only-aluminium,
@@ -226,12 +223,3 @@
         distribution-deploy-sodium,
         distribution-offline-sodium,
         openflowplugin-csit-1node-longevity-only-sodium
-    csit-weekly-list-neon: >
-        controller-csit-1node-notifications-longevity-only-neon,
-        controller-csit-3node-drb-partnheal-longevity-only-neon,
-        controller-csit-3node-drb-precedence-longevity-only-neon,
-        controller-csit-3node-ddb-expl-lead-movement-longevity-only-neon,
-        bgpcep-csit-3node-bgpclustering-longevity-only-neon,
-        distribution-deploy-neon,
-        distribution-offline-neon,
-        openflowplugin-csit-1node-longevity-only-neon

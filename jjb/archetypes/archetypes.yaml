@@ -72,29 +72,6 @@
     staging-profile-id: d88dcfe6ce48d
 
 - project:
-    name: archetypes-neon
-    jobs:
-      - gerrit-maven-clm
-      - '{project-name}-merge-{stream}':
-          build-timeout: 180
-          cron: '@daily'
-          mvn-goals: clean install -V -Dmaven.compile.fork=true
-      - gerrit-maven-stage:
-          sign-artifacts: true
-      - odl-maven-verify-jobs
-
-    stream: neon
-    project: 'archetypes'
-    project-name: 'archetypes'
-    branch: 'stable/neon'
-    mvn-settings: 'archetypes-settings'
-    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream},mdsal-merge-{stream}'
-    email-upstream: '[archetypes] [odlparent] [yangtools] [controller] [mdsal]'
-
-    # Used by the release job
-    staging-profile-id: d88dcfe6ce48d
-
-- project:
     name: archetypes-sonar
     jobs:
       - gerrit-maven-sonar
