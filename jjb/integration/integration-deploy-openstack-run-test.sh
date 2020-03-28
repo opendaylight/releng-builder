@@ -358,6 +358,9 @@ EOF
 # Trigger n-odl full sync every 30 secs.
 maintenance_interval = 30
 
+[ml2_type_vlan]
+network_vlan_ranges = public:1:4094,physnet1:1:4094
+
 [[post-config|/etc/neutron/dhcp_agent.ini]]
 [DEFAULT]
 force_metadata = True
