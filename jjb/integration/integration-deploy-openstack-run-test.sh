@@ -834,7 +834,7 @@ for i in $(seq 1 "${NUM_OPENSTACK_CONTROL_NODES}"); do
     # and Q_ML2_PLUGIN_VLAN_TYPE_OPTIONS could be used for the ml2_type_vlan
     ${SSH} "${!CONTROLIP}" "bash /tmp/get_devstack.sh > /tmp/get_devstack.sh.txt 2>&1"
     ssh "${!CONTROLIP}" "sed -i 's/flat_networks public/flat_networks public,physnet1/' /opt/stack/devstack/lib/neutron"
-    ssh "${!CONTROLIP}" "sed -i '186i iniset \$NEUTRON_CORE_PLUGIN_CONF ml2_type_vlan network_vlan_ranges public:1:4094,physnet1:1:4094' /opt/stack/devstack/lib/neutron"
+    ssh "${!CONTROLIP}" "sed -i '/.*if is_service_enabled neutron\-api.*/a iniset \$NEUTRON_CORE_PLUGIN_CONF ml2_type_vlan network_vlan_ranges public:1:4094,physnet1:1:4094' /opt/stack/devstack/lib/neutron"
     #Workaround for networking-sfc to configure the paramaters in neutron.conf if the
     # services used are neutron-api, neutron-dhcp etc instead of q-agt.
     # Can be removed if the patch https://review.openstack.org/#/c/596287/ gets merged
