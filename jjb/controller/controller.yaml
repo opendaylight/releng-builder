@@ -1,6 +1,6 @@
 ---
 - project:
-    name: controller-aluminium
+    name: controller-master
     jobs:
       - '{project-name}-rtd-jobs':
           build-node: centos7-builder-2c-2g
@@ -10,7 +10,7 @@
       - odl-maven-jobs-jdk11
       - odl-maven-verify-jobs
 
-    stream: aluminium
+    stream: master
     project: 'controller'
     project-name: 'controller'
     branch: 'master'
