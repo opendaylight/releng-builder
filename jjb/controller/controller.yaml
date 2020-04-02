@@ -19,8 +19,7 @@
     mvn-settings: 'controller-settings'
     mvn-version: mvn36
     mvn-goals: 'clean deploy -Pdocs'
-    mvn-opts: '-Xmx4096m -Dmaven.compile.fork=true'
-    build-node: centos7-builder-8c-8g
+    mvn-opts: '-Xmx3072m -Dmaven.compile.fork=true'
     build-timeout: 90
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},aaa-merge-{stream}'
     email-upstream: '[controller] [odlparent] [yangtools] [aaa]'
