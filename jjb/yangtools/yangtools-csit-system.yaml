@@ -32,7 +32,8 @@
     install-features: 'odl-restconf'
 
     # Robot custom options:
-    robot-options: ''
+    robot-options: '-v JAVA_OPTIONS:"-Xmx10240m"'
 
-    # Additional patterns to archive
-    # FIXME: Delete if no patterns.
+    # Because of the higher mem requirements for this job (see robot-options),
+    # we need a build minion with more available memory.
+    odl_system_flavor: 'odl-standard-4'
