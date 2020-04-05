@@ -2,14 +2,7 @@
 - project:
     name: archetypes-aluminium
     jobs:
-      - gerrit-release-merge
-      - gerrit-maven-clm
-      - '{project-name}-merge-{stream}':
-          build-timeout: 180
-          cron: '@daily'
-          mvn-goals: clean install -V -Dmaven.compile.fork=true
-      - gerrit-maven-stage:
-          sign-artifacts: true
+      - odl-maven-jobs-jdk11
       - odl-maven-verify-jobs
 
     stream: aluminium
@@ -27,13 +20,7 @@
 - project:
     name: archetypes-magnesium
     jobs:
-      - gerrit-maven-clm
-      - '{project-name}-merge-{stream}':
-          build-timeout: 180
-          cron: '@daily'
-          mvn-goals: clean install -V -Dmaven.compile.fork=true
-      - gerrit-maven-stage:
-          sign-artifacts: true
+      - odl-maven-jobs-jdk11
       - odl-maven-verify-jobs
 
     stream: magnesium
@@ -51,13 +38,7 @@
 - project:
     name: archetypes-sodium
     jobs:
-      - gerrit-maven-clm
-      - '{project-name}-merge-{stream}':
-          build-timeout: 180
-          cron: '@daily'
-          mvn-goals: clean install -V -Dmaven.compile.fork=true
-      - gerrit-maven-stage:
-          sign-artifacts: true
+      - odl-maven-jobs
       - odl-maven-verify-jobs
 
     stream: sodium
