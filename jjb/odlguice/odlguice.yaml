@@ -1,0 +1,27 @@
+---
+- project:
+    name: odlguice
+    jobs:
+      - gerrit-release-merge
+      - gerrit-tox-verify
+
+    stream:
+      - aluminium:
+          branch: 'master'
+      - magnesium:
+          branch: 'stable/magnesium'
+
+    project: odlguice
+    project-name: odlguice
+    build-node: centos7-builder-2c-2g
+    build-timeout: 60
+    mvn-settings: 'odlguice-settings'
+
+    # Used by the release job
+    staging-profile-id: 44ce7d1aad49e
+
+- project:
+    name: odlguice-view
+    views:
+      - project-view
+    project-name: odlguice
