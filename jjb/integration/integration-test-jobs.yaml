@@ -53,6 +53,7 @@
     project-name: integration-test
     jobs:
       - 'integration-distribution-test-{stream}'
+      - 'integration-distribution-mri-test-{stream}'
       - 'integration-distribution-weekly-test-trigger-{stream}'
       - 'integration-update-csit-tests-{stream}'
 
@@ -61,38 +62,41 @@
       - aluminium:
           branch: 'master'
           csit-blacklist: >
-              alto bier coe didm dluxapps groupbasedpolicy l2switch nemo
-              of-config p4plugin packetcable sfc sxp telemetry tsdr unimgr usc
+              alto bier coe detnet dluxapps groupbasedpolicy l2switch mdsal nemo
+              p4plugin packetcable sfc sxp telemetry tsdr unimgr usc yangtools
               gate longevity sanity tdd tempest wip
               netvirt-csit-1node-1cmb-0ctl-0cmp-openstack-pike
               netvirt-csit-1node-1cmb-0ctl-0cmp-openstack-queens-upstream-stateful-itm-direct
               netvirt-csit-3node-1cmb
               last-line-is-ignored-so-we-need-something-dummy-here-to-make-sure-the-real-last-line-is-used
           csit-list: !include: csit-jobs-aluminium.lst
+          csit-mri-list: '{csit-mri-list-aluminium}'
           csit-weekly-list: '{csit-weekly-list-aluminium}'
       - magnesium:
           branch: 'stable/magnesium'
           csit-blacklist: >
-              alto bier coe didm dluxapps groupbasedpolicy l2switch nemo
-              of-config p4plugin packetcable sfc sxp telemetry tsdr unimgr usc
+              alto bier coe detnet dluxapps groupbasedpolicy l2switch mdsal nemo
+              p4plugin packetcable sfc sxp telemetry tsdr unimgr usc yangtools
               gate longevity sanity tdd tempest wip
               netvirt-csit-1node-1cmb-0ctl-0cmp-openstack-pike
               netvirt-csit-1node-1cmb-0ctl-0cmp-openstack-queens-upstream-stateful-itm-direct
               netvirt-csit-3node-1cmb
               last-line-is-ignored-so-we-need-something-dummy-here-to-make-sure-the-real-last-line-is-used
           csit-list: !include: csit-jobs-magnesium.lst
+          csit-mri-list: '{csit-mri-list-magnesium}'
           csit-weekly-list: '{csit-weekly-list-magnesium}'
       - sodium:
           branch: 'stable/sodium'
           csit-blacklist: >
-              alto bier didm dluxapps groupbasedpolicy jsonrpc l2switch nemo
-              of-config p4plugin packetcable sxp telemetry tsdr unimgr usc
+              alto bier dluxapps groupbasedpolicy jsonrpc l2switch mdsal nemo
+              p4plugin packetcable sxp telemetry tsdr unimgr usc yangtools
               gate longevity sanity tdd tempest wip
               netvirt-csit-1node-1cmb-0ctl-0cmp-openstack-pike
               netvirt-csit-1node-1cmb-0ctl-0cmp-openstack-queens-upstream-stateful-itm-direct
               netvirt-csit-3node-1cmb
               last-line-is-ignored-so-we-need-something-dummy-here-to-make-sure-the-real-last-line-is-used
           csit-list: !include: csit-jobs-sodium.lst
+          csit-mri-list: '{csit-mri-list-sodium}'
           csit-weekly-list: '{csit-weekly-list-sodium}'
 
 - project:
@@ -447,8 +451,9 @@
           condition-expression: $RUN_TEST
           steps:
             - trigger-builds:
-                - project: '{csit-list}'
-                  block: true
+                - project: >
+                      integration-distribution-test-{stream},
+                      integration-distribution-mri-test-{stream}
                   predefined-parameters: |
                     BUNDLE_URL=$BUNDLE_URL
                     KARAF_VERSION=$KARAF_VERSION
@@ -458,6 +463,38 @@
       - email-notification:
           email-recipients: '{email-recipients}'
           email-prefix: '[int/dist]'
+
+- job-template:
+    name: 'integration-distribution-mri-test-{stream}'
+
+    project-type: freestyle
+    node: queue-intque-2c-1g
+
+    properties:
+      - opendaylight-infra-properties:
+          build-days-to-keep: '{build-days-to-keep}'
+
+    parameters:
+      - integration-bundle-url:
+          bundle-url: '{bundle-url}'
+      - distribution-karaf-version:
+          karaf-version: '{karaf-version}'
+
+    triggers:
+      - timed: '{schedule-weekly}'
+
+    builders:
+      - trigger-builds:
+          - project: '{csit-mri-list}'
+            block: true
+            predefined-parameters: |
+              BUNDLE_URL=$BUNDLE_URL
+              KARAF_VERSION=$KARAF_VERSION
+
+    publishers:
+      - email-notification:
+          email-recipients: '{email-recipients}'
+          email-prefix: '[integration]'
 
 - job-template:
     name: 'integration-distribution-weekly-test-trigger-{stream}'
