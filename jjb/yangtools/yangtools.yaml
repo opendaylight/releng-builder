@@ -2,7 +2,8 @@
 - project:
     name: yangtools-master
     jobs:
-      - 'gerrit-release-merge'
+      - 'gerrit-release-merge':
+          build-node: centos7-builder-2c-2g
       - odl-maven-jobs-jdk11
       - odl-maven-verify-jobs
 

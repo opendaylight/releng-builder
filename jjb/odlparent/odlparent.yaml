@@ -2,7 +2,8 @@
 - project:
     name: odlparent-master
     jobs:
-      - 'gerrit-release-merge'
+      - 'gerrit-release-merge':
+          build-node: centos7-builder-2c-2g
       - '{project-name}-rtd-jobs':
           build-node: centos7-builder-2c-2g
           doc-dir: .tox/docs/tmp/html
