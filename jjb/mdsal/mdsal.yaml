@@ -112,11 +112,13 @@
     project: 'mdsal'
     project-name: 'mdsal'
     branch: 'master'
-    build-node: centos7-builder-8c-8g
     java-version: 'openjdk11'
     mvn-settings: 'mdsal-settings'
     mvn-goals: '-Dmaven.compile.fork=true clean deploy -Dintegrationtests'
-    mvn-opts: '-Xmx2048m'
+    sonarcloud: true
+    sonarcloud-project-organization: '{sonarcloud_project_organization}'
+    sonarcloud-api-token: '{sonarcloud_api_token}'
+    sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
 
 - project:
     name: mdsal-view
