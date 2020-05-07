@@ -93,6 +93,10 @@
     mvn-goals: '-U clean deploy findbugs:findbugs'
     mvn-opts: '-Xmx1024m'
     disable-job: true
+    sonarcloud: true
+    sonarcloud-project-organization: '{sonarcloud_project_organization}'
+    sonarcloud-api-token: '{sonarcloud_api_token}'
+    sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
 
 - project:
     name: groupbasedpolicy-view
