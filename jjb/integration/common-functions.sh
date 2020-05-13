@@ -670,7 +670,7 @@ EOF
         echo "collect_logs: for opendaylight controller ip: ${!CONTROLLERIP}"
         NODE_FOLDER="odl_${i}"
         mkdir -p "${NODE_FOLDER}"
-        echo "Lets's take the karaf thread dump again..."
+        echo "Let's take the karaf thread dump again..."
         ssh "${!CONTROLLERIP}" "sudo ps aux" > "${WORKSPACE}"/ps_after.log
         pid=$(grep org.apache.karaf.main.Main "${WORKSPACE}"/ps_after.log | grep -v grep | tr -s ' ' | cut -f2 -d' ')
         echo "karaf main: org.apache.karaf.main.Main, pid:${pid}"
@@ -1086,7 +1086,7 @@ function copy_and_run_post_startup_script() {
 function dump_controller_threads() {
     for i in $(seq 1 "${NUM_ODL_SYSTEM}"); do
         CONTROLLERIP="ODL_SYSTEM_${i}_IP"
-        echo "Lets's take the karaf thread dump"
+        echo "Let's take the karaf thread dump"
         ssh "${!CONTROLLERIP}" "sudo ps aux" > "${WORKSPACE}"/ps_before.log
         pid=$(grep org.apache.karaf.main.Main "${WORKSPACE}"/ps_before.log | grep -v grep | tr -s ' ' | cut -f2 -d' ')
         echo "karaf main: org.apache.karaf.main.Main, pid:${pid}"
