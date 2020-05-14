@@ -1,7 +1,7 @@
 ---
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v2.2.1
+    rev: v2.5.0
     hooks:
       - id: check-json
       - id: flake8
@@ -10,12 +10,12 @@ repos:
       - id: trailing-whitespace
 
   - repo: https://github.com/jorisroovers/gitlint
-    rev: v0.11.0
+    rev: v0.13.1
     hooks:
       - id: gitlint
 
   - repo: https://github.com/jumanjihouse/pre-commit-hooks
-    sha: 1.11.0
+    sha: 2.0.2
     hooks:
       - id: shellcheck
         exclude: >
@@ -25,6 +25,6 @@ repos:
             )$
 
   - repo: https://github.com/adrienverge/yamllint
-    rev: v1.15.0
+    rev: v1.23.0
     hooks:
       - id: yamllint
