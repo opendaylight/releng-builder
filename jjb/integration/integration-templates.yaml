@@ -1139,8 +1139,9 @@
       - string:
           name: ODL_ML2_PORT_BINDING
           default: '{odl-ml2-port-binding}'
-          description: 'Method of networking-odl port-binding (pseudo-agentdb-binding or legacy-port-binding or
-          network-topology)'
+          description: >
+            Method of networking-odl port-binding (pseudo-agentdb-binding or
+            legacy-port-binding or network-topology)
       - string:
           name: DEVSTACK_KUBERNETES_PLUGIN_REPO
           default: '{devstack-kubernetes-plugin-repo}'
@@ -1216,8 +1217,9 @@
       - string:
           name: LBAAS_SERVICE_PROVIDER
           default: '{lbaas-service-provider}'
-          description: 'The NEUTRON_LBAAS_SERVICE_PROVIDERV2 value to be used in local.conf - only relevant when using
-          neutron-lbaas'
+          description: >
+            The NEUTRON_LBAAS_SERVICE_PROVIDERV2 value to be used in
+            local.conf - only relevant when using neutron-lbaas
       - string:
           name: ODL_SFC_DRIVER
           default: '{odl-sfc-driver}'
@@ -1229,8 +1231,9 @@
       - string:
           name: OVS_INSTALL
           default: '{ovs-install}'
-          description: 'Install a custom OVS. It can be an OVS version to build (like v2.9.2 or v2.6.1-nsh) or a yum
-          repo url to pull from.'
+          description: >
+            Install a custom OVS. It can be an OVS version to build
+            (like v2.9.2 or v2.6.1-nsh) or a yum repo url to pull from.
 
     scm:
       - integration-gerrit-scm:
