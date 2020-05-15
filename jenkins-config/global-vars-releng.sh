@@ -11,3 +11,4 @@ SIGUL_BRIDGE_IP=10.30.168.3
 SIGUL_KEY=odl-release-2018
 SILO=releng
 SONAR_URL=https://sonar.opendaylight.org
+S3_BUCKET=
