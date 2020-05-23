@@ -17,14 +17,13 @@
       - aluminium:
           branch: 'master'
           jre: 'openjdk11'
+          scope: 'only'
       - magnesium:
           branch: 'stable/magnesium'
           jre: 'openjdk11'
+          scope: 'all'
       - sodium:
           branch: 'stable/sodium'
-
-    install:
-      - all:
           scope: 'all'
 
     # Job images
