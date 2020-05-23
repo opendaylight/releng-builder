@@ -17,15 +17,14 @@
       - aluminium:
           branch: 'master'
           jre: 'openjdk11'
+          install: 'only'
       - magnesium:
           branch: 'stable/magnesium'
           jre: 'openjdk11'
+          install: 'all'
       - sodium:
           branch: 'stable/sodium'
-
-    install:
-      - all:
-          scope: 'all'
+          install: 'all'
 
     # Job images
     tools_system_image: 'ZZCI - Ubuntu 16.04 - mininet-ovs-28 - 20190415-091034.881'
