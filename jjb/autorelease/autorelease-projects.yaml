@@ -5,12 +5,8 @@
       - autorelease-branch-cut
       - 'autorelease-release-{stream}-{mvn-version}-{java-version}':
           build-node: centos7-autorelease-4c-16g
-      - 'autorelease-update-submodules-{stream}'
-      - 'autorelease-update-validate-jobs-{stream}'
       - 'autorelease-version-bump-{stream}-{mvn-version}-{java-version}':
           build-node: centos7-autorelease-4c-16g
-      - '{project-name}-validate-autorelease-{stream}'
-      - gerrit-tox-verify
 
     stream:
       - sodium:
@@ -39,14 +35,17 @@
         -Dsft.heap.max=4g
     java-version: openjdk8
 
-
 - project:
     name: autorelease-projects-openjdk11
     jobs:
       - 'autorelease-generate-release-notes-{stream}'
       - 'autorelease-release-{stream}-{mvn-version}-{java-version}':
           build-node: centos7-autorelease-4c-16g
-      - 'autorelease-version-bump-{stream}-{mvn-version}-{java-version}':
+      - 'autorelease-update-submodules-{stream}'
+      - 'autorelease-update-validate-jobs-{stream}'
+      - '{project-name}-validate-autorelease-{stream}'
+      - 'autorelease-version-bump-{stream}-{mvn-version}-{java-version}'
+      - gerrit-tox-verify
 
     stream:
       - aluminium:
