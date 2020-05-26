@@ -36,7 +36,7 @@ cd "$DOCS_DIR" || exit 1
 cp "$WORKSPACE/release-notes.rst" "docs/release-notes/release-notes-${RELEASE,,}.rst"
 git add docs/release-notes/
 
-GERRIT_COMMIT_MESSAGE="Update release notes"
+GERRIT_COMMIT_MESSAGE="Update release notes for $RELEASE"
 GERRIT_TOPIC="autogenerate-release-notes"
 CHANGE_ID=$(ssh -p 29418 "jenkins-$SILO@git.opendaylight.org" gerrit query \
                limit:1 owner:self is:open project:docs \
