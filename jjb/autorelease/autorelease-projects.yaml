@@ -12,6 +12,7 @@
       - sodium:
           branch: 'stable/sodium'
           integration-test: sodium
+          cron: '@weekly'
 
     project: releng/autorelease
     project-name: autorelease
@@ -54,9 +55,6 @@
       - magnesium:
           branch: 'stable/magnesium'
           integration-test: magnesium
-      - sodium:
-          branch: 'stable/sodium'
-          integration-test: sodium-dev-null
 
     project: releng/autorelease
     project-name: autorelease
