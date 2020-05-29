@@ -3,6 +3,7 @@
     name: autorelease-projects
     jobs:
       - autorelease-branch-cut
+      - 'autorelease-generate-release-notes-{stream}'
       - 'autorelease-release-{stream}-{mvn-version}-{java-version}':
           build-node: centos7-autorelease-4c-16g
       - 'autorelease-version-bump-{stream}-{mvn-version}-{java-version}':
