@@ -15,10 +15,15 @@
     project: 'unimgr'
     project-name: 'unimgr'
     branch: 'master'
+    java-version: 'openjdk11'
     mvn-settings: 'unimgr-settings'
     mvn-opts: '-Xmx1024m'
-    dependencies: 'ovsdb-merge-{stream}'
-    email-upstream: '[unimgr] [ovsdb]'
+    dependencies: >
+        odlparent-merge-{stream},
+        yangtools-merge-{stream},
+        controller-merge-{stream},
+        mdsal-merge-{stream}
+    email-upstream: '[unimgr] [odlparent] [yangtools] [controller] [mdsal]'
     build-node: centos7-builder-4c-16g
 
     # Used by the release job
@@ -39,6 +44,7 @@
     project: 'unimgr'
     project-name: 'unimgr'
     branch: 'stable/magnesium'
+    java-version: 'openjdk11'
     mvn-settings: 'unimgr-settings'
     mvn-opts: '-Xmx1024m'
     dependencies: 'ovsdb-merge-{stream}'
@@ -80,6 +86,7 @@
     project: 'unimgr'
     project-name: 'unimgr'
     branch: 'master'
+    java-version: 'openjdk11'
     mvn-settings: 'unimgr-settings'
     mvn-opts: '-Xmx1024m'
 
