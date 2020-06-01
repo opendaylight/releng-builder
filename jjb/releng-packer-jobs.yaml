@@ -22,7 +22,9 @@
     build-timeout: 90
     cron: '00 H 1 * *'
 
-    platforms: centos-7
+    platforms:
+      - centos-7
+      - centos-8
     templates: builder
     update-cloud-image: true
 
