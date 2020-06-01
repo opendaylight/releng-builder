@@ -1229,6 +1229,10 @@
           default: '{odl-snat-mode}'
           description: 'The SNAT mode to be configured - options are conntrack/controller.'
       - string:
+          name: GROUP_ADD_MOD_ENABLED
+          default: '{group-add-mod-enabled}'
+          description: 'The Group add mod enabled mode to be configured - options are true/false.'
+      - string:
           name: OVS_INSTALL
           default: '{ovs-install}'
           description: >
@@ -1450,6 +1454,10 @@
           default: '{odl-snat-mode}'
           description: 'The SNAT mode to be configured - options are conntrack/controller.'
       - string:
+          name: GROUP_ADD_MOD_ENABLED
+          default: '{group-add-mod-enabled}'
+          description: 'The Group add mod enabled mode to be configured - options are true/false.'
+      - string:
           name: OVS_INSTALL
           default: '{ovs-install}'
           description: 'Install a custom OVS. It can be an OVS version to build (like v2.9.2 or v2.6.1-nsh) or a yum
@@ -1650,6 +1658,10 @@
           name: ODL_SNAT_MODE
           default: '{odl-snat-mode}'
           description: 'The SNAT mode to be configured - options are conntrack/controller.'
+      - string:
+          name: GROUP_ADD_MOD_ENABLED
+          default: '{group-add-mod-enabled}'
+          description: 'The Group add mod enabled mode to be configured - options are true/false.'
       - string:
           name: OVS_INSTALL
           default: '{ovs-install}'
@@ -1875,6 +1887,10 @@
           default: '{odl-snat-mode}'
           description: 'The SNAT mode to be configured - options are conntrack/controller.'
       - string:
+          name: GROUP_ADD_MOD_ENABLED
+          default: '{group-add-mod-enabled}'
+          description: 'The Group add mod enabled mode to be configured - options are true/false.'
+      - string:
           name: OVS_INSTALL
           default: '{ovs-install}'
           description: 'Install a custom OVS. It can be an OVS version to build (like v2.9.2 or v2.6.1-nsh) or a yum
@@ -2085,6 +2101,10 @@
           name: ODL_SNAT_MODE
           default: '{odl-snat-mode}'
           description: 'The SNAT mode to be configured - options are conntrack/controller.'
+      - string:
+          name: GROUP_ADD_MOD_ENABLED
+          default: '{group-add-mod-enabled}'
+          description: 'The Group add mod enabled mode to be configured - options are true/false.'
 
     scm:
       - integration-gerrit-scm:
@@ -2209,3 +2229,7 @@
           name: ODL_SNAT_MODE
           default: '{odl-snat-mode}'
           description: 'The SNAT mode to be configured - options are conntrack/controller.'
+      - string:
+          name: GROUP_ADD_MOD_ENABLED
+          default: '{group-add-mod-enabled}'
+          description: 'The Group add mod enabled mode to be configured - options are true/false.'
