@@ -145,29 +145,36 @@ do
         git checkout FETCH_HEAD
         # If the patch is for MRI project, adjust the MRI versions
         # shellcheck disable=SC2235
-        if [ "${PROJECT}" == "odlparent" ] || [ "${PROJECT}" == "yangtools" ] || ([ "${PROJECT}" == "mdsal" ] && [ "${DISTROSTREAM}" != "fluorine" ]); then
+        if [ "${PROJECT}" == "odlparent" ] || [ "${PROJECT}" == "yangtools" ] || [ "${PROJECT}" == "mdsal" ] || ([ "${PROJECT}" == "controller" ] && [ "${DISTROSTREAM}" != "magnesium" ]); then
             ODLPARENT_VERSION="$(xmlstarlet sel -N x=http://maven.apache.org/POM/4.0.0 -t -v //x:odlparent.version ../pom.xml)"
             echo "change odlparent version to ${ODLPARENT_VERSION}"
             find . -name "pom.xml" -print0 | xargs -0 xmlstarlet ed --inplace -P -N x=http://maven.apache.org/POM/4.0.0 -u //x:version\[../x:parent/x:groupId=\"org.opendaylight.odlparent\"\] -v "${ODLPARENT_VERSION}"
             find . -name "pom.xml" -print0 | xargs -0 xmlstarlet ed --inplace -P -N x=http://maven.apache.org/POM/4.0.0 -u //x:version\[../x:groupId=\"org.opendaylight.odlparent\"\] -v "${ODLPARENT_VERSION}"
         fi
         # shellcheck disable=SC2235
-        if [ "${PROJECT}" == "yangtools" ] || ([ "${PROJECT}" == "mdsal" ] && [ "${DISTROSTREAM}" != "fluorine" ]); then
+        if [ "${PROJECT}" == "yangtools" ] || [ "${PROJECT}" == "mdsal" ] || ([ "${PROJECT}" == "controller" ] && [ "${DISTROSTREAM}" != "magnesium" ]); then
             YANGTOOLS_VERSION="$(xmlstarlet sel -N x=http://maven.apache.org/POM/4.0.0 -t -v //x:yangtools.version ../pom.xml)"
             echo "change yangtools version to ${YANGTOOLS_VERSION}"
             find . -name "pom.xml" -print0 | xargs -0 xmlstarlet ed --inplace -P -N x=http://maven.apache.org/POM/4.0.0 -u //x:version\[../x:parent/x:groupId=\"org.opendaylight.yangtools\"\] -v "${YANGTOOLS_VERSION}"
             find . -name "pom.xml" -print0 | xargs -0 xmlstarlet ed --inplace -P -N x=http://maven.apache.org/POM/4.0.0 -u //x:version\[../x:groupId=\"org.opendaylight.yangtools\"\] -v "${YANGTOOLS_VERSION}"
         fi
-        if [ "${PROJECT}" == "mdsal" ] && [ "${DISTROSTREAM}" != "fluorine" ]; then
+	# shellcheck disable=SC2235
+	if [ "${PROJECT}" == "mdsal" ] || ([ "${PROJECT}" == "controller" ] && [ "${DISTROSTREAM}" != "magnesium" ]); then
             MDSAL_VERSION="$(xmlstarlet sel -N x=http://maven.apache.org/POM/4.0.0 -t -v //x:mdsal.version ../pom.xml)"
             echo "change mdsal version to ${MDSAL_VERSION}"
             find . -name "pom.xml" -print0 | xargs -0 xmlstarlet ed --inplace -P -N x=http://maven.apache.org/POM/4.0.0 -u //x:version\[../x:parent/x:groupId=\"org.opendaylight.mdsal\"\] -v "${MDSAL_VERSION}"
             find . -name "pom.xml" -print0 | xargs -0 xmlstarlet ed --inplace -P -N x=http://maven.apache.org/POM/4.0.0 -u //x:version\[../x:groupId=\"org.opendaylight.mdsal\"\] -v "${MDSAL_VERSION}"
         fi
+        if [ "${PROJECT}" == "controller" ] && [ "${DISTROSTREAM}" != "magnesium" ]; then
+            CONTROLLER_VERSION="$(xmlstarlet sel -N x=http://maven.apache.org/POM/4.0.0 -t -v //x:controller.version ../pom.xml)"
+            echo "change controller version to ${CONTROLLER_VERSION}"
+            find . -name "pom.xml" -print0 | xargs -0 xmlstarlet ed --inplace -P -N x=http://maven.apache.org/POM/4.0.0 -u //x:version\[../x:parent/x:groupId=\"org.opendaylight.controller\"\] -v "${CONTROLLER_VERSION}"
+            find . -name "pom.xml" -print0 | xargs -0 xmlstarlet ed --inplace -P -N x=http://maven.apache.org/POM/4.0.0 -u //x:version\[../x:groupId=\"org.opendaylight.controller\"\] -v "${CONTROLLER_VERSION}"
+        fi
     else
         # If project with no patch is MRI, download release tag:
         # shellcheck disable=SC2235
-        if [ "${PROJECT}" == "odlparent" ] || [ "${PROJECT}" == "yangtools" ] || ([ "${PROJECT}" == "mdsal" ] && [ "${DISTROSTREAM}" != "fluorine" ]); then
+        if [ "${PROJECT}" == "odlparent" ] || [ "${PROJECT}" == "yangtools" ] || [ "${PROJECT}" == "mdsal" ] || ([ "${PROJECT}" == "controller" ] && [ "${DISTROSTREAM}" != "magnesium" ]); then
             # shellcheck disable=SC2086
             PROJECT_VERSION="$(xmlstarlet sel -N x=http://maven.apache.org/POM/4.0.0 -t -v //x:${PROJECT_SHORTNAME}.version ../pom.xml)"
             echo "2. checking out tag v${PROJECT_VERSION}"
