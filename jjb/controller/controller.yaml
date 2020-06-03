@@ -47,7 +47,8 @@
     java-version: 'openjdk11'
     mvn-settings: 'controller-settings'
     mvn-goals: 'clean deploy -Pintegrationtests,docs'
-    mvn-opts: '-Xmx3072m -Dmaven.compile.fork=true'
+    mvn-opts: '-Xmx4096m -Dmaven.compile.fork=true'
+    build-node: centos7-builder-8c-8g
     build-timeout: 90
     dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},aaa-merge-{stream}'
     email-upstream: '[controller] [odlparent] [yangtools] [aaa]'
