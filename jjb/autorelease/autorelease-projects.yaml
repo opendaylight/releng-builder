@@ -5,9 +5,8 @@
       - autorelease-branch-cut
       - 'autorelease-generate-release-notes-{stream}'
       - 'autorelease-release-{stream}-{mvn-version}-{java-version}':
-          build-node: centos7-autorelease-4c-16g
-      - 'autorelease-version-bump-{stream}-{mvn-version}-{java-version}':
-          build-node: centos7-autorelease-4c-16g
+          build-node: centos7-builder-4c-16g
+      - 'autorelease-version-bump-{stream}-{mvn-version}-{java-version}'
 
     stream:
       - sodium:
@@ -42,7 +41,7 @@
     jobs:
       - 'autorelease-generate-release-notes-{stream}'
       - 'autorelease-release-{stream}-{mvn-version}-{java-version}':
-          build-node: centos7-autorelease-4c-16g
+          build-node: centos7-builder-4c-16g
       - 'autorelease-update-submodules-{stream}'
       - 'autorelease-update-validate-jobs-{stream}'
       - '{project-name}-validate-autorelease-{stream}'
