@@ -44,7 +44,7 @@
     builders:
       - shell: |
           #!/bin/bash -l
-          virtualenv --system-site-packages $WORKSPACE/venv
+          virtualenv -p python3 --system-site-packages $WORKSPACE/venv
           source $WORKSPACE/venv/bin/activate
           PYTHON="$WORKSPACE/venv/bin/python"
           $PYTHON -m pip install --upgrade networkx
