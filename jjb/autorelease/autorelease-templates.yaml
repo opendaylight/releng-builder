@@ -570,6 +570,8 @@
 
     builders:
       - lf-infra-pre-build
+      - lf-update-java-alternatives:
+          java-version: "{java-version}"
       - autorelease-checkout-gerrit-patch
       - autorelease-compare-projects
       - lf-jacoco-nojava-workaround
