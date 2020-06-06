@@ -444,12 +444,6 @@
           - integration-deploy-openstack-run-test.sh
 
 - builder:
-    name: integration-apex-image-manager
-    builders:
-      - shell: !include-raw:
-          - ../opendaylight-infra-apex-image-management.sh
-
-- builder:
     name: integration-compare-distributions
     # Operation: will compare an already created distribtion (probably last
     # published to nexus) to the current distribution being created.
