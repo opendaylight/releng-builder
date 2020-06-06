@@ -305,24 +305,6 @@
 # Shell Scripts #
 #################
 
-# Macro: integration-get-apex-addresses
-# Operation: this macro gets the IP addresses of the dynamic vms from apex snapshots
-# Used by: {project}-csit-* apex related job templates
-
-- builder:
-    name: integration-get-apex-addresses
-    builders:
-      - shell: !include-raw: integration-get-apex-addresses.sh
-
-# Macro: integration-apex-run-tests
-# Operation: this macro just runs the robot suites
-# Used by: {project}-csit-* apex related job templates
-
-- builder:
-    name: integration-apex-run-tests
-    builders:
-      - shell: !include-raw: integration-apex-run-tests.sh
-
 # Macro: integration-get-slave-addresses
 # Operation: this macro gets the IP addresses of the dynamic vms
 # Used by: {project}-csit-* job templates
@@ -441,12 +423,6 @@
     builders:
       - shell: !include-raw:
           - integration-deploy-openstack-run-test.sh
-
-- builder:
-    name: integration-apex-image-manager
-    builders:
-      - shell: !include-raw:
-          - ../opendaylight-infra-apex-image-management.sh
 
 - builder:
     name: integration-compare-distributions
