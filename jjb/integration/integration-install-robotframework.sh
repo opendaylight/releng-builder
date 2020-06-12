@@ -22,47 +22,60 @@ source "${ROBOT_VENV}/bin/activate"
 set -exu
 
 # Make sure pip itself us up-to-date.
-pip install --upgrade pip
+python2 -m pip install --user --upgrade pip
 python3 -m pip install --user --upgrade pip
 
-pip install --upgrade docker-py importlib requests scapy netifaces netaddr ipaddr pyhocon
-pip install --upgrade robotframework-httplibrary \
-    requests==2.15.1 \
-    robotframework-requests \
-    robotframework-sshlibrary==3.1.1 \
-    robotframework-selenium2library \
-    robotframework-pycurllibrary
+echo "Installing Python 2 Requirements"
+cat << 'EOF' > "python2-requirements.txt"
+docker-py
+importlib
+ipaddr
+netaddr
+netifaces
+pyhocon
+requests
+robotframework-httplibrary
+robotframework-pycurllibrary
+robotframework-requests
+robotframework-selenium2library
+robotframework-sshlibrary==3.1.1
+scapy
 
 # Module jsonpath is needed by current AAA idmlite suite.
-pip install --upgrade jsonpath-rw
+jsonpath-rw
 
 # Modules for longevity framework robot library
-pip install --upgrade elasticsearch==1.7.0 elasticsearch-dsl==0.0.11
+elasticsearch==1.7.0
+elasticsearch-dsl==0.0.11
 
 # Module for pyangbind used by lispflowmapping project
-pip install --upgrade pyangbind
+pyangbind
 
 # Module for iso8601 datetime format
-pip install --upgrade isodate
+isodate
 
 # Module for TemplatedRequests.robot library
-pip install --upgrade jmespath
+jmespath
 
 # Module for backup-restore support library
-pip install --upgrade jsonpatch
-
-#Module for elasticsearch python client
-#Module for elasticsearch python client
-python3 -m pip install --user urllib3==1.22
-python3 -m pip install --user requests==2.9.1
-python3 -m pip install --user elasticsearch==6.2.0
-python3 -m pip install --user PyYAML==3.11
+jsonpatch
 
 # odltools for extra debugging
-pip install odltools
+odltools
+EOF
+python2 -m pip install --user -r python2-requirements.txt
 odltools -V
-
-# Print installed versions.
 pip freeze
+
+
+echo "Installing Python 3 Requirements"
+cat << 'EOF' > "python3-requirements.txt"
+urllib3==1.22
+requests
+elasticsearch==6.2.0
+PyYAML==3.11
+EOF
+python3 -m pip install --user -r python3-requirements.txt
+pip3 freeze
 
 # vim: sw=4 ts=4 sts=4 et ft=sh :
