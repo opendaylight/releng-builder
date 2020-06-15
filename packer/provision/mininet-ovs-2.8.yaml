@@ -134,6 +134,17 @@
       apt: name=vlan state=present
       become: true
 
+    - name: Install CSIT dependencies
+      apt:
+        name:
+          - git-review
+          - python-chardet
+          - python-ndg-httpsclient
+          - python-requests
+          - python-urllib3
+        state: present
+      become: true
+
   post_tasks:
     - name: System Reseal
       script: ../common-packer/provision/system-reseal.sh
