@@ -134,14 +134,14 @@
       apt: name=vlan state=present
       become: true
 
+    # This image is being used as a CSIT tools image and some of our
+    # CSIT test scripts are relying on python-2 and its request library.
+    # This makes sure we install them onto the image even though they
+    # are not required for the OVS rule of it.
     - name: Install CSIT dependencies
       apt:
         name:
-          - git-review
-          - python-chardet
-          - python-ndg-httpsclient
           - python-requests
-          - python-urllib3
         state: present
       become: true
 
