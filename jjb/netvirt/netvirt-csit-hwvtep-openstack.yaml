@@ -1,6 +1,6 @@
 ---
 - project:
-    name: netvirt-csit-hwvtep-openstack-integration-aluminium
+    name: netvirt-csit-hwvtep-openstack-integration-aluminium-queens
     jobs:
       - inttest-csit-hwvtep-openstack-custom
 
@@ -38,7 +38,8 @@
           install-features: 'odl-jolokia,odl-netvirt-openstack'
 
     functionality:
-      - upstream-stateful
+      - upstream-stateful:
+          schedule: '{schedule-weekly}'
       - gate-stateful
 
     openstack:
@@ -50,7 +51,109 @@
           openstack_system2_image: '{openstack_queens_system_image}'
 
 - project:
-    name: netvirt-csit-hwvtep-openstack-integration-magnesium
+    name: netvirt-csit-hwvtep-openstack-integration-aluminium-rocky
+    jobs:
+      - inttest-csit-hwvtep-openstack-custom
+
+    project: 'netvirt'
+    stream: 'aluminium'
+    branch: 'master'
+    jre: 'openjdk11'
+    testplan: '{project}-{topology}-l2gw-openstack.txt'
+    odl-ml2-driver-version: 'v2'
+    enable-openstack-services: 'placement-api,l2gw-plugin'
+    enable-openstack-compute-services: 'placement-client'
+    security-group-mode: 'stateful'
+    odl_system_flavor: odl-highcpu-8
+    openstack_system_flavor: odl-highcpu-8
+    openstack_system2_flavor: odl-highcpu-4
+    tools_system_count: 2
+    tools_system_image: ZZCI - Ubuntu 16.04 - mininet-ovs-26 - x86_64 - 20200601-180138.390
+    os-cmb-cnt: 0
+    os-ctl-cnt: 1
+    os-cmp-cnt: 2
+
+    # TODO: remove this flag and instead use the enable-openstack-services list to know if l2gw is enabled
+    enable-networking-l2gw: 'yes'
+
+    topology:
+      - 1node:
+          openstack_system2_count: 2
+          odl_system_count: 1
+          enable-haproxy: 'no'
+          install-features: 'odl-netvirt-openstack'
+      - 3node:
+          openstack_system2_count: 3
+          odl_system_count: 3
+          enable-haproxy: 'yes'
+          install-features: 'odl-jolokia,odl-netvirt-openstack'
+
+    functionality:
+      - upstream-stateful:
+          schedule: '{schedule-daily}'
+      - gate-stateful
+
+    openstack:
+      - rocky:
+          openstack-branch: 'stable/rocky'
+          odl-ml2-branch: 'stable/rocky'
+          odl-ml2-port-binding: 'pseudo-agentdb-binding'
+          openstack_system_image: '{openstack_rocky_system_image}'
+          openstack_system2_image: '{openstack_rocky_system_image}'
+
+- project:
+    name: netvirt-csit-hwvtep-openstack-integration-aluminium-stein
+    jobs:
+      - inttest-csit-hwvtep-openstack-custom
+
+    project: 'netvirt'
+    stream: 'aluminium'
+    branch: 'master'
+    jre: 'openjdk11'
+    testplan: '{project}-{topology}-l2gw-openstack.txt'
+    odl-ml2-driver-version: 'v2'
+    enable-openstack-services: 'placement-api,l2gw-plugin'
+    enable-openstack-compute-services: 'placement-client'
+    security-group-mode: 'stateful'
+    odl_system_flavor: odl-highcpu-8
+    openstack_system_flavor: odl-highcpu-8
+    openstack_system2_flavor: odl-highcpu-4
+    tools_system_count: 2
+    tools_system_image: ZZCI - Ubuntu 16.04 - mininet-ovs-26 - x86_64 - 20200601-180138.390
+    os-cmb-cnt: 0
+    os-ctl-cnt: 1
+    os-cmp-cnt: 2
+
+    # TODO: remove this flag and instead use the enable-openstack-services list to know if l2gw is enabled
+    enable-networking-l2gw: 'yes'
+
+    topology:
+      - 1node:
+          openstack_system2_count: 2
+          odl_system_count: 1
+          enable-haproxy: 'no'
+          install-features: 'odl-netvirt-openstack'
+      - 3node:
+          openstack_system2_count: 3
+          odl_system_count: 3
+          enable-haproxy: 'yes'
+          install-features: 'odl-jolokia,odl-netvirt-openstack'
+
+    functionality:
+      - upstream-stateful:
+          schedule: '{schedule-daily}'
+      - gate-stateful
+
+    openstack:
+      - stein:
+          openstack-branch: 'stable/stein'
+          odl-ml2-branch: 'stable/stein'
+          odl-ml2-port-binding: 'pseudo-agentdb-binding'
+          openstack_system_image: '{openstack_stein_system_image}'
+          openstack_system2_image: '{openstack_stein_system_image}'
+
+- project:
+    name: netvirt-csit-hwvtep-openstack-integration-magnesium-queens
     jobs:
       - inttest-csit-hwvtep-openstack-custom
 
@@ -88,7 +191,8 @@
           install-features: 'odl-jolokia,odl-netvirt-openstack'
 
     functionality:
-      - upstream-stateful
+      - upstream-stateful:
+          schedule: '{schedule-weekly}'
       - gate-stateful
 
     openstack:
@@ -100,7 +204,111 @@
           openstack_system2_image: '{openstack_queens_system_image}'
 
 - project:
-    name: netvirt-csit-hwvtep-openstack-integration-sodium
+    name: netvirt-csit-hwvtep-openstack-integration-magnesium-rocky
+    jobs:
+      - inttest-csit-hwvtep-openstack-custom
+
+    project: 'netvirt'
+    stream: 'magnesium'
+    branch: 'stable/magnesium'
+    jre: 'openjdk11'
+    testplan: '{project}-{topology}-l2gw-openstack.txt'
+    odl-ml2-driver-version: 'v2'
+    enable-openstack-services: 'placement-api,l2gw-plugin'
+    enable-openstack-compute-services: 'placement-client'
+    security-group-mode: 'stateful'
+    odl_system_flavor: odl-highcpu-8
+    openstack_system_flavor: odl-highcpu-8
+    openstack_system2_flavor: odl-highcpu-4
+    tools_system_count: 2
+    tools_system_image: ZZCI - Ubuntu 16.04 - mininet-ovs-26 - x86_64 - 20200601-180138.390
+    os-cmb-cnt: 0
+    os-ctl-cnt: 1
+    os-cmp-cnt: 2
+
+    # TODO: remove this flag and instead use the enable-openstack-services list to know if l2gw is enabled
+    enable-networking-l2gw: 'yes'
+
+    topology:
+      - 1node:
+          openstack_system2_count: 2
+          odl_system_count: 1
+          enable-haproxy: 'no'
+          install-features: 'odl-netvirt-openstack'
+      - 3node:
+          openstack_system2_count: 3
+          odl_system_count: 3
+          enable-haproxy: 'yes'
+          install-features: 'odl-jolokia,odl-netvirt-openstack'
+
+    functionality:
+      - upstream-stateful:
+          schedule: '{schedule-weekly}'
+      - gate-stateful
+
+    openstack:
+      - rocky:
+          openstack-branch: 'stable/rocky'
+          odl-ml2-branch: 'stable/rocky'
+          odl-ml2-port-binding: 'pseudo-agentdb-binding'
+          openstack_system_image: '{openstack_rocky_system_image}'
+          openstack_system2_image: '{openstack_rocky_system_image}'
+          schedule: '{schedule-daily}'
+
+- project:
+    name: netvirt-csit-hwvtep-openstack-integration-magnesium-stein
+    jobs:
+      - inttest-csit-hwvtep-openstack-custom
+
+    project: 'netvirt'
+    stream: 'magnesium'
+    branch: 'stable/magnesium'
+    jre: 'openjdk11'
+    testplan: '{project}-{topology}-l2gw-openstack.txt'
+    odl-ml2-driver-version: 'v2'
+    enable-openstack-services: 'placement-api,l2gw-plugin'
+    enable-openstack-compute-services: 'placement-client'
+    security-group-mode: 'stateful'
+    odl_system_flavor: odl-highcpu-8
+    openstack_system_flavor: odl-highcpu-8
+    openstack_system2_flavor: odl-highcpu-4
+    tools_system_count: 2
+    tools_system_image: ZZCI - Ubuntu 16.04 - mininet-ovs-26 - x86_64 - 20200601-180138.390
+    os-cmb-cnt: 0
+    os-ctl-cnt: 1
+    os-cmp-cnt: 2
+
+    # TODO: remove this flag and instead use the enable-openstack-services list to know if l2gw is enabled
+    enable-networking-l2gw: 'yes'
+
+    topology:
+      - 1node:
+          openstack_system2_count: 2
+          odl_system_count: 1
+          enable-haproxy: 'no'
+          install-features: 'odl-netvirt-openstack'
+      - 3node:
+          openstack_system2_count: 3
+          odl_system_count: 3
+          enable-haproxy: 'yes'
+          install-features: 'odl-jolokia,odl-netvirt-openstack'
+
+    functionality:
+      - upstream-stateful:
+          schedule: '{schedule-weekly}'
+      - gate-stateful
+
+    openstack:
+      - stein:
+          openstack-branch: 'stable/stein'
+          odl-ml2-branch: 'stable/stein'
+          odl-ml2-port-binding: 'pseudo-agentdb-binding'
+          openstack_system_image: '{openstack_stein_system_image}'
+          openstack_system2_image: '{openstack_stein_system_image}'
+          schedule: '{schedule-weekly}'
+
+- project:
+    name: netvirt-csit-hwvtep-openstack-integration-sodium-queens
     jobs:
       - inttest-csit-hwvtep-openstack-custom
 
@@ -137,7 +345,8 @@
           install-features: 'odl-jolokia,odl-netvirt-openstack'
 
     functionality:
-      - upstream-stateful
+      - upstream-stateful:
+          schedule: '{schedule-weekly}'
       - gate-stateful
 
     openstack:
@@ -147,3 +356,106 @@
           odl-ml2-port-binding: 'pseudo-agentdb-binding'
           openstack_system_image: '{openstack_queens_system_image}'
           openstack_system2_image: '{openstack_queens_system_image}'
+          schedule: '{schedule-weekly}'
+
+- project:
+    name: netvirt-csit-hwvtep-openstack-integration-sodium-rocky
+    jobs:
+      - inttest-csit-hwvtep-openstack-custom
+
+    project: 'netvirt'
+    stream: 'sodium'
+    branch: 'stable/sodium'
+    testplan: '{project}-{topology}-l2gw-openstack.txt'
+    odl-ml2-driver-version: 'v2'
+    enable-openstack-services: 'placement-api,l2gw-plugin'
+    enable-openstack-compute-services: 'placement-client'
+    security-group-mode: 'stateful'
+    odl_system_flavor: odl-highcpu-8
+    openstack_system_flavor: odl-highcpu-8
+    openstack_system2_flavor: odl-highcpu-4
+    tools_system_count: 2
+    tools_system_image: ZZCI - Ubuntu 16.04 - mininet-ovs-26 - x86_64 - 20200601-180138.390
+    os-cmb-cnt: 0
+    os-ctl-cnt: 1
+    os-cmp-cnt: 2
+
+    # TODO: remove this flag and instead use the enable-openstack-services list to know if l2gw is enabled
+    enable-networking-l2gw: 'yes'
+
+    topology:
+      - 1node:
+          openstack_system2_count: 2
+          odl_system_count: 1
+          enable-haproxy: 'no'
+          install-features: 'odl-netvirt-openstack'
+      - 3node:
+          openstack_system2_count: 3
+          odl_system_count: 3
+          enable-haproxy: 'yes'
+          install-features: 'odl-jolokia,odl-netvirt-openstack'
+
+    functionality:
+      - upstream-stateful:
+          schedule: '{schedule-weekly}'
+      - gate-stateful
+
+    openstack:
+      - rocky:
+          openstack-branch: 'stable/rocky'
+          odl-ml2-branch: 'stable/rocky'
+          odl-ml2-port-binding: 'pseudo-agentdb-binding'
+          openstack_system_image: '{openstack_rocky_system_image}'
+          openstack_system2_image: '{openstack_rocky_system_image}'
+          schedule: '{schedule-weekly}'
+
+- project:
+    name: netvirt-csit-hwvtep-openstack-integration-sodium-stein
+    jobs:
+      - inttest-csit-hwvtep-openstack-custom
+
+    project: 'netvirt'
+    stream: 'sodium'
+    branch: 'stable/sodium'
+    testplan: '{project}-{topology}-l2gw-openstack.txt'
+    odl-ml2-driver-version: 'v2'
+    enable-openstack-services: 'placement-api,l2gw-plugin'
+    enable-openstack-compute-services: 'placement-client'
+    security-group-mode: 'stateful'
+    odl_system_flavor: odl-highcpu-8
+    openstack_system_flavor: odl-highcpu-8
+    openstack_system2_flavor: odl-highcpu-4
+    tools_system_count: 2
+    tools_system_image: ZZCI - Ubuntu 16.04 - mininet-ovs-26 - x86_64 - 20200601-180138.390
+    os-cmb-cnt: 0
+    os-ctl-cnt: 1
+    os-cmp-cnt: 2
+
+    # TODO: remove this flag and instead use the enable-openstack-services list to know if l2gw is enabled
+    enable-networking-l2gw: 'yes'
+
+    topology:
+      - 1node:
+          openstack_system2_count: 2
+          odl_system_count: 1
+          enable-haproxy: 'no'
+          install-features: 'odl-netvirt-openstack'
+      - 3node:
+          openstack_system2_count: 3
+          odl_system_count: 3
+          enable-haproxy: 'yes'
+          install-features: 'odl-jolokia,odl-netvirt-openstack'
+
+    functionality:
+      - upstream-stateful:
+          schedule: '{schedule-weekly}'
+      - gate-stateful
+
+    openstack:
+      - stein:
+          openstack-branch: 'stable/stein'
+          odl-ml2-branch: 'stable/stein'
+          odl-ml2-port-binding: 'pseudo-agentdb-binding'
+          openstack_system_image: '{openstack_stein_system_image}'
+          openstack_system2_image: '{openstack_stein_system_image}'
+          schedule: '{schedule-weekly}'

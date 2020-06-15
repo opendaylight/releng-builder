@@ -1,6 +1,6 @@
 ---
 - project:
-    name: netvirt-csit-openstack-integration-aluminium
+    name: netvirt-csit-openstack-integration-aluminium-queens
     jobs:
       - inttest-csit-openstack-custom
 
@@ -35,11 +35,14 @@
           install-features: 'odl-jolokia,odl-netvirt-openstack'
 
     functionality:
-      - upstream-stateful
+      - upstream-stateful:
+          schedule: '{schedule-daily}'
       - upstream-stateful-itm-direct-tunnels:
           enable-itm-direct-tunnels: 'true'
+          schedule: '{schedule-daily}'
       - upstream-stateful-snat-conntrack:
           odl-snat-mode: 'conntrack'
+          schedule: '{schedule-daily}'
       - gate-stateful
       - gate-stateful-itm-direct-tunnels:
           enable-itm-direct-tunnels: 'true'
@@ -51,6 +54,7 @@
           testplan: '{project}-{topology}-dcgw-openstack.txt'
           tools_system_count: 3
           enable-gre-type-driver: 'yes'
+          schedule: '{schedule-daily}'
       # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
       - gate-tdd-wip:
           testplan: '{project}-{topology}-tdd-wip-openstack.txt'
@@ -81,6 +85,87 @@
           odl-ml2-port-binding: 'pseudo-agentdb-binding'
           openstack_system_image: '{openstack_queens_system_image}'
           openstack_system2_image: '{openstack_queens_system_image}'
+
+- project:
+    name: netvirt-csit-openstack-integration-aluminium-rocky
+    jobs:
+      - inttest-csit-openstack-custom
+
+    project: 'netvirt'
+    stream: 'aluminium'
+    branch: 'master'
+    jre: 'openjdk11'
+    testplan: '{project}-{topology}-openstack.txt'
+    odl-ml2-driver-version: 'v2'
+    enable-openstack-services: 'placement-api,tempest'
+    enable-openstack-compute-services: 'placement-client'
+    security-group-mode: 'stateful'
+    odl_system_flavor: odl-highcpu-8
+    openstack_system_flavor: odl-highcpu-8
+    openstack_system2_flavor: odl-highcpu-4
+    tools_system_count: 0
+    os-cmb-cnt: 0
+    os-ctl-cnt: 1
+    os-cmp-cnt: 2
+
+    topology:
+      - 1node:
+          openstack_system2_count: 2
+          odl_system_count: 1
+          enable-haproxy: 'no'
+          install-features: 'odl-netvirt-openstack'
+          robot-options: '-v FAIL_ON_EXCEPTIONS:True'
+      - 3node:
+          openstack_system2_count: 3
+          odl_system_count: 3
+          enable-haproxy: 'yes'
+          install-features: 'odl-jolokia,odl-netvirt-openstack'
+
+    functionality:
+      - upstream-stateful:
+          schedule: '{schedule-daily}'
+      - upstream-stateful-itm-direct-tunnels:
+          enable-itm-direct-tunnels: 'true'
+          schedule: '{schedule-daily}'
+      - upstream-stateful-snat-conntrack:
+          odl-snat-mode: 'conntrack'
+          schedule: '{schedule-daily}'
+      - gate-stateful
+      - gate-stateful-itm-direct-tunnels:
+          enable-itm-direct-tunnels: 'true'
+      - gate-stateful-snat-conntrack:
+          odl-snat-mode: 'conntrack'
+      - gate-minimal-cluster:
+          testplan: '{project}-{topology}-minimal-openstack.txt'
+      - dcgw:
+          testplan: '{project}-{topology}-dcgw-openstack.txt'
+          tools_system_count: 3
+          enable-gre-type-driver: 'yes'
+          schedule: '{schedule-daily}'
+      # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
+      - gate-tdd-wip:
+          testplan: '{project}-{topology}-tdd-wip-openstack.txt'
+          schedule: '{schedule-weekly}'
+          tools_system_count: 3
+          enable-gre-type-driver: 'yes'
+      - tempest-stateful:
+          test-suites: 'openstack/tempest/tempest.robot'
+          testplan: '{project}-{topology}-openstack-tempest.txt'
+          schedule: '{schedule-daily}'
+      - tempest-stateful-snat-conntrack:
+          test-suites: 'openstack/tempest/tempest.robot'
+          testplan: '{project}-{topology}-openstack-tempest.txt'
+          odl-snat-mode: 'conntrack'
+          schedule: '{schedule-daily}'
+      - gate-tempest-stateful:
+          test-suites: 'openstack/tempest/tempest.robot'
+          testplan: '{project}-{topology}-openstack-tempest.txt'
+      - gate-tempest-stateful-snat-conntrack:
+          test-suites: 'openstack/tempest/tempest.robot'
+          testplan: '{project}-{topology}-openstack-tempest.txt'
+          odl-snat-mode: 'conntrack'
+
+    openstack:
       - rocky:
           openstack-branch: 'stable/rocky'
           odl-ml2-branch: 'stable/rocky'
@@ -89,7 +174,94 @@
           openstack_system2_image: '{openstack_rocky_system_image}'
 
 - project:
-    name: netvirt-csit-openstack-integration-magnesium
+    name: netvirt-csit-openstack-integration-aluminium-stein
+    jobs:
+      - inttest-csit-openstack-custom
+
+    project: 'netvirt'
+    stream: 'aluminium'
+    branch: 'master'
+    jre: 'openjdk11'
+    testplan: '{project}-{topology}-openstack.txt'
+    odl-ml2-driver-version: 'v2'
+    enable-openstack-services: 'placement-api,tempest'
+    enable-openstack-compute-services: 'placement-client'
+    security-group-mode: 'stateful'
+    odl_system_flavor: odl-highcpu-8
+    openstack_system_flavor: odl-highcpu-8
+    openstack_system2_flavor: odl-highcpu-4
+    tools_system_count: 0
+    os-cmb-cnt: 0
+    os-ctl-cnt: 1
+    os-cmp-cnt: 2
+
+    topology:
+      - 1node:
+          openstack_system2_count: 2
+          odl_system_count: 1
+          enable-haproxy: 'no'
+          install-features: 'odl-netvirt-openstack'
+          robot-options: '-v FAIL_ON_EXCEPTIONS:True'
+      - 3node:
+          openstack_system2_count: 3
+          odl_system_count: 3
+          enable-haproxy: 'yes'
+          install-features: 'odl-jolokia,odl-netvirt-openstack'
+
+    functionality:
+      - upstream-stateful:
+          schedule: '{schedule-daily}'
+      - upstream-stateful-itm-direct-tunnels:
+          enable-itm-direct-tunnels: 'true'
+          schedule: '{schedule-daily}'
+      - upstream-stateful-snat-conntrack:
+          odl-snat-mode: 'conntrack'
+          schedule: '{schedule-daily}'
+      - gate-stateful
+      - gate-stateful-itm-direct-tunnels:
+          enable-itm-direct-tunnels: 'true'
+      - gate-stateful-snat-conntrack:
+          odl-snat-mode: 'conntrack'
+      - gate-minimal-cluster:
+          testplan: '{project}-{topology}-minimal-openstack.txt'
+      - dcgw:
+          testplan: '{project}-{topology}-dcgw-openstack.txt'
+          tools_system_count: 3
+          enable-gre-type-driver: 'yes'
+          schedule: '{schedule-daily}'
+      # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
+      - gate-tdd-wip:
+          testplan: '{project}-{topology}-tdd-wip-openstack.txt'
+          schedule: '{schedule-weekly}'
+          tools_system_count: 3
+          enable-gre-type-driver: 'yes'
+      - tempest-stateful:
+          test-suites: 'openstack/tempest/tempest.robot'
+          testplan: '{project}-{topology}-openstack-tempest.txt'
+          schedule: '{schedule-daily}'
+      - tempest-stateful-snat-conntrack:
+          test-suites: 'openstack/tempest/tempest.robot'
+          testplan: '{project}-{topology}-openstack-tempest.txt'
+          odl-snat-mode: 'conntrack'
+          schedule: '{schedule-daily}'
+      - gate-tempest-stateful:
+          test-suites: 'openstack/tempest/tempest.robot'
+          testplan: '{project}-{topology}-openstack-tempest.txt'
+      - gate-tempest-stateful-snat-conntrack:
+          test-suites: 'openstack/tempest/tempest.robot'
+          testplan: '{project}-{topology}-openstack-tempest.txt'
+          odl-snat-mode: 'conntrack'
+
+    openstack:
+      - stein:
+          openstack-branch: 'stable/stein'
+          odl-ml2-branch: 'stable/stein'
+          odl-ml2-port-binding: 'pseudo-agentdb-binding'
+          openstack_system_image: '{openstack_stein_system_image}'
+          openstack_system2_image: '{openstack_stein_system_image}'
+
+- project:
+    name: netvirt-csit-openstack-integration-magnesium-queens
     jobs:
       - inttest-csit-openstack-custom
 
@@ -124,11 +296,14 @@
           install-features: 'odl-jolokia,odl-netvirt-openstack'
 
     functionality:
-      - upstream-stateful
+      - upstream-stateful:
+          schedule: '{schedule-daily}'
       - upstream-stateful-itm-direct-tunnels:
           enable-itm-direct-tunnels: 'true'
+          schedule: '{schedule-daily}'
       - upstream-stateful-snat-conntrack:
           odl-snat-mode: 'conntrack'
+          schedule: '{schedule-daily}'
       - gate-stateful
       - gate-stateful-itm-direct-tunnels:
           enable-itm-direct-tunnels: 'true'
@@ -138,6 +313,7 @@
           testplan: '{project}-{topology}-minimal-openstack.txt'
       - dcgw:
           testplan: '{project}-{topology}-dcgw-openstack.txt'
+          schedule: '{schedule-daily}'
           tools_system_count: 3
           enable-gre-type-driver: 'yes'
       # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
@@ -170,6 +346,87 @@
           odl-ml2-port-binding: 'pseudo-agentdb-binding'
           openstack_system_image: '{openstack_queens_system_image}'
           openstack_system2_image: '{openstack_queens_system_image}'
+
+- project:
+    name: netvirt-csit-openstack-integration-magnesium-rocky
+    jobs:
+      - inttest-csit-openstack-custom
+
+    project: 'netvirt'
+    stream: 'magnesium'
+    branch: 'stable/magnesium'
+    jre: 'openjdk11'
+    testplan: '{project}-{topology}-openstack.txt'
+    odl-ml2-driver-version: 'v2'
+    enable-openstack-services: 'placement-api,tempest'
+    enable-openstack-compute-services: 'placement-client'
+    security-group-mode: 'stateful'
+    odl_system_flavor: odl-highcpu-8
+    openstack_system_flavor: odl-highcpu-8
+    openstack_system2_flavor: odl-highcpu-4
+    tools_system_count: 0
+    os-cmb-cnt: 0
+    os-ctl-cnt: 1
+    os-cmp-cnt: 2
+
+    topology:
+      - 1node:
+          openstack_system2_count: 2
+          odl_system_count: 1
+          enable-haproxy: 'no'
+          install-features: 'odl-netvirt-openstack'
+          robot-options: '-v FAIL_ON_EXCEPTIONS:True'
+      - 3node:
+          openstack_system2_count: 3
+          odl_system_count: 3
+          enable-haproxy: 'yes'
+          install-features: 'odl-jolokia,odl-netvirt-openstack'
+
+    functionality:
+      - upstream-stateful:
+          schedule: '{schedule-daily}'
+      - upstream-stateful-itm-direct-tunnels:
+          enable-itm-direct-tunnels: 'true'
+          schedule: '{schedule-daily}'
+      - upstream-stateful-snat-conntrack:
+          odl-snat-mode: 'conntrack'
+          schedule: '{schedule-daily}'
+      - gate-stateful
+      - gate-stateful-itm-direct-tunnels:
+          enable-itm-direct-tunnels: 'true'
+      - gate-stateful-snat-conntrack:
+          odl-snat-mode: 'conntrack'
+      - gate-minimal-cluster:
+          testplan: '{project}-{topology}-minimal-openstack.txt'
+      - dcgw:
+          testplan: '{project}-{topology}-dcgw-openstack.txt'
+          schedule: '{schedule-daily}'
+          tools_system_count: 3
+          enable-gre-type-driver: 'yes'
+      # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
+      - gate-tdd-wip:
+          testplan: '{project}-{topology}-tdd-wip-openstack.txt'
+          schedule: '{schedule-weekly}'
+          tools_system_count: 3
+          enable-gre-type-driver: 'yes'
+      - tempest-stateful:
+          test-suites: 'openstack/tempest/tempest.robot'
+          testplan: '{project}-{topology}-openstack-tempest.txt'
+          schedule: '{schedule-daily}'
+      - tempest-stateful-snat-conntrack:
+          test-suites: 'openstack/tempest/tempest.robot'
+          testplan: '{project}-{topology}-openstack-tempest.txt'
+          odl-snat-mode: 'conntrack'
+          schedule: '{schedule-daily}'
+      - gate-tempest-stateful:
+          test-suites: 'openstack/tempest/tempest.robot'
+          testplan: '{project}-{topology}-openstack-tempest.txt'
+      - gate-tempest-stateful-snat-conntrack:
+          test-suites: 'openstack/tempest/tempest.robot'
+          testplan: '{project}-{topology}-openstack-tempest.txt'
+          odl-snat-mode: 'conntrack'
+
+    openstack:
       - rocky:
           openstack-branch: 'stable/rocky'
           odl-ml2-branch: 'stable/rocky'
@@ -178,7 +435,268 @@
           openstack_system2_image: '{openstack_rocky_system_image}'
 
 - project:
-    name: netvirt-csit-openstack-integration-sodium
+    name: netvirt-csit-openstack-integration-magnesium-stein
+    jobs:
+      - inttest-csit-openstack-custom
+
+    project: 'netvirt'
+    stream: 'magnesium'
+    branch: 'stable/magnesium'
+    jre: 'openjdk11'
+    testplan: '{project}-{topology}-openstack.txt'
+    odl-ml2-driver-version: 'v2'
+    enable-openstack-services: 'placement-api,tempest'
+    enable-openstack-compute-services: 'placement-client'
+    security-group-mode: 'stateful'
+    odl_system_flavor: odl-highcpu-8
+    openstack_system_flavor: odl-highcpu-8
+    openstack_system2_flavor: odl-highcpu-4
+    tools_system_count: 0
+    os-cmb-cnt: 0
+    os-ctl-cnt: 1
+    os-cmp-cnt: 2
+
+    topology:
+      - 1node:
+          openstack_system2_count: 2
+          odl_system_count: 1
+          enable-haproxy: 'no'
+          install-features: 'odl-netvirt-openstack'
+          robot-options: '-v FAIL_ON_EXCEPTIONS:True'
+      - 3node:
+          openstack_system2_count: 3
+          odl_system_count: 3
+          enable-haproxy: 'yes'
+          install-features: 'odl-jolokia,odl-netvirt-openstack'
+
+    functionality:
+      - upstream-stateful:
+          schedule: '{schedule-weekly}'
+      - upstream-stateful-itm-direct-tunnels:
+          enable-itm-direct-tunnels: 'true'
+          schedule: '{schedule-weekly}'
+      - upstream-stateful-snat-conntrack:
+          odl-snat-mode: 'conntrack'
+          schedule: '{schedule-weekly}'
+      - gate-stateful
+      - gate-stateful-itm-direct-tunnels:
+          enable-itm-direct-tunnels: 'true'
+      - gate-stateful-snat-conntrack:
+          odl-snat-mode: 'conntrack'
+      - gate-minimal-cluster:
+          testplan: '{project}-{topology}-minimal-openstack.txt'
+      - dcgw:
+          testplan: '{project}-{topology}-dcgw-openstack.txt'
+          tools_system_count: 3
+          schedule: '{schedule-weekly}'
+          enable-gre-type-driver: 'yes'
+      # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
+      - gate-tdd-wip:
+          testplan: '{project}-{topology}-tdd-wip-openstack.txt'
+          schedule: '{schedule-weekly}'
+          tools_system_count: 3
+          enable-gre-type-driver: 'yes'
+      - tempest-stateful:
+          test-suites: 'openstack/tempest/tempest.robot'
+          testplan: '{project}-{topology}-openstack-tempest.txt'
+          schedule: '{schedule-daily}'
+      - tempest-stateful-snat-conntrack:
+          test-suites: 'openstack/tempest/tempest.robot'
+          testplan: '{project}-{topology}-openstack-tempest.txt'
+          odl-snat-mode: 'conntrack'
+          schedule: '{schedule-daily}'
+      - gate-tempest-stateful:
+          test-suites: 'openstack/tempest/tempest.robot'
+          testplan: '{project}-{topology}-openstack-tempest.txt'
+      - gate-tempest-stateful-snat-conntrack:
+          test-suites: 'openstack/tempest/tempest.robot'
+          testplan: '{project}-{topology}-openstack-tempest.txt'
+          odl-snat-mode: 'conntrack'
+
+    openstack:
+      - stein:
+          openstack-branch: 'stable/stein'
+          odl-ml2-branch: 'stable/stein'
+          odl-ml2-port-binding: 'pseudo-agentdb-binding'
+          openstack_system_image: '{openstack_stein_system_image}'
+          openstack_system2_image: '{openstack_stein_system_image}'
+
+- project:
+    name: netvirt-csit-openstack-integration-sodium-queens
+    jobs:
+      - inttest-csit-openstack-custom
+
+    project: 'netvirt'
+    stream: 'sodium'
+    branch: 'stable/sodium'
+    testplan: '{project}-{topology}-openstack.txt'
+    odl-ml2-driver-version: 'v2'
+    enable-openstack-services: 'placement-api,tempest'
+    enable-openstack-compute-services: 'placement-client'
+    security-group-mode: 'stateful'
+    odl_system_flavor: odl-highcpu-8
+    openstack_system_flavor: odl-highcpu-8
+    openstack_system2_flavor: odl-highcpu-4
+    tools_system_count: 0
+    os-cmb-cnt: 0
+    os-ctl-cnt: 1
+    os-cmp-cnt: 2
+
+    topology:
+      - 1node:
+          openstack_system2_count: 2
+          odl_system_count: 1
+          enable-haproxy: 'no'
+          install-features: 'odl-netvirt-openstack'
+          robot-options: '-v FAIL_ON_EXCEPTIONS:True'
+      - 3node:
+          openstack_system2_count: 3
+          odl_system_count: 3
+          enable-haproxy: 'yes'
+          install-features: 'odl-jolokia,odl-netvirt-openstack'
+
+    functionality:
+      - upstream-stateful:
+          schedule: '{schedule-weekly}'
+      - upstream-stateful-itm-direct-tunnels:
+          enable-itm-direct-tunnels: 'true'
+          schedule: '{schedule-weekly}'
+      - upstream-stateful-snat-conntrack:
+          odl-snat-mode: 'conntrack'
+          schedule: '{schedule-weekly}'
+      - gate-stateful
+      - gate-stateful-itm-direct-tunnels:
+          enable-itm-direct-tunnels: 'true'
+          schedule: '{schedule-weekly}'
+      - gate-stateful-snat-conntrack:
+          odl-snat-mode: 'conntrack'
+      - gate-minimal-cluster:
+          testplan: '{project}-{topology}-minimal-openstack.txt'
+      - dcgw:
+          testplan: '{project}-{topology}-dcgw-openstack.txt'
+          schedule: '{schedule-weekly}'
+          tools_system_count: 3
+          enable-gre-type-driver: 'yes'
+      # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
+      - gate-tdd-wip:
+          testplan: '{project}-{topology}-tdd-wip-openstack.txt'
+          schedule: '{schedule-weekly}'
+          tools_system_count: 3
+          enable-gre-type-driver: 'yes'
+      - tempest-stateful:
+          test-suites: 'openstack/tempest/tempest.robot'
+          testplan: '{project}-{topology}-openstack-tempest.txt'
+          schedule: '{schedule-daily}'
+      - tempest-stateful-snat-conntrack:
+          test-suites: 'openstack/tempest/tempest.robot'
+          testplan: '{project}-{topology}-openstack-tempest.txt'
+          odl-snat-mode: 'conntrack'
+          schedule: '{schedule-daily}'
+      - gate-tempest-stateful:
+          test-suites: 'openstack/tempest/tempest.robot'
+          testplan: '{project}-{topology}-openstack-tempest.txt'
+      - gate-tempest-stateful-snat-conntrack:
+          test-suites: 'openstack/tempest/tempest.robot'
+          testplan: '{project}-{topology}-openstack-tempest.txt'
+          odl-snat-mode: 'conntrack'
+
+    openstack:
+      - queens:
+          openstack-branch: 'stable/queens'
+          odl-ml2-branch: 'stable/queens'
+          odl-ml2-port-binding: 'pseudo-agentdb-binding'
+          openstack_system_image: '{openstack_queens_system_image}'
+          openstack_system2_image: '{openstack_queens_system_image}'
+          schedule: '{schedule-weekly}'
+
+- project:
+    name: netvirt-csit-openstack-integration-sodium-rocky
+    jobs:
+      - inttest-csit-openstack-custom
+
+    project: 'netvirt'
+    stream: 'sodium'
+    branch: 'stable/sodium'
+    testplan: '{project}-{topology}-openstack.txt'
+    odl-ml2-driver-version: 'v2'
+    enable-openstack-services: 'placement-api,tempest'
+    enable-openstack-compute-services: 'placement-client'
+    security-group-mode: 'stateful'
+    odl_system_flavor: odl-highcpu-8
+    openstack_system_flavor: odl-highcpu-8
+    openstack_system2_flavor: odl-highcpu-4
+    tools_system_count: 0
+    os-cmb-cnt: 0
+    os-ctl-cnt: 1
+    os-cmp-cnt: 2
+
+    topology:
+      - 1node:
+          openstack_system2_count: 2
+          odl_system_count: 1
+          enable-haproxy: 'no'
+          install-features: 'odl-netvirt-openstack'
+          robot-options: '-v FAIL_ON_EXCEPTIONS:True'
+      - 3node:
+          openstack_system2_count: 3
+          odl_system_count: 3
+          enable-haproxy: 'yes'
+          install-features: 'odl-jolokia,odl-netvirt-openstack'
+
+    functionality:
+      - upstream-stateful:
+          schedule: '{schedule-weekly}'
+      - upstream-stateful-itm-direct-tunnels:
+          enable-itm-direct-tunnels: 'true'
+          schedule: '{schedule-weekly}'
+      - upstream-stateful-snat-conntrack:
+          odl-snat-mode: 'conntrack'
+          schedule: '{schedule-weekly}'
+      - gate-stateful
+      - gate-stateful-itm-direct-tunnels:
+          enable-itm-direct-tunnels: 'true'
+      - gate-stateful-snat-conntrack:
+          odl-snat-mode: 'conntrack'
+      - gate-minimal-cluster:
+          testplan: '{project}-{topology}-minimal-openstack.txt'
+      - dcgw:
+          testplan: '{project}-{topology}-dcgw-openstack.txt'
+          schedule: '{schedule-weekly}'
+          tools_system_count: 3
+          enable-gre-type-driver: 'yes'
+      # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
+      - gate-tdd-wip:
+          testplan: '{project}-{topology}-tdd-wip-openstack.txt'
+          schedule: '{schedule-weekly}'
+          tools_system_count: 3
+          enable-gre-type-driver: 'yes'
+      - tempest-stateful:
+          test-suites: 'openstack/tempest/tempest.robot'
+          testplan: '{project}-{topology}-openstack-tempest.txt'
+          schedule: '{schedule-daily}'
+      - tempest-stateful-snat-conntrack:
+          test-suites: 'openstack/tempest/tempest.robot'
+          testplan: '{project}-{topology}-openstack-tempest.txt'
+          odl-snat-mode: 'conntrack'
+          schedule: '{schedule-daily}'
+      - gate-tempest-stateful:
+          test-suites: 'openstack/tempest/tempest.robot'
+          testplan: '{project}-{topology}-openstack-tempest.txt'
+      - gate-tempest-stateful-snat-conntrack:
+          test-suites: 'openstack/tempest/tempest.robot'
+          testplan: '{project}-{topology}-openstack-tempest.txt'
+          odl-snat-mode: 'conntrack'
+
+    openstack:
+      - rocky:
+          openstack-branch: 'stable/rocky'
+          odl-ml2-branch: 'stable/rocky'
+          odl-ml2-port-binding: 'pseudo-agentdb-binding'
+          openstack_system_image: '{openstack_rocky_system_image}'
+          openstack_system2_image: '{openstack_rocky_system_image}'
+
+- project:
+    name: netvirt-csit-openstack-integration-sodium-stein
     jobs:
       - inttest-csit-openstack-custom
 
@@ -252,21 +770,16 @@
           odl-snat-mode: 'conntrack'
 
     openstack:
-      - queens:
-          openstack-branch: 'stable/queens'
-          odl-ml2-branch: 'stable/queens'
+      - stein:
+          openstack-branch: 'stable/stein'
+          odl-ml2-branch: 'stable/stein'
           odl-ml2-port-binding: 'pseudo-agentdb-binding'
-          openstack_system_image: '{openstack_queens_system_image}'
-          openstack_system2_image: '{openstack_queens_system_image}'
-      - rocky:
-          openstack-branch: 'stable/rocky'
-          odl-ml2-branch: 'stable/rocky'
-          odl-ml2-port-binding: 'pseudo-agentdb-binding'
-          openstack_system_image: '{openstack_rocky_system_image}'
-          openstack_system2_image: '{openstack_rocky_system_image}'
+          openstack_system_image: '{openstack_stein_system_image}'
+          openstack_system2_image: '{openstack_stein_system_image}'
+
 
 - project:
-    name: netvirt-csit-1cmb-0ctl-0cmp-openstack-integration
+    name: netvirt-csit-1cmb-0ctl-0cmp-openstack-integration-queens
     jobs:
       - inttest-csit-openstack-custom
 
@@ -282,9 +795,6 @@
     os-cmp-cnt: 0
 
     stream:
-      - aluminium:
-          branch: 'master'
-          jre: 'openjdk11'
       - magnesium:
           branch: 'stable/magnesium'
           jre: 'openjdk11'
@@ -305,11 +815,14 @@
           install-features: 'odl-jolokia,odl-netvirt-openstack'
 
     functionality:
-      - upstream-stateful
+      - upstream-stateful:
+          schedule: '{schedule-weekly}'
       - upstream-stateful-itm-direct-tunnels:
           enable-itm-direct-tunnels: 'true'
+          schedule: '{schedule-weekly}'
       - upstream-stateful-snat-conntrack:
           odl-snat-mode: 'conntrack'
+          schedule: '{schedule-weekly}'
       - gate-stateful
       - gate-stateful-itm-direct-tunnels:
           enable-itm-direct-tunnels: 'true'
@@ -345,12 +858,417 @@
           odl-ml2-port-binding: 'pseudo-agentdb-binding'
           openstack_system_image: '{openstack_queens_system_image}'
           openstack_system2_image: '{openstack_queens_system_image}'
+          schedule: '{schedule-weekly}'
+
+- project:
+    name: netvirt-csit-1cmb-0ctl-0cmp-openstack-integration-queens-aluminium
+    jobs:
+      - inttest-csit-openstack-custom
+
+    project: 'netvirt'
+    testplan: '{project}-{topology}-openstack.txt'
+    odl-ml2-driver-version: 'v2'
+    enable-openstack-services: 'n-cpu,placement-api,tempest'
+    security-group-mode: 'stateful'
+    odl_system_flavor: odl-highcpu-8
+    openstack_system_flavor: odl-highcpu-8
+    os-cmb-cnt: 1
+    os-ctl-cnt: 0
+    os-cmp-cnt: 0
+
+    stream:
+      - aluminium:
+          branch: 'master'
+          jre: 'openjdk11'
+
+    topology:
+      - 1node:
+          openstack_system2_count: 0
+          odl_system_count: 1
+          enable-haproxy: 'no'
+          install-features: 'odl-netvirt-openstack'
+          robot-options: '-v FAIL_ON_EXCEPTIONS:True'
+      - 3node:
+          openstack_system2_count: 1
+          odl_system_count: 3
+          enable-haproxy: 'yes'
+          install-features: 'odl-jolokia,odl-netvirt-openstack'
+
+    functionality:
+      - upstream-stateful:
+          schedule: '{schedule-daily}'
+      - upstream-stateful-itm-direct-tunnels:
+          enable-itm-direct-tunnels: 'true'
+          schedule: '{schedule-daily}'
+      - upstream-stateful-snat-conntrack:
+          odl-snat-mode: 'conntrack'
+          schedule: '{schedule-daily}'
+      - gate-stateful
+      - gate-stateful-itm-direct-tunnels:
+          enable-itm-direct-tunnels: 'true'
+      - gate-stateful-snat-conntrack:
+          odl-snat-mode: 'conntrack'
+      - gate-minimal-cluster:
+          testplan: '{project}-{topology}-minimal-openstack.txt'
+      - dcgw:
+          testplan: '{project}-{topology}-dcgw-openstack.txt'
+          tools_system_count: 3
+          enable-gre-type-driver: 'yes'
+          schedule: '{schedule-daily}'
+      # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
+      - gate-tdd-wip:
+          testplan: '{project}-{topology}-tdd-wip-openstack.txt'
+          schedule: ''
+      - tempest-stateful:
+          test-suites: 'openstack/tempest/tempest.robot'
+          testplan: '{project}-{topology}-openstack-tempest.txt'
+          schedule: '{schedule-daily}'
+      - tempest-stateful-snat-conntrack:
+          test-suites: 'openstack/tempest/tempest.robot'
+          testplan: '{project}-{topology}-openstack-tempest.txt'
+          odl-snat-mode: 'conntrack'
+          schedule: '{schedule-daily}'
+      - gate-tempest-stateful:
+          test-suites: 'openstack/tempest/tempest.robot'
+          testplan: '{project}-{topology}-openstack-tempest.txt'
+      - gate-tempest-stateful-snat-conntrack:
+          test-suites: 'openstack/tempest/tempest.robot'
+          testplan: '{project}-{topology}-openstack-tempest.txt'
+          odl-snat-mode: 'conntrack'
+
+    openstack:
+      - queens:
+          openstack-branch: 'stable/queens'
+          odl-ml2-branch: 'stable/queens'
+          odl-ml2-port-binding: 'pseudo-agentdb-binding'
+          openstack_system_image: '{openstack_queens_system_image}'
+          openstack_system2_image: '{openstack_queens_system_image}'
+          schedule: '{schedule-weekly}'
+
+- project:
+    name: netvirt-csit-1cmb-0ctl-0cmp-openstack-integration-rocky
+    jobs:
+      - inttest-csit-openstack-custom
+
+    project: 'netvirt'
+    testplan: '{project}-{topology}-openstack.txt'
+    odl-ml2-driver-version: 'v2'
+    enable-openstack-services: 'n-cpu,placement-api,tempest'
+    security-group-mode: 'stateful'
+    odl_system_flavor: odl-highcpu-8
+    openstack_system_flavor: odl-highcpu-8
+    os-cmb-cnt: 1
+    os-ctl-cnt: 0
+    os-cmp-cnt: 0
+
+    stream:
+      - magnesium:
+          branch: 'stable/magnesium'
+          jre: 'openjdk11'
+      - sodium:
+          branch: 'stable/sodium'
+
+    topology:
+      - 1node:
+          openstack_system2_count: 0
+          odl_system_count: 1
+          enable-haproxy: 'no'
+          install-features: 'odl-netvirt-openstack'
+          robot-options: '-v FAIL_ON_EXCEPTIONS:True'
+      - 3node:
+          openstack_system2_count: 1
+          odl_system_count: 3
+          enable-haproxy: 'yes'
+          install-features: 'odl-jolokia,odl-netvirt-openstack'
+
+    functionality:
+      - upstream-stateful:
+          schedule: '{schedule-weekly}'
+      - upstream-stateful-itm-direct-tunnels:
+          enable-itm-direct-tunnels: 'true'
+          schedule: '{schedule-weekly}'
+      - upstream-stateful-snat-conntrack:
+          odl-snat-mode: 'conntrack'
+          schedule: '{schedule-weekly}'
+      - gate-stateful
+      - gate-stateful-itm-direct-tunnels:
+          enable-itm-direct-tunnels: 'true'
+      - gate-stateful-snat-conntrack:
+          odl-snat-mode: 'conntrack'
+      - gate-minimal-cluster:
+          testplan: '{project}-{topology}-minimal-openstack.txt'
+      # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
+      - gate-tdd-wip:
+          testplan: '{project}-{topology}-tdd-wip-openstack.txt'
+          schedule: ''
+      - tempest-stateful:
+          test-suites: 'openstack/tempest/tempest.robot'
+          testplan: '{project}-{topology}-openstack-tempest.txt'
+          schedule: '{schedule-daily}'
+      - tempest-stateful-snat-conntrack:
+          test-suites: 'openstack/tempest/tempest.robot'
+          testplan: '{project}-{topology}-openstack-tempest.txt'
+          odl-snat-mode: 'conntrack'
+          schedule: '{schedule-daily}'
+      - gate-tempest-stateful:
+          test-suites: 'openstack/tempest/tempest.robot'
+          testplan: '{project}-{topology}-openstack-tempest.txt'
+      - gate-tempest-stateful-snat-conntrack:
+          test-suites: 'openstack/tempest/tempest.robot'
+          testplan: '{project}-{topology}-openstack-tempest.txt'
+          odl-snat-mode: 'conntrack'
+
+    openstack:
       - rocky:
           openstack-branch: 'stable/rocky'
           odl-ml2-branch: 'stable/rocky'
           odl-ml2-port-binding: 'pseudo-agentdb-binding'
           openstack_system_image: '{openstack_rocky_system_image}'
           openstack_system2_image: '{openstack_rocky_system_image}'
+
+- project:
+    name: netvirt-csit-1cmb-0ctl-0cmp-openstack-integration-rocky-aluminium
+    jobs:
+      - inttest-csit-openstack-custom
+
+    project: 'netvirt'
+    testplan: '{project}-{topology}-openstack.txt'
+    odl-ml2-driver-version: 'v2'
+    enable-openstack-services: 'n-cpu,placement-api,tempest'
+    security-group-mode: 'stateful'
+    odl_system_flavor: odl-highcpu-8
+    openstack_system_flavor: odl-highcpu-8
+    os-cmb-cnt: 1
+    os-ctl-cnt: 0
+    os-cmp-cnt: 0
+
+    stream:
+      - aluminium:
+          branch: 'master'
+          jre: 'openjdk11'
+
+    topology:
+      - 1node:
+          openstack_system2_count: 0
+          odl_system_count: 1
+          enable-haproxy: 'no'
+          install-features: 'odl-netvirt-openstack'
+          robot-options: '-v FAIL_ON_EXCEPTIONS:True'
+      - 3node:
+          openstack_system2_count: 1
+          odl_system_count: 3
+          enable-haproxy: 'yes'
+          install-features: 'odl-jolokia,odl-netvirt-openstack'
+
+    functionality:
+      - upstream-stateful:
+          schedule: '{schedule-daily}'
+      - upstream-stateful-itm-direct-tunnels:
+          enable-itm-direct-tunnels: 'true'
+          schedule: '{schedule-daily}'
+      - upstream-stateful-snat-conntrack:
+          odl-snat-mode: 'conntrack'
+          schedule: '{schedule-daily}'
+      - gate-stateful
+      - gate-stateful-itm-direct-tunnels:
+          enable-itm-direct-tunnels: 'true'
+      - gate-stateful-snat-conntrack:
+          odl-snat-mode: 'conntrack'
+      - gate-minimal-cluster:
+          testplan: '{project}-{topology}-minimal-openstack.txt'
+      - dcgw:
+          testplan: '{project}-{topology}-dcgw-openstack.txt'
+          tools_system_count: 3
+          enable-gre-type-driver: 'yes'
+          schedule: '{schedule-daily}'
+      # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
+      - gate-tdd-wip:
+          testplan: '{project}-{topology}-tdd-wip-openstack.txt'
+          schedule: ''
+      - tempest-stateful:
+          test-suites: 'openstack/tempest/tempest.robot'
+          testplan: '{project}-{topology}-openstack-tempest.txt'
+          schedule: '{schedule-daily}'
+      - tempest-stateful-snat-conntrack:
+          test-suites: 'openstack/tempest/tempest.robot'
+          testplan: '{project}-{topology}-openstack-tempest.txt'
+          odl-snat-mode: 'conntrack'
+          schedule: '{schedule-daily}'
+      - gate-tempest-stateful:
+          test-suites: 'openstack/tempest/tempest.robot'
+          testplan: '{project}-{topology}-openstack-tempest.txt'
+      - gate-tempest-stateful-snat-conntrack:
+          test-suites: 'openstack/tempest/tempest.robot'
+          testplan: '{project}-{topology}-openstack-tempest.txt'
+          odl-snat-mode: 'conntrack'
+
+    openstack:
+      - rocky:
+          openstack-branch: 'stable/rocky'
+          odl-ml2-branch: 'stable/rocky'
+          odl-ml2-port-binding: 'pseudo-agentdb-binding'
+          openstack_system_image: '{openstack_rocky_system_image}'
+          openstack_system2_image: '{openstack_rocky_system_image}'
+
+- project:
+    name: netvirt-csit-1cmb-0ctl-0cmp-openstack-integration-stein
+    jobs:
+      - inttest-csit-openstack-custom
+
+    project: 'netvirt'
+    testplan: '{project}-{topology}-openstack.txt'
+    odl-ml2-driver-version: 'v2'
+    enable-openstack-services: 'n-cpu,placement-api,tempest'
+    security-group-mode: 'stateful'
+    odl_system_flavor: odl-highcpu-8
+    openstack_system_flavor: odl-highcpu-8
+    os-cmb-cnt: 1
+    os-ctl-cnt: 0
+    os-cmp-cnt: 0
+
+    stream:
+      - magnesium:
+          branch: 'stable/magnesium'
+          jre: 'openjdk11'
+      - sodium:
+          branch: 'stable/sodium'
+
+    topology:
+      - 1node:
+          openstack_system2_count: 0
+          odl_system_count: 1
+          enable-haproxy: 'no'
+          install-features: 'odl-netvirt-openstack'
+          robot-options: '-v FAIL_ON_EXCEPTIONS:True'
+      - 3node:
+          openstack_system2_count: 1
+          odl_system_count: 3
+          enable-haproxy: 'yes'
+          install-features: 'odl-jolokia,odl-netvirt-openstack'
+
+    functionality:
+      - upstream-stateful:
+          schedule: '{schedule-weekly}'
+      - upstream-stateful-itm-direct-tunnels:
+          enable-itm-direct-tunnels: 'true'
+          schedule: '{schedule-weekly}'
+      - upstream-stateful-snat-conntrack:
+          odl-snat-mode: 'conntrack'
+          schedule: '{schedule-weekly}'
+      - gate-stateful
+      - gate-stateful-itm-direct-tunnels:
+          enable-itm-direct-tunnels: 'true'
+      - gate-stateful-snat-conntrack:
+          odl-snat-mode: 'conntrack'
+      - gate-minimal-cluster:
+          testplan: '{project}-{topology}-minimal-openstack.txt'
+      # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
+      - gate-tdd-wip:
+          testplan: '{project}-{topology}-tdd-wip-openstack.txt'
+          schedule: ''
+      - tempest-stateful:
+          test-suites: 'openstack/tempest/tempest.robot'
+          testplan: '{project}-{topology}-openstack-tempest.txt'
+          schedule: '{schedule-daily}'
+      - tempest-stateful-snat-conntrack:
+          test-suites: 'openstack/tempest/tempest.robot'
+          testplan: '{project}-{topology}-openstack-tempest.txt'
+          odl-snat-mode: 'conntrack'
+          schedule: '{schedule-daily}'
+      - gate-tempest-stateful:
+          test-suites: 'openstack/tempest/tempest.robot'
+          testplan: '{project}-{topology}-openstack-tempest.txt'
+      - gate-tempest-stateful-snat-conntrack:
+          test-suites: 'openstack/tempest/tempest.robot'
+          testplan: '{project}-{topology}-openstack-tempest.txt'
+          odl-snat-mode: 'conntrack'
+
+    openstack:
+      - stein:
+          openstack-branch: 'stable/stein'
+          odl-ml2-branch: 'stable/stein'
+          odl-ml2-port-binding: 'pseudo-agentdb-binding'
+          openstack_system_image: '{openstack_stein_system_image}'
+          openstack_system2_image: '{openstack_stein_system_image}'
+
+
+- project:
+    name: netvirt-csit-1cmb-0ctl-0cmp-openstack-integration-stein-aluminium
+    jobs:
+      - inttest-csit-openstack-custom
+
+    project: 'netvirt'
+    testplan: '{project}-{topology}-openstack.txt'
+    odl-ml2-driver-version: 'v2'
+    enable-openstack-services: 'n-cpu,placement-api,tempest'
+    security-group-mode: 'stateful'
+    odl_system_flavor: odl-highcpu-8
+    openstack_system_flavor: odl-highcpu-8
+    os-cmb-cnt: 1
+    os-ctl-cnt: 0
+    os-cmp-cnt: 0
+
+    stream:
+      - aluminium:
+          branch: 'master'
+          jre: 'openjdk11'
+
+    topology:
+      - 1node:
+          openstack_system2_count: 0
+          odl_system_count: 1
+          enable-haproxy: 'no'
+          install-features: 'odl-netvirt-openstack'
+          robot-options: '-v FAIL_ON_EXCEPTIONS:True'
+      - 3node:
+          openstack_system2_count: 1
+          odl_system_count: 3
+          enable-haproxy: 'yes'
+          install-features: 'odl-jolokia,odl-netvirt-openstack'
+
+    functionality:
+      - upstream-stateful:
+          schedule: '{schedule-daily}'
+      - upstream-stateful-itm-direct-tunnels:
+          enable-itm-direct-tunnels: 'true'
+          schedule: '{schedule-daily}'
+      - upstream-stateful-snat-conntrack:
+          odl-snat-mode: 'conntrack'
+          schedule: '{schedule-daily}'
+      - gate-stateful
+      - gate-stateful-itm-direct-tunnels:
+          enable-itm-direct-tunnels: 'true'
+      - gate-stateful-snat-conntrack:
+          odl-snat-mode: 'conntrack'
+      - gate-minimal-cluster:
+          testplan: '{project}-{topology}-minimal-openstack.txt'
+      - dcgw:
+          testplan: '{project}-{topology}-dcgw-openstack.txt'
+          tools_system_count: 3
+          enable-gre-type-driver: 'yes'
+          schedule: '{schedule-daily}'
+      # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
+      - gate-tdd-wip:
+          testplan: '{project}-{topology}-tdd-wip-openstack.txt'
+          schedule: ''
+      - tempest-stateful:
+          test-suites: 'openstack/tempest/tempest.robot'
+          testplan: '{project}-{topology}-openstack-tempest.txt'
+          schedule: '{schedule-daily}'
+      - tempest-stateful-snat-conntrack:
+          test-suites: 'openstack/tempest/tempest.robot'
+          testplan: '{project}-{topology}-openstack-tempest.txt'
+          odl-snat-mode: 'conntrack'
+          schedule: '{schedule-daily}'
+      - gate-tempest-stateful:
+          test-suites: 'openstack/tempest/tempest.robot'
+          testplan: '{project}-{topology}-openstack-tempest.txt'
+      - gate-tempest-stateful-snat-conntrack:
+          test-suites: 'openstack/tempest/tempest.robot'
+          testplan: '{project}-{topology}-openstack-tempest.txt'
+          odl-snat-mode: 'conntrack'
+
+    openstack:
       - stein:
           openstack-branch: 'stable/stein'
           odl-ml2-branch: 'stable/stein'
