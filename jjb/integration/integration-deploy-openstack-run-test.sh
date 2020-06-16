@@ -97,6 +97,8 @@ function install_openstack_clients_in_robot_vm() {
        wget "https://raw.githubusercontent.com/openstack/requirements/stable/${openstack_version}/upper-constraints.txt" -O /tmp/constraints.txt 2>/dev/null
        #python openstackclient version in rocky contradicts with version in global-jjb and stops openstackclient installation in rocky. Will be removed based on version change in global-jjb.
        sed -i s/python-openstackclient===3.16.2/python-openstackclient===3.14.0/ /tmp/constraints.txt
+       #Python uwsgi 2.0.19 is having errors, forcing it to pick 2.0.18
+       sed -i '1 auwsgi===2.0.18' /tmp/constraints.txt
        echo "$PYTHON -m pip install --upgrade --no-deps ${package} --no-cache-dir -c /tmp/constraints.txt"
        $PYTHON -m pip install --upgrade --no-deps "${package}" --no-cache-dir -c /tmp/constraints.txt
        echo "$PYTHON -m pip install ${package} --no-cache-dir -c /tmp/constraints.txt"
@@ -149,6 +151,7 @@ EOF
 #The libvirt-python 3.10 does not support all the new API exposed
 #This fix will force devstack to use latest libvirt-python
 #from pypi.org (latest version as of 06-Dec-2018)
+#Python uwsgi 2.0.19 is having errors, forcing it to pick 2.0.18
 function fix_libvirt_python_build() {
     local ip=$1
     ${SSH} "${ip}" "
@@ -157,6 +160,7 @@ function fix_libvirt_python_build() {
         cd requirements;
         git checkout ${ODL_ML2_BRANCH};
         sed -i s/libvirt-python===3.10.0/libvirt-python===4.10.0/ upper-constraints.txt
+        sed -i '1 auwsgi===2.0.18' upper-constraints.txt
         "
 }
 
