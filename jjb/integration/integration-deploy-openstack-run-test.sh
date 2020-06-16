@@ -157,6 +157,7 @@ function fix_libvirt_python_build() {
         cd requirements;
         git checkout ${ODL_ML2_BRANCH};
         sed -i s/libvirt-python===3.10.0/libvirt-python===4.10.0/ upper-constraints.txt
+        sed -i '1 auwsgi===2.0.18' upper-constraints.txt
         "
 }
 
