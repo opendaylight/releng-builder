@@ -97,6 +97,8 @@ function install_openstack_clients_in_robot_vm() {
        wget "https://raw.githubusercontent.com/openstack/requirements/stable/${openstack_version}/upper-constraints.txt" -O /tmp/constraints.txt 2>/dev/null
        #python openstackclient version in rocky contradicts with version in global-jjb and stops openstackclient installation in rocky. Will be removed based on version change in global-jjb.
        sed -i s/python-openstackclient===3.16.2/python-openstackclient===3.14.0/ /tmp/constraints.txt
+       #Python uwsgi 2.0.19 is having errors, forcing it to pick 2.0.18
+       sed -i '1 auwsgi===2.0.18' /tmp/constraints.txt
        echo "$PYTHON -m pip install --upgrade --no-deps ${package} --no-cache-dir -c /tmp/constraints.txt"
        $PYTHON -m pip install --upgrade --no-deps "${package}" --no-cache-dir -c /tmp/constraints.txt
        echo "$PYTHON -m pip install ${package} --no-cache-dir -c /tmp/constraints.txt"
@@ -145,11 +147,14 @@ EOF
     ssh "${control_ip}" "bash /tmp/setup_live_migration_control.sh"
 }
 
+#Fix for broken requirements versions while bringing up the stack.
 #Fix Problem caused due to new libvirt version in CentOS repo.
 #The libvirt-python 3.10 does not support all the new API exposed
 #This fix will force devstack to use latest libvirt-python
 #from pypi.org (latest version as of 06-Dec-2018)
-function fix_libvirt_python_build() {
+#Python uwsgi 2.0.19 is having errors, forcing it to pick 2.0.18
+#more info: https://lists.opendaylight.org/g/app-dev/topic/netvirt_jobs_are_failing_with/74897077
+function fix_broken_requirements_versions() {
     local ip=$1
     ${SSH} "${ip}" "
         cd /opt/stack;
@@ -157,6 +162,7 @@ function fix_libvirt_python_build() {
         cd requirements;
         git checkout ${ODL_ML2_BRANCH};
         sed -i s/libvirt-python===3.10.0/libvirt-python===4.10.0/ upper-constraints.txt
+        sed -i '1 auwsgi===2.0.18' upper-constraints.txt
         "
 }
 
@@ -856,7 +862,7 @@ for i in $(seq 1 "${NUM_OPENSTACK_CONTROL_NODES}"); do
         # but in the meantime do it ourselves
         ssh "${!CONTROLIP}" "sudo ovs-vsctl set Open_vSwitch . external_ids:of-tunnel=true"
     fi
-    fix_libvirt_python_build "${!CONTROLIP}"
+    fix_broken_requirements_versions "${!CONTROLIP}"
     echo "Stack the control node ${i} of ${NUM_OPENSTACK_CONTROL_NODES}: ${CONTROLIP}"
     # Workaround: fixing boneheaded polkit issue, to be removed later
     ssh "${!CONTROLIP}" "sudo bash -c 'echo deltarpm=0 >> /etc/yum.conf && yum -y update polkit'"
@@ -915,7 +921,7 @@ for i in $(seq 1 "${NUM_OPENSTACK_COMPUTE_NODES}"); do
         # but in the meantime do it ourselves
         ssh "${!COMPUTEIP}" "sudo ovs-vsctl set Open_vSwitch . external_ids:of-tunnel=true"
     fi
-    fix_libvirt_python_build "${!COMPUTEIP}"
+    fix_broken_requirements_versions "${!COMPUTEIP}"
     echo "Stack the compute node ${i} of ${NUM_OPENSTACK_COMPUTE_NODES}: ${!COMPUTEIP}"
     ssh "${!COMPUTEIP}" "cd /opt/stack/devstack; nohup ./stack.sh > /opt/stack/devstack/nohup.out 2>&1 &"
     ssh "${!COMPUTEIP}" "ps -ef | grep stack.sh"
