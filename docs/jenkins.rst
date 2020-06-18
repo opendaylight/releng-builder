@@ -260,8 +260,8 @@ Pool: ODLVEX
           prd-centos7-autorelease-4c-16g
         <td><b>Packer Template</b><br/>
         releng/builder/packer/templates/builder.json</td>
-        <td><b>Spinup Script</b><br/>
-        releng/builder/jenkins-scripts/builder.sh</td>
+        <td><b>Playbook</b><br/>
+        releng/builder/packer/common-packer/provision/baseline.yaml</td>
       </tr>
       <tr>
         <td colspan="4">
@@ -278,7 +278,7 @@ Pool: ODLVEX
         <td><b>Minion Template names</b><br/> centos7-robot-2c-2g</td>
         <td><b>Packer Template</b><br/>
         releng/builder/packer/templates/robot.json</td>
-        <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/robot.sh</td>
+        <td><b>Playbook</b><br/> releng/builder/packer/provision/robot.yaml</td>
       </tr>
       <tr>
         <td colspan="4">
@@ -295,7 +295,7 @@ Pool: ODLVEX
         <td><b>Jenkins Labels</b><br/> ubuntu1604-mininet-ovs-25-2c-2g</td>
         <td><b>Minion Template names</b><br/> ubuntu1604-mininet-ovs-25-2c-2g</td>
         <td><b>Packer Template</b><br/> releng/builder/packer/templates/mininet-ovs-2.5.json</td>
-        <td><b>Script</b><br/> releng/builder/packer/provision//mininet-ovs-2.5.yaml</td>
+        <td><b>Playbook</b><br/> releng/builder/packer/provision//mininet-ovs-2.5.yaml</td>
       </tr>
       <tr>
         <td colspan="4">
@@ -331,7 +331,7 @@ Pool: ODLVEX
         <td><b>Jenkins Labels</b><br/> centos7-devstack-2c-4g</td>
         <td><b>Minion Template names</b><br/> centos7-devstack-2c-4g</td>
         <td><b>Packer Template</b><br/> releng/builder/packer/templates/devstack.json</td>
-        <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/devstack.sh</td>
+        <td><b>Playbook</b><br/> releng/builder/packer/provision/devstack.yaml</td>
       </tr>
       <tr>
         <td colspan="4">
@@ -346,7 +346,7 @@ Pool: ODLVEX
         <td><b>Jenkins Labels</b><br/> centos7-docker-2c-4g</td>
         <td><b>Minion Template names</b><br/> centos7-docker-2c-4g</td>
         <td><b>Packer Template</b><br/> releng/builder/packer/templates/docker.json</td>
-        <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/docker.sh</td>
+        <td><b>Playbook</b><br/> releng/builder/packer/common-packer/provision/docker.yaml</td>
       </tr>
       <tr>
         <td colspan="4">
