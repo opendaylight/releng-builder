@@ -347,22 +347,10 @@ Pool: ODLVEX
       </tr>
 
       <tr class="warning">
-        <td><b>Jenkins Labels</b><br/> ubuntu1404-gbp-2c-2g</td>
-        <td><b>Minion Template names</b><br/> ubuntu1404-gbp-2c-2g</td>
+        <td><b>Jenkins Labels</b><br/> ubuntu1604-gbp-2c-2g</td>
+        <td><b>Minion Template names</b><br/> ubuntu1604-gbp-2c-2g</td>
         <td><b>Packer Template</b><br/> releng/builder/packer/templates/gbp.json</td>
-        <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/ubuntu-docker-ovs.sh</td>
-      </tr>
-      <tr>
-        <td colspan="4">
-          Ubuntu 14.04 (Trusty) node with latest OVS and docker installed. Used by Group Based Policy.
-        </td>
-      </tr>
-
-      <tr class="warning">
-        <td><b>Jenkins Labels</b><br/> ubuntu1604-gbp-2c-4g</td>
-        <td><b>Minion Template names</b><br/> ubuntu1604-gbp-2c-4g</td>
-        <td><b>Packer Template</b><br/> releng/builder/packer/templates/gbp.json</td>
-        <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/ubuntu-docker-ovs.sh</td>
+        <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/gpb.sh</td>
       </tr>
       <tr>
         <td colspan="4">
