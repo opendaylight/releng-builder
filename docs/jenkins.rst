@@ -292,27 +292,38 @@ Pool: ODLVEX
       </tr>
 
       <tr class="warning">
-        <td><b>Jenkins Labels</b><br/> ubuntu1404-mininet-2c-2g</td>
-        <td><b>Minion Template names</b><br/> ubuntu1404-mininet-2c-2g</td>
-        <td><b>Packer Template</b><br/>
-        releng/builder/packer/teamplates/mininet.json</td>
-        <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/mininet-ubuntu.sh</td>
+        <td><b>Jenkins Labels</b><br/> ubuntu1604-mininet-ovs-25-2c-2g</td>
+        <td><b>Minion Template names</b><br/> ubuntu1604-mininet-ovs-25-2c-2g</td>
+        <td><b>Packer Template</b><br/> releng/builder/packer/templates/mininet-ovs-2.5.json</td>
+        <td><b>Script</b><br/> releng/builder/packer/provision//mininet-ovs-2.5.yaml</td>
       </tr>
       <tr>
         <td colspan="4">
-          Basic Ubuntu 14.04 (Trusty) system with ovs 2.0.2 and mininet 2.1.0
+          Basic Ubuntu 16.04 (Xenial) system with ovs 2.5 and mininet 2.2.1
         </td>
       </tr>
 
       <tr class="warning">
-        <td><b>Jenkins Labels</b><br/> ubuntu1404-mininet-ovs-23-2c-2g</td>
-        <td><b>Minion Template names</b><br/> ubuntu1404-mininet-ovs-23-2c-2g</td>
-        <td><b>Packer Template</b><br/> releng/builder/packer/templates/mininet-ovs-2.3.json</td>
-        <td><b>Spinup Script</b><br/> releng/builder/jenkins-scripts/mininet-ubuntu.sh</td>
+        <td><b>Jenkins Labels</b><br/> ubuntu1604-mininet-ovs-26-2c-2g</td>
+        <td><b>Minion Template names</b><br/> ubuntu1604-mininet-ovs-26-2c-2g</td>
+        <td><b>Packer Template</b><br/> releng/builder/packer/templates/mininet-ovs-2.6.json</td>
+        <td><b>Playbook</b><br/> releng/builder/packer/provision//mininet-ovs-2.6.yaml</td>
       </tr>
       <tr>
         <td colspan="4">
-          Ubuntu 16.04 (Xenial) system with ovs 2.5 and mininet 2.2.1
+          Ubuntu 16.04 (Xenial) system with ovs 2.6 and mininet 2.2.1
+        </td>
+      </tr>
+
+      <tr class="warning">
+        <td><b>Jenkins Labels</b><br/> ubuntu1604-mininet-ovs-28-2c-2g</td>
+        <td><b>Minion Template names</b><br/> ubuntu1604-mininet-ovs-28-2c-2g</td>
+        <td><b>Packer Template</b><br/> releng/builder/packer/templates/mininet-ovs-2.8.json</td>
+        <td><b>Playbook</b><br/> releng/builder/packer/provision//mininet-ovs-2.8.yaml</td>
+      </tr>
+      <tr>
+        <td colspan="4">
+          Ubuntu 16.04 (Xenial) system with ovs 2.8 and mininet 2.2.1
         </td>
       </tr>
 
