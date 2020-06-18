@@ -35,14 +35,11 @@
           install-features: 'odl-jolokia,odl-netvirt-openstack'
 
     functionality:
-      - upstream-stateful:
-          schedule: '{schedule-daily}'
+      - upstream-stateful
       - upstream-stateful-itm-direct-tunnels:
           enable-itm-direct-tunnels: 'true'
-          schedule: '{schedule-daily}'
       - upstream-stateful-snat-conntrack:
           odl-snat-mode: 'conntrack'
-          schedule: '{schedule-daily}'
       - gate-stateful
       - gate-stateful-itm-direct-tunnels:
           enable-itm-direct-tunnels: 'true'
@@ -54,7 +51,6 @@
           testplan: '{project}-{topology}-dcgw-openstack.txt'
           tools_system_count: 3
           enable-gre-type-driver: 'yes'
-          schedule: '{schedule-daily}'
       # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
       - gate-tdd-wip:
           testplan: '{project}-{topology}-tdd-wip-openstack.txt'
@@ -122,14 +118,11 @@
           install-features: 'odl-jolokia,odl-netvirt-openstack'
 
     functionality:
-      - upstream-stateful:
-          schedule: '{schedule-daily}'
+      - upstream-stateful
       - upstream-stateful-itm-direct-tunnels:
           enable-itm-direct-tunnels: 'true'
-          schedule: '{schedule-daily}'
       - upstream-stateful-snat-conntrack:
           odl-snat-mode: 'conntrack'
-          schedule: '{schedule-daily}'
       - gate-stateful
       - gate-stateful-itm-direct-tunnels:
           enable-itm-direct-tunnels: 'true'
@@ -141,7 +134,6 @@
           testplan: '{project}-{topology}-dcgw-openstack.txt'
           tools_system_count: 3
           enable-gre-type-driver: 'yes'
-          schedule: '{schedule-daily}'
       # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
       - gate-tdd-wip:
           testplan: '{project}-{topology}-tdd-wip-openstack.txt'
@@ -209,14 +201,11 @@
           install-features: 'odl-jolokia,odl-netvirt-openstack'
 
     functionality:
-      - upstream-stateful:
-          schedule: '{schedule-daily}'
+      - upstream-stateful
       - upstream-stateful-itm-direct-tunnels:
           enable-itm-direct-tunnels: 'true'
-          schedule: '{schedule-daily}'
       - upstream-stateful-snat-conntrack:
           odl-snat-mode: 'conntrack'
-          schedule: '{schedule-daily}'
       - gate-stateful
       - gate-stateful-itm-direct-tunnels:
           enable-itm-direct-tunnels: 'true'
@@ -228,7 +217,6 @@
           testplan: '{project}-{topology}-dcgw-openstack.txt'
           tools_system_count: 3
           enable-gre-type-driver: 'yes'
-          schedule: '{schedule-daily}'
       # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
       - gate-tdd-wip:
           testplan: '{project}-{topology}-tdd-wip-openstack.txt'
@@ -296,14 +284,11 @@
           install-features: 'odl-jolokia,odl-netvirt-openstack'
 
     functionality:
-      - upstream-stateful:
-          schedule: '{schedule-daily}'
+      - upstream-stateful
       - upstream-stateful-itm-direct-tunnels:
           enable-itm-direct-tunnels: 'true'
-          schedule: '{schedule-daily}'
       - upstream-stateful-snat-conntrack:
           odl-snat-mode: 'conntrack'
-          schedule: '{schedule-daily}'
       - gate-stateful
       - gate-stateful-itm-direct-tunnels:
           enable-itm-direct-tunnels: 'true'
@@ -313,7 +298,6 @@
           testplan: '{project}-{topology}-minimal-openstack.txt'
       - dcgw:
           testplan: '{project}-{topology}-dcgw-openstack.txt'
-          schedule: '{schedule-daily}'
           tools_system_count: 3
           enable-gre-type-driver: 'yes'
       # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
@@ -383,14 +367,11 @@
           install-features: 'odl-jolokia,odl-netvirt-openstack'
 
     functionality:
-      - upstream-stateful:
-          schedule: '{schedule-daily}'
+      - upstream-stateful
       - upstream-stateful-itm-direct-tunnels:
           enable-itm-direct-tunnels: 'true'
-          schedule: '{schedule-daily}'
       - upstream-stateful-snat-conntrack:
           odl-snat-mode: 'conntrack'
-          schedule: '{schedule-daily}'
       - gate-stateful
       - gate-stateful-itm-direct-tunnels:
           enable-itm-direct-tunnels: 'true'
@@ -400,7 +381,6 @@
           testplan: '{project}-{topology}-minimal-openstack.txt'
       - dcgw:
           testplan: '{project}-{topology}-dcgw-openstack.txt'
-          schedule: '{schedule-daily}'
           tools_system_count: 3
           enable-gre-type-driver: 'yes'
       # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
