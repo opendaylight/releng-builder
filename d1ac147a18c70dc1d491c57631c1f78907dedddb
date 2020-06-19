@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "58c51e3f_737ae1fa",
+        "filename": "jjb/integration/integration-install-robotframework.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2020-06-19T14:38:33Z",
+      "side": 1,
+      "message": "Yep agree with this suggestion here. Let\u0027s default to Python 3.",
+      "parentUuid": "99f63259_f8b91f73",
+      "revId": "d1ac147a18c70dc1d491c57631c1f78907dedddb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3b78c3b7_879e4fa6",
         "filename": "jjb/integration/integration-install-robotframework.sh",
         "patchSetId": 2
@@ -81,6 +99,41 @@
       "writtenOn": "2020-06-19T11:43:39Z",
       "side": 1,
       "message": "We may need to get rid of --user in these 4 installs, because the lftools and soem other dependencies are reporting errors",
+      "revId": "d1ac147a18c70dc1d491c57631c1f78907dedddb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fe55466_49117b83",
+        "filename": "jjb/integration/integration-install-robotframework.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2020-06-19T14:38:33Z",
+      "side": 1,
+      "message": "If I recall this was to work around dual support for Python 2 and Python 3. If we decide to stick to only Python 3 then ensuring we merge this with what\u0027s above and drop all the --user stuff.",
+      "parentUuid": "66cfcbd5_cbbea549",
+      "revId": "d1ac147a18c70dc1d491c57631c1f78907dedddb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "370c1704_0458412a",
+        "filename": "jjb/integration/integration-install-robotframework.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2020-06-19T14:38:33Z",
+      "side": 1,
+      "message": "This isn\u0027t needed if we follow Venkat\u0027s Python3 virtualenv suggestion.",
       "revId": "d1ac147a18c70dc1d491c57631c1f78907dedddb",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": true
