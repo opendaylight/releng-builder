@@ -25,31 +25,30 @@ set -exu
 pip install --upgrade pip
 python3 -m pip install --user --upgrade pip
 
-pip install --upgrade docker-py importlib requests scapy netifaces netaddr ipaddr pyhocon
-pip install --upgrade robotframework-httplibrary \
+python3 -m pip install --upgrade docker-py importlib requests scapy netifaces netaddr ipaddr pyhocon
+python3 -m pip install --upgrade robotframework-httplibrary \
     requests==2.15.1 \
     robotframework-requests \
     robotframework-sshlibrary==3.1.1 \
     robotframework-selenium2library \
-    robotframework-pycurllibrary
 
 # Module jsonpath is needed by current AAA idmlite suite.
 pip install --upgrade jsonpath-rw
 
 # Modules for longevity framework robot library
-pip install --upgrade elasticsearch==1.7.0 elasticsearch-dsl==0.0.11
+python3 -m pip install --upgrade elasticsearch==1.7.0 elasticsearch-dsl==0.0.11
 
 # Module for pyangbind used by lispflowmapping project
-pip install --upgrade pyangbind
+python3 -m pip install --upgrade pyangbind
 
 # Module for iso8601 datetime format
-pip install --upgrade isodate
+python3 -m pip install --upgrade isodate
 
 # Module for TemplatedRequests.robot library
-pip install --upgrade jmespath
+python3 -m pip install --upgrade jmespath
 
 # Module for backup-restore support library
-pip install --upgrade jsonpatch
+python3 -m pip install --upgrade jsonpatch
 
 #Module for elasticsearch python client
 #Module for elasticsearch python client
@@ -59,7 +58,7 @@ python3 -m pip install --user elasticsearch==6.2.0
 python3 -m pip install --user PyYAML==3.11
 
 # odltools for extra debugging
-pip install odltools
+python3 -m pip install odltools
 odltools -V
 
 # Print installed versions.
