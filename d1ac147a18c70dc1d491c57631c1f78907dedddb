@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ccf4c24_a7e7acfb",
+        "filename": "jjb/integration/integration-deploy-controller-run-test.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 7779
+      },
+      "writtenOn": "2020-06-19T11:43:39Z",
+      "side": 1,
+      "message": "Not needed, if the coments in install-robotframework is addressed",
+      "revId": "d1ac147a18c70dc1d491c57631c1f78907dedddb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3de248f4_90a9f2d5",
+        "filename": "jjb/integration/integration-deploy-openstack-run-test.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 1157,
+      "author": {
+        "id": 7779
+      },
+      "writtenOn": "2020-06-19T11:43:39Z",
+      "side": 1,
+      "message": "Not needed if virtualenv is invoked correctly.",
+      "revId": "d1ac147a18c70dc1d491c57631c1f78907dedddb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99f63259_f8b91f73",
+        "filename": "jjb/integration/integration-install-robotframework.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 7779
+      },
+      "writtenOn": "2020-06-19T11:43:39Z",
+      "side": 1,
+      "message": "The above line should be replaced by virtualenv -p python3, that will make the rest of changes (python3 -m) as not needed",
+      "revId": "d1ac147a18c70dc1d491c57631c1f78907dedddb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b78c3b7_879e4fa6",
+        "filename": "jjb/integration/integration-install-robotframework.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 7779
+      },
+      "writtenOn": "2020-06-19T11:43:39Z",
+      "side": 1,
+      "message": "removeing robotframework-pycurllibrary is valid",
+      "revId": "d1ac147a18c70dc1d491c57631c1f78907dedddb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66cfcbd5_cbbea549",
+        "filename": "jjb/integration/integration-install-robotframework.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 7779
+      },
+      "writtenOn": "2020-06-19T11:43:39Z",
+      "side": 1,
+      "message": "We may need to get rid of --user in these 4 installs, because the lftools and soem other dependencies are reporting errors",
+      "revId": "d1ac147a18c70dc1d491c57631c1f78907dedddb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    }
+  ]
+}
