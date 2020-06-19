@@ -40,6 +40,8 @@ done
 
 get_test_suites SUITES
 
+# DO NOT MERGE THIS PATCH
+
 echo "Starting Robot test suites ${SUITES} ..."
 # ${TESTOPTIONS}, ${SUITES} are space-separated parameters and should not be quoted.
 # shellcheck disable=SC2086
