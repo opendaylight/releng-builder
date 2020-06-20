@@ -5,7 +5,7 @@
 #
 # All rights reserved. This program and the accompanying materials
 # are made available under the terms of the Eclipse Public License v1.0
-# which accompanies this distribution, and is available at
+# whichG accompanies this distribution, and is available at
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
 
@@ -56,5 +56,9 @@ odltools -V
 
 # Print installed versions.
 pip freeze
+#Workaround for python3- httplib not updated 
+#ToDO replace this library
+2to3 ${ROBOT_VENV}/lib/python3.5/site-packages/HttpLibrary/__init__.py -w
+2to3 ${ROBOT_VENV}/lib/python3.5/site-packages/HttpLibrary/livetest.py -w
 
 # vim: sw=4 ts=4 sts=4 et ft=sh :
