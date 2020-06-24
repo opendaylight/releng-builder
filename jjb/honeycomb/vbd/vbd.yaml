@@ -32,6 +32,15 @@
     sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
 
 - project:
+    name: vbd-info
+    jobs:
+      - gerrit-info-yaml-verify
+    project: honeycomb/vbd
+    project-name: vbd
+    branch: master
+    build-node: centos7-builder-2c-1g
+
+- project:
     name: vbd-view
     views:
       - project-view
