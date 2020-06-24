@@ -64,6 +64,15 @@
     mvn-settings: 'archetypes-settings'
 
 - project:
+    name: archetypes-info
+    jobs:
+      - gerrit-info-yaml-verify
+    project: archetypes
+    project-name: archetypes
+    branch: master
+    build-node: centos7-builder-2c-1g
+
+- project:
     name: archetypes-view
     views:
       - project-view
