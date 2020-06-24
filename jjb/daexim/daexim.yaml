@@ -90,6 +90,15 @@
     sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
 
 - project:
+    name: daexim-info
+    jobs:
+      - gerrit-info-yaml-verify
+    project: daexim
+    project-name: daexim
+    branch: master
+    build-node: centos7-builder-2c-1g
+
+- project:
     name: daexim-view
     views:
       - project-view
