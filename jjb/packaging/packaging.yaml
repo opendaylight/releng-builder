@@ -563,6 +563,15 @@
       - lf-infra-publish
 
 - project:
+    jobs:
+      name: packaging-info
+      - gerrit-info-yaml-verify
+    project: packaging
+    project-name: packaging
+    branch: master
+    build-node: centos7-builder-2c-1g
+
+- project:
     name: packaging-view
     views:
       - project-view
