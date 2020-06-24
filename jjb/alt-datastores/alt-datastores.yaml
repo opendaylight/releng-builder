@@ -87,6 +87,15 @@
     mvn-opts: '-Xmx1024m'
 
 - project:
+    name: alt-datastores-info
+    jobs:
+      - gerrit-info-yaml-verify
+    project: alt-datastores
+    project-name: alt-datastores
+    branch: master
+    build-node: centos7-builder-2c-1g
+
+- project:
     name: alt-datastores-view
     views:
       - project-view
