@@ -88,6 +88,15 @@
     mvn-opts: '-Xmx1024m'
 
 - project:
+    name: telemetry-info
+    jobs:
+      - gerrit-info-yaml-verify
+    project: telemetry
+    project-name: telemetry
+    branch: master
+    build-node: centos7-builder-2c-1g
+
+- project:
     name: telemetry-view
     views:
       - project-view
