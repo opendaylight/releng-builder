@@ -77,6 +77,15 @@
     disable-job: true
 
 - project:
+    name: bier-info
+    jobs:
+      - gerrit-info-yaml-verify
+    project: bier
+    project-name: bier
+    branch: master
+    build-node: centos7-builder-2c-1g
+
+- project:
     name: bier-view
     views:
       - project-view
