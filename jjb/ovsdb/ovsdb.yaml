@@ -89,6 +89,15 @@
     staging-profile-id: a68b188166958
 
 - project:
+    name: ovsdb-info
+    jobs:
+      - gerrit-info-yaml-verify
+    project: ovsdb
+    project-name: ovsdb
+    branch: master
+    build-node: centos7-builder-2c-1g
+
+- project:
     name: ovsdb-view
     views:
       - project-view
