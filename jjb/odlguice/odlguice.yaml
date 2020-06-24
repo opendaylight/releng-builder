@@ -21,6 +21,15 @@
     staging-profile-id: 44ce7d1aad49e
 
 - project:
+    name: odlguice-info
+    jobs:
+      - gerrit-info-yaml-verify
+    project: odlguice
+    project-name: odlguice
+    branch: master
+    build-node: centos7-builder-2c-1g
+
+- project:
     name: odlguice-view
     views:
       - project-view
