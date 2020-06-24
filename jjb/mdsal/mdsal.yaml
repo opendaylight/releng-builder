@@ -122,6 +122,15 @@
     sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
 
 - project:
+    name: mdsal-info
+    jobs:
+      - gerrit-info-yaml-verify
+    project: mdsal
+    project-name: mdsal
+    branch: master
+    build-node: centos7-builder-2c-1g
+
+- project:
     name: mdsal-view
     views:
       - project-view
