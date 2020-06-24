@@ -89,6 +89,15 @@
     mvn-opts: '-Xmx2048m -Dmaven.compile.fork=true'
 
 - project:
+    name: sfc-info
+    jobs:
+      - gerrit-info-yaml-verify
+    project: sfc
+    project-name: sfc
+    branch: master
+    build-node: centos7-builder-2c-1g
+
+- project:
     name: sfc-view
     views:
       - project-view
