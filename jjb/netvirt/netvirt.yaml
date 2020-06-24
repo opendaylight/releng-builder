@@ -138,6 +138,14 @@
     view-regex: 'netvirt-csit(?!(.*gate)|(.*hwvtep)).*'
 
 - project:
+    name: netvirt
+    jobs:
+      - gerrit-info-yaml-verify
+    project: netvirt
+    project-name: netvirt-info
+    build-node: centos7-builder-2c-1g
+
+- project:
     name: netvirt-view
     views:
       - project-view
