@@ -104,6 +104,15 @@
     sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
 
 - project:
+    name: controller-info
+    jobs:
+      - gerrit-info-yaml-verify
+    project: controller
+    project-name: controller
+    branch: master
+    build-node: centos7-builder-2c-1g
+
+- project:
     name: controller-view
     views:
       - project-view
