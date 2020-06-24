@@ -80,6 +80,15 @@
     sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
 
 - project:
+    name: neutron-info
+    jobs:
+      - gerrit-info-yaml-verify
+    project: neutron
+    project-name: neutron
+    branch: master
+    build-node: centos7-builder-2c-1g
+
+- project:
     name: neutron-view
     views:
       - project-view
