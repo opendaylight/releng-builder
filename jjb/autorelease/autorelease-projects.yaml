@@ -79,6 +79,15 @@
     java-version: 'openjdk11'
 
 - project:
+    name: autorelease-info
+    jobs:
+      - gerrit-info-yaml-verify
+    project: releng/autorelease
+    project-name: autorelease
+    branch: master
+    build-node: centos7-builder-2c-1g
+
+- project:
     name: autorelease-view
     views:
       - project-view
