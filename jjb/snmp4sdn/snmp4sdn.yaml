@@ -85,6 +85,15 @@
     sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
 
 - project:
+    name: snmp4sdn-info
+    jobs:
+      - gerrit-info-yaml-verify
+    project: snmp4sdn
+    project-name: snmp4sdn
+    branch: master
+    build-node: centos7-builder-2c-1g
+
+- project:
     name: snmp4sdn-view
     views:
       - project-view
