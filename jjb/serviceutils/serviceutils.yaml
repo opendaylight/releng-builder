@@ -115,6 +115,15 @@
     sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
 
 - project:
+    name: serviceutils-info
+    jobs:
+      - gerrit-info-yaml-verify
+    project: serviceutils
+    project-name: serviceutils
+    branch: master
+    build-node: centos7-builder-2c-1g
+
+- project:
     name: serviceutils-view
     views:
       - project-view
