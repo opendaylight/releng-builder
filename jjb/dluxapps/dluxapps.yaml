@@ -77,6 +77,15 @@
     sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
 
 - project:
+    name: dluxapps-info
+    jobs:
+      - gerrit-info-yaml-verify
+    project: dluxapps
+    project-name: dluxapps
+    branch: master
+    build-node: centos7-builder-2c-1g
+
+- project:
     name: dluxapps-view
     views:
       - project-view
