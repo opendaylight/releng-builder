@@ -65,6 +65,15 @@
     mvn-opts: '-Xmx1024m'
 
 - project:
+    name: detnet-info
+    jobs:
+      - gerrit-info-yaml-verify
+    project: detnet
+    project-name: detnet
+    branch: master
+    build-node: centos7-builder-2c-1g
+
+- project:
     name: detnet-view
     views:
       - project-view
