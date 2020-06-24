@@ -105,6 +105,15 @@
     sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
 
 - project:
+    name: netconf-info
+    jobs:
+      - gerrit-info-yaml-verify
+    project: netconf
+    project-name: netconf
+    branch: master
+    build-node: centos7-builder-2c-1g
+
+- project:
     name: netconf-view
     views:
       - project-view
