@@ -73,6 +73,15 @@
     sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
 
 - project:
+    jobs:
+      name: usc-info
+      - gerrit-info-yaml-verify
+    project: usc
+    project-name: usc
+    branch: master
+    build-node: centos7-builder-2c-1g
+
+- project:
     name: usc-view
     views:
       - project-view
