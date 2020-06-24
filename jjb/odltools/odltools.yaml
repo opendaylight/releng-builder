@@ -26,6 +26,15 @@
     mvn-settings: 'odltools-settings'
 
 - project:
+    name: odltools-info
+    jobs:
+      - gerrit-info-yaml-verify
+    project: odltools
+    project-name: odltools
+    branch: master
+    build-node: centos7-builder-2c-1g
+
+- project:
     name: odltools-view
     views:
       - project-view
