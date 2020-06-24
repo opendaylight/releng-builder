@@ -109,6 +109,15 @@
     mvn-opts: '-Xmx2048m -Dmaven.compile.fork=true'
 
 - project:
+    name: lispflowmapping-info
+    jobs:
+      - gerrit-info-yaml-verify
+    project: lispflowmapping
+    project-name: lispflowmapping
+    branch: master
+    build-node: centos7-builder-2c-1g
+
+- project:
     name: lispflowmapping-view
     views:
       - project-view
