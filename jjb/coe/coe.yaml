@@ -87,6 +87,15 @@
     mvn-opts: '-Xmx1024m'
 
 - project:
+    name: coe-info
+    jobs:
+      - gerrit-info-yaml-verify
+    project: coe
+    project-name: coe
+    branch: master
+    build-node: centos7-builder-2c-1g
+
+- project:
     name: coe-view
     views:
       - project-view
