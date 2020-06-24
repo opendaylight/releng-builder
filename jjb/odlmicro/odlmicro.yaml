@@ -21,6 +21,15 @@
     staging-profile-id: 44ce67428fd0d
 
 - project:
+    name: odlmicro-info
+    jobs:
+      - gerrit-info-yaml-verify
+    project: odlmicro
+    project-name: odlmicro
+    branch: master
+    build-node: centos7-builder-2c-1g
+
+- project:
     name: odlmicro-view
     views:
       - project-view
