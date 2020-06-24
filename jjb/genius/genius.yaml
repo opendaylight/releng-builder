@@ -119,6 +119,15 @@
     mvn-opts: '-Xmx1024m'
 
 - project:
+    name: genius-info
+    jobs:
+      - gerrit-info-yaml-verify
+    project: genius
+    project-name: genius
+    branch: master
+    build-node: centos7-builder-2c-1g
+
+- project:
     name: genius-view
     views:
       - project-view
