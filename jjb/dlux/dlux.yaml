@@ -46,6 +46,15 @@
     mvn-opts: '-Xmx1024m'
 
 - project:
+    name: dlux-info
+    jobs:
+      - gerrit-info-yaml-verify
+    project: dlux
+    project-name: dlux
+    branch: master
+    build-node: centos7-builder-2c-1g
+
+- project:
     name: dlux-view
     views:
       - project-view
