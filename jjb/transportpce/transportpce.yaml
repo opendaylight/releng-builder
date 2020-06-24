@@ -93,6 +93,15 @@
     mvn-opts: '-Xmx1024m'
 
 - project:
+    name: transportpce-info
+    jobs:
+      - gerrit-info-yaml-verify
+    project: transportpce
+    project-name: transportpce
+    branch: master
+    build-node: centos7-builder-2c-1g
+
+- project:
     name: transportpce-view
     views:
       - project-view
