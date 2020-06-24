@@ -125,6 +125,15 @@
     mvn-opts: '-Xmx1024m'
 
 - project:
+    name: openflowplugin-info
+    jobs:
+      - gerrit-info-yaml-verify
+    project: openflowplugin
+    project-name: openflowplugin
+    branch: master
+    build-node: centos7-builder-2c-1g
+
+- project:
     name: openflowplugin-view
     views:
       - project-view
