@@ -98,6 +98,15 @@
     sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
 
 - project:
+    name: sxp-info
+    jobs:
+      - gerrit-info-yaml-verify
+    project: sxp
+    project-name: sxp
+    branch: master
+    build-node: centos7-builder-2c-1g
+
+- project:
     name: sxp-view
     views:
       - project-view
