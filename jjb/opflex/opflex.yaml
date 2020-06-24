@@ -130,6 +130,15 @@
       - lf-infra-publish
 
 - project:
+    jobs:
+      name: opflex-info
+      - gerrit-info-yaml-verify
+    project: opflex
+    project-name: opflex
+    branch: master
+    build-node: centos7-builder-2c-1g
+
+- project:
     name: opflex-view
     views:
       - project-view
