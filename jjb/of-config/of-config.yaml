@@ -73,6 +73,15 @@
     sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
 
 - project:
+    name: of-config-info
+    jobs:
+      - gerrit-info-yaml-verify
+    project: of-config
+    project-name: of-config
+    branch: master
+    build-node: centos7-builder-2c-1g
+
+- project:
     name: of-config-view
     views:
       - project-view
