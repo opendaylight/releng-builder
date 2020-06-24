@@ -69,6 +69,15 @@
     mvn-opts: '-Xmx1024m'
 
 - project:
+    name: p4plugin-info
+    jobs:
+      - gerrit-info-yaml-verify
+    project: p4plugin
+    project-name: p4plugin
+    branch: master
+    build-node: centos7-builder-2c-1g
+
+- project:
     name: p4plugin-view
     views:
       - project-view
