@@ -88,6 +88,15 @@
     sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
 
 - project:
+    name: l2switch-info
+    jobs:
+      - gerrit-info-yaml-verify
+    project: l2switch
+    project-name: l2switch
+    branch: master
+    build-node: centos7-builder-2c-1g
+
+- project:
     name: l2switch-view
     views:
       - project-view
