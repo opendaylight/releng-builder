@@ -23,6 +23,15 @@
     rtd-token: 86e54dd38c651e2164ea63c183ae601d19cd1f3c
 
 - project:
+    name: docs-info
+    jobs:
+      - gerrit-info-yaml-verify
+    project: docs
+    project-name: docs
+    branch: master
+    build-node: centos7-builder-2c-1g
+
+- project:
     name: docs-view
     views:
       - project-view
