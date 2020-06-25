@@ -25,6 +25,15 @@
     staging-profile-id: 'da5a90345bd62'
 
 - project:
+    name: ansible-info
+    jobs:
+      - gerrit-info-yaml-verify
+    project: ansible
+    project-name: ansible
+    branch: master
+    build-node: centos7-builder-2c-1g
+
+- project:
     name: ansible-view
     views:
       - project-view
