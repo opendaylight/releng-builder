@@ -615,6 +615,15 @@
       - lf-infra-publish
 
 - project:
+    name: integration-info
+    jobs:
+      - gerrit-info-yaml-verify
+    project: integration
+    project-name: integration
+    branch: master
+    build-node: centos7-builder-2c-1g
+
+- project:
     name: integration-view
     views:
       - project-view
