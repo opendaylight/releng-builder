@@ -15,9 +15,6 @@
   pre_tasks:
     - include_role: name=lfit.system-update
 
-  roles:
-    - lfit.mono-install
-
   tasks:
     - name: Install Cassandra Server
       block:
