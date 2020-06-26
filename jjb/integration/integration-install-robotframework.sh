@@ -8,6 +8,7 @@
 # which accompanies this distribution, and is available at
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
+# vim: sw=4 ts=4 sts=4 et ft=sh :
 
 ROBOT_VENV="/tmp/v/robot"
 echo ROBOT_VENV="${ROBOT_VENV}" >> "${WORKSPACE}/env.properties"
@@ -22,39 +23,46 @@ source "${ROBOT_VENV}/bin/activate"
 set -exu
 
 # Make sure pip itself us up-to-date.
-pip install --upgrade pip
-python3 -m pip install --user --upgrade pip
+python -m pip install --upgrade pip
 
-pip install --upgrade docker-py importlib requests scapy netifaces netaddr ipaddr pyhocon
-pip install --upgrade robotframework-httplibrary \
-    requests==2.15.1 \
-    robotframework-requests \
-    robotframework-sshlibrary==3.1.1 \
-    robotframework-selenium2library
+echo "Installing Python Requirements"
+cat << 'EOF' > "requirements.txt"
+docker-py
+importlib
+ipaddr
+netaddr
+netifaces
+pyhocon
+requests
+robotframework-httplibrary
+robotframework-pycurllibrary
+robotframework-requests
+robotframework-selenium2library
+robotframework-sshlibrary==3.1.1
+scapy
 
 # Module jsonpath is needed by current AAA idmlite suite.
-pip install --upgrade jsonpath-rw
+jsonpath-rw
 
 # Modules for longevity framework robot library
-pip install --upgrade elasticsearch elasticsearch-dsl
+elasticsearch
+elasticsearch-dsl
 
 # Module for pyangbind used by lispflowmapping project
-pip install --upgrade pyangbind
+pyangbind
 
 # Module for iso8601 datetime format
-pip install --upgrade isodate
+isodate
 
 # Module for TemplatedRequests.robot library
-pip install --upgrade jmespath
+jmespath
 
 # Module for backup-restore support library
-pip install --upgrade jsonpatch
+jsonpatch
 
 # odltools for extra debugging
-pip install odltools
+odltools
+EOF
+python -m pip install -r requirements.txt
 odltools -V
-
-# Print installed versions.
 pip freeze
-
-# vim: sw=4 ts=4 sts=4 et ft=sh :
