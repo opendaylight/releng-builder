@@ -35,7 +35,6 @@ netifaces
 pyhocon
 requests
 robotframework-httplibrary
-robotframework-pycurllibrary
 robotframework-requests
 robotframework-selenium2library
 robotframework-sshlibrary==3.1.1
