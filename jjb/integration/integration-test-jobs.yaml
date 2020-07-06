@@ -62,7 +62,7 @@
     stream:
       - aluminium:
           branch: 'master'
-          csit-blacklist: >
+          csit-blocklist: >
               alto bier coe controller detnet dluxapps groupbasedpolicy l2switch mdsal
               nemo p4plugin packetcable sfc sxp telemetry tsdr unimgr usc yangtools
               gate longevity sanity tdd tempest wip
@@ -78,7 +78,7 @@
           csit-weekly-list: '{csit-weekly-list-aluminium}'
       - magnesium:
           branch: 'stable/magnesium'
-          csit-blacklist: >
+          csit-blocklist: >
               alto bier coe detnet dluxapps groupbasedpolicy l2switch mdsal nemo
               p4plugin packetcable sfc sxp telemetry tsdr unimgr usc yangtools
               gate longevity sanity tdd tempest wip
@@ -94,7 +94,7 @@
           csit-weekly-list: '{csit-weekly-list-magnesium}'
       - sodium:
           branch: 'stable/sodium'
-          csit-blacklist: >
+          csit-blocklist: >
               alto bier dluxapps groupbasedpolicy jsonrpc l2switch mdsal nemo
               p4plugin packetcable sxp telemetry tsdr unimgr usc yangtools
               gate longevity sanity tdd tempest wip
@@ -573,9 +573,9 @@
           branch: master  # Hardcode as releng/builder only has master
           lftools-version: '{lftools-version}'
       - string:
-          name: CSIT_BLACKLIST
-          default: '{csit-blacklist}'
-          description: Space separated list of jobs strings to blacklist.
+          name: CSIT_BLOCKLIST
+          default: '{csit-blocklist}'
+          description: Space separated list of jobs strings to blocklist.
 
     scm:
       - lf-infra-gerrit-scm:
