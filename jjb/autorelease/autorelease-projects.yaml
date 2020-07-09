@@ -28,7 +28,7 @@
     staging-profile-id: 425e43800fea70
     # TODO: **/*.hprof is too large, compress with xz first
     mvn-params: >
-        -Pintegrationtests,repoBuild
+        -PrepoBuild
         -P!karaf
         -Pignore-lispflowmapping-integrationtest
         -Dcheckstyle.skip=true
@@ -70,7 +70,7 @@
     staging-profile-id: 425e43800fea70
     # TODO: **/*.hprof is too large, compress with xz first
     mvn-params: >
-        -Pintegrationtests,repoBuild
+        -PrepoBuild
         -P!karaf
         -Pignore-lispflowmapping-integrationtest
         -Dcheckstyle.skip=true
