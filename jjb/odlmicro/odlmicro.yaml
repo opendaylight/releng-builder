@@ -1,22 +1,21 @@
 ---
 - project:
-    name: odlmicro
+    name: odlmicro-aluminium
     jobs:
       - gerrit-release-merge
       - odl-maven-jobs-jdk11
       - odl-maven-verify-jobs
 
-    stream:
-      - aluminium:
-          branch: 'master'
-      - magnesium:
-          branch: 'stable/magnesium'
-
+    stream: aluminium
     project: odlmicro
+    project-name: 'odlmicro'
+    branch: 'master'
+    java-version: 'openjdk11'
     project-name: odlmicro
     build-node: centos7-builder-2c-2g
     build-timeout: 60
     mvn-settings: 'odlmicro-settings'
+    mvn-opts: '-Xmx2048m'
 
     # Used by the release job
     staging-profile-id: 44ce67428fd0d
