@@ -3,7 +3,8 @@
     name: odlmicro
     jobs:
       - gerrit-release-merge
-      - gerrit-tox-verify
+      - odl-maven-jobs-jdk11
+      - odl-maven-verify-jobs
 
     stream:
       - aluminium:
