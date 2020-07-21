@@ -108,6 +108,8 @@ function install_openstack_clients_in_robot_vm() {
     done
 
     if [ "${ENABLE_NETWORKING_L2GW}" == "yes" ]; then
+        #alembic 1.4.2 is having issues. Updating the package with 1.4.0
+        $PYTHON -m pip install alembic===1.4.0
         #networking-l2gw is not officially available in any release yet. Getting the latest stable version.
         $PYTHON -m pip install networking-l2gw==11.0.0 more-itertools==5.0.0
     fi
