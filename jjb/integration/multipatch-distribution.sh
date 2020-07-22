@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -ex
 
 # create a fresh empty place to build this custom distribution
 BUILD_DIR=${WORKSPACE}/patch_tester
