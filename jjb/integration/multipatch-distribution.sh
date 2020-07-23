@@ -22,7 +22,7 @@ wget "https://git.opendaylight.org/gerrit/gitweb?p=integration/distribution.git;
 cat pom.xml
 
 # Set up git committer name and email, needed for commit creation when cherry-picking.
-export EMAIL="sandbox@jenkins.opendaylight.org"
+export EMAIL="jenkins-$SILO@opendaylight.org"
 export GIT_COMMITTER_NAME="Multipatch Job"
 
 # Extract a list of patches per project from an comment trigger. An example is:
