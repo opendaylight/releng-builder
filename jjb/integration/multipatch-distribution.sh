@@ -18,7 +18,7 @@ mkdir -p "$BUILD_DIR"
 cd "$BUILD_DIR"
 
 # Download distribution pom.xml
-wget "http://git.opendaylight.org/gerrit/gitweb?p=integration/distribution.git;a=blob_plain;f=artifacts/upstream/properties/pom.xml;hb=refs/heads/$DISTROBRANCH" -O "pom.xml"
+wget "https://git.opendaylight.org/gerrit/gitweb?p=integration/distribution.git;a=blob_plain;f=artifacts/upstream/properties/pom.xml;hb=refs/heads/$DISTROBRANCH" -O "pom.xml"
 cat pom.xml
 
 # Set up git committer name and email, needed for commit creation when cherry-picking.
