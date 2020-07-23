@@ -28,6 +28,9 @@ export GIT_COMMITTER_NAME="Multipatch Job"
 # Extract a list of patches per project from an comment trigger. An example is:
 # multipatch-build:openflowplugin:45/69445/1,genius:46/69446/1,netvirt:47/69447/1
 if [ -n "$GERRIT_EVENT_COMMENT_TEXT" ]; then
+    # Decode Base64 before parsing text.
+    GERRIT_EVENT_COMMENT_TEXT=$(echo $GERRIT_EVENT_COMMENT_TEXT | base64 -d)
+
     if [[ "$GERRIT_EVENT_COMMENT_TEXT" == *fast* ]]; then
         BUILD_FAST="true"
         PATCHES_TO_BUILD=$(echo "$GERRIT_EVENT_COMMENT_TEXT" | grep 'multipatch-build-fast:')
