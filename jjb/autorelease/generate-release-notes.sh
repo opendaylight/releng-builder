@@ -15,7 +15,7 @@ set -x
 
 pip install --user --quiet --upgrade git-review
 
-RELEASE=${RELEASE:-$(echo "$GERRIT_EVENT_COMMENT_TEXT" | grep generate-release-notes | awk '{print $2}')}
+RELEASE=${RELEASE:-$(echo "$GERRIT_EVENT_COMMENT_TEXT" | base64 -d | grep generate-release-notes | awk '{print $2}')}
 if [ -z "$RELEASE" ]; then
     echo "ERROR: The RELEASE variable is not set."
     exit 1
