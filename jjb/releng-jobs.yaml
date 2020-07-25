@@ -64,7 +64,7 @@
           os-cloud: '{os-cloud}'
           project: '{project}'
           branch: '{branch}'
-          refspec: 'refs/heads/{branch}'
+          refspec: '{refspec}'
           artifacts: '{archive-artifacts}'
 
     wrappers:
@@ -139,12 +139,13 @@
           os-cloud: vex
           project: '{project}'
           branch: '{branch}'
-          refspec: 'refs/heads/{branch}'
+          refspec: '{refspec}'
           artifacts: '{archive-artifacts}'
 
     scm:
       - git-scm:
           branch: '{branch}'
+          refspec: '{refspec}'
 
     wrappers:
       - opendaylight-infra-wrappers:
