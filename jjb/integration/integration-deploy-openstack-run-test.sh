@@ -101,6 +101,7 @@ function install_openstack_clients_in_robot_vm() {
        sed -i '1 auwsgi===2.0.18' /tmp/constraints.txt
        #Python3 paramiko 2.7.1 has requirement cryptography>=2.5, Updating it to the latest
        sed -i s/cryptography===2.3/cryptography===2.9.2/ /tmp/constraints.txt
+       sed -i s/osc-lib===2.2.0/osc-lib===1.11.1/ /tmp/constraints.txt
        echo "$PYTHON -m pip install --upgrade --no-deps ${package} --no-cache-dir -c /tmp/constraints.txt"
        $PYTHON -m pip install --upgrade --no-deps "${package}" --no-cache-dir -c /tmp/constraints.txt
        echo "$PYTHON -m pip install ${package} --no-cache-dir -c /tmp/constraints.txt"
