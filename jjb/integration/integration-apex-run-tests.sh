@@ -126,7 +126,7 @@ for suite in ${SUITES}; do
     # prepend an incremental counter to the suite name so that the full robot log combining all the suites as is done
     # in the rebot step below will list all the suites in chronological order as rebot seems to alphabetize them
     ((suite_num = suite_num + 1))
-    suite_index="$(printf %02d ${suite_num})"
+    suite_index="$(printf %02d "${suite_num}")"
     suite_name="$(basename "${suite}" | cut -d. -f1)"
     log_name="${suite_index}_${suite_name}"
     robot -N "${log_name}" \
