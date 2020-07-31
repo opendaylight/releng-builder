@@ -1,0 +1,36 @@
+---
+- project:
+    name: odlsaf-aluminium
+    jobs:
+      - gerrit-release-merge
+      - odl-maven-jobs-jdk11
+      - odl-maven-verify-jobs
+
+    stream: aluminium
+    project: 'odlsaf'
+    project-name: 'odlsaf'
+    build-node: centos7-builder-2c-2g
+    build-timeout: 120
+    branch: 'master'
+    java-version: 'openjdk11'
+    mvn-settings: 'odlsaf-settings'
+    mvn-opts: '-Xmx2048m'
+    email-upstream: '[app-dev]'
+
+    # Used by the release job
+    staging-profile-id: 2802f0e38ee665
+
+- project:
+    name: odlsaf-info
+    jobs:
+      - gerrit-info-yaml-verify
+    project: odlsaf
+    project-name: odlsaf
+    branch: master
+    build-node: centos7-builder-2c-1g
+
+- project:
+    name: odlsaf-view
+    views:
+      - project-view
+    project-name: odlsaf
