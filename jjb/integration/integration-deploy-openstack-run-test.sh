@@ -96,12 +96,18 @@ function install_openstack_clients_in_robot_vm() {
        echo "Get the current support version of the package ${package}"
        wget "https://raw.githubusercontent.com/openstack/requirements/stable/${openstack_version}/upper-constraints.txt" -O /tmp/constraints.txt 2>/dev/null
        #python openstackclient version in rocky contradicts with version in global-jjb and stops openstackclient installation in rocky. Will be removed based on version change in global-jjb.
-       sed -i s/python-openstackclient===3.16.2/python-openstackclient===3.14.0/ /tmp/constraints.txt
+       $PYTHON -m pip install setuptools===34.4.0
+       $PYTHON -m pip install python-openstackclient===3.16.3       
+       sed -i s/osc-lib===1.11.1/osc-lib\>=2.0.0/ /tmp/constraints.txt
+       sed -i s/python-openstackclient===3.14.0/python-openstackclient===3.16.3/ /tmp/constraints.txt
+       sed -i s/keystoneauth1===3.10.1/keystoneauth1===3.18.0/ /tmp/constraints.txt
+       sed -i s/openstacksdk===0.17.3/openstacksdk===0.48.0/ /tmp/constraints.txt
+       sed -i s/os-service-types===1.3.0/os-service-types===1.7.0/ /tmp/constraints.txt
+       sed -i s/stevedore===1.29.0/stevedore\>=3.0.0/ /tmp/constraints.txt
        #Python uwsgi 2.0.19 is having errors, forcing it to pick 2.0.18
        sed -i '1 auwsgi===2.0.18' /tmp/constraints.txt
        #Python3 paramiko 2.7.1 has requirement cryptography>=2.5, Updating it to the latest
        sed -i s/cryptography===2.3/cryptography===2.9.2/ /tmp/constraints.txt
-       sed -i s/osc-lib===2.2.0/osc-lib===1.11.1/ /tmp/constraints.txt
        echo "$PYTHON -m pip install --upgrade --no-deps ${package} --no-cache-dir -c /tmp/constraints.txt"
        $PYTHON -m pip install --upgrade --no-deps "${package}" --no-cache-dir -c /tmp/constraints.txt
        echo "$PYTHON -m pip install ${package} --no-cache-dir -c /tmp/constraints.txt"
