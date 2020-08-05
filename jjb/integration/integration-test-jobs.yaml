@@ -19,8 +19,11 @@
 
     # CSIT Lists in defaults.yaml
     stream:
-      - aluminium:
+      - silicon:
           branch: 'master'
+          java-version: 'openjdk11'
+      - aluminium:
+          branch: 'stable/aluminium'
           mvn-version: 'mvn35'
           java-version: 'openjdk11'
           csit-list: !include: csit-jobs-aluminium.lst
