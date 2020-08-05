@@ -1,5 +1,24 @@
 ---
 - project:
+    name: snmp-silicon
+    jobs:
+      - gerrit-release-merge
+      - odl-maven-jobs
+      - odl-maven-verify-jobs
+
+    stream: silicon
+    project: 'snmp'
+    project-name: 'snmp'
+    branch: 'master'
+    mvn-settings: 'snmp-settings'
+    mvn-opts: '-Xmx1024m'
+    dependencies: 'odlparent-merge-{stream}'
+    email-upstream: '[snmp] [odlparent]'
+
+    # Used by the release job
+    staging-profile-id: a68fb236b93a6
+
+- project:
     name: snmp-aluminium
     jobs:
       - gerrit-release-merge
@@ -9,7 +28,7 @@
     stream: aluminium
     project: 'snmp'
     project-name: 'snmp'
-    branch: 'master'
+    branch: 'stable/aluminium'
     mvn-settings: 'snmp-settings'
     mvn-opts: '-Xmx1024m'
     dependencies: 'odlparent-merge-{stream}'

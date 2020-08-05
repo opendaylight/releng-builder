@@ -1,5 +1,27 @@
 ---
 - project:
+    name: bier-silicon
+    jobs:
+      - gerrit-release-merge
+      - odl-maven-jobs
+      - odl-maven-verify-jobs
+
+    stream: silicon
+    project: 'bier'
+    project-name: 'bier'
+    branch: 'master'
+    build-node: centos7-builder-2c-8g
+    build-timeout: 90
+    mvn-settings: 'bier-settings'
+    mvn-opts: '-Xmx1024m'
+    dependencies: ''
+    email-upstream: '[bier]'
+    disable-job: true
+
+    # Used by the release job
+    staging-profile-id: 942a8075b1f2a
+
+- project:
     name: bier-aluminium
     jobs:
       - gerrit-release-merge
@@ -9,7 +31,7 @@
     stream: aluminium
     project: 'bier'
     project-name: 'bier'
-    branch: 'master'
+    branch: 'stable/aluminium'
     build-node: centos7-builder-2c-8g
     build-timeout: 90
     mvn-settings: 'bier-settings'
