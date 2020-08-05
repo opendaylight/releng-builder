@@ -188,6 +188,16 @@
     10-exclude-value: ''
 
     # Manual CSIT job lists used by sanity or periodic in nature.
+    csit-mri-list-silicon: >
+        controller-csit-1node-akka1-all-silicon,
+        controller-csit-1node-benchmark-all-silicon,
+        controller-csit-1node-rest-cars-perf-all-silicon,
+        controller-csit-3node-benchmark-all-silicon,
+        controller-csit-3node-clustering-ask-all-silicon,
+        controller-csit-3node-clustering-tell-all-silicon,
+        controller-csit-3node-rest-clust-cars-perf-ask-only-silicon,
+        controller-csit-3node-rest-clust-cars-perf-tell-only-silicon,
+        yangtools-csit-1node-system-only-silicon
     csit-mri-list-aluminium: >
         controller-csit-1node-akka1-all-aluminium,
         controller-csit-1node-benchmark-all-aluminium,
@@ -202,6 +212,9 @@
         yangtools-csit-1node-system-only-magnesium
     csit-mri-list-sodium: >
         yangtools-csit-1node-system-only-sodium
+    csit-sanity-list-silicon: >
+        openflowplugin-csit-1node-sanity-only-silicon,
+        distribution-sanity-silicon
     csit-sanity-list-aluminium: >
         openflowplugin-csit-1node-sanity-only-aluminium,
         distribution-sanity-aluminium
@@ -211,6 +224,15 @@
     csit-sanity-list-sodium: >
         openflowplugin-csit-1node-sanity-only-sodium,
         distribution-sanity-sodium
+    csit-weekly-list-silicon: >
+        controller-csit-1node-notifications-longevity-only-silicon,
+        controller-csit-3node-drb-partnheal-longevity-only-silicon,
+        controller-csit-3node-drb-precedence-longevity-only-silicon,
+        controller-csit-3node-ddb-expl-lead-movement-longevity-only-silicon,
+        bgpcep-csit-3node-bgpclustering-longevity-only-silicon,
+        distribution-deploy-silicon,
+        distribution-offline-silicon,
+        openflowplugin-csit-1node-longevity-only-silicon
     csit-weekly-list-aluminium: >
         controller-csit-1node-notifications-longevity-only-aluminium,
         controller-csit-3node-drb-partnheal-longevity-only-aluminium,

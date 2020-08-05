@@ -21,8 +21,12 @@
     nexus-iq-stage: release
     email-upstream: '[int/dist]'
     stream:
-      - aluminium:
+      - silicon:
           branch: 'master'
+          java-version: openjdk11
+          jre: 'openjdk11'
+      - aluminium:
+          branch: 'stable/aluminium'
           java-version: openjdk11
           jre: 'openjdk11'
           karaf-version: odl
@@ -64,8 +68,25 @@
     dist-pom: 'distribution/pom.xml'
 
     stream:
-      - aluminium:
+      - silicon:
           branch: 'master'
+          java-version: 'openjdk11'
+          jre: 'openjdk11'
+          dependencies: >
+              aaa-maven-merge-{stream},
+              bgpcep-maven-merge-{stream},
+              daexim-maven-merge-{stream},
+              genius-maven-merge-{stream},
+              jsonrpc-maven-merge-{stream},
+              lispflowmapping-maven-merge-{stream},
+              netconf-maven-merge-{stream},
+              netvirt-maven-merge-{stream}
+              neutron-maven-merge-{stream},
+              openflowplugin-maven-merge-{stream},
+              ovsdb-maven-merge-{stream},
+              serviceutils-maven-merge-{stream},
+      - aluminium:
+          branch: 'stable/aluminium'
           java-version: 'openjdk11'
           jre: 'openjdk11'
           dependencies: >
@@ -140,8 +161,14 @@
     dist-pom: 'distribution/opendaylight/pom.xml'
 
     stream:
-      - aluminium:
+      - silicon:
           branch: 'master'
+          java-version: 'openjdk11'
+          karaf-version: odl
+          dependencies: >
+              distribution-merge-managed-{stream},
+      - aluminium:
+          branch: 'stable/aluminium'
           java-version: 'openjdk11'
           karaf-version: odl
           dependencies: >
