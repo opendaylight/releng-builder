@@ -49,8 +49,11 @@
       - gerrit-tox-verify
 
     stream:
-      - aluminium:
+      - silicon:
           branch: 'master'
+          integration-test: silicon
+      - aluminium:
+          branch: 'stable/aluminium'
           integration-test: aluminium
       - magnesium:
           branch: 'stable/magnesium'
