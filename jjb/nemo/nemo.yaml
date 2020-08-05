@@ -1,5 +1,25 @@
 ---
 - project:
+    name: nemo-silicon
+    jobs:
+      - odl-maven-jobs
+      - odl-maven-verify-jobs
+      - gerrit-release-merge
+
+    stream: silicon
+    project: 'nemo'
+    project-name: 'nemo'
+    branch: 'master'
+    mvn-settings: 'nemo-settings'
+    mvn-opts: '-Xmx1024m'
+    dependencies: ''
+    email-upstream: '[nemo]'
+    disable-job: true
+
+    # Used by the release job
+    staging-profile-id: a67a9890f6202
+
+- project:
     name: nemo-aluminium
     jobs:
       - odl-maven-jobs
@@ -9,7 +29,7 @@
     stream: aluminium
     project: 'nemo'
     project-name: 'nemo'
-    branch: 'master'
+    branch: 'stable/aluminium'
     mvn-settings: 'nemo-settings'
     mvn-opts: '-Xmx1024m'
     dependencies: ''
