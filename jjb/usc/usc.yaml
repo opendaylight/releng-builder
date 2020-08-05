@@ -1,5 +1,25 @@
 ---
 - project:
+    name: usc-silicon
+    jobs:
+      - '{project-name}-maven-javadoc-jobs'
+      - gerrit-release-merge
+      - odl-maven-jobs
+      - odl-maven-verify-jobs
+
+    stream: silicon
+    project: 'usc'
+    project-name: 'usc'
+    branch: 'master'
+    mvn-settings: 'usc-settings'
+    mvn-opts: '-Xmx1024m'
+    dependencies: 'controller-merge-{stream},yangtools-merge-{stream},odlparent-merge-{stream}'
+    email-upstream: '[usc] [controller] [yangtools] [odlparent]'
+
+    # Used by the release job
+    staging-profile-id: a697b633b3ffe
+
+- project:
     name: usc-aluminium
     jobs:
       - '{project-name}-maven-javadoc-jobs'
@@ -10,7 +30,7 @@
     stream: aluminium
     project: 'usc'
     project-name: 'usc'
-    branch: 'master'
+    branch: 'stable/aluminium'
     mvn-settings: 'usc-settings'
     mvn-opts: '-Xmx1024m'
     dependencies: 'controller-merge-{stream},yangtools-merge-{stream},odlparent-merge-{stream}'
