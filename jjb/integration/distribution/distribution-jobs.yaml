@@ -21,8 +21,11 @@
     nexus-iq-stage: release
     email-upstream: '[int/dist]'
     stream:
-      - aluminium:
+      - silicon:
           branch: 'master'
+          jre: 'openjdk11'
+      - aluminium:
+          branch: 'stable/aluminium'
           java-version: openjdk11
           jre: 'openjdk11'
           karaf-version: odl

@@ -6,8 +6,11 @@
       - 'opflex-merge-{stream}'
 
     stream:
-      - aluminium:
+      - silicon:
           branch: 'master'
+          java-version: 'openjdk11'
+      - aluminium:
+          branch: 'stable/aluminium'
           libuv-version: '1.20.2'
           rapidjson-version: '1.1.0'
           openvswitch-version: '2.12.0'
