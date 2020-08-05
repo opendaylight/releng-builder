@@ -14,8 +14,12 @@
 
     # Project branches
     stream:
-      - aluminium:
+      - silicon:
           branch: 'master'
+          jre: 'openjdk11'
+          install: 'all'
+      - aluminium:
+          branch: 'stable/aluminium'
           jre: 'openjdk11'
           install: 'all'
       - magnesium:

@@ -16,8 +16,11 @@
     testplan: '{project}-{functionality}.txt'
 
     stream:
-      - aluminium:
+      - silicon:
           branch: 'master'
+          jre: 'openjdk11'
+      - aluminium:
+          branch: 'stable/aluminium'
           jre: 'openjdk11'
       - magnesium:
           branch: 'stable/magnesium'
