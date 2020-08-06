@@ -7,7 +7,6 @@
           project-pattern: tsdr
           rtd-build-url: https://readthedocs.org/api/v2/webhook/opendaylight-tsdr/47532/
           rtd-token: 96c97641155132afcc5900bafc68af3364d91c99
-      - gerrit-release-merge
       - odl-maven-jobs
       - odl-maven-verify-jobs
 
@@ -91,6 +90,17 @@
 
     # Used by the release job
     staging-profile-id: a69373036303c
+
+- project:
+    name: tsdr-release-management
+    jobs:
+      - gerrit-release-merge
+
+    project: tsdr
+    project-name: tsdr
+
+    build-node: centos7-builder-2c-1g
+    mvn-settings: tsdr-settings
 
 - project:
     name: tsdr-sonar

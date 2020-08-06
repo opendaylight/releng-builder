@@ -2,8 +2,6 @@
 - project:
     name: mdsal-master
     jobs:
-      - 'gerrit-release-merge':
-          build-node: centos7-builder-2c-2g
       - '{project-name}-rtd-jobs':
           build-node: centos7-builder-2c-2g
           project-pattern: mdsal
@@ -131,6 +129,17 @@
 
     # Used by the release job
     staging-profile-id: a674173c7b29d
+
+- project:
+    name: mdsal-release-management
+    jobs:
+      - gerrit-release-merge
+
+    project: mdsal
+    project-name: mdsal
+
+    build-node: centos7-builder-2c-1g
+    mvn-settings: mdsal-settings
 
 - project:
     name: mdsal-sonar

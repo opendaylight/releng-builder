@@ -2,7 +2,6 @@
 - project:
     name: dluxapps-silicon
     jobs:
-      - gerrit-release-merge
       - odl-maven-jobs
       - odl-maven-verify-jobs
 
@@ -79,6 +78,17 @@
 
     # Used by the release job
     staging-profile-id: 96e6fb1e65bf9
+
+- project:
+    name: dluxapps-release-management
+    jobs:
+      - gerrit-release-merge
+
+    project: dluxapps
+    project-name: dluxapps
+
+    build-node: centos7-builder-2c-1g
+    mvn-settings: dluxapps-settings
 
 - project:
     name: dluxapps-sonar
