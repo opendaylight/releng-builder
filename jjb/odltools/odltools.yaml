@@ -28,6 +28,24 @@
     mvn-settings: 'odltools-settings'
 
 - project:
+    name: odltools-sonar
+    jobs:
+      - gerrit-maven-sonar:
+          mvn-params: >
+            -Dodl.jacoco.aggregateFile=$WORKSPACE/target/jacoco.exec
+            -Dsonar.jacoco.reportPath=$WORKSPACE/target/jacoco.exec
+
+    project: 'odltools'
+    project-name: 'odltools'
+    branch: 'master'
+    mvn-settings: 'odltools-settings'
+    mvn-opts: '-Xmx1024m'
+    sonarcloud: true
+    sonarcloud-project-organization: '{sonarcloud_project_organization}'
+    sonarcloud-api-token: '{sonarcloud_api_token}'
+    sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
+
+- project:
     name: odltools-info
     jobs:
       - gerrit-info-yaml-verify
