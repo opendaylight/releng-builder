@@ -2,8 +2,6 @@
 - project:
     name: odlparent-master
     jobs:
-      - 'gerrit-release-merge':
-          build-node: centos7-builder-2c-2g
       - '{project-name}-rtd-jobs':
           build-node: centos7-builder-2c-2g
           doc-dir: .tox/docs/tmp/html
@@ -101,6 +99,17 @@
 
     # Used by the release job
     staging-profile-id: 880d5ac25eaa
+
+- project:
+    name: odlparent-release-management
+    jobs:
+      - gerrit-release-merge
+
+    project: odlparent
+    project-name: odlparent
+
+    build-node: centos7-builder-2c-1g
+    mvn-settings: odlparent-settings
 
 - project:
     name: odlparent-sonar

@@ -2,7 +2,6 @@
 - project:
     name: snmp-silicon
     jobs:
-      - gerrit-release-merge
       - odl-maven-jobs
       - odl-maven-verify-jobs
 
@@ -71,6 +70,17 @@
 
     # Used by the release job
     staging-profile-id: a68fb236b93a6
+
+- project:
+    name: snmp-release-management
+    jobs:
+      - gerrit-release-merge
+
+    project: snmp
+    project-name: snmp
+
+    build-node: centos7-builder-2c-1g
+    mvn-settings: snmp-settings
 
 - project:
     name: snmp-sonar

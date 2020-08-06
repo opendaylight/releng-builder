@@ -2,8 +2,6 @@
 - project:
     name: infrautils-master
     jobs:
-      - 'gerrit-release-merge':
-          build-node: centos7-builder-2c-2g
       - '{project-name}-rtd-jobs':
           build-node: centos7-builder-2c-2g
           doc-dir: .tox/docs/tmp/html
@@ -78,6 +76,17 @@
 
     # Used by the release job
     staging-profile-id: 96fca0367756c
+
+- project:
+    name: infrautils-release-management
+    jobs:
+      - gerrit-release-merge
+
+    project: infrautils
+    project-name: infrautils
+
+    build-node: centos7-builder-2c-1g
+    mvn-settings: infrautils-settings
 
 - project:
     name: infrautils-sonar
