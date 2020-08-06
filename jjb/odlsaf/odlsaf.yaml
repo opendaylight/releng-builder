@@ -41,6 +41,24 @@
     staging-profile-id: 2802f0e38ee665
 
 - project:
+    name: odlsaf-sonar
+    jobs:
+      - gerrit-maven-sonar:
+          mvn-params: >
+            -Dodl.jacoco.aggregateFile=$WORKSPACE/target/jacoco.exec
+            -Dsonar.jacoco.reportPath=$WORKSPACE/target/jacoco.exec
+
+    project: 'odlsaf'
+    project-name: 'odlsaf'
+    branch: 'master'
+    mvn-settings: 'odlsaf-settings'
+    mvn-opts: '-Xmx1024m'
+    sonarcloud: true
+    sonarcloud-project-organization: '{sonarcloud_project_organization}'
+    sonarcloud-api-token: '{sonarcloud_api_token}'
+    sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
+
+- project:
     name: odlsaf-info
     jobs:
       - gerrit-info-yaml-verify
