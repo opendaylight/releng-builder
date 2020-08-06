@@ -41,6 +41,24 @@
     staging-profile-id: 44ce7d1aad49e
 
 - project:
+    name: odlguice-sonar
+    jobs:
+      - gerrit-maven-sonar:
+          mvn-params: >
+            -Dodl.jacoco.aggregateFile=$WORKSPACE/target/jacoco.exec
+            -Dsonar.jacoco.reportPath=$WORKSPACE/target/jacoco.exec
+
+    project: 'odlguice'
+    project-name: 'odlguice'
+    branch: 'master'
+    mvn-settings: 'odlguice-settings'
+    mvn-opts: '-Xmx1024m'
+    sonarcloud: true
+    sonarcloud-project-organization: '{sonarcloud_project_organization}'
+    sonarcloud-api-token: '{sonarcloud_api_token}'
+    sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
+
+- project:
     name: odlguice-info
     jobs:
       - gerrit-info-yaml-verify
