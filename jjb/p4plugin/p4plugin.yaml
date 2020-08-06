@@ -3,7 +3,6 @@
     name: p4plugin-silicon
     jobs:
       - '{project-name}-maven-javadoc-jobs'
-      - gerrit-release-merge
       - odl-maven-jobs
       - odl-maven-verify-jobs
 
@@ -75,6 +74,17 @@
 
     # Used by the release job
     staging-profile-id: a68bf26e208d4
+
+- project:
+    name: p4plugin-release-management
+    jobs:
+      - gerrit-release-merge
+
+    project: p4plugin
+    project-name: p4plugin
+
+    build-node: centos7-builder-2c-1g
+    mvn-settings: p4plugin-settings
 
 - project:
     name: p4plugin-sonar

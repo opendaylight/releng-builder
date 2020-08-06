@@ -9,7 +9,6 @@
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-plastic/102307/
           rtd-token: 963a1745b909ae6a1eae01f814c4983d17fdd44c
       - gerrit-tox-verify
-      - gerrit-release-merge
       - odl-maven-jobs
       - odl-maven-verify-jobs
 
@@ -23,6 +22,17 @@
 
     # Used by the release job
     staging-profile-id: 380d129f253e1
+
+- project:
+    name: plastic-release-management
+    jobs:
+      - gerrit-release-merge
+
+    project: plastic
+    project-name: plastic
+
+    build-node: centos7-builder-2c-1g
+    mvn-settings: plastic-settings
 
 - project:
     name: plastic-sonar

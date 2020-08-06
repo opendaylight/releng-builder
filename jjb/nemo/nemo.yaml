@@ -4,7 +4,6 @@
     jobs:
       - odl-maven-jobs
       - odl-maven-verify-jobs
-      - gerrit-release-merge
 
     stream: silicon
     project: 'nemo'
@@ -75,6 +74,17 @@
 
     # Used by the release job
     staging-profile-id: a67a9890f6202
+
+- project:
+    name: nemo-release-management
+    jobs:
+      - gerrit-release-merge
+
+    project: nemo
+    project-name: nemo
+
+    build-node: centos7-builder-2c-1g
+    mvn-settings: nemo-settings
 
 - project:
     name: nemo-sonar
