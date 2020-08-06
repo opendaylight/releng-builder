@@ -2,7 +2,6 @@
 - project:
     name: l2switch-silicon
     jobs:
-      - gerrit-release-merge
       - odl-maven-jobs
       - odl-maven-verify-jobs
 
@@ -95,6 +94,17 @@
 
     # Used by the release job
     staging-profile-id: 96fee85953ca0
+
+- project:
+    name: l2switch-release-management
+    jobs:
+      - gerrit-release-merge
+
+    project: l2switch
+    project-name: l2switch
+
+    build-node: centos7-builder-2c-1g
+    mvn-settings: l2switch-settings
 
 - project:
     name: l2switch-sonar

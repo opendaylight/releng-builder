@@ -7,7 +7,6 @@
           project-pattern: unimgr
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-unimgr/49748/
           rtd-token: e12225e9b9ac67f5439c1619dcad342393b7ea31
-      - gerrit-release-merge
       - odl-maven-jobs
       - odl-maven-verify-jobs
 
@@ -106,6 +105,17 @@
 
     # Used by the release job
     staging-profile-id: a695d0a0b8d51
+
+- project:
+    name: unimgr-release-management
+    jobs:
+      - gerrit-release-merge
+
+    project: unimgr
+    project-name: unimgr
+
+    build-node: centos7-builder-2c-1g
+    mvn-settings: unimgr-settings
 
 - project:
     name: unimgr-sonar

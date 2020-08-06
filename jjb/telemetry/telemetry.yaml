@@ -101,6 +101,17 @@
     staging-profile-id: 8ed9c52266504
 
 - project:
+    name: telemetry-release-management
+    jobs:
+      - gerrit-release-merge
+
+    project: telemetry
+    project-name: telemetry
+
+    build-node: centos7-builder-2c-1g
+    mvn-settings: telemetry-settings
+
+- project:
     name: telemetry-sonar
     jobs:
       - gerrit-maven-sonar

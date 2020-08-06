@@ -2,7 +2,6 @@
 - project:
     name: packetcable-silicon
     jobs:
-      - gerrit-release-merge
       - odl-maven-jobs
       - odl-maven-verify-jobs
 
@@ -75,6 +74,17 @@
 
     # Used by the release job
     staging-profile-id: a68ca4a24655c
+
+- project:
+    name: packetcable-release-management
+    jobs:
+      - gerrit-release-merge
+
+    project: packetcable
+    project-name: packetcable
+
+    build-node: centos7-builder-2c-1g
+    mvn-settings: packetcable-settings
 
 - project:
     name: packetcable-sonar

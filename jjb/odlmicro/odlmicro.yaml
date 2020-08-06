@@ -2,7 +2,6 @@
 - project:
     name: odlmicro-silicon
     jobs:
-      - gerrit-release-merge
       - odl-maven-jobs-jdk11
       - odl-maven-verify-jobs
 
@@ -37,6 +36,17 @@
 
     # Used by the release job
     staging-profile-id: 44ce67428fd0d
+
+- project:
+    name: odlmicro-release-management
+    jobs:
+      - gerrit-release-merge
+
+    project: odlmicro
+    project-name: odlmicro
+
+    build-node: centos7-builder-2c-1g
+    mvn-settings: odlmicro-settings
 
 - project:
     name: odlmicro-info
