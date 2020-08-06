@@ -28,6 +28,9 @@
     name: plastic-sonar
     jobs:
       - gerrit-maven-sonar
+          mvn-params: >
+            -Dodl.jacoco.aggregateFile=$WORKSPACE/target/jacoco.exec
+            -Dsonar.jacoco.reportPath=$WORKSPACE/target/jacoco.exec
 
     project: plastic
     project-name: plastic
