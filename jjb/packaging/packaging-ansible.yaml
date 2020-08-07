@@ -4,26 +4,26 @@
     project-name: packaging-ansible
 
     jobs:
-      - '{project-name}-test-rpm-{stream}'
-      - '{project-name}-test-deb-{stream}':
+      - "{project-name}-test-rpm-{stream}"
+      - "{project-name}-test-deb-{stream}":
           disable-job: true
       - gerrit-tox-verify
 
-    project: 'integration/packaging/ansible-opendaylight'
+    project: "integration/packaging/ansible-opendaylight"
 
     stream:
       - master:
-          branch: 'master'
+          branch: "master"
 
 - job-template:
-    name: '{project-name}-test-rpm-{stream}'
+    name: "{project-name}-test-rpm-{stream}"
 
     node: centos7-builder-2c-2g
     disable-job: false
 
     project-type: freestyle
 
-    disabled: '{disable-job}'
+    disabled: "{disable-job}"
 
     properties:
       - opendaylight-infra-properties:
@@ -31,21 +31,21 @@
 
     parameters:
       - opendaylight-infra-parameters:
-          os-cloud: '{os-cloud}'
-          project: '{project}'
-          branch: '{branch}'
-          refspec: 'refs/heads/{branch}'
-          artifacts: '{archive-artifacts}'
+          os-cloud: "{os-cloud}"
+          project: "{project}"
+          branch: "{branch}"
+          refspec: "refs/heads/{branch}"
+          artifacts: "{archive-artifacts}"
 
     scm:
       - integration-gerrit-scm:
-          basedir: '{project-name}'
-          refspec: '$GERRIT_REFSPEC'
-          branch: '{branch}'
+          basedir: "{project-name}"
+          refspec: "$GERRIT_REFSPEC"
+          branch: "{branch}"
 
     wrappers:
       - opendaylight-infra-wrappers:
-          build-timeout: '{build-timeout}'
+          build-timeout: "{build-timeout}"
 
     builders:
       - shell: !include-raw: setup-ansible-rpm.sh
@@ -54,27 +54,26 @@
       - shell: !include-raw: test-ansible-rpm-upgrade.sh
 
     triggers:
-      - timed: '@weekly'
+      - timed: "@weekly"
       - gerrit-trigger-patch-submitted:
-          gerrit-server-name: '{gerrit-server-name}'
-          project: '{project}'
-          branch: '{branch}'
-          files: '**'
-          forbidden-files: ''
-
+          gerrit-server-name: "{gerrit-server-name}"
+          project: "{project}"
+          branch: "{branch}"
+          files: "**"
+          forbidden-files: ""
 
     publishers:
       - lf-infra-publish
 
 - job-template:
-    name: '{project-name}-test-deb-{stream}'
+    name: "{project-name}-test-deb-{stream}"
 
     node: ubuntu1604-mininet-ovs-25-1c-4g
     disable-job: false
 
     project-type: freestyle
 
-    disabled: '{disable-job}'
+    disabled: "{disable-job}"
 
     properties:
       - opendaylight-infra-properties:
@@ -82,21 +81,21 @@
 
     parameters:
       - opendaylight-infra-parameters:
-          os-cloud: '{os-cloud}'
-          project: '{project}'
-          branch: '{branch}'
-          refspec: 'refs/heads/{branch}'
-          artifacts: '{archive-artifacts}'
+          os-cloud: "{os-cloud}"
+          project: "{project}"
+          branch: "{branch}"
+          refspec: "refs/heads/{branch}"
+          artifacts: "{archive-artifacts}"
 
     scm:
       - integration-gerrit-scm:
-          basedir: '{project-name}'
-          refspec: '$GERRIT_REFSPEC'
-          branch: '{branch}'
+          basedir: "{project-name}"
+          refspec: "$GERRIT_REFSPEC"
+          branch: "{branch}"
 
     wrappers:
       - opendaylight-infra-wrappers:
-          build-timeout: '{build-timeout}'
+          build-timeout: "{build-timeout}"
 
     builders:
       - shell: !include-raw: setup-ansible-deb.sh
@@ -104,13 +103,13 @@
       - shell: !include-raw: test-ansible-deb-custom-config.sh
 
     triggers:
-      - timed: '@weekly'
+      - timed: "@weekly"
       - gerrit-trigger-patch-submitted:
-          gerrit-server-name: '{gerrit-server-name}'
-          project: '{project}'
-          branch: '{branch}'
-          files: '**'
-          forbidden-files: ''
+          gerrit-server-name: "{gerrit-server-name}"
+          project: "{project}"
+          branch: "{branch}"
+          files: "**"
+          forbidden-files: ""
 
     publishers:
       - lf-infra-publish

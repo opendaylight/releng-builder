@@ -8,13 +8,13 @@
 
     stream: silicon
     project: odlmicro
-    project-name: 'odlmicro'
-    branch: 'master'
-    java-version: 'openjdk11'
+    project-name: "odlmicro"
+    branch: "master"
+    java-version: "openjdk11"
     build-node: centos7-builder-2c-2g
     build-timeout: 60
-    mvn-settings: 'odlmicro-settings'
-    mvn-opts: '-Xmx2048m'
+    mvn-settings: "odlmicro-settings"
+    mvn-opts: "-Xmx2048m"
 
     # Used by the release job
     staging-profile-id: 44ce67428fd0d
@@ -27,13 +27,13 @@
 
     stream: aluminium
     project: odlmicro
-    project-name: 'odlmicro'
-    branch: 'stable/aluminium'
-    java-version: 'openjdk11'
+    project-name: "odlmicro"
+    branch: "stable/aluminium"
+    java-version: "openjdk11"
     build-node: centos7-builder-2c-2g
     build-timeout: 60
-    mvn-settings: 'odlmicro-settings'
-    mvn-opts: '-Xmx2048m'
+    mvn-settings: "odlmicro-settings"
+    mvn-opts: "-Xmx2048m"
 
     # Used by the release job
     staging-profile-id: 44ce67428fd0d
@@ -46,16 +46,15 @@
             -Dodl.jacoco.aggregateFile=$WORKSPACE/target/jacoco.exec
             -Dsonar.jacoco.reportPath=$WORKSPACE/target/jacoco.exec
 
-    project: 'odlmicro'
-    project-name: 'odlmicro'
-    branch: 'master'
-    mvn-settings: 'odlmicro-settings'
-    mvn-opts: '-Xmx1024m'
+    project: "odlmicro"
+    project-name: "odlmicro"
+    branch: "master"
+    mvn-settings: "odlmicro-settings"
+    mvn-opts: "-Xmx1024m"
     sonarcloud: true
-    sonarcloud-project-organization: '{sonarcloud_project_organization}'
-    sonarcloud-api-token: '{sonarcloud_api_token}'
-    sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
-
+    sonarcloud-project-organization: "{sonarcloud_project_organization}"
+    sonarcloud-api-token: "{sonarcloud_api_token}"
+    sonarcloud-project-key: "{sonarcloud_project_organization}_{project-name}"
 
 - project:
     name: odlmicro-info

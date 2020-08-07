@@ -73,7 +73,7 @@
     name: install-test-uninstall-rpm
     builders:
       - inject:
-          properties-content: 'URL=/home/$USER/rpmbuild/RPMS/noarch/*.rpm'
+          properties-content: "URL=/home/$USER/rpmbuild/RPMS/noarch/*.rpm"
       # Install deps needed interactive Karaf shell tests
       - shell: |
           # Install expect to interact with Karaf shell
@@ -97,7 +97,7 @@
     name: install-test-uninstall-deb
     builders:
       - inject:
-          properties-content: 'PACKAGE=$WORKSPACE/packaging/packages/deb/opendaylight/*.deb'
+          properties-content: "PACKAGE=$WORKSPACE/packaging/packages/deb/opendaylight/*.deb"
       # Install deps needed interactive Karaf shell tests
       - shell: |
           # Install expect to interact with Karaf shell

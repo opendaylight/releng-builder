@@ -7,18 +7,18 @@
       - odl-maven-verify-jobs
 
     stream: silicon
-    project: 'l2switch'
-    project-name: 'l2switch'
-    branch: 'master'
-    mvn-settings: 'l2switch-settings'
-    mvn-opts: '-Xmx1024m -Dmaven.compile.fork=true'
+    project: "l2switch"
+    project-name: "l2switch"
+    branch: "master"
+    mvn-settings: "l2switch-settings"
+    mvn-opts: "-Xmx1024m -Dmaven.compile.fork=true"
     dependencies: >
-        odlparent-merge-{stream},
-        yangtools-merge-{stream},
-        controller-merge-{stream},
-        openflowjava-merge-{stream},
-        openflowplugin-merge-{stream}
-    email-upstream: '[l2switch] [odlparent] [yangtools] [controller] [openflowjava] [openflowplugin]'
+      odlparent-merge-{stream},
+      yangtools-merge-{stream},
+      controller-merge-{stream},
+      openflowjava-merge-{stream},
+      openflowplugin-merge-{stream}
+    email-upstream: "[l2switch] [odlparent] [yangtools] [controller] [openflowjava] [openflowplugin]"
     disable-job: true
 
     # Used by the release job
@@ -31,18 +31,18 @@
       - odl-maven-verify-jobs
 
     stream: aluminium
-    project: 'l2switch'
-    project-name: 'l2switch'
-    branch: 'stable/aluminium'
-    mvn-settings: 'l2switch-settings'
-    mvn-opts: '-Xmx1024m -Dmaven.compile.fork=true'
+    project: "l2switch"
+    project-name: "l2switch"
+    branch: "stable/aluminium"
+    mvn-settings: "l2switch-settings"
+    mvn-opts: "-Xmx1024m -Dmaven.compile.fork=true"
     dependencies: >
-        odlparent-merge-{stream},
-        yangtools-merge-{stream},
-        controller-merge-{stream},
-        openflowjava-merge-{stream},
-        openflowplugin-merge-{stream}
-    email-upstream: '[l2switch] [odlparent] [yangtools] [controller] [openflowjava] [openflowplugin]'
+      odlparent-merge-{stream},
+      yangtools-merge-{stream},
+      controller-merge-{stream},
+      openflowjava-merge-{stream},
+      openflowplugin-merge-{stream}
+    email-upstream: "[l2switch] [odlparent] [yangtools] [controller] [openflowjava] [openflowplugin]"
     disable-job: true
 
     # Used by the release job
@@ -55,18 +55,18 @@
       - odl-maven-verify-jobs
 
     stream: magnesium
-    project: 'l2switch'
-    project-name: 'l2switch'
-    branch: 'stable/magnesium'
-    mvn-settings: 'l2switch-settings'
-    mvn-opts: '-Xmx1024m -Dmaven.compile.fork=true'
+    project: "l2switch"
+    project-name: "l2switch"
+    branch: "stable/magnesium"
+    mvn-settings: "l2switch-settings"
+    mvn-opts: "-Xmx1024m -Dmaven.compile.fork=true"
     dependencies: >
-        odlparent-merge-{stream},
-        yangtools-merge-{stream},
-        controller-merge-{stream},
-        openflowjava-merge-{stream},
-        openflowplugin-merge-{stream}
-    email-upstream: '[l2switch] [odlparent] [yangtools] [controller] [openflowjava] [openflowplugin]'
+      odlparent-merge-{stream},
+      yangtools-merge-{stream},
+      controller-merge-{stream},
+      openflowjava-merge-{stream},
+      openflowplugin-merge-{stream}
+    email-upstream: "[l2switch] [odlparent] [yangtools] [controller] [openflowjava] [openflowplugin]"
     disable-job: true
 
     # Used by the release job
@@ -79,18 +79,18 @@
       - odl-maven-verify-jobs
 
     stream: sodium
-    project: 'l2switch'
-    project-name: 'l2switch'
-    branch: 'stable/sodium'
-    mvn-settings: 'l2switch-settings'
-    mvn-opts: '-Xmx1024m -Dmaven.compile.fork=true'
+    project: "l2switch"
+    project-name: "l2switch"
+    branch: "stable/sodium"
+    mvn-settings: "l2switch-settings"
+    mvn-opts: "-Xmx1024m -Dmaven.compile.fork=true"
     dependencies: >
-        odlparent-merge-{stream},
-        yangtools-merge-{stream},
-        controller-merge-{stream},
-        openflowjava-merge-{stream},
-        openflowplugin-merge-{stream}
-    email-upstream: '[l2switch] [odlparent] [yangtools] [controller] [openflowjava] [openflowplugin]'
+      odlparent-merge-{stream},
+      yangtools-merge-{stream},
+      controller-merge-{stream},
+      openflowjava-merge-{stream},
+      openflowplugin-merge-{stream}
+    email-upstream: "[l2switch] [odlparent] [yangtools] [controller] [openflowjava] [openflowplugin]"
     disable-job: true
 
     # Used by the release job
@@ -100,16 +100,16 @@
     name: l2switch-sonar
     jobs:
       - gerrit-maven-sonar
-    project: 'l2switch'
-    project-name: 'l2switch'
-    branch: 'master'
-    mvn-settings: 'l2switch-settings'
-    mvn-opts: '-Xmx1024m -Dmaven.compile.fork=true'
+    project: "l2switch"
+    project-name: "l2switch"
+    branch: "master"
+    mvn-settings: "l2switch-settings"
+    mvn-opts: "-Xmx1024m -Dmaven.compile.fork=true"
     disable-job: true
     sonarcloud: true
-    sonarcloud-project-organization: '{sonarcloud_project_organization}'
-    sonarcloud-api-token: '{sonarcloud_api_token}'
-    sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
+    sonarcloud-project-organization: "{sonarcloud_project_organization}"
+    sonarcloud-api-token: "{sonarcloud_api_token}"
+    sonarcloud-project-key: "{sonarcloud_project_organization}_{project-name}"
 
 - project:
     name: l2switch-info

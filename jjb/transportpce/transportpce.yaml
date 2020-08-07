@@ -2,7 +2,7 @@
 - project:
     name: transportpce-silicon
     jobs:
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: transportpce
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-transportpce/47688/
@@ -14,15 +14,15 @@
       - odl-maven-jobs-jdk11
       - odl-maven-verify-jobs
 
-    project: 'transportpce'
-    project-name: 'transportpce'
+    project: "transportpce"
+    project-name: "transportpce"
     stream: silicon
-    branch: 'master'
-    java-version: 'openjdk11'
-    mvn-settings: 'transportpce-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
-    email-upstream: '[transportpce] [odlparent] [yangtools] [controller]'
+    branch: "master"
+    java-version: "openjdk11"
+    mvn-settings: "transportpce-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}"
+    email-upstream: "[transportpce] [odlparent] [yangtools] [controller]"
 
     # Used by the release job
     staging-profile-id: a6927323fa3d4
@@ -30,7 +30,7 @@
 - project:
     name: transportpce-aluminium
     jobs:
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: transportpce
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-transportpce/47688/
@@ -41,15 +41,15 @@
       - odl-maven-jobs-jdk11
       - odl-maven-verify-jobs
 
-    project: 'transportpce'
-    project-name: 'transportpce'
+    project: "transportpce"
+    project-name: "transportpce"
     stream: aluminium
-    branch: 'stable/aluminium'
-    java-version: 'openjdk11'
-    mvn-settings: 'transportpce-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
-    email-upstream: '[transportpce] [odlparent] [yangtools] [controller]'
+    branch: "stable/aluminium"
+    java-version: "openjdk11"
+    mvn-settings: "transportpce-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}"
+    email-upstream: "[transportpce] [odlparent] [yangtools] [controller]"
 
     # Used by the release job
     staging-profile-id: a6927323fa3d4
@@ -57,7 +57,7 @@
 - project:
     name: transportpce-magnesium
     jobs:
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: transportpce
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-transportpce/47688/
@@ -68,15 +68,15 @@
       - odl-maven-jobs-jdk11
       - odl-maven-verify-jobs
 
-    project: 'transportpce'
-    project-name: 'transportpce'
+    project: "transportpce"
+    project-name: "transportpce"
     stream: magnesium
-    branch: 'stable/magnesium'
-    java-version: 'openjdk11'
-    mvn-settings: 'transportpce-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
-    email-upstream: '[transportpce] [odlparent] [yangtools] [controller]'
+    branch: "stable/magnesium"
+    java-version: "openjdk11"
+    mvn-settings: "transportpce-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}"
+    email-upstream: "[transportpce] [odlparent] [yangtools] [controller]"
 
     # Used by the release job
     staging-profile-id: a6927323fa3d4
@@ -84,7 +84,7 @@
 - project:
     name: transportpce-sodium
     jobs:
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: transportpce
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-transportpce/47688/
@@ -95,14 +95,14 @@
       - odl-maven-jobs
       - odl-maven-verify-jobs
 
-    project: 'transportpce'
-    project-name: 'transportpce'
+    project: "transportpce"
+    project-name: "transportpce"
     stream: sodium
-    branch: 'stable/sodium'
-    mvn-settings: 'transportpce-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
-    email-upstream: '[transportpce] [odlparent] [yangtools] [controller]'
+    branch: "stable/sodium"
+    mvn-settings: "transportpce-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}"
+    email-upstream: "[transportpce] [odlparent] [yangtools] [controller]"
 
     # Used by the release job
     staging-profile-id: a6927323fa3d4
@@ -112,16 +112,16 @@
     jobs:
       - gerrit-maven-sonar
 
-    project: 'transportpce'
-    project-name: 'transportpce'
-    branch: 'master'
-    java-version: 'openjdk11'
-    mvn-settings: 'transportpce-settings'
-    mvn-opts: '-Xmx1024m'
+    project: "transportpce"
+    project-name: "transportpce"
+    branch: "master"
+    java-version: "openjdk11"
+    mvn-settings: "transportpce-settings"
+    mvn-opts: "-Xmx1024m"
     sonarcloud: true
-    sonarcloud-project-organization: '{sonarcloud_project_organization}'
-    sonarcloud-api-token: '{sonarcloud_api_token}'
-    sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
+    sonarcloud-project-organization: "{sonarcloud_project_organization}"
+    sonarcloud-api-token: "{sonarcloud_api_token}"
+    sonarcloud-project-key: "{sonarcloud_project_organization}_{project-name}"
 
 - project:
     name: transportpce-info

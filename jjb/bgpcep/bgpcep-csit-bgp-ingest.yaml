@@ -6,47 +6,47 @@
       # FIXME: Dicument differences from -mixed- and unify into single (matrix) definition.
 
     # The project name
-    project: 'bgpcep'
+    project: "bgpcep"
 
     # The functionality under test
-    functionality: 'bgp-ingest'
+    functionality: "bgp-ingest"
 
     # Project branches
     stream:
       - silicon:
-          branch: 'master'
-          jre: 'openjdk11'
+          branch: "master"
+          jre: "openjdk11"
       - aluminium:
-          branch: 'stable/aluminium'
-          jre: 'openjdk11'
+          branch: "stable/aluminium"
+          jre: "openjdk11"
       - magnesium:
-          branch: 'stable/magnesium'
-          jre: 'openjdk11'
+          branch: "stable/magnesium"
+          jre: "openjdk11"
       - sodium:
-          branch: 'stable/sodium'
+          branch: "stable/sodium"
 
     install:
       - all:
-          scope: 'all'
+          scope: "all"
 
     # Features to install
     install-features: >
-        odl-restconf,
-        odl-jolokia,
-        odl-bgpcep-data-change-counter,
-        odl-bgpcep-bgp,
-        odl-bgpcep-bgp-config-example
+      odl-restconf,
+      odl-jolokia,
+      odl-bgpcep-data-change-counter,
+      odl-bgpcep-bgp,
+      odl-bgpcep-bgp-config-example
 
     # Robot custom options:
     robot-options: >
-        -v USE_NETCONF_CONNECTOR:False
-        -v CHECK_PERIOD_PREFIX_COUNT_SINGLE:60
-        -v REPETITIONS_CHANGE_COUNT_SINGLE:1
-        -v CHECK_PERIOD_PREFIX_COUNT_MANY:60
-        -v TEST_DURATION_MULTIPLIER_PREFIX_COUNT_MANY:8.0
-        -v REPETITIONS_CHANGE_COUNT_MANY:1
-        -v MULTIPLICITY_CHANGE_COUNT_MANY:10
-        -v TEST_DURATION_MULTIPLIER_CHANGE_COUNT_MANY:8.0
+      -v USE_NETCONF_CONNECTOR:False
+      -v CHECK_PERIOD_PREFIX_COUNT_SINGLE:60
+      -v REPETITIONS_CHANGE_COUNT_SINGLE:1
+      -v CHECK_PERIOD_PREFIX_COUNT_MANY:60
+      -v TEST_DURATION_MULTIPLIER_PREFIX_COUNT_MANY:8.0
+      -v REPETITIONS_CHANGE_COUNT_MANY:1
+      -v MULTIPLICITY_CHANGE_COUNT_MANY:10
+      -v TEST_DURATION_MULTIPLIER_CHANGE_COUNT_MANY:8.0
 
     # Controller configuration
     odl_system_flavor: odl-standard-4

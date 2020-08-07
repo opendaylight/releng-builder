@@ -6,80 +6,79 @@
     name: integration-csit-parameters
     parameters:
       - opendaylight-infra-parameters:
-          os-cloud: '{os-cloud}'
-          project: 'integration/test'
-          branch: '{branch}'
-          refspec: 'refs/heads/{branch}'
-          artifacts: '{archive-artifacts}'
+          os-cloud: "{os-cloud}"
+          project: "integration/test"
+          branch: "{branch}"
+          refspec: "refs/heads/{branch}"
+          artifacts: "{archive-artifacts}"
       # CSIT
       - integration-bundle-url:
-          bundle-url: '{bundle-url}'
+          bundle-url: "{bundle-url}"
       - integration-repo-url:
-          repo-url: '{repo-url}'
+          repo-url: "{repo-url}"
       - integration-test-options:
-          test-options: '{robot-options}'
+          test-options: "{robot-options}"
       - integration-controller-parameters:
-          controller-debug-map: '{debug-map}'
-          controller-features: '{install-features}'
-          controller-max-mem: '{controller-max-mem}'
-          controller-scope: '{controller-scope}'
-          controller-use-features-boot: '{use-features-boot}'
-          feature-elasticsearch-attribute: '{elasticsearch-attribute}'
+          controller-debug-map: "{debug-map}"
+          controller-features: "{install-features}"
+          controller-max-mem: "{controller-max-mem}"
+          controller-scope: "{controller-scope}"
+          controller-use-features-boot: "{use-features-boot}"
+          feature-elasticsearch-attribute: "{elasticsearch-attribute}"
 
 - parameter:
     name: integration-controller-parameters
     parameters:
       - string:
           name: CONTROLLERSCOPE
-          default: '{controller-scope}'
-          description: 'Feature Only or Feature All test'
+          default: "{controller-scope}"
+          description: "Feature Only or Feature All test"
 
       - string:
           name: CONTROLLERFEATURES
-          default: '{controller-features}'
+          default: "{controller-features}"
           description: |
-              Features to install in the controller separated by comma.
-              (note: Do not include decanter* features used for harvesting JVM metrics.
-               They are inserted in install scripts.)
+            Features to install in the controller separated by comma.
+            (note: Do not include decanter* features used for harvesting JVM metrics.
+             They are inserted in install scripts.)
 
       - string:
           name: CONTROLLERDEBUGMAP
-          default: '{controller-debug-map}'
+          default: "{controller-debug-map}"
           description: |
-              Key:Value map of debugs to enable on the controller separated by spaces.
-              The module should not include org.opendaylight.
-              The levels must be one of: ERROR, WARN, INFO, DEBUG, TRACE.
-              (ex. ovsdb.lib:ERROR netvirt.vpnservice:INFO)
+            Key:Value map of debugs to enable on the controller separated by spaces.
+            The module should not include org.opendaylight.
+            The levels must be one of: ERROR, WARN, INFO, DEBUG, TRACE.
+            (ex. ovsdb.lib:ERROR netvirt.vpnservice:INFO)
 
       - string:
           name: CONTROLLERMAXMEM
-          default: '{controller-max-mem}'
+          default: "{controller-max-mem}"
           description: |
-              Max Heap size to use when starting the controller.
+            Max Heap size to use when starting the controller.
 
       - string:
           name: ELASTICSEARCHATTRIBUTE
-          default: '{feature-elasticsearch-attribute}'
+          default: "{feature-elasticsearch-attribute}"
           description: |
-              Configure the period the script should harvest JVM metrics.
-              Possible values: long (=120000)
-                               short (=5000)
-                               any number between 5000 and 120000
-                               disabled (use for disabling harvesting)
+            Configure the period the script should harvest JVM metrics.
+            Possible values: long (=120000)
+                             short (=5000)
+                             any number between 5000 and 120000
+                             disabled (use for disabling harvesting)
 
       - string:
           name: USEFEATURESBOOT
-          default: '{controller-use-features-boot}'
-          description: 'Boolean to toggle whether featuresBoot is appended or ignored'
-
+          default: "{controller-use-features-boot}"
+          description: "Boolean to toggle whether featuresBoot is appended or ignored"
 
 - parameter:
     name: integration-distribution-branch
     parameters:
       - string:
           name: DISTROBRANCH
-          default: '{branch}'
-          description: 'Distribution GIT branch'
+          default: "{branch}"
+          description: "Distribution GIT branch"
 
 - parameter:
     name: distribution-karaf-version
@@ -88,108 +87,108 @@
     parameters:
       - string:
           name: KARAF_VERSION
-          default: '{karaf-version}'
-          description: 'karaf3, karaf4, odl, affects ODL deploy scripts'
+          default: "{karaf-version}"
+          description: "karaf3, karaf4, odl, affects ODL deploy scripts"
 
 - parameter:
     name: integration-bundle-url
     parameters:
       - string:
           name: BUNDLE_URL
-          default: '{bundle-url}'
-          description: 'URL to karaf distribution zip'
+          default: "{bundle-url}"
+          description: "URL to karaf distribution zip"
 
 - parameter:
     name: integration-repo-url
     parameters:
       - string:
           name: REPO_URL
-          default: '{repo-url}'
-          description: 'URL to feature repo artifact'
+          default: "{repo-url}"
+          description: "URL to feature repo artifact"
 
 - parameter:
     name: integration-jdk-version
     parameters:
       - string:
           name: JDKVERSION
-          default: '{jdkversion}'
-          description: 'Parameter to indicate JAVA Version'
+          default: "{jdkversion}"
+          description: "Parameter to indicate JAVA Version"
 
 - parameter:
     name: integration-distribution-stream
     parameters:
       - string:
           name: DISTROSTREAM
-          default: '{stream}'
-          description: 'Distribution stream string, for suites to know which behavior to expect'
+          default: "{stream}"
+          description: "Distribution stream string, for suites to know which behavior to expect"
 
 - parameter:
     name: integration-script-plan
     parameters:
       - string:
           name: SCRIPTPLAN
-          default: '{script-plan}'
-          description: 'Script plan we will run before downloading and un-archiving am ODL distribution'
+          default: "{script-plan}"
+          description: "Script plan we will run before downloading and un-archiving am ODL distribution"
 
 - parameter:
     name: integration-config-plan
     parameters:
       - string:
           name: CONFIGPLAN
-          default: '{config-plan}'
-          description: 'Config plan we will run after un-archiving and starting an ODL distribution'
+          default: "{config-plan}"
+          description: "Config plan we will run after un-archiving and starting an ODL distribution"
 
 - parameter:
     name: integration-stream-test-plan
     parameters:
       - string:
           name: STREAMTESTPLAN
-          default: '{stream-test-plan}'
-          description: 'Stream-specific test plan we will run'
+          default: "{stream-test-plan}"
+          description: "Stream-specific test plan we will run"
 
 - parameter:
     name: integration-test-plan
     parameters:
       - string:
           name: TESTPLAN
-          default: '{test-plan}'
-          description: 'General test plan we will run unless stream-specific one is found'
+          default: "{test-plan}"
+          description: "General test plan we will run unless stream-specific one is found"
 
 - parameter:
     name: integration-test-suites
     parameters:
       - string:
           name: SUITES
-          default: '{test-suites}'
+          default: "{test-suites}"
           description: |
-              List of space-separated suites. Useful when running specific suites within a testplan.
-              Do not include ${{WORKSPACE}}/test/csit/suites/ in the values:
-              (ex. openstack/connectivity/l2.robot openstack/clustering/ha_l2.robot
-               openstack/tempest/tempest.robot netvirt/elan/elan.robot).
+            List of space-separated suites. Useful when running specific suites within a testplan.
+            Do not include ${{WORKSPACE}}/test/csit/suites/ in the values:
+            (ex. openstack/connectivity/l2.robot openstack/clustering/ha_l2.robot
+             openstack/tempest/tempest.robot netvirt/elan/elan.robot).
 
 - parameter:
     name: integration-test-options
     parameters:
       - string:
           name: TESTOPTIONS
-          default: '{test-options}'
-          description: 'Robot command options'
+          default: "{test-options}"
+          description: "Robot command options"
 
 - parameter:
     name: integration-distribution-git-url
     parameters:
       - string:
           name: DISTROGITURL
-          default: '{git-url}/integration/distribution'
-          description: 'Distribution GIT URL (do not modify)'
+          default: "{git-url}/integration/distribution"
+          description: "Distribution GIT URL (do not modify)"
 
 - parameter:
     name: integration-patch-refspec
     parameters:
       - string:
           name: PATCHREFSPEC
-          default: '{branch}'
-          description: 'Integration Patch Refspec'
+          default: "{branch}"
+          description: "Integration Patch Refspec"
 
 # Macro: integration-gerrit-scm
 # Operation: this macro downloads a project gerrit
@@ -199,14 +198,14 @@
     name: integration-gerrit-scm
     scm:
       - git:
-          credentials-id: 'opendaylight-jenkins-ssh'
-          url: '$GIT_BASE'
-          basedir: '{basedir}'
-          refspec: '{refspec}'
+          credentials-id: "opendaylight-jenkins-ssh"
+          url: "$GIT_BASE"
+          basedir: "{basedir}"
+          refspec: "{refspec}"
           branches:
-            - 'origin/{branch}'
+            - "origin/{branch}"
           skip-tag: true
-          choosing-strategy: 'gerrit'
+          choosing-strategy: "gerrit"
 
 # Macro: integration-distribution-scm
 # Operation: this macro downloads the integration/distribution repo using distribution as basedir
@@ -216,12 +215,12 @@
     name: integration-distribution-scm
     scm:
       - git:
-          credentials-id: 'opendaylight-jenkins-ssh'
-          basedir: 'distribution'
-          url: '$DISTROGITURL'
-          refspec: ''
+          credentials-id: "opendaylight-jenkins-ssh"
+          basedir: "distribution"
+          url: "$DISTROGITURL"
+          refspec: ""
           branches:
-            - 'origin/{branch}'
+            - "origin/{branch}"
           skip-tag: true
 
 # Macro: integration-trigger-patch-submitted
@@ -238,7 +237,7 @@
     name: integration-trigger-patch-submitted
     triggers:
       - gerrit:
-          server-name: '{gerrit-server-name}'
+          server-name: "{gerrit-server-name}"
           trigger-on:
             - patchset-created-event:
                 exclude-drafts: true
@@ -252,13 +251,13 @@
           gerrit-build-unstable-codereview-value: 0
           projects:
             - project-compare-type: ANT
-              project-pattern: '{project}'
+              project-pattern: "{project}"
               branches:
                 - branch-compare-type: ANT
-                  branch-pattern: '**/{branch}'
+                  branch-pattern: "**/{branch}"
               file-paths:
                 - compare-type: ANT
-                  pattern: '{files}'
+                  pattern: "{files}"
 
 # Macro: integration-csit-only
 # Operation: this macro sets a trigger on reverse job list
@@ -268,8 +267,8 @@
     name: integration-csit-trigger
     triggers:
       - reverse:
-          jobs: '{jobs}'
-          result: 'success'
+          jobs: "{jobs}"
+          result: "success"
 
 # Macro: integration-openstack-controller-mininet
 # Operation: this macro will spin the controller and mininet vms
@@ -280,12 +279,12 @@
     wrappers:
       - openstack:
           instances:
-            - cloud-name: 'ODLRPC'
-              template-name: '{controller-image}'
-              count: '{controller-vms}'
-            - cloud-name: 'ODLRPC'
-              template-name: '{mininet-image}'
-              count: '{mininet-vms}'
+            - cloud-name: "ODLRPC"
+              template-name: "{controller-image}"
+              count: "{controller-vms}"
+            - cloud-name: "ODLRPC"
+              template-name: "{mininet-image}"
+              count: "{mininet-vms}"
 
 # Macro: integration-openstack-controller-devstack
 # Operation: this macro will spin the controller and devstack vms
@@ -295,12 +294,12 @@
     wrappers:
       - openstack:
           instances:
-            - cloud-name: 'ODLRPC'
-              template-name: '{controller-image}'
-              count: '{controller-vms}'
-            - cloud-name: 'ODLRPC'
-              template-name: '{openstack-image}'
-              count: '{openstack-vms}'
+            - cloud-name: "ODLRPC"
+              template-name: "{controller-image}"
+              count: "{controller-vms}"
+            - cloud-name: "ODLRPC"
+              template-name: "{openstack-image}"
+              count: "{openstack-vms}"
 
 #################
 # Shell Scripts #
@@ -490,10 +489,10 @@
     name: integration-csit-publish
     publishers:
       - robot:
-          output-path: ''
-          other-files: '{obj:robot_other_files}'
-          unstable-threshold: '{robot-unstable-threshold}'
-          pass-threshold: '{robot-pass-threshold}'
+          output-path: ""
+          other-files: "{obj:robot_other_files}"
+          unstable-threshold: "{robot-unstable-threshold}"
+          pass-threshold: "{robot-pass-threshold}"
           only-critical: false
       - integration-csit-archive-build
       - integration-csit-run-postscript
@@ -534,7 +533,6 @@
                     # TODO: Tweak the compression level if better ratio (or speed) is needed.
           mark-unstable-if-failed: true
 
-
 - publisher:
     name: integration-csit-run-postscript
     publishers:
@@ -550,8 +548,8 @@
               build-steps:
                 - config-file-provider:
                     files:
-                      - file-id: 'odl-elastic-cloud'
-                        target: '${HOME}/.netrc'
+                      - file-id: "odl-elastic-cloud"
+                        target: "${HOME}/.netrc"
                 - shell: |
                     #!/bin/bash
                     #The following script runs any configurable postplan stored in test/csit/postplans.
@@ -583,7 +581,7 @@
                 - UNSTABLE
               build-steps:
                 - inject:
-                    properties-file: 'slave_addresses.txt'
+                    properties-file: "slave_addresses.txt"
                 - shell: |
                     #!/bin/bash
                     source /tmp/common-functions.sh ${BUNDLEFOLDER}

@@ -5,29 +5,29 @@
       - inttest-patch-test
 
     # The project name
-    project: 'bgpcep'
+    project: "bgpcep"
 
     # Project branches
     stream:
       - silicon:
-          branch: 'master'
-          java-version: 'openjdk11'
+          branch: "master"
+          java-version: "openjdk11"
       - aluminium:
-          branch: 'stable/aluminium'
-          java-version: 'openjdk11'
+          branch: "stable/aluminium"
+          java-version: "openjdk11"
       - magnesium:
-          branch: 'stable/magnesium'
-          java-version: 'openjdk11'
+          branch: "stable/magnesium"
+          java-version: "openjdk11"
       - sodium:
-          branch: 'stable/sodium'
+          branch: "stable/sodium"
 
     feature:
       - bgp:
           csit-list: >
-              bgpcep-csit-1node-gate-userfeatures-all-{stream},
-              bgpcep-csit-1node-gate-bgp-ingest-mixed-all-{stream}
+            bgpcep-csit-1node-gate-userfeatures-all-{stream},
+            bgpcep-csit-1node-gate-bgp-ingest-mixed-all-{stream}
 
       - pcep:
           csit-list: >
-              bgpcep-csit-1node-gate-userfeatures-all-{stream},
-              bgpcep-csit-1node-gate-throughpcep-all-{stream}
+            bgpcep-csit-1node-gate-userfeatures-all-{stream},
+            bgpcep-csit-1node-gate-throughpcep-all-{stream}

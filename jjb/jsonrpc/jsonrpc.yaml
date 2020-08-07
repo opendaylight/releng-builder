@@ -2,8 +2,8 @@
 - project:
     name: jsonrpc-silicon
     jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-distribution-check-{stream}"
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: jsonrpc
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-jsonrpc/91870/
@@ -12,15 +12,15 @@
       - odl-maven-jobs-jdk11
       - odl-maven-verify-jobs
 
-    project: 'jsonrpc'
-    project-name: 'jsonrpc'
+    project: "jsonrpc"
+    project-name: "jsonrpc"
     stream: silicon
-    java-version: 'openjdk11'
-    branch: 'master'
-    mvn-settings: 'jsonrpc-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream},mdsal-merge-{stream}'
-    email-upstream: '[jsonrpc] [odlparent] [yangtools] [controller] [mdsal]'
+    java-version: "openjdk11"
+    branch: "master"
+    mvn-settings: "jsonrpc-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream},mdsal-merge-{stream}"
+    email-upstream: "[jsonrpc] [odlparent] [yangtools] [controller] [mdsal]"
 
     # Used by the release job
     staging-profile-id: 96fdf4408765d
@@ -28,8 +28,8 @@
 - project:
     name: jsonrpc-aluminium
     jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-distribution-check-{stream}"
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: jsonrpc
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-jsonrpc/91870/
@@ -37,15 +37,15 @@
       - odl-maven-jobs-jdk11
       - odl-maven-verify-jobs
 
-    project: 'jsonrpc'
-    project-name: 'jsonrpc'
+    project: "jsonrpc"
+    project-name: "jsonrpc"
     stream: aluminium
-    java-version: 'openjdk11'
-    branch: 'stable/aluminium'
-    mvn-settings: 'jsonrpc-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream},mdsal-merge-{stream}'
-    email-upstream: '[jsonrpc] [odlparent] [yangtools] [controller] [mdsal]'
+    java-version: "openjdk11"
+    branch: "stable/aluminium"
+    mvn-settings: "jsonrpc-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream},mdsal-merge-{stream}"
+    email-upstream: "[jsonrpc] [odlparent] [yangtools] [controller] [mdsal]"
 
     # Used by the release job
     staging-profile-id: 96fdf4408765d
@@ -53,8 +53,8 @@
 - project:
     name: jsonrpc-magnesium
     jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-distribution-check-{stream}"
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: jsonrpc
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-jsonrpc/91870/
@@ -62,15 +62,15 @@
       - odl-maven-jobs-jdk11
       - odl-maven-verify-jobs
 
-    project: 'jsonrpc'
-    project-name: 'jsonrpc'
+    project: "jsonrpc"
+    project-name: "jsonrpc"
     stream: magnesium
-    java-version: 'openjdk11'
-    branch: 'stable/magnesium'
-    mvn-settings: 'jsonrpc-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream},mdsal-merge-{stream}'
-    email-upstream: '[jsonrpc] [odlparent] [yangtools] [controller] [mdsal]'
+    java-version: "openjdk11"
+    branch: "stable/magnesium"
+    mvn-settings: "jsonrpc-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream},mdsal-merge-{stream}"
+    email-upstream: "[jsonrpc] [odlparent] [yangtools] [controller] [mdsal]"
 
     # Used by the release job
     staging-profile-id: 96fdf4408765d
@@ -78,7 +78,7 @@
 - project:
     name: jsonrpc-sodium
     jobs:
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: jsonrpc
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-jsonrpc/91870/
@@ -86,14 +86,14 @@
       - odl-maven-jobs
       - odl-maven-verify-jobs
 
-    project: 'jsonrpc'
-    project-name: 'jsonrpc'
+    project: "jsonrpc"
+    project-name: "jsonrpc"
     stream: sodium
-    branch: 'stable/sodium'
-    mvn-settings: 'jsonrpc-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream},mdsal-merge-{stream}'
-    email-upstream: '[jsonrpc] [odlparent] [yangtools] [controller] [mdsal]'
+    branch: "stable/sodium"
+    mvn-settings: "jsonrpc-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream},mdsal-merge-{stream}"
+    email-upstream: "[jsonrpc] [odlparent] [yangtools] [controller] [mdsal]"
 
     # Used by the release job
     staging-profile-id: 96fdf4408765d
@@ -103,16 +103,16 @@
     jobs:
       - gerrit-maven-sonar
 
-    project: 'jsonrpc'
-    project-name: 'jsonrpc'
-    java-version: 'openjdk11'
-    branch: 'master'
-    mvn-settings: 'jsonrpc-settings'
-    mvn-opts: '-Xmx1024m'
+    project: "jsonrpc"
+    project-name: "jsonrpc"
+    java-version: "openjdk11"
+    branch: "master"
+    mvn-settings: "jsonrpc-settings"
+    mvn-opts: "-Xmx1024m"
     sonarcloud: true
-    sonarcloud-project-organization: '{sonarcloud_project_organization}'
-    sonarcloud-api-token: '{sonarcloud_api_token}'
-    sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
+    sonarcloud-project-organization: "{sonarcloud_project_organization}"
+    sonarcloud-api-token: "{sonarcloud_api_token}"
+    sonarcloud-project-key: "{sonarcloud_project_organization}_{project-name}"
 
 - project:
     name: jsonrpc-info

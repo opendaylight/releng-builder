@@ -2,7 +2,7 @@
 - project:
     name: unimgr-silicon
     jobs:
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: unimgr
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-unimgr/49748/
@@ -12,18 +12,18 @@
       - odl-maven-verify-jobs
 
     stream: silicon
-    project: 'unimgr'
-    project-name: 'unimgr'
-    branch: 'master'
-    java-version: 'openjdk11'
-    mvn-settings: 'unimgr-settings'
-    mvn-opts: '-Xmx1024m'
+    project: "unimgr"
+    project-name: "unimgr"
+    branch: "master"
+    java-version: "openjdk11"
+    mvn-settings: "unimgr-settings"
+    mvn-opts: "-Xmx1024m"
     dependencies: >
-        odlparent-merge-{stream},
-        yangtools-merge-{stream},
-        controller-merge-{stream},
-        mdsal-merge-{stream}
-    email-upstream: '[unimgr] [odlparent] [yangtools] [controller] [mdsal]'
+      odlparent-merge-{stream},
+      yangtools-merge-{stream},
+      controller-merge-{stream},
+      mdsal-merge-{stream}
+    email-upstream: "[unimgr] [odlparent] [yangtools] [controller] [mdsal]"
     build-node: centos7-builder-4c-16g
 
     # Used by the release job
@@ -32,7 +32,7 @@
 - project:
     name: unimgr-aluminium
     jobs:
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: unimgr
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-unimgr/49748/
@@ -41,18 +41,18 @@
       - odl-maven-verify-jobs
 
     stream: aluminium
-    project: 'unimgr'
-    project-name: 'unimgr'
-    branch: 'stable/aluminium'
-    java-version: 'openjdk11'
-    mvn-settings: 'unimgr-settings'
-    mvn-opts: '-Xmx1024m'
+    project: "unimgr"
+    project-name: "unimgr"
+    branch: "stable/aluminium"
+    java-version: "openjdk11"
+    mvn-settings: "unimgr-settings"
+    mvn-opts: "-Xmx1024m"
     dependencies: >
-        odlparent-merge-{stream},
-        yangtools-merge-{stream},
-        controller-merge-{stream},
-        mdsal-merge-{stream}
-    email-upstream: '[unimgr] [odlparent] [yangtools] [controller] [mdsal]'
+      odlparent-merge-{stream},
+      yangtools-merge-{stream},
+      controller-merge-{stream},
+      mdsal-merge-{stream}
+    email-upstream: "[unimgr] [odlparent] [yangtools] [controller] [mdsal]"
     build-node: centos7-builder-4c-16g
 
     # Used by the release job
@@ -61,7 +61,7 @@
 - project:
     name: unimgr-magnesium
     jobs:
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: unimgr
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-unimgr/49748/
@@ -70,14 +70,14 @@
       - odl-maven-verify-jobs
 
     stream: magnesium
-    project: 'unimgr'
-    project-name: 'unimgr'
-    branch: 'stable/magnesium'
-    java-version: 'openjdk11'
-    mvn-settings: 'unimgr-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: 'ovsdb-merge-{stream}'
-    email-upstream: '[unimgr] [ovsdb]'
+    project: "unimgr"
+    project-name: "unimgr"
+    branch: "stable/magnesium"
+    java-version: "openjdk11"
+    mvn-settings: "unimgr-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: "ovsdb-merge-{stream}"
+    email-upstream: "[unimgr] [ovsdb]"
     build-node: centos7-builder-4c-16g
 
     # Used by the release job
@@ -86,7 +86,7 @@
 - project:
     name: unimgr-sodium
     jobs:
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: unimgr
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-unimgr/49748/
@@ -95,13 +95,13 @@
       - odl-maven-verify-jobs
 
     stream: sodium
-    project: 'unimgr'
-    project-name: 'unimgr'
-    branch: 'stable/sodium'
-    mvn-settings: 'unimgr-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: 'ovsdb-merge-{stream}'
-    email-upstream: '[unimgr] [ovsdb]'
+    project: "unimgr"
+    project-name: "unimgr"
+    branch: "stable/sodium"
+    mvn-settings: "unimgr-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: "ovsdb-merge-{stream}"
+    email-upstream: "[unimgr] [ovsdb]"
     build-node: centos7-builder-4c-16g
 
     # Used by the release job
@@ -112,16 +112,16 @@
     jobs:
       - gerrit-maven-sonar
 
-    project: 'unimgr'
-    project-name: 'unimgr'
-    branch: 'master'
-    java-version: 'openjdk11'
-    mvn-settings: 'unimgr-settings'
-    mvn-opts: '-Xmx1024m'
+    project: "unimgr"
+    project-name: "unimgr"
+    branch: "master"
+    java-version: "openjdk11"
+    mvn-settings: "unimgr-settings"
+    mvn-opts: "-Xmx1024m"
     sonarcloud: true
-    sonarcloud-project-organization: '{sonarcloud_project_organization}'
-    sonarcloud-api-token: '{sonarcloud_api_token}'
-    sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
+    sonarcloud-project-organization: "{sonarcloud_project_organization}"
+    sonarcloud-api-token: "{sonarcloud_api_token}"
+    sonarcloud-project-key: "{sonarcloud_project_organization}_{project-name}"
 
 - project:
     name: unimgr-info

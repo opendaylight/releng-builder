@@ -24,11 +24,11 @@ def check_prefix(filename):
     with open(filename, 'r') as _file:
         for num, line in enumerate(_file, 1):
             if re.search('prefix:', line):
-                if "''" not in line:
+                if "\"\"" not in line:
                     print(
                         'ERROR: A non-blank prefix is defined in '
                         'jjb/defaults.yaml. The prefix MUST be set to blank '
-                        '\'\' in production!'
+                        '\"\" in production!'
                     )
                     sys.exit(1)
 
