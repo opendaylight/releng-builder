@@ -5,31 +5,31 @@
       - inttest-csit-3node
 
     # The project name
-    project: 'sxp'
+    project: "sxp"
 
     # The functionality under test
-    functionality: 'cluster-binding'
+    functionality: "cluster-binding"
 
     # Project branches
     stream:
       - silicon:
-          branch: 'master'
-          jre: 'openjdk11'
+          branch: "master"
+          jre: "openjdk11"
       - aluminium:
-          branch: 'stable/aluminium'
-          jre: 'openjdk11'
+          branch: "stable/aluminium"
+          jre: "openjdk11"
       - magnesium:
-          branch: 'stable/magnesium'
-          jre: 'openjdk11'
+          branch: "stable/magnesium"
+          jre: "openjdk11"
       - sodium:
-          branch: 'stable/sodium'
+          branch: "stable/sodium"
 
     install:
       - all:
-          scope: 'all'
+          scope: "all"
 
     # Features to install
-    install-features: 'odl-restconf,odl-sxp-routing'
+    install-features: "odl-restconf,odl-sxp-routing"
 
     # Robot custom options:
-    robot-options: ''
+    robot-options: ""

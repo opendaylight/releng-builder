@@ -5,45 +5,45 @@
       - inttest-csit-1node
 
     # The project name
-    project: 'openflowplugin'
+    project: "openflowplugin"
 
     # The functionality under test
-    functionality: 'scale-switch'
+    functionality: "scale-switch"
 
     # Project branches
     stream:
       - silicon:
-          branch: 'master'
-          jre: 'openjdk11'
+          branch: "master"
+          jre: "openjdk11"
       - aluminium:
-          branch: 'stable/aluminium'
-          jre: 'openjdk11'
+          branch: "stable/aluminium"
+          jre: "openjdk11"
       - magnesium:
-          branch: 'stable/magnesium'
-          jre: 'openjdk11'
+          branch: "stable/magnesium"
+          jre: "openjdk11"
       - sodium:
-          branch: 'stable/sodium'
+          branch: "stable/sodium"
 
     install:
       - only:
-          scope: 'only'
+          scope: "only"
 
     # Job images
-    tools_system_image: 'ZZCI - Ubuntu 16.04 - mininet-ovs-28 - 20190415-091034.881'
+    tools_system_image: "ZZCI - Ubuntu 16.04 - mininet-ovs-28 - 20190415-091034.881"
 
     # Features to install
     install-features: >
-        odl-openflowplugin-flow-services-rest
+      odl-openflowplugin-flow-services-rest
 
     # Robot custom options
-    robot-options: ''
+    robot-options: ""
 
     # Plot Info
-    01-plot-title: 'Maximum Switches Linear Topology'
-    01-plot-yaxis: 'Switches'
-    01-plot-group: 'Switch Scalability'
-    01-plot-data-file: 'switches.csv'
-    02-plot-title: 'Topology Discover Time'
-    02-plot-yaxis: 'Seconds'
-    02-plot-group: 'Switch Scalability'
-    02-plot-data-file: 'time.csv'
+    01-plot-title: "Maximum Switches Linear Topology"
+    01-plot-yaxis: "Switches"
+    01-plot-group: "Switch Scalability"
+    01-plot-data-file: "switches.csv"
+    02-plot-title: "Topology Discover Time"
+    02-plot-yaxis: "Seconds"
+    02-plot-group: "Switch Scalability"
+    02-plot-data-file: "time.csv"

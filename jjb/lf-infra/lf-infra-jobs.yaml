@@ -9,7 +9,7 @@
     build-node: ubuntu1804-docker-2c-2g
     build-timeout: 60
     stream: any
-    branch: '*'
+    branch: "*"
     python-version: python3
 
     git-url: https://gerrit.linuxfoundation.org/infra/$GERRIT_PROJECT
@@ -24,7 +24,7 @@
     project: releng/ci-workshop
     build-node: centos7-builder-2c-8g
     stream: any
-    branch: '*'
+    branch: "*"
 
     git-url: https://gerrit.linuxfoundation.org/infra/$GERRIT_PROJECT
     gerrit-server-name: lf-releng
@@ -38,7 +38,7 @@
     project: releng/info-master
     build-node: centos7-builder-2c-2g
     stream: any
-    branch: '*'
+    branch: "*"
 
     git-url: https://gerrit.linuxfoundation.org/infra/$GERRIT_PROJECT
     gerrit-server-name: lf-releng
@@ -52,14 +52,14 @@
     project: zzz-test-release
     build-node: centos7-builder-2c-2g
     stream: any
-    branch: '*'
+    branch: "*"
 
     git-url: https://git.opendaylight.org/gerrit/$GERRIT_PROJECT
 
 - project:
     name: lf-infra-common-packer
     jobs:
-      - '{project-name}-rtd-jobs'
+      - "{project-name}-rtd-jobs"
       - gerrit-release-announce
       - gerrit-tox-verify
 
@@ -70,7 +70,7 @@
     rtd-build-url: https://readthedocs.org/api/v2/webhook/lf-releng-common-packer/38930/
     rtd-token: 0cdf727cc22f8f888ffec0e69f46d89031018776
     stream: any
-    branch: '*'
+    branch: "*"
 
     git-url: https://gerrit.linuxfoundation.org/infra/$GERRIT_PROJECT
     gerrit-server-name: lf-releng
@@ -78,7 +78,7 @@
 - project:
     name: lf-infra-docs
     jobs:
-      - '{project-name}-rtd-jobs'
+      - "{project-name}-rtd-jobs"
       - gerrit-tox-verify
 
     project-name: lf-infra-docs
@@ -88,7 +88,7 @@
     rtd-build-url: https://readthedocs.org/api/v2/webhook/lf-releng-docs/32930/
     rtd-token: e02d61c268c3cc11b65ef169ff199dbb82989647
     stream: any
-    branch: '*'
+    branch: "*"
 
     git-url: https://gerrit.linuxfoundation.org/infra/$GERRIT_PROJECT
     gerrit-server-name: lf-releng
@@ -96,7 +96,7 @@
 - project:
     name: lf-infra-docs-conf
     jobs:
-      - '{project-name}-rtd-jobs'
+      - "{project-name}-rtd-jobs"
       - gerrit-release-announce
       - gerrit-tox-verify
 
@@ -107,7 +107,7 @@
     rtd-build-url: https://readthedocs.org/api/v2/webhook/lfdocs-conf/32931/
     rtd-token: 27a59073490f2cefab41761dc225ac8c8bfdf028
     stream: any
-    branch: '*'
+    branch: "*"
 
     git-url: https://gerrit.linuxfoundation.org/infra/$GERRIT_PROJECT
     gerrit-server-name: lf-releng
@@ -115,7 +115,7 @@
 - project:
     name: lf-infra-global-jjb
     jobs:
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-rtd-jobs":
           gerrit_trigger_file_paths:
             - compare-type: REG_EXP
               pattern: '.*\.css'
@@ -126,7 +126,7 @@
             - compare-type: REG_EXP
               pattern: '.*\/conf.py'
             - compare-type: REG_EXP
-              pattern: 'releasenotes/.*'
+              pattern: "releasenotes/.*"
       - gerrit-release-announce
       - gerrit-tox-verify
 
@@ -137,7 +137,7 @@
     rtd-build-url: https://readthedocs.org/api/v2/webhook/lf-releng-global-jjb/32932/
     rtd-token: f19058af6f90e04dff828e3eec5e2f0990895a7b
     stream: any
-    branch: '*'
+    branch: "*"
 
     git-url: https://gerrit.linuxfoundation.org/infra/$GERRIT_PROJECT
     gerrit-server-name: lf-releng
@@ -145,7 +145,7 @@
 - project:
     name: lf-infra-lftools
     jobs:
-      - '{project-name}-rtd-jobs'
+      - "{project-name}-rtd-jobs"
       - gerrit-release-announce:
           build-node: centos7-builder-2c-1g
       - gerrit-tox-verify
@@ -158,7 +158,7 @@
     rtd-build-url: https://readthedocs.org/api/v2/webhook/lf-releng-tools/32933/
     rtd-token: 47a135ceba9053c6f88394a7171ebf5602a9fc95
     stream: any
-    branch: '*'
+    branch: "*"
 
     git-url: https://gerrit.linuxfoundation.org/infra/$GERRIT_PROJECT
     gerrit-server-name: lf-releng
@@ -172,7 +172,7 @@
     project: releng/license-checker
     build-node: centos7-builder-2c-2g
     stream: any
-    branch: '*'
+    branch: "*"
 
     git-url: https://gerrit.linuxfoundation.org/infra/$GERRIT_PROJECT
     gerrit-server-name: lf-releng

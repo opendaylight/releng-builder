@@ -7,13 +7,13 @@
       - odl-maven-verify-jobs
 
     stream: silicon
-    project: 'snmp'
-    project-name: 'snmp'
-    branch: 'master'
-    mvn-settings: 'snmp-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: 'odlparent-merge-{stream}'
-    email-upstream: '[snmp] [odlparent]'
+    project: "snmp"
+    project-name: "snmp"
+    branch: "master"
+    mvn-settings: "snmp-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: "odlparent-merge-{stream}"
+    email-upstream: "[snmp] [odlparent]"
 
     # Used by the release job
     staging-profile-id: a68fb236b93a6
@@ -25,13 +25,13 @@
       - odl-maven-verify-jobs
 
     stream: aluminium
-    project: 'snmp'
-    project-name: 'snmp'
-    branch: 'stable/aluminium'
-    mvn-settings: 'snmp-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: 'odlparent-merge-{stream}'
-    email-upstream: '[snmp] [odlparent]'
+    project: "snmp"
+    project-name: "snmp"
+    branch: "stable/aluminium"
+    mvn-settings: "snmp-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: "odlparent-merge-{stream}"
+    email-upstream: "[snmp] [odlparent]"
 
     # Used by the release job
     staging-profile-id: a68fb236b93a6
@@ -43,13 +43,13 @@
       - odl-maven-verify-jobs
 
     stream: magnesium
-    project: 'snmp'
-    project-name: 'snmp'
-    branch: 'stable/magnesium'
-    mvn-settings: 'snmp-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: 'odlparent-merge-{stream}'
-    email-upstream: '[snmp] [odlparent]'
+    project: "snmp"
+    project-name: "snmp"
+    branch: "stable/magnesium"
+    mvn-settings: "snmp-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: "odlparent-merge-{stream}"
+    email-upstream: "[snmp] [odlparent]"
 
     # Used by the release job
     staging-profile-id: a68fb236b93a6
@@ -61,13 +61,13 @@
       - odl-maven-verify-jobs
 
     stream: sodium
-    project: 'snmp'
-    project-name: 'snmp'
-    branch: 'stable/sodium'
-    mvn-settings: 'snmp-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: 'odlparent-merge-{stream}'
-    email-upstream: '[snmp] [odlparent]'
+    project: "snmp"
+    project-name: "snmp"
+    branch: "stable/sodium"
+    mvn-settings: "snmp-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: "odlparent-merge-{stream}"
+    email-upstream: "[snmp] [odlparent]"
 
     # Used by the release job
     staging-profile-id: a68fb236b93a6
@@ -76,15 +76,15 @@
     name: snmp-sonar
     jobs:
       - gerrit-maven-sonar
-    project: 'snmp'
-    project-name: 'snmp'
-    branch: 'master'
-    mvn-settings: 'snmp-settings'
-    mvn-opts: '-Xmx1024m'
+    project: "snmp"
+    project-name: "snmp"
+    branch: "master"
+    mvn-settings: "snmp-settings"
+    mvn-opts: "-Xmx1024m"
     sonarcloud: true
-    sonarcloud-project-organization: '{sonarcloud_project_organization}'
-    sonarcloud-api-token: '{sonarcloud_api_token}'
-    sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
+    sonarcloud-project-organization: "{sonarcloud_project_organization}"
+    sonarcloud-api-token: "{sonarcloud_api_token}"
+    sonarcloud-project-key: "{sonarcloud_project_organization}_{project-name}"
 
 - project:
     name: snmp-info

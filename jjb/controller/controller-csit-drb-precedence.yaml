@@ -5,10 +5,10 @@
       - inttest-csit-3node
 
     # The project name
-    project: 'controller'
+    project: "controller"
 
     # The functionality under test
-    functionality: 'drb-precedence-longevity'
+    functionality: "drb-precedence-longevity"
 
     # Set elasticsearch attribute to value 'long' for longevity jobs
     #elasticsearch-attribute: 'long'
@@ -16,25 +16,25 @@
     # Project branches
     stream:
       - silicon:
-          branch: 'master'
-          jre: 'openjdk11'
+          branch: "master"
+          jre: "openjdk11"
       - aluminium:
-          branch: 'stable/aluminium'
-          jre: 'openjdk11'
+          branch: "stable/aluminium"
+          jre: "openjdk11"
       - magnesium:
-          branch: 'stable/magnesium'
-          jre: 'openjdk11'
+          branch: "stable/magnesium"
+          jre: "openjdk11"
       - sodium:
-          branch: 'stable/sodium'
+          branch: "stable/sodium"
 
     install:
       - only:
-          scope: 'only'
+          scope: "only"
 
     # Features to install
     install-features: >
-        odl-restconf-noauth,
-        odl-clustering-test-app
+      odl-restconf-noauth,
+      odl-clustering-test-app
 
     # Built timeout
-    build-timeout: '1500'
+    build-timeout: "1500"

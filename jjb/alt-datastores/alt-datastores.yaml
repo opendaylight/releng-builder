@@ -2,7 +2,7 @@
 - project:
     name: alt-datastores-silicon
     jobs:
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: alt-datastores
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-alt-datastore/86481/
@@ -12,13 +12,13 @@
       - odl-maven-verify-jobs
 
     stream: silicon
-    project: 'alt-datastores'
-    project-name: 'alt-datastores'
-    branch: 'master'
-    mvn-settings: 'alt-datastores-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
-    email-upstream: '[alt-datastores] [odlparent] [yangtools] [controller]'
+    project: "alt-datastores"
+    project-name: "alt-datastores"
+    branch: "master"
+    mvn-settings: "alt-datastores-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}"
+    email-upstream: "[alt-datastores] [odlparent] [yangtools] [controller]"
     build-node: centos7-docker-2c-8g
 
     # Used by the release job
@@ -27,7 +27,7 @@
 - project:
     name: alt-datastores-aluminium
     jobs:
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: alt-datastores
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-alt-datastore/86481/
@@ -36,13 +36,13 @@
       - odl-maven-verify-jobs
 
     stream: aluminium
-    project: 'alt-datastores'
-    project-name: 'alt-datastores'
-    branch: 'stable/aluminium'
-    mvn-settings: 'alt-datastores-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
-    email-upstream: '[alt-datastores] [odlparent] [yangtools] [controller]'
+    project: "alt-datastores"
+    project-name: "alt-datastores"
+    branch: "stable/aluminium"
+    mvn-settings: "alt-datastores-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}"
+    email-upstream: "[alt-datastores] [odlparent] [yangtools] [controller]"
     build-node: centos7-docker-2c-8g
 
     # Used by the release job
@@ -51,7 +51,7 @@
 - project:
     name: alt-datastores-magnesium
     jobs:
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: alt-datastores
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-alt-datastore/86481/
@@ -60,13 +60,13 @@
       - odl-maven-verify-jobs
 
     stream: magnesium
-    project: 'alt-datastores'
-    project-name: 'alt-datastores'
-    branch: 'stable/magnesium'
-    mvn-settings: 'alt-datastores-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
-    email-upstream: '[alt-datastores] [odlparent] [yangtools] [controller]'
+    project: "alt-datastores"
+    project-name: "alt-datastores"
+    branch: "stable/magnesium"
+    mvn-settings: "alt-datastores-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}"
+    email-upstream: "[alt-datastores] [odlparent] [yangtools] [controller]"
     build-node: centos7-docker-2c-8g
 
     # Used by the release job
@@ -75,7 +75,7 @@
 - project:
     name: alt-datastores-sodium
     jobs:
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: alt-datastores
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-alt-datastore/86481/
@@ -84,13 +84,13 @@
       - odl-maven-verify-jobs
 
     stream: sodium
-    project: 'alt-datastores'
-    project-name: 'alt-datastores'
-    branch: 'stable/sodium'
-    mvn-settings: 'alt-datastores-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
-    email-upstream: '[alt-datastores] [odlparent] [yangtools] [controller]'
+    project: "alt-datastores"
+    project-name: "alt-datastores"
+    branch: "stable/sodium"
+    mvn-settings: "alt-datastores-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}"
+    email-upstream: "[alt-datastores] [odlparent] [yangtools] [controller]"
     build-node: centos7-docker-2c-8g
 
     # Used by the release job
@@ -104,15 +104,15 @@
             -Dodl.jacoco.aggregateFile=$WORKSPACE/target/jacoco.exec
             -Dsonar.jacoco.reportPath=$WORKSPACE/target/jacoco.exec
 
-    project: 'alt-datastores'
-    project-name: 'alt-datastores'
-    branch: 'master'
-    mvn-settings: 'alt-datastores-settings'
-    mvn-opts: '-Xmx1024m'
+    project: "alt-datastores"
+    project-name: "alt-datastores"
+    branch: "master"
+    mvn-settings: "alt-datastores-settings"
+    mvn-opts: "-Xmx1024m"
     sonarcloud: true
-    sonarcloud-project-organization: '{sonarcloud_project_organization}'
-    sonarcloud-api-token: '{sonarcloud_api_token}'
-    sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
+    sonarcloud-project-organization: "{sonarcloud_project_organization}"
+    sonarcloud-api-token: "{sonarcloud_api_token}"
+    sonarcloud-project-key: "{sonarcloud_project_organization}_{project-name}"
 
 - project:
     name: alt-datastores-info

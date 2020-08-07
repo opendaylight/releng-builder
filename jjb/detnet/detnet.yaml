@@ -2,7 +2,7 @@
 - project:
     name: detnet-silicon
     jobs:
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: detnet
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-detnet/86479/
@@ -12,14 +12,14 @@
       - odl-maven-verify-jobs
 
     stream: silicon
-    project: 'detnet'
-    project-name: 'detnet'
-    branch: 'master'
-    java-version: 'openjdk11'
-    mvn-settings: 'detnet-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
-    email-upstream: '[detnet] [odlparent] [yangtools] [controller]'
+    project: "detnet"
+    project-name: "detnet"
+    branch: "master"
+    java-version: "openjdk11"
+    mvn-settings: "detnet-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}"
+    email-upstream: "[detnet] [odlparent] [yangtools] [controller]"
     build-node: centos7-docker-2c-8g
 
     # Used by the release job
@@ -28,7 +28,7 @@
 - project:
     name: detnet-aluminium
     jobs:
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: detnet
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-detnet/86479/
@@ -37,14 +37,14 @@
       - odl-maven-verify-jobs
 
     stream: aluminium
-    project: 'detnet'
-    project-name: 'detnet'
-    branch: 'stable/aluminium'
-    java-version: 'openjdk11'
-    mvn-settings: 'detnet-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
-    email-upstream: '[detnet] [odlparent] [yangtools] [controller]'
+    project: "detnet"
+    project-name: "detnet"
+    branch: "stable/aluminium"
+    java-version: "openjdk11"
+    mvn-settings: "detnet-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}"
+    email-upstream: "[detnet] [odlparent] [yangtools] [controller]"
     build-node: centos7-docker-2c-8g
 
     # Used by the release job
@@ -53,7 +53,7 @@
 - project:
     name: detnet-magnesium
     jobs:
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: detnet
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-detnet/86479/
@@ -62,14 +62,14 @@
       - odl-maven-verify-jobs
 
     stream: magnesium
-    project: 'detnet'
-    project-name: 'detnet'
-    branch: 'stable/magnesium'
-    java-version: 'openjdk11'
-    mvn-settings: 'detnet-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
-    email-upstream: '[detnet] [odlparent] [yangtools] [controller]'
+    project: "detnet"
+    project-name: "detnet"
+    branch: "stable/magnesium"
+    java-version: "openjdk11"
+    mvn-settings: "detnet-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}"
+    email-upstream: "[detnet] [odlparent] [yangtools] [controller]"
     build-node: centos7-docker-2c-8g
 
     # Used by the release job
@@ -83,15 +83,15 @@
             -Dodl.jacoco.aggregateFile=$WORKSPACE/target/jacoco.exec
             -Dsonar.jacoco.reportPath=$WORKSPACE/target/jacoco.exec
 
-    project: 'detnet'
-    project-name: 'detnet'
-    branch: 'master'
-    mvn-settings: 'detnet-settings'
-    mvn-opts: '-Xmx1024m'
+    project: "detnet"
+    project-name: "detnet"
+    branch: "master"
+    mvn-settings: "detnet-settings"
+    mvn-opts: "-Xmx1024m"
     sonarcloud: true
-    sonarcloud-project-organization: '{sonarcloud_project_organization}'
-    sonarcloud-api-token: '{sonarcloud_api_token}'
-    sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
+    sonarcloud-project-organization: "{sonarcloud_project_organization}"
+    sonarcloud-api-token: "{sonarcloud_api_token}"
+    sonarcloud-project-key: "{sonarcloud_project_organization}_{project-name}"
 
 - project:
     name: detnet-info

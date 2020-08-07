@@ -2,9 +2,9 @@
 - project:
     name: netvirt-silicon
     jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-maven-javadoc-jobs'
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-distribution-check-{stream}"
+      - "{project-name}-maven-javadoc-jobs"
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           doc-dir: .tox/docs/tmp/html
           project-pattern: netvirt
@@ -14,27 +14,27 @@
       - odl-maven-jobs-jdk11
       - odl-maven-verify-jobs
 
-    csit-gate-list: 'netvirt-csit-1node-0cmb-1ctl-2cmp-apex-queens-gate-snat-conntrack-{stream}'
+    csit-gate-list: "netvirt-csit-1node-0cmb-1ctl-2cmp-apex-queens-gate-snat-conntrack-{stream}"
     block_on_csit: false
 
     stream: silicon
-    branch: 'master'
+    branch: "master"
 
-    project: 'netvirt'
-    project-name: 'netvirt'
+    project: "netvirt"
+    project-name: "netvirt"
 
-    java-version: 'openjdk11'
-    mvn-settings: 'netvirt-settings'
-    mvn-opts: '-Xmx2048m'
+    java-version: "openjdk11"
+    mvn-settings: "netvirt-settings"
+    mvn-opts: "-Xmx2048m"
     build-timeout: 90
     build-node: centos7-builder-8c-8g
     dependencies: >
-        genius-merge-{stream},
-        neutron-merge-{stream},
-        openflowjava-merge-{stream},
-        openflowplugin-merge-{stream},
-        ovsdb-merge-{stream}
-    email-upstream: '[genius] [netvirt] [neutron] [openflowjava] [openflowplugin] [ovsdb]'
+      genius-merge-{stream},
+      neutron-merge-{stream},
+      openflowjava-merge-{stream},
+      openflowplugin-merge-{stream},
+      ovsdb-merge-{stream}
+    email-upstream: "[genius] [netvirt] [neutron] [openflowjava] [openflowplugin] [ovsdb]"
 
     # Used by the release job
     staging-profile-id: a67da0ffbb1ba
@@ -42,9 +42,9 @@
 - project:
     name: netvirt-aluminium
     jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-maven-javadoc-jobs'
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-distribution-check-{stream}"
+      - "{project-name}-maven-javadoc-jobs"
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           doc-dir: .tox/docs/tmp/html
           project-pattern: netvirt
@@ -54,27 +54,27 @@
       - odl-maven-jobs-jdk11
       - odl-maven-verify-jobs
 
-    csit-gate-list: 'netvirt-csit-1node-0cmb-1ctl-2cmp-apex-queens-gate-snat-conntrack-{stream}'
+    csit-gate-list: "netvirt-csit-1node-0cmb-1ctl-2cmp-apex-queens-gate-snat-conntrack-{stream}"
     block_on_csit: false
 
     stream: aluminium
-    branch: 'stable/aluminium'
+    branch: "stable/aluminium"
 
-    project: 'netvirt'
-    project-name: 'netvirt'
+    project: "netvirt"
+    project-name: "netvirt"
 
-    java-version: 'openjdk11'
-    mvn-settings: 'netvirt-settings'
-    mvn-opts: '-Xmx2048m'
+    java-version: "openjdk11"
+    mvn-settings: "netvirt-settings"
+    mvn-opts: "-Xmx2048m"
     build-timeout: 90
     build-node: centos7-builder-8c-8g
     dependencies: >
-        genius-merge-{stream},
-        neutron-merge-{stream},
-        openflowjava-merge-{stream},
-        openflowplugin-merge-{stream},
-        ovsdb-merge-{stream}
-    email-upstream: '[genius] [netvirt] [neutron] [openflowjava] [openflowplugin] [ovsdb]'
+      genius-merge-{stream},
+      neutron-merge-{stream},
+      openflowjava-merge-{stream},
+      openflowplugin-merge-{stream},
+      ovsdb-merge-{stream}
+    email-upstream: "[genius] [netvirt] [neutron] [openflowjava] [openflowplugin] [ovsdb]"
 
     # Used by the release job
     staging-profile-id: a67da0ffbb1ba
@@ -82,9 +82,9 @@
 - project:
     name: netvirt-magnesium
     jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-maven-javadoc-jobs'
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-distribution-check-{stream}"
+      - "{project-name}-maven-javadoc-jobs"
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           doc-dir: .tox/docs/tmp/html
           project-pattern: netvirt
@@ -94,27 +94,27 @@
       - odl-maven-jobs-jdk11
       - odl-maven-verify-jobs
 
-    csit-gate-list: 'netvirt-csit-1node-0cmb-1ctl-2cmp-apex-queens-gate-snat-conntrack-{stream}'
+    csit-gate-list: "netvirt-csit-1node-0cmb-1ctl-2cmp-apex-queens-gate-snat-conntrack-{stream}"
     block_on_csit: false
 
     stream: magnesium
-    branch: 'stable/magnesium'
+    branch: "stable/magnesium"
 
-    project: 'netvirt'
-    project-name: 'netvirt'
+    project: "netvirt"
+    project-name: "netvirt"
 
-    java-version: 'openjdk11'
-    mvn-settings: 'netvirt-settings'
-    mvn-opts: '-Xmx2048m'
+    java-version: "openjdk11"
+    mvn-settings: "netvirt-settings"
+    mvn-opts: "-Xmx2048m"
     build-timeout: 90
     build-node: centos7-builder-8c-8g
     dependencies: >
-        genius-merge-{stream},
-        neutron-merge-{stream},
-        openflowjava-merge-{stream},
-        openflowplugin-merge-{stream},
-        ovsdb-merge-{stream}
-    email-upstream: '[genius] [netvirt] [neutron] [openflowjava] [openflowplugin] [ovsdb]'
+      genius-merge-{stream},
+      neutron-merge-{stream},
+      openflowjava-merge-{stream},
+      openflowplugin-merge-{stream},
+      ovsdb-merge-{stream}
+    email-upstream: "[genius] [netvirt] [neutron] [openflowjava] [openflowplugin] [ovsdb]"
 
     # Used by the release job
     staging-profile-id: a67da0ffbb1ba
@@ -122,9 +122,9 @@
 - project:
     name: netvirt-sodium
     jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-maven-javadoc-jobs'
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-distribution-check-{stream}"
+      - "{project-name}-maven-javadoc-jobs"
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           doc-dir: .tox/docs/tmp/html
           project-pattern: netvirt
@@ -134,25 +134,25 @@
       - odl-maven-jobs
       - odl-maven-verify-jobs
 
-    csit-gate-list: 'netvirt-csit-1node-0cmb-1ctl-2cmp-apex-queens-gate-snat-conntrack-{stream}'
+    csit-gate-list: "netvirt-csit-1node-0cmb-1ctl-2cmp-apex-queens-gate-snat-conntrack-{stream}"
     block_on_csit: false
 
     stream: sodium
-    branch: 'stable/sodium'
+    branch: "stable/sodium"
 
-    project: 'netvirt'
-    project-name: 'netvirt'
-    mvn-settings: 'netvirt-settings'
-    mvn-opts: '-Xmx2048m'
+    project: "netvirt"
+    project-name: "netvirt"
+    mvn-settings: "netvirt-settings"
+    mvn-opts: "-Xmx2048m"
     build-timeout: 90
     build-node: centos7-builder-8c-8g
     dependencies: >
-        genius-merge-{stream},
-        neutron-merge-{stream},
-        openflowjava-merge-{stream},
-        openflowplugin-merge-{stream},
-        ovsdb-merge-{stream}
-    email-upstream: '[genius] [netvirt] [neutron] [openflowjava] [openflowplugin] [ovsdb]'
+      genius-merge-{stream},
+      neutron-merge-{stream},
+      openflowjava-merge-{stream},
+      openflowplugin-merge-{stream},
+      ovsdb-merge-{stream}
+    email-upstream: "[genius] [netvirt] [neutron] [openflowjava] [openflowplugin] [ovsdb]"
 
     # Used by the release job
     staging-profile-id: a67da0ffbb1ba
@@ -162,24 +162,24 @@
     jobs:
       - gerrit-maven-sonar
 
-    project: 'netvirt'
-    project-name: 'netvirt'
-    branch: 'master'
-    java-version: 'openjdk11'
-    mvn-settings: 'netvirt-settings'
-    mvn-opts: '-Xmx1024m'
+    project: "netvirt"
+    project-name: "netvirt"
+    branch: "master"
+    java-version: "openjdk11"
+    mvn-settings: "netvirt-settings"
+    mvn-opts: "-Xmx1024m"
     sonarcloud: true
-    sonarcloud-project-organization: '{sonarcloud_project_organization}'
-    sonarcloud-api-token: '{sonarcloud_api_token}'
-    sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
+    sonarcloud-project-organization: "{sonarcloud_project_organization}"
+    sonarcloud-api-token: "{sonarcloud_api_token}"
+    sonarcloud-project-key: "{sonarcloud_project_organization}_{project-name}"
 
 - project:
     name: netvirt-csit-view
     views:
       - csit-view
     view-name: netvirt-csit
-    view-description: 'List of netvirt-csit jobs'
-    view-regex: 'netvirt-csit(?!(.*gate)|(.*hwvtep)).*'
+    view-description: "List of netvirt-csit jobs"
+    view-regex: "netvirt-csit(?!(.*gate)|(.*hwvtep)).*"
 
 - project:
     name: netvirt

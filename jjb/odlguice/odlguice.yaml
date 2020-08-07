@@ -7,15 +7,15 @@
       - odl-maven-verify-jobs
 
     stream: silicon
-    project: 'odlguice'
-    project-name: 'odlguice'
+    project: "odlguice"
+    project-name: "odlguice"
     build-node: centos7-builder-2c-2g
     build-timeout: 120
-    branch: 'master'
-    java-version: 'openjdk11'
-    mvn-settings: 'odlguice-settings'
-    mvn-opts: '-Xmx2048m'
-    email-upstream: '[app-dev]'
+    branch: "master"
+    java-version: "openjdk11"
+    mvn-settings: "odlguice-settings"
+    mvn-opts: "-Xmx2048m"
+    email-upstream: "[app-dev]"
 
     # Used by the release job
     staging-profile-id: 44ce7d1aad49e
@@ -27,15 +27,15 @@
       - odl-maven-verify-jobs
 
     stream: aluminium
-    project: 'odlguice'
-    project-name: 'odlguice'
+    project: "odlguice"
+    project-name: "odlguice"
     build-node: centos7-builder-2c-2g
     build-timeout: 120
-    branch: 'stable/aluminium'
-    java-version: 'openjdk11'
-    mvn-settings: 'odlguice-settings'
-    mvn-opts: '-Xmx2048m'
-    email-upstream: '[app-dev]'
+    branch: "stable/aluminium"
+    java-version: "openjdk11"
+    mvn-settings: "odlguice-settings"
+    mvn-opts: "-Xmx2048m"
+    email-upstream: "[app-dev]"
 
     # Used by the release job
     staging-profile-id: 44ce7d1aad49e
@@ -48,15 +48,15 @@
             -Dodl.jacoco.aggregateFile=$WORKSPACE/target/jacoco.exec
             -Dsonar.jacoco.reportPath=$WORKSPACE/target/jacoco.exec
 
-    project: 'odlguice'
-    project-name: 'odlguice'
-    branch: 'master'
-    mvn-settings: 'odlguice-settings'
-    mvn-opts: '-Xmx1024m'
+    project: "odlguice"
+    project-name: "odlguice"
+    branch: "master"
+    mvn-settings: "odlguice-settings"
+    mvn-opts: "-Xmx1024m"
     sonarcloud: true
-    sonarcloud-project-organization: '{sonarcloud_project_organization}'
-    sonarcloud-api-token: '{sonarcloud_api_token}'
-    sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
+    sonarcloud-project-organization: "{sonarcloud_project_organization}"
+    sonarcloud-api-token: "{sonarcloud_api_token}"
+    sonarcloud-project-key: "{sonarcloud_project_organization}_{project-name}"
 
 - project:
     name: odlguice-info

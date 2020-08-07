@@ -4,40 +4,40 @@
     jobs:
       - inttest-patch-test
 
-    project: 'aaa'
+    project: "aaa"
 
     stream:
       - silicon:
-          branch: 'master'
-          java-version: 'openjdk11'
+          branch: "master"
+          java-version: "openjdk11"
       - aluminium:
-          branch: 'stable/aluminium'
-          java-version: 'openjdk11'
+          branch: "stable/aluminium"
+          java-version: "openjdk11"
       - magnesium:
-          branch: 'stable/magnesium'
-          java-version: 'openjdk11'
+          branch: "stable/magnesium"
+          java-version: "openjdk11"
       - sodium:
-          branch: 'stable/sodium'
+          branch: "stable/sodium"
 
-    os-branch: 'queens'
+    os-branch: "queens"
 
     feature:
       - authn:
           csit-list: >
-              aaa-csit-1node-authn-all-{stream}
+            aaa-csit-1node-authn-all-{stream}
 
       - keystone:
           csit-list: >
-              aaa-csit-1node-keystone-all-{stream}
+            aaa-csit-1node-keystone-all-{stream}
 
       - netvirt:
           csit-list: >
-              netvirt-csit-1node-{os-std-topo}-openstack-{os-branch}-gate-stateful-{stream}
+            netvirt-csit-1node-{os-std-topo}-openstack-{os-branch}-gate-stateful-{stream}
 
       - cluster-netvirt:
           csit-list: >
-              netvirt-csit-3node-{os-std-topo}-openstack-{os-branch}-gate-stateful-{stream}
+            netvirt-csit-3node-{os-std-topo}-openstack-{os-branch}-gate-stateful-{stream}
 
       - genius:
           csit-list: >
-              genius-csit-1node-gate-only-{stream}
+            genius-csit-1node-gate-only-{stream}

@@ -2,8 +2,8 @@
 - project:
     name: aaa-silicon
     jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-distribution-check-{stream}"
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: aaa
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-aaa/47615/
@@ -12,14 +12,14 @@
       - odl-maven-verify-jobs
 
     stream: silicon
-    project: 'aaa'
-    project-name: 'aaa'
-    branch: 'master'
-    java-version: 'openjdk11'
-    mvn-settings: 'aaa-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
-    email-upstream: '[aaa] [odlparent] [yangtools] [controller]'
+    project: "aaa"
+    project-name: "aaa"
+    branch: "master"
+    java-version: "openjdk11"
+    mvn-settings: "aaa-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}"
+    email-upstream: "[aaa] [odlparent] [yangtools] [controller]"
 
     # Used by the release job
     staging-profile-id: 9318cf3c82c33
@@ -27,8 +27,8 @@
 - project:
     name: aaa-aluminium
     jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-distribution-check-{stream}"
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: aaa
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-aaa/47615/
@@ -37,14 +37,14 @@
       - odl-maven-verify-jobs
 
     stream: aluminium
-    project: 'aaa'
-    project-name: 'aaa'
-    branch: 'stable/aluminium'
-    java-version: 'openjdk11'
-    mvn-settings: 'aaa-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
-    email-upstream: '[aaa] [odlparent] [yangtools] [controller]'
+    project: "aaa"
+    project-name: "aaa"
+    branch: "stable/aluminium"
+    java-version: "openjdk11"
+    mvn-settings: "aaa-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}"
+    email-upstream: "[aaa] [odlparent] [yangtools] [controller]"
 
     # Used by the release job
     staging-profile-id: 9318cf3c82c33
@@ -52,8 +52,8 @@
 - project:
     name: aaa-magnesium
     jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-distribution-check-{stream}"
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: aaa
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-aaa/47615/
@@ -62,14 +62,14 @@
       - odl-maven-verify-jobs
 
     stream: magnesium
-    project: 'aaa'
-    project-name: 'aaa'
-    branch: 'stable/magnesium'
-    java-version: 'openjdk11'
-    mvn-settings: 'aaa-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
-    email-upstream: '[aaa] [odlparent] [yangtools] [controller]'
+    project: "aaa"
+    project-name: "aaa"
+    branch: "stable/magnesium"
+    java-version: "openjdk11"
+    mvn-settings: "aaa-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}"
+    email-upstream: "[aaa] [odlparent] [yangtools] [controller]"
 
     # Used by the release job
     staging-profile-id: 9318cf3c82c33
@@ -77,8 +77,8 @@
 - project:
     name: aaa-sodium
     jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-distribution-check-{stream}"
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: aaa
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-aaa/47615/
@@ -87,13 +87,13 @@
       - odl-maven-verify-jobs
 
     stream: sodium
-    project: 'aaa'
-    project-name: 'aaa'
-    branch: 'stable/sodium'
-    mvn-settings: 'aaa-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
-    email-upstream: '[aaa] [odlparent] [yangtools] [controller]'
+    project: "aaa"
+    project-name: "aaa"
+    branch: "stable/sodium"
+    mvn-settings: "aaa-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}"
+    email-upstream: "[aaa] [odlparent] [yangtools] [controller]"
 
     # Used by the release job
     staging-profile-id: 9318cf3c82c33
@@ -106,16 +106,16 @@
             -Dodl.jacoco.aggregateFile=$WORKSPACE/target/jacoco.exec
             -Dsonar.jacoco.reportPath=$WORKSPACE/target/jacoco.exec
 
-    project: 'aaa'
-    project-name: 'aaa'
-    branch: 'master'
-    java-version: 'openjdk11'
-    mvn-settings: 'aaa-settings'
-    mvn-opts: '-Xmx1024m'
+    project: "aaa"
+    project-name: "aaa"
+    branch: "master"
+    java-version: "openjdk11"
+    mvn-settings: "aaa-settings"
+    mvn-opts: "-Xmx1024m"
     sonarcloud: true
-    sonarcloud-project-organization: '{sonarcloud_project_organization}'
-    sonarcloud-api-token: '{sonarcloud_api_token}'
-    sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
+    sonarcloud-project-organization: "{sonarcloud_project_organization}"
+    sonarcloud-api-token: "{sonarcloud_api_token}"
+    sonarcloud-project-key: "{sonarcloud_project_organization}_{project-name}"
 
 - project:
     name: aaa-info
@@ -123,7 +123,7 @@
       - gerrit-info-yaml-verify
     project: aaa
     project-name: aaa
-    branch: 'master'
+    branch: "master"
     build-node: centos7-builder-2c-1g
 
 - project:

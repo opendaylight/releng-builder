@@ -5,23 +5,23 @@
     name: opflex-build
     builders:
       - maven-target:
-          maven-version: 'mvn33'
+          maven-version: "mvn33"
           pom: genie/pom.xml
           goals: compile
       - shell: !include-raw-escape: scripts/opflex-build.sh
 
 - builder:
-    name: 'opflex-build-libuv'
+    name: "opflex-build-libuv"
     builders:
       - shell: !include-raw-escape: scripts/libuv-build.sh
 
 - builder:
-    name: 'opflex-build-openvswitch'
+    name: "opflex-build-openvswitch"
     builders:
       - shell: !include-raw: scripts/openvswitch-build.sh
 
 - builder:
-    name: 'opflex-build-rapidjson'
+    name: "opflex-build-rapidjson"
     builders:
       - shell: !include-raw-escape: scripts/rapidjson-build.sh
 
@@ -37,16 +37,16 @@
     # UPLOAD_FILES_PATH: Path to directory containing one or more files
     builders:
       - lf-maven-install:
-          mvn-version: '{mvn-version}'
+          mvn-version: "{mvn-version}"
       - lf-provide-maven-settings:
-          global-settings-file: '{global-settings-file}'
-          settings-file: '{settings-file}'
+          global-settings-file: "{global-settings-file}"
+          settings-file: "{settings-file}"
       - inject:
           properties-content: |
-              MAVEN_REPO_URL=file://$WORKSPACE/m2repo
-              REPO_ID={repo-id}
-              GROUP_ID={group-id}
-              UPLOAD_FILES_PATH={upload-files-dir}
+            MAVEN_REPO_URL=file://$WORKSPACE/m2repo
+            REPO_ID={repo-id}
+            GROUP_ID={group-id}
+            UPLOAD_FILES_PATH={upload-files-dir}
       - shell: !include-raw-escape:
           - ../global-jjb/shell/common-variables.sh
           - scripts/deploy-opflex.sh
@@ -64,39 +64,39 @@
     # STAGING_PROFILE_ID  : Staging profile id created on Nexus
     builders:
       - lf-provide-maven-settings:
-          global-settings-file: '{global-settings-file}'
-          settings-file: '{settings-file}'
+          global-settings-file: "{global-settings-file}"
+          settings-file: "{settings-file}"
       - lf-infra-create-netrc:
           server-id: opendaylight-staging
       - inject:
           properties-content: |
-              STAGING_PROFILE_ID={staging-profile-id}
+            STAGING_PROFILE_ID={staging-profile-id}
       - shell: !include-raw-escape:
           - ../global-jjb/shell/maven-stage.sh
 
 - scm:
-    name: 'git-opflex-libuv'
+    name: "git-opflex-libuv"
     scm:
       - git:
           url: https://github.com/libuv/libuv.git
           branches:
-            - 'refs/tags/v$LIBUV_VERSION'
+            - "refs/tags/v$LIBUV_VERSION"
           wipe-workspace: true
 
 - scm:
-    name: 'git-opflex-ovs-v2'
+    name: "git-opflex-ovs-v2"
     scm:
       - git:
           url: https://github.com/openvswitch/ovs.git
           branches:
-            - 'refs/tags/v$OPENVSWITCH_VERSION'
+            - "refs/tags/v$OPENVSWITCH_VERSION"
           wipe-workspace: true
 
 - scm:
-    name: 'git-opflex-rapidjson'
+    name: "git-opflex-rapidjson"
     scm:
       - git:
           url: https://github.com/miloyip/rapidjson.git
           branches:
-            - 'refs/tags/v$RAPIDJSON_VERSION'
+            - "refs/tags/v$RAPIDJSON_VERSION"
           wipe-workspace: true

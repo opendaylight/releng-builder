@@ -1,19 +1,19 @@
 ---
 - project:
-    name: '00-Empty View'
+    name: "00-Empty View"
     views:
       - common-view
-    view-name: '00-Empty View'
+    view-name: "00-Empty View"
     view-description: >
       Empty job view. This is used as the default landing view to keep the
       Jenkins UI responding better while a) under high load and b) when there
       are a lot of jobs defined in the system
-    view-regex: ''
+    view-regex: ""
 
 - view:
     name: 01-Recent
-    regex: '.*'
-    description: 'List of most recent jobs'
+    regex: ".*"
+    description: "List of most recent jobs"
     job-filters:
       most-recent:
         max-to-include: 25
@@ -39,13 +39,13 @@
     views:
       - common-view
     view-name: All-Sonar
-    view-regex: '.*-sonar$'
-    view-description: 'List of Sonar jobs'
+    view-regex: ".*-sonar$"
+    view-description: "List of Sonar jobs"
 
 - view:
     name: CLM
-    description: 'List of CLM jobs'
-    regex: '.*-clm-.*'
+    description: "List of CLM jobs"
+    regex: ".*-clm-.*"
     view-type: list
     filter-executors: false
     filter-queue: false
@@ -65,40 +65,40 @@
     views:
       - csit-view
     view-name: CSIT-1node
-    view-description: 'List of CSIT 1node jobs'
-    view-regex: '^.*-csit-1node.*'
+    view-description: "List of CSIT 1node jobs"
+    view-regex: "^.*-csit-1node.*"
 
 - project:
     name: CSIT-3node
     views:
       - csit-view
     view-name: CSIT-3node
-    view-description: 'List of CSIT 3node jobs'
-    view-regex: '^.*-csit-3node.*'
+    view-description: "List of CSIT 3node jobs"
+    view-regex: "^.*-csit-3node.*"
 
 - project:
     name: CSIT
     views:
       - csit-view
     view-name: CSIT
-    view-description: 'List of CSIT jobs'
-    view-regex: '^.*-csit-.*'
+    view-description: "List of CSIT jobs"
+    view-regex: "^.*-csit-.*"
 
 - project:
     name: CSIT-Verify
     views:
       - csit-view
     view-name: CSIT-Verify
-    view-description: 'List of CSIT Verify jobs'
-    view-regex: '^.*-csit-verify.*'
+    view-description: "List of CSIT Verify jobs"
+    view-regex: "^.*-csit-verify.*"
 
 - project:
     name: Distribution-Check
     views:
       - common-view
     view-name: Distribution-Check
-    view-description: 'List of Distribution Check jobs'
-    view-regex: '.*-distribution.*-check-.*'
+    view-description: "List of Distribution Check jobs"
+    view-regex: ".*-distribution.*-check-.*"
 
 - project:
     name: Distribution-Jobs
@@ -106,96 +106,96 @@
       - common-view
     view-name: Distribution-Jobs
     view-description: >
-        List of Distribution jobs (test, check, merge, deploy, offline, verify)
-    view-regex: '^.*-distribution-(?!(test|check|merge|deploy|offline|verify)).*'
+      List of Distribution jobs (test, check, merge, deploy, offline, verify)
+    view-regex: "^.*-distribution-(?!(test|check|merge|deploy|offline|verify)).*"
 
 - project:
     name: Gate
     views:
       - common-view
     view-name: Gate
-    view-description: 'List of Gate jobs'
-    view-regex: '.*-gate-.*'
+    view-description: "List of Gate jobs"
+    view-regex: ".*-gate-.*"
 
 - project:
     name: Integration
     views:
       - common-view
     view-name: Integration
-    view-description: 'List of Integration jobs'
-    view-regex: '.*-integration-.*'
+    view-description: "List of Integration jobs"
+    view-regex: ".*-integration-.*"
 
 - project:
     name: Javadoc
     views:
       - common-view
     view-name: Javadoc
-    view-description: 'List of Javadoc jobs'
-    view-regex: '.*-javadoc-.*'
+    view-description: "List of Javadoc jobs"
+    view-regex: ".*-javadoc-.*"
 
 - project:
     name: Maven-Stage
     views:
       - common-view
     view-name: Maven-Stage
-    view-description: 'List of Maven Stage jobs'
-    view-regex: '.*-maven-stage-.*'
+    view-description: "List of Maven Stage jobs"
+    view-regex: ".*-maven-stage-.*"
 
 - project:
     name: Maven-Verify-Deps
     views:
       - common-view
     view-name: Maven-Verify-Deps
-    view-description: 'List of Maven Verify Deps jobs'
-    view-regex: '.*-maven-verify-deps-.*'
+    view-description: "List of Maven Verify Deps jobs"
+    view-regex: ".*-maven-verify-deps-.*"
 
 - project:
     name: Merge-Jobs
     views:
       - common-view
     view-name: Merge-Jobs
-    view-description: 'List of Merge jobs'
-    view-regex: '.*-merge-.*'
+    view-description: "List of Merge jobs"
+    view-regex: ".*-merge-.*"
 
 - project:
     name: Patch-Test
     views:
       - common-view
     view-name: Patch-Test
-    view-description: 'List of Patch-Test jobs, for prioritizing jobs via the Job Priorities plugin'
-    view-regex: '.*-patch-test-.*'
+    view-description: "List of Patch-Test jobs, for prioritizing jobs via the Job Priorities plugin"
+    view-regex: ".*-patch-test-.*"
 
 - project:
     name: Sanity
     views:
       - common-view
     view-name: Sanity
-    view-description: 'List of Sanity jobs'
-    view-regex: '.*-sanity-.*'
+    view-description: "List of Sanity jobs"
+    view-regex: ".*-sanity-.*"
 
 - project:
     name: Thirdparty
     views:
       - common-view
     view-name: Thirdparty
-    view-description: 'List of ODL Nexus Thirdparty dependencies jobs'
-    view-regex: '.*-thirdparty-.*'
+    view-description: "List of ODL Nexus Thirdparty dependencies jobs"
+    view-regex: ".*-thirdparty-.*"
 
 - project:
     name: Validate-AR
     views:
       - common-view
     view-name: Validate
-    view-description: 'List of Validate jobs'
-    view-regex: '.*-validate-autorelease-.*'
+    view-description: "List of Validate jobs"
+    view-regex: ".*-validate-autorelease-.*"
 
 - project:
     name: Verify
     views:
       - common-view
     view-name: Verify
-    view-description: 'List of Verify jobs, exluding CSIT jobs'
-    view-regex: '^(?!.*-csit).*-verify-.*'
+    view-description: "List of Verify jobs, exluding CSIT jobs"
+    view-regex: "^(?!.*-csit).*-verify-.*"
 
 - project:
     name: builder

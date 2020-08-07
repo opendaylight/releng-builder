@@ -6,36 +6,36 @@
       - inttest-csit-verify-1node
 
     # The project name
-    project: 'bier'
+    project: "bier"
     disable-job: true
 
     # The functionality under test
-    functionality: 'basic'
+    functionality: "basic"
 
     # Project branches
     stream:
       - silicon:
-          branch: 'master'
-          jre: 'openjdk11'
+          branch: "master"
+          jre: "openjdk11"
       - aluminium:
-          branch: 'stable/aluminium'
-          jre: 'openjdk11'
+          branch: "stable/aluminium"
+          jre: "openjdk11"
       - magnesium:
-          branch: 'stable/magnesium'
-          jre: 'openjdk11'
+          branch: "stable/magnesium"
+          jre: "openjdk11"
       - sodium:
-          branch: 'stable/sodium'
+          branch: "stable/sodium"
 
-    verify-stream: 'sodium'
-    verify-branch: 'stable/sodium'
-    verify-karaf-version: 'karaf4'
+    verify-stream: "sodium"
+    verify-branch: "stable/sodium"
+    verify-karaf-version: "karaf4"
 
     install:
       - all:
-          scope: 'all'
+          scope: "all"
 
     # Features to install
-    install-features: 'odl-bier-all'
+    install-features: "odl-bier-all"
 
     # Robot custom options
-    robot-options: ''
+    robot-options: ""

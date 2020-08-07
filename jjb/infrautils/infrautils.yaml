@@ -2,9 +2,9 @@
 - project:
     name: infrautils-master
     jobs:
-      - 'gerrit-release-merge':
+      - "gerrit-release-merge":
           build-node: centos7-builder-2c-2g
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           doc-dir: .tox/docs/tmp/html
           project-pattern: infrautils
@@ -14,14 +14,14 @@
       - odl-maven-verify-jobs
 
     stream: master
-    project: 'infrautils'
-    project-name: 'infrautils'
-    branch: 'master'
-    java-version: 'openjdk11'
-    mvn-settings: 'infrautils-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: 'odlparent-merge-{stream}'
-    email-upstream: '[infrautils] [odlparent]'
+    project: "infrautils"
+    project-name: "infrautils"
+    branch: "master"
+    java-version: "openjdk11"
+    mvn-settings: "infrautils-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: "odlparent-merge-{stream}"
+    email-upstream: "[infrautils] [odlparent]"
 
     # Used by the release job
     staging-profile-id: 96fca0367756c
@@ -29,9 +29,9 @@
 - project:
     name: infrautils-magnesium
     jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-maven-javadoc-jobs'
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-distribution-check-{stream}"
+      - "{project-name}-maven-javadoc-jobs"
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           doc-dir: .tox/docs/tmp/html
           project-pattern: infrautils
@@ -41,14 +41,14 @@
       - odl-maven-verify-jobs
 
     stream: magnesium
-    project: 'infrautils'
-    project-name: 'infrautils'
-    branch: 'stable/magnesium'
-    java-version: 'openjdk11'
-    mvn-settings: 'infrautils-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: 'odlparent-merge-{stream}'
-    email-upstream: '[infrautils] [odlparent]'
+    project: "infrautils"
+    project-name: "infrautils"
+    branch: "stable/magnesium"
+    java-version: "openjdk11"
+    mvn-settings: "infrautils-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: "odlparent-merge-{stream}"
+    email-upstream: "[infrautils] [odlparent]"
 
     # Used by the release job
     staging-profile-id: 96fca0367756c
@@ -56,9 +56,9 @@
 - project:
     name: infrautils-sodium
     jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-maven-javadoc-jobs'
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-distribution-check-{stream}"
+      - "{project-name}-maven-javadoc-jobs"
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           doc-dir: .tox/docs/tmp/html
           project-pattern: infrautils
@@ -68,13 +68,13 @@
       - odl-maven-verify-jobs
 
     stream: sodium
-    project: 'infrautils'
-    project-name: 'infrautils'
-    branch: 'stable/sodium'
-    mvn-settings: 'infrautils-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: 'odlparent-merge-{stream}'
-    email-upstream: '[infrautils] [odlparent]'
+    project: "infrautils"
+    project-name: "infrautils"
+    branch: "stable/sodium"
+    mvn-settings: "infrautils-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: "odlparent-merge-{stream}"
+    email-upstream: "[infrautils] [odlparent]"
 
     # Used by the release job
     staging-profile-id: 96fca0367756c
@@ -83,16 +83,16 @@
     name: infrautils-sonar
     jobs:
       - gerrit-maven-sonar
-    project: 'infrautils'
-    project-name: 'infrautils'
-    branch: 'master'
-    java-version: 'openjdk11'
-    mvn-settings: 'infrautils-settings'
-    mvn-opts: '-Xmx1024m'
+    project: "infrautils"
+    project-name: "infrautils"
+    branch: "master"
+    java-version: "openjdk11"
+    mvn-settings: "infrautils-settings"
+    mvn-opts: "-Xmx1024m"
     sonarcloud: true
-    sonarcloud-project-organization: '{sonarcloud_project_organization}'
-    sonarcloud-api-token: '{sonarcloud_api_token}'
-    sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
+    sonarcloud-project-organization: "{sonarcloud_project_organization}"
+    sonarcloud-api-token: "{sonarcloud_api_token}"
+    sonarcloud-project-key: "{sonarcloud_project_organization}_{project-name}"
 
 - project:
     name: infrautils-info

@@ -7,13 +7,13 @@
       - odl-maven-verify-jobs
 
     stream: silicon
-    project: 'packetcable'
-    project-name: 'packetcable'
-    branch: 'master'
-    mvn-settings: 'packetcable-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: ''
-    email-upstream: '[packetcable]'
+    project: "packetcable"
+    project-name: "packetcable"
+    branch: "master"
+    mvn-settings: "packetcable-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: ""
+    email-upstream: "[packetcable]"
     disable-job: true
 
     # Used by the release job
@@ -26,13 +26,13 @@
       - odl-maven-verify-jobs
 
     stream: aluminium
-    project: 'packetcable'
-    project-name: 'packetcable'
-    branch: 'stable/aluminium'
-    mvn-settings: 'packetcable-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: ''
-    email-upstream: '[packetcable]'
+    project: "packetcable"
+    project-name: "packetcable"
+    branch: "stable/aluminium"
+    mvn-settings: "packetcable-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: ""
+    email-upstream: "[packetcable]"
     disable-job: true
 
     # Used by the release job
@@ -45,13 +45,13 @@
       - odl-maven-verify-jobs
 
     stream: magnesium
-    project: 'packetcable'
-    project-name: 'packetcable'
-    branch: 'stable/magnesium'
-    mvn-settings: 'packetcable-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: ''
-    email-upstream: '[packetcable]'
+    project: "packetcable"
+    project-name: "packetcable"
+    branch: "stable/magnesium"
+    mvn-settings: "packetcable-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: ""
+    email-upstream: "[packetcable]"
     disable-job: true
 
     # Used by the release job
@@ -64,13 +64,13 @@
       - odl-maven-verify-jobs
 
     stream: sodium
-    project: 'packetcable'
-    project-name: 'packetcable'
-    branch: 'stable/sodium'
-    mvn-settings: 'packetcable-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: ''
-    email-upstream: '[packetcable]'
+    project: "packetcable"
+    project-name: "packetcable"
+    branch: "stable/sodium"
+    mvn-settings: "packetcable-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: ""
+    email-upstream: "[packetcable]"
     disable-job: true
 
     # Used by the release job
@@ -80,16 +80,16 @@
     name: packetcable-sonar
     jobs:
       - gerrit-maven-sonar
-    project: 'packetcable'
-    project-name: 'packetcable'
-    branch: 'master'
-    mvn-settings: 'packetcable-settings'
-    mvn-opts: '-Xmx1024m'
+    project: "packetcable"
+    project-name: "packetcable"
+    branch: "master"
+    mvn-settings: "packetcable-settings"
+    mvn-opts: "-Xmx1024m"
     disable-job: true
     sonarcloud: true
-    sonarcloud-project-organization: '{sonarcloud_project_organization}'
-    sonarcloud-api-token: '{sonarcloud_api_token}'
-    sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
+    sonarcloud-project-organization: "{sonarcloud_project_organization}"
+    sonarcloud-api-token: "{sonarcloud_api_token}"
+    sonarcloud-project-key: "{sonarcloud_project_organization}_{project-name}"
 
 - project:
     name: packetcable-info
