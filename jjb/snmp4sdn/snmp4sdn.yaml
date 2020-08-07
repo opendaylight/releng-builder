@@ -2,7 +2,7 @@
 - project:
     name: snmp4sdn-silicon
     jobs:
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: snmp4sdn
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-snmp4sdn/75649/
@@ -12,13 +12,13 @@
       - gerrit-release-merge
 
     stream: silicon
-    project: 'snmp4sdn'
-    project-name: 'snmp4sdn'
-    branch: 'master'
-    mvn-settings: 'snmp4sdn-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: 'odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream}'
-    email-upstream: '[snmp4sdn] [odlparent] [controller] [yangtools]'
+    project: "snmp4sdn"
+    project-name: "snmp4sdn"
+    branch: "master"
+    mvn-settings: "snmp4sdn-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: "odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream}"
+    email-upstream: "[snmp4sdn] [odlparent] [controller] [yangtools]"
 
     # Used by the release job
     staging-profile-id: a69034a4b6ef5
@@ -26,7 +26,7 @@
 - project:
     name: snmp4sdn-aluminium
     jobs:
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: snmp4sdn
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-snmp4sdn/75649/
@@ -35,13 +35,13 @@
       - odl-maven-verify-jobs
 
     stream: aluminium
-    project: 'snmp4sdn'
-    project-name: 'snmp4sdn'
-    branch: 'stable/aluminium'
-    mvn-settings: 'snmp4sdn-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: 'odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream}'
-    email-upstream: '[snmp4sdn] [odlparent] [controller] [yangtools]'
+    project: "snmp4sdn"
+    project-name: "snmp4sdn"
+    branch: "stable/aluminium"
+    mvn-settings: "snmp4sdn-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: "odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream}"
+    email-upstream: "[snmp4sdn] [odlparent] [controller] [yangtools]"
 
     # Used by the release job
     staging-profile-id: a69034a4b6ef5
@@ -49,7 +49,7 @@
 - project:
     name: snmp4sdn-magnesium
     jobs:
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: snmp4sdn
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-snmp4sdn/75649/
@@ -58,13 +58,13 @@
       - odl-maven-verify-jobs
 
     stream: magnesium
-    project: 'snmp4sdn'
-    project-name: 'snmp4sdn'
-    branch: 'stable/magnesium'
-    mvn-settings: 'snmp4sdn-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: 'odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream}'
-    email-upstream: '[snmp4sdn] [odlparent] [controller] [yangtools]'
+    project: "snmp4sdn"
+    project-name: "snmp4sdn"
+    branch: "stable/magnesium"
+    mvn-settings: "snmp4sdn-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: "odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream}"
+    email-upstream: "[snmp4sdn] [odlparent] [controller] [yangtools]"
 
     # Used by the release job
     staging-profile-id: a69034a4b6ef5
@@ -72,7 +72,7 @@
 - project:
     name: snmp4sdn-sodium
     jobs:
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: snmp4sdn
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-snmp4sdn/75649/
@@ -81,13 +81,13 @@
       - odl-maven-verify-jobs
 
     stream: sodium
-    project: 'snmp4sdn'
-    project-name: 'snmp4sdn'
-    branch: 'stable/sodium'
-    mvn-settings: 'snmp4sdn-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: 'odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream}'
-    email-upstream: '[snmp4sdn] [odlparent] [controller] [yangtools]'
+    project: "snmp4sdn"
+    project-name: "snmp4sdn"
+    branch: "stable/sodium"
+    mvn-settings: "snmp4sdn-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: "odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream}"
+    email-upstream: "[snmp4sdn] [odlparent] [controller] [yangtools]"
 
     # Used by the release job
     staging-profile-id: a69034a4b6ef5
@@ -97,15 +97,15 @@
     jobs:
       - gerrit-maven-sonar
 
-    project: 'snmp4sdn'
-    project-name: 'snmp4sdn'
-    branch: 'master'
-    mvn-settings: 'snmp4sdn-settings'
-    mvn-opts: '-Xmx1024m'
+    project: "snmp4sdn"
+    project-name: "snmp4sdn"
+    branch: "master"
+    mvn-settings: "snmp4sdn-settings"
+    mvn-opts: "-Xmx1024m"
     sonarcloud: true
-    sonarcloud-project-organization: '{sonarcloud_project_organization}'
-    sonarcloud-api-token: '{sonarcloud_api_token}'
-    sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
+    sonarcloud-project-organization: "{sonarcloud_project_organization}"
+    sonarcloud-api-token: "{sonarcloud_api_token}"
+    sonarcloud-project-key: "{sonarcloud_project_organization}_{project-name}"
 
 - project:
     name: snmp4sdn-info

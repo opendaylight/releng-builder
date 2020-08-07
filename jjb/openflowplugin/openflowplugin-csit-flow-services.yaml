@@ -5,7 +5,7 @@
       - inttest-csit-1node
 
     # The project name
-    project: 'openflowplugin'
+    project: "openflowplugin"
 
     # The functionality under test
     functionality:
@@ -15,29 +15,29 @@
     # Project branches
     stream:
       - silicon:
-          branch: 'master'
-          jre: 'openjdk11'
-          install: 'all'
+          branch: "master"
+          jre: "openjdk11"
+          install: "all"
       - aluminium:
-          branch: 'stable/aluminium'
-          jre: 'openjdk11'
-          install: 'all'
+          branch: "stable/aluminium"
+          jre: "openjdk11"
+          install: "all"
       - magnesium:
-          branch: 'stable/magnesium'
-          jre: 'openjdk11'
-          install: 'all'
+          branch: "stable/magnesium"
+          jre: "openjdk11"
+          install: "all"
       - sodium:
-          branch: 'stable/sodium'
-          install: 'all'
+          branch: "stable/sodium"
+          install: "all"
 
     # Job images
-    tools_system_image: 'ZZCI - Ubuntu 16.04 - mininet-ovs-28 - 20190415-091034.881'
+    tools_system_image: "ZZCI - Ubuntu 16.04 - mininet-ovs-28 - 20190415-091034.881"
 
     # Features to install
     install-features: >
-        odl-openflowplugin-flow-services-rest,
-        odl-openflowplugin-app-table-miss-enforcer,
-        odl-openflowplugin-nxm-extensions
+      odl-openflowplugin-flow-services-rest,
+      odl-openflowplugin-app-table-miss-enforcer,
+      odl-openflowplugin-nxm-extensions
 
     # Robot custom options
-    robot-options: ''
+    robot-options: ""

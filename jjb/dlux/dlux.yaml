@@ -7,13 +7,13 @@
       - odl-maven-verify-jobs
 
     stream: magnesium
-    project: 'dlux'
-    project-name: 'dlux'
-    branch: 'master'
-    java-version: 'openjdk11'
-    mvn-settings: 'dlux-settings'
-    dependencies: 'odlparent-merge-{stream}'
-    email-upstream: '[dlux] [odlparent]'
+    project: "dlux"
+    project-name: "dlux"
+    branch: "master"
+    java-version: "openjdk11"
+    mvn-settings: "dlux-settings"
+    dependencies: "odlparent-merge-{stream}"
+    email-upstream: "[dlux] [odlparent]"
 
     # Used by the release job
     staging-profile-id: 96e6a0327484f
@@ -25,12 +25,12 @@
       - odl-maven-verify-jobs
 
     stream: sodium
-    project: 'dlux'
-    project-name: 'dlux'
-    branch: 'stable/sodium'
-    mvn-settings: 'dlux-settings'
-    dependencies: 'odlparent-merge-{stream}'
-    email-upstream: '[dlux] [odlparent]'
+    project: "dlux"
+    project-name: "dlux"
+    branch: "stable/sodium"
+    mvn-settings: "dlux-settings"
+    dependencies: "odlparent-merge-{stream}"
+    email-upstream: "[dlux] [odlparent]"
 
     # Used by the release job
     staging-profile-id: 96e6a0327484f
@@ -39,15 +39,15 @@
     name: dlux-sonar
     jobs:
       - gerrit-maven-sonar
-    project: 'dlux'
-    project-name: 'dlux'
-    branch: 'master'
-    mvn-settings: 'dlux-settings'
-    mvn-opts: '-Xmx1024m'
+    project: "dlux"
+    project-name: "dlux"
+    branch: "master"
+    mvn-settings: "dlux-settings"
+    mvn-opts: "-Xmx1024m"
     sonarcloud: true
-    sonarcloud-project-organization: '{sonarcloud_project_organization}'
-    sonarcloud-api-token: '{sonarcloud_api_token}'
-    sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
+    sonarcloud-project-organization: "{sonarcloud_project_organization}"
+    sonarcloud-api-token: "{sonarcloud_api_token}"
+    sonarcloud-project-key: "{sonarcloud_project_organization}_{project-name}"
 
 - project:
     name: dlux-info

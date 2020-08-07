@@ -1,12 +1,12 @@
 ---
 # Autorelease build jobs
 - job-template:
-    name: 'docs-update-{stream}'
+    name: "docs-update-{stream}"
 
     ######################
     # Default parameters #
     ######################
-    disable-job: 'false'
+    disable-job: "false"
 
     #####################
     # Job Configuration #
@@ -14,7 +14,7 @@
 
     project-type: freestyle
     node: centos7-builder-2c-2g
-    disabled: '{disable-job}'
+    disabled: "{disable-job}"
 
     properties:
       - lf-infra-properties:
@@ -22,38 +22,38 @@
 
     parameters:
       - lf-infra-parameters:
-          project: 'releng/autorelease'
-          project-name: 'autorelease'
-          branch: '{branch}'
-          stream: '{stream}'
-          lftools-version: '{lftools-version}'
+          project: "releng/autorelease"
+          project-name: "autorelease"
+          branch: "{branch}"
+          stream: "{stream}"
+          lftools-version: "{lftools-version}"
       - string:
           name: RELEASE_NAME
-          description: 'The next release name eg Magnesium'
+          description: "The next release name eg Magnesium"
       - bool:
           name: PUBLISH
           default: false
-          description: 'The flag to publish or not'
+          description: "The flag to publish or not"
 
     scm:
       - lf-gerrit-clone:
-          git-url: '$GIT_URL/$GERRIT_PROJECT'
-          branch: '$GERRIT_BRANCH'
-          refspec: '$GERRIT_REFSPEC'
+          git-url: "$GIT_URL/$GERRIT_PROJECT"
+          branch: "$GERRIT_BRANCH"
+          refspec: "$GERRIT_REFSPEC"
           jenkins-ssh-credential: opendaylight-jenkins-ssh
           submodule-disable: false
           submodule-recursive: true
           submodule-timeout: 10
-          basedir: 'autorelease'
+          basedir: "autorelease"
           choosing-strategy: default
           wipe-workspace: true
       - lf-gerrit-clone:
-          git-url: '$GIT_URL/docs'
-          branch: '$GERRIT_BRANCH'
-          refspec: '$GERRIT_REFSPEC'
+          git-url: "$GIT_URL/docs"
+          branch: "$GERRIT_BRANCH"
+          refspec: "$GERRIT_REFSPEC"
           jenkins-ssh-credential: opendaylight-jenkins-ssh
           submodule-disable: true
-          basedir: 'docs'
+          basedir: "docs"
           submodule-recursive: false
           submodule-timeout: 10
           choosing-strategy: default

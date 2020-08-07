@@ -2,9 +2,9 @@
 - project:
     name: controller-master
     jobs:
-      - 'gerrit-release-merge':
+      - "gerrit-release-merge":
           build-node: centos7-builder-2c-2g
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: controller
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-controller/48288/
@@ -13,17 +13,17 @@
       - odl-maven-verify-jobs
 
     stream: master
-    project: 'controller'
-    project-name: 'controller'
-    branch: 'master'
-    java-version: 'openjdk11'
-    mvn-settings: 'controller-settings'
+    project: "controller"
+    project-name: "controller"
+    branch: "master"
+    java-version: "openjdk11"
+    mvn-settings: "controller-settings"
     mvn-version: mvn36
-    mvn-goals: 'clean deploy -Pdocs'
-    mvn-opts: '-Xmx3072m -Dmaven.compile.fork=true'
+    mvn-goals: "clean deploy -Pdocs"
+    mvn-opts: "-Xmx3072m -Dmaven.compile.fork=true"
     build-timeout: 90
-    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},aaa-merge-{stream}'
-    email-upstream: '[controller] [odlparent] [yangtools] [aaa]'
+    dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},aaa-merge-{stream}"
+    email-upstream: "[controller] [odlparent] [yangtools] [aaa]"
 
     # Used by the release job
     staging-profile-id: 96c1c9177efdd
@@ -31,8 +31,8 @@
 - project:
     name: controller-magnesium
     jobs:
-      - '{project-name}-distribution-check-{stream}':
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-distribution-check-{stream}":
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: controller
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-controller/48288/
@@ -41,17 +41,17 @@
       - odl-maven-verify-jobs
 
     stream: magnesium
-    project: 'controller'
-    project-name: 'controller'
-    branch: 'stable/magnesium'
-    java-version: 'openjdk11'
-    mvn-settings: 'controller-settings'
-    mvn-goals: 'clean deploy -Pintegrationtests,docs'
-    mvn-opts: '-Xmx4096m -Dmaven.compile.fork=true'
+    project: "controller"
+    project-name: "controller"
+    branch: "stable/magnesium"
+    java-version: "openjdk11"
+    mvn-settings: "controller-settings"
+    mvn-goals: "clean deploy -Pintegrationtests,docs"
+    mvn-opts: "-Xmx4096m -Dmaven.compile.fork=true"
     build-node: centos7-builder-8c-8g
     build-timeout: 90
-    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},aaa-merge-{stream}'
-    email-upstream: '[controller] [odlparent] [yangtools] [aaa]'
+    dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},aaa-merge-{stream}"
+    email-upstream: "[controller] [odlparent] [yangtools] [aaa]"
 
     # Used by the release job
     staging-profile-id: 96c1c9177efdd
@@ -59,8 +59,8 @@
 - project:
     name: controller-sodium
     jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-distribution-check-{stream}"
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: controller
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-controller/48288/
@@ -69,16 +69,16 @@
       - odl-maven-verify-jobs
 
     stream: sodium
-    project: 'controller'
-    project-name: 'controller'
-    branch: 'stable/sodium'
-    mvn-settings: 'controller-settings'
-    mvn-goals: 'clean deploy -Pintegrationtests,docs'
-    mvn-opts: '-Xmx4096m -Dmaven.compile.fork=true'
+    project: "controller"
+    project-name: "controller"
+    branch: "stable/sodium"
+    mvn-settings: "controller-settings"
+    mvn-goals: "clean deploy -Pintegrationtests,docs"
+    mvn-opts: "-Xmx4096m -Dmaven.compile.fork=true"
     build-node: centos7-builder-8c-8g
     build-timeout: 90
-    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},aaa-merge-{stream}'
-    email-upstream: '[controller] [odlparent] [yangtools] [aaa]'
+    dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},aaa-merge-{stream}"
+    email-upstream: "[controller] [odlparent] [yangtools] [aaa]"
 
     # Used by the release job
     staging-profile-id: 96c1c9177efdd
@@ -91,17 +91,17 @@
             -Dodl.jacoco.aggregateFile=$WORKSPACE/target/jacoco.exec
             -Dsonar.jacoco.reportPath=$WORKSPACE/target/jacoco.exec
 
-    project: 'controller'
-    project-name: 'controller'
+    project: "controller"
+    project-name: "controller"
     branch: master
-    java-version: 'openjdk11'
-    mvn-settings: 'controller-settings'
-    mvn-goals: 'clean deploy -Pintegrationtests,docs'
-    mvn-opts: '-Xmx4096m -Dmaven.compile.fork=true'
+    java-version: "openjdk11"
+    mvn-settings: "controller-settings"
+    mvn-goals: "clean deploy -Pintegrationtests,docs"
+    mvn-opts: "-Xmx4096m -Dmaven.compile.fork=true"
     sonarcloud: true
-    sonarcloud-project-organization: '{sonarcloud_project_organization}'
-    sonarcloud-api-token: '{sonarcloud_api_token}'
-    sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
+    sonarcloud-project-organization: "{sonarcloud_project_organization}"
+    sonarcloud-api-token: "{sonarcloud_api_token}"
+    sonarcloud-project-key: "{sonarcloud_project_organization}_{project-name}"
 
 - project:
     name: controller-info

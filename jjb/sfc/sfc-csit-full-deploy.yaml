@@ -5,38 +5,38 @@
       - inttest-csit-3node-docker
 
     # The project name
-    project: 'sfc'
+    project: "sfc"
 
     # The functionality under test
-    functionality: 'full-deploy'
+    functionality: "full-deploy"
 
     # Project branches
     stream:
       - silicon:
-          branch: 'master'
-          jre: 'openjdk11'
+          branch: "master"
+          jre: "openjdk11"
       - aluminium:
-          branch: 'stable/aluminium'
-          jre: 'openjdk11'
+          branch: "stable/aluminium"
+          jre: "openjdk11"
       - magnesium:
-          branch: 'stable/magnesium'
-          jre: 'openjdk11'
+          branch: "stable/magnesium"
+          jre: "openjdk11"
       - sodium:
-          branch: 'stable/sodium'
+          branch: "stable/sodium"
 
     install:
       - all:
-          scope: 'all'
+          scope: "all"
 
     # Features to install
     install-features: >
-        odl-sfc-provider,
-        odl-sfc-ui,
-        odl-sfc-openflow-renderer,
-        odl-sfc-scf-openflow,
-        odl-sfc-sb-rest,
-        odl-sfc-ovs,
-        odl-sfc-netconf
+      odl-sfc-provider,
+      odl-sfc-ui,
+      odl-sfc-openflow-renderer,
+      odl-sfc-scf-openflow,
+      odl-sfc-sb-rest,
+      odl-sfc-ovs,
+      odl-sfc-netconf
 
     # Robot custom options
-    robot-options: ''
+    robot-options: ""

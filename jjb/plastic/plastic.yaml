@@ -2,7 +2,7 @@
 - project:
     name: plastic-master
     jobs:
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           doc-dir: .tox/docs/tmp/html
           project-pattern: plastic
@@ -19,7 +19,7 @@
     branch: master
     java-version: openjdk8
     mvn-settings: plastic-settings
-    mvn-opts: '-Xmx1024m'
+    mvn-opts: "-Xmx1024m"
 
     # Used by the release job
     staging-profile-id: 380d129f253e1
@@ -37,11 +37,11 @@
     branch: master
     java-version: openjdk8
     mvn-settings: plastic-settings
-    mvn-opts: '-Xmx1024m'
+    mvn-opts: "-Xmx1024m"
     sonarcloud: true
-    sonarcloud-project-organization: '{sonarcloud_project_organization}'
-    sonarcloud-api-token: '{sonarcloud_api_token}'
-    sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
+    sonarcloud-project-organization: "{sonarcloud_project_organization}"
+    sonarcloud-api-token: "{sonarcloud_api_token}"
+    sonarcloud-project-key: "{sonarcloud_project_organization}_{project-name}"
 
 - project:
     name: plastic-info

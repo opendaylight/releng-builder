@@ -37,19 +37,19 @@
     #   pom: Relative path to pom file to use. Typically '$GERRIT_PROJECT/pom.xml'.
     builders:
       - maven-target:
-          maven-version: '{mvn-version}'
-          pom: '{pom}'
+          maven-version: "{mvn-version}"
+          pom: "{pom}"
           goals: |
-              clean deploy
-              dependency:tree -DoutputFile=dependency_tree.txt
-              -Pq
-              -DaltDeploymentRepository=fake-nexus::default::file:///tmp/n/
-              {mvn-opts}
+            clean deploy
+            dependency:tree -DoutputFile=dependency_tree.txt
+            -Pq
+            -DaltDeploymentRepository=fake-nexus::default::file:///tmp/n/
+            {mvn-opts}
           java-opts:
-            - '-Xmx4096m -Dmaven.compile.fork=true'
-          settings: 'integration-settings'
+            - "-Xmx4096m -Dmaven.compile.fork=true"
+          settings: "integration-settings"
           settings-type: cfp
-          global-settings: 'global-settings'
+          global-settings: "global-settings"
           global-settings-type: cfp
 
 - builder:
@@ -89,18 +89,18 @@
     #   dist-pom: Relative path to pom file to use. 'distribution/pom.xml' is recommended.
     builders:
       - maven-target:
-          maven-version: '{mvn-version}'
-          pom: '{dist-pom}'
+          maven-version: "{mvn-version}"
+          pom: "{dist-pom}"
           goals: |
-              clean install
-              dependency:tree -DoutputFile=dependency_tree.txt
-              -Pq
-              {mvn-opts}
+            clean install
+            dependency:tree -DoutputFile=dependency_tree.txt
+            -Pq
+            {mvn-opts}
           java-opts:
-            - '-Xmx1024m -Dmaven.compile.fork=true'
-          settings: 'integration-settings'
+            - "-Xmx1024m -Dmaven.compile.fork=true"
+          settings: "integration-settings"
           settings-type: cfp
-          global-settings: 'global-settings'
+          global-settings: "global-settings"
           global-settings-type: cfp
 
 - builder:
@@ -193,16 +193,16 @@
       - shell: |
           cp -r /tmp/r /tmp/t
       - maven-target:
-          maven-version: '{mvn-version}'
-          pom: '{pom}'
+          maven-version: "{mvn-version}"
+          pom: "{pom}"
           goals: |
-              clean install
-              dependency:tree -DoutputFile=dependency_tree.txt
-              -s fake_remotes.xml
-              -Pq
-              {mvn-opts}
+            clean install
+            dependency:tree -DoutputFile=dependency_tree.txt
+            -s fake_remotes.xml
+            -Pq
+            {mvn-opts}
           java-opts:
-            - '-Xmx4096m -Dmaven.compile.fork=true'
+            - "-Xmx4096m -Dmaven.compile.fork=true"
       - shell: |
           rm -rf /tmp/r
           mv /tmp/t /tmp/r
@@ -219,18 +219,18 @@
     #   dist-pom: Relative path to pom file to use. 'distribution/pom.xml' is recommended.
     builders:
       - maven-target:
-          maven-version: '{mvn-version}'
-          pom: '{dist-pom}'
+          maven-version: "{mvn-version}"
+          pom: "{dist-pom}"
           goals: |
-              clean install
-              dependency:tree -DoutputFile=dependency_tree.txt
-              -s fake_remotes.xml
-              -Pq
-              -Dsft.heap.max=4g
-              -DskipTests=false
-              {mvn-opts}
+            clean install
+            dependency:tree -DoutputFile=dependency_tree.txt
+            -s fake_remotes.xml
+            -Pq
+            -Dsft.heap.max=4g
+            -DskipTests=false
+            {mvn-opts}
           java-opts:
-            - '-Xmx1024m -Dmaven.compile.fork=true'
+            - "-Xmx1024m -Dmaven.compile.fork=true"
 
 - builder:
     name: distribution-check-warn-9191

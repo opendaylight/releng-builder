@@ -18,11 +18,11 @@
   tasks:
     - name: Install Cassandra Server
       block:
-        - name: 'Fetch Cassandra Server to /tmp/apache-cassandra-{{cassandra_version}}-bin.tar.gz'
+        - name: "Fetch Cassandra Server to /tmp/apache-cassandra-{{cassandra_version}}-bin.tar.gz"
           get_url:
-            url: 'https://archive.apache.org/dist/cassandra/{{cassandra_version}}/apache-cassandra-{{cassandra_version}}-bin.tar.gz'
-            dest: '/tmp/apache-cassandra-{{cassandra_version}}-bin.tar.gz'
-            checksum: '{{cassandra_checksum}}'
+            url: "https://archive.apache.org/dist/cassandra/{{cassandra_version}}/apache-cassandra-{{cassandra_version}}-bin.tar.gz"
+            dest: "/tmp/apache-cassandra-{{cassandra_version}}-bin.tar.gz"
+            checksum: "{{cassandra_checksum}}"
         - name: Make /tmp/cassandra directory
           file:
             path: /tmp/cassandra
@@ -30,16 +30,16 @@
             mode: 0755
         - name: Untar Cassandra server to /tmp/cassandra
           unarchive:
-            src: '/tmp/apache-cassandra-{{cassandra_version}}-bin.tar.gz'
+            src: "/tmp/apache-cassandra-{{cassandra_version}}-bin.tar.gz"
             dest: /tmp/cassandra
             remote_src: true
     - name: Install Elastic Search
       block:
-        - name: 'Fetch Elastic Search to /tmp/elasticsearch-{{elastic_search_version}}.tar.gz'
+        - name: "Fetch Elastic Search to /tmp/elasticsearch-{{elastic_search_version}}.tar.gz"
           get_url:
-            url: 'https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-{{elastic_search_version}}.tar.gz'
-            dest: '/tmp/elasticsearch-{{elastic_search_version}}.tar.gz'
-            checksum: '{{elastic_search_checksum}}'
+            url: "https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-{{elastic_search_version}}.tar.gz"
+            dest: "/tmp/elasticsearch-{{elastic_search_version}}.tar.gz"
+            checksum: "{{elastic_search_checksum}}"
         - name: Make /tmp/elasticsearch directory
           file:
             path: /tmp/elasticsearch
@@ -47,16 +47,16 @@
             mode: 0755
         - name: Untar Elastic Search to /tmp/elasticsearch
           unarchive:
-            src: '/tmp/elasticsearch-{{elastic_search_version}}.tar.gz'
+            src: "/tmp/elasticsearch-{{elastic_search_version}}.tar.gz"
             dest: /tmp/elasticsearch
             remote_src: true
     - name: Install HBase Server
       block:
-        - name: 'Fetch HBase to /tmp/hbase-{{hbase_version}}.tar.gz'
+        - name: "Fetch HBase to /tmp/hbase-{{hbase_version}}.tar.gz"
           get_url:
-            url: 'https://archive.apache.org/dist/hbase/hbase-{{hbase_version}}/hbase-{{hbase_version}}.tar.gz'
-            dest: '/tmp/hbase-{{hbase_version}}.tar.gz'
-            checksum: '{{hbase_checksum}}'
+            url: "https://archive.apache.org/dist/hbase/hbase-{{hbase_version}}/hbase-{{hbase_version}}.tar.gz"
+            dest: "/tmp/hbase-{{hbase_version}}.tar.gz"
+            checksum: "{{hbase_checksum}}"
         - name: Make /tmp/Hbase directory
           file:
             path: /tmp/Hbase
@@ -64,7 +64,7 @@
             mode: 0755
         - name: Untar Hbase to /tmp/Hbase
           unarchive:
-            src: '/tmp/hbase-{{hbase_version}}.tar.gz'
+            src: "/tmp/hbase-{{hbase_version}}.tar.gz"
             dest: /tmp/Hbase
             remote_src: true
 

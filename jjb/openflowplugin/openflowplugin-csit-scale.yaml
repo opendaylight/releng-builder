@@ -5,7 +5,7 @@
       - inttest-csit-1node
 
     # The project name
-    project: 'openflowplugin'
+    project: "openflowplugin"
 
     # The functionality under test
     functionality:
@@ -15,28 +15,28 @@
     # Project branches
     stream:
       - silicon:
-          branch: 'master'
-          jre: 'openjdk11'
+          branch: "master"
+          jre: "openjdk11"
       - aluminium:
-          branch: 'stable/aluminium'
-          jre: 'openjdk11'
+          branch: "stable/aluminium"
+          jre: "openjdk11"
       - magnesium:
-          branch: 'stable/magnesium'
-          jre: 'openjdk11'
+          branch: "stable/magnesium"
+          jre: "openjdk11"
       - sodium:
-          branch: 'stable/sodium'
+          branch: "stable/sodium"
 
     install:
       - only:
-          scope: 'only'
+          scope: "only"
 
     # Job images
-    tools_system_image: 'ZZCI - Ubuntu 16.04 - mininet-ovs-28 - 20190415-091034.881'
+    tools_system_image: "ZZCI - Ubuntu 16.04 - mininet-ovs-28 - 20190415-091034.881"
 
     # Features to install
     install-features: >
-        odl-openflowplugin-flow-services-rest,
-        odl-openflowplugin-app-table-miss-enforcer
+      odl-openflowplugin-flow-services-rest,
+      odl-openflowplugin-app-table-miss-enforcer
 
     # Robot custom options
-    robot-options: '-v TOPO_TREE_DEPTH:7'
+    robot-options: "-v TOPO_TREE_DEPTH:7"

@@ -5,28 +5,28 @@
       - inttest-csit-1node
 
     # The project name
-    project: 'mdsal'
+    project: "mdsal"
     disable-job: true
 
     # The functionality under test
-    functionality: 'bindingv1'
+    functionality: "bindingv1"
 
     stream:
       - silicon:
-          branch: 'master'
-          jre: 'openjdk11'
+          branch: "master"
+          jre: "openjdk11"
       - aluminium:
-          branch: 'stable/aluminium'
-          jre: 'openjdk11'
+          branch: "stable/aluminium"
+          jre: "openjdk11"
       - magnesium:
-          branch: 'stable/magnesium'
-          jre: 'openjdk11'
+          branch: "stable/magnesium"
+          jre: "openjdk11"
       - sodium:
-          branch: 'stable/sodium'
+          branch: "stable/sodium"
 
     install:
       - only:
-          scope: 'only'
+          scope: "only"
 
     # No tools system VMs needed, but ODL system needs RAM and benefits from CPUs.
     tools_system_count: 0
@@ -35,10 +35,10 @@
     odl_system_flavor: odl-standard-4
 
     # Features to install
-    install-features: 'odl-restconf'
+    install-features: "odl-restconf"
 
     # Robot custom options:
-    robot-options: ''
+    robot-options: ""
 
     # Additional patterns to archive
-    archive-artifacts: '*.xml'
+    archive-artifacts: "*.xml"
