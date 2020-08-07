@@ -6,6 +6,11 @@ repos:
       - id: check-json
       - id: trailing-whitespace
 
+  - repo: https://github.com/prettier/prettier
+    rev: 2.0.5
+    hooks:
+      - id: prettier
+
   - repo: https://github.com/jorisroovers/gitlint
     rev: v0.13.1
     hooks:
@@ -16,10 +21,10 @@ repos:
     hooks:
       - id: shellcheck
         exclude: >
-            (?x)^(
-                jjb/global-jjb/.*|
-                jenkins-config/.*
-            )$
+          (?x)^(
+              jjb/global-jjb/.*|
+              jenkins-config/.*
+          )$
 
   - repo: https://github.com/ambv/black
     rev: stable
