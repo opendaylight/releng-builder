@@ -28,3 +28,15 @@ repos:
     rev: v1.23.0
     hooks:
       - id: yamllint
+
+  - repo: local
+    hooks:
+      # TODO: Switch to upstream hook when https://github.com/btford/write-good/pull/119 is merged.
+      - id: write-good
+        name: write-good
+        description: Check docs for English prose with write-good
+        entry: write-good
+        language: node
+        files: "\\.(rst|md|markdown|mdown|mkdn)$"
+        additional_dependencies: ["write-good"]
+        exclude: docs/jenkins.rst
