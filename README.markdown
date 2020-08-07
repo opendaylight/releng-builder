@@ -1,3 +1,3 @@
-Documentation for Releng/Builder can be found on our [readthedocs][1] site.
+Documentation for Releng/Builder is available on our [readthedocs][1] site.
 
-[1]: http://docs.opendaylight.org/en/latest/submodules/releng/builder/docs/index.html
+[1]: https://docs.opendaylight.org/projects/releng-builder/en/latest/
