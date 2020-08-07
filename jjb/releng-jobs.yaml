@@ -21,7 +21,8 @@
       - builder-copy-sandbox-logs
       - gerrit-tox-verify
       # Automation for docs and jobs
-      - 'builder-update-image-list'
+      - "builder-update-image-list":
+          archive-artifacts: docs/cloud-images.rst
       - gerrit-info-yaml-verify
 
     # The following values are only specified here
@@ -160,6 +161,7 @@
       - timed: '0 11 * * 1-5'
 
     builders:
+      - lf-infra-pre-build
       - shell: !include-raw-escape: opendaylight-infra-update-image-list.sh
       - lf-infra-push-gerrit-patch:
           project: '{project}'
