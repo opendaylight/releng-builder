@@ -6,33 +6,33 @@
       - inttest-csit-verify-1node
 
     # The project name
-    project: 'packetcable'
+    project: "packetcable"
 
     # The functionality under test
-    functionality: 'pcmm'
+    functionality: "pcmm"
 
     disable-job: true
 
     # Project branches
     stream:
       - silicon:
-          branch: 'master'
-          jre: 'openjdk11'
+          branch: "master"
+          jre: "openjdk11"
       - aluminium:
-          branch: 'stable/aluminium'
-          jre: 'openjdk11'
+          branch: "stable/aluminium"
+          jre: "openjdk11"
       - magnesium:
-          branch: 'stable/magnesium'
-          jre: 'openjdk11'
+          branch: "stable/magnesium"
+          jre: "openjdk11"
       - sodium:
-          branch: 'stable/sodium'
+          branch: "stable/sodium"
 
     install:
       - all:
-          scope: 'all'
+          scope: "all"
 
     # Features to install
-    install-features: 'odl-packetcable-policy-server'
+    install-features: "odl-packetcable-policy-server"
     # Robot custom options
 
-    robot-options: ''
+    robot-options: ""

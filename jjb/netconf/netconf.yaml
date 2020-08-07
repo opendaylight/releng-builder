@@ -2,8 +2,8 @@
 - project:
     name: netconf-silicon
     jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-distribution-check-{stream}"
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: netconf
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-netconf/48397/
@@ -12,17 +12,17 @@
       - odl-maven-verify-jobs
 
     stream: silicon
-    project: 'netconf'
-    project-name: 'netconf'
-    branch: 'master'
+    project: "netconf"
+    project-name: "netconf"
+    branch: "master"
     build-node: centos7-builder-2c-8g
-    java-version: 'openjdk11'
-    mvn-settings: 'netconf-settings'
-    mvn-goals: 'clean deploy -Pintegrationtests'
-    mvn-opts: '-Xmx2048m -Dmaven.compile.fork=true'
+    java-version: "openjdk11"
+    mvn-settings: "netconf-settings"
+    mvn-goals: "clean deploy -Pintegrationtests"
+    mvn-opts: "-Xmx2048m -Dmaven.compile.fork=true"
     build-timeout: 90
-    dependencies: 'aaa-merge-{stream},controller-merge-{stream},odlparent-merge-{stream},yangtools-merge-{stream}'
-    email-upstream: '[netconf] [aaa] [controller] [odlparent] [yangtools]'
+    dependencies: "aaa-merge-{stream},controller-merge-{stream},odlparent-merge-{stream},yangtools-merge-{stream}"
+    email-upstream: "[netconf] [aaa] [controller] [odlparent] [yangtools]"
 
     # Used by the release job
     staging-profile-id: a67b22fc3663f
@@ -30,8 +30,8 @@
 - project:
     name: netconf-aluminium
     jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-distribution-check-{stream}"
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: netconf
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-netconf/48397/
@@ -40,17 +40,17 @@
       - odl-maven-verify-jobs
 
     stream: aluminium
-    project: 'netconf'
-    project-name: 'netconf'
-    branch: 'stable/aluminium'
+    project: "netconf"
+    project-name: "netconf"
+    branch: "stable/aluminium"
     build-node: centos7-builder-2c-8g
-    java-version: 'openjdk11'
-    mvn-settings: 'netconf-settings'
-    mvn-goals: 'clean deploy -Pintegrationtests'
-    mvn-opts: '-Xmx2048m -Dmaven.compile.fork=true'
+    java-version: "openjdk11"
+    mvn-settings: "netconf-settings"
+    mvn-goals: "clean deploy -Pintegrationtests"
+    mvn-opts: "-Xmx2048m -Dmaven.compile.fork=true"
     build-timeout: 90
-    dependencies: 'aaa-merge-{stream},controller-merge-{stream},odlparent-merge-{stream},yangtools-merge-{stream}'
-    email-upstream: '[netconf] [aaa] [controller] [odlparent] [yangtools]'
+    dependencies: "aaa-merge-{stream},controller-merge-{stream},odlparent-merge-{stream},yangtools-merge-{stream}"
+    email-upstream: "[netconf] [aaa] [controller] [odlparent] [yangtools]"
 
     # Used by the release job
     staging-profile-id: a67b22fc3663f
@@ -58,8 +58,8 @@
 - project:
     name: netconf-magnesium
     jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-distribution-check-{stream}"
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: netconf
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-netconf/48397/
@@ -68,17 +68,17 @@
       - odl-maven-verify-jobs
 
     stream: magnesium
-    project: 'netconf'
-    project-name: 'netconf'
-    branch: 'stable/magnesium'
+    project: "netconf"
+    project-name: "netconf"
+    branch: "stable/magnesium"
     build-node: centos7-builder-2c-8g
-    java-version: 'openjdk11'
-    mvn-settings: 'netconf-settings'
-    mvn-goals: 'clean deploy -Pintegrationtests'
-    mvn-opts: '-Xmx2048m -Dmaven.compile.fork=true'
+    java-version: "openjdk11"
+    mvn-settings: "netconf-settings"
+    mvn-goals: "clean deploy -Pintegrationtests"
+    mvn-opts: "-Xmx2048m -Dmaven.compile.fork=true"
     build-timeout: 90
-    dependencies: 'aaa-merge-{stream},controller-merge-{stream},odlparent-merge-{stream},yangtools-merge-{stream}'
-    email-upstream: '[netconf] [aaa] [controller] [odlparent] [yangtools]'
+    dependencies: "aaa-merge-{stream},controller-merge-{stream},odlparent-merge-{stream},yangtools-merge-{stream}"
+    email-upstream: "[netconf] [aaa] [controller] [odlparent] [yangtools]"
 
     # Used by the release job
     staging-profile-id: a67b22fc3663f
@@ -86,8 +86,8 @@
 - project:
     name: netconf-sodium
     jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-distribution-check-{stream}"
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: netconf
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-netconf/48397/
@@ -96,16 +96,16 @@
       - odl-maven-verify-jobs
 
     stream: sodium
-    project: 'netconf'
-    project-name: 'netconf'
-    branch: 'stable/sodium'
+    project: "netconf"
+    project-name: "netconf"
+    branch: "stable/sodium"
     build-node: centos7-builder-2c-8g
-    mvn-settings: 'netconf-settings'
-    mvn-goals: 'clean deploy -Pintegrationtests'
-    mvn-opts: '-Xmx2048m -Dmaven.compile.fork=true'
+    mvn-settings: "netconf-settings"
+    mvn-goals: "clean deploy -Pintegrationtests"
+    mvn-opts: "-Xmx2048m -Dmaven.compile.fork=true"
     build-timeout: 90
-    dependencies: 'aaa-merge-{stream},controller-merge-{stream},odlparent-merge-{stream},yangtools-merge-{stream}'
-    email-upstream: '[netconf] [aaa] [controller] [odlparent] [yangtools]'
+    dependencies: "aaa-merge-{stream},controller-merge-{stream},odlparent-merge-{stream},yangtools-merge-{stream}"
+    email-upstream: "[netconf] [aaa] [controller] [odlparent] [yangtools]"
 
     # Used by the release job
     staging-profile-id: a67b22fc3663f
@@ -118,19 +118,19 @@
             -Dodl.jacoco.aggregateFile=$WORKSPACE/target/jacoco.exec
             -Dsonar.jacoco.reportPath=$WORKSPACE/target/jacoco.exec
 
-    project: 'netconf'
-    project-name: 'netconf'
-    branch: 'master'
+    project: "netconf"
+    project-name: "netconf"
+    branch: "master"
     build-node: centos7-builder-2c-8g
-    java-version: 'openjdk11'
-    mvn-settings: 'netconf-settings'
-    mvn-goals: 'clean deploy -Pintegrationtests'
-    mvn-opts: '-Xmx2048m -Dmaven.compile.fork=true'
+    java-version: "openjdk11"
+    mvn-settings: "netconf-settings"
+    mvn-goals: "clean deploy -Pintegrationtests"
+    mvn-opts: "-Xmx2048m -Dmaven.compile.fork=true"
     build-timeout: 90
     sonarcloud: true
-    sonarcloud-project-organization: '{sonarcloud_project_organization}'
-    sonarcloud-api-token: '{sonarcloud_api_token}'
-    sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
+    sonarcloud-project-organization: "{sonarcloud_project_organization}"
+    sonarcloud-api-token: "{sonarcloud_api_token}"
+    sonarcloud-project-key: "{sonarcloud_project_organization}_{project-name}"
 
 - project:
     name: netconf-info

@@ -5,45 +5,45 @@
       - inttest-csit-1node
 
     # The project name
-    project: 'netconf'
+    project: "netconf"
 
     # The functionality under test
     functionality:
       - userfeatures
       - userfeatures-rfc8040:
-          robot-options: '-v NETOPEER_USER:root -v USE_NETCONF_CONNECTOR:False -v USE_RFC8040:True'
+          robot-options: "-v NETOPEER_USER:root -v USE_NETCONF_CONNECTOR:False -v USE_RFC8040:True"
       - gate-userfeatures
       - gate-userfeatures-rfc8040:
-          robot-options: '-v NETOPEER_USER:root -v USE_NETCONF_CONNECTOR:False -v USE_RFC8040:True'
+          robot-options: "-v NETOPEER_USER:root -v USE_NETCONF_CONNECTOR:False -v USE_RFC8040:True"
 
     # Project branches
     stream:
       - silicon:
-          branch: 'master'
-          jre: 'openjdk11'
+          branch: "master"
+          jre: "openjdk11"
       - aluminium:
-          branch: 'stable/aluminium'
-          jre: 'openjdk11'
+          branch: "stable/aluminium"
+          jre: "openjdk11"
       - magnesium:
-          branch: 'stable/magnesium'
-          jre: 'openjdk11'
+          branch: "stable/magnesium"
+          jre: "openjdk11"
       - sodium:
-          branch: 'stable/sodium'
+          branch: "stable/sodium"
 
     install:
       - all:
-          scope: 'all'
+          scope: "all"
 
     tools_system_image: ZZCI - Ubuntu 16.04 - docker - x86_64 - 20190614-042302.610
 
     # Features to install
     install-features: >
-        odl-restconf,
-        odl-netconf-mdsal,
-        odl-mdsal-apidocs,
-        odl-mdsal-model-inventory,
-        odl-clustering-test-app,
-        odl-netconf-topology
+      odl-restconf,
+      odl-netconf-mdsal,
+      odl-mdsal-apidocs,
+      odl-mdsal-model-inventory,
+      odl-clustering-test-app,
+      odl-netconf-topology
 
     # Robot custom options
-    robot-options: '-v NETOPEER_USER:root -v USE_NETCONF_CONNECTOR:False'
+    robot-options: "-v NETOPEER_USER:root -v USE_NETCONF_CONNECTOR:False"

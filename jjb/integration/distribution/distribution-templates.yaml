@@ -1,19 +1,19 @@
 ---
 - job-template:
-    name: '{project-name}-distribution-check-{stream}'
+    name: "{project-name}-distribution-check-{stream}"
 
     ######################
     # Default parameters #
     ######################
 
     mvn-version: mvn35
-    csit-gate-list: ''
+    csit-gate-list: ""
     block_on_csit: false
     # Unless block_on_csit is true, the failure-threshold will be ignored. For project jobs that
     # want to fail distribution check on csit jobs, they will only need a list of jobs to run
     # plus the change of block_on_csit to true, and this failure-threshold: 'UNSTABLE' will take
     # effect
-    failure-threshold: 'UNSTABLE'
+    failure-threshold: "UNSTABLE"
     disable-job: false
 
     #####################
@@ -23,39 +23,39 @@
     # Operation: This job template builds a patch, creates a distribution containing
     #            the patch (making sure dependencies are specified),
     #            and performs the distribution deploy test.
-    disabled: '{disable-job}'
+    disabled: "{disable-job}"
 
     project-type: freestyle
-    node: 'centos7-builder-8c-8g'
+    node: "centos7-builder-8c-8g"
     concurrent: true
 
     properties:
       - opendaylight-infra-properties:
-          build-days-to-keep: '{build-days-to-keep}'
+          build-days-to-keep: "{build-days-to-keep}"
 
     parameters:
       - opendaylight-infra-parameters:
-          os-cloud: '{os-cloud}'
-          project: '{project}'
-          branch: '{branch}'
-          refspec: 'refs/heads/{branch}'
-          artifacts: '{archive-artifacts}'
+          os-cloud: "{os-cloud}"
+          project: "{project}"
+          branch: "{branch}"
+          refspec: "refs/heads/{branch}"
+          artifacts: "{archive-artifacts}"
       - integration-distribution-stream:
-          stream: '{stream}'
+          stream: "{stream}"
       - integration-distribution-git-url:
-          git-url: '{git-url}'
+          git-url: "{git-url}"
       - distribution-karaf-version:
-          karaf-version: '{karaf-version}'
+          karaf-version: "{karaf-version}"
       - maven-exec:
-          maven-version: '{mvn-version}'
+          maven-version: "{mvn-version}"
 
     scm:
       - integration-gerrit-scm:
-          basedir: '$GERRIT_PROJECT'
-          refspec: '$GERRIT_REFSPEC'
-          branch: '{branch}'
+          basedir: "$GERRIT_PROJECT"
+          refspec: "$GERRIT_REFSPEC"
+          branch: "{branch}"
       - integration-distribution-scm:
-          branch: '{distribution_branch}'
+          branch: "{distribution_branch}"
 
     wrappers:
       - opendaylight-infra-wrappers:
@@ -64,45 +64,45 @@
           # enforce a 60 minute limit to ensure stuck jobs get
           # cleared up sooner.
           # Double that as Karaf 3+4 may take longer.
-          build-timeout: '120'
+          build-timeout: "120"
 
     triggers:
       - gerrit-trigger-patch-submitted:
-          gerrit-server-name: '{gerrit-server-name}'
-          project: '{project}'
-          branch: '{branch}'
-          files: '**'
-          forbidden-files: ''
+          gerrit-server-name: "{gerrit-server-name}"
+          project: "{project}"
+          branch: "{branch}"
+          files: "**"
+          forbidden-files: ""
 
     builders:
       - distribution-check-wipe
       - lf-update-java-alternatives:
-          java-version: '{java-version}'
+          java-version: "{java-version}"
       - inject:
-          properties-file: 'allowed_projects.txt'
+          properties-file: "allowed_projects.txt"
       - distribution-check-build-project:
-          pom: '$GERRIT_PROJECT/pom.xml'
-          mvn-opts: '{opendaylight-infra-mvn-opts}'
-          mvn-version: '{mvn-version}'
+          pom: "$GERRIT_PROJECT/pom.xml"
+          mvn-opts: "{opendaylight-infra-mvn-opts}"
+          mvn-version: "{mvn-version}"
           # {opendaylight-infra-parallel-mvn-opts} is bad when there are multiple big features in SFT.
       - distribution-check-verify-groupid:
-          gerrit-project: '$GERRIT_PROJECT'
+          gerrit-project: "$GERRIT_PROJECT"
       - distribution-check-download-deps:
-          dist-pom: 'distribution/pom.xml'
-          mvn-opts: '{opendaylight-infra-mvn-opts}'
-          mvn-version: '{mvn-version}'
+          dist-pom: "distribution/pom.xml"
+          mvn-opts: "{opendaylight-infra-mvn-opts}"
+          mvn-version: "{mvn-version}"
           # {opendaylight-infra-parallel-mvn-opts} is bad when there are multiple big features in SFT.
       - distribution-check-delete-snapshots
       - distribution-check-configure-remotes
       - distribution-check-repeat-project-build:
-          pom: '$GERRIT_PROJECT/pom.xml'
-          mvn-opts: '{opendaylight-infra-mvn-opts}'
-          mvn-version: '{mvn-version}'
+          pom: "$GERRIT_PROJECT/pom.xml"
+          mvn-opts: "{opendaylight-infra-mvn-opts}"
+          mvn-version: "{mvn-version}"
           # {opendaylight-infra-parallel-mvn-opts} is bad when there are multiple big features in SFT.
       - distribution-check-repeat-distro-build:
-          dist-pom: 'distribution/pom.xml'
-          mvn-opts: '{opendaylight-infra-mvn-opts}'
-          mvn-version: '{mvn-version}'
+          dist-pom: "distribution/pom.xml"
+          mvn-opts: "{opendaylight-infra-mvn-opts}"
+          mvn-version: "{mvn-version}"
           # {opendaylight-infra-parallel-mvn-opts} is bad when there are multiple big features in SFT.
       - integration-set-variables
       - distribution-check-warn-9191
@@ -112,79 +112,79 @@
       - distribution-check-bootup
 
       - trigger-builds:
-          - project: '{csit-gate-list}'
-            block: '{obj:block_on_csit}'
+          - project: "{csit-gate-list}"
+            block: "{obj:block_on_csit}"
             block-thresholds:
-              failure-threshold: '{failure-threshold}'
+              failure-threshold: "{failure-threshold}"
             predefined-parameters: |
               BUNDLE_URL=$BUNDLE_URL
               KARAF_VERSION=$KARAF_VERSION
 
     publishers:
       - email-notification:
-          email-recipients: '{email-recipients}'
-          email-prefix: '[{project-name}]'
+          email-recipients: "{email-recipients}"
+          email-prefix: "[{project-name}]"
       - integration-csit-archive-build
       - lf-infra-publish
 
 - job-template:
-    name: 'distribution-verify-{type}-{stream}'
+    name: "distribution-verify-{type}-{stream}"
 
-    disable-job: 'false'
+    disable-job: "false"
 
     project-type: freestyle
     node: centos7-builder-8c-8g
     concurrent: true
-    disabled: '{disable-job}'
+    disabled: "{disable-job}"
 
     properties:
       - opendaylight-infra-properties:
-          build-days-to-keep: '{build-days-to-keep}'
+          build-days-to-keep: "{build-days-to-keep}"
 
     parameters:
       - opendaylight-infra-parameters:
-          os-cloud: '{os-cloud}'
-          project: '{project}'
-          branch: '{branch}'
-          refspec: 'refs/heads/{branch}'
-          artifacts: '{archive-artifacts}'
+          os-cloud: "{os-cloud}"
+          project: "{project}"
+          branch: "{branch}"
+          refspec: "refs/heads/{branch}"
+          artifacts: "{archive-artifacts}"
 
     scm:
       - gerrit-trigger-scm:
-          refspec: '$GERRIT_REFSPEC'
-          choosing-strategy: 'gerrit'
+          refspec: "$GERRIT_REFSPEC"
+          choosing-strategy: "gerrit"
 
     wrappers:
       - opendaylight-infra-wrappers:
-          build-timeout: '{build-timeout}'
+          build-timeout: "{build-timeout}"
 
     triggers:
       - gerrit-trigger-patch-submitted:
-          gerrit-server-name: '{gerrit-server-name}'
-          project: '{project}'
-          branch: '{branch}'
-          files: '{files}'
-          forbidden-files: '{forbidden-files}'
+          gerrit-server-name: "{gerrit-server-name}"
+          project: "{project}"
+          branch: "{branch}"
+          files: "{files}"
+          forbidden-files: "{forbidden-files}"
 
     builders:
       - wipe-org-opendaylight-repo
       - lf-provide-maven-settings:
-          global-settings-file: 'global-settings'
-          settings-file: 'integration-settings'
+          global-settings-file: "global-settings"
+          settings-file: "integration-settings"
       - lf-update-java-alternatives:
-          java-version: '{java-version}'
+          java-version: "{java-version}"
       - maven-target:
           maven-version: mvn35
           pom: pom.xml
           goals: |
-              clean install dependency:tree -DoutputFile=dependency_tree.txt
-              -Dstream={stream}
-              -Dsft.heap.max=4g
-              {opendaylight-infra-mvn-opts}
-              {profile}
+            clean install dependency:tree -DoutputFile=dependency_tree.txt
+            -Dstream={stream}
+            -Dsft.heap.max=4g
+            {opendaylight-infra-mvn-opts}
+            {profile}
           # {opendaylight-infra-parallel-mvn-opts} is bad when there are multiple big features in SFT.
           java-opts:
-            - '-Xmx1024m'
+            - "-Xmx1024m"
           settings: integration-settings
           settings-type: cfp
           global-settings: global-settings
@@ -195,11 +195,11 @@
       - lf-jacoco-report
       - lf-infra-publish
       - email-notification:
-          email-recipients: '{email-recipients}'
-          email-prefix: '[{project-name}]'
+          email-recipients: "{email-recipients}"
+          email-prefix: "[{project-name}]"
 
 - job-template:
-    name: 'distribution-merge-{type}-{stream}'
+    name: "distribution-merge-{type}-{stream}"
 
     # Need to keep jobs that deploy to Nexus at end of build as Maven
     # projects. Maybe reconsider this once upstream moves deploy to a
@@ -209,64 +209,64 @@
     disable-job: false
 
     project-type: maven
-    node: 'centos7-builder-8c-8g'
-    disabled: '{disable-job}'
+    node: "centos7-builder-8c-8g"
+    disabled: "{disable-job}"
 
     properties:
       - opendaylight-infra-properties:
-          build-days-to-keep: '{build-days-to-keep}'
+          build-days-to-keep: "{build-days-to-keep}"
 
     parameters:
       - opendaylight-infra-parameters:
-          os-cloud: '{os-cloud}'
-          project: '{project}'
-          branch: '{branch}'
-          refspec: 'refs/heads/{branch}'
-          artifacts: '{archive-artifacts}'
+          os-cloud: "{os-cloud}"
+          project: "{project}"
+          branch: "{branch}"
+          refspec: "refs/heads/{branch}"
+          artifacts: "{archive-artifacts}"
       - distribution-karaf-version:
-          karaf-version: '{karaf-version}'
+          karaf-version: "{karaf-version}"
 
     scm:
       - gerrit-trigger-scm:
-          refspec: ''
-          choosing-strategy: 'default'
+          refspec: ""
+          choosing-strategy: "default"
 
     wrappers:
       - opendaylight-infra-wrappers:
-          build-timeout: '{build-timeout}'
+          build-timeout: "{build-timeout}"
 
     triggers:
       - gerrit-trigger-patch-merged:
-          gerrit-server-name: '{gerrit-server-name}'
-          name: '{project}'
-          branch: '{branch}'
-          files: '{files}'
-          forbidden-files: '{forbidden-files}'
+          gerrit-server-name: "{gerrit-server-name}"
+          name: "{project}"
+          branch: "{branch}"
+          files: "{files}"
+          forbidden-files: "{forbidden-files}"
       - reverse:
-          jobs: '{dependencies}'
+          jobs: "{dependencies}"
 
     prebuilders:
       - wipe-org-opendaylight-repo
       - lf-jacoco-nojava-workaround
       - lf-provide-maven-settings:
-          global-settings-file: 'global-settings'
-          settings-file: 'integration-settings'
+          global-settings-file: "global-settings"
+          settings-file: "integration-settings"
       - lf-update-java-alternatives:
-          java-version: '{java-version}'
+          java-version: "{java-version}"
       - integration-set-variables
       - distribute-build-url:
-          path: '$KARAF_ARTIFACT/src/main/assembly'
+          path: "$KARAF_ARTIFACT/src/main/assembly"
 
     maven:
-      maven-name: 'mvn35'
-      root-pom: 'pom.xml'
+      maven-name: "mvn35"
+      root-pom: "pom.xml"
       goals: >
-          clean install dependency:tree -DoutputFile=dependency_tree.txt -V -B
-          -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r
-          -Dsft.heap.max=4g
-          -Djenkins -Dmerge -Dstream={stream}
-          {profile}
-      maven-opts: '-Xmx1024m'
+        clean install dependency:tree -DoutputFile=dependency_tree.txt -V -B
+        -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r
+        -Dsft.heap.max=4g
+        -Djenkins -Dmerge -Dstream={stream}
+        {profile}
+      maven-opts: "-Xmx1024m"
       settings: integration-settings
       settings-type: cfp
       global-settings: global-settings
@@ -283,17 +283,17 @@
 
     publishers:
       - maven-deploy:
-          id: ''
+          id: ""
           unique-version: true
           deploy-unstable: false
       - lf-jacoco-report
       - lf-infra-publish
       - email-notification:
-          email-recipients: '{email-recipients}'
-          email-prefix: '[{project-name}]'
+          email-recipients: "{email-recipients}"
+          email-prefix: "[{project-name}]"
 
 - job-template:
-    name: 'distribution-check-{type}-{stream}'
+    name: "distribution-check-{type}-{stream}"
 
     ######################
     # Default parameters #
@@ -306,35 +306,35 @@
     #####################
 
     # Like a {project}-distribution-check, but few steps less as there is no upstream project involved.
-    disabled: '{disable-job}'
+    disabled: "{disable-job}"
 
     project-type: freestyle
-    node: 'centos7-builder-8c-8g'
+    node: "centos7-builder-8c-8g"
     concurrent: true
 
     properties:
       - opendaylight-infra-properties:
-          build-days-to-keep: '{build-days-to-keep}'
+          build-days-to-keep: "{build-days-to-keep}"
 
     parameters:
       - opendaylight-infra-parameters:
-          os-cloud: '{os-cloud}'
-          project: '{project}'
-          branch: '{branch}'
-          refspec: 'refs/heads/{branch}'
-          artifacts: '{archive-artifacts}'
+          os-cloud: "{os-cloud}"
+          project: "{project}"
+          branch: "{branch}"
+          refspec: "refs/heads/{branch}"
+          artifacts: "{archive-artifacts}"
       - integration-distribution-stream:
-          stream: '{stream}'
+          stream: "{stream}"
       - distribution-karaf-version:
-          karaf-version: '{karaf-version}'
+          karaf-version: "{karaf-version}"
       - maven-exec:
           maven-version: mvn35
 
     scm:
       - integration-gerrit-scm:
-          basedir: 'distribution'
-          refspec: '$GERRIT_REFSPEC'
-          branch: '{branch}'
+          basedir: "distribution"
+          refspec: "$GERRIT_REFSPEC"
+          branch: "{branch}"
 
     wrappers:
       - opendaylight-infra-wrappers:
@@ -343,56 +343,56 @@
           # enforce a 60 minute limit to ensure stuck jobs get
           # cleared up sooner.
           # Double that as Karaf 3+4 may take longer.
-          build-timeout: '120'
+          build-timeout: "120"
 
     triggers:
       - gerrit-trigger-patch-submitted:
-          gerrit-server-name: '{gerrit-server-name}'
-          project: '{project}'
-          branch: '{branch}'
-          files: '{files}'
-          forbidden-files: '{forbidden-files}'
+          gerrit-server-name: "{gerrit-server-name}"
+          project: "{project}"
+          branch: "{branch}"
+          files: "{files}"
+          forbidden-files: "{forbidden-files}"
 
     builders:
       - distribution-check-wipe
       - lf-update-java-alternatives:
-          java-version: '{java-version}'
+          java-version: "{java-version}"
       - inject:
-          properties-file: 'allowed_projects.txt'
+          properties-file: "allowed_projects.txt"
       - distribution-check-build-project:
-          pom: 'distribution/pom.xml'
+          pom: "distribution/pom.xml"
           mvn-opts: |
-              {opendaylight-infra-mvn-opts}
-              {profile}
-          mvn-version: '{mvn-version}'
+            {opendaylight-infra-mvn-opts}
+            {profile}
+          mvn-version: "{mvn-version}"
           # '{opendaylight-infra-parallel-mvn-opts}' is bad when there are multiple big features in SFT.
       - distribution-check-verify-groupid:
-          gerrit-project: 'integration'
+          gerrit-project: "integration"
       - distribution-check-delete-snapshots
       - distribution-check-configure-remotes
       - distribution-check-repeat-project-build:
-          pom: 'distribution/pom.xml'
+          pom: "distribution/pom.xml"
           mvn-opts: |
-              {opendaylight-infra-mvn-opts}
-              {profile}
-          mvn-version: '{mvn-version}'
+            {opendaylight-infra-mvn-opts}
+            {profile}
+          mvn-version: "{mvn-version}"
           # '{opendaylight-infra-parallel-mvn-opts}' is bad when there are multiple big features in SFT.
       - integration-set-variables
       - distribution-check-warn-9191
       - distribution-check-warn-9192
       - integration-upload-distribution:
-          dist-pom: '{dist-pom}'
+          dist-pom: "{dist-pom}"
       - distribution-check-bootup
 
     publishers:
       - email-notification:
-          email-recipients: '{email-recipients}'
-          email-prefix: '[{project-name}]'
+          email-recipients: "{email-recipients}"
+          email-prefix: "[{project-name}]"
       - integration-csit-archive-build
       - lf-infra-publish
 
 - job-template:
-    name: 'distribution-sanity-{stream}'
+    name: "distribution-sanity-{stream}"
     # Goal: Verify distribution starts with no issues when all features are loaded.
     # Operation: This job deploys odl-integration-all + list of UM features.
     # This job works for both managed & self-managed distro.
@@ -403,39 +403,39 @@
 
     properties:
       - opendaylight-infra-properties:
-          build-days-to-keep: '{build-days-to-keep}'
+          build-days-to-keep: "{build-days-to-keep}"
 
     parameters:
       - opendaylight-infra-parameters:
-          os-cloud: '{os-cloud}'
-          project: '{project}'
-          branch: '{branch}'
-          refspec: 'refs/heads/{branch}'
-          artifacts: '{archive-artifacts}'
+          os-cloud: "{os-cloud}"
+          project: "{project}"
+          branch: "{branch}"
+          refspec: "refs/heads/{branch}"
+          artifacts: "{archive-artifacts}"
       - integration-distribution-stream:
-          stream: '{stream}'
+          stream: "{stream}"
       - integration-distribution-branch:
-          branch: '{branch}'
+          branch: "{branch}"
       - integration-bundle-url:
-          bundle-url: '{bundle-url}'
+          bundle-url: "{bundle-url}"
       - integration-repo-url:
-          repo-url: '{sm-repos}'
+          repo-url: "{sm-repos}"
       - integration-controller-parameters:
-          controller-features: '{sm-features}'
+          controller-features: "{sm-features}"
           # Parameters below are unused in this job so set them all to blank
-          controller-max-mem: ''
-          controller-debug-map: ''
-          controller-scope: ''
-          controller-use-features-boot: ''
-          feature-elasticsearch-attribute: '{elasticsearch-attribute}'
+          controller-max-mem: ""
+          controller-debug-map: ""
+          controller-scope: ""
+          controller-use-features-boot: ""
+          feature-elasticsearch-attribute: "{elasticsearch-attribute}"
       - integration-jdk-version:
-          jdkversion: '{jre}'
+          jdkversion: "{jre}"
       - distribution-karaf-version:
-          karaf-version: '{karaf-version}'
+          karaf-version: "{karaf-version}"
 
     wrappers:
       - opendaylight-infra-wrappers:
-          build-timeout: '{build-timeout}'
+          build-timeout: "{build-timeout}"
 
     builders:
       - integration-detect-variables
@@ -443,13 +443,13 @@
 
     publishers:
       - email-notification:
-          email-recipients: '{email-recipients}'
-          email-prefix: '[{project-name}]'
+          email-recipients: "{email-recipients}"
+          email-prefix: "[{project-name}]"
       - integration-csit-archive-build
       - lf-infra-publish
 
 - job-template:
-    name: 'distribution-csit-managed-{stream}'
+    name: "distribution-csit-managed-{stream}"
     # Goal: Verify distribution starts with no issues when all features are loaded.
     # Operation: This job deploys odl-integration-all.
     # This job works for just managed distro.
@@ -459,33 +459,33 @@
     project-type: freestyle
     node: centos7-builder-4c-4g
     concurrent: false
-    disabled: '{disable-job}'
+    disabled: "{disable-job}"
 
     properties:
       - opendaylight-infra-properties:
-          build-days-to-keep: '{build-days-to-keep}'
+          build-days-to-keep: "{build-days-to-keep}"
 
     parameters:
       - opendaylight-infra-parameters:
-          os-cloud: '{os-cloud}'
-          project: '{project}'
-          branch: '{branch}'
-          refspec: 'refs/heads/{branch}'
-          artifacts: '{archive-artifacts}'
+          os-cloud: "{os-cloud}"
+          project: "{project}"
+          branch: "{branch}"
+          refspec: "refs/heads/{branch}"
+          artifacts: "{archive-artifacts}"
       - integration-distribution-stream:
-          stream: '{stream}'
+          stream: "{stream}"
       - integration-distribution-branch:
-          branch: '{branch}'
+          branch: "{branch}"
       - integration-bundle-url:
-          bundle-url: '{bundle-url}'
+          bundle-url: "{bundle-url}"
       - integration-jdk-version:
-          jdkversion: '{jre}'
+          jdkversion: "{jre}"
       - distribution-karaf-version:
-          karaf-version: 'karaf4'
+          karaf-version: "karaf4"
 
     wrappers:
       - opendaylight-infra-wrappers:
-          build-timeout: '{build-timeout}'
+          build-timeout: "{build-timeout}"
 
     builders:
       - integration-detect-variables
@@ -493,7 +493,7 @@
 
     publishers:
       - email-notification:
-          email-recipients: '{email-recipients}'
-          email-prefix: '[{project-name}]'
+          email-recipients: "{email-recipients}"
+          email-prefix: "[{project-name}]"
       - integration-csit-archive-build
       - lf-infra-publish

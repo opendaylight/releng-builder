@@ -26,12 +26,12 @@ Rackspace's Public cloud and a private OpenStack cloud.
 
 From a high level, the builds:
 
-* Boot a specified base image in both clouds.
-* Run a set of shell scripts, listed in the template's shell provisioner
-  section, to do any configuration required by the builder.
-* Execute a shutdown of the running instance in the clouds.
-* Execute a 'nova image-create' operation against the shutdown instance.
-* Perform a 'nova delete' operation against the shutdown instance.
+-   Boot a specified base image in both clouds.
+-   Run a set of shell scripts, listed in the template's shell provisioner
+    section, to do any configuration required by the builder.
+-   Execute a shutdown of the running instance in the clouds.
+-   Execute a 'nova image-create' operation against the shutdown instance.
+-   Perform a 'nova delete' operation against the shutdown instance.
 
 [1]: https://www.packer.io/
 [2]: https://www.packer.io/intro/getting-started/setup.html

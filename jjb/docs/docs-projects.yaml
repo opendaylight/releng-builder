@@ -2,12 +2,12 @@
 - project:
     name: docs-update-{stream}
     jobs:
-      - 'docs-update-{stream}'
+      - "docs-update-{stream}"
     stream:
       - master:
-          branch: 'master'
+          branch: "master"
       - magnesium:
-          branch: 'stable/magnesium'
+          branch: "stable/magnesium"
       - sodium:
-          branch: 'stable/sodium'
+          branch: "stable/sodium"
     build-node: centos7-builder-2c-2g

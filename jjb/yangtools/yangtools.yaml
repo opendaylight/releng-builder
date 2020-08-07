@@ -10,19 +10,19 @@
     branch: master
     stream: master
 
-    java-version: 'openjdk11'
-    mvn-settings: 'yangtools-settings'
+    java-version: "openjdk11"
+    mvn-settings: "yangtools-settings"
     mvn-version: mvn36
 
-    dependencies: ''
-    email-upstream: '[yangtools]'
+    dependencies: ""
+    email-upstream: "[yangtools]"
     archive-artifacts: >
-        **/*.prop
-        **/*.log
-        **/target/surefire-reports/*-output.txt
-        **/target/failsafe-reports/failsafe-summary.xml
-        **/hs_err_*.log
-        **/target/feature/feature.xml
+      **/*.prop
+      **/*.log
+      **/target/surefire-reports/*-output.txt
+      **/target/failsafe-reports/failsafe-summary.xml
+      **/hs_err_*.log
+      **/target/feature/feature.xml
 
     # Used by the release job
     staging-profile-id: 1271cf710cc09d
@@ -38,18 +38,18 @@
     branch: 4.0.x
     stream: 4.0.x
 
-    java-version: 'openjdk11'
-    mvn-settings: 'yangtools-settings'
+    java-version: "openjdk11"
+    mvn-settings: "yangtools-settings"
 
-    dependencies: ''
-    email-upstream: '[yangtools]'
+    dependencies: ""
+    email-upstream: "[yangtools]"
     archive-artifacts: >
-        **/*.prop
-        **/*.log
-        **/target/surefire-reports/*-output.txt
-        **/target/failsafe-reports/failsafe-summary.xml
-        **/hs_err_*.log
-        **/target/feature/feature.xml
+      **/*.prop
+      **/*.log
+      **/target/surefire-reports/*-output.txt
+      **/target/failsafe-reports/failsafe-summary.xml
+      **/hs_err_*.log
+      **/target/feature/feature.xml
 
     # Used by the release job
     staging-profile-id: 1271cf710cc09d
@@ -65,18 +65,18 @@
     branch: v3.0.x
     stream: v3.0.x
 
-    mvn-settings: 'yangtools-settings'
-    mvn-opts: '-Xmx1024m'
+    mvn-settings: "yangtools-settings"
+    mvn-opts: "-Xmx1024m"
 
-    dependencies: ''
-    email-upstream: '[yangtools]'
+    dependencies: ""
+    email-upstream: "[yangtools]"
     archive-artifacts: >
-        **/*.prop
-        **/*.log
-        **/target/surefire-reports/*-output.txt
-        **/target/failsafe-reports/failsafe-summary.xml
-        **/hs_err_*.log
-        **/target/feature/feature.xml
+      **/*.prop
+      **/*.log
+      **/target/surefire-reports/*-output.txt
+      **/target/failsafe-reports/failsafe-summary.xml
+      **/hs_err_*.log
+      **/target/feature/feature.xml
 
     # Used by the release job
     staging-profile-id: 1271cf710cc09d
@@ -101,16 +101,16 @@
             -Dsonar.jacoco.reportPath=$WORKSPACE/target/jacoco.exec
             -Dskip.karaf.featureTest=true
 
-    project: 'yangtools'
-    project-name: 'yangtools'
-    branch: 'master'
-    java-version: 'openjdk11'
-    mvn-settings: 'yangtools-settings'
-    mvn-opts: '-Xmx1024m'
+    project: "yangtools"
+    project-name: "yangtools"
+    branch: "master"
+    java-version: "openjdk11"
+    mvn-settings: "yangtools-settings"
+    mvn-opts: "-Xmx1024m"
     sonarcloud: true
-    sonarcloud-project-organization: '{sonarcloud_project_organization}'
-    sonarcloud-api-token: '{sonarcloud_api_token}'
-    sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
+    sonarcloud-project-organization: "{sonarcloud_project_organization}"
+    sonarcloud-api-token: "{sonarcloud_api_token}"
+    sonarcloud-project-key: "{sonarcloud_project_organization}_{project-name}"
 
 - project:
     name: yangtools-info

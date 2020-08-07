@@ -4,33 +4,33 @@
     jobs:
       - inttest-patch-test
 
-    project: 'yangtools'
+    project: "yangtools"
 
     stream:
       - silicon:
-          branch: 'master'
-          jre: 'openjdk11'
+          branch: "master"
+          jre: "openjdk11"
       - aluminium:
-          branch: 'stable/aluminium'
-          jre: 'openjdk11'
+          branch: "stable/aluminium"
+          jre: "openjdk11"
       - magnesium:
-          branch: 'stable/magnesium'
-          jre: 'openjdk11'
+          branch: "stable/magnesium"
+          jre: "openjdk11"
       - sodium:
-          branch: 'stable/sodium'
+          branch: "stable/sodium"
 
-    os-branch: 'queens'
-    jdk: 'openjdk8'
+    os-branch: "queens"
+    jdk: "openjdk8"
 
     feature:
       - netvirt:
           csit-list: >
-              netvirt-csit-1node-{os-std-topo}-openstack-{os-branch}-gate-stateful-{stream}
+            netvirt-csit-1node-{os-std-topo}-openstack-{os-branch}-gate-stateful-{stream}
 
       - cluster-netvirt:
           csit-list: >
-              netvirt-csit-3node-{os-std-topo}-openstack-{os-branch}-gate-stateful-{stream}
+            netvirt-csit-3node-{os-std-topo}-openstack-{os-branch}-gate-stateful-{stream}
 
       - genius:
           csit-list: >
-              genius-csit-1node-gate-only-{stream}
+            genius-csit-1node-gate-only-{stream}
