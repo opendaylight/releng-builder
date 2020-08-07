@@ -12,9 +12,9 @@
     - include_role: name=lfit.system-update
 
   tasks:
-    - name: 'Install OpenVSwitch {{ovs_version}}'
+    - name: "Install OpenVSwitch {{ovs_version}}"
       block:
-        - name: 'Install dependencies required for OpenVSwitch {{ovs_version}}'
+        - name: "Install dependencies required for OpenVSwitch {{ovs_version}}"
           apt:
             name:
               - dh-autoreconf
@@ -38,24 +38,24 @@
             state: directory
             mode: 0755
           become: true
-        - name: 'Fetch OpenVSwitch {{ovs_version}} to /tmp'
+        - name: "Fetch OpenVSwitch {{ovs_version}} to /tmp"
           get_url:
-            url: 'http://openvswitch.org/releases/openvswitch-2.6.1.tar.gz'
-            dest: '/tmp/openvswitch-2.6.1.tar.gz'
-            checksum: '{{ovs_checksum}}'
-        - name: 'Unarchive OpenVSwitch {{ovs_version}}'
+            url: "http://openvswitch.org/releases/openvswitch-2.6.1.tar.gz"
+            dest: "/tmp/openvswitch-2.6.1.tar.gz"
+            checksum: "{{ovs_checksum}}"
+        - name: "Unarchive OpenVSwitch {{ovs_version}}"
           unarchive:
-            src: '/tmp/openvswitch-{{ovs_version}}.tar.gz'
+            src: "/tmp/openvswitch-{{ovs_version}}.tar.gz"
             dest: /opt/ovs
             remote_src: true
           become: true
-        - name: 'Build OpenVSwitch {{ovs_version}}'
+        - name: "Build OpenVSwitch {{ovs_version}}"
           shell: DEB_BUILD_OPTIONS='parallel=8 nocheck' fakeroot debian/rules binary
           args:
-            chdir: '/opt/ovs/openvswitch-{{ovs_version}}'
+            chdir: "/opt/ovs/openvswitch-{{ovs_version}}"
           become: true
-        - name: 'Install OpenVSwitch {{ovs_version}}'
-          apt: 'deb={{item}}'
+        - name: "Install OpenVSwitch {{ovs_version}}"
+          apt: "deb={{item}}"
           with_items:
             - /opt/ovs/openvswitch-common_2.6.1-1_amd64.deb
             - /opt/ovs/openvswitch-switch_2.6.1-1_amd64.deb

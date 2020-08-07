@@ -2,9 +2,9 @@
 - project:
     name: openflowplugin-silicon
     jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-maven-javadoc-jobs'
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-distribution-check-{stream}"
+      - "{project-name}-maven-javadoc-jobs"
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           doc-dir: .tox/docs/tmp/html
           project-pattern: openflowplugin
@@ -13,25 +13,25 @@
       - odl-maven-jobs-jdk11
       - odl-maven-verify-jobs
 
-    csit-gate-list: 'netvirt-csit-1node-0cmb-1ctl-2cmp-apex-queens-gate-snat-conntrack-{stream}'
+    csit-gate-list: "netvirt-csit-1node-0cmb-1ctl-2cmp-apex-queens-gate-snat-conntrack-{stream}"
     block_on_csit: false
 
     stream: silicon
-    project: 'openflowplugin'
-    project-name: 'openflowplugin'
-    branch: 'master'
+    project: "openflowplugin"
+    project-name: "openflowplugin"
+    branch: "master"
     build-node: centos7-builder-2c-8g
     build-timeout: 90
-    java-version: 'openjdk11'
-    mvn-settings: 'openflowplugin-settings'
-    mvn-goals: 'clean deploy javadoc:aggregate'
-    mvn-opts: '-Xmx1024m'
+    java-version: "openjdk11"
+    mvn-settings: "openflowplugin-settings"
+    mvn-goals: "clean deploy javadoc:aggregate"
+    mvn-opts: "-Xmx1024m"
     dependencies: >
-        odlparent-merge-{stream},
-        yangtools-merge-{stream},
-        controller-merge-{stream},
-        openflowjava-merge-{stream}
-    email-upstream: '[openflowplugin] [odlparent] [yangtools] [controller] [openflowjava]'
+      odlparent-merge-{stream},
+      yangtools-merge-{stream},
+      controller-merge-{stream},
+      openflowjava-merge-{stream}
+    email-upstream: "[openflowplugin] [odlparent] [yangtools] [controller] [openflowjava]"
 
     # Used by the release job
     staging-profile-id: a68a76dc1b44c
@@ -39,9 +39,9 @@
 - project:
     name: openflowplugin-aluminium
     jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-maven-javadoc-jobs'
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-distribution-check-{stream}"
+      - "{project-name}-maven-javadoc-jobs"
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           doc-dir: .tox/docs/tmp/html
           project-pattern: openflowplugin
@@ -50,25 +50,25 @@
       - odl-maven-jobs-jdk11
       - odl-maven-verify-jobs
 
-    csit-gate-list: 'netvirt-csit-1node-0cmb-1ctl-2cmp-apex-queens-gate-snat-conntrack-{stream}'
+    csit-gate-list: "netvirt-csit-1node-0cmb-1ctl-2cmp-apex-queens-gate-snat-conntrack-{stream}"
     block_on_csit: false
 
     stream: aluminium
-    project: 'openflowplugin'
-    project-name: 'openflowplugin'
-    branch: 'stable/aluminium'
+    project: "openflowplugin"
+    project-name: "openflowplugin"
+    branch: "stable/aluminium"
     build-node: centos7-builder-2c-8g
     build-timeout: 90
-    java-version: 'openjdk11'
-    mvn-settings: 'openflowplugin-settings'
-    mvn-goals: 'clean deploy javadoc:aggregate'
-    mvn-opts: '-Xmx1024m'
+    java-version: "openjdk11"
+    mvn-settings: "openflowplugin-settings"
+    mvn-goals: "clean deploy javadoc:aggregate"
+    mvn-opts: "-Xmx1024m"
     dependencies: >
-        odlparent-merge-{stream},
-        yangtools-merge-{stream},
-        controller-merge-{stream},
-        openflowjava-merge-{stream}
-    email-upstream: '[openflowplugin] [odlparent] [yangtools] [controller] [openflowjava]'
+      odlparent-merge-{stream},
+      yangtools-merge-{stream},
+      controller-merge-{stream},
+      openflowjava-merge-{stream}
+    email-upstream: "[openflowplugin] [odlparent] [yangtools] [controller] [openflowjava]"
 
     # Used by the release job
     staging-profile-id: a68a76dc1b44c
@@ -76,9 +76,9 @@
 - project:
     name: openflowplugin-magnesium
     jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-maven-javadoc-jobs'
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-distribution-check-{stream}"
+      - "{project-name}-maven-javadoc-jobs"
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           doc-dir: .tox/docs/tmp/html
           project-pattern: openflowplugin
@@ -87,25 +87,25 @@
       - odl-maven-jobs-jdk11
       - odl-maven-verify-jobs
 
-    csit-gate-list: 'netvirt-csit-1node-0cmb-1ctl-2cmp-apex-queens-gate-snat-conntrack-{stream}'
+    csit-gate-list: "netvirt-csit-1node-0cmb-1ctl-2cmp-apex-queens-gate-snat-conntrack-{stream}"
     block_on_csit: false
 
     stream: magnesium
-    project: 'openflowplugin'
-    project-name: 'openflowplugin'
-    branch: 'stable/magnesium'
+    project: "openflowplugin"
+    project-name: "openflowplugin"
+    branch: "stable/magnesium"
     build-node: centos7-builder-2c-8g
     build-timeout: 90
-    java-version: 'openjdk11'
-    mvn-settings: 'openflowplugin-settings'
-    mvn-goals: 'clean deploy javadoc:aggregate'
-    mvn-opts: '-Xmx1024m'
+    java-version: "openjdk11"
+    mvn-settings: "openflowplugin-settings"
+    mvn-goals: "clean deploy javadoc:aggregate"
+    mvn-opts: "-Xmx1024m"
     dependencies: >
-        odlparent-merge-{stream},
-        yangtools-merge-{stream},
-        controller-merge-{stream},
-        openflowjava-merge-{stream}
-    email-upstream: '[openflowplugin] [odlparent] [yangtools] [controller] [openflowjava]'
+      odlparent-merge-{stream},
+      yangtools-merge-{stream},
+      controller-merge-{stream},
+      openflowjava-merge-{stream}
+    email-upstream: "[openflowplugin] [odlparent] [yangtools] [controller] [openflowjava]"
 
     # Used by the release job
     staging-profile-id: a68a76dc1b44c
@@ -113,9 +113,9 @@
 - project:
     name: openflowplugin-sodium
     jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-maven-javadoc-jobs'
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-distribution-check-{stream}"
+      - "{project-name}-maven-javadoc-jobs"
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           doc-dir: .tox/docs/tmp/html
           project-pattern: openflowplugin
@@ -124,24 +124,24 @@
       - odl-maven-jobs
       - odl-maven-verify-jobs
 
-    csit-gate-list: 'netvirt-csit-1node-0cmb-1ctl-2cmp-apex-queens-gate-snat-conntrack-{stream}'
+    csit-gate-list: "netvirt-csit-1node-0cmb-1ctl-2cmp-apex-queens-gate-snat-conntrack-{stream}"
     block_on_csit: false
 
     stream: sodium
-    project: 'openflowplugin'
-    project-name: 'openflowplugin'
-    branch: 'stable/sodium'
+    project: "openflowplugin"
+    project-name: "openflowplugin"
+    branch: "stable/sodium"
     build-node: centos7-builder-2c-8g
     build-timeout: 90
-    mvn-settings: 'openflowplugin-settings'
-    mvn-goals: 'clean deploy javadoc:aggregate'
-    mvn-opts: '-Xmx1024m'
+    mvn-settings: "openflowplugin-settings"
+    mvn-goals: "clean deploy javadoc:aggregate"
+    mvn-opts: "-Xmx1024m"
     dependencies: >
-        odlparent-merge-{stream},
-        yangtools-merge-{stream},
-        controller-merge-{stream},
-        openflowjava-merge-{stream}
-    email-upstream: '[openflowplugin] [odlparent] [yangtools] [controller] [openflowjava]'
+      odlparent-merge-{stream},
+      yangtools-merge-{stream},
+      controller-merge-{stream},
+      openflowjava-merge-{stream}
+    email-upstream: "[openflowplugin] [odlparent] [yangtools] [controller] [openflowjava]"
 
     # Used by the release job
     staging-profile-id: a68a76dc1b44c
@@ -151,19 +151,19 @@
     jobs:
       - gerrit-maven-sonar
 
-    project: 'openflowplugin'
-    project-name: 'openflowplugin'
-    branch: 'master'
+    project: "openflowplugin"
+    project-name: "openflowplugin"
+    branch: "master"
     build-node: centos7-builder-2c-8g
     build-timeout: 90
-    java-version: 'openjdk11'
-    mvn-settings: 'openflowplugin-settings'
-    mvn-goals: 'clean deploy javadoc:aggregate'
-    mvn-opts: '-Xmx1024m'
+    java-version: "openjdk11"
+    mvn-settings: "openflowplugin-settings"
+    mvn-goals: "clean deploy javadoc:aggregate"
+    mvn-opts: "-Xmx1024m"
     sonarcloud: true
-    sonarcloud-project-organization: '{sonarcloud_project_organization}'
-    sonarcloud-api-token: '{sonarcloud_api_token}'
-    sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
+    sonarcloud-project-organization: "{sonarcloud_project_organization}"
+    sonarcloud-api-token: "{sonarcloud_api_token}"
+    sonarcloud-project-key: "{sonarcloud_project_organization}_{project-name}"
 
 - project:
     name: openflowplugin-info
@@ -178,4 +178,4 @@
     name: openflowplugin-view
     views:
       - project-view
-    project-name: 'openflowplugin'
+    project-name: "openflowplugin"

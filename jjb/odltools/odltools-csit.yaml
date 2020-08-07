@@ -7,25 +7,25 @@
 
     project: odltools
     tools_system_count: 0
-    testplan: '{project}-basic.txt'
+    testplan: "{project}-basic.txt"
 
     stream:
       - silicon:
-          branch: 'master'
-          jre: 'openjdk11'
+          branch: "master"
+          jre: "openjdk11"
       - aluminium:
-          branch: 'stable/aluminium'
-          jre: 'openjdk11'
+          branch: "stable/aluminium"
+          jre: "openjdk11"
       - magnesium:
-          branch: 'stable/magnesium'
-          jre: 'openjdk11'
+          branch: "stable/magnesium"
+          jre: "openjdk11"
       - sodium:
-          branch: 'stable/sodium'
+          branch: "stable/sodium"
 
     functionality:
-      - 'upstream'
-      - 'gate'
+      - "upstream"
+      - "gate"
 
     install:
       - all:
-          scope: 'all'
+          scope: "all"

@@ -5,7 +5,7 @@
       - inttest-csit-1node
 
     # The project name
-    project: 'openflowplugin'
+    project: "openflowplugin"
 
     # The functionality under test
     functionality:
@@ -15,37 +15,37 @@
     # Project branches
     stream:
       - silicon:
-          branch: 'master'
-          jre: 'openjdk11'
+          branch: "master"
+          jre: "openjdk11"
       - aluminium:
-          branch: 'stable/aluminium'
-          jre: 'openjdk11'
+          branch: "stable/aluminium"
+          jre: "openjdk11"
       - magnesium:
-          branch: 'stable/magnesium'
-          jre: 'openjdk11'
+          branch: "stable/magnesium"
+          jre: "openjdk11"
       - sodium:
-          branch: 'stable/sodium'
+          branch: "stable/sodium"
 
     install:
       - only:
-          scope: 'only'
+          scope: "only"
 
     # Job images
-    odl_system_flavor: 'odl-standard-4'
-    tools_system_image: 'ZZCI - Ubuntu 16.04 - mininet-ovs-28 - 20190415-091034.881'
+    odl_system_flavor: "odl-standard-4"
+    tools_system_image: "ZZCI - Ubuntu 16.04 - mininet-ovs-28 - 20190415-091034.881"
 
     # Features to install
-    install-features: 'odl-openflowplugin-flow-services-rest'
+    install-features: "odl-openflowplugin-flow-services-rest"
 
     # Robot custom options
-    robot-options: '-v flnr:100000 -v swnr:32 -v fpr:200'
+    robot-options: "-v flnr:100000 -v swnr:32 -v fpr:200"
 
     # Plot Info
-    01-plot-title: 'Stats Collection Rate'
-    01-plot-yaxis: 'flow_mods/sec'
-    01-plot-group: 'Stats Collection Performance'
-    01-plot-data-file: 'stats_rate.csv'
-    02-plot-title: 'Stats Collection Time'
-    02-plot-yaxis: 'seconds'
-    02-plot-group: 'Stats Collection Performance'
-    02-plot-data-file: 'stats_time.csv'
+    01-plot-title: "Stats Collection Rate"
+    01-plot-yaxis: "flow_mods/sec"
+    01-plot-group: "Stats Collection Performance"
+    01-plot-data-file: "stats_rate.csv"
+    02-plot-title: "Stats Collection Time"
+    02-plot-yaxis: "seconds"
+    02-plot-group: "Stats Collection Performance"
+    02-plot-data-file: "stats_time.csv"

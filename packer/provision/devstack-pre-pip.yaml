@@ -9,7 +9,7 @@
     - include_role: name=lfit.system-update
 
   tasks:
-    - name: 'Install devstack dependencies'
+    - name: "Install devstack dependencies"
       block:
         - name: Install xpath dependencies
           yum:
@@ -54,7 +54,7 @@
               - libmlx5
             state: present
           become: true
-    - name: 'Pre-Install yum and pip packages'
+    - name: "Pre-Install yum and pip packages"
       block:
         - name: Create /tmp/devstack directory
           file:
@@ -65,7 +65,7 @@
           git:
             repo: https://github.com/openstack-dev/devstack.git
             dest: /tmp/devstack
-            version: '{{ os_branch }}'
+            version: "{{ os_branch }}"
         - name: "Read openstack devstack dependencies"
           shell: "sed -e 's/#.*//' /tmp/devstack/files/rpms/general"
           register: sed_output
@@ -78,8 +78,8 @@
           become: true
         - name: git clone openstack core projects
           git: repo='https://github.com/openstack/{{ item }}.git'
-               dest='/tmp/devstack/{{ item }}'
-               version='{{ os_branch }}'
+            dest='/tmp/devstack/{{ item }}'
+            version='{{ os_branch }}'
           with_items:
             - requirements
             - keystone
@@ -111,21 +111,21 @@
             - horizon
           become: true
 
-    - name: 'Install openvswitch from relevant openstack branch'
+    - name: "Install openvswitch from relevant openstack branch"
       block:
-        - name: 'Install CentOS openstack release {{ rdo_branch }}'
+        - name: "Install CentOS openstack release {{ rdo_branch }}"
           yum:
-            name: 'centos-release-openstack-{{ rdo_branch }}'
+            name: "centos-release-openstack-{{ rdo_branch }}"
             state: present
           become: true
-        - name: 'Install openvswitch 2.8.2 for stable/queens'
+        - name: "Install openvswitch 2.8.2 for stable/queens"
           yum:
             name: openvswitch-2.8.2-1.el7
             state: present
             disable_gpg_check: yes
           when: rdo_branch == 'queens'
           become: true
-        - name: 'Install openvswitch latest for stable/rocky'
+        - name: "Install openvswitch latest for stable/rocky"
           yum:
             name: openvswitch
             state: present
@@ -144,7 +144,7 @@
           when: ansible_facts.packages['git2u'] is defined
       become: true
 
-    - name: 'Cleanup devstack directory'
+    - name: "Cleanup devstack directory"
       block:
         - name: "Removing /tmp/devstack"
           file:

@@ -9,7 +9,7 @@
     - include_role: name=lfit.system-update
 
   tasks:
-    - name: 'Install devstack dependencies'
+    - name: "Install devstack dependencies"
       block:
         - name: Install xpath dependencies
           yum:

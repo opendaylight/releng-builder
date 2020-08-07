@@ -2,9 +2,9 @@
 - project:
     name: odlparent-master
     jobs:
-      - 'gerrit-release-merge':
+      - "gerrit-release-merge":
           build-node: centos7-builder-2c-2g
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           doc-dir: .tox/docs/tmp/html
           project-pattern: odlparent
@@ -19,19 +19,19 @@
     stream: master
     branch: master
 
-    java-version: 'openjdk11'
+    java-version: "openjdk11"
     mvn-settings: odlparent-settings
     mvn-version: mvn36
 
-    dependencies: ''
-    email-upstream: '[odlparent]'
+    dependencies: ""
+    email-upstream: "[odlparent]"
     archive-artifacts: >
-        **/*.prop
-        **/*.log
-        **/target/surefire-reports/*-output.txt
-        **/target/failsafe-reports/failsafe-summary.xml
-        **/hs_err_*.log
-        **/target/feature/feature.xml
+      **/*.prop
+      **/*.log
+      **/target/surefire-reports/*-output.txt
+      **/target/failsafe-reports/failsafe-summary.xml
+      **/hs_err_*.log
+      **/target/feature/feature.xml
 
     # Used by the release job
     staging-profile-id: 880d5ac25eaa
@@ -39,7 +39,7 @@
 - project:
     name: odlparent-6.0.x
     jobs:
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           doc-dir: .tox/docs/tmp/html
           project-pattern: odlparent
@@ -54,20 +54,20 @@
     stream: 6.0.x
     branch: 6.0.x
 
-    java-version: 'openjdk11'
+    java-version: "openjdk11"
     mvn-settings: odlparent-settings
-    mvn-opts: '-Xmx1024m'
+    mvn-opts: "-Xmx1024m"
     mvn-version: mvn35
 
-    dependencies: ''
-    email-upstream: '[odlparent]'
+    dependencies: ""
+    email-upstream: "[odlparent]"
     archive-artifacts: >
-        **/*.prop
-        **/*.log
-        **/target/surefire-reports/*-output.txt
-        **/target/failsafe-reports/failsafe-summary.xml
-        **/hs_err_*.log
-        **/target/feature/feature.xml
+      **/*.prop
+      **/*.log
+      **/target/surefire-reports/*-output.txt
+      **/target/failsafe-reports/failsafe-summary.xml
+      **/hs_err_*.log
+      **/target/feature/feature.xml
 
     # Used by the release job
     staging-profile-id: 880d5ac25eaa
@@ -75,7 +75,7 @@
 - project:
     name: odlparent-5.0.x
     jobs:
-      - '{project-name}-maven-javadoc-jobs'
+      - "{project-name}-maven-javadoc-jobs"
       - odl-maven-jobs
       - odl-maven-verify-jobs
       - gerrit-tox-verify
@@ -86,18 +86,18 @@
     branch: 5.0.x
 
     mvn-settings: odlparent-settings
-    mvn-opts: '-Xmx1024m'
+    mvn-opts: "-Xmx1024m"
     mvn-version: mvn35
 
-    dependencies: ''
-    email-upstream: '[odlparent]'
+    dependencies: ""
+    email-upstream: "[odlparent]"
     archive-artifacts: >
-        **/*.prop
-        **/*.log
-        **/target/surefire-reports/*-output.txt
-        **/target/failsafe-reports/failsafe-summary.xml
-        **/hs_err_*.log
-        **/target/feature/feature.xml
+      **/*.prop
+      **/*.log
+      **/target/surefire-reports/*-output.txt
+      **/target/failsafe-reports/failsafe-summary.xml
+      **/hs_err_*.log
+      **/target/feature/feature.xml
 
     # Used by the release job
     staging-profile-id: 880d5ac25eaa
@@ -110,16 +110,16 @@
             -Dodl.jacoco.aggregateFile=$WORKSPACE/target/jacoco.exec
             -Dsonar.jacoco.reportPath=$WORKSPACE/target/jacoco.exec
 
-    project: 'odlparent'
-    project-name: 'odlparent'
-    branch: 'master'
-    java-version: 'openjdk11'
-    mvn-settings: 'odlparent-settings'
-    mvn-opts: '-Xmx1024m'
+    project: "odlparent"
+    project-name: "odlparent"
+    branch: "master"
+    java-version: "openjdk11"
+    mvn-settings: "odlparent-settings"
+    mvn-opts: "-Xmx1024m"
     sonarcloud: true
-    sonarcloud-project-organization: '{sonarcloud_project_organization}'
-    sonarcloud-api-token: '{sonarcloud_api_token}'
-    sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
+    sonarcloud-project-organization: "{sonarcloud_project_organization}"
+    sonarcloud-api-token: "{sonarcloud_api_token}"
+    sonarcloud-project-key: "{sonarcloud_project_organization}_{project-name}"
 
 - project:
     name: odlparent-info

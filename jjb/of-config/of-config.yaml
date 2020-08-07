@@ -7,13 +7,13 @@
       - odl-maven-verify-jobs
 
     stream: silicon
-    project: 'of-config'
-    project-name: 'of-config'
-    branch: 'master'
-    mvn-settings: 'of-config-settings'
-    mvn-opts: '-Xmx1024m'
+    project: "of-config"
+    project-name: "of-config"
+    branch: "master"
+    mvn-settings: "of-config-settings"
+    mvn-opts: "-Xmx1024m"
     dependencies: netconf-merge-{stream}'
-    email-upstream: '[of-config] [netconf]'
+    email-upstream: "[of-config] [netconf]"
     disable-job: true
 
     # Used by the release job
@@ -26,13 +26,13 @@
       - odl-maven-verify-jobs
 
     stream: aluminium
-    project: 'of-config'
-    project-name: 'of-config'
-    branch: 'stable/aluminium'
-    mvn-settings: 'of-config-settings'
-    mvn-opts: '-Xmx1024m'
+    project: "of-config"
+    project-name: "of-config"
+    branch: "stable/aluminium"
+    mvn-settings: "of-config-settings"
+    mvn-opts: "-Xmx1024m"
     dependencies: netconf-merge-{stream}'
-    email-upstream: '[of-config] [netconf]'
+    email-upstream: "[of-config] [netconf]"
     disable-job: true
 
     # Used by the release job
@@ -45,13 +45,13 @@
       - odl-maven-verify-jobs
 
     stream: magnesium
-    project: 'of-config'
-    project-name: 'of-config'
-    branch: 'stable/magnesium'
-    mvn-settings: 'of-config-settings'
-    mvn-opts: '-Xmx1024m'
+    project: "of-config"
+    project-name: "of-config"
+    branch: "stable/magnesium"
+    mvn-settings: "of-config-settings"
+    mvn-opts: "-Xmx1024m"
     dependencies: netconf-merge-{stream}'
-    email-upstream: '[of-config] [netconf]'
+    email-upstream: "[of-config] [netconf]"
     disable-job: true
 
     # Used by the release job
@@ -64,13 +64,13 @@
       - odl-maven-verify-jobs
 
     stream: sodium
-    project: 'of-config'
-    project-name: 'of-config'
-    branch: 'stable/sodium'
-    mvn-settings: 'of-config-settings'
-    mvn-opts: '-Xmx1024m'
+    project: "of-config"
+    project-name: "of-config"
+    branch: "stable/sodium"
+    mvn-settings: "of-config-settings"
+    mvn-opts: "-Xmx1024m"
     dependencies: netconf-merge-{stream}'
-    email-upstream: '[of-config] [netconf]'
+    email-upstream: "[of-config] [netconf]"
     disable-job: true
 
     # Used by the release job
@@ -80,16 +80,16 @@
     name: of-config-sonar
     jobs:
       - gerrit-maven-sonar
-    project: 'of-config'
-    project-name: 'of-config'
-    branch: 'master'
-    mvn-settings: 'of-config-settings'
-    mvn-opts: '-Xmx1024m'
+    project: "of-config"
+    project-name: "of-config"
+    branch: "master"
+    mvn-settings: "of-config-settings"
+    mvn-opts: "-Xmx1024m"
     disable-job: true
     sonarcloud: true
-    sonarcloud-project-organization: '{sonarcloud_project_organization}'
-    sonarcloud-api-token: '{sonarcloud_api_token}'
-    sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
+    sonarcloud-project-organization: "{sonarcloud_project_organization}"
+    sonarcloud-api-token: "{sonarcloud_api_token}"
+    sonarcloud-project-key: "{sonarcloud_project_organization}_{project-name}"
 
 - project:
     name: of-config-info
