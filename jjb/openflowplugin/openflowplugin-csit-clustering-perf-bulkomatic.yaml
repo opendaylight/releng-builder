@@ -5,7 +5,7 @@
       - inttest-csit-3node
 
     # The project name
-    project: 'openflowplugin'
+    project: "openflowplugin"
 
     # The functionality under test
     functionality:
@@ -15,39 +15,39 @@
     # Project branches
     stream:
       - silicon:
-          branch: 'master'
-          jre: 'openjdk11'
+          branch: "master"
+          jre: "openjdk11"
       - aluminium:
-          branch: 'stable/aluminium'
-          jre: 'openjdk11'
+          branch: "stable/aluminium"
+          jre: "openjdk11"
       - magnesium:
-          branch: 'stable/magnesium'
-          jre: 'openjdk11'
+          branch: "stable/magnesium"
+          jre: "openjdk11"
       - sodium:
-          branch: 'stable/sodium'
+          branch: "stable/sodium"
 
     install:
       - only:
-          scope: 'only'
+          scope: "only"
 
     # Job images
-    tools_system_image: 'ZZCI - Ubuntu 16.04 - mininet-ovs-28 - 20190415-091034.881'
+    tools_system_image: "ZZCI - Ubuntu 16.04 - mininet-ovs-28 - 20190415-091034.881"
 
     # Features to install
     install-features: >
-        odl-openflowplugin-flow-services-rest,
-        odl-openflowplugin-app-bulk-o-matic,
-        odl-jolokia
+      odl-openflowplugin-flow-services-rest,
+      odl-openflowplugin-app-bulk-o-matic,
+      odl-jolokia
 
     # Robot custom options
-    robot-options: '-v ODL_OF_PLUGIN:lithium -v switch_count:32 -v flow_count_per_switch:2250'
+    robot-options: "-v ODL_OF_PLUGIN:lithium -v switch_count:32 -v flow_count_per_switch:2250"
 
     # Plot Info
-    01-plot-title: 'Flow Add rate'
-    01-plot-yaxis: 'flow_mods/sec'
-    01-plot-group: 'Java Performance'
-    01-plot-data-file: 'rate.csv'
-    02-plot-title: 'Flow Add time'
-    02-plot-yaxis: 'seconds'
-    02-plot-group: 'Java Performance'
-    02-plot-data-file: 'time.csv'
+    01-plot-title: "Flow Add rate"
+    01-plot-yaxis: "flow_mods/sec"
+    01-plot-group: "Java Performance"
+    01-plot-data-file: "rate.csv"
+    02-plot-title: "Flow Add time"
+    02-plot-yaxis: "seconds"
+    02-plot-group: "Java Performance"
+    02-plot-data-file: "time.csv"

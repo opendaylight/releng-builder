@@ -12,7 +12,7 @@
 
       - gerrit-maven-stage:
           sign-artifacts: true
-          cron: ''
+          cron: ""
 
     java-version: openjdk11
     mvn-version: mvn35
@@ -32,20 +32,20 @@
       #           - 'distribution-merge-{stream}'
       #         condition: SUCCESS
       #         trigger-with-no-params: true
-      - '{project-name}-merge-{stream}':
+      - "{project-name}-merge-{stream}":
           build-timeout: 180
           mvn-goals: clean install -V -Dmaven.compile.fork=true -Dintegrationtests -Dvtn.build.jobs=2
-          disable-job: '{disable-job}'
+          disable-job: "{disable-job}"
 
       - gerrit-maven-stage:
           sign-artifacts: true
           mvn-central: false
           ossrh-profile-id: 6386ebbbf3a563
-          cron: ''
+          cron: ""
 
     java-version: openjdk8
     mvn-version: mvn35
-    disable-job: '{disable-job}'
+    disable-job: "{disable-job}"
 
 - job-group:
     name: odl-maven-verify-jobs
@@ -58,7 +58,7 @@
     mvn-version: mvn35
 
 - job-template:
-    name: '{project-name}-integration-{stream}'
+    name: "{project-name}-integration-{stream}"
 
     ######################
     # Default parameters #
@@ -78,68 +78,68 @@
     #####################
 
     project-type: freestyle
-    node: '{build-node}'
-    jdk: '{java-version}'
-    disabled: '{disable-job}'
+    node: "{build-node}"
+    jdk: "{java-version}"
+    disabled: "{disable-job}"
 
     properties:
       - opendaylight-infra-properties:
-          build-days-to-keep: '{build-days-to-keep}'
+          build-days-to-keep: "{build-days-to-keep}"
 
     parameters:
       - opendaylight-infra-parameters:
-          os-cloud: '{os-cloud}'
-          project: '{project}'
-          branch: '{branch}'
-          refspec: 'refs/heads/{branch}'
-          artifacts: '{archive-artifacts}'
+          os-cloud: "{os-cloud}"
+          project: "{project}"
+          branch: "{branch}"
+          refspec: "refs/heads/{branch}"
+          artifacts: "{archive-artifacts}"
 
     scm:
       - git-scm:
-          refspec: ''
-          branch: '{branch}'
+          refspec: ""
+          branch: "{branch}"
 
     wrappers:
       - opendaylight-infra-wrappers:
-          build-timeout: '{build-timeout}'
+          build-timeout: "{build-timeout}"
 
     triggers:
       - reverse:
-          jobs: '{dependencies}'
-          result: 'success'
+          jobs: "{dependencies}"
+          result: "success"
 
     builders:
       - lf-jacoco-nojava-workaround
       - lf-provide-maven-settings:
-          global-settings-file: 'global-settings'
-          settings-file: '{mvn-settings}'
+          global-settings-file: "global-settings"
+          settings-file: "{mvn-settings}"
       - maven-target:
-          maven-version: 'mvn35'
+          maven-version: "mvn35"
           goals: |
-              {mvn-goals}
-              {opendaylight-infra-mvn-opts}
+            {mvn-goals}
+            {opendaylight-infra-mvn-opts}
           java-opts:
-            - '{mvn-opts}'
-          settings: '{mvn-settings}'
+            - "{mvn-opts}"
+          settings: "{mvn-settings}"
           settings-type: cfp
-          global-settings: 'global-settings'
+          global-settings: "global-settings"
           global-settings-type: cfp
 
     publishers:
       - email-notification:
-          email-recipients: '{email-recipients}'
-          email-prefix: '{email-upstream}'
+          email-recipients: "{email-recipients}"
+          email-prefix: "{email-upstream}"
       - findbugs
       - lf-jacoco-report
       - lf-infra-publish
 
 - job-template:
-    name: '{project-name}-merge-{stream}'
+    name: "{project-name}-merge-{stream}"
 
     ######################
     # Default parameters #
     ######################
-    disable-job: 'false'
+    disable-job: "false"
 
     archive-artifacts: >
       **/*.log
@@ -147,8 +147,8 @@
       **/target/**/feature.xml
       **/target/failsafe-reports/failsafe-summary.xml
       **/target/surefire-reports/*-output.txt
-    cron: '@daily'
-    mvn-opts: ''
+    cron: "@daily"
+    mvn-opts: ""
     mvn-version: mvn35
     java-version: openjdk8
 
@@ -161,9 +161,9 @@
     # separate lifecycle:
     #     https://issues.apache.org/jira/browse/MNG-5666
     project-type: maven
-    node: '{build-node}'
-    jdk: '{java-version}'
-    disabled: '{disable-job}'
+    node: "{build-node}"
+    jdk: "{java-version}"
+    disabled: "{disable-job}"
 
     properties:
       - opendaylight-infra-properties:
@@ -171,54 +171,54 @@
 
     parameters:
       - opendaylight-infra-parameters:
-          os-cloud: '{os-cloud}'
-          project: '{project}'
-          branch: '{branch}'
-          refspec: 'refs/heads/{branch}'
-          artifacts: '{archive-artifacts}'
+          os-cloud: "{os-cloud}"
+          project: "{project}"
+          branch: "{branch}"
+          refspec: "refs/heads/{branch}"
+          artifacts: "{archive-artifacts}"
       - string:
           name: STREAM
-          default: '{stream}'
+          default: "{stream}"
           description: "String representing release name"
 
     scm:
       - gerrit-trigger-scm:
-          refspec: ''
-          choosing-strategy: 'default'
+          refspec: ""
+          choosing-strategy: "default"
 
     wrappers:
       - opendaylight-infra-wrappers:
-          build-timeout: '{build-timeout}'
+          build-timeout: "{build-timeout}"
 
     triggers:
-      - timed: '{obj:cron}'
+      - timed: "{obj:cron}"
       - gerrit-trigger-patch-merged:
-          gerrit-server-name: '{gerrit-server-name}'
-          name: '{project}'
-          branch: '{branch}'
-          files: '**'
-          forbidden-files: ''
+          gerrit-server-name: "{gerrit-server-name}"
+          name: "{project}"
+          branch: "{branch}"
+          files: "**"
+          forbidden-files: ""
 
     prebuilders:
       - lf-jacoco-nojava-workaround
       - lf-provide-maven-settings:
-          global-settings-file: 'global-settings'
-          settings-file: '{mvn-settings}'
+          global-settings-file: "global-settings"
+          settings-file: "{mvn-settings}"
       - lf-maven-install:
-          mvn-version: '{mvn-version}'
+          mvn-version: "{mvn-version}"
 
     # TODO: Do we want to apply sophisticated checks as in *-distribution-check-*?
     maven:
-      maven-name: '{mvn-version}'
+      maven-name: "{mvn-version}"
       goals: >
-          {mvn-goals}
-          -Dmerge
-          -Dstream={stream}
-          {opendaylight-infra-mvn-opts}
-      maven-opts: '{mvn-opts}'
-      settings: '{mvn-settings}'
+        {mvn-goals}
+        -Dmerge
+        -Dstream={stream}
+        {opendaylight-infra-mvn-opts}
+      maven-opts: "{mvn-opts}"
+      settings: "{mvn-settings}"
       settings-type: cfp
-      global-settings: 'global-settings'
+      global-settings: "global-settings"
       global-settings-type: cfp
       post-step-run-condition: UNSTABLE
 
@@ -227,10 +227,10 @@
 
     publishers:
       - email-notification:
-          email-recipients: '{email-recipients}'
-          email-prefix: '[{project-name}]'
+          email-recipients: "{email-recipients}"
+          email-prefix: "[{project-name}]"
       - maven-deploy:
-          id: ''
+          id: ""
           unique-version: true
           deploy-unstable: false
       - lf-jacoco-report

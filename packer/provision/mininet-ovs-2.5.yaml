@@ -9,9 +9,9 @@
     - include_role: name=lfit.system-update
 
   tasks:
-    - name: 'Install OpenVSwitch {{ovs_version}}'
+    - name: "Install OpenVSwitch {{ovs_version}}"
       block:
-        - name: 'Install dependencies required for OpenVSwitch {{ovs_version}}'
+        - name: "Install dependencies required for OpenVSwitch {{ovs_version}}"
           apt:
             name:
               - dh-autoreconf
@@ -29,7 +29,7 @@
               - python-twisted-conch
             state: present
           become: true
-        - name: 'Install OpenVSwitch {{ovs_version}}'
+        - name: "Install OpenVSwitch {{ovs_version}}"
           apt:
             name:
               - openvswitch-switch

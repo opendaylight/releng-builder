@@ -2,9 +2,9 @@
 - project:
     name: genius-silicon
     jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-maven-javadoc-jobs'
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-distribution-check-{stream}"
+      - "{project-name}-maven-javadoc-jobs"
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: genius
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-genius/34944/
@@ -12,25 +12,25 @@
       - odl-maven-jobs-jdk11
       - odl-maven-verify-jobs
 
-    csit-gate-list: 'netvirt-csit-1node-0cmb-1ctl-2cmp-apex-queens-gate-snat-conntrack-{stream}'
+    csit-gate-list: "netvirt-csit-1node-0cmb-1ctl-2cmp-apex-queens-gate-snat-conntrack-{stream}"
     block_on_csit: false
 
     stream: silicon
-    project: 'genius'
-    project-name: 'genius'
-    branch: 'master'
+    project: "genius"
+    project-name: "genius"
+    branch: "master"
     build-node: centos7-builder-2c-8g
-    java-version: 'openjdk11'
-    mvn-settings: 'genius-settings'
-    mvn-opts: '-Xmx1024m'
+    java-version: "openjdk11"
+    mvn-settings: "genius-settings"
+    mvn-opts: "-Xmx1024m"
     build-timeout: 90
     dependencies: >
-        controller-merge-{stream},
-        yangtools-merge-{stream},
-        odlparent-merge-{stream},
-        openflowplugin-merge-{stream},
-        neutron-merge-{stream}
-    email-upstream: '[genius] [controller] [yangtools] [odlparent] [openflowplugin] [neutron]'
+      controller-merge-{stream},
+      yangtools-merge-{stream},
+      odlparent-merge-{stream},
+      openflowplugin-merge-{stream},
+      neutron-merge-{stream}
+    email-upstream: "[genius] [controller] [yangtools] [odlparent] [openflowplugin] [neutron]"
 
     # Used by the release job
     staging-profile-id: 96fb4b6d9d1ee
@@ -38,9 +38,9 @@
 - project:
     name: genius-aluminium
     jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-maven-javadoc-jobs'
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-distribution-check-{stream}"
+      - "{project-name}-maven-javadoc-jobs"
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: genius
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-genius/34944/
@@ -48,25 +48,25 @@
       - odl-maven-jobs-jdk11
       - odl-maven-verify-jobs
 
-    csit-gate-list: 'netvirt-csit-1node-0cmb-1ctl-2cmp-apex-queens-gate-snat-conntrack-{stream}'
+    csit-gate-list: "netvirt-csit-1node-0cmb-1ctl-2cmp-apex-queens-gate-snat-conntrack-{stream}"
     block_on_csit: false
 
     stream: aluminium
-    project: 'genius'
-    project-name: 'genius'
-    branch: 'stable/aluminium'
+    project: "genius"
+    project-name: "genius"
+    branch: "stable/aluminium"
     build-node: centos7-builder-2c-8g
-    java-version: 'openjdk11'
-    mvn-settings: 'genius-settings'
-    mvn-opts: '-Xmx1024m'
+    java-version: "openjdk11"
+    mvn-settings: "genius-settings"
+    mvn-opts: "-Xmx1024m"
     build-timeout: 90
     dependencies: >
-        controller-merge-{stream},
-        yangtools-merge-{stream},
-        odlparent-merge-{stream},
-        openflowplugin-merge-{stream},
-        neutron-merge-{stream}
-    email-upstream: '[genius] [controller] [yangtools] [odlparent] [openflowplugin] [neutron]'
+      controller-merge-{stream},
+      yangtools-merge-{stream},
+      odlparent-merge-{stream},
+      openflowplugin-merge-{stream},
+      neutron-merge-{stream}
+    email-upstream: "[genius] [controller] [yangtools] [odlparent] [openflowplugin] [neutron]"
 
     # Used by the release job
     staging-profile-id: 96fb4b6d9d1ee
@@ -74,9 +74,9 @@
 - project:
     name: genius-magnesium
     jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-maven-javadoc-jobs'
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-distribution-check-{stream}"
+      - "{project-name}-maven-javadoc-jobs"
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: genius
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-genius/34944/
@@ -84,25 +84,25 @@
       - odl-maven-jobs-jdk11
       - odl-maven-verify-jobs
 
-    csit-gate-list: 'netvirt-csit-1node-0cmb-1ctl-2cmp-apex-queens-gate-snat-conntrack-{stream}'
+    csit-gate-list: "netvirt-csit-1node-0cmb-1ctl-2cmp-apex-queens-gate-snat-conntrack-{stream}"
     block_on_csit: false
 
     stream: magnesium
-    project: 'genius'
-    project-name: 'genius'
-    branch: 'stable/magnesium'
+    project: "genius"
+    project-name: "genius"
+    branch: "stable/magnesium"
     build-node: centos7-builder-2c-8g
-    java-version: 'openjdk11'
-    mvn-settings: 'genius-settings'
-    mvn-opts: '-Xmx1024m'
+    java-version: "openjdk11"
+    mvn-settings: "genius-settings"
+    mvn-opts: "-Xmx1024m"
     build-timeout: 90
     dependencies: >
-        controller-merge-{stream},
-        yangtools-merge-{stream},
-        odlparent-merge-{stream},
-        openflowplugin-merge-{stream},
-        neutron-merge-{stream}
-    email-upstream: '[genius] [controller] [yangtools] [odlparent] [openflowplugin] [neutron]'
+      controller-merge-{stream},
+      yangtools-merge-{stream},
+      odlparent-merge-{stream},
+      openflowplugin-merge-{stream},
+      neutron-merge-{stream}
+    email-upstream: "[genius] [controller] [yangtools] [odlparent] [openflowplugin] [neutron]"
 
     # Used by the release job
     staging-profile-id: 96fb4b6d9d1ee
@@ -110,9 +110,9 @@
 - project:
     name: genius-sodium
     jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-maven-javadoc-jobs'
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-distribution-check-{stream}"
+      - "{project-name}-maven-javadoc-jobs"
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: genius
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-genius/34944/
@@ -120,24 +120,24 @@
       - odl-maven-jobs
       - odl-maven-verify-jobs
 
-    csit-gate-list: 'netvirt-csit-1node-0cmb-1ctl-2cmp-apex-queens-gate-snat-conntrack-{stream}'
+    csit-gate-list: "netvirt-csit-1node-0cmb-1ctl-2cmp-apex-queens-gate-snat-conntrack-{stream}"
     block_on_csit: false
 
     stream: sodium
-    project: 'genius'
-    project-name: 'genius'
-    branch: 'stable/sodium'
+    project: "genius"
+    project-name: "genius"
+    branch: "stable/sodium"
     build-node: centos7-builder-2c-8g
-    mvn-settings: 'genius-settings'
-    mvn-opts: '-Xmx1024m'
+    mvn-settings: "genius-settings"
+    mvn-opts: "-Xmx1024m"
     build-timeout: 90
     dependencies: >
-        controller-merge-{stream},
-        yangtools-merge-{stream},
-        odlparent-merge-{stream},
-        openflowplugin-merge-{stream},
-        neutron-merge-{stream}
-    email-upstream: '[genius] [controller] [yangtools] [odlparent] [openflowplugin] [neutron]'
+      controller-merge-{stream},
+      yangtools-merge-{stream},
+      odlparent-merge-{stream},
+      openflowplugin-merge-{stream},
+      neutron-merge-{stream}
+    email-upstream: "[genius] [controller] [yangtools] [odlparent] [openflowplugin] [neutron]"
 
     # Used by the release job
     staging-profile-id: 96fb4b6d9d1ee
@@ -146,17 +146,17 @@
     name: genius-sonar
     jobs:
       - gerrit-maven-sonar
-    project: 'genius'
-    project-name: 'genius'
-    branch: 'master'
+    project: "genius"
+    project-name: "genius"
+    branch: "master"
     build-node: centos7-builder-2c-8g
-    java-version: 'openjdk11'
-    mvn-settings: 'genius-settings'
-    mvn-opts: '-Xmx1024m'
+    java-version: "openjdk11"
+    mvn-settings: "genius-settings"
+    mvn-opts: "-Xmx1024m"
     sonarcloud: true
-    sonarcloud-project-organization: '{sonarcloud_project_organization}'
-    sonarcloud-api-token: '{sonarcloud_api_token}'
-    sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
+    sonarcloud-project-organization: "{sonarcloud_project_organization}"
+    sonarcloud-api-token: "{sonarcloud_api_token}"
+    sonarcloud-project-key: "{sonarcloud_project_organization}_{project-name}"
 
 - project:
     name: genius-info

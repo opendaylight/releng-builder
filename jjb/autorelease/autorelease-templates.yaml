@@ -19,23 +19,23 @@
           project: releng/autorelease
           branch: master
           stream: master
-          lftools-version: '{lftools-version}'
+          lftools-version: "{lftools-version}"
       - string:
           name: RELEASE
           description: |
-              Release name to branch cut.
-              Eg. Lithium, Beryllium, Boron, Carbon...
+            Release name to branch cut.
+            Eg. Lithium, Beryllium, Boron, Carbon...
       - bool:
           name: DRY_RUN
           default: true
           description: |
-              If DRY_RUN is enabled modifications are not published to Gerrit.
+            If DRY_RUN is enabled modifications are not published to Gerrit.
 
     scm:
       - lf-infra-gerrit-scm:
-          git-url: '$GIT_URL/$GERRIT_PROJECT'
+          git-url: "$GIT_URL/$GERRIT_PROJECT"
           branch: master
-          refspec: 'refs/heads/master'
+          refspec: "refs/heads/master"
           jenkins-ssh-credential: opendaylight-jenkins-ssh
           submodule-disable: false
           submodule-recursive: true
@@ -54,31 +54,31 @@
       - lf-infra-publish
 
 - job-template:
-    name: 'autorelease-release-{stream}-{mvn-version}-{java-version}'
+    name: "autorelease-release-{stream}-{mvn-version}-{java-version}"
 
     ######################
     # Default parameters #
     ######################
 
-    build-node: '{build-node}'
-    cron: 'H 0 * * *'
-    java-version: '{java-version}'
+    build-node: "{build-node}"
+    cron: "H 0 * * *"
+    java-version: "{java-version}"
     mvn-global-settings: global-settings
     mvn-goals: clean deploy
-    mvn-opts: '-Xmx8g -Dmaven.compile.fork=true'
-    mvn-params: ''
+    mvn-opts: "-Xmx8g -Dmaven.compile.fork=true"
+    mvn-params: ""
     mvn-settings: autorelease-settings
     mvn-version: mvn35
     sign-artifacts: true
-    disable-job: 'false'
+    disable-job: "false"
 
     #####################
     # Job Configuration #
     #####################
 
     project-type: freestyle
-    node: '{build-node}'
-    disabled: '{disable-job}'
+    node: "{build-node}"
+    disabled: "{disable-job}"
 
     properties:
       - lf-infra-properties:
@@ -86,34 +86,34 @@
 
     parameters:
       - lf-infra-parameters:
-          project: '{project}'
-          stream: '{stream}'
-          branch: '{branch}'
-          lftools-version: '{lftools-version}'
+          project: "{project}"
+          stream: "{stream}"
+          branch: "{branch}"
+          lftools-version: "{lftools-version}"
       - lf-infra-maven-parameters:
-          mvn-opts: '{mvn-opts}'
-          mvn-params: '{mvn-params}'
-          mvn-version: '{mvn-version}'
+          mvn-opts: "{mvn-opts}"
+          mvn-params: "{mvn-params}"
+          mvn-version: "{mvn-version}"
       - distribution-karaf-version:
-          karaf-version: '{karaf-version}'
+          karaf-version: "{karaf-version}"
       - autorelease-release-tag:
-          release-tag: '{stream}'
+          release-tag: "{stream}"
       - string:
           name: ARCHIVE_ARTIFACTS
-          default: '{archive-artifacts}'
+          default: "{archive-artifacts}"
           description: Artifacts to archive to the logs server.
       - string:
           name: STAGING_PROFILE_ID
-          default: '{staging-profile-id}'
+          default: "{staging-profile-id}"
           description: Nexus staging profile ID.
 
     scm:
       - git:
-          credentials-id: 'opendaylight-jenkins-ssh'
-          url: '$GIT_BASE'
-          refspec: '$GERRIT_REFSPEC'
+          credentials-id: "opendaylight-jenkins-ssh"
+          url: "$GIT_BASE"
+          refspec: "$GERRIT_REFSPEC"
           branches:
-            - '$GERRIT_BRANCH'
+            - "$GERRIT_BRANCH"
           choosing-strategy: default
           skip-tag: true
           submodule:
@@ -122,51 +122,51 @@
 
     wrappers:
       - opendaylight-infra-wrappers:
-          build-timeout: '900'
+          build-timeout: "900"
 
     triggers:
-      - timed: '{cron}'
+      - timed: "{cron}"
 
     builders:
       - lf-infra-pre-build
       # force jenkins install of maven version before any shell scripts use it
       - lf-maven-install:
-          mvn-version: '{mvn-version}'
+          mvn-version: "{mvn-version}"
       - wipe-local-maven-repo
       - lf-jacoco-nojava-workaround
       - shell: "./scripts/list-project-dependencies.sh"
       - autorelease-determine-merge-order
       - lf-provide-maven-settings:
-          global-settings-file: '{mvn-global-settings}'
-          settings-file: '{mvn-settings}'
+          global-settings-file: "{mvn-global-settings}"
+          settings-file: "{mvn-settings}"
       - autorelease-generate-release-patches
       - autorelease-generate-artifact-versions
       - lf-update-java-alternatives:
-          java-version: '{java-version}'
+          java-version: "{java-version}"
       - autorelease-distribute-taglist
       - distribute-build-url:
-          path: 'integration/distribution/$KARAF_ARTIFACT/src/main/assembly'
+          path: "integration/distribution/$KARAF_ARTIFACT/src/main/assembly"
       # In a perfect world projects should be releasing separately and we consume them
       # via a project that pulls the release bits from each project from Nexus.
       # Keep the patches compatible with that ideal, but apply an edit
       # to enable building in a single maven reactor afterwards.
       - autorelease-fix-relative-paths
       - lf-maven-build:
-          mvn-goals: '{mvn-goals}'
+          mvn-goals: "{mvn-goals}"
       - lf-sigul-sign-dir:
-          sign-artifacts: '{sign-artifacts}'
-          sign-dir: '$WORKSPACE/m2repo'
+          sign-artifacts: "{sign-artifacts}"
+          sign-dir: "$WORKSPACE/m2repo"
           sign-mode: serial
       - lf-maven-stage:
-          mvn-global-settings: '{mvn-global-settings}'
-          mvn-settings: '{mvn-settings}'
-          mvn-staging-id: '{mvn-staging-id}'
+          mvn-global-settings: "{mvn-global-settings}"
+          mvn-settings: "{mvn-settings}"
+          mvn-staging-id: "{mvn-staging-id}"
       - autorelease-get-integration-test-variables
       - autorelease-maven-sources:
-          opendaylight-infra-mvn-opts: '{opendaylight-infra-mvn-opts}'
-          maven-version: '{mvn-version}'
-          settings: '{mvn-settings}'
-          global-settings: '{mvn-global-settings}'
+          opendaylight-infra-mvn-opts: "{opendaylight-infra-mvn-opts}"
+          maven-version: "{mvn-version}"
+          settings: "{mvn-settings}"
+          global-settings: "{mvn-global-settings}"
       - shell: |
           mkdir -p archives/
           cp *.log *.prop $_
@@ -174,19 +174,19 @@
     publishers:
       - opendaylight-infra-notify-status
       - trigger-parameterized-builds:
-          - project: 'integration-distribution-test-{integration-test}'
+          - project: "integration-distribution-test-{integration-test}"
             condition: UNSTABLE_OR_BETTER
             property-file: variables.jenkins-trigger
             fail-on-missing: true
-          - project: 'integration-distribution-test-{integration-test}'
+          - project: "integration-distribution-test-{integration-test}"
             condition: FAILED
             trigger-with-no-params: true
-          - project: 'packaging-build-rpm-{stream}'
+          - project: "packaging-build-rpm-{stream}"
             condition: UNSTABLE_OR_BETTER
             predefined-parameters: DOWNLOAD_URL=$BUNDLE_URL
             property-file: variables.jenkins-trigger
             fail-on-missing: true
-          - project: 'packaging-build-deb-{stream}'
+          - project: "packaging-build-deb-{stream}"
             condition: UNSTABLE_OR_BETTER
             predefined-parameters: DOWNLOAD_URL=$BUNDLE_URL
             property-file: variables.jenkins-trigger
@@ -203,14 +203,14 @@
       - lf-infra-publish
 
 - job-template:
-    name: 'autorelease-update-submodules-{stream}'
+    name: "autorelease-update-submodules-{stream}"
 
     ######################
     # Default parameters #
     ######################
 
-    cron: 'H 0 * * *'
-    disable-job: 'false'
+    cron: "H 0 * * *"
+    disable-job: "false"
 
     #####################
     # Job configuration #
@@ -218,7 +218,7 @@
 
     project-type: freestyle
     node: centos7-builder-2c-2g
-    disabled: '{disable-job}'
+    disabled: "{disable-job}"
 
     properties:
       - lf-infra-properties:
@@ -227,16 +227,16 @@
     parameters:
       - lf-infra-parameters:
           project: releng/autorelease
-          branch: '{branch}'
-          stream: '{stream}'
-          refspec: 'refs/heads/{branch}'
-          lftools-version: '{lftools-version}'
+          branch: "{branch}"
+          stream: "{stream}"
+          refspec: "refs/heads/{branch}"
+          lftools-version: "{lftools-version}"
 
     scm:
       - lf-infra-gerrit-scm:
-          git-url: '$GIT_URL/$GERRIT_PROJECT'
-          branch: '{branch}'
-          refspec: 'refs/heads/{branch}'
+          git-url: "$GIT_URL/$GERRIT_PROJECT"
+          branch: "{branch}"
+          refspec: "refs/heads/{branch}"
           jenkins-ssh-credential: opendaylight-jenkins-ssh
           submodule-disable: false
           submodule-recursive: true
@@ -249,7 +249,7 @@
           jenkins-ssh-credential: opendaylight-jenkins-ssh
 
     triggers:
-      - timed: '{obj:cron}'
+      - timed: "{obj:cron}"
 
     builders:
       - lf-infra-pre-build
@@ -259,12 +259,12 @@
           git submodule update --remote
           git add .
       - lf-infra-push-gerrit-patch:
-          project: '{project}'
-          gerrit-user: 'jenkins-$SILO'
-          gerrit-host: 'git.opendaylight.org'
-          gerrit-topic: 'autorelease-update-submodules'
-          gerrit-commit-message: 'Update submodules to latest HEAD of branch'
-          reviewers-email: ''
+          project: "{project}"
+          gerrit-user: "jenkins-$SILO"
+          gerrit-host: "git.opendaylight.org"
+          gerrit-topic: "autorelease-update-submodules"
+          gerrit-commit-message: "Update submodules to latest HEAD of branch"
+          reviewers-email: ""
 
     publishers:
       - lf-infra-publish
@@ -276,8 +276,8 @@
     # Default parameters #
     ######################
 
-    cron: '@weekly'
-    disable-job: 'false'
+    cron: "@weekly"
+    disable-job: "false"
 
     #####################
     # Job configuration #
@@ -285,7 +285,7 @@
 
     project-type: freestyle
     node: centos7-builder-2c-1g
-    disabled: '{disable-job}'
+    disabled: "{disable-job}"
 
     properties:
       - lf-infra-properties:
@@ -294,15 +294,15 @@
     parameters:
       - lf-infra-parameters:
           project: releng/builder
-          branch: '{branch}'
-          stream: '{stream}'
-          lftools-version: '{lftools-version}'
+          branch: "{branch}"
+          stream: "{stream}"
+          lftools-version: "{lftools-version}"
 
     scm:
       - lf-infra-gerrit-scm:
-          git-url: '$GIT_URL/releng/builder'
+          git-url: "$GIT_URL/releng/builder"
           branch: master
-          refspec: 'refs/heads/master'
+          refspec: "refs/heads/master"
           jenkins-ssh-credential: opendaylight-jenkins-ssh
           submodule-disable: false
           submodule-recursive: true
@@ -310,19 +310,19 @@
           choosing-strategy: default
 
     triggers:
-      - timed: '{cron}'
+      - timed: "{cron}"
       - gerrit:
-          server-name: '{gerrit-server-name}'
+          server-name: "{gerrit-server-name}"
           trigger-on:
             - change-merged-event
             - comment-added-contains-event:
                 comment-contains-value: remerge$
           projects:
             - project-compare-type: ANT
-              project-pattern: '{project}'
+              project-pattern: "{project}"
               branches:
                 - branch-compare-type: ANT
-                  branch-pattern: '**/{branch}'
+                  branch-pattern: "**/{branch}"
               file-paths:
                 - compare-type: ANT
                   pattern: pom.xml
@@ -337,12 +337,12 @@
       - autorelease-update-project-views
       - autorelease-update-validate-projects
       - lf-infra-push-gerrit-patch:
-          project: '{project}'
-          gerrit-user: 'jenkins-$SILO'
-          gerrit-host: 'git.opendaylight.org'
-          gerrit-topic: 'autorelease-update-validate-jobs-{stream}'
-          gerrit-commit-message: 'Update validate-ar jobs for {stream}'
-          reviewers-email: 'jenkins-releng@opendaylight.org'
+          project: "{project}"
+          gerrit-user: "jenkins-$SILO"
+          gerrit-host: "git.opendaylight.org"
+          gerrit-topic: "autorelease-update-validate-jobs-{stream}"
+          gerrit-commit-message: "Update validate-ar jobs for {stream}"
+          reviewers-email: "jenkins-releng@opendaylight.org"
 
     publishers:
       - lf-infra-publish
@@ -357,15 +357,15 @@
     mvn-global-settings: global-settings
     mvn-settings: autorelease-settings
     mvn-version: mvn35
-    disable-job: 'false'
+    disable-job: "false"
 
     #####################
     # Job configuration #
     #####################
 
     project-type: freestyle
-    node: '{build-node}'
-    disabled: '{disable-job}'
+    node: "{build-node}"
+    disabled: "{disable-job}"
 
     properties:
       - opendaylight-infra-properties:
@@ -374,38 +374,38 @@
     parameters:
       - lf-infra-parameters:
           project: releng/autorelease
-          branch: '{branch}'
-          stream: '{stream}'
-          refspec: 'refs/heads/{branch}'
-          lftools-version: '{lftools-version}'
+          branch: "{branch}"
+          stream: "{stream}"
+          refspec: "refs/heads/{branch}"
+          lftools-version: "{lftools-version}"
       - string:
           name: RELEASE_TAG
-          default: '{stream}'
+          default: "{stream}"
           description: |
-              Release that is being version bumped.
-              Eg. Lithium, Beryllium, Boron, Carbon, Carbon-SR1, Carbon-SR2...
+            Release that is being version bumped.
+            Eg. Lithium, Beryllium, Boron, Carbon, Carbon-SR1, Carbon-SR2...
       - bool:
           name: BRANCH_CUT
           default: false
           description: |
-              If BRANCH_CUT is enabled, perform version bump for branch cutting
-              workflow, else perform version bump for simultaneous release
-              workflow (detault).
+            If BRANCH_CUT is enabled, perform version bump for branch cutting
+            workflow, else perform version bump for simultaneous release
+            workflow (detault).
       - bool:
           name: DRY_RUN
           default: true
           description: |
-              If DRY_RUN is enabled modifications are not published to Gerrit
-              and artifacts are not pushed to Nexus. Instead the build will be
-              performed using the goals "clean install".
+            If DRY_RUN is enabled modifications are not published to Gerrit
+            and artifacts are not pushed to Nexus. Instead the build will be
+            performed using the goals "clean install".
       - maven-exec:
-          maven-version: '{mvn-version}'
+          maven-version: "{mvn-version}"
 
     scm:
       - lf-infra-gerrit-scm:
-          git-url: '$GIT_URL/$GERRIT_PROJECT'
-          branch: '{branch}'
-          refspec: 'refs/heads/{branch}'
+          git-url: "$GIT_URL/$GERRIT_PROJECT"
+          branch: "{branch}"
+          refspec: "refs/heads/{branch}"
           jenkins-ssh-credential: opendaylight-jenkins-ssh
           submodule-disable: false
           submodule-recursive: true
@@ -423,10 +423,10 @@
       - lf-update-java-alternatives:
           java-version: "{java-version}"
       - lf-maven-install:
-          mvn-version: '{mvn-version}'
+          mvn-version: "{mvn-version}"
       - lf-provide-maven-settings:
-          global-settings-file: '{mvn-global-settings}'
-          settings-file: '{mvn-settings}'
+          global-settings-file: "{mvn-global-settings}"
+          settings-file: "{mvn-settings}"
       - shell: !include-raw-escape:
           - version-bump.sh
 
@@ -434,12 +434,12 @@
       - lf-infra-publish
 
 - job-template:
-    name: 'autorelease-generate-release-notes-{stream}'
+    name: "autorelease-generate-release-notes-{stream}"
 
     ######################
     # Default parameters #
     ######################
-    disable-job: 'false'
+    disable-job: "false"
 
     gerrit_merge_triggers:
       - comment-added-contains-event:
@@ -451,7 +451,7 @@
 
     project-type: freestyle
     node: centos7-builder-2c-8g
-    disabled: '{disable-job}'
+    disabled: "{disable-job}"
 
     properties:
       - lf-infra-properties:
@@ -459,20 +459,20 @@
 
     parameters:
       - lf-infra-parameters:
-          project: '{project}'
-          branch: '{branch}'
-          stream: '{stream}'
-          lftools-version: '{lftools-version}'
+          project: "{project}"
+          branch: "{branch}"
+          stream: "{stream}"
+          lftools-version: "{lftools-version}"
       - string:
           name: RELEASE
           description: |
-              Release to generate release notes for.
-              Eg. Sodium-SR1, Magnesium-SR2...
+            Release to generate release notes for.
+            Eg. Sodium-SR1, Magnesium-SR2...
     scm:
       - lf-infra-gerrit-scm:
-          git-url: '$GIT_URL/$GERRIT_PROJECT'
-          branch: '$GERRIT_BRANCH'
-          refspec: '$GERRIT_REFSPEC'
+          git-url: "$GIT_URL/$GERRIT_PROJECT"
+          branch: "$GERRIT_BRANCH"
+          refspec: "$GERRIT_REFSPEC"
           jenkins-ssh-credential: opendaylight-jenkins-ssh
           submodule-disable: false
           submodule-recursive: true
@@ -486,14 +486,14 @@
 
     triggers:
       - gerrit:
-          server-name: '{gerrit-server-name}'
-          trigger-on: '{obj:gerrit_merge_triggers}'
+          server-name: "{gerrit-server-name}"
+          trigger-on: "{obj:gerrit_merge_triggers}"
           projects:
             - project-compare-type: ANT
-              project-pattern: '{project}'
+              project-pattern: "{project}"
               branches:
                 - branch-compare-type: ANT
-                  branch-pattern: '**/{branch}'
+                  branch-pattern: "**/{branch}"
 
     builders:
       - lf-infra-pre-build
@@ -503,7 +503,7 @@
       - lf-infra-publish
 
 - job-template:
-    name: '{project-name}-validate-autorelease-{stream}'
+    name: "{project-name}-validate-autorelease-{stream}"
 
     #####################
     # Default variables #
@@ -513,7 +513,7 @@
     mvn-global-settings: global-settings
     mvn-settings: autorelease-settings
     mvn-version: mvn35
-    disable-job: 'false'
+    disable-job: "false"
 
     #####################
     # Job Configuration #
@@ -524,8 +524,8 @@
     #       override the build node.
     node: centos7-builder-2c-8g
     concurrent: true
-    jdk: '{java-version}'
-    disabled: '{disable-job}'
+    jdk: "{java-version}"
+    disabled: "{disable-job}"
 
     properties:
       - lf-infra-properties:
@@ -533,24 +533,24 @@
 
     parameters:
       - lf-infra-parameters:
-          project: '{project}'
-          stream: '{stream}'
-          branch: '{branch}'
-          lftools-version: '{lftools-version}'
+          project: "{project}"
+          stream: "{stream}"
+          branch: "{branch}"
+          lftools-version: "{lftools-version}"
       - autorelease-release-tag:
           release-tag: validate
       - string:
           name: CLONE_URL
-          default: '{git-url}/releng/autorelease'
+          default: "{git-url}/releng/autorelease"
           description: "Autorelease clone URL"
 
     scm:
       - git:
-          url: '$CLONE_URL'
-          credentials-id: 'opendaylight-jenkins-ssh'
-          refspec: ''
+          url: "$CLONE_URL"
+          credentials-id: "opendaylight-jenkins-ssh"
+          refspec: ""
           branches:
-            - 'origin/{branch}'
+            - "origin/{branch}"
           skip-tag: true
           submodule:
             recursive: true
@@ -558,15 +558,15 @@
 
     wrappers:
       - opendaylight-infra-wrappers:
-          build-timeout: '{build-timeout}'
+          build-timeout: "{build-timeout}"
 
     triggers:
       - gerrit-trigger-patch-submitted:
-          gerrit-server-name: '{gerrit-server-name}'
-          project: '{project}'
-          branch: '{branch}'
-          files: '**/*.xml'
-          forbidden-files: ''
+          gerrit-server-name: "{gerrit-server-name}"
+          project: "{project}"
+          branch: "{branch}"
+          files: "**/*.xml"
+          forbidden-files: ""
 
     builders:
       - lf-infra-pre-build
@@ -583,31 +583,31 @@
       # to enable building in a single maven reactor afterwards.
       - autorelease-fix-relative-paths
       - maven-target:
-          maven-version: '{mvn-version}'
+          maven-version: "{mvn-version}"
           pom: validate-pom.xml
           goals: |
-              clean install dependency:tree
-              -T1.5C
-              -Pq
-              {opendaylight-infra-mvn-opts}
+            clean install dependency:tree
+            -T1.5C
+            -Pq
+            {opendaylight-infra-mvn-opts}
           java-opts:
-            - '-Xmx8g'
-          settings: '{mvn-settings}'
+            - "-Xmx8g"
+          settings: "{mvn-settings}"
           settings-type: cfp
-          global-settings: '{mvn-global-settings}'
+          global-settings: "{mvn-global-settings}"
           global-settings-type: cfp
       - maven-target:
-          maven-version: '{mvn-version}'
+          maven-version: "{mvn-version}"
           pom: pom.xml
           goals: |
-              clean validate
-              -Pq
-              {opendaylight-infra-mvn-opts}
+            clean validate
+            -Pq
+            {opendaylight-infra-mvn-opts}
           java-opts:
-            - '-Xmx8g -Dmaven.compile.fork=true'
-          settings: '{mvn-settings}'
+            - "-Xmx8g -Dmaven.compile.fork=true"
+          settings: "{mvn-settings}"
           settings-type: cfp
-          global-settings: '{mvn-global-settings}'
+          global-settings: "{mvn-global-settings}"
           global-settings-type: cfp
       - shell: |
           mkdir -p archives/
@@ -615,6 +615,6 @@
 
     publishers:
       - email-notification:
-          email-recipients: '{email-recipients}'
-          email-prefix: '[autorelease] [{project-name}]'
+          email-recipients: "{email-recipients}"
+          email-prefix: "[autorelease] [{project-name}]"
       - lf-infra-publish

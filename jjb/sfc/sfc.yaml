@@ -2,7 +2,7 @@
 - project:
     name: sfc-silicon
     jobs:
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: sfc
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-sfc/38996/
@@ -11,15 +11,15 @@
       - odl-maven-verify-jobs
 
     stream: silicon
-    project: 'sfc'
-    project-name: 'sfc'
-    branch: 'master'
-    java-version: 'openjdk11'
-    mvn-settings: 'sfc-settings'
-    mvn-opts: '-Xmx2048m -Dmaven.compile.fork=true'
+    project: "sfc"
+    project-name: "sfc"
+    branch: "master"
+    java-version: "openjdk11"
+    mvn-settings: "sfc-settings"
+    mvn-opts: "-Xmx2048m -Dmaven.compile.fork=true"
     build-timeout: 120
-    dependencies: 'openflowplugin-merge-{stream},ovsdb-merge-{stream},lispflowmapping-merge-{stream}'
-    email-upstream: '[sfc] [openflowplugin] [ovsdb] [lispflowmapping]'
+    dependencies: "openflowplugin-merge-{stream},ovsdb-merge-{stream},lispflowmapping-merge-{stream}"
+    email-upstream: "[sfc] [openflowplugin] [ovsdb] [lispflowmapping]"
     build-node: centos7-builder-8c-8g
 
     # Used by the release job
@@ -28,7 +28,7 @@
 - project:
     name: sfc-aluminium
     jobs:
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: sfc
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-sfc/38996/
@@ -37,15 +37,15 @@
       - odl-maven-verify-jobs
 
     stream: aluminium
-    project: 'sfc'
-    project-name: 'sfc'
-    branch: 'stable/aluminium'
-    java-version: 'openjdk11'
-    mvn-settings: 'sfc-settings'
-    mvn-opts: '-Xmx2048m -Dmaven.compile.fork=true'
+    project: "sfc"
+    project-name: "sfc"
+    branch: "stable/aluminium"
+    java-version: "openjdk11"
+    mvn-settings: "sfc-settings"
+    mvn-opts: "-Xmx2048m -Dmaven.compile.fork=true"
     build-timeout: 120
-    dependencies: 'openflowplugin-merge-{stream},ovsdb-merge-{stream},lispflowmapping-merge-{stream}'
-    email-upstream: '[sfc] [openflowplugin] [ovsdb] [lispflowmapping]'
+    dependencies: "openflowplugin-merge-{stream},ovsdb-merge-{stream},lispflowmapping-merge-{stream}"
+    email-upstream: "[sfc] [openflowplugin] [ovsdb] [lispflowmapping]"
     build-node: centos7-builder-8c-8g
 
     # Used by the release job
@@ -54,7 +54,7 @@
 - project:
     name: sfc-magnesium
     jobs:
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: sfc
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-sfc/38996/
@@ -63,15 +63,15 @@
       - odl-maven-verify-jobs
 
     stream: magnesium
-    project: 'sfc'
-    project-name: 'sfc'
-    branch: 'stable/magnesium'
-    java-version: 'openjdk11'
-    mvn-settings: 'sfc-settings'
-    mvn-opts: '-Xmx2048m -Dmaven.compile.fork=true'
+    project: "sfc"
+    project-name: "sfc"
+    branch: "stable/magnesium"
+    java-version: "openjdk11"
+    mvn-settings: "sfc-settings"
+    mvn-opts: "-Xmx2048m -Dmaven.compile.fork=true"
     build-timeout: 120
-    dependencies: 'openflowplugin-merge-{stream},ovsdb-merge-{stream},lispflowmapping-merge-{stream}'
-    email-upstream: '[sfc] [openflowplugin] [ovsdb] [lispflowmapping]'
+    dependencies: "openflowplugin-merge-{stream},ovsdb-merge-{stream},lispflowmapping-merge-{stream}"
+    email-upstream: "[sfc] [openflowplugin] [ovsdb] [lispflowmapping]"
     build-node: centos7-builder-8c-8g
 
     # Used by the release job
@@ -80,8 +80,8 @@
 - project:
     name: sfc-sodium
     jobs:
-      - '{project-name}-distribution-check-{stream}'
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-distribution-check-{stream}"
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: sfc
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-sfc/38996/
@@ -90,14 +90,14 @@
       - odl-maven-verify-jobs
 
     stream: sodium
-    project: 'sfc'
-    project-name: 'sfc'
-    branch: 'stable/sodium'
-    mvn-settings: 'sfc-settings'
-    mvn-opts: '-Xmx2048m -Dmaven.compile.fork=true'
+    project: "sfc"
+    project-name: "sfc"
+    branch: "stable/sodium"
+    mvn-settings: "sfc-settings"
+    mvn-opts: "-Xmx2048m -Dmaven.compile.fork=true"
     build-timeout: 120
-    dependencies: 'openflowplugin-merge-{stream},ovsdb-merge-{stream},lispflowmapping-merge-{stream}'
-    email-upstream: '[sfc] [openflowplugin] [ovsdb] [lispflowmapping]'
+    dependencies: "openflowplugin-merge-{stream},ovsdb-merge-{stream},lispflowmapping-merge-{stream}"
+    email-upstream: "[sfc] [openflowplugin] [ovsdb] [lispflowmapping]"
     build-node: centos7-builder-8c-8g
 
     # Used by the release job
@@ -107,16 +107,16 @@
     name: sfc-sonar
     jobs:
       - gerrit-maven-sonar
-    project: 'sfc'
-    project-name: 'sfc'
-    branch: 'master'
-    java-version: 'openjdk11'
-    mvn-settings: 'sfc-settings'
-    mvn-opts: '-Xmx2048m -Dmaven.compile.fork=true'
+    project: "sfc"
+    project-name: "sfc"
+    branch: "master"
+    java-version: "openjdk11"
+    mvn-settings: "sfc-settings"
+    mvn-opts: "-Xmx2048m -Dmaven.compile.fork=true"
     sonarcloud: true
-    sonarcloud-project-organization: '{sonarcloud_project_organization}'
-    sonarcloud-api-token: '{sonarcloud_api_token}'
-    sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
+    sonarcloud-project-organization: "{sonarcloud_project_organization}"
+    sonarcloud-api-token: "{sonarcloud_api_token}"
+    sonarcloud-project-key: "{sonarcloud_project_organization}_{project-name}"
 
 - project:
     name: sfc-info

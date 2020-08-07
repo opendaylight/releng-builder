@@ -3,7 +3,7 @@
     name: odltools
     jobs:
       - gerrit-tox-verify
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           doc-dir: .tox/docs/tmp/html
           project-pattern: odltools
@@ -12,19 +12,19 @@
 
     stream:
       - silicon:
-          branch: 'master'
+          branch: "master"
       - aluminium:
-          branch: 'stable/aluminium'
+          branch: "stable/aluminium"
       - magnesium:
-          branch: 'stable/magnesium'
+          branch: "stable/magnesium"
       - sodium:
-          branch: 'stable/sodium'
+          branch: "stable/sodium"
 
     project: odltools
     project-name: odltools
     build-node: centos7-builder-2c-2g
     build-timeout: 60
-    mvn-settings: 'odltools-settings'
+    mvn-settings: "odltools-settings"
 
 - project:
     name: odltools-release-management
@@ -45,15 +45,15 @@
             -Dodl.jacoco.aggregateFile=$WORKSPACE/target/jacoco.exec
             -Dsonar.jacoco.reportPath=$WORKSPACE/target/jacoco.exec
 
-    project: 'odltools'
-    project-name: 'odltools'
-    branch: 'master'
-    mvn-settings: 'odltools-settings'
-    mvn-opts: '-Xmx1024m'
+    project: "odltools"
+    project-name: "odltools"
+    branch: "master"
+    mvn-settings: "odltools-settings"
+    mvn-opts: "-Xmx1024m"
     sonarcloud: true
-    sonarcloud-project-organization: '{sonarcloud_project_organization}'
-    sonarcloud-api-token: '{sonarcloud_api_token}'
-    sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
+    sonarcloud-project-organization: "{sonarcloud_project_organization}"
+    sonarcloud-api-token: "{sonarcloud_api_token}"
+    sonarcloud-project-key: "{sonarcloud_project_organization}_{project-name}"
 
 - project:
     name: odltools-info

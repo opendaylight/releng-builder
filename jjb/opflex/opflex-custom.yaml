@@ -2,158 +2,158 @@
 - project:
     name: opflex
     jobs:
-      - 'opflex-verify-{stream}'
-      - 'opflex-merge-{stream}'
+      - "opflex-verify-{stream}"
+      - "opflex-merge-{stream}"
 
     stream:
       - silicon:
-          branch: 'master'
-          libuv-version: '1.20.2'
-          rapidjson-version: '1.1.0'
-          openvswitch-version: '2.12.0'
+          branch: "master"
+          libuv-version: "1.20.2"
+          rapidjson-version: "1.1.0"
+          openvswitch-version: "2.12.0"
       - aluminium:
-          branch: 'stable/aluminium'
-          libuv-version: '1.20.2'
-          rapidjson-version: '1.1.0'
-          openvswitch-version: '2.12.0'
+          branch: "stable/aluminium"
+          libuv-version: "1.20.2"
+          rapidjson-version: "1.1.0"
+          openvswitch-version: "2.12.0"
       - magnesium:
-          branch: 'stable/magnesium'
-          libuv-version: '1.20.2'
-          rapidjson-version: '1.1.0'
-          openvswitch-version: '2.12.0'
+          branch: "stable/magnesium"
+          libuv-version: "1.20.2"
+          rapidjson-version: "1.1.0"
+          openvswitch-version: "2.12.0"
       - sodium:
-          branch: 'stable/sodium'
-          libuv-version: '1.8.0'
-          rapidjson-version: '1.0.2'
-          openvswitch-version: '2.6.0'
+          branch: "stable/sodium"
+          libuv-version: "1.8.0"
+          rapidjson-version: "1.0.2"
+          openvswitch-version: "2.6.0"
 
-    project: 'opflex'
-    archive-artifacts: '**/*.tar.gz'
-    jdk: 'openjdk8'
+    project: "opflex"
+    archive-artifacts: "**/*.tar.gz"
+    jdk: "openjdk8"
 
 - job-template:
-    name: 'opflex-verify-{stream}'
+    name: "opflex-verify-{stream}"
 
     disable-job: false
 
     project-type: freestyle
     node: centos7-builder-2c-8g
     concurrent: true
-    jdk: '{java-version}'
-    disabled: '{disable-job}'
+    jdk: "{java-version}"
+    disabled: "{disable-job}"
 
     properties:
       - opendaylight-infra-properties:
-          build-days-to-keep: '{build-days-to-keep}'
+          build-days-to-keep: "{build-days-to-keep}"
 
     parameters:
       - opendaylight-infra-parameters:
-          os-cloud: '{os-cloud}'
-          project: '{project}'
-          branch: '{branch}'
-          refspec: 'refs/heads/{branch}'
-          artifacts: '{archive-artifacts}'
+          os-cloud: "{os-cloud}"
+          project: "{project}"
+          branch: "{branch}"
+          refspec: "refs/heads/{branch}"
+          artifacts: "{archive-artifacts}"
       - string:
           name: LIBUV_VERSION
           # yamllint disable-line rule:line-length
-          default: '{libuv-version}'
-          description: 'libuv version'
+          default: "{libuv-version}"
+          description: "libuv version"
       - string:
           name: RAPIDJSON_VERSION
           # yamllint disable-line rule:line-length
-          default: '{rapidjson-version}'
-          description: 'rapidjson version'
+          default: "{rapidjson-version}"
+          description: "rapidjson version"
       - string:
           name: OPENVSWITCH_VERSION
           # yamllint disable-line rule:line-length
-          default: '{openvswitch-version}'
-          description: 'openvswitch-version'
+          default: "{openvswitch-version}"
+          description: "openvswitch-version"
 
     scm:
       - gerrit-trigger-scm:
-          refspec: '$GERRIT_REFSPEC'
-          choosing-strategy: 'gerrit'
+          refspec: "$GERRIT_REFSPEC"
+          choosing-strategy: "gerrit"
 
     wrappers:
       - opendaylight-infra-wrappers:
-          build-timeout: '{build-timeout}'
+          build-timeout: "{build-timeout}"
 
     triggers:
       - gerrit-trigger-patch-submitted:
-          gerrit-server-name: '{gerrit-server-name}'
-          project: '{project}'
-          branch: '{branch}'
-          files: '**'
-          forbidden-files: ''
+          gerrit-server-name: "{gerrit-server-name}"
+          project: "{project}"
+          branch: "{branch}"
+          files: "**"
+          forbidden-files: ""
 
     builders:
       - opflex-build:
-          mvn33: 'mvn33'
-          stream: '{stream}'
+          mvn33: "mvn33"
+          stream: "{stream}"
 
     publishers:
       - email-notification:
-          email-recipients: '{email-recipients}'
-          email-prefix: '[opflex]'
+          email-recipients: "{email-recipients}"
+          email-prefix: "[opflex]"
       - lf-infra-publish
 
 - job-template:
-    name: 'opflex-merge-{stream}'
+    name: "opflex-merge-{stream}"
 
     node: centos7-builder-2c-8g
-    jdk: '{java-version}'
+    jdk: "{java-version}"
 
     properties:
       - opendaylight-infra-properties:
-          build-days-to-keep: '{build-days-to-keep}'
+          build-days-to-keep: "{build-days-to-keep}"
 
     parameters:
       - opendaylight-infra-parameters:
-          os-cloud: '{os-cloud}'
-          project: '{project}'
-          branch: '{branch}'
-          refspec: 'refs/heads/{branch}'
-          artifacts: ''
+          os-cloud: "{os-cloud}"
+          project: "{project}"
+          branch: "{branch}"
+          refspec: "refs/heads/{branch}"
+          artifacts: ""
       - string:
           name: LIBUV_VERSION
           # yamllint disable-line rule:line-length
-          default: '{libuv-version}'
-          description: 'libuv version'
+          default: "{libuv-version}"
+          description: "libuv version"
       - string:
           name: RAPIDJSON_VERSION
           # yamllint disable-line rule:line-length
-          default: '{rapidjson-version}'
-          description: 'rapidjson version'
+          default: "{rapidjson-version}"
+          description: "rapidjson version"
       - string:
           name: OPENVSWITCH_VERSION
           # yamllint disable-line rule:line-length
-          default: '{openvswitch-version}'
-          description: 'openvswitch version'
+          default: "{openvswitch-version}"
+          description: "openvswitch version"
 
     scm:
       - gerrit-trigger-scm:
-          refspec: ''
-          choosing-strategy: 'default'
+          refspec: ""
+          choosing-strategy: "default"
 
     wrappers:
       - opendaylight-infra-wrappers:
-          build-timeout: '{build-timeout}'
+          build-timeout: "{build-timeout}"
 
     triggers:
       - gerrit-trigger-patch-merged:
-          gerrit-server-name: '{gerrit-server-name}'
-          name: 'opflex'
-          branch: '{branch}'
-          files: '**'
-          forbidden-files: ''
+          gerrit-server-name: "{gerrit-server-name}"
+          name: "opflex"
+          branch: "{branch}"
+          files: "**"
+          forbidden-files: ""
 
     builders:
       - opflex-build:
-          mvn33: 'mvn33'
-          stream: '{stream}'
+          mvn33: "mvn33"
+          stream: "{stream}"
 
     publishers:
       - email-notification:
-          email-recipients: '{email-recipients}'
-          email-prefix: '[opflex]'
+          email-recipients: "{email-recipients}"
+          email-prefix: "[opflex]"
       - lf-infra-publish

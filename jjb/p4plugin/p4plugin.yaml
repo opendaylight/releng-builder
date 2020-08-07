@@ -2,18 +2,18 @@
 - project:
     name: p4plugin-silicon
     jobs:
-      - '{project-name}-maven-javadoc-jobs'
+      - "{project-name}-maven-javadoc-jobs"
       - odl-maven-jobs
       - odl-maven-verify-jobs
 
     stream: silicon
-    project: 'p4plugin'
-    project-name: 'p4plugin'
-    branch: 'master'
-    mvn-settings: 'p4plugin-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: ''
-    email-upstream: '[p4plugin]'
+    project: "p4plugin"
+    project-name: "p4plugin"
+    branch: "master"
+    mvn-settings: "p4plugin-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: ""
+    email-upstream: "[p4plugin]"
 
     # Used by the release job
     staging-profile-id: a68bf26e208d4
@@ -21,18 +21,18 @@
 - project:
     name: p4plugin-aluminium
     jobs:
-      - '{project-name}-maven-javadoc-jobs'
+      - "{project-name}-maven-javadoc-jobs"
       - odl-maven-jobs
       - odl-maven-verify-jobs
 
     stream: aluminium
-    project: 'p4plugin'
-    project-name: 'p4plugin'
-    branch: 'stable/aluminium'
-    mvn-settings: 'p4plugin-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: ''
-    email-upstream: '[p4plugin]'
+    project: "p4plugin"
+    project-name: "p4plugin"
+    branch: "stable/aluminium"
+    mvn-settings: "p4plugin-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: ""
+    email-upstream: "[p4plugin]"
 
     # Used by the release job
     staging-profile-id: a68bf26e208d4
@@ -40,18 +40,18 @@
 - project:
     name: p4plugin-magnesium
     jobs:
-      - '{project-name}-maven-javadoc-jobs'
+      - "{project-name}-maven-javadoc-jobs"
       - odl-maven-jobs
       - odl-maven-verify-jobs
 
     stream: magnesium
-    project: 'p4plugin'
-    project-name: 'p4plugin'
-    branch: 'stable/magnesium'
-    mvn-settings: 'p4plugin-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: ''
-    email-upstream: '[p4plugin]'
+    project: "p4plugin"
+    project-name: "p4plugin"
+    branch: "stable/magnesium"
+    mvn-settings: "p4plugin-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: ""
+    email-upstream: "[p4plugin]"
 
     # Used by the release job
     staging-profile-id: a68bf26e208d4
@@ -59,18 +59,18 @@
 - project:
     name: p4plugin-sodium
     jobs:
-      - '{project-name}-maven-javadoc-jobs'
+      - "{project-name}-maven-javadoc-jobs"
       - odl-maven-jobs
       - odl-maven-verify-jobs
 
     stream: sodium
-    project: 'p4plugin'
-    project-name: 'p4plugin'
-    branch: 'stable/sodium'
-    mvn-settings: 'p4plugin-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: ''
-    email-upstream: '[p4plugin]'
+    project: "p4plugin"
+    project-name: "p4plugin"
+    branch: "stable/sodium"
+    mvn-settings: "p4plugin-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: ""
+    email-upstream: "[p4plugin]"
 
     # Used by the release job
     staging-profile-id: a68bf26e208d4
@@ -91,15 +91,15 @@
     jobs:
       - gerrit-maven-sonar
 
-    project: 'p4plugin'
-    project-name: 'p4plugin'
-    branch: 'master'
-    mvn-settings: 'p4plugin-settings'
-    mvn-opts: '-Xmx1024m'
+    project: "p4plugin"
+    project-name: "p4plugin"
+    branch: "master"
+    mvn-settings: "p4plugin-settings"
+    mvn-opts: "-Xmx1024m"
     sonarcloud: true
-    sonarcloud-project-organization: '{sonarcloud_project_organization}'
-    sonarcloud-api-token: '{sonarcloud_api_token}'
-    sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
+    sonarcloud-project-organization: "{sonarcloud_project_organization}"
+    sonarcloud-api-token: "{sonarcloud_api_token}"
+    sonarcloud-project-key: "{sonarcloud_project_organization}_{project-name}"
 
 - project:
     name: p4plugin-info

@@ -6,12 +6,12 @@
       - odl-maven-verify-jobs
 
     stream: master
-    project: 'honeycomb/vbd'
-    project-name: 'vbd'
-    branch: 'master'
-    mvn-settings: 'honeycomb-vbd-settings'
-    dependencies: ''
-    email-upstream: '[vbd]'
+    project: "honeycomb/vbd"
+    project-name: "vbd"
+    branch: "master"
+    mvn-settings: "honeycomb-vbd-settings"
+    dependencies: ""
+    email-upstream: "[vbd]"
 
     # Used by the release job
     staging-profile-id: 96fc362c36862
@@ -31,15 +31,15 @@
     name: vbd-sonar
     jobs:
       - gerrit-maven-sonar
-    project: 'honeycomb/vbd'
-    project-name: 'vbd'
-    branch: 'master'
-    mvn-settings: 'honeycomb-vbd-settings'
-    mvn-opts: '-Xmx1024m'
+    project: "honeycomb/vbd"
+    project-name: "vbd"
+    branch: "master"
+    mvn-settings: "honeycomb-vbd-settings"
+    mvn-opts: "-Xmx1024m"
     sonarcloud: true
-    sonarcloud-project-organization: '{sonarcloud_project_organization}'
-    sonarcloud-api-token: '{sonarcloud_api_token}'
-    sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
+    sonarcloud-project-organization: "{sonarcloud_project_organization}"
+    sonarcloud-api-token: "{sonarcloud_api_token}"
+    sonarcloud-project-key: "{sonarcloud_project_organization}_{project-name}"
 
 - project:
     name: vbd-info

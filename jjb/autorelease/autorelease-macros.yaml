@@ -5,7 +5,7 @@
     parameters:
       - string:
           name: RELEASE_TAG
-          default: '{release-tag}'
+          default: "{release-tag}"
           description: "The Release train tag to use eg. Beryllium-SR1"
 
 - wrapper:
@@ -58,19 +58,19 @@
     name: autorelease-maven-sources
     builders:
       - maven-target:
-          maven-version: '{maven-version}'
-          pom: 'pom.xml'
+          maven-version: "{maven-version}"
+          pom: "pom.xml"
           goals: |
-              dependency:sources
-              --quiet
-              -DoutputFile=$WORKSPACE/sources.log
-              -DappendOutput
-              {opendaylight-infra-mvn-opts}
+            dependency:sources
+            --quiet
+            -DoutputFile=$WORKSPACE/sources.log
+            -DappendOutput
+            {opendaylight-infra-mvn-opts}
           java-opts:
-            - '-Xmx4096m'
-          settings: '{settings}'
+            - "-Xmx4096m"
+          settings: "{settings}"
           settings-type: cfp
-          global-settings: '{global-settings}'
+          global-settings: "{global-settings}"
           global-settings-type: cfp
       - shell: |
           awk '/The following files have NOT been resolved:/,/^$/' sources.log > missing-sources.log

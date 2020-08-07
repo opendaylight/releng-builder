@@ -2,7 +2,7 @@
 - project:
     name: tsdr-silicon
     jobs:
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: tsdr
           rtd-build-url: https://readthedocs.org/api/v2/webhook/opendaylight-tsdr/47532/
@@ -11,13 +11,13 @@
       - odl-maven-verify-jobs
 
     stream: silicon
-    project: 'tsdr'
-    project-name: 'tsdr'
-    branch: 'master'
-    mvn-settings: 'tsdr-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: ''
-    email-upstream: '[tsdr]'
+    project: "tsdr"
+    project-name: "tsdr"
+    branch: "master"
+    mvn-settings: "tsdr-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: ""
+    email-upstream: "[tsdr]"
 
     # Used by the release job
     staging-profile-id: a69373036303c
@@ -25,7 +25,7 @@
 - project:
     name: tsdr-aluminium
     jobs:
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: tsdr
           rtd-build-url: https://readthedocs.org/api/v2/webhook/opendaylight-tsdr/47532/
@@ -34,13 +34,13 @@
       - odl-maven-verify-jobs
 
     stream: aluminium
-    project: 'tsdr'
-    project-name: 'tsdr'
-    branch: 'stable/aluminium'
-    mvn-settings: 'tsdr-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: ''
-    email-upstream: '[tsdr]'
+    project: "tsdr"
+    project-name: "tsdr"
+    branch: "stable/aluminium"
+    mvn-settings: "tsdr-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: ""
+    email-upstream: "[tsdr]"
 
     # Used by the release job
     staging-profile-id: a69373036303c
@@ -48,7 +48,7 @@
 - project:
     name: tsdr-magnesium
     jobs:
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: tsdr
           rtd-build-url: https://readthedocs.org/api/v2/webhook/opendaylight-tsdr/47532/
@@ -57,13 +57,13 @@
       - odl-maven-verify-jobs
 
     stream: magnesium
-    project: 'tsdr'
-    project-name: 'tsdr'
-    branch: 'stable/magnesium'
-    mvn-settings: 'tsdr-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: ''
-    email-upstream: '[tsdr]'
+    project: "tsdr"
+    project-name: "tsdr"
+    branch: "stable/magnesium"
+    mvn-settings: "tsdr-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: ""
+    email-upstream: "[tsdr]"
 
     # Used by the release job
     staging-profile-id: a69373036303c
@@ -71,7 +71,7 @@
 - project:
     name: tsdr-sodium
     jobs:
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: tsdr
           rtd-build-url: https://readthedocs.org/api/v2/webhook/opendaylight-tsdr/47532/
@@ -80,13 +80,13 @@
       - odl-maven-verify-jobs
 
     stream: sodium
-    project: 'tsdr'
-    project-name: 'tsdr'
-    branch: 'stable/sodium'
-    mvn-settings: 'tsdr-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: ''
-    email-upstream: '[tsdr]'
+    project: "tsdr"
+    project-name: "tsdr"
+    branch: "stable/sodium"
+    mvn-settings: "tsdr-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: ""
+    email-upstream: "[tsdr]"
 
     # Used by the release job
     staging-profile-id: a69373036303c
@@ -106,15 +106,15 @@
     name: tsdr-sonar
     jobs:
       - gerrit-maven-sonar
-    project: 'tsdr'
-    project-name: 'tsdr'
-    branch: 'master'
-    mvn-settings: 'tsdr-settings'
-    mvn-opts: '-Xmx1024m'
+    project: "tsdr"
+    project-name: "tsdr"
+    branch: "master"
+    mvn-settings: "tsdr-settings"
+    mvn-opts: "-Xmx1024m"
     sonarcloud: true
-    sonarcloud-project-organization: '{sonarcloud_project_organization}'
-    sonarcloud-api-token: '{sonarcloud_api_token}'
-    sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
+    sonarcloud-project-organization: "{sonarcloud_project_organization}"
+    sonarcloud-api-token: "{sonarcloud_api_token}"
+    sonarcloud-project-key: "{sonarcloud_project_organization}_{project-name}"
 
 - project:
     name: tsdr-info

@@ -2,7 +2,7 @@
 - project:
     name: sxp-silicon
     jobs:
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: sxp
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-sxp/47573/
@@ -10,18 +10,18 @@
       - odl-maven-jobs
       - odl-maven-verify-jobs
 
-    java-version: 'openjdk11'
+    java-version: "openjdk11"
 
     stream: silicon
-    project: 'sxp'
-    project-name: 'sxp'
-    branch: 'master'
+    project: "sxp"
+    project-name: "sxp"
+    branch: "master"
 
-    mvn-settings: 'sxp-settings'
-    mvn-opts: '-Xmx1024m'
+    mvn-settings: "sxp-settings"
+    mvn-opts: "-Xmx1024m"
 
-    dependencies: 'odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream}'
-    email-upstream: '[sxp] [odlparent] [controller] [yangtools]'
+    dependencies: "odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream}"
+    email-upstream: "[sxp] [odlparent] [controller] [yangtools]"
 
     # Used by the release job
     staging-profile-id: a6909c75719b7
@@ -29,7 +29,7 @@
 - project:
     name: sxp-aluminium
     jobs:
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: sxp
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-sxp/47573/
@@ -37,18 +37,18 @@
       - odl-maven-jobs
       - odl-maven-verify-jobs
 
-    java-version: 'openjdk11'
+    java-version: "openjdk11"
 
     stream: aluminium
-    project: 'sxp'
-    project-name: 'sxp'
-    branch: 'stable/aluminium'
+    project: "sxp"
+    project-name: "sxp"
+    branch: "stable/aluminium"
 
-    mvn-settings: 'sxp-settings'
-    mvn-opts: '-Xmx1024m'
+    mvn-settings: "sxp-settings"
+    mvn-opts: "-Xmx1024m"
 
-    dependencies: 'odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream}'
-    email-upstream: '[sxp] [odlparent] [controller] [yangtools]'
+    dependencies: "odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream}"
+    email-upstream: "[sxp] [odlparent] [controller] [yangtools]"
 
     # Used by the release job
     staging-profile-id: a6909c75719b7
@@ -56,7 +56,7 @@
 - project:
     name: sxp-magnesium
     jobs:
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: sxp
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-sxp/47573/
@@ -64,18 +64,18 @@
       - odl-maven-jobs
       - odl-maven-verify-jobs
 
-    java-version: 'openjdk11'
+    java-version: "openjdk11"
 
     stream: magnesium
-    project: 'sxp'
-    project-name: 'sxp'
-    branch: 'stable/magnesium'
+    project: "sxp"
+    project-name: "sxp"
+    branch: "stable/magnesium"
 
-    mvn-settings: 'sxp-settings'
-    mvn-opts: '-Xmx1024m'
+    mvn-settings: "sxp-settings"
+    mvn-opts: "-Xmx1024m"
 
-    dependencies: 'odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream}'
-    email-upstream: '[sxp] [odlparent] [controller] [yangtools]'
+    dependencies: "odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream}"
+    email-upstream: "[sxp] [odlparent] [controller] [yangtools]"
 
     # Used by the release job
     staging-profile-id: a6909c75719b7
@@ -83,7 +83,7 @@
 - project:
     name: sxp-sodium
     jobs:
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: sxp
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-sxp/47573/
@@ -95,15 +95,15 @@
       - openjdk8
 
     stream: sodium
-    project: 'sxp'
-    project-name: 'sxp'
-    branch: 'stable/sodium'
+    project: "sxp"
+    project-name: "sxp"
+    branch: "stable/sodium"
 
-    mvn-settings: 'sxp-settings'
-    mvn-opts: '-Xmx1024m'
+    mvn-settings: "sxp-settings"
+    mvn-opts: "-Xmx1024m"
 
-    dependencies: 'odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream}'
-    email-upstream: '[sxp] [odlparent] [controller] [yangtools]'
+    dependencies: "odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream}"
+    email-upstream: "[sxp] [odlparent] [controller] [yangtools]"
 
     # Used by the release job
     staging-profile-id: a6909c75719b7
@@ -123,16 +123,16 @@
     name: sxp-sonar
     jobs:
       - gerrit-maven-sonar
-    project: 'sxp'
-    project-name: 'sxp'
-    branch: 'master'
-    java-version: 'openjdk11'
-    mvn-settings: 'sxp-settings'
-    mvn-opts: '-Xmx1024m'
+    project: "sxp"
+    project-name: "sxp"
+    branch: "master"
+    java-version: "openjdk11"
+    mvn-settings: "sxp-settings"
+    mvn-opts: "-Xmx1024m"
     sonarcloud: true
-    sonarcloud-project-organization: '{sonarcloud_project_organization}'
-    sonarcloud-api-token: '{sonarcloud_api_token}'
-    sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
+    sonarcloud-project-organization: "{sonarcloud_project_organization}"
+    sonarcloud-api-token: "{sonarcloud_api_token}"
+    sonarcloud-project-key: "{sonarcloud_project_organization}_{project-name}"
 
 - project:
     name: sxp-info

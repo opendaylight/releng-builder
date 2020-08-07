@@ -2,24 +2,24 @@
 - project:
     name: telemetry-silicon
     jobs:
-      - 'odl-maven-jobs'
+      - "odl-maven-jobs"
       - odl-maven-verify-jobs
-      - '{project-name}-integration-{stream}'
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-integration-{stream}"
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: telemetry
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-telemetry/57583/
           rtd-token: 694bcbf8e0b45b3c4e53174c6e5773ca351e1efb
 
     stream: silicon
-    project: 'telemetry'
-    project-name: 'telemetry'
-    branch: 'master'
-    mvn-settings: 'telemetry-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: ''
-    email-upstream: '[telemetry]'
-    archive-artifacts: ''
+    project: "telemetry"
+    project-name: "telemetry"
+    branch: "master"
+    mvn-settings: "telemetry-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: ""
+    email-upstream: "[telemetry]"
+    archive-artifacts: ""
 
     # Used by the release job
     staging-profile-id: 8ed9c52266504
@@ -27,24 +27,24 @@
 - project:
     name: telemetry-aluminium
     jobs:
-      - 'odl-maven-jobs'
+      - "odl-maven-jobs"
       - odl-maven-verify-jobs
-      - '{project-name}-integration-{stream}'
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-integration-{stream}"
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: telemetry
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-telemetry/57583/
           rtd-token: 694bcbf8e0b45b3c4e53174c6e5773ca351e1efb
 
     stream: aluminium
-    project: 'telemetry'
-    project-name: 'telemetry'
-    branch: 'stable/aluminium'
-    mvn-settings: 'telemetry-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: ''
-    email-upstream: '[telemetry]'
-    archive-artifacts: ''
+    project: "telemetry"
+    project-name: "telemetry"
+    branch: "stable/aluminium"
+    mvn-settings: "telemetry-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: ""
+    email-upstream: "[telemetry]"
+    archive-artifacts: ""
 
     # Used by the release job
     staging-profile-id: 8ed9c52266504
@@ -52,24 +52,24 @@
 - project:
     name: telemetry-magnesium
     jobs:
-      - 'odl-maven-jobs'
+      - "odl-maven-jobs"
       - odl-maven-verify-jobs
-      - '{project-name}-integration-{stream}'
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-integration-{stream}"
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: telemetry
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-telemetry/57583/
           rtd-token: 694bcbf8e0b45b3c4e53174c6e5773ca351e1efb
 
     stream: magnesium
-    project: 'telemetry'
-    project-name: 'telemetry'
-    branch: 'stable/magnesium'
-    mvn-settings: 'telemetry-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: ''
-    email-upstream: '[telemetry]'
-    archive-artifacts: ''
+    project: "telemetry"
+    project-name: "telemetry"
+    branch: "stable/magnesium"
+    mvn-settings: "telemetry-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: ""
+    email-upstream: "[telemetry]"
+    archive-artifacts: ""
 
     # Used by the release job
     staging-profile-id: 8ed9c52266504
@@ -77,24 +77,24 @@
 - project:
     name: telemetry-sodium
     jobs:
-      - 'odl-maven-jobs'
+      - "odl-maven-jobs"
       - odl-maven-verify-jobs
-      - '{project-name}-integration-{stream}'
-      - '{project-name}-rtd-jobs':
+      - "{project-name}-integration-{stream}"
+      - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
           project-pattern: telemetry
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-telemetry/57583/
           rtd-token: 694bcbf8e0b45b3c4e53174c6e5773ca351e1efb
 
     stream: sodium
-    project: 'telemetry'
-    project-name: 'telemetry'
-    branch: 'stable/sodium'
-    mvn-settings: 'telemetry-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: ''
-    email-upstream: '[telemetry]'
-    archive-artifacts: ''
+    project: "telemetry"
+    project-name: "telemetry"
+    branch: "stable/sodium"
+    mvn-settings: "telemetry-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: ""
+    email-upstream: "[telemetry]"
+    archive-artifacts: ""
 
     # Used by the release job
     staging-profile-id: 8ed9c52266504
@@ -115,16 +115,16 @@
     jobs:
       - gerrit-maven-sonar
 
-    project: 'telemetry'
-    project-name: 'telemetry'
-    branch: 'master'
-    mvn-settings: 'telemetry-settings'
-    mvn-goals: 'clean install'
-    mvn-opts: '-Xmx1024m'
+    project: "telemetry"
+    project-name: "telemetry"
+    branch: "master"
+    mvn-settings: "telemetry-settings"
+    mvn-goals: "clean install"
+    mvn-opts: "-Xmx1024m"
     sonarcloud: true
-    sonarcloud-project-organization: '{sonarcloud_project_organization}'
-    sonarcloud-api-token: '{sonarcloud_api_token}'
-    sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
+    sonarcloud-project-organization: "{sonarcloud_project_organization}"
+    sonarcloud-api-token: "{sonarcloud_api_token}"
+    sonarcloud-project-key: "{sonarcloud_project_organization}_{project-name}"
 
 - project:
     name: telemetry-info

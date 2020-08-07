@@ -5,38 +5,38 @@
       - inttest-csit-1node
 
     # The project name
-    project: 'netconf'
+    project: "netconf"
 
     # The functionality under test
-    functionality: 'scale'
+    functionality: "scale"
 
     # Project branches
     stream:
       - silicon:
-          branch: 'master'
-          jre: 'openjdk11'
+          branch: "master"
+          jre: "openjdk11"
       - aluminium:
-          branch: 'stable/aluminium'
-          jre: 'openjdk11'
+          branch: "stable/aluminium"
+          jre: "openjdk11"
       - magnesium:
-          branch: 'stable/magnesium'
-          jre: 'openjdk11'
+          branch: "stable/magnesium"
+          jre: "openjdk11"
       - sodium:
-          branch: 'stable/sodium'
+          branch: "stable/sodium"
 
     install:
       - only:
-          scope: 'only'
+          scope: "only"
 
     # Features to install
     install-features: >
-        odl-restconf,
-        odl-clustering-test-app,
-        odl-netconf-mdsal,
-        odl-netconf-topology
+      odl-restconf,
+      odl-clustering-test-app,
+      odl-netconf-mdsal,
+      odl-netconf-topology
 
     # Robot custom options
-    robot-options: '-v USE_NETCONF_CONNECTOR:False'
+    robot-options: "-v USE_NETCONF_CONNECTOR:False"
 
     # ODL system configuration
     odl_system_flavor: odl-standard-4
@@ -47,50 +47,53 @@
       - inttest-csit-1node
 
     # The project name
-    project: 'netconf'
+    project: "netconf"
 
     # The functionality under test
-    functionality: 'scale-max-devices'
+    functionality: "scale-max-devices"
 
     # Project branches
     stream:
       - aluminium:
-          branch: 'master'
-          jre: 'openjdk11'
-          robot-options: '-v USE_NETCONF_CONNECTOR:False -v SCHEMA_MODEL:juniper -v INIT_DEVICE_COUNT:250
-                          -v MAX_DEVICE_COUNT:1000 -v DEVICE_INCREMENT:100 -v TESTTOOL_BOOT_TIMEOUT:600s
-                          -v MAX_HEAP:4G --flattenkeywords name:*repeat*keyword*'
+          branch: "master"
+          jre: "openjdk11"
+          robot-options:
+            "-v USE_NETCONF_CONNECTOR:False -v SCHEMA_MODEL:juniper -v INIT_DEVICE_COUNT:250
+            -v MAX_DEVICE_COUNT:1000 -v DEVICE_INCREMENT:100 -v TESTTOOL_BOOT_TIMEOUT:600s
+            -v MAX_HEAP:4G --flattenkeywords name:*repeat*keyword*"
       - magnesium:
-          branch: 'stable/magnesium'
-          jre: 'openjdk11'
-          robot-options: '-v USE_NETCONF_CONNECTOR:False -v SCHEMA_MODEL:juniper -v INIT_DEVICE_COUNT:250
-                          -v MAX_DEVICE_COUNT:1000 -v DEVICE_INCREMENT:100 -v TESTTOOL_BOOT_TIMEOUT:600s
-                          -v MAX_HEAP:4G --flattenkeywords name:*repeat*keyword*'
+          branch: "stable/magnesium"
+          jre: "openjdk11"
+          robot-options:
+            "-v USE_NETCONF_CONNECTOR:False -v SCHEMA_MODEL:juniper -v INIT_DEVICE_COUNT:250
+            -v MAX_DEVICE_COUNT:1000 -v DEVICE_INCREMENT:100 -v TESTTOOL_BOOT_TIMEOUT:600s
+            -v MAX_HEAP:4G --flattenkeywords name:*repeat*keyword*"
       - sodium:
-          branch: 'stable/sodium'
-          robot-options: '-v USE_NETCONF_CONNECTOR:False -v SCHEMA_MODEL:juniper -v INIT_DEVICE_COUNT:10
-                          -v MAX_DEVICE_COUNT:500 -v DEVICE_INCREMENT:25 -v TESTTOOL_BOOT_TIMEOUT:600s
-                          -v MAX_HEAP:4G --flattenkeywords name:*repeat*keyword*'
+          branch: "stable/sodium"
+          robot-options:
+            "-v USE_NETCONF_CONNECTOR:False -v SCHEMA_MODEL:juniper -v INIT_DEVICE_COUNT:10
+            -v MAX_DEVICE_COUNT:500 -v DEVICE_INCREMENT:25 -v TESTTOOL_BOOT_TIMEOUT:600s
+            -v MAX_HEAP:4G --flattenkeywords name:*repeat*keyword*"
 
     install:
       - only:
-          scope: 'only'
+          scope: "only"
 
     # Features to install
     install-features: >
-        odl-restconf,
-        odl-clustering-test-app,
-        odl-netconf-mdsal,
-        odl-netconf-topology,
-        odl-jolokia
+      odl-restconf,
+      odl-clustering-test-app,
+      odl-netconf-mdsal,
+      odl-netconf-topology,
+      odl-jolokia
 
     # ODL system configuration
     odl_system_flavor: odl-standard-8
-    controller-max-mem: '12G'
+    controller-max-mem: "12G"
     tools_system_flavor: odl-standard-8
 
     # Plot Info
-    01-plot-title: 'Max Devices'
-    01-plot-yaxis: 'Devices'
-    01-plot-group: 'Netconf Devices'
-    01-plot-data-file: 'devices.csv'
+    01-plot-title: "Max Devices"
+    01-plot-yaxis: "Devices"
+    01-plot-group: "Netconf Devices"
+    01-plot-data-file: "devices.csv"

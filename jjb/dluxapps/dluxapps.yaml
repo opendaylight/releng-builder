@@ -5,15 +5,15 @@
       - odl-maven-jobs
       - odl-maven-verify-jobs
 
-    project: 'dluxapps'
-    project-name: 'dluxapps'
+    project: "dluxapps"
+    project-name: "dluxapps"
     stream: silicon
-    branch: 'master'
+    branch: "master"
     build-node: centos7-builder-2c-8g
-    mvn-settings: 'dluxapps-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
-    email-upstream: '[dluxapps] [odlparent] [yangtools] [controller]'
+    mvn-settings: "dluxapps-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}"
+    email-upstream: "[dluxapps] [odlparent] [yangtools] [controller]"
     disable-job: true
 
     # Used by the release job
@@ -25,15 +25,15 @@
       - odl-maven-jobs
       - odl-maven-verify-jobs
 
-    project: 'dluxapps'
-    project-name: 'dluxapps'
+    project: "dluxapps"
+    project-name: "dluxapps"
     stream: aluminium
-    branch: 'stable/aluminium'
+    branch: "stable/aluminium"
     build-node: centos7-builder-2c-8g
-    mvn-settings: 'dluxapps-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
-    email-upstream: '[dluxapps] [odlparent] [yangtools] [controller]'
+    mvn-settings: "dluxapps-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}"
+    email-upstream: "[dluxapps] [odlparent] [yangtools] [controller]"
     disable-job: true
 
     # Used by the release job
@@ -45,15 +45,15 @@
       - odl-maven-jobs
       - odl-maven-verify-jobs
 
-    project: 'dluxapps'
-    project-name: 'dluxapps'
+    project: "dluxapps"
+    project-name: "dluxapps"
     stream: magnesium
-    branch: 'stable/magnesium'
+    branch: "stable/magnesium"
     build-node: centos7-builder-2c-8g
-    mvn-settings: 'dluxapps-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
-    email-upstream: '[dluxapps] [odlparent] [yangtools] [controller]'
+    mvn-settings: "dluxapps-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}"
+    email-upstream: "[dluxapps] [odlparent] [yangtools] [controller]"
     disable-job: true
 
     # Used by the release job
@@ -65,15 +65,15 @@
       - odl-maven-jobs
       - odl-maven-verify-jobs
 
-    project: 'dluxapps'
-    project-name: 'dluxapps'
+    project: "dluxapps"
+    project-name: "dluxapps"
     stream: sodium
-    branch: 'stable/sodium'
+    branch: "stable/sodium"
     build-node: centos7-builder-2c-8g
-    mvn-settings: 'dluxapps-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
-    email-upstream: '[dluxapps] [odlparent] [yangtools] [controller]'
+    mvn-settings: "dluxapps-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}"
+    email-upstream: "[dluxapps] [odlparent] [yangtools] [controller]"
     disable-job: true
 
     # Used by the release job
@@ -95,16 +95,16 @@
     jobs:
       - gerrit-maven-sonar
 
-    project: 'dluxapps'
-    project-name: 'dluxapps'
-    branch: 'master'
+    project: "dluxapps"
+    project-name: "dluxapps"
+    branch: "master"
     build-node: centos7-builder-2c-8g
-    mvn-settings: 'dluxapps-settings'
-    mvn-opts: '-Xmx1024m'
+    mvn-settings: "dluxapps-settings"
+    mvn-opts: "-Xmx1024m"
     sonarcloud: true
-    sonarcloud-project-organization: '{sonarcloud_project_organization}'
-    sonarcloud-api-token: '{sonarcloud_api_token}'
-    sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
+    sonarcloud-project-organization: "{sonarcloud_project_organization}"
+    sonarcloud-api-token: "{sonarcloud_api_token}"
+    sonarcloud-project-key: "{sonarcloud_project_organization}_{project-name}"
 
 - project:
     name: dluxapps-info

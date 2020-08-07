@@ -4,7 +4,7 @@
     name: opendaylight-infra-properties
     properties:
       - build-discarder:
-          days-to-keep: '{build-days-to-keep}'
+          days-to-keep: "{build-days-to-keep}"
           num-to-keep: 40
           # Need to keep artifacts for at least 1 day as some projects need to
           # be able to validate their artifacts and only allowing limited
@@ -17,73 +17,73 @@
     parameters:
       - string:
           name: PROJECT
-          default: '{project}'
-          description: 'Parameter to identify an ODL Gerrit project'
+          default: "{project}"
+          description: "Parameter to identify an ODL Gerrit project"
       - string:
           name: ARCHIVE_ARTIFACTS
           # Before adding more here, beware of https://jira.linuxfoundation.org/browse/RELENG-280
           default: >
-              {artifacts}
-              **/target/surefire-reports/*-output.txt
-              **/target/failsafe-reports/failsafe-summary.xml
-              **/hs_err_*.log
-              **/target/feature/feature.xml
+            {artifacts}
+            **/target/surefire-reports/*-output.txt
+            **/target/failsafe-reports/failsafe-summary.xml
+            **/hs_err_*.log
+            **/target/feature/feature.xml
           # TODO: **/*.hprof is too large, compress with xz first
-          description: 'Space separated glob patterns for artifacts to archive into logs.opendaylight.org'
+          description: "Space separated glob patterns for artifacts to archive into logs.opendaylight.org"
       - string:
           name: GERRIT_PROJECT
-          default: '{project}'
+          default: "{project}"
           description: "GERRIT_PROJECT parameter if not given by trigger"
       - string:
           name: GERRIT_BRANCH
-          default: '{branch}'
+          default: "{branch}"
           description: "JJB configured GERRIT_BRANCH parameter"
       - string:
           name: GERRIT_REFSPEC
-          default: '{refspec}'
+          default: "{refspec}"
           description: |
-              Gerrit reference to checkout (ex: refs/heads/master,
-              refs/changes/48/61548/1 where 61548 is Gerrit change ID, 1 is
-              patch number and 48 is last two digits of change ID)
+            Gerrit reference to checkout (ex: refs/heads/master,
+            refs/changes/48/61548/1 where 61548 is Gerrit change ID, 1 is
+            patch number and 48 is last two digits of change ID)
       - string:
           name: STACK_NAME
-          default: '$SILO-$JOB_NAME-$BUILD_NUMBER'
+          default: "$SILO-$JOB_NAME-$BUILD_NUMBER"
           description: "Used by Heat to generate a unique stack & vm name"
       - string:
           name: OS_CLOUD
-          default: '{os-cloud}'
+          default: "{os-cloud}"
           description: |
-              The name of a cloud configuration in clouds.yaml. OS_CLOUD is a
-              variable name that is significant to openstack client as a
-              environment variable. Please refer to the documentation for
-              further details.
-              https://docs.openstack.org/developer/python-openstackclient/
+            The name of a cloud configuration in clouds.yaml. OS_CLOUD is a
+            variable name that is significant to openstack client as a
+            environment variable. Please refer to the documentation for
+            further details.
+            https://docs.openstack.org/developer/python-openstackclient/
 
 - parameter:
     name: distribution-branch-to-build-parameter
     parameters:
       - string:
           name: DISTRIBUTION_BRANCH_TO_BUILD
-          default: 'master'
-          description: 'distribution repo branch to build with'
+          default: "master"
+          description: "distribution repo branch to build with"
 
 - parameter:
     name: maven-exec
     parameters:
       - string:
           name: MVN
-          default: '/w/tools/hudson.tasks.Maven_MavenInstallation/{maven-version}/bin/mvn'
-          description: 'Maven selector to be used by shell scripts'
+          default: "/w/tools/hudson.tasks.Maven_MavenInstallation/{maven-version}/bin/mvn"
+          description: "Maven selector to be used by shell scripts"
 
 - scm:
     name: git-scm
     scm:
       - git:
-          credentials-id: 'opendaylight-jenkins-ssh'
-          url: '$GIT_BASE'
-          refspec: ''
+          credentials-id: "opendaylight-jenkins-ssh"
+          url: "$GIT_BASE"
+          refspec: ""
           branches:
-            - 'origin/{branch}'
+            - "origin/{branch}"
           skip-tag: true
           wipe-workspace: true
 
@@ -91,11 +91,11 @@
     name: git-scm-with-submodules
     scm:
       - git:
-          credentials-id: 'opendaylight-jenkins-ssh'
-          url: '$GIT_BASE'
-          refspec: ''
+          credentials-id: "opendaylight-jenkins-ssh"
+          url: "$GIT_BASE"
+          refspec: ""
           branches:
-            - 'refs/heads/{branch}'
+            - "refs/heads/{branch}"
           skip-tag: true
           wipe-workspace: true
           submodule:
@@ -105,13 +105,13 @@
     name: gerrit-trigger-scm
     scm:
       - git:
-          credentials-id: 'opendaylight-jenkins-ssh'
-          url: '$GIT_BASE'
-          refspec: '{refspec}'
+          credentials-id: "opendaylight-jenkins-ssh"
+          url: "$GIT_BASE"
+          refspec: "{refspec}"
           branches:
-            - 'origin/$GERRIT_BRANCH'
+            - "origin/$GERRIT_BRANCH"
           skip-tag: true
-          choosing-strategy: '{choosing-strategy}'
+          choosing-strategy: "{choosing-strategy}"
 
 # This is a single macro to use for all jobs who vote on every (relevant) patch set.
 # Only 'recheck' trigger word is supported, it always triggers the full set of relevant jobs,
@@ -125,7 +125,7 @@
     name: gerrit-trigger-patch-submitted
     triggers:
       - gerrit:
-          server-name: '{gerrit-server-name}'
+          server-name: "{gerrit-server-name}"
           trigger-on:
             - patchset-created-event:
                 exclude-drafts: true
@@ -136,39 +136,39 @@
                 comment-contains-value: '^Patch Set[ ]+[0-9]+:([ ]+|[\n]+)(recheck|reverify)$'
           projects:
             - project-compare-type: ANT
-              project-pattern: '{project}'
+              project-pattern: "{project}"
               branches:
                 - branch-compare-type: ANT
-                  branch-pattern: '**/{branch}'
+                  branch-pattern: "**/{branch}"
               file-paths:
                 - compare-type: ANT
-                  pattern: '{files}'
+                  pattern: "{files}"
               forbidden-file-paths:
                 - compare-type: ANT
-                  pattern: '{forbidden-files}'
+                  pattern: "{forbidden-files}"
 
 # TODO: Unify argument names across gerrit-trigger-* macros.
 - trigger:
     name: gerrit-trigger-patch-merged
     triggers:
       - gerrit:
-          server-name: '{gerrit-server-name}'
+          server-name: "{gerrit-server-name}"
           trigger-on:
             - change-merged-event
             - comment-added-contains-event:
-                comment-contains-value: 'remerge$'
+                comment-contains-value: "remerge$"
           projects:
-            - project-compare-type: 'ANT'
-              project-pattern: '{name}'
+            - project-compare-type: "ANT"
+              project-pattern: "{name}"
               branches:
-                - branch-compare-type: 'ANT'
-                  branch-pattern: '**/{branch}'
+                - branch-compare-type: "ANT"
+                  branch-pattern: "**/{branch}"
               file-paths:
                 - compare-type: ANT
-                  pattern: '{files}'
+                  pattern: "{files}"
               forbidden-file-paths:
                 - compare-type: ANT
-                  pattern: '{forbidden-files}'
+                  pattern: "{forbidden-files}"
           skip-vote:
             successful: true
             failed: true
@@ -192,21 +192,21 @@
     name: email-notification
     publishers:
       - email-ext:
-          recipients: '{email-recipients}'
-          reply-to: ''
+          recipients: "{email-recipients}"
+          reply-to: ""
           content-type: default
-          subject: '{email-prefix} $PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!'
+          subject: "{email-prefix} $PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!"
           body: |
-              $PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:
+            $PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:
 
-              Please refer to the logs server URL for console logs when possible
-              and use the Jenkins Build URL as a last resort.
+            Please refer to the logs server URL for console logs when possible
+            and use the Jenkins Build URL as a last resort.
 
-              Console Logs URL:
-              https://logs.opendaylight.org/$SILO/$JENKINS_HOSTNAME/$JOB_NAME/$BUILD_NUMBER
+            Console Logs URL:
+            https://logs.opendaylight.org/$SILO/$JENKINS_HOSTNAME/$JOB_NAME/$BUILD_NUMBER
 
-              Jenkins Build URL:
-              $BUILD_URL
+            Jenkins Build URL:
+            $BUILD_URL
           unstable: true
           fixed: true
           send-to:
@@ -243,12 +243,12 @@
 - builder:
     name: wipe-org-opendaylight-repo
     builders:
-      - shell: 'if [ -d /tmp/r/org/opendaylight ]; then rm -rf /tmp/r/org/opendaylight; fi'
+      - shell: "if [ -d /tmp/r/org/opendaylight ]; then rm -rf /tmp/r/org/opendaylight; fi"
 
 - builder:
     name: wipe-local-maven-repo
     builders:
-      - shell: 'if [ -d /tmp/r ]; then rm -rf /tmp/r; fi'
+      - shell: "if [ -d /tmp/r ]; then rm -rf /tmp/r; fi"
 
 - wrapper:
     # This wrapper is required for all jobs as it configures the wrappers
@@ -259,20 +259,20 @@
       - config-file-provider:
           files:
             - file-id: npmrc
-              target: '$HOME/.npmrc'
+              target: "$HOME/.npmrc"
             - file-id: pipconf
-              target: '$HOME/.config/pip/pip.conf'
+              target: "$HOME/.config/pip/pip.conf"
             - file-id: clouds-yaml
-              target: '$HOME/.config/openstack/clouds.yaml'
+              target: "$HOME/.config/openstack/clouds.yaml"
       - timeout:
           type: absolute
-          timeout: '{build-timeout}'
-          timeout-var: 'BUILD_TIMEOUT'
+          timeout: "{build-timeout}"
+          timeout-var: "BUILD_TIMEOUT"
           fail: true
       - timestamps
       - ssh-agent-credentials:
           users:
-            - 'opendaylight-jenkins-ssh'
+            - "opendaylight-jenkins-ssh"
       - openstack:
           single-use: true
 

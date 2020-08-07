@@ -6,13 +6,13 @@
       - odl-maven-verify-jobs
 
     stream: silicon
-    project: 'nemo'
-    project-name: 'nemo'
-    branch: 'master'
-    mvn-settings: 'nemo-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: ''
-    email-upstream: '[nemo]'
+    project: "nemo"
+    project-name: "nemo"
+    branch: "master"
+    mvn-settings: "nemo-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: ""
+    email-upstream: "[nemo]"
     disable-job: true
 
     # Used by the release job
@@ -25,13 +25,13 @@
       - odl-maven-verify-jobs
 
     stream: aluminium
-    project: 'nemo'
-    project-name: 'nemo'
-    branch: 'stable/aluminium'
-    mvn-settings: 'nemo-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: ''
-    email-upstream: '[nemo]'
+    project: "nemo"
+    project-name: "nemo"
+    branch: "stable/aluminium"
+    mvn-settings: "nemo-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: ""
+    email-upstream: "[nemo]"
     disable-job: true
 
     # Used by the release job
@@ -44,13 +44,13 @@
       - odl-maven-verify-jobs
 
     stream: magnesium
-    project: 'nemo'
-    project-name: 'nemo'
-    branch: 'stable/magnesium'
-    mvn-settings: 'nemo-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: ''
-    email-upstream: '[nemo]'
+    project: "nemo"
+    project-name: "nemo"
+    branch: "stable/magnesium"
+    mvn-settings: "nemo-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: ""
+    email-upstream: "[nemo]"
     disable-job: true
 
     # Used by the release job
@@ -63,13 +63,13 @@
       - odl-maven-verify-jobs
 
     stream: sodium
-    project: 'nemo'
-    project-name: 'nemo'
-    branch: 'stable/sodium'
-    mvn-settings: 'nemo-settings'
-    mvn-opts: '-Xmx1024m'
-    dependencies: ''
-    email-upstream: '[nemo]'
+    project: "nemo"
+    project-name: "nemo"
+    branch: "stable/sodium"
+    mvn-settings: "nemo-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: ""
+    email-upstream: "[nemo]"
     disable-job: true
 
     # Used by the release job
@@ -90,16 +90,16 @@
     name: nemo-sonar
     jobs:
       - gerrit-maven-sonar
-    project: 'nemo'
-    project-name: 'nemo'
-    branch: 'master'
-    mvn-settings: 'nemo-settings'
-    mvn-opts: '-Xmx1024m'
+    project: "nemo"
+    project-name: "nemo"
+    branch: "master"
+    mvn-settings: "nemo-settings"
+    mvn-opts: "-Xmx1024m"
     disable-job: true
     sonarcloud: true
-    sonarcloud-project-organization: '{sonarcloud_project_organization}'
-    sonarcloud-api-token: '{sonarcloud_api_token}'
-    sonarcloud-project-key: '{sonarcloud_project_organization}_{project-name}'
+    sonarcloud-project-organization: "{sonarcloud_project_organization}"
+    sonarcloud-api-token: "{sonarcloud_api_token}"
+    sonarcloud-project-key: "{sonarcloud_project_organization}_{project-name}"
 
 - project:
     name: nemo-info
