@@ -821,19 +821,17 @@ Maven Properties
 ----------------
 
 We provide a properties which your job can take advantage of if you want to do
-something different depending on the job type that is run. If you create a
-profile that activates on a property listed blow. The JJB templated jobs will
-be able to activate the profile during the build to run any custom code you
-wish to run in your project.
+trigger a different configuration depending on job type. You can create a
+profile that activates on a property listed below. The JJB templated jobs will
+activate the profile during the build to run any custom code configuration you
+wish to run for this job type.
 
 .. code-block:: bash
 
-    -Dmerge   : This flag is passed in our Merge job and is equivalent to the
-                Maven property
-                <merge>true</merge>.
-    -Dsonar   : This flag is passed in our Sonar job and is equivalent to the
-                Maven property
-                <sonar>true</sonar>.
+    -Dmerge   : The Merge job sets this flag and is the same as setting the
+                Maven property <merge>true</merge>.
+    -Dsonar   : The Sonar job sets this flag and is the same as setting the
+                Maven property <sonar>true</sonar>.
 
 .. _odl-jenkins-sandbox:
 
@@ -842,7 +840,7 @@ Jenkins Sandbox
 
 URL: https://jenkins.opendaylight.org/sandbox
 
-Jenkins Sandbox documentation can be found in the
+Jenkins Sandbox documentation is available in the
 :doc:`LF Jenkins Sandbox Guide <lfdocs:jenkins-sandbox>`.
 
 .. _example-jenkins.ini: https://git.opendaylight.org/gerrit/gitweb?p=releng/builder.git;a=blob;f=jenkins.ini.example
