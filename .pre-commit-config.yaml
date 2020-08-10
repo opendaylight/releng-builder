@@ -4,9 +4,6 @@ repos:
     rev: v2.5.0
     hooks:
       - id: check-json
-      - id: flake8
-        args: ['--max-line-length=88']
-        exclude: docs/*
       - id: trailing-whitespace
 
   - repo: https://github.com/jorisroovers/gitlint
@@ -23,6 +20,29 @@ repos:
                 jjb/global-jjb/.*|
                 jenkins-config/.*
             )$
+
+  - repo: https://github.com/ambv/black
+    rev: stable
+    hooks:
+      - id: black
+
+  - repo: https://gitlab.com/pycqa/flake8
+    rev: 3.8.3
+    hooks:
+      - id: flake8
+        args: ["--max-line-length=88"]
+
+  - repo: https://github.com/pycqa/bandit
+    rev: 1.6.2
+    hooks:
+      - id: bandit
+        # Bandit does not need to run on test code
+        exclude: tests/*
+
+  - repo: https://github.com/pycqa/pydocstyle
+    rev: 5.0.2
+    hooks:
+      - id: pydocstyle
 
   - repo: https://github.com/adrienverge/yamllint
     rev: v1.23.0

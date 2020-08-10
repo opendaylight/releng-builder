@@ -9,6 +9,6 @@
 # which accompanies this distribution, and is available at
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
+"""Configuration for Sphinx."""
 
-from docs_conf.conf import *
-
+from docs_conf.conf import *  # noqa
