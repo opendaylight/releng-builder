@@ -2,7 +2,6 @@
 - project:
     name: bier-silicon
     jobs:
-      - gerrit-release-merge
       - odl-maven-jobs
       - odl-maven-verify-jobs
 
@@ -83,6 +82,17 @@
 
     # Used by the release job
     staging-profile-id: 942a8075b1f2a
+
+- project:
+    name: bier-release-management
+    jobs:
+      - gerrit-release-merge
+
+    project: bier
+    project-name: bier
+
+    build-node: centos7-builder-2c-1g
+    mvn-settings: bier-settings
 
 - project:
     name: bier-sonar

@@ -2,7 +2,6 @@
 - project:
     name: of-config-silicon
     jobs:
-      - gerrit-release-merge
       - odl-maven-jobs
       - odl-maven-verify-jobs
 
@@ -75,6 +74,17 @@
 
     # Used by the release job
     staging-profile-id: a6880455efe67
+
+- project:
+    name: of-config-release-management
+    jobs:
+      - gerrit-release-merge
+
+    project: of-config
+    project-name: of-config
+
+    build-node: centos7-builder-2c-1g
+    mvn-settings: of-config-settings
 
 - project:
     name: of-config-sonar

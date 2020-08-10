@@ -2,7 +2,6 @@
 - project:
     name: odltools
     jobs:
-      - gerrit-release-merge
       - gerrit-tox-verify
       - '{project-name}-rtd-jobs':
           build-node: centos7-builder-2c-2g
@@ -26,6 +25,17 @@
     build-node: centos7-builder-2c-2g
     build-timeout: 60
     mvn-settings: 'odltools-settings'
+
+- project:
+    name: odltools-release-management
+    jobs:
+      - gerrit-release-merge
+
+    project: odltools
+    project-name: odltools
+
+    build-node: centos7-builder-2c-1g
+    mvn-settings: odltools-settings
 
 - project:
     name: odltools-sonar

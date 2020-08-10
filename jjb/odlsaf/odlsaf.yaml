@@ -2,7 +2,6 @@
 - project:
     name: odlsaf-silicon
     jobs:
-      - gerrit-release-merge
       - odl-maven-jobs-jdk11
       - odl-maven-verify-jobs
 
@@ -39,6 +38,17 @@
 
     # Used by the release job
     staging-profile-id: 2802f0e38ee665
+
+- project:
+    name: odlsaf-release-management
+    jobs:
+      - gerrit-release-merge
+
+    project: odlsaf
+    project-name: odlsaf
+
+    build-node: centos7-builder-2c-1g
+    mvn-settings: odlsaf-settings
 
 - project:
     name: odlsaf-sonar

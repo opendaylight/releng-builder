@@ -3,7 +3,6 @@
     name: usc-silicon
     jobs:
       - '{project-name}-maven-javadoc-jobs'
-      - gerrit-release-merge
       - odl-maven-jobs
       - odl-maven-verify-jobs
 
@@ -75,6 +74,17 @@
 
     # Used by the release job
     staging-profile-id: a697b633b3ffe
+
+- project:
+    name: usc-release-management
+    jobs:
+      - gerrit-release-merge
+
+    project: usc
+    project-name: usc
+
+    build-node: centos7-builder-2c-1g
+    mvn-settings: usc-settings
 
 - project:
     name: usc-sonar

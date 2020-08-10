@@ -2,8 +2,6 @@
 - project:
     name: controller-master
     jobs:
-      - 'gerrit-release-merge':
-          build-node: centos7-builder-2c-2g
       - '{project-name}-rtd-jobs':
           build-node: centos7-builder-2c-2g
           project-pattern: controller
@@ -82,6 +80,17 @@
 
     # Used by the release job
     staging-profile-id: 96c1c9177efdd
+
+- project:
+    name: controller-release-management
+    jobs:
+      - gerrit-release-merge
+
+    project: controller
+    project-name: controller
+
+    build-node: centos7-builder-2c-1g
+    mvn-settings: controller-settings
 
 - project:
     name: controller-sonar

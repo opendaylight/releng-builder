@@ -9,7 +9,6 @@
           rtd-token: 4a78556e59ce3ef35e61e2fa19ebae049acf6d5d
       - odl-maven-jobs
       - odl-maven-verify-jobs
-      - gerrit-release-merge
 
     java-version: 'openjdk11'
 
@@ -108,6 +107,17 @@
 
     # Used by the release job
     staging-profile-id: a6909c75719b7
+
+- project:
+    name: sxp-release-management
+    jobs:
+      - gerrit-release-merge
+
+    project: sxp
+    project-name: sxp
+
+    build-node: centos7-builder-2c-1g
+    mvn-settings: sxp-settings
 
 - project:
     name: sxp-sonar
