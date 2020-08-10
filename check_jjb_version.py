@@ -9,7 +9,7 @@
 ##############################################################################
 """Ensures that the jjb-version in tox and releng-jobs.yaml match."""
 
-__author__ = 'Thanh Ha'
+__author__ = "Thanh Ha"
 
 
 import os
@@ -18,25 +18,26 @@ import sys
 
 
 def check_jjb_version(tox_file, releng_jobs_file):
-    with open(tox_file, 'r') as _file:
+    """Check that JJB version matches in job cfg and tox.ini."""
+    with open(tox_file, "r") as _file:
         for num, line in enumerate(_file, 1):
-            if re.search('env:JJB_VERSION:', line):
-                jjb_version_tox = line.rsplit(':', 1)[1].replace('}', '').strip()
+            if re.search("env:JJB_VERSION:", line):
+                jjb_version_tox = line.rsplit(":", 1)[1].replace("}", "").strip()
                 break
 
-    with open(releng_jobs_file, 'r') as _file:
+    with open(releng_jobs_file, "r") as _file:
         for num, line in enumerate(_file, 1):
-            if re.search('jjb-version: ', line):
-                jjb_version = line.rsplit(':', 1)[1].strip()
+            if re.search("jjb-version: ", line):
+                jjb_version = line.rsplit(":", 1)[1].strip()
                 break
 
-    print('JJB version in jjb/releng-jobs.yaml: {}'.format(jjb_version))
-    print('JJB version in tox.ini: {}'.format(jjb_version_tox))
+    print("JJB version in jjb/releng-jobs.yaml: {}".format(jjb_version))
+    print("JJB version in tox.ini: {}".format(jjb_version_tox))
 
     if jjb_version != jjb_version_tox:
-        print('ERROR: JJB version in jjb/releng-jobs.yaml and tox.ini MUST match.')
+        print("ERROR: JJB version in jjb/releng-jobs.yaml and tox.ini MUST match.")
         sys.exit(1)
 
 
 if __name__ == "__main__":
-    check_jjb_version('tox.ini', os.path.join('jjb', 'releng-jobs.yaml'))
+    check_jjb_version("tox.ini", os.path.join("jjb", "releng-jobs.yaml"))

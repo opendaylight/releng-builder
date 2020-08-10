@@ -12,7 +12,7 @@
 The production prefix MUST always be a blank string.
 """
 
-__author__ = 'Thanh Ha'
+__author__ = "Thanh Ha"
 
 
 import os
@@ -21,17 +21,18 @@ import sys
 
 
 def check_prefix(filename):
-    with open(filename, 'r') as _file:
+    """Check if a prefix was checked into this repo."""
+    with open(filename, "r") as _file:
         for num, line in enumerate(_file, 1):
-            if re.search('prefix:', line):
-                if "''" not in line:
+            if re.search("prefix:", line):
+                if '""' not in line:
                     print(
-                        'ERROR: A non-blank prefix is defined in '
-                        'jjb/defaults.yaml. The prefix MUST be set to blank '
-                        '\'\' in production!'
+                        "ERROR: A non-blank prefix is defined in "
+                        "jjb/defaults.yaml. The prefix MUST be set to blank "
+                        '"" in production!'
                     )
                     sys.exit(1)
 
 
 if __name__ == "__main__":
-    check_prefix(os.path.join('jjb', 'defaults.yaml'))
+    check_prefix(os.path.join("jjb", "defaults.yaml"))
