@@ -59,6 +59,8 @@ if [ "$BRANCH_CUT" = "false" ]; then
     commit_msg="Bump versions by x.y.(z+1)"
 else
     commit_msg="Bump versions by x.(y+1).z"
+    # If we are branch cutting we also need to bump the docs/conf.yaml version
+    find . -type f -name conf.yaml -exec sed -i "s/version:.*/version: ${STREAM^}/" {} \;
 fi
 lftools version bump "$RELEASE_TAG"
 
