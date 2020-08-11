@@ -1,5 +1,25 @@
 ---
 - project:
+    name: dluxapps-phosphorus
+    jobs:
+      - odl-maven-jobs
+      - odl-maven-verify-jobs
+
+    project: "dluxapps"
+    project-name: "dluxapps"
+    stream: phosphorus
+    branch: "master"
+    build-node: centos7-builder-2c-8g
+    mvn-settings: "dluxapps-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}"
+    email-upstream: "[dluxapps] [odlparent] [yangtools] [controller]"
+    disable-job: true
+
+    # Used by the release job
+    staging-profile-id: 96e6fb1e65bf9
+
+- project:
     name: dluxapps-silicon
     jobs:
       - odl-maven-jobs
@@ -8,7 +28,7 @@
     project: "dluxapps"
     project-name: "dluxapps"
     stream: silicon
-    branch: "master"
+    branch: "stable/silicon"
     build-node: centos7-builder-2c-8g
     mvn-settings: "dluxapps-settings"
     mvn-opts: "-Xmx1024m"

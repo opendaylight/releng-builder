@@ -8,8 +8,11 @@
 
     project: "netvirt"
     stream:
-      - silicon:
+      - phosphorus:
           branch: "master"
+          jre: "openjdk11"
+      - silicon:
+          branch: "stable/silicon"
           jre: "openjdk11"
       - aluminium:
           branch: "stable/aluminium"
@@ -22,8 +25,7 @@
 
     testplan: "{project}-{topology}-openstack.txt"
 
-    test-suites: "openstack/connectivity/l2.robot
-      openstack/connectivity/external_network.robot"
+    test-suites: "openstack/connectivity/l2.robot openstack/connectivity/external_network.robot"
 
     topology: "1node"
 

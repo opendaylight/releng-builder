@@ -49,8 +49,11 @@
       - gerrit-tox-verify
 
     stream:
-      - silicon:
+      - phosphorus:
           branch: "master"
+          integration-test: silicon
+      - silicon:
+          branch: "stable/silicon"
           integration-test: silicon
       - aluminium:
           branch: "stable/aluminium"

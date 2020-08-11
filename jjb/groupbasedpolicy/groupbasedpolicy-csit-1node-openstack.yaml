@@ -20,8 +20,11 @@
     functionality: "openstack"
 
     stream:
-      - silicon:
+      - phosphorus:
           branch: "master"
+          jre: "openjdk11"
+      - silicon:
+          branch: "stable/silicon"
           jre: "openjdk11"
       - aluminium:
           branch: "stable/aluminium"

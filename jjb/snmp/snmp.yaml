@@ -1,5 +1,23 @@
 ---
 - project:
+    name: snmp-phosphorus
+    jobs:
+      - odl-maven-jobs
+      - odl-maven-verify-jobs
+
+    stream: phosphorus
+    project: "snmp"
+    project-name: "snmp"
+    branch: "master"
+    mvn-settings: "snmp-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: "odlparent-merge-{stream}"
+    email-upstream: "[snmp] [odlparent]"
+
+    # Used by the release job
+    staging-profile-id: a68fb236b93a6
+
+- project:
     name: snmp-silicon
     jobs:
       - odl-maven-jobs
@@ -8,7 +26,7 @@
     stream: silicon
     project: "snmp"
     project-name: "snmp"
-    branch: "master"
+    branch: "stable/silicon"
     mvn-settings: "snmp-settings"
     mvn-opts: "-Xmx1024m"
     dependencies: "odlparent-merge-{stream}"

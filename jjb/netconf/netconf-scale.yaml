@@ -12,8 +12,11 @@
 
     # Project branches
     stream:
-      - silicon:
+      - phosphorus:
           branch: "master"
+          jre: "openjdk11"
+      - silicon:
+          branch: "stable/silicon"
           jre: "openjdk11"
       - aluminium:
           branch: "stable/aluminium"
@@ -58,22 +61,22 @@
           branch: "master"
           jre: "openjdk11"
           robot-options:
-            "-v USE_NETCONF_CONNECTOR:False -v SCHEMA_MODEL:juniper -v INIT_DEVICE_COUNT:250
-            -v MAX_DEVICE_COUNT:1000 -v DEVICE_INCREMENT:100 -v TESTTOOL_BOOT_TIMEOUT:600s
-            -v MAX_HEAP:4G --flattenkeywords name:*repeat*keyword*"
+            "-v USE_NETCONF_CONNECTOR:False -v SCHEMA_MODEL:juniper -v\
+            \ INIT_DEVICE_COUNT:250 -v MAX_DEVICE_COUNT:1000 -v DEVICE_INCREMENT:100\
+            \ -v TESTTOOL_BOOT_TIMEOUT:600s -v MAX_HEAP:4G --flattenkeywords name:*repeat*keyword*"
       - magnesium:
           branch: "stable/magnesium"
           jre: "openjdk11"
           robot-options:
-            "-v USE_NETCONF_CONNECTOR:False -v SCHEMA_MODEL:juniper -v INIT_DEVICE_COUNT:250
-            -v MAX_DEVICE_COUNT:1000 -v DEVICE_INCREMENT:100 -v TESTTOOL_BOOT_TIMEOUT:600s
-            -v MAX_HEAP:4G --flattenkeywords name:*repeat*keyword*"
+            "-v USE_NETCONF_CONNECTOR:False -v SCHEMA_MODEL:juniper -v\
+            \ INIT_DEVICE_COUNT:250 -v MAX_DEVICE_COUNT:1000 -v DEVICE_INCREMENT:100\
+            \ -v TESTTOOL_BOOT_TIMEOUT:600s -v MAX_HEAP:4G --flattenkeywords name:*repeat*keyword*"
       - sodium:
           branch: "stable/sodium"
           robot-options:
-            "-v USE_NETCONF_CONNECTOR:False -v SCHEMA_MODEL:juniper -v INIT_DEVICE_COUNT:10
-            -v MAX_DEVICE_COUNT:500 -v DEVICE_INCREMENT:25 -v TESTTOOL_BOOT_TIMEOUT:600s
-            -v MAX_HEAP:4G --flattenkeywords name:*repeat*keyword*"
+            "-v USE_NETCONF_CONNECTOR:False -v SCHEMA_MODEL:juniper -v\
+            \ INIT_DEVICE_COUNT:10 -v MAX_DEVICE_COUNT:500 -v DEVICE_INCREMENT:25 -v\
+            \ TESTTOOL_BOOT_TIMEOUT:600s -v MAX_HEAP:4G --flattenkeywords name:*repeat*keyword*"
 
     install:
       - only:

@@ -3,7 +3,7 @@
     name: bgpcep-csit-bgp-ingest
     jobs:
       - inttest-csit-1node
-      # FIXME: Dicument differences from -mixed- and unify into single (matrix) definition.
+        # FIXME: Dicument differences from -mixed- and unify into single (matrix) definition.
 
     # The project name
     project: "bgpcep"
@@ -13,8 +13,11 @@
 
     # Project branches
     stream:
-      - silicon:
+      - phosphorus:
           branch: "master"
+          jre: "openjdk11"
+      - silicon:
+          branch: "stable/silicon"
           jre: "openjdk11"
       - aluminium:
           branch: "stable/aluminium"
