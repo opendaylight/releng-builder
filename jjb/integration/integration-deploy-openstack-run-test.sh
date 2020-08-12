@@ -102,7 +102,7 @@ function install_openstack_clients_in_robot_vm() {
        sed -i s/python-openstackclient===3.14.0/python-openstackclient===3.16.3/ /tmp/constraints.txt
        sed -i s/keystoneauth1===3.10.1/keystoneauth1===3.18.0/ /tmp/constraints.txt
        sed -i s/openstacksdk===0.17.3/openstacksdk===0.48.0/ /tmp/constraints.txt
-       sed -i s/os-service-types===1.3.0/os-service-types===1.7.0/ /tmp/constraints.txt
+       sed -ie 's/os-service-types===.*/os-service-types===1.7.0/' /tmp/constraints.txt
        sed -i s/stevedore===1.29.0/stevedore\>=3.0.0/ /tmp/constraints.txt
        #Python uwsgi 2.0.19 is having errors, forcing it to pick 2.0.18
        sed -i '1 auwsgi===2.0.18' /tmp/constraints.txt
