@@ -6,34 +6,13 @@
   become_user: root
   become_method: sudo
   vars:
-    cassandra_checksum: sha256:a95ba4e2c9345b31310d14507e8889797cc626bc793fd341fff8ff8cba3131cd
-    cassandra_version: 2.1.16
     elastic_search_checksum: sha256:0aa58947d66b487488e86059352deb7c6cab5da4accdff043cce9fed7c3d2fa7
     elastic_search_version: 1.7.5
-    hbase_checksum: sha256:9cd990939403fd43dfb665b14603e3772ca3ed813a6e21a81de1778583b35eb8
-    hbase_version: 0.94.27
 
   pre_tasks:
     - include_role: name=lfit.system-update
 
   tasks:
-    - name: Install Cassandra Server
-      block:
-        - name: "Fetch Cassandra Server to /tmp/apache-cassandra-{{cassandra_version}}-bin.tar.gz"
-          get_url:
-            url: "https://archive.apache.org/dist/cassandra/{{cassandra_version}}/apache-cassandra-{{cassandra_version}}-bin.tar.gz"
-            dest: "/tmp/apache-cassandra-{{cassandra_version}}-bin.tar.gz"
-            checksum: "{{cassandra_checksum}}"
-        - name: Make /tmp/cassandra directory
-          file:
-            path: /tmp/cassandra
-            state: directory
-            mode: 0755
-        - name: Untar Cassandra server to /tmp/cassandra
-          unarchive:
-            src: "/tmp/apache-cassandra-{{cassandra_version}}-bin.tar.gz"
-            dest: /tmp/cassandra
-            remote_src: true
     - name: Install Elastic Search
       block:
         - name: "Fetch Elastic Search to /tmp/elasticsearch-{{elastic_search_version}}.tar.gz"
@@ -50,23 +29,6 @@
           unarchive:
             src: "/tmp/elasticsearch-{{elastic_search_version}}.tar.gz"
             dest: /tmp/elasticsearch
-            remote_src: true
-    - name: Install HBase Server
-      block:
-        - name: "Fetch HBase to /tmp/hbase-{{hbase_version}}.tar.gz"
-          get_url:
-            url: "https://archive.apache.org/dist/hbase/hbase-{{hbase_version}}/hbase-{{hbase_version}}.tar.gz"
-            dest: "/tmp/hbase-{{hbase_version}}.tar.gz"
-            checksum: "{{hbase_checksum}}"
-        - name: Make /tmp/Hbase directory
-          file:
-            path: /tmp/Hbase
-            state: directory
-            mode: 0755
-        - name: Untar Hbase to /tmp/Hbase
-          unarchive:
-            src: "/tmp/hbase-{{hbase_version}}.tar.gz"
-            dest: /tmp/Hbase
             remote_src: true
 
   post_tasks:
