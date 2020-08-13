@@ -14,9 +14,6 @@
       - odl-maven-jobs-jdk11
       - odl-maven-verify-jobs
 
-    csit-gate-list: "netvirt-csit-1node-0cmb-1ctl-2cmp-apex-queens-gate-snat-conntrack-{stream}"
-    block_on_csit: false
-
     stream: silicon
     branch: "master"
 
@@ -53,9 +50,6 @@
       - gerrit-tox-verify
       - odl-maven-jobs-jdk11
       - odl-maven-verify-jobs
-
-    csit-gate-list: "netvirt-csit-1node-0cmb-1ctl-2cmp-apex-queens-gate-snat-conntrack-{stream}"
-    block_on_csit: false
 
     stream: aluminium
     branch: "stable/aluminium"
@@ -94,9 +88,6 @@
       - odl-maven-jobs-jdk11
       - odl-maven-verify-jobs
 
-    csit-gate-list: "netvirt-csit-1node-0cmb-1ctl-2cmp-apex-queens-gate-snat-conntrack-{stream}"
-    block_on_csit: false
-
     stream: magnesium
     branch: "stable/magnesium"
 
@@ -133,9 +124,6 @@
       - gerrit-tox-verify
       - odl-maven-jobs
       - odl-maven-verify-jobs
-
-    csit-gate-list: "netvirt-csit-1node-0cmb-1ctl-2cmp-apex-queens-gate-snat-conntrack-{stream}"
-    block_on_csit: false
 
     stream: sodium
     branch: "stable/sodium"
