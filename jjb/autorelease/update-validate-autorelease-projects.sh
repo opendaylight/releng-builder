@@ -31,7 +31,7 @@ cat > "$YAML_FILE" << EOF
 - project:
     name: autorelease-validate-${STREAM}
     jobs:
-      - '{project-name}-validate-autorelease-{stream}'
+      - "{project-name}-validate-autorelease-{stream}"
     stream: ${STREAM}
     branch: ${BRANCH}
     project-name:
