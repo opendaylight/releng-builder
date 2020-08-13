@@ -22,6 +22,30 @@
       "revId": "9ce0357a4018463f7d006d61455effdca9f01d15",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26d44bc9_efc6d0d3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2020-08-13T13:32:32Z",
+      "side": 1,
+      "message": "Oh yeah maybe... (I didn\u0027t think to search there).\n\nSo I found that this code only runs if ELASTICSEARCHATTRIBUTE !\u003d \"disabled\".\n\nSearching for what sets that it looks like it comes from projects that set \"feature-elasticsearch-attribute\" which is remapped as \"elasticsearch-attribute\" in the macro integration-csit-parameters.\n\nSo searching for projects that set elasticsearch-attribute I found the following:\n\n jjb/openflowplugin/openflowplugin-csit-longevity.yaml:    #elasticsearch-attribute: \u0027long\u0027\n jjb/controller/controller-csit-drb-partnheal.yaml:    #elasticsearch-attribute: \u0027long\u0027\n jjb/controller/controller-csit-dnb-noloss.yaml:    #elasticsearch-attribute: \u0027long\u0027\n jjb/controller/controller-csit-ddb-expl-lead-movement.yaml:    #elasticsearch-attribute: \u0027long\u0027\n jjb/controller/controller-csit-cs-chasing-leader.yaml:    #elasticsearch-attribute: \u0027long\u0027\n jjb/controller/controller-csit-drb-precedence.yaml:    #elasticsearch-attribute: \u0027long\u0027\n jjb/controller/controller-csit-cs-partnheal.yaml:    #elasticsearch-attribute: \u0027long\u0027\n jjb/controller/controller-csit-clustering.yaml:    elasticsearch-attribute: \"disabled\"\n jjb/bgpcep/bgpcep-csit-bgpclustering-longevity.yaml:    #elasticsearch-attribute: \u0027long\u0027\n\nNotice that all of them except one have it commented out with the exception of controller-csit-clustering which sets it to \"disabled\". Effectively meaning as it stands nothing uses this at all.\n\nLooking at historical commits it looks like Luis disabled the controller one because \"The JMX collector bundle cannot resolve properly in this test\". Looking at a few other projects it seems like they were all disabled for similar reasons.\n\nAccording to Git blame it looks like this feature was developed by \"Stanislav Chlebec\" so let me add him for comments.",
+      "parentUuid": "27189578_9dd97dae",
+      "range": {
+        "startLine": 9,
+        "startChar": 11,
+        "endLine": 9,
+        "endChar": 25
+      },
+      "revId": "9ce0357a4018463f7d006d61455effdca9f01d15",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
     }
   ]
 }
