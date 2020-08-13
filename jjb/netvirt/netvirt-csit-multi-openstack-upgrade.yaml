@@ -7,9 +7,6 @@
     project: "netvirt"
 
     stream:
-      - magnesium:
-          branch: "stable/magnesium"
-          jre: "openjdk11"
       - sodium:
           branch: "stable/sodium"
 
@@ -82,10 +79,10 @@
 
     functionality:
       - upgrade:
-          schedule: "{schedule-daily}"
+          schedule: "{schedule-weekly}"
       - upgrade-snat-conntrack:
           odl-snat-mode: "conntrack"
-          schedule: "{schedule-daily}"
+          schedule: "{schedule-weekly}"
 
     openstack:
       - rocky:
@@ -105,6 +102,9 @@
     stream:
       - magnesium:
           branch: "stable/magnesium"
+          jre: "openjdk11"
+      - aluminium:
+          branch: "stable/aluminium"
           jre: "openjdk11"
 
     testplan: "{project}-{topology}-openstack-upgrade.txt"
@@ -143,14 +143,14 @@
           openstack_system2_image: "{openstack_stein_system_image}"
 
 - project:
-    name: netvirt-csit-upgrade-openstack-integration-stein-aluminium
+    name: netvirt-csit-upgrade-openstack-integration-stein-silicon
     jobs:
       - inttest-csit-openstack-custom
 
     project: "netvirt"
 
     stream:
-      - aluminium:
+      - silicon:
           branch: "master"
           jre: "openjdk11"
 

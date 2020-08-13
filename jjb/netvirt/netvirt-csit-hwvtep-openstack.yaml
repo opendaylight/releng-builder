@@ -1,11 +1,10 @@
 ---
 - project:
-    name: netvirt-csit-hwvtep-openstack-integration-aluminium-rocky
+    name: netvirt-csit-hwvtep-openstack-integration-silicon-rocky
     jobs:
       - inttest-csit-hwvtep-openstack-custom
-
     project: "netvirt"
-    stream: "aluminium"
+    stream: "silicon"
     branch: "master"
     jre: "openjdk11"
     testplan: "{project}-{topology}-l2gw-openstack.txt"
@@ -51,12 +50,12 @@
           openstack_system2_image: "{openstack_rocky_system_image}"
 
 - project:
-    name: netvirt-csit-hwvtep-openstack-integration-aluminium-stein
+    name: netvirt-csit-hwvtep-openstack-integration-silicon-stein
     jobs:
       - inttest-csit-hwvtep-openstack-custom
 
     project: "netvirt"
-    stream: "aluminium"
+    stream: "silicon"
     branch: "master"
     jre: "openjdk11"
     testplan: "{project}-{topology}-l2gw-openstack.txt"
@@ -102,13 +101,13 @@
           openstack_system2_image: "{openstack_stein_system_image}"
 
 - project:
-    name: netvirt-csit-hwvtep-openstack-integration-magnesium-rocky
+    name: netvirt-csit-hwvtep-openstack-integration-aluminium-stein
     jobs:
       - inttest-csit-hwvtep-openstack-custom
 
     project: "netvirt"
-    stream: "magnesium"
-    branch: "stable/magnesium"
+    stream: "aluminium"
+    branch: "stable/aluminium"
     jre: "openjdk11"
     testplan: "{project}-{topology}-l2gw-openstack.txt"
     odl-ml2-driver-version: "v2"
@@ -141,17 +140,16 @@
 
     functionality:
       - upstream-stateful:
-          schedule: "{schedule-weekly}"
+          schedule: "{schedule-daily}"
       - gate-stateful
 
     openstack:
-      - rocky:
-          openstack-branch: "stable/rocky"
-          odl-ml2-branch: "stable/rocky"
+      - stein:
+          openstack-branch: "stable/stein"
+          odl-ml2-branch: "stable/stein"
           odl-ml2-port-binding: "pseudo-agentdb-binding"
-          openstack_system_image: "{openstack_rocky_system_image}"
-          openstack_system2_image: "{openstack_rocky_system_image}"
-          schedule: "{schedule-daily}"
+          openstack_system_image: "{openstack_stein_system_image}"
+          openstack_system2_image: "{openstack_stein_system_image}"
 
 - project:
     name: netvirt-csit-hwvtep-openstack-integration-magnesium-stein
