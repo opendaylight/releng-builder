@@ -46,6 +46,30 @@
       "revId": "b1663721fa8603d7d2c6ea4b1d909127f63c550c",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bff60d1c_1d5b9a44",
+        "filename": "jjb/netconf/netconf-userfeatures.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2020-08-14T20:34:25Z",
+      "side": 1,
+      "message": "yes, I think we need to revert. Looks like some new failure comes because of this image.\n\nI ran this image and the old image back to back in four jobs and you can see the failure\nis consistent. It\u0027s in an \"auth\" area.\n\nhttps://jenkins.opendaylight.org/releng/view/netconf/job/netconf-csit-1node-userfeatures-rfc8040-all-silicon/",
+      "parentUuid": "5c5b3a69_5e44f56b",
+      "range": {
+        "startLine": 37,
+        "startChar": 47,
+        "endLine": 37,
+        "endChar": 53
+      },
+      "revId": "b1663721fa8603d7d2c6ea4b1d909127f63c550c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
     }
   ]
 }
