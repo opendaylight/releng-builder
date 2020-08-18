@@ -50,6 +50,12 @@
       https://jenkins.opendaylight.org/sandbox
     openstack-cloud: vex
 
+    publishers:
+      - email-notification:
+          email-recipients: "{lfstaff-email}"
+          email-prefix: "[releng]"
+      - lf-infra-publish
+
 - job-template:
     name: builder-check-poms
     node: centos7-builder-2c-1g
