@@ -107,7 +107,7 @@ function install_openstack_clients_in_robot_vm() {
        #Python uwsgi 2.0.19 is having errors, forcing it to pick 2.0.18
        sed -i '1 auwsgi===2.0.18' /tmp/constraints.txt
        #Python3 paramiko 2.7.1 has requirement cryptography>=2.5, Updating it to the latest
-       sed -i s/cryptography===2.3/cryptography===2.9.2/ /tmp/constraints.txt
+       sed -ie 's/cryptography===.*/cryptography===2.9.2/' /tmp/constraints.txt
        echo "$PYTHON -m pip install --upgrade --no-deps ${package} --no-cache-dir -c /tmp/constraints.txt"
        $PYTHON -m pip install --upgrade --no-deps "${package}" --no-cache-dir -c /tmp/constraints.txt
        echo "$PYTHON -m pip install ${package} --no-cache-dir -c /tmp/constraints.txt"
