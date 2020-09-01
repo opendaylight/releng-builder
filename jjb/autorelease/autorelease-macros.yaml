@@ -45,7 +45,7 @@
       - shell: |
           #!/bin/bash -l
           set -xe -o pipefail
-          virtualenv -p python3 --system-site-packages $WORKSPACE/venv
+          python3 -m venv $WORKSPACE/venv
           source $WORKSPACE/venv/bin/activate
           PYTHON="$WORKSPACE/venv/bin/python"
           $PYTHON -m pip install --upgrade networkx
