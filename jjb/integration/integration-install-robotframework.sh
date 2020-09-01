@@ -16,7 +16,7 @@ echo ROBOT_VENV="${ROBOT_VENV}" >> "${WORKSPACE}/env.properties"
 # The --system-site-packages parameter allows us to pick up system level
 # installed packages. This allows us to bake matplotlib which takes very long
 # to install into the image.
-virtualenv -p python3 --system-site-packages "${ROBOT_VENV}"
+python3 -m venv "${ROBOT_VENV}"
 # shellcheck disable=SC1090
 source "${ROBOT_VENV}/bin/activate"
 
