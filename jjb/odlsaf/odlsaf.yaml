@@ -8,12 +8,12 @@
     stream: silicon
     project: "odlsaf"
     project-name: "odlsaf"
-    build-node: centos7-builder-2c-2g
+    build-node: centos7-builder-4c-4g
     build-timeout: 120
     branch: "master"
     java-version: "openjdk11"
     mvn-settings: "odlsaf-settings"
-    mvn-opts: "-Xmx1024m"
+    mvn-opts: "-Xmx2048m"
     email-upstream: "[app-dev]"
 
     # Used by the release job
@@ -28,12 +28,12 @@
     stream: aluminium
     project: "odlsaf"
     project-name: "odlsaf"
-    build-node: centos7-builder-2c-2g
+    build-node: centos7-builder-4c-4g
     build-timeout: 120
     branch: "stable/aluminium"
     java-version: "openjdk11"
     mvn-settings: "odlsaf-settings"
-    mvn-opts: "-Xmx1024m"
+    mvn-opts: "-Xmx2048m"
     email-upstream: "[app-dev]"
 
     # Used by the release job
