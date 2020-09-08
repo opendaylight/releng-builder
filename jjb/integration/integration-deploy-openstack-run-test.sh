@@ -136,8 +136,8 @@ function install_rdo_release() {
           ${SSH} "${ip}" "sudo yum install -y https://repos.fedorapeople.org/repos/openstack/openstack-queens/rdo-release-queens-1.noarch.rpm"
           ;;
 
-       master)
-          ${SSH} "${ip}" "sudo yum install -y https://repos.fedorapeople.org/repos/openstack/openstack-rocky/rdo-release-rocky-1.noarch.rpm"
+       *stein*)
+          ${SSH} "${ip}" "sudo yum install -y https://repos.fedorapeople.org/repos/openstack/openstack-stein/rdo-release-stein-3.noarch.rpm"
           ;;
     esac
 }
@@ -353,6 +353,8 @@ minimize_polling=True
 # MTU(1400) + VXLAN(50) + VLAN(4) = 1454 < MTU eth0/br-physnet1(1458)
 physical_network_mtus = ${PUBLIC_PHYSICAL_NETWORK}:1400
 path_mtu = 1458
+[ml2_type_vlan]
+network_vlan_ranges=${PUBLIC_PHYSICAL_NETWORK}:1:4094
 EOF
     if [ "${ENABLE_GRE_TYPE_DRIVERS}" == "yes" ]; then
         cat >> "${local_conf_file_name}" << EOF
@@ -778,6 +780,10 @@ echo
 echo "workaround: do not upgrade openvswitch"
 sudo yum install -y yum-plugin-versionlock
 sudo yum versionlock add openvswitch
+
+echo "workaround: upgrade pip and setuptools"
+sudo pip install --upgrade pip
+sudo pip install --upgrade setuptools
 EOF
 
 cat > "${WORKSPACE}/setup_host_cell_mapping.sh" << EOF
