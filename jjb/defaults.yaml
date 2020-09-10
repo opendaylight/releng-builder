@@ -39,6 +39,10 @@
     git-url: "ssh://jenkins-$SILO@git.opendaylight.org:29418"
     lftools-version: <1.0.0
 
+    # openstack-cron email notification defaults
+    failure-notification: "releng+ODL@linuxfoundation.org"
+    failure-notification-prefix: "[releng]"
+
     # defaults for parameters installing openstack for csit jobs
     devstack-hash: ""
     create-initial-networks: "False"
