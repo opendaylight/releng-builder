@@ -24,7 +24,7 @@ def check_prefix(filename):
     """Check if a prefix was checked into this repo."""
     with open(filename, "r") as _file:
         for num, line in enumerate(_file, 1):
-            if re.search("prefix:", line):
+            if re.search(" +" "prefix:", line):
                 if '""' not in line:
                     print(
                         "ERROR: A non-blank prefix is defined in "
