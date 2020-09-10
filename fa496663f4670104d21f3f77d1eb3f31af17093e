@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2fdf62f_334d0e90",
+        "filename": "check_prefix.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2020-09-10T21:27:51Z",
+      "side": 1,
+      "message": "All changes made by hooks:\ndiff --git a/jjb/defaults.yaml b/jjb/defaults.yaml\nindex 140f7872..d8130c1a 100644\n--- a/jjb/defaults.yaml\n+++ b/jjb/defaults.yaml\n@@ -41,7 +41,7 @@\n \n     # openstack-cron email notification defaults\n     failure-notification: \"releng+ODL@linuxfoundation.org\"\n-    failure-notification-prefix: \"[releng]\"\n+    failure-notification-prefix: \"[releng]\" # this is comment about prefix:\n \n     # defaults for parameters installing openstack for csit jobs\n     devstack-hash: \"\"\nERROR: InvocationError for command /home/abelur/git/builder-test/.tox/pre-commit/bin/pre-commit run --all-files --show-diff-on-failure (exited with code 1)\nprefix run-test-pre: PYTHONHASHSEED\u003d\u00271850559127\u0027\nprefix run-test: commands[0] | python /home/abelur/git/builder-test/check_prefix.py\nERROR: A non-blank prefix is defined in jjb/defaults.yaml. The prefix MUST be set to blank \"\" in production!\nERROR: InvocationError for command /home/abelur/git/builder-test/.tox/prefix/bin/python check_prefix.py (exited with code 1)\nrobot run-test-pre: PYTHONHASHSEED\u003d\u00271850559127\u0027\nrobot run-test: commands[0] | python /home/abelur/git/builder-test/check_robot.py",
+      "range": {
+        "startLine": 27,
+        "startChar": 25,
+        "endLine": 27,
+        "endChar": 38
+      },
+      "revId": "fa496663f4670104d21f3f77d1eb3f31af17093e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    }
+  ]
+}
