@@ -87,7 +87,7 @@
     jobs:
       - inttest-csit-openstack-custom
     #temporarily disabling Stein jobs
-    disabled: true
+    disable-job: true
     project: "netvirt"
     stream: "silicon"
     branch: "master"
@@ -255,7 +255,7 @@
       - inttest-csit-openstack-custom
 
     #temporarily disabling Stein jobs
-    disabled: true
+    disable-job: true
     project: "netvirt"
     stream: "aluminium"
     branch: "stable/aluminium"
@@ -340,7 +340,7 @@
       - inttest-csit-openstack-custom
 
     #temporarily disabling Stein jobs
-    disabled: true
+    disable-job: true
     project: "netvirt"
     stream: "magnesium"
     branch: "stable/magnesium"
@@ -763,7 +763,7 @@
       - inttest-csit-openstack-custom
 
     #temporarily disabling Stein jobs
-    disabled: true
+    disable-job: true
     project: "netvirt"
     testplan: "{project}-{topology}-openstack.txt"
     odl-ml2-driver-version: "v2"
@@ -844,7 +844,7 @@
       - inttest-csit-openstack-custom
 
     #temporarily disabling Stein jobs
-    disabled: true
+    disable-job: true
     project: "netvirt"
     testplan: "{project}-{topology}-openstack.txt"
     odl-ml2-driver-version: "v2"
