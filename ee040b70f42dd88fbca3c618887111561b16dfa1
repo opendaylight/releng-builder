@@ -19,6 +19,52 @@
     },
     {
       "key": {
+        "uuid": "423d15bc_cf60a03e",
+        "filename": "scripts/cut-branch-jobs.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2020-09-16T17:35:38Z",
+      "side": 1,
+      "message": "I\u0027m not going to comment on every single one of these, but the name of the parameter may need some rethinking. See comment later for further explanation as to why.",
+      "range": {
+        "startLine": 27,
+        "startChar": 30,
+        "endLine": 27,
+        "endChar": 54
+      },
+      "revId": "ee040b70f42dd88fbca3c618887111561b16dfa1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5435e150_e71ff21d",
+        "filename": "scripts/cut-branch-jobs.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2020-09-16T17:35:38Z",
+      "side": 1,
+      "message": "This assumes that all of the projects are using \u0027master\u0027 as their primary development branch. Given the industry trend to moving away from this term this should probably be overridable or detected from the source project?\n\nI don\u0027t know of any ODL projects that have switched, but we\u0027ve got other LF supported projects that have started transitioning to alternative primary branches. At present I\u0027ve seen the following: \u0027main\u0027 (following what GitHub is pushing for and what I believe git will switch to as it\u0027s default in the future), and \u0027dev\u0027 (as they like they idea of dev / development being the primary branch)",
+      "range": {
+        "startLine": 60,
+        "startChar": 48,
+        "endLine": 60,
+        "endChar": 54
+      },
+      "revId": "ee040b70f42dd88fbca3c618887111561b16dfa1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c03d279_510898f1",
         "filename": "scripts/cut-branch-jobs.py",
         "patchSetId": 14
