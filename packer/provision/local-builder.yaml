@@ -1,5 +1,6 @@
 ---
 - import_playbook: ../common-packer/provision/baseline.yaml
+- import_playbook: ../common-packer/provision/docker.yaml
 
 - hosts: all
   become_user: root
