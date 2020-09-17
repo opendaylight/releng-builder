@@ -1,7 +1,7 @@
 #!/bin/bash
 #@IgnoreInspection BashAddShebang
-if [[ "${IS_NOT_KARAF_APPL}" == "True" ]]; then
-   echo "Not a Karaf Distro skipping karaf deployment"
+if [[ "${IS_NOT_KARAF_APPL}" == "False" ]]; then
+   echo "Tests already executed for Karaf Distro"
    exit
 fi
 # Activate robotframework virtualenv
@@ -10,36 +10,15 @@ fi
 # shellcheck source=${ROBOT_VENV}/bin/activate disable=SC1091
 source "${ROBOT_VENV}/bin/activate"
 source /tmp/common-functions.sh "${BUNDLEFOLDER}"
-
-
 echo "#################################################"
-echo "##         Configure Cluster and Start         ##"
+echo "## invoke Tests for non-karaf Controllers      ##"
 echo "#################################################"
 
-get_features
 
 # shellcheck disable=SC2034
 nodes_list=$(get_nodes_list)
 
-run_plan "script"
-
 add_jvm_support
-
-create_configuration_script
-
-create_startup_script
-
-create_post_startup_script
-
-copy_and_run_configuration_script
-
-run_plan "config"
-
-copy_and_run_startup_script
-
-copy_and_run_post_startup_script
-
-dump_controller_threads
 
 if [ "${NUM_OPENSTACK_SYSTEM}" -gt 0 ]; then
    echo "Exiting without running tests to deploy openstack for testing"
@@ -93,22 +72,22 @@ robot -N "${TESTPLAN}" \
 
 echo "Examining the files in data/log and checking filesize"
 # shellcheck disable=SC2029
-ssh "${ODL_SYSTEM_IP}" "ls -altr /tmp/${BUNDLEFOLDER}/data/log/"
+ssh "${ODL_SYSTEM_IP}" "ls -altr /tmp/"
 # shellcheck disable=SC2029
-ssh "${ODL_SYSTEM_IP}" "du -hs /tmp/${BUNDLEFOLDER}/data/log/*"
+ssh "${ODL_SYSTEM_IP}" "du -hs /tmp/"
 
 for i in $(seq 1 "${NUM_ODL_SYSTEM}")
 do
     CONTROLLERIP="ODL_SYSTEM_${i}_IP"
     echo "Let's take the karaf thread dump again..."
     ssh "${!CONTROLLERIP}" "sudo ps aux" > "${WORKSPACE}"/ps_after.log
-    pid=$(grep org.apache.karaf.main.Main "${WORKSPACE}/ps_after.log" | grep -v grep | tr -s ' ' | cut -f2 -d' ')
+    pid=$(grep org.opendaylight.netconf.micro.NetconfMain "${WORKSPACE}/ps_after.log" | grep -v grep | tr -s ' ' | cut -f2 -d' ')
     echo "karaf main: org.apache.karaf.main.Main, pid:${pid}"
     # shellcheck disable=SC2029
     ssh "${!CONTROLLERIP}" "${JAVA_HOME}/bin/jstack -l ${pid}" > "${WORKSPACE}/karaf_${i}_${pid}_threads_after.log" || true
     echo "Killing ODL"
     set +e  # We do not want to create red dot just because something went wrong while fetching logs.
-    ssh "${!CONTROLLERIP}" bash -c 'ps axf | grep karaf | grep -v grep | awk '"'"'{print "kill -9 " $1}'"'"' | sh'
+    ssh "${!CONTROLLERIP}" bash -c 'ps axf | grep org.opendaylight.netconf.micro.NetconfMain | grep -v grep | awk '"'"'{print "kill -9 " $1}'"'"' | sh'
 done
 
 sleep 5
@@ -118,15 +97,9 @@ for i in $(seq 1 "${NUM_ODL_SYSTEM}")
 do
     CONTROLLERIP="ODL_SYSTEM_${i}_IP"
     echo "Compressing karaf.log ${i}"
-    ssh "${!CONTROLLERIP}" gzip --best "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
+    ssh "${!CONTROLLERIP}" gzip --best "/tmp/odlmicro_netconf.log"
     echo "Fetching compressed karaf.log ${i}"
-    scp "${!CONTROLLERIP}:/tmp/${BUNDLEFOLDER}/data/log/karaf.log.gz" "odl${i}_karaf.log.gz" && ssh "${!CONTROLLERIP}" rm -f "/tmp/${BUNDLEFOLDER}/data/log/karaf.log.gz"
-    # TODO: Should we compress the output log file as well?
-    scp "${!CONTROLLERIP}:/tmp/${BUNDLEFOLDER}/data/log/karaf_console.log" "odl${i}_karaf_console.log" && ssh "${!CONTROLLERIP}" rm -f "/tmp/${BUNDLEFOLDER}/data/log/karaf_console.log"
-    echo "Fetch GC logs"
-    # FIXME: Put member index in filename, instead of directory name.
-    mkdir -p "gclogs-${i}"
-    scp "${!CONTROLLERIP}:/tmp/${BUNDLEFOLDER}/data/log/*.log" "gclogs-${i}/" && ssh "${!CONTROLLERIP}" rm -f "/tmp/${BUNDLEFOLDER}/data/log/*.log"
+    scp "${!CONTROLLERIP}:/tmp/odlmicro_netconf.log.gz" "odlmicro${i}.log.gz"
 done
 
 echo "Examine copied files"
