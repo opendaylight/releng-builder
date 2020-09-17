@@ -190,12 +190,18 @@
     tools_system_count: "1"
     tools_system_flavor: "odl-highcpu-2"
     tools_system_image: "ZZCI - Ubuntu 16.04 - mininet-ovs-28 - x86_64 - 20200813-051640.743"
+    controller-is-a-karaf-feature: "True"
 
     #####################
     # Job configuration #
     #####################
 
     parameters:
+      - string:
+          name: IS_KARAF_APPL
+          description: "Boolean to let pipeline know if the project has a different deployer"
+          default: "{controller-is-a-karaf-feature}"
+
       - integration-csit-parameters:
           archive-artifacts: "{archive-artifacts}"
           branch: "{branch}"
@@ -265,6 +271,7 @@
       - integration-detect-variables
       - integration-install-common-functions
       - integration-deploy-controller-run-test
+      - integration-run-test
       - integration-cleanup-tmp
 
     publishers:

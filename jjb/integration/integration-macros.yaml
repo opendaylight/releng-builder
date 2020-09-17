@@ -345,6 +345,15 @@
     builders:
       - shell: !include-raw: integration-deploy-controller-run-test.sh
 
+# Macro: integration-deply-non-karaf-controller-run-test
+# Operation: this macro deploys non-karaf controller application and run test
+# Used by: {project}-csit-1node-* job templates
+
+- builder:
+    name: integration-run-test
+    builders:
+      - shell: !include-raw: integration-run-test.sh
+
 # Macro: integration-configure-clustering
 # Operation: this macro configures the clustering
 # Used by: {project}-csit-3node-* job templates
