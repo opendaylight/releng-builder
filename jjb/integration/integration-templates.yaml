@@ -183,6 +183,7 @@
     openstack-cloud: vex
     openstack-heat-template: csit-2-instance-type.yaml
     openstack-heat-template-dir: openstack-hot
+    controller-is-not-karaf-feature: "False"
 
     odl_system_flavor: "odl-highcpu-4"
     odl_system_image: "ZZCI - CentOS 7 - builder - x86_64 - 20200901-060217.896"
@@ -211,6 +212,7 @@
           install-features: "{install-features}"
           use-features-boot: "True"
           elasticsearch-attribute: "{elasticsearch-attribute}"
+          controller-is-not-karaf-feature: "{controller-is-not-karaf-feature}"
       - integration-stack-2-type:
           vm_0_count: "1"
           vm_0_flavor: "{odl_system_flavor}"
@@ -265,6 +267,7 @@
       - integration-detect-variables
       - integration-install-common-functions
       - integration-deploy-controller-run-test
+      - integration-run-test
       - integration-cleanup-tmp
 
     publishers:
