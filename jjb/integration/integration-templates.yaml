@@ -79,6 +79,7 @@
     odl_system_flavor: "odl-highcpu-4"
     odl_system_image: "ZZCI - CentOS 7 - builder - x86_64 - 20200901-060217.896"
     controller-max-mem: "2048m"
+    controller-is-not-karaf-feature: "False"
     tools_system_count: "1"
     tools_system_flavor: "odl-highcpu-2"
     tools_system_image: "ZZCI - Ubuntu 16.04 - mininet-ovs-28 - x86_64 - 20200813-051640.743"
@@ -103,6 +104,7 @@
           install-features: "{install-features}"
           use-features-boot: "True"
           elasticsearch-attribute: "{elasticsearch-attribute}"
+          controller-is-not-karaf-feature: "{controller-is-not-karaf-feature}"
       - integration-stack-2-type:
           vm_0_count: "1"
           vm_0_flavor: "{odl_system_flavor}"
@@ -190,6 +192,7 @@
     tools_system_count: "1"
     tools_system_flavor: "odl-highcpu-2"
     tools_system_image: "ZZCI - Ubuntu 16.04 - mininet-ovs-28 - x86_64 - 20200813-051640.743"
+    controller-is-not-karaf-feature: "False"
 
     #####################
     # Job configuration #
@@ -211,6 +214,7 @@
           install-features: "{install-features}"
           use-features-boot: "True"
           elasticsearch-attribute: "{elasticsearch-attribute}"
+          controller-is-not-karaf-feature: "{controller-is-not-karaf-feature}"
       - integration-stack-2-type:
           vm_0_count: "1"
           vm_0_flavor: "{odl_system_flavor}"
@@ -265,6 +269,7 @@
       - integration-detect-variables
       - integration-install-common-functions
       - integration-deploy-controller-run-test
+      - integration-run-test
       - integration-cleanup-tmp
 
     publishers:
@@ -450,6 +455,7 @@
           install-features: "{install-features}"
           use-features-boot: "True"
           elasticsearch-attribute: "{elasticsearch-attribute}"
+          controller-is-not-karaf-feature: "{controller-is-not-karaf-feature}"
       - integration-stack-2-type:
           vm_0_count: "1"
           vm_0_flavor: "{odl_system_flavor}"
@@ -494,6 +500,7 @@
     odl_system_flavor: "odl-highcpu-4"
     odl_system_image: "ZZCI - CentOS 7 - builder - x86_64 - 20200901-060217.896"
     controller-max-mem: "2048m"
+    controller-is-not-karaf-feature: "False"
     tools_system_count: "1"
     tools_system_flavor: "odl-highcpu-2"
     tools_system_image: "ZZCI - Ubuntu 16.04 - mininet-ovs-28 - x86_64 - 20200813-051640.743"
@@ -518,6 +525,7 @@
           install-features: "odl-jolokia,{install-features}"
           use-features-boot: "True"
           elasticsearch-attribute: "{elasticsearch-attribute}"
+          controller-is-not-karaf-feature: "{controller-is-not-karaf-feature}"
       - integration-stack-2-type:
           vm_0_count: "3"
           vm_0_flavor: "{odl_system_flavor}"
@@ -605,6 +613,7 @@
     odl_system_flavor: "odl-highcpu-4"
     odl_system_image: "ZZCI - CentOS 7 - builder - x86_64 - 20200901-060217.896"
     controller-max-mem: "2048m"
+    controller-is-not-karaf-feature: "False"
     tools_system_count: "1"
     tools_system_flavor: "odl-highcpu-2"
     tools_system_image: "ZZCI - Ubuntu 16.04 - mininet-ovs-28 - x86_64 - 20200813-051640.743"
@@ -629,6 +638,7 @@
           install-features: "odl-jolokia,{install-features}"
           use-features-boot: "True"
           elasticsearch-attribute: "{elasticsearch-attribute}"
+          controller-is-not-karaf-feature: "{controller-is-not-karaf-feature}"
       - integration-stack-2-type:
           vm_0_count: "3"
           vm_0_flavor: "{odl_system_flavor}"
@@ -869,6 +879,7 @@
           install-features: "odl-jolokia,{install-features}"
           use-features-boot: "True"
           elasticsearch-attribute: "{elasticsearch-attribute}"
+          controller-is-not-karaf-feature: "{controller-is-not-karaf-feature}"
       - integration-stack-2-type:
           vm_0_count: "3"
           vm_0_flavor: "{odl_system_flavor}"
@@ -914,6 +925,7 @@
     odl_system_flavor: "odl-highcpu-4"
     odl_system_image: "ZZCI - CentOS 7 - builder - x86_64 - 20200901-060217.896"
     controller-max-mem: "2048m"
+    controller-is-not-karaf-feature: "False"
     docker_system_count: "1"
     docker_system_flavor: "odl-standard-1"
     docker_system_image: "ZZCI - CentOS 7 - docker - x86_64 - 20200901-220018.955"
@@ -938,6 +950,7 @@
           install-features: "odl-jolokia,{install-features}"
           use-features-boot: "True"
           elasticsearch-attribute: "{elasticsearch-attribute}"
+          controller-is-not-karaf-feature: "{controller-is-not-karaf-feature}"
       - integration-stack-2-type:
           vm_0_count: "3"
           vm_0_flavor: "{odl_system_flavor}"
@@ -1048,6 +1061,7 @@
     odl_system_flavor: "odl-highcpu-4"
     odl_system_image: "ZZCI - CentOS 7 - builder - x86_64 - 20200901-060217.896"
     controller-max-mem: "2048m"
+    controller-is-not-karaf-feature: "False"
     openstack_system_count: 1
     openstack_system_flavor: "odl-standard-4"
     openstack_system_image: "ZZCI - CentOS 7 - devstack - x86_64 - 20200813-052044.669"
@@ -1078,6 +1092,7 @@
           install-features: "{install-features}"
           use-features-boot: "{use-features-boot}"
           elasticsearch-attribute: "{elasticsearch-attribute}"
+          controller-is-not-karaf-feature: "{controller-is-not-karaf-feature}"
       - integration-stack-4-type:
           vm_0_count: "{odl_system_count}"
           vm_0_flavor: "{odl_system_flavor}"
@@ -1305,6 +1320,7 @@
           install-features: "{install-features}"
           use-features-boot: "{use-features-boot}"
           elasticsearch-attribute: "{elasticsearch-attribute}"
+          controller-is-not-karaf-feature: "{controller-is-not-karaf-feature}"
       - integration-stack-4-type:
           vm_0_count: "{odl_system_count}"
           vm_0_flavor: "{odl_system_flavor}"
@@ -1478,6 +1494,7 @@
     odl_system_flavor: "odl-highcpu-4"
     odl_system_image: "ZZCI - CentOS 7 - builder - x86_64 - 20200901-060217.896"
     controller-max-mem: "2048m"
+    controller-is-not-karaf-feature: "False"
     openstack_system_count: 1
     openstack_system_flavor: "odl-standard-4"
     openstack_system_image: "ZZCI - CentOS 7 - devstack - x86_64 - 20200813-052044.669"
@@ -1508,6 +1525,7 @@
           install-features: "{install-features}"
           use-features-boot: "{use-features-boot}"
           elasticsearch-attribute: "{elasticsearch-attribute}"
+          controller-is-not-karaf-feature: "{controller-is-not-karaf-feature}"
       - integration-stack-4-type:
           vm_0_count: "{odl_system_count}"
           vm_0_flavor: "{odl_system_flavor}"
@@ -1739,6 +1757,7 @@
           install-features: "{install-features}"
           use-features-boot: "{use-features-boot}"
           elasticsearch-attribute: "{elasticsearch-attribute}"
+          controller-is-not-karaf-feature: "{controller-is-not-karaf-feature}"
       - integration-stack-4-type:
           vm_0_count: "{odl_system_count}"
           vm_0_flavor: "{odl_system_flavor}"
