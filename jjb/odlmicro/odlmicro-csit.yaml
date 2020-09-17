@@ -1,0 +1,29 @@
+---
+- project:
+    name: odlmicro-csit-system
+    jobs:
+      - inttest-csit-1node
+
+    # The project name
+    project: "odlmicro"
+    controller-is-not-karaf-feature: "True"
+
+    # The functionality under test
+    testplan: "{project}-{functionality}-{stream}.txt"
+
+    # Project branches.
+    stream:
+      - aluminium:
+          branch: "master"
+          jre: "openjdk11"
+          functionality: "netconf"
+          robot-options: >
+            -e ODLMICRO_IGN
+            -v ODL_MICRO_VERSION:1.0.0-SNAPSHOT
+            -v NETCONF_TESTTOOL_VERSION:1.9.0-SNAPSHOT
+
+    install:
+      - manual:
+          scope: "test"
+
+    tools_system_count: 1
