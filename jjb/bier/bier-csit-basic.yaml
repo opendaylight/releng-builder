@@ -23,11 +23,9 @@
       - magnesium:
           branch: "stable/magnesium"
           jre: "openjdk11"
-      - sodium:
-          branch: "stable/sodium"
 
-    verify-stream: "sodium"
-    verify-branch: "stable/sodium"
+    verify-stream: "magnesium"
+    verify-branch: "stable/magnesium"
     verify-karaf-version: "karaf4"
 
     install:

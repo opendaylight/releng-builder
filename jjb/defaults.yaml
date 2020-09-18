@@ -104,9 +104,9 @@
 
     # Data for csit-verify jobs
     # Branch for "last" version detection
-    verify-branch: stable/sodium
+    verify-branch: stable/magnesium
     # Value for ODL_STREAM
-    verify-stream: sodium
+    verify-stream: magnesium
     verify-karaf-version: karaf4
     verify-jdkversion: openjdk8
 
@@ -214,8 +214,6 @@
       yangtools-csit-1node-system-only-aluminium
     csit-mri-list-magnesium: >
       yangtools-csit-1node-system-only-magnesium
-    csit-mri-list-sodium: >
-      yangtools-csit-1node-system-only-sodium
     csit-sanity-list-silicon: >
       openflowplugin-csit-1node-sanity-only-silicon,
       distribution-sanity-silicon
@@ -225,9 +223,6 @@
     csit-sanity-list-magnesium: >
       openflowplugin-csit-1node-sanity-only-magnesium,
       distribution-sanity-magnesium
-    csit-sanity-list-sodium: >
-      openflowplugin-csit-1node-sanity-only-sodium,
-      distribution-sanity-sodium
     csit-weekly-list-silicon: >
       controller-csit-1node-notifications-longevity-only-silicon,
       controller-csit-3node-drb-partnheal-longevity-only-silicon,
@@ -255,12 +250,3 @@
       distribution-deploy-magnesium,
       distribution-offline-magnesium,
       openflowplugin-csit-1node-longevity-only-magnesium
-    csit-weekly-list-sodium: >
-      controller-csit-1node-notifications-longevity-only-sodium,
-      controller-csit-3node-drb-partnheal-longevity-only-sodium,
-      controller-csit-3node-drb-precedence-longevity-only-sodium,
-      controller-csit-3node-ddb-expl-lead-movement-longevity-only-sodium,
-      bgpcep-csit-3node-bgpclustering-longevity-only-sodium,
-      distribution-deploy-sodium,
-      distribution-offline-sodium,
-      openflowplugin-csit-1node-longevity-only-sodium
