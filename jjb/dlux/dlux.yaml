@@ -18,23 +18,6 @@
     staging-profile-id: 96e6a0327484f
 
 - project:
-    name: dlux-sodium
-    jobs:
-      - odl-maven-jobs
-      - odl-maven-verify-jobs
-
-    stream: sodium
-    project: "dlux"
-    project-name: "dlux"
-    branch: "stable/sodium"
-    mvn-settings: "dlux-settings"
-    dependencies: "odlparent-merge-{stream}"
-    email-upstream: "[dlux] [odlparent]"
-
-    # Used by the release job
-    staging-profile-id: 96e6a0327484f
-
-- project:
     name: dlux-release-management
     jobs:
       - gerrit-release-merge

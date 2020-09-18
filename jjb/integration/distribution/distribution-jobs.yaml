@@ -35,16 +35,6 @@
           java-version: openjdk11
           jre: "openjdk11"
           karaf-version: odl
-      - sodium:
-          branch: "stable/sodium"
-          karaf-version: odl
-          # Self-Managed projects repos and features:
-          sm-repos: >
-            mvn:org.opendaylight.transportpce/features-transportpce//xml/features
-          sm-features: >
-            odl-transportpce,
-            odl-transportpce-api,
-            odl-transportpce-ordmodels
 
 - project:
     name: distribution-managed
@@ -121,24 +111,6 @@
             openflowplugin-maven-merge-{stream},
             ovsdb-maven-merge-{stream},
             serviceutils-maven-merge-{stream},
-      - sodium:
-          branch: "stable/sodium"
-          dependencies: >
-            aaa-merge-{stream},
-            bgpcep-merge-{stream},
-            coe-merge-{stream},
-            controller-merge-{stream},
-            daexim-merge-{stream},
-            genius-merge-{stream},
-            infrautils-merge-{stream},
-            lispflowmapping-merge-{stream},
-            netconf-merge-{stream},
-            netvirt-merge-{stream}
-            neutron-merge-{stream},
-            openflowplugin-merge-{stream},
-            ovsdb-merge-{stream},
-            serviceutils-merge-{stream},
-            sfc-merge-{stream}
 
 - project:
     name: distribution-full
@@ -179,12 +151,6 @@
           karaf-version: odl
           dependencies: >
             distribution-merge-managed-{stream},
-      - sodium:
-          branch: "stable/sodium"
-          karaf-version: odl
-          dependencies: >
-            distribution-merge-managed-{stream},
-            transportpce-merge-{stream}
 
 - project:
     name: distribution-release
@@ -213,8 +179,6 @@
       - magnesium:
           branch: "stable/magnesium"
           java-version: "openjdk11"
-      - sodium:
-          branch: "stable/sodium"
 
 - project:
     name: distribution-sonar
