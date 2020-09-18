@@ -181,16 +181,6 @@
           - project: "integration-distribution-test-{integration-test}"
             condition: FAILED
             trigger-with-no-params: true
-          - project: "packaging-build-rpm-{stream}"
-            condition: UNSTABLE_OR_BETTER
-            predefined-parameters: DOWNLOAD_URL=$BUNDLE_URL
-            property-file: variables.jenkins-trigger
-            fail-on-missing: true
-          - project: "packaging-build-deb-{stream}"
-            condition: UNSTABLE_OR_BETTER
-            predefined-parameters: DOWNLOAD_URL=$BUNDLE_URL
-            property-file: variables.jenkins-trigger
-            fail-on-missing: true
       # Critical component of the OpenDaylight community
       - postbuildscript:
           builders:
