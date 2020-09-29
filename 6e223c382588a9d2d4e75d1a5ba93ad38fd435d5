@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4bbf0836_ee40ae1b",
+        "filename": "jjb/integration/integration-macros.yaml",
+        "patchSetId": 12
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 7779
+      },
+      "writtenOn": "2020-09-29T11:32:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c37155a_d6713933",
+      "revId": "6e223c382588a9d2d4e75d1a5ba93ad38fd435d5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a166766_ad5e5acc",
         "filename": "jjb/integration/integration-run-test.sh",
         "patchSetId": 12
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "2ddeada9_47a95fb3",
+        "filename": "jjb/integration/integration-run-test.sh",
+        "patchSetId": 12
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 7779
+      },
+      "writtenOn": "2020-09-29T11:32:58Z",
+      "side": 1,
+      "message": "I would go with (1) but one issue, We are planning to use all existing suites for netconf, openflowplugin and ovsdb to start. Worried if it will break test suites and more test changes will be needed. I will try them manually and move it in a future patch, will that work?",
+      "parentUuid": "1a166766_ad5e5acc",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 38
+      },
+      "revId": "6e223c382588a9d2d4e75d1a5ba93ad38fd435d5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f4e5f4fb_65ccc578",
         "filename": "jjb/integration/integration-templates.yaml",
         "patchSetId": 12
@@ -53,6 +95,24 @@
       "writtenOn": "2020-09-26T19:25:26Z",
       "side": 1,
       "message": "If in general you want to set this to \"False\", you can add this to jjb/default.yaml vs adding this in every CSIT templates.",
+      "revId": "6e223c382588a9d2d4e75d1a5ba93ad38fd435d5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "519ba492_1763994f",
+        "filename": "jjb/integration/integration-templates.yaml",
+        "patchSetId": 12
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 7779
+      },
+      "writtenOn": "2020-09-29T11:32:58Z",
+      "side": 1,
+      "message": "Used it as a paramter in only one of the template, so that it does not affect all the suites. Please let me know if the change is fine.",
+      "parentUuid": "f4e5f4fb_65ccc578",
       "revId": "6e223c382588a9d2d4e75d1a5ba93ad38fd435d5",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": true
