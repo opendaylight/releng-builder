@@ -17,6 +17,7 @@
           branch: "master"
           jre: "openjdk11"
           functionality: "netconf"
+          trigger-jobs: "odlmicro-maven-merge-{stream}"
           robot-options: >
             -e ODLMICRO_IGN
             -v ODL_MICRO_VERSION:1.0.1-SNAPSHOT
@@ -25,6 +26,7 @@
           branch: "stable/aluminium"
           jre: "openjdk11"
           functionality: "netconf"
+          trigger-jobs: "odlmicro-maven-merge-{stream}"
           robot-options: >
             -e ODLMICRO_IGN
             -v ODL_MICRO_VERSION:1.0.0-SNAPSHOT
