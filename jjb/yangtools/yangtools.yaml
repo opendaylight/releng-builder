@@ -126,8 +126,10 @@
       - gerrit-maven-sonar:
           mvn-params: >
             -Dodl.jacoco.aggregateFile=$WORKSPACE/target/jacoco.exec
-            -Dsonar.jacoco.reportPath=$WORKSPACE/target/jacoco.exec
             -Dskip.karaf.featureTest=true
+          sonar-mvn-goal: >
+            org.jacoco:jacoco-maven-plugin:report -Djacoco.dataFile=$WORKSPACE/target/jacoco.exec
+            sonar:sonar
 
     project: "yangtools"
     project-name: "yangtools"
