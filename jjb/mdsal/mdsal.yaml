@@ -147,8 +147,10 @@
       - gerrit-maven-sonar:
           mvn-params: >
             -Dodl.jacoco.aggregateFile=$WORKSPACE/target/jacoco.exec
-            -Dsonar.jacoco.reportPath=$WORKSPACE/target/jacoco.exec
             -Dskip.karaf.featureTest=true
+          sonar-mvn-goal: >
+            jacoco:report -Djacoco.dataFile=$WORKSPACE/target/jacoco.exec
+            sonar:sonar
 
     project: "mdsal"
     project-name: "mdsal"
