@@ -101,8 +101,10 @@
       - gerrit-maven-sonar:
           mvn-params: >
             -Dodl.jacoco.aggregateFile=$WORKSPACE/target/jacoco.exec
-            -Dsonar.jacoco.reportPath=$WORKSPACE/target/jacoco.exec
             -P!karaf
+          sonar-mvn-goal: >
+            jacoco:report -Djacoco.dataFile=$WORKSPACE/target/jacoco.exec
+            sonar:sonar
 
     project: "bgpcep"
     project-name: "bgpcep"
