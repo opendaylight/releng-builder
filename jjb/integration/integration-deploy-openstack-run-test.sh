@@ -1233,6 +1233,7 @@ for suite in ${SUITES}; do
     -v TOOLS_SYSTEM_2_IP:"${TOOLS_SYSTEM_2_IP}" \
     -v TOOLS_SYSTEM_3_IP:"${TOOLS_SYSTEM_3_IP}" \
     -v USER_HOME:"${HOME}" \
+    -v IS_KARAF_APPL:"{IS_KARAF_APPL}" \
     -v WORKSPACE:/tmp \
     ${TESTOPTIONS} ${suite} || true
 done
