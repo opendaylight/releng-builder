@@ -103,6 +103,8 @@
           install-features: "{install-features}"
           use-features-boot: "True"
           elasticsearch-attribute: "{elasticsearch-attribute}"
+          karaf-based-controller: "{karaf-based-controller}"
+          karaf-version: "{karaf-version}"
       - integration-stack-2-type:
           vm_0_count: "1"
           vm_0_flavor: "{odl_system_flavor}"
@@ -124,8 +126,6 @@
           test-plan: "{project}-{functionality}.txt"
       - integration-jdk-version:
           jdkversion: "{verify-jdkversion}"
-      - distribution-karaf-version:
-          karaf-version: "{verify-karaf-version}"
 
     scm:
       - integration-gerrit-scm:
@@ -190,18 +190,12 @@
     tools_system_count: "1"
     tools_system_flavor: "odl-highcpu-2"
     tools_system_image: "ZZCI - Ubuntu 16.04 - mininet-ovs-28 - x86_64 - 20200813-051640.743"
-    controller-is-a-karaf-feature: "True"
 
     #####################
     # Job configuration #
     #####################
 
     parameters:
-      - string:
-          name: IS_KARAF_APPL
-          description: "Boolean to let pipeline know if the project has a different deployer"
-          default: "{controller-is-a-karaf-feature}"
-
       - integration-csit-parameters:
           archive-artifacts: "{archive-artifacts}"
           branch: "{branch}"
@@ -217,6 +211,8 @@
           install-features: "{install-features}"
           use-features-boot: "True"
           elasticsearch-attribute: "{elasticsearch-attribute}"
+          karaf-based-controller: "{karaf-based-controller}"
+          karaf-version: "{karaf-version}"
       - integration-stack-2-type:
           vm_0_count: "1"
           vm_0_flavor: "{odl_system_flavor}"
@@ -242,8 +238,6 @@
           branch: "master"
       - integration-jdk-version:
           jdkversion: "{jre}"
-      - distribution-karaf-version:
-          karaf-version: "{karaf-version}"
 
     scm:
       - integration-gerrit-scm:
@@ -457,6 +451,8 @@
           install-features: "{install-features}"
           use-features-boot: "True"
           elasticsearch-attribute: "{elasticsearch-attribute}"
+          karaf-based-controller: "{karaf-based-controller}"
+          karaf-version: "{karaf-version}"
       - integration-stack-2-type:
           vm_0_count: "1"
           vm_0_flavor: "{odl_system_flavor}"
@@ -482,8 +478,6 @@
           branch: "master"
       - integration-jdk-version:
           jdkversion: "{jre}"
-      - distribution-karaf-version:
-          karaf-version: "{karaf-version}"
 
 - job-template:
     name: "{prefix}{project}-csit-verify-3node-{functionality}"
@@ -525,6 +519,8 @@
           install-features: "odl-jolokia,{install-features}"
           use-features-boot: "True"
           elasticsearch-attribute: "{elasticsearch-attribute}"
+          karaf-based-controller: "{karaf-based-controller}"
+          karaf-version: "{karaf-version}"
       - integration-stack-2-type:
           vm_0_count: "3"
           vm_0_flavor: "{odl_system_flavor}"
@@ -548,8 +544,6 @@
           test-suites: "{test-suites}"
       - integration-jdk-version:
           jdkversion: "{verify-jdkversion}"
-      - distribution-karaf-version:
-          karaf-version: "{verify-karaf-version}"
 
     scm:
       - integration-gerrit-scm:
@@ -636,6 +630,8 @@
           install-features: "odl-jolokia,{install-features}"
           use-features-boot: "True"
           elasticsearch-attribute: "{elasticsearch-attribute}"
+          karaf-based-controller: "{karaf-based-controller}"
+          karaf-version: "{karaf-version}"
       - integration-stack-2-type:
           vm_0_count: "3"
           vm_0_flavor: "{odl_system_flavor}"
@@ -661,8 +657,6 @@
           branch: "master"
       - integration-jdk-version:
           jdkversion: "{jre}"
-      - distribution-karaf-version:
-          karaf-version: "{karaf-version}"
 
     scm:
       - integration-gerrit-scm:
@@ -876,6 +870,8 @@
           install-features: "odl-jolokia,{install-features}"
           use-features-boot: "True"
           elasticsearch-attribute: "{elasticsearch-attribute}"
+          karaf-based-controller: "{karaf-based-controller}"
+          karaf-version: "{karaf-version}"
       - integration-stack-2-type:
           vm_0_count: "3"
           vm_0_flavor: "{odl_system_flavor}"
@@ -901,8 +897,6 @@
           branch: "master"
       - integration-jdk-version:
           jdkversion: "{jre}"
-      - distribution-karaf-version:
-          karaf-version: "{karaf-version}"
 
 - job-template:
     name: "{prefix}{project}-csit-3node-docker-{functionality}-{install}-{stream}"
@@ -945,6 +939,8 @@
           install-features: "odl-jolokia,{install-features}"
           use-features-boot: "True"
           elasticsearch-attribute: "{elasticsearch-attribute}"
+          karaf-based-controller: "{karaf-based-controller}"
+          karaf-version: "{karaf-version}"
       - integration-stack-2-type:
           vm_0_count: "3"
           vm_0_flavor: "{odl_system_flavor}"
@@ -968,8 +964,6 @@
           branch: "master"
       - integration-jdk-version:
           jdkversion: "{jre}"
-      - distribution-karaf-version:
-          karaf-version: "{karaf-version}"
 
     scm:
       - integration-gerrit-scm:
@@ -1085,6 +1079,8 @@
           install-features: "{install-features}"
           use-features-boot: "{use-features-boot}"
           elasticsearch-attribute: "{elasticsearch-attribute}"
+          karaf-based-controller: "{karaf-based-controller}"
+          karaf-version: "{karaf-version}"
       - integration-stack-4-type:
           vm_0_count: "{odl_system_count}"
           vm_0_flavor: "{odl_system_flavor}"
@@ -1114,8 +1110,6 @@
           branch: "master"
       - integration-jdk-version:
           jdkversion: "{jre}"
-      - distribution-karaf-version:
-          karaf-version: "{karaf-version}"
       - string:
           name: OPENSTACK_BRANCH
           default: "{openstack-branch}"
@@ -1312,6 +1306,8 @@
           install-features: "{install-features}"
           use-features-boot: "{use-features-boot}"
           elasticsearch-attribute: "{elasticsearch-attribute}"
+          karaf-based-controller: "{karaf-based-controller}"
+          karaf-version: "{karaf-version}"
       - integration-stack-4-type:
           vm_0_count: "{odl_system_count}"
           vm_0_flavor: "{odl_system_flavor}"
@@ -1341,8 +1337,6 @@
           branch: "master"
       - integration-jdk-version:
           jdkversion: "{jre}"
-      - distribution-karaf-version:
-          karaf-version: "{karaf-version}"
       - string:
           name: OPENSTACK_BRANCH
           default: "{openstack-branch}"
@@ -1515,6 +1509,8 @@
           install-features: "{install-features}"
           use-features-boot: "{use-features-boot}"
           elasticsearch-attribute: "{elasticsearch-attribute}"
+          karaf-based-controller: "{karaf-based-controller}"
+          karaf-version: "{karaf-version}"
       - integration-stack-4-type:
           vm_0_count: "{odl_system_count}"
           vm_0_flavor: "{odl_system_flavor}"
@@ -1544,8 +1540,6 @@
           branch: "master"
       - integration-jdk-version:
           jdkversion: "{jre}"
-      - distribution-karaf-version:
-          karaf-version: "{karaf-version}"
       - string:
           name: OPENSTACK_BRANCH
           default: "{openstack-branch}"
@@ -1746,6 +1740,8 @@
           install-features: "{install-features}"
           use-features-boot: "{use-features-boot}"
           elasticsearch-attribute: "{elasticsearch-attribute}"
+          karaf-based-controller: "{karaf-based-controller}"
+          karaf-version: "{karaf-version}"
       - integration-stack-4-type:
           vm_0_count: "{odl_system_count}"
           vm_0_flavor: "{odl_system_flavor}"
@@ -1775,8 +1771,6 @@
           branch: "master"
       - integration-jdk-version:
           jdkversion: "{jre}"
-      - distribution-karaf-version:
-          karaf-version: "{karaf-version}"
       - string:
           name: OPENSTACK_BRANCH
           default: "{openstack-branch}"

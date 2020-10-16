@@ -25,6 +25,10 @@
           controller-scope: "{controller-scope}"
           controller-use-features-boot: "{use-features-boot}"
           feature-elasticsearch-attribute: "{elasticsearch-attribute}"
+      - distribution-is-karaf-appl:
+          karaf-based-controller: "{karaf-based-controller}"
+      - distribution-karaf-version:
+          karaf-version: "{karaf-version}"
 
 - parameter:
     name: integration-controller-parameters
@@ -79,6 +83,14 @@
           name: DISTROBRANCH
           default: "{branch}"
           description: "Distribution GIT branch"
+
+- parameter:
+    name: distribution-is-karaf-appl
+    parameters:
+      - string:
+          name: IS_KARAF_APPL
+          default: "{karaf-based-controller}"
+          description: "Boolean to let pipeline know if the project has a different deployer"
 
 - parameter:
     name: distribution-karaf-version
