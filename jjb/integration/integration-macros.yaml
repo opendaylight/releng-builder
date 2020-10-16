@@ -81,6 +81,14 @@
           description: "Distribution GIT branch"
 
 - parameter:
+    name: distribution-is-karaf-appl
+    parameters:
+      - string:
+          name: IS_KARAF_APPL
+          default: "{controller-is-a-karaf-feature}"
+          description: "Boolean to let pipeline know if the project has a different deployer"
+
+- parameter:
     name: distribution-karaf-version
     # Arguments:
     #   karaf-version: Provide, otherwise defaults.yaml value is used.
