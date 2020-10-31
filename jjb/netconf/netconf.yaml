@@ -84,6 +84,17 @@
     staging-profile-id: a67b22fc3663f
 
 - project:
+    name: netconf-release-management
+    jobs:
+      - gerrit-release-merge
+
+    project: netconf
+    project-name: netconf
+
+    build-node: centos7-builder-2c-1g
+    mvn-settings: netconf-settings
+
+- project:
     name: netconf-sonar
     jobs:
       - gerrit-maven-sonar:
