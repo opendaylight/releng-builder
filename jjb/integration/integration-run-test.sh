@@ -70,6 +70,10 @@ robot -N "${TESTPLAN}" \
       -v WORKSPACE:/tmp \
       ${TESTOPTIONS} ${SUITES} || true
 
+# Compressing so size is not too large.
+# Renaming to look as (compressed) log, to get archived automatically.
+gzip -9 -c /tmp/output.xml > /tmp/output.xml.log.gz
+
 echo "Examining the files in data/log and checking filesize"
 # shellcheck disable=SC2029
 ssh "${ODL_SYSTEM_IP}" "ls -altr /tmp/"
