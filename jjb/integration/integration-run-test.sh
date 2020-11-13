@@ -1,5 +1,8 @@
 #!/bin/bash
 #@IgnoreInspection BashAddShebang
+
+echo "---> integration-run-test.sh"
+
 if [ "${IS_KARAF_APPL}" = "True" ] ; then
     echo "Karaf Deployments, Tests must have already run"
     exit
@@ -35,9 +38,10 @@ done
 get_test_suites SUITES
 
 echo "Starting Robot test suites ${SUITES} ..."
+set -x
 # ${TESTOPTIONS}, ${SUITES} are space-separated parameters and should not be quoted.
 # shellcheck disable=SC2086
-robot -N "${TESTPLAN}" \
+robot -N "${TESTPLAN}" --log none --report none \
       --removekeywords wuks -c critical -e exclude -e "skip_if_${DISTROSTREAM}" \
       -v BUNDLEFOLDER:"${BUNDLEFOLDER}" \
       -v BUNDLE_URL:"${ACTUAL_BUNDLE_URL}" \
@@ -69,6 +73,7 @@ robot -N "${TESTPLAN}" \
       -v USER_HOME:"${HOME}" \
       -v WORKSPACE:/tmp \
       ${TESTOPTIONS} ${SUITES} || true
+set +x
 
 echo "Examining the files in data/log and checking filesize"
 # shellcheck disable=SC2029
@@ -102,8 +107,15 @@ do
     scp "${!CONTROLLERIP}:/tmp/odlmicro_netconf.log.gz" "odlmicro${i}.log.gz"
 done
 
+set -x
 echo "Examine copied files"
 ls -lt
+# Compressing so size is not too large.
+# Renaming to look as (compressed) log, to get archived automatically.
+gzip -9 -c ./output.xml > ./output.xml.log.gz
+echo "Examine processed files"
+ls -lt
+set +x
 
 true  # perhaps Jenkins is testing last exit code
 
