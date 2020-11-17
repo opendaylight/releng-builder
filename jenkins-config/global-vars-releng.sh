@@ -11,4 +11,5 @@ SIGUL_BRIDGE_IP=10.30.168.3
 SIGUL_KEY=odl-release-2020
 SILO=releng
 SONAR_URL=https://sonar.opendaylight.org
-S3_BUCKET=
+S3_BUCKET=odl-logs-s3-cloudfront-index
+CDN_URL=s3-logs.opendaylight.org
