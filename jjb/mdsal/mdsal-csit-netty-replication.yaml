@@ -1,0 +1,37 @@
+---
+- project:
+    name: mdsal-csit-netty-replication
+    jobs:
+      - inttest-csit-3node
+
+    # The project name
+    project: 'mdsal'
+
+    # The functionality under test
+    functionality: "netty-replication"
+
+    # Project branches  
+    stream:
+      - silicon:
+          branch: "master"
+          jre: "openjdk11"
+      - aluminium:
+          branch: "stable/aluminium"
+          jre: "openjdk11"
+      - magnesium:
+          branch: "stable/magnesium"
+          jre: "openjdk11"
+
+    install:
+      - only:
+          scope: 'only'
+
+    # Features to install
+    install-features: >
+        features-mdsal,
+        odl-mdsal-exp-replicate-netty,
+        odl-restconf-nb-bierman02,
+        odl-netconf-clustered-topolog
+
+    # Robot custom options
+    robot-options: ''
