@@ -1,0 +1,35 @@
+---
+- project:
+    name: mdsal-csit-netty-replicate
+    jobs:
+      - inttest-csit-3node
+
+    # The project name
+    project: "mdsal"
+
+    # The functionality under test
+    functionality: "netty-replicate"
+
+    elasticsearch-attribute: "disabled"
+
+    # Project branches
+    stream:
+      - silicon:
+          branch: "master"
+          jre: "openjdk11"
+      - aluminium:
+          branch: "stable/aluminium"
+          jre: "openjdk11"
+      - magnesium:
+          branch: "stable/magnesium"
+          jre: "openjdk11"
+
+    install:
+      - all:
+          scope: "all"
+
+    tools_system_count: 0
+
+    install-features: >
+      odl-restconf,
+      odl-clustering-test-app
