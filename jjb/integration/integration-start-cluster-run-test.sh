@@ -67,6 +67,7 @@ robot -N "${TESTPLAN}" \
       -v TOOLS_SYSTEM_IP:"${TOOLS_SYSTEM_IP}" ${tools_variables} \
       -v TOOLS_SYSTEM_USER:"${USER}" \
       -v USER_HOME:"${HOME}" \
+      -v IS_KARAF_APPL:"{IS_KARAF_APPL}" \
       -v WORKSPACE:/tmp \
       ${TESTOPTIONS} ${SUITES} || true
 
