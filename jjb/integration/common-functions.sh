@@ -976,12 +976,14 @@ done
 
 # This workaround is required for Karaf decanter to work proper
 # The bundle:refresh command does not fail if the decanter bundles are not present
-echo "ssh to karaf console to do bundle refresh of decanter jmx collector"
-sshpass -p karaf ssh -o StrictHostKeyChecking=no \
-                     -o UserKnownHostsFile=/dev/null \
-                     -o LogLevel=error \
-                     -p 8101 karaf@localhost \
-                     "bundle:refresh org.apache.karaf.decanter.collector.jmx && bundle:refresh org.apache.karaf.decanter.api"
+# There seems to be impact in silicon stream so we better to comment this for now
+#
+#echo "ssh to karaf console to do bundle refresh of decanter jmx collector"
+#sshpass -p karaf ssh -o StrictHostKeyChecking=no \
+#                     -o UserKnownHostsFile=/dev/null \
+#                     -o LogLevel=error \
+#                     -p 8101 karaf@localhost \
+#                     "bundle:refresh org.apache.karaf.decanter.collector.jmx && bundle:refresh org.apache.karaf.decanter.api"
 
 if [[ "$USEFEATURESBOOT" != "True" ]]; then
 
