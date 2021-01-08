@@ -171,7 +171,7 @@ for suite in ${SUITES}; do
     -v SSH_KEY:robot_id_rsa \
     -v TOOLS_SYSTEM_IP: \
     -v USER_HOME:"${HOME}" \
-    -v IS_KARAF_APPL:"{IS_KARAF_APPL}" \
+    -v IS_KARAF_APPL:"${IS_KARAF_APPL}" \
     -v WORKSPACE:/tmp \
     "${TESTOPTIONS}" "${suite}" || true
 done
