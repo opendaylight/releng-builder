@@ -34,7 +34,7 @@ netifaces
 pyhocon
 requests
 robotframework-httplibrary
-robotframework-requests
+robotframework-requests==0.7.2
 robotframework-selenium2library
 robotframework-sshlibrary==3.1.1
 scapy
