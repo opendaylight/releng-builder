@@ -16,7 +16,7 @@
   },
   "builders": [
     {
-      "name": "vexxhost",
+      "name": "openstack",
       "image_name": "ZZCI - {{user `distro`}} - mininet-ovs-26 - {{user `arch`}} - {{isotime \"20060102-150405.000\"}}",
       "instance_name": "{{user `distro`}}-mininet-ovs-26-{{uuid}}",
       "source_image_name": "{{user `base_image`}}",

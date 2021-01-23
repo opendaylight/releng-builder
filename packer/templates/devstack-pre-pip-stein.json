@@ -16,7 +16,7 @@
   },
   "builders": [
     {
-      "name": "vexxhost",
+      "name": "openstack",
       "image_name": "ZZCI - {{user `distro`}} - devstack-stein - {{user `arch`}} - {{isotime \"20060102-150405.000\"}}",
       "instance_name": "{{user `distro`}}-devstack-stein-{{uuid}}",
       "source_image_name": "{{user `base_image`}}",
