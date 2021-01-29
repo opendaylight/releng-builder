@@ -25,7 +25,7 @@
           java-version: "openjdk11"
           csit-list: !include: csit-jobs-silicon.lst
           build-order: >
-            odlparent yangtools mdsal controller infrautils serviceutils aaa netconf
+            odlparent infrautils yangtools mdsal controller serviceutils aaa netconf
             daexim jsonrpc ovsdb neutron openflowplugin genius lispflowmapping
             bgpcep integration/distribution
 
@@ -35,7 +35,7 @@
           java-version: "openjdk11"
           csit-list: !include: csit-jobs-aluminium.lst
           build-order: >
-            odlparent yangtools mdsal controller infrautils serviceutils aaa netconf
+            odlparent infrautils yangtools mdsal controller serviceutils aaa netconf
             daexim jsonrpc ovsdb neutron openflowplugin genius lispflowmapping netvirt
             bgpcep integration/distribution
 
@@ -45,7 +45,7 @@
           java-version: "openjdk11"
           csit-list: !include: csit-jobs-magnesium.lst
           build-order: >
-            odlparent yangtools mdsal infrautils controller serviceutils aaa netconf
+            odlparent infrautils yangtools mdsal controller serviceutils aaa netconf
             daexim jsonrpc ovsdb neutron openflowplugin genius lispflowmapping netvirt
             bgpcep integration/distribution
 
