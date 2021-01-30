@@ -75,6 +75,17 @@
     staging-profile-id: 9318cf3c82c33
 
 - project:
+    name: aaa-release-management
+    jobs:
+      - gerrit-release-merge
+
+    project: aaa
+    project-name: aaa
+
+    build-node: centos7-builder-2c-1g
+    mvn-settings: aaa-settings
+
+- project:
     name: aaa-sonar
     jobs:
       - gerrit-maven-sonar:
