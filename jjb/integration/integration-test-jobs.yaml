@@ -26,7 +26,7 @@
           csit-list: !include: csit-jobs-silicon.lst
           build-order: >
             odlparent infrautils yangtools mdsal controller serviceutils aaa netconf
-            daexim jsonrpc ovsdb neutron openflowplugin genius lispflowmapping
+            daexim jsonrpc ovsdb neutron openflowplugin lispflowmapping
             bgpcep integration/distribution
 
       - aluminium:
@@ -64,7 +64,7 @@
       - silicon:
           branch: "master"
           csit-blocklist: >
-            bier controller dluxapps lispflowmapping l2switch mdsal nemo
+            bier controller dluxapps genius lispflowmapping l2switch mdsal nemo
             netvirt odlmicro packetcable sfc sxp telemetry tsdr usc yangtools
             gate longevity sanity tdd tempest wip
             bgpcep-csit-3node-bgpclustering-all
