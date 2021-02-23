@@ -51,7 +51,7 @@
           testplan: "{project}-{topology}-dcgw-openstack.txt"
           tools_system_count: 3
           enable-gre-type-driver: "yes"
-      # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
+        # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
       - gate-tdd-wip:
           testplan: "{project}-{topology}-tdd-wip-openstack.txt"
           schedule: "{schedule-weekly}"
@@ -135,7 +135,7 @@
           testplan: "{project}-{topology}-dcgw-openstack.txt"
           tools_system_count: 3
           enable-gre-type-driver: "yes"
-      # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
+        # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
       - gate-tdd-wip:
           testplan: "{project}-{topology}-tdd-wip-openstack.txt"
           schedule: "{schedule-weekly}"
@@ -218,7 +218,7 @@
           testplan: "{project}-{topology}-dcgw-openstack.txt"
           tools_system_count: 3
           enable-gre-type-driver: "yes"
-      # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
+        # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
       - gate-tdd-wip:
           testplan: "{project}-{topology}-tdd-wip-openstack.txt"
           schedule: "{schedule-weekly}"
@@ -303,7 +303,7 @@
           testplan: "{project}-{topology}-dcgw-openstack.txt"
           tools_system_count: 3
           enable-gre-type-driver: "yes"
-      # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
+        # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
       - gate-tdd-wip:
           testplan: "{project}-{topology}-tdd-wip-openstack.txt"
           schedule: "{schedule-weekly}"
@@ -392,7 +392,7 @@
           tools_system_count: 3
           schedule: "{schedule-weekly}"
           enable-gre-type-driver: "yes"
-      # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
+        # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
       - gate-tdd-wip:
           testplan: "{project}-{topology}-tdd-wip-openstack.txt"
           schedule: "{schedule-weekly}"
@@ -473,7 +473,7 @@
           odl-snat-mode: "conntrack"
       - gate-minimal-cluster:
           testplan: "{project}-{topology}-minimal-openstack.txt"
-      # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
+        # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
       - gate-tdd-wip:
           testplan: "{project}-{topology}-tdd-wip-openstack.txt"
           schedule: ""
@@ -554,7 +554,7 @@
           odl-snat-mode: "conntrack"
       - gate-minimal-cluster:
           testplan: "{project}-{topology}-minimal-openstack.txt"
-      # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
+        # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
       - gate-tdd-wip:
           testplan: "{project}-{topology}-tdd-wip-openstack.txt"
           schedule: ""
@@ -602,8 +602,12 @@
     os-cmp-cnt: 0
 
     stream:
-      - silicon:
+      - phosphorus:
           branch: "master"
+          jre: "openjdk11"
+
+      - silicon:
+          branch: "stable/silicon"
           jre: "openjdk11"
 
     topology:
@@ -640,7 +644,7 @@
           tools_system_count: 3
           enable-gre-type-driver: "yes"
           schedule: "{schedule-daily}"
-      # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
+        # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
       - gate-tdd-wip:
           testplan: "{project}-{topology}-tdd-wip-openstack.txt"
           schedule: ""

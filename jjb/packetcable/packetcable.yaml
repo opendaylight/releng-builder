@@ -1,5 +1,24 @@
 ---
 - project:
+    name: packetcable-phosphorus
+    jobs:
+      - odl-maven-jobs
+      - odl-maven-verify-jobs
+
+    stream: phosphorus
+    project: "packetcable"
+    project-name: "packetcable"
+    branch: "master"
+    mvn-settings: "packetcable-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: ""
+    email-upstream: "[packetcable]"
+    disable-job: true
+
+    # Used by the release job
+    staging-profile-id: a68ca4a24655c
+
+- project:
     name: packetcable-silicon
     jobs:
       - odl-maven-jobs
@@ -8,7 +27,7 @@
     stream: silicon
     project: "packetcable"
     project-name: "packetcable"
-    branch: "master"
+    branch: "stable/silicon"
     mvn-settings: "packetcable-settings"
     mvn-opts: "-Xmx1024m"
     dependencies: ""

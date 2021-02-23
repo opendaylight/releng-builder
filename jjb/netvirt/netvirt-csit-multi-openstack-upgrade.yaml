@@ -104,8 +104,12 @@
     project: "netvirt"
 
     stream:
-      - silicon:
+      - phosphorus:
           branch: "master"
+          jre: "openjdk11"
+
+      - silicon:
+          branch: "stable/silicon"
           jre: "openjdk11"
 
     testplan: "{project}-{topology}-openstack-upgrade.txt"
