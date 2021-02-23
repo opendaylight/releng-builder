@@ -2,30 +2,34 @@
 - project:
     name: openflowplugin-csit-flow-services
     jobs:
-      - inttest-csit-1node
+    - inttest-csit-1node
 
     # The project name
     project: "openflowplugin"
 
     # The functionality under test
     functionality:
-      - flow-services
-      - gate-flow-services
+    - flow-services
+    - gate-flow-services
 
     # Project branches
     stream:
-      - silicon:
-          branch: "master"
-          jre: "openjdk11"
-          install: "all"
-      - aluminium:
-          branch: "stable/aluminium"
-          jre: "openjdk11"
-          install: "all"
-      - magnesium:
-          branch: "stable/magnesium"
-          jre: "openjdk11"
-          install: "all"
+    - phosphorus:
+        branch: "master"
+        jre: "openjdk11"
+        install: "all"
+    - silicon:
+        branch: "stable/silicon"
+        jre: "openjdk11"
+        install: "all"
+    - aluminium:
+        branch: "stable/aluminium"
+        jre: "openjdk11"
+        install: "all"
+    - magnesium:
+        branch: "stable/magnesium"
+        jre: "openjdk11"
+        install: "all"
 
     # Job images
     tools_system_image: "ZZCI - Ubuntu 16.04 - mininet-ovs-28 - x86_64 - 20200813-051640.743"

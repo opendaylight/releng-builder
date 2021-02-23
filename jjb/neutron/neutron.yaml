@@ -1,13 +1,13 @@
 ---
 - project:
-    name: neutron-silicon
+    name: neutron-phosphorus
     jobs:
-      - "{project-name}-distribution-check-{stream}"
-      - "{project-name}-maven-javadoc-jobs"
-      - odl-maven-jobs-jdk11
-      - odl-maven-verify-jobs
+    - "{project-name}-distribution-check-{stream}"
+    - "{project-name}-maven-javadoc-jobs"
+    - odl-maven-jobs-jdk11
+    - odl-maven-verify-jobs
 
-    stream: silicon
+    stream: phosphorus
     project: "neutron"
     project-name: "neutron"
     build-timeout: 90
@@ -22,12 +22,34 @@
     staging-profile-id: a67e1b40d7419
 
 - project:
+    name: neutron-silicon
+    jobs:
+    - "{project-name}-distribution-check-{stream}"
+    - "{project-name}-maven-javadoc-jobs"
+    - odl-maven-jobs-jdk11
+    - odl-maven-verify-jobs
+
+    stream: silicon
+    project: "neutron"
+    project-name: "neutron"
+    build-timeout: 90
+    branch: "stable/silicon"
+    java-version: "openjdk11"
+    mvn-settings: "neutron-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: "odlparent-merge-{stream},aaa-merge-{stream}"
+    email-upstream: "[neutron] [odlparent] [aaa]"
+
+    # Used by the release job
+    staging-profile-id: a67e1b40d7419
+
+- project:
     name: neutron-aluminium
     jobs:
-      - "{project-name}-distribution-check-{stream}"
-      - "{project-name}-maven-javadoc-jobs"
-      - odl-maven-jobs-jdk11
-      - odl-maven-verify-jobs
+    - "{project-name}-distribution-check-{stream}"
+    - "{project-name}-maven-javadoc-jobs"
+    - odl-maven-jobs-jdk11
+    - odl-maven-verify-jobs
 
     stream: aluminium
     project: "neutron"
@@ -46,10 +68,10 @@
 - project:
     name: neutron-magnesium
     jobs:
-      - "{project-name}-distribution-check-{stream}"
-      - "{project-name}-maven-javadoc-jobs"
-      - odl-maven-jobs-jdk11
-      - odl-maven-verify-jobs
+    - "{project-name}-distribution-check-{stream}"
+    - "{project-name}-maven-javadoc-jobs"
+    - odl-maven-jobs-jdk11
+    - odl-maven-verify-jobs
 
     stream: magnesium
     project: "neutron"
@@ -68,7 +90,7 @@
 - project:
     name: neutron-sonar
     jobs:
-      - gerrit-maven-sonar
+    - gerrit-maven-sonar
     project: "neutron"
     project-name: "neutron"
     branch: "master"
@@ -83,7 +105,7 @@
 - project:
     name: neutron-info
     jobs:
-      - gerrit-info-yaml-verify
+    - gerrit-info-yaml-verify
     project: neutron
     project-name: neutron
     branch: master
@@ -92,5 +114,5 @@
 - project:
     name: neutron-view
     views:
-      - project-view
+    - project-view
     project-name: neutron

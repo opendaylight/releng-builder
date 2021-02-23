@@ -1,11 +1,11 @@
 ---
 - project:
-    name: archetypes-silicon
+    name: archetypes-phosphorus
     jobs:
-      - odl-maven-jobs-jdk11
-      - odl-maven-verify-jobs
+    - odl-maven-jobs-jdk11
+    - odl-maven-verify-jobs
 
-    stream: silicon
+    stream: phosphorus
     project: "archetypes"
     project-name: "archetypes"
     branch: "master"
@@ -18,10 +18,28 @@
     staging-profile-id: d88dcfe6ce48d
 
 - project:
+    name: archetypes-silicon
+    jobs:
+    - odl-maven-jobs-jdk11
+    - odl-maven-verify-jobs
+
+    stream: silicon
+    project: "archetypes"
+    project-name: "archetypes"
+    branch: "stable/silicon"
+    java-version: "openjdk11"
+    mvn-settings: "archetypes-settings"
+    dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream},mdsal-merge-{stream}"
+    email-upstream: "[archetypes] [odlparent] [yangtools] [controller] [mdsal]"
+
+    # Used by the release job
+    staging-profile-id: d88dcfe6ce48d
+
+- project:
     name: archetypes-aluminium
     jobs:
-      - odl-maven-jobs-jdk11
-      - odl-maven-verify-jobs
+    - odl-maven-jobs-jdk11
+    - odl-maven-verify-jobs
 
     stream: aluminium
     project: "archetypes"
@@ -38,8 +56,8 @@
 - project:
     name: archetypes-magnesium
     jobs:
-      - odl-maven-jobs-jdk11
-      - odl-maven-verify-jobs
+    - odl-maven-jobs-jdk11
+    - odl-maven-verify-jobs
 
     stream: magnesium
     project: "archetypes"
@@ -56,7 +74,7 @@
 - project:
     name: archetypes-sonar
     jobs:
-      - gerrit-maven-sonar
+    - gerrit-maven-sonar
 
     project: "archetypes"
     project-name: "archetypes"
@@ -71,7 +89,7 @@
 - project:
     name: archetypes-info
     jobs:
-      - gerrit-info-yaml-verify
+    - gerrit-info-yaml-verify
     project: archetypes
     project-name: archetypes
     branch: master
@@ -80,5 +98,5 @@
 - project:
     name: archetypes-view
     views:
-      - project-view
+    - project-view
     project-name: archetypes

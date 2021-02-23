@@ -2,7 +2,7 @@
 - project:
     name: autorelease-version-management
     jobs:
-      - gerrit-tox-verify
+    - gerrit-tox-verify
 
     project: releng/autorelease
     project-name: autorelease-version-management
@@ -11,9 +11,11 @@
     build-node: centos7-builder-2c-8g
 
     stream:
-      - silicon:
-          branch: "master"
-      - aluminium:
-          branch: "stable/aluminium"
-      - magnesium:
-          branch: "stable/magnesium"
+    - phosphorus:
+        branch: "master"
+    - silicon:
+        branch: "stable/silicon"
+    - aluminium:
+        branch: "stable/aluminium"
+    - magnesium:
+        branch: "stable/magnesium"

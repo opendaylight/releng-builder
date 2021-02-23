@@ -2,35 +2,38 @@
 - project:
     name: netconf-csit-userfeatures
     jobs:
-      - inttest-csit-1node
+    - inttest-csit-1node
 
     # The project name
     project: "netconf"
 
     # The functionality under test
     functionality:
-      - userfeatures
-      - userfeatures-rfc8040:
-          robot-options: "-v NETOPEER_USER:root -v USE_NETCONF_CONNECTOR:False -v USE_RFC8040:True"
-      - gate-userfeatures
-      - gate-userfeatures-rfc8040:
-          robot-options: "-v NETOPEER_USER:root -v USE_NETCONF_CONNECTOR:False -v USE_RFC8040:True"
+    - userfeatures
+    - userfeatures-rfc8040:
+        robot-options: "-v NETOPEER_USER:root -v USE_NETCONF_CONNECTOR:False -v USE_RFC8040:True"
+    - gate-userfeatures
+    - gate-userfeatures-rfc8040:
+        robot-options: "-v NETOPEER_USER:root -v USE_NETCONF_CONNECTOR:False -v USE_RFC8040:True"
 
     # Project branches
     stream:
-      - silicon:
-          branch: "master"
-          jre: "openjdk11"
-      - aluminium:
-          branch: "stable/aluminium"
-          jre: "openjdk11"
-      - magnesium:
-          branch: "stable/magnesium"
-          jre: "openjdk11"
+    - phosphorus:
+        branch: "master"
+        jre: "openjdk11"
+    - silicon:
+        branch: "stable/silicon"
+        jre: "openjdk11"
+    - aluminium:
+        branch: "stable/aluminium"
+        jre: "openjdk11"
+    - magnesium:
+        branch: "stable/magnesium"
+        jre: "openjdk11"
 
     install:
-      - all:
-          scope: "all"
+    - all:
+        scope: "all"
 
     tools_system_image: "ZZCI - Ubuntu 18.04 - docker - x86_64 - 20200901-040308.994"
 

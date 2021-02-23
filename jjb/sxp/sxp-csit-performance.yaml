@@ -2,7 +2,7 @@
 - project:
     name: sxp-csit-performance
     jobs:
-      - inttest-csit-1node
+    - inttest-csit-1node
 
     # The project name
     project: "sxp"
@@ -12,19 +12,22 @@
 
     # Project branches
     stream:
-      - silicon:
-          branch: "master"
-          jre: "openjdk11"
-      - aluminium:
-          branch: "stable/aluminium"
-          jre: "openjdk11"
-      - magnesium:
-          branch: "stable/magnesium"
-          jre: "openjdk11"
+    - phosphorus:
+        branch: "master"
+        jre: "openjdk11"
+    - silicon:
+        branch: "stable/silicon"
+        jre: "openjdk11"
+    - aluminium:
+        branch: "stable/aluminium"
+        jre: "openjdk11"
+    - magnesium:
+        branch: "stable/magnesium"
+        jre: "openjdk11"
 
     install:
-      - all:
-          scope: "all"
+    - all:
+        scope: "all"
 
     # Features to install
     install-features: "odl-restconf,odl-sxp-routing,odl-sxp-robot"

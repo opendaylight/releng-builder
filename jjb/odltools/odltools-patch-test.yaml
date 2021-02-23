@@ -2,20 +2,22 @@
 - project:
     name: odltools-patch-test
     jobs:
-      - inttest-patch-test
+    - inttest-patch-test
 
     project: odltools
     jdk: openjdk8
 
     stream:
-      - silicon:
-          branch: "master"
-      - aluminium:
-          branch: "stable/aluminium"
-      - magnesium:
-          branch: "stable/magnesium"
+    - phosphorus:
+        branch: "master"
+    - silicon:
+        branch: "stable/silicon"
+    - aluminium:
+        branch: "stable/aluminium"
+    - magnesium:
+        branch: "stable/magnesium"
 
     feature:
-      - current:
-          csit-list: >
-            odltools-csit-1node-gate-all-{stream}
+    - current:
+        csit-list: >
+          odltools-csit-1node-gate-all-{stream}

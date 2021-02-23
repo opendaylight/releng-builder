@@ -1,16 +1,16 @@
 ---
 - project:
-    name: snmp4sdn-silicon
+    name: snmp4sdn-phosphorus
     jobs:
-      - "{project-name}-rtd-jobs":
-          build-node: centos7-builder-2c-2g
-          project-pattern: snmp4sdn
-          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-snmp4sdn/75649/
-          rtd-token: 55ee5e520f96e1fa691b277b2919e8d62cb0b71f
-      - odl-maven-jobs
-      - odl-maven-verify-jobs
+    - "{project-name}-rtd-jobs":
+        build-node: centos7-builder-2c-2g
+        project-pattern: snmp4sdn
+        rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-snmp4sdn/75649/
+        rtd-token: 55ee5e520f96e1fa691b277b2919e8d62cb0b71f
+    - odl-maven-jobs
+    - odl-maven-verify-jobs
 
-    stream: silicon
+    stream: phosphorus
     project: "snmp4sdn"
     project-name: "snmp4sdn"
     branch: "master"
@@ -23,15 +23,38 @@
     staging-profile-id: a69034a4b6ef5
 
 - project:
+    name: snmp4sdn-silicon
+    jobs:
+    - "{project-name}-rtd-jobs":
+        build-node: centos7-builder-2c-2g
+        project-pattern: snmp4sdn
+        rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-snmp4sdn/75649/
+        rtd-token: 55ee5e520f96e1fa691b277b2919e8d62cb0b71f
+    - odl-maven-jobs
+    - odl-maven-verify-jobs
+
+    stream: silicon
+    project: "snmp4sdn"
+    project-name: "snmp4sdn"
+    branch: "stable/silicon"
+    mvn-settings: "snmp4sdn-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: "odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream}"
+    email-upstream: "[snmp4sdn] [odlparent] [controller] [yangtools]"
+
+    # Used by the release job
+    staging-profile-id: a69034a4b6ef5
+
+- project:
     name: snmp4sdn-aluminium
     jobs:
-      - "{project-name}-rtd-jobs":
-          build-node: centos7-builder-2c-2g
-          project-pattern: snmp4sdn
-          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-snmp4sdn/75649/
-          rtd-token: 55ee5e520f96e1fa691b277b2919e8d62cb0b71f
-      - odl-maven-jobs
-      - odl-maven-verify-jobs
+    - "{project-name}-rtd-jobs":
+        build-node: centos7-builder-2c-2g
+        project-pattern: snmp4sdn
+        rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-snmp4sdn/75649/
+        rtd-token: 55ee5e520f96e1fa691b277b2919e8d62cb0b71f
+    - odl-maven-jobs
+    - odl-maven-verify-jobs
 
     stream: aluminium
     project: "snmp4sdn"
@@ -48,13 +71,13 @@
 - project:
     name: snmp4sdn-magnesium
     jobs:
-      - "{project-name}-rtd-jobs":
-          build-node: centos7-builder-2c-2g
-          project-pattern: snmp4sdn
-          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-snmp4sdn/75649/
-          rtd-token: 55ee5e520f96e1fa691b277b2919e8d62cb0b71f
-      - odl-maven-jobs
-      - odl-maven-verify-jobs
+    - "{project-name}-rtd-jobs":
+        build-node: centos7-builder-2c-2g
+        project-pattern: snmp4sdn
+        rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-snmp4sdn/75649/
+        rtd-token: 55ee5e520f96e1fa691b277b2919e8d62cb0b71f
+    - odl-maven-jobs
+    - odl-maven-verify-jobs
 
     stream: magnesium
     project: "snmp4sdn"
@@ -71,7 +94,7 @@
 - project:
     name: snmp4sdn-release-management
     jobs:
-      - gerrit-release-merge
+    - gerrit-release-merge
 
     project: snmp4sdn
     project-name: snmp4sdn
@@ -82,7 +105,7 @@
 - project:
     name: snmp4sdn-sonar
     jobs:
-      - gerrit-maven-sonar
+    - gerrit-maven-sonar
 
     project: "snmp4sdn"
     project-name: "snmp4sdn"
@@ -97,7 +120,7 @@
 - project:
     name: snmp4sdn-info
     jobs:
-      - gerrit-info-yaml-verify
+    - gerrit-info-yaml-verify
     project: snmp4sdn
     project-name: snmp4sdn
     branch: master
@@ -106,5 +129,5 @@
 - project:
     name: snmp4sdn-view
     views:
-      - project-view
+    - project-view
     project-name: snmp4sdn

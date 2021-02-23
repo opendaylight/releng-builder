@@ -2,7 +2,7 @@
 - project:
     name: l2switch-patch-test
     jobs:
-      - inttest-patch-test
+    - inttest-patch-test
 
     # The project name
     project: "l2switch"
@@ -10,21 +10,24 @@
 
     # Project branches
     stream:
-      - silicon:
-          branch: "master"
-          jre: "openjdk11"
-      - aluminium:
-          branch: "stable/aluminium"
-          jre: "openjdk11"
-      - magnesium:
-          branch: "stable/magnesium"
-          jre: "openjdk11"
+    - phosphorus:
+        branch: "master"
+        jre: "openjdk11"
+    - silicon:
+        branch: "stable/silicon"
+        jre: "openjdk11"
+    - aluminium:
+        branch: "stable/aluminium"
+        jre: "openjdk11"
+    - magnesium:
+        branch: "stable/magnesium"
+        jre: "openjdk11"
 
     os-branch: "queens"
 
     feature:
-      - all:
-          csit-list: >
-            l2switch-csit-1node--host-scalability-daily-only-{stream},
-            l2switch-csit-1node-scalability-all-{stream},
-            l2switch-csit-1node-switch-all-{stream}
+    - all:
+        csit-list: >
+          l2switch-csit-1node--host-scalability-daily-only-{stream},
+          l2switch-csit-1node-scalability-all-{stream},
+          l2switch-csit-1node-switch-all-{stream}

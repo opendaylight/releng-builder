@@ -2,39 +2,42 @@
 - project:
     name: ovsdb-patch-test
     jobs:
-      - inttest-patch-test
+    - inttest-patch-test
 
     # The project name
     project: "ovsdb"
 
     stream:
-      - silicon:
-          branch: "master"
-          java-version: "openjdk11"
-      - aluminium:
-          branch: "stable/aluminium"
-          java-version: "openjdk11"
-      - magnesium:
-          branch: "stable/magnesium"
-          java-version: "openjdk11"
+    - phosphorus:
+        branch: "master"
+        java-version: "openjdk11"
+    - silicon:
+        branch: "stable/silicon"
+        java-version: "openjdk11"
+    - aluminium:
+        branch: "stable/aluminium"
+        java-version: "openjdk11"
+    - magnesium:
+        branch: "stable/magnesium"
+        java-version: "openjdk11"
 
     os-branch: "queens"
     jdk: "openjdk8"
 
     feature:
-      - genius:
-          csit-list: >
-            genius-csit-1node-gate-only-{stream}
-      - netvirt:
-          csit-list: >
-            netvirt-csit-1node-{os-std-topo}-openstack-{os-branch}-gate-stateful-{stream}
-      - cluster-netvirt:
-          csit-list: >
-            netvirt-csit-3node-{os-std-topo}-openstack-{os-branch}-gate-stateful-{stream}
-      - l2gw:
-          csit-list: >
-            netvirt-csit-hwvtep-1node-{os-std-topo}-openstack-{os-branch}-gate-stateful-{stream}
-      - core:
-          csit-list: >
-            ovsdb-csit-1node-gate-southbound-all-{stream},
-            ovsdb-csit-3node-gate-clustering-only-{stream}
+    - genius:
+        csit-list: >
+          genius-csit-1node-gate-only-{stream}
+    - netvirt:
+        csit-list: >
+          netvirt-csit-1node-{os-std-topo}-openstack-{os-branch}-gate-stateful-{stream}
+    - cluster-netvirt:
+        csit-list: >
+          netvirt-csit-3node-{os-std-topo}-openstack-{os-branch}-gate-stateful-{stream}
+    - l2gw:
+        csit-list: >
+          netvirt-csit-hwvtep-1node-{os-std-topo}-openstack-{os-branch}-gate-stateful-{stream}
+    - core:
+        csit-list: >
+          ovsdb-csit-1node-gate-southbound-all-{stream},
+          ovsdb-csit-3node-gate-clustering-only-{stream}

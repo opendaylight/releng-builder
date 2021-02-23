@@ -2,33 +2,36 @@
 - project:
     name: genius-csit-genius-oxygen-fluorine
     jobs:
-      - inttest-csit-1node-custom
-      - inttest-csit-3node-custom
+    - inttest-csit-1node-custom
+    - inttest-csit-3node-custom
 
     project: "genius"
 
     functionality:
-      - "upstream"
-      - "gate"
-      - "tdd-wip":
-          testplan: "{project}-tdd-wip.txt"
+    - "upstream"
+    - "gate"
+    - "tdd-wip":
+        testplan: "{project}-tdd-wip.txt"
 
     testplan: "{project}-{functionality}.txt"
 
     stream:
-      - silicon:
-          branch: "master"
-          jre: "openjdk11"
-      - aluminium:
-          branch: "stable/aluminium"
-          jre: "openjdk11"
-      - magnesium:
-          branch: "stable/magnesium"
-          jre: "openjdk11"
+    - phosphorus:
+        branch: "master"
+        jre: "openjdk11"
+    - silicon:
+        branch: "stable/silicon"
+        jre: "openjdk11"
+    - aluminium:
+        branch: "stable/aluminium"
+        jre: "openjdk11"
+    - magnesium:
+        branch: "stable/magnesium"
+        jre: "openjdk11"
 
     install:
-      - only:
-          scope: "only"
+    - only:
+        scope: "only"
 
     tools_system_count: 3
 

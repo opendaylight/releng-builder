@@ -2,14 +2,14 @@
 - project:
     name: netvirt-csit-upgrade-openstack-integration-rocky-aluminium
     jobs:
-      - inttest-csit-openstack-custom
+    - inttest-csit-openstack-custom
 
     project: "netvirt"
 
     stream:
-      - aluminium:
-          branch: "master"
-          jre: "openjdk11"
+    - aluminium:
+        branch: "master"
+        jre: "openjdk11"
 
     testplan: "{project}-{topology}-openstack-upgrade.txt"
     odl-ml2-driver-version: "v2"
@@ -25,41 +25,41 @@
     os-cmp-cnt: 2
 
     topology:
-      - 1node:
-          openstack_system2_count: 2
-          odl_system_count: 1
-          enable-haproxy: "no"
-          install-features: "odl-netvirt-openstack"
+    - 1node:
+        openstack_system2_count: 2
+        odl_system_count: 1
+        enable-haproxy: "no"
+        install-features: "odl-netvirt-openstack"
 
     functionality:
-      - upgrade:
-          schedule: "{schedule-weekly}"
-      - upgrade-snat-conntrack:
-          odl-snat-mode: "conntrack"
-          schedule: "{schedule-weekly}"
+    - upgrade:
+        schedule: "{schedule-weekly}"
+    - upgrade-snat-conntrack:
+        odl-snat-mode: "conntrack"
+        schedule: "{schedule-weekly}"
 
     openstack:
-      - rocky:
-          openstack-branch: "stable/rocky"
-          odl-ml2-branch: "stable/rocky"
-          odl-ml2-port-binding: "pseudo-agentdb-binding"
-          openstack_system_image: "{openstack_rocky_system_image}"
-          openstack_system2_image: "{openstack_rocky_system_image}"
+    - rocky:
+        openstack-branch: "stable/rocky"
+        odl-ml2-branch: "stable/rocky"
+        odl-ml2-port-binding: "pseudo-agentdb-binding"
+        openstack_system_image: "{openstack_rocky_system_image}"
+        openstack_system2_image: "{openstack_rocky_system_image}"
 
 - project:
     name: netvirt-csit-upgrade-openstack-integration-stein
     jobs:
-      - inttest-csit-openstack-custom
+    - inttest-csit-openstack-custom
 
     project: "netvirt"
 
     stream:
-      - magnesium:
-          branch: "stable/magnesium"
-          jre: "openjdk11"
-      - aluminium:
-          branch: "stable/aluminium"
-          jre: "openjdk11"
+    - magnesium:
+        branch: "stable/magnesium"
+        jre: "openjdk11"
+    - aluminium:
+        branch: "stable/aluminium"
+        jre: "openjdk11"
 
     testplan: "{project}-{topology}-openstack-upgrade.txt"
     odl-ml2-driver-version: "v2"
@@ -75,38 +75,42 @@
     os-cmp-cnt: 2
 
     topology:
-      - 1node:
-          openstack_system2_count: 2
-          odl_system_count: 1
-          enable-haproxy: "no"
-          install-features: "odl-netvirt-openstack"
+    - 1node:
+        openstack_system2_count: 2
+        odl_system_count: 1
+        enable-haproxy: "no"
+        install-features: "odl-netvirt-openstack"
 
     functionality:
-      - upgrade:
-          schedule: "{schedule-weekly}"
-      - upgrade-snat-conntrack:
-          odl-snat-mode: "conntrack"
-          schedule: "{schedule-weekly}"
+    - upgrade:
+        schedule: "{schedule-weekly}"
+    - upgrade-snat-conntrack:
+        odl-snat-mode: "conntrack"
+        schedule: "{schedule-weekly}"
 
     openstack:
-      - stein:
-          openstack-branch: "stable/stein"
-          odl-ml2-branch: "stable/stein"
-          odl-ml2-port-binding: "pseudo-agentdb-binding"
-          openstack_system_image: "{openstack_stein_system_image}"
-          openstack_system2_image: "{openstack_stein_system_image}"
+    - stein:
+        openstack-branch: "stable/stein"
+        odl-ml2-branch: "stable/stein"
+        odl-ml2-port-binding: "pseudo-agentdb-binding"
+        openstack_system_image: "{openstack_stein_system_image}"
+        openstack_system2_image: "{openstack_stein_system_image}"
 
 - project:
     name: netvirt-csit-upgrade-openstack-integration-stein-silicon
     jobs:
-      - inttest-csit-openstack-custom
+    - inttest-csit-openstack-custom
 
     project: "netvirt"
 
     stream:
-      - silicon:
-          branch: "master"
-          jre: "openjdk11"
+    - phosphorus:
+        branch: "master"
+        jre: "openjdk11"
+
+    - silicon:
+        branch: "stable/silicon"
+        jre: "openjdk11"
 
     testplan: "{project}-{topology}-openstack-upgrade.txt"
     odl-ml2-driver-version: "v2"
@@ -122,23 +126,23 @@
     os-cmp-cnt: 2
 
     topology:
-      - 1node:
-          openstack_system2_count: 2
-          odl_system_count: 1
-          enable-haproxy: "no"
-          install-features: "odl-netvirt-openstack"
+    - 1node:
+        openstack_system2_count: 2
+        odl_system_count: 1
+        enable-haproxy: "no"
+        install-features: "odl-netvirt-openstack"
 
     functionality:
-      - upgrade:
-          schedule: "{schedule-daily}"
-      - upgrade-snat-conntrack:
-          odl-snat-mode: "conntrack"
-          schedule: "{schedule-daily}"
+    - upgrade:
+        schedule: "{schedule-daily}"
+    - upgrade-snat-conntrack:
+        odl-snat-mode: "conntrack"
+        schedule: "{schedule-daily}"
 
     openstack:
-      - stein:
-          openstack-branch: "stable/stein"
-          odl-ml2-branch: "stable/stein"
-          odl-ml2-port-binding: "pseudo-agentdb-binding"
-          openstack_system_image: "{openstack_stein_system_image}"
-          openstack_system2_image: "{openstack_stein_system_image}"
+    - stein:
+        openstack-branch: "stable/stein"
+        odl-ml2-branch: "stable/stein"
+        odl-ml2-port-binding: "pseudo-agentdb-binding"
+        openstack_system_image: "{openstack_stein_system_image}"
+        openstack_system2_image: "{openstack_stein_system_image}"

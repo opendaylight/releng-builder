@@ -2,26 +2,29 @@
 - project:
     name: autorelease-projects-openjdk11
     jobs:
-      - autorelease-branch-cut
-      - "autorelease-generate-release-notes-{stream}"
-      - "autorelease-release-{stream}-{mvn-version}-{java-version}":
-          build-node: centos7-builder-4c-16g
-      - "autorelease-update-submodules-{stream}"
-      - "autorelease-update-validate-jobs-{stream}"
-      - "{project-name}-validate-autorelease-{stream}"
-      - "autorelease-version-bump-{stream}-{mvn-version}-{java-version}"
-      - gerrit-tox-verify
+    - autorelease-branch-cut
+    - "autorelease-generate-release-notes-{stream}"
+    - "autorelease-release-{stream}-{mvn-version}-{java-version}":
+        build-node: centos7-builder-4c-16g
+    - "autorelease-update-submodules-{stream}"
+    - "autorelease-update-validate-jobs-{stream}"
+    - "{project-name}-validate-autorelease-{stream}"
+    - "autorelease-version-bump-{stream}-{mvn-version}-{java-version}"
+    - gerrit-tox-verify
 
     stream:
-      - silicon:
-          branch: "master"
-          integration-test: silicon
-      - aluminium:
-          branch: "stable/aluminium"
-          integration-test: aluminium
-      - magnesium:
-          branch: "stable/magnesium"
-          integration-test: magnesium
+    - phosphorus:
+        branch: "master"
+        integration-test: silicon
+    - silicon:
+        branch: "stable/silicon"
+        integration-test: silicon
+    - aluminium:
+        branch: "stable/aluminium"
+        integration-test: aluminium
+    - magnesium:
+        branch: "stable/magnesium"
+        integration-test: magnesium
 
     project: releng/autorelease
     project-name: autorelease
@@ -48,7 +51,7 @@
 - project:
     name: autorelease-info
     jobs:
-      - gerrit-info-yaml-verify
+    - gerrit-info-yaml-verify
     project: releng/autorelease
     project-name: autorelease
     branch: master
@@ -57,5 +60,5 @@
 - project:
     name: autorelease-view
     views:
-      - project-view
+    - project-view
     project-name: autorelease

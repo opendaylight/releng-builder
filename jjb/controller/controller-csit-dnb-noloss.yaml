@@ -2,7 +2,7 @@
 - project:
     name: mdsal-csit-dom-notification-broker-no-loss-longevity
     jobs:
-      - inttest-csit-1node
+    - inttest-csit-1node
 
     # The project name
     project: "controller"
@@ -15,19 +15,22 @@
 
     # Project branches
     stream:
-      - silicon:
-          branch: "master"
-          jre: "openjdk11"
-      - aluminium:
-          branch: "stable/aluminium"
-          jre: "openjdk11"
-      - magnesium:
-          branch: "stable/magnesium"
-          jre: "openjdk11"
+    - phosphorus:
+        branch: "master"
+        jre: "openjdk11"
+    - silicon:
+        branch: "stable/silicon"
+        jre: "openjdk11"
+    - aluminium:
+        branch: "stable/aluminium"
+        jre: "openjdk11"
+    - magnesium:
+        branch: "stable/magnesium"
+        jre: "openjdk11"
 
     install:
-      - only:
-          scope: "only"
+    - only:
+        scope: "only"
 
     # Features to install
     install-features: >

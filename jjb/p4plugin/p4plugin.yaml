@@ -1,12 +1,12 @@
 ---
 - project:
-    name: p4plugin-silicon
+    name: p4plugin-phosphorus
     jobs:
-      - "{project-name}-maven-javadoc-jobs"
-      - odl-maven-jobs
-      - odl-maven-verify-jobs
+    - "{project-name}-maven-javadoc-jobs"
+    - odl-maven-jobs
+    - odl-maven-verify-jobs
 
-    stream: silicon
+    stream: phosphorus
     project: "p4plugin"
     project-name: "p4plugin"
     branch: "master"
@@ -19,11 +19,30 @@
     staging-profile-id: a68bf26e208d4
 
 - project:
+    name: p4plugin-silicon
+    jobs:
+    - "{project-name}-maven-javadoc-jobs"
+    - odl-maven-jobs
+    - odl-maven-verify-jobs
+
+    stream: silicon
+    project: "p4plugin"
+    project-name: "p4plugin"
+    branch: "stable/silicon"
+    mvn-settings: "p4plugin-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: ""
+    email-upstream: "[p4plugin]"
+
+    # Used by the release job
+    staging-profile-id: a68bf26e208d4
+
+- project:
     name: p4plugin-aluminium
     jobs:
-      - "{project-name}-maven-javadoc-jobs"
-      - odl-maven-jobs
-      - odl-maven-verify-jobs
+    - "{project-name}-maven-javadoc-jobs"
+    - odl-maven-jobs
+    - odl-maven-verify-jobs
 
     stream: aluminium
     project: "p4plugin"
@@ -40,9 +59,9 @@
 - project:
     name: p4plugin-magnesium
     jobs:
-      - "{project-name}-maven-javadoc-jobs"
-      - odl-maven-jobs
-      - odl-maven-verify-jobs
+    - "{project-name}-maven-javadoc-jobs"
+    - odl-maven-jobs
+    - odl-maven-verify-jobs
 
     stream: magnesium
     project: "p4plugin"
@@ -59,7 +78,7 @@
 - project:
     name: p4plugin-release-management
     jobs:
-      - gerrit-release-merge
+    - gerrit-release-merge
 
     project: p4plugin
     project-name: p4plugin
@@ -70,7 +89,7 @@
 - project:
     name: p4plugin-sonar
     jobs:
-      - gerrit-maven-sonar
+    - gerrit-maven-sonar
 
     project: "p4plugin"
     project-name: "p4plugin"
@@ -85,7 +104,7 @@
 - project:
     name: p4plugin-info
     jobs:
-      - gerrit-info-yaml-verify
+    - gerrit-info-yaml-verify
     project: p4plugin
     project-name: p4plugin
     branch: master
@@ -94,5 +113,5 @@
 - project:
     name: p4plugin-view
     views:
-      - project-view
+    - project-view
     project-name: p4plugin
