@@ -2,7 +2,7 @@
 - project:
     name: controller-csit-akka1
     jobs:
-      - inttest-csit-1node
+    - inttest-csit-1node
 
     # The project name
     project: "controller"
@@ -11,19 +11,22 @@
     functionality: "akka1"
 
     stream:
-      - silicon:
-          branch: "master"
-          jre: "openjdk11"
-      - aluminium:
-          branch: "stable/aluminium"
-          jre: "openjdk11"
-      - magnesium:
-          branch: "stable/magnesium"
-          jre: "openjdk11"
+    - phosphorus:
+        branch: "master"
+        jre: "openjdk11"
+    - silicon:
+        branch: "stable/silicon"
+        jre: "openjdk11"
+    - aluminium:
+        branch: "stable/aluminium"
+        jre: "openjdk11"
+    - magnesium:
+        branch: "stable/magnesium"
+        jre: "openjdk11"
 
     install:
-      - all:
-          scope: "all"
+    - all:
+        scope: "all"
 
     # No tools system VMs needed in for this job
     tools_system_count: 0

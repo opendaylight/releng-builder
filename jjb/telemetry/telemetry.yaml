@@ -1,17 +1,17 @@
 ---
 - project:
-    name: telemetry-silicon
+    name: telemetry-phosphorus
     jobs:
-      - "odl-maven-jobs"
-      - odl-maven-verify-jobs
-      - "{project-name}-integration-{stream}"
-      - "{project-name}-rtd-jobs":
-          build-node: centos7-builder-2c-2g
-          project-pattern: telemetry
-          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-telemetry/57583/
-          rtd-token: 694bcbf8e0b45b3c4e53174c6e5773ca351e1efb
+    - "odl-maven-jobs"
+    - odl-maven-verify-jobs
+    - "{project-name}-integration-{stream}"
+    - "{project-name}-rtd-jobs":
+        build-node: centos7-builder-2c-2g
+        project-pattern: telemetry
+        rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-telemetry/57583/
+        rtd-token: 694bcbf8e0b45b3c4e53174c6e5773ca351e1efb
 
-    stream: silicon
+    stream: phosphorus
     project: "telemetry"
     project-name: "telemetry"
     branch: "master"
@@ -25,16 +25,41 @@
     staging-profile-id: 8ed9c52266504
 
 - project:
+    name: telemetry-silicon
+    jobs:
+    - "odl-maven-jobs"
+    - odl-maven-verify-jobs
+    - "{project-name}-integration-{stream}"
+    - "{project-name}-rtd-jobs":
+        build-node: centos7-builder-2c-2g
+        project-pattern: telemetry
+        rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-telemetry/57583/
+        rtd-token: 694bcbf8e0b45b3c4e53174c6e5773ca351e1efb
+
+    stream: silicon
+    project: "telemetry"
+    project-name: "telemetry"
+    branch: "stable/silicon"
+    mvn-settings: "telemetry-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: ""
+    email-upstream: "[telemetry]"
+    archive-artifacts: ""
+
+    # Used by the release job
+    staging-profile-id: 8ed9c52266504
+
+- project:
     name: telemetry-aluminium
     jobs:
-      - "odl-maven-jobs"
-      - odl-maven-verify-jobs
-      - "{project-name}-integration-{stream}"
-      - "{project-name}-rtd-jobs":
-          build-node: centos7-builder-2c-2g
-          project-pattern: telemetry
-          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-telemetry/57583/
-          rtd-token: 694bcbf8e0b45b3c4e53174c6e5773ca351e1efb
+    - "odl-maven-jobs"
+    - odl-maven-verify-jobs
+    - "{project-name}-integration-{stream}"
+    - "{project-name}-rtd-jobs":
+        build-node: centos7-builder-2c-2g
+        project-pattern: telemetry
+        rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-telemetry/57583/
+        rtd-token: 694bcbf8e0b45b3c4e53174c6e5773ca351e1efb
 
     stream: aluminium
     project: "telemetry"
@@ -52,14 +77,14 @@
 - project:
     name: telemetry-magnesium
     jobs:
-      - "odl-maven-jobs"
-      - odl-maven-verify-jobs
-      - "{project-name}-integration-{stream}"
-      - "{project-name}-rtd-jobs":
-          build-node: centos7-builder-2c-2g
-          project-pattern: telemetry
-          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-telemetry/57583/
-          rtd-token: 694bcbf8e0b45b3c4e53174c6e5773ca351e1efb
+    - "odl-maven-jobs"
+    - odl-maven-verify-jobs
+    - "{project-name}-integration-{stream}"
+    - "{project-name}-rtd-jobs":
+        build-node: centos7-builder-2c-2g
+        project-pattern: telemetry
+        rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-telemetry/57583/
+        rtd-token: 694bcbf8e0b45b3c4e53174c6e5773ca351e1efb
 
     stream: magnesium
     project: "telemetry"
@@ -77,7 +102,7 @@
 - project:
     name: telemetry-release-management
     jobs:
-      - gerrit-release-merge
+    - gerrit-release-merge
 
     project: telemetry
     project-name: telemetry
@@ -88,7 +113,7 @@
 - project:
     name: telemetry-sonar
     jobs:
-      - gerrit-maven-sonar
+    - gerrit-maven-sonar
 
     project: "telemetry"
     project-name: "telemetry"
@@ -104,7 +129,7 @@
 - project:
     name: telemetry-info
     jobs:
-      - gerrit-info-yaml-verify
+    - gerrit-info-yaml-verify
     project: telemetry
     project-name: telemetry
     branch: master
@@ -113,5 +138,5 @@
 - project:
     name: telemetry-view
     views:
-      - project-view
+    - project-view
     project-name: telemetry

@@ -2,31 +2,34 @@
 - project:
     name: ovsdb-csit-southbound
     jobs:
-      - inttest-csit-1node
+    - inttest-csit-1node
 
     # The project name
     project: "ovsdb"
 
     # The functionality under test
     functionality:
-      - "upstream-southbound"
-      - "gate-southbound"
+    - "upstream-southbound"
+    - "gate-southbound"
 
     # Project branches
     stream:
-      - silicon:
-          branch: "master"
-          jre: "openjdk11"
-      - aluminium:
-          branch: "stable/aluminium"
-          jre: "openjdk11"
-      - magnesium:
-          branch: "stable/magnesium"
-          jre: "openjdk11"
+    - phosphorus:
+        branch: "master"
+        jre: "openjdk11"
+    - silicon:
+        branch: "stable/silicon"
+        jre: "openjdk11"
+    - aluminium:
+        branch: "stable/aluminium"
+        jre: "openjdk11"
+    - magnesium:
+        branch: "stable/magnesium"
+        jre: "openjdk11"
 
     install:
-      - all:
-          scope: "all"
+    - all:
+        scope: "all"
 
     # Mininet configuration
     tools_system_count: 2

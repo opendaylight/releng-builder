@@ -2,15 +2,17 @@
 - project:
     name: sfc-python
     jobs:
-      - "gerrit-tox-verify"
+    - "gerrit-tox-verify"
 
     stream:
-      - silicon:
-          branch: "master"
-      - aluminium:
-          branch: "stable/aluminium"
-      - magnesium:
-          branch: "stable/magnesium"
+    - phosphorus:
+        branch: "master"
+    - silicon:
+        branch: "stable/silicon"
+    - aluminium:
+        branch: "stable/aluminium"
+    - magnesium:
+        branch: "stable/magnesium"
 
     project: "sfc"
     project-name: "sfc"

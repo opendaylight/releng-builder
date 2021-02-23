@@ -1,18 +1,18 @@
 ---
 - project:
-    name: sxp-silicon
+    name: sxp-phosphorus
     jobs:
-      - "{project-name}-rtd-jobs":
-          build-node: centos7-builder-2c-2g
-          project-pattern: sxp
-          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-sxp/47573/
-          rtd-token: 4a78556e59ce3ef35e61e2fa19ebae049acf6d5d
-      - odl-maven-jobs
-      - odl-maven-verify-jobs
+    - "{project-name}-rtd-jobs":
+        build-node: centos7-builder-2c-2g
+        project-pattern: sxp
+        rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-sxp/47573/
+        rtd-token: 4a78556e59ce3ef35e61e2fa19ebae049acf6d5d
+    - odl-maven-jobs
+    - odl-maven-verify-jobs
 
     java-version: "openjdk11"
 
-    stream: silicon
+    stream: phosphorus
     project: "sxp"
     project-name: "sxp"
     branch: "master"
@@ -27,15 +27,42 @@
     staging-profile-id: a6909c75719b7
 
 - project:
+    name: sxp-silicon
+    jobs:
+    - "{project-name}-rtd-jobs":
+        build-node: centos7-builder-2c-2g
+        project-pattern: sxp
+        rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-sxp/47573/
+        rtd-token: 4a78556e59ce3ef35e61e2fa19ebae049acf6d5d
+    - odl-maven-jobs
+    - odl-maven-verify-jobs
+
+    java-version: "openjdk11"
+
+    stream: silicon
+    project: "sxp"
+    project-name: "sxp"
+    branch: "stable/silicon"
+
+    mvn-settings: "sxp-settings"
+    mvn-opts: "-Xmx1024m"
+
+    dependencies: "odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream}"
+    email-upstream: "[sxp] [odlparent] [controller] [yangtools]"
+
+    # Used by the release job
+    staging-profile-id: a6909c75719b7
+
+- project:
     name: sxp-aluminium
     jobs:
-      - "{project-name}-rtd-jobs":
-          build-node: centos7-builder-2c-2g
-          project-pattern: sxp
-          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-sxp/47573/
-          rtd-token: 4a78556e59ce3ef35e61e2fa19ebae049acf6d5d
-      - odl-maven-jobs
-      - odl-maven-verify-jobs
+    - "{project-name}-rtd-jobs":
+        build-node: centos7-builder-2c-2g
+        project-pattern: sxp
+        rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-sxp/47573/
+        rtd-token: 4a78556e59ce3ef35e61e2fa19ebae049acf6d5d
+    - odl-maven-jobs
+    - odl-maven-verify-jobs
 
     java-version: "openjdk11"
 
@@ -56,13 +83,13 @@
 - project:
     name: sxp-magnesium
     jobs:
-      - "{project-name}-rtd-jobs":
-          build-node: centos7-builder-2c-2g
-          project-pattern: sxp
-          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-sxp/47573/
-          rtd-token: 4a78556e59ce3ef35e61e2fa19ebae049acf6d5d
-      - odl-maven-jobs
-      - odl-maven-verify-jobs
+    - "{project-name}-rtd-jobs":
+        build-node: centos7-builder-2c-2g
+        project-pattern: sxp
+        rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-sxp/47573/
+        rtd-token: 4a78556e59ce3ef35e61e2fa19ebae049acf6d5d
+    - odl-maven-jobs
+    - odl-maven-verify-jobs
 
     java-version: "openjdk11"
 
@@ -83,7 +110,7 @@
 - project:
     name: sxp-release-management
     jobs:
-      - gerrit-release-merge
+    - gerrit-release-merge
 
     project: sxp
     project-name: sxp
@@ -94,7 +121,7 @@
 - project:
     name: sxp-sonar
     jobs:
-      - gerrit-maven-sonar
+    - gerrit-maven-sonar
     project: "sxp"
     project-name: "sxp"
     branch: "master"
@@ -109,7 +136,7 @@
 - project:
     name: sxp-info
     jobs:
-      - gerrit-info-yaml-verify
+    - gerrit-info-yaml-verify
     project: sxp
     project-name: sxp
     branch: master
@@ -118,5 +145,5 @@
 - project:
     name: sxp-view
     views:
-      - project-view
+    - project-view
     project-name: sxp

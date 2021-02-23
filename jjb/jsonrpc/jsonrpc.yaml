@@ -1,19 +1,19 @@
 ---
 - project:
-    name: jsonrpc-silicon
+    name: jsonrpc-phosphorus
     jobs:
-      - "{project-name}-distribution-check-{stream}"
-      - "{project-name}-rtd-jobs":
-          build-node: centos7-builder-2c-2g
-          project-pattern: jsonrpc
-          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-jsonrpc/91870/
-          rtd-token: 04d31d4414734686d63f9b160e974fe5a18d031d
-      - odl-maven-jobs-jdk11
-      - odl-maven-verify-jobs
+    - "{project-name}-distribution-check-{stream}"
+    - "{project-name}-rtd-jobs":
+        build-node: centos7-builder-2c-2g
+        project-pattern: jsonrpc
+        rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-jsonrpc/91870/
+        rtd-token: 04d31d4414734686d63f9b160e974fe5a18d031d
+    - odl-maven-jobs-jdk11
+    - odl-maven-verify-jobs
 
     project: "jsonrpc"
     project-name: "jsonrpc"
-    stream: silicon
+    stream: phosphorus
     java-version: "openjdk11"
     branch: "master"
     mvn-settings: "jsonrpc-settings"
@@ -25,16 +25,41 @@
     staging-profile-id: 96fdf4408765d
 
 - project:
+    name: jsonrpc-silicon
+    jobs:
+    - "{project-name}-distribution-check-{stream}"
+    - "{project-name}-rtd-jobs":
+        build-node: centos7-builder-2c-2g
+        project-pattern: jsonrpc
+        rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-jsonrpc/91870/
+        rtd-token: 04d31d4414734686d63f9b160e974fe5a18d031d
+    - odl-maven-jobs-jdk11
+    - odl-maven-verify-jobs
+
+    project: "jsonrpc"
+    project-name: "jsonrpc"
+    stream: silicon
+    java-version: "openjdk11"
+    branch: "stable/silicon"
+    mvn-settings: "jsonrpc-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream},mdsal-merge-{stream}"
+    email-upstream: "[jsonrpc] [odlparent] [yangtools] [controller] [mdsal]"
+
+    # Used by the release job
+    staging-profile-id: 96fdf4408765d
+
+- project:
     name: jsonrpc-aluminium
     jobs:
-      - "{project-name}-distribution-check-{stream}"
-      - "{project-name}-rtd-jobs":
-          build-node: centos7-builder-2c-2g
-          project-pattern: jsonrpc
-          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-jsonrpc/91870/
-          rtd-token: 04d31d4414734686d63f9b160e974fe5a18d031d
-      - odl-maven-jobs-jdk11
-      - odl-maven-verify-jobs
+    - "{project-name}-distribution-check-{stream}"
+    - "{project-name}-rtd-jobs":
+        build-node: centos7-builder-2c-2g
+        project-pattern: jsonrpc
+        rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-jsonrpc/91870/
+        rtd-token: 04d31d4414734686d63f9b160e974fe5a18d031d
+    - odl-maven-jobs-jdk11
+    - odl-maven-verify-jobs
 
     project: "jsonrpc"
     project-name: "jsonrpc"
@@ -52,14 +77,14 @@
 - project:
     name: jsonrpc-magnesium
     jobs:
-      - "{project-name}-distribution-check-{stream}"
-      - "{project-name}-rtd-jobs":
-          build-node: centos7-builder-2c-2g
-          project-pattern: jsonrpc
-          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-jsonrpc/91870/
-          rtd-token: 04d31d4414734686d63f9b160e974fe5a18d031d
-      - odl-maven-jobs-jdk11
-      - odl-maven-verify-jobs
+    - "{project-name}-distribution-check-{stream}"
+    - "{project-name}-rtd-jobs":
+        build-node: centos7-builder-2c-2g
+        project-pattern: jsonrpc
+        rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-jsonrpc/91870/
+        rtd-token: 04d31d4414734686d63f9b160e974fe5a18d031d
+    - odl-maven-jobs-jdk11
+    - odl-maven-verify-jobs
 
     project: "jsonrpc"
     project-name: "jsonrpc"
@@ -77,7 +102,7 @@
 - project:
     name: jsonrpc-release-management
     jobs:
-      - gerrit-release-merge
+    - gerrit-release-merge
 
     project: jsonrpc
     project-name: jsonrpc
@@ -88,7 +113,7 @@
 - project:
     name: jsonrpc-sonar
     jobs:
-      - gerrit-maven-sonar
+    - gerrit-maven-sonar
 
     project: "jsonrpc"
     project-name: "jsonrpc"
@@ -104,7 +129,7 @@
 - project:
     name: jsonrpc-info
     jobs:
-      - gerrit-info-yaml-verify
+    - gerrit-info-yaml-verify
     project: jsonrpc
     project-name: jsonrpc
     branch: master
@@ -113,5 +138,5 @@
 - project:
     name: jsonrpc-view
     views:
-      - project-view
+    - project-view
     project-name: jsonrpc

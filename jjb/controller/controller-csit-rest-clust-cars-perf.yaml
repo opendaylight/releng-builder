@@ -2,31 +2,34 @@
 - project:
     name: controller-csit-rest-clust-cars-perf
     jobs:
-      - inttest-csit-3node
+    - inttest-csit-3node
 
     # The project name
     project: "controller"
 
     # The functionality under test
     functionality:
-      - "rest-clust-cars-perf-ask"
-      - "rest-clust-cars-perf-tell"
+    - "rest-clust-cars-perf-ask"
+    - "rest-clust-cars-perf-tell"
 
     # Project branches
     stream:
-      - silicon:
-          branch: "master"
-          jre: "openjdk11"
-      - aluminium:
-          branch: "stable/aluminium"
-          jre: "openjdk11"
-      - magnesium:
-          branch: "stable/magnesium"
-          jre: "openjdk11"
+    - phosphorus:
+        branch: "master"
+        jre: "openjdk11"
+    - silicon:
+        branch: "stable/silicon"
+        jre: "openjdk11"
+    - aluminium:
+        branch: "stable/aluminium"
+        jre: "openjdk11"
+    - magnesium:
+        branch: "stable/magnesium"
+        jre: "openjdk11"
 
     install:
-      - only:
-          scope: "only"
+    - only:
+        scope: "only"
 
     # Features to install
     install-features: >

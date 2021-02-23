@@ -2,29 +2,32 @@
 - project:
     name: controller-csit-clustering
     jobs:
-      - inttest-csit-3node
+    - inttest-csit-3node
 
     project: "controller"
     functionality:
-      - "clustering-ask"
-      - "clustering-tell"
+    - "clustering-ask"
+    - "clustering-tell"
 
     elasticsearch-attribute: "disabled"
 
     stream:
-      - silicon:
-          branch: "master"
-          jre: "openjdk11"
-      - aluminium:
-          branch: "stable/aluminium"
-          jre: "openjdk11"
-      - magnesium:
-          branch: "stable/magnesium"
-          jre: "openjdk11"
+    - phosphorus:
+        branch: "master"
+        jre: "openjdk11"
+    - silicon:
+        branch: "stable/silicon"
+        jre: "openjdk11"
+    - aluminium:
+        branch: "stable/aluminium"
+        jre: "openjdk11"
+    - magnesium:
+        branch: "stable/magnesium"
+        jre: "openjdk11"
 
     install:
-      - all:
-          scope: "all"
+    - all:
+        scope: "all"
 
     tools_system_count: 0
 

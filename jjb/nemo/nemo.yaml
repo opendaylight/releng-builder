@@ -1,11 +1,11 @@
 ---
 - project:
-    name: nemo-silicon
+    name: nemo-phosphorus
     jobs:
-      - odl-maven-jobs
-      - odl-maven-verify-jobs
+    - odl-maven-jobs
+    - odl-maven-verify-jobs
 
-    stream: silicon
+    stream: phosphorus
     project: "nemo"
     project-name: "nemo"
     branch: "master"
@@ -19,10 +19,29 @@
     staging-profile-id: a67a9890f6202
 
 - project:
+    name: nemo-silicon
+    jobs:
+    - odl-maven-jobs
+    - odl-maven-verify-jobs
+
+    stream: silicon
+    project: "nemo"
+    project-name: "nemo"
+    branch: "stable/silicon"
+    mvn-settings: "nemo-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: ""
+    email-upstream: "[nemo]"
+    disable-job: true
+
+    # Used by the release job
+    staging-profile-id: a67a9890f6202
+
+- project:
     name: nemo-aluminium
     jobs:
-      - odl-maven-jobs
-      - odl-maven-verify-jobs
+    - odl-maven-jobs
+    - odl-maven-verify-jobs
 
     stream: aluminium
     project: "nemo"
@@ -40,8 +59,8 @@
 - project:
     name: nemo-magnesium
     jobs:
-      - odl-maven-jobs
-      - odl-maven-verify-jobs
+    - odl-maven-jobs
+    - odl-maven-verify-jobs
 
     stream: magnesium
     project: "nemo"
@@ -59,7 +78,7 @@
 - project:
     name: nemo-release-management
     jobs:
-      - gerrit-release-merge
+    - gerrit-release-merge
 
     project: nemo
     project-name: nemo
@@ -70,7 +89,7 @@
 - project:
     name: nemo-sonar
     jobs:
-      - gerrit-maven-sonar
+    - gerrit-maven-sonar
     project: "nemo"
     project-name: "nemo"
     branch: "master"
@@ -85,7 +104,7 @@
 - project:
     name: nemo-info
     jobs:
-      - gerrit-info-yaml-verify
+    - gerrit-info-yaml-verify
     project: nemo
     project-name: nemo
     branch: master
@@ -94,5 +113,5 @@
 - project:
     name: nemo-view
     views:
-      - project-view
+    - project-view
     project-name: nemo

@@ -2,7 +2,7 @@
 - project:
     name: netconf-csit-scale
     jobs:
-      - inttest-csit-1node
+    - inttest-csit-1node
 
     # The project name
     project: "netconf"
@@ -12,19 +12,22 @@
 
     # Project branches
     stream:
-      - silicon:
-          branch: "master"
-          jre: "openjdk11"
-      - aluminium:
-          branch: "stable/aluminium"
-          jre: "openjdk11"
-      - magnesium:
-          branch: "stable/magnesium"
-          jre: "openjdk11"
+    - phosphorus:
+        branch: "master"
+        jre: "openjdk11"
+    - silicon:
+        branch: "stable/silicon"
+        jre: "openjdk11"
+    - aluminium:
+        branch: "stable/aluminium"
+        jre: "openjdk11"
+    - magnesium:
+        branch: "stable/magnesium"
+        jre: "openjdk11"
 
     install:
-      - only:
-          scope: "only"
+    - only:
+        scope: "only"
 
     # Features to install
     install-features: >
@@ -42,7 +45,7 @@
 - project:
     name: netconf-csit-scale-max-devices
     jobs:
-      - inttest-csit-1node
+    - inttest-csit-1node
 
     # The project name
     project: "netconf"
@@ -52,31 +55,34 @@
 
     # Project branches
     stream:
-      - silicon:
-          branch: "master"
-          jre: "openjdk11"
-          robot-options:
-            "-v USE_NETCONF_CONNECTOR:False -v SCHEMA_MODEL:juniper -v INIT_DEVICE_COUNT:400
-            -v MAX_DEVICE_COUNT:3000 -v DEVICE_INCREMENT:200 -v TESTTOOL_BOOT_TIMEOUT:600s
-            -v MAX_HEAP:4G --flattenkeywords name:*repeat*keyword*"
-      - aluminium:
-          branch: "stable/aluminium"
-          jre: "openjdk11"
-          robot-options:
-            "-v USE_NETCONF_CONNECTOR:False -v SCHEMA_MODEL:juniper -v INIT_DEVICE_COUNT:1000
-            -v MAX_DEVICE_COUNT:4000 -v DEVICE_INCREMENT:500 -v TESTTOOL_BOOT_TIMEOUT:600s
-            -v MAX_HEAP:4G --flattenkeywords name:*repeat*keyword*"
-      - magnesium:
-          branch: "stable/magnesium"
-          jre: "openjdk11"
-          robot-options:
-            "-v USE_NETCONF_CONNECTOR:False -v SCHEMA_MODEL:juniper -v INIT_DEVICE_COUNT:250
-            -v MAX_DEVICE_COUNT:1000 -v DEVICE_INCREMENT:100 -v TESTTOOL_BOOT_TIMEOUT:600s
-            -v MAX_HEAP:4G --flattenkeywords name:*repeat*keyword*"
+    - phosphorus:
+        branch: "master"
+        jre: "openjdk11"
+        robot-options: "-v USE_NETCONF_CONNECTOR:False -v SCHEMA_MODEL:juniper -v\
+          \ INIT_DEVICE_COUNT:400 -v MAX_DEVICE_COUNT:3000 -v DEVICE_INCREMENT:200\
+          \ -v TESTTOOL_BOOT_TIMEOUT:600s -v MAX_HEAP:4G --flattenkeywords name:*repeat*keyword*"
+    - silicon:
+        branch: "stable/silicon"
+        jre: "openjdk11"
+        robot-options: "-v USE_NETCONF_CONNECTOR:False -v SCHEMA_MODEL:juniper -v\
+          \ INIT_DEVICE_COUNT:400 -v MAX_DEVICE_COUNT:3000 -v DEVICE_INCREMENT:200\
+          \ -v TESTTOOL_BOOT_TIMEOUT:600s -v MAX_HEAP:4G --flattenkeywords name:*repeat*keyword*"
+    - aluminium:
+        branch: "stable/aluminium"
+        jre: "openjdk11"
+        robot-options: "-v USE_NETCONF_CONNECTOR:False -v SCHEMA_MODEL:juniper -v\
+          \ INIT_DEVICE_COUNT:1000 -v MAX_DEVICE_COUNT:4000 -v DEVICE_INCREMENT:500\
+          \ -v TESTTOOL_BOOT_TIMEOUT:600s -v MAX_HEAP:4G --flattenkeywords name:*repeat*keyword*"
+    - magnesium:
+        branch: "stable/magnesium"
+        jre: "openjdk11"
+        robot-options: "-v USE_NETCONF_CONNECTOR:False -v SCHEMA_MODEL:juniper -v\
+          \ INIT_DEVICE_COUNT:250 -v MAX_DEVICE_COUNT:1000 -v DEVICE_INCREMENT:100\
+          \ -v TESTTOOL_BOOT_TIMEOUT:600s -v MAX_HEAP:4G --flattenkeywords name:*repeat*keyword*"
 
     install:
-      - only:
-          scope: "only"
+    - only:
+        scope: "only"
 
     # Features to install
     install-features: >

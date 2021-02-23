@@ -2,28 +2,31 @@
 - project:
     name: odltools-csit
     jobs:
-      - inttest-csit-1node-custom
-      - inttest-csit-verify-1node
+    - inttest-csit-1node-custom
+    - inttest-csit-verify-1node
 
     project: odltools
     tools_system_count: 0
     testplan: "{project}-basic.txt"
 
     stream:
-      - silicon:
-          branch: "master"
-          jre: "openjdk11"
-      - aluminium:
-          branch: "stable/aluminium"
-          jre: "openjdk11"
-      - magnesium:
-          branch: "stable/magnesium"
-          jre: "openjdk11"
+    - phosphorus:
+        branch: "master"
+        jre: "openjdk11"
+    - silicon:
+        branch: "stable/silicon"
+        jre: "openjdk11"
+    - aluminium:
+        branch: "stable/aluminium"
+        jre: "openjdk11"
+    - magnesium:
+        branch: "stable/magnesium"
+        jre: "openjdk11"
 
     functionality:
-      - "upstream"
-      - "gate"
+    - "upstream"
+    - "gate"
 
     install:
-      - all:
-          scope: "all"
+    - all:
+        scope: "all"

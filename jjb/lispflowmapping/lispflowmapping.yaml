@@ -1,18 +1,18 @@
 ---
 - project:
-    name: lispflowmapping-silicon
+    name: lispflowmapping-phosphorus
     jobs:
-      - "{project-name}-distribution-check-{stream}"
-      - "{project-name}-maven-javadoc-jobs"
-      - "{project-name}-rtd-jobs":
-          build-node: centos7-builder-2c-2g
-          project-pattern: lispflowmapping
-          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-lispflowmapping/47783/
-          rtd-token: 181be9dd804e4969b9f318a6f1988e3cbee9d9a8
-      - odl-maven-jobs-jdk11
-      - odl-maven-verify-jobs
+    - "{project-name}-distribution-check-{stream}"
+    - "{project-name}-maven-javadoc-jobs"
+    - "{project-name}-rtd-jobs":
+        build-node: centos7-builder-2c-2g
+        project-pattern: lispflowmapping
+        rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-lispflowmapping/47783/
+        rtd-token: 181be9dd804e4969b9f318a6f1988e3cbee9d9a8
+    - odl-maven-jobs-jdk11
+    - odl-maven-verify-jobs
 
-    stream: silicon
+    stream: phosphorus
     project: "lispflowmapping"
     project-name: "lispflowmapping"
     branch: "master"
@@ -32,17 +32,49 @@
     staging-profile-id: 96fff2503b766
 
 - project:
+    name: lispflowmapping-silicon
+    jobs:
+    - "{project-name}-distribution-check-{stream}"
+    - "{project-name}-maven-javadoc-jobs"
+    - "{project-name}-rtd-jobs":
+        build-node: centos7-builder-2c-2g
+        project-pattern: lispflowmapping
+        rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-lispflowmapping/47783/
+        rtd-token: 181be9dd804e4969b9f318a6f1988e3cbee9d9a8
+    - odl-maven-jobs-jdk11
+    - odl-maven-verify-jobs
+
+    stream: silicon
+    project: "lispflowmapping"
+    project-name: "lispflowmapping"
+    branch: "stable/silicon"
+    java-version: "openjdk11"
+    mvn-settings: "lispflowmapping-settings"
+    mvn-goals: "clean deploy -DrepoBuild"
+    mvn-opts: "-Xmx2048m -Dmaven.compile.fork=true"
+    dependencies: "controller-merge-{stream},odlparent-merge-{stream},yangtools-merge-{stream},neutron-merge-{stream}"
+    email-upstream: "[lispflowmapping] [controller] [odlparent] [yangtools] [neutron]"
+    archive-artifacts: >
+      **/*.log
+      **/target/surefire-reports/*-output.txt
+
+    build-node: centos7-builder-8c-8g
+
+    # Used by the release job
+    staging-profile-id: 96fff2503b766
+
+- project:
     name: lispflowmapping-aluminium
     jobs:
-      - "{project-name}-distribution-check-{stream}"
-      - "{project-name}-maven-javadoc-jobs"
-      - "{project-name}-rtd-jobs":
-          build-node: centos7-builder-2c-2g
-          project-pattern: lispflowmapping
-          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-lispflowmapping/47783/
-          rtd-token: 181be9dd804e4969b9f318a6f1988e3cbee9d9a8
-      - odl-maven-jobs-jdk11
-      - odl-maven-verify-jobs
+    - "{project-name}-distribution-check-{stream}"
+    - "{project-name}-maven-javadoc-jobs"
+    - "{project-name}-rtd-jobs":
+        build-node: centos7-builder-2c-2g
+        project-pattern: lispflowmapping
+        rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-lispflowmapping/47783/
+        rtd-token: 181be9dd804e4969b9f318a6f1988e3cbee9d9a8
+    - odl-maven-jobs-jdk11
+    - odl-maven-verify-jobs
 
     stream: aluminium
     project: "lispflowmapping"
@@ -66,15 +98,15 @@
 - project:
     name: lispflowmapping-magnesium
     jobs:
-      - "{project-name}-distribution-check-{stream}"
-      - "{project-name}-maven-javadoc-jobs"
-      - "{project-name}-rtd-jobs":
-          build-node: centos7-builder-2c-2g
-          project-pattern: lispflowmapping
-          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-lispflowmapping/47783/
-          rtd-token: 181be9dd804e4969b9f318a6f1988e3cbee9d9a8
-      - odl-maven-jobs-jdk11
-      - odl-maven-verify-jobs
+    - "{project-name}-distribution-check-{stream}"
+    - "{project-name}-maven-javadoc-jobs"
+    - "{project-name}-rtd-jobs":
+        build-node: centos7-builder-2c-2g
+        project-pattern: lispflowmapping
+        rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-lispflowmapping/47783/
+        rtd-token: 181be9dd804e4969b9f318a6f1988e3cbee9d9a8
+    - odl-maven-jobs-jdk11
+    - odl-maven-verify-jobs
 
     stream: magnesium
     project: "lispflowmapping"
@@ -98,7 +130,7 @@
 - project:
     name: lispflowmapping-sonar
     jobs:
-      - gerrit-maven-sonar
+    - gerrit-maven-sonar
     project: "lispflowmapping"
     project-name: "lispflowmapping"
     branch: "master"
@@ -114,7 +146,7 @@
 - project:
     name: lispflowmapping-info
     jobs:
-      - gerrit-info-yaml-verify
+    - gerrit-info-yaml-verify
     project: lispflowmapping
     project-name: lispflowmapping
     branch: master
@@ -123,5 +155,5 @@
 - project:
     name: lispflowmapping-view
     views:
-      - project-view
+    - project-view
     project-name: lispflowmapping
