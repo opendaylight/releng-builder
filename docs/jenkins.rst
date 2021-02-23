@@ -204,23 +204,19 @@ accounts in the cloud so should ensure consistent performance.
      - CPUs
      - Memory
 
-   * - odl-standard-1
-     - 1
-     - 4
-
-   * - odl-standard-2
+   * - v3-standard-2
      - 2
      - 8
 
-   * - odl-standard-4
+   * - v3-standard-4
      - 4
      - 16
 
-   * - odl-standard-8
+   * - v3-standard-8
      - 8
      - 32
 
-   * - odl-standard-16
+   * - v3-standard-16
      - 16
      - 64
 
