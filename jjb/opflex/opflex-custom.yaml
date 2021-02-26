@@ -6,8 +6,13 @@
       - "opflex-merge-{stream}"
 
     stream:
-      - silicon:
+      - phosphorus:
           branch: "master"
+          libuv-version: "1.20.2"
+          rapidjson-version: "1.1.0"
+          openvswitch-version: "2.12.0"
+      - silicon:
+          branch: "stable/silicon"
           libuv-version: "1.20.2"
           rapidjson-version: "1.1.0"
           openvswitch-version: "2.12.0"
@@ -49,18 +54,21 @@
           refspec: "refs/heads/{branch}"
           artifacts: "{archive-artifacts}"
       - string:
-          name: LIBUV_VERSION
-          # yamllint disable-line rule:line-length
+          name:
+            LIBUV_VERSION
+            # yamllint disable-line rule:line-length
           default: "{libuv-version}"
           description: "libuv version"
       - string:
-          name: RAPIDJSON_VERSION
-          # yamllint disable-line rule:line-length
+          name:
+            RAPIDJSON_VERSION
+            # yamllint disable-line rule:line-length
           default: "{rapidjson-version}"
           description: "rapidjson version"
       - string:
-          name: OPENVSWITCH_VERSION
-          # yamllint disable-line rule:line-length
+          name:
+            OPENVSWITCH_VERSION
+            # yamllint disable-line rule:line-length
           default: "{openvswitch-version}"
           description: "openvswitch-version"
 
@@ -110,18 +118,21 @@
           refspec: "refs/heads/{branch}"
           artifacts: ""
       - string:
-          name: LIBUV_VERSION
-          # yamllint disable-line rule:line-length
+          name:
+            LIBUV_VERSION
+            # yamllint disable-line rule:line-length
           default: "{libuv-version}"
           description: "libuv version"
       - string:
-          name: RAPIDJSON_VERSION
-          # yamllint disable-line rule:line-length
+          name:
+            RAPIDJSON_VERSION
+            # yamllint disable-line rule:line-length
           default: "{rapidjson-version}"
           description: "rapidjson version"
       - string:
-          name: OPENVSWITCH_VERSION
-          # yamllint disable-line rule:line-length
+          name:
+            OPENVSWITCH_VERSION
+            # yamllint disable-line rule:line-length
           default: "{openvswitch-version}"
           description: "openvswitch version"
 
