@@ -28,12 +28,12 @@ while getopts :h: opts; do
         ;;
   esac
 done
-set +u  # Allow unbound variables for virtualenv
-virtualenv --quiet "/tmp/v/git-review"
-# shellcheck source=/tmp/v/git-review/bin/activate disable=SC1091
-source "/tmp/v/git-review/bin/activate"
-pip install --quiet --upgrade "pip==9.0.3" setuptools
-pip install --quiet --upgrade git-review
+
+# shellcheck disable=SC1090
+source ~/lf-env.sh
+
+lf-activate-venv "git-review==1.28"
+
 git config --global --add gitreview.username "jenkins-$SILO"
 cd "$WORKSPACE"/autorelease || exit
 GERRIT_PROJECT="releng/autorelease"

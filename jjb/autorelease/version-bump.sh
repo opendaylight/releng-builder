@@ -26,7 +26,10 @@ BRANCH="$GERRIT_BRANCH"
 # Ensure we fail the job if any steps fail.
 set -eu -o pipefail
 
-pip install --user --quiet --upgrade git-review
+# shellcheck disable=SC1090
+source ~/lf-env.sh
+
+lf-activate-venv "git-review==1.28"
 
 # Fail if branch cutting is not on master
 if [ "$BRANCH_CUT" = "true" ] && [ "$BRANCH" != "master" ]; then

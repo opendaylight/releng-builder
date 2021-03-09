@@ -13,7 +13,10 @@
 
 set -x
 
-pip install --user --quiet --upgrade git-review
+# shellcheck disable=SC1090
+source ~/lf-env.sh
+
+lf-activate-venv "git-review==1.28"
 
 RELEASE=${RELEASE:-$(echo "$GERRIT_EVENT_COMMENT_TEXT" | base64 -d | grep generate-release-notes | awk '{print $2}')}
 if [ -z "$RELEASE" ]; then

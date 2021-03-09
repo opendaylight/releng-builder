@@ -28,7 +28,10 @@ LOG_FILE="$WORKSPACE/archives/branch-cut.log"
 
 set -eu -o pipefail
 
-pip install --user --quiet --upgrade git-review
+# shellcheck disable=SC1090
+source ~/lf-env.sh
+
+lf-activate-venv "git-review==1.28"
 
 # Validate inputs
 if [ -z "$RELEASE" ]; then
