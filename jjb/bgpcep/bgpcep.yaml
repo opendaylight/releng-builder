@@ -128,6 +128,17 @@
     staging-profile-id: 9427a05049030
 
 - project:
+    name: bgpcep-release-management
+    jobs:
+      - gerrit-release-merge
+
+    project: bgpcep
+    project-name: bgpcep
+
+    build-node: centos7-builder-2c-1g
+    mvn-settings: bgpcep-settings
+
+- project:
     name: bgpcep-sonar
     jobs:
       - gerrit-maven-sonar:
