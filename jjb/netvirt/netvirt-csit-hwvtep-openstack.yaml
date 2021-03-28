@@ -37,8 +37,7 @@
           install-features: "odl-jolokia,odl-netvirt-openstack"
 
     functionality:
-      - upstream-stateful:
-          schedule: "{schedule-daily}"
+      - upstream-stateful
       - gate-stateful
 
     openstack:
@@ -88,8 +87,7 @@
           install-features: "odl-jolokia,odl-netvirt-openstack"
 
     functionality:
-      - upstream-stateful:
-          schedule: "{schedule-daily}"
+      - upstream-stateful
       - gate-stateful
 
     openstack:
@@ -139,8 +137,7 @@
           install-features: "odl-jolokia,odl-netvirt-openstack"
 
     functionality:
-      - upstream-stateful:
-          schedule: "{schedule-daily}"
+      - upstream-stateful
       - gate-stateful
 
     openstack:
@@ -190,8 +187,7 @@
           install-features: "odl-jolokia,odl-netvirt-openstack"
 
     functionality:
-      - upstream-stateful:
-          schedule: "{schedule-weekly}"
+      - upstream-stateful
       - gate-stateful
 
     openstack:
@@ -201,4 +197,3 @@
           odl-ml2-port-binding: "pseudo-agentdb-binding"
           openstack_system_image: "{openstack_stein_system_image}"
           openstack_system2_image: "{openstack_stein_system_image}"
-          schedule: "{schedule-weekly}"
