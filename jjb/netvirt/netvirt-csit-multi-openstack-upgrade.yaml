@@ -32,11 +32,9 @@
           install-features: "odl-netvirt-openstack"
 
     functionality:
-      - upgrade:
-          schedule: "{schedule-weekly}"
+      - upgrade
       - upgrade-snat-conntrack:
           odl-snat-mode: "conntrack"
-          schedule: "{schedule-weekly}"
 
     openstack:
       - rocky:
@@ -79,11 +77,9 @@
           install-features: "odl-netvirt-openstack"
 
     functionality:
-      - upgrade:
-          schedule: "{schedule-weekly}"
+      - upgrade
       - upgrade-snat-conntrack:
           odl-snat-mode: "conntrack"
-          schedule: "{schedule-weekly}"
 
     openstack:
       - stein:
@@ -130,11 +126,9 @@
           install-features: "odl-netvirt-openstack"
 
     functionality:
-      - upgrade:
-          schedule: "{schedule-daily}"
+      - upgrade
       - upgrade-snat-conntrack:
           odl-snat-mode: "conntrack"
-          schedule: "{schedule-daily}"
 
     openstack:
       - stein:
