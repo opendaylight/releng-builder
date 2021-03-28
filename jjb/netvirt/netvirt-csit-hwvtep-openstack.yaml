@@ -38,7 +38,6 @@
 
     functionality:
       - upstream-stateful:
-          schedule: "{schedule-daily}"
       - gate-stateful
 
     openstack:
@@ -89,7 +88,6 @@
 
     functionality:
       - upstream-stateful:
-          schedule: "{schedule-daily}"
       - gate-stateful
 
     openstack:
@@ -140,7 +138,6 @@
 
     functionality:
       - upstream-stateful:
-          schedule: "{schedule-daily}"
       - gate-stateful
 
     openstack:
@@ -191,7 +188,6 @@
 
     functionality:
       - upstream-stateful:
-          schedule: "{schedule-weekly}"
       - gate-stateful
 
     openstack:
@@ -201,4 +197,3 @@
           odl-ml2-port-binding: "pseudo-agentdb-binding"
           openstack_system_image: "{openstack_stein_system_image}"
           openstack_system2_image: "{openstack_stein_system_image}"
-          schedule: "{schedule-weekly}"

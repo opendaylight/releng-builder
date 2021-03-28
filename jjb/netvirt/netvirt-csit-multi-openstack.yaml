@@ -54,18 +54,15 @@
         # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
       - gate-tdd-wip:
           testplan: "{project}-{topology}-tdd-wip-openstack.txt"
-          schedule: "{schedule-weekly}"
           tools_system_count: 3
           enable-gre-type-driver: "yes"
       - tempest-stateful:
           test-suites: "openstack/tempest/tempest.robot"
           testplan: "{project}-{topology}-openstack-tempest.txt"
-          schedule: "{schedule-daily}"
       - tempest-stateful-snat-conntrack:
           test-suites: "openstack/tempest/tempest.robot"
           testplan: "{project}-{topology}-openstack-tempest.txt"
           odl-snat-mode: "conntrack"
-          schedule: "{schedule-daily}"
       - gate-tempest-stateful:
           test-suites: "openstack/tempest/tempest.robot"
           testplan: "{project}-{topology}-openstack-tempest.txt"
@@ -138,18 +135,15 @@
         # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
       - gate-tdd-wip:
           testplan: "{project}-{topology}-tdd-wip-openstack.txt"
-          schedule: "{schedule-weekly}"
           tools_system_count: 3
           enable-gre-type-driver: "yes"
       - tempest-stateful:
           test-suites: "openstack/tempest/tempest.robot"
           testplan: "{project}-{topology}-openstack-tempest.txt"
-          schedule: "{schedule-daily}"
       - tempest-stateful-snat-conntrack:
           test-suites: "openstack/tempest/tempest.robot"
           testplan: "{project}-{topology}-openstack-tempest.txt"
           odl-snat-mode: "conntrack"
-          schedule: "{schedule-daily}"
       - gate-tempest-stateful:
           test-suites: "openstack/tempest/tempest.robot"
           testplan: "{project}-{topology}-openstack-tempest.txt"
@@ -221,18 +215,15 @@
         # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
       - gate-tdd-wip:
           testplan: "{project}-{topology}-tdd-wip-openstack.txt"
-          schedule: "{schedule-weekly}"
           tools_system_count: 3
           enable-gre-type-driver: "yes"
       - tempest-stateful:
           test-suites: "openstack/tempest/tempest.robot"
           testplan: "{project}-{topology}-openstack-tempest.txt"
-          schedule: "{schedule-weekly}"
       - tempest-stateful-snat-conntrack:
           test-suites: "openstack/tempest/tempest.robot"
           testplan: "{project}-{topology}-openstack-tempest.txt"
           odl-snat-mode: "conntrack"
-          schedule: "{schedule-weekly}"
       - gate-tempest-stateful:
           test-suites: "openstack/tempest/tempest.robot"
           testplan: "{project}-{topology}-openstack-tempest.txt"
@@ -306,18 +297,15 @@
         # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
       - gate-tdd-wip:
           testplan: "{project}-{topology}-tdd-wip-openstack.txt"
-          schedule: "{schedule-weekly}"
           tools_system_count: 3
           enable-gre-type-driver: "yes"
       - tempest-stateful:
           test-suites: "openstack/tempest/tempest.robot"
           testplan: "{project}-{topology}-openstack-tempest.txt"
-          schedule: "{schedule-weekly}"
       - tempest-stateful-snat-conntrack:
           test-suites: "openstack/tempest/tempest.robot"
           testplan: "{project}-{topology}-openstack-tempest.txt"
           odl-snat-mode: "conntrack"
-          schedule: "{schedule-weekly}"
       - gate-tempest-stateful:
           test-suites: "openstack/tempest/tempest.robot"
           testplan: "{project}-{topology}-openstack-tempest.txt"
@@ -373,13 +361,10 @@
 
     functionality:
       - upstream-stateful:
-          schedule: "{schedule-weekly}"
       - upstream-stateful-itm-direct-tunnels:
           enable-itm-direct-tunnels: "true"
-          schedule: "{schedule-weekly}"
       - upstream-stateful-snat-conntrack:
           odl-snat-mode: "conntrack"
-          schedule: "{schedule-weekly}"
       - gate-stateful
       - gate-stateful-itm-direct-tunnels:
           enable-itm-direct-tunnels: "true"
@@ -390,23 +375,19 @@
       - dcgw:
           testplan: "{project}-{topology}-dcgw-openstack.txt"
           tools_system_count: 3
-          schedule: "{schedule-weekly}"
           enable-gre-type-driver: "yes"
         # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
       - gate-tdd-wip:
           testplan: "{project}-{topology}-tdd-wip-openstack.txt"
-          schedule: "{schedule-weekly}"
           tools_system_count: 3
           enable-gre-type-driver: "yes"
       - tempest-stateful:
           test-suites: "openstack/tempest/tempest.robot"
           testplan: "{project}-{topology}-openstack-tempest.txt"
-          schedule: "{schedule-daily}"
       - tempest-stateful-snat-conntrack:
           test-suites: "openstack/tempest/tempest.robot"
           testplan: "{project}-{topology}-openstack-tempest.txt"
           odl-snat-mode: "conntrack"
-          schedule: "{schedule-daily}"
       - gate-tempest-stateful:
           test-suites: "openstack/tempest/tempest.robot"
           testplan: "{project}-{topology}-openstack-tempest.txt"
@@ -459,13 +440,10 @@
 
     functionality:
       - upstream-stateful:
-          schedule: "{schedule-weekly}"
       - upstream-stateful-itm-direct-tunnels:
           enable-itm-direct-tunnels: "true"
-          schedule: "{schedule-weekly}"
       - upstream-stateful-snat-conntrack:
           odl-snat-mode: "conntrack"
-          schedule: "{schedule-weekly}"
       - gate-stateful
       - gate-stateful-itm-direct-tunnels:
           enable-itm-direct-tunnels: "true"
@@ -476,16 +454,13 @@
         # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
       - gate-tdd-wip:
           testplan: "{project}-{topology}-tdd-wip-openstack.txt"
-          schedule: ""
       - tempest-stateful:
           test-suites: "openstack/tempest/tempest.robot"
           testplan: "{project}-{topology}-openstack-tempest.txt"
-          schedule: "{schedule-weekly}"
       - tempest-stateful-snat-conntrack:
           test-suites: "openstack/tempest/tempest.robot"
           testplan: "{project}-{topology}-openstack-tempest.txt"
           odl-snat-mode: "conntrack"
-          schedule: "{schedule-weekly}"
       - gate-tempest-stateful:
           test-suites: "openstack/tempest/tempest.robot"
           testplan: "{project}-{topology}-openstack-tempest.txt"
@@ -540,13 +515,10 @@
 
     functionality:
       - upstream-stateful:
-          schedule: "{schedule-weekly}"
       - upstream-stateful-itm-direct-tunnels:
           enable-itm-direct-tunnels: "true"
-          schedule: "{schedule-weekly}"
       - upstream-stateful-snat-conntrack:
           odl-snat-mode: "conntrack"
-          schedule: "{schedule-weekly}"
       - gate-stateful
       - gate-stateful-itm-direct-tunnels:
           enable-itm-direct-tunnels: "true"
@@ -557,16 +529,13 @@
         # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
       - gate-tdd-wip:
           testplan: "{project}-{topology}-tdd-wip-openstack.txt"
-          schedule: ""
       - tempest-stateful:
           test-suites: "openstack/tempest/tempest.robot"
           testplan: "{project}-{topology}-openstack-tempest.txt"
-          schedule: "{schedule-weekly}"
       - tempest-stateful-snat-conntrack:
           test-suites: "openstack/tempest/tempest.robot"
           testplan: "{project}-{topology}-openstack-tempest.txt"
           odl-snat-mode: "conntrack"
-          schedule: "{schedule-weekly}"
       - gate-tempest-stateful:
           test-suites: "openstack/tempest/tempest.robot"
           testplan: "{project}-{topology}-openstack-tempest.txt"
@@ -625,13 +594,10 @@
 
     functionality:
       - upstream-stateful:
-          schedule: "{schedule-daily}"
       - upstream-stateful-itm-direct-tunnels:
           enable-itm-direct-tunnels: "true"
-          schedule: "{schedule-daily}"
       - upstream-stateful-snat-conntrack:
           odl-snat-mode: "conntrack"
-          schedule: "{schedule-daily}"
       - gate-stateful
       - gate-stateful-itm-direct-tunnels:
           enable-itm-direct-tunnels: "true"
@@ -643,20 +609,16 @@
           testplan: "{project}-{topology}-dcgw-openstack.txt"
           tools_system_count: 3
           enable-gre-type-driver: "yes"
-          schedule: "{schedule-daily}"
         # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
       - gate-tdd-wip:
           testplan: "{project}-{topology}-tdd-wip-openstack.txt"
-          schedule: ""
       - tempest-stateful:
           test-suites: "openstack/tempest/tempest.robot"
           testplan: "{project}-{topology}-openstack-tempest.txt"
-          schedule: "{schedule-daily}"
       - tempest-stateful-snat-conntrack:
           test-suites: "openstack/tempest/tempest.robot"
           testplan: "{project}-{topology}-openstack-tempest.txt"
           odl-snat-mode: "conntrack"
-          schedule: "{schedule-daily}"
       - gate-tempest-stateful:
           test-suites: "openstack/tempest/tempest.robot"
           testplan: "{project}-{topology}-openstack-tempest.txt"

@@ -33,10 +33,8 @@
 
     functionality:
       - upgrade:
-          schedule: "{schedule-weekly}"
       - upgrade-snat-conntrack:
           odl-snat-mode: "conntrack"
-          schedule: "{schedule-weekly}"
 
     openstack:
       - rocky:
@@ -83,10 +81,8 @@
 
     functionality:
       - upgrade:
-          schedule: "{schedule-weekly}"
       - upgrade-snat-conntrack:
           odl-snat-mode: "conntrack"
-          schedule: "{schedule-weekly}"
 
     openstack:
       - stein:
@@ -134,10 +130,8 @@
 
     functionality:
       - upgrade:
-          schedule: "{schedule-daily}"
       - upgrade-snat-conntrack:
           odl-snat-mode: "conntrack"
-          schedule: "{schedule-daily}"
 
     openstack:
       - stein:
