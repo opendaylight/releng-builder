@@ -105,9 +105,9 @@
 
     # Data for csit-verify jobs
     # Branch for "last" version detection
-    verify-branch: stable/magnesium
+    verify-branch: stable/aluminium
     # Value for ODL_STREAM
-    verify-stream: magnesium
+    verify-stream: aluminium
     verify-karaf-version: karaf4
     verify-jdkversion: openjdk8
 
@@ -215,18 +215,12 @@
       controller-csit-3node-rest-clust-cars-perf-tell-only-aluminium,
       mdsal-csit-3node-netty-replicate-only-aluminium,
       yangtools-csit-1node-system-only-aluminium
-    csit-mri-list-magnesium: >
-      mdsal-csit-3node-netty-replicate-only-magnesium,
-      yangtools-csit-1node-system-only-magnesium
     csit-sanity-list-silicon: >
       openflowplugin-csit-1node-sanity-only-silicon,
       distribution-sanity-silicon
     csit-sanity-list-aluminium: >
       openflowplugin-csit-1node-sanity-only-aluminium,
       distribution-sanity-aluminium
-    csit-sanity-list-magnesium: >
-      openflowplugin-csit-1node-sanity-only-magnesium,
-      distribution-sanity-magnesium
     csit-weekly-list-silicon: >
       controller-csit-1node-notifications-longevity-only-silicon,
       controller-csit-3node-drb-partnheal-longevity-only-silicon,
@@ -245,15 +239,6 @@
       distribution-deploy-aluminium,
       distribution-offline-aluminium,
       openflowplugin-csit-1node-longevity-only-aluminium
-    csit-weekly-list-magnesium: >
-      controller-csit-1node-notifications-longevity-only-magnesium,
-      controller-csit-3node-drb-partnheal-longevity-only-magnesium,
-      controller-csit-3node-drb-precedence-longevity-only-magnesium,
-      controller-csit-3node-ddb-expl-lead-movement-longevity-only-magnesium,
-      bgpcep-csit-3node-bgpclustering-longevity-only-magnesium,
-      distribution-deploy-magnesium,
-      distribution-offline-magnesium,
-      openflowplugin-csit-1node-longevity-only-magnesium
     csit-mri-list-phosphorus: >
       controller-csit-1node-akka1-all-phosphorus,
       controller-csit-1node-benchmark-all-phosphorus,

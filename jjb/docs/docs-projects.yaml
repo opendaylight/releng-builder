@@ -1,11 +1,9 @@
 ---
 - project:
     name: docs-update-{stream}
+    build-node: centos7-builder-2c-2g
     jobs:
       - "docs-update-{stream}"
     stream:
       - master:
           branch: "master"
-      - magnesium:
-          branch: "stable/magnesium"
-    build-node: centos7-builder-2c-2g

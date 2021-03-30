@@ -54,24 +54,6 @@
     staging-profile-id: a68fb236b93a6
 
 - project:
-    name: snmp-magnesium
-    jobs:
-      - odl-maven-jobs
-      - odl-maven-verify-jobs
-
-    stream: magnesium
-    project: "snmp"
-    project-name: "snmp"
-    branch: "stable/magnesium"
-    mvn-settings: "snmp-settings"
-    mvn-opts: "-Xmx1024m"
-    dependencies: "odlparent-merge-{stream}"
-    email-upstream: "[snmp] [odlparent]"
-
-    # Used by the release job
-    staging-profile-id: a68fb236b93a6
-
-- project:
     name: snmp-release-management
     jobs:
       - gerrit-release-merge

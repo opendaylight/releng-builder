@@ -30,11 +30,6 @@
           java-version: openjdk11
           jre: "openjdk11"
           karaf-version: odl
-      - magnesium:
-          branch: "stable/magnesium"
-          java-version: openjdk11
-          jre: "openjdk11"
-          karaf-version: odl
 
 - project:
     name: distribution-managed
@@ -89,25 +84,6 @@
             openflowplugin-maven-merge-{stream},
             ovsdb-maven-merge-{stream},
             serviceutils-maven-merge-{stream},
-      - magnesium:
-          branch: "stable/magnesium"
-          java-version: "openjdk11"
-          jre: "openjdk11"
-          dependencies: >
-            aaa-maven-merge-{stream},
-            bgpcep-maven-merge-{stream},
-            controller-maven-merge-{stream},
-            daexim-maven-merge-{stream},
-            genius-maven-merge-{stream},
-            infrautils-maven-merge-{stream},
-            jsonrpc-maven-merge-{stream},
-            lispflowmapping-maven-merge-{stream},
-            netconf-maven-merge-{stream},
-            netvirt-maven-merge-{stream}
-            neutron-maven-merge-{stream},
-            openflowplugin-maven-merge-{stream},
-            ovsdb-maven-merge-{stream},
-            serviceutils-maven-merge-{stream},
 
 - project:
     name: distribution-full
@@ -142,12 +118,6 @@
           karaf-version: odl
           dependencies: >
             distribution-merge-managed-{stream},
-      - magnesium:
-          branch: "stable/magnesium"
-          java-version: "openjdk11"
-          karaf-version: odl
-          dependencies: >
-            distribution-merge-managed-{stream},
 
 - project:
     name: distribution-release
@@ -172,9 +142,6 @@
           java-version: "openjdk11"
       - aluminium:
           branch: "stable/aluminium"
-          java-version: "openjdk11"
-      - magnesium:
-          branch: "stable/magnesium"
           java-version: "openjdk11"
 
 - project:
