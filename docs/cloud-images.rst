@@ -81,3 +81,4 @@ Following are the list of published images available to Jenkins jobs.
 * ZZCI - Ubuntu 18.04 - mininet-ovs-25 - x86_64 - 20200813-035525.790
 * ZZCI - Ubuntu 18.04 - mininet-ovs-25 - x86_64 - 20210329-022743.058
 * ZZCI - Ubuntu 18.04 - mininet-ovs-28 - x86_64 - 20200731-200431.555
+* ZZCI - Ubuntu 18.04 - mininet-ovs-28 - x86_64 - 20210329-150700.140
