@@ -194,6 +194,7 @@
 
     # Manual CSIT job lists used by sanity or periodic in nature.
     csit-mri-list-silicon: >
+      aaa-csit-1node-authn-all-silicon,
       controller-csit-1node-akka1-all-silicon,
       controller-csit-1node-benchmark-all-silicon,
       controller-csit-1node-rest-cars-perf-all-silicon,
@@ -203,6 +204,13 @@
       controller-csit-3node-rest-clust-cars-perf-ask-only-silicon,
       controller-csit-3node-rest-clust-cars-perf-tell-only-silicon,
       mdsal-csit-3node-netty-replicate-only-silicon,
+      netconf-csit-1node-callhome-only-silicon,
+      netconf-csit-1node-scale-max-devices-only-silicon,
+      netconf-csit-1node-scale-only-silicon,
+      netconf-csit-1node-userfeatures-all-silicon,
+      netconf-csit-1node-userfeatures-rfc8040-all-silicon,
+      netconf-csit-3node-clustering-only-silicon,
+      netconf-csit-3node-clustering-scale-only-silicon,
       yangtools-csit-1node-system-only-silicon
     csit-mri-list-aluminium: >
       controller-csit-1node-akka1-all-aluminium,
@@ -240,6 +248,7 @@
       distribution-offline-aluminium,
       openflowplugin-csit-1node-longevity-only-aluminium
     csit-mri-list-phosphorus: >
+      aaa-csit-1node-authn-all-phosphorus,
       controller-csit-1node-akka1-all-phosphorus,
       controller-csit-1node-benchmark-all-phosphorus,
       controller-csit-1node-rest-cars-perf-all-phosphorus,
@@ -249,6 +258,13 @@
       controller-csit-3node-rest-clust-cars-perf-ask-only-phosphorus,
       controller-csit-3node-rest-clust-cars-perf-tell-only-phosphorus,
       mdsal-csit-3node-netty-replicate-only-phosphorus,
+      netconf-csit-1node-callhome-only-phosphorus,
+      netconf-csit-1node-scale-max-devices-only-phosphorus,
+      netconf-csit-1node-scale-only-phosphorus,
+      netconf-csit-1node-userfeatures-all-phosphorus,
+      netconf-csit-1node-userfeatures-rfc8040-all-phosphorus,
+      netconf-csit-3node-clustering-only-phosphorus,
+      netconf-csit-3node-clustering-scale-only-phosphorus,
       yangtools-csit-1node-system-only-phosphorus
     csit-weekly-list-phosphorus: >
       controller-csit-1node-notifications-longevity-only-phosphorus,
