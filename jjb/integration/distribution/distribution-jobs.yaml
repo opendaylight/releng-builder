@@ -17,19 +17,19 @@
     mvn-settings: integration-distribution-settings
     mvn-goals: "clean install dependency:tree -DoutputFile=dependency_tree.txt"
     mvn-opts: "-Xmx1024m"
+    java-version: openjdk11
+    jre: "openjdk11"
+    karaf-version: odl
     nexus-iq-namespace: odl-
     nexus-iq-stage: release
     email-upstream: "[int/dist]"
     stream:
-      - silicon:
+      - phosphorus:
           branch: "master"
-          java-version: openjdk11
-          jre: "openjdk11"
+      - silicon:
+          branch: "stable/silicon"
       - aluminium:
           branch: "stable/aluminium"
-          java-version: openjdk11
-          jre: "openjdk11"
-          karaf-version: odl
 
 - project:
     name: distribution-managed
@@ -49,14 +49,26 @@
     type: managed
     profile: "-Pmanaged"
     forbidden-files: "opendaylight/**"
+    java-version: "openjdk11"
+    jre: "openjdk11"
     karaf-version: karaf4
     dist-pom: "distribution/pom.xml"
 
     stream:
-      - silicon:
+      - phosphorus:
           branch: "master"
-          java-version: "openjdk11"
-          jre: "openjdk11"
+          dependencies: >
+            bgpcep-maven-merge-{stream},
+            daexim-maven-merge-{stream},
+            jsonrpc-maven-merge-{stream},
+            lispflowmapping-maven-merge-{stream},
+            netconf-maven-merge-{stream},
+            neutron-maven-merge-{stream},
+            openflowplugin-maven-merge-{stream},
+            ovsdb-maven-merge-{stream},
+            serviceutils-maven-merge-{stream},
+      - silicon:
+          branch: "stable/silicon"
           dependencies: >
             bgpcep-maven-merge-{stream},
             daexim-maven-merge-{stream},
@@ -69,8 +81,6 @@
             serviceutils-maven-merge-{stream},
       - aluminium:
           branch: "stable/aluminium"
-          java-version: "openjdk11"
-          jre: "openjdk11"
           dependencies: >
             aaa-maven-merge-{stream},
             bgpcep-maven-merge-{stream},
@@ -102,20 +112,20 @@
     type: full
     profile: "-Punmanaged"
     files: "opendaylight/**"
+    java-version: "openjdk11"
     karaf-version: odl
     dist-pom: "distribution/opendaylight/pom.xml"
-
     stream:
-      - silicon:
+      - phosphorus:
           branch: "master"
-          java-version: "openjdk11"
-          karaf-version: odl
+          dependencies: >
+            distribution-merge-managed-{stream},
+      - silicon:
+          branch: "stable/silicon"
           dependencies: >
             distribution-merge-managed-{stream},
       - aluminium:
           branch: "stable/aluminium"
-          java-version: "openjdk11"
-          karaf-version: odl
           dependencies: >
             distribution-merge-managed-{stream},
 
@@ -131,18 +141,19 @@
     mvn-goals: "clean deploy -f opendaylight/pom.xml"
     mvn-settings: "integration-distribution-settings"
     mvn-opts: "-Xmx1024m"
+    java-version: "openjdk11"
     email-upstream: "[int/dist]"
 
     # Used by the release job
     staging-profile-id: 2af042ed81d5e2
 
     stream:
-      - silicon:
+      - phospshorus:
           branch: "master"
-          java-version: "openjdk11"
+      - silicon:
+          branch: "stable/silicon"
       - aluminium:
           branch: "stable/aluminium"
-          java-version: "openjdk11"
 
 - project:
     name: distribution-sonar
