@@ -35,7 +35,7 @@ if [[ "$KARAF_VERSION" == "karaf3" ]]; then
     FEATURE_TEST_STRING="features-integration-test"
 fi
 
-sed -ie "s%\(featuresRepositories= \|featuresRepositories = \)%featuresRepositories = mvn:org.opendaylight.integration/${FEATURE_TEST_STRING}/${BUNDLE_VERSION}/xml/features,%g" "${FEATURESCONF}"
+sed -ie "s%\(featuresRepositories= \|featuresRepositories = \)%featuresRepositories = mvn:org.opendaylight.integration/${FEATURE_TEST_STRING}//xml/features,%g" "${FEATURESCONF}"
 
 if [[ -n "${REPO_URL}" ]]; then
    # sed below will fail if it finds space between feature repos.
