@@ -12,6 +12,7 @@ Following are the list of published images available to Jenkins jobs.
 * ZZCI - CentOS 7 - builder - x86_64 - 20200730-200731.474
 * ZZCI - CentOS 7 - builder - x86_64 - 20200811-062543.500
 * ZZCI - CentOS 7 - builder - x86_64 - 20200901-060217.896
+* ZZCI - CentOS 7 - builder - x86_64 - 20210401-060141.809
 * ZZCI - CentOS 7 - devstack - x86_64 - 20191004-045548.485
 * ZZCI - CentOS 7 - devstack - x86_64 - 20200601-230324.154
 * ZZCI - CentOS 7 - devstack - x86_64 - 20200801-230142.896
