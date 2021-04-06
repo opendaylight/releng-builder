@@ -121,44 +121,6 @@
     update-cloud-image: true
 
 - project:
-    name: packer-mininet-ovs-2.5-jobs
-    jobs:
-      - gerrit-packer-merge
-
-    project: releng/builder
-    project-name: builder
-    branch: master
-    archive-artifacts: "**/*.log"
-
-    build-node: centos7-builder-2c-1g
-    build-timeout: 60
-    cron: "00 H 1 * *"
-
-    platforms:
-      - ubuntu-18.04
-    templates: mininet-ovs-2.5
-    update-cloud-image: true
-
-- project:
-    name: packer-mininet-ovs-2.6-jobs
-    jobs:
-      - gerrit-packer-merge
-
-    project: releng/builder
-    project-name: builder
-    branch: master
-    archive-artifacts: "**/*.log"
-
-    build-node: centos7-builder-2c-1g
-    build-timeout: 75
-    cron: "00 H 1 * *"
-
-    platforms:
-      - ubuntu-18.04
-    templates: mininet-ovs-2.6
-    update-cloud-image: true
-
-- project:
     name: packer-mininet-ovs-2.8-jobs
     jobs:
       - gerrit-packer-merge
