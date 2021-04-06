@@ -22,10 +22,8 @@
     platform:
       - centos7:
           build-node: centos7-builder-2c-8g
-      - ubuntu1604:
-          build-node: ubuntu1604-mininet-ovs-25-1c-4g
       - ubuntu1804:
-          build-node: ubuntu1804-mininet-ovs-25-1c-4g
+          build-node: ubuntu1804-mininet-ovs-28-1c-4g
 
 - job-template:
     name: "netvirt-thirdparty-quagga-{platform}"
