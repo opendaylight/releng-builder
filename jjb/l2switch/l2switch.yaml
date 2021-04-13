@@ -1,16 +1,19 @@
 ---
 - project:
-    name: l2switch-phosphorus
+    name: l2switch-master
     jobs:
-      - odl-maven-jobs
+      - odl-maven-jobs-jdk11
       - odl-maven-verify-jobs
 
-    stream: phosphorus
-    project: "l2switch"
-    project-name: "l2switch"
-    branch: "master"
+    project: l2switch
+    project-name: l2switch
+    branch: master
+    stream: master
+
+    java-version: "openjdk11"
     mvn-settings: "l2switch-settings"
-    mvn-opts: "-Xmx1024m -Dmaven.compile.fork=true"
+    mvn-version: mvn36
+
     dependencies: >
       odlparent-merge-{stream},
       yangtools-merge-{stream},
@@ -20,33 +23,6 @@
     email-upstream:
       "[l2switch] [odlparent] [yangtools] [controller] [openflowjava]\
       \ [openflowplugin]"
-    disable-job: true
-
-    # Used by the release job
-    staging-profile-id: 96fee85953ca0
-
-- project:
-    name: l2switch-silicon
-    jobs:
-      - odl-maven-jobs
-      - odl-maven-verify-jobs
-
-    stream: silicon
-    project: "l2switch"
-    project-name: "l2switch"
-    branch: "stable/silicon"
-    mvn-settings: "l2switch-settings"
-    mvn-opts: "-Xmx1024m -Dmaven.compile.fork=true"
-    dependencies: >
-      odlparent-merge-{stream},
-      yangtools-merge-{stream},
-      controller-merge-{stream},
-      openflowjava-merge-{stream},
-      openflowplugin-merge-{stream}
-    email-upstream:
-      "[l2switch] [odlparent] [yangtools] [controller] [openflowjava]\
-      \ [openflowplugin]"
-    disable-job: true
 
     # Used by the release job
     staging-profile-id: 96fee85953ca0
@@ -70,8 +46,7 @@
     project-name: "l2switch"
     branch: "master"
     mvn-settings: "l2switch-settings"
-    mvn-opts: "-Xmx1024m -Dmaven.compile.fork=true"
-    disable-job: true
+    mvn-opts: "-Xmx1024m"
     sonarcloud: true
     sonarcloud-project-organization: "{sonarcloud_project_organization}"
     sonarcloud-api-token: "{sonarcloud_api_token}"
