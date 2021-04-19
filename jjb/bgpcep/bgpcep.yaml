@@ -1,8 +1,7 @@
 ---
 - project:
-    name: bgpcep-phosphorus
+    name: bgpcep-master
     jobs:
-      - "{project-name}-distribution-check-{stream}"
       - "{project-name}-maven-javadoc-jobs"
       - "{project-name}-rtd-jobs":
           build-node: centos7-builder-2c-2g
@@ -12,7 +11,7 @@
       - odl-maven-jobs-jdk11
       - odl-maven-verify-jobs
 
-    stream: phosphorus
+    stream: master
     project: "bgpcep"
     project-name: "bgpcep"
     build-node: centos7-builder-8c-8g
