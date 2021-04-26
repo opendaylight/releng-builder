@@ -1,52 +1,14 @@
 ---
 - project:
-    name: of-config-phosphorus
+    name: of-config-master
     jobs:
       - odl-maven-jobs
       - odl-maven-verify-jobs
 
-    stream: phosphorus
+    stream: master
     project: "of-config"
     project-name: "of-config"
     branch: "master"
-    mvn-settings: "of-config-settings"
-    mvn-opts: "-Xmx1024m"
-    dependencies: netconf-merge-{stream}'
-    email-upstream: "[of-config] [netconf]"
-    disable-job: true
-
-    # Used by the release job
-    staging-profile-id: a6880455efe67
-
-- project:
-    name: of-config-silicon
-    jobs:
-      - odl-maven-jobs
-      - odl-maven-verify-jobs
-
-    stream: silicon
-    project: "of-config"
-    project-name: "of-config"
-    branch: "stable/silicon"
-    mvn-settings: "of-config-settings"
-    mvn-opts: "-Xmx1024m"
-    dependencies: netconf-merge-{stream}'
-    email-upstream: "[of-config] [netconf]"
-    disable-job: true
-
-    # Used by the release job
-    staging-profile-id: a6880455efe67
-
-- project:
-    name: of-config-aluminium
-    jobs:
-      - odl-maven-jobs
-      - odl-maven-verify-jobs
-
-    stream: aluminium
-    project: "of-config"
-    project-name: "of-config"
-    branch: "stable/aluminium"
     mvn-settings: "of-config-settings"
     mvn-opts: "-Xmx1024m"
     dependencies: netconf-merge-{stream}'
