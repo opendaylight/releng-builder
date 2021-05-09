@@ -11,24 +11,13 @@
           branch: "master"
           jre: "openjdk11"
       - silicon:
-          branch: "stable/silicon"
+          branch: "6.0.x"
           jre: "openjdk11"
       - aluminium:
-          branch: "stable/aluminium"
+          branch: "5.0.x"
           jre: "openjdk11"
 
-    os-branch: "queens"
-    jdk: "openjdk8"
-
     feature:
-      - netvirt:
+      - core:
           csit-list: >
-            netvirt-csit-1node-{os-std-topo}-openstack-{os-branch}-gate-stateful-{stream}
-
-      - cluster-netvirt:
-          csit-list: >
-            netvirt-csit-3node-{os-std-topo}-openstack-{os-branch}-gate-stateful-{stream}
-
-      - genius:
-          csit-list: >
-            genius-csit-1node-gate-only-{stream}
+            yangtools-csit-1node-system-only-{stream}
