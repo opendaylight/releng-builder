@@ -1,0 +1,116 @@
+---
+- import_playbook: ../common-packer/provision/docker.yaml
+
+- hosts: all
+  become_user: root
+  become_method: sudo
+
+  vars:
+    kubectl_version: 1.15.11
+    helm_version: 2.16.6
+    helm3_3_version: 3.3.4
+    helm3_5_version: 3.5.1
+    chartmuseum_version: 0.12.0
+
+  tasks:
+    - name: "Install kubectl {{kubectl_version}}"
+      get_url:
+        url: "https://storage.googleapis.com/kubernetes-release/release/v{{kubectl_version}}/bin/linux/amd64/kubectl"
+        dest: /usr/local/bin/kubectl
+        mode: 0775
+      become: yes
+
+    - name: "Install Helm {{helm_version}}"
+      block:
+        - name: "Fetch tar.gz for {{helm_version}}"
+          get_url:
+            url: "http://storage.googleapis.com/kubernetes-helm/helm-v{{helm_version}}-linux-amd64.tar.gz"
+            dest: "/tmp/helm-v{{helm_version}}-linux-amd64.tar.gz"
+        - name: "Unarchive {{helm_version}}"
+          unarchive:
+            src: "/tmp/helm-v{{helm_version}}-linux-amd64.tar.gz"
+            dest: /tmp
+            remote_src: true
+          become: yes
+        - name: "Move {{helm_version}} bin to /usr/local/bin and set as executable"
+          command: "mv /tmp/linux-amd64/helm /usr/local/bin/helm"
+          become: yes
+        - name: "Check Helm {{helm_version}}"
+          command: "which helm"
+
+    - name: "Install Helm 3.3 {{helm3_3_version}}"
+      block:
+        - name: "Create directory /tmp/helm3_3"
+          file:
+            path: /tmp/helm3_3
+            state: directory
+        - name: "Fetch tar.gz for Helm 3.3"
+          get_url:
+            url: "https://get.helm.sh/helm-v{{helm3_3_version}}-linux-amd64.tar.gz"
+            dest: /tmp/helm3_3
+        - name: "Unarchive Helm 3.3"
+          unarchive:
+            src: "/tmp/helm3_3/helm-v{{helm3_3_version}}-linux-amd64.tar.gz"
+            dest: /tmp/helm3_3
+            remote_src: true
+          become: yes
+        - name: "Move Helm 3.3 bin to /usr/local/bin and set as executable"
+          command: "mv /tmp/helm3_3/linux-amd64/helm /usr/local/bin/helm3.3"
+          become: yes
+        - name: "Check Helm 3.3"
+          command: "which helm3.3"
+        - name: "Check kubectl {{kubectl_version}}"
+          command: "which kubectl"
+
+        - name: "Install Helm 3.3"
+          shell: |
+            echo "----> Installing helm 3.3"
+            wget 'https://get.helm.sh/helm-v{{helm3_3_version}}-linux-amd64.tar.gz'
+            tar -xvf 'https://get.helm.sh/helm-v{{helm3_3_version}}-linux-amd64.tar.gz'
+            mv linux-amd64/helm /usr/local/bin/helm3.3
+            which helm3.3
+          become: true
+
+    - name: "Install Helm3.5 {{helm3_5_version}}"
+      block:
+        - name: "Create directory /tmp/helm3.5"
+          file:
+            path: /tmp/helm3.5
+            state: directory
+        - name: "Fetch tar.gz for Helm 3.5"
+          get_url:
+            url: "https://get.helm.sh/helm-v{{helm3_5_version}}-linux-amd64.tar.gz"
+            dest: /tmp/helm3.5
+        - name: "Unarchive Helm 3.5"
+          unarchive:
+            src: "/tmp/helm3.5/helm-v{{helm3_5_version}}-linux-amd64.tar.gz"
+            dest: /tmp/helm3.5
+            remote_src: true
+          become: yes
+        - name: "Move Helm 3.5 bin to /usr/local/bin and set as executable"
+          command: "mv /tmp/helm3.5/linux-amd64/helm /usr/local/bin/helm3.5"
+          become: yes
+        - name: "Check Helm 3.5"
+          command: "which helm3.5"
+        - name: "Check kubectl {{kubectl_version}}"
+          command: "which kubectl"
+
+        - name: "Install Helm 3.5"
+          shell: |
+            echo "----> Installing helm3.5"
+            wget 'https://get.helm.sh/helm-v{{helm3_5_version}}-linux-amd64.tar.gz'
+            tar -xvf 'https://get.helm.sh/helm-v{{helm3_5_version}}-linux-amd64.tar.gz'
+            mv linux-amd64/helm /usr/local/bin/helm3.5
+            which helm3.5
+          become: true
+
+    - name: "Install ChartMuseum {{chartmuseum_version}}"
+      block:
+        - name: "Fetch bin for ChartMuseum"
+          get_url:
+            url: "https://s3.amazonaws.com/chartmuseum/release/v{{ chartmuseum_version }}/bin/linux/amd64/chartmuseum"
+            dest: /usr/local/bin/chartmuseum
+            mode: "0755"
+          become: yes
+        - name: "Check ChartMuseum {{chartmuseum_version}}"
+          command: "which chartmuseum"
