@@ -1,6 +1,7 @@
 {
   "variables": {
     "ansible_roles_path": ".galaxy",
+    "arch": "x86_64",
     "base_image": null,
     "distro": null,
     "cloud_auth_url": null,
@@ -9,6 +10,10 @@
     "cloud_network": null,
     "cloud_tenant": null,
     "cloud_user_data": null,
+    "cloud_region": "ca-ymq-1",
+    "distro": null,
+    "docker_source_image": null,
+    "flavor": "v3-standard-2",
     "ssh_user": null,
     "ssh_proxy_host": ""
   },
@@ -33,7 +38,17 @@
       "flavor": "v1-standard-1",
       "metadata": {
         "ci_managed": "yes"
-      }
+      },
+      "use_blockstorage_volume": "{{user `vm_use_block_storage`}}",
+      "volume_size": "{{user `vm_volume_size`}}",
+      "image_disk_format": "{{user `vm_image_disk_format`}}"
+    },
+    {
+      "name": "docker",
+      "type": "docker",
+      "image": "{{ user `docker_source_image` }}",
+      "commit": true,
+      "changes": ["ENTRYPOINT [\"\"]", "CMD [\"\"]"]
     }
   ],
   "provisioners": [

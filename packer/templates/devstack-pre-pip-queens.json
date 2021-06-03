@@ -33,6 +33,13 @@
       "use_blockstorage_volume": "{{user `vm_use_block_storage`}}",
       "volume_size": "{{user `vm_volume_size`}}",
       "image_disk_format": "{{user `vm_image_disk_format`}}"
+    },
+    {
+      "name": "docker",
+      "type": "docker",
+      "image": "{{ user `docker_source_image` }}",
+      "commit": true,
+      "changes": ["ENTRYPOINT [\"\"]", "CMD [\"\"]"]
     }
   ],
   "provisioners": [
