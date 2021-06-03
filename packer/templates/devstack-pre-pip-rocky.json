@@ -10,6 +10,7 @@
     "vm_volume_size": "20",
     "vm_image_disk_format": "",
     "distro": null,
+    "docker_source_image": null,
     "flavor": "v3-standard-2",
     "ssh_user": null,
     "ssh_proxy_host": ""
@@ -21,15 +22,25 @@
       "instance_name": "{{user `distro`}}-devstack-rocky-{{uuid}}",
       "source_image_name": "{{user `base_image`}}",
       "type": "openstack",
-      "region": "ca-ymq-1",
+      "region": "{{user `cloud_region`}}",
       "networks": ["{{user `cloud_network`}}"],
       "user_data_file": "{{user `cloud_user_data`}}",
       "ssh_username": "{{user `ssh_user`}}",
       "ssh_proxy_host": "{{user `ssh_proxy_host`}}",
-      "flavor": "v3-standard-2",
+      "flavor": "{{user `flavor`}}",
       "metadata": {
         "ci_managed": "yes"
-      }
+      },
+      "use_blockstorage_volume": "{{user `vm_use_block_storage`}}",
+      "volume_size": "{{user `vm_volume_size`}}",
+      "image_disk_format": "{{user `vm_image_disk_format`}}"
+    },
+    {
+      "name": "docker",
+      "type": "docker",
+      "image": "{{ user `docker_source_image` }}",
+      "commit": true,
+      "changes": ["ENTRYPOINT [\"\"]", "CMD [\"\"]"]
     }
   ],
   "provisioners": [
