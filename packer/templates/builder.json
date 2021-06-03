@@ -10,6 +10,7 @@
     "vm_volume_size": "20",
     "vm_image_disk_format": "",
     "distro": null,
+    "docker_source_image": null,
     "flavor": "v3-standard-2",
     "ssh_user": null,
     "ssh_proxy_host": ""
@@ -33,6 +34,13 @@
       "use_blockstorage_volume": "{{user `vm_use_block_storage`}}",
       "volume_size": "{{user `vm_volume_size`}}",
       "image_disk_format": "{{user `vm_image_disk_format`}}"
+    },
+    {
+      "name": "docker",
+      "type": "docker",
+      "image": "{{ user `docker_source_image` }}",
+      "commit": true,
+      "changes": ["ENTRYPOINT [\"\"]", "CMD [\"\"]"]
     }
   ],
   "provisioners": [
