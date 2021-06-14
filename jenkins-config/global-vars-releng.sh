@@ -1,3 +1,7 @@
+CONTAINER_PULL_REGISTRY=nexus3.opendaylight.org:10003
+CONTAINER_PUSH_REGISTRY=nexus3.opendaylight.org:10002
+DOCKER_REGISTRY=nexus3.opendaylight.org
+DOCKERHUB_REGISTRY=docker.io
 GERRIT_URL=https://git.opendaylight.org/gerrit
 GIT_BASE=git://devvexx.opendaylight.org/mirror/$PROJECT
 GIT_URL=git://devvexx.opendaylight.org/mirror
@@ -5,6 +9,7 @@ JENKINS_HOSTNAME=vex-yul-odl-jenkins-1
 LOGS_SERVER=https://logs.opendaylight.org
 NEXUS_URL=https://nexus.opendaylight.org
 ODLNEXUSPROXY=https://nexus.opendaylight.org
+REGISTRY_PORTS=10001 10002 10003 10004
 RELEASE_USERNAME=odl-release
 RELEASE_EMAIL=collab-it+odl-release@linuxfoundation.org
 SIGUL_BRIDGE_IP=10.30.168.3
