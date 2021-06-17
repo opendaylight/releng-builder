@@ -46,7 +46,7 @@ repos:
     hooks:
       - id: bandit
         # Bandit does not need to run on test code
-        exclude: tests/*
+        exclude: ^tests/
 
   - repo: https://github.com/pycqa/pydocstyle
     rev: 5.0.2
