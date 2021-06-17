@@ -46,6 +46,30 @@
       "revId": "841343bd0959443c9a0b0e49b339571e0f3e5ad3",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ff7029cc_abdbc27c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 6731
+      },
+      "writtenOn": "2021-06-17T08:11:42Z",
+      "side": 1,
+      "message": "Since pre-commit is enforced in the CI and this change bumps version and excludes common-packer from the checks performed,\nI consider it modifies the CI configuration and behavior.\nSo I think \"CI\" was more adapted than \"Chore\" according to the commonly accepted standard.\n\nHowever, since neither conventional comits official pages nor ODL/releng documentations define clearly what \"CI\" and \"Chore\" types mean, there can be diverging interpretations here.\n\nhttps://www.conventionalcommits.org/en/v1.0.0/ only defines the \"feat\" and \"fix\" types. It lets the possibilities open for any other types and gives https://github.com/conventional-changelog/commitlint/tree/master/@commitlint/config-conventional#type-enum \nand https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#type as examples.\nOnly angular proposes a definition of its types in its documentation\nI quote \n\"ci: Changes to our CI configuration files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs)\"\n\nAnd there is no  definiton given for the \"chore\" type.\n\nSo here are Karma definition for \"test\"(\u003d~ CI) and \"chore\"\n\"\n test (adding missing tests, refactoring tests; no production code change)\n chore (updating grunt tasks etc; no production code change)\n\"\nhttp://karma-runner.github.io/6.3/dev/git-commit-msg.html\n\nBoth induce no production code change.",
+      "parentUuid": "ee3aaa21_d3af9bb7",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 2
+      },
+      "revId": "841343bd0959443c9a0b0e49b339571e0f3e5ad3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
     }
   ]
 }
