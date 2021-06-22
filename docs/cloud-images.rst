@@ -13,6 +13,7 @@ Following are the list of published images available to Jenkins jobs.
 * ZZCI - CentOS 7 - builder - x86_64 - 20200811-062543.500
 * ZZCI - CentOS 7 - builder - x86_64 - 20200901-060217.896
 * ZZCI - CentOS 7 - builder - x86_64 - 20210401-060141.809
+* ZZCI - CentOS 7 - builder - x86_64 - 20210608-222854.683
 * ZZCI - CentOS 7 - devstack - x86_64 - 20191004-045548.485
 * ZZCI - CentOS 7 - devstack - x86_64 - 20200601-230324.154
 * ZZCI - CentOS 7 - devstack - x86_64 - 20200801-230142.896
@@ -29,6 +30,7 @@ Following are the list of published images available to Jenkins jobs.
 * ZZCI - CentOS 7 - devstack-rocky - x86_64 - 20200801-000156.903
 * ZZCI - CentOS 7 - devstack-rocky - x86_64 - 20200811-042113.395
 * ZZCI - CentOS 7 - devstack-rocky - x86_64 - 20200813-042753.841
+* ZZCI - CentOS 7 - devstack-rocky - x86_64 - 20210608-222908.760
 * ZZCI - CentOS 7 - devstack-stein - x86_64 - 20200101-010206.159
 * ZZCI - CentOS 7 - devstack-stein - x86_64 - 20200112-040429.851
 * ZZCI - CentOS 7 - devstack-stein - x86_64 - 20200501-010133.750
@@ -86,3 +88,4 @@ Following are the list of published images available to Jenkins jobs.
 * ZZCI - Ubuntu 18.04 - mininet-ovs-25 - x86_64 - 20210329-022743.058
 * ZZCI - Ubuntu 18.04 - mininet-ovs-28 - x86_64 - 20200731-200431.555
 * ZZCI - Ubuntu 18.04 - mininet-ovs-28 - x86_64 - 20210329-150700.140
+* ZZCI - Ubuntu 18.04 - mininet-ovs-28 - x86_64 - 20210608-222826.097
