@@ -1,0 +1,48 @@
+---
+- project:
+    name: packaging-maven-docker-jobs
+    project-name: packaging
+    project: integration/packaging
+    container-public-registry: nexus3.opendaylight.org:10001
+    container-snapshot-registry: nexus3.opendaylight.org:10003
+    container-staging-registry: nexus3.opendaylight.org:10004
+    staging-profile-id: ""
+    mvn-settings: packaging-settings
+    mvn-snapshot-id: packaging-snapshots
+    nexus-snapshot-repo: opendaylight-snapshots
+    tox-dir: "$WORKSPACE"
+    docker-name: odl-docker
+    docker-root: "$WORKSPACE/odl-docker"
+    build-node: centos7-docker-4c-4g
+    gerrit_trigger_file_paths:
+      - compare-type: REG_EXP
+        pattern: "$WORKSPACE/.*"
+    jobs:
+      - gerrit-docker-verify:
+          docker-root: "$WORKSPACE"
+          docker-name: "odl-docker"
+          docker-build-args: "-f ./odl-docker/Dockerfile"
+      - gerrit-docker-merge:
+          post_docker_build_script: |
+            #!/bin/bash
+            set -uex -o pipefail
+            set -x
+            DOCKER_IMAGE_TAG2=${{DOCKER_IMAGE_TAG%-*}}
+            DNAME={container-snapshot-registry}/{docker-name}
+            docker tag $DNAME:$DOCKER_IMAGE_TAG $DNAME:$DOCKER_IMAGE_TAG2
+            docker tag $DNAME:$DOCKER_IMAGE_TAG $DNAME:latest
+            docker push $DNAME:$DOCKER_IMAGE_TAG2
+            docker push $DNAME:latest
+      - gerrit-maven-docker-stage:
+          mvn-params: "-Dmaven.test.skip install exec:exec -Pbuild-docker"
+          maven-versions-plugin: true
+          sign-artifacts: true
+    stream:
+      - master:
+          branch: "master"
+
+- project:
+    name: packaging-view
+    views:
+      - project-view
+    project-name: packaging

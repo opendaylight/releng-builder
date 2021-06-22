@@ -40,6 +40,13 @@
     git-url: "ssh://jenkins-$SILO@git.opendaylight.org:29418"
     lftools-version: <1.0.0
 
+    # Nexus3 docker registries
+    container-public-registry: nexus3.opendaylight.org:10001
+    container-snapshot-registry: nexus3.opendaylight.org:10003
+    container-staging-registry: nexus3.opendaylight.org:10004
+    # the quotes here are REQUIRED
+    container-push-registry: "{container-snapshot-registry}"
+
     # openstack-cron email notification defaults
     failure-notification: "releng+ODL@linuxfoundation.org"
     failure-notification-prefix: "[releng]"
