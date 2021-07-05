@@ -11,6 +11,7 @@
     mvn-snapshot-id: packaging-snapshots
     nexus-snapshot-repo: opendaylight-snapshots
     tox-dir: "$WORKSPACE"
+    pre_docker_build_script: "$WORKSPACE/odl-docker/install_docker.sh"
     docker-name: odl-docker
     docker-root: "$WORKSPACE/odl-docker"
     build-node: centos7-docker-4c-4g
@@ -19,9 +20,7 @@
         pattern: "$WORKSPACE/.*"
     jobs:
       - gerrit-docker-verify:
-          docker-root: "$WORKSPACE"
           docker-name: "odl-docker"
-          docker-build-args: "-f ./odl-docker/Dockerfile"
       - gerrit-docker-merge:
           post_docker_build_script: |
             #!/bin/bash
