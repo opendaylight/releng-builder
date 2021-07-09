@@ -18,6 +18,8 @@
     gerrit_trigger_file_paths:
       - compare-type: REG_EXP
         pattern: "$WORKSPACE/.*"
+      - compare-type: REG_EXP
+        pattern: "odl-docker/.*"
     jobs:
       - gerrit-docker-verify:
       - gerrit-docker-merge:
