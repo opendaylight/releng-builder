@@ -37,6 +37,8 @@
           mvn-params: "-Dmaven.test.skip install exec:exec -Pbuild-docker"
           maven-versions-plugin: true
           sign-artifacts: true
+      - '{project-name}-gerrit-release-jobs'
+
     stream:
       - master:
           branch: "master"
