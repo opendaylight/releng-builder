@@ -1,8 +1,13 @@
 #!/bin/bash
-if [[ -n "${CONTROLLERFEATURES}" ]]; then
-    ACTUALFEATURES="odl-integration-all,${CONTROLLERFEATURES}"
+# do not add integration features in MRI projects
+if [[ "$KARAF_PROJECT" == integration ]]; then
+    if [[ -n "${CONTROLLERFEATURES}" ]]; then
+        ACTUALFEATURES="odl-integration-all,${CONTROLLERFEATURES}"
+    else
+        ACTUALFEATURES="odl-integration-all"
+    fi
 else
-    ACTUALFEATURES="odl-integration-all"
+    ACTUALFEATURES="${CONTROLLERFEATURES}"
 fi
 
 if [[ "${JOB_NAME}" == *"distribution-sanity"* ]]; then
@@ -35,19 +40,23 @@ if [[ "$KARAF_VERSION" == "karaf3" ]]; then
     FEATURE_TEST_STRING="features-integration-test"
 fi
 
-sed -ie "s%\(featuresRepositories= \|featuresRepositories = \)%featuresRepositories = mvn:org.opendaylight.integration/${FEATURE_TEST_STRING}//xml/features,%g" "${FEATURESCONF}"
+# only replace feature repo in integration/distro, MRI projects need to pull in
+# the features they need by themselves
+if [[ "$KARAF_PROJECT" == integration]]; then
+    sed -ie "s%\(featuresRepositories= \|featuresRepositories = \)%featuresRepositories = mvn:org.opendaylight.integration/${FEATURE_TEST_STRING}//xml/features,%g" "${FEATURESCONF}"
 
-if [[ -n "${REPO_URL}" ]]; then
-   # sed below will fail if it finds space between feature repos.
-   REPO_URL_NO_SPACE="$(echo -e "${REPO_URL}" | tr -d '[:space:]')"
-   sed -ie "s%featuresRepositories = %featuresRepositories = ${REPO_URL_NO_SPACE},%g" "${FEATURESCONF}"
+    if [[ -n "${REPO_URL}" ]]; then
+       # sed below will fail if it finds space between feature repos.
+       REPO_URL_NO_SPACE="$(echo -e "${REPO_URL}" | tr -d '[:space:]')"
+       sed -ie "s%featuresRepositories = %featuresRepositories = ${REPO_URL_NO_SPACE},%g" "${FEATURESCONF}"
+    fi
+
+    # Add actual boot features.
+    # sed below will fail if it finds space between feature repos.
+    FEATURES_NO_SPACE="$(echo -e "${ACTUALFEATURES}" | tr -d '[:space:]')"
+    sed -ie "s/\(featuresBoot= \|featuresBoot = \)/featuresBoot = ${FEATURES_NO_SPACE},/g" "${FEATURESCONF}"
+    cat "${FEATURESCONF}"
 fi
-
-# Add actual boot features.
-# sed below will fail if it finds space between feature repos.
-FEATURES_NO_SPACE="$(echo -e "${ACTUALFEATURES}" | tr -d '[:space:]')"
-sed -ie "s/\(featuresBoot= \|featuresBoot = \)/featuresBoot = ${FEATURES_NO_SPACE},/g" "${FEATURESCONF}"
-cat "${FEATURESCONF}"
 
 echo "Configuring the log..."
 LOGCONF="${WORKSPACE}/${BUNDLEFOLDER}/etc/org.ops4j.pax.logging.cfg"
