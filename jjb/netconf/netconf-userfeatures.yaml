@@ -28,6 +28,8 @@
           branch: "stable/aluminium"
           jre: "openjdk11"
 
+    karaf-version: netconf
+
     install:
       - all:
           scope: "all"
@@ -39,7 +41,6 @@
       odl-restconf,
       odl-netconf-mdsal,
       odl-mdsal-apidocs,
-      odl-mdsal-model-inventory,
       odl-clustering-test-app,
       odl-netconf-topology
 
