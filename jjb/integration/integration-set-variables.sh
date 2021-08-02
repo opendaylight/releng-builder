@@ -2,10 +2,19 @@
 
 if [[ "$KARAF_VERSION" == "odl" ]]; then
     KARAF_ARTIFACT="opendaylight"
+    KARAF_PROJECT="integration"
 elif [[ "$KARAF_VERSION" == "karaf3" ]]; then
     KARAF_ARTIFACT="distribution-karaf"
+    KARAF_PROJECT="integration"
+elif [[ "$KARAF_VERSION" == "controller" ]]; then
+    KARAF_ARTIFACT="controller-test-karaf"
+    KARAF_PROJECT="controller"
+elif [[ "$KARAF_VERSION" == "netconf" ]]; then
+    KARAF_ARTIFACT="netconf-karaf"
+    KARAF_PROJECT="netconf"
 else
     KARAF_ARTIFACT="karaf"
+    KARAF_PROJECT="integration"
 fi
 
 if [ "$JDKVERSION" == 'openjdk11' ]; then
@@ -17,12 +26,14 @@ elif [ "$JDKVERSION" == 'openjdk8' ]; then
 fi
 
 echo "Karaf artifact is ${KARAF_ARTIFACT}"
+echo "Karaf project is ${KARAF_PROJECT}"
 echo "Java home is ${JAVA_HOME}"
 
 # The following is not a shell file, double quotes would be literal.
 cat > "${WORKSPACE}/set_variables.env" <<EOF
 JAVA_HOME=${JAVA_HOME}
 KARAF_ARTIFACT=${KARAF_ARTIFACT}
+KARAF_PROJECT=${KARAF_PROJECT}
 EOF
 
 # vim: ts=4 sw=4 sts=4 et ft=sh :
