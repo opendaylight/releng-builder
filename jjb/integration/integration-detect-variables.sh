@@ -9,6 +9,12 @@ if [ "${BUNDLE_URL}" == 'last' ]; then
     # Obtain current pom.xml of integration/distribution, correct branch.
     if [[ "$KARAF_ARTIFACT" == "opendaylight" ]]; then
         wget "http://${GERRIT_PATH}/gitweb?p=integration/distribution.git;a=blob_plain;f=opendaylight/pom.xml;hb=refs/heads/$DISTROBRANCH" -O "pom.xml"
+    elif [[ "$KARAF_ARTIFACT" == "karaf" ]]; then
+        wget "http://${GERRIT_PATH}/gitweb?p=integration/distribution.git;a=blob_plain;f=pom.xml;hb=refs/heads/$DISTROBRANCH" -O "pom.xml"
+    elif [[ "$KARAF_ARTIFACT" == "netconf-karaf" ]]; then
+        wget "http://${GERRIT_PATH}/gitweb?p=${KARAF_PROJECT}.git;a=blob_plain;f=karaf/pom.xml;hb=refs/heads/$DISTROBRANCH" -O "pom.xml"
+    elif [[ "$KARAF_ARTIFACT" == "controller-test-karaf" ]]; then
+        wget "http://${GERRIT_PATH}/gitweb?p=${KARAF_PROJECT}.git;a=blob_plain;f=karaf/pom.xml;hb=refs/heads/$DISTROBRANCH" -O "pom.xml"
     else
         wget "http://${GERRIT_PATH}/gitweb?p=integration/distribution.git;a=blob_plain;f=pom.xml;hb=refs/heads/$DISTROBRANCH" -O "pom.xml"
     fi
@@ -16,7 +22,7 @@ if [ "${BUNDLE_URL}" == 'last' ]; then
     BUNDLE_VERSION="$(xpath pom.xml '/project/version/text()' 2> /dev/null)"
     echo "Bundle version is ${BUNDLE_VERSION}"
     # Acquire the timestamp information from maven-metadata.xml
-    NEXUSPATH="${NEXUSURL_PREFIX}/${ODL_NEXUS_REPO}/org/opendaylight/integration/${KARAF_ARTIFACT}"
+    NEXUSPATH="${NEXUSURL_PREFIX}/${ODL_NEXUS_REPO}/org/opendaylight/${KARAF_PROJECT}/${KARAF_ARTIFACT}"
     wget "${NEXUSPATH}/${BUNDLE_VERSION}/maven-metadata.xml"
     less "maven-metadata.xml"
     TIMESTAMP="$(xpath maven-metadata.xml "//snapshotVersion[extension='zip'][1]/value/text()" 2>/dev/null)"
