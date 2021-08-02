@@ -1838,6 +1838,107 @@
             Install a custom OVS. It can be an OVS version to build (like
             v2.9.2 or v2.6.1-nsh) or a yum repo url to pull from.
 
+# Template: {project}-mri-patch-test-{stream}
+# Goal: Build a patch and run project specific system test on a mri projects distribution containing the change
+# Operation: This job template builds a patch, uses the projects distribution and triggers the project system
+# test defined in {csit-list} when gerrit receives test-{project} keyword
+
+- job-template:
+    name: "{prefix}{project}-mri-patch-test-{feature}-{stream}"
+    id: inttest-mri-patch-test
+    <<: *inttest_csit_common
+
+    build-timeout: 720
+
+    parameters:
+      - opendaylight-infra-parameters:
+          os-cloud: "{os-cloud}"
+          project: "{project}"
+          branch: "{branch}"
+          refspec: "refs/heads/{branch}"
+          artifacts: "{archive-artifacts}"
+      - integration-distribution-branch:
+          branch: "{branch}"
+      - distribution-karaf-version:
+          karaf-version: "{karaf-version}"
+      - integration-distribution-git-url:
+          git-url: "{git-url}"
+      - string:
+          name: feature
+          default: "all"
+          description: "Specific feature test for patch"
+      - maven-exec:
+          maven-version: mvn35
+
+    scm:
+      - integration-gerrit-scm:
+          basedir: "{project}"
+          refspec: "$GERRIT_REFSPEC"
+          branch: "{branch}"
+      - integration-distribution-scm:
+          branch: "{branch}"
+
+    triggers:
+      - gerrit:
+          server-name: "{gerrit-server-name}"
+          trigger-on:
+            - comment-added-contains-event:
+                comment-contains-value: "test-{project}-all"
+            - comment-added-contains-event:
+                comment-contains-value: "test-{project}-{feature}"
+          projects:
+            - project-compare-type: "ANT"
+              project-pattern: "{project}"
+              branches:
+                - branch-compare-type: "ANT"
+                  branch-pattern: "**/{branch}"
+          skip-vote:
+            successful: true
+            failed: true
+            unstable: true
+            notbuilt: true
+
+    builders:
+      - integration-rebase-gerrit-patch
+      - wipe-org-opendaylight-repo
+      - lf-update-java-alternatives:
+          java-version: "{java-version}"
+      - maven-target:
+          maven-version: mvn35
+          pom: "{project}/pom.xml"
+          goals: |
+            clean install dependency:tree
+            -Pq
+            -Dgitid.skip=false
+            -Dmaven.gitcommitid.skip=false
+            -DgenerateReports=false
+            -Dstream={stream}
+            {opendaylight-infra-mvn-opts}
+          # {opendaylight-infra-parallel-mvn-opts} is bad when there are multiple big features in SFT.
+          java-opts:
+            - "-Xmx4096m -Dmaven.compile.fork=true"
+          settings: integration-settings
+          settings-type: cfp
+          global-settings: global-settings
+          global-settings-type: cfp
+      - integration-upload-distribution:
+          dist-pom: "{project}/pom.xml"
+      - trigger-builds:
+          - project: "{csit-list}"
+            block: true
+            predefined-parameters: |
+              BUNDLE_URL=$BUNDLE_URL
+              GERRIT_BRANCH=$GERRIT_BRANCH
+              GERRIT_PROJECT=$GERRIT_PROJECT
+              GERRIT_REFSPEC=$GERRIT_REFSPEC
+              KARAF_VERSION=$KARAF_VERSION
+
+    publishers:
+      - email-notification:
+          email-recipients: "{email-recipients}"
+          email-prefix: "[{project}]"
+
+
 # Template: {project}-patch-test-{stream}
 # Goal: Build a patch and run project specific system test on a distribution containing the change
 # Operation: This job template builds a patch, creates a distribution containing the patch, and

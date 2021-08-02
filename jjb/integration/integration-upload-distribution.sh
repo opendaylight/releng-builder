@@ -4,7 +4,18 @@ set -xeu -o pipefail
 BUNDLE_VERSION=$(xpath "${BUNDLE_POM}" '/project/version/text()' 2> /dev/null)
 BUNDLEFOLDER="${KARAF_ARTIFACT}-${BUNDLE_VERSION}"
 BUNDLE="${BUNDLEFOLDER}.zip"
-BUNDLE_PATH="/tmp/r/org/opendaylight/integration/${KARAF_ARTIFACT}/${BUNDLE_VERSION}/${BUNDLE}"
+BUNDLE_PATH="/tmp/r/org/opendaylight/${KARAF_PROJECT}/${KARAF_ARTIFACT}/${BUNDLE_VERSION}/${BUNDLE}"
+if [[ "$KARAF_PROJECT" == "integration" ]]; then
+    GROUP_ID="org.opendaylight.${KARAF_PROJECT}.${GERRIT_PROJECT//\//.}"
+else
+    GROUP_ID="org.opendaylight.${KARAF_PROJECT}"
+fi
+
+echo "Bundle folder is ${BUNDLEFOLDER}"
+echo "Bundle is ${BUNDLE}"
+echo "Bundle path is ${BUNDLE_PATH}"
+echo "Group ID is ${GROUP_ID}"
+
 ls -l "${BUNDLE_PATH}"
 LOG_FILE='integration-upload-distribution.log'
 echo "Uploading distribution to Nexus..."
@@ -15,7 +26,7 @@ echo "Uploading distribution to Nexus..."
     -Dfile="${BUNDLE_PATH}" \
     -DrepositoryId=opendaylight-snapshot \
     -Durl="$ODLNEXUSPROXY/content/repositories/opendaylight.snapshot/" \
-    -DgroupId="org.opendaylight.integration.${GERRIT_PROJECT//\//.}" \
+    -DgroupId=${GROUP_ID} \
     -DartifactId="${KARAF_ARTIFACT}" \
     -Dversion="${BUNDLE_VERSION}" \
     -Dpackaging=zip \

@@ -856,7 +856,11 @@ function get_nodes_list() {
 
 function get_features() {
     if [ "${CONTROLLERSCOPE}" == 'all' ]; then
-        ACTUALFEATURES="odl-integration-compatible-with-all,${CONTROLLERFEATURES}"
+        if [ "$KARAF_PROJECT" == "integration"]; then
+            ACTUALFEATURES="odl-integration-compatible-with-all,${CONTROLLERFEATURES}"
+        else
+            ACTUALFEATURES="odl-infrautils-ready,${CONTROLLERFEATURES}"
+        fi
         # if CONTROLLERMEM still is the default 2G and was not overridden by a
         # custom job, then we need to make sure to increase it because "all"
         # features can be heavy
@@ -916,9 +920,12 @@ if [[ "$KARAF_VERSION" == "karaf4" ]]; then
     FEATURE_TEST_STRING="features-test"
 fi
 
-sed -ie "s%\\(featuresRepositories=\\|featuresRepositories =\\)%featuresRepositories = mvn:org.opendaylight.integration/\${FEATURE_TEST_STRING}/${BUNDLE_VERSION}/xml/features,mvn:org.apache.karaf.decanter/apache-karaf-decanter/1.2.0/xml/features,%g" ${FEATURESCONF}
-if [[ ! -z "${REPO_URL}" ]]; then
-   sed -ie "s%featuresRepositories =%featuresRepositories = ${REPO_URL},%g" ${FEATURESCONF}
+# only manipulate feature repo in integration distro
+if [[ "$KARAF_PROJECT" == "integration" ]]; then
+	sed -ie "s%\\(featuresRepositories=\\|featuresRepositories =\\)%featuresRepositories = mvn:org.opendaylight.integration/\${FEATURE_TEST_STRING}/${BUNDLE_VERSION}/xml/features,mvn:org.apache.karaf.decanter/apache-karaf-decanter/1.2.0/xml/features,%g" ${FEATURESCONF}
+	if [[ ! -z "${REPO_URL}" ]]; then
+	   sed -ie "s%featuresRepositories =%featuresRepositories = ${REPO_URL},%g" ${FEATURESCONF}
+	fi
 fi
 cat ${FEATURESCONF}
 

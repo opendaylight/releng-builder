@@ -100,7 +100,8 @@
       - string:
           name: KARAF_VERSION
           default: "{karaf-version}"
-          description: "karaf3, karaf4, odl, affects ODL deploy scripts"
+          # FIXME integration/unmanaged instead of karaf4/odl maybe makes more sense
+          description: "karaf3, karaf4, odl, controller, netconf affects ODL deploy scripts"
 
 - parameter:
     name: integration-bundle-url
