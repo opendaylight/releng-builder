@@ -82,6 +82,9 @@
 
     build-node: centos7-builder-2c-1g
     mvn-settings: infrautils-settings
+    # Needs to be rather long until we sort out the performance of
+    # https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/
+    build-timeout: 60
 
 - project:
     name: infrautils-sonar
