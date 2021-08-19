@@ -14,6 +14,10 @@
           sign-artifacts: true
           cron: ""
 
+      - gerrit-maven-mri-stage:
+          sign-artifacts: true
+          cron: ""
+
     java-version: openjdk11
     mvn-version: mvn35
 
@@ -38,6 +42,12 @@
           disable-job: "{disable-job}"
 
       - gerrit-maven-stage:
+          sign-artifacts: true
+          mvn-central: false
+          ossrh-profile-id: 6386ebbbf3a563
+          cron: ""
+
+      - gerrit-maven-mri-stage:
           sign-artifacts: true
           mvn-central: false
           ossrh-profile-id: 6386ebbbf3a563
