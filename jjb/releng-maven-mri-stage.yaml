@@ -1,0 +1,206 @@
+####################
+# COMMON FUNCTIONS #
+####################
+
+- releng_maven_mri_common: &releng_maven_mri_common
+    name: releng-maven-mri-common
+
+    ######################
+    # Default parameters #
+    ######################
+
+    archive-artifacts: >
+      **/*.log
+      **/hs_err_*.log
+      **/target/**/feature.xml
+      **/target/failsafe-reports/failsafe-summary.xml
+      **/target/surefire-reports/*-output.txt
+
+    #####################
+    # Job Configuration #
+    #####################
+
+    project-type: freestyle
+    node: "{build-node}"
+
+    properties:
+      - lf-infra-properties:
+          build-days-to-keep: "{build-days-to-keep}"
+
+    parameters:
+      - lf-infra-parameters:
+          project: "{project}"
+          branch: "{branch}"
+          stream: "{stream}"
+      - lf-infra-maven-parameters:
+          mvn-opts: "{mvn-opts}"
+          mvn-params: "{mvn-params}"
+          mvn-version: "{mvn-version}"
+      - string:
+          name: ARCHIVE_ARTIFACTS
+          default: "{archive-artifacts}"
+          description: Artifacts to archive to the logs server.
+
+    wrappers:
+      - lf-infra-wrappers:
+          build-timeout: "{build-timeout}"
+          jenkins-ssh-credential: "{jenkins-ssh-credential}"
+
+    publishers:
+      # TODO: Make email notification work.
+      # - lf-infra-email-notify:
+      #     email-recipients: '{email-recipients}'
+      #     email-prefix: '[releng]'
+      - lf-infra-publish
+
+- builder:
+    name: maven-mri-stage
+    builders:
+      - lf-provide-maven-settings:
+          global-settings-file: "{mvn-global-settings}"
+          settings-file: "{mvn-settings}"
+      - lf-infra-create-netrc:
+          server-id: "{mvn-staging-id}"
+      # include-raw-escape fails due to JJB bug
+      - shell: !include-raw-escape:
+          - global-jjb/shell/common-variables.sh
+          - releng-maven-mri-stage.sh
+      - lf-provide-maven-settings-cleanup
+
+###############
+# Maven Stage #
+###############
+
+- releng_maven_mri_stage: &releng_maven_mri_stage
+    name: releng-maven-mri-stage
+
+    ######################
+    # Default parameters #
+    ######################
+
+    branch: master
+    build-days-to-keep: 30 # 30 days in case a release takes long to get approved.
+    build-timeout: 60
+    cron: "@daily"
+    disable-job: false
+    git-url: "$GIT_URL/$PROJECT"
+    github-url: "https://github.com"
+    java-version: openjdk8
+    maven-versions-plugin: false
+    version-properties-file: version.properties
+    mvn-central: false
+    mvn-global-settings: global-settings
+    mvn-goals: clean deploy
+    mvn-opts: ""
+    mvn-params: ""
+    mvn-version: mvn35
+    ossrh-profile-id: ""
+    mvn-pom: ""
+    sign-artifacts: false
+    sign-mode: serial
+    stream: master
+    submodule-recursive: true
+    submodule-timeout: 10
+    submodule-disable: false
+
+    gerrit_release_triggers:
+      - comment-added-contains-event:
+          comment-contains-value: '^Patch Set\s+\d+:\s+stage-(maven-)?release\s*$'
+
+    gerrit_trigger_file_paths:
+      - compare-type: ANT
+        pattern: "**"
+
+    # github_included_regions MUST match gerrit_trigger_file_paths
+    github_included_regions:
+      - ".*"
+
+    #####################
+    # Job Configuration #
+    #####################
+
+    disabled: "{disable-job}"
+
+    parameters:
+      - lf-infra-parameters:
+          project: "{project}"
+          branch: "{branch}"
+          stream: "{stream}"
+      - lf-infra-maven-parameters:
+          mvn-opts: "{mvn-opts}"
+          mvn-params: "{mvn-params}"
+          mvn-version: "{mvn-version}"
+          staging-profile-id: "{staging-profile-id}"
+      - bool:
+          name: MAVEN_VERSIONS_PLUGIN
+          default: "{maven-versions-plugin}"
+          description: Use maven-versions-plugin to update pom versions.
+      - string:
+          name: ARCHIVE_ARTIFACTS
+          default: "{archive-artifacts}"
+          description: Artifacts to archive to the logs server.
+      - string:
+          name: STAGING_PROFILE_ID
+          default: "{staging-profile-id}"
+          description: Nexus staging profile ID.
+
+    builders:
+      - lf-infra-pre-build
+      - lf-jacoco-nojava-workaround
+      - integration-set-variables
+      - lf-maven-install:
+          mvn-version: "{mvn-version}"
+      - lf-update-java-alternatives:
+          java-version: "{java-version}"
+      - lf-provide-maven-settings:
+          global-settings-file: "{mvn-global-settings}"
+          settings-file: "{mvn-settings}"
+      - lf-maven-versions-plugin:
+          maven-versions-plugin: "{maven-versions-plugin}"
+          version-properties-file: "{version-properties-file}"
+          mvn-version: "{mvn-version}"
+          mvn-pom: "{mvn-pom}"
+          mvn-settings: "{mvn-settings}"
+      - shell: !include-raw-escape: global-jjb/shell/maven-patch-release.sh
+      - lf-maven-build:
+          mvn-goals: "{mvn-goals}"
+      - lf-sigul-sign-dir:
+          sign-artifacts: "{sign-artifacts}"
+          sign-dir: "$WORKSPACE/m2repo"
+          sign-mode: "{sign-mode}"
+      - maven-mri-stage:
+          mvn-global-settings: "{mvn-global-settings}"
+          mvn-settings: "{mvn-settings}"
+          mvn-staging-id: "{mvn-staging-id}"
+      - lf-maven-central:
+          mvn-central: "{mvn-central}"
+          mvn-global-settings: "{mvn-global-settings}"
+          mvn-settings: "{mvn-settings}"
+          ossrh-profile-id: "{ossrh-profile-id}"
+      - lf-provide-maven-settings-cleanup
+      - inject:
+          properties-file: maven-staged-bundle.env
+      - trigger-builds:
+          - project: "{project-name}-distribution-mri-test-{stream}"
+            block: true
+            predefined-parameters: |
+              BUNDLE_URL=$BUNDLE_URL
+              KARAF_VERSION=$KARAF_VERSION
+
+- job-template:
+    name: "{project-name}-maven-mri-stage-{stream}"
+    id: gerrit-maven-mri-stage
+    <<: *releng_maven_mri_common
+    # yamllint disable-line rule:key-duplicates
+    <<: *releng_maven_mri_stage
+
+    scm:
+      - lf-infra-gerrit-scm:
+          jenkins-ssh-credential: "{jenkins-ssh-credential}"
+          git-url: "{git-url}"
+          refspec: "$GERRIT_REFSPEC"
+          branch: "$GERRIT_BRANCH"
+          submodule-recursive: "{submodule-recursive}"
+          submodule-timeout: "{submodule-timeout}"
+          submodule-disable: "{submodule-disable}"
+          choosing-strategy: default
