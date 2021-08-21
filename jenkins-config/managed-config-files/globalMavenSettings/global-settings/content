@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+  <mirrors>
+    <mirror>
+      <id>opendaylight-release-mirror</id>
+      <name>Local Nexus mirror for OpenDaylight builds</name>
+      <url>${env.ODLNEXUSPROXY}/content/repositories/public/</url>
+      <mirrorOf>central</mirrorOf>
+    </mirror>
+  </mirrors>
+
+  <profiles>
+    <profile>
+      <id>opendaylight-release</id>
+      <repositories>
+        <repository>
+          <id>opendaylight-mirror</id>
+          <name>opendaylight-mirror</name>
+          <url>${env.ODLNEXUSPROXY}/content/repositories/public/</url>
+          <releases>
+            <enabled>true</enabled>
+            <updatePolicy>never</updatePolicy>
+          </releases>
+          <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+        </repository>
+      </repositories>
+
+      <pluginRepositories>
+        <pluginRepository>
+          <id>opendaylight-mirror</id>
+          <name>opendaylight-mirror</name>
+          <url>${env.ODLNEXUSPROXY}/content/repositories/public/</url>
+          <releases>
+            <enabled>true</enabled>
+            <updatePolicy>never</updatePolicy>
+          </releases>
+          <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+        </pluginRepository>
+      </pluginRepositories>
+    </profile>
+
+    <profile>
+      <id>opendaylight-snapshots</id>
+      <repositories>
+        <repository>
+          <id>opendaylight-snapshot</id>
+          <name>opendaylight-snapshot</name>
+          <url>${env.ODLNEXUSPROXY}/content/repositories/opendaylight.snapshot/</url>
+          <releases>
+            <enabled>false</enabled>
+          </releases>
+          <snapshots>
+            <enabled>true</enabled>
+          </snapshots>
+        </repository>
+      </repositories>
+
+      <pluginRepositories>
+        <pluginRepository>
+          <id>opendaylight-snapshot</id>
+          <name>opendaylight-snapshot</name>
+          <url>${env.ODLNEXUSPROXY}/content/repositories/opendaylight.snapshot/</url>
+          <releases>
+            <enabled>false</enabled>
+          </releases>
+          <snapshots>
+            <enabled>true</enabled>
+          </snapshots>
+        </pluginRepository>
+      </pluginRepositories>
+    </profile>
+  </profiles>
+
+  <activeProfiles>
+    <activeProfile>opendaylight-release</activeProfile>
+    <activeProfile>opendaylight-snapshots</activeProfile>
+  </activeProfiles>
+</settings>
