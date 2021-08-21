@@ -1,0 +1,15 @@
+[client]
+bridge-hostname: vex-yul-odl-ingress-1.ci.codeaurora.org
+bridge-port: 44334
+client-cert-nickname: vex-yul-odl-jenkins-1.ci.codeaurora.org
+server-hostname: vex-yul-wl-sigul-server-1.dr.codeaurora.org
+user-name: vex-yul-odl-jenkins-1.ci.codeaurora.org
+
+[koji]
+
+[nss]
+nss-dir: /home/jenkins/sigul
+nss-password: $SIGUL_NSS_PASS
+#RM nss-password: uFMLuCUpppkfV+GLqjv8W7ptCoV3z8li
+nss-min-tls: tls1.2
+nss-max-tls: tls1.2
