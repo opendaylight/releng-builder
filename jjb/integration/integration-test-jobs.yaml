@@ -501,6 +501,39 @@
           email-prefix: "[integration]"
 
 - job-template:
+    name: "{project}-distribution-mri-test-{stream}"
+    id: inttest-distribution-mri-test
+
+    project-type: freestyle
+    node: queue-intque-2c-1g
+
+    properties:
+      - opendaylight-infra-properties:
+          build-days-to-keep: "{build-days-to-keep}"
+
+    parameters:
+      - integration-bundle-url:
+          bundle-url: "{bundle-url}"
+      - distribution-karaf-version:
+          karaf-version: "{karaf-version}"
+
+    triggers:
+      - timed: "{schedule-weekly}"
+
+    builders:
+      - trigger-builds:
+          - project: "{csit-mri-list}"
+            block: true
+            predefined-parameters: |
+              BUNDLE_URL=$BUNDLE_URL
+              KARAF_VERSION=$KARAF_VERSION
+
+    publishers:
+      - email-notification:
+          email-recipients: "{email-recipients}"
+          email-prefix: "[integration]"
+
+- job-template:
     name: "integration-distribution-weekly-test-trigger-{stream}"
 
     project-type: freestyle

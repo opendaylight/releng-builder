@@ -1,0 +1,30 @@
+---
+- project:
+    name: netconf-distribution-mri-test
+    jobs:
+      - inttest-distribution-mri-test
+
+    project: "netconf"
+
+    stream:
+      - master:
+          branch: "master"
+          java-version: "openjdk11"
+      - silicon:
+          branch: "stable/silicon"
+          java-version: "openjdk11"
+      - aluminium:
+          branch: "stable/aluminium"
+          java-version: "openjdk11"
+
+    os-branch: "queens"
+
+    karaf-version: netconf
+
+    csit-mri-list: >
+      netconf-csit-1node-gate-callhome-only-{stream},
+      netconf-csit-1node-gate-userfeatures-all-{stream},
+      netconf-csit-1node-gate-userfeatures-rfc8040-all-{stream},
+      netconf-csit-1node-scale-only-{stream},
+      netconf-csit-3node-clustering-only-{stream},
+      netconf-csit-3node-clustering-scale-only-{stream}

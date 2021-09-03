@@ -2,12 +2,12 @@
 - project:
     name: netconf-patch-test
     jobs:
-      - inttest-patch-test
+      - inttest-mri-patch-test
 
     project: "netconf"
 
     stream:
-      - phosphorus:
+      - master:
           branch: "master"
           java-version: "openjdk11"
       - silicon:
@@ -18,6 +18,8 @@
           java-version: "openjdk11"
 
     os-branch: "queens"
+
+    karaf-version: netconf
 
     feature:
       - core:
