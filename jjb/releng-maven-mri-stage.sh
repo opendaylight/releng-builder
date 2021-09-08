@@ -29,4 +29,5 @@ echo "Bundle url is ${BUNDLE_URL}"
 # Re-inject the new BUNDLE_URL for downstream jobs to pull from Nexus
 cat > "${WORKSPACE}/maven-staged-bundle.env" <<EOF
 BUNDLE_URL=${BUNDLE_URL}
+KARAF_VERSION=${KARAF_VERSION}
 EOF
