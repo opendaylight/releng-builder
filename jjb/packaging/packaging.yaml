@@ -16,7 +16,7 @@
 - project:
     <<: *packaging_common
     name: packaging-docker
-    docker-name: "odl-docker"
+    docker-name: "opendaylight"
     docker-root: "$WORKSPACE/odl-docker"
     docker-build-args: "--network=host"
     pre_docker_build_script: "$WORKSPACE/odl-docker/install_docker.sh"
