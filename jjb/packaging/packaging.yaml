@@ -1,43 +1,42 @@
 ---
-- project:
-    name: packaging-maven-docker-jobs
-    project-name: packaging
+- packaging_common: &packaging_common
+    # values apply to all packaging docker projects
+    name: packaging-common
+    # git repo
     project: integration/packaging
-    container-public-registry: nexus3.opendaylight.org:10001
-    container-snapshot-registry: nexus3.opendaylight.org:10003
-    container-staging-registry: nexus3.opendaylight.org:10004
-    staging-profile-id: ""
+    # jenkins job name prefix
+    project-name: packaging
+    # maven settings file has docker credentials
     mvn-settings: packaging-settings
-    mvn-snapshot-id: packaging-snapshots
-    nexus-snapshot-repo: opendaylight-snapshots
-    tox-dir: "$WORKSPACE"
-    pre_docker_build_script: "$WORKSPACE/odl-docker/install_docker.sh"
-    docker-name: odl-docker
-    docker-root: "$WORKSPACE/odl-docker"
+    # source of docker tag
+    container-tag-method: yaml-file
+    # build node
     build-node: centos7-docker-4c-4g
+
+
+- project:
+    <<: *packaging_common
+    name: packaging-docker
+    docker-name: 'odl-docker'
+    docker-root: "$WORKSPACE/odl-docker"
+    docker-build-args: '--network=host'
+    pre_docker_build_script: "$WORKSPACE/odl-docker/install_docker.sh"
+    container-public-registry: nexus3.opendaylight.org:10001
+    container-push-registry: nexus3.opendaylight.org:10003
     gerrit_trigger_file_paths:
-      - compare-type: REG_EXP
-        pattern: "$WORKSPACE/.*"
       - compare-type: REG_EXP
         pattern: "odl-docker/.*"
     jobs:
-      - gerrit-docker-verify:
-      - gerrit-docker-merge:
-          post_docker_build_script: |
-            #!/bin/bash
-            set -uex -o pipefail
-            set -x
-            DOCKER_IMAGE_TAG2=${{DOCKER_IMAGE_TAG%-*}}
-            DNAME={container-snapshot-registry}/{docker-name}
-            docker tag $DNAME:$DOCKER_IMAGE_TAG $DNAME:$DOCKER_IMAGE_TAG2
-            docker tag $DNAME:$DOCKER_IMAGE_TAG $DNAME:latest
-            docker push $DNAME:$DOCKER_IMAGE_TAG2
-            docker push $DNAME:latest
-      - "{project-name}-gerrit-release-jobs"
-
+      - '{project-name}-gerrit-docker-jobs'
     stream:
-      - master:
-          branch: "master"
+      - silicon:
+          branch: stable/silicon
+
+- project:
+    <<: *packaging_common
+    name: packaging-release
+    jobs:
+      - '{project-name}-gerrit-release-jobs'
 
 - project:
     name: packaging-view
