@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc478084_bdab3c7d",
+        "filename": "jenkins-config/managed-config-files/globalMavenSettings/global-settings/content",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2021-09-09T17:52:33Z",
+      "side": 1,
+      "message": "Just found this as an issue with ORAN, the ${env.???} var needs to have the $ \"escaped\" with ^\n\nPlease fix throughout this file, we should end up with ^${env.???}",
+      "range": {
+        "startLine": 11,
+        "startChar": 11,
+        "endLine": 11,
+        "endChar": 12
+      },
+      "revId": "8617bd4a8e1c243efe50bfdabd8e344dece7671a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    }
+  ]
+}
