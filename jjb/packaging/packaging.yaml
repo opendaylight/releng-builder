@@ -1,21 +1,11 @@
 ---
-- packaging_common:
-    &packaging_common # values apply to all packaging docker projects
-    name: packaging-common
-    # git repo
-    project: integration/packaging
-    # jenkins job name prefix
-    project-name: packaging
-    # maven settings file has docker credentials
-    mvn-settings: packaging-settings
-    # source of docker tag
-    container-tag-method: yaml-file
-    # build node
-    build-node: centos7-docker-4c-4g
-
 - project:
-    <<: *packaging_common
     name: packaging-docker
+    project: integration/packaging
+    project-name: packaging
+    mvn-settings: packaging-settings
+    container-tag-method: yaml-file
+    build-node: centos7-docker-4c-4g
     docker-name: "opendaylight"
     docker-root: "$WORKSPACE/odl-docker"
     docker-build-args: "--network=host"
@@ -32,8 +22,12 @@
           branch: stable/silicon
 
 - project:
-    <<: *packaging_common
     name: packaging-release
+    project: integration/packaging
+    project-name: packaging
+    mvn-settings: packaging-settings
+    container-tag-method: yaml-file
+    build-node: centos7-docker-4c-4g
     jobs:
       - "{project-name}-gerrit-release-jobs"
 
