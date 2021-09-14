@@ -97,8 +97,12 @@
     project: "netvirt"
 
     stream:
-      - phosphorus:
+      - sulfur:
           branch: "master"
+          jre: "openjdk11"
+
+      - phosphorus:
+          branch: "stable/phosphorus"
           jre: "openjdk11"
 
       - silicon:
