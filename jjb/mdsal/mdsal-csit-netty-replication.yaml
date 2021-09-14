@@ -12,8 +12,17 @@
 
     # Project branches
     stream:
-      - phosphorus:
+      - sulfur:
           branch: "master"
+          jre: "openjdk11"
+          install-features: >
+            features-controller,
+            odl-mdsal-replicate-netty,
+            odl-restconf-nb-bierman02,
+            odl-netconf-clustered-topology,
+            odl-clustering-test-app
+      - phosphorus:
+          branch: "stable/phosphorus"
           jre: "openjdk11"
           install-features: >
             features-controller,

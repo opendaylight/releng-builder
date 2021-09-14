@@ -5,8 +5,11 @@
       - "ovsdb-daily-full-integration-{stream}"
 
     stream:
-      - phosphorus:
+      - sulfur:
           branch: "master"
+          java-version: "openjdk11"
+      - phosphorus:
+          branch: "stable/phosphorus"
           java-version: "openjdk11"
       - silicon:
           branch: "stable/silicon"

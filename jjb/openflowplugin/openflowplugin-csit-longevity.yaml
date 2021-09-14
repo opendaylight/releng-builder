@@ -12,12 +12,15 @@
     functionality: "longevity"
 
     # Set elasticsearch attribute to value 'long' for longevity jobs
-    #elasticsearch-attribute: 'long'
+    # elasticsearch-attribute: 'long'
 
     # Project branches
     stream:
-      - phosphorus:
+      - sulfur:
           branch: "master"
+          jre: "openjdk11"
+      - phosphorus:
+          branch: "stable/phosphorus"
           jre: "openjdk11"
       - silicon:
           branch: "stable/silicon"
