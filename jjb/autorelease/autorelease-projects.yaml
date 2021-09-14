@@ -13,8 +13,11 @@
       - gerrit-tox-verify
 
     stream:
-      - phosphorus:
+      - sulfur:
           branch: "master"
+          integration-test: phosphorus
+      - phosphorus:
+          branch: "stable/phosphorus"
           integration-test: phosphorus
       - silicon:
           branch: "stable/silicon"

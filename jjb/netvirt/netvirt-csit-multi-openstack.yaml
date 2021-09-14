@@ -51,7 +51,7 @@
           testplan: "{project}-{topology}-dcgw-openstack.txt"
           tools_system_count: 3
           enable-gre-type-driver: "yes"
-        # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
+      # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
       - gate-tdd-wip:
           testplan: "{project}-{topology}-tdd-wip-openstack.txt"
           tools_system_count: 3
@@ -83,7 +83,7 @@
     name: netvirt-csit-openstack-integration-silicon-stein
     jobs:
       - inttest-csit-openstack-custom
-    #temporarily disabling Stein jobs
+    # temporarily disabling Stein jobs
     disable-job: true
     project: "netvirt"
     stream: "silicon"
@@ -132,7 +132,7 @@
           testplan: "{project}-{topology}-dcgw-openstack.txt"
           tools_system_count: 3
           enable-gre-type-driver: "yes"
-        # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
+      # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
       - gate-tdd-wip:
           testplan: "{project}-{topology}-tdd-wip-openstack.txt"
           tools_system_count: 3
@@ -212,7 +212,7 @@
           testplan: "{project}-{topology}-dcgw-openstack.txt"
           tools_system_count: 3
           enable-gre-type-driver: "yes"
-        # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
+      # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
       - gate-tdd-wip:
           testplan: "{project}-{topology}-tdd-wip-openstack.txt"
           tools_system_count: 3
@@ -245,7 +245,7 @@
     jobs:
       - inttest-csit-openstack-custom
 
-    #temporarily disabling Stein jobs
+    # temporarily disabling Stein jobs
     disable-job: true
     project: "netvirt"
     stream: "aluminium"
@@ -294,7 +294,7 @@
           testplan: "{project}-{topology}-dcgw-openstack.txt"
           tools_system_count: 3
           enable-gre-type-driver: "yes"
-        # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
+      # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
       - gate-tdd-wip:
           testplan: "{project}-{topology}-tdd-wip-openstack.txt"
           tools_system_count: 3
@@ -327,7 +327,7 @@
     jobs:
       - inttest-csit-openstack-custom
 
-    #temporarily disabling Stein jobs
+    # temporarily disabling Stein jobs
     disable-job: true
     project: "netvirt"
     testplan: "{project}-{topology}-openstack.txt"
@@ -341,8 +341,12 @@
     os-cmp-cnt: 0
 
     stream:
-      - phosphorus:
+      - sulfur:
           branch: "master"
+          jre: "openjdk11"
+
+      - phosphorus:
+          branch: "stable/phosphorus"
           jre: "openjdk11"
 
       - silicon:
@@ -379,7 +383,7 @@
           testplan: "{project}-{topology}-dcgw-openstack.txt"
           tools_system_count: 3
           enable-gre-type-driver: "yes"
-        # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
+      # Job for Test Driven Development with it's own testplan to run new/non-passing suites. scheduled manually.
       - gate-tdd-wip:
           testplan: "{project}-{topology}-tdd-wip-openstack.txt"
       - tempest-stateful:
