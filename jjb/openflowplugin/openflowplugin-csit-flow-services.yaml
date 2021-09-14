@@ -14,8 +14,12 @@
 
     # Project branches
     stream:
-      - phosphorus:
+      - sulfur:
           branch: "master"
+          jre: "openjdk11"
+          install: "all"
+      - phosphorus:
+          branch: "stable/phosphorus"
           jre: "openjdk11"
           install: "all"
       - silicon:
