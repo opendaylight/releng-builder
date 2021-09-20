@@ -29,7 +29,9 @@
             **/hs_err_*.log
             **/target/feature/feature.xml
           # TODO: **/*.hprof is too large, compress with xz first
-          description: "Space separated glob patterns for artifacts to archive into logs.opendaylight.org"
+          description: |
+            Space separated glob patterns for artifacts to archive
+            into s3-logs.opendaylight.org/logs
       - string:
           name: GERRIT_PROJECT
           default: "{project}"
@@ -203,7 +205,7 @@
             and use the Jenkins Build URL as a last resort.
 
             Console Logs URL:
-            https://logs.opendaylight.org/$SILO/$JENKINS_HOSTNAME/$JOB_NAME/$BUILD_NUMBER
+            https://s3-logs.opendaylight.org/logs/$SILO/$JENKINS_HOSTNAME/$JOB_NAME/$BUILD_NUMBER
 
             Jenkins Build URL:
             $BUILD_URL
