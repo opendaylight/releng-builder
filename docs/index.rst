@@ -11,4 +11,3 @@ Contents:
    :maxdepth: 2
 
    jenkins
-   signing
