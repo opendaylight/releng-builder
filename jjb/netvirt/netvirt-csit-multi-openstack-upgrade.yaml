@@ -90,23 +90,15 @@
           openstack_system2_image: "{openstack_stein_system_image}"
 
 - project:
-    name: netvirt-csit-upgrade-openstack-integration-stein-silicon
+    name: netvirt-csit-upgrade-openstack-integration-stein-master
     jobs:
       - inttest-csit-openstack-custom
 
     project: "netvirt"
 
     stream:
-      - sulfur:
+      - master:
           branch: "master"
-          jre: "openjdk11"
-
-      - phosphorus:
-          branch: "stable/phosphorus"
-          jre: "openjdk11"
-
-      - silicon:
-          branch: "stable/silicon"
           jre: "openjdk11"
 
     testplan: "{project}-{topology}-openstack-upgrade.txt"

@@ -1,10 +1,10 @@
 ---
 - project:
-    name: netvirt-csit-hwvtep-openstack-integration-silicon-rocky
+    name: netvirt-csit-hwvtep-openstack-integration-master-rocky
     jobs:
       - inttest-csit-hwvtep-openstack-custom
     project: "netvirt"
-    stream: "silicon"
+    stream: "master"
     branch: "master"
     jre: "openjdk11"
     testplan: "{project}-{topology}-l2gw-openstack.txt"
@@ -48,12 +48,12 @@
           openstack_system2_image: "{openstack_rocky_system_image}"
 
 - project:
-    name: netvirt-csit-hwvtep-openstack-integration-silicon-stein
+    name: netvirt-csit-hwvtep-openstack-integration-master-stein
     jobs:
       - inttest-csit-hwvtep-openstack-custom
 
     project: "netvirt"
-    stream: "silicon"
+    stream: "master"
     branch: "master"
     jre: "openjdk11"
     testplan: "{project}-{topology}-l2gw-openstack.txt"

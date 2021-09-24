@@ -1,11 +1,11 @@
 ---
 - project:
-    name: netvirt-csit-openstack-integration-silicon-rocky
+    name: netvirt-csit-openstack-integration-master-rocky
     jobs:
       - inttest-csit-openstack-custom
 
     project: "netvirt"
-    stream: "silicon"
+    stream: "master"
     branch: "master"
     jre: "openjdk11"
     testplan: "{project}-{topology}-openstack.txt"
@@ -80,13 +80,13 @@
           openstack_system2_image: "{openstack_rocky_system_image}"
 
 - project:
-    name: netvirt-csit-openstack-integration-silicon-stein
+    name: netvirt-csit-openstack-integration-master-stein
     jobs:
       - inttest-csit-openstack-custom
     # temporarily disabling Stein jobs
     disable-job: true
     project: "netvirt"
-    stream: "silicon"
+    stream: "master"
     branch: "master"
     jre: "openjdk11"
     testplan: "{project}-{topology}-openstack.txt"
@@ -323,7 +323,7 @@
           openstack_system2_image: "{openstack_stein_system_image}"
 
 - project:
-    name: netvirt-csit-1cmb-0ctl-0cmp-openstack-integration-stein-silicon
+    name: netvirt-csit-1cmb-0ctl-0cmp-openstack-integration-stein-master
     jobs:
       - inttest-csit-openstack-custom
 
@@ -341,16 +341,8 @@
     os-cmp-cnt: 0
 
     stream:
-      - sulfur:
+      - master:
           branch: "master"
-          jre: "openjdk11"
-
-      - phosphorus:
-          branch: "stable/phosphorus"
-          jre: "openjdk11"
-
-      - silicon:
-          branch: "stable/silicon"
           jre: "openjdk11"
 
     topology:
