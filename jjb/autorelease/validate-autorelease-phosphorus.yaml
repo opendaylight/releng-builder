@@ -5,7 +5,7 @@
     jobs:
       - "{project-name}-validate-autorelease-{stream}"
     stream: phosphorus
-    branch: master
+    branch: stable/phosphorus
     project-name:
       - daexim:
           project: daexim
@@ -15,8 +15,6 @@
           project: jsonrpc
       - lispflowmapping:
           project: lispflowmapping
-      - neutron:
-          project: neutron
       - openflowplugin:
           project: openflowplugin
       - ovsdb:
