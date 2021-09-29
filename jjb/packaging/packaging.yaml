@@ -6,7 +6,7 @@
     mvn-settings: packaging-settings
     container-tag-method: yaml-file
     build-node: centos7-docker-4c-4g
-    docker-name: "opendaylight"
+    docker-name: "opendaylight/opendaylight"
     docker-root: "$WORKSPACE/odl-docker"
     docker-build-args: "--network=host"
     pre_docker_build_script: "$WORKSPACE/odl-docker/install_docker.sh"
