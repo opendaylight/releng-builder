@@ -346,7 +346,7 @@ parser.add_argument(
     metavar="RELEASE_ON_CURRENT_BRANCH",
     type=str,
     help="""The ODL release codename for the new {}
-        (eg. Aluminium, Silicon).""".format(
+        (eg. Silicon, Phosphorus).""".format(
         default_branch
     ),
 )

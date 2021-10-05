@@ -125,9 +125,9 @@
 
     # Data for csit-verify jobs
     # Branch for "last" version detection
-    verify-branch: stable/aluminium
+    verify-branch: stable/silicon
     # Value for ODL_STREAM
-    verify-stream: aluminium
+    verify-stream: silicon
     verify-karaf-version: karaf4
     verify-jdkversion: openjdk8
 
@@ -232,23 +232,9 @@
       netconf-csit-3node-clustering-only-silicon,
       netconf-csit-3node-clustering-scale-only-silicon,
       yangtools-csit-1node-system-only-silicon
-    csit-mri-list-aluminium: >
-      controller-csit-1node-akka1-all-aluminium,
-      controller-csit-1node-benchmark-all-aluminium,
-      controller-csit-1node-rest-cars-perf-all-aluminium,
-      controller-csit-3node-benchmark-all-aluminium,
-      controller-csit-3node-clustering-ask-all-aluminium,
-      controller-csit-3node-clustering-tell-all-aluminium,
-      controller-csit-3node-rest-clust-cars-perf-ask-only-aluminium,
-      controller-csit-3node-rest-clust-cars-perf-tell-only-aluminium,
-      mdsal-csit-3node-netty-replicate-only-aluminium,
-      yangtools-csit-1node-system-only-aluminium
     csit-sanity-list-silicon: >
       openflowplugin-csit-1node-sanity-only-silicon,
       distribution-sanity-silicon
-    csit-sanity-list-aluminium: >
-      openflowplugin-csit-1node-sanity-only-aluminium,
-      distribution-sanity-aluminium
     csit-weekly-list-silicon: >
       controller-csit-1node-notifications-longevity-only-silicon,
       controller-csit-3node-drb-partnheal-longevity-only-silicon,
@@ -258,15 +244,6 @@
       distribution-deploy-silicon,
       distribution-offline-silicon,
       openflowplugin-csit-1node-longevity-only-silicon
-    csit-weekly-list-aluminium: >
-      controller-csit-1node-notifications-longevity-only-aluminium,
-      controller-csit-3node-drb-partnheal-longevity-only-aluminium,
-      controller-csit-3node-drb-precedence-longevity-only-aluminium,
-      controller-csit-3node-ddb-expl-lead-movement-longevity-only-aluminium,
-      bgpcep-csit-3node-bgpclustering-longevity-only-aluminium,
-      distribution-deploy-aluminium,
-      distribution-offline-aluminium,
-      openflowplugin-csit-1node-longevity-only-aluminium
     csit-mri-list-phosphorus: >
       aaa-csit-1node-authn-all-phosphorus,
       controller-csit-1node-akka1-all-phosphorus,

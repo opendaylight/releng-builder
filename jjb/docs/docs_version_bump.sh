@@ -12,7 +12,7 @@
 update_file_usage () {
     echo "Usage: $0 <RELEASE_NAME> <PUBLISH>"
     echo ""
-    echo "    RELEASE_NAME:  The RELEASE_NAME eg: Aluminium, Silicon."
+    echo "    RELEASE_NAME:  The RELEASE_NAME eg: Silicon, Phosphorus."
     echo "    PUBLISH:  Set to true to PUBLISH"
     echo ""
 }
