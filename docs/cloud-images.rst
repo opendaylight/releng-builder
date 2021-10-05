@@ -14,6 +14,7 @@ Following are the list of published images available to Jenkins jobs.
 * ZZCI - CentOS 7 - builder - x86_64 - 20200901-060217.896
 * ZZCI - CentOS 7 - builder - x86_64 - 20210401-060141.809
 * ZZCI - CentOS 7 - builder - x86_64 - 20210608-222854.683
+* ZZCI - CentOS 7 - builder - x86_64 - 20211001-123242.814
 * ZZCI - CentOS 7 - devstack - x86_64 - 20191004-045548.485
 * ZZCI - CentOS 7 - devstack - x86_64 - 20200601-230324.154
 * ZZCI - CentOS 7 - devstack - x86_64 - 20200801-230142.896
@@ -31,6 +32,7 @@ Following are the list of published images available to Jenkins jobs.
 * ZZCI - CentOS 7 - devstack-rocky - x86_64 - 20200811-042113.395
 * ZZCI - CentOS 7 - devstack-rocky - x86_64 - 20200813-042753.841
 * ZZCI - CentOS 7 - devstack-rocky - x86_64 - 20210608-222908.760
+* ZZCI - CentOS 7 - devstack-rocky - x86_64 - 20211001-000220.740
 * ZZCI - CentOS 7 - devstack-stein - x86_64 - 20200101-010206.159
 * ZZCI - CentOS 7 - devstack-stein - x86_64 - 20200112-040429.851
 * ZZCI - CentOS 7 - devstack-stein - x86_64 - 20200501-010133.750
@@ -38,6 +40,7 @@ Following are the list of published images available to Jenkins jobs.
 * ZZCI - CentOS 7 - devstack-stein - x86_64 - 20200811-070703.256
 * ZZCI - CentOS 7 - devstack-stein - x86_64 - 20200813-035545.011
 * ZZCI - CentOS 7 - devstack-stein - x86_64 - 20210401-010130.589
+* ZZCI - CentOS 7 - devstack-stein - x86_64 - 20211001-010151.446
 * ZZCI - CentOS 7 - docker - x86_64 - 20190924-232930.807
 * ZZCI - CentOS 7 - docker - x86_64 - 20191004-045622.840
 * ZZCI - CentOS 7 - docker - x86_64 - 20200601-220134.752
@@ -48,6 +51,7 @@ Following are the list of published images available to Jenkins jobs.
 * ZZCI - CentOS 7 - robot - x86_64 - 20191002-145719.577
 * ZZCI - CentOS 7 - robot - x86_64 - 20200812-002103.678
 * ZZCI - CentOS 7 - robot - x86_64 - 20200813-045046.282
+* ZZCI - CentOS 7 - robot - x86_64 - 20211001-132202.905
 * ZZCI - CentOS 8 - builder - x86_64 - 20200801-040136.580
 * ZZCI - CentOS 8 - builder - x86_64 - 20200811-042012.627
 * ZZCI - CentOS 8 - builder - x86_64 - 20200901-040201.907
