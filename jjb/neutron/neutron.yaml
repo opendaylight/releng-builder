@@ -10,11 +10,10 @@
     project: "neutron"
     project-name: "neutron"
     build-timeout: 90
-    branch: "stable/phosphorus"
+    branch: "master"
     java-version: "openjdk11"
     mvn-settings: "neutron-settings"
     mvn-opts: "-Xmx1024m"
-    dependencies: "odlparent-merge-{stream},aaa-merge-{stream}"
     email-upstream: "[neutron] [odlparent] [aaa]"
 
     # Used by the release job
