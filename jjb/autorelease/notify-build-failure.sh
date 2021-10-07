@@ -107,7 +107,7 @@ Autorelease $STREAM failed to build $ARTIFACT_ID$PROJECT_STRING in build
 $BUILD_NUMBER. \${!ATTACHMENT} ${PROJECT:+${NEWLINE}${GROUPLIST}}
 
 Console Logs:
-https://logs.opendaylight.org/$SILO/$ARCHIVES_DIR
+https://s3-logs.opendaylight.org/logs/$SILO/$ARCHIVES_DIR
 
 Jenkins Build:
 $BUILD_URL

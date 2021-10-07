@@ -19,7 +19,7 @@
 echo "---> copy-sandbox-logs.sh"
 
 build_path="$(echo "$GERRIT_EVENT_COMMENT_TEXT" | base64 -d | grep 'copy-logs:' | awk -F: '{print $2}' | tr -d '[:space:]')"
-fetch_url="https://logs.opendaylight.org/sandbox/vex-yul-odl-jenkins-2/$build_path"
+fetch_url="https://s3-logs.opendaylight.org/logs/sandbox/vex-yul-odl-jenkins-2/$build_path"
 
 COPY_DIR="$WORKSPACE/archives"
 mkdir -p "$COPY_DIR"
