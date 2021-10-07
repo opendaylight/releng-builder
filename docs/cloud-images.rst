@@ -47,6 +47,7 @@ Following are the list of published images available to Jenkins jobs.
 * ZZCI - CentOS 7 - docker - x86_64 - 20200801-220136.401
 * ZZCI - CentOS 7 - docker - x86_64 - 20200810-015757.604
 * ZZCI - CentOS 7 - docker - x86_64 - 20200901-220018.955
+* ZZCI - CentOS 7 - docker - x86_64 - 20211006-065328.122
 * ZZCI - CentOS 7 - robot - 20190430-080312.962
 * ZZCI - CentOS 7 - robot - x86_64 - 20191002-145719.577
 * ZZCI - CentOS 7 - robot - x86_64 - 20200812-002103.678
