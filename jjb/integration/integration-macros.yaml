@@ -543,10 +543,6 @@
                 - SUCCESS
                 - UNSTABLE
               build-steps:
-                - config-file-provider:
-                    files:
-                      - file-id: "odl-elastic-cloud"
-                        target: "${HOME}/.netrc"
                 - shell: |
                     #!/bin/bash
                     #The following script runs any configurable postplan stored in test/csit/postplans.
@@ -561,7 +557,6 @@
                             ${line}
                         done
                     fi
-                    rm ${HOME}/.netrc
           mark-unstable-if-failed: true
 
 - publisher:
