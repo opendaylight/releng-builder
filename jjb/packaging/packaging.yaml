@@ -9,7 +9,6 @@
     docker-name: "opendaylight/opendaylight"
     docker-root: "$WORKSPACE/odl-docker"
     docker-build-args: "--network=host"
-    pre_docker_build_script: "$WORKSPACE/odl-docker/install_docker.sh"
     container-public-registry: nexus3.opendaylight.org:10001
     container-push-registry: nexus3.opendaylight.org:10003
     gerrit_trigger_file_paths:
@@ -18,6 +17,8 @@
     jobs:
       - "{project-name}-gerrit-docker-jobs"
     stream:
+      - phosphorus:
+          branch: stable/phosphorus
       - silicon:
           branch: stable/silicon
 
