@@ -44,7 +44,7 @@ echo "Starting Robot test suites ${SUITES} ..."
 # ${TESTOPTIONS}, ${SUITES} are space-separated parameters and should not be quoted.
 # shellcheck disable=SC2086
 robot -N "${TESTPLAN}" \
-      --removekeywords wuks -c critical -e exclude -e "skip_if_${DISTROSTREAM}" \
+      --removekeywords wuks -e exclude -e "skip_if_${DISTROSTREAM}" \
       -v BUNDLEFOLDER:"${BUNDLEFOLDER}" \
       -v BUNDLE_URL:"${ACTUAL_BUNDLE_URL}" \
       -v CONTROLLER:"${ODL_SYSTEM_IP}" \
