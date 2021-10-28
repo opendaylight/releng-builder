@@ -2,7 +2,7 @@
 - project:
     name: bgpcep-patch-test
     jobs:
-      - inttest-patch-test
+      - inttest-mri-patch-test
 
     # The project name
     project: "bgpcep"
@@ -18,6 +18,8 @@
       - silicon:
           branch: "stable/silicon"
           java-version: "openjdk11"
+
+    karaf-version: bgpcep
 
     feature:
       - bgp:

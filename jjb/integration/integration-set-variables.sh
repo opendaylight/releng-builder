@@ -12,6 +12,9 @@ elif [[ "$KARAF_VERSION" == "controller" ]]; then
 elif [[ "$KARAF_VERSION" == "netconf" ]]; then
     KARAF_ARTIFACT="netconf-karaf"
     KARAF_PROJECT="netconf"
+elif [[ "$KARAF_VERSION" == "bgpcep" ]]; then
+    KARAF_ARTIFACT="bgpcep-karaf"
+    KARAF_PROJECT="bgpcep"
 else
     KARAF_ARTIFACT="karaf"
     KARAF_PROJECT="integration"

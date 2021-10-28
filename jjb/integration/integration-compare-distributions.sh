@@ -19,6 +19,8 @@ elif [[ "$KARAF_ARTIFACT" == "netconf-karaf" ]]; then
     wget "http://${GERRIT_PATH}/gitweb?p=${KARAF_PROJECT}.git;a=blob_plain;f=karaf/pom.xml;hb=refs/heads/$DISTROBRANCH" -O "pom.xml"
 elif [[ "$KARAF_ARTIFACT" == "controller-test-karaf" ]]; then
     wget "http://${GERRIT_PATH}/gitweb?p=${KARAF_PROJECT}.git;a=blob_plain;f=karaf/pom.xml;hb=refs/heads/$DISTROBRANCH" -O "pom.xml"
+elif [[ "$KARAF_ARTIFACT" == "bgpcep-karaf" ]]; then
+    wget "http://${GERRIT_PATH}/gitweb?p=${KARAF_PROJECT}.git;a=blob_plain;f=distribution-karaf/pom.xml;hb=refs/heads/$DISTROBRANCH" -O "pom.xml"
 else
     wget "http://${GERRIT_PATH}/gitweb?p=integration/distribution.git;a=blob_plain;f=pom.xml;hb=refs/heads/$DISTROBRANCH" -O "pom.xml"
 fi
