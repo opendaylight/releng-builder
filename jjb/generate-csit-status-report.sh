@@ -40,24 +40,23 @@ page = requests.get(build_url)
 soup = BeautifulSoup(page.text, 'html.parser')
 links = soup.findAll("a", { "class" : "model-link" })
 
-_file = open('csit_failed_tests.txt', 'w+')
+with open('csit_failed_tests.txt', 'w+') as _file:
+    for link in links:
+        if link.img and (link.img['alt'] == 'Unstable' or
+                         link.img['alt'] == 'Failed' or
+                         link.img['alt'] == 'Aborted'):
 
-for link in links:
-    if link.img and (link.img['alt'] == 'Unstable' or
-                     link.img['alt'] == 'Failed' or
-                     link.img['alt'] == 'Aborted'):
-
-        url = link['href']
-        project = url.split('/')[3].split('-')[0]
-        _file.write("{}\\t{}{}\\n".format(project, jenkins_url, url))
-
-_file.close()
+            url = link['href']
+            project = url.split('/')[3].split('-')[0]
+            _file.write("{}\\t{}{}\\n".format(project, jenkins_url, url))
 EOF
 
-virtualenv --quiet "/tmp/v/jenkins"
+python3 -m venv "/tmp/v/jenkins"
 # shellcheck source=/tmp/v/jenkins/bin/activate disable=SC1091
 source "/tmp/v/jenkins/bin/activate"
-pip install --quiet --upgrade "pip<10.0.0" setuptools
+# Remove pip cache to avoid cache entry deserialization failures
+rm -rf ~/.cache/pip/
+pip install --quiet --upgrade pip setuptools
 pip install --quiet --upgrade tox
 pip install --quiet --upgrade beautifulsoup4
 pip install --quiet --upgrade requests
