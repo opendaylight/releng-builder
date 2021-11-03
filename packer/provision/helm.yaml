@@ -64,11 +64,11 @@
 
         - name: "Install Helm 3.3"
           shell: |
-            echo "----> Installing helm 3.3"
-            wget 'https://get.helm.sh/helm-v{{helm3_3_version}}-linux-amd64.tar.gz'
-            tar -xvf 'https://get.helm.sh/helm-v{{helm3_3_version}}-linux-amd64.tar.gz'
-            mv linux-amd64/helm /usr/local/bin/helm3.3
-            which helm3.3
+              echo "----> Installing helm 3.3"
+              wget 'https://get.helm.sh/helm-v{{helm3_3_version}}-linux-amd64.tar.gz'
+              tar -xvf 'https://get.helm.sh/helm-v{{helm3_3_version}}-linux-amd64.tar.gz'
+              mv linux-amd64/helm /usr/local/bin/helm3.3
+              which helm3.3
           become: true
 
     - name: "Install Helm3.5 {{helm3_5_version}}"
@@ -97,11 +97,11 @@
 
         - name: "Install Helm 3.5"
           shell: |
-            echo "----> Installing helm3.5"
-            wget 'https://get.helm.sh/helm-v{{helm3_5_version}}-linux-amd64.tar.gz'
-            tar -xvf 'https://get.helm.sh/helm-v{{helm3_5_version}}-linux-amd64.tar.gz'
-            mv linux-amd64/helm /usr/local/bin/helm3.5
-            which helm3.5
+              echo "----> Installing helm3.5"
+              wget 'https://get.helm.sh/helm-v{{helm3_5_version}}-linux-amd64.tar.gz'
+              tar -xvf 'https://get.helm.sh/helm-v{{helm3_5_version}}-linux-amd64.tar.gz'
+              mv linux-amd64/helm /usr/local/bin/helm3.5
+              which helm3.5
           become: true
 
     - name: "Install ChartMuseum {{chartmuseum_version}}"
