@@ -1937,6 +1937,9 @@
       - email-notification:
           email-recipients: "{email-recipients}"
           email-prefix: "[{project}]"
+      - integration-csit-collect-netvirt-logs
+      - lf-infra-publish
+
 
 # Template: {project}-patch-test-{stream}
 # Goal: Build a patch and run project specific system test on a distribution containing the change
@@ -2053,3 +2056,4 @@
       - email-notification:
           email-recipients: "{email-recipients}"
           email-prefix: "[{project}]"
+      - lf-infra-publish
