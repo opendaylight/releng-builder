@@ -467,10 +467,12 @@
     builders:
       - config-file-provider:
           files:
-            - file-id: global-settings
+            - file-id: "global-settings"
               variable: GLOBAL_SETTINGS_FILE
-            - file-id: integration-settings
-              variable: SETTINGS_FILE
+            - file-id: "integration-settings"
+              variable: INTEGRATION_SETTINGS_FILE
+            - file-id: "{project}-settings"
+              variable: PROJECT_SETTINGS_FILE
       - integration-set-variables
       - inject:
           properties-content: BUNDLE_POM={dist-pom}
