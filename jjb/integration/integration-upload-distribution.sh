@@ -7,8 +7,10 @@ BUNDLE="${BUNDLEFOLDER}.zip"
 BUNDLE_PATH="/tmp/r/org/opendaylight/${KARAF_PROJECT}/${KARAF_ARTIFACT}/${BUNDLE_VERSION}/${BUNDLE}"
 if [[ "$KARAF_PROJECT" == "integration" ]]; then
     GROUP_ID="org.opendaylight.${KARAF_PROJECT}.${GERRIT_PROJECT//\//.}"
+    SETTINGS_FILE="${INTEGRATION_SETTINGS_FILE}"
 else
     GROUP_ID="org.opendaylight.${KARAF_PROJECT}"
+    SETTINGS_FILE="${PROJECT_SETTINGS_FILE}"
 fi
 
 echo "Bundle folder is ${BUNDLEFOLDER}"
@@ -21,8 +23,8 @@ LOG_FILE='integration-upload-distribution.log'
 echo "Uploading distribution to Nexus..."
 "$MVN" deploy:deploy-file \
     --log-file ${LOG_FILE} \
-    --global-settings "$GLOBAL_SETTINGS_FILE" \
-    --settings "$SETTINGS_FILE" \
+    --global-settings "${GLOBAL_SETTINGS_FILE}" \
+    --settings "${SETTINGS_FILE}" \
     -Dfile="${BUNDLE_PATH}" \
     -DrepositoryId=opendaylight-snapshot \
     -Durl="$ODLNEXUSPROXY/content/repositories/opendaylight.snapshot/" \

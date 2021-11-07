@@ -109,6 +109,7 @@
       - distribution-check-warn-9192
       - integration-upload-distribution:
           dist-pom: distribution/pom.xml
+          project: "{project}"
       - distribution-check-bootup
 
       - trigger-builds:
@@ -382,6 +383,7 @@
       - distribution-check-warn-9192
       - integration-upload-distribution:
           dist-pom: "{dist-pom}"
+          project: "{project}"
       - distribution-check-bootup
 
     publishers:

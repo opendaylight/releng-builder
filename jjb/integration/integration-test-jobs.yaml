@@ -347,6 +347,7 @@
           global-settings-type: cfp
       - integration-upload-distribution:
           dist-pom: distribution/pom.xml
+          project: "{project}"
       - trigger-builds:
           - project: "{csit-list}"
             block: true
@@ -447,6 +448,7 @@
       - integration-multipatch-builder
       - integration-upload-distribution:
           dist-pom: patch_tester/distribution/pom.xml
+          project: "{project}"
       - conditional-step:
           condition-kind: boolean-expression
           condition-expression: $RUN_TEST
