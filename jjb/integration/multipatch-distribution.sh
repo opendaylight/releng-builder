@@ -229,7 +229,7 @@ for PROJECT_SHORTNAME in "${PROJECTS[@]}"; do
             -Dgitid.skip=false \
             -Dmaven.gitcommitid.skip=false \
             --global-settings "$GLOBAL_SETTINGS_FILE" \
-            --settings "$SETTINGS_FILE" \
+            --settings "$INTEGRATION_SETTINGS_FILE" \
             $MAVEN_OPTIONS
         # Since we've installed the artifacts, we can clean the build and save disk space
         # shellcheck disable=SC2086
@@ -239,7 +239,7 @@ for PROJECT_SHORTNAME in "${PROJECTS[@]}"; do
             -Dgitid.skip=false \
             -Dmaven.gitcommitid.skip=false \
             --global-settings "$GLOBAL_SETTINGS_FILE" \
-            --settings "$SETTINGS_FILE" \
+            --settings "$INTEGRATION_SETTINGS_FILE" \
             $MAVEN_OPTIONS
     popd
 done
