@@ -1923,6 +1923,7 @@
           global-settings-type: cfp
       - integration-upload-distribution:
           dist-pom: "{project}/pom.xml"
+          settings-project: "{project}"
       - trigger-builds:
           - project: "{csit-list}"
             block: true
@@ -2039,6 +2040,7 @@
           global-settings-type: cfp
       - integration-upload-distribution:
           dist-pom: distribution/pom.xml
+          settings-project: integration
       - trigger-builds:
           - project: "{csit-list}"
             block: true

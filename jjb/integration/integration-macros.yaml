@@ -469,7 +469,7 @@
           files:
             - file-id: global-settings
               variable: GLOBAL_SETTINGS_FILE
-            - file-id: integration-settings
+            - file-id: "{settings-project}-settings"
               variable: SETTINGS_FILE
       - integration-set-variables
       - inject:
