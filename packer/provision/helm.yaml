@@ -24,7 +24,7 @@
       block:
         - name: "Fetch tar.gz for {{helm_version}}"
           get_url:
-            url: "http://storage.googleapis.com/kubernetes-helm/helm-v{{helm_version}}-linux-amd64.tar.gz"
+            url: "https://get.helm.sh/helm-v{{helm_version}}-linux-amd64.tar.gz"
             dest: "/tmp/helm-v{{helm_version}}-linux-amd64.tar.gz"
         - name: "Unarchive {{helm_version}}"
           unarchive:
