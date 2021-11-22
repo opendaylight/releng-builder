@@ -56,6 +56,7 @@ Following are the list of published images available to Jenkins jobs.
 * ZZCI - CentOS 8 - builder - x86_64 - 20200801-040136.580
 * ZZCI - CentOS 8 - builder - x86_64 - 20200811-042012.627
 * ZZCI - CentOS 8 - builder - x86_64 - 20200901-040201.907
+* ZZCI - CentOS 8 - builder - x86_64 - 20211006-074156.707
 * ZZCI - OPNFV - apex - compute - 0
 * ZZCI - OPNFV - apex - compute - 1
 * ZZCI - OPNFV - apex - controller - 0
@@ -86,6 +87,8 @@ Following are the list of published images available to Jenkins jobs.
 * ZZCI - Ubuntu 18.04 - docker - x86_64 - 20200901-040308.994
 * ZZCI - Ubuntu 18.04 - docker - x86_64 - 20210401-040235.479
 * ZZCI - Ubuntu 18.04 - helm -  - 20210513-214525.779
+* ZZCI - Ubuntu 18.04 - helm - x86_64 - 20211108-230947.651
+* ZZCI - Ubuntu 18.04 - helm - x86_64 - 20211116-033750.677
 * ZZCI - Ubuntu 18.04 - mininet-ovs-25 - x86_64 - 20200121-232651.765
 * ZZCI - Ubuntu 18.04 - mininet-ovs-25 - x86_64 - 20200521-041758.169
 * ZZCI - Ubuntu 18.04 - mininet-ovs-25 - x86_64 - 20200811-124252.042
