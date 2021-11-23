@@ -29,35 +29,6 @@
     staging-profile-id: a695d0a0b8d51
 
 - project:
-    name: unimgr-fluorine
-    jobs:
-      - "{project-name}-rtd-jobs":
-          build-node: centos7-builder-2c-2g
-          project-pattern: unimgr
-          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-unimgr/49748/
-          rtd-token: e12225e9b9ac67f5439c1619dcad342393b7ea31
-      - odl-maven-jobs
-      - odl-maven-verify-jobs
-
-    stream: fluorine
-    project: "unimgr"
-    project-name: "unimgr"
-    branch: "stable/fluorine"
-    java-version: "openjdk8"
-    mvn-settings: "unimgr-settings"
-    mvn-opts: "-Xmx1024m"
-    dependencies: >
-      odlparent-merge-{stream},
-      yangtools-merge-{stream},
-      controller-merge-{stream},
-      mdsal-merge-{stream}
-    email-upstream: "[unimgr] [odlparent] [yangtools] [controller] [mdsal]"
-    build-node: centos7-builder-4c-16g
-
-    # Used by the release job
-    staging-profile-id: a695d0a0b8d51
-
-- project:
     name: unimgr-release-management
     jobs:
       - gerrit-release-merge
