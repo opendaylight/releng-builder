@@ -98,6 +98,8 @@ echo "Examining the files in data/log and checking filesize"
 ssh "${ODL_SYSTEM_IP}" "ls -altr /tmp/${BUNDLEFOLDER}/data/log/"
 # shellcheck disable=SC2029
 ssh "${ODL_SYSTEM_IP}" "du -hs /tmp/${BUNDLEFOLDER}/data/log/*"
+# shellcheck disable=SC2029
+ssh "${ODL_SYSTEM_IP}" "ls -lh /tmp/${BUNDLEFOLDER}/*.hprof"
 
 for i in $(seq 1 "${NUM_ODL_SYSTEM}")
 do
