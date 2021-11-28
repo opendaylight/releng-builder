@@ -19,7 +19,7 @@
           cron: ""
 
     java-version: openjdk11
-    mvn-version: mvn35
+    mvn-version: mvn38
 
 - job-group:
     name: odl-maven-verify-jobs
@@ -29,7 +29,7 @@
       - gerrit-maven-verify-dependencies:
           build-timeout: 180
 
-    mvn-version: mvn35
+    mvn-version: mvn38
 
 - job-template:
     name: "{project-name}-integration-{stream}"
