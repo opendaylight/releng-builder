@@ -67,7 +67,8 @@
           shell: |
             echo "----> Installing helm 3.3"
             wget 'https://get.helm.sh/helm-v{{helm3_3_version}}-linux-amd64.tar.gz'
-            tar -xvf 'https://get.helm.sh/helm-v{{helm3_3_version}}-linux-amd64.tar.gz'
+            tar -xvf './helm-v{{helm3_3_version}}-linux-amd64.tar.gz'
+            mkdir -p /usr/local/bin/helm3.3
             mv linux-amd64/helm /usr/local/bin/helm3.3
             which helm3.3
           become: true
@@ -99,7 +100,8 @@
           shell: |
             echo "----> Installing helm3.5"
             wget 'https://get.helm.sh/helm-v{{helm3_5_version}}-linux-amd64.tar.gz'
-            tar -xvf 'https://get.helm.sh/helm-v{{helm3_5_version}}-linux-amd64.tar.gz'
+            tar -xvf './helm-v{{helm3_5_version}}-linux-amd64.tar.gz'
+            mkdir -p /usr/local/bin/helm3.5
             mv linux-amd64/helm /usr/local/bin/helm3.5
             which helm3.5
           become: true
@@ -131,7 +133,8 @@
           shell: |
             echo "----> Installing helm3.7"
             wget 'https://get.helm.sh/helm-v{{helm3_7_version}}-linux-amd64.tar.gz'
-            tar -xvf 'https://get.helm.sh/helm-v{{helm3_7_version}}-linux-amd64.tar.gz'
+            tar -xvf './helm-v{{helm3_7_version}}-linux-amd64.tar.gz'
+            mkdir -p /usr/local/bin/helm3.7
             mv linux-amd64/helm /usr/local/bin/helm3.7
             which helm3.7
           become: true
