@@ -1,0 +1,26 @@
+---
+- project:
+    name: packaging-k8s
+    project: integration/packaging
+    project-name: packaging
+    container-infra-prefix: "registry.public.yul1.vexxhost.net/magnum/"
+    cloud-provider-tag: "v1.18.0"
+    etcd-volume-size: "20"
+    build-node: centos7-helm-4c-4g
+    boot-volume-size: 40
+    cluster-settle-time: 1m
+    cluster-template-name: "k8s-1.21.1"
+    helm-client-url: "https://get.helm.sh/helm-v3.7.1-linux-amd64.tar.gz"
+    helm-sha256: "6cd6cad4b97e10c33c978ff3ac97bb42b68f79766f1d2284cfd62ec04cd177f4"
+    helm-version: "v3.7.1"
+    k8s-version: v1.16.0
+    kube-tag: "v1.21.1"
+    master-count: 1
+    master-flavor: v3-standard-8
+    node-count: 2
+    node-flavor: v3-standard-8
+    openstack-cloud: vex
+    master-lb-floating-ip-enabled: "false"
+    openstack-k8s-deploy-script: "!include-raw-escape: openstack-k8s-deploy-helm.sh"
+    jobs:
+      - "{project-name}-k8s-odl-deploy-test"
