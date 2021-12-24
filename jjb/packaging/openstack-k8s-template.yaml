@@ -1,0 +1,274 @@
+---
+- parameter:
+    name: lf-k8s-params
+    parameters:
+      - string:
+          name: BOOT_VOLUME_SIZE
+          default: "{boot-volume-size}"
+      - string:
+          name: CLUSTER_SETTLE_TIME
+          default: "{cluster-settle-time}"
+      - string:
+          name: CLUSTER_NAME
+          default: "$SILO-$JOB_NAME-$BUILD_NUMBER"
+      - string:
+          name: CLUSTER_TEMPLATE_NAME
+          default: "{cluster-template-name}"
+      - string:
+          name: DOCKER_VOLUME_SIZE
+          default: "{docker-volume-size}"
+      - string:
+          name: KEYPAIR
+          default: "$SILO"
+      - string:
+          name: K8S_VERSION
+          default: "{k8s-version}"
+      - string:
+          name: MASTER_COUNT
+          default: "{master-count}"
+      - string:
+          name: MASTER_FLAVOR
+          default: "{master-flavor}"
+      - string:
+          name: NODE_COUNT
+          default: "{node-count}"
+      - string:
+          name: NODE_FLAVOR
+          default: "{node-flavor}"
+      - string:
+          name: OS_CLOUD
+          default: "{openstack-cloud}"
+      - string:
+          name: HELM_VERSION
+          default: "{helm-version}"
+      - string:
+          name: HELM_SHA256
+          default: "{helm-sha256}"
+      - string:
+          name: HELM_CLIENT_URL
+          default: "{helm-client-url}"
+      - string:
+          name: CLOUD_PROVIDER_TAG
+          default: "{cloud-provider-tag}"
+      - string:
+          name: CONTAINER_INFRA_PREFIX
+          default: "{container-infra-prefix}"
+      - string:
+          name: ETCD_VOLUME_SIZE
+          default: "{etcd-volume-size}"
+      - string:
+          name: KUBE_TAG
+          default: "{kube-tag}"
+      - string:
+          name: MASTER_LB_FLOATING_IP_ENABLED
+          default: "{master-lb-floating-ip-enabled}"
+
+- builder:
+    name: lf-k8s-cluster-create-with-template
+    builders:
+      - inject:
+          properties-content: |
+            BOOT_VOLUME_SIZE={boot-volume-size}
+            CLOUD_PROVIDER_TAG={cloud-provider-tag}
+            CLUSTER_NAME={cluster-name}
+            CLUSTER_SETTLE_TIME={cluster-settle-time}
+            CLUSTER_TEMPLATE_NAME={cluster-template-name}
+            CONTAINER_INFRA_PREFIX={container-infra-prefix}
+            ETCD_VOLUME_SIZE={etcd-volume-size}
+            HELM_VERSION={helm-version}
+            HELM_SHA256={helm-sha256}
+            HELM_CLIENT_URL={helm-client-url}
+            K8S_VERSION={k8s-version}
+            KEYPAIR={keypair}
+            KUBE_TAG={kube-tag}
+            MASTER_COUNT={master-count}
+            MASTER_FLAVOR={master-flavor}
+            MASTER_LB_FLOATING_IP_ENABLED={master-lb-floating-ip-enabled}
+            NODE_COUNT={node-count}
+            NODE_FLAVOR={node-flavor}
+            OS_CLOUD={openstack-cloud}
+      - config-file-provider:
+          files:
+            - file-id: clouds-yaml
+              target: "$HOME/.config/openstack/clouds.yaml"
+      - shell: !include-raw-escape: openstack-k8s-create-with-template.sh
+      - shell: !include-raw-escape: openstack-k8s-config-export.sh
+
+- builder:
+    name: lf-k8s-cluster-deploy
+    builders:
+      - shell: "{obj:deploy_script}"
+
+- publisher:
+    name: lf-k8s-cluster-delete
+    publishers:
+      - postbuildscript:
+          builders:
+            - role: BOTH
+              build-on:
+                - ABORTED
+                - FAILURE
+                - SUCCESS
+                - UNSTABLE
+              build-steps:
+                - inject:
+                    properties-content: |
+                      CLUSTER_NAME={cluster-name}
+                      OS_CLOUD={openstack-cloud}
+                - config-file-provider:
+                    files:
+                      - file-id: clouds-yaml
+                        target: "$HOME/.config/openstack/clouds.yaml"
+                - shell: !include-raw-escape: openstack-k8s-cluster-delete.sh
+          mark-unstable-if-failed: false
+
+- trigger:
+    name: gerrit-trigger-patch-submitted-k8s-deploy
+    triggers:
+      - gerrit:
+          server-name: "{gerrit-server-name}"
+          trigger-on:
+            - patchset-created-event:
+                exclude-drafts: true
+                exclude-trivial-rebase: false
+                exclude-no-code-change: false
+            - draft-published-event
+            - comment-added-contains-event:
+                comment-contains-value: '^Patch Set[ ]+[0-9]+:([ ]+|[\n]+)(recheck|reverify)$'
+          projects:
+            - project-compare-type: ANT
+              project-pattern: "{project}"
+              branches:
+                - branch-compare-type: ANT
+                  branch-pattern: "**/{branch}"
+              file-paths:
+                - compare-type: ANT
+                  pattern: "{files}"
+              forbidden-file-paths:
+                - compare-type: ANT
+                  pattern: "{forbidden-files}"
+
+- job-template:
+    name: "{project-name}-k8s-odl-deploy-test"
+
+    #####################
+    # Default variables #
+    #####################
+
+    deploy_script: ""
+    boot-volume-size: { boot-volume-size }
+    cluster-settle-time: { cluster-settle-time }
+    cluster-name: "$SILO-$JOB_NAME-$BUILD_NUMBER"
+    cloud-provider-tag: "{cloud-provider-tag}"
+    container-infra-prefix: "{container-infra-prefix}"
+    etcd-volume-size: "{etcd-volume-size}"
+    docker-volume-size: { docker-volume-size }
+    helm-client-url: "{helm-client-url}"
+    helm-sha256: "{helm-sha256}"
+    helm-version: "{helm-version}"
+    keypair: { keypair }
+    k8s-version: { k8s-version }
+    kube-tag: "{kube-tag}"
+    master-count: { master-count }
+    master-flavor: { master-flavor }
+    master-lb-floating-ip-enabled: "{master-lb-floating-ip-enabled}"
+    node-count: { node-count }
+    node-flavor: { node-flavor }
+    openstack-cloud: { openstack-cloud }
+
+    mvn-version: mvn35
+    disable-job: false
+
+    #####################
+    # Job Configuration #
+    #####################
+
+    project-type: freestyle
+    node: "{build-node}"
+
+    properties:
+      - lf-infra-properties:
+          build-days-to-keep: "{build-days-to-keep}"
+
+    parameters:
+      - lf-k8s-params:
+          boot-volume-size: "{boot-volume-size}"
+          cloud-provider-tag: "{cloud-provider-tag}"
+          container-infra-prefix: "{container-infra-prefix}"
+          cluster-settle-time: "{cluster-settle-time}"
+          cluster-template-name: "{cluster-template-name}"
+          cluster-name: "{cluster-name}"
+          docker-volume-size: "{docker-volume-size}"
+          etcd-volume-size: "{etcd-volume-size}"
+          helm-version: "{helm-version}"
+          helm-sha256: "{helm-sha256}"
+          helm-client-url: "{helm-client-url}"
+          keypair: "{keypair}"
+          k8s-version: "{k8s-version}"
+          kube-tag: "{kube-tag}"
+          master-count: "{master-count}"
+          master-flavor: "{master-flavor}"
+          master-lb-floating-ip-enabled: "{master-lb-floating-ip-enabled}"
+          node-count: "{node-count}"
+          node-flavor: "{node-flavor}"
+          openstack-cloud: "{openstack-cloud}"
+      - opendaylight-infra-parameters:
+          os-cloud: "{os-cloud}"
+          project: "{project}"
+          branch: "{branch}"
+          refspec: "refs/heads/{branch}"
+          artifacts: "{archive-artifacts}"
+
+    scm:
+      - gerrit-trigger-scm:
+          refspec: "$GERRIT_REFSPEC"
+          choosing-strategy: "default"
+          submodule-recursive: "false"
+
+    triggers:
+      - timed: "@weekly"
+      - gerrit-trigger-patch-submitted-k8s-deploy:
+          gerrit-server-name: "{gerrit-server-name}"
+          project: "{project}"
+          branch: "{branch}"
+          files: "helm/**"
+          forbidden-files: ""
+
+    builders:
+      - lf-infra-pre-build
+      - lf-k8s-cluster-create-with-template:
+          boot-volume-size: "{boot-volume-size}"
+          cloud-provider-tag: "{cloud-provider-tag}"
+          container-infra-prefix: "{container-infra-prefix}"
+          cluster-settle-time: "{cluster-settle-time}"
+          cluster-template-name: "{cluster-template-name}"
+          cluster-name: "{cluster-name}"
+          docker-volume-size: "{docker-volume-size}"
+          etcd-volume-size: "{etcd-volume-size}"
+          helm-version: "{helm-version}"
+          helm-sha256: "{helm-sha256}"
+          helm-client-url: "{helm-client-url}"
+          k8s-version: "{k8s-version}"
+          keypair: "{keypair}"
+          kube-tag: "{kube-tag}"
+          master-count: "{master-count}"
+          master-flavor: "{master-flavor}"
+          master-lb-floating-ip-enabled: "{master-lb-floating-ip-enabled}"
+          node-count: "{node-count}"
+          node-flavor: "{node-flavor}"
+          openstack-cloud: "{openstack-cloud}"
+      - lf-k8s-cluster-deploy:
+          deploy_script: "{openstack-k8s-deploy-script}"
+
+    wrappers:
+      - opendaylight-infra-wrappers:
+          build-timeout: "360"
+      - lf-infra-wrappers:
+          build-timeout: "{build-timeout}"
+          jenkins-ssh-credential: "{jenkins-ssh-credential}"
+
+    publishers:
+      - lf-k8s-cluster-delete:
+          cluster-name: "{cluster-name}"
+          openstack-cloud: "{openstack-cloud}"
+      - lf-infra-publish
