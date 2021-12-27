@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "977a5363_5065c174",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2021-12-27T19:35:49Z",
+      "side": 1,
+      "message": "One other thing, and it wouldn\u0027t be in this here. Have you verified that the produced cost.csv file that is generated during the logshipping appropriately captures cluster costs?",
+      "revId": "95f6ed2a7ed239cf73f080ebf7e1c1212e5a6492",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "983da4bf_fa426b10",
+        "filename": "jjb/packaging/openstack-k8s-config-export.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2021-12-27T19:35:49Z",
+      "side": 1,
+      "message": "It\u0027s better to fully specify the command in a script than to use shortcuts that are useful on the CLI. This helps with legibility and means folks are less likely to have to hit a man page to understand what the command is doing.\n\nI understand that this is actually \u0027ip address show\u0027 because I use the ip command enough, but someone else may not.",
+      "revId": "95f6ed2a7ed239cf73f080ebf7e1c1212e5a6492",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
