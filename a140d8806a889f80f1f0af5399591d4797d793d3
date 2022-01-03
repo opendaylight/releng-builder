@@ -214,6 +214,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "dba28422_822219aa",
+        "filename": "jjb/packaging/openstack-k8s-cluster-delete.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2022-01-03T23:09:18Z",
+      "side": 1,
+      "message": "This would need all our scripts to move to a diff shell altogether and should be addressed separately. We have been using bash scripting consistently across repos/projects. We would welcome a proposal/CR.",
+      "parentUuid": "0dff3f55_03e34bfa",
+      "revId": "a140d8806a889f80f1f0af5399591d4797d793d3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "57db1f3f_061cf306",
         "filename": "jjb/packaging/openstack-k8s-cluster-delete.sh",
         "patchSetId": 6
@@ -225,6 +243,24 @@
       "writtenOn": "2022-01-03T12:03:01Z",
       "side": 1,
       "message": "source is not portable out of bash\n~ is not understood by dash\n\n\u0027. $HOME/lf-env.sh\u0027 should work almost everywhere.",
+      "revId": "a140d8806a889f80f1f0af5399591d4797d793d3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a3b119c9_65630dbf",
+        "filename": "jjb/packaging/openstack-k8s-cluster-delete.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2022-01-03T23:09:18Z",
+      "side": 1,
+      "message": "This would need all our scripts to move to a diff shell altogether and should be addressed separately. We have been using bash scripting consistently across repos/projects. We would welcome a proposal/CR.",
+      "parentUuid": "57db1f3f_061cf306",
       "revId": "a140d8806a889f80f1f0af5399591d4797d793d3",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
@@ -248,6 +284,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "89b87154_d6bc26f4",
+        "filename": "jjb/packaging/openstack-k8s-cluster-delete.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2022-01-03T23:09:18Z",
+      "side": 1,
+      "message": "This would need all our scripts to move to a diff shell altogether and should be addressed separately. We have been using bash scripting consistently across repos/projects. We would welcome a proposal/CR.",
+      "parentUuid": "6d403d95_de2e9909",
+      "revId": "a140d8806a889f80f1f0af5399591d4797d793d3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b856a530_1971393d",
         "filename": "jjb/packaging/openstack-k8s-cluster-delete.sh",
         "patchSetId": 6
@@ -259,6 +313,24 @@
       "writtenOn": "2022-01-03T12:03:01Z",
       "side": 1,
       "message": "double brackets and regex with \u003d~ are not portable out of bash.\nBelow is a portable equivalent.\n\nelif expr \"${cluster_delete_status}\" : \".*accepted.*\" \u003e/dev/null; then\n\nNB: stdout redirection to /dev/null is here to give a strict equivalent but it might be ommitted if not needed.",
+      "revId": "a140d8806a889f80f1f0af5399591d4797d793d3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de17c277_68847b25",
+        "filename": "jjb/packaging/openstack-k8s-cluster-delete.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2022-01-03T23:09:18Z",
+      "side": 1,
+      "message": "This would need all our scripts to move to a diff shell altogether and should be addressed separately. We have been using bash scripting consistently across repos/projects. We would welcome a proposal/CR.",
+      "parentUuid": "b856a530_1971393d",
       "revId": "a140d8806a889f80f1f0af5399591d4797d793d3",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
