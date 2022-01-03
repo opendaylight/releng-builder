@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03caec7e_c49ffdc7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 6731
+      },
+      "writtenOn": "2022-01-03T12:03:01Z",
+      "side": 1,
+      "message": "I think it would be more correct to write \"allows the creation of a K8S cluster\" or \"allows creating  a K8S cluster\"",
+      "range": {
+        "startLine": 9,
+        "startChar": 20,
+        "endLine": 9,
+        "endChar": 29
+      },
+      "revId": "a140d8806a889f80f1f0af5399591d4797d793d3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7d91d3e5_8666e403",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 6731
+      },
+      "writtenOn": "2022-01-03T12:03:01Z",
+      "side": 1,
+      "message": "\"LF-Jira: RELENG-3644\" is enough IMO.\nWith that syntax it points to ODL JIRA  rather than the LFN instance.\nI think that \"Issue-ID:\" should be removed to avoid parsing issues.",
+      "revId": "a140d8806a889f80f1f0af5399591d4797d793d3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea2221d8_18318139",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6731
+      },
+      "writtenOn": "2022-01-03T12:03:01Z",
+      "side": 1,
+      "message": "Happy new year everyone.\n\n@Anil and Andrew LGTM as far as I can see but -1 because of a few  commit messages issues.\n\nAlso I\u0027ve added a few remarks to improve the portability only in the first script and I encourage you to consider them everywhere here.\nEven if I won\u0027t block you for that or if you want to stick with bash for the moment.\n\nAlthough bash is a good interactive shell, I am no fond of using it for such scripting\nlike most GNU/linux distros now.(cf https://wiki.ubuntu.com/DashAsBinSh and https://mywiki.wooledge.org/Bashism)\n\nHope this helps\nGuillaume\n\n",
+      "revId": "a140d8806a889f80f1f0af5399591d4797d793d3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cfa3b676_28803a35",
+        "filename": "jjb/packaging/openstack-k8s-cluster-delete.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 6731
+      },
+      "writtenOn": "2022-01-03T12:03:01Z",
+      "side": 1,
+      "message": "-l is to simulate a login-like shell invocation (and is also supported by dash).\nI am not very familiar with this kind of k8s deployment script.\nSo this might sound like a stupid question but is it really needed here ?\nAnd if so why?\nI have the feeling this is related to the users tests scripts that are mentioned in the commit message body but it is not crystal-clear to me.",
+      "revId": "a140d8806a889f80f1f0af5399591d4797d793d3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0dff3f55_03e34bfa",
+        "filename": "jjb/packaging/openstack-k8s-cluster-delete.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 6731
+      },
+      "writtenOn": "2022-01-03T12:03:01Z",
+      "side": 1,
+      "message": "this is pretty usefull for debugging\n\u0027-eux\u0027 is supported by ash/dash but not everywhere\n\n\u0027-o pipefail\u0027 is hard to port\nIt is not supported by dash/ash and can behave differently in some others shells.\nThere are several alternatives but no unique recipe AFAIK.\nmoreutils/mispipe is one of them - cf https://stackoverflow.com/questions/17757039/equivalent-of-pipefail-in-dash-shell",
+      "revId": "a140d8806a889f80f1f0af5399591d4797d793d3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "57db1f3f_061cf306",
+        "filename": "jjb/packaging/openstack-k8s-cluster-delete.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 6731
+      },
+      "writtenOn": "2022-01-03T12:03:01Z",
+      "side": 1,
+      "message": "source is not portable out of bash\n~ is not understood by dash\n\n\u0027. $HOME/lf-env.sh\u0027 should work almost everywhere.",
+      "revId": "a140d8806a889f80f1f0af5399591d4797d793d3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d403d95_de2e9909",
+        "filename": "jjb/packaging/openstack-k8s-cluster-delete.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 6731
+      },
+      "writtenOn": "2022-01-03T12:03:01Z",
+      "side": 1,
+      "message": "double brackets are not portable out of bash\nand I think their use is not needed in this specific case.",
+      "revId": "a140d8806a889f80f1f0af5399591d4797d793d3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b856a530_1971393d",
+        "filename": "jjb/packaging/openstack-k8s-cluster-delete.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 6731
+      },
+      "writtenOn": "2022-01-03T12:03:01Z",
+      "side": 1,
+      "message": "double brackets and regex with \u003d~ are not portable out of bash.\nBelow is a portable equivalent.\n\nelif expr \"${cluster_delete_status}\" : \".*accepted.*\" \u003e/dev/null; then\n\nNB: stdout redirection to /dev/null is here to give a strict equivalent but it might be ommitted if not needed.",
+      "revId": "a140d8806a889f80f1f0af5399591d4797d793d3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
