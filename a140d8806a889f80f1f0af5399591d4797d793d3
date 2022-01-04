@@ -195,6 +195,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "772807cd_d147753a",
+        "filename": "jjb/packaging/openstack-k8s-cluster-delete.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 6731
+      },
+      "writtenOn": "2022-01-04T08:09:34Z",
+      "side": 1,
+      "message": "fair enough. Thx for the explanation.",
+      "parentUuid": "41468631_8a2b1a6c",
+      "revId": "a140d8806a889f80f1f0af5399591d4797d793d3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0dff3f55_03e34bfa",
@@ -226,6 +244,24 @@
       "side": 1,
       "message": "This would need all our scripts to move to a diff shell altogether and should be addressed separately. We have been using bash scripting consistently across repos/projects. We would welcome a proposal/CR.",
       "parentUuid": "0dff3f55_03e34bfa",
+      "revId": "a140d8806a889f80f1f0af5399591d4797d793d3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c1d53626_9677d7ac",
+        "filename": "jjb/packaging/openstack-k8s-cluster-delete.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 6731
+      },
+      "writtenOn": "2022-01-04T08:09:34Z",
+      "side": 1,
+      "message": "I do agree  for the pipefail particular case here.\n\nhowever, the other bashisms below are pretty simple to fix without any side-effect and this would greatly ease any further steps.\nMore explanations below.\nIMO, this work has to be done progressively. It would be pretty painful and probably unreviewable to address every bashisms in a single CR.\nWhy not doing it directly here ?",
+      "parentUuid": "dba28422_822219aa",
       "revId": "a140d8806a889f80f1f0af5399591d4797d793d3",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
@@ -267,6 +303,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ac5730f5_ed025df4",
+        "filename": "jjb/packaging/openstack-k8s-cluster-delete.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 6731
+      },
+      "writtenOn": "2022-01-04T08:09:34Z",
+      "side": 1,
+      "message": "actually not, the dot syntax is completely valid in bash too.\nApart relative path support, the only real difference with the source syntax is that the dot one does not accept more than one argument.\n\nAdressing it directly here would make any potential transition to another shell much smoother.",
+      "parentUuid": "a3b119c9_65630dbf",
+      "revId": "a140d8806a889f80f1f0af5399591d4797d793d3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6d403d95_de2e9909",
         "filename": "jjb/packaging/openstack-k8s-cluster-delete.sh",
         "patchSetId": 6
@@ -302,6 +356,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d1bd5a5b_3c627a94",
+        "filename": "jjb/packaging/openstack-k8s-cluster-delete.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 6731
+      },
+      "writtenOn": "2022-01-04T08:09:34Z",
+      "side": 1,
+      "message": "actually not, the simple bracket syntax is completely valid in bash too, but often requires more quotes than the double-bracket one.\nAdressing it directly here would make any potential transition to another shell much smoother.",
+      "parentUuid": "89b87154_d6bc26f4",
+      "revId": "a140d8806a889f80f1f0af5399591d4797d793d3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b856a530_1971393d",
         "filename": "jjb/packaging/openstack-k8s-cluster-delete.sh",
         "patchSetId": 6
@@ -331,6 +403,24 @@
       "side": 1,
       "message": "This would need all our scripts to move to a diff shell altogether and should be addressed separately. We have been using bash scripting consistently across repos/projects. We would welcome a proposal/CR.",
       "parentUuid": "b856a530_1971393d",
+      "revId": "a140d8806a889f80f1f0af5399591d4797d793d3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0796508f_4cb9203d",
+        "filename": "jjb/packaging/openstack-k8s-cluster-delete.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 6731
+      },
+      "writtenOn": "2022-01-04T08:09:34Z",
+      "side": 1,
+      "message": "actually not, the expr command is completely valid in bash too.\n\nAdressing it directly here would make any potential transition to another shell much smoother.",
+      "parentUuid": "de17c277_68847b25",
       "revId": "a140d8806a889f80f1f0af5399591d4797d793d3",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }

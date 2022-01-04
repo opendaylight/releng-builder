@@ -16,6 +16,41 @@
       "message": "Just for the ref in the gist, I tried bashisms on the builder repo, but did not notice anything significant on our scripts (except for missing !# in the startup scripts). I\u0027d suggest we could add a tox check (to give out warnings for this) to address posix compatibility, AFAIK shellcheck already does most of what is required.\n\nhttps://gist.github.com/askb/a02b5f1a50b14e467822054b04b9cf85",
       "revId": "62510978328697c0f6c7de913134a008d1c6d628",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fcb11ab4_c8d3f5d5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6731
+      },
+      "writtenOn": "2022-01-04T08:09:34Z",
+      "side": 1,
+      "message": "I am not sure to understand what you mean by bashism but if you meant the checkbashim command, I suspect it was run without the option -f.\nThis option is required to lint scripts with an explicit bash shebang.\nOtherwise, it will warn nothing except if no bashism is found in the script\n( to indicate the shebang can safely be changed for /bin/sh ).\n\nIf it helps, I can propose you a checkbashism tox profile in another CR (with voting disabled) so that you can see what would be the right way to perform it here according to me.\n\nI agree shellcheck is a good start and does provide good pointers about POSIX compliancy.But it also adresses other kind of issues\nCheckbashism is more complete and indicated IMO, though both complete well each other.",
+      "parentUuid": "c9d12233_0ff7fe83",
+      "revId": "62510978328697c0f6c7de913134a008d1c6d628",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "69582a5b_25a7b469",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6731
+      },
+      "writtenOn": "2022-01-04T08:09:34Z",
+      "side": 1,
+      "message": "LGTM\nAlthough I am fine to do this in another CR, I would prefer to address directly here the remaining comments (except the \u0027-o pipefail\u0027 specific issue).",
+      "revId": "62510978328697c0f6c7de913134a008d1c6d628",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
