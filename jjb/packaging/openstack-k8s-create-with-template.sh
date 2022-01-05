@@ -16,7 +16,7 @@ set -eux -o pipefail
 source ~/lf-env.sh
 lf-activate-venv python-openstackclient python-magnumclient
 
-OS_TIMEOUT=12       # Wait time in minutes for OpenStack cluster to come up.
+OS_TIMEOUT=20       # Wait time in minutes for OpenStack cluster to come up.
 CLUSTER_RETRIES=3   # Number of times to retry creating a cluster.
 CLUSTER_SUCCESSFUL=false
 
@@ -76,7 +76,8 @@ helm_client_url="${helm_client_url}" \
 
     echo "INFO $try: Wait until ${OS_TIMEOUT} (in minutes) to rollout ${cluster_name}."
     for i in $(seq $OS_TIMEOUT); do
-        sleep 60
+        sleep 90
+
         CLUSTER_STATUS=$(openstack --os-cloud "$os_cloud" coe cluster show "$cluster_uuid" -c status -f value)
         echo "$i: ${CLUSTER_STATUS}"
 
