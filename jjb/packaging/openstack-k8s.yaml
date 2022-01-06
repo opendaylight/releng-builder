@@ -21,6 +21,6 @@
     node-flavor: v3-standard-8
     openstack-cloud: vex
     master-lb-floating-ip-enabled: "false"
-    openstack-k8s-deploy-script: "!include-raw-escape: openstack-k8s-deploy-helm.sh"
+    openstack-k8s-deploy-script: !include-raw-escape: openstack-k8s-deploy-helm.sh
     jobs:
       - "{project-name}-k8s-odl-deploy-test"
