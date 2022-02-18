@@ -914,11 +914,8 @@ if [[ "$USEFEATURESBOOT" == "True" ]]; then
     sed -ie "s/\\(featuresBoot=\\|featuresBoot =\\)/featuresBoot = ${ACTUALFEATURES},/g" ${FEATURESCONF}
 fi
 
-FEATURE_TEST_STRING="features-integration-test"
+FEATURE_TEST_STRING="features-test"
 KARAF_VERSION=${KARAF_VERSION:-karaf4}
-if [[ "$KARAF_VERSION" == "karaf4" ]]; then
-    FEATURE_TEST_STRING="features-test"
-fi
 
 # only manipulate feature repo in integration distro
 if [[ "$KARAF_PROJECT" == "integration" ]]; then
@@ -1253,5 +1250,3 @@ function install_ovs_from_path() {
     ${SSH} "${ip}" "sudo yum -y install createrepo && createrepo --database /tmp/ovs_rpms"
     install_ovs_from_repo "${ip}" file:/tmp/ovs_rpms
 }
-
-

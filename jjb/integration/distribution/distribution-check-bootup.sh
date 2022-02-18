@@ -36,9 +36,6 @@ unzip -q "${BUNDLE}"
 echo "Configuring the startup features..."
 FEATURESCONF="${WORKSPACE}/${BUNDLEFOLDER}/etc/org.apache.karaf.features.cfg"
 FEATURE_TEST_STRING="features-test"
-if [[ "$KARAF_VERSION" == "karaf3" ]]; then
-    FEATURE_TEST_STRING="features-integration-test"
-fi
 
 # only replace feature repo in integration/distro, MRI projects need to pull in
 # the features they need by themselves
