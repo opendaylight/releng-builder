@@ -16,6 +16,23 @@
       "message": "jjb-deploy openflowplugin-csit-1node-sanity-only-phosphorus",
       "revId": "7274121d12a7095d8278ab2a882e43e2fb33e6b6",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a010b59f_95a76c7e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1927
+      },
+      "writtenOn": "2022-02-18T20:43:33Z",
+      "side": 1,
+      "message": "KARAF_VERSION of the \u0027openflowplugin-csit-1node-sanity-only-*\u0027 tests is \u0027odl\u0027 and does not match \u0027karaf4\u0027, FEATURE_TEST_STRING is incorrectly set to \u0027features-integration-test\u0027:\n\nFor example, openflowplugin-csit-1node-sanity-only-phosphorus #342\n\nhttps://s3-logs.opendaylight.org/logs/releng/vex-yul-odl-jenkins-1/openflowplugin-csit-1node-sanity-only-phosphorus/342/console.log.gz\n\n```\n+ FEATURE_TEST_STRING\u003dfeatures-integration-test\n+ KARAF_VERSION\u003dodl\n+ [[ odl \u003d\u003d \\k\\a\\r\\a\\f\\4 ]]\n+ [[ integration \u003d\u003d \\i\\n\\t\\e\\g\\r\\a\\t\\i\\o\\n ]]\n+ sed -ie \u0027s%\\(featuresRepositories\u003d\\|featuresRepositories \u003d\\)%featuresRepositories \u003d mvn:org.opendaylight.integration/features-integration-test/15.2.0-SNAPSHOT/xml/features,mvn:org.apache.karaf.decanter/apache-karaf-decanter/1.2.0/xml/features,%g\u0027 /tmp/opendaylight-15.2.0-SNAPSHOT/etc/org.apache.karaf.features.cfg\n```\n\nSince the latest MRI version bump in Phosphorus, controller does not even boot up properly making pretty much all the CSIT test cases fail.\n\nSandbox test shows that the OpenFlow Plugin sanity test for Phosphorus is working with this change:\n\nhttps://jenkins.opendaylight.org/sandbox/view/All/job/openflowplugin-csit-1node-sanity-only-phosphorus/1/",
+      "revId": "7274121d12a7095d8278ab2a882e43e2fb33e6b6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
