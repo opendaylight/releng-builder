@@ -915,11 +915,15 @@ if [[ "$USEFEATURESBOOT" == "True" ]]; then
 fi
 
 FEATURE_TEST_STRING="features-test"
+FEATURE_TEST_VERSION="$BUNDLE_VERSION"
+if [[ "$KARAF_ARTIFACT" == "opendaylight" ]]; then
+    FEATURE_TEST_VERSION="$(sed -r "s%^([0-9]+)\.([0-9]+)\.0(.*)%0.\1.\2\3%" <<<"$BUNDLE_VERSION")"
+fi
 KARAF_VERSION=${KARAF_VERSION:-karaf4}
 
 # only manipulate feature repo in integration distro
 if [[ "$KARAF_PROJECT" == "integration" ]]; then
-	sed -ie "s%\\(featuresRepositories=\\|featuresRepositories =\\)%featuresRepositories = mvn:org.opendaylight.integration/\${FEATURE_TEST_STRING}/${BUNDLE_VERSION}/xml/features,mvn:org.apache.karaf.decanter/apache-karaf-decanter/1.2.0/xml/features,%g" ${FEATURESCONF}
+	sed -ie "s%\\(featuresRepositories=\\|featuresRepositories =\\)%featuresRepositories = mvn:org.opendaylight.integration/\${FEATURE_TEST_STRING}/\${FEATURE_TEST_VERSION}/xml/features,mvn:org.apache.karaf.decanter/apache-karaf-decanter/1.2.0/xml/features,%g" ${FEATURESCONF}
 	if [[ ! -z "${REPO_URL}" ]]; then
 	   sed -ie "s%featuresRepositories =%featuresRepositories = ${REPO_URL},%g" ${FEATURESCONF}
 	fi
