@@ -36,11 +36,15 @@ unzip -q "${BUNDLE}"
 echo "Configuring the startup features..."
 FEATURESCONF="${WORKSPACE}/${BUNDLEFOLDER}/etc/org.apache.karaf.features.cfg"
 FEATURE_TEST_STRING="features-test"
+FEATURE_TEST_VERSION="$BUNDLE_VERSION"
+if [[ "$KARAF_ARTIFACT" == "opendaylight" ]]; then
+    FEATURE_TEST_VERSION="$(sed -r "s%^([0-9]+)\.([0-9]+)\.0(.*)%0.\1.\2\3%" <<<"$BUNDLE_VERSION")"
+fi
 
 # only replace feature repo in integration/distro, MRI projects need to pull in
 # the features they need by themselves
 if [[ "$KARAF_PROJECT" == integration ]]; then
-    sed -ie "s%\(featuresRepositories= \|featuresRepositories = \)%featuresRepositories = mvn:org.opendaylight.integration/${FEATURE_TEST_STRING}//xml/features,%g" "${FEATURESCONF}"
+    sed -ie "s%\(featuresRepositories= \|featuresRepositories = \)%featuresRepositories = mvn:org.opendaylight.integration/${FEATURE_TEST_STRING}/${FEATURE_TEST_VERSION}/xml/features,%g" "${FEATURESCONF}"
 
     if [[ -n "${REPO_URL}" ]]; then
        # sed below will fail if it finds space between feature repos.
