@@ -16,6 +16,23 @@
       "message": "jjb-deploy openflowplugin-csit-1node-sanity-only-phosphorus",
       "revId": "3f4ebacef8227091c3df2a918192339bb8e31499",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "16dd2fd3_fc62f5d5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1927
+      },
+      "writtenOn": "2022-02-22T00:59:14Z",
+      "side": 1,
+      "message": "Currently, \u0027features-test\u0027 version set for \u0027openflowplugin-csit-1node-sanity-only-*\u0027 is incorrect because the version of \u0027opendaylight\u0027 bundle, which has a different versioning scheme, is also used for the feature repository.\n\nFor example, in the following configuration, \u0027features-test\u0027 version is set to \u002715.2.0-SNAPSHOT\u0027 after opendaylight version when it should be \u00270.15.2-SNAPSHOT\u0027:\n\nhttps://s3-logs.opendaylight.org/logs/releng/vex-yul-odl-jenkins-1/openflowplugin-csit-1node-sanity-only-phosphorus/346/console.log.gz\n\n```\nfeaturesRepositories \u003d mvn:org.opendaylight.integration/features-test/15.2.0-SNAPSHOT/xml/features,mvn:org.apache.karaf.decanter/apache-karaf-decanter/1.2.0/xml/features, file:${karaf.etc}/6b1d04ec-27d9-4c01-9a2f-1655edbca5cd.xml\n```\n\nThis change addresses the issue, and set the correct \u0027features-test\u0027 version:\n\nhttps://s3-logs.opendaylight.org/logs/sandbox/vex-yul-odl-jenkins-2/openflowplugin-csit-1node-sanity-only-phosphorus/3/console.log.gz\n\n```\nfeaturesRepositories \u003d mvn:org.opendaylight.integration/features-test/0.15.2-SNAPSHOT/xml/features,mvn:org.apache.karaf.decanter/apache-karaf-decanter/1.2.0/xml/features, file:${karaf.etc}/0512751d-3558-4f08-b419-40db6fcf226f.xml\n```\n\n---\n\n\u0027distribution-santiy-*\u0027 tests do not include the version in the feature repository path at all. For example,\n\nhttps://s3-logs.opendaylight.org/logs/releng/vex-yul-odl-jenkins-1/distribution-sanity-phosphorus/312/console.log.gz\n\n```\nfeaturesRepositories \u003d mvn:org.opendaylight.integration/features-test//xml/features,file:${karaf.etc}/6b1d04ec-27d9-4c01-9a2f-1655edbca5cd.xml\n```\n\nAlthough this doesn\u0027t seem to negatively affect testing, this change also addresses the missing version issue:\n\nhttps://s3-logs.opendaylight.org/logs/sandbox/vex-yul-odl-jenkins-2/distribution-sanity-phosphorus/1/console.log.gz\n\n```\nfeaturesRepositories \u003d mvn:org.opendaylight.integration/features-test/0.15.2-SNAPSHOT/xml/features,file:${karaf.etc}/0512751d-3558-4f08-b419-40db6fcf226f.xml\n```\n",
+      "revId": "3f4ebacef8227091c3df2a918192339bb8e31499",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
