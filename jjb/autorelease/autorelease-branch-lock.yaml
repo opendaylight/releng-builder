@@ -1,0 +1,100 @@
+---
+# Self-service job to lock/unlock a branch for release work or code-freeze
+# The job also can enable/disable supercommitter rights for any given branch.
+- job-template:
+    name: "{project-name}-gerrit-branch-lock-{stream}"
+
+    ######################
+    # Default parameters #
+    ######################
+
+    branch: "**"
+    disable-job: false
+    git-url: "$GIT_URL/$GERRIT_PROJECT"
+    submodule-timeout: 10
+    submodule-disable: true
+    gerrit_merge_triggers: ""
+
+    #####################
+    # Job Configuration #
+    #####################
+
+    project-type: freestyle
+    node: "{build-node}"
+    disabled: "{disable-job}"
+
+    properties:
+      - lf-infra-properties:
+          project: "{project}"
+          build-days-to-keep: 1
+
+    parameters:
+      - lf-infra-parameters:
+          project: "{project}"
+          stream: "{stream}"
+          branch: "{branch}"
+      - bool:
+          name: CODE_FREEZE
+          default: false
+          description: |
+            If CODE_FREEZE is checked then the GERRIT_BRANCH is locked
+            for registered users.
+      - bool:
+          name: DRY_RUN
+          default: false
+          description: |
+            If DRY_RUN is checked the permission changes are not pushed.
+      - bool:
+          name: RELEASE_PREP
+          default: false
+          description: |
+            If RELEASE_PREP is checked then the GERRIT_BRANCH is locked
+            for registered users and unlocked for RELENG.
+      - bool:
+          name: SUPERCOMMITTERS
+          default: false
+          description: |
+            If SUPERCOMMITTERS is checked then supercommitters rights are
+            granted on the GERRIT_BRANCH.
+      - bool:
+          name: UNLOCK
+          default: false
+          description: |
+            If UNLOCK is checked then GERRIT_BRANCH is unlocked
+            If supercommitters rights is set, they are removed.
+
+    wrappers:
+      - lf-infra-wrappers:
+          build-timeout: 5
+          jenkins-ssh-credential: "{jenkins-ssh-credential}"
+
+    scm:
+      - lf-infra-gerrit-scm:
+          git-url: "{git-url}"
+          refspec: ""
+          branch: "$GERRIT_BRANCH"
+          submodule-recursive: false
+          submodule-timeout: "{submodule-timeout}"
+          submodule-disable: "{submodule-disable}"
+          choosing-strategy: default
+          jenkins-ssh-credential: "{jenkins-ssh-credential}"
+
+    builders:
+      - shell: !include-raw-escape: autorelease-gerrit-branch-lock.sh
+
+    publishers:
+      - lf-infra-publish
+
+- project:
+    name: autorelease-branch-lock
+    project: releng/autorelease
+    project-name: autorelease
+    jobs:
+      - "{project-name}-gerrit-branch-lock-{stream}"
+    stream:
+      - sulfur:
+          branch: "master"
+      - phosphorus:
+          branch: "stable/phosphorus"
+      - silicon:
+          branch: "stable/silicon"
