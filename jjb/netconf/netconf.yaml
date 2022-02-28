@@ -81,27 +81,6 @@
     staging-profile-id: a67b22fc3663f
 
 - project:
-    name: netconf-1.7.4.x
-    jobs:
-      - odl-maven-jobs-jdk11
-      - odl-maven-verify-jobs
-
-    stream: 1.7.4.x
-    project: "netconf"
-    project-name: "netconf"
-    branch: "1.7.4.x"
-    karaf-version: "netconf"
-    mvn-settings: "netconf-settings"
-    mvn-goals: "clean deploy -Pintegrationtests"
-    mvn-opts: "-Xmx2048m -Dmaven.compile.fork=true"
-    build-timeout: 90
-    dependencies: "aaa-merge-{stream},controller-merge-{stream},odlparent-merge-{stream},yangtools-merge-{stream}"
-    email-upstream: "[netconf] [aaa] [controller] [odlparent] [yangtools]"
-
-    # Used by the release job
-    staging-profile-id: a67b22fc3663f
-
-- project:
     name: netconf-release-management
     jobs:
       - gerrit-release-merge
