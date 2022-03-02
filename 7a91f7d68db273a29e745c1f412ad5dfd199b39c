@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a0b3df7_3c89202e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2022-03-02T00:01:24Z",
+      "side": 1,
+      "message": "Need to switch to a choice parameter instead of a bunch of booleans",
+      "revId": "7a91f7d68db273a29e745c1f412ad5dfd199b39c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "050e7d77_9626e362",
+        "filename": "jjb/autorelease/autorelease-branch-lock.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2022-03-02T00:01:24Z",
+      "side": 1,
+      "message": "keep DRY_RUN as a boolean, but move all the others into the \u0027choice\u0027 parameter type",
+      "range": {
+        "startLine": 36,
+        "startChar": 1,
+        "endLine": 65,
+        "endChar": 0
+      },
+      "revId": "7a91f7d68db273a29e745c1f412ad5dfd199b39c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "87c05148_20e1bd91",
+        "filename": "jjb/autorelease/autorelease-gerrit-branch-lock.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2022-03-02T00:01:24Z",
+      "side": 1,
+      "message": "This block should likely go away with the choice parameter being properly set",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 2
+      },
+      "revId": "7a91f7d68db273a29e745c1f412ad5dfd199b39c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
