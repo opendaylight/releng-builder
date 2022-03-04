@@ -31,6 +31,17 @@
 
     mvn-version: mvn38
 
+- job-group:
+    name: odl-maven-verify-jobs-jdk17
+
+    jobs:
+      - gerrit-maven-verify
+      - gerrit-maven-verify-dependencies:
+          build-timeout: 180
+
+    mvn-version: mvn38
+    java-version: openjdk17
+
 - job-template:
     name: "{project-name}-integration-{stream}"
 
