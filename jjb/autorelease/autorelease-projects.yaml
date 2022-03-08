@@ -13,8 +13,11 @@
       - gerrit-tox-verify
 
     stream:
-      - sulfur:
+      - chlorine:
           branch: "master"
+          integration-test: sulfur
+      - sulfur:
+          branch: "stable/sulfur"
           integration-test: sulfur
       - phosphorus:
           branch: "stable/phosphorus"
