@@ -65,6 +65,6 @@ python -m pip install -r requirements.txt
 # Todo: Workaround needs pinned version of odltool to the latest because of the
 # update in the dependency resolver in pip 21.3.
 # Ref: https://github.com/pypa/pip/issues/9215
-pip install odltools==0.1.33
+pip install odltools==0.1.34
 odltools -V
 pip freeze
