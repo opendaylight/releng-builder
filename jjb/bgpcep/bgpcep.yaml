@@ -8,6 +8,8 @@
           project-pattern: bgpcep
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-bgpcep/47576/
           rtd-token: dbe9d1aabbe8812a26b428908f6613c28e3191fc
+      - gerrit-tox-verify:
+          parallel: true
       - odl-maven-jobs-jdk11
       - odl-maven-verify-jobs
 
