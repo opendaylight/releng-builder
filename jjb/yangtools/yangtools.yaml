@@ -4,6 +4,7 @@
     jobs:
       - odl-maven-jobs-jdk11
       - odl-maven-verify-jobs
+      - odl-maven-verify-jobs-jdk17
 
     project: yangtools
     project-name: yangtools
@@ -12,7 +13,7 @@
 
     java-version: "openjdk11"
     mvn-settings: "yangtools-settings"
-    mvn-version: mvn36
+    build-node: centos8-builder-4c-4g
 
     dependencies: ""
     email-upstream: "[yangtools]"
