@@ -6,7 +6,7 @@
     # Default parameters #
     ######################
 
-    mvn-version: mvn35
+    mvn-version: mvn38
     csit-gate-list: ""
     block_on_csit: false
     # Unless block_on_csit is true, the failure-threshold will be ignored. For project jobs that
@@ -175,7 +175,7 @@
       - lf-update-java-alternatives:
           java-version: "{java-version}"
       - maven-target:
-          maven-version: mvn35
+          maven-version: mvn38
           pom: pom.xml
           goals: |
             clean install dependency:tree -DoutputFile=dependency_tree.txt
@@ -259,7 +259,7 @@
           path: "$KARAF_ARTIFACT/src/main/assembly"
 
     maven:
-      maven-name: "mvn35"
+      maven-name: "mvn38"
       root-pom: "pom.xml"
       goals: >
         clean install dependency:tree -DoutputFile=dependency_tree.txt -V -B
@@ -300,7 +300,7 @@
     # Default parameters #
     ######################
     disable-job: false
-    mvn-version: mvn35
+    mvn-version: mvn38
 
     #####################
     # Job Configuration #
@@ -329,7 +329,7 @@
       - distribution-karaf-version:
           karaf-version: "{karaf-version}"
       - maven-exec:
-          maven-version: mvn35
+          maven-version: mvn38
 
     scm:
       - integration-gerrit-scm:
