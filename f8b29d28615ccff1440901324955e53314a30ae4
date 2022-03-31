@@ -16,6 +16,24 @@
       "message": "Just by curiosity, any particular reason to switch to 4c-4g ?",
       "revId": "f8b29d28615ccff1440901324955e53314a30ae4",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "05f95e63_30548f0a",
+        "filename": "jjb/aaa/aaa.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2022-03-31T13:08:35Z",
+      "side": 1,
+      "message": "It\u0027s not actually a switch at all, we have:\n\ndefaults.yaml:    build-node: centos7-builder-4c-4g\n\nWe really need to retire those centos7 builders and switch the default 😊",
+      "parentUuid": "ef93368c_3ed64a8e",
+      "revId": "f8b29d28615ccff1440901324955e53314a30ae4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
