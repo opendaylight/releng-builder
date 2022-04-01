@@ -29,7 +29,10 @@
           scope: "only"
 
     # Features to install
-    install-features: "odl-openflowplugin-flow-services-rest,odl-openflowplugin-app-bulk-o-matic"
+    install-features: >
+      odl-openflowplugin-flow-services-rest,
+      odl-openflowplugin-app-bulk-o-matic,
+      odl-restconf-nb-bierman02
 
     # Robot custom options
     robot-options: "-v ODL_OF_PLUGIN:lithium"
