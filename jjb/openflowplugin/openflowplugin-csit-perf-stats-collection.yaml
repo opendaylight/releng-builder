@@ -29,7 +29,9 @@
           scope: "only"
 
     # Features to install
-    install-features: "odl-openflowplugin-flow-services-rest"
+    install-features: >
+      odl-openflowplugin-flow-services-rest,
+      odl-restconf-nb-bierman02
 
     # Robot custom options
     robot-options: "-v flnr:100000 -v swnr:32 -v fpr:200"

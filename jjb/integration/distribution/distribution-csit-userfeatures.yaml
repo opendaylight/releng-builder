@@ -21,7 +21,12 @@
           scope: "all"
 
     # Features to install
-    install-features: "odl-restconf,odl-distribution-version,odl-netconf-topology,odl-jolokia"
+    install-features: >
+      odl-restconf,
+      odl-restconf-nb-bierman02,
+      odl-distribution-version,
+      odl-netconf-topology,
+      odl-jolokia
 
     # Robot custom options
     robot-options: "-v USE_NETCONF_CONNECTOR:False"
