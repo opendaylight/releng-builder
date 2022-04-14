@@ -13,12 +13,12 @@
           parallel: true
       - odl-maven-jobs-jdk11
       - odl-maven-verify-jobs
-      - odl-maven-verify-jobs-jdk17
+      - odl-maven-verify-jobs-jdk17:
+        build-node: centos8-builder-8c-8g
 
     stream: master
     project: "bgpcep"
     project-name: "bgpcep"
-    build-node: centos8-builder-8c-8g
     build-timeout: 120
     branch: "master"
     java-version: "openjdk11"

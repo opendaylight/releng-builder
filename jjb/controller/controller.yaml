@@ -9,7 +9,8 @@
           rtd-token: b8440116c823a80c0fb0479eb7448a9196e6932f
       - odl-maven-jobs-jdk11
       - odl-maven-verify-jobs
-      - odl-maven-verify-jobs-jdk17
+      - odl-maven-verify-jobs-jdk17:
+        build-node: centos8-builder-4c-4g
 
     stream: master
     project: "controller"
@@ -17,7 +18,6 @@
     branch: "master"
     java-version: "openjdk11"
     mvn-settings: "controller-settings"
-    build-node: centos8-builder-4c-4g
     mvn-goals: "clean deploy -Pdocs"
     mvn-opts: "-Xmx3072m -Dmaven.compile.fork=true"
     build-timeout: 90

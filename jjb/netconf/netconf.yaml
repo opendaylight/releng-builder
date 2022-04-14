@@ -9,7 +9,8 @@
           rtd-token: aee2df909686ab7ba36f2ed08d90bdcf81f7b8dc
       - odl-maven-jobs-jdk11
       - odl-maven-verify-jobs
-      - odl-maven-verify-jobs-jdk17
+      - odl-maven-verify-jobs-jdk17:
+        build-node: centos8-builder-4c-4g
 
     stream: master
     project: "netconf"
@@ -18,7 +19,6 @@
     java-version: "openjdk11"
     karaf-version: "netconf"
     mvn-settings: "netconf-settings"
-    build-node: centos8-builder-4c-4g
     mvn-goals: "clean deploy -Pintegrationtests"
     mvn-opts: "-Xmx2048m -Dmaven.compile.fork=true"
     build-timeout: 90
