@@ -22,6 +22,28 @@
     mvn-version: mvn38
 
 - job-group:
+    name: odl-maven-jobs-jdk17
+
+    jobs:
+      - gerrit-maven-clm:
+          nexus-iq-namespace: odl-
+          nexus-iq-stage: release
+
+      - gerrit-maven-merge:
+          build-timeout: 180
+
+      - gerrit-maven-stage:
+          sign-artifacts: true
+          cron: ""
+
+      - gerrit-maven-mri-stage:
+          sign-artifacts: true
+          cron: ""
+
+    java-version: openjdk17
+    mvn-version: mvn38
+
+- job-group:
     name: odl-maven-verify-jobs
 
     jobs:
