@@ -7,17 +7,16 @@
           project-pattern: mdsal
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-mdsal/44052/
           rtd-token: a56d6212dd3de3eef12642affe8a6100cc8bc002
-      - odl-maven-jobs-jdk11
-      - odl-maven-verify-jobs
-      - odl-maven-verify-jobs-jdk17:
-        build-node: centos8-builder-4c-4g
+      - odl-maven-jobs-jdk17
+      - odl-maven-verify-jobs-jdk17
 
     project: mdsal
     project-name: mdsal
     branch: master
     stream: master
 
-    java-version: "openjdk11"
+    build-node: centos8-builder-4c-4g
+    java-version: "openjdk17"
     mvn-settings: "mdsal-settings"
     build-timeout: 60
 
