@@ -110,11 +110,11 @@
     project: "netconf"
     project-name: "netconf"
     branch: "master"
-    java-version: "openjdk11"
+    build-node: centos8-builder-4c-4g
+    java-version: "openjdk17"
     mvn-version: mvn38
     mvn-settings: "netconf-settings"
     mvn-goals: "clean deploy -Pintegrationtests"
-    mvn-opts: "-Xmx2048m -Dmaven.compile.fork=true"
     build-timeout: 90
     sonarcloud: true
     sonarcloud-project-organization: "{sonarcloud_project_organization}"
