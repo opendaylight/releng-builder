@@ -14,8 +14,12 @@
 
     # Project branches
     stream:
-      - sulfur:
+      - chlorine:
           branch: "master"
+          jre: "openjdk11"
+          install: "all"
+      - sulfur:
+          branch: "stable/sulfur"
           jre: "openjdk11"
           install: "all"
       - phosphorus:

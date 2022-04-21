@@ -80,8 +80,10 @@
     jobs:
       - "{project-name}-gerrit-branch-lock-{stream}"
     stream:
-      - sulfur:
+      - chlorine:
           branch: "master"
+      - sulfur:
+          branch: "stable/sulfur"
       - phosphorus:
           branch: "stable/phosphorus"
       - silicon:

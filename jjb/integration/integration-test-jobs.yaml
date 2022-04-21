@@ -19,8 +19,18 @@
 
     # CSIT Lists in defaults.yaml
     stream:
-      - sulfur:
+      - chlorine:
           branch: "master"
+          mvn-version: "mvn35"
+          java-version: "openjdk11"
+          csit-list: !include: csit-jobs-chlorine.lst
+          build-order: >
+            odlparent infrautils yangtools mdsal controller serviceutils aaa netconf
+            daexim jsonrpc ovsdb neutron openflowplugin lispflowmapping
+            bgpcep integration/distribution
+
+      - sulfur:
+          branch: "stable/sulfur"
           mvn-version: "mvn35"
           java-version: "openjdk11"
           csit-list: !include: csit-jobs-sulfur.lst
@@ -61,8 +71,21 @@
 
     # CSIT Lists in defaults.yaml
     stream:
-      - sulfur:
+      - chlorine:
           branch: "master"
+          csit-blocklist: >
+            aaa bier controller dluxapps genius lispflowmapping l2switch mdsal nemo
+            netconf netvirt odlmicro packetcable sfc sxp telemetry tsdr usc yangtools
+            gate longevity sanity tdd tempest wip
+            bgpcep-csit-3node-bgpclustering-all
+            bgpcep-csit-3node-bgpclustering-ha-only
+            openflowplugin-csit-1node-bundle-based-reconciliation
+            last-line-is-ignored-so-we-need-something-dummy-here-to-make-sure-the-real-last-line-is-used
+          csit-list: !include: csit-jobs-chlorine.lst
+          csit-mri-list: "{csit-mri-list-chlorine}"
+          csit-weekly-list: "{csit-weekly-list-chlorine}"
+      - sulfur:
+          branch: "stable/sulfur"
           csit-blocklist: >
             aaa bier controller dluxapps genius lispflowmapping l2switch mdsal nemo
             netconf netvirt odlmicro packetcable sfc sxp telemetry tsdr usc yangtools
@@ -109,8 +132,12 @@
       - "integration-sanity-test-{stream}"
 
     stream:
-      - sulfur:
+      - chlorine:
           branch: "master"
+          karaf-version: odl
+          csit-sanity-list: "{csit-sanity-list-chlorine}"
+      - sulfur:
+          branch: "stable/sulfur"
           karaf-version: odl
           csit-sanity-list: "{csit-sanity-list-sulfur}"
       - phosphorus:
@@ -164,7 +191,7 @@
             - file-id: odl-elastic-cloud
               target: "$HOME/.netrc"
       - integration-install-robotframework
-      # yamllint disable-line rule:line-length
+        # yamllint disable-line rule:line-length
       - shell: python3 $WORKSPACE/test/csit/scripts/push_dashboard.py a4ff38b99ef2c7626450543021b4c134.us-east-1.aws.found.io:9243
 
     publishers:

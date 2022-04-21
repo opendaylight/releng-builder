@@ -12,8 +12,17 @@
 
     # Project branches
     stream:
-      - sulfur:
+      - chlorine:
           branch: "master"
+          jre: "openjdk11"
+          install-features: >
+            features-controller,
+            odl-mdsal-replicate-netty,
+            odl-restconf-nb-bierman02,
+            odl-netconf-clustered-topology,
+            odl-clustering-test-app
+      - sulfur:
+          branch: "stable/sulfur"
           jre: "openjdk11"
           install-features: >
             features-controller,

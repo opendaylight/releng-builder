@@ -8,8 +8,11 @@
     project: "ovsdb"
 
     stream:
-      - sulfur:
+      - chlorine:
           branch: "master"
+          java-version: "openjdk11"
+      - sulfur:
+          branch: "stable/sulfur"
           java-version: "openjdk11"
       - phosphorus:
           branch: "stable/phosphorus"

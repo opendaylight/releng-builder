@@ -10,8 +10,11 @@
     testplan: "{project}-basic.txt"
 
     stream:
-      - sulfur:
+      - chlorine:
           branch: "master"
+          jre: "openjdk11"
+      - sulfur:
+          branch: "stable/sulfur"
           jre: "openjdk11"
       - phosphorus:
           branch: "stable/phosphorus"
