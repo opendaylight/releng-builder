@@ -7,15 +7,39 @@
           project-pattern: aaa
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-aaa/47615/
           rtd-token: 621132230e1307d38f4aaf27e669d7dfdf98532f
-      - odl-maven-jobs-jdk11
-      - odl-maven-verify-jobs
-      - odl-maven-verify-jobs-jdk17:
-        build-node: centos8-builder-4c-4g
+      - odl-maven-jobs-jdk17
+      - odl-maven-verify-jobs-jdk17
 
     stream: master
     project: "aaa"
     project-name: "aaa"
     branch: "master"
+    java-version: "openjdk17"
+    mvn-settings: "aaa-settings"
+    build-node: centos8-builder-4c-4g
+    dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}"
+    email-upstream: "[aaa] [odlparent] [yangtools] [controller]"
+
+    # Used by the release job
+    staging-profile-id: 9318cf3c82c33
+
+- project:
+    name: aaa-0.15.x
+    jobs:
+      - "{project-name}-rtd-jobs":
+          build-node: centos7-builder-2c-2g
+          project-pattern: aaa
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-aaa/47615/
+          rtd-token: 621132230e1307d38f4aaf27e669d7dfdf98532f
+      - odl-maven-jobs-jdk11
+      - odl-maven-verify-jobs
+      - odl-maven-verify-jobs-jdk17:
+        build-node: centos8-builder-4c-4g
+
+    stream: 0.15.x
+    project: "aaa"
+    project-name: "aaa"
+    branch: 0.15.x
     java-version: "openjdk11"
     mvn-settings: "aaa-settings"
     mvn-opts: "-Xmx1024m"
@@ -100,10 +124,10 @@
     project: "aaa"
     project-name: "aaa"
     branch: "master"
-    java-version: "openjdk11"
+    java-version: "openjdk17"
     mvn-version: mvn38
     mvn-settings: "aaa-settings"
-    mvn-opts: "-Xmx1024m"
+    build-node: centos8-builder-4c-4g
     sonarcloud: true
     sonarcloud-project-organization: "{sonarcloud_project_organization}"
     sonarcloud-api-token: "{sonarcloud_api_token}"
