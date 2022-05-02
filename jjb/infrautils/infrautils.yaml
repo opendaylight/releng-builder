@@ -35,7 +35,8 @@
           rtd-token: 294c76173237e3a088365c31012cf4ddaa767dc9
       - odl-maven-jobs-jdk11
       - odl-maven-verify-jobs
-      - odl-maven-verify-jobs-jdk17
+      - odl-maven-verify-jobs-jdk17:
+        build-node: centos8-builder-4c-4g
 
     stream: 3.0.x
     project: "infrautils"
@@ -43,7 +44,6 @@
     branch: 3.0.x
     java-version: "openjdk11"
     mvn-settings: "infrautils-settings"
-    build-node: centos8-builder-4c-4g
     dependencies: "odlparent-merge-{stream}"
     email-upstream: "[infrautils] [odlparent]"
 
