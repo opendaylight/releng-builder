@@ -24,8 +24,12 @@
     nexus-iq-stage: release
     email-upstream: "[int/dist]"
     stream:
-      - sulfur:
+      - chlorine:
           branch: "master"
+          mvn-version: mvn38
+      - sulfur:
+          branch: "stable/sulfur"
+          mvn-version: mvn38
       - phosphorus:
           branch: "stable/phosphorus"
       - silicon:
@@ -55,27 +59,32 @@
     dist-pom: "distribution/pom.xml"
 
     stream:
-      - sulfur:
+      - chlorine:
           branch: "master"
+          mvn-version: mvn38
           dependencies: >
-            bgpcep-maven-merge-{stream},
             daexim-maven-merge-{stream},
             jsonrpc-maven-merge-{stream},
             lispflowmapping-maven-merge-{stream},
-            netconf-maven-merge-{stream},
-            neutron-maven-merge-{stream},
+            openflowplugin-maven-merge-{stream},
+            ovsdb-maven-merge-{stream},
+            serviceutils-maven-merge-{stream},
+      - sulfur:
+          branch: "stable/sulfur"
+          mvn-version: mvn38
+          dependencies: >
+            daexim-maven-merge-{stream},
+            jsonrpc-maven-merge-{stream},
+            lispflowmapping-maven-merge-{stream},
             openflowplugin-maven-merge-{stream},
             ovsdb-maven-merge-{stream},
             serviceutils-maven-merge-{stream},
       - phosphorus:
           branch: "stable/phosphorus"
           dependencies: >
-            bgpcep-maven-merge-{stream},
             daexim-maven-merge-{stream},
             jsonrpc-maven-merge-{stream},
             lispflowmapping-maven-merge-{stream},
-            netconf-maven-merge-{stream},
-            neutron-maven-merge-{stream},
             openflowplugin-maven-merge-{stream},
             ovsdb-maven-merge-{stream},
             serviceutils-maven-merge-{stream},
@@ -113,8 +122,14 @@
     karaf-version: odl
     dist-pom: "distribution/opendaylight/pom.xml"
     stream:
-      - sulfur:
+      - chlorine:
           branch: "master"
+          mvn-version: mvn38
+          dependencies: >
+            distribution-merge-managed-{stream},
+      - sulfur:
+          branch: "stable/sulfur"
+          mvn-version: mvn38
           dependencies: >
             distribution-merge-managed-{stream},
       - phosphorus:
@@ -145,8 +160,12 @@
     staging-profile-id: 2af042ed81d5e2
 
     stream:
-      - sulfur:
+      - chlorine:
           branch: "master"
+          mvn-version: mvn38
+      - sulfur:
+          branch: "stable/sulfur"
+          mvn-version: mvn38
       - phosphorus:
           branch: "stable/phosphorus"
       - silicon:
