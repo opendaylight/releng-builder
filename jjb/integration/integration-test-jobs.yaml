@@ -21,23 +21,23 @@
     stream:
       - chlorine:
           branch: "master"
-          mvn-version: "mvn35"
+          mvn-version: "mvn38"
           java-version: "openjdk11"
           csit-list: !include: csit-jobs-chlorine.lst
           build-order: >
-            odlparent infrautils yangtools mdsal controller serviceutils aaa netconf
-            daexim jsonrpc ovsdb neutron openflowplugin lispflowmapping
-            bgpcep integration/distribution
+            odlparent infrautils yangtools mdsal controller aaa netconf bgpcep
+            serviceutils daexim jsonrpc ovsdb openflowplugin lispflowmapping
+            integration/distribution
 
       - sulfur:
           branch: "stable/sulfur"
-          mvn-version: "mvn35"
+          mvn-version: "mvn38"
           java-version: "openjdk11"
           csit-list: !include: csit-jobs-sulfur.lst
           build-order: >
-            odlparent infrautils yangtools mdsal controller serviceutils aaa netconf
-            daexim jsonrpc ovsdb neutron openflowplugin lispflowmapping
-            bgpcep integration/distribution
+            odlparent infrautils yangtools mdsal controller aaa netconf bgpcep
+            serviceutils daexim jsonrpc ovsdb openflowplugin lispflowmapping
+            integration/distribution
 
       - phosphorus:
           branch: "stable/phosphorus"
@@ -45,9 +45,9 @@
           java-version: "openjdk11"
           csit-list: !include: csit-jobs-phosphorus.lst
           build-order: >
-            odlparent infrautils yangtools mdsal controller serviceutils aaa netconf
-            daexim jsonrpc ovsdb neutron openflowplugin lispflowmapping
-            bgpcep integration/distribution
+            odlparent infrautils yangtools mdsal controller aaa netconf bgpcep
+            serviceutils daexim jsonrpc ovsdb openflowplugin lispflowmapping
+            integration/distribution
 
       - silicon:
           branch: "stable/silicon"
@@ -74,8 +74,8 @@
       - chlorine:
           branch: "master"
           csit-blocklist: >
-            aaa bier controller dluxapps genius lispflowmapping l2switch mdsal nemo
-            netconf netvirt odlmicro packetcable sfc sxp telemetry tsdr usc yangtools
+            aaa controller dluxapps genius lispflowmapping l2switch mdsal
+            netconf netvirt odlmicro sxp yangtools
             gate longevity sanity tdd tempest wip
             bgpcep-csit-3node-bgpclustering-all
             bgpcep-csit-3node-bgpclustering-ha-only
@@ -87,8 +87,8 @@
       - sulfur:
           branch: "stable/sulfur"
           csit-blocklist: >
-            aaa bier controller dluxapps genius lispflowmapping l2switch mdsal nemo
-            netconf netvirt odlmicro packetcable sfc sxp telemetry tsdr usc yangtools
+            aaa controller dluxapps genius lispflowmapping l2switch mdsal
+            netconf netvirt odlmicro sxp yangtools
             gate longevity sanity tdd tempest wip
             bgpcep-csit-3node-bgpclustering-all
             bgpcep-csit-3node-bgpclustering-ha-only
@@ -100,8 +100,8 @@
       - phosphorus:
           branch: "stable/phosphorus"
           csit-blocklist: >
-            aaa bier controller dluxapps genius lispflowmapping l2switch mdsal nemo
-            netconf netvirt odlmicro packetcable sfc sxp telemetry tsdr usc yangtools
+            aaa controller dluxapps genius lispflowmapping l2switch mdsal
+            netconf netvirt odlmicro sxp yangtools
             gate longevity sanity tdd tempest wip
             bgpcep-csit-3node-bgpclustering-all
             bgpcep-csit-3node-bgpclustering-ha-only
@@ -303,7 +303,7 @@
       - integration-distribution-git-url:
           git-url: "{git-url}"
       - maven-exec:
-          maven-version: mvn35
+          maven-version: "{mvn-version}"
 
     scm:
       - integration-gerrit-scm:
@@ -345,7 +345,7 @@
       - lf-update-java-alternatives:
           java-version: "{java-version}"
       - maven-target:
-          maven-version: "mvn35"
+          maven-version: "{mvn-version}"
           pom: "$GERRIT_PROJECT/pom.xml"
           goals: |
             clean install dependency:tree -DoutputFile=dependency_tree.txt
@@ -360,7 +360,7 @@
           global-settings: global-settings
           global-settings-type: cfp
       - maven-target:
-          maven-version: mvn35
+          maven-version: "{mvn-version}"
           pom: distribution/pom.xml
           goals: |
             clean install dependency:tree -DoutputFile=dependency_tree.txt
@@ -442,7 +442,7 @@
       - lf-infra-maven-parameters:
           mvn-opts: ""
           mvn-params: ""
-          mvn-version: mvn35
+          mvn-version: "{mvn-version}"
           staging-profile-id: "" # Staging repos do not make sense for this job
 
     wrappers:

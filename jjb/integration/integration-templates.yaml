@@ -1868,7 +1868,7 @@
           default: "all"
           description: "Specific feature test for patch"
       - maven-exec:
-          maven-version: mvn35
+          maven-version: "{mvn-version}"
 
     scm:
       - integration-gerrit-scm:
@@ -1904,7 +1904,7 @@
       - lf-update-java-alternatives:
           java-version: "{java-version}"
       - maven-target:
-          maven-version: mvn35
+          maven-version: "{mvn-version}"
           pom: "{project}/pom.xml"
           goals: |
             clean install dependency:tree
@@ -1970,7 +1970,7 @@
           default: "all"
           description: "Specific feature test for patch"
       - maven-exec:
-          maven-version: mvn35
+          maven-version: "{mvn-version}"
 
     scm:
       - integration-gerrit-scm:
@@ -2006,7 +2006,7 @@
       - lf-update-java-alternatives:
           java-version: "{java-version}"
       - maven-target:
-          maven-version: mvn35
+          maven-version: "{mvn-version}"
           pom: "{project}/pom.xml"
           goals: |
             clean install dependency:tree
@@ -2024,7 +2024,7 @@
           global-settings: global-settings
           global-settings-type: cfp
       - maven-target:
-          maven-version: mvn35
+          maven-version: "{mvn-version}"
           pom: distribution/pom.xml
           goals: |
             clean install dependency:tree
