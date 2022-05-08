@@ -175,7 +175,7 @@
       - lf-update-java-alternatives:
           java-version: "{java-version}"
       - maven-target:
-          maven-version: mvn38
+          maven-version: "{mvn-version}"
           pom: pom.xml
           goals: |
             clean install dependency:tree -DoutputFile=dependency_tree.txt
@@ -329,7 +329,7 @@
       - distribution-karaf-version:
           karaf-version: "{karaf-version}"
       - maven-exec:
-          maven-version: mvn38
+          maven-version: "{mvn-version}"
 
     scm:
       - integration-gerrit-scm:
