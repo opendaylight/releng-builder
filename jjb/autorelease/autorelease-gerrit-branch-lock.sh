@@ -45,8 +45,31 @@ install_gerrit_hook() {
 install_gerrit_hook
 
 mode="${GERRIT_ACCESS_MODE}"
-
+set -x
 case $mode in
+    branch-cut)
+        if [ "${GERRIT_BRANCH}" == "master" ] && [[ "${GERRIT_BRANCH_NEXT}" =~ stable ]]; then
+            echo "INFO: Locking branch for new branch cutting: ${GERRIT_BRANCH_NEXT}"
+            git config -f project.config "access.refs/for/refs/heads/${GERRIT_BRANCH_NEXT}.exclusiveGroupPermissions" "create"
+            git config -f project.config "access.refs/for/refs/heads/${GERRIT_BRANCH_NEXT}.create" "block group Registered Users"
+            git config -f project.config --add "access.refs/for/refs/heads/${GERRIT_BRANCH_NEXT}.create" "group Release Engineering Team"
+            git config -f project.config "access.refs/heads/${GERRIT_BRANCH_NEXT}.label-Code-Review" "-2..+2 group Release Engineering Team"
+            git config -f project.config "access.refs/heads/${GERRIT_BRANCH_NEXT}.label-Verified" "-1..+1 group Release Engineering Team"
+            git config -f project.config "access.refs/heads/${GERRIT_BRANCH_NEXT}.submit" "block group Registered Users"
+            git config -f project.config --add "access.refs/heads/${GERRIT_BRANCH_NEXT}.submit" "group Release Engineering Team"
+            git config -f project.config "access.refs/heads/${GERRIT_BRANCH_NEXT}.exclusiveGroupPermissions" "submit"
+            git config -f project.config --add "access.refs/heads/*.create" "group Release Engineering Team"
+            git config -f project.config "access.refs/heads/${GERRIT_BRANCH}.label-Code-Review" "-2..+2 group Release Engineering Team"
+            git config -f project.config "access.refs/heads/${GERRIT_BRANCH}.label-Verified" "-1..+1 group Release Engineering Team"
+            git config -f project.config "access.refs/heads/${GERRIT_BRANCH}.submit" "block group Registered Users"
+            git config -f project.config --add "access.refs/heads/${GERRIT_BRANCH}.submit" "group Release Engineering Team"
+            git commit -asm "Chore: Lock for new branch cutting: ${GERRIT_BRANCH_NEXT}"
+        else
+            echo "ERROR: Cannot perform branch cutting on non-master branch."
+            echo "ERROR: stable branch should be ex: stable/sulfur"
+            exit 1
+        fi
+        ;;
     supercommitters)
         echo "INFO: Locking branch for MRI: ${GERRIT_BRANCH}"
         git config -f project.config "access.refs/heads/${GERRIT_BRANCH}.exclusiveGroupPermissions" "submit"

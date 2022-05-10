@@ -33,6 +33,12 @@
           project: "{project}"
           stream: "{stream}"
           branch: "{branch}"
+      - string:
+          name: GERRIT_BRANCH_NEXT
+          default: ""
+          description: |
+            Gerrit parameter to identify a new Gerrit branch for branch cutting.
+            ex: stable/sulfur, stable/chlorine
       - bool:
           name: DRY_RUN
           default: true
@@ -41,11 +47,13 @@
       - choice:
           name: GERRIT_ACCESS_MODE
           choices:
+            - branch-cut
             - code-freeze
             - supercommitters
             - release-prep
             - unlock
           description: |
+            If BRANCH_CUT is selected then the GERRIT_BRANCH and master is locked for registered users.
             If CODE_FREEZE is selected then the GERRIT_BRANCH is locked for registered users.
             If RELEASE_PREP is selected then the GERRIT_BRANCH is locked for registered users and unlocked for RELENG.
             If SUPERCOMMITTERS is selected then supercommitters rights are granted on the GERRIT_BRANCH.
