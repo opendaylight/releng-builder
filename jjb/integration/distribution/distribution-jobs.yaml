@@ -33,9 +33,6 @@
       - phosphorus:
           branch: "stable/phosphorus"
           mvn-version: mvn35
-      - silicon:
-          branch: "stable/silicon"
-          mvn-version: mvn35
 
 - project:
     name: distribution-managed
@@ -91,19 +88,6 @@
             openflowplugin-maven-merge-{stream},
             ovsdb-maven-merge-{stream},
             serviceutils-maven-merge-{stream},
-      - silicon:
-          branch: "stable/silicon"
-          mvn-version: mvn35
-          dependencies: >
-            bgpcep-maven-merge-{stream},
-            daexim-maven-merge-{stream},
-            jsonrpc-maven-merge-{stream},
-            lispflowmapping-maven-merge-{stream},
-            netconf-maven-merge-{stream},
-            neutron-maven-merge-{stream},
-            openflowplugin-maven-merge-{stream},
-            ovsdb-maven-merge-{stream},
-            serviceutils-maven-merge-{stream},
 
 - project:
     name: distribution-full
@@ -141,11 +125,6 @@
           mvn-version: mvn35
           dependencies: >
             distribution-merge-managed-{stream},
-      - silicon:
-          branch: "stable/silicon"
-          mvn-version: mvn35
-          dependencies: >
-            distribution-merge-managed-{stream},
 
 - project:
     name: distribution-release
@@ -174,9 +153,6 @@
           mvn-version: mvn38
       - phosphorus:
           branch: "stable/phosphorus"
-          mvn-version: mvn35
-      - silicon:
-          branch: "stable/silicon"
           mvn-version: mvn35
 
 - project:

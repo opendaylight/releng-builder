@@ -12,7 +12,7 @@
 update_file_usage () {
     echo "Usage: $0 <RELEASE_NAME> <PUBLISH>"
     echo ""
-    echo "    RELEASE_NAME:  The RELEASE_NAME eg: Silicon, Phosphorus."
+    echo "    RELEASE_NAME:  The RELEASE_NAME eg: Sulfur, Phosphorus."
     echo "    PUBLISH:  Set to true to PUBLISH"
     echo ""
 }
@@ -36,11 +36,11 @@ pip install --quiet --upgrade "pip==9.0.3" setuptools
 pip install --quiet --upgrade git-review
 git config --global --add gitreview.username "jenkins-$SILO"
 cd "$WORKSPACE"/docs || exit
-RELEASE_NAME=$RELEASE_NAME
+RELEASE_NAME=${RELEASE_NAME:-}
 Next_release="$(tr '[:lower:]' '[:upper:]' <<< "${RELEASE_NAME:0:1}")${RELEASE_NAME:1}" # Captilize Version Name
 release_name=$STREAM
 Release_version="$(tr '[:lower:]' '[:upper:]' <<< "${release_name:0:1}")${release_name:1}" # Captilize Version Name
-PUBLISH=$PUBLISH
+PUBLISH=${PUBLISH:-}
 stable_release_str=stable-$release_name
 echo "Start Version Updating in docs project"
 echo "RELEASE_NAME : $Next_release"
