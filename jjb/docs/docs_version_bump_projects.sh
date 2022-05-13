@@ -12,7 +12,7 @@
 update_file_usage () {
     echo "Usage: $0 <release_name> <PUBLISH>"
     echo ""
-    echo "    release_name:  The release_name e.g Silicon, Phosphorus."
+    echo "    release_name:  The release_name e.g Sulfur, Phosphorus."
     echo "    PUBLISH:  Set to true to PUBLISH"
     echo ""
 }
@@ -39,7 +39,7 @@ cd "$WORKSPACE"/autorelease || exit
 GERRIT_PROJECT="releng/autorelease"
 if [ "$GERRIT_PROJECT" == "releng/autorelease" ]; then
     # User input
-    RELEASE_NAME=$RELEASE_NAME
+    RELEASE_NAME=${RELEASE_NAME:-}
     # Captilize Version Name
     release_name="$(tr '[:lower:]' '[:upper:]' <<< "${RELEASE_NAME:0:1}")${RELEASE_NAME:1}"
     echo "Start Version Updating in odl-projects"

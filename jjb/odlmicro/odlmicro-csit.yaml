@@ -37,14 +37,6 @@
             -e ODLMICRO_IGN
             -v ODL_MICRO_VERSION:1.0.1-SNAPSHOT
             -v NETCONF_TESTTOOL_VERSION:1.10.0-SNAPSHOT
-      - silicon:
-          branch: "stable/silicon"
-          jre: "openjdk11"
-          functionality: "netconf"
-          robot-options: >
-            -e ODLMICRO_IGN
-            -v ODL_MICRO_VERSION:1.0.1-SNAPSHOT
-            -v NETCONF_TESTTOOL_VERSION:1.10.0-SNAPSHOT
 
     install:
       - manual:
@@ -93,18 +85,6 @@
             -v SCALE_TESTS:TRUE
       - phosphorus:
           branch: "stable/phosphorus"
-          jre: "openjdk11"
-          functionality: "netconf-devices-scale"
-          robot-options: >
-            -e ODLMICRO_IGN
-            -v ODL_MICRO_VERSION:1.0.1-SNAPSHOT
-            -v NETCONF_TESTTOOL_VERSION:1.10.0-SNAPSHOT
-            -v USE_NETCONF_CONNECTOR:False
-            -v SCHEMA_MODEL:juniper
-            -v INIT_DEVICE_COUNT:400
-            -v SCALE_TESTS:TRUE
-      - silicon:
-          branch: "stable/silicon"
           jre: "openjdk11"
           functionality: "netconf-devices-scale"
           robot-options: >
@@ -171,18 +151,6 @@
             -v SCALE_TESTS:TRUE
       - phosphorus:
           branch: "stable/phosphorus"
-          jre: "openjdk11"
-          functionality: "netconf-general-scale"
-          robot-options: >
-            -e ODLMICRO_IGN
-            -v ODL_MICRO_VERSION:1.0.1-SNAPSHOT
-            -v NETCONF_TESTTOOL_VERSION:1.10.0-SNAPSHOT
-            -v USE_NETCONF_CONNECTOR:False
-            -v SCHEMA_MODEL:juniper
-            -v INIT_DEVICE_COUNT:400
-            -v SCALE_TESTS:TRUE
-      - silicon:
-          branch: "stable/silicon"
           jre: "openjdk11"
           functionality: "netconf-general-scale"
           robot-options: >

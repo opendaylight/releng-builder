@@ -57,25 +57,6 @@
     staging-profile-id: a68bf26e208d4
 
 - project:
-    name: p4plugin-silicon
-    jobs:
-      - "{project-name}-maven-javadoc-jobs"
-      - odl-maven-jobs-jdk11
-      - odl-maven-verify-jobs
-
-    stream: silicon
-    project: "p4plugin"
-    project-name: "p4plugin"
-    branch: "stable/silicon"
-    mvn-settings: "p4plugin-settings"
-    mvn-opts: "-Xmx1024m"
-    dependencies: ""
-    email-upstream: "[p4plugin]"
-
-    # Used by the release job
-    staging-profile-id: a68bf26e208d4
-
-- project:
     name: p4plugin-release-management
     jobs:
       - gerrit-release-merge
