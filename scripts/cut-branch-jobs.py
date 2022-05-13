@@ -47,7 +47,7 @@ def create_and_update_project_jobs(
 
     Only updates projects where the top project configuration has a name that
     is equivalent to the current release. For example project name
-    "aaa-silicon" would have a release that matches what was passed to
+    "aaa-sulfur" would have a release that matches what was passed to
     release_on_stable_branch.
     """
     for directory in filter(
@@ -101,7 +101,7 @@ def update_job_streams(release_on_stable_branch, release_on_current_branch, job_
     are handled by other functions in this script.
 
     Only updates projects where the top stream in the list is equivalent to the
-    current release. For example stream "silicon" would have a release that
+    current release. For example stream "sulfur" would have a release that
     matches what was passed to release_on_stable_branch.
     """
     for directory in filter(
@@ -328,7 +328,7 @@ def update_integration_csit_list(
 parser = argparse.ArgumentParser(
     description="""Creates & updates jobs for ODL projects when branch cutting.
 
-    Example usage: python scripts/cut-branch.sh Silicon Phosphorus jjb/
+    Example usage: python scripts/cut-branch.sh Phosphorus Sulfur jjb/
 
     ** If calling from tox the JOD_DIR is auto-detected so only pass the current
     and next release stream name. **
@@ -346,7 +346,7 @@ parser.add_argument(
     metavar="RELEASE_ON_CURRENT_BRANCH",
     type=str,
     help="""The ODL release codename for the new {}
-        (eg. Silicon, Phosphorus).""".format(
+        (eg. Sulfur, Phosphorus).""".format(
         default_branch
     ),
 )
