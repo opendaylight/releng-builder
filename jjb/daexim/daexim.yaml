@@ -8,18 +8,16 @@
           project-pattern: daexim
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-daexim/47611/
           rtd-token: 76284f12638574f131cdccdf257d852d07c195fc
-      - odl-maven-jobs-jdk11
-      - odl-maven-verify-jobs
+      - odl-maven-jobs-jdk17
       - odl-maven-verify-jobs-jdk17
 
     project: "daexim"
     project-name: "daexim"
     stream: chlorine
     branch: "master"
-    java-version: "openjdk11"
+    java-version: "openjdk17"
     mvn-settings: "daexim-settings"
     build-node: centos8-builder-4c-4g
-    mvn-opts: "-Xmx1024m"
     dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}"
     email-upstream: "[daexim] [odlparent] [yangtools] [controller]"
 
