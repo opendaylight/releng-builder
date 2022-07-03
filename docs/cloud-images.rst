@@ -72,6 +72,7 @@ Following are the list of published images available to Jenkins jobs.
 * ZZCI - CentOS Stream 8 - builder - x86_64 - 20220411-013651.819
 * ZZCI - CentOS Stream 8 - builder - x86_64 - 20220411-025029.496
 * ZZCI - CentOS Stream 8 - builder - x86_64 - 20220601-071415.711
+* ZZCI - CentOS Stream 8 - builder - x86_64 - 20220629-035812.822
 * ZZCI - OPNFV - apex - compute - 0
 * ZZCI - OPNFV - apex - compute - 1
 * ZZCI - OPNFV - apex - controller - 0
