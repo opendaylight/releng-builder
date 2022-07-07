@@ -135,6 +135,7 @@
 
     project: "integration/distribution"
     project-name: "distribution"
+    use-release-file: false
     mvn-goals: "clean deploy -f opendaylight/pom.xml"
     mvn-settings: "integration-distribution-settings"
     mvn-opts: "-Xmx1024m"
@@ -172,6 +173,42 @@
     sonarcloud-project-organization: "{sonarcloud_project_organization}"
     sonarcloud-api-token: "{sonarcloud_api_token}"
     sonarcloud-project-key: "{sonarcloud_project_organization}_{project-name}"
+
+- project:
+    name: distribution-docker
+    project: integration/distribution
+    project-name: distribution
+    mvn-settings: integration-distribution-settings
+    container-tag-method: yaml-file
+    build-node: centos7-docker-4c-4g
+    docker-name: "opendaylight/opendaylight"
+    docker-root: "$WORKSPACE/docker"
+    docker-build-args: "--network=host"
+    container-public-registry: nexus3.opendaylight.org:10001
+    container-push-registry: nexus3.opendaylight.org:10003
+    gerrit_trigger_file_paths:
+      - compare-type: REG_EXP
+        pattern: "docker/.*"
+    jobs:
+      - "{project-name}-gerrit-docker-jobs"
+    stream:
+      - chlorine:
+          branch: "master"
+      - sulfur:
+          branch: "stable/sulfur"
+      - phosphorus:
+          branch: "stable/phosphorus"
+
+- project:
+    name: distribution-docker-release
+    project: integration/distribution
+    project-name: distribution-docker
+    use-release-file: true
+    mvn-settings: integration-distribution-settings
+    container-tag-method: yaml-file
+    build-node: centos7-docker-4c-4g
+    jobs:
+      - "{project-name}-gerrit-release-jobs"
 
 - project:
     name: distribution-view
