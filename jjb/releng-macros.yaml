@@ -146,7 +146,7 @@
                 - compare-type: ANT
                   pattern: "{files}"
               forbidden-file-paths:
-                - compare-type: ANT
+                - compare-type: REG_EXP
                   pattern: "{forbidden-files}"
 
 # TODO: Unify argument names across gerrit-trigger-* macros.
@@ -169,7 +169,7 @@
                 - compare-type: ANT
                   pattern: "{files}"
               forbidden-file-paths:
-                - compare-type: ANT
+                - compare-type: REG_EXP
                   pattern: "{forbidden-files}"
           skip-vote:
             successful: true
