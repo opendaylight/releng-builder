@@ -51,7 +51,7 @@
     email-upstream: "[int/dist]"
     type: managed
     profile: "-Pmanaged"
-    forbidden-files: "opendaylight/**"
+    forbidden-files: '(opendaylight\/.*|docker\/.*)'
     java-version: "openjdk11"
     jre: "openjdk11"
     karaf-version: karaf4
