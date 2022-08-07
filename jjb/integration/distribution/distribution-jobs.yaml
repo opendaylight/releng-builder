@@ -14,11 +14,13 @@
 
     project: integration/distribution
     project-name: distribution
+    build-node: centos8-builder-4c-4g
     mvn-settings: integration-distribution-settings
     mvn-goals: "clean install dependency:tree -DoutputFile=dependency_tree.txt"
     mvn-opts: "-Xmx1024m"
-    java-version: openjdk11
-    jre: "openjdk11"
+    mvn-version: mvn38
+    java-version: openjdk17
+    jre: "openjdk17"
     karaf-version: odl
     nexus-iq-namespace: odl-
     nexus-iq-stage: release
@@ -26,13 +28,13 @@
     stream:
       - chlorine:
           branch: "master"
-          mvn-version: mvn38
       - sulfur:
           branch: "stable/sulfur"
-          mvn-version: mvn38
+          java-version: openjdk11
       - phosphorus:
           branch: "stable/phosphorus"
           mvn-version: mvn35
+          java-version: openjdk11
 
 - project:
     name: distribution-managed
@@ -45,22 +47,23 @@
 
     project: integration/distribution
     project-name: distribution
+    build-node: centos8-builder-4c-4g
     mvn-settings: integration-distribution-settings
     mvn-goals: "clean install dependency:tree -DoutputFile=dependency_tree.txt"
     mvn-opts: "-Xmx1024m"
+    mvn-version: mvn38
     email-upstream: "[int/dist]"
     type: managed
     profile: "-Pmanaged"
     forbidden-files: '(opendaylight\/.*|docker\/.*)'
-    java-version: "openjdk11"
-    jre: "openjdk11"
+    java-version: "openjdk17"
+    jre: "openjdk17"
     karaf-version: karaf4
     dist-pom: "distribution/pom.xml"
 
     stream:
       - chlorine:
           branch: "master"
-          mvn-version: mvn38
           dependencies: >
             daexim-maven-merge-{stream},
             jsonrpc-maven-merge-{stream},
@@ -70,7 +73,7 @@
             serviceutils-maven-merge-{stream},
       - sulfur:
           branch: "stable/sulfur"
-          mvn-version: mvn38
+          java-version: "openjdk11"
           dependencies: >
             daexim-maven-merge-{stream},
             jsonrpc-maven-merge-{stream},
@@ -81,6 +84,7 @@
       - phosphorus:
           branch: "stable/phosphorus"
           mvn-version: mvn35
+          java-version: "openjdk11"
           dependencies: >
             daexim-maven-merge-{stream},
             jsonrpc-maven-merge-{stream},
@@ -99,30 +103,32 @@
 
     project: integration/distribution
     project-name: distribution
+    build-node: centos8-builder-4c-4g
     mvn-settings: integration-distribution-settings
     mvn-goals: "clean install dependency:tree -DoutputFile=dependency_tree.txt"
     mvn-opts: "-Xmx1024m"
+    mvn-version: mvn38
     email-upstream: "[int/dist]"
     type: full
     profile: "-Punmanaged"
     files: "opendaylight/**"
-    java-version: "openjdk11"
+    java-version: "openjdk17"
     karaf-version: odl
     dist-pom: "distribution/opendaylight/pom.xml"
     stream:
       - chlorine:
           branch: "master"
-          mvn-version: mvn38
           dependencies: >
             distribution-merge-managed-{stream},
       - sulfur:
           branch: "stable/sulfur"
-          mvn-version: mvn38
+          java-version: "openjdk11"
           dependencies: >
             distribution-merge-managed-{stream},
       - phosphorus:
           branch: "stable/phosphorus"
           mvn-version: mvn35
+          java-version: "openjdk11"
           dependencies: >
             distribution-merge-managed-{stream},
 
@@ -135,11 +141,13 @@
 
     project: "integration/distribution"
     project-name: "distribution"
+    build-node: centos8-builder-4c-4g
     use-release-file: false
     mvn-goals: "clean deploy -f opendaylight/pom.xml"
     mvn-settings: "integration-distribution-settings"
     mvn-opts: "-Xmx1024m"
-    java-version: "openjdk11"
+    mvn-version: mvn38
+    java-version: "openjdk17"
     email-upstream: "[int/dist]"
 
     # Used by the release job
@@ -148,13 +156,13 @@
     stream:
       - chlorine:
           branch: "master"
-          mvn-version: mvn38
       - sulfur:
           branch: "stable/sulfur"
-          mvn-version: mvn38
+          java-version: "openjdk11"
       - phosphorus:
           branch: "stable/phosphorus"
           mvn-version: mvn35
+          java-version: "openjdk11"
 
 - project:
     name: distribution-sonar
@@ -163,8 +171,9 @@
 
     project: integration/distribution
     project-name: distribution
+    build-node: centos8-builder-4c-4g
     branch: master
-    java-version: "openjdk11"
+    java-version: "openjdk17"
     mvn-version: mvn38
     mvn-settings: integration-distribution-settings
     mvn-goals: clean install dependency:tree -DoutputFile=dependency_tree.txt
