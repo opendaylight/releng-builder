@@ -13,9 +13,6 @@
       - gerrit-tox-verify
 
     stream:
-      - chlorine:
-          branch: "master"
-          integration-test: chlorine
       - sulfur:
           branch: "stable/sulfur"
           integration-test: sulfur
@@ -54,7 +51,7 @@
     stream:
       - chlorine:
           branch: "master"
-          integration-test: chlorine-dev-null
+          integration-test: chlorine
 
     project: releng/autorelease
     project-name: autorelease
