@@ -17,12 +17,13 @@
           stream: master
           build-node: centos7-builder-2c-2g
 
+    mvn-version: "mvn38"
+    java-version: "openjdk17"
+
     # CSIT Lists in defaults.yaml
     stream:
       - chlorine:
           branch: "master"
-          mvn-version: "mvn38"
-          java-version: "openjdk11"
           csit-list: !include: csit-jobs-chlorine.lst
           build-order: >
             odlparent infrautils yangtools mdsal controller aaa netconf bgpcep
@@ -31,7 +32,6 @@
 
       - sulfur:
           branch: "stable/sulfur"
-          mvn-version: "mvn38"
           java-version: "openjdk11"
           csit-list: !include: csit-jobs-sulfur.lst
           build-order: >
