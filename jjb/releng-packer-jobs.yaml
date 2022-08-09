@@ -174,7 +174,9 @@
     build-timeout: 60
     cron: "00 H 1 * *"
 
-    platforms: centos-7
+    platforms:
+      - centos-7
+      - centos-cs-8
     templates: robot
     update-cloud-image: true
 
