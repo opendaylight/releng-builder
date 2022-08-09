@@ -32,7 +32,7 @@ def get_robot_systems(filename):
 
     with open(filename, "r") as _file:
         for num, line in enumerate(_file, 1):
-            if re.search("centos7-robot", line):
+            if re.search("centos[78]-robot", line):
                 robots.add(line.rsplit(maxsplit=1)[1])
 
     return robots
