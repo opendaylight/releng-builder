@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e7d4cc1_3290d5fc",
+        "filename": "jjb/integration/distribution/distribution-check-bootup.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 6731
+      },
+      "writtenOn": "2022-08-10T14:57:48Z",
+      "side": 1,
+      "message": "OK since it is a bash script.\nThough, I am not very fond of \u003d\u003d in such conditions with simple brackets.\n\u003d\u003d is a bashism and only \u003d is defined by POSIX as well as simple brackets.\nThus, bash-specific double brackets are preferable with this syntax IMO\n\nhttps://mywiki.wooledge.org/Bashism#Conditionals",
+      "revId": "4a923310adf468e0b70acfa2456660b82b812bc4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
