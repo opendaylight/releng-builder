@@ -72,7 +72,10 @@ cat "${MEMCONF}"
 echo "Listing all open ports on controller system"
 netstat -pnatu
 
-if [ "$JDKVERSION" == 'openjdk11' ]; then
+if [ "$JDKVERSION" == 'openjdk17' ]; then
+    echo "Preparing for JRE Version 17"
+    JAVA_HOME="/usr/lib/jvm/java-17-openjdk"
+elif [ "$JDKVERSION" == 'openjdk11' ]; then
     echo "Preparing for JRE Version 11"
     JAVA_HOME="/usr/lib/jvm/java-11-openjdk"
 elif [ "${JDKVERSION}" == 'openjdk8' ]; then
