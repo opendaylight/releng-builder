@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # SPDX-License-Identifier: EPL-1.0
 ##############################################################################
 # Copyright (c) 2018 The Linux Foundation and others.
@@ -15,7 +15,8 @@ set -e -x
 # The script builds 6wind/quagga source and binary packages from zrpcd
 # repository for testing router functionalities with Netvirt jobs, .
 
-pushd "$(pwd)/zrpcd"
+initdir=$(pwd)
+cd "$(pwd)/zrpcd"
 
 chmod a+x "$(pwd)/pkgsrc/dev_compile_script.sh"
 cd "$(pwd)/pkgsrc" && sudo "./dev_compile_script.sh" -p -d -b -v "$QUAGGA_VERSION"
@@ -38,7 +39,7 @@ case "$OS" in
     ;;
 esac
 
-popd
+cd $initdir
 
 # todo: remove below lines once the scripts in zrpcd repos build the src packages.
 # Ref: https://lists.opendaylight.org/pipermail/integration-dev/2018-July/012330.html
