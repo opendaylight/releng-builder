@@ -575,7 +575,8 @@
                 - inject:
                     properties-file: "slave_addresses.txt"
                 - shell: |
-                    #!/bin/bash
-                    source /tmp/common-functions.sh ${BUNDLEFOLDER}
+                    #!/bin/sh
+                    #  ${BUNDLEFOLDER} needs to be correctly set
+                    . /tmp/common-functions.sh
                     collect_netvirt_logs
           mark-unstable-if-failed: true

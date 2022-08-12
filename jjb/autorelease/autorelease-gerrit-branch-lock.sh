@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # SPDX-License-Identifier: EPL-1.0
 ##############################################################################
 # Copyright (c) 2022 The Linux Foundation and others.
@@ -48,7 +48,7 @@ mode="${GERRIT_ACCESS_MODE}"
 set -x
 case $mode in
     branch-cut)
-        if [ "${GERRIT_BRANCH}" == "master" ] && [[ "${GERRIT_BRANCH_NEXT}" =~ stable ]]; then
+        if [ "${GERRIT_BRANCH}" = "master" ] && expr "${GERRIT_BRANCH_NEXT}" : "stable.*"; then
             echo "INFO: Locking branch for new branch cutting: ${GERRIT_BRANCH_NEXT}"
             git config -f project.config "access.refs/for/refs/heads/${GERRIT_BRANCH_NEXT}.exclusiveGroupPermissions" "create"
             git config -f project.config "access.refs/for/refs/heads/${GERRIT_BRANCH_NEXT}.create" "block group Registered Users"
