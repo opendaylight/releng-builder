@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "87284768_2b3a1cf2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6731
+      },
+      "writtenOn": "2022-08-12T13:29:07Z",
+      "side": 1,
+      "message": "LGTM but we have to be cautious of potential side-effects here.",
+      "revId": "c371d17997e765dd845793a93a9a1441407109a4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "51012832_7cb41113",
+        "filename": "jjb/integration/common-functions.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6731
+      },
+      "writtenOn": "2022-08-12T13:29:07Z",
+      "side": 1,
+      "message": "There is a tricky issue because of this file\nthat was always called with source and an argument up to this change.\nContrary to the source bash syntax, the dot POSIX equivalent syntax does not allow any argument.",
+      "revId": "c371d17997e765dd845793a93a9a1441407109a4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
