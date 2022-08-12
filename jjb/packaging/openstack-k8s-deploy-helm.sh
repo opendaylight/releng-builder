@@ -1,4 +1,4 @@
-#!/bin/bash -l
+#!/bin/sh -l
 # SPDX-License-Identifier: EPL-1.0
 ##############################################################################
 # Copyright (c) 2021 The Linux Foundation and others.
@@ -48,12 +48,12 @@ for i in $(seq 10); do
     kubectl get nodes --show-labels
 
     pod_status=$(kubectl get pods -n default -o jsonpath="{.items[0].status.phase}")
-    if [[ "$pod_status" =~ .*Running.* ]]; then
+    if expr "$pod_status" : ".*Running.*"; then
         echo "INFO: SNDC runing on the pod"
         kubectl --namespace default port-forward "$POD_NAME" 8080:"$CONTAINER_PORT" &
         sleep 30
         break
-    elif [[ "$pod_status" =~ .*Pending.* ]]; then
+    elif expr "$pod_status" : ".*Pending.*"; then
         echo "INFO: SNDC pod status: ${pod_status}, creation in progress ..."
         continue
     else

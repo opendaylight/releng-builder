@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # SPDX-License-Identifier: EPL-1.0
 ##############################################################################
 # Copyright (c) 2021 The Linux Foundation and others.
@@ -25,10 +25,10 @@ set -eu -o pipefail
 
 # Handle when a project chooses to not archive logs to a log server
 # in other cases if CREDENTIAL is not found then fail the build.
-if [ -z "$CREDENTIAL" ] && [ "$SERVER_ID" == "logs" ]; then
+if [ -z "$CREDENTIAL" ] && [ "$SERVER_ID" = "logs" ]; then
     echo "WARN: Log server credential not found."
     exit 0
-elif [ -z "$CREDENTIAL" ] && [ "$SERVER_ID" == "ossrh" ]; then
+elif [ -z "$CREDENTIAL" ] && [ "$SERVER_ID" = "ossrh" ]; then
     echo "WARN: OSSRH credentials not found."
     echo "      This is needed for staging to Maven Central."
     exit 0
@@ -37,7 +37,7 @@ elif [ -z "$CREDENTIAL" ]; then
     exit 1
 fi
 
-if [ "$SERVER_ID" == "ossrh" ]; then
+if [ "$SERVER_ID" = "ossrh" ]; then
     machine="oss.sonatype.org"
 else
     machine="$DOCKER_URL"
