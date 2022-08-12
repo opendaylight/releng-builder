@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # SPDX-License-Identifier: EPL-1.0
 ##############################################################################
 # Copyright (c) 2017 The Linux Foundation and others.
@@ -53,7 +53,7 @@ EOF
 
 python3 -m venv "/tmp/v/jenkins"
 # shellcheck source=/tmp/v/jenkins/bin/activate disable=SC1091
-source "/tmp/v/jenkins/bin/activate"
+. "/tmp/v/jenkins/bin/activate"
 # Remove pip cache to avoid cache entry deserialization failures
 rm -rf ~/.cache/pip/
 pip install --quiet --upgrade pip setuptools

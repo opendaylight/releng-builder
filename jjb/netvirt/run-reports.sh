@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # SPDX-License-Identifier: EPL-1.0
 ##############################################################################
 # Copyright (c) 2018 Red Hat, Inc. and others.
@@ -15,7 +15,7 @@ set -x # Enable trace
 
 virtualenv --quiet "/tmp/v/odltools"
 # shellcheck disable=SC1091
-source /tmp/v/odltools/bin/activate
+. /tmp/v/odltools/bin/activate
 pip install odltools
 mkdir "$REPORT_PATH"
 python -m odltools csit reports --numjobs "$NUM_JOBS" --path "$REPORT_PATH" --url "$LOG_URL" --jobnames "$JOB_NAMES" || true

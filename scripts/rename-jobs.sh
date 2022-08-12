@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Script to rename Jenkins jobs by searching and replacing a string with a new
 # string.
@@ -28,7 +28,7 @@ jobs=$(xmlstarlet sel -t -m '//hudson/job' \
       grep "$search_string")
 
 for job in $(echo "$jobs" | tr "\n" " "); do
-    new_job="${job//$search_string/$replace_string}"
+    new_job=$(echo $job | sed "s@$search_string@$replace_string@g")
     echo "Renaming $job to $new_job"
     #curl --data "newName=${new_job}" "https://$username:$password@jenkins.opendaylight.org/$system/job/${job}/doRename"
 done
