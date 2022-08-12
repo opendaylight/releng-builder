@@ -1,8 +1,10 @@
 #!/bin/bash
 
-echo "common-functions.sh is being sourced"
+echo "common-functions.sh is now being dotted."
+echo "Caution: it used to be sourced."
+echo "Using now BUNDLEFOLDER value from parent shell: ${BUNDLEFOLDER}"
 
-BUNDLEFOLDER=$1
+#BUNDLEFOLDER=$1
 
 # Basic controller configuration settings
 export MAVENCONF=/tmp/${BUNDLEFOLDER}/etc/org.ops4j.pax.url.mvn.cfg
@@ -894,7 +896,7 @@ function get_features() {
 function create_configuration_script() {
     cat > "${WORKSPACE}"/configuration-script.sh <<EOF
 set -x
-source /tmp/common-functions.sh ${BUNDLEFOLDER}
+. /tmp/common-functions.sh
 
 echo "Changing to /tmp"
 cd /tmp
