@@ -1,4 +1,4 @@
-#!/bin/bash -l
+#!/bin/sh -l
 # Activate robotframework virtualenv
 # ${ROBOT_VENV} comes from the integration-install-robotframework.sh
 # script.
@@ -23,7 +23,7 @@ UNZIPPED_DIR=$(dirname "$(unzip -qql "${BUNDLE}" | head -n1 | tr -s ' ' | cut -d
 unzip -q "${BUNDLE}"
 tar czf "${DISTRO_UNDER_TEST}" "${UNZIPPED_DIR}"
 git clone https://gerrit.opnfv.org/gerrit/sdnvpn.git /tmp/sdnvpn
-pushd /tmp/sdnvpn; git fetch https://gerrit.opnfv.org/gerrit/sdnvpn refs/changes/93/63293/1 && git checkout FETCH_HEAD; popd
+initdir=$(pwd);cd /tmp/sdnvpn; git fetch https://gerrit.opnfv.org/gerrit/sdnvpn refs/changes/93/63293/1 && git checkout FETCH_HEAD; cd $initdir
 /tmp/sdnvpn/odl-pipeline/lib/odl_reinstaller.sh --pod-config "${WORKSPACE}/node.yaml" --odl-artifact "${DISTRO_UNDER_TEST}" --ssh-key-file ~/.ssh/robot_id_rsa
 
 cat > /tmp/extra_node_configs.sh << EOF
@@ -45,7 +45,7 @@ ssh "$OPENSTACK_COMPUTE_NODE_2_IP" "sudo bash /tmp/extra_node_configs.sh"
 
 USER=heat-admin
 openstack object save OPNFV-APEX-SNAPSHOTS overcloudrc
-source overcloudrc
+. overcloudrc
 cat overcloudrc
 openstack hypervisor list
 
@@ -125,7 +125,7 @@ suite_num=0
 for suite in ${SUITES}; do
     # prepend an incremental counter to the suite name so that the full robot log combining all the suites as is done
     # in the rebot step below will list all the suites in chronological order as rebot seems to alphabetize them
-    ((suite_num = suite_num + 1))
+    suite_num=$((suite_num+1))
     suite_index="$(printf %02d "${suite_num}")"
     suite_name="$(basename "${suite}" | cut -d. -f1)"
     log_name="${suite_index}_${suite_name}"

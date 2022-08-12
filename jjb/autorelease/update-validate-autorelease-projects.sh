@@ -1,4 +1,4 @@
-#!/bin/bash -l
+#!/bin/sh -l
 # SPDX-License-Identifier: EPL-1.0
 ##############################################################################
 # Copyright (c) 2017 - 2018 The Linux Foundation and others.
@@ -16,14 +16,14 @@ BRANCH="stable/${STREAM}"
 # branch does not exist assume master
 url="https://git.opendaylight.org/gerrit/projects/releng%2Fautorelease/branches/"
 resp=$(curl -s -w "\\n\\n%{http_code}" --globoff -H "Content-Type:application/json" "$url")
-if [[ ! "$resp" =~ $BRANCH ]]; then
+if ! expr "$resp" : ".*$BRANCH.*" ; then
     BRANCH="master"
 fi
 
 wget -nv -O /tmp/pom.xml "https://git.opendaylight.org/gerrit/gitweb?p=releng/autorelease.git;a=blob_plain;f=pom.xml;hb=$GERRIT_BRANCH"
 # Allow word splitting as we only expect modules to appear
 # shellcheck disable=2207
-modules=($(xmlstarlet sel -N x=http://maven.apache.org/POM/4.0.0 -t -m '//x:modules' -v '//x:module' /tmp/pom.xml))
+modules="$(xmlstarlet sel -N x=http://maven.apache.org/POM/4.0.0 -t -m '//x:modules' -v '//x:module' /tmp/pom.xml)"
 
 cat > "$YAML_FILE" << EOF
 ---
@@ -37,9 +37,9 @@ cat > "$YAML_FILE" << EOF
     project-name:
 EOF
 
-for module in "${modules[@]}"; do
+for module in $modules; do
     echo "Include $module"
-    echo "      - ${module//\//-}:" >> "$YAML_FILE"
+    echo "      - $(echo ${module} | sed 's@/@-@g')" >> "$YAML_FILE"
     echo "          project: $module" >> "$YAML_FILE"
 done
 

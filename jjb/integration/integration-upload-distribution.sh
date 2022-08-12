@@ -1,12 +1,12 @@
-#!/bin/bash
+#!/bin/sh
 set -xeu -o pipefail
 
 BUNDLE_VERSION=$(xpath "${BUNDLE_POM}" '/project/version/text()' 2> /dev/null)
 BUNDLEFOLDER="${KARAF_ARTIFACT}-${BUNDLE_VERSION}"
 BUNDLE="${BUNDLEFOLDER}.zip"
 BUNDLE_PATH="/tmp/r/org/opendaylight/${KARAF_PROJECT}/${KARAF_ARTIFACT}/${BUNDLE_VERSION}/${BUNDLE}"
-if [[ "$KARAF_PROJECT" == "integration" ]]; then
-    GROUP_ID="org.opendaylight.${KARAF_PROJECT}.${GERRIT_PROJECT//\//.}"
+if [ "$KARAF_PROJECT" = "integration" ]; then
+    GROUP_ID="org.opendaylight.${KARAF_PROJECT}.$(echo ${GERRIT_PROJECT} | sed 's@/@.@g')"
 else
     GROUP_ID="org.opendaylight.${KARAF_PROJECT}"
 fi
