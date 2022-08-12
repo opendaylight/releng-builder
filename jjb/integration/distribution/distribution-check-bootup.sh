@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 # do not add integration features in MRI projects
-if [[ "$KARAF_PROJECT" == integration ]]; then
-    if [[ -n "${CONTROLLERFEATURES}" ]]; then
+if [ "$KARAF_PROJECT" = "integration" ]; then
+    if [ -n "${CONTROLLERFEATURES}" ]; then
         ACTUALFEATURES="odl-integration-all,${CONTROLLERFEATURES}"
     else
         ACTUALFEATURES="odl-integration-all"
@@ -10,7 +10,7 @@ else
     ACTUALFEATURES="${CONTROLLERFEATURES}"
 fi
 
-if [[ "${JOB_NAME}" == *"distribution-sanity"* ]]; then
+if expr "${JOB_NAME}" : ".*distribution-sanity.*" ; then
     CONTROLLERMEM="4096m"
 else
     CONTROLLERMEM="3072m"
@@ -24,7 +24,7 @@ echo "Clean Existing distribution"
 rm -rf "${BUNDLEFOLDER}"
 
 echo "Fetch the distribution..."
-if  [[ -z "${BUNDLE_PATH}" ]]; then
+if  [ -z "${BUNDLE_PATH}" ]; then
     wget --progress=dot:mega  "${ACTUAL_BUNDLE_URL}"
 else
     cp "${BUNDLE_PATH}" .
@@ -37,16 +37,16 @@ echo "Configuring the startup features..."
 FEATURESCONF="${WORKSPACE}/${BUNDLEFOLDER}/etc/org.apache.karaf.features.cfg"
 FEATURE_TEST_STRING="features-test"
 FEATURE_TEST_VERSION="$BUNDLE_VERSION"
-if [[ "$KARAF_ARTIFACT" == "opendaylight" ]]; then
-    FEATURE_TEST_VERSION="$(sed -r "s%^([0-9]+)\.([0-9]+)\.0(.*)%0.\1.\2\3%" <<<"$BUNDLE_VERSION")"
+if [ "$KARAF_ARTIFACT" = "opendaylight" ]; then
+    FEATURE_TEST_VERSION="$(echo "$BUNDLE_VERSION" | sed -E "s%^([0-9]+)\.([0-9]+)\.0(.*)%0.\1.\2\3%")"
 fi
 
 # only replace feature repo in integration/distro, MRI projects need to pull in
 # the features they need by themselves
-if [[ "$KARAF_PROJECT" == integration ]]; then
+if [ "$KARAF_PROJECT" = "integration" ]; then
     sed -ie "s%\(featuresRepositories= \|featuresRepositories = \)%featuresRepositories = mvn:org.opendaylight.integration/${FEATURE_TEST_STRING}/${FEATURE_TEST_VERSION}/xml/features,%g" "${FEATURESCONF}"
 
-    if [[ -n "${REPO_URL}" ]]; then
+    if [ -n "${REPO_URL}" ]; then
        # sed below will fail if it finds space between feature repos.
        REPO_URL_NO_SPACE="$(echo -e "${REPO_URL}" | tr -d '[:space:]')"
        sed -ie "s%featuresRepositories = %featuresRepositories = ${REPO_URL_NO_SPACE},%g" "${FEATURESCONF}"
@@ -72,13 +72,13 @@ cat "${MEMCONF}"
 echo "Listing all open ports on controller system"
 netstat -pnatu
 
-if [ "$JDKVERSION" == 'openjdk17' ]; then
+if [ "$JDKVERSION" = 'openjdk17' ]; then
     echo "Preparing for JRE Version 17"
     JAVA_HOME="/usr/lib/jvm/java-17-openjdk"
-elif [ "$JDKVERSION" == 'openjdk11' ]; then
+elif [ "$JDKVERSION" = 'openjdk11' ]; then
     echo "Preparing for JRE Version 11"
     JAVA_HOME="/usr/lib/jvm/java-11-openjdk"
-elif [ "${JDKVERSION}" == 'openjdk8' ]; then
+elif [ "${JDKVERSION}" = 'openjdk8' ]; then
     echo "Setting the JRE Version to 8"
     # dynamic_verify does not allow sudo, JAVA_HOME should be enough for karaf start.
     # sudo /usr/sbin/alternatives --set java /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.60-2.b27.el7_1.x86_64/jre/bin/java
@@ -95,7 +95,7 @@ mkdir -p "${WORKSPACE}/${BUNDLEFOLDER}/data/log"
 echo "Starting controller..."
 "${WORKSPACE}/${BUNDLEFOLDER}/bin/start"
 
-function dump_log_and_exit {
+dump_log_and_exit() {
     echo "Dumping first 500K bytes of karaf log..."
     head --bytes=500K "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log"
     echo "Dumping last 500K bytes of karaf log..."
@@ -114,7 +114,7 @@ while true; do
     if grep --quiet 'org.opendaylight.infrautils.*System ready' "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log"; then
         echo "Controller is UP"
         break
-    elif (( "${COUNT}" >= "360" )); then
+    elif [ ${COUNT} -ge 360 ]; then
         echo "Timeout Controller DOWN"
         dump_log_and_exit
     fi
@@ -127,7 +127,7 @@ done
 echo "Listing all open ports on controller system"
 netstat -pnatu
 
-function exit_on_log_file_message {
+exit_on_log_file_message() {
     echo "looking for \"$1\" in karaf.log file"
     if grep --quiet "$1" "${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf.log"; then
         echo ABORTING: found "$1"
@@ -155,9 +155,10 @@ echo "Kill controller"
 ps axf | grep karaf | grep -v grep | awk '{print "kill -9 " $1}' | sh
 
 echo "Bug 4628: Detecting misplaced config files"
-pushd "${WORKSPACE}/${BUNDLEFOLDER}" || exit
+initdir = $(pwd)
+cd "${WORKSPACE}/${BUNDLEFOLDER}" || exit
 XMLS_FOUND="$(echo -- *.xml)"
-popd || exit
+cd $initdir || exit
 if [ "$XMLS_FOUND" != "*.xml" ]; then
     echo "Bug 4628 confirmed."
     ## TODO: Uncomment the following when ODL is fixed, to guard against regression.
