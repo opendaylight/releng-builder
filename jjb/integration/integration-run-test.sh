@@ -8,8 +8,8 @@ fi
 # ${ROBOT_VENV} comes from the integration-install-robotframework.sh
 # script.
 # shellcheck source=${ROBOT_VENV}/bin/activate disable=SC1091
-source "${ROBOT_VENV}/bin/activate"
-source /tmp/common-functions.sh "${BUNDLEFOLDER}"
+. "${ROBOT_VENV}/bin/activate"
+. /tmp/common-functions.sh
 echo "#################################################"
 echo "## invoke Tests for non-karaf Controllers      ##"
 echo "#################################################"
