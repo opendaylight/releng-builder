@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # SPDX-License-Identifier: EPL-1.0
 ##############################################################################
 # Copyright (c) 2017 The Linux Foundation and others.
@@ -15,15 +15,17 @@ search_string="csit"
 
 wget --quiet -O "$jobs_file" "https://jenkins.opendaylight.org/$SILO/api/xml"
 # shellcheck disable=SC2207
-jobs=($(xmlstarlet sel -t -m '//hudson/job' \
-    -n -v 'name' "$jobs_file" | grep $search_string | grep "$STREAM"))
+jobs="$(xmlstarlet sel -t -m '//hudson/job' \
+    -n -v 'name' "$jobs_file" | grep $search_string | grep "$STREAM")"
 
 # output as comma-separated list
 job_list="${WORKSPACE}/jjb/integration/csit-jobs-${STREAM}.lst"
 rm "$job_list"
-for job in "${jobs[@]}"; do
+
+for job in $jobs; do
     echo "Checking if $job is blocklisted."
-    if [[ ! $job =~ update-csit-tests|${CSIT_BLOCKLIST// /\|} ]]; then
+    if ["$job" != "update-csit-tests"] && \
+      echo ${CSIT_BLOCKLIST} | tr ' ' '\n' | grep -F -q -x "$job"; then
         echo "${job}," >> "$job_list"
         echo "    Added $job to job list."
     fi
