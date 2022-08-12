@@ -9,7 +9,7 @@
     - include_role: name=lfit.system-update
 
   tasks:
-    - name: Install robot dependencies
+    - name: Install robot dependencies on CentOS 7
       yum:
         name:
           - postgresql-devel
@@ -19,6 +19,21 @@
           - python36-pip
         state: present
       become: true
+      when:
+        - ansible_facts['distribution_major_version'] is version('8', '<')
+
+    - name: Install robot dependencies on CentOS 8
+      yum:
+        name:
+          - postgresql-devel
+          - python3-docker
+          - python3-matplotlib
+          - python3-netaddr
+          - python38-pip
+        state: present
+      become: true
+      when:
+        - ansible_facts['distribution_major_version'] is version('8', '>=')
 
     - name: Install dlux dependencies
       block:
@@ -39,10 +54,29 @@
               - libpcap-devel
               - libxml2-devel
               - libxslt-devel
+            state: present
+          become: true
+
+        - name: Install lispflowmapping dependencies for CentOS 7
+          yum:
+            name:
               - python-docker-py
               - python-netaddr
             state: present
           become: true
+          when:
+            - ansible_facts['distribution_major_version'] is version('8', '<')
+
+        - name: Install lispflowmapping dependencies for CentOS 8
+          yum:
+            name:
+              - python3-docker
+              - python3-netaddr
+            state: present
+          become: true
+          when:
+            - ansible_facts['distribution_major_version'] is version('8', '>=')
+
         - name: Install udpreplay
           block:
             - name: Fetch udpreplay git repo
