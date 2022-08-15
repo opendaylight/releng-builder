@@ -14,7 +14,7 @@
     stream:
       - master:
           branch: "master"
-          jre: "openjdk11"
+          jre: "openjdk17"
 
     karaf-version: netconf
 
@@ -50,7 +50,7 @@
     stream:
       - master:
           branch: "master"
-          jre: "openjdk11"
+          jre: "openjdk17"
           robot-options:
             "-v USE_NETCONF_CONNECTOR:False -v SCHEMA_MODEL:juniper -v\
             \ INIT_DEVICE_COUNT:1000 -v MAX_DEVICE_COUNT:3000 -v DEVICE_INCREMENT:500\
