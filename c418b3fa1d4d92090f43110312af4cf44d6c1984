@@ -16,6 +16,24 @@
       "message": "Okay, I am not sure whether this is the right approach.\n\nAlternative seems to be to define new templates and use those for new project definitions -- which seems to be a much larger effort.\n\nOr, can we perhaps override build-node/jre in integration-test-jobs.yaml?\n\nAnyway, I don\u0027t know how to run this on sandbox, so all input is welcome.",
       "revId": "c418b3fa1d4d92090f43110312af4cf44d6c1984",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "60938639_033b3960",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2022-08-15T14:24:03Z",
+      "side": 1,
+      "message": "Well, this failure solves the conundrum:\n\n```\nrobot run-test: commands[0] | python /w/workspace/builder-tox-verify-master/check_robot.py\nERROR: More than one robot system type definition detected.\nPlease ensure that ALL templates use the same robot nodes.\nInfra does not support more than 1 robot node type in use.\n```",
+      "parentUuid": "b28dcb05_f973ff1b",
+      "revId": "c418b3fa1d4d92090f43110312af4cf44d6c1984",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
