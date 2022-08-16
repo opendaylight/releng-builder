@@ -1,4 +1,4 @@
-#!/bin/bash -l
+#!/bin/sh -l
 # SPDX-License-Identifier: EPL-1.0
 ##############################################################################
 # Copyright (c) 2018 The Linux Foundation and others.
@@ -17,14 +17,14 @@ BRANCH="stable/${STREAM}"
 # branch does not exist assume master
 url="https://git.opendaylight.org/gerrit/projects/releng%2Fautorelease/branches/"
 resp=$(curl -s -w "\\n\\n%{http_code}" --globoff -H "Content-Type:application/json" "$url")
-if [[ ! "$resp" =~ $BRANCH ]]; then
+if ! expr $resp : "$BRANCH" ; then
     BRANCH="master"
 fi
 
 wget -nv -O /tmp/pom.xml "https://git.opendaylight.org/gerrit/gitweb?p=releng/autorelease.git;a=blob_plain;f=pom.xml;hb=$GERRIT_BRANCH"
 
 # handle list of projects read from the pom.xml output as multiple lines.
-mapfile -t modules < <(xmlstarlet sel -N x=http://maven.apache.org/POM/4.0.0 -t -m '//x:modules' -v '//x:module' /tmp/pom.xml)
+modules=$(xmlstarlet sel -N x=http://maven.apache.org/POM/4.0.0 -t -m '//x:modules' -v '//x:module' /tmp/pom.xml)
 
 cat > "$VIEWS_AR_YAML_FILE" << EOF
 ---
@@ -53,7 +53,7 @@ cat > "$VIEWS_AR_YAML_FILE" << EOF
     job-name:
 EOF
 
-for module in "${modules[@]}"; do
+for module in modules; do
     echo "Include project:$module to autorelease view"
     echo "      - \"$module-maven-merge-${STREAM}\"" >> "$VIEWS_AR_YAML_FILE"
 done

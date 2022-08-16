@@ -1,4 +1,4 @@
-#!/bin/bash -l
+#!/bin/sh -l
 # SPDX-License-Identifier: EPL-1.0
 ##############################################################################
 # Copyright (c) 2017 The Linux Foundation and others.
@@ -26,18 +26,20 @@ fi
 
 ./scripts/release-notes-generator.sh "$RELEASE"
 
+REL_LOWCASE=$(echo $RELEASE |  tr '[:upper:]' '[:lower:]')
+
 # Archive the notes
 if [ -f  "$WORKSPACE/release-notes.rst" ]; then
     mkdir -p "$WORKSPACE/archives"
-    cp -f "$WORKSPACE/release-notes.rst" "$WORKSPACE/archives/${RELEASE,,}"
+    cp -f "$WORKSPACE/release-notes.rst" "$WORKSPACE/archives/$REL_LOWCASE"
 fi
 
 # Generate a docs patch for the notes
 DOCS_DIR=$(mktemp -d)
 git clone -b "$GERRIT_BRANCH" https://git.opendaylight.org/gerrit/docs.git "$DOCS_DIR"
 cd "$DOCS_DIR" || exit 1
-cp "$WORKSPACE/release-notes.rst" "docs/release-notes/release-notes-${RELEASE,,}.rst"
-sed -i -e '$a     release-notes-'"${RELEASE,,}"'' "docs/release-notes/index.rst"
+cp "$WORKSPACE/release-notes.rst" "docs/release-notes/release-notes-$REL_LOWCASE.rst"
+sed -i -e '$a     release-notes-'"$REL_LOWCASE"'' "docs/release-notes/index.rst"
 git add docs/release-notes/
 
 GERRIT_COMMIT_MESSAGE="Update release notes for $RELEASE"
