@@ -1,4 +1,4 @@
-#!/bin/bash -l
+#!/bin/sh -l
 # SPDX-License-Identifier: EPL-1.0
 ##############################################################################
 # Copyright (c) 2021 The Linux Foundation and others.
@@ -15,12 +15,9 @@ echo "*** starting releace process for $BUILD_TYPE"
 ls -l
 pwd
 cd "$WORKSPACE/helm/opendaylight" || exit
-helm_charts=()
-while IFS= read -rd $'\n'; do
-    helm_charts+=("$line")
-done < <(find "$WORKSPACE/helm/opendaylight")
+helm_charts=$(find "$WORKSPACE/helm/opendaylight")
 
-for chart in "${helm_charts[@]}"; do
+for chart in $helm_charts; do
   chart=$(echo "$chart" | xargs)
   echo " ** processing chart $chart"
   case "$BUILD_TYPE" in

@@ -1,4 +1,4 @@
-#!/bin/bash -l
+#!/bin/sh -l
 # SPDX-License-Identifier: EPL-1.0
 ##############################################################################
 # Copyright (c) 2021 The Linux Foundation and others.
@@ -67,10 +67,10 @@ helm_client_url="${helm_client_url}" \
         --floating-ip-disabled)
 
     # Check return status and extract the $cluster_uuid from return status
-    if [[ -z "$cluster_status" ]]; then
+    if [ -z "$cluster_status" ]; then
         echo "ERROR: Failed to create coe cluster ${cluster_name}"
         exit 1
-    elif [[ "${cluster_status}" =~ .*accepted.* ]]; then
+    elif expr ${cluster_status} : '.*accepted.*' ; then
         cluster_uuid=$(echo "${cluster_status}" | awk -F' ' '{print $5}')
     fi
 
@@ -100,7 +100,7 @@ helm_client_url="${helm_client_url}" \
                     sleep 30
                     delete_status=$(openstack coe cluster show "${cluster_name}" -f value -c status)
                     echo "$j: ${delete_status}"
-                    if [[ ${delete_status} == "DELETE_FAILED" ]]; then
+                    if [ "${delete_status}" = "DELETE_FAILED" ]; then
                         reason=$(openstack coe cluster show "${cluster_name}" -f value -c health_status_reason)
                         echo "ERROR: Failed to delete ${cluster_name}. Reason: ${reason}"
 
