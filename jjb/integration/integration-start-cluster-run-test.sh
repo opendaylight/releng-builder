@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 #@IgnoreInspection BashAddShebang
 # Activate robotframework virtualenv
 # ${ROBOT_VENV} comes from the integration-install-robotframework.sh
@@ -27,15 +27,19 @@ fi
 echo "Generating controller variables..."
 for i in $(seq 1 "${NUM_ODL_SYSTEM}")
 do
-    CONTROLLERIP=ODL_SYSTEM_${i}_IP
-    odl_variables=${odl_variables}" -v ${CONTROLLERIP}:${!CONTROLLERIP}"
+    CONTROLLER_VARNAME=ODL_SYSTEM_${i}_IP
+    # eval presents no security issue here because of controlled possible values
+    eval CONTROLLERIP=\$$CONTROLLER_VARNAME
+    odl_variables=${odl_variables}" -v ${CONTROLLER_VARNAME}:${CONTROLLERIP}"
 done
 
 echo "Generating mininet variables..."
 for i in $(seq 1 "${NUM_TOOLS_SYSTEM}")
 do
-    MININETIP=TOOLS_SYSTEM_${i}_IP
-    tools_variables=${tools_variables}" -v ${MININETIP}:${!MININETIP}"
+    MININET_VARNAME=TOOLS_SYSTEM_${i}_IP
+    # eval presents no security issue here because of controlled possible values
+    eval MININETIP=\$$MININET_VARNAME
+    tools_variables=${tools_variables}" -v ${MININET_VARNAME}:${MININETIP}"
 done
 
 get_test_suites SUITES
@@ -90,30 +94,32 @@ ssh "${ODL_SYSTEM_3_IP}" "du -hs /tmp/${BUNDLEFOLDER}/data/log/*"
 set +e  # We do not want to create red dot just because something went wrong while fetching logs.
 for i in $(seq 1 "${NUM_ODL_SYSTEM}")
 do
-    CONTROLLERIP="ODL_SYSTEM_${i}_IP"
+    # eval presents no security issue here because of controlled possible values
+    eval CONTROLLERIP=\$"ODL_SYSTEM_${i}_IP"
     echo "Let's take the karaf thread dump again"
-    ssh "${!CONTROLLERIP}" "sudo ps aux" > "${WORKSPACE}/ps_after.log"
+    ssh "${CONTROLLERIP}" "sudo ps aux" > "${WORKSPACE}/ps_after.log"
     pid=$(grep org.apache.karaf.main.Main "${WORKSPACE}/ps_after.log" | grep -v grep | tr -s ' ' | cut -f2 -d' ')
     echo "karaf main: org.apache.karaf.main.Main, pid:${pid}"
     # shellcheck disable=SC2029
-    ssh "${!CONTROLLERIP}" "${JAVA_HOME}/bin/jstack -l ${pid}" > "${WORKSPACE}/karaf_${i}_${pid}_threads_after.log" || true
+    ssh "${CONTROLLERIP}" "${JAVA_HOME}/bin/jstack -l ${pid}" > "${WORKSPACE}/karaf_${i}_${pid}_threads_after.log" || true
     echo "killing karaf process..."
-    ssh "${!CONTROLLERIP}" bash -c 'ps axf | grep karaf | grep -v grep | awk '"'"'{print "kill -9 " $1}'"'"' | sh'
+    ssh "${CONTROLLERIP}" bash -c 'ps axf | grep karaf | grep -v grep | awk '"'"'{print "kill -9 " $1}'"'"' | sh'
 done
 sleep 5
 for i in $(seq 1 "${NUM_ODL_SYSTEM}")
 do
-    CONTROLLERIP=ODL_SYSTEM_${i}_IP
+    # eval presents no security issue here because of controlled possible values
+    eval CONTROLLERIP=\$"ODL_SYSTEM_${i}_IP"
     echo "Compressing karaf.log ${i}"
-    ssh "${!CONTROLLERIP}" gzip --best "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
+    ssh "${CONTROLLERIP}" gzip --best "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
     echo "Fetching compressed karaf.log ${i}"
-    scp "${!CONTROLLERIP}:/tmp/${BUNDLEFOLDER}/data/log/karaf.log.gz" "odl${i}_karaf.log.gz" && ssh "${!CONTROLLERIP}" rm -f "/tmp/${BUNDLEFOLDER}/data/log/karaf.log.gz"
+    scp "${CONTROLLERIP}:/tmp/${BUNDLEFOLDER}/data/log/karaf.log.gz" "odl${i}_karaf.log.gz" && ssh "${CONTROLLERIP}" rm -f "/tmp/${BUNDLEFOLDER}/data/log/karaf.log.gz"
     # TODO: Should we compress the output log file as well?
-    scp "${!CONTROLLERIP}:/tmp/${BUNDLEFOLDER}/data/log/karaf_console.log" "odl${i}_karaf_console.log" && ssh "${!CONTROLLERIP}" rm -f "/tmp/${BUNDLEFOLDER}/data/log/karaf_console.log"
+    scp "${CONTROLLERIP}:/tmp/${BUNDLEFOLDER}/data/log/karaf_console.log" "odl${i}_karaf_console.log" && ssh "${CONTROLLERIP}" rm -f "/tmp/${BUNDLEFOLDER}/data/log/karaf_console.log"
     echo "Fetch GC logs"
     # FIXME: Put member index in filename, instead of directory name.
     mkdir -p "gclogs-${i}"
-    scp "${!CONTROLLERIP}:/tmp/${BUNDLEFOLDER}/data/log/*.log" "gclogs-${i}/" && ssh "${!CONTROLLERIP}" rm -f "/tmp/${BUNDLEFOLDER}/data/log/*.log"
+    scp "${CONTROLLERIP}:/tmp/${BUNDLEFOLDER}/data/log/*.log" "gclogs-${i}/" && ssh "${CONTROLLERIP}" rm -f "/tmp/${BUNDLEFOLDER}/data/log/*.log"
 done
 
 echo "Examine copied files"

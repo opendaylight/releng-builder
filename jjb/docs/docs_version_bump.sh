@@ -1,4 +1,4 @@
-#!/bin/bash -l
+#!/bin/sh -l
 # SPDX-License-Identifier: EPL-1.0
 ##############################################################################
 # Copyright (c) 2019 The Linux Foundation and others.
@@ -37,14 +37,14 @@ pip install --quiet --upgrade git-review
 git config --global --add gitreview.username "jenkins-$SILO"
 cd "$WORKSPACE"/docs || exit
 RELEASE_NAME=${RELEASE_NAME:-}
-Next_release="$(tr '[:lower:]' '[:upper:]' <<< "${RELEASE_NAME:0:1}")${RELEASE_NAME:1}" # Captilize Version Name
+Next_release=$(echo $RELEASE_NAME | sed 's/\([a-z]\)\([a-zA-Z0-9]*\)/\u\1\2/g') # Captilize Version Name
 release_name=$STREAM
-Release_version="$(tr '[:lower:]' '[:upper:]' <<< "${release_name:0:1}")${release_name:1}" # Captilize Version Name
+Release_version=$(echo $release_name | sed 's/\([a-z]\)\([a-zA-Z0-9]*\)/\u\1\2/g') # Captilize Version Name
 PUBLISH=${PUBLISH:-}
 stable_release_str=stable-$release_name
 echo "Start Version Updating in docs project"
 echo "RELEASE_NAME : $Next_release"
-if [ "$GERRIT_BRANCH" == "master" ]
+if [ "$GERRIT_BRANCH" = "master" ]
 then
     # ####################################
     # # Changes in the master branch #
@@ -72,7 +72,7 @@ then
     sed -i "s/$Release_version/$Next_release/g" docs/conf.yaml
     # Updating version in docs/javadoc.rst
     sed -i "s/$release_name/$RELEASE_NAME/g" docs/javadoc.rst
-    if [ "$PUBLISH" == "true" ]
+    if [ "$PUBLISH" = "true" ]
     then
             git add docs/conf.py docs/conf.yaml docs/javadoc.rst
             echo "Update configuratiom files in master branch"
@@ -94,7 +94,7 @@ else
 
     # #Updating links in docs/conf.py
     sed -i "s/latest/$stable_release_str/g" docs/conf.py
-    if [ "$PUBLISH" == "true" ]
+    if [ "$PUBLISH" = "true" ]
     then
             git add docs/conf.py
             echo "Update docs/conf.py links from latest to $stable_release_str"
