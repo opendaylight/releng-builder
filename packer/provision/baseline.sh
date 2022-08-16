@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # vim: ts=4 sw=4 sts=4 et tw=72 :
 
@@ -9,17 +9,17 @@ enable_service() {
     # Enable services for Ubuntu instances
     # We purposely want to allow globbing to build the package array
     # shellcheck disable=SC2206
-    services=($@)
+    services="$@"
 
-    for service in "${services[@]}"; do
+    for service in $services; do
         echo "---> Enable service: $service"
         FACTER_OS=$(/usr/bin/facter operatingsystem | tr '[:upper:]' '[:lower:]')
         FACTER_OSVER=$(/usr/bin/facter operatingsystemrelease)
-        if [ "$FACTER_OS" == "centos" ]; then
+        if [ "$FACTER_OS" = "centos" ]; then
             systemctl enable "$service"
             systemctl start "$service"
             systemctl status "$service"
-        elif [ "$FACTER_OS" == "ubuntu" ]; then
+        elif [ "$FACTER_OS" = "ubuntu" ]; then
             case "$FACTER_OSVER" in
                 14.04)
                     service "$service" start
@@ -76,12 +76,12 @@ ensure_ubuntu_install() {
 
     # We purposely want to allow globbing to build the package array
     # shellcheck disable=SC2206
-    packages=($@)
+    packages="$@"
 
-    for pkg in "${packages[@]}"
+    for pkg in $packages
     do
         # Retry installing package 5 times if necessary
-        for i in {0..5}
+        for i in $(seq 0 5)
         do
 
             # Wait for any background apt processes to finish before running apt
@@ -250,11 +250,10 @@ EOF
     enable_service sysstat
 
     # Install python3 and dependencies, needed for Coala linting at least
-    yum install -y python34
-    yum install -y python34-{devel,virtualenv,setuptools,pip}
+    yum install -y python34 python34-devel python34-virtualenv python34-setuptools python34-pip
 
     # Install python dependencies, useful generally
-    yum install -y python-{devel,virtualenv,setuptools,pip}
+    yum install -y python-devel python-virtualenv python-setuptools python-pip
 }
 
 ubuntu_systems() {
@@ -306,11 +305,10 @@ EOF
     ensure_ubuntu_install unzip xz-utils git libxml-xpath-perl
 
     # Install python3 and dependencies, needed for Coala linting
-    ensure_ubuntu_install python3
-    ensure_ubuntu_install python3-{dev,setuptools,pip}
+    ensure_ubuntu_install python3 python3-dev python3-setuptools python3-pip
 
     # Install python and dependencies
-    ensure_ubuntu_install python-{dev,virtualenv,setuptools,pip}
+    ensure_ubuntu_install python-dev python-setuptools python-pip
 
     FACTER_OSVER=$(facter operatingsystemrelease)
     case "$FACTER_OSVER" in
