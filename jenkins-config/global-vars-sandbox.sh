@@ -1,3 +1,5 @@
+#!/bin/sh
+
 CONTAINER_PULL_REGISTRY=nexus3.opendaylight.org:10003
 CONTAINER_PUSH_REGISTRY=nexus3.opendaylight.org:10002
 DOCKER_REGISTRY=nexus3.opendaylight.org

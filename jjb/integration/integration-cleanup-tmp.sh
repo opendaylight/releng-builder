@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/bin/sh
+
 echo "Cleaning up Robot installation..."
 
 # ${ROBOT_VENV} comes from the integration-install-robotframework.sh

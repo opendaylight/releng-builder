@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 echo "---> releng-maven-mri-stage.sh"
 # This script publishes artifacts to a staging repo in Nexus and exports the karaf bundle URL.

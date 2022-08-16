@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/bin/sh
+
 echo "Cleaning up the workspace..."
 
 # Leftover files from previous runs could be wrongly copied as results.

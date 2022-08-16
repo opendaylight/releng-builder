@@ -1,4 +1,4 @@
-#!/bin/bash -l
+#!/bin/sh -l
 # Get the Controller and Tools VM slave addresses
 
 set -ex -o pipefail
