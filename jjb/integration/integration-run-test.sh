@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 #@IgnoreInspection BashAddShebang
 if [ "${IS_KARAF_APPL}" = "True" ] ; then
     echo "Karaf Deployments, Tests must have already run"
@@ -28,8 +28,10 @@ fi
 echo "Generating mininet variables..."
 for i in $(seq 1 "${NUM_TOOLS_SYSTEM}")
 do
-    MININETIP="TOOLS_SYSTEM_${i}_IP"
-    tools_variables=${tools_variables}" -v ${MININETIP}:${!MININETIP}"
+    MININET_VARNAME="TOOLS_SYSTEM_${i}_IP"
+    # eval presents no security issue here because of controlled possible values
+    eval MININETIP=\$$MININET_VARNAME
+    tools_variables=${tools_variables}" -v ${MININET_VARNAME}:${MININETIP}"
 done
 
 get_test_suites SUITES
@@ -79,16 +81,17 @@ ssh "${ODL_SYSTEM_IP}" "du -hs /tmp/"
 
 for i in $(seq 1 "${NUM_ODL_SYSTEM}")
 do
-    CONTROLLERIP="ODL_SYSTEM_${i}_IP"
+    # eval presents no security issue here because of controlled possible values
+    eval CONTROLLERIP=\$"ODL_SYSTEM_${i}_IP"
     echo "Let's take the karaf thread dump again..."
-    ssh "${!CONTROLLERIP}" "sudo ps aux" > "${WORKSPACE}"/ps_after.log
+    ssh "${CONTROLLERIP}" "sudo ps aux" > "${WORKSPACE}"/ps_after.log
     pid=$(grep org.opendaylight.netconf.micro.NetconfMain "${WORKSPACE}/ps_after.log" | grep -v grep | tr -s ' ' | cut -f2 -d' ')
     echo "karaf main: org.apache.karaf.main.Main, pid:${pid}"
     # shellcheck disable=SC2029
-    ssh "${!CONTROLLERIP}" "${JAVA_HOME}/bin/jstack -l ${pid}" > "${WORKSPACE}/karaf_${i}_${pid}_threads_after.log" || true
+    ssh "${CONTROLLERIP}" "${JAVA_HOME}/bin/jstack -l ${pid}" > "${WORKSPACE}/karaf_${i}_${pid}_threads_after.log" || true
     echo "Killing ODL"
     set +e  # We do not want to create red dot just because something went wrong while fetching logs.
-    ssh "${!CONTROLLERIP}" bash -c 'ps axf | grep org.opendaylight.netconf.micro.NetconfMain | grep -v grep | awk '"'"'{print "kill -9 " $1}'"'"' | sh'
+    ssh "${CONTROLLERIP}" bash -c 'ps axf | grep org.opendaylight.netconf.micro.NetconfMain | grep -v grep | awk '"'"'{print "kill -9 " $1}'"'"' | sh'
 done
 
 sleep 5
@@ -96,11 +99,12 @@ sleep 5
 # TODO: Use rsync.
 for i in $(seq 1 "${NUM_ODL_SYSTEM}")
 do
-    CONTROLLERIP="ODL_SYSTEM_${i}_IP"
+    # eval presents no security issue here because of controlled possible values
+    eval CONTROLLERIP=\$"ODL_SYSTEM_${i}_IP"
     echo "Compressing karaf.log ${i}"
-    ssh "${!CONTROLLERIP}" gzip --best "/tmp/odlmicro_netconf.log"
+    ssh "${CONTROLLERIP}" gzip --best "/tmp/odlmicro_netconf.log"
     echo "Fetching compressed karaf.log ${i}"
-    scp "${!CONTROLLERIP}:/tmp/odlmicro_netconf.log.gz" "odlmicro${i}.log.gz"
+    scp "${CONTROLLERIP}:/tmp/odlmicro_netconf.log.gz" "odlmicro${i}.log.gz"
 done
 
 echo "Examine copied files"

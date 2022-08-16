@@ -1,4 +1,4 @@
-#!/bin/bash -l
+#!/bin/sh -l
 # SPDX-License-Identifier: EPL-1.0
 ##############################################################################
 # Copyright (c) 2015, 2017 The Linux Foundation and others.
@@ -20,9 +20,9 @@
 echo "---> prepare-release.sh"
 
 # Set release tag as $STREAM, when no release tag is passed
-RELEASE_TAG="${RELEASE_TAG:-${STREAM^}}"
+RELEASE_TAG="${RELEASE_TAG:-$STREAM}"
 # Ensure that the first letter of RELEASE_TAG is uppercase.
-RELEASE_TAG="${RELEASE_TAG^}"
+RELEASE_TAG=$(echo $RELEASE_TAG | sed 's/\([a-z]\)\([a-zA-Z0-9]*\)/\u\1\2/g')
 
 # Directory to put git format-patches
 PATCH_DIR="$WORKSPACE/archives/patches"
@@ -40,18 +40,21 @@ echo "$RELEASE_TAG"
 find . -name "*.xml" -print0 | xargs -0 sed -i 's/-SNAPSHOT//'
 
 # Ignore changes to Final distribution since that will be released separately
-pushd integration/distribution || exit 1
+initdir=$(pwd)
+cd integration/distribution || exit 1
     git checkout -f opendaylight/pom.xml
-popd || exit 1
+cd $initdir || exit 1
 git submodule foreach "git commit -am \"Release $RELEASE_TAG\" || true"
 git commit -am "Release $RELEASE_TAG"
 
 modules=$(xmlstarlet sel -N x=http://maven.apache.org/POM/4.0.0 -t -m '//x:modules' -v '//x:module' pom.xml)
 for module in $modules; do
-    pushd "$module" || exit
-    git format-patch --stdout "origin/$GERRIT_BRANCH" > "$PATCH_DIR/${module//\//-}.patch"
-    git bundle create "$PATCH_DIR/${module//\//-}.bundle" "origin/master..HEAD"
-    popd || exit
+    initdir=$(pwd)
+    cd "$module" || exit
+    modulebasename=$(echo $module | sed 's@/@-@g')
+    git format-patch --stdout "origin/$GERRIT_BRANCH" > "$PATCH_DIR/$modulebasename.patch"
+    git bundle create "$PATCH_DIR/$modulebasename.bundle" "origin/master..HEAD"
+    cd $initdir || exit
 done
 
 tar cvzf "$WORKSPACE/archives/patches.tar.gz" -C "$WORKSPACE/archives" patches

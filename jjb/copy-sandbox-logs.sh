@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # SPDX-License-Identifier: EPL-1.0
 ##############################################################################
 # Copyright (c) 2017 The Linux Foundation and others.
@@ -23,7 +23,8 @@ fetch_url="https://s3-logs.opendaylight.org/logs/sandbox/vex-yul-odl-jenkins-2/$
 
 COPY_DIR="$WORKSPACE/archives"
 mkdir -p "$COPY_DIR"
-pushd "$COPY_DIR" || exit
+initdir=$(pwd)
+cd "$COPY_DIR" || exit
 
 # Ensure that the repo_url has a trailing slash as wget needs it to work
 case "$fetch_url" in
@@ -40,8 +41,8 @@ wget -nv --recursive --execute robots=off --no-parent \
     "$fetch_url"
 
 echo "Removing files that do not need to be cloned..."
-mapfile -t remove_files < <(find . -type f -name "*index.html*")
-for f in "${remove_files[@]}"; do
+remove_files=$(find . -type f -name "*index.html*")
+for f in $remove_files; do
     rm "$f"
 done
-popd || exit
+cd $initdir || exit
