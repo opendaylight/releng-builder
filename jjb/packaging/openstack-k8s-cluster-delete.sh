@@ -13,7 +13,7 @@ echo "---> Delete K8S cluster"
 
 set -eux -o pipefail
 # shellcheck disable=SC1090
-source ~/lf-env.sh
+. ~/lf-env.sh
 
 os_cloud="${OS_CLOUD:-vex}"
 cluster_name="${CLUSTER_NAME}"

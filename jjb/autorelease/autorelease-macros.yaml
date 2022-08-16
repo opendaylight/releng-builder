@@ -46,7 +46,7 @@
           #!/bin/bash -l
           set -xe -o pipefail
           python3 -m venv $WORKSPACE/venv
-          source $WORKSPACE/venv/bin/activate
+          . $WORKSPACE/venv/bin/activate
           PYTHON="$WORKSPACE/venv/bin/python"
           $PYTHON -m pip install --upgrade networkx
           $PYTHON -m pip freeze

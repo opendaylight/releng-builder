@@ -13,7 +13,7 @@ echo "---> Export K8S cluster config and view nodes"
 set -eux -o pipefail
 
 # shellcheck disable=SC1090
-source ~/lf-env.sh
+. ~/lf-env.sh
 
 OS_TIMEOUT=5             # Wait time in minutes for OpenStack cluster nodes to come up.
 CLUSTER_NODE_RETRIES=15  # Number of times to retry waiting for a cluster nodes.

@@ -30,7 +30,7 @@ while getopts :h: opts; do
 done
 
 # shellcheck disable=SC1090
-source ~/lf-env.sh
+. ~/lf-env.sh
 
 lf-activate-venv "git-review==1.28"
 

@@ -279,7 +279,7 @@ function run_plan() {
         for line in $( grep -E -v '(^[[:space:]]*#|^[[:space:]]*$)' "${type}plan.txt" ); do
             printf "Executing %s...\\n" "${line}"
             # shellcheck source=${line} disable=SC1091
-            source "${line}"
+            . "${line}"
         done
     fi
     printf "Finished running %s plans\\n" "${type}"

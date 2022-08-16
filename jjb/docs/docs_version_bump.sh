@@ -31,7 +31,7 @@ done
 set +u  # Allow unbound variables for virtualenv
 virtualenv --quiet "/tmp/v/git-review"
 # shellcheck source=/tmp/v/git-review/bin/activate disable=SC1091
-source "/tmp/v/git-review/bin/activate"
+. "/tmp/v/git-review/bin/activate"
 pip install --quiet --upgrade "pip==9.0.3" setuptools
 pip install --quiet --upgrade git-review
 git config --global --add gitreview.username "jenkins-$SILO"
