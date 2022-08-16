@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # SPDX-License-Identifier: EPL-1.0
 ##############################################################################
 # Copyright (c) 2019 The Linux Foundation and others.
@@ -37,11 +37,11 @@ lf-activate-venv "git-review==1.28"
 git config --global --add gitreview.username "jenkins-$SILO"
 cd "$WORKSPACE"/autorelease || exit
 GERRIT_PROJECT="releng/autorelease"
-if [ "$GERRIT_PROJECT" == "releng/autorelease" ]; then
+if [ "$GERRIT_PROJECT" = "releng/autorelease" ]; then
     # User input
     RELEASE_NAME=${RELEASE_NAME:-}
     # Captilize Version Name
-    release_name="$(tr '[:lower:]' '[:upper:]' <<< "${RELEASE_NAME:0:1}")${RELEASE_NAME:1}"
+    release_name=$(echo $RELEASE_NAME | sed 's/\([a-z]\)\([a-zA-Z0-9]*\)/\u\1\2/g')
     echo "Start Version Updating in odl-projects"
     echo "RELEASE_NAME : $release_name"
     ################
@@ -54,7 +54,7 @@ if [ "$GERRIT_PROJECT" == "releng/autorelease" ]; then
     echo "git checkout $GERRIT_BRANCH"
     git submodule foreach "git branch"
     git submodule foreach "$command"
-    if [ "$PUBLISH" == "true" ]
+    if [ "$PUBLISH" = "true" ]
       then
         echo "Update docs header to $release_name in $STREAM"
         git submodule foreach "git add . || true"

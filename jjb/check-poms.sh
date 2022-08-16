@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # SPDX-License-Identifier: EPL-1.0
 ##############################################################################
 # Copyright (c) 2015 The Linux Foundation and others.
@@ -33,14 +33,14 @@ curl -s --header "Accept: application/json" \
 for p in $(python "${WORKSPACE}/parse_json.py" < "${WORKSPACE}/projects.json")
 do
     # Ignore non-projects and archived projects
-    if [ "$p" == "All-Users" ] || \
-       [ "$p" == "affinity" ] || \
-       [ "$p" == "integration" ] || \
-       [ "$p" == "net-virt-platform" ] || \
-       [ "$p" == "opendove" ] || \
-       [ "$p" == "plugin2oc" ] || \
+    if [ "$p" = "All-Users" ] || \
+       [ "$p" = "affinity" ] || \
+       [ "$p" = "integration" ] || \
+       [ "$p" = "net-virt-platform" ] || \
+       [ "$p" = "opendove" ] || \
+       [ "$p" = "plugin2oc" ] || \
        # Also ignore projects known to deploy to non-ODL repositories
-       [ "$p" == "yangide" ]
+       [ "$p" = "yangide" ]
     then
         continue
     fi
@@ -52,9 +52,9 @@ done
 FILE=repos.txt
 
 find . -name pom.xml -print0 | xargs -0 grep -i '<repositories>\|<pluginRepositories>' > "$FILE"
-[[ $(tr -d "\\r\\n" < $FILE|wc -c) -eq 0 ]] && rm $FILE
+[ $(tr -d "\\r\\n" < $FILE|wc -c) -eq 0 ] && rm $FILE
 
-if [ -a $FILE ]
+if [ -e $FILE ]
 then
     cat $FILE
     echo "[ERROR] Repos with <repositories> and/or <pluginRepositories> sections found!"
