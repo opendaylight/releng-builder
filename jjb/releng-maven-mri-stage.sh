@@ -18,7 +18,9 @@ staging_repo=$(sed -n -e 's/Staging repository \(.*\) created\./\1/p' "$TMP_FILE
 mkdir -p "$WORKSPACE/archives"
 echo "$staging_repo ${NEXUS_URL}/content/repositories/$staging_repo" | tee -a "$WORKSPACE/archives/staging-repo.txt"
 
-staged_version=$(find . -name '*karaf*.pom' -exec xpath {} '/project/version/text()' \; 2> /dev/null)
+# TODO: remove the second xpath command once the old version in CentOS 7 is not used any more
+staged_version=$(find . -name '*karaf*.pom' -exec \
+    sh -c 'xpath -e "/project/version/text()" "$1" 2>/dev/null || xpath "$1" "/project/version/text()" 2>/dev/null' xpath.sh {} \;)
 BUNDLE_URL="${NEXUS_URL}/content/repositories/$staging_repo/org/opendaylight/${PROJECT}/${KARAF_ARTIFACT}/${staged_version}/${KARAF_ARTIFACT}-${staged_version}.zip"
 
 # Cleanup
