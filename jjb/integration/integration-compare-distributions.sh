@@ -26,7 +26,12 @@ else
 fi
 
 # Extract the BUNDLE_VERSION from the pom.xml
-BUNDLE_VERSION=$(xpath pom.xml '/project/version/text()' 2> /dev/null)
+# TODO: remove this conditional once CentOS 7 is not used
+if grep VERSION_ID /etc/os-release | grep 7 >/dev/null 2>&1; then
+    BUNDLE_VERSION=$(xpath pom.xml '/project/version/text()' 2>/dev/null)
+else
+    BUNDLE_VERSION=$(xpath -q -e '/project/version/text()' pom.xml)
+fi
 echo "Bundle version is ${BUNDLE_VERSION}"
 # Acquire the timestamp information from maven-metadata.xml
 NEXUSPATH="${NEXUSURL_PREFIX}/${ODL_NEXUS_REPO}/org/opendaylight/${KARAF_PROJECT}/${KARAF_ARTIFACT}"
@@ -39,7 +44,12 @@ if [ $? -ne 0 ]; then
 fi
 
 less maven-metadata.xml
-TIMESTAMP=$(xpath maven-metadata.xml "//snapshotVersion[extension='zip'][1]/value/text()" 2>/dev/null)
+# TODO: remove this conditional once CentOS 7 is not used
+if grep VERSION_ID /etc/os-release | grep 7 >/dev/null 2>&1; then
+    TIMESTAMP=$(xpath maven-metadata.xml "//snapshotVersion[extension='zip'][1]/value/text()" 2>/dev/null)
+else
+    TIMESTAMP=$(xpath -q -e "//snapshotVersion[extension='zip'][1]/value/text()" maven-metadata.xml)
+fi
 echo "Nexus timestamp is ${TIMESTAMP}"
 BUNDLEFOLDER="${KARAF_ARTIFACT}-${BUNDLE_VERSION}"
 BUNDLE="${KARAF_ARTIFACT}-${TIMESTAMP}.zip"
@@ -80,4 +90,3 @@ if [ -f /tmp/distro_new/bin/extract_modules.sh ]; then
     /tmp/distro_new/bin/check_modules.sh
     mv /tmp/distro_new/opendaylight-models "$WORKSPACE"/archives
 fi
-
