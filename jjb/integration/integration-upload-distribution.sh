@@ -1,7 +1,7 @@
 #!/bin/bash
 set -xeu -o pipefail
 
-BUNDLE_VERSION=$(xpath "${BUNDLE_POM}" '/project/version/text()' 2> /dev/null)
+BUNDLE_VERSION=$(xpath -q -e '/project/version/text()' "${BUNDLE_POM}")
 BUNDLEFOLDER="${KARAF_ARTIFACT}-${BUNDLE_VERSION}"
 BUNDLE="${BUNDLEFOLDER}.zip"
 BUNDLE_PATH="/tmp/r/org/opendaylight/${KARAF_PROJECT}/${KARAF_ARTIFACT}/${BUNDLE_VERSION}/${BUNDLE}"

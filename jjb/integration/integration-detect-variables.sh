@@ -21,13 +21,13 @@ if [ "${BUNDLE_URL}" == 'last' ]; then
         wget "http://${GERRIT_PATH}/gitweb?p=integration/distribution.git;a=blob_plain;f=pom.xml;hb=refs/heads/$DISTROBRANCH" -O "pom.xml"
     fi
     # Extract the BUNDLE_VERSION from the pom.xml
-    BUNDLE_VERSION="$(xpath pom.xml '/project/version/text()' 2> /dev/null)"
+    BUNDLE_VERSION="$(xpath -q -e '/project/version/text()' pom.xml)"
     echo "Bundle version is ${BUNDLE_VERSION}"
     # Acquire the timestamp information from maven-metadata.xml
     NEXUSPATH="${NEXUSURL_PREFIX}/${ODL_NEXUS_REPO}/org/opendaylight/${KARAF_PROJECT}/${KARAF_ARTIFACT}"
     wget "${NEXUSPATH}/${BUNDLE_VERSION}/maven-metadata.xml"
     less "maven-metadata.xml"
-    TIMESTAMP="$(xpath maven-metadata.xml "//snapshotVersion[extension='zip'][1]/value/text()" 2>/dev/null)"
+    TIMESTAMP="$(xpath -q -e "//snapshotVersion[extension='zip'][1]/value/text()" maven-metadata.xml)"
     echo "Nexus timestamp is ${TIMESTAMP}"
     BUNDLEFOLDER="${KARAF_ARTIFACT}-${BUNDLE_VERSION}"
     BUNDLE="${KARAF_ARTIFACT}-${TIMESTAMP}.zip"

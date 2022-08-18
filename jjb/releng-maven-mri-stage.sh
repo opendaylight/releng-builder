@@ -18,7 +18,7 @@ staging_repo=$(sed -n -e 's/Staging repository \(.*\) created\./\1/p' "$TMP_FILE
 mkdir -p "$WORKSPACE/archives"
 echo "$staging_repo ${NEXUS_URL}/content/repositories/$staging_repo" | tee -a "$WORKSPACE/archives/staging-repo.txt"
 
-staged_version=$(find . -name '*karaf*.pom' -exec xpath {} '/project/version/text()' \; 2> /dev/null)
+staged_version=$(find . -name '*karaf*.pom' -exec xpath -q -e '/project/version/text()' {} \;)
 BUNDLE_URL="${NEXUS_URL}/content/repositories/$staging_repo/org/opendaylight/${PROJECT}/${KARAF_ARTIFACT}/${staged_version}/${KARAF_ARTIFACT}-${staged_version}.zip"
 
 # Cleanup
