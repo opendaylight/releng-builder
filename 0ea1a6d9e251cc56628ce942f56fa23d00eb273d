@@ -16,6 +16,24 @@
       "message": "if -e option triggers an error on the old version, what about this OS agnostic solution?\n\nBUNDLE_VERSION\u003d$(xpath -q -e \u0027/project/version/text()\u0027 pom.xml || xpath pom.xml \u0027/project/version/text()\u0027 2\u003e/dev/nul)",
       "revId": "0ea1a6d9e251cc56628ce942f56fa23d00eb273d",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac9e8fdd_2d262065",
+        "filename": "jjb/integration/integration-compare-distributions.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1927
+      },
+      "writtenOn": "2022-08-18T17:37:19Z",
+      "side": 1,
+      "message": "Done. Removed \u0027-q\u0027 option because stderr needs to redirected to /dev/null anyway to suppress error messages.",
+      "parentUuid": "f9397ad7_3b815405",
+      "revId": "0ea1a6d9e251cc56628ce942f56fa23d00eb273d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
