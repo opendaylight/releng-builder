@@ -4,7 +4,7 @@
 # ${ROBOT_VENV} comes from the integration-install-robotframework.sh
 # script.
 # shellcheck disable=SC1090,SC1091
-source "${ROBOT_VENV}/bin/activate"
+. "${ROBOT_VENV}/bin/activate"
 source /tmp/common-functions.sh "${BUNDLEFOLDER}"
 
 echo "#################################################"

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # It looks like the devstack gate is stomping on our dnsmasq setup which
 # therefore kills our ability to do proper lookups of some resources.

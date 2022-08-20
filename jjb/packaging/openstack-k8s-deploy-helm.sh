@@ -15,7 +15,7 @@ set -eux -o pipefail
 set -x
 
 # shellcheck disable=SC1090
-source ~/lf-env.sh
+. ~/lf-env.sh
 
 K8S_DEPLOY_LOG="$WORKSPACE/archives/k8s-kubectl-file.log"
 mkdir -p "$WORKSPACE/archives"

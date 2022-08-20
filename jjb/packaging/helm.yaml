@@ -296,7 +296,7 @@
     helm_build_script: |
       #!/bin/bash
       set -x
-      source helm.prop
+      . helm.prop
       set -e -o pipefail
       cd helm/opendaylight
       helm3.7 version

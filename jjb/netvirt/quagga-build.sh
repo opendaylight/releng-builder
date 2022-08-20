@@ -40,7 +40,6 @@ esac
 
 popd
 
-# todo: remove below lines once the scripts in zrpcd repos build the
-# source packages.
+# todo: remove below lines once the scripts in zrpcd repos build the src packages.
 # Ref: https://lists.opendaylight.org/pipermail/integration-dev/2018-July/012330.html
 tar cvzf "$WORKSPACE/upload_files/zrpcd.$(date +%F).tar.gz" "$(pwd)/zrpcd"

@@ -15,7 +15,7 @@ set -e -o pipefail
 mkdir -p ".chartstorage"
 
 chartmuseum --port=6464 --storage="local" --storage-local-rootdir=".chartstorage" &> /dev/null &
-source helm.prop
+. helm.prop
 $HELM_BIN plugin install --version v0.9.0 https://github.com/chartmuseum/helm-push.git || true
 $HELM_BIN repo add local http://localhost:6464
 $HELM_BIN repo add opendaylight http://localhost:6464
