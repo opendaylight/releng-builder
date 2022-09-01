@@ -11,6 +11,11 @@
 
 set -e -o pipefail
 
+# shellcheck disable=SC1090
+source ~/lf-env.sh
+
+lf-activate-venv --python python3 python-openstackclient
+
 cat > "$WORKSPACE/docs/cloud-images.rst" << EOF
 Following are the list of published images available to Jenkins jobs.
 

@@ -41,6 +41,13 @@ function copy-ssh-keys-to-slave() {
     done
 }
 
+# shellcheck disable=SC1090
+source ~/lf-env.sh
+
+lf-activate-venv --python python3 \
+    python-openstackclient \
+    yq
+
 # Print the Stack outputs parameters so that we can identify which IPs belong
 # to which VM types.
 openstack stack show -c outputs "$STACK_NAME"
