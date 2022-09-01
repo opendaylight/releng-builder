@@ -24,12 +24,6 @@ Following are the list of published images available to Jenkins jobs.
 * ZZCI - CentOS 7 - devstack - x86_64 - 20200811-042231.836
 * ZZCI - CentOS 7 - devstack - x86_64 - 20200813-052044.669
 * ZZCI - CentOS 7 - devstack - x86_64 - 20220401-230107.511
-* ZZCI - CentOS 7 - devstack-queens - x86_64 - 20191004-045555.756
-* ZZCI - CentOS 7 - devstack-queens - x86_64 - 20200601-190140.080
-* ZZCI - CentOS 7 - devstack-queens - x86_64 - 20200801-190141.781
-* ZZCI - CentOS 7 - devstack-queens - x86_64 - 20200811-124350.479
-* ZZCI - CentOS 7 - devstack-queens - x86_64 - 20200813-034148.207
-* ZZCI - CentOS 7 - devstack-queens - x86_64 - 20210120-225008.045
 * ZZCI - CentOS 7 - devstack-rocky - 20190601-000116.015
 * ZZCI - CentOS 7 - devstack-rocky - 20190628-065204.973
 * ZZCI - CentOS 7 - devstack-rocky - x86_64 - 20191002-183226.559
