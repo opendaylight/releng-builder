@@ -9,7 +9,13 @@
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
 
+# shellcheck disable=SC2039
 set -e -o pipefail
+
+# shellcheck disable=SC1090
+. ~/lf-env.sh
+
+lf-activate-venv --python python3 python-openstackclient
 
 cat > "$WORKSPACE/docs/cloud-images.rst" << EOF
 Following are the list of published images available to Jenkins jobs.

@@ -16,8 +16,15 @@ else
     cd /builder/openstack-hot || exit 1
 fi
 
-# openstack cli is failing with the decorator package
-sudo pip install --upgrade --quiet decorator
+# shellcheck disable=SC1090
+. ~/lf-env.sh
+
+lf-activate-venv --python python3 \
+    decorator \
+    python-heatclient \
+    python-openstackclient \
+    python-magnumclient \
+    yq
 
 JOB_SUM=$(echo "$JOB_NAME" | sum | awk '{{ print $1 }}')
 VM_NAME="$JOB_SUM-$BUILD_NUMBER"

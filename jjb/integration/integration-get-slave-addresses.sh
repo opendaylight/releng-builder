@@ -8,6 +8,13 @@ TOOLS_SYSTEM=()
 OPENSTACK_SYSTEM=()
 OPENSTACK_CONTROLLERS=()
 
+# shellcheck disable=SC1090
+. ~/lf-env.sh
+
+lf-activate-venv --python python3 \
+    python-heatclient \
+    python-openstackclient
+
 mapfile -t ADDR <<< "$(openstack stack show -f json -c outputs "$STACK_NAME" | jq -r '.outputs[] | select(.output_key | match("^vm_[0-9]+_ips$")) | .output_value | .[]')"
 
 # The next two blocks of code will parse the list of vm IP's hostnames to determine which type of node

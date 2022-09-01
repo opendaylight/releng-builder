@@ -10,7 +10,13 @@
 ##############################################################################
 
 # Ensure we fail the job if any steps fail.
+# shellcheck disable=SC2039
 set -eu -o pipefail
+
+# shellcheck disable=SC1090
+. ~/lf-env.sh
+
+lf-activate-venv --python python3 lftools
 
 MAVEN_GROUP_ID=$(xmlstarlet sel \
       -N "x=http://maven.apache.org/POM/4.0.0" \
