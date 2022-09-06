@@ -12,6 +12,25 @@ lf-activate-venv --python python3 \
 
 set -x
 
+# shellcheck disable=SC1090
+. ~/lf-env.sh
+
+
+# Check if openstack venv was previously created
+if [ -f "/tmp/.os_lf_venv" ]; then
+    os_lf_venv=$(cat "/tmp/.os_lf_venv")
+fi
+
+if [ -d "${os_lf_venv}" ] && [ -f "${os_lf_venv}/bin/openstack" ]; then
+    echo "Re-use existing venv: ${os_lf_venv}"
+    PATH=$os_lf_venv/bin:$PATH
+else
+    lf-activate-venv --python python3 \
+        python-heatclient \
+        python-openstackclient \
+        yq
+fi
+
 ODL_SYSTEM=()
 TOOLS_SYSTEM=()
 OPENSTACK_SYSTEM=()
