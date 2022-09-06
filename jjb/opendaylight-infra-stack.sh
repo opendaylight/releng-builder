@@ -1,4 +1,4 @@
-#!/bin/sh -l
+#!/bin/bash -l
 # SPDX-License-Identifier: EPL-1.0
 ##############################################################################
 # Copyright (c) 2017 The Linux Foundation and others.
@@ -77,7 +77,7 @@ for try in $(seq $STACK_RETRIES); do
                     sleep 30
                     delete_status=$(openstack stack show "$STACK_NAME" -f value -c stack_status)
                     echo "$j: $delete_status"
-                    if [ "$delete_status" = "DELETE_FAILED" ]; then
+                    if [[ $delete_status == "DELETE_FAILED" ]]; then
                         reason=$(openstack stack show "$STACK_NAME" -f value -c stack_status_reason)
                         echo "ERROR: Failed to delete $STACK_NAME. Reason: $reason"
 

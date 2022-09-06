@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # SPDX-License-Identifier: EPL-1.0
 ##############################################################################
 # Copyright (c) 2016 The Linux Foundation and others.
@@ -22,7 +22,7 @@ for i in "java-builder,builder" \
          "robot,robot" \
          "mininet,mininet-ubuntu"
 do set -- $i
-    if expr $HOST : ".*$1.*" ; then
+    if [[ $HOST == *"$1"* ]]; then
         SYSTEM_TYPE="$2"
         break
     fi
