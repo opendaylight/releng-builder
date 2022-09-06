@@ -15,6 +15,22 @@ set -eux -o pipefail
 # shellcheck disable=SC1090
 . ~/lf-env.sh
 
+# Check if openstack venv was previously created
+if [ -f "/tmp/.os_lf_venv" ]; then
+    os_lf_venv=$(cat "/tmp/.os_lf_venv")
+fi
+
+if [ -d "${os_lf_venv}" ] && [ -f "${os_lf_venv}/bin/openstack" ]; then
+    echo "Re-use existing venv: ${os_lf_venv}"
+    PATH=$os_lf_venv/bin:$PATH
+else
+    lf-activate-venv --python python3 \
+        kubernetes \
+        python-heatclient \
+        python-openstackclient \
+        yq
+fi
+
 OS_TIMEOUT=5             # Wait time in minutes for OpenStack cluster nodes to come up.
 CLUSTER_NODE_RETRIES=15  # Number of times to retry waiting for a cluster nodes.
 CLUSTER_NODE_SUCCESSFUL=false

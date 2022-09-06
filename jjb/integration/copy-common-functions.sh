@@ -1,5 +1,23 @@
 #!/bin/bash -l
 
+# shellcheck disable=SC1090
+. ~/lf-env.sh
+
+# Check if openstack venv was previously created
+if [ -f "/tmp/.os_lf_venv" ]; then
+    os_lf_venv=$(cat "/tmp/.os_lf_venv")
+fi
+
+if [ -d "${os_lf_venv}" ] && [ -f "${os_lf_venv}/bin/openstack" ]; then
+    echo "Re-use existing venv: ${os_lf_venv}"
+    PATH=$os_lf_venv/bin:$PATH
+else
+    lf-activate-venv --python python3 \
+        python-heatclient \
+        python-openstackclient \
+        yq
+fi
+
 # Copy the whole script to /tmp/common-functions.sh and to remote nodes but
 # only if this script itself is executing and not sourced. jenkins prepends this
 # script to the common-functions.sh script when adding it to the robot minion.

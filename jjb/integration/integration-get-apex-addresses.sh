@@ -3,6 +3,24 @@
 
 set -ex -o pipefail
 
+# shellcheck disable=SC1090
+. ~/lf-env.sh
+
+# Check if openstack venv was previously created
+if [ -f "/tmp/.os_lf_venv" ]; then
+    os_lf_venv=$(cat "/tmp/.os_lf_venv")
+fi
+
+if [ -d "${os_lf_venv}" ] && [ -f "${os_lf_venv}/bin/openstack" ]; then
+    echo "Re-use existing venv: ${os_lf_venv}"
+    PATH=$os_lf_venv/bin:$PATH
+else
+    lf-activate-venv --python python3 \
+        python-heatclient \
+        python-openstackclient \
+        yq
+fi
+
 git clone https://gerrit.opnfv.org/gerrit/releng.git /tmp/opnfv_releng
 
 openstack object save OPNFV-APEX-SNAPSHOTS node.yaml
@@ -64,5 +82,3 @@ ping -c3 "$OPENSTACK_COMPUTE_NODE_1_IP"
 ping -c3 "$OPENSTACK_COMPUTE_NODE_2_IP"
 
 # vim: sw=4 ts=4 sts=4 et ft=sh :
-
-

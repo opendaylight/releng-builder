@@ -44,7 +44,6 @@ function copy-ssh-keys-to-slave() {
 # shellcheck disable=SC1090
 . ~/lf-env.sh
 
-
 # Check if openstack venv was previously created
 if [ -f "/tmp/.os_lf_venv" ]; then
     os_lf_venv=$(cat "/tmp/.os_lf_venv")
