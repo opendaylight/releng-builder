@@ -8,6 +8,13 @@
 # is true and copies the script. In the false path this copy below is skipped
 # and the sourcing continues so that the appended common-function.sh ends up sourced.
 if [ "${BASH_SOURCE[0]}" == "${0}" ]; then
+    # shellcheck disable=SC1090
+    . ~/lf-env.sh
+
+    lf-activate-venv --python python3 \
+        python-heatclient \
+        python-openstackclient
+
     echo "Copying common-functions.sh to /tmp"
     cp "${0}" /tmp/common-functions.sh
 
