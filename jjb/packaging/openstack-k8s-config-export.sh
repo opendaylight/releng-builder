@@ -15,6 +15,12 @@ set -eux -o pipefail
 # shellcheck disable=SC1090
 . ~/lf-env.sh
 
+lf-activate-venv --python python3 \
+    kubernetes \
+    python-heatclient \
+    python-openstackclient \
+    yq
+
 OS_TIMEOUT=5             # Wait time in minutes for OpenStack cluster nodes to come up.
 CLUSTER_NODE_RETRIES=15  # Number of times to retry waiting for a cluster nodes.
 CLUSTER_NODE_SUCCESSFUL=false

@@ -12,8 +12,15 @@
 echo "---> Delete K8S cluster"
 
 set -eux -o pipefail
+
 # shellcheck disable=SC1090
 . ~/lf-env.sh
+
+lf-activate-venv --python python3 \
+    kubernetes \
+    python-heatclient \
+    python-openstackclient \
+    yq
 
 os_cloud="${OS_CLOUD:-vex}"
 cluster_name="${CLUSTER_NAME}"
