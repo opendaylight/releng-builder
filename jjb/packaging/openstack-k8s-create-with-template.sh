@@ -12,9 +12,14 @@
 echo "---> Create K8S cluster with pre-existing template"
 
 set -eux -o pipefail
+
 # shellcheck disable=SC1090
 . ~/lf-env.sh
-lf-activate-venv python-openstackclient python-magnumclient
+
+lf-activate-venv --python python3 \
+    python-heatclient \
+    python-openstackclient \
+    yq
 
 OS_TIMEOUT=20       # Wait time in minutes for OpenStack cluster to come up.
 CLUSTER_RETRIES=3   # Number of times to retry creating a cluster.

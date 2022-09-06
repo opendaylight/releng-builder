@@ -1,4 +1,13 @@
 #!/bin/bash -l
+
+# shellcheck disable=SC1090
+. ~/lf-env.sh
+
+lf-activate-venv --python python3 \
+    python-heatclient \
+    python-openstackclient \
+    yq
+
 # Get the Controller and Tools VM slave addresses
 
 set -x
