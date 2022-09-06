@@ -703,6 +703,14 @@ function install_ovs() {
     fi
 }
 
+# shellcheck disable=SC1090
+. ~/lf-env.sh
+
+lf-activate-venv --python python3 \
+    python-heatclient \
+    python-openstackclient \
+    yq
+
 ODL_PROVIDER_MAPPINGS="\${PUBLIC_PHYSICAL_NETWORK}:${PUBLIC_BRIDGE}"
 RECLONE=False
 ODL_PORT=8181

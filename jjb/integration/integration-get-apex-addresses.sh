@@ -3,6 +3,14 @@
 
 set -ex -o pipefail
 
+# shellcheck disable=SC1090
+. ~/lf-env.sh
+
+lf-activate-venv --python python3 \
+    python-heatclient \
+    python-openstackclient \
+    yq
+
 git clone https://gerrit.opnfv.org/gerrit/releng.git /tmp/opnfv_releng
 
 openstack object save OPNFV-APEX-SNAPSHOTS node.yaml
@@ -64,5 +72,3 @@ ping -c3 "$OPENSTACK_COMPUTE_NODE_1_IP"
 ping -c3 "$OPENSTACK_COMPUTE_NODE_2_IP"
 
 # vim: sw=4 ts=4 sts=4 et ft=sh :
-
-

@@ -8,6 +8,14 @@ source /tmp/common-functions.sh "${BUNDLEFOLDER}"
 # Ensure we fail the job if any steps fail.
 set -ex -o pipefail
 
+# shellcheck disable=SC1090
+. ~/lf-env.sh
+
+lf-activate-venv --python python3 \
+    python-heatclient \
+    python-openstackclient \
+    yq
+
 print_job_parameters
 
 get_os_deploy
