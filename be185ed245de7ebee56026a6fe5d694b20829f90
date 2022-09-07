@@ -16,6 +16,40 @@
       "message": "This needs the global-jjb CR merged and release update.\n\nhttps://gerrit.linuxfoundation.org/infra/c/releng/global-jjb/+/70597 \n",
       "revId": "be185ed245de7ebee56026a6fe5d694b20829f90",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3d22c531_46049e26",
+        "filename": "jjb/integration/copy-common-functions.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1927
+      },
+      "writtenOn": "2022-09-07T15:11:15Z",
+      "side": 1,
+      "message": "\u0027openstack\u0027 command is only required to copy \u0027common-functions.sh\u0027 within the if-block below. Since this file together with \u0027common-functions.sh\u0027 is sourced in other VMs, this better be inside the if-block. \n```\njenkins prepends this script to the common-functions.sh script when adding it to the robot minion.\n```",
+      "revId": "be185ed245de7ebee56026a6fe5d694b20829f90",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b0caeed_ef4d4fc7",
+        "filename": "jjb/integration/copy-common-functions.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1927
+      },
+      "writtenOn": "2022-09-07T15:11:15Z",
+      "side": 1,
+      "message": "yq doesn\u0027t seem to be used in any of the scripts changed with this patch.",
+      "revId": "be185ed245de7ebee56026a6fe5d694b20829f90",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
