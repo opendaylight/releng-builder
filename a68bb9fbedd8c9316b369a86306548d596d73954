@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a164278c_50cf02cd",
+        "filename": "jjb/packaging/openstack-k8s-cluster-delete.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2022-09-07T08:55:45Z",
+      "side": 1,
+      "message": "... guarded only by openstack, if this runs after openstack-k8s-create-with-template.sh, we will reuse the env...",
+      "range": {
+        "startLine": 24,
+        "startChar": 53,
+        "endLine": 24,
+        "endChar": 62
+      },
+      "revId": "a68bb9fbedd8c9316b369a86306548d596d73954",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63202caa_297b5f7a",
+        "filename": "jjb/packaging/openstack-k8s-cluster-delete.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2022-09-07T08:55:45Z",
+      "side": 1,
+      "message": "but openstack-k8s-create-with-template.sh has NOT installed k8s, so ... do we need or not?!",
+      "range": {
+        "startLine": 29,
+        "startChar": 8,
+        "endLine": 29,
+        "endChar": 18
+      },
+      "revId": "a68bb9fbedd8c9316b369a86306548d596d73954",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "175cd77c_0bc5c6f0",
+        "filename": "jjb/packaging/openstack-k8s-create-with-template.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2022-09-07T08:55:45Z",
+      "side": 1,
+      "message": "and all of this is NOT. it is also broken, because, if this script runs first...",
+      "range": {
+        "startLine": 19,
+        "startChar": 1,
+        "endLine": 19,
+        "endChar": 48
+      },
+      "revId": "a68bb9fbedd8c9316b369a86306548d596d73954",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e18ebb8_4afa4059",
+        "filename": "jjb/packaging/openstack-k8s-create-with-template.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2022-09-07T08:55:45Z",
+      "side": 1,
+      "message": "... it will only install openstack.",
+      "range": {
+        "startLine": 29,
+        "startChar": 8,
+        "endLine": 30,
+        "endChar": 32
+      },
+      "revId": "a68bb9fbedd8c9316b369a86306548d596d73954",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
