@@ -282,37 +282,6 @@
           jobs: "{jobs}"
           result: "success"
 
-# Macro: integration-openstack-controller-mininet
-# Operation: this macro will spin the controller and mininet vms
-# Used by: {project}-csit-* job templates
-
-- wrapper:
-    name: integration-openstack-controller-mininet
-    wrappers:
-      - openstack:
-          instances:
-            - cloud-name: "ODLRPC"
-              template-name: "{controller-image}"
-              count: "{controller-vms}"
-            - cloud-name: "ODLRPC"
-              template-name: "{mininet-image}"
-              count: "{mininet-vms}"
-
-# Macro: integration-openstack-controller-devstack
-# Operation: this macro will spin the controller and devstack vms
-# Used by: {project}-csit-openstack job templates
-- wrapper:
-    name: integration-openstack-controller-devstack
-    wrappers:
-      - openstack:
-          instances:
-            - cloud-name: "ODLRPC"
-              template-name: "{controller-image}"
-              count: "{controller-vms}"
-            - cloud-name: "ODLRPC"
-              template-name: "{openstack-image}"
-              count: "{openstack-vms}"
-
 #################
 # Shell Scripts #
 #################
@@ -411,15 +380,6 @@
     builders:
       - shell: !include-raw: multipatch-distribution.sh
 
-# Macro: integration-cleanup-workspace
-# Operation: Cleans up files possibly left there by the previous build
-# Used by: {project}-csit-* job templates
-
-- builder:
-    name: integration-cleanup-workspace
-    builders:
-      - shell: !include-raw: integration-cleanup-workspace.sh
-
 # Macro: integration-rebase-patch
 # Operation: For cloned project, rebase checked-out Gerrit patch onto $DISTROBRANCH.
 # Used by: integration-patch-distribution-* job template
@@ -438,12 +398,6 @@
       - shell: !include-raw:
           - copy-common-functions.sh
           - common-functions.sh
-
-- builder:
-    name: integration-deploy-openstack-run-test
-    builders:
-      - shell: !include-raw:
-          - integration-deploy-openstack-run-test.sh
 
 - builder:
     name: integration-compare-distributions
@@ -559,23 +513,3 @@
                     fi
           mark-unstable-if-failed: true
 
-- publisher:
-    name: integration-csit-collect-netvirt-logs
-    publishers:
-      - postbuildscript:
-          builders:
-            - role: BOTH
-              build-on:
-                - ABORTED
-                - FAILURE
-                - NOT_BUILT
-                - SUCCESS
-                - UNSTABLE
-              build-steps:
-                - inject:
-                    properties-file: "slave_addresses.txt"
-                - shell: |
-                    #!/bin/bash
-                    source /tmp/common-functions.sh ${BUNDLEFOLDER}
-                    collect_netvirt_logs
-          mark-unstable-if-failed: true
