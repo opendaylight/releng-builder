@@ -413,57 +413,6 @@
     <<: *inttest_csit_1node
 
 - job-template:
-    name: "{prefix}{project}-csit-1node-{functionality}-{install}-{stream}"
-    id: inttest-csit-1node-custom
-    <<: *inttest_csit_common
-    # yamllint disable-line rule:key-duplicates
-    <<: *inttest_csit_1node
-
-    parameters:
-      - integration-csit-parameters:
-          archive-artifacts: "{archive-artifacts}"
-          branch: "{branch}"
-          os-cloud: "{os-cloud}"
-          # CSIT
-          bundle-url: "{bundle-url}"
-          repo-url: "{repo-url}"
-          robot-options: "{robot-options}"
-          # Controller
-          controller-scope: "{install}"
-          controller-max-mem: "{controller-max-mem}"
-          debug-map: "{debug-map}"
-          install-features: "{install-features}"
-          use-features-boot: "True"
-          elasticsearch-attribute: "{elasticsearch-attribute}"
-          karaf-based-controller: "{karaf-based-controller}"
-          karaf-version: "{karaf-version}"
-      - integration-stack-2-type:
-          vm_0_count: "1"
-          vm_0_flavor: "{odl_system_flavor}"
-          vm_0_image: "{odl_system_image}"
-          vm_1_count: "{tools_system_count}"
-          vm_1_flavor: "{tools_system_flavor}"
-          vm_1_image: "{tools_system_image}"
-      - integration-distribution-branch:
-          branch: "{branch}"
-      - integration-distribution-stream:
-          stream: "{stream}"
-      - integration-script-plan:
-          script-plan: "{project}.txt"
-      - integration-config-plan:
-          config-plan: "{project}.txt"
-      - integration-stream-test-plan:
-          stream-test-plan: "{project}-{functionality}-{stream}.txt"
-      - integration-test-plan:
-          test-plan: "{testplan}"
-      - integration-test-suites:
-          test-suites: "{test-suites}"
-      - integration-patch-refspec:
-          branch: "master"
-      - integration-jdk-version:
-          jdkversion: "{jre}"
-
-- job-template:
     name: "{prefix}{project}-csit-verify-3node-{functionality}"
     id: inttest-csit-verify-3node
     <<: *inttest_csit_common
