@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c0a8d9cd_5cd65c64",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 6731
+      },
+      "writtenOn": "2022-09-13T18:44:09Z",
+      "side": 1,
+      "message": "Right.\nthis confirms /bin/sh points to a different shell than bash\nand than these scripts are tighly coupled to global-jjb LFN repo.\nMore precisely at this URL.\nhttps://gerrit.linuxfoundation.org/infra/gitweb?p\u003dreleng/global-jjb.git;a\u003dblob;f\u003djenkins-init-scripts/lf-env.sh\n\nWe need to clean this file first before going further here.\n\nThe error here comes the function name itself.\nPOSIX functions name must not contain dash \"-\"\n(NB underscores \"_\" are allowed)",
+      "revId": "e1332f383760ed7c2a8e7f4ea6d452b73b100db0",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
