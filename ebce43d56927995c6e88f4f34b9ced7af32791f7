@@ -56,6 +56,24 @@
       "message": "lf-env.sh should be sourced before lf-activate-venv is used.",
       "revId": "ebce43d56927995c6e88f4f34b9ced7af32791f7",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9842605a_14e90cc2",
+        "filename": "jjb/integration/integration-install-robotframework.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2022-09-13T12:58:00Z",
+      "side": 1,
+      "message": "Testing lf-env.sh is a bit tricky on the sandbox, because this is taken from the ~HEAD of the branch, when the job clones the repo at the start. Note: at that time \"this\" CR is not yet merged and therefore not available when sourcing the latest changes. \n\nYou\u0027ll need to edit job config and modify to pull the the file in raw format gist. Do it in pyhton-tools-install.sh which is the pre-build script.\n\nex:\nwget \u003cURL\u003e -O ~/lf-env.sh",
+      "parentUuid": "91a3bf0c_b3ccbe94",
+      "revId": "ebce43d56927995c6e88f4f34b9ced7af32791f7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
