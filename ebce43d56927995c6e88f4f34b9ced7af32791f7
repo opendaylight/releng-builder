@@ -122,6 +122,24 @@
       "parentUuid": "91a3bf0c_b3ccbe94",
       "revId": "ebce43d56927995c6e88f4f34b9ced7af32791f7",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c9844ea6_9e72b6cc",
+        "filename": "jjb/integration/integration-install-robotframework.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1927
+      },
+      "writtenOn": "2022-09-13T21:28:20Z",
+      "side": 1,
+      "message": "As suggested I added a line in python-tools-install.sh to download the latest lf-env.sh. But installation of Python packages was not completed for almost an hour and had to abort it:\n```\n07:34:10 lf-activate-venv(): INFO: Creating python3 venv at /tmp/venv-45kI\n07:34:10 lf-activate-venv(): INFO: Save venv in file: /w/workspace/openflowplugin-csit-1node-flow-services-all-sulfur/.robot_venv\n07:34:12 lf-activate-venv(): INFO: Installing: docker-py ipaddr netaddr netifaces pyhocon requests robotframework-httplibrary robotframework-requests\u003d\u003d0.7.2 robotframework-selenium2library robotframework-sshlibrary\u003d\u003d3.1.1 scapy jsonpath-rw elasticsearch elasticsearch-dsl pyangbind isodate jmespath jsonpatch odltools\u003d\u003d0.1.34 \n08:29:03 $ ssh-agent -k\n08:29:03 unset SSH_AUTH_SOCK;\n08:29:03 unset SSH_AGENT_PID;\n08:29:03 echo Agent pid 5368 killed;\n08:29:03 [ssh-agent] Stopped.\n08:29:03 Build was aborted\n08:29:03 Aborted by Sangwook Ha\n```\n\nA couple of issues:\n- With the latest pip dependency resolution can take a long time. So we need a way to make it faster, e.g. use pre-generated pinned requirements\n- The strict requirement of odltools (requests~\u003d2.19.1) is in conflict with other requirements.\n\nSo I would suggest to revert this file back and update this script in a separate change after Sulfur \u0026 Chlorine are released.",
+      "parentUuid": "9842605a_14e90cc2",
+      "revId": "ebce43d56927995c6e88f4f34b9ced7af32791f7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
