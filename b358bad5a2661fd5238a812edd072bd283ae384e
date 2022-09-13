@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d9fc4f70_c82d9ba1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6731
+      },
+      "writtenOn": "2022-09-13T19:51:21Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "b358bad5a2661fd5238a812edd072bd283ae384e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f169da9_9e59a82f",
+        "filename": "jjb/integration/copy-common-functions.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 6731
+      },
+      "writtenOn": "2022-09-13T19:51:21Z",
+      "side": 1,
+      "message": "since we are in the area, I suggest either that we remove one equal to have a POSIX compliant check or that we use double brackets instead of simple ones to be fully coherent with the bash specific syntax.\nSecond solution is preferable IMO since this condition cannot be evaluated on a different shell...",
+      "revId": "b358bad5a2661fd5238a812edd072bd283ae384e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "88a04caf_68941c54",
+        "filename": "jjb/integration/integration-install-robotframework.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 6731
+      },
+      "writtenOn": "2022-09-13T19:51:21Z",
+      "side": 1,
+      "message": "this function name coming from lf-env.sh is not POSIX compliant because it contains dashes (Underscores are preferable).\nThis dotted file induces regression in term of portability here.\nOnce everything works fine, I suggest we think of cleaning global-jjb lf-env.sh if we do not want to increase the technical debt in releng.",
+      "revId": "b358bad5a2661fd5238a812edd072bd283ae384e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
