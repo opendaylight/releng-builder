@@ -50,6 +50,24 @@
       "message": "this function name coming from lf-env.sh is not POSIX compliant because it contains dashes (Underscores are preferable).\nThis dotted file induces regression in term of portability here.\nOnce everything works fine, I suggest we think of cleaning global-jjb lf-env.sh if we do not want to increase the technical debt in releng.",
       "revId": "b358bad5a2661fd5238a812edd072bd283ae384e",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b6b75334_a0c00009",
+        "filename": "jjb/integration/integration-install-robotframework.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2022-09-14T01:39:50Z",
+      "side": 1,
+      "message": "+1, we should first start with cleaning up global-jjb and then the builder/ci-man repos. Since a lot of scripts are actualy pulled from global-jjb and could avoid unnecessary reverts.",
+      "parentUuid": "88a04caf_68941c54",
+      "revId": "b358bad5a2661fd5238a812edd072bd283ae384e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
