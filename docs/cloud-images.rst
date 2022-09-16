@@ -5,7 +5,9 @@ Following are the list of published images available to Jenkins jobs.
 * ZZCI - CentOS 7 - builder - x86_64 - 20220401-060107.331
 * ZZCI - CentOS 7 - builder - x86_64 - 20220811-110452.412
 * ZZCI - CentOS 7 - builder - x86_64 - 20220830-004905.209
+* ZZCI - CentOS 7 - builder - x86_64 - 20220915-210350.650
 * ZZCI - CentOS 7 - devstack - x86_64 - 20220401-230107.511
+* ZZCI - CentOS 7 - devstack - x86_64 - 20220915-220248.057
 * ZZCI - CentOS 7 - devstack-rocky - 20190601-000116.015
 * ZZCI - CentOS 7 - devstack-rocky - 20190628-065204.973
 * ZZCI - CentOS 7 - devstack-rocky - x86_64 - 20191002-183226.559
@@ -14,14 +16,19 @@ Following are the list of published images available to Jenkins jobs.
 * ZZCI - CentOS 7 - devstack-rocky - x86_64 - 20200813-042753.841
 * ZZCI - CentOS 7 - devstack-rocky - x86_64 - 20220401-000109.037
 * ZZCI - CentOS 7 - devstack-rocky - x86_64 - 20220811-110620.848
+* ZZCI - CentOS 7 - devstack-rocky - x86_64 - 20220915-220323.497
 * ZZCI - CentOS 7 - devstack-stein - x86_64 - 20220401-010109.230
 * ZZCI - CentOS 7 - devstack-stein - x86_64 - 20220811-110634.575
+* ZZCI - CentOS 7 - devstack-stein - x86_64 - 20220915-222435.096
 * ZZCI - CentOS 7 - docker - x86_64 - 20220401-220102.840
 * ZZCI - CentOS 7 - docker - x86_64 - 20220811-110637.413
+* ZZCI - CentOS 7 - docker - x86_64 - 20220915-220324.722
 * ZZCI - CentOS 7 - helm - x86_64 - 20220401-000138.473
 * ZZCI - CentOS 7 - helm - x86_64 - 20220811-110654.568
+* ZZCI - CentOS 7 - helm - x86_64 - 20220915-220356.090
 * ZZCI - CentOS 7 - robot - 20190430-080312.962
 * ZZCI - CentOS 7 - robot - x86_64 - 20220401-220138.484
+* ZZCI - CentOS 7 - robot - x86_64 - 20220915-220357.338
 * ZZCI - CentOS Stream 8 - builder - x86_64 - 20220303-223622.243
 * ZZCI - CentOS Stream 8 - builder - x86_64 - 20220405-005246.199
 * ZZCI - CentOS Stream 8 - builder - x86_64 - 20220411-013651.819
@@ -54,3 +61,4 @@ Following are the list of published images available to Jenkins jobs.
 * ZZCI - Ubuntu 18.04 - mininet-ovs-28 - x86_64 - 20220601-180059.980
 * ZZCI - Ubuntu 18.04 - mininet-ovs-28 - x86_64 - 20220701-180056.799
 * ZZCI - Ubuntu 18.04 - mininet-ovs-28 - x86_64 - 20220801-180111.774
+* ZZCI - Ubuntu 18.04 - mininet-ovs-28 - x86_64 - 20220915-223016.788
