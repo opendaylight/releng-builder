@@ -106,12 +106,11 @@
     project: "openflowplugin"
     project-name: "openflowplugin"
     branch: "master"
-    build-node: centos7-builder-4c-4g
+    build-node: centos8-builder-4c-4g
     build-timeout: 90
-    java-version: "openjdk11"
+    java-version: "openjdk17"
     mvn-version: mvn38
     mvn-settings: "openflowplugin-settings"
-    mvn-goals: "clean deploy javadoc:aggregate"
     sonarcloud: true
     sonarcloud-project-organization: "{sonarcloud_project_organization}"
     sonarcloud-api-token: "{sonarcloud_api_token}"
