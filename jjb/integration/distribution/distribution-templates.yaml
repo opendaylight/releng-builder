@@ -430,8 +430,6 @@
           controller-scope: ""
           controller-use-features-boot: ""
           feature-elasticsearch-attribute: "{elasticsearch-attribute}"
-      - integration-jdk-version:
-          jdkversion: "{jre}"
       - distribution-karaf-version:
           karaf-version: "{karaf-version}"
 
@@ -441,6 +439,8 @@
 
     builders:
       - integration-detect-variables
+      - lf-update-java-alternatives:
+          java-version: "{java-version}"
       - distribution-check-bootup
 
     publishers:
@@ -480,8 +480,6 @@
           branch: "{branch}"
       - integration-bundle-url:
           bundle-url: "{bundle-url}"
-      - integration-jdk-version:
-          jdkversion: "{jre}"
       - distribution-karaf-version:
           karaf-version: "karaf4"
 
@@ -491,6 +489,8 @@
 
     builders:
       - integration-detect-variables
+      - lf-update-java-alternatives:
+          java-version: "{java-version}"
       - distribution-check-bootup
 
     publishers:

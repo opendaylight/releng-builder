@@ -48,13 +48,13 @@ if [ "$KARAF_PROJECT" = "integration" ]; then
 
     if [ -n "${REPO_URL}" ]; then
        # sed below will fail if it finds space between feature repos.
-       REPO_URL_NO_SPACE="$(echo -e "${REPO_URL}" | tr -d '[:space:]')"
+       REPO_URL_NO_SPACE="$(echo "${REPO_URL}" | tr -d '[:space:]')"
        sed -ie "s%featuresRepositories = %featuresRepositories = ${REPO_URL_NO_SPACE},%g" "${FEATURESCONF}"
     fi
 
     # Add actual boot features.
     # sed below will fail if it finds space between feature repos.
-    FEATURES_NO_SPACE="$(echo -e "${ACTUALFEATURES}" | tr -d '[:space:]')"
+    FEATURES_NO_SPACE="$(echo "${ACTUALFEATURES}" | tr -d '[:space:]')"
     sed -ie "s/\(featuresBoot= \|featuresBoot = \)/featuresBoot = ${FEATURES_NO_SPACE},/g" "${FEATURESCONF}"
     cat "${FEATURESCONF}"
 fi
@@ -72,21 +72,12 @@ cat "${MEMCONF}"
 echo "Listing all open ports on controller system"
 netstat -pnatu
 
-if [ "$JDKVERSION" = 'openjdk17' ]; then
-    echo "Preparing for JRE Version 17"
-    JAVA_HOME="/usr/lib/jvm/java-17-openjdk"
-elif [ "$JDKVERSION" = 'openjdk11' ]; then
-    echo "Preparing for JRE Version 11"
-    JAVA_HOME="/usr/lib/jvm/java-11-openjdk"
-elif [ "${JDKVERSION}" = 'openjdk8' ]; then
-    echo "Setting the JRE Version to 8"
-    # dynamic_verify does not allow sudo, JAVA_HOME should be enough for karaf start.
-    # sudo /usr/sbin/alternatives --set java /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.60-2.b27.el7_1.x86_64/jre/bin/java
-    export JAVA_HOME='/usr/lib/jvm/java-1.8.0'
-fi
-readlink -e "${JAVA_HOME}/bin/java"
-echo "JDK Version should be overriden by JAVA_HOME"
+echo "Sourcing Java environment variable .."
+# shellcheck disable=SC1091
+. /tmp/java.env
+
 java -version
+echo JAVA_HOME="${JAVA_HOME}"
 
 echo "Redirecting karaf console output to karaf_console.log"
 export KARAF_REDIRECT="${WORKSPACE}/${BUNDLEFOLDER}/data/log/karaf_console.log"
@@ -155,10 +146,10 @@ echo "Kill controller"
 ps axf | grep karaf | grep -v grep | awk '{print "kill -9 " $1}' | sh
 
 echo "Bug 4628: Detecting misplaced config files"
-initdir = $(pwd)
+initdir=$(pwd)
 cd "${WORKSPACE}/${BUNDLEFOLDER}" || exit
 XMLS_FOUND="$(echo -- *.xml)"
-cd $initdir || exit
+cd "$initdir" || exit
 if [ "$XMLS_FOUND" != "*.xml" ]; then
     echo "Bug 4628 confirmed."
     ## TODO: Uncomment the following when ODL is fixed, to guard against regression.
