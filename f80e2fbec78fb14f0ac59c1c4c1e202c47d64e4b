@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c3ae8537_83914ccc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1927
+      },
+      "writtenOn": "2022-09-22T22:18:19Z",
+      "side": 1,
+      "message": "Sandbox test:\n- https://jenkins.opendaylight.org/sandbox/view/ALL/job/autorelease-generate-release-notes-sulfur/2/\n\nAnd the change submitted from sandbox:\n- https://git.opendaylight.org/gerrit/c/docs/+/102446\n",
+      "revId": "f80e2fbec78fb14f0ac59c1c4c1e202c47d64e4b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a503eec2_85cc6fbd",
+        "filename": "jjb/autorelease/generate-release-notes.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1927
+      },
+      "writtenOn": "2022-09-22T22:18:19Z",
+      "side": 1,
+      "message": "Currently \u0027index.rst\u0027 in the docs repository (master \u0026 stable/sulfur) includes this line:\n```\nrelease-notes-*\n```\nSo either the line should be removed from \u0027index.rst\u0027, or this sed command should be removed.",
+      "revId": "f80e2fbec78fb14f0ac59c1c4c1e202c47d64e4b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
