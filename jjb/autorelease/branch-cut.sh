@@ -31,13 +31,16 @@ set -eu -o pipefail
 # shellcheck disable=SC1090
 . ~/lf-env.sh
 
-lf-activate-venv "git-review==1.28"
+lf-activate-venv --python python3 "git-review==2.3.1"
 
 # Validate inputs
 if [ -z "$RELEASE" ]; then
     echo "ERROR: RELEASE variable must be set to a release name. Eg Carbon"
     exit 1
 fi
+
+# Workaround for git-review failing to copy the commit-msg hook to submodules
+git config core.hooksPath "$(git rev-parse --show-toplevel)/.git/hooks"
 
 # Setup Gerrit remote to ensure Change-Id gets set on commit.
 git config --global --add gitreview.username "jenkins-$SILO"
