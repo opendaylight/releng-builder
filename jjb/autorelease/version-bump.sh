@@ -29,7 +29,7 @@ set -eu -o pipefail
 # shellcheck disable=SC1090
 . ~/lf-env.sh
 
-lf-activate-venv "git-review==1.28"
+lf-activate-venv --python python3 "git-review==2.3.1"
 
 # Fail if branch cutting is not on master
 if [ "$BRANCH_CUT" = "true" ] && [ "$BRANCH" != "master" ]; then
@@ -47,6 +47,9 @@ if [ "$BRANCH_CUT" = "false" ]; then
         popd
     done
 fi
+
+# Workaround for git-review failing to copy the commit-msg hook to submodules
+git config core.hooksPath "$(git rev-parse --show-toplevel)/.git/hooks"
 
 # Setup Gerrit remote to ensure Change-Id gets set on commit.
 git config --global --add gitreview.username "jenkins-$SILO"
