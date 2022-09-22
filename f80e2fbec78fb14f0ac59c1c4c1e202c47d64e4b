@@ -33,6 +33,24 @@
       "message": "Currently \u0027index.rst\u0027 in the docs repository (master \u0026 stable/sulfur) includes this line:\n```\nrelease-notes-*\n```\nSo either the line should be removed from \u0027index.rst\u0027, or this sed command should be removed.",
       "revId": "f80e2fbec78fb14f0ac59c1c4c1e202c47d64e4b",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f98d0db_a6601769",
+        "filename": "jjb/autorelease/generate-release-notes.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1927
+      },
+      "writtenOn": "2022-09-22T22:51:22Z",
+      "side": 1,
+      "message": "\u003e Currently \u0027index.rst\u0027 in the docs repository (master \u0026 stable/sulfur) includes this line:\n\u003e ```\n\u003e release-notes-*\n\u003e ```\n\u003e So either the line should be removed from \u0027index.rst\u0027, or this sed command should be removed.\n\nRemoved the sed command since the wildcard match is already there.",
+      "parentUuid": "a503eec2_85cc6fbd",
+      "revId": "f80e2fbec78fb14f0ac59c1c4c1e202c47d64e4b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
