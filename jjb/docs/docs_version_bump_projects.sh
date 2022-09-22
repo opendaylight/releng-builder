@@ -32,7 +32,10 @@ done
 # shellcheck disable=SC1090
 . ~/lf-env.sh
 
-lf-activate-venv "git-review==1.28"
+lf-activate-venv --python python3 "git-review==2.3.1"
+
+# Workaround for git-review failing to copy the commit-msg hook to submodules
+git config core.hooksPath "$(git rev-parse --show-toplevel)/.git/hooks"
 
 git config --global --add gitreview.username "jenkins-$SILO"
 cd "$WORKSPACE"/autorelease || exit
@@ -54,6 +57,8 @@ if [ "$GERRIT_PROJECT" == "releng/autorelease" ]; then
     echo "git checkout $GERRIT_BRANCH"
     git submodule foreach "git branch"
     git submodule foreach "$command"
+    # Workaround for git-review failing to copy the commit-msg hook to submodules
+    git submodule foreach 'git config core.hooksPath "$(git rev-parse --show-toplevel)/.git/hooks"'
     if [ "$PUBLISH" == "true" ]
       then
         echo "Update docs header to $release_name in $STREAM"

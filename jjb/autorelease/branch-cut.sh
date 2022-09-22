@@ -31,7 +31,7 @@ set -eu -o pipefail
 # shellcheck disable=SC1090
 . ~/lf-env.sh
 
-lf-activate-venv "git-review==1.28"
+lf-activate-venv --python python3 "git-review==2.3.1"
 
 # Validate inputs
 if [ -z "$RELEASE" ]; then
@@ -39,9 +39,14 @@ if [ -z "$RELEASE" ]; then
     exit 1
 fi
 
+# Workaround for git-review failing to copy the commit-msg hook to submodules
+git config core.hooksPath "$(git rev-parse --show-toplevel)/.git/hooks"
+
 # Setup Gerrit remote to ensure Change-Id gets set on commit.
 git config --global --add gitreview.username "jenkins-$SILO"
 git remote -v
+# Workaround for git-review failing to copy the commit-msg hook to submodules
+git submodule foreach 'git config core.hooksPath "$(git rev-parse --show-toplevel)/.git/hooks"'
 git submodule foreach git review -s
 git review -s
 

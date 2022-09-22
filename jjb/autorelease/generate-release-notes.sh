@@ -16,7 +16,7 @@ set -x
 # shellcheck disable=SC1090
 . ~/lf-env.sh
 
-lf-activate-venv "git-review==1.28"
+lf-activate-venv --python python3 "git-review==2.3.1"
 
 RELEASE=${RELEASE:-$(echo "$GERRIT_EVENT_COMMENT_TEXT" | base64 -d | grep generate-release-notes | awk '{print $2}')}
 if [ -z "$RELEASE" ]; then
@@ -57,6 +57,9 @@ fi
 
 git status
 git remote add gerrit "ssh://jenkins-$SILO@git.opendaylight.org:29418/docs.git"
+
+# Workaround for git-review failing to copy the commit-msg hook to submodules
+git config core.hooksPath "$(git rev-parse --show-toplevel)/.git/hooks"
 
 # Don't fail the build if this command fails because it's possible that there
 # is no changes since last update.
