@@ -37,7 +37,6 @@ DOCS_DIR=$(mktemp -d)
 git clone -b "$GERRIT_BRANCH" https://git.opendaylight.org/gerrit/docs.git "$DOCS_DIR"
 cd "$DOCS_DIR" || exit 1
 cp "$WORKSPACE/release-notes.rst" "docs/release-notes/release-notes-${RELEASE,,}.rst"
-sed -i -e '$a     release-notes-'"${RELEASE,,}"'' "docs/release-notes/index.rst"
 git add docs/release-notes/
 
 GERRIT_COMMIT_MESSAGE="Update release notes for $RELEASE"
@@ -63,4 +62,4 @@ git config core.hooksPath "$(git rev-parse --show-toplevel)/.git/hooks"
 
 # Don't fail the build if this command fails because it's possible that there
 # is no changes since last update.
-git review --yes -t "$GERRIT_TOPIC" || true
+git review --yes -t "$GERRIT_TOPIC" "$GERRIT_BRANCH" || true
