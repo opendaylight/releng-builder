@@ -47,6 +47,7 @@
     jobs:
       - "autorelease-release-{stream}-{mvn-version}-{java-version}":
           build-node: centos8-builder-4c-16g
+      - "autorelease-version-bump-{stream}-{mvn-version}-{java-version}"
 
     stream:
       - chlorine:
