@@ -5,8 +5,11 @@
       - "ovsdb-daily-full-integration-{stream}"
 
     stream:
-      - chlorine:
+      - argon:
           branch: "master"
+          jre: "openjdk17"
+      - chlorine:
+          branch: "stable/chlorine"
           java-version: "openjdk17"
       - sulfur:
           branch: "stable/sulfur"

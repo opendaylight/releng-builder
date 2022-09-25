@@ -6,15 +6,17 @@
 
     # The project name
     project: "jsonrpc"
+    jre: "openjdk17"
 
     # The functionality under test
     functionality: "basic"
 
     # Project branches
     stream:
-      - chlorine:
+      - argon:
           branch: "master"
-          jre: "openjdk17"
+      - chlorine:
+          branch: "stable/chlorine"
       - sulfur:
           branch: "stable/sulfur"
           jre: "openjdk11"
