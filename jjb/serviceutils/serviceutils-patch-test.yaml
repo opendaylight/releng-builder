@@ -5,16 +5,17 @@
       - inttest-patch-test
 
     project: "serviceutils"
+    java-version: "openjdk17"
+    mvn-version: "mvn38"
 
     stream:
-      - chlorine:
+      - argon:
           branch: "master"
-          java-version: "openjdk17"
-          mvn-version: "mvn38"
+      - chlorine:
+          branch: "stable/chlorine"
       - sulfur:
           branch: "stable/sulfur"
           java-version: "openjdk11"
-          mvn-version: "mvn38"
       - phosphorus:
           branch: "stable/phosphorus"
           java-version: "openjdk11"

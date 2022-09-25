@@ -6,6 +6,7 @@
 
     # The project name
     project: "controller"
+    jre: "openjdk17"
 
     # The functionality under test
     functionality: "ddb-expl-lead-movement-longevity"
@@ -15,9 +16,10 @@
 
     # Project branches
     stream:
-      - chlorine:
+      - argon:
           branch: "master"
-          jre: "openjdk17"
+      - chlorine:
+          branch: "stable/chlorine"
       - sulfur:
           branch: "stable/sulfur"
           jre: "openjdk11"
