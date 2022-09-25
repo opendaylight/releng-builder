@@ -1,15 +1,34 @@
 ---
 - project:
+    name: p4plugin-argon
+    jobs:
+      - "{project-name}-maven-javadoc-jobs"
+      - odl-maven-jobs-jdk17
+      - odl-maven-verify-jobs
+
+    stream: argon
+    project: "p4plugin"
+    project-name: "p4plugin"
+    branch: "master"
+    mvn-settings: "p4plugin-settings"
+    mvn-opts: "-Xmx1024m"
+    dependencies: ""
+    email-upstream: "[p4plugin]"
+
+    # Used by the release job
+    staging-profile-id: a68bf26e208d4
+
+- project:
     name: p4plugin-chlorine
     jobs:
       - "{project-name}-maven-javadoc-jobs"
-      - odl-maven-jobs-jdk11
+      - odl-maven-jobs-jdk17
       - odl-maven-verify-jobs
 
     stream: chlorine
     project: "p4plugin"
     project-name: "p4plugin"
-    branch: "master"
+    branch: "stable/chlorine"
     mvn-settings: "p4plugin-settings"
     mvn-opts: "-Xmx1024m"
     dependencies: ""

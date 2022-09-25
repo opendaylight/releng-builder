@@ -49,8 +49,11 @@
           build-node: centos8-builder-4c-16g
 
     stream:
-      - chlorine:
+      - argon:
           branch: "master"
+          integration-test: argon
+      - chlorine:
+          branch: "stable/chlorine"
           integration-test: chlorine
 
     project: releng/autorelease
