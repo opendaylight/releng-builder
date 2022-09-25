@@ -22,14 +22,20 @@
 
     # CSIT Lists in defaults.yaml
     stream:
-      - chlorine:
+      - argon:
           branch: "master"
           csit-list: !include: csit-jobs-chlorine.lst
           build-order: >
             odlparent infrautils yangtools mdsal controller aaa netconf bgpcep
             serviceutils daexim jsonrpc ovsdb openflowplugin lispflowmapping
             integration/distribution
-
+      - chlorine:
+          branch: "stable/chlorine"
+          csit-list: !include: csit-jobs-chlorine.lst
+          build-order: >
+            odlparent infrautils yangtools mdsal controller aaa netconf bgpcep
+            serviceutils daexim jsonrpc ovsdb openflowplugin lispflowmapping
+            integration/distribution
       - sulfur:
           branch: "stable/sulfur"
           java-version: "openjdk11"
@@ -38,7 +44,6 @@
             odlparent infrautils yangtools mdsal controller aaa netconf bgpcep
             serviceutils daexim jsonrpc ovsdb openflowplugin lispflowmapping
             integration/distribution
-
       - phosphorus:
           branch: "stable/phosphorus"
           mvn-version: "mvn35"
@@ -61,8 +66,21 @@
 
     # CSIT Lists in defaults.yaml
     stream:
-      - chlorine:
+      - argon:
           branch: "master"
+          csit-blocklist: >
+            aaa controller dluxapps genius lispflowmapping l2switch mdsal
+            netconf netvirt odlmicro sxp yangtools
+            gate longevity sanity tdd tempest wip
+            bgpcep-csit-3node-bgpclustering-all
+            bgpcep-csit-3node-bgpclustering-ha-only
+            openflowplugin-csit-1node-bundle-based-reconciliation
+            last-line-is-ignored-so-we-need-something-dummy-here-to-make-sure-the-real-last-line-is-used
+          csit-list: !include: csit-jobs-argon.lst
+          csit-mri-list: "{csit-mri-list-argon}"
+          csit-weekly-list: "{csit-weekly-list-argon}"
+      - chlorine:
+          branch: "stable/chlorine"
           csit-blocklist: >
             aaa controller dluxapps genius lispflowmapping l2switch mdsal
             netconf netvirt odlmicro sxp yangtools
@@ -109,8 +127,12 @@
       - "integration-sanity-test-{stream}"
 
     stream:
-      - chlorine:
+      - argon:
           branch: "master"
+          karaf-version: odl
+          csit-sanity-list: "{csit-sanity-list-argon}"
+      - chlorine:
+          branch: "stable/chlorine"
           karaf-version: odl
           csit-sanity-list: "{csit-sanity-list-chlorine}"
       - sulfur:

@@ -7,14 +7,16 @@
     # The project name
     project: "sxp"
 
+    jre: "openjdk17"
     # The functionality under test
     functionality: "topology"
 
     # Project branches
     stream:
-      - chlorine:
+      - argon:
           branch: "master"
-          jre: "openjdk11"
+      - chlorine:
+          branch: "stable/chlorine"
       - sulfur:
           branch: "stable/sulfur"
           jre: "openjdk11"

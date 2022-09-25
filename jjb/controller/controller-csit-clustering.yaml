@@ -5,6 +5,7 @@
       - inttest-csit-3node
 
     project: "controller"
+    jre: "openjdk17"
     functionality:
       - "clustering-ask"
       - "clustering-tell"
@@ -12,9 +13,10 @@
     elasticsearch-attribute: "disabled"
 
     stream:
-      - chlorine:
+      - argon:
           branch: "master"
-          jre: "openjdk17"
+      - chlorine:
+          branch: "stable/chlorine"
       - sulfur:
           branch: "stable/sulfur"
           jre: "openjdk11"

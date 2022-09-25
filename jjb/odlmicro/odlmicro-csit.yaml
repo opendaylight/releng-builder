@@ -13,8 +13,16 @@
 
     # Project branches.
     stream:
-      - chlorine:
+      - argon:
           branch: "master"
+          jre: "openjdk17"
+          functionality: "netconf"
+          robot-options: >
+            -e ODLMICRO_IGN
+            -v ODL_MICRO_VERSION:1.0.1-SNAPSHOT
+            -v NETCONF_TESTTOOL_VERSION:1.10.0-SNAPSHOT
+      - chlorine:
+          branch: "stable/chlorine"
           jre: "openjdk17"
           functionality: "netconf"
           robot-options: >
