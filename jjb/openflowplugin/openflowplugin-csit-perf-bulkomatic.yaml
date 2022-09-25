@@ -14,8 +14,12 @@
 
     # Project branches
     stream:
-      - chlorine:
+      - argon:
           branch: "master"
+          jre: "openjdk17"
+          install: "all"
+      - chlorine:
+          branch: "stable/chlorine"
           jre: "openjdk17"
       - sulfur:
           branch: "stable/sulfur"

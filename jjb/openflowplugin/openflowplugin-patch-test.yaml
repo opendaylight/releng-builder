@@ -9,8 +9,12 @@
 
     # Project branches
     stream:
-      - chlorine:
+      - argon:
           branch: "master"
+          jre: "openjdk17"
+          mvn-version: "mvn38"
+      - chlorine:
+          branch: "stable/chlorine"
           java-version: "openjdk17"
           mvn-version: "mvn38"
       - sulfur:

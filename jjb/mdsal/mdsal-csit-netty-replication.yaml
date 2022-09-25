@@ -12,8 +12,17 @@
 
     # Project branches
     stream:
-      - chlorine:
+      - argon:
           branch: "master"
+          jre: "openjdk17"
+          install-features: >
+            features-controller,
+            odl-mdsal-replicate-netty,
+            odl-restconf-nb-bierman02,
+            odl-netconf-clustered-topology,
+            odl-clustering-test-app
+      - chlorine:
+          branch: "stable/chlorine"
           jre: "openjdk17"
           install-features: >
             features-controller,

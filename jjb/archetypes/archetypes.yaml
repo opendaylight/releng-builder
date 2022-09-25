@@ -1,5 +1,23 @@
 ---
 - project:
+    name: archetypes-argon
+    jobs:
+      - odl-maven-jobs-jdk11
+      - odl-maven-verify-jobs
+
+    stream: argon
+    project: "archetypes"
+    project-name: "archetypes"
+    branch: "master"
+    java-version: "openjdk11"
+    mvn-settings: "archetypes-settings"
+    dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream},mdsal-merge-{stream}"
+    email-upstream: "[archetypes] [odlparent] [yangtools] [controller] [mdsal]"
+
+    # Used by the release job
+    staging-profile-id: d88dcfe6ce48d
+
+- project:
     name: archetypes-chlorine
     jobs:
       - odl-maven-jobs-jdk11
@@ -8,7 +26,7 @@
     stream: chlorine
     project: "archetypes"
     project-name: "archetypes"
-    branch: "master"
+    branch: "stable/chlorine"
     java-version: "openjdk11"
     mvn-settings: "archetypes-settings"
     dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream},mdsal-merge-{stream}"
