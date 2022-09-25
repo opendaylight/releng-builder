@@ -6,15 +6,22 @@
 
     # The project name
     project: "mdsal"
+    jre: "openjdk17"
 
     # The functionality under test
     functionality: "netty-replicate"
 
     # Project branches
     stream:
-      - chlorine:
+      - argon:
           branch: "master"
-          jre: "openjdk17"
+          install-features: >
+            features-controller,
+            odl-mdsal-replicate-netty,
+            odl-netconf-clustered-topology,
+            odl-clustering-test-app
+      - chlorine:
+          branch: "stable/chlorine"
           install-features: >
             features-controller,
             odl-mdsal-replicate-netty,

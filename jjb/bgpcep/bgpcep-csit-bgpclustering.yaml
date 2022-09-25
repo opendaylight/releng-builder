@@ -6,15 +6,17 @@
 
     # The project name
     project: "bgpcep"
+    jre: "openjdk17"
 
     # The functionality under test
     functionality: "bgpclustering"
 
     # Project branches
     stream:
-      - chlorine:
+      - argon:
           branch: "master"
-          jre: "openjdk17"
+      - chlorine:
+          branch: "stable/chlorine"
       - sulfur:
           branch: "stable/sulfur"
           jre: "openjdk11"
