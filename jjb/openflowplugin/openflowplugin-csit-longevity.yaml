@@ -6,6 +6,7 @@
 
     # The project name
     project: "openflowplugin"
+    jre: "openjdk17"
     build-timeout: 1440
 
     # The functionality under test
@@ -16,9 +17,10 @@
 
     # Project branches
     stream:
-      - chlorine:
+      - argon:
           branch: "master"
-          jre: "openjdk17"
+      - chlorine:
+          branch: "stable/chlorine"
       - sulfur:
           branch: "stable/sulfur"
           jre: "openjdk11"
