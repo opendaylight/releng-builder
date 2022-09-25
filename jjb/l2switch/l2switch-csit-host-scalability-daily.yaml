@@ -7,15 +7,17 @@
     # The project name
     project: "l2switch"
     disable-job: true
+    jre: "openjdk17"
 
     # The functionality under test
     functionality: "host-scalability-daily"
 
     # Project branches
     stream:
-      - chlorine:
+      - argon:
           branch: "master"
-          jre: "openjdk17"
+      - chlorine:
+          branch: "stable/chlorine"
       - sulfur:
           branch: "stable/sulfur"
           jre: "openjdk11"

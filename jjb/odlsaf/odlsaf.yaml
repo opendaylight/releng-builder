@@ -1,5 +1,25 @@
 ---
 - project:
+    name: odlsaf-argon
+    jobs:
+      - odl-maven-jobs-jdk11
+      - odl-maven-verify-jobs
+
+    stream: argon
+    project: "odlsaf"
+    project-name: "odlsaf"
+    build-node: centos7-builder-4c-4g
+    build-timeout: 120
+    branch: "master"
+    java-version: "openjdk11"
+    mvn-settings: "odlsaf-settings"
+    mvn-opts: "-Xmx2048m"
+    email-upstream: "[app-dev]"
+
+    # Used by the release job
+    staging-profile-id: 2802f0e38ee665
+
+- project:
     name: odlsaf-chlorine
     jobs:
       - odl-maven-jobs-jdk11
@@ -10,7 +30,7 @@
     project-name: "odlsaf"
     build-node: centos7-builder-4c-4g
     build-timeout: 120
-    branch: "master"
+    branch: "stable/chlorine"
     java-version: "openjdk11"
     mvn-settings: "odlsaf-settings"
     mvn-opts: "-Xmx2048m"

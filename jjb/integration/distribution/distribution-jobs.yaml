@@ -26,10 +26,13 @@
     nexus-iq-stage: release
     email-upstream: "[int/dist]"
     stream:
-      - chlorine:
+      - argon:
           branch: "master"
+      - chlorine:
+          branch: "stable/chlorine"
       - sulfur:
           branch: "stable/sulfur"
+          java-version: openjdk11
       - phosphorus:
           branch: "stable/phosphorus"
           mvn-version: mvn35
@@ -61,8 +64,17 @@
     dist-pom: "distribution/pom.xml"
 
     stream:
-      - chlorine:
+      - argon:
           branch: "master"
+          dependencies: >
+            daexim-maven-merge-{stream},
+            jsonrpc-maven-merge-{stream},
+            lispflowmapping-maven-merge-{stream},
+            openflowplugin-maven-merge-{stream},
+            ovsdb-maven-merge-{stream},
+            serviceutils-maven-merge-{stream},
+      - chlorine:
+          branch: "stable/chlorine"
           dependencies: >
             daexim-maven-merge-{stream},
             jsonrpc-maven-merge-{stream},
@@ -115,8 +127,12 @@
     karaf-version: odl
     dist-pom: "distribution/opendaylight/pom.xml"
     stream:
-      - chlorine:
+      - argon:
           branch: "master"
+          dependencies: >
+            distribution-merge-managed-{stream},
+      - chlorine:
+          branch: "stable/chlorine"
           dependencies: >
             distribution-merge-managed-{stream},
       - sulfur:
@@ -152,8 +168,10 @@
     staging-profile-id: 2af042ed81d5e2
 
     stream:
-      - chlorine:
+      - argon:
           branch: "master"
+      - chlorine:
+          branch: "stable/chlorine"
       - sulfur:
           branch: "stable/sulfur"
           java-version: "openjdk11"
@@ -211,8 +229,10 @@
     jobs:
       - "{project-name}-gerrit-docker-jobs"
     stream:
-      - chlorine:
+      - argon:
           branch: "master"
+      - chlorine:
+          branch: "stable/chlorine"
       - sulfur:
           branch: "stable/sulfur"
       - phosphorus:
