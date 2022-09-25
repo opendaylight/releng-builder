@@ -1,14 +1,33 @@
 ---
 - project:
+    name: odlmicro-argon
+    jobs:
+      - odl-maven-jobs-jdk17
+      - odl-maven-verify-jobs
+
+    stream: argon
+    project: odlmicro
+    project-name: "odlmicro"
+    branch: "master"
+    java-version: "openjdk11"
+    build-node: centos7-builder-2c-2g
+    build-timeout: 60
+    mvn-settings: "odlmicro-settings"
+    mvn-opts: "-Xmx2048m"
+
+    # Used by the release job
+    staging-profile-id: 44ce67428fd0d
+
+- project:
     name: odlmicro-chlorine
     jobs:
-      - odl-maven-jobs-jdk11
+      - odl-maven-jobs-jdk17
       - odl-maven-verify-jobs
 
     stream: chlorine
     project: odlmicro
     project-name: "odlmicro"
-    branch: "master"
+    branch: "stable/chlorine"
     java-version: "openjdk11"
     build-node: centos7-builder-2c-2g
     build-timeout: 60
