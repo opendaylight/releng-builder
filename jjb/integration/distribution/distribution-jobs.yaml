@@ -30,7 +30,6 @@
           branch: "master"
       - sulfur:
           branch: "stable/sulfur"
-          java-version: openjdk11
       - phosphorus:
           branch: "stable/phosphorus"
           mvn-version: mvn35
@@ -137,7 +136,6 @@
     jobs:
       - gerrit-maven-stage:
           sign-artifacts: true
-      - gerrit-release-merge
 
     project: "integration/distribution"
     project-name: "distribution"
@@ -163,6 +161,18 @@
           branch: "stable/phosphorus"
           mvn-version: mvn35
           java-version: "openjdk11"
+
+- project:
+    name: distribution-release-management
+    jobs:
+      - gerrit-release-merge
+
+    project: "integration/distribution"
+    project-name: distribution
+
+    build-node: centos7-builder-2c-1g
+    mvn-settings: integration-distribution-settings
+    build-timeout: 60
 
 - project:
     name: distribution-sonar
