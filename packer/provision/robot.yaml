@@ -35,16 +35,6 @@
       when:
         - ansible_facts['distribution_major_version'] is version('8', '>=')
 
-    - name: Install dlux dependencies
-      block:
-        - name: Install dlux dependencies
-          yum:
-            name:
-              - firefox
-              - xorg-x11-server-Xvfb
-            state: present
-      become: true
-
     - name: Install lispflowmapping dependencies
       block:
         - name: Install lispflowmapping dependencies
