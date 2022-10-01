@@ -29,15 +29,6 @@
       - genius:
           csit-list: >
             genius-csit-1node-gate-only-{stream}
-      - netvirt:
-          csit-list: >
-            netvirt-csit-1node-{os-std-topo}-openstack-{os-branch}-gate-stateful-{stream}
-      - cluster-netvirt:
-          csit-list: >
-            netvirt-csit-3node-{os-std-topo}-openstack-{os-branch}-gate-stateful-{stream}
-      - l2gw:
-          csit-list: >
-            netvirt-csit-hwvtep-1node-{os-std-topo}-openstack-{os-branch}-gate-stateful-{stream}
       - core:
           csit-list: >
             ovsdb-csit-1node-gate-southbound-all-{stream},
