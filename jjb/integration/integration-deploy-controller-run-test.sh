@@ -34,6 +34,10 @@ create_post_startup_script
 
 copy_and_run_configuration_script
 
+create_pytest_script
+
+run_pytest_script
+
 run_plan "config"
 
 copy_and_run_startup_script
@@ -59,6 +63,7 @@ get_test_suites SUITES
 echo "Starting Robot test suites ${SUITES} ..."
 # ${TESTOPTIONS}, ${SUITES} are space-separated parameters and should not be quoted.
 # shellcheck disable=SC2086
+set -x
 robot -N "${TESTPLAN}" \
       --removekeywords wuks -e exclude -e "skip_if_${DISTROSTREAM}" \
       -v BUNDLEFOLDER:"${BUNDLEFOLDER}" \
