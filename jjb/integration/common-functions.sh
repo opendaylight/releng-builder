@@ -972,6 +972,96 @@ EOF
 # cat > ${WORKSPACE}/startup-script.sh <<EOF
 }
 
+function create_pytest_script() {
+    cat > "${WORKSPACE}"/pytest.py <<EOF
+import argparse
+
+# Construct the argument parser
+parser = argparse.ArgumentParser()
+
+# create list of variables
+var_list = [
+"BUNDLEFOLDER",
+"BUNDLE_URL",
+"CONTROLLER",
+"CONTROLLER_USER",
+"GERRIT_BRANCH",
+"GERRIT_PROJECT",
+"GERRIT_REFSPEC",
+"JAVA_HOME",
+"JDKVERSION",
+"JENKINS_WORKSPACE",
+"MININET1",
+"MININET2",
+"MININET3",
+"MININET4",
+"MININET5",
+"MININET",
+"MININET_USER",
+"NEXUSURL_PREFIX",
+"NUM_ODL_SYSTEM",
+"NUM_TOOLS_SYSTEM",
+"ODL_STREAM",
+"ODL_SYSTEM_1_IP",
+"ODL_SYSTEM_IP",
+"ODL_SYSTEM_USER",
+"SUITES",
+"TOOLS_SYSTEM_IP",
+"TOOLS_SYSTEM_USER",
+"USER_HOME",
+"IS_KARAF_APPL",
+"WORKSPACE"
+]
+
+# getting parsed arguments from shell using var_list
+for var in var_list:
+    parser.add_argument("--" + var, nargs='?', const='')
+
+args = parser.parse_args()
+
+# store and print all variables
+for var in var_list:
+    globals()[var] = getattr(args, var)
+    print(var, " = ", globals()[var])
+EOF
+}
+
+
+function run_pytest_script() {
+    set -x && echo "running pytest.py"
+
+    python3 $WORKSPACE/pytest.py --BUNDLEFOLDER ${BUNDLEFOLDER}\
+                                 --BUNDLE_URL ${ACTUAL_BUNDLE_URL}\
+                                 --CONTROLLER ${ODL_SYSTEM_IP}\
+                                 --CONTROLLER_USER ${USER}\
+                                 --GERRIT_BRANCH ${GERRIT_BRANCH}\
+                                 --GERRIT_PROJECT ${GERRIT_PROJECT}\
+                                 --GERRIT_REFSPEC ${GERRIT_REFSPEC}\
+                                 --JAVA_HOME ${JAVA_HOME}\
+                                 --JDKVERSI ${JDKVERSION}\
+                                 --JENKINS_WORKSPACE ${WORKSPACE}\
+                                 --MININET1 ${TOOLS_SYSTEM_2_IP}\
+                                 --MININET2 ${TOOLS_SYSTEM_3_IP}\
+                                 --MININET3 ${TOOLS_SYSTEM_4_IP}\
+                                 --MININET4 ${TOOLS_SYSTEM_5_IP}\
+                                 --MININET5 ${TOOLS_SYSTEM_6_IP}\
+                                 --MININET ${TOOLS_SYSTEM_IP}\
+                                 --MININET_USER ${USER}\
+                                 --NEXUSURL_PREFIX ${NEXUSURL_PRIX}\
+                                 --NUM_ODL_SYSTEM ${NUM_ODL_SYST}\
+                                 --NUM_TOOLS_SYSTEM ${NUM_TOOLS_STEM}\
+                                 --ODL_STREAM ${DISTROSTREAM}\
+                                 --ODL_SYSTEM_1_IP ${ODL_SYSTEM_}\
+                                 --ODL_SYSTEM_IP ${ODL_SYSTEM_IP}\
+                                 --ODL_SYSTEM_USER ${USER}\
+                                 --SUITES ${SUITES}\
+                                 --TOOLS_SYSTEM_IP ${TOOLS_SYSTEIP} ${tools_variables}\
+                                 --TOOLS_SYSTEM_USER ${USER}\
+                                 --USER_HOME ${HOME}\
+                                 --IS_KARAF_APPL ${IS_KARAF_APPL}\
+                                 --WORKSPACE /tmp
+}
+
 function create_post_startup_script() {
     cat > "${WORKSPACE}"/post-startup-script.sh <<EOF
 # wait up to 60s for karaf port 8101 to be opened, polling every 5s
