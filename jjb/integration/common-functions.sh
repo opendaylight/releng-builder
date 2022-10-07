@@ -972,6 +972,501 @@ EOF
 # cat > ${WORKSPACE}/startup-script.sh <<EOF
 }
 
+function create_pytest_script() {
+    # mkdir ${WORKSPACE}/pytest_test
+    cat > "${WORKSPACE}"/pytest_test.py <<EOF
+import os
+import pytest
+import pytest_lib
+from pytest_lib import YANGMODELS_REPO, YANGMODELS_REPO_COMMIT_HASH, OPENCONFIG_REPO, OPENCONFIG_REPO_COMMIT_HASH, delete_static_paths_list
+
+# create list of variables
+var_list = [
+    # "BUNDLEFOLDER",
+    # "BUNDLE_URL",
+    # "CONTROLLER",
+    "CONTROLLER_USER",
+    # "GERRIT_BRANCH",
+    # "GERRIT_PROJECT",
+    # "GERRIT_REFSPEC",
+    # "JAVA_HOME",
+    # "JDKVERSION",
+    # "JENKINS_WORKSPACE",
+    # "MININET1",
+    # "MININET2",
+    # "MININET3",
+    # "MININET4",
+    # "MININET5",
+    # "MININET",
+    # "MININET_USER",
+    # "NEXUSURL_PREFIX",
+    # "NUM_ODL_SYSTEM",
+    # "NUM_TOOLS_SYSTEM",
+    # "ODL_STREAM",
+    # "ODL_SYSTEM_1_IP",
+    "ODL_SYSTEM_IP",
+    # "ODL_SYSTEM_USER",
+    # "SUITES",
+    # "TOOLS_SYSTEM_IP",
+    # "TOOLS_SYSTEM_USER",
+    # "USER_HOME",
+    # "IS_KARAF_APPL",
+    # "WORKSPACE"
+]
+
+
+@pytest.fixture
+def bash_arguments(request):
+    # get shell arguments using conftest.py
+    odl_params = {x: (request.config.getoption('--' + x)) for x in var_list}
+    print(odl_params)
+    return odl_params
+
+
+def test_check_ping(bash_arguments):
+    print("# response should be 0 if ODL_SYSTEM is running")
+    response = os.system("ping -c 1 " + bash_arguments["ODL_SYSTEM_IP"])
+    assert response == 0
+
+
+def test_karaf_is_not_running(bash_arguments):
+    print("# response should be 0 if karaf is not running")
+    cmd = "ps axf | grep org.apache.karaf | grep -v grep | wc -l"
+    response = pytest_lib.execute_ssh_command(command=cmd, username=bash_arguments['CONTROLLER_USER'], hostname=bash_arguments['ODL_SYSTEM_IP'])
+    assert response[1] == 0
+    
+# Static_Set_As_Src from ROBOTFRAMEWORK - start   
+    
+def test_remove_target_src(bash_arguments):
+    cmd = "rm -rf target src"
+    response = pytest_lib.execute_ssh_command(command=cmd, username=bash_arguments['CONTROLLER_USER'], hostname=bash_arguments['ODL_SYSTEM_IP'])
+    assert response[1] == 0
+    
+def test_create_dir(bash_arguments):
+    cmd = "mkdir -p src/main"
+    response = pytest_lib.execute_ssh_command(command=cmd, username=bash_arguments['CONTROLLER_USER'], hostname=bash_arguments['ODL_SYSTEM_IP'])
+    assert response[1] == 0
+    
+def test_clone_yangmodels(bash_arguments):
+    # clone should return exit status 0
+    cmd = f"cd src/main && git clone {YANGMODELS_REPO}"
+    response = pytest_lib.execute_ssh_command(command=cmd, username=bash_arguments['CONTROLLER_USER'], hostname=bash_arguments['ODL_SYSTEM_IP'])
+    assert response[1] == 0
+    
+def test_checkout_yangmodels(bash_arguments):
+    # checkout should return exit status 0
+    cmd = f"cd src/main/yang && git checkout -b ytest {YANGMODELS_REPO_COMMIT_HASH}"
+    response = pytest_lib.execute_ssh_command(command=cmd, username=bash_arguments['CONTROLLER_USER'], hostname=bash_arguments['ODL_SYSTEM_IP'])
+    assert response[1] == 0
+    
+def test_remove_openconfig(bash_arguments):
+    # checkout should return exit status 0
+    cmd = "rm -rf src/main/yang/experimental/openconfig"
+    response = pytest_lib.execute_ssh_command(command=cmd, username=bash_arguments['CONTROLLER_USER'], hostname=bash_arguments['ODL_SYSTEM_IP'])
+    assert response[1] == 0
+    
+def test_clone_openconfig(bash_arguments):
+    # clone should return exit status 0
+    cmd = f"cd src/main/yang/experimental/ && git clone {OPENCONFIG_REPO} && mv -v public openconfig"
+    # cmd = f"cd src/main && git clone {YANGMODELS_REPO}"
+    response = pytest_lib.execute_ssh_command(command=cmd, username=bash_arguments['CONTROLLER_USER'], hostname=bash_arguments['ODL_SYSTEM_IP'])
+    assert response[1] == 0
+    
+def test_checkout_openconfig(bash_arguments):
+    # checkout should return exit status 0
+    cmd = f"cd src/main/yang/experimental/openconfig && git checkout -b ytest {OPENCONFIG_REPO_COMMIT_HASH}"
+    response = pytest_lib.execute_ssh_command(command=cmd, username=bash_arguments['CONTROLLER_USER'], hostname=bash_arguments['ODL_SYSTEM_IP'])
+    assert response[1] == 0
+    
+def test_delete_static_paths(bash_arguments):
+    # checkout should return exit status 0
+    cmd = None
+    response = pytest_lib.execute_ssh_command(command=cmd, username=bash_arguments['CONTROLLER_USER'], hostname=bash_arguments['ODL_SYSTEM_IP'], commands_as_list=delete_static_paths_list)
+    assert response[1] == 0
+EOF
+}
+
+function create_conftest() {
+    cat > "${WORKSPACE}"/conftest.py <<EOF
+def pytest_addoption(parser):
+    parser.addoption('--BUNDLEFOLDER', default="", help='Get BUNDLEFOLDER from shell args')
+    parser.addoption('--BUNDLE_URL', default="", help='Get BUNDLE_URL from shell args')
+    parser.addoption('--CONTROLLER', default="", help='Get CONTROLLER from shell args')
+    parser.addoption('--CONTROLLER_USER', default="", help='Get CONTROLLER_USER from shell args')
+    parser.addoption('--GERRIT_BRANCH', default="", help='Get GERRIT_BRANCH from shell args')
+    parser.addoption('--GERRIT_PROJECT', default="", help='Get GERRIT_PROJECT from shell args')
+    parser.addoption('--GERRIT_REFSPEC', default="", help='Get GERRIT_REFSPEC from shell args')
+    parser.addoption('--JAVA_HOME', default="", help='Get JAVA_HOME from shell args')
+    parser.addoption('--JDKVERSION', default="", help='Get JDKVERSION from shell args')
+    parser.addoption('--JENKINS_WORKSPACE', default="", help='Get JENKINS_WORKSPACE from shell args')
+    parser.addoption('--MININET1', default="", help='Get MININET1 from shell args')
+    parser.addoption('--MININET2', default="", help='Get MININET2 from shell args')
+    parser.addoption('--MININET3', default="", help='Get MININET3 from shell args')
+    parser.addoption('--MININET4', default="", help='Get MININET4 from shell args')
+    parser.addoption('--MININET5', default="", help='Get MININET5 from shell args')
+    parser.addoption('--MININET', default="", help='Get MININET from shell args')
+    parser.addoption('--MININET_USER', default="", help='Get MININET_USER from shell args')
+    parser.addoption('--NEXUSURL_PREFIX', default="", help='Get NEXUSURL_PREFIX from shell args')
+    parser.addoption('--NUM_ODL_SYSTEM', default="", help='Get NUM_ODL_SYSTEM from shell args')
+    parser.addoption('--NUM_TOOLS_SYSTEM', default="", help='Get NUM_TOOLS_SYSTEM from shell args')
+    parser.addoption('--ODL_STREAM', default="", help='Get ODL_STREAM from shell args')
+    parser.addoption('--ODL_SYSTEM_1_IP', default="", help='Get ODL_SYSTEM_1_IP from shell args')
+    parser.addoption('--ODL_SYSTEM_IP', default="", help='Get ODL_SYSTEM_IP from shell args')
+    parser.addoption('--ODL_SYSTEM_USER', default="", help='Get ODL_SYSTEM_USER from shell args')
+    # parser.addoption('--SUITES', default="", help='Get SUITES from shell args')
+    parser.addoption('--TOOLS_SYSTEM_IP', default="", help='Get TOOLS_SYSTEM_IP from shell args')
+    parser.addoption('--TOOLS_SYSTEM_USER', default="", help='Get TOOLS_SYSTEM_USER from shell args')
+    parser.addoption('--USER_HOME', default="", help='Get USER_HOME from shell args')
+    parser.addoption('--IS_KARAF_APPL', default="", help='Get IS_KARAF_APPL from shell args')
+    parser.addoption('--WORKSPACE', default="", help='Get WORKSPACE from shell args')
+EOF
+}
+
+function create_pytest_lib() {
+    cat > "${WORKSPACE}"/pytest_lib.py <<EOF
+import paramiko
+
+
+# variables
+YANGMODELS_REPO_COMMIT_HASH = "cdd14114cdaf130be2b6bfce92538c05f6d7c07d"
+YANGMODELS_REPO = "https://github.com/YangModels/yang"
+OPENCONFIG_REPO = "https://github.com/openconfig/public"
+OPENCONFIG_REPO_COMMIT_HASH = "8062b1b45208b952598ad3c3aa9e5ebc4f03cc67"
+ 
+ 
+def execute_ssh_command(hostname, command, username, commands_as_list=False):
+    print(f'running ssh command {command} to ip {hostname}') 
+        
+    # created client using paramiko
+    client = paramiko.SSHClient()
+    client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    client.connect(hostname, username=username, )
+    if commands_as_list:
+        for command in commands_as_list:
+            (stdin, stdout, stderr) = client.exec_command(command)
+            exit_status=(stdout.channel.recv_exit_status())
+            cmd_output = stdout.read()
+            error = stderr.read()
+            print('log printing command: ', command,  "\nlog printing exit_status:", 
+                                            exit_status,  "\nlog printing cmd_output:", 
+                                            cmd_output,  "\nlog printing stderr:", error)
+    else:
+        (stdin, stdout, stderr) = client.exec_command(command)    
+    exit_status=(stdout.channel.recv_exit_status())
+    cmd_output = stdout.read()
+    error = stderr.read()
+    print(commands_as_list)
+    print('log printing command: ', command,  "\nlog printing exit_status:", exit_status,  "\nlog printing cmd_output:", cmd_output,  "\nlog printing stderr:", error)
+            
+    # we are returning the outputs
+    return [cmd_output, exit_status, error]
+
+delete_static_paths_list = ["rm -vrf .git", 
+"rm -vrf experimental/ieee/1906.1/ieee1906-dot1-system.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/@2015-03-09.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/abstract-topology@2014-07-01.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/alto-service@2015-03-22.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/alto-service-types@2015-03-22.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/BATTERY-MIB@2015-06-15.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/bfd-routing-app@2015-02-14.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/bfd.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/bgp@2015-05-15.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/bgp-l3vpn@2015-10-15.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/bgp-policy@2015-05-15.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/cira-shg-mud@2019-07-08.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/dot1q-tag-types@2016-07-08.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/draft-gonzalez-netconf-5277bis-00@2016-03-20.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/draft-gonzalez-netmod-5277-00@2016-03-20.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/draft-ietf-ccamp-dwdm-if-param-yang-03@2020-03-09.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/example-5g-core-network@2017-12-28.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/example-rip@2012-10-04.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/finite-state-machine@2016-03-15.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/flexible-encapsulation@2015-10-19.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/flexi-grid-TED@2015-07-01.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/gen-oam@2014-10-23.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/hardware-entities.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/huawei-dhcp@2014-12-18.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/huawei-ipte@2014-08-13.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/i2rs-rib@2015-04-03.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/i2rs-service-topology@2015-07-07.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/iana-civic-address-type@2014-05-08.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/iana-geo-uri-type@2014-05-08.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ieee802-pse@2017-03-02.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-5277-netmod@2016-06-15.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-acl@2015-03-04.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-acl-dnsname@2016-01-14.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-ambi@2019-08-25.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-bfd-mpls-te@2018-08-01.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-bgp-extensions@2016-07-08.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-bgp-l3vpn@2018-04-17.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-bgp-policy@2020-06-28.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-bgp-rib-shared-attributes@2019-03-21.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-bier-oam@2017-06-13.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-bier-rpcs@2018-08-28.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-brski-possession@2018-10-11.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-connectionless-oam@2017-09-06.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-connectionless-oam-methods@2017-09-06.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-data-export-capabilities.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-diffserv-action@2015-04-07.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-diffserv-classifier@2015-04-07.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-diffserv-policy@2015-04-07.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-dmm-fpc-base@2017-03-08.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-dmm-fpc-pmip@2017-03-08.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-dmm-fpc-policyext@2017-03-08.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-dmm-threegpp@2017-03-08.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-dots-access-control-list@2017-11-29.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-dots-signal-call-home@2018-09-28.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-dots-signal-control@2019-05-13.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-dots-signal-control-filter@2019-02-15.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-entity@2016-05-13.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-ext-xponder-wdm-if@2020-03-09.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-fabric-capable-device@2016-09-29.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-fabric-endpoint@2017-06-29.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-fabric-service@2017-08-30.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-fabric-service-types@2017-08-30.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-fb-rib@2017-03-13.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-fb-rib-types@2017-03-13.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-flex-algo@2019-04-26.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-flex-grid-media-channel@2018-10-22.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-flex-grid-topology@2018-10-22.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-flexi-grid-media-channel@2019-03-24.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-gen-oam@2015-04-09.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-gen-oam-ais@2016-06-25.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-gen-oam-pm@2015-01-07.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-gre@2015-07-02.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-gre-tunnel@2015-10-13.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-http-subscribed-notifications@2018-06-11.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-ipipv4-tunnel-02@2015-10-15.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-ipipv4-tunnel@2015-10-14.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-ip-tunnel@2016-06-20.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-ipv6-router-advertisements-2@2017-10-05.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-ipv6-unicast-routing-2@2017-10-06.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-isis-bfd@2015-11-18.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-l2vpn-igmp-mld-snooping@2017-03-13.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-l3nm-te-service-mapping@2020-11-02.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-l3vpn@2015-10-09.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-l3vpn-ntw@2020-10-16.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-library-tags@2017-08-12.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-lime-bfd-extension@2014-08-30.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-lisp-petr@2016-06-30.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-lisp-pitr@2016-06-30.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-location@2014-05-08.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-mpls-mldp@2018-10-22.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-mpls-mldp-extended@2018-10-22.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-mpls-te@2014-11-06.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-mpls-te-global@2014-10-13.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-mpls-te-links@2014-10-13.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-mpls-te-lsps@2014-10-13.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-mpls-te-tunnel-ifs@2014-10-13.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-mpls-tp-topology@2019-03-11.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-mpls-tp-tunnel@2019-03-11.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-mud-quarantine@2019-12-27.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-multicast-service@2016-02-29.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-mvpn@2019-12-02.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-netconf-error-parameters@2013-07-11.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-netconf-light@2012-01-12.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-netconf-server-new@2015-07-06.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-netconf-subscribed-notifications@2018-08-03.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-notification-capabilities@2020-03-23.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-nvo3@2019-04-01.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-nvo3-base@2020-08-26.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-odu-topology@2016-07-07.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-OPSAWG-te-tunnel.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-OPSAWG-ute-tunnel.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-optical-impairment-topology@2019-05-22.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-ospf-bfd@2016-10-31.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-ospf-ppr@2019-07-07.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-otn-service@2016-06-24.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-otn-tunnel@2020-03-09.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-poe-power-management@2017-03-09.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-qos@2016-10-20.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-rats-attestation-stream@2020-03-06.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-restconf-collection@2015-01-30.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-restconf-list-pagination@2015-01-30.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-restconf-server-new@2015-07-06.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-rfc7210@2015-03-09.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-rib-extension@2020-09-18.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-rsvp-te@2020-03-09.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-rsvp-te-mpls@2020-03-09.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-rsvp-te-psc@2015-10-16.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-schema-selection@2020-02-29.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-schema-version-selection@2019-10-31.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-sd-onos-service-l3vpn@2015-12-16.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-sd-onos-service-types@2015-12-16.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-service-pm@2020-07-13.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-sfc-oam@2016-11-21.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-supa-abstracted-l3vpn@2015-05-04.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-supa-ddc@2014-12-25.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-supa-l3vpn@2015-02-04.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-supa-service-flow@2015-08-05.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-supa-service-flow-policy@2015-10-10.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-syslog@2018-03-15.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-sztp-conveyed-info@2019-01-15.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-template.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-te-mpls-types@2018-12-21.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-te-path-computation@2019-03-11.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-te-topology-psc@2016-07-01.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-te-wson@2017-06-27.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-tpm-remote-attestation@2020-03-09.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-trill-oam-pm@2015-01-11.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-trust-anchors@2019-04-29.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-ucpe-ni-properties@2019-11-27.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-uses-geo-location@2019-02-02.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-utunnel@2015-12-16.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-vxlan@2018-08-29.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-wson-tunnel@2019-09-11.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-yang-annotations@2014-11-28.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-yang-hash@2016-02-10.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-yang-inst-data-pkg@2020-01-21.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-yang-library-packages@2018-11-26.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-yang-opstate-metadata@2016-07-06.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-yang-package@2019-09-11.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-yang-package-instance@2020-01-21.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-yang-packages@2020-01-21.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-yang-package-types@2020-01-21.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-yang-push-ext@2019-02-01.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ietf-yl-packages@2020-01-21.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/if-l3-vlan@2015-10-19.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/interfaces-common@2015-10-19.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ipfix-psamp.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/isis-topology@2015-06-08.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/l3-unicast-igp-topology@2015-06-08.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/l3vpn@2014-08-15.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/layer-one-topology@2015-02-11.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/lime-bfd-extension@2014-08-30.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/logical-network-element@2016-01-19.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/lora.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/media-channel@2014-06-05.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/mpls@2014-12-12.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/mpls-igp@2014-07-07.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/mpls-rsvp@2015-04-22.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/mpls-static@2015-02-01.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/mpls-te@2014-07-07.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/networking-instance@2016-01-20.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/network-instance@2016-02-22.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/network-topology@2014-12-11.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/nvo3-oam@2014-04-24.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/openconfig-mpls@2015-10-14.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/openconfig-mpls-igp@2015-07-04.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/openconfig-mpls-rsvp@2015-09-18.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/openconfig-mpls-te@2015-10-04.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/openconfig-network-instance@2015-10-18.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/openconfig-network-instance-types@2015-10-18.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ospf@2014-09-17.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/ospf-topology@2015-06-08.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/pbbevpn@2015-03-06.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/rendered-service-path@2014-07-01.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/service-function@2014-29-04.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/service-function-chain@2014-07-01.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/service-function-description-monitor@2014-12-01.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/service-function-path@2014-07-01.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/service-node@2014-07-01.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/sfc-oam@2014-09-04.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/sff-topology.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/softwire@2014-12-14.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/TCP-MIB@2005-02-18.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/transitions@2016-03-15.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/trill-oam@2014-04-16.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/TUDA-V1-ATTESTATION-MIB@2017-10-30.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/tunnel-management@2015-01-12.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/tunnel-policy@2018-09-15.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/udmcore.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/utunnel@2015-07-05.yang", 
+"rm -vrf experimental/ietf-extracted-YANG-modules/virtualizer@2016-02-24.yang", 
+"rm -vrf experimental/ietf/SYSLOG-MODEL/ietf-syslog.yang", 
+"rm -vrf experimental/odp/config-bgp-listener-impl.yang", 
+"rm -vrf experimental/odp/opendaylight-md-sal-binding.yang", 
+"rm -vrf experimental/odp/opendaylight-md-sal-dom.yang", 
+"rm -vrf experimental/odp/shutdown-impl.yang", 
+"rm -vrf experimental/odp/shutdown.yang", 
+"rm -vrf experimental/odp/toaster-consumer-impl.yang", 
+"rm -vrf experimental/odp/toaster-consumer.yang", 
+"rm -vrf experimental/odp/toaster-provider-impl.yang", 
+"rm -vrf experimental/odp/toaster-provider.yang", 
+"rm -vrf experimental/openconfig/release/models/wifi/openconfig-ap-interfaces.yang", 
+"rm -vrf experimental/vendor/cisco/common/cisco-link-oam.yang", 
+"rm -vrf standard/ieee/draft/1906.1/ieee1906-dot1-components.yang", 
+"rm -vrf standard/ieee/draft/1906.1/ieee1906-dot1-definitions.yang", 
+"rm -vrf standard/ieee/draft/1906.1/ieee1906-dot1-nanivid.yang", 
+"rm -vrf standard/ieee/draft/1906.1/ieee1906-dot1-nanosensor.yang", 
+"rm -vrf standard/ieee/draft/1906.1/ieee1906-dot1-neuron.yang", 
+"rm -vrf standard/ieee/draft/1906.1/ieee1906-dot1-system.yang", 
+"rm -vrf standard/ieee/draft/1906.1/ieee1906-dot1-types.yang", 
+"rm -vrf standard/ieee/draft/802.1/Qcw/ieee802-dot1q-psfp.yang", 
+"rm -vrf standard/ieee/draft/802.1/Qcw/ieee802-dot1q-sched.yang", 
+"rm -vrf standard/ieee/draft/802.1/Qcw/ieee802-types.yang", 
+"rm -vrf standard/ieee/draft/802.1/Qcz/ieee802-dot1q-lldp-dcbx-tlv.yang", 
+"rm -vrf standard/ietf/DRAFT/example-jukebox.yang", 
+"rm -vrf standard/ietf/DRAFT/ietf-access-control-list.yang", 
+"rm -vrf standard/ietf/DRAFT/ietf-bfd.yang", 
+"rm -vrf standard/ietf/DRAFT/ietf-isis.yang", 
+"rm -vrf standard/ietf/DRAFT/ietf-pim-bidir@2017-03-09.yang", 
+"rm -vrf standard/ietf/DRAFT/ietf-pim-bidir.yang", 
+"rm -vrf standard/ietf/DRAFT/ietf-pim-dm@2017-03-09.yang", 
+"rm -vrf standard/ietf/DRAFT/ietf-pim-dm.yang", 
+"rm -vrf standard/ietf/DRAFT/ietf-pim-rp@2017-03-09.yang", 
+"rm -vrf standard/ietf/DRAFT/ietf-pim-rp.yang", 
+"rm -vrf standard/ietf/DRAFT/ietf-pim-sm@2017-03-09.yang", 
+"rm -vrf standard/ietf/DRAFT/ietf-pim-sm.yang", 
+"rm -vrf standard/ietf/DRAFT/ietf-zerotouch-bootstrap-server.yang", 
+"rm -vrf standard/ietf/DRAFT/newco-acl.yang", 
+"rm -vrf standard/ietf/RFC/ietf-connectionless-oam@2019-04-16.yang", 
+"rm -vrf standard/ietf/RFC/ietf-connectionless-oam-methods@2019-04-16.yang", 
+"rm -vrf standard/ietf/RFC/ietf-connectionless-oam-methods.yang", 
+"rm -vrf standard/ietf/RFC/ietf-connectionless-oam.yang", 
+"rm -vrf standard/ietf/RFC/ietf-snmp*", 
+"rm -vrf standard/ietf/RFC/ietf-sztp-conveyed-info@2019-04-30.yang", 
+"rm -vrf standard/ietf/RFC/ietf-sztp-conveyed-info.yang", 
+"rm -vrf vendor/cisco", 
+"rm -vrf vendor/juniper "]
+EOF
+}
+
+
+function create_pytest_ini() {
+    cat > "${WORKSPACE}"/pytest.ini <<EOF
+[pytest]
+addopts = -p no:warnings
+EOF
+}
+
+
+function run_pytest_script() {
+    set -x && echo "running pytest_test.py"
+    # ls $WORKSPACE/pytest_test
+
+        pytest -rSA pytest_test.py  --ODL_SYSTEM_IP ${ODL_SYSTEM_IP}\
+                                    --CONTROLLER_USER ${USER}\
+                                    # --ODL_SYSTEM_USER ${USER}\            
+                                    # --BUNDLEFOLDER ${BUNDLEFOLDER}\
+                                    # --BUNDLE_URL ${ACTUAL_BUNDLE_URL}\
+                                    # --CONTROLLER ${ODL_SYSTEM_IP}\
+                                    # --GERRIT_BRANCH ${GERRIT_BRANCH}\
+                                    # --GERRIT_PROJECT ${GERRIT_PROJECT}\
+                                    # --GERRIT_REFSPEC ${GERRIT_REFSPEC}\
+                                    # --JAVA_HOME ${JAVA_HOME}\
+                                    # --JDKVERSION ${JDKVERSION}\
+                                    # --JENKINS_WORKSPACE ${WORKSPACE}\
+                                    # --MININET1 ${TOOLS_SYSTEM_2_IP}\
+                                    # --MININET2 ${TOOLS_SYSTEM_3_IP}\
+                                    # --MININET3 ${TOOLS_SYSTEM_4_IP}\
+                                    # --MININET4 ${TOOLS_SYSTEM_5_IP}\
+                                    # --MININET5 ${TOOLS_SYSTEM_6_IP}\
+                                    # --MININET ${TOOLS_SYSTEM_IP}\
+                                    # --MININET_USER ${USER}\
+                                    # --NEXUSURL_PREFIX ${NEXUSURL_PRIX}\
+                                    # --NUM_ODL_SYSTEM ${NUM_ODL_SYST}\
+                                    # --NUM_TOOLS_SYSTEM ${NUM_TOOLS_STEM}\
+                                    # --ODL_STREAM ${DISTROSTREAM}\
+                                    # --ODL_SYSTEM_1_IP ${ODL_SYSTEM_}\
+                                    # --SUITES ${SUITES}\
+                                    # --TOOLS_SYSTEM_IP ${TOOLS_SYSTEIP} ${tools_variables}\
+                                    # --TOOLS_SYSTEM_USER ${USER}\
+                                    # --USER_HOME ${HOME}\
+                                    # --IS_KARAF_APPL ${IS_KARAF_APPL}\
+                                    # --WORKSPACE /tmp
+}
+
 function create_post_startup_script() {
     cat > "${WORKSPACE}"/post-startup-script.sh <<EOF
 # wait up to 60s for karaf port 8101 to be opened, polling every 5s
