@@ -38,6 +38,7 @@ robotframework-httplibrary
 robotframework-requests==0.7.2
 robotframework-selenium2library
 robotframework-sshlibrary==3.1.1
+pytest
 scapy
 
 # Module jsonpath is needed by current AAA idmlite suite.

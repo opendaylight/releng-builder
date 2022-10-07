@@ -972,6 +972,155 @@ EOF
 # cat > ${WORKSPACE}/startup-script.sh <<EOF
 }
 
+function create_pytest_script() {
+    cat > "${WORKSPACE}"/pytest.py <<EOF
+import argparse
+
+# Construct the argument parser
+parser = argparse.ArgumentParser()
+
+# create list of variables 
+var_list = [
+"BUNDLEFOLDER",
+"BUNDLE_URL",
+"CONTROLLER",
+"CONTROLLER_USER",
+"GERRIT_BRANCH",
+"GERRIT_PROJECT",
+"GERRIT_REFSPEC",
+"JAVA_HOME",
+"JDKVERSION",
+"JENKINS_WORKSPACE",
+"MININET1",
+"MININET2",
+"MININET3",
+"MININET4",
+"MININET5",
+"MININET",
+"MININET_USER",
+"NEXUSURL_PREFIX",
+"NUM_ODL_SYSTEM",
+"NUM_TOOLS_SYSTEM",
+"ODL_STREAM",
+"ODL_SYSTEM_1_IP",
+"ODL_SYSTEM_IP",
+"ODL_SYSTEM_USER",
+"SUITES",
+"TOOLS_SYSTEM_IP",
+"TOOLS_SYSTEM_USER",
+"USER_HOME",
+"IS_KARAF_APPL",
+"WORKSPACE"
+]
+
+# getting parsed arguments from shell using var_list variables
+for var in var_list:
+    parser.add_argument("--" + var, nargs='?', const='')
+
+args = parser.parse_args()
+    
+# store all variables    
+BUNDLEFOLDER = args.BUNDLEFOLDER
+BUNDLE_URL = args.BUNDLE_URL
+CONTROLLER = args.CONTROLLER
+CONTROLLER_USER = args.CONTROLLER_USER
+GERRIT_BRANCH = args.GERRIT_BRANCH
+GERRIT_PROJECT = args.GERRIT_PROJECT
+GERRIT_REFSPEC = args.GERRIT_REFSPEC
+JAVA_HOME = args.JAVA_HOME
+JDKVERSION = args.JDKVERSION
+JENKINS_WORKSPACE = args.JENKINS_WORKSPACE
+MININET1 = args.MININET1
+MININET2 = args.MININET2
+MININET3 = args.MININET3
+MININET4 = args.MININET4
+MININET5 = args.MININET5
+MININET = args.MININET
+MININET_USER = args.MININET_USER
+NEXUSURL_PREFIX = args.NEXUSURL_PREFIX
+NUM_ODL_SYSTEM = args.NUM_ODL_SYSTEM
+NUM_TOOLS_SYSTEM = args.NUM_TOOLS_SYSTEM
+ODL_STREAM = args.ODL_STREAM
+ODL_SYSTEM_1_IP = args.ODL_SYSTEM_1_IP
+ODL_SYSTEM_IP = args.ODL_SYSTEM_IP
+ODL_SYSTEM_USER = args.ODL_SYSTEM_USER
+SUITES = args.SUITES
+TOOLS_SYSTEM_IP = args.TOOLS_SYSTEM_IP
+TOOLS_SYSTEM_USER = args.TOOLS_SYSTEM_USER
+USER_HOME = args.USER_HOME
+IS_KARAF_APPL = args.IS_KARAF_APPL
+WORKSPACE = args.WORKSPACE
+
+# Print all variables
+print("BUNDLEFOLDER = ", BUNDLEFOLDER) 
+print("BUNDLE_URL = ", BUNDLE_URL) 
+print("CONTROLLER = ", CONTROLLER) 
+print("CONTROLLER_USER = ", CONTROLLER_USER) 
+print("GERRIT_BRANCH = ", GERRIT_BRANCH) 
+print("GERRIT_PROJECT = ", GERRIT_PROJECT) 
+print("GERRIT_REFSPEC = ", GERRIT_REFSPEC) 
+print("JAVA_HOME = ", JAVA_HOME) 
+print("JDKVERSION = ", JDKVERSION) 
+print("JENKINS_WORKSPACE = ", JENKINS_WORKSPACE) 
+print("MININET1 = ", MININET1)
+print("MININET2 = ", MININET2) 
+print("MININET3 = ", MININET3) 
+print("MININET4 = ", MININET4) 
+print("MININET5 = ", MININET5) 
+print("MININET = ", MININET) 
+print("MININET_USER = ", MININET_USER) 
+print("NEXUSURL_PREFIX = ", NEXUSURL_PREFIX) 
+print("NUM_ODL_SYSTEM = ", NUM_ODL_SYSTEM) 
+print("NUM_TOOLS_SYSTEM = ", NUM_TOOLS_SYSTEM) 
+print("ODL_STREAM = ", ODL_STREAM) 
+print("ODL_SYSTEM_1_IP = ", ODL_SYSTEM_1_IP) 
+print("ODL_SYSTEM_IP = ", ODL_SYSTEM_IP) 
+print("ODL_SYSTEM_USER = ", ODL_SYSTEM_USER) 
+print("SUITES = ", SUITES) 
+print("TOOLS_SYSTEM_IP = ", TOOLS_SYSTEM_IP) 
+print("TOOLS_SYSTEM_USER = ", TOOLS_SYSTEM_USER) 
+print("USER_HOME = ", USER_HOME) 
+print("IS_KARAF_APPL = ", IS_KARAF_APPL) 
+print("WORKSPACE = ", WORKSPACE)
+EOF
+}
+
+
+function run_pytest_script() {
+    set -x && echo "running pytest.py"
+
+    python3 $WORKSPACE/pytest.py --BUNDLEFOLDER ${BUNDLEFOLDER}\
+                                 --BUNDLE_URL ${ACTUAL_BUNDLE_URL}\
+                                 --CONTROLLER ${ODL_SYSTEM_IP}\
+                                 --CONTROLLER_USER ${USER}\
+                                 --GERRIT_BRANCH ${GERRIT_BRANCH}\
+                                 --GERRIT_PROJECT ${GERRIT_PROJECT}\
+                                 --GERRIT_REFSPEC ${GERRIT_REFSPEC}\
+                                 --JAVA_HOME ${JAVA_HOME}\
+                                 --JDKVERSI ${JDKVERSION}\
+                                 --JENKINS_WORKSPACE ${WORKSPACE}\
+                                 --MININET1 ${TOOLS_SYSTEM_2_IP}\
+                                 --MININET2 ${TOOLS_SYSTEM_3_IP}\
+                                 --MININET3 ${TOOLS_SYSTEM_4_IP}\
+                                 --MININET4 ${TOOLS_SYSTEM_5_IP}\
+                                 --MININET5 ${TOOLS_SYSTEM_6_IP}\
+                                 --MININET ${TOOLS_SYSTEM_IP}\
+                                 --MININET_USER ${USER}\
+                                 --NEXUSURL_PREFIX ${NEXUSURL_PRIX}\
+                                 --NUM_ODL_SYSTEM ${NUM_ODL_SYST}\
+                                 --NUM_TOOLS_SYSTEM ${NUM_TOOLS_STEM}\
+                                 --ODL_STREAM ${DISTROSTREAM}\
+                                 --ODL_SYSTEM_1_IP ${ODL_SYSTEM_}\
+                                 --ODL_SYSTEM_IP ${ODL_SYSTEM_IP}\
+                                 --ODL_SYSTEM_USER ${USER}\
+                                 --SUITES ${SUITES}\
+                                 --TOOLS_SYSTEM_IP ${TOOLS_SYSTEIP} ${tools_variables}\
+                                 --TOOLS_SYSTEM_USER ${USER}\
+                                 --USER_HOME ${HOME}\
+                                 --IS_KARAF_APPL ${IS_KARAF_APPL}\
+                                 --WORKSPACE /tmp
+}
+
 function create_post_startup_script() {
     cat > "${WORKSPACE}"/post-startup-script.sh <<EOF
 # wait up to 60s for karaf port 8101 to be opened, polling every 5s
