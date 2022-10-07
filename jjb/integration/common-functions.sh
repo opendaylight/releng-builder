@@ -972,6 +972,142 @@ EOF
 # cat > ${WORKSPACE}/startup-script.sh <<EOF
 }
 
+function create_pytest_script() {
+    mkdir ${WORKSPACE}/pytest_test
+    cat > "${WORKSPACE}"/pytest_test/pytest_test.py <<EOF
+import os
+import pytest
+
+# create list of variables
+var_list = [
+    "BUNDLEFOLDER",
+    "BUNDLE_URL",
+    "CONTROLLER",
+    "CONTROLLER_USER",
+    "GERRIT_BRANCH",
+    "GERRIT_PROJECT",
+    "GERRIT_REFSPEC",
+    "JAVA_HOME",
+    "JDKVERSION",
+    "JENKINS_WORKSPACE",
+    "MININET1",
+    "MININET2",
+    "MININET3",
+    "MININET4",
+    "MININET5",
+    "MININET",
+    "MININET_USER",
+    "NEXUSURL_PREFIX",
+    "NUM_ODL_SYSTEM",
+    "NUM_TOOLS_SYSTEM",
+    "ODL_STREAM",
+    "ODL_SYSTEM_1_IP",
+    "ODL_SYSTEM_IP",
+    "ODL_SYSTEM_USER",
+    "SUITES",
+    "TOOLS_SYSTEM_IP",
+    "TOOLS_SYSTEM_USER",
+    "USER_HOME",
+    "IS_KARAF_APPL",
+    "WORKSPACE"
+]
+
+@pytest.fixture
+def bash_arguments(request):
+    # get request.config.options into dict
+    odl_params = {x: (request.config.getoption('--' + x)) for x in var_list}
+    return odl_params
+
+def test_check_ping(bash_arguments):
+    print(bash_arguments)
+    response = os.system("ping -c 1 " + bash_arguments["ODL_SYSTEM_IP"])
+    # and then check the response...
+    assert response == 0
+
+EOF
+}
+
+function create_conftest() {
+    cat > "${WORKSPACE}"/pytest_test/conftest.py <<EOF
+def pytest_addoption(parser):
+    parser.addoption('--BUNDLEFOLDER', action='store', default=None, help='Get BUNDLEFOLDER from shell args')
+    parser.addoption('--BUNDLE_URL', action='store', default=None, help='Get BUNDLE_URL from shell args')
+    parser.addoption('--CONTROLLER', action='store', default=None, help='Get CONTROLLER from shell args')
+    parser.addoption('--CONTROLLER_USER', action='store', default=None, help='Get CONTROLLER_USER from shell args')
+    parser.addoption('--GERRIT_BRANCH', action='store', default=None, help='Get GERRIT_BRANCH from shell args')
+    parser.addoption('--GERRIT_PROJECT', action='store', default=None, help='Get GERRIT_PROJECT from shell args')
+    parser.addoption('--GERRIT_REFSPEC', action='store', default=None, help='Get GERRIT_REFSPEC from shell args')
+    parser.addoption('--JAVA_HOME', action='store', default=None, help='Get JAVA_HOME from shell args')
+    parser.addoption('--JDKVERSION', action='store', default=None, help='Get JDKVERSION from shell args')
+    parser.addoption('--JENKINS_WORKSPACE', action='store', default=None, help='Get JENKINS_WORKSPACE from shell args')
+    parser.addoption('--MININET1', action='store', default=None, help='Get MININET1 from shell args')
+    parser.addoption('--MININET2', action='store', default=None, help='Get MININET2 from shell args')
+    parser.addoption('--MININET3', action='store', default=None, help='Get MININET3 from shell args')
+    parser.addoption('--MININET4', action='store', default=None, help='Get MININET4 from shell args')
+    parser.addoption('--MININET5', action='store', default=None, help='Get MININET5 from shell args')
+    parser.addoption('--MININET', action='store', default=None, help='Get MININET from shell args')
+    parser.addoption('--MININET_USER', action='store', default=None, help='Get MININET_USER from shell args')
+    parser.addoption('--NEXUSURL_PREFIX', action='store', default=None, help='Get NEXUSURL_PREFIX from shell args')
+    parser.addoption('--NUM_ODL_SYSTEM', action='store', default=None, help='Get NUM_ODL_SYSTEM from shell args')
+    parser.addoption('--NUM_TOOLS_SYSTEM', action='store', default=None, help='Get NUM_TOOLS_SYSTEM from shell args')
+    parser.addoption('--ODL_STREAM', action='store', default=None, help='Get ODL_STREAM from shell args')
+    parser.addoption('--ODL_SYSTEM_1_IP', action='store', default=None, help='Get ODL_SYSTEM_1_IP from shell args')
+    parser.addoption('--ODL_SYSTEM_IP', action='store', default=None, help='Get ODL_SYSTEM_IP from shell args')
+    parser.addoption('--ODL_SYSTEM_USER', action='store', default=None, help='Get ODL_SYSTEM_USER from shell args')
+    parser.addoption('--SUITES', action='store', default=None, help='Get SUITES from shell args')
+    parser.addoption('--TOOLS_SYSTEM_IP', action='store', default=None, help='Get TOOLS_SYSTEM_IP from shell args')
+    parser.addoption('--TOOLS_SYSTEM_USER', action='store', default=None, help='Get TOOLS_SYSTEM_USER from shell args')
+    parser.addoption('--USER_HOME', action='store', default=None, help='Get USER_HOME from shell args')
+    parser.addoption('--IS_KARAF_APPL', action='store', default=None, help='Get IS_KARAF_APPL from shell args')
+    parser.addoption('--WORKSPACE', action='store', default=None, help='Get WORKSPACE from shell args')
+EOF
+}
+
+
+function create_pytest_ini() {
+    cat > "${WORKSPACE}"/pytest_test/pytest.ini <<EOF
+[pytest]
+addopts = -p no:warnings
+EOF
+}
+
+
+function run_pytest_script() {
+    set -x && echo "running pytest_test.py"
+    ls $WORKSPACE/pytest_test
+
+    pytest -s $WORKSPACE/pytest_test/pytest_test.py --BUNDLEFOLDER ${BUNDLEFOLDER:=False}\
+                                   --BUNDLE_URL ${ACTUAL_BUNDLE_URL:=False}\
+                                   --CONTROLLER ${ODL_SYSTEM_IP:=False}\
+                                   --CONTROLLER_USER ${USER:=False}\
+                                   --GERRIT_BRANCH ${GERRIT_BRANCH:=False}\
+                                   --GERRIT_PROJECT ${GERRIT_PROJECT:=False}\
+                                   --GERRIT_REFSPEC ${GERRIT_REFSPEC:=False}\
+                                   --JAVA_HOME ${JAVA_HOME:=False}\
+                                   --JDKVERSION ${JDKVERSION:=False}\
+                                   --JENKINS_WORKSPACE ${WORKSPACE:=False}\
+                                   --MININET1 ${TOOLS_SYSTEM_2_IP:=False}\
+                                   --MININET2 ${TOOLS_SYSTEM_3_IP:=False}\
+                                   --MININET3 ${TOOLS_SYSTEM_4_IP:=False}\
+                                   --MININET4 ${TOOLS_SYSTEM_5_IP:=False}\
+                                   --MININET5 ${TOOLS_SYSTEM_6_IP:=False}\
+                                   --MININET ${TOOLS_SYSTEM_IP:=False}\
+                                   --MININET_USER ${USER:=False}\
+                                   --NEXUSURL_PREFIX ${NEXUSURL_PRIX:=False}\
+                                   --NUM_ODL_SYSTEM ${NUM_ODL_SYST:=False}\
+                                   --NUM_TOOLS_SYSTEM ${NUM_TOOLS_STEM:=False}\
+                                   --ODL_STREAM ${DISTROSTREAM:=False}\
+                                   --ODL_SYSTEM_1_IP ${ODL_SYSTEM_:=False}\
+                                   --ODL_SYSTEM_IP ${ODL_SYSTEM_IP:=False}\
+                                   --ODL_SYSTEM_USER ${USER:=False}\
+                                   --SUITES ${SUITES:=False}\
+                                   --TOOLS_SYSTEM_IP ${TOOLS_SYSTEIP} ${tools_variables:=False}\
+                                   --TOOLS_SYSTEM_USER ${USER:=False}\
+                                   --USER_HOME ${HOME:=False}\
+                                   --IS_KARAF_APPL ${IS_KARAF_APPL:=False}\
+                                   --WORKSPACE /tmp
+}
+
 function create_post_startup_script() {
     cat > "${WORKSPACE}"/post-startup-script.sh <<EOF
 # wait up to 60s for karaf port 8101 to be opened, polling every 5s
