@@ -55,6 +55,7 @@
     {
       "type": "ansible",
       "playbook_file": "provision/devstack-pre-pip.yaml",
+      "command": "./common-packer/ansible-playbook.sh",
       "ansible_env_vars": [
         "ANSIBLE_DEBUG=False",
         "ANSIBLE_NOCOWS=1",
