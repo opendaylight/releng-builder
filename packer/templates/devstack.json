@@ -56,6 +56,8 @@
     {
       "type": "ansible",
       "playbook_file": "provision/devstack.yaml",
+      "command": "./common-packer/ansible-playbook.sh",
+      "skip_version_check": true,
       "ansible_env_vars": [
         "ANSIBLE_NOCOWS=1",
         "ANSIBLE_PIPELINING=True",
