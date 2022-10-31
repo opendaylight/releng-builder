@@ -246,6 +246,7 @@
       - integration-get-slave-addresses
       - inject:
           properties-file: "slave_addresses.txt"
+      - integration-set-variables
       - integration-detect-variables
       - integration-install-common-functions
       - integration-deploy-controller-run-test
