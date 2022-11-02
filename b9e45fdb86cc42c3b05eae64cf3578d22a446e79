@@ -89,6 +89,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e43fab9f_91b6d620",
+        "filename": "jjb/integration/integration-templates.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1927
+      },
+      "writtenOn": "2022-11-02T04:42:32Z",
+      "side": 1,
+      "message": "It depends. For example, netconf-csit-1node-gate-userfeatures-rfc8040-all-master downloads \u0027netconf-karaf\u0027 because KARAF_VERSION is \u0027netconf\u0027, and it\u0027s a sub-project of netconf-distribution-mri-test-master:\n\nhttps://jenkins.opendaylight.org/releng/view/netconf/job/netconf-csit-1node-gate-userfeatures-rfc8040-all-master/69/consoleText\nhttps://jenkins.opendaylight.org/releng/view/netconf/job/netconf-csit-1node-gate-userfeatures-rfc8040-all-master/69/parameters/\n\nSub-projects of integration-distribution-mri-test-* like netconf-csit-1node-gate-userfeatures-rfc8040-all-master, use integration/distribution karaf because KARAF_VERSION of \u0027karaf4\u0027, which makes sense since it\u0027s part of integration-distribution tests.",
+      "parentUuid": "e9bb7839_2aea18ff",
+      "revId": "b9e45fdb86cc42c3b05eae64cf3578d22a446e79",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "15d58fb4_b165e790",
         "filename": "jjb/netconf/netconf-userfeatures.yaml",
         "patchSetId": 2
