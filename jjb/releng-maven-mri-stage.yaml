@@ -96,6 +96,10 @@
     mvn-version: mvn35
     ossrh-profile-id: ""
     mvn-pom: ""
+    sbom-flags: ""
+    sbom-path: "$WORKSPACE"
+    sbom-generator: false
+    sbom-generator-version: "v0.0.15"
     sign-artifacts: false
     sign-mode: serial
     stream: master
@@ -145,6 +149,14 @@
           name: STAGING_PROFILE_ID
           default: "{staging-profile-id}"
           description: Nexus staging profile ID.
+      - string:
+          name: SBOM_GENERATOR_VERSION
+          default: "{sbom-generator-version}"
+          description: SBOM generator version to download and run.
+      - string:
+          name: SBOM_PATH
+          default: "{sbom-path}"
+          description: path where SBOM needs to be executed.
 
     builders:
       - lf-infra-pre-build
@@ -166,6 +178,14 @@
       - shell: !include-raw-escape: global-jjb/shell/maven-patch-release.sh
       - lf-maven-build:
           mvn-goals: "{mvn-goals}"
+      # With SBOM Generator
+      - conditional-step:
+          condition-kind: boolean-expression
+          condition-expression: "{sbom-generator}"
+          steps:
+            - shell: echo 'Running SBOM Generator'
+            - lf-infra-maven-sbom-generator:
+                sbom-flags: "{sbom-flags}"
       - lf-sigul-sign-dir:
           sign-artifacts: "{sign-artifacts}"
           sign-dir: "$WORKSPACE/m2repo"

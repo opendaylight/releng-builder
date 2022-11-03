@@ -2,7 +2,9 @@
 - project:
     name: "{project-name}-maven-stage-{stream}"
     jobs:
-      - gerrit-maven-stage
+      - gerrit-maven-stage:
+          sbom-generator: true
+
     project: zzz-test-release
     project-name: zzz-test-release
     stream: master
