@@ -151,7 +151,9 @@
     name: distribution-release
     jobs:
       - gerrit-maven-stage:
+          sbom-generator: true
           sign-artifacts: true
+          maven-versions-plugin: true
 
     project: "integration/distribution"
     project-name: "distribution"

@@ -12,9 +12,13 @@
 
       - gerrit-maven-stage:
           sign-artifacts: true
+          sbom-generator: true
+          maven-versions-plugin: true
           cron: ""
 
       - gerrit-maven-mri-stage:
+          sbom-generator: true
+          maven-versions-plugin: true
           sign-artifacts: true
           cron: ""
 
@@ -33,11 +37,15 @@
           build-timeout: 180
 
       - gerrit-maven-stage:
+          sbom-generator: true
           sign-artifacts: true
+          maven-versions-plugin: true
           cron: ""
 
       - gerrit-maven-mri-stage:
+          sbom-generator: true
           sign-artifacts: true
+          maven-versions-plugin: true
           cron: ""
 
     java-version: openjdk17
