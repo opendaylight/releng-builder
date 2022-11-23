@@ -124,9 +124,9 @@
 
     # Data for csit-verify jobs
     # Branch for "last" version detection
-    verify-branch: stable/phosphorus
+    verify-branch: stable/sulfur
     # Value for ODL_STREAM
-    verify-stream: phosphorus
+    verify-stream: sulfur
     verify-karaf-version: karaf4
     verify-jdkversion: openjdk11
 
@@ -212,37 +212,6 @@
     10-exclude-value: ""
 
     # Manual CSIT job lists used by sanity or periodic in nature.
-    csit-mri-list-phosphorus: >
-      aaa-csit-1node-authn-all-phosphorus,
-      controller-csit-1node-akka1-all-phosphorus,
-      controller-csit-1node-benchmark-all-phosphorus,
-      controller-csit-1node-rest-cars-perf-all-phosphorus,
-      controller-csit-3node-benchmark-all-phosphorus,
-      controller-csit-3node-clustering-ask-all-phosphorus,
-      controller-csit-3node-clustering-tell-all-phosphorus,
-      controller-csit-3node-rest-clust-cars-perf-ask-only-phosphorus,
-      controller-csit-3node-rest-clust-cars-perf-tell-only-phosphorus,
-      mdsal-csit-3node-netty-replicate-only-phosphorus,
-      netconf-csit-1node-callhome-only-master,
-      netconf-csit-1node-scale-max-devices-only-master,
-      netconf-csit-1node-scale-only-master,
-      netconf-csit-1node-userfeatures-all-master,
-      netconf-csit-1node-userfeatures-rfc8040-all-master,
-      netconf-csit-3node-clustering-only-master,
-      netconf-csit-3node-clustering-scale-only-master,
-      yangtools-csit-1node-system-only-phosphorus
-    csit-weekly-list-phosphorus: >
-      controller-csit-1node-notifications-longevity-only-phosphorus,
-      controller-csit-3node-drb-partnheal-longevity-only-phosphorus,
-      controller-csit-3node-drb-precedence-longevity-only-phosphorus,
-      controller-csit-3node-ddb-expl-lead-movement-longevity-only-phosphorus,
-      bgpcep-csit-3node-bgpclustering-longevity-only-phosphorus,
-      distribution-deploy-phosphorus,
-      distribution-offline-phosphorus,
-      openflowplugin-csit-1node-longevity-only-phosphorus
-    csit-sanity-list-phosphorus: >
-      openflowplugin-csit-1node-sanity-only-phosphorus,
-      distribution-sanity-phosphorus
     csit-mri-list-sulfur: >
       aaa-csit-1node-authn-all-sulfur, controller-csit-1node-akka1-all-sulfur,
       controller-csit-1node-benchmark-all-sulfur,

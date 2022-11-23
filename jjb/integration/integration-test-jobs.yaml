@@ -44,15 +44,6 @@
             odlparent infrautils yangtools mdsal controller aaa netconf bgpcep
             serviceutils daexim jsonrpc ovsdb openflowplugin lispflowmapping
             integration/distribution
-      - phosphorus:
-          branch: "stable/phosphorus"
-          mvn-version: "mvn35"
-          java-version: "openjdk11"
-          csit-list: !include: csit-jobs-phosphorus.lst
-          build-order: >
-            odlparent infrautils yangtools mdsal controller aaa netconf bgpcep
-            serviceutils daexim jsonrpc ovsdb openflowplugin lispflowmapping
-            integration/distribution
 
 - project:
     name: integration-distribution
@@ -105,19 +96,6 @@
           csit-list: !include: csit-jobs-sulfur.lst
           csit-mri-list: "{csit-mri-list-sulfur}"
           csit-weekly-list: "{csit-weekly-list-sulfur}"
-      - phosphorus:
-          branch: "stable/phosphorus"
-          csit-blocklist: >
-            aaa controller genius lispflowmapping l2switch mdsal
-            netconf netvirt odlmicro sxp yangtools
-            gate longevity sanity tdd tempest wip
-            bgpcep-csit-3node-bgpclustering-all
-            bgpcep-csit-3node-bgpclustering-ha-only
-            openflowplugin-csit-1node-bundle-based-reconciliation
-            last-line-is-ignored-so-we-need-something-dummy-here-to-make-sure-the-real-last-line-is-used
-          csit-list: !include: csit-jobs-phosphorus.lst
-          csit-mri-list: "{csit-mri-list-phosphorus}"
-          csit-weekly-list: "{csit-weekly-list-phosphorus}"
 
 - project:
     name: integration-sanity
@@ -139,10 +117,6 @@
           branch: "stable/sulfur"
           karaf-version: odl
           csit-sanity-list: "{csit-sanity-list-sulfur}"
-      - phosphorus:
-          branch: "stable/phosphorus"
-          karaf-version: odl
-          csit-sanity-list: "{csit-sanity-list-phosphorus}"
 
 - job-template:
     name: "integration-merge-dashboard"

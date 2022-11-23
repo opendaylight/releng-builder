@@ -33,10 +33,6 @@
       - sulfur:
           branch: "stable/sulfur"
           java-version: openjdk11
-      - phosphorus:
-          branch: "stable/phosphorus"
-          mvn-version: mvn35
-          java-version: openjdk11
 
 - project:
     name: distribution-managed
@@ -92,17 +88,6 @@
             openflowplugin-maven-merge-{stream},
             ovsdb-maven-merge-{stream},
             serviceutils-maven-merge-{stream},
-      - phosphorus:
-          branch: "stable/phosphorus"
-          mvn-version: mvn35
-          java-version: "openjdk11"
-          dependencies: >
-            daexim-maven-merge-{stream},
-            jsonrpc-maven-merge-{stream},
-            lispflowmapping-maven-merge-{stream},
-            openflowplugin-maven-merge-{stream},
-            ovsdb-maven-merge-{stream},
-            serviceutils-maven-merge-{stream},
 
 - project:
     name: distribution-full
@@ -140,12 +125,6 @@
           java-version: "openjdk11"
           dependencies: >
             distribution-merge-managed-{stream},
-      - phosphorus:
-          branch: "stable/phosphorus"
-          mvn-version: mvn35
-          java-version: "openjdk11"
-          dependencies: >
-            distribution-merge-managed-{stream},
 
 - project:
     name: distribution-release
@@ -175,10 +154,6 @@
           branch: "stable/chlorine"
       - sulfur:
           branch: "stable/sulfur"
-          java-version: "openjdk11"
-      - phosphorus:
-          branch: "stable/phosphorus"
-          mvn-version: mvn35
           java-version: "openjdk11"
 
 - project:
@@ -236,8 +211,6 @@
           branch: "stable/chlorine"
       - sulfur:
           branch: "stable/sulfur"
-      - phosphorus:
-          branch: "stable/phosphorus"
 
 - project:
     name: distribution-docker-release
