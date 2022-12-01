@@ -30,6 +30,7 @@
       - gerrit-maven-clm:
           nexus-iq-namespace: odl-
           nexus-iq-stage: release
+          mvn-opts: "--add-opens java.base/java.util=ALL-UNNAMED"
 
       - gerrit-maven-merge:
           build-timeout: 180
