@@ -1,0 +1,61 @@
+# Copyright (c) 2023 PANTHEON.tech s.r.o. All rights reserved.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Eclipse Public License v1.0 which accompanies this distribution,
+# and is available at http://www.eclipse.org/legal/epl-v10.html
+
+
+# Bumping MRI versions tool
+This program is making versions changes in pom.xml files. For example 10.0.1 to 10.0.2
+The change will aply only if groupId.text contain "org.opendaylight" and minor version is the same.
+
+## Installing
+
+*Prerequisite:*  The followings are required for building test:
+
+- Python 3.8+
+
+GET THE CODE:
+
+USING HTTPS:
+    git clone "https://git.opendaylight.org/gerrit/releng/builder"
+
+USING SSH:
+    git clone "ssh://{USERNAME}@git.opendaylight.org:29418/releng/builder"
+
+NAVIGATE TO:
+    cd ~/builder/scripts/bump_MRI_versions
+
+INSTALL VIRTUAL ENVIROMENT PACKAGE:
+    sudo apt install python3-virtualenv
+
+CREATE NEW VIRTUAL ENVIROMENT:
+    virtualenv venv
+
+ACTIVATE VIRTUAL ENVIROMENT:
+    source venv/bin/activate
+
+INSTALL LIBRARIES:
+    pip install requests
+    pip install bs4
+    pip install lxml
+
+SET FOLDER FOR TESTING:
+    clone repo for version updating in ~/builder/scripts/bump_MRI_versions or
+        update "bumping_dir" variable in python_lib.py file
+
+
+## Running
+
+RUN: python main.py
+
+## Logs
+
+PRINT:
+    Every change will be printed out to the console.
+
+    example here:
+
+    XML FILE: repos/aaa/features/odl-aaa-api/pom.xml
+    ('groupId:', 'org.opendaylight.mdsal', 'ARTIFACT ID:', 'odl-mdsal-binding-base', 'VERSION:', '11.0.1', 'NEW VERSION:', '11.0.2')
+    ****************************************************************************************************
