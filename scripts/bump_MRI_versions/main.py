@@ -4,57 +4,17 @@
 # terms of the Eclipse Public License v1.0 which accompanies this distribution,
 # and is available at http://www.eclipse.org/legal/epl-v10.html
 
-import requests, re, sys, getopt, os, git
-import xml.etree.ElementTree as ET
+import requests, re
 from pathlib import Path
 from bs4 import BeautifulSoup
 from datetime import datetime
-from python_lib import find_highest_revision, get_namespaces, log_artifact, check_minor_version
+from python_lib import find_highest_revision, log_artifact, check_minor_version
 from lxml import etree
 
 
-logs = ""
 global repo
-
-# retrieve args from command
-def main(argv):
-    global log, repo, patch
-    log = "N"
-    repo = "aaa"
-    patch = ""
-    try:
-        opts, args = getopt.getopt(argv,"hl:r:p",["help", "log=","repo=", "patch="])
-    except getopt.GetoptError:
-        print("wrong usage type -h or --help for help")
-        sys.exit(2)
-    for opt, arg in opts:
-        if opt == '-h' or opt == '--help':
-            print("Usage: python3 main.py [log] [repo] [patch]")
-            print("[log] -l Y -this otpion will enable full log in to console")
-            print("[repo] -r aaa or -r odlparent or --repo mdsal or --repo netconf")
-            print("[patch] -p I657396dc0f7295b4d492fb64bf5f4e5c4b34c548 or --patch I657396dc0f7295b4d492fb64bf5f4e5c4b34c548")
-            sys.exit()
-        elif opt in ("-l", "--log"):
-            log = True
-        elif opt in ("-r", "--repo"):
-            repo = arg
-        elif opt in ("-p", "--patch"):
-            patch = arg
-if __name__ == "__main__":
-   main(sys.argv[1:])
-
-# delete logs if -l Y
-if log == "Y":
-    os.system("rm -rf /logs/*")
-
-#clone repo if repo dir not exist
+repo="aaa"
 repo_dir = f"repos/{repo}"
-if not os.path.exists(repo_dir):
-    print("Cloning repositpory please wait.")
-    git_url =  f"https://git.opendaylight.org/gerrit/{repo}"
-    git.Repo.clone_from(git_url, repo_dir)
-if patch != "":
-    os.system(f"cd repos/{repo} && {patch}")
 
 def get_version_for_artifact(groupId, artifactId):
     global logs
@@ -101,13 +61,8 @@ for path in Path(repo_dir).rglob('*.xml'):
                         if int(new_version.split(".")[0]) == int(version.text.split(".")[0]):
                             # check minor version and patch version
                             if check_minor_version(version, new_version):
-                                logs += log_artifact(path, groupId, artifactId, version.text, new_version)
+                                print(log_artifact(path, groupId, artifactId, version.text, new_version))
                                 version.text = new_version
                                 tree.write(path, encoding="UTF-8", pretty_print=True, doctype='<?xml version="1.0" encoding="UTF-8"?>')
             except AttributeError:
                 pass
-
-
-os.system(f"cd logs &&  touch {repo}.log")
-with open(f'logs/{repo}.log', 'w') as f:
-    f.write(str(logs))
