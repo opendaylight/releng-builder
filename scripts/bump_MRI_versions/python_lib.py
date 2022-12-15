@@ -4,6 +4,9 @@
 # terms of the Eclipse Public License v1.0 which accompanies this distribution,
 # and is available at http://www.eclipse.org/legal/epl-v10.html
 
+# modify this dir for pick up project from there
+bumping_dir = f"repos"
+
 def find_highest_revision(revisions):
     # convert list of strings to list of tuples
     converted_items = [tuple(map(int, item.split('.'))) for item in revisions]
@@ -21,5 +24,4 @@ def log_artifact(path, groupId, artifactId, version, new_version):
 
 def check_minor_version(version, new_version):
     if int(new_version.split(".")[1]) != int(version.text.split(".")[1]) or int(new_version.split(".")[2]) != int(version.text.split(".")[2]):
-        print("TRUE")
         return True
