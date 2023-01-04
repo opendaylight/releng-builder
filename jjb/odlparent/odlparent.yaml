@@ -11,6 +11,15 @@
       - odl-maven-jobs-jdk17
       - odl-maven-verify-jobs-jdk17
       - gerrit-tox-verify
+      - gerrit-release-merge:
+          build-node: centos8-builder-2c-1g
+          distribution-type: maven
+          use-release-file: false
+          gerrit-branch: master
+          # Pre-filled values -- we expect the person triggering the job to remove all the XXXes
+          version: 12.0.XXX
+          git-tag: v12.0.XXX
+          log-dir: project-maven-stage-master/XXX/
 
     project: odlparent
     project-name: odlparent
@@ -101,16 +110,16 @@
     # Used by the release job
     staging-profile-id: 880d5ac25eaa
 
-- project:
-    name: odlparent-release-management
-    jobs:
-      - gerrit-release-merge
-
-    project: odlparent
-    project-name: odlparent
-
-    build-node: centos7-builder-2c-1g
-    mvn-settings: odlparent-settings
+#- project:
+#    name: odlparent-release-management
+#    jobs:
+#      - gerrit-release-merge
+#
+#    project: odlparent
+#    project-name: odlparent
+#
+#    build-node: centos7-builder-2c-1g
+#    mvn-settings: odlparent-settings
 
 - project:
     name: odlparent-sonar
