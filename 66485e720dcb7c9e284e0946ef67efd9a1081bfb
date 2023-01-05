@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9b568017_3a32aa57",
+        "filename": "jjb/odlparent/odlparent.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2023-01-05T01:01:39Z",
+      "side": 1,
+      "message": "okay, so git-tag et al. is something which should translate to GIT_TAG parameter in the release job. Most notably we want to pre-fill GERRIT_BRANCH, plus provide guidance as to what the stage job/release name should be.\n\nyeah, I am starting with master, as that is simplest -- for stable streams, we want to also define VERSION and VERSION_TAG to 12.0.XXX.\n\nAll of this is for humans, really, so the sooner we have push-button end-to-end project releases, this will become moot.\n\nSo, I guess global-jjb will need to grow a {stream} template parameter first, at which point we can rebase.",
+      "parentUuid": "346d13d9_efcf1837",
+      "range": {
+        "startLine": 14,
+        "startChar": 9,
+        "endLine": 14,
+        "endChar": 29
+      },
+      "revId": "66485e720dcb7c9e284e0946ef67efd9a1081bfb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "eedffa3b_6a46be05",
         "filename": "jjb/odlparent/odlparent.yaml",
         "patchSetId": 1
