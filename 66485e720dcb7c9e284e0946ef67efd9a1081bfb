@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "346d13d9_efcf1837",
+        "filename": "jjb/odlparent/odlparent.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2023-01-05T00:12:10Z",
+      "side": 1,
+      "message": "First things first, the error shows up as: \n\njenkins_jobs.errors.JenkinsJobsException: Duplicate definitions for job \u0027odlparent-release-merge\u0027 specified\n\nIt\u0027s picking up the job defs in multiple places, comment out 113-112 to resolve the errors. Note: you\u0027ll likely need to add this job def for each of the stream/branch in odlparent.\n\nComing to the second part, the release merge template is a part of the global-jjb release-jobs template that takes 4 required params, and does not include the git-tag, version or gerrit-branch which are newer ones introduced here. If we need these to be usable then we\u0027ll need to modify the global-jjb template to accomodate these values, without impacting the workflow for other LF projects. :)",
+      "range": {
+        "startLine": 14,
+        "startChar": 9,
+        "endLine": 14,
+        "endChar": 29
+      },
+      "revId": "66485e720dcb7c9e284e0946ef67efd9a1081bfb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eedffa3b_6a46be05",
+        "filename": "jjb/odlparent/odlparent.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2023-01-05T00:12:10Z",
+      "side": 1,
+      "message": "# comment out while testing or remove.",
+      "range": {
+        "startLine": 113,
+        "startChar": 0,
+        "endLine": 123,
+        "endChar": 0
+      },
+      "revId": "66485e720dcb7c9e284e0946ef67efd9a1081bfb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
