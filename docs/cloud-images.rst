@@ -72,6 +72,7 @@ Following are the list of published images available to Jenkins jobs.
 * ZZCI - Ubuntu 18.04 - docker - x86_64 - 20220701-040013.395
 * ZZCI - Ubuntu 18.04 - docker - x86_64 - 20221001-040106.423
 * ZZCI - Ubuntu 18.04 - docker - x86_64 - 20221201-040108.330
+* ZZCI - Ubuntu 18.04 - docker - x86_64 - 20230101-040125.332
 * ZZCI - Ubuntu 18.04 - helm -  - 20210513-214525.779
 * ZZCI - Ubuntu 18.04 - helm - x86_64 - 20220501-140101.102
 * ZZCI - Ubuntu 18.04 - helm - x86_64 - 20220811-112321.717
