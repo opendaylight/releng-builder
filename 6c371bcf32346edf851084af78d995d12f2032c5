@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "f1cdd7cd_6d4fb476",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 18
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 6731
+      },
+      "writtenOn": "2023-01-27T08:44:20Z",
+      "side": 1,
+      "message": "typo trough -\u003e through\n\n( it would be a pity to serve a BeautifulSoup in a trough 😊 )",
+      "revId": "6c371bcf32346edf851084af78d995d12f2032c5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "e808921b_4a480efa",
@@ -14,6 +31,176 @@
       "writtenOn": "2023-01-26T17:25:36Z",
       "side": 1,
       "message": "recheck",
+      "revId": "6c371bcf32346edf851084af78d995d12f2032c5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2ddb8307_5ebc0416",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6731
+      },
+      "writtenOn": "2023-01-27T08:44:20Z",
+      "side": 1,
+      "message": "Thanks. I like the idea.\nMost comments I reported are improvement proposed by pylint which would make sense here, I think.\nIMO we should agree on a coding style and a variable convention naming.\nThen enforce it with pylint such as proposed in this change\nhttps://git.opendaylight.org/gerrit/c/transportpce/+/99063/1/tox.ini",
+      "revId": "6c371bcf32346edf851084af78d995d12f2032c5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fbeebc5b_1d08801e",
+        "filename": "scripts/bump_mri_versions/main.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 6731
+      },
+      "writtenOn": "2023-01-27T08:44:20Z",
+      "side": 1,
+      "message": "pylint complains with the following warning\nComparison \u0027version !\u003d None\u0027 should be \u0027version is not None\u0027 (singleton-comparison)",
+      "revId": "6c371bcf32346edf851084af78d995d12f2032c5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c5d42230_e0ec77bd",
+        "filename": "scripts/bump_mri_versions/main.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 6731
+      },
+      "writtenOn": "2023-01-27T08:44:20Z",
+      "side": 1,
+      "message": "this line is very long (151 char).\nIMO one condition per line would be more readable and conditions should be cascaded with the previous line check",
+      "revId": "6c371bcf32346edf851084af78d995d12f2032c5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b3f088d3_ea426dab",
+        "filename": "scripts/bump_mri_versions/main.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 6731
+      },
+      "writtenOn": "2023-01-27T08:44:20Z",
+      "side": 1,
+      "message": "new_version abides by the snake case convention naming, which is the one proposed by default in pylint and most python recommendations.\nUp to here, I thought the convention naming used was the camel case as in Java.\nBoth conventions make sense.\nBut IMO we should stick to only one naming convention and not mix them.\n\nAlso this seems detected as a constant by pylint that recommends to use upper case.\n\npylint scripts/bump_mri_versions/main.py scripts/bump_mri_versions/python_lib.py | grep invalid-name\nscripts/bump_mri_versions/main.py:14:0: C0103: Argument name \"groupId\" doesn\u0027t conform to snake_case naming style (invalid-name)\nscripts/bump_mri_versions/main.py:14:0: C0103: Argument name \"artifactId\" doesn\u0027t conform to snake_case naming style (invalid-name)\nscripts/bump_mri_versions/main.py:52:32: C0103: Constant name \"new_version\" doesn\u0027t conform to UPPER_CASE naming style (invalid-name)\nscripts/bump_mri_versions/main.py:77:28: C0103: Constant name \"result\" doesn\u0027t conform to UPPER_CASE naming style (invalid-name)\nscripts/bump_mri_versions/main.py:80:28: C0103: Constant name \"standalone\" doesn\u0027t conform to UPPER_CASE naming style (invalid-name)\nscripts/bump_mri_versions/main.py:82:32: C0103: Constant name \"standalone\" doesn\u0027t conform to UPPER_CASE naming style (invalid-name)\nscripts/bump_mri_versions/python_lib.py:17:0: C0103: Argument name \"groupId\" doesn\u0027t conform to snake_case naming style (invalid-name)\nscripts/bump_mri_versions/python_lib.py:17:0: C0103: Argument name \"artifactId\" doesn\u0027t conform to snake_case naming style (invalid-name)",
+      "revId": "6c371bcf32346edf851084af78d995d12f2032c5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "91f5bc37_907c8556",
+        "filename": "scripts/bump_mri_versions/python_lib.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 6731
+      },
+      "writtenOn": "2023-01-27T08:44:20Z",
+      "side": 1,
+      "message": "pylint complains with the following warning\nW1309: Using an f-string that does not have any interpolated variables (f-string-without-interpolation)",
+      "revId": "6c371bcf32346edf851084af78d995d12f2032c5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "89877202_fc4ffec1",
+        "filename": "scripts/bump_mri_versions/python_lib.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 6731
+      },
+      "writtenOn": "2023-01-27T08:44:20Z",
+      "side": 1,
+      "message": "pylint complains with the following warning\nC0121: Comparison \u0027groupId \u003d\u003d None\u0027 should be \u0027groupId is None\u0027 (singleton-comparison)",
+      "revId": "6c371bcf32346edf851084af78d995d12f2032c5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef538c95_fc6e3dcf",
+        "filename": "scripts/bump_mri_versions/python_lib.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 6731
+      },
+      "writtenOn": "2023-01-27T08:44:20Z",
+      "side": 1,
+      "message": "pylint complains with the following warning\nC0325: Unnecessary parens after \u0027return\u0027 keyword (superfluous-parens)",
+      "revId": "6c371bcf32346edf851084af78d995d12f2032c5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d564c5dd_b33b6798",
+        "filename": "scripts/bump_mri_versions/python_lib.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 6731
+      },
+      "writtenOn": "2023-01-27T08:44:20Z",
+      "side": 1,
+      "message": "this line is very long (211 char).\nIMO one condition per line would be more readable",
+      "revId": "6c371bcf32346edf851084af78d995d12f2032c5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9218e0ee_48f53b68",
+        "filename": "scripts/bump_mri_versions/python_lib.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 6731
+      },
+      "writtenOn": "2023-01-27T08:44:20Z",
+      "side": 1,
+      "message": "pylint complains with the following warning\nR1710: Either all return statements in a function should return an expression, or none of them should. (inconsistent-return-statements)",
+      "revId": "6c371bcf32346edf851084af78d995d12f2032c5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "024a1fad_3b4ef331",
+        "filename": "scripts/bump_mri_versions/readme.md",
+        "patchSetId": 18
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 6731
+      },
+      "writtenOn": "2023-01-27T08:44:20Z",
+      "side": 1,
+      "message": "\". venv/bin/activate\" is more indicated IMO",
       "revId": "6c371bcf32346edf851084af78d995d12f2032c5",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
