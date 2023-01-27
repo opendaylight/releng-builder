@@ -87,6 +87,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff234c5c_b4d0f613",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6731
+      },
+      "writtenOn": "2023-01-27T15:52:20Z",
+      "side": 1,
+      "message": "You are welcome",
+      "parentUuid": "b7cf772e_098c130e",
+      "revId": "6c371bcf32346edf851084af78d995d12f2032c5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d5054103_fb59736c",
@@ -398,6 +416,24 @@
       "side": 1,
       "message": "I don\u0027t understand this warning. I made this function to check, if there is difference between these two versions. If it returns True, it continues to making change in artifact. Otherwise it skips the artifact because there is nothing to do.",
       "parentUuid": "9218e0ee_48f53b68",
+      "revId": "6c371bcf32346edf851084af78d995d12f2032c5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d9bc7cb6_f6a04ad3",
+        "filename": "scripts/bump_mri_versions/python_lib.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 6731
+      },
+      "writtenOn": "2023-01-27T15:52:20Z",
+      "side": 1,
+      "message": "OK\nIn other words, pylint complains that there is no return statement outside of the if block.\nIt is interpreted as a return None but it seems you need a boolean since you  already returned a True in the if-block.\nI should probably try to add an else clause with a return False\nor simply a return False outside of the if-block at the very end of the method.",
+      "parentUuid": "205282d0_b2000d36",
       "revId": "6c371bcf32346edf851084af78d995d12f2032c5",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
