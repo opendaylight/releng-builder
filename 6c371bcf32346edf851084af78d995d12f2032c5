@@ -105,6 +105,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9dc66d0a_f12522cf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6731
+      },
+      "writtenOn": "2023-01-30T08:05:18Z",
+      "side": 1,
+      "message": "I\u0027ve fixed the last comment I left and run autopep8 to clean the indentation and reworked one variable name and import orders.\nOnce that  done, pylint reported 3 more warnings that I think are relevant.\nI let you test it and fixed them. And we should be done.\n\nscripts/bump_mri_versions/main.py:16:29: W0621: Redefining name \u0027group_id\u0027 from outer scope (line 47) (redefined-outer-name)\nscripts/bump_mri_versions/main.py:16:39: W0621: Redefining name \u0027artifact_id\u0027 from outer scope (line 48) (redefined-outer-name)\nscripts/bump_mri_versions/main.py:38:7: R1726: Boolean condition \u0027(\u0027pom.xml\u0027 or \u0027feature.xml\u0027 in str(path)) and \u0027test/resources\u0027 not in str(path)\u0027 may be simplified to \u0027\u0027test/resources\u0027 not in str(path)\u0027 (simplifiable-condition)",
+      "parentUuid": "ff234c5c_b4d0f613",
+      "revId": "6c371bcf32346edf851084af78d995d12f2032c5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d5054103_fb59736c",
@@ -434,6 +452,24 @@
       "side": 1,
       "message": "OK\nIn other words, pylint complains that there is no return statement outside of the if block.\nIt is interpreted as a return None but it seems you need a boolean since you  already returned a True in the if-block.\nI should probably try to add an else clause with a return False\nor simply a return False outside of the if-block at the very end of the method.",
       "parentUuid": "205282d0_b2000d36",
+      "revId": "6c371bcf32346edf851084af78d995d12f2032c5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "70dbfa8b_ede5f21b",
+        "filename": "scripts/bump_mri_versions/python_lib.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 6731
+      },
+      "writtenOn": "2023-01-30T08:05:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9bc7cb6_f6a04ad3",
       "revId": "6c371bcf32346edf851084af78d995d12f2032c5",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
