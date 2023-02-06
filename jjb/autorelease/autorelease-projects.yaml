@@ -1,16 +1,36 @@
 ---
 - project:
-    name: autorelease-projects-openjdk11
+    name: autorelease-projects-common
     jobs:
       - autorelease-branch-cut
       - "autorelease-generate-release-notes-{stream}"
-      - "autorelease-release-{stream}-{mvn-version}-{java-version}":
-          build-node: centos7-builder-4c-16g
       - "autorelease-update-submodules-{stream}"
       - "autorelease-update-validate-jobs-{stream}"
       - "{project-name}-validate-autorelease-{stream}"
-      - "autorelease-version-bump-{stream}-{mvn-version}-{java-version}"
       - gerrit-tox-verify
+
+    stream:
+      - argon:
+          branch: "master"
+      - chlorine:
+          branch: "stable/chlorine"
+      - sulfur:
+          branch: "stable/sulfur"
+
+    project: releng/autorelease
+    project-name: autorelease
+    build-node: centos7-builder-2c-2g
+    archive-artifacts: >
+      **/*.prop
+      **/*.log
+    staging-profile-id: 425e43800fea70
+
+- project:
+    name: autorelease-projects-openjdk11
+    jobs:
+      - "autorelease-release-{stream}-{mvn-version}-{java-version}":
+          build-node: centos7-builder-4c-16g
+      - "autorelease-version-bump-{stream}-{mvn-version}-{java-version}"
 
     stream:
       - sulfur:
