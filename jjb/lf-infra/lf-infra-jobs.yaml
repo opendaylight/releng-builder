@@ -114,20 +114,6 @@
     gerrit-server-name: lf-releng
 
 - project:
-    name: lf-infra-gerrit_to_platform
-    jobs:
-      - gerrit-tox-verify
-
-    project-name: lf-infra-gerrit_to_platform
-    project: releng/gerrit_to_platform
-    build-node: centos8-builder-2c-1g
-    stream: any
-    branch: "*"
-
-    git-url: https://gerrit.linuxfoundation.org/infra/$GERRIT_PROJECT
-    gerrit-server-name: lf-releng
-
-- project:
     name: lf-infra-global-jjb
     jobs:
       - "{project-name}-rtd-jobs":
