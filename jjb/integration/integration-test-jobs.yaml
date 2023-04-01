@@ -22,9 +22,16 @@
 
     # CSIT Lists in defaults.yaml
     stream:
-      - argon:
+      - potassium:
           branch: "master"
-          csit-list: !include: csit-jobs-chlorine.lst
+          csit-list: !include: csit-jobs-potassium.lst
+          build-order: >
+            odlparent infrautils yangtools mdsal controller aaa netconf bgpcep
+            serviceutils daexim jsonrpc ovsdb openflowplugin lispflowmapping
+            integration/distribution
+      - argon:
+          branch: "stable/argon"
+          csit-list: !include: csit-jobs-argon.lst
           build-order: >
             odlparent infrautils yangtools mdsal controller aaa netconf bgpcep
             serviceutils daexim jsonrpc ovsdb openflowplugin lispflowmapping
