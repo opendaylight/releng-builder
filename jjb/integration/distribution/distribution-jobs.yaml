@@ -26,8 +26,10 @@
     nexus-iq-stage: release
     email-upstream: "[int/dist]"
     stream:
-      - argon:
+      - potassium:
           branch: "master"
+      - argon:
+          branch: "stable/argon"
       - chlorine:
           branch: "stable/chlorine"
       - sulfur:
@@ -60,8 +62,17 @@
     dist-pom: "distribution/pom.xml"
 
     stream:
-      - argon:
+      - potassium:
           branch: "master"
+          dependencies: >
+            daexim-maven-merge-{stream},
+            jsonrpc-maven-merge-{stream},
+            lispflowmapping-maven-merge-{stream},
+            openflowplugin-maven-merge-{stream},
+            ovsdb-maven-merge-{stream},
+            serviceutils-maven-merge-{stream},
+      - argon:
+          branch: "stable/argon"
           dependencies: >
             daexim-maven-merge-{stream},
             jsonrpc-maven-merge-{stream},
@@ -112,8 +123,12 @@
     karaf-version: odl
     dist-pom: "distribution/opendaylight/pom.xml"
     stream:
-      - argon:
+      - potassium:
           branch: "master"
+          dependencies: >
+            distribution-merge-managed-{stream},
+      - argon:
+          branch: "stable/argon"
           dependencies: >
             distribution-merge-managed-{stream},
       - chlorine:
@@ -149,8 +164,10 @@
     staging-profile-id: 2af042ed81d5e2
 
     stream:
-      - argon:
+      - potassium:
           branch: "master"
+      - argon:
+          branch: "stable/argon"
       - chlorine:
           branch: "stable/chlorine"
       - sulfur:
@@ -206,8 +223,10 @@
     jobs:
       - "{project-name}-gerrit-docker-jobs"
     stream:
-      - argon:
+      - potassium:
           branch: "master"
+      - argon:
+          branch: "stable/argon"
       - chlorine:
           branch: "stable/chlorine"
       - sulfur:
