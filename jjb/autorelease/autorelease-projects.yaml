@@ -10,8 +10,10 @@
       - gerrit-tox-verify
 
     stream:
-      - argon:
+      - potassium:
           branch: "master"
+      - argon:
+          branch: "stable/argon"
       - chlorine:
           branch: "stable/chlorine"
       - sulfur:
@@ -67,8 +69,11 @@
       - "autorelease-version-bump-{stream}-{mvn-version}-{java-version}"
 
     stream:
-      - argon:
+      - potassium:
           branch: "master"
+          integration-test: potassium
+      - argon:
+          branch: "stable/argon"
           integration-test: argon
       - chlorine:
           branch: "stable/chlorine"
