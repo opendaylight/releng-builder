@@ -84,35 +84,6 @@
     staging-profile-id: 1271cf710cc09d
 
 - project:
-    name: yangtools-8.0.x
-    jobs:
-      - odl-maven-jobs-jdk11
-      - odl-maven-verify-jobs
-      - odl-maven-verify-jobs-jdk17:
-          build-node: centos8-builder-4c-4g
-
-    project: yangtools
-    project-name: yangtools
-    branch: 8.0.x
-    stream: 8.0.x
-
-    java-version: "openjdk11"
-    mvn-settings: "yangtools-settings"
-
-    dependencies: ""
-    email-upstream: "[yangtools]"
-    archive-artifacts: >
-      **/*.prop
-      **/*.log
-      **/target/surefire-reports/*-output.txt
-      **/target/failsafe-reports/failsafe-summary.xml
-      **/hs_err_*.log
-      **/target/feature/feature.xml
-
-    # Used by the release job
-    staging-profile-id: 1271cf710cc09d
-
-- project:
     name: yangtools-release-management
     jobs:
       - gerrit-release-merge
