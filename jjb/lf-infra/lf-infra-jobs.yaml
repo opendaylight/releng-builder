@@ -96,28 +96,6 @@
     gerrit-server-name: lf-releng
 
 - project:
-    name: lf-infra-lftools
-    jobs:
-      - "{project-name}-rtd-jobs"
-      - gerrit-release-announce:
-          build-node: centos7-builder-2c-1g
-      - gerrit-tox-verify
-
-    project-name: lf-infra-lftools
-    project: releng/lftools
-    project-pattern: releng/lftools
-    build-node: centos7-builder-2c-2g
-    build-timeout: 30
-    rtd-build-url: https://readthedocs.org/api/v2/webhook/lf-releng-tools/32933/
-    rtd-token: 47a135ceba9053c6f88394a7171ebf5602a9fc95
-    stream: any
-    branch: "*"
-    parallel: true
-
-    git-url: https://gerrit.linuxfoundation.org/infra/$GERRIT_PROJECT
-    gerrit-server-name: lf-releng
-
-- project:
     name: lf-infra-license-checker
     jobs:
       - gerrit-tox-verify
