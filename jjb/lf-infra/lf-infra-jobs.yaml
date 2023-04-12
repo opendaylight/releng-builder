@@ -96,36 +96,6 @@
     gerrit-server-name: lf-releng
 
 - project:
-    name: lf-infra-global-jjb
-    jobs:
-      - "{project-name}-rtd-jobs":
-          gerrit_trigger_file_paths:
-            - compare-type: REG_EXP
-              pattern: '.*\.css'
-            - compare-type: REG_EXP
-              pattern: '.*\.html'
-            - compare-type: REG_EXP
-              pattern: '.*\.rst'
-            - compare-type: REG_EXP
-              pattern: '.*\/conf.py'
-            - compare-type: REG_EXP
-              pattern: "releasenotes/.*"
-      - gerrit-release-announce
-      - gerrit-tox-verify
-
-    project-name: lf-infra-global-jjb
-    project: releng/global-jjb
-    project-pattern: releng/global-jjb
-    build-node: centos7-builder-2c-8g
-    rtd-build-url: https://readthedocs.org/api/v2/webhook/lf-releng-global-jjb/32932/
-    rtd-token: f19058af6f90e04dff828e3eec5e2f0990895a7b
-    stream: any
-    branch: "*"
-
-    git-url: https://gerrit.linuxfoundation.org/infra/$GERRIT_PROJECT
-    gerrit-server-name: lf-releng
-
-- project:
     name: lf-infra-lftools
     jobs:
       - "{project-name}-rtd-jobs"
