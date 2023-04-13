@@ -76,26 +76,6 @@
     gerrit-server-name: lf-releng
 
 - project:
-    name: lf-infra-docs-conf
-    jobs:
-      - "{project-name}-rtd-jobs"
-      - gerrit-release-announce
-      - gerrit-tox-verify
-
-    project-name: lf-infra-docs-conf
-    project: releng/docs-conf
-    project-pattern: releng/docs-conf
-    project-slug: lfdocs-conf
-    build-node: centos8-builder-2c-1g
-    rtd-build-url: https://readthedocs.org/api/v2/webhook/lfdocs-conf/32931/
-    rtd-token: 27a59073490f2cefab41761dc225ac8c8bfdf028
-    stream: any
-    branch: "*"
-
-    git-url: https://gerrit.linuxfoundation.org/infra/$GERRIT_PROJECT
-    gerrit-server-name: lf-releng
-
-- project:
     name: lf-infra-license-checker
     jobs:
       - gerrit-tox-verify
