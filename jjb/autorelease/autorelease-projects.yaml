@@ -16,8 +16,6 @@
           branch: "stable/argon"
       - chlorine:
           branch: "stable/chlorine"
-      - sulfur:
-          branch: "stable/sulfur"
 
     project: releng/autorelease
     project-name: autorelease
@@ -26,40 +24,6 @@
       **/*.prop
       **/*.log
     staging-profile-id: 425e43800fea70
-
-- project:
-    name: autorelease-projects-openjdk11
-    jobs:
-      - "autorelease-release-{stream}-{mvn-version}-{java-version}":
-          build-node: centos7-builder-4c-16g
-      - "autorelease-version-bump-{stream}-{mvn-version}-{java-version}"
-
-    stream:
-      - sulfur:
-          branch: "stable/sulfur"
-          integration-test: sulfur
-
-    project: releng/autorelease
-    project-name: autorelease
-    build-node: centos7-builder-2c-8g
-    # Before adding more here, beware of https://jira.linuxfoundation.org/browse/RELENG-280
-    archive-artifacts: >
-      **/*.prop
-      **/*.log
-      **/target/surefire-reports/*-output.txt
-      **/target/failsafe-reports/failsafe-summary.xml
-      **/hs_err_*.log
-      **/target/feature/feature.xml
-    staging-profile-id: 425e43800fea70
-    # TODO: **/*.hprof is too large, compress with xz first
-    mvn-params: >
-      -PrepoBuild
-      -P!karaf
-      -Pignore-lispflowmapping-integrationtest
-      -Dcheckstyle.skip=true
-      -Dskip.karaf.featureTest=true
-      -Dsft.heap.max=4g
-    java-version: "openjdk11"
 
 - project:
     name: autorelease-projects-openjdk17

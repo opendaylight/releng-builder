@@ -124,11 +124,11 @@
 
     # Data for csit-verify jobs
     # Branch for "last" version detection
-    verify-branch: stable/sulfur
+    verify-branch: stable/chlorine
     # Value for ODL_STREAM
-    verify-stream: sulfur
+    verify-stream: chlorine
     verify-karaf-version: karaf4
-    verify-jdkversion: openjdk11
+    verify-jdkversion: openjdk17
 
     # Maven / Java
     java-version: "openjdk8"
@@ -212,36 +212,6 @@
     10-exclude-value: ""
 
     # Manual CSIT job lists used by sanity or periodic in nature.
-    csit-mri-list-sulfur: >
-      aaa-csit-1node-authn-all-sulfur, controller-csit-1node-akka1-all-sulfur,
-      controller-csit-1node-benchmark-all-sulfur,
-      controller-csit-1node-rest-cars-perf-all-sulfur,
-      controller-csit-3node-benchmark-all-sulfur,
-      controller-csit-3node-clustering-ask-all-sulfur,
-      controller-csit-3node-clustering-tell-all-sulfur,
-      controller-csit-3node-rest-clust-cars-perf-ask-only-sulfur,
-      controller-csit-3node-rest-clust-cars-perf-tell-only-sulfur,
-      mdsal-csit-3node-netty-replicate-only-sulfur,
-      netconf-csit-1node-callhome-only-master,
-      netconf-csit-1node-scale-max-devices-only-master,
-      netconf-csit-1node-scale-only-master,
-      netconf-csit-1node-userfeatures-all-master,
-      netconf-csit-1node-userfeatures-rfc8040-all-master,
-      netconf-csit-3node-clustering-only-master,
-      netconf-csit-3node-clustering-scale-only-master,
-      yangtools-csit-1node-system-only-sulfur
-    csit-weekly-list-sulfur: >
-      controller-csit-1node-notifications-longevity-only-sulfur,
-      controller-csit-3node-drb-partnheal-longevity-only-sulfur,
-      controller-csit-3node-drb-precedence-longevity-only-sulfur,
-      controller-csit-3node-ddb-expl-lead-movement-longevity-only-sulfur,
-      bgpcep-csit-3node-bgpclustering-longevity-only-sulfur,
-      distribution-deploy-sulfur,
-      distribution-offline-sulfur,
-      openflowplugin-csit-1node-longevity-only-sulfur
-    csit-sanity-list-sulfur: >
-      openflowplugin-csit-1node-sanity-only-sulfur,
-      distribution-sanity-sulfur
     csit-mri-list-chlorine: >
       aaa-csit-1node-authn-all-chlorine,
       controller-csit-1node-akka1-all-chlorine,

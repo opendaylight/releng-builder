@@ -32,9 +32,6 @@
           branch: "stable/argon"
       - chlorine:
           branch: "stable/chlorine"
-      - sulfur:
-          branch: "stable/sulfur"
-          java-version: openjdk11
 
 - project:
     name: distribution-managed
@@ -89,16 +86,6 @@
             openflowplugin-maven-merge-{stream},
             ovsdb-maven-merge-{stream},
             serviceutils-maven-merge-{stream},
-      - sulfur:
-          branch: "stable/sulfur"
-          java-version: "openjdk11"
-          dependencies: >
-            daexim-maven-merge-{stream},
-            jsonrpc-maven-merge-{stream},
-            lispflowmapping-maven-merge-{stream},
-            openflowplugin-maven-merge-{stream},
-            ovsdb-maven-merge-{stream},
-            serviceutils-maven-merge-{stream},
 
 - project:
     name: distribution-full
@@ -135,11 +122,6 @@
           branch: "stable/chlorine"
           dependencies: >
             distribution-merge-managed-{stream},
-      - sulfur:
-          branch: "stable/sulfur"
-          java-version: "openjdk11"
-          dependencies: >
-            distribution-merge-managed-{stream},
 
 - project:
     name: distribution-release
@@ -170,9 +152,6 @@
           branch: "stable/argon"
       - chlorine:
           branch: "stable/chlorine"
-      - sulfur:
-          branch: "stable/sulfur"
-          java-version: "openjdk11"
 
 - project:
     name: distribution-release-management
@@ -229,8 +208,6 @@
           branch: "stable/argon"
       - chlorine:
           branch: "stable/chlorine"
-      - sulfur:
-          branch: "stable/sulfur"
 
 - project:
     name: distribution-docker-release
