@@ -28,7 +28,7 @@
 # Anchors #
 ###########
 
-- inttest_csit_common: &inttest_csit_common
+- _inttest_csit_common: &inttest_csit_common
     name: inttest-csit-common
     # Defines common configuration to all CSIT jobs
 
@@ -164,7 +164,7 @@
 # inttest-csit-1node #
 ######################
 
-- inttest_csit_1node: &inttest_csit_1node
+- _inttest_csit_1node: &inttest_csit_1node
     name: inttest-csit-1node
 
     #####################
@@ -518,7 +518,7 @@
 # inttest-csit-3node #
 ######################
 
-- inttest_csit_3node: &inttest_csit_3node
+- _inttest_csit_3node: &inttest_csit_3node
     name: inttest-csit-3node
 
     #####################
