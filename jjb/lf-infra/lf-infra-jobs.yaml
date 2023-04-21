@@ -79,20 +79,6 @@
       - lf-pipelines-verify
 
 - project:
-    name: lf-infra-python-one-password
-    jobs:
-      - gerrit-tox-verify
-
-    project-name: lf-infra-python-one-password
-    project: releng/python-one-password
-    build-node: centos8-builder-2c-2g
-    stream: any
-    branch: "*"
-
-    git-url: https://gerrit.linuxfoundation.org/infra/$GERRIT_PROJECT
-    gerrit-server-name: lf-releng
-
-- project:
     name: lf-infra-view
     views:
       - project-view
