@@ -916,9 +916,6 @@ fi
 
 FEATURE_TEST_STRING="features-test"
 FEATURE_TEST_VERSION="$BUNDLE_VERSION"
-if [[ "$KARAF_ARTIFACT" == "opendaylight" ]]; then
-    FEATURE_TEST_VERSION="$(sed -r "s%^([0-9]+)\.([0-9]+)\.0(.*)%0.\1.\2\3%" <<<"$BUNDLE_VERSION")"
-fi
 KARAF_VERSION=${KARAF_VERSION:-karaf4}
 
 # only manipulate feature repo in integration distro

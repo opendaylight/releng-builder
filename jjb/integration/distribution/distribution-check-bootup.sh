@@ -37,9 +37,6 @@ echo "Configuring the startup features..."
 FEATURESCONF="${WORKSPACE}/${BUNDLEFOLDER}/etc/org.apache.karaf.features.cfg"
 FEATURE_TEST_STRING="features-test"
 FEATURE_TEST_VERSION="$BUNDLE_VERSION"
-if [ "$KARAF_ARTIFACT" = "opendaylight" ]; then
-    FEATURE_TEST_VERSION="$(echo "$BUNDLE_VERSION" | sed -E "s%^([0-9]+)\.([0-9]+)\.0(.*)%0.\1.\2\3%")"
-fi
 
 # only replace feature repo in integration/distro, MRI projects need to pull in
 # the features they need by themselves
