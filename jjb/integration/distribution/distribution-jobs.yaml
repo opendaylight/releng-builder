@@ -52,7 +52,7 @@
     email-upstream: "[int/dist]"
     type: managed
     profile: "-Pmanaged"
-    forbidden-files: '(opendaylight\/.*|docker\/.*)'
+    forbidden-files: '(docker\/.*)'
     java-version: "openjdk17"
     jre: "openjdk17"
     karaf-version: karaf4
@@ -86,84 +86,6 @@
             openflowplugin-maven-merge-{stream},
             ovsdb-maven-merge-{stream},
             serviceutils-maven-merge-{stream},
-
-- project:
-    name: distribution-full
-    jobs:
-      # gerrit- is generic template, distribution- is project specific.
-      - "distribution-merge-{type}-{stream}"
-      - "distribution-verify-{type}-{stream}"
-      - "distribution-check-{type}-{stream}"
-
-    project: integration/distribution
-    project-name: distribution
-    build-node: centos8-builder-4c-4g
-    mvn-settings: integration-distribution-settings
-    mvn-goals: "clean install dependency:tree -DoutputFile=dependency_tree.txt"
-    mvn-opts: "-Xmx1024m"
-    mvn-version: mvn38
-    email-upstream: "[int/dist]"
-    type: full
-    profile: "-Punmanaged"
-    files: "opendaylight/**"
-    java-version: "openjdk17"
-    karaf-version: odl
-    dist-pom: "distribution/opendaylight/pom.xml"
-    stream:
-      - potassium:
-          branch: "master"
-          dependencies: >
-            distribution-merge-managed-{stream},
-      - argon:
-          branch: "stable/argon"
-          dependencies: >
-            distribution-merge-managed-{stream},
-      - chlorine:
-          branch: "stable/chlorine"
-          dependencies: >
-            distribution-merge-managed-{stream},
-
-- project:
-    name: distribution-release
-    jobs:
-      - gerrit-maven-stage:
-          sbom-generator: true
-          sign-artifacts: true
-          sbom-path: "opendaylight"
-
-    project: "integration/distribution"
-    project-name: "distribution"
-    build-node: centos8-builder-4c-4g
-    use-release-file: false
-    mvn-goals: "clean deploy -f opendaylight/pom.xml"
-    mvn-settings: "integration-distribution-settings"
-    mvn-opts: "-Xmx1024m"
-    mvn-version: mvn38
-    java-version: "openjdk17"
-    email-upstream: "[int/dist]"
-
-    # Used by the release job
-    staging-profile-id: 2af042ed81d5e2
-
-    stream:
-      - potassium:
-          branch: "master"
-      - argon:
-          branch: "stable/argon"
-      - chlorine:
-          branch: "stable/chlorine"
-
-- project:
-    name: distribution-release-management
-    jobs:
-      - gerrit-release-merge
-
-    project: "integration/distribution"
-    project-name: distribution
-
-    build-node: centos7-builder-2c-1g
-    mvn-settings: integration-distribution-settings
-    build-timeout: 60
 
 - project:
     name: distribution-sonar
