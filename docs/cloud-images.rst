@@ -10,6 +10,7 @@ Following are the list of published images available to Jenkins jobs.
 * ZZCI - CentOS 7 - builder - x86_64 - 20221201-060105.225
 * ZZCI - CentOS 7 - builder - x86_64 - 20230301-060101.869
 * ZZCI - CentOS 7 - builder - x86_64 - 20230401-060117.151
+* ZZCI - CentOS 7 - builder - x86_64 - 20230501-060110.287
 * ZZCI - CentOS 7 - devstack - x86_64 - 20220401-230107.511
 * ZZCI - CentOS 7 - devstack - x86_64 - 20220915-220248.057
 * ZZCI - CentOS 7 - devstack - x86_64 - 20221016-125752.520
@@ -39,6 +40,7 @@ Following are the list of published images available to Jenkins jobs.
 * ZZCI - CentOS 7 - docker - x86_64 - 20221201-220105.396
 * ZZCI - CentOS 7 - docker - x86_64 - 20230301-220107.956
 * ZZCI - CentOS 7 - docker - x86_64 - 20230401-220108.252
+* ZZCI - CentOS 7 - docker - x86_64 - 20230501-220111.311
 * ZZCI - CentOS 7 - helm - x86_64 - 20220401-000138.473
 * ZZCI - CentOS 7 - helm - x86_64 - 20220811-110654.568
 * ZZCI - CentOS 7 - helm - x86_64 - 20220915-220356.090
@@ -66,6 +68,7 @@ Following are the list of published images available to Jenkins jobs.
 * ZZCI - CentOS Stream 8 - builder - x86_64 - 20221201-160128.560
 * ZZCI - CentOS Stream 8 - builder - x86_64 - 20230301-160121.204
 * ZZCI - CentOS Stream 8 - builder - x86_64 - 20230401-160111.589
+* ZZCI - CentOS Stream 8 - builder - x86_64 - 20230501-160107.084
 * ZZCI - CentOS Stream 8 - robot - x86_64 - 20220811-231817.668
 * ZZCI - CentOS Stream 8 - robot - x86_64 - 20230301-010147.625
 * ZZCI - CentOS Stream 8 - robot - x86_64 - 20230401-010209.151
