@@ -16,6 +16,64 @@
       "message": "Shouldn\u0027t \u0027lfit/checkout-gerrit-change-action@v0.3\u0027 be used like other jobs?",
       "revId": "2e2bab9c14ebb043732bf04f3afd04e9acfc457d",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc6a4368_80bac013",
+        "filename": ".github/workflows/gerrit-verify.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2023-05-24T16:41:05Z",
+      "side": 1,
+      "message": "Yes, this definitely should. The block should be this:\n\n- uses: lfit/checkout-gerrit-change-action@v0.3\n  with:\n    gerrit-refspec: ${{ inputs.GERRIT_REFSPEC }}\n    delay: \"0s\"",
+      "parentUuid": "d4dd61ad_57fd8cf1",
+      "revId": "2e2bab9c14ebb043732bf04f3afd04e9acfc457d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d27b518_5b72a625",
+        "filename": ".github/workflows/gerrit-verify.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2023-05-24T16:41:05Z",
+      "side": 1,
+      "message": "These two steps should be replaced with the following (tox is already installed with the previous step):\n\n- name: Run tox\n  run: \u003e-\n    pipx run tox",
+      "range": {
+        "startLine": 136,
+        "startChar": 0,
+        "endLine": 139,
+        "endChar": 16
+      },
+      "revId": "2e2bab9c14ebb043732bf04f3afd04e9acfc457d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e220df0_17844ef4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2023-05-24T16:41:05Z",
+      "side": 1,
+      "message": "I\u0027m confused as to why our GHA didn\u0027t fire on this, so we\u0027re going to have to dig on it some while this is open (perfect validation change)",
+      "revId": "2e2bab9c14ebb043732bf04f3afd04e9acfc457d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
