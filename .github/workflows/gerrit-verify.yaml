@@ -124,9 +124,21 @@ jobs:
           EOF
           jenkins-jobs test -o archives/job-configs jjb/
 
+  tox-verify:
+    needs: prepare
+    runs-on: ubuntu-latest
+    steps:
+      - uses: lfit/checkout-gerrit-change-action@v0.3
+          with:
+            gerrit-refspec: ${{ inputs.GERRIT_REFSPEC }}
+            delay: "0s"
+      - name: name: Run tox
+        run: >-
+          pipx run tox
+
   vote:
     if: ${{ always() }}
-    needs: [prepare, actionlint, pre-commit, jjb-validation]
+    needs: [prepare, actionlint, pre-commit, jjb-validation, tox-verify]
     runs-on: ubuntu-latest
     steps:
       - uses: technote-space/workflow-conclusion-action@v3
