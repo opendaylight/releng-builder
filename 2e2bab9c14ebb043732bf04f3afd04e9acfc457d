@@ -91,6 +91,23 @@
       "message": "recheck",
       "revId": "2e2bab9c14ebb043732bf04f3afd04e9acfc457d",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "52230535_aec2a244",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2023-05-24T18:43:02Z",
+      "side": 1,
+      "message": "My previous comments still stand, but we now have GHA firing on this (and failing). We will need to delete the GHA votes for a bit while we are still getting Jenkins +1 on things. It\u0027s GHA is specifically failing pre-commit checks that tox is not running which is why it\u0027s passing Jenkins.\n\nWe\u0027ll need some cleanup of everything that pre-commit is complaining about to get GHA to pass cleanly before we can consider dropping Jenkins validation.",
+      "revId": "2e2bab9c14ebb043732bf04f3afd04e9acfc457d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
