@@ -36,6 +36,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b844e531_109a402f",
+        "filename": ".github/workflows/gerrit-verify.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2023-05-25T00:20:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc6a4368_80bac013",
+      "revId": "2e2bab9c14ebb043732bf04f3afd04e9acfc457d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9d27b518_5b72a625",
@@ -49,6 +67,30 @@
       "writtenOn": "2023-05-24T16:41:05Z",
       "side": 1,
       "message": "These two steps should be replaced with the following (tox is already installed with the previous step):\n\n- name: Run tox\n  run: \u003e-\n    pipx run tox",
+      "range": {
+        "startLine": 136,
+        "startChar": 0,
+        "endLine": 139,
+        "endChar": 16
+      },
+      "revId": "2e2bab9c14ebb043732bf04f3afd04e9acfc457d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d2bd8ef_59c150bf",
+        "filename": ".github/workflows/gerrit-verify.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2023-05-25T00:20:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d27b518_5b72a625",
       "range": {
         "startLine": 136,
         "startChar": 0,
@@ -106,6 +148,24 @@
       "writtenOn": "2023-05-24T18:43:02Z",
       "side": 1,
       "message": "My previous comments still stand, but we now have GHA firing on this (and failing). We will need to delete the GHA votes for a bit while we are still getting Jenkins +1 on things. It\u0027s GHA is specifically failing pre-commit checks that tox is not running which is why it\u0027s passing Jenkins.\n\nWe\u0027ll need some cleanup of everything that pre-commit is complaining about to get GHA to pass cleanly before we can consider dropping Jenkins validation.",
+      "revId": "2e2bab9c14ebb043732bf04f3afd04e9acfc457d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5337d058_dce62c4a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2023-05-25T00:20:37Z",
+      "side": 1,
+      "message": "\u003e My previous comments still stand, but we now have GHA firing on this (and failing). We will need to delete the GHA votes for a bit while we are still getting Jenkins +1 on things. It\u0027s GHA is specifically failing pre-commit checks that tox is not running which is why it\u0027s passing Jenkins.\n\u003e \n\u003e We\u0027ll need some cleanup of everything that pre-commit is complaining about to get GHA to pass cleanly before we can consider dropping Jenkins validation.\n\nack, will fix and submit a pre-commit / tox issues in a diff patch",
+      "parentUuid": "52230535_aec2a244",
       "revId": "2e2bab9c14ebb043732bf04f3afd04e9acfc457d",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
