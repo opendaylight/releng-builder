@@ -3,9 +3,8 @@
     name: lf-odl-releasedockerhub-macro
     builders:
       - shell: !include-raw-escape:
-        - ./run_releasedockerhub.sh
+          - ./run_releasedockerhub.sh
         ##- ../shell/run_releasedockerhub.sh "{org} {summary} {verbose} {copy}"
-
 
 - job:
     name: lf-odl-release-docker-hub
@@ -14,55 +13,53 @@
     project-type: freestyle
     node: ubuntu1804-docker-4c-4g
     disable-job: false
-    disabled: '{disable-job}'
+    disabled: "{disable-job}"
 
     # Runs once a day
     triggers:
-      - timed: '@daily'
+      - timed: "@daily"
 
-#   Define needed parameters for lf-infra-docker-login
+    #   Define needed parameters for lf-infra-docker-login
     parameters:
       - string:
           name: DOCKER_REGISTRY
-          default: 'nexus3.opendaylight.org'
+          default: "nexus3.opendaylight.org"
       - string:
           name: REGISTRY_PORTS
-          default: '10002'
+          default: "10002"
       - string:
           name: DOCKERHUB_REGISTRY
-          default: 'docker.io'
+          default: "docker.io"
 
-#   Define needed parameters for lf-odl-releasedockerhub-macro
+      #   Define needed parameters for lf-odl-releasedockerhub-macro
       - string:
           name: RELEASEDOCKERHUB_ORG
-          default: 'opendaylight'
-          description: ''
+          default: "opendaylight"
+          description: ""
       - string:
           name: RELEASEDOCKERHUB_REPO
-          default: ''
-          description: 'Only match repos that contains this string'
+          default: ""
+          description: "Only match repos that contains this string"
       - string:
           name: RELEASEDOCKERHUB_EXACT
-          default: ''
-          description: 'Repo has to exactly match RELEASEDOCKERHUB_REPO '
+          default: ""
+          description: "Repo has to exactly match RELEASEDOCKERHUB_REPO "
       - string:
           name: RELEASEDOCKERHUB_SUMMARY
-          default: 'Yes'
-          description: 'Provides a brief statistic summary of what it found, and what it should do. Activate with Yes'
+          default: "Yes"
+          description: "Provides a brief statistic summary of what it found, and what it should do. Activate with Yes"
       - string:
           name: RELEASEDOCKERHUB_VERBOSE
-          default: ''
-          description: 'Provides a verbose output of the operations. Activate with Yes'
+          default: ""
+          description: "Provides a verbose output of the operations. Activate with Yes"
       - string:
           name: RELEASEDOCKERHUB_COPY
-          default: 'Yes'
-          description: 'If a copy operation should be done from Nexus3 to docker hub. Activate with Yes'
-
+          default: "Yes"
+          description: "If a copy operation should be done from Nexus3 to docker hub. Activate with Yes"
 
     builders:
-      - lf-infra-pre-build                                  ## shell/python-tools-install.sh
+      - lf-infra-pre-build ## shell/python-tools-install.sh
       - lf-infra-docker-login:
-          global-settings-file: 'global-settings'
-          settings-file: 'odl-releasedockerhub-authz-settings'
+          global-settings-file: "global-settings"
+          settings-file: "odl-releasedockerhub-authz-settings"
       - lf-odl-releasedockerhub-macro:
-

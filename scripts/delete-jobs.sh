@@ -10,11 +10,11 @@
 
 search_string=$1
 
-echo -n "Enter system (sandbox|releng): "
+printf "Enter system (sandbox|releng): "
 read -r system
-echo -n "Enter username: "
+printf "Enter username: "
 read -r username
-echo -n "Enter api_token: "
+printf "Enter api_token: "
 read -r password
 
 echo "$username:$password"
