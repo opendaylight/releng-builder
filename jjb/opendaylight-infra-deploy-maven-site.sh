@@ -10,6 +10,7 @@
 ##############################################################################
 
 # Ensure we fail the job if any steps fail.
+# shellcheck disable=SC2039,SC3040
 set -eu -o pipefail
 
 # shellcheck disable=SC1090
