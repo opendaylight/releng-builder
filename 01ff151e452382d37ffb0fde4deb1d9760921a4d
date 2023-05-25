@@ -48,6 +48,30 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "71c1c1af_a2a6e843",
+        "filename": "jjb/integration/common-functions.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 850,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2023-05-25T15:20:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "06f64416_e38463a2",
+      "range": {
+        "startLine": 850,
+        "startChar": 14,
+        "endLine": 850,
+        "endChar": 15
+      },
+      "revId": "01ff151e452382d37ffb0fde4deb1d9760921a4d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4acd00c0_49a95789",
@@ -85,6 +109,30 @@
       "side": 1,
       "message": "yes, shellcheck returns \"SC2004 (style): $/${} is unnecessary on arithmetic variables.\"",
       "parentUuid": "4acd00c0_49a95789",
+      "range": {
+        "startLine": 80,
+        "startChar": 21,
+        "endLine": 80,
+        "endChar": 31
+      },
+      "revId": "01ff151e452382d37ffb0fde4deb1d9760921a4d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0d84017_dad9ab16",
+        "filename": "jjb/integration/integration-get-slave-addresses.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2023-05-25T15:20:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a7f3df12_fff74625",
       "range": {
         "startLine": 80,
         "startChar": 21,
@@ -144,6 +192,23 @@
       "side": 1,
       "message": "Copyright should be put in comments.\nAnd lines beginning with a hash are interpreted as titles in Markdown.\nAnd there should be normally one main title that begins with only one hash.",
       "parentUuid": "829aef9b_6bbc82b7",
+      "revId": "01ff151e452382d37ffb0fde4deb1d9760921a4d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16096a21_40d79ec8",
+        "filename": "scripts/bump_mri_versions/readme.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2023-05-25T15:20:27Z",
+      "side": 1,
+      "message": "My point here is that a copyright _was_ in the file. Guillaume  is correct that it should be a comment. What we _shouldn\u0027t_ be doing is removing the copyright unless it\u0027s done by the party / organization that put it in there!",
       "revId": "01ff151e452382d37ffb0fde4deb1d9760921a4d",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
@@ -244,6 +309,24 @@
       "side": 1,
       "message": "Now that it passes the CI, I think it would probably make sense to keep it.",
       "parentUuid": "364c3433_8db90bd1",
+      "revId": "01ff151e452382d37ffb0fde4deb1d9760921a4d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b10de4a_7356792c",
+        "filename": "tox.ini",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2023-05-25T15:20:27Z",
+      "side": 1,
+      "message": "It\u0027s fine if it\u0027s left in here, but if it is then the next patch that enables tox in the GHA needs to be configured explicitly skip pre-commit when running tox as we run that as a parallel job to reduce validation run-time.",
+      "parentUuid": "ee396feb_f8554c8b",
       "revId": "01ff151e452382d37ffb0fde4deb1d9760921a4d",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
