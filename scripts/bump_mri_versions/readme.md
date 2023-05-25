@@ -1,50 +1,50 @@
+<!--
 # Copyright (c) 2023 PANTHEON.tech s.r.o. All rights reserved.
-#
-# This program and the accompanying materials are made available under the
-# terms of the Eclipse Public License v1.0 which accompanies this distribution,
-# and is available at http://www.eclipse.org/legal/epl-v10.html
-
+# This program and the accompanying materials are available under the
+# terms of the Eclipse Public License v1.0 which accompanies this
+# distribution, and is available at
+# http://www.eclipse.org/legal/epl-v10.html
+-->
 
 # Bumping MRI versions tool
-This program is making versions changes in pom.xml files. For example 10.0.1 to 10.0.2
-The change will aply only if groupId.text contain "org.opendaylight".
 
-This program is also making changes in feature.xml files. For example [0.16,1) to [0.17,1)
-
+This program is making versions changes in pom.xml files. For example 10.0.1
+to 10.0.2. The change will apply if groupId.text contain "org.opendaylight".
+This program is also making changes in feature.xml files. For example
+[0.16,1) to [0.17,1)
 
 ## Installing
 
-*Prerequisite:*  The followings are required for building test:
+_Prerequisite:_
 
 - Python 3.8+
 
 GET THE CODE:
 
 USING HTTPS:
-    git clone "https://git.opendaylight.org/gerrit/releng/builder"
+git clone "https://git.opendaylight.org/gerrit/releng/builder"
 
 USING SSH:
-    git clone "ssh://{USERNAME}@git.opendaylight.org:29418/releng/builder"
+git clone "ssh://{USERNAME}@git.opendaylight.org:29418/releng/builder"
 
 NAVIGATE TO:
-    cd ~/builder/scripts/bump_mri_versions
+cd ~/builder/scripts/bump_mri_versions
 
 INSTALL VIRTUAL ENVIROMENT PACKAGE:
-    sudo apt install python3-virtualenv
+sudo apt install python3-virtualenv
 
 CREATE NEW VIRTUAL ENVIROMENT:
-    virtualenv venv
+virtualenv venv
 
 ACTIVATE VIRTUAL ENVIROMENT:
-    . venv/bin/activate
+. venv/bin/activate
 
 INSTALL LIBRARIES:
-    pip install requests bs4 lxml
+pip install requests bs4 lxml
 
 SET FOLDER FOR TESTING:
-    clone repo for version updating in ~/builder/scripts/bump_mri_versions/repos or
-        update "bumping_dir" variable in python_lib.py file
-
+clone repo for version updating in ~/builder/scripts/bump_mri_versions/repos or
+update "bumping_dir" variable in python_lib.py file
 
 ## Running
 
@@ -53,7 +53,7 @@ RUN: python main.py
 ## Logs
 
 PRINT:
-    Every change will be printed out to the console.
+All changes will be output to the console.
 
     examples here:
 

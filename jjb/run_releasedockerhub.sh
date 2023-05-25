@@ -53,4 +53,5 @@ fi
 echo "cmd_str = >>$cmd_str<<"
 
 # Run the releasedockerhub command in lftools
+# shellcheck disable=SC2086
 lftools nexus docker releasedockerhub  $cmd_str
