@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a48be86e_7d2beb82",
+        "filename": "jjb/opendaylight-infra-deploy-maven-site.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2023-05-25T11:42:45Z",
+      "side": 1,
+      "message": "This has a diff behaviour on Fedora platform: so have to add both error codes.\n\nTest shell scripts with shellcheck.......................................Failed\n- hook id: shellcheck\n- exit code: 1\n\nIn jjb/opendaylight-infra-deploy-maven-site.sh line 14:\nset -eu -o pipefail\n           ^------^ SC3040 (warning): In POSIX sh, set option pipefail is undefined.\n\nFor more information:\n  https://www.shellcheck.net/wiki/SC3040 -- In POSIX sh, set option pipefail ...\n\nIn jjb/releng-maven-mri-stage.sh line 12:\nset -xeu -o pipefail\n            ^------^ SC3040 (warning): In POSIX sh, set option pipefail is undefined.",
+      "parentUuid": "1639840c_d3af4eb5",
+      "revId": "c3fe15f551cd09a44dac77bfed42b9a19cfaccc0",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3d49dba8_d53780e2",
         "filename": "jjb/releng-maven-mri-stage.sh",
         "patchSetId": 1
