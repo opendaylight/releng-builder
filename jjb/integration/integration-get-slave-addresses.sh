@@ -77,7 +77,7 @@ if [ ${#OPENSTACK_CONTROLLERS[@]} -eq 2 ]; then
     ctrl_index=$((ctrl_index -1))
     tmp_addr=${OPENSTACK_SYSTEM[0]}
     OPENSTACK_SYSTEM[0]=${OPENSTACK_SYSTEM[$ctrl_index]}
-    OPENSTACK_SYSTEM[$ctrl_index]=$tmp_addr
+    OPENSTACK_SYSTEM[ctrl_index]=$tmp_addr
 fi
 
 # Add alias for ODL_SYSTEM_1_IP as ODL_SYSTEM_IP
