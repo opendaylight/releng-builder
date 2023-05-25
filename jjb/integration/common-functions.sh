@@ -847,7 +847,7 @@ function get_nodes_list() {
     # Create the string for nodes
     for i in $(seq 1 "${NUM_ODL_SYSTEM}") ; do
         CONTROLLERIP=ODL_SYSTEM_${i}_IP
-        nodes[$i]=${!CONTROLLERIP}
+        nodes[i]=${!CONTROLLERIP}
     done
 
     nodes_list=$(join "${nodes[@]}")
