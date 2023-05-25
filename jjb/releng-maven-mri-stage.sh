@@ -8,6 +8,7 @@ echo "---> releng-maven-mri-stage.sh"
 # $STAGING_PROFILE_ID :  Provided by a job parameter.
 
 # Ensure we fail the job if any steps fail.
+# shellcheck disable=SC3040
 set -xeu -o pipefail
 
 TMP_FILE="$(mktemp)"

@@ -2,7 +2,7 @@
 if [ "$GERRIT_BRANCH" = "master" ]; then
     RTD_BUILD_VERSION=latest
 else
-    RTD_BUILD_VERSION=$(echo $GERRIT_BRANCH | sed 's@/@-@g')
+    RTD_BUILD_VERSION=$(echo "$GERRIT_BRANCH" | sed 's@/@-@g')
 fi
 
 # shellcheck disable=SC1083
