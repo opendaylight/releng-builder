@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "06f64416_e38463a2",
+        "filename": "jjb/integration/common-functions.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 850,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2023-05-25T14:21:46Z",
+      "side": 1,
+      "message": "yes, shellcheck returns \"SC2004 (style): $/${} is unnecessary on arithmetic variables.\"\n\n$ declare -A myArray\u003d(\"cat\" \"dog\" \"mouse\" \"frog\")\n$ i\u003d3\n$ echo \"${myArray[i]}\"\nfrog\n$ myArray[i]\u003d\"bird\"\n$ echo \"${myArray[@]}\"\ncat dog mice bird",
+      "parentUuid": "c3096580_def9ec5b",
+      "range": {
+        "startLine": 850,
+        "startChar": 14,
+        "endLine": 850,
+        "endChar": 15
+      },
+      "revId": "01ff151e452382d37ffb0fde4deb1d9760921a4d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4acd00c0_49a95789",
         "filename": "jjb/integration/integration-get-slave-addresses.sh",
         "patchSetId": 2
@@ -37,6 +61,30 @@
       "writtenOn": "2023-05-25T13:50:37Z",
       "side": 1,
       "message": "Was shellcheck failing this for some reason? This seems like ctrl_index isn\u0027t going to render as a proper variable now to me",
+      "range": {
+        "startLine": 80,
+        "startChar": 21,
+        "endLine": 80,
+        "endChar": 31
+      },
+      "revId": "01ff151e452382d37ffb0fde4deb1d9760921a4d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7f3df12_fff74625",
+        "filename": "jjb/integration/integration-get-slave-addresses.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2023-05-25T14:21:46Z",
+      "side": 1,
+      "message": "yes, shellcheck returns \"SC2004 (style): $/${} is unnecessary on arithmetic variables.\"",
+      "parentUuid": "4acd00c0_49a95789",
       "range": {
         "startLine": 80,
         "startChar": 21,
@@ -66,6 +114,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "829aef9b_6bbc82b7",
+        "filename": "scripts/bump_mri_versions/readme.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2023-05-25T14:21:46Z",
+      "side": 1,
+      "message": "That was getting rendered incorrectly with auto-formating and returning errors. readme files in other projects do not really have a copyright.",
+      "parentUuid": "98a68f98_49e55877",
+      "revId": "01ff151e452382d37ffb0fde4deb1d9760921a4d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bdc2cfde_e842e76f",
         "filename": "scripts/bump_mri_versions/readme.md",
         "patchSetId": 2
@@ -77,6 +143,30 @@
       "writtenOn": "2023-05-25T13:50:37Z",
       "side": 1,
       "message": "Long line, needs wrapping",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 153
+      },
+      "revId": "01ff151e452382d37ffb0fde4deb1d9760921a4d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b270766_f027e3e6",
+        "filename": "scripts/bump_mri_versions/readme.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2023-05-25T14:21:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bdc2cfde_e842e76f",
       "range": {
         "startLine": 3,
         "startChar": 0,
@@ -100,6 +190,24 @@
       "writtenOn": "2023-05-25T13:50:37Z",
       "side": 1,
       "message": "why are you enabling pre-commit in tox?",
+      "revId": "01ff151e452382d37ffb0fde4deb1d9760921a4d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "364c3433_8db90bd1",
+        "filename": "tox.ini",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2023-05-25T14:21:46Z",
+      "side": 1,
+      "message": "this was only for testing locally, I\u0027ll revert it",
+      "parentUuid": "ef01c4ab_2957885d",
       "revId": "01ff151e452382d37ffb0fde4deb1d9760921a4d",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
