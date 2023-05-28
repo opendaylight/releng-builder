@@ -49,7 +49,7 @@
     email-upstream: "[int/dist]"
     type: managed
     profile: "-Pmanaged"
-    forbidden-files: '(docker\/.*)'
+    forbidden-files: '(docker\/.*|releases\/.*)'
     jre: "openjdk17"
     karaf-version: karaf4
     dist-pom: "distribution/pom.xml"
