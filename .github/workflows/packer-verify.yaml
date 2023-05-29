@@ -1,0 +1,161 @@
+---
+name: Packer Verify
+
+# yamllint disable-line rule:truthy
+on:
+  workflow_dispatch:
+    inputs:
+      GERRIT_BRANCH:
+        description: "Branch that change is against"
+        required: true
+        type: string
+      GERRIT_CHANGE_ID:
+        description: "The ID for the change"
+        required: true
+        type: string
+      GERRIT_CHANGE_NUMBER:
+        description: "The Gerrit number"
+        required: true
+        type: string
+      GERRIT_CHANGE_URL:
+        description: "URL to the change"
+        required: true
+        type: string
+      GERRIT_EVENT_TYPE:
+        description: "Type of Gerrit event"
+        required: true
+        type: string
+      GERRIT_PATCHSET_NUMBER:
+        description: "The patch number for the change"
+        required: true
+        type: string
+      GERRIT_PATCHSET_REVISION:
+        description: "The revision sha"
+        required: true
+        type: string
+      GERRIT_PROJECT:
+        description: "Project in Gerrit"
+        required: true
+        type: string
+      GERRIT_REFSPEC:
+        description: "Gerrit refspec of change"
+        required: true
+        type: string
+      PACKER_VERSION:
+        description: "Packer version"
+        required: true
+        type: string
+
+env:
+  PACKER_VERSION: "1.8.6"
+
+concurrency:
+  group: ${{ github.event.inputs.GERRIT_CHANGE_ID || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clear votes
+        uses: lfit/gerrit-review-action@v0.3
+        with:
+          host: ${{ vars.GERRIT_SERVER }}
+          username: ${{ vars.GERRIT_SSH_USER }}
+          key: ${{ secrets.GERRIT_SSH_PRIVKEY }}
+          known_hosts: ${{ vars.GERRIT_KNOWN_HOSTS }}
+          gerrit-change-number: ${{ inputs.GERRIT_CHANGE_NUMBER }}
+          gerrit-patchset-number: ${{ inputs.GERRIT_PATCHSET_NUMBER }}
+          vote-type: clear
+      - name: Allow replication
+        run: sleep 10s
+
+  actionlint:
+    needs: prepare
+    runs-on: ubuntu-latest
+    steps:
+      - uses: lfit/checkout-gerrit-change-action@v0.3
+        with:
+          gerrit-refspec: ${{ inputs.GERRIT_REFSPEC }}
+          delay: "0s"
+      - name: Download actionlint
+        id: get_actionlint
+        run: bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
+        shell: bash
+      - name: Check workflow files
+        run: ${{ steps.get_actionlint.outputs.executable }} -color
+        shell: bash
+
+  packer-validation:
+    needs: prepare
+    runs-on: ubuntu-latest
+    steps:
+      - uses: lfit/checkout-gerrit-change-action@v0.3
+        with:
+          gerrit-refspec: ${{ inputs.GERRIT_REFSPEC }}
+          delay: "0s"
+      - name: Setup packer
+        uses: hashicorp/setup-packer@main
+        id: setup
+        env:
+          AUTH_URL: ${{ secrets.cloud_auth_url }}
+          CLOUD_ENV: "packer/cloud-env.json"
+        with:
+          cloud_auth_url: "https://auth.vexxhost.net/v3/"
+          cloud_tenant: ${{ secrets.cloud_tenant }}
+          cloud_user: ${{ secrets.cloud_user }}
+          cloud_network: ${{ secrets.cloud_network }}
+          version: ${{ env.PACKER_VERSION }}
+          cloud_pass: ${{ secrets.cloud_pass }}
+          dicrectory: packer
+          file_name: cloud-env.json
+          fail_on_empty: true
+      - uses: actions/setup-python@v4
+        id: setup-python
+        with:
+          python-version: "3.11"
+      - name: Clone git submodules
+        run: git submodule update --init
+      - name: Run JJB Verify
+        run: |
+          cd packer
+          varfiles=(vars/*.json common-packer/vars/*.json)
+          templates=(templates/*.json)
+
+          for varfile in "${varfiles[@]}"; do
+              # cloud-env.json is a file containing credentials which is pulled in via
+              # CLOUDENV variable so skip it here. Also handle the case where a project
+              # has not vars/*.json file.
+              if [[ "$varfile" == *"cloud-env.json"* ]] || [[ "$varfile" == 'vars/*.json' ]]; then
+                  continue
+              fi
+
+              echo "-----> Testing varfile: $varfile"
+              for template in "${templates[@]}"; do
+                  export PACKER_LOG="yes"
+                  export PACKER_LOG_PATH="$PACKER_LOGS_DIR/packer-validate-${varfile##*/}-${template##*/}.log"
+                  if output=$(packer.io validate -var-file="$CLOUDENV" -var-file="$varfile" "$template"); then
+                      echo "$template: $output"
+                  else
+                      echo "$template: $output"
+                      exit 1
+                  fi
+              done
+          done
+
+  vote:
+    if: ${{ always() }}
+    needs: [prepare, actionlint, packer-validation]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: technote-space/workflow-conclusion-action@v3
+      - name: Set vote
+        uses: lfit/gerrit-review-action@v0.3
+        with:
+          host: ${{ vars.GERRIT_SERVER }}
+          username: ${{ vars.GERRIT_SSH_USER }}
+          key: ${{ secrets.GERRIT_SSH_PRIVKEY }}
+          known_hosts: ${{ vars.GERRIT_KNOWN_HOSTS }}
+          gerrit-change-number: ${{ inputs.GERRIT_CHANGE_NUMBER }}
+          gerrit-patchset-number: ${{ inputs.GERRIT_PATCHSET_NUMBER }}
+          vote-type: ${{ env.WORKFLOW_CONCLUSION }}
