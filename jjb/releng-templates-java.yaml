@@ -45,7 +45,6 @@
           sign-artifacts: true
           cron: ""
 
-    java-version: openjdk17
     mvn-version: mvn38
 
 - job-group:
@@ -67,7 +66,6 @@
           build-timeout: 180
 
     mvn-version: mvn38
-    java-version: openjdk17
 
 - job-template:
     name: "{project-name}-integration-{stream}"
@@ -162,7 +160,6 @@
     cron: "@daily"
     mvn-opts: ""
     mvn-version: mvn35
-    java-version: openjdk8
 
     #####################
     # Job Configuration #
