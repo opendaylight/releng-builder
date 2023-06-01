@@ -1,6 +1,29 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d02fb8b_61b2563f",
+        "filename": ".github/workflows/gerrit-verify.yaml",
+        "patchSetId": 8
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2023-06-01T19:03:20Z",
+      "side": 1,
+      "message": "I would think we would be able to get away with a single:\n\n\u0027packer/**\u0027 or does the paths-filter action not recurse sub-directories?",
+      "range": {
+        "startLine": 177,
+        "startChar": 17,
+        "endLine": 179,
+        "endChar": 37
+      },
+      "revId": "58f440636b565c8e0f8f5c92018343611c428d6f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "c5f695df_318014b6",
@@ -14,6 +37,24 @@
       "writtenOn": "2023-06-01T18:00:04Z",
       "side": 1,
       "message": "do we plan to have all verifications running under the same gerrit-verify workflow? \nWould it be a good idea to have 2 workflows? 1 for the gerrit verify and 1 that triggers only on packer files to run the packer verify?\n",
+      "revId": "58f440636b565c8e0f8f5c92018343611c428d6f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "934f1529_6351c728",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2023-06-01T19:03:20Z",
+      "side": 1,
+      "message": "While it would seem fitting to have separate workflow files for each class of validation, we run into an issue with voting potentially being in a race condition if something is happening in different sections of the code base that have different workflows.",
+      "parentUuid": "c5f695df_318014b6",
       "revId": "58f440636b565c8e0f8f5c92018343611c428d6f",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
