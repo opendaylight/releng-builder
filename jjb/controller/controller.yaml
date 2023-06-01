@@ -3,7 +3,7 @@
     name: controller-master
     jobs:
       - "{project-name}-rtd-jobs":
-          build-node: centos7-builder-2c-2g
+          build-node: centos8-builder-2c-2g
           project-pattern: controller
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-controller/48288/
           rtd-token: b8440116c823a80c0fb0479eb7448a9196e6932f
@@ -29,7 +29,7 @@
     name: controller-7.0.x
     jobs:
       - "{project-name}-rtd-jobs":
-          build-node: centos7-builder-2c-2g
+          build-node: centos8-builder-2c-2g
           project-pattern: controller
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-controller/48288/
           rtd-token: b8440116c823a80c0fb0479eb7448a9196e6932f
@@ -55,7 +55,7 @@
     name: controller-6.0.x
     jobs:
       - "{project-name}-rtd-jobs":
-          build-node: centos7-builder-2c-2g
+          build-node: centos8-builder-2c-2g
           project-pattern: controller
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-controller/48288/
           rtd-token: b8440116c823a80c0fb0479eb7448a9196e6932f

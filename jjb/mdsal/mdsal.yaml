@@ -3,7 +3,7 @@
     name: mdsal-master
     jobs:
       - "{project-name}-rtd-jobs":
-          build-node: centos7-builder-2c-2g
+          build-node: centos8-builder-2c-2g
           project-pattern: mdsal
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-mdsal/44052/
           rtd-token: a56d6212dd3de3eef12642affe8a6100cc8bc002
@@ -35,7 +35,7 @@
     name: mdsal-11.0.x
     jobs:
       - "{project-name}-rtd-jobs":
-          build-node: centos7-builder-2c-2g
+          build-node: centos8-builder-2c-2g
           project-pattern: mdsal
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-mdsal/44052/
           rtd-token: a56d6212dd3de3eef12642affe8a6100cc8bc002
@@ -67,7 +67,7 @@
     name: mdsal-10.0.x
     jobs:
       - "{project-name}-rtd-jobs":
-          build-node: centos7-builder-2c-2g
+          build-node: centos8-builder-2c-2g
           project-pattern: mdsal
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-mdsal/44052/
           rtd-token: a56d6212dd3de3eef12642affe8a6100cc8bc002
