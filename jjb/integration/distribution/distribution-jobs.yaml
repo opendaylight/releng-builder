@@ -18,7 +18,6 @@
     mvn-goals: "clean install dependency:tree -DoutputFile=dependency_tree.txt"
     mvn-opts: "-Xmx1024m"
     mvn-version: mvn38
-    java-version: openjdk17
     jre: "openjdk17"
     karaf-version: odl
     nexus-iq-namespace: odl-
@@ -51,7 +50,6 @@
     type: managed
     profile: "-Pmanaged"
     forbidden-files: '(docker\/.*)'
-    java-version: "openjdk17"
     jre: "openjdk17"
     karaf-version: karaf4
     dist-pom: "distribution/pom.xml"
@@ -93,7 +91,6 @@
     project: integration/distribution
     project-name: distribution
     branch: master
-    java-version: "openjdk17"
     mvn-version: mvn38
     mvn-settings: integration-distribution-settings
     mvn-goals: clean install dependency:tree -DoutputFile=dependency_tree.txt
