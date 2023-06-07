@@ -10,11 +10,7 @@
     # The functionality under test
     functionality:
       - userfeatures
-      - userfeatures-rfc8040:
-          robot-options: "-v NETOPEER_USER:root -v USE_NETCONF_CONNECTOR:False -v USE_RFC8040:True"
       - gate-userfeatures
-      - gate-userfeatures-rfc8040:
-          robot-options: "-v NETOPEER_USER:root -v USE_NETCONF_CONNECTOR:False -v USE_RFC8040:True"
 
     # Project branches
     stream:
