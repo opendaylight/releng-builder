@@ -62,7 +62,6 @@
 
     build-node: "{build-node}"
     cron: "H 0 * * *"
-    java-version: "{java-version}"
     mvn-global-settings: global-settings
     mvn-goals: clean deploy
     mvn-opts: "-Xmx8g -Dmaven.compile.fork=true"
@@ -499,7 +498,7 @@
     # Default variables #
     #####################
 
-    java-version: openjdk8
+    java-version: openjdk17
     mvn-global-settings: global-settings
     mvn-settings: autorelease-settings
     mvn-version: mvn38
@@ -512,7 +511,7 @@
     project-type: freestyle
     # Note: This NEEDS to be hardcoded as projects should NOT be allowed to
     #       override the build node.
-    node: centos7-builder-2c-8g
+    node: centos8-builder-2c-8g
     concurrent: true
     jdk: "{java-version}"
     disabled: "{disable-job}"
