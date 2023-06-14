@@ -45,6 +45,7 @@
           sign-artifacts: true
           cron: ""
 
+    java-version: openjdk17
     mvn-version: mvn38
 
 - job-group:
@@ -65,6 +66,7 @@
       - gerrit-maven-verify-dependencies:
           build-timeout: 180
 
+    java-version: openjdk17
     mvn-version: mvn38
 
 - job-template:
