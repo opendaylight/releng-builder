@@ -177,9 +177,11 @@ jobs:
               - 'packer/**'
       - if: steps.changes.outputs.src == 'true'
         run: |
-          cd packer
-          varfiles=(vars/*.json common-packer/vars/*.json)
-          templates=(templates/*.json)
+          cd "$GITHUB_WORKSPACE"/packer
+          varfiles=("$GITHUB_WORKSPACE"/vars/*.json "$GITHUB_WORKSPACE"/common-packer/vars/*.json)
+          templates=("$GITHUB_WORKSPACE"/templates/*.json)
+          PACKER_LOG_PATH="$GITHUB_WORKSPACE"/logs/
+          mkdir -p "$PACKER_LOG_PATH"
 
           for varfile in "${varfiles[@]}"; do
               # cloud-env.json is a file containing credentials which is pulled in via
