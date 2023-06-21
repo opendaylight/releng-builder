@@ -19,6 +19,7 @@ set -eux -o pipefail
 lf-activate-venv --python python3 \
     python-heatclient \
     python-openstackclient \
+    urllib3~=1.26.15 \
     yq
 
 OS_TIMEOUT=20       # Wait time in minutes for OpenStack cluster to come up.
