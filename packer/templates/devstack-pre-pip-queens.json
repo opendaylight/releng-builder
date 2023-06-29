@@ -54,7 +54,7 @@
     },
     {
       "type": "ansible",
-      "playbook_file": "provision/devstack-pre-pip.yaml",
+      "playbook_file": "provision/devstack-pre-pip-centos.yaml",
       "command": "./common-packer/ansible-playbook.sh",
       "skip_version_check": true,
       "ansible_env_vars": [
@@ -67,7 +67,10 @@
       ],
       "extra_arguments": [
         "--extra-vars",
-        "os_branch=stable/queens rdo_branch=queens"
+        "os_branch=stable/queens rdo_branch=queens",
+        "--scp-extra-args", "'-O'",
+        "--ssh-extra-args",
+        "-o IdentitiesOnly=yes -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedAlgorithms=+ssh-rsa"
       ]
     }
   ]
