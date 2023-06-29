@@ -18,8 +18,8 @@
   "builders": [
     {
       "name": "openstack",
-      "image_name": "ZZCI - {{user `distro`}} - devstack-stein - {{user `arch`}} - {{isotime \"20060102-150405.000\"}}",
-      "instance_name": "{{user `distro`}}-devstack-stein-{{uuid}}",
+      "image_name": "ZZCI - {{user `distro`}} - devstack-yoga - {{user `arch`}} - {{isotime \"20060102-150405.000\"}}",
+      "instance_name": "{{user `distro`}}-devstack-yoga-{{uuid}}",
       "source_image_name": "{{user `base_image`}}",
       "type": "openstack",
       "region": "{{user `cloud_region`}}",
@@ -68,7 +68,7 @@
       ],
       "extra_arguments": [
         "--extra-vars",
-        "os_branch=stable/queens rdo_branch=queens",
+        "os_branch=stable/yoga rdo_branch=yoga",
         "--scp-extra-args", "'-O'",
         "--ssh-extra-args",
         "-o IdentitiesOnly=yes -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedAlgorithms=+ssh-rsa"
