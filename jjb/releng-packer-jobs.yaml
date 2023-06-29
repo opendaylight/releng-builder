@@ -7,6 +7,7 @@
     project: releng/builder
     project-name: builder
     build-node: centos7-builder-2c-1g
+    packer-cloud-settings: packer-cloud-env-hcl
 
 - project:
     name: packer-builder-jobs
@@ -27,6 +28,7 @@
       - centos-cs-8
     templates: builder
     update-cloud-image: true
+    packer-cloud-settings: packer-cloud-env-hcl
 
 - project:
     name: packer-devstack-jobs
@@ -45,6 +47,7 @@
     platforms: centos-7
     templates: devstack
     update-cloud-image: true
+    packer-cloud-settings: packer-cloud-env-hcl
 
 - project:
     name: packer-devstack-pre-pip-queens-jobs
@@ -63,6 +66,7 @@
     platforms: centos-7
     templates: devstack-pre-pip-queens
     update-cloud-image: true
+    packer-cloud-settings: packer-cloud-env-hcl
 
 - project:
     name: packer-devstack-pre-pip-rocky-jobs
@@ -81,6 +85,7 @@
     platforms: centos-7
     templates: devstack-pre-pip-rocky
     update-cloud-image: true
+    packer-cloud-settings: packer-cloud-env-hcl
 
 - project:
     name: packer-devstack-pre-pip-stein-jobs
@@ -99,6 +104,7 @@
     platforms: centos-7
     templates: devstack-pre-pip-stein
     update-cloud-image: true
+    packer-cloud-settings: packer-cloud-env-hcl
 
 - project:
     name: packer-docker-jobs
@@ -120,6 +126,7 @@
       - ubuntu-20.04
     templates: docker
     update-cloud-image: true
+    packer-cloud-settings: packer-cloud-env-hcl
 
 - project:
     name: packer-helm-jobs
@@ -141,6 +148,7 @@
       - centos-7
     templates: helm
     update-cloud-image: true
+    packer-cloud-settings: packer-cloud-env-hcl
 
 - project:
     name: packer-mininet-ovs-2.8-jobs
@@ -160,6 +168,7 @@
       - ubuntu-18.04
     templates: mininet-ovs-2.8
     update-cloud-image: true
+    packer-cloud-settings: packer-cloud-env-hcl
 
 - project:
     name: packer-robot-jobs
@@ -201,3 +210,4 @@
     gerrit-host: "git.opendaylight.org"
     gerrit-topic: "update-cloud-image"
     reviewers-email: "jenkins-releng@opendaylight.org"
+    packer-cloud-settings: packer-cloud-env-hcl
