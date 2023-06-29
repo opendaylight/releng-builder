@@ -15,19 +15,12 @@
           yum:
             name:
               - perl-XML-XPath
-              - python-pip
               - crudini
             state: present
           become: true
         - name: Installing non-baseline requirements
           yum:
             name:
-              - deltarpm
-              - python
-              - python-crypto
-              - python-devel
-              - python-lxml
-              - python-setuptools
               - libxml2-devel
               - libxslt-devel
               - libffi-devel
