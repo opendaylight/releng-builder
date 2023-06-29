@@ -64,6 +64,11 @@
         "ANSIBLE_ROLES_PATH={{user `ansible_roles_path`}}",
         "ANSIBLE_CALLBACK_WHITELIST=profile_tasks",
         "ANSIBLE_STDOUT_CALLBACK=debug"
+      ],
+      "extra_arguments": [
+        "--scp-extra-args", "'-O'",
+        "--ssh-extra-args",
+        "-o IdentitiesOnly=yes -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedAlgorithms=+ssh-rsa"
       ]
     }
   ]

@@ -55,7 +55,7 @@
     },
     {
       "type": "ansible",
-      "playbook_file": "provision/devstack.yaml",
+      "playbook_file": "provision/devstack-centos.yaml",
       "command": "./common-packer/ansible-playbook.sh",
       "skip_version_check": true,
       "ansible_env_vars": [
@@ -64,6 +64,11 @@
         "ANSIBLE_ROLES_PATH={{user `ansible_roles_path`}}",
         "ANSIBLE_CALLBACK_WHITELIST=profile_tasks",
         "ANSIBLE_STDOUT_CALLBACK=debug"
+      ],
+      "extra_arguments": [
+        "--scp-extra-args", "'-O'",
+        "--ssh-extra-args",
+        "-o IdentitiesOnly=yes -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedAlgorithms=+ssh-rsa"
       ]
     }
   ]
