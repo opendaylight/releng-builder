@@ -148,9 +148,20 @@ build {
   }
 
   provisioner "ansible" {
-    ansible_env_vars   = ["ANSIBLE_DEBUG=False", "ANSIBLE_NOCOWS=1", "ANSIBLE_PIPELINING=True", "ANSIBLE_ROLES_PATH=${var.ansible_roles_path}", "ANSIBLE_CALLBACK_WHITELIST=profile_tasks", "ANSIBLE_STDOUT_CALLBACK=debug"]
+    ansible_env_vars   = [
+        "ANSIBLE_NOCOWS=1",
+        "ANSIBLE_PIPELINING=False",
+        "ANSIBLE_HOST_KEY_CHECKING=False",
+        "ANSIBLE_ROLES_PATH=${var.ansible_roles_path}",
+        "ANSIBLE_CALLBACK_WHITELIST=profile_tasks",
+        "ANSIBLE_STDOUT_CALLBACK=debug"
+    ]
+    extra_arguments   = [
+      "--extra-vars", "os_branch=stable/yoga rdo_branch=yoga",
+      "--ssh-extra-args",
+      "-o IdentitiesOnly=yes -o HostKeyAlgorithms=+ssh-rsa"
+    ]
     command            = "./common-packer/ansible-playbook.sh"
-    extra_arguments    = ["--extra-vars", "os_branch=stable/yoga rdo_branch=yoga", "--scp-extra-args", "'-O'", "--ssh-extra-args", "-o IdentitiesOnly=yes -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedAlgorithms=+ssh-rsa"]
     playbook_file      = "provision/devstack-pre-pip-centos.yaml"
     skip_version_check = true
   }

@@ -67,11 +67,9 @@
         "ANSIBLE_STDOUT_CALLBACK=debug"
       ],
       "extra_arguments": [
-        "--extra-vars",
-        "os_branch=stable/yoga rdo_branch=yoga",
-        "--scp-extra-args", "'-O'",
+        "--extra-vars", "os_branch=stable/yoga rdo_branch=yoga",
         "--ssh-extra-args",
-        "-o IdentitiesOnly=yes -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedAlgorithms=+ssh-rsa"
+        "-o IdentitiesOnly=yes -o HostKeyAlgorithms=+ssh-rsa"
       ]
     }
   ]

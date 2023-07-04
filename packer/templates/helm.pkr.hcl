@@ -156,9 +156,18 @@ build {
   }
 
   provisioner "ansible" {
-    ansible_env_vars   = ["ANSIBLE_NOCOWS=1", "ANSIBLE_PIPELINING=True", "ANSIBLE_ROLES_PATH=${var.ansible_roles_path}", "ANSIBLE_CALLBACK_WHITELIST=profile_tasks", "ANSIBLE_STDOUT_CALLBACK=debug"]
+    ansible_env_vars   = [
+        "ANSIBLE_NOCOWS=1",
+        "ANSIBLE_PIPELINING=False",
+        "ANSIBLE_HOST_KEY_CHECKING=False",
+        "ANSIBLE_ROLES_PATH=${var.ansible_roles_path}",
+        "ANSIBLE_CALLBACK_WHITELIST=profile_tasks",
+        "ANSIBLE_STDOUT_CALLBACK=debug"
+    ]
     command            = "./common-packer/ansible-playbook.sh"
-    extra_arguments    = ["--scp-extra-args", "'-O'", "--ssh-extra-args", "-o IdentitiesOnly=yes -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedAlgorithms=+ssh-rsa"]
+    extra_arguments    = [
+        "--ssh-extra-args", "-o IdentitiesOnly=yes -o HostKeyAlgorithms=+ssh-rsa"
+    ]
     playbook_file      = "provision/helm.yaml"
     skip_version_check = true
   }
