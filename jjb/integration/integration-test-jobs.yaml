@@ -55,8 +55,21 @@
 
     # CSIT Lists in defaults.yaml
     stream:
-      - argon:
+      - potassium:
           branch: "master"
+          csit-blocklist: >
+            aaa controller genius lispflowmapping l2switch mdsal
+            netconf netvirt odlmicro sxp yangtools
+            gate longevity sanity tdd tempest wip
+            bgpcep-csit-3node-bgpclustering-all
+            bgpcep-csit-3node-bgpclustering-ha-only
+            openflowplugin-csit-1node-bundle-based-reconciliation
+            last-line-is-ignored-so-we-need-something-dummy-here-to-make-sure-the-real-last-line-is-used
+          csit-list: !include: csit-jobs-potassium.lst
+          csit-mri-list: "{csit-mri-list-potassium}"
+          csit-weekly-list: "{csit-weekly-list-potassium}"
+      - argon:
+          branch: "stable/argon"
           csit-blocklist: >
             aaa controller genius lispflowmapping l2switch mdsal
             netconf netvirt odlmicro sxp yangtools
@@ -90,8 +103,12 @@
       - "integration-sanity-test-{stream}"
 
     stream:
-      - argon:
+      - potassium:
           branch: "master"
+          karaf-version: odl
+          csit-sanity-list: "{csit-sanity-list-potassium}"
+      - argon:
+          branch: "stable/argon"
           karaf-version: odl
           csit-sanity-list: "{csit-sanity-list-argon}"
       - chlorine:
