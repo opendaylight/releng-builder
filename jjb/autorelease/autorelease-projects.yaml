@@ -4,6 +4,7 @@
     jobs:
       - autorelease-branch-cut
       - "autorelease-generate-release-notes-{stream}"
+          build-node: centos8-builder-2c-2g
       - "autorelease-update-submodules-{stream}"
       - "autorelease-update-validate-jobs-{stream}"
       - "{project-name}-validate-autorelease-{stream}"
