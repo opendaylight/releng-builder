@@ -3,7 +3,6 @@
     name: autorelease-projects-common
     jobs:
       - autorelease-branch-cut
-      - "autorelease-generate-release-notes-{stream}"
       - "autorelease-update-submodules-{stream}"
       - "autorelease-update-validate-jobs-{stream}"
       - "{project-name}-validate-autorelease-{stream}"
@@ -31,6 +30,7 @@
       - "autorelease-release-{stream}-{mvn-version}-{java-version}":
           build-node: centos8-builder-4c-16g
       - "autorelease-version-bump-{stream}-{mvn-version}-{java-version}"
+      - "autorelease-generate-release-notes-{stream}"
 
     stream:
       - potassium:

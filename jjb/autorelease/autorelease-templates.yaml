@@ -429,6 +429,7 @@
     # Default parameters #
     ######################
     disable-job: "false"
+    build-node: "centos8-builder-2c-8g"
 
     gerrit_merge_triggers:
       - comment-added-contains-event:
@@ -439,7 +440,7 @@
     #####################
 
     project-type: freestyle
-    node: centos7-builder-2c-8g
+    node: "{build-node}"
     disabled: "{disable-job}"
 
     properties:
