@@ -159,7 +159,7 @@
       **/target/**/feature.xml
       **/target/failsafe-reports/failsafe-summary.xml
       **/target/surefire-reports/*-output.txt
-    cron: "@daily"
+    cron: "0 0 * * tue,sat"
     mvn-opts: ""
     mvn-version: mvn35
 
