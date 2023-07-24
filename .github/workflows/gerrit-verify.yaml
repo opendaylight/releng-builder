@@ -3,47 +3,52 @@ name: Gerrit Verify
 
 # yamllint disable-line rule:truthy
 on:
+  push:
+    branches: [master]
   workflow_dispatch:
     inputs:
       GERRIT_BRANCH:
         description: "Branch that change is against"
-        required: true
+        required: false
         type: string
       GERRIT_CHANGE_ID:
         description: "The ID for the change"
-        required: true
+        required: false
         type: string
       GERRIT_CHANGE_NUMBER:
         description: "The Gerrit number"
-        required: true
+        required: false
         type: string
       GERRIT_CHANGE_URL:
         description: "URL to the change"
-        required: true
+        required: false
         type: string
       GERRIT_EVENT_TYPE:
         description: "Type of Gerrit event"
-        required: true
+        required: false
         type: string
       GERRIT_PATCHSET_NUMBER:
         description: "The patch number for the change"
-        required: true
+        required: false
         type: string
       GERRIT_PATCHSET_REVISION:
         description: "The revision sha"
-        required: true
+        required: false
         type: string
       GERRIT_PROJECT:
         description: "Project in Gerrit"
         required: true
         type: string
+        default: releng/builder
       GERRIT_REFSPEC:
         description: "Gerrit refspec of change"
-        required: true
+        required: false
         type: string
+        default: master
 
 env:
-  PACKER_VERSION: "1.8.6"
+  OS_CLOUD: "vex"
+  PACKER_VERSION: "1.9.1"
 
 concurrency:
   group: ${{ github.event.inputs.GERRIT_CHANGE_ID || github.run_id }}
@@ -51,10 +56,12 @@ concurrency:
 
 jobs:
   prepare:
+    # skip during local actions testing
+    if: ${{ !github.event.prepare }}
     runs-on: ubuntu-latest
     steps:
       - name: Clear votes
-        uses: lfit/gerrit-review-action@v0.3
+        uses: lfit/gerrit-review-action@v0.4
         with:
           host: ${{ vars.GERRIT_SERVER }}
           username: ${{ vars.GERRIT_SSH_USER }}
@@ -67,10 +74,12 @@ jobs:
         run: sleep 10s
 
   actionlint:
+    # skip during local actions testing
+    if: ${{ !github.event.actionlint }}
     needs: prepare
     runs-on: ubuntu-latest
     steps:
-      - uses: lfit/checkout-gerrit-change-action@v0.3
+      - uses: lfit/checkout-gerrit-change-action@v0.4
         with:
           gerrit-refspec: ${{ inputs.GERRIT_REFSPEC }}
           delay: "0s"
@@ -84,10 +93,11 @@ jobs:
 
   # run pre-commit tox env separately to get use of more parallel processing
   pre-commit:
+    if: ${{ !github.event.pre-commit }} # skip during local actions testing
     needs: prepare
     runs-on: ubuntu-latest
     steps:
-      - uses: lfit/checkout-gerrit-change-action@v0.3
+      - uses: lfit/checkout-gerrit-change-action@v0.4
         with:
           gerrit-refspec: ${{ inputs.GERRIT_REFSPEC }}
           delay: "0s"
@@ -98,10 +108,11 @@ jobs:
         run: pipx run pre-commit run --all-files --show-diff-on-failure
 
   jjb-validation:
+    if: ${{ !github.event.jjb }} # skip during local actions testing
     needs: prepare
     runs-on: ubuntu-latest
     steps:
-      - uses: lfit/checkout-gerrit-change-action@v0.3
+      - uses: lfit/checkout-gerrit-change-action@v0.4
         with:
           gerrit-refspec: ${{ inputs.GERRIT_REFSPEC }}
           delay: "0s"
@@ -128,10 +139,12 @@ jobs:
           jenkins-jobs test -o archives/job-configs jjb/
 
   tox-verify:
+    # skip during local actions testing
+    if: ${{ !github.event.tox }}
     needs: prepare
     runs-on: ubuntu-latest
     steps:
-      - uses: lfit/checkout-gerrit-change-action@v0.3
+      - uses: lfit/checkout-gerrit-change-action@v0.4
         with:
           gerrit-refspec: ${{ inputs.GERRIT_REFSPEC }}
           delay: "0s"
@@ -143,57 +156,88 @@ jobs:
         run: >-
           pipx run tox
 
-  packer-validation:
-    needs: prepare
+  packer-validator:
+    # skip during local actions testing
+    if: ${{ !github.event.packer }}
     runs-on: ubuntu-latest
     steps:
-      - uses: lfit/checkout-gerrit-change-action@v0.3
+      - uses: lfit/checkout-gerrit-change-action@v0.4
         with:
           gerrit-refspec: ${{ inputs.GERRIT_REFSPEC }}
           delay: "0s"
+      - name: Clone git submodules
+        run: git submodule update --init
       - name: Setup packer
         uses: hashicorp/setup-packer@main
         id: setup
-        env:
-          AUTH_URL: ${{ secrets.cloud_auth_url }}
-          CLOUD_ENV: "packer/cloud-env.json"
         with:
-          cloud_auth_url: "https://auth.vexxhost.net/v3/"
-          cloud_tenant: ${{ secrets.cloud_tenant }}
-          cloud_user: ${{ secrets.cloud_user }}
-          cloud_network: ${{ secrets.cloud_network }}
           version: ${{ env.PACKER_VERSION }}
-          cloud_pass: ${{ secrets.cloud_pass }}
-          dicrectory: packer
-          file_name: cloud-env.json
-          fail_on_empty: true
-      - name: Clone git submodules
-        run: git submodule update --init
-      - uses: dorny/paths-filter@v2
-        id: changes
+      - name: Create cloud-env file required for packer
+        id: create-cloud-env-file
+        shell: bash
+        run: |
+          echo "${{ secrets.CLOUDS_ENV_B64 }}" | base64 --decode > "${GITHUB_WORKSPACE}/cloud-env.pkrvars.hcl"
+      - name: Create cloud.yaml file for openstack client
+        id: create-cloud-yaml-file
+        shell: bash
+        run: |
+          mkdir -p "$HOME/.config/openstack"
+          echo "${{ secrets.CLOUDS_YAML_B64 }}" | base64 --decode > "$HOME/.config/openstack/clouds.yaml"
+      - uses: actions/setup-python@v4
+        id: setup-python
         with:
+          python-version: "3.11"
+      - name: Install openstack deps
+        id: install-openstack-deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install python-openstackclient
+          pip freeze
+      - uses: dorny/paths-filter@v2
+        id: check-packer-files-in-change
+        with:
+          base: master
+          ref: ${{ inputs.GERRIT_REFSPEC }}
           filters: |
             src:
               - 'packer/**'
       - if: steps.changes.outputs.src == 'true'
         run: |
+          set -x
           cd packer
-          varfiles=(vars/*.json common-packer/vars/*.json)
-          templates=(templates/*.json)
+
+          varfiles=(common-packer/vars/*.pkrvars.hcl)
+          templates=(templates/*.pkr.hcl)
+
+          mkdir -p "${GITHUB_WORKSPACE}/logs"
+          PACKER_LOGS_DIR="${GITHUB_WORKSPACE}/logs"
 
           for varfile in "${varfiles[@]}"; do
-              # cloud-env.json is a file containing credentials which is pulled in via
-              # CLOUDENV variable so skip it here. Also handle the case where a project
-              # has not vars/*.json file.
-              if [[ "$varfile" == *"cloud-env.json"* ]] || [[ "$varfile" == 'vars/*.json' ]]; then
+              if [[ "$varfile" == *"cloud-env.json"* ]] || \
+                 [[ "$varfile" == "vars/*.json" ]] || \
+                 [[ "$varfile" == *"cloud-env.pkrvars.hcl"* ]] || \
+                 [[ "$varfile" == *"cloud-env-aws.pkrvars.hcl"* ]] || \
+                 [[ "$varfile" == "vars/*.pkrvars.hcl" ]]; then
                   continue
               fi
 
-              echo "-----> Testing varfile: $varfile"
+              echo "-----> Test var: $varfile"
               for template in "${templates[@]}"; do
+                  if [[ "$template" == *"variables.pkr.hcl"* ]] || \
+                     [[ "$template" == *"variables.auto.pkr.hcl"* ]]; then
+                      continue
+                  fi
+
+                  if [[ "${template#*.}" == "pkr.hcl" ]]; then
+                      echo "packer init $template ..."
+                      packer init "$template"
+                  fi
+
                   export PACKER_LOG="yes"
                   export PACKER_LOG_PATH="$PACKER_LOGS_DIR/packer-validate-${varfile##*/}-${template##*/}.log"
-                  if output=$(packer validate -var-file="$CLOUDENV" -var-file="$varfile" "$template"); then
+                  if output=$(OS_CLOUD=${{ env.OS_CLOUD }} packer validate \
+                                  -var-file="${GITHUB_WORKSPACE}/cloud-env.pkrvars.hcl" \
+                                  -var-file="$varfile" "$template"); then
                       echo "$template: $output"
                   else
                       echo "$template: $output"
@@ -203,7 +247,7 @@ jobs:
           done
 
   vote:
-    if: ${{ always() }}
+    if: ${{ always() }} && ${{ !github.event.vote }} # skip during local actions testing
     needs:
       [
         prepare,
@@ -211,13 +255,13 @@ jobs:
         pre-commit,
         jjb-validation,
         tox-verify,
-        packer-validation,
+        packer-validator,
       ]
     runs-on: ubuntu-latest
     steps:
       - uses: technote-space/workflow-conclusion-action@v3
       - name: Set vote
-        uses: lfit/gerrit-review-action@v0.3
+        uses: lfit/gerrit-review-action@v0.4
         with:
           host: ${{ vars.GERRIT_SERVER }}
           username: ${{ vars.GERRIT_SSH_USER }}
