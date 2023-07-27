@@ -140,9 +140,6 @@ source "openstack" "helm" {
   volume_size             = "${var.vm_volume_size}"
 }
 
-# a build block invokes sources and runs provisioning steps on them. The
-# documentation for build blocks can be found here:
-# https://www.packer.io/docs/templates/hcl_templates/blocks/build
 build {
   sources = ["source.docker.helm", "source.openstack.helm"]
 
