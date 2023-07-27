@@ -42,9 +42,6 @@ on:
         required: true
         type: string
 
-env:
-  PACKER_VERSION: "1.8.6"
-
 concurrency:
   group: ${{ github.event.inputs.GERRIT_CHANGE_ID || github.run_id }}
   cancel-in-progress: true
@@ -70,7 +67,7 @@ jobs:
     needs: prepare
     runs-on: ubuntu-latest
     steps:
-      - uses: lfit/checkout-gerrit-change-action@v0.3
+      - uses: lfit/checkout-gerrit-change-action@v0.4
         with:
           gerrit-refspec: ${{ inputs.GERRIT_REFSPEC }}
           delay: "0s"
@@ -87,7 +84,7 @@ jobs:
     needs: prepare
     runs-on: ubuntu-latest
     steps:
-      - uses: lfit/checkout-gerrit-change-action@v0.3
+      - uses: lfit/checkout-gerrit-change-action@v0.4
         with:
           gerrit-refspec: ${{ inputs.GERRIT_REFSPEC }}
           delay: "0s"
@@ -101,7 +98,7 @@ jobs:
     needs: prepare
     runs-on: ubuntu-latest
     steps:
-      - uses: lfit/checkout-gerrit-change-action@v0.3
+      - uses: lfit/checkout-gerrit-change-action@v0.4
         with:
           gerrit-refspec: ${{ inputs.GERRIT_REFSPEC }}
           delay: "0s"
@@ -131,7 +128,7 @@ jobs:
     needs: prepare
     runs-on: ubuntu-latest
     steps:
-      - uses: lfit/checkout-gerrit-change-action@v0.3
+      - uses: lfit/checkout-gerrit-change-action@v0.4
         with:
           gerrit-refspec: ${{ inputs.GERRIT_REFSPEC }}
           delay: "0s"
@@ -143,76 +140,9 @@ jobs:
         run: >-
           pipx run tox
 
-  packer-validation:
-    needs: prepare
-    runs-on: ubuntu-latest
-    steps:
-      - uses: lfit/checkout-gerrit-change-action@v0.3
-        with:
-          gerrit-refspec: ${{ inputs.GERRIT_REFSPEC }}
-          delay: "0s"
-      - name: Setup packer
-        uses: hashicorp/setup-packer@main
-        id: setup
-        env:
-          AUTH_URL: ${{ secrets.cloud_auth_url }}
-          CLOUD_ENV: "packer/cloud-env.json"
-        with:
-          cloud_auth_url: "https://auth.vexxhost.net/v3/"
-          cloud_tenant: ${{ secrets.cloud_tenant }}
-          cloud_user: ${{ secrets.cloud_user }}
-          cloud_network: ${{ secrets.cloud_network }}
-          version: ${{ env.PACKER_VERSION }}
-          cloud_pass: ${{ secrets.cloud_pass }}
-          dicrectory: packer
-          file_name: cloud-env.json
-          fail_on_empty: true
-      - name: Clone git submodules
-        run: git submodule update --init
-      - uses: dorny/paths-filter@v2
-        id: changes
-        with:
-          filters: |
-            src:
-              - 'packer/**'
-      - if: steps.changes.outputs.src == 'true'
-        run: |
-          cd packer
-          varfiles=(vars/*.json common-packer/vars/*.json)
-          templates=(templates/*.json)
-
-          for varfile in "${varfiles[@]}"; do
-              # cloud-env.json is a file containing credentials which is pulled in via
-              # CLOUDENV variable so skip it here. Also handle the case where a project
-              # has not vars/*.json file.
-              if [[ "$varfile" == *"cloud-env.json"* ]] || [[ "$varfile" == 'vars/*.json' ]]; then
-                  continue
-              fi
-
-              echo "-----> Testing varfile: $varfile"
-              for template in "${templates[@]}"; do
-                  export PACKER_LOG="yes"
-                  export PACKER_LOG_PATH="$PACKER_LOGS_DIR/packer-validate-${varfile##*/}-${template##*/}.log"
-                  if output=$(packer validate -var-file="$CLOUDENV" -var-file="$varfile" "$template"); then
-                      echo "$template: $output"
-                  else
-                      echo "$template: $output"
-                      exit 1
-                  fi
-              done
-          done
-
   vote:
     if: ${{ always() }}
-    needs:
-      [
-        prepare,
-        actionlint,
-        pre-commit,
-        jjb-validation,
-        tox-verify,
-        packer-validation,
-      ]
+    needs: [prepare, actionlint, pre-commit, jjb-validation, tox-verify]
     runs-on: ubuntu-latest
     steps:
       - uses: technote-space/workflow-conclusion-action@v3
