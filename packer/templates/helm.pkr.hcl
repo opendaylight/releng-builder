@@ -123,7 +123,7 @@ source "openstack" "helm" {
   identity_endpoint = "${var.cloud_auth_url}"
   image_disk_format = "${var.vm_image_disk_format}"
   image_name        = "ZZCI - ${var.distro} - helm - ${var.arch} - ${legacy_isotime("20060102-150405.000")}"
-  instance_name     = "${var.distro}-builder-${uuidv4()}"
+  instance_name     = "${var.distro}-helm-${uuidv4()}"
   metadata = {
     ci_managed = "yes"
   }
