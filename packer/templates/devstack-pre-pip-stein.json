@@ -67,7 +67,8 @@
         "ANSIBLE_STDOUT_CALLBACK=debug"
       ],
       "extra_arguments": [
-        "--extra-vars", "os_branch=stable/queens rdo_branch=queens",
+        "--extra-vars",
+        "os_branch=stable/queens rdo_branch=queens",
         "--ssh-extra-args",
         "-o IdentitiesOnly=yes -o HostKeyAlgorithms=+ssh-rsa"
       ]
