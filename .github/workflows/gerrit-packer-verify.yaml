@@ -50,7 +50,7 @@ env:
   PACKER_VERSION: "1.9.1"
 
 concurrency:
-  group: ${{ github.event.inputs.GERRIT_CHANGE_ID || github.run_id }}
+  group: packer-${{ github.event.inputs.GERRIT_CHANGE_ID || github.run_id }}
   cancel-in-progress: true
 
 jobs:
