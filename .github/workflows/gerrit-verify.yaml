@@ -42,6 +42,10 @@ on:
         required: true
         type: string
 
+env:
+  OS_CLOUD: "vex"
+  PACKER_VERSION: "1.9.1"
+
 concurrency:
   group: ${{ github.event.inputs.GERRIT_CHANGE_ID || github.run_id }}
   cancel-in-progress: true
@@ -140,9 +144,109 @@ jobs:
         run: >-
           pipx run tox
 
+  packer-validator:
+    needs: prepare
+    runs-on: ubuntu-latest
+    steps:
+      - uses: lfit/checkout-gerrit-change-action@v0.4
+        with:
+          gerrit-refspec: ${{ inputs.GERRIT_REFSPEC }}
+          delay: "0s"
+      - name: Clone git submodules
+        run: git submodule update --init
+      - name: Setup packer
+        uses: hashicorp/setup-packer@main
+        id: setup
+        with:
+          version: ${{ env.PACKER_VERSION }}
+      - name: Create cloud-env file required for packer
+        id: create-cloud-env-file
+        shell: bash
+        run: |
+          echo "${{ secrets.CLOUDS_ENV_B64 }}" | base64 --decode \
+                > "${GITHUB_WORKSPACE}/cloud-env.pkrvars.hcl"
+      - name: Create cloud.yaml file for openstack client
+        id: create-cloud-yaml-file
+        shell: bash
+        run: |
+          mkdir -p "$HOME/.config/openstack"
+          echo "${{ secrets.CLOUDS_YAML_B64 }}" | base64 --decode \
+                > "$HOME/.config/openstack/clouds.yaml"
+      - uses: actions/setup-python@v4
+        id: setup-python
+        with:
+          python-version: "3.11"
+      - name: Install openstack deps
+        id: install-openstack-deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install python-openstackclient
+          pip freeze
+      - uses: dorny/paths-filter@v2
+        id: changes
+        with:
+          base: ${{ inputs.GERRIT_BRANCH }}
+          ref: ${{ inputs.GERRIT_PATCHSET_REVISION }}
+          filters: |
+            src:
+              - 'packer/**'
+      - if: steps.changes.outputs.src == 'true'
+        run: |
+          set -x
+          cd packer
+
+          varfiles=(common-packer/vars/*.pkrvars.hcl)
+          templates=(templates/*.pkr.hcl)
+
+          mkdir -p "${GITHUB_WORKSPACE}/logs"
+          PACKER_LOGS_DIR="${GITHUB_WORKSPACE}/logs"
+
+          for varfile in "${varfiles[@]}"; do
+              if [[ "$varfile" == *"cloud-env.json"* ]] || \
+                 [[ "$varfile" == "vars/*.json" ]] || \
+                 [[ "$varfile" == *"cloud-env.pkrvars.hcl"* ]] || \
+                 [[ "$varfile" == *"cloud-env-aws.pkrvars.hcl"* ]] || \
+                 [[ "$varfile" == "vars/*.pkrvars.hcl" ]]; then
+                  continue
+              fi
+
+              echo "-----> Test var: $varfile"
+              for template in "${templates[@]}"; do
+                  if [[ "$template" == *"variables.pkr.hcl"* ]] || \
+                     [[ "$template" == *"variables.auto.pkr.hcl"* ]]; then
+                      continue
+                  fi
+
+                  if [[ "${template#*.}" == "pkr.hcl" ]]; then
+                      echo "packer init $template ..."
+                      packer init "$template"
+                  fi
+
+                  LOG_FILE_NAME="packer-validate-${varfile##*/}-${template##*/}.log"
+                  export PACKER_LOG="yes"
+                  export PACKER_LOG_PATH="${PACKER_LOGS_DIR}/${LOG_FILE_NAME}"
+                  if output=$(OS_CLOUD=${{ env.OS_CLOUD }} packer validate \
+                        -var-file="${GITHUB_WORKSPACE}/cloud-env.pkrvars.hcl" \
+                        -var-file="$varfile" "$template"); then
+                      echo "$template: $output"
+                  else
+                      echo "$template: $output"
+                      exit 1
+                  fi
+              done
+          done
+
   vote:
     if: ${{ always() }}
-    needs: [prepare, actionlint, pre-commit, jjb-validation, tox-verify]
+    needs:
+      [
+        prepare,
+        actionlint,
+        pre-commit,
+        jjb-validation,
+        tox-verify,
+        packer-validator,
+      ]
     runs-on: ubuntu-latest
     steps:
       - uses: technote-space/workflow-conclusion-action@v3
