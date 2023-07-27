@@ -110,8 +110,7 @@ jobs:
       - uses: dorny/paths-filter@v2
         id: changes
         with:
-          base: ${{ inputs.GERRIT_BRANCH }}
-          ref: ${{ inputs.GERRIT_REFSPEC }}
+          base: ${{ inputs.GERRIT_PATCHSET_REVISION }}
           filters: |
             src:
               - 'packer/**'
