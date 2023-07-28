@@ -16,6 +16,24 @@
       "message": "please fix the issue with prettier\n\nNOTE: the fact that this got here and failed tells me you don\u0027t have pre-commit configured locally, please do that",
       "revId": "83fa2a658448745fc8e36a9b47dc937b4c07f129",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c05b68d7_862cf9dd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2023-07-28T01:56:25Z",
+      "side": 1,
+      "message": "done!\n\nHave an issue with my local pre-commit, but I have run this through tox and updated the change.\n\n$ pre-commit install\nTraceback (most recent call last):\n  File \"/home/abelur/.local/bin/pre-commit\", line 5, in \u003cmodule\u003e\n    from pre_commit.main import main\n  File \"/home/abelur/.local/lib/python3.9/site-packages/pre_commit/main.py\", line 14, in \u003cmodule\u003e\n    from pre_commit.commands.clean import clean\n  File \"/home/abelur/.local/lib/python3.9/site-packages/pre_commit/commands/clean.py\", line 6, in \u003cmodule\u003e\n    from pre_commit.store import Store\n  File \"/home/abelur/.local/lib/python3.9/site-packages/pre_commit/store.py\", line 6, in \u003cmodule\u003e\n    import sqlite3\n  File \"/opt/pyenv/versions/3.9.13/lib/python3.9/sqlite3/__init__.py\", line 57, in \u003cmodule\u003e\n    from sqlite3.dbapi2 import *\n  File \"/opt/pyenv/versions/3.9.13/lib/python3.9/sqlite3/dbapi2.py\", line 27, in \u003cmodule\u003e\n    from _sqlite3 import *\nModuleNotFoundError: No module named \u0027_sqlite3\u0027",
+      "parentUuid": "d64bdff4_15f393b7",
+      "revId": "83fa2a658448745fc8e36a9b47dc937b4c07f129",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
