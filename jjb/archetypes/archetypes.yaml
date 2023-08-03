@@ -20,17 +20,12 @@
 - project:
     name: archetypes-sonar
     jobs:
-      - gerrit-maven-sonar
+      - odl-sonar-jobs-jdk11
 
     project: "archetypes"
     project-name: "archetypes"
     branch: "master"
-    java-version: "openjdk11"
     mvn-settings: "archetypes-settings"
-    sonarcloud: true
-    sonarcloud-project-organization: "{sonarcloud_project_organization}"
-    sonarcloud-api-token: "{sonarcloud_api_token}"
-    sonarcloud-project-key: "{sonarcloud_project_organization}_{project-name}"
 
 - project:
     name: archetypes-info

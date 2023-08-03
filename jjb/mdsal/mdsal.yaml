@@ -106,7 +106,7 @@
 - project:
     name: mdsal-sonar
     jobs:
-      - gerrit-maven-sonar:
+      - odl-sonar-jobs-jdk17:
           mvn-params: >
             -Dodl.jacoco.aggregateFile=$WORKSPACE/target/jacoco.exec
             -Dskip.karaf.featureTest=true
@@ -117,14 +117,9 @@
     project: "mdsal"
     project-name: "mdsal"
     branch: "master"
-    mvn-version: mvn38
     mvn-settings: "mdsal-settings"
     mvn-goals: "clean deploy"
     mvn-opts: "-Dintegrationtests"
-    sonarcloud: true
-    sonarcloud-project-organization: "{sonarcloud_project_organization}"
-    sonarcloud-api-token: "{sonarcloud_api_token}"
-    sonarcloud-project-key: "{sonarcloud_project_organization}_{project-name}"
 
 - project:
     name: mdsal-info

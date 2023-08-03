@@ -35,18 +35,14 @@
 - project:
     name: genius-sonar
     jobs:
-      - gerrit-maven-sonar
+      - odl-sonar-jobs-jdk11
+
     project: "genius"
     project-name: "genius"
     branch: "master"
     build-node: centos7-builder-4c-4g
-    java-version: "openjdk11"
     mvn-settings: "genius-settings"
     mvn-opts: "-Xmx1024m"
-    sonarcloud: true
-    sonarcloud-project-organization: "{sonarcloud_project_organization}"
-    sonarcloud-api-token: "{sonarcloud_api_token}"
-    sonarcloud-project-key: "{sonarcloud_project_organization}_{project-name}"
 
 - project:
     name: genius-info

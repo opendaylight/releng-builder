@@ -88,7 +88,7 @@
 - project:
     name: controller-sonar
     jobs:
-      - gerrit-maven-sonar:
+      - odl-sonar-jobs-jdk17:
           mvn-params: >
             -Dodl.jacoco.aggregateFile=$WORKSPACE/target/jacoco.exec
             -Dskip.karaf.featureTest=true
@@ -99,14 +99,9 @@
     project: "controller"
     project-name: "controller"
     branch: master
-    mvn-version: mvn38
     mvn-settings: "controller-settings"
     mvn-goals: "clean deploy -Pintegrationtests,docs"
     mvn-opts: "-Xmx4096m -Dmaven.compile.fork=true"
-    sonarcloud: true
-    sonarcloud-project-organization: "{sonarcloud_project_organization}"
-    sonarcloud-api-token: "{sonarcloud_api_token}"
-    sonarcloud-project-key: "{sonarcloud_project_organization}_{project-name}"
 
 - project:
     name: controller-info
