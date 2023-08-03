@@ -94,7 +94,7 @@
 - project:
     name: yangtools-sonar
     jobs:
-      - gerrit-maven-sonar:
+      - odl-sonar-jobs-jdk17:
           mvn-params: >
             -Dodl.jacoco.aggregateFile=$WORKSPACE/target/jacoco.exec
             -Dskip.karaf.featureTest=true
@@ -105,13 +105,7 @@
     project: "yangtools"
     project-name: "yangtools"
     branch: "master"
-    mvn-version: mvn38
     mvn-settings: "yangtools-settings"
-    sonarcloud: true
-    sonarcloud-java-version: openjdk17
-    sonarcloud-project-organization: "{sonarcloud_project_organization}"
-    sonarcloud-api-token: "{sonarcloud_api_token}"
-    sonarcloud-project-key: "{sonarcloud_project_organization}_{project-name}"
 
 - project:
     name: yangtools-info

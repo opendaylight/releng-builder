@@ -69,6 +69,34 @@
     java-version: openjdk17
     mvn-version: mvn38
 
+- job-group:
+    name: odl-sonar-jobs-jdk11
+
+    jobs:
+      - gerrit-maven-sonar
+
+    java-version: openjdk11
+    mvn-version: mvn38
+    sonarcloud: true
+    sonarcloud-java-version: openjdk11
+    sonarcloud-project-organization: "{sonarcloud_project_organization}"
+    sonarcloud-api-token: "{sonarcloud_api_token}"
+    sonarcloud-project-key: "{sonarcloud_project_organization}_{project-name}"
+
+- job-group:
+    name: odl-sonar-jobs-jdk17
+
+    jobs:
+      - gerrit-maven-sonar
+
+    java-version: openjdk17
+    mvn-version: mvn38
+    sonarcloud: true
+    sonarcloud-java-version: openjdk17
+    sonarcloud-project-organization: "{sonarcloud_project_organization}"
+    sonarcloud-api-token: "{sonarcloud_api_token}"
+    sonarcloud-project-key: "{sonarcloud_project_organization}_{project-name}"
+
 - job-template:
     name: "{project-name}-integration-{stream}"
 

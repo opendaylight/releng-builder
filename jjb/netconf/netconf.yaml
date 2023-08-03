@@ -128,7 +128,7 @@
 - project:
     name: netconf-sonar
     jobs:
-      - gerrit-maven-sonar:
+      - odl-sonar-jobs-jdk17:
           mvn-params: >
             -Dodl.jacoco.aggregateFile=$WORKSPACE/target/jacoco.exec
             -Dskip.karaf.featureTest=true
@@ -139,14 +139,9 @@
     project: "netconf"
     project-name: "netconf"
     branch: "master"
-    mvn-version: mvn38
     mvn-settings: "netconf-settings"
     mvn-goals: "clean deploy -Pintegrationtests"
     build-timeout: 90
-    sonarcloud: true
-    sonarcloud-project-organization: "{sonarcloud_project_organization}"
-    sonarcloud-api-token: "{sonarcloud_api_token}"
-    sonarcloud-project-key: "{sonarcloud_project_organization}_{project-name}"
 
 - project:
     name: netconf-info
