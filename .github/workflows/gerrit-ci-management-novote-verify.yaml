@@ -47,12 +47,10 @@ concurrency:
   group: ci-management-${{ github.workflow }}-${{ github.event.inputs.GERRIT_CHANGE_ID || github.run_id }}
   cancel-in-progress: true
 
-permissions: read-all
-
 jobs:
   call-gerrit-ci-management-verify:
     # yamllint disable-line rule:line-length
-    uses: lfit/releng-reusable-workflows/.github/workflows/composed-ci-management-verify.yaml@c2ac0a0837fb45713491e3074c1199c344dbe3a3
+    uses: lfit/releng-reusable-workflows/.github/workflows/composed-ci-management-verify.yaml@main
     with:
       GERRIT_BRANCH: ${{ inputs.GERRIT_BRANCH }}
       GERRIT_CHANGE_ID: ${{ inputs.GERRIT_CHANGE_ID }}
