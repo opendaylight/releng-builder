@@ -88,8 +88,10 @@
     jobs:
       - "{project-name}-gerrit-branch-lock-{stream}"
     stream:
-      - potassium:
+      - calcium:
           branch: "master"
+      - potassium:
+          branch: "stable/potassium"
       - argon:
           branch: "stable/argon"
       - chlorine:

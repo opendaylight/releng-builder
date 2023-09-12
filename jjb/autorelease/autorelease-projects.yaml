@@ -9,8 +9,10 @@
       - gerrit-tox-verify
 
     stream:
-      - potassium:
+      - calcium:
           branch: "master"
+      - potassium:
+          branch: "stable/potassium"
       - argon:
           branch: "stable/argon"
       - chlorine:
@@ -33,8 +35,11 @@
       - "autorelease-generate-release-notes-{stream}"
 
     stream:
-      - potassium:
+      - calcium:
           branch: "master"
+          integration-test: potassium
+      - potassium:
+          branch: "stable/potassium"
           integration-test: potassium
       - argon:
           branch: "stable/argon"

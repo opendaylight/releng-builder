@@ -1,5 +1,37 @@
 ---
 - project:
+    name: openflowplugin-calcium
+    jobs:
+      - "{project-name}-distribution-check-{stream}"
+      - "{project-name}-maven-javadoc-jobs":
+          mvn-version: mvn38
+          java-version: openjdk17
+      - "{project-name}-rtd-jobs":
+          build-node: centos8-builder-2c-2g
+          doc-dir: .tox/docs/tmp/html
+          project-pattern: openflowplugin
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-openflowplugin/38994/
+          rtd-token: 86ce095922558b890c61b1b05d682521d1d66d5f
+      - odl-maven-jobs-jdk17
+      - odl-maven-verify-jobs-jdk17
+
+    stream: calcium
+    project: "openflowplugin"
+    project-name: "openflowplugin"
+    branch: "master"
+    build-timeout: 90
+    mvn-settings: "openflowplugin-settings"
+    mvn-goals: "clean deploy javadoc:aggregate"
+    dependencies: >
+      odlparent-merge-{stream},
+      yangtools-merge-{stream},
+      controller-merge-{stream},
+      openflowjava-merge-{stream}
+    email-upstream: "[openflowplugin] [odlparent] [yangtools] [controller] [openflowjava]"
+    # Used by the release job
+    staging-profile-id: a68a76dc1b44c
+
+- project:
     name: openflowplugin-potassium
     jobs:
       - "{project-name}-distribution-check-{stream}"
@@ -18,7 +50,7 @@
     stream: potassium
     project: "openflowplugin"
     project-name: "openflowplugin"
-    branch: "master"
+    branch: "stable/potassium"
     build-timeout: 90
     mvn-settings: "openflowplugin-settings"
     mvn-goals: "clean deploy javadoc:aggregate"

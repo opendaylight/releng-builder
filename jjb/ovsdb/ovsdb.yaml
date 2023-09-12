@@ -1,5 +1,31 @@
 ---
 - project:
+    name: ovsdb-calcium
+    jobs:
+      - "{project-name}-distribution-check-{stream}"
+      - "{project-name}-maven-javadoc-jobs":
+          mvn-version: mvn38
+          java-version: openjdk17
+      - "{project-name}-rtd-jobs":
+          build-node: centos8-builder-2c-2g
+          project-pattern: ovsdb
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/opendaylight-ovsdb/35667/
+          rtd-token: 46030df8681cf7fc857aa80c1a7695f46ed252be
+      - odl-maven-jobs-jdk17
+      - odl-maven-verify-jobs-jdk17
+
+    stream: calcium
+    project: "ovsdb"
+    project-name: "ovsdb"
+    branch: "master"
+    mvn-settings: "ovsdb-settings"
+    dependencies: "odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream}"
+    email-upstream: "[ovsdb] [odlparent] [controller] [yangtools]"
+
+    # Used by the release job
+    staging-profile-id: a68b188166958
+
+- project:
     name: ovsdb-potassium
     jobs:
       - "{project-name}-distribution-check-{stream}"
@@ -17,7 +43,7 @@
     stream: potassium
     project: "ovsdb"
     project-name: "ovsdb"
-    branch: "master"
+    branch: "stable/potassium"
     mvn-settings: "ovsdb-settings"
     dependencies: "odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream}"
     email-upstream: "[ovsdb] [odlparent] [controller] [yangtools]"
