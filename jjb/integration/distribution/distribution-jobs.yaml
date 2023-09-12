@@ -24,8 +24,10 @@
     nexus-iq-stage: release
     email-upstream: "[int/dist]"
     stream:
-      - potassium:
+      - calcium:
           branch: "master"
+      - potassium:
+          branch: "stable/potassium"
       - argon:
           branch: "stable/argon"
       - chlorine:
@@ -55,8 +57,17 @@
     dist-pom: "distribution/pom.xml"
 
     stream:
-      - potassium:
+      - calcium:
           branch: "master"
+          dependencies: >
+            daexim-maven-merge-{stream},
+            jsonrpc-maven-merge-{stream},
+            lispflowmapping-maven-merge-{stream},
+            openflowplugin-maven-merge-{stream},
+            ovsdb-maven-merge-{stream},
+            serviceutils-maven-merge-{stream},
+      - potassium:
+          branch: "stable/potassium"
           dependencies: >
             daexim-maven-merge-{stream},
             jsonrpc-maven-merge-{stream},
@@ -113,8 +124,10 @@
     jobs:
       - "{project-name}-gerrit-docker-jobs"
     stream:
-      - potassium:
+      - calcium:
           branch: "master"
+      - potassium:
+          branch: "stable/potassium"
       - argon:
           branch: "stable/argon"
       - chlorine:
