@@ -30,20 +30,6 @@
     gerrit-server-name: lf-releng
 
 - project:
-    name: lf-infra-info-master
-    jobs:
-      - gerrit-tox-verify
-
-    project-name: lf-infra-info-master
-    project: releng/info-master
-    build-node: centos7-builder-2c-2g
-    stream: any
-    branch: "*"
-
-    git-url: https://gerrit.linuxfoundation.org/infra/$GERRIT_PROJECT
-    gerrit-server-name: lf-releng
-
-- project:
     name: lf-test-release-tox-verify
     jobs:
       - gerrit-tox-verify
