@@ -26,6 +26,32 @@
     staging-profile-id: 1271cf710cc09d
 
 - project:
+    name: yangtools-11.0.x
+    jobs:
+      - odl-maven-jobs-jdk17
+      - odl-maven-verify-jobs-jdk17
+
+    project: yangtools
+    project-name: yangtools
+    branch: 11.0.x
+    stream: 11.0.x
+
+    mvn-settings: "yangtools-settings"
+
+    dependencies: ""
+    email-upstream: "[yangtools]"
+    archive-artifacts: >
+      **/*.prop
+      **/*.log
+      **/target/surefire-reports/*-output.txt
+      **/target/failsafe-reports/failsafe-summary.xml
+      **/hs_err_*.log
+      **/target/feature/feature.xml
+
+    # Used by the release job
+    staging-profile-id: 1271cf710cc09d
+
+- project:
     name: yangtools-10.0.x
     jobs:
       - odl-maven-jobs-jdk17
