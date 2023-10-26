@@ -42,13 +42,6 @@
             odlparent infrautils yangtools mdsal controller aaa netconf bgpcep
             serviceutils daexim jsonrpc ovsdb openflowplugin lispflowmapping
             integration/distribution
-      - chlorine:
-          branch: "stable/chlorine"
-          csit-list: !include: csit-jobs-chlorine.lst
-          build-order: >
-            odlparent infrautils yangtools mdsal controller aaa netconf bgpcep
-            serviceutils daexim jsonrpc ovsdb openflowplugin lispflowmapping
-            integration/distribution
 
 - project:
     name: integration-distribution
@@ -101,19 +94,6 @@
           csit-list: !include: csit-jobs-argon.lst
           csit-mri-list: "{csit-mri-list-argon}"
           csit-weekly-list: "{csit-weekly-list-argon}"
-      - chlorine:
-          branch: "stable/chlorine"
-          csit-blocklist: >
-            aaa controller genius lispflowmapping l2switch mdsal
-            netconf netvirt odlmicro sxp yangtools
-            gate longevity sanity tdd tempest wip
-            bgpcep-csit-3node-bgpclustering-all
-            bgpcep-csit-3node-bgpclustering-ha-only
-            openflowplugin-csit-1node-bundle-based-reconciliation
-            last-line-is-ignored-so-we-need-something-dummy-here-to-make-sure-the-real-last-line-is-used
-          csit-list: !include: csit-jobs-chlorine.lst
-          csit-mri-list: "{csit-mri-list-chlorine}"
-          csit-weekly-list: "{csit-weekly-list-chlorine}"
 
 - project:
     name: integration-sanity
@@ -135,10 +115,6 @@
           branch: "stable/argon"
           karaf-version: odl
           csit-sanity-list: "{csit-sanity-list-argon}"
-      - chlorine:
-          branch: "stable/chlorine"
-          karaf-version: odl
-          csit-sanity-list: "{csit-sanity-list-chlorine}"
 
 - job-template:
     name: "integration-merge-dashboard"

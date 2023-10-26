@@ -30,8 +30,6 @@
           branch: "stable/potassium"
       - argon:
           branch: "stable/argon"
-      - chlorine:
-          branch: "stable/chlorine"
 
 - project:
     name: distribution-managed
@@ -84,15 +82,6 @@
             openflowplugin-maven-merge-{stream},
             ovsdb-maven-merge-{stream},
             serviceutils-maven-merge-{stream},
-      - chlorine:
-          branch: "stable/chlorine"
-          dependencies: >
-            daexim-maven-merge-{stream},
-            jsonrpc-maven-merge-{stream},
-            lispflowmapping-maven-merge-{stream},
-            openflowplugin-maven-merge-{stream},
-            ovsdb-maven-merge-{stream},
-            serviceutils-maven-merge-{stream},
 
 - project:
     name: distribution-sonar
@@ -130,8 +119,6 @@
           branch: "stable/potassium"
       - argon:
           branch: "stable/argon"
-      - chlorine:
-          branch: "stable/chlorine"
 
 - project:
     name: distribution-docker-release

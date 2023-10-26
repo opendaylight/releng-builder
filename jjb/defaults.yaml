@@ -124,9 +124,9 @@
 
     # Data for csit-verify jobs
     # Branch for "last" version detection
-    verify-branch: stable/chlorine
+    verify-branch: stable/argon
     # Value for ODL_STREAM
-    verify-stream: chlorine
+    verify-stream: argon
     verify-karaf-version: karaf4
     verify-jdkversion: openjdk17
 
@@ -212,36 +212,6 @@
     10-exclude-value: ""
 
     # Manual CSIT job lists used by sanity or periodic in nature.
-    csit-mri-list-chlorine: >
-      aaa-csit-1node-authn-all-chlorine,
-      controller-csit-1node-akka1-all-chlorine,
-      controller-csit-1node-benchmark-all-chlorine,
-      controller-csit-1node-rest-cars-perf-all-chlorine,
-      controller-csit-3node-benchmark-all-chlorine,
-      controller-csit-3node-clustering-ask-all-chlorine,
-      controller-csit-3node-clustering-tell-all-chlorine,
-      controller-csit-3node-rest-clust-cars-perf-ask-only-chlorine,
-      controller-csit-3node-rest-clust-cars-perf-tell-only-chlorine,
-      mdsal-csit-3node-netty-replicate-only-chlorine,
-      netconf-csit-1node-callhome-only-master,
-      netconf-csit-1node-scale-max-devices-only-master,
-      netconf-csit-1node-scale-only-master,
-      netconf-csit-1node-userfeatures-all-master,
-      netconf-csit-3node-clustering-only-master,
-      netconf-csit-3node-clustering-scale-only-master,
-      yangtools-csit-1node-system-only-chlorine
-    csit-weekly-list-chlorine: >
-      controller-csit-1node-notifications-longevity-only-chlorine,
-      controller-csit-3node-drb-partnheal-longevity-only-chlorine,
-      controller-csit-3node-drb-precedence-longevity-only-chlorine,
-      controller-csit-3node-ddb-expl-lead-movement-longevity-only-chlorine,
-      bgpcep-csit-3node-bgpclustering-longevity-only-chlorine,
-      distribution-deploy-chlorine,
-      distribution-offline-chlorine,
-      openflowplugin-csit-1node-longevity-only-chlorine
-    csit-sanity-list-chlorine: >
-      openflowplugin-csit-1node-sanity-only-chlorine,
-      distribution-sanity-chlorine
     csit-mri-list-argon: >
       aaa-csit-1node-authn-all-argon,
       controller-csit-1node-akka1-all-argon,
