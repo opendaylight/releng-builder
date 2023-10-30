@@ -2,15 +2,15 @@
 - project:
     name: l2switch-master
     jobs:
-      - odl-maven-jobs-jdk11
-      - odl-maven-verify-jobs
+      - odl-maven-jobs-jdk17
+      - odl-maven-verify-jobs-jdk17
 
     project: l2switch
     project-name: l2switch
     branch: master
     stream: master
 
-    java-version: "openjdk11"
+    java-version: "openjdk17"
     mvn-settings: "l2switch-settings"
     mvn-version: mvn36
 
