@@ -3,15 +3,15 @@
     name: neutron-master
     jobs:
       - "{project-name}-maven-javadoc-jobs"
-      - odl-maven-jobs-jdk11
-      - odl-maven-verify-jobs
+      - odl-maven-jobs-jdk17
+      - odl-maven-verify-jobs-jdk17
 
     stream: master
     project: "neutron"
     project-name: "neutron"
     build-timeout: 90
     branch: "master"
-    java-version: "openjdk11"
+    java-version: "openjdk17"
     mvn-settings: "neutron-settings"
     mvn-opts: "-Xmx1024m"
     email-upstream: "[neutron] [odlparent] [aaa]"
