@@ -10,10 +10,6 @@
           jenkins-silos: releng sandbox
       - gerrit-jenkins-sandbox-cleanup
       - gerrit-jjb-deploy-job
-      - gerrit-jjb-merge:
-          build-timeout: 90
-      - gerrit-jjb-verify:
-          build-timeout: 90
       - builder-check-poms
       - builder-copy-sandbox-logs
       - gerrit-tox-verify
