@@ -20,6 +20,7 @@
     archive-artifacts: "**/*.log"
 
     build-node: centos7-builder-2c-1g
+    packer-cloud-settings: packer-cloud-env-hcl
     build-timeout: 90
     cron: "00 H 1 * *"
 
@@ -28,7 +29,6 @@
       - centos-cs-8
     templates: builder
     update-cloud-image: true
-    packer-cloud-settings: packer-cloud-env-hcl
 
 - project:
     name: packer-devstack-jobs
@@ -41,13 +41,13 @@
     archive-artifacts: "**/*.log"
 
     build-node: centos7-builder-2c-1g
+    packer-cloud-settings: packer-cloud-env-hcl
     build-timeout: 90
     cron: "00 H 1 * *"
 
     platforms: centos-7
     templates: devstack
     update-cloud-image: true
-    packer-cloud-settings: packer-cloud-env-hcl
 
 - project:
     name: packer-devstack-pre-pip-queens-jobs
@@ -60,13 +60,13 @@
     archive-artifacts: "**/*.log"
 
     build-node: centos7-builder-2c-1g
+    packer-cloud-settings: packer-cloud-env-hcl
     build-timeout: 75
     cron: "00 H 1 * *"
 
     platforms: centos-7
     templates: devstack-pre-pip-queens
     update-cloud-image: true
-    packer-cloud-settings: packer-cloud-env-hcl
 
 - project:
     name: packer-devstack-pre-pip-rocky-jobs
@@ -79,13 +79,13 @@
     archive-artifacts: "**/*.log"
 
     build-node: centos7-builder-2c-1g
+    packer-cloud-settings: packer-cloud-env-hcl
     build-timeout: 75
     cron: "00 H 1 * *"
 
     platforms: centos-7
     templates: devstack-pre-pip-rocky
     update-cloud-image: true
-    packer-cloud-settings: packer-cloud-env-hcl
 
 - project:
     name: packer-devstack-pre-pip-stein-jobs
@@ -98,13 +98,13 @@
     archive-artifacts: "**/*.log"
 
     build-node: centos7-builder-2c-1g
+    packer-cloud-settings: packer-cloud-env-hcl
     build-timeout: 75
     cron: "00 H 1 * *"
 
     platforms: centos-7
     templates: devstack-pre-pip-stein
     update-cloud-image: true
-    packer-cloud-settings: packer-cloud-env-hcl
 
 - project:
     name: packer-docker-jobs
@@ -117,6 +117,7 @@
     archive-artifacts: "**/*.log"
 
     build-node: centos7-builder-2c-1g
+    packer-cloud-settings: packer-cloud-env-hcl
     build-timeout: 60
     cron: "00 H 1 * *"
 
@@ -126,7 +127,6 @@
       - ubuntu-20.04
     templates: docker
     update-cloud-image: true
-    packer-cloud-settings: packer-cloud-env-hcl
 
 - project:
     name: packer-helm-jobs
@@ -140,6 +140,7 @@
     archive-artifacts: "**/*.log"
 
     build-node: centos7-builder-2c-1g
+    packer-cloud-settings: packer-cloud-env-hcl
     build-timeout: 60
     cron: "00 H 1 * *"
 
@@ -148,7 +149,6 @@
       - centos-7
     templates: helm
     update-cloud-image: true
-    packer-cloud-settings: packer-cloud-env-hcl
 
 - project:
     name: packer-mininet-ovs-2.8-jobs
@@ -161,6 +161,8 @@
     archive-artifacts: "**/*.log"
 
     build-node: centos7-builder-2c-1g
+    packer-cloud-settings: packer-cloud-env-hcl
+
     build-timeout: 90
     cron: "00 H 1 * *"
 
@@ -168,7 +170,6 @@
       - ubuntu-18.04
     templates: mininet-ovs-2.8
     update-cloud-image: true
-    packer-cloud-settings: packer-cloud-env-hcl
 
 - project:
     name: packer-robot-jobs
@@ -181,6 +182,7 @@
     archive-artifacts: "**/*.log"
 
     build-node: centos7-builder-2c-1g
+    packer-cloud-settings: packer-cloud-env-hcl
     build-timeout: 60
     cron: "00 H 1 * *"
 
