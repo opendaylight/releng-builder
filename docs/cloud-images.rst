@@ -54,6 +54,7 @@ Following are the list of published images available to Jenkins jobs.
 * ZZCI - CentOS 7 - robot - x86_64 - 20221101-220138.675
 * ZZCI - CentOS 7 - robot - x86_64 - 20221201-220143.533
 * ZZCI - CentOS 7 - robot - x86_64 - 20230301-220131.480
+* ZZCI - CentOS 7 - robot - x86_64 - 20230501-220152.957
 * ZZCI - CentOS Stream 8 - builder - x86_64 - 20220303-223622.243
 * ZZCI - CentOS Stream 8 - builder - x86_64 - 20220405-005246.199
 * ZZCI - CentOS Stream 8 - builder - x86_64 - 20220411-013651.819
