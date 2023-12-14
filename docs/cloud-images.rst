@@ -11,11 +11,13 @@ Following are the list of published images available to Jenkins jobs.
 * ZZCI - CentOS 7 - builder - x86_64 - 20230301-060101.869
 * ZZCI - CentOS 7 - builder - x86_64 - 20230401-060117.151
 * ZZCI - CentOS 7 - builder - x86_64 - 20230501-060110.287
+* ZZCI - CentOS 7 - builder - x86_64 - 20231213-090206.813
 * ZZCI - CentOS 7 - devstack - x86_64 - 20220401-230107.511
 * ZZCI - CentOS 7 - devstack - x86_64 - 20220915-220248.057
 * ZZCI - CentOS 7 - devstack - x86_64 - 20221016-125752.520
 * ZZCI - CentOS 7 - devstack - x86_64 - 20230301-230109.257
 * ZZCI - CentOS 7 - devstack - x86_64 - 20230401-230106.445
+* ZZCI - CentOS 7 - devstack - x86_64 - 20231213-111336.211
 * ZZCI - CentOS 7 - devstack-rocky - 20190601-000116.015
 * ZZCI - CentOS 7 - devstack-rocky - 20190628-065204.973
 * ZZCI - CentOS 7 - devstack-rocky - x86_64 - 20191002-183226.559
@@ -41,6 +43,7 @@ Following are the list of published images available to Jenkins jobs.
 * ZZCI - CentOS 7 - docker - x86_64 - 20230301-220107.956
 * ZZCI - CentOS 7 - docker - x86_64 - 20230401-220108.252
 * ZZCI - CentOS 7 - docker - x86_64 - 20230501-220111.311
+* ZZCI - CentOS 7 - docker - x86_64 - 20231213-111103.823
 * ZZCI - CentOS 7 - helm - x86_64 - 20220401-000138.473
 * ZZCI - CentOS 7 - helm - x86_64 - 20220811-110654.568
 * ZZCI - CentOS 7 - helm - x86_64 - 20220915-220356.090
@@ -71,9 +74,11 @@ Following are the list of published images available to Jenkins jobs.
 * ZZCI - CentOS Stream 8 - builder - x86_64 - 20230401-160111.589
 * ZZCI - CentOS Stream 8 - builder - x86_64 - 20230501-160107.084
 * ZZCI - CentOS Stream 8 - builder - x86_64 - 20230727-135233.501
+* ZZCI - CentOS Stream 8 - builder - x86_64 - 20231213-094027.766
 * ZZCI - CentOS Stream 8 - robot - x86_64 - 20220811-231817.668
 * ZZCI - CentOS Stream 8 - robot - x86_64 - 20230301-010147.625
 * ZZCI - CentOS Stream 8 - robot - x86_64 - 20230401-010209.151
+* ZZCI - CentOS Stream 8 - robot - x86_64 - 20231213-111243.663
 * ZZCI - OPNFV - apex - compute - 0
 * ZZCI - OPNFV - apex - compute - 1
 * ZZCI - OPNFV - apex - controller - 0
