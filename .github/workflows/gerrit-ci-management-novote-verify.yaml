@@ -71,7 +71,7 @@ jobs:
 
   call-gerrit-packer-verify:
     # yamllint disable-line rule:line-length
-    uses: lfit/releng-reusable-workflows/.github/workflows/composed-packer-verify.yaml@main
+    uses: lfit/releng-reusable-workflows/.github/workflows/compose-packer-verify.yaml@main
     with:
       GERRIT_BRANCH: ${{ inputs.GERRIT_BRANCH }}
       GERRIT_CHANGE_ID: ${{ inputs.GERRIT_CHANGE_ID }}
