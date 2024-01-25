@@ -71,7 +71,7 @@ jobs:
     needs: prepare
     runs-on: ubuntu-latest
     steps:
-      - uses: lfit/checkout-gerrit-change-action@v0.4
+      - uses: lfit/checkout-gerrit-change-action@57bf0435f739fbbc7ce4cc85c9c3b8a386c6f84b # v0.6
         with:
           gerrit-refspec: ${{ inputs.GERRIT_REFSPEC }}
           delay: "0s"
@@ -88,7 +88,7 @@ jobs:
     needs: prepare
     runs-on: ubuntu-latest
     steps:
-      - uses: lfit/checkout-gerrit-change-action@v0.4
+      - uses: lfit/checkout-gerrit-change-action@57bf0435f739fbbc7ce4cc85c9c3b8a386c6f84b # v0.6
         with:
           gerrit-refspec: ${{ inputs.GERRIT_REFSPEC }}
           delay: "0s"
@@ -102,7 +102,7 @@ jobs:
     needs: prepare
     runs-on: ubuntu-latest
     steps:
-      - uses: lfit/checkout-gerrit-change-action@v0.4
+      - uses: lfit/checkout-gerrit-change-action@57bf0435f739fbbc7ce4cc85c9c3b8a386c6f84b # v0.6
         with:
           gerrit-refspec: ${{ inputs.GERRIT_REFSPEC }}
           delay: "0s"
@@ -132,7 +132,7 @@ jobs:
     needs: prepare
     runs-on: ubuntu-latest
     steps:
-      - uses: lfit/checkout-gerrit-change-action@v0.4
+      - uses: lfit/checkout-gerrit-change-action@57bf0435f739fbbc7ce4cc85c9c3b8a386c6f84b # v0.6
         with:
           gerrit-refspec: ${{ inputs.GERRIT_REFSPEC }}
           delay: "0s"
@@ -150,7 +150,7 @@ jobs:
     steps:
       - name: Gerrit Checkout
         # yamllint disable-line rule:line-length
-        uses: lfit/checkout-gerrit-change-action@70360ca2f8bee3e6a15224d8a03f8e017b1ac91f # v0.4
+        uses: lfit/checkout-gerrit-change-action@57bf0435f739fbbc7ce4cc85c9c3b8a386c6f84b # v0.6
         with:
           gerrit-refspec: ${{ inputs.GERRIT_REFSPEC }}
           delay: "0s"
