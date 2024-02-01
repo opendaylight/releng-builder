@@ -3,6 +3,6 @@
 - builder:
     name: docs-update
     builders:
-      - shell: !include-raw:
+      - shell: !include-raw-escape:
           - docs_version_bump.sh
           - docs_version_bump_projects.sh

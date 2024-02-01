@@ -98,6 +98,7 @@
       **/target/surefire-reports/*-output.txt
     mvn-goals: clean install
     disable-job: false
+    jacoco-exclude-pattern: "**/gen/**,**/generated-sources/**,**/yang-gen**,**/pax/**"
 
     #####################
     # Job Configuration #
@@ -156,7 +157,8 @@
           email-recipients: "{email-recipients}"
           email-prefix: "{email-upstream}"
       - findbugs
-      - lf-jacoco-report
+      - lf-jacoco-report:
+          exclude-pattern: "{jacoco-exclude-pattern}"
       - lf-infra-publish
 
 - job-template:
@@ -166,6 +168,7 @@
     # Default parameters #
     ######################
     disable-job: "false"
+    jacoco-exclude-pattern: "**/gen/**,**/generated-sources/**,**/yang-gen**,**/pax/**"
 
     archive-artifacts: >
       **/*.log
@@ -258,5 +261,6 @@
           id: ""
           unique-version: true
           deploy-unstable: false
-      - lf-jacoco-report
+      - lf-jacoco-report:
+          exclude-pattern: "{jacoco-exclude-pattern}"
       - lf-infra-publish
