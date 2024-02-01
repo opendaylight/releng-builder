@@ -19,25 +19,7 @@
 - builder:
     name: autorelease-checkout-gerrit-patch
     builders:
-      - shell: |
-          #!/bin/bash -l
-          set -eu -o pipefail
-
-          # If the project is autorelease then we do not need to cd
-          if [ "$GERRIT_PROJECT" != "releng/autorelease" ]; then
-              cd "$WORKSPACE/$GERRIT_PROJECT"
-          fi
-
-          echo "Checking out ${GERRIT_PROJECT} patch ${GERRIT_REFSPEC}..."
-          git fetch origin ${GERRIT_REFSPEC} && git checkout FETCH_HEAD
-
-          # If the project is autorelease then we need to init and update submodules
-          if [ "$GERRIT_PROJECT" == "releng/autorelease" ]; then
-              git submodule update --init
-              # The previous checkout might have failed to remove directory of a submodule being removed.
-              # See https://stackoverflow.com/a/10761699
-              git clean -dff
-          fi
+      - shell: !include-raw-escape: autorelease-checkout-gerrit-patch.sh
 
 - builder:
     name: autorelease-determine-merge-order
@@ -103,14 +85,14 @@
 - builder:
     name: autorelease-generate-release-patches
     builders:
-      - shell: !include-raw:
+      - shell: !include-raw-escape:
           - prepare-release.sh
 
 - builder:
     name: autorelease-get-integration-test-variables
     builders:
       - integration-set-variables
-      - shell: !include-raw: autorelease-get-integration-test-variables.sh
+      - shell: !include-raw-escape: autorelease-get-integration-test-variables.sh
       - inject:
           properties-file: variables.prop
 
@@ -123,18 +105,18 @@
 - builder:
     name: autorelease-generate-release-notes
     builders:
-      - shell: !include-raw:
+      - shell: !include-raw-escape:
           - generate-release-notes.sh
 
 - builder:
     name: autorelease-update-project-views
     builders:
-      - shell: !include-raw: update-autorelease-projects-views.sh
+      - shell: !include-raw-escape: update-autorelease-projects-views.sh
 
 - builder:
     name: autorelease-update-validate-projects
     builders:
-      - shell: !include-raw: update-validate-autorelease-projects.sh
+      - shell: !include-raw-escape: update-validate-autorelease-projects.sh
 
 - builder:
     name: autorelease-compare-projects
@@ -155,5 +137,5 @@
                 - SUCCESS
                 - UNSTABLE
               build-steps:
-                - shell: !include-raw: notify-build-failure.sh
+                - shell: !include-raw-escape: notify-build-failure.sh
           mark-unstable-if-failed: true
