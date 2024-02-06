@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "49b995ce_0e5acc2a",
+        "filename": "jjb/integration/distribution/distribution-check-verify-groupid.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1927
+      },
+      "writtenOn": "2024-02-06T21:46:30Z",
+      "side": 1,
+      "message": "This seems to work without the shellcheck exception:\n```\nfor PROJECT in /tmp/r/org/opendaylight/*; do\n    if [[ ! -d \"$PROJECT\" ]]; then\n        continue\n    fi\n```",
+      "revId": "bb082b47eab8d9d27355feb9087bd58d4aabc97d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bdfd7d85_4fa13a1f",
+        "filename": "jjb/integration/distribution/distribution-check-verify-groupid.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1927
+      },
+      "writtenOn": "2024-02-06T21:46:30Z",
+      "side": 1,
+      "message": "Indentation is not aligned.",
+      "revId": "bb082b47eab8d9d27355feb9087bd58d4aabc97d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3d28d6f4_643e7bb7",
+        "filename": "jjb/integration/integration-csit-archive-artifacts.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1927
+      },
+      "writtenOn": "2024-02-06T21:46:30Z",
+      "side": 1,
+      "message": "This should work without the shellcheck exception:\n```\nmv -- *_\"${i}\".png \"${NODE_FOLDER}\" || true\n```",
+      "revId": "bb082b47eab8d9d27355feb9087bd58d4aabc97d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6da3119a_674cdfea",
+        "filename": "jjb/integration/integration-csit-archive-artifacts.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1927
+      },
+      "writtenOn": "2024-02-06T21:46:30Z",
+      "side": 1,
+      "message": "Quotation marks shouldn\u0027t be used otherwise wildcard wouldn\u0027t work:\n```\nmv -- *.log *.log.gz *.csv *.png ./archives || true\n```",
+      "revId": "bb082b47eab8d9d27355feb9087bd58d4aabc97d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b156c7d_ce099c8a",
+        "filename": "jjb/integration/integration-csit-run-postscript.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1927
+      },
+      "writtenOn": "2024-02-06T21:46:30Z",
+      "side": 1,
+      "message": "This should work without the shellcheck exception:\n```\nsed \"s:integration:${WORKSPACE}:\" \"${script_name}\" \u003e postplan.txt\n```",
+      "revId": "bb082b47eab8d9d27355feb9087bd58d4aabc97d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
