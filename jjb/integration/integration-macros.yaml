@@ -293,7 +293,7 @@
 - builder:
     name: integration-get-slave-addresses
     builders:
-      - shell: !include-raw-escape: integration-get-slave-addresses.sh
+      - shell: !include-raw: integration-get-slave-addresses.sh
 
 - builder:
     name: integration-set-variables
@@ -301,7 +301,7 @@
     # Required bash variables:
     #   KARAF_VERSION: 'karaf4' or 'karaf3'. Use distribution-karaf-version macro to set.
     builders:
-      - shell: !include-raw-escape: integration-set-variables.sh
+      - shell: !include-raw: integration-set-variables.sh
       - inject:
           properties-file: set_variables.env
 
@@ -313,7 +313,7 @@
     #   KARAF_VERSION: 'karaf4' or 'karaf3'. Use distribution-karaf-version macro to set.
     builders:
       - integration-set-variables
-      - shell: !include-raw-escape: integration-detect-variables.sh
+      - shell: !include-raw: integration-detect-variables.sh
       - inject:
           properties-file: detect_variables.env
 
@@ -324,7 +324,7 @@
 - builder:
     name: integration-deploy-controller-run-test
     builders:
-      - shell: !include-raw-escape: integration-deploy-controller-run-test.sh
+      - shell: !include-raw: integration-deploy-controller-run-test.sh
 
 # Macro: integration-deply-non-karaf-controller-run-test
 # Operation: this macro deploys non-karaf controller application and run test
@@ -333,7 +333,7 @@
 - builder:
     name: integration-run-test
     builders:
-      - shell: !include-raw-escape: integration-run-test.sh
+      - shell: !include-raw: integration-run-test.sh
 
 # Macro: integration-configure-clustering
 # Operation: this macro configures the clustering
@@ -342,7 +342,7 @@
 - builder:
     name: integration-configure-clustering
     builders:
-      - shell: !include-raw-escape: integration-configure-clustering.sh
+      - shell: !include-raw: integration-configure-clustering.sh
 
 # Macro: integration-start-cluster-run-test
 # Operation: this macro starts the 3-node cluster and runs test
@@ -351,7 +351,7 @@
 - builder:
     name: integration-start-cluster-run-test
     builders:
-      - shell: !include-raw-escape: integration-start-cluster-run-test.sh
+      - shell: !include-raw: integration-start-cluster-run-test.sh
 
 # Macro: integration-install-robotframework
 # Operation: Installs robotframework using pip to a virtualenv
@@ -360,7 +360,7 @@
 - builder:
     name: integration-install-robotframework
     builders:
-      - shell: !include-raw-escape: integration-install-robotframework.sh
+      - shell: !include-raw: integration-install-robotframework.sh
 
 # Macro: integration-cleanup-tmp
 # Operation: Cleans up temporary files created by build
@@ -369,7 +369,7 @@
 - builder:
     name: integration-cleanup-tmp
     builders:
-      - shell: !include-raw-escape: integration-cleanup-tmp.sh
+      - shell: !include-raw: integration-cleanup-tmp.sh
 
 # Macro: integration-multipatch-builder
 # Operation: checks out multiple patches and builds custom distribution
@@ -378,7 +378,7 @@
 - builder:
     name: integration-multipatch-builder
     builders:
-      - shell: !include-raw-escape: multipatch-distribution.sh
+      - shell: !include-raw: multipatch-distribution.sh
 
 # Macro: integration-rebase-patch
 # Operation: For cloned project, rebase checked-out Gerrit patch onto $DISTROBRANCH.
@@ -387,7 +387,7 @@
 - builder:
     name: integration-rebase-gerrit-patch
     builders:
-      - shell: !include-raw-escape: integration-rebase-gerrit-patch.sh
+      - shell: !include-raw: integration-rebase-gerrit-patch.sh
 
 # Macro: integration-install-common-functions
 # Operation: Copy the common-functions.sh script to csit nodes
@@ -395,7 +395,7 @@
 - builder:
     name: integration-install-common-functions
     builders:
-      - shell: !include-raw-escape:
+      - shell: !include-raw:
           - copy-common-functions.sh
           - common-functions.sh
 
@@ -408,12 +408,7 @@
     # Required bash variables:
     #   KARAF_ARTIFACT: 'karaf' or 'distribution-karaf'. Use integration-set-variables.
     builders:
-      - shell: !include-raw-escape: integration-compare-distributions.sh
-
-- builder:
-    name: integration-csit-archive-artifacts
-    builders:
-      - shell: !include-raw-escape: integration-csit-archive-artifacts.sh
+      - shell: !include-raw: integration-compare-distributions.sh
 
 - builder:
     name: integration-upload-distribution
@@ -466,7 +461,27 @@
                 - SUCCESS
                 - UNSTABLE
               build-steps:
-                - shell: !include-raw-escape: integration-csit-archive-artifacts.sh
+                - shell: |
+                    #!/bin/bash
+                    echo "Archiving csit artifacts"
+                    cd $WORKSPACE
+                    mkdir -p ./archives
+                    for i in `seq 1 ${NUM_ODL_SYSTEM}`; do
+                        NODE_FOLDER="./archives/odl_${i}"
+                        mkdir -p ${NODE_FOLDER}
+                        mv odl${i}_* ${NODE_FOLDER} || true
+                        mv karaf_${i}_*_threads* ${NODE_FOLDER} || true
+                        mv *_${i}.png ${NODE_FOLDER} || true
+                        mv /tmp/odl${i}_* ${NODE_FOLDER} || true
+                        mv gclogs-${i} ${NODE_FOLDER} || true
+                    done
+                    curl --output robot-plugin.zip "$BUILD_URL/robot/report/*zip*/robot-plugin.zip"
+                    unzip -d ./archives robot-plugin.zip
+                    mv *.log *.log.gz *.csv *.png ./archives || true  # Don't fail if file missing
+                    # TODO: Can the following line ever fail?
+                    find . -type f -name *.hprof -print0 \
+                        | tar -cvf - --null -T - | xz --threads=0 > ./archives/hprof.tar.xz
+                    # TODO: Tweak the compression level if better ratio (or speed) is needed.
           mark-unstable-if-failed: true
 
 - publisher:
@@ -482,5 +497,18 @@
                 - SUCCESS
                 - UNSTABLE
               build-steps:
-                - shell: !include-raw-escape: integration-csit-run-postscript.sh
+                - shell: |
+                    #!/bin/bash
+                    #The following script runs any configurable postplan stored in test/csit/postplans.
+                    if [ -f "${WORKSPACE}/test/csit/postplans/${TESTPLAN}" ]; then
+                        echo "postplan exists!!!"
+                        echo "Changing the postplan path..."
+                        script_name=${WORKSPACE}/test/csit/postplans/${TESTPLAN}
+                        cat ${script_name} | sed "s:integration:${WORKSPACE}:" > postplan.txt
+                        cat postplan.txt
+                        egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' postplan.txt | while read -r line ; do
+                            echo "Executing ${line}..."
+                            ${line}
+                        done
+                    fi
           mark-unstable-if-failed: true

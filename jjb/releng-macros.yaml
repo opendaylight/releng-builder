@@ -284,5 +284,5 @@
                 - SUCCESS
                 - UNSTABLE
               build-steps:
-                - shell: !include-raw-escape: generate-csit-status-report.sh
+                - shell: !include-raw: generate-csit-status-report.sh
           mark-unstable-if-failed: true
