@@ -20,7 +20,9 @@ for PROJECT in /tmp/r/org/opendaylight/*; do
         continue
     fi
     echo "Checking $PROJECT"
-    if [[ "$ALLOW_PROJECTS" != *"$PROJECT"* ]]; then
+    # strip path from the dirname
+    base_dir="$(basename -- "$PROJECT")"
+    if [[ "$ALLOW_PROJECTS" != *"$base_dir"* ]]; then
         echo "ERROR: Not allowed project $PROJECT pulled"
         EXIT_CODE="1"
     fi
