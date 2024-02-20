@@ -13,6 +13,7 @@ Following are the list of published images available to Jenkins jobs.
 * ZZCI - CentOS 7 - builder - x86_64 - 20230501-060110.287
 * ZZCI - CentOS 7 - builder - x86_64 - 20231213-090206.813
 * ZZCI - CentOS 7 - builder - x86_64 - 20240101-060132.845
+* ZZCI - CentOS 7 - builder - x86_64 - 20240201-060121.705
 * ZZCI - CentOS 7 - devstack - x86_64 - 20220401-230107.511
 * ZZCI - CentOS 7 - devstack - x86_64 - 20220915-220248.057
 * ZZCI - CentOS 7 - devstack - x86_64 - 20221016-125752.520
@@ -20,6 +21,7 @@ Following are the list of published images available to Jenkins jobs.
 * ZZCI - CentOS 7 - devstack - x86_64 - 20230401-230106.445
 * ZZCI - CentOS 7 - devstack - x86_64 - 20231213-111336.211
 * ZZCI - CentOS 7 - devstack - x86_64 - 20240101-230119.558
+* ZZCI - CentOS 7 - devstack - x86_64 - 20240201-230120.693
 * ZZCI - CentOS 7 - devstack-rocky - 20190601-000116.015
 * ZZCI - CentOS 7 - devstack-rocky - 20190628-065204.973
 * ZZCI - CentOS 7 - devstack-rocky - x86_64 - 20191002-183226.559
@@ -62,6 +64,7 @@ Following are the list of published images available to Jenkins jobs.
 * ZZCI - CentOS 7 - robot - x86_64 - 20230301-220131.480
 * ZZCI - CentOS 7 - robot - x86_64 - 20230501-220152.957
 * ZZCI - CentOS 7 - robot - x86_64 - 20240101-220154.458
+* ZZCI - CentOS 7 - robot - x86_64 - 20240201-220154.217
 * ZZCI - CentOS Stream 8 - builder - x86_64 - 20220303-223622.243
 * ZZCI - CentOS Stream 8 - builder - x86_64 - 20220405-005246.199
 * ZZCI - CentOS Stream 8 - builder - x86_64 - 20220411-013651.819
@@ -81,12 +84,14 @@ Following are the list of published images available to Jenkins jobs.
 * ZZCI - CentOS Stream 8 - builder - x86_64 - 20230801-160108.418
 * ZZCI - CentOS Stream 8 - builder - x86_64 - 20231213-094027.766
 * ZZCI - CentOS Stream 8 - builder - x86_64 - 20240117-011746.201
+* ZZCI - CentOS Stream 8 - builder - x86_64 - 20240201-160121.488
 * ZZCI - CentOS Stream 8 - robot - x86_64 - 20220811-231817.668
 * ZZCI - CentOS Stream 8 - robot - x86_64 - 20230301-010147.625
 * ZZCI - CentOS Stream 8 - robot - x86_64 - 20230401-010209.151
 * ZZCI - CentOS Stream 8 - robot - x86_64 - 20231213-111243.663
 * ZZCI - CentOS Stream 8 - robot - x86_64 - 20240101-010215.978
 * ZZCI - CentOS Stream 8 - robot - x86_64 - 20240116-014504.639
+* ZZCI - CentOS Stream 8 - robot - x86_64 - 20240201-010245.776
 * ZZCI - OPNFV - apex - compute - 0
 * ZZCI - OPNFV - apex - compute - 1
 * ZZCI - OPNFV - apex - controller - 0
