@@ -132,7 +132,11 @@
     name: "distribution-verify-{type}-{stream}"
 
     disable-job: "false"
-    jacoco-exclude-pattern: "**/gen/**,**/generated-sources/**,**/yang-gen**,**/pax/**"
+    jacoco-exclude-pattern: >
+      **/gen/**
+      **/generated-sources/**
+      **/yang-gen**
+      **/pax/**
 
     project-type: freestyle
     node: centos8-builder-8c-8g
@@ -195,7 +199,7 @@
     publishers:
       - findbugs
       - lf-jacoco-report:
-          exclude-pattern: { jacoco-exclude-pattern }
+          exclude-pattern: "{jacoco-exclude-pattern}"
       - lf-infra-publish
       - email-notification:
           email-recipients: "{email-recipients}"
@@ -210,7 +214,11 @@
     #     https://issues.apache.org/jira/browse/MNG-5666
 
     disable-job: false
-    jacoco-exclude-pattern: "**/gen/**,**/generated-sources/**,**/yang-gen**,**/pax/**"
+    jacoco-exclude-pattern: >
+      **/gen/**
+      **/generated-sources/**
+      **/yang-gen**
+      **/pax/**
 
     project-type: maven
     node: "centos8-builder-8c-8g"
