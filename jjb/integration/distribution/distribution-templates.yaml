@@ -132,10 +132,10 @@
     name: "distribution-verify-{type}-{stream}"
 
     disable-job: "false"
-    jacoco-exclude-pattern: >
-      **/gen/**
-      **/generated-sources/**
-      **/yang-gen**
+    jacoco-exclude-pattern: >-
+      **/gen/**,
+      **/generated-sources/**,
+      **/yang-gen**,
       **/pax/**
 
     project-type: freestyle
@@ -214,10 +214,10 @@
     #     https://issues.apache.org/jira/browse/MNG-5666
 
     disable-job: false
-    jacoco-exclude-pattern: >
-      **/gen/**
-      **/generated-sources/**
-      **/yang-gen**
+    jacoco-exclude-pattern: >-
+      **/gen/**,
+      **/generated-sources/**,
+      **/yang-gen**,
       **/pax/**
 
     project-type: maven

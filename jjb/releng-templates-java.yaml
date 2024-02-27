@@ -98,10 +98,10 @@
       **/target/surefire-reports/*-output.txt
     mvn-goals: clean install
     disable-job: false
-    jacoco-exclude-pattern: >
-      **/gen/**
-      **/generated-sources/**
-      **/yang-gen**
+    jacoco-exclude-pattern: >-
+      **/gen/**,
+      **/generated-sources/**,
+      **/yang-gen**,
       **/pax/**
 
     #####################
@@ -172,10 +172,10 @@
     # Default parameters #
     ######################
     disable-job: "false"
-    jacoco-exclude-pattern: >
-      **/gen/**
-      **/generated-sources/**
-      **/yang-gen**
+    jacoco-exclude-pattern: >-
+      **/gen/**,
+      **/generated-sources/**,
+      **/yang-gen**,
       **/pax/**
 
     archive-artifacts: >
