@@ -32,6 +32,38 @@
     staging-profile-id: 9427a05049030
 
 - project:
+    name: bgpcep-0.20.x
+    jobs:
+      - "{project-name}-maven-javadoc-jobs":
+          mvn-version: mvn38
+          java-version: openjdk17
+      - "{project-name}-rtd-jobs":
+          build-node: centos8-builder-2c-2g
+          project-pattern: bgpcep
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-bgpcep/47576/
+          rtd-token: dbe9d1aabbe8812a26b428908f6613c28e3191fc
+      - gerrit-tox-verify:
+          parallel: true
+      - odl-maven-jobs-jdk17
+      - odl-maven-verify-jobs-jdk17
+
+    stream: 0.20.x
+    project: "bgpcep"
+    project-name: "bgpcep"
+    build-timeout: 120
+    branch: "0.20.x"
+    build-node: centos8-builder-8c-8g
+    mvn-settings: "bgpcep-settings"
+    dependencies: >
+      odlparent-merge-{stream},
+      yangtools-merge-{stream},
+      controller-merge-{stream},
+      mdsal-merge-{stream}
+    email-upstream: "[bgpcep] [odlparent] [yangtools] [controller] [mdsal]"
+    # Used by the release job
+    staging-profile-id: 9427a05049030
+
+- project:
     name: bgpcep-0.19.x
     jobs:
       - "{project-name}-maven-javadoc-jobs":
@@ -52,38 +84,6 @@
     project-name: "bgpcep"
     build-timeout: 120
     branch: "0.19.x"
-    build-node: centos8-builder-8c-8g
-    mvn-settings: "bgpcep-settings"
-    dependencies: >
-      odlparent-merge-{stream},
-      yangtools-merge-{stream},
-      controller-merge-{stream},
-      mdsal-merge-{stream}
-    email-upstream: "[bgpcep] [odlparent] [yangtools] [controller] [mdsal]"
-    # Used by the release job
-    staging-profile-id: 9427a05049030
-
-- project:
-    name: bgpcep-0.18.x
-    jobs:
-      - "{project-name}-maven-javadoc-jobs":
-          mvn-version: mvn38
-          java-version: openjdk17
-      - "{project-name}-rtd-jobs":
-          build-node: centos8-builder-2c-2g
-          project-pattern: bgpcep
-          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-bgpcep/47576/
-          rtd-token: dbe9d1aabbe8812a26b428908f6613c28e3191fc
-      - gerrit-tox-verify:
-          parallel: true
-      - odl-maven-jobs-jdk17
-      - odl-maven-verify-jobs-jdk17
-
-    stream: 0.18.x
-    project: "bgpcep"
-    project-name: "bgpcep"
-    build-timeout: 120
-    branch: "0.18.x"
     build-node: centos8-builder-8c-8g
     mvn-settings: "bgpcep-settings"
     dependencies: >
