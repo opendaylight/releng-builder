@@ -28,7 +28,7 @@
     name: autorelease-projects-openjdk17
     jobs:
       - "autorelease-release-{stream}-{mvn-version}-{java-version}":
-          build-node: centos8-builder-4c-16g
+          build-node: centos8-builder-8c-8g
       - "autorelease-version-bump-{stream}-{mvn-version}-{java-version}"
       - "autorelease-generate-release-notes-{stream}"
 
