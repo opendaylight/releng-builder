@@ -1,21 +1,5 @@
 ---
 - project:
-    name: lf-infra-ansible-roles-system-update
-    jobs:
-      - gerrit-tox-verify
-
-    project-name: lf-infra-ansible-roles
-    project: ansible/roles/*
-    build-node: ubuntu1804-docker-4c-4g
-    build-timeout: 60
-    stream: any
-    branch: "*"
-    python-version: python3
-
-    git-url: https://gerrit.linuxfoundation.org/infra/$GERRIT_PROJECT
-    gerrit-server-name: lf-releng
-
-- project:
     name: lf-infra-ci-workshop
     jobs:
       - gerrit-tox-verify
