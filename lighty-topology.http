@@ -1,0 +1,67 @@
+# curl --location 'http://192.168.56.25:8181/rests/data/network-topology:network-topology/topology=topology-netconf?fields=node%2Fnode-id%3Bnode%2Fnetconf-node-topology%3Aconnection-status'
+#--header 'Authorization: Basic YWRtaW46YWRtaW4='
+GET http://192.168.56.25:8181/rests/data/network-topology:network-topology/topology=topology-netconf?fields=node%2Fnode-id%3Bnode%2Fnetconf-node-topology%3Aconnection-status
+Authorization: Basic YWRtaW46YWRtaW4=
+
+###
+
+# curl --location 'http://192.168.56.25:8181/rests/data/network-topology:network-topology/topology=topology-netconf?content=all'
+#--header 'Authorization: Basic YWRtaW46YWRtaW4='
+GET http://192.168.56.25:8181/rests/data/network-topology:network-topology/topology=topology-netconf?content=all
+Authorization: Basic YWRtaW46YWRtaW4=
+
+###
+
+# curl --location --request PATCH 'http://192.168.56.25:8181/rests/data/network-topology:network-topology/topology=topology-netconf'
+#--header 'Authorization: Basic YWRtaW46YWRtaW4='
+#--header 'Content-Type: application/yang-data+json'
+#--data '{
+#    "network-topology:topology": [
+#    {
+#      "topology-id": "topology-netconf",
+#      "node": [
+#        {
+#          "node-id": "17830-sim-device",
+#          "netconf-node-topology:username": "netconf",
+#          "netconf-node-topology:password": "netconf",
+#          "netconf-node-topology:host": "192.168.56.25",
+#          "netconf-node-topology:port": 17830,
+#          "netconf-node-topology:schemaless": false,
+#          "netconf-node-topology:tcp-only": false,
+#          "netconf-node-topology:keepalive-delay": 0,
+#          "protocol": {
+#              "name": "SSH"
+#          }
+#        }
+#      ]
+#    }
+#  ]
+#}'
+PATCH http://192.168.56.25:8181/rests/data/network-topology:network-topology/topology=topology-netconf
+Authorization: Basic YWRtaW46YWRtaW4=
+Content-Type: application/yang-data+json
+
+{
+    "network-topology:topology": [
+    {
+      "topology-id": "topology-netconf",
+      "node": [
+        {
+          "node-id": "17830-sim-device",
+          "netconf-node-topology:username": "netconf",
+          "netconf-node-topology:password": "netconf",
+          "netconf-node-topology:host": "192.168.56.25",
+          "netconf-node-topology:port": 17830,
+          "netconf-node-topology:schemaless": false,
+          "netconf-node-topology:tcp-only": false,
+          "netconf-node-topology:keepalive-delay": 0,
+          "protocol": {
+              "name": "SSH"
+          }
+        }
+      ]
+    }
+  ]
+}
+
+###
