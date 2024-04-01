@@ -16,6 +16,7 @@ Following are the list of published images available to Jenkins jobs.
 * ZZCI - CentOS 7 - builder - x86_64 - 20240201-060121.705
 * ZZCI - CentOS 7 - builder - x86_64 - 20240221-041136.622
 * ZZCI - CentOS 7 - builder - x86_64 - 20240306-105309.257
+* ZZCI - CentOS 7 - builder - x86_64 - 20240401-060133.417
 * ZZCI - CentOS 7 - devstack - x86_64 - 20220401-230107.511
 * ZZCI - CentOS 7 - devstack - x86_64 - 20220915-220248.057
 * ZZCI - CentOS 7 - devstack - x86_64 - 20221016-125752.520
@@ -100,6 +101,7 @@ Following are the list of published images available to Jenkins jobs.
 * ZZCI - CentOS Stream 8 - robot - x86_64 - 20240116-014504.639
 * ZZCI - CentOS Stream 8 - robot - x86_64 - 20240201-010245.776
 * ZZCI - CentOS Stream 8 - robot - x86_64 - 20240309-064350.911
+* ZZCI - CentOS Stream 8 - robot - x86_64 - 20240401-010224.970
 * ZZCI - OPNFV - apex - compute - 0
 * ZZCI - OPNFV - apex - compute - 1
 * ZZCI - OPNFV - apex - controller - 0
