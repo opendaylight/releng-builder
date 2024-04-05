@@ -12,8 +12,14 @@
 
     # Project branches
     stream:
-      - master:
+      - scandium:
           branch: "master"
+          jre: "openjdk17"
+      - calcium:
+          branch: "7.0.x"
+          jre: "openjdk17"
+      - potassium:
+          branch: "6.0.x"
           jre: "openjdk17"
 
     karaf-version: netconf

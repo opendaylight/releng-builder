@@ -184,6 +184,8 @@
           bundle-url: "{bundle-url}"
       - distribution-karaf-version:
           karaf-version: "{karaf-version}"
+      - integration-distribution-branch:
+          branch: "{branch}"
 
     builders:
       - lf-infra-pre-build
@@ -193,6 +195,7 @@
             predefined-parameters: |
               BUNDLE_URL=$BUNDLE_URL
               KARAF_VERSION=$KARAF_VERSION
+              DISTROBRANCH=$DISTROBRANCH
 
     wrappers:
       - lf-infra-wrappers:
@@ -224,6 +227,8 @@
           bundle-url: "{bundle-url}"
       - distribution-karaf-version:
           karaf-version: "{karaf-version}"
+      - integration-distribution-branch:
+          branch: "{branch}"
 
     triggers:
       - timed: "{schedule-daily}"
@@ -236,6 +241,7 @@
             predefined-parameters: |
               BUNDLE_URL=$BUNDLE_URL
               KARAF_VERSION=$KARAF_VERSION
+              DISTROBRANCH=$DISTROBRANCH
 
     publishers:
       - email-notification:
@@ -348,6 +354,7 @@
             predefined-parameters: |
               BUNDLE_URL=$BUNDLE_URL
               KARAF_VERSION=$KARAF_VERSION
+              DISTROBRANCH=$DISTROBRANCH
 
     publishers:
       - lf-infra-publish
@@ -454,6 +461,7 @@
                   predefined-parameters: |
                     BUNDLE_URL=$BUNDLE_URL
                     KARAF_VERSION=$KARAF_VERSION
+                    DISTROBRANCH=$DISTROBRANCH
 
     publishers:
       - lf-infra-publish
@@ -476,6 +484,8 @@
           bundle-url: "{bundle-url}"
       - distribution-karaf-version:
           karaf-version: "{karaf-version}"
+      - integration-distribution-branch:
+          branch: "{branch}"
 
     triggers:
       - timed: "{schedule-weekly}"
@@ -487,6 +497,7 @@
             predefined-parameters: |
               BUNDLE_URL=$BUNDLE_URL
               KARAF_VERSION=$KARAF_VERSION
+              DISTROBRANCH=$DISTROBRANCH
 
     publishers:
       - email-notification:
@@ -509,6 +520,8 @@
           bundle-url: "{bundle-url}"
       - distribution-karaf-version:
           karaf-version: "{karaf-version}"
+      - integration-distribution-branch:
+          branch: "{branch}"
 
     triggers:
       - timed: "{schedule-weekly}"
@@ -520,6 +533,7 @@
             predefined-parameters: |
               BUNDLE_URL=$BUNDLE_URL
               KARAF_VERSION=$KARAF_VERSION
+              DISTROBRANCH=$DISTROBRANCH
 
     publishers:
       - email-notification:
@@ -541,6 +555,8 @@
           bundle-url: "{bundle-url}"
       - distribution-karaf-version:
           karaf-version: "{karaf-version}"
+      - integration-distribution-branch:
+          branch: "{branch}"
 
     triggers:
       - timed: "{schedule-weekly}"
@@ -552,6 +568,7 @@
             predefined-parameters: |
               BUNDLE_URL=$BUNDLE_URL
               KARAF_VERSION=$KARAF_VERSION
+              DISTROBRANCH=$DISTROBRANCH
 
     publishers:
       - email-notification:
