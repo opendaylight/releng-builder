@@ -1,5 +1,28 @@
 ---
 - project:
+    name: daexim-scandium
+    jobs:
+      - "{project-name}-distribution-check-{stream}"
+      - "{project-name}-rtd-jobs":
+          build-node: centos8-builder-2c-2g
+          project-pattern: daexim
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-daexim/47611/
+          rtd-token: 76284f12638574f131cdccdf257d852d07c195fc
+      - odl-maven-jobs-jdk17
+      - odl-maven-verify-jobs-jdk17
+
+    project: "daexim"
+    project-name: "daexim"
+    stream: scandium
+    branch: "master"
+    mvn-settings: "daexim-settings"
+    dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}"
+    email-upstream: "[daexim] [odlparent] [yangtools] [controller]"
+
+    # Used by the release job
+    staging-profile-id: 96e4dade34bd7
+
+- project:
     name: daexim-calcium
     jobs:
       - "{project-name}-distribution-check-{stream}"
@@ -14,7 +37,7 @@
     project: "daexim"
     project-name: "daexim"
     stream: calcium
-    branch: "master"
+    branch: "stable/calcium"
     mvn-settings: "daexim-settings"
     dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}"
     email-upstream: "[daexim] [odlparent] [yangtools] [controller]"
