@@ -24,12 +24,12 @@
     nexus-iq-stage: release
     email-upstream: "[int/dist]"
     stream:
-      - calcium:
+      - scandium:
           branch: "master"
+      - calcium:
+          branch: "stable/calcium"
       - potassium:
           branch: "stable/potassium"
-      - argon:
-          branch: "stable/argon"
 
 - project:
     name: distribution-managed
@@ -53,35 +53,21 @@
     jre: "openjdk17"
     karaf-version: karaf4
     dist-pom: "distribution/pom.xml"
+    dependencies: >
+      daexim-maven-merge-{stream},
+      jsonrpc-maven-merge-{stream},
+      lispflowmapping-maven-merge-{stream},
+      openflowplugin-maven-merge-{stream},
+      ovsdb-maven-merge-{stream},
+      serviceutils-maven-merge-{stream},
 
     stream:
-      - calcium:
+      - scandium:
           branch: "master"
-          dependencies: >
-            daexim-maven-merge-{stream},
-            jsonrpc-maven-merge-{stream},
-            lispflowmapping-maven-merge-{stream},
-            openflowplugin-maven-merge-{stream},
-            ovsdb-maven-merge-{stream},
-            serviceutils-maven-merge-{stream},
+      - calcium:
+          branch: "stable/master"
       - potassium:
           branch: "stable/potassium"
-          dependencies: >
-            daexim-maven-merge-{stream},
-            jsonrpc-maven-merge-{stream},
-            lispflowmapping-maven-merge-{stream},
-            openflowplugin-maven-merge-{stream},
-            ovsdb-maven-merge-{stream},
-            serviceutils-maven-merge-{stream},
-      - argon:
-          branch: "stable/argon"
-          dependencies: >
-            daexim-maven-merge-{stream},
-            jsonrpc-maven-merge-{stream},
-            lispflowmapping-maven-merge-{stream},
-            openflowplugin-maven-merge-{stream},
-            ovsdb-maven-merge-{stream},
-            serviceutils-maven-merge-{stream},
 
 - project:
     name: distribution-sonar
@@ -113,12 +99,12 @@
     jobs:
       - "{project-name}-gerrit-docker-jobs"
     stream:
-      - calcium:
+      - scandium:
           branch: "master"
+      - calcium:
+          branch: "stable/calcium"
       - potassium:
           branch: "stable/potassium"
-      - argon:
-          branch: "stable/argon"
 
 - project:
     name: distribution-docker-release
