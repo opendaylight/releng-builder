@@ -74,6 +74,8 @@ jobs:
       - uses: lfit/checkout-gerrit-change-action@54d751e8bd167bc91f7d665dabe33fae87aaaa63 # v0.9
         with:
           gerrit-refspec: ${{ inputs.GERRIT_REFSPEC }}
+          gerrit-project: ${{ inputs.GERRIT_PROJECT }}
+          gerrit-url: ${{ vars.GERRIT_URL }}
           delay: "0s"
       - name: Download actionlint
         id: get_actionlint
@@ -91,6 +93,8 @@ jobs:
       - uses: lfit/checkout-gerrit-change-action@54d751e8bd167bc91f7d665dabe33fae87aaaa63 # v0.9
         with:
           gerrit-refspec: ${{ inputs.GERRIT_REFSPEC }}
+          gerrit-project: ${{ inputs.GERRIT_PROJECT }}
+          gerrit-url: ${{ vars.GERRIT_URL }}
           delay: "0s"
       - uses: actions/setup-python@v5
         with:
@@ -105,7 +109,10 @@ jobs:
       - uses: lfit/checkout-gerrit-change-action@54d751e8bd167bc91f7d665dabe33fae87aaaa63 # v0.9
         with:
           gerrit-refspec: ${{ inputs.GERRIT_REFSPEC }}
+          gerrit-project: ${{ inputs.GERRIT_PROJECT }}
+          gerrit-url: ${{ vars.GERRIT_URL }}
           delay: "0s"
+          submodules: "true"
       - uses: actions/setup-python@v5
         id: setup-python
         with:
@@ -115,7 +122,7 @@ jobs:
       - name: Run JJB Verify
         run: |
           python -m pip install --upgrade pip
-          pip install jenkins-job-builder==5.1.0
+          pip install jenkins-job-builder==6.3.0
           mkdir -p "${HOME}/.config/jenkins_jobs"
           cat << EOF > "${HOME}/.config/jenkins_jobs/jenkins_jobs.ini"
           [job_builder]
@@ -135,7 +142,10 @@ jobs:
       - uses: lfit/checkout-gerrit-change-action@54d751e8bd167bc91f7d665dabe33fae87aaaa63 # v0.9
         with:
           gerrit-refspec: ${{ inputs.GERRIT_REFSPEC }}
+          gerrit-project: ${{ inputs.GERRIT_PROJECT }}
+          gerrit-url: ${{ vars.GERRIT_URL }}
           delay: "0s"
+          submodules: "true"
       - uses: actions/setup-python@v5
         id: setup-python
         with:
@@ -153,7 +163,10 @@ jobs:
         uses: lfit/checkout-gerrit-change-action@54d751e8bd167bc91f7d665dabe33fae87aaaa63 # v0.9
         with:
           gerrit-refspec: ${{ inputs.GERRIT_REFSPEC }}
+          gerrit-project: ${{ inputs.GERRIT_PROJECT }}
+          gerrit-url: ${{ vars.GERRIT_URL }}
           delay: "0s"
+          submodules: "true"
       - name: Clone git submodules
         shell: bash
         run: git submodule update --init
