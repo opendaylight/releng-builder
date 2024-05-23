@@ -83,6 +83,56 @@
     sonarcloud-api-token: "{sonarcloud_api_token}"
     sonarcloud-project-key: "{sonarcloud_project_organization}_{project-name}"
 
+- job-group:
+    name: odl-maven-jobs-jdk21
+
+    jobs:
+      - gerrit-maven-clm:
+          nexus-iq-namespace: odl-
+          nexus-iq-stage: release
+          mvn-opts: "--add-opens java.base/java.util=ALL-UNNAMED"
+
+      - gerrit-maven-merge:
+          build-timeout: 180
+
+      - gerrit-maven-stage:
+          sbom-generator: true
+          sign-artifacts: true
+          cron: ""
+
+      - gerrit-maven-mri-stage:
+          sbom-generator: true
+          sign-artifacts: true
+          cron: ""
+
+    java-version: openjdk21
+    mvn-version: mvn38
+
+- job-group:
+    name: odl-maven-verify-jobs-jdk21
+
+    jobs:
+      - gerrit-maven-verify
+      - gerrit-maven-verify-dependencies:
+          build-timeout: 180
+
+    java-version: openjdk21
+    mvn-version: mvn38
+
+- job-group:
+    name: odl-sonar-jobs-jdk21
+
+    jobs:
+      - gerrit-maven-sonar
+
+    java-version: openjdk21
+    mvn-version: mvn38
+    sonarcloud: true
+    sonarcloud-java-version: openjdk21
+    sonarcloud-project-organization: "{sonarcloud_project_organization}"
+    sonarcloud-api-token: "{sonarcloud_api_token}"
+    sonarcloud-project-key: "{sonarcloud_project_organization}_{project-name}"
+
 - job-template:
     name: "{project-name}-integration-{stream}"
 
