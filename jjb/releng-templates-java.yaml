@@ -74,13 +74,14 @@
     mvn-version: mvn39
 
 - job-group:
-    name: odl-maven-verify-jobs
+    name: odl-maven-verify-jobs-jdk11
 
     jobs:
       - gerrit-maven-verify
       - gerrit-maven-verify-dependencies:
           build-timeout: 180
 
+    java-version: openjdk11
     mvn-version: mvn38
 
 - job-group:
