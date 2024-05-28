@@ -12,3 +12,7 @@
 """Configuration for Sphinx."""
 
 from docs_conf.conf import *  # noqa
+
+# linkcheck configuration
+linkcheck_timeout = 60
+linkcheck_retries = 3
