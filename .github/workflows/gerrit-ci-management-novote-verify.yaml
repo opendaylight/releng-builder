@@ -82,10 +82,8 @@ jobs:
       GERRIT_PATCHSET_REVISION: ${{ inputs.GERRIT_PATCHSET_REVISION }}
       GERRIT_PROJECT: ${{ inputs.GERRIT_PROJECT }}
       GERRIT_REFSPEC: ${{ inputs.GERRIT_REFSPEC }}
-      comment-only: "true"
       ENV_VARS: ${{ toJSON(vars) }}
     secrets:
       ENV_SECRETS: ${{ toJSON(secrets) }}
-      GERRIT_SSH_PRIVKEY: ${{ secrets.GERRIT_SSH_PRIVKEY }}
       CLOUDS_ENV_B64: ${{ secrets.CLOUDS_ENV_B64 }}
       CLOUDS_YAML_B64: ${{ secrets.CLOUDS_YAML_B64 }}
