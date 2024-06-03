@@ -180,7 +180,9 @@ def update_integration_csit_list(
             return constructor.construct_scalar(node)
 
     def default_constructor(constructor, tag_suffix, node):
-        generic = {ruamel.yaml.ScalarNode: GenericScalar,}.get(  # noqa
+        generic = {
+            ruamel.yaml.ScalarNode: GenericScalar,
+        }.get(  # noqa
             type(node)
         )
         if generic is None:
@@ -263,20 +265,20 @@ def update_integration_csit_list(
         new_csit_mri_list = copy.deepcopy(
             data[0]["defaults"].get("csit-mri-list-{}".format(release_on_stable_branch))
         )
-        data[0]["defaults"][
-            "csit-mri-list-{}".format(release_on_current_branch)
-        ] = new_csit_mri_list.replace(
-            release_on_stable_branch, release_on_current_branch
+        data[0]["defaults"]["csit-mri-list-{}".format(release_on_current_branch)] = (
+            new_csit_mri_list.replace(
+                release_on_stable_branch, release_on_current_branch
+            )
         )
 
         # Add next release csit-mri-list-RELEASE
         new_csit_mri_list = copy.deepcopy(
             data[0]["defaults"].get("csit-mri-list-{}".format(release_on_stable_branch))
         )
-        data[0]["defaults"][
-            "csit-mri-list-{}".format(release_on_current_branch)
-        ] = new_csit_mri_list.replace(
-            release_on_stable_branch, release_on_current_branch
+        data[0]["defaults"]["csit-mri-list-{}".format(release_on_current_branch)] = (
+            new_csit_mri_list.replace(
+                release_on_stable_branch, release_on_current_branch
+            )
         )
 
         # Add next release csit-weekly-list-RELEASE
@@ -285,10 +287,10 @@ def update_integration_csit_list(
                 "csit-weekly-list-{}".format(release_on_stable_branch)
             )
         )
-        data[0]["defaults"][
-            "csit-weekly-list-{}".format(release_on_current_branch)
-        ] = new_csit_mri_list.replace(
-            release_on_stable_branch, release_on_current_branch
+        data[0]["defaults"]["csit-weekly-list-{}".format(release_on_current_branch)] = (
+            new_csit_mri_list.replace(
+                release_on_stable_branch, release_on_current_branch
+            )
         )
 
         # Add next release csit-sanity-list-RELEASE
@@ -297,10 +299,10 @@ def update_integration_csit_list(
                 "csit-sanity-list-{}".format(release_on_stable_branch)
             )
         )
-        data[0]["defaults"][
-            "csit-sanity-list-{}".format(release_on_current_branch)
-        ] = new_csit_mri_list.replace(
-            release_on_stable_branch, release_on_current_branch
+        data[0]["defaults"]["csit-sanity-list-{}".format(release_on_current_branch)] = (
+            new_csit_mri_list.replace(
+                release_on_stable_branch, release_on_current_branch
+            )
         )
 
     with open(defaults_yaml, "w") as f:
