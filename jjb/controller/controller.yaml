@@ -18,7 +18,6 @@
 
     mvn-settings: "controller-settings"
     mvn-goals: "clean deploy -Pdocs"
-    build-timeout: 90
     dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},aaa-merge-{stream}"
     email-upstream: "[controller] [odlparent] [yangtools] [aaa]"
 
@@ -45,7 +44,6 @@
 
     mvn-settings: "controller-settings"
     mvn-goals: "clean deploy -Pdocs"
-    build-timeout: 90
 
     dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},aaa-merge-{stream}"
     email-upstream: "[controller] [odlparent] [yangtools] [aaa]"
@@ -71,7 +69,6 @@
 
     mvn-settings: "controller-settings"
     mvn-goals: "clean deploy -Pdocs"
-    build-timeout: 90
 
     dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},aaa-merge-{stream}"
     email-upstream: "[controller] [odlparent] [yangtools] [aaa]"
@@ -89,9 +86,6 @@
 
     build-node: centos7-builder-2c-1g
     mvn-settings: controller-settings
-    # Needs to be rather long until we sort out the performance of
-    # https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/
-    build-timeout: 120
 
 - project:
     name: controller-sonar
