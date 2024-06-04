@@ -3,20 +3,50 @@
     name: controller-master
     jobs:
       - "{project-name}-rtd-jobs":
-          build-node: centos8-builder-2c-2g
+          build-node: ubuntu2004-docker-2c-2g
+          project-pattern: controller
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-controller/48288/
+          rtd-token: b8440116c823a80c0fb0479eb7448a9196e6932f
+      - odl-maven-jobs-jdk21
+      - odl-maven-verify-jobs-jdk21
+
+    project: controller
+    project-name: controller
+    stream: master
+    branch: master
+    build-node: ubuntu2004-docker-4c-4g
+
+    mvn-settings: "controller-settings"
+    mvn-goals: "clean deploy -Pdocs"
+    build-timeout: 90
+    dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},aaa-merge-{stream}"
+    email-upstream: "[controller] [odlparent] [yangtools] [aaa]"
+
+    # Used by the release job
+    staging-profile-id: 96c1c9177efdd
+
+- project:
+    name: controller-9.0.x
+    jobs:
+      - "{project-name}-rtd-jobs":
+          build-node: ubuntu2004-docker-2c-2g
           project-pattern: controller
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-controller/48288/
           rtd-token: b8440116c823a80c0fb0479eb7448a9196e6932f
       - odl-maven-jobs-jdk17
       - odl-maven-verify-jobs-jdk17
+      - odl-maven-verify-jobs-jdk21
 
-    stream: master
-    project: "controller"
-    project-name: "controller"
-    branch: master
+    project: controller
+    project-name: controller
+    stream: 9.0.x
+    branch: 9.0.x
+    build-node: ubuntu2004-docker-4c-4g
+
     mvn-settings: "controller-settings"
     mvn-goals: "clean deploy -Pdocs"
     build-timeout: 90
+
     dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},aaa-merge-{stream}"
     email-upstream: "[controller] [odlparent] [yangtools] [aaa]"
 
@@ -34,37 +64,15 @@
       - odl-maven-jobs-jdk17
       - odl-maven-verify-jobs-jdk17
 
+    project: controller
+    project-name: controller
     stream: 8.0.x
-    project: "controller"
-    project-name: "controller"
     branch: 8.0.x
+
     mvn-settings: "controller-settings"
     mvn-goals: "clean deploy -Pdocs"
     build-timeout: 90
-    dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},aaa-merge-{stream}"
-    email-upstream: "[controller] [odlparent] [yangtools] [aaa]"
 
-    # Used by the release job
-    staging-profile-id: 96c1c9177efdd
-
-- project:
-    name: controller-7.0.x
-    jobs:
-      - "{project-name}-rtd-jobs":
-          build-node: centos8-builder-2c-2g
-          project-pattern: controller
-          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-controller/48288/
-          rtd-token: b8440116c823a80c0fb0479eb7448a9196e6932f
-      - odl-maven-jobs-jdk17
-      - odl-maven-verify-jobs-jdk17
-
-    stream: 7.0.x
-    project: "controller"
-    project-name: "controller"
-    branch: 7.0.x
-    mvn-settings: "controller-settings"
-    mvn-goals: "clean deploy -Pdocs"
-    build-timeout: 90
     dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},aaa-merge-{stream}"
     email-upstream: "[controller] [odlparent] [yangtools] [aaa]"
 
@@ -88,7 +96,7 @@
 - project:
     name: controller-sonar
     jobs:
-      - odl-sonar-jobs-jdk17:
+      - odl-sonar-jobs-jdk21:
           mvn-params: >
             -Dodl.jacoco.aggregateFile=$WORKSPACE/target/jacoco.exec
             -Dskip.karaf.featureTest=true
@@ -96,12 +104,13 @@
             jacoco:report -Djacoco.dataFile=$WORKSPACE/target/jacoco.exec
             sonar:sonar
 
-    project: "controller"
-    project-name: "controller"
+    project: controller
+    project-name: controller
     branch: master
+    build-node: ubuntu2004-docker-4c-4g
+
     mvn-settings: "controller-settings"
     mvn-goals: "clean deploy -Pintegrationtests,docs"
-    mvn-opts: "-Xmx4096m -Dmaven.compile.fork=true"
 
 - project:
     name: controller-info
