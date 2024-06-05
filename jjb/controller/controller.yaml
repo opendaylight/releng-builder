@@ -34,13 +34,13 @@
           rtd-token: b8440116c823a80c0fb0479eb7448a9196e6932f
       - odl-maven-jobs-jdk17
       - odl-maven-verify-jobs-jdk17
-      - odl-maven-verify-jobs-jdk21
+      - odl-maven-verify-jobs-jdk21:
+          build-node: ubuntu2004-docker-4c-4g
 
     project: controller
     project-name: controller
     stream: 9.0.x
     branch: 9.0.x
-    build-node: ubuntu2004-docker-4c-4g
 
     mvn-settings: "controller-settings"
     mvn-goals: "clean deploy -Pdocs"
