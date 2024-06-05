@@ -1,29 +1,5 @@
 ---
 - job-group:
-    name: odl-maven-jobs-jdk11
-
-    jobs:
-      - gerrit-maven-clm:
-          nexus-iq-namespace: odl-
-          nexus-iq-stage: release
-
-      - gerrit-maven-merge:
-          build-timeout: 180
-
-      - gerrit-maven-stage:
-          sign-artifacts: true
-          sbom-generator: true
-          cron: ""
-
-      - gerrit-maven-mri-stage:
-          sbom-generator: true
-          sign-artifacts: true
-          cron: ""
-
-    java-version: openjdk11
-    mvn-version: mvn38
-
-- job-group:
     name: odl-maven-jobs-jdk17
 
     jobs:
@@ -72,17 +48,6 @@
 
     java-version: openjdk21
     mvn-version: mvn39
-
-- job-group:
-    name: odl-maven-verify-jobs-jdk11
-
-    jobs:
-      - gerrit-maven-verify
-      - gerrit-maven-verify-dependencies:
-          build-timeout: 180
-
-    java-version: openjdk11
-    mvn-version: mvn38
 
 - job-group:
     name: odl-maven-verify-jobs-jdk17
