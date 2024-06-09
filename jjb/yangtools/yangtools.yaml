@@ -24,13 +24,13 @@
     jobs:
       - odl-maven-jobs-jdk17
       - odl-maven-verify-jobs-jdk17
-      - odl-maven-verify-jobs-jdk21
+      - odl-maven-verify-jobs-jdk21:
+          build-node: ubuntu2004-docker-4c-4g
 
     project: yangtools
     project-name: yangtools
     stream: 13.0.x
     branch: 13.0.x
-    build-node: ubuntu2004-docker-4c-4g
 
     mvn-settings: "yangtools-settings"
 
