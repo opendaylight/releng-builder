@@ -82,7 +82,7 @@
 - project:
     name: odlparent-sonar
     jobs:
-      - odl-sonar-jobs-jdk17:
+      - odl-sonar-jobs-jdk21:
           mvn-params: >
             -Dodl.jacoco.aggregateFile=$WORKSPACE/target/jacoco.exec
             -Dskip.karaf.featureTest=true
@@ -93,8 +93,9 @@
     project: "odlparent"
     project-name: "odlparent"
     branch: "master"
+    build-node: ubuntu2004-docker-2c-2g
+
     mvn-settings: "odlparent-settings"
-    mvn-opts: "-Xmx1024m"
 
 - project:
     name: odlparent-info
