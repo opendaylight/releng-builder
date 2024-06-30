@@ -101,7 +101,7 @@
 - project:
     name: mdsal-sonar
     jobs:
-      - odl-sonar-jobs-jdk17:
+      - odl-sonar-jobs-jdk21:
           mvn-params: >
             -Dodl.jacoco.aggregateFile=$WORKSPACE/target/jacoco.exec
             -Dskip.karaf.featureTest=true
@@ -112,6 +112,8 @@
     project: "mdsal"
     project-name: "mdsal"
     branch: "master"
+    build-node: ubuntu2004-docker-4c-4g
+
     mvn-settings: "mdsal-settings"
     mvn-goals: "clean deploy"
     mvn-opts: "-Dintegrationtests"
