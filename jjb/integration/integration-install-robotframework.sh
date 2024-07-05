@@ -35,7 +35,7 @@ pyhocon
 requests
 robotframework
 robotframework-httplibrary
-robotframework-requests==0.9.3
+robotframework-requests==0.9.7
 robotframework-selenium2library
 robotframework-sshlibrary==3.8.0
 scapy
