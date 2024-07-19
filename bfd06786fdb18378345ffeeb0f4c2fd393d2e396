@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "811c5c76_de8509e4",
+        "filename": ".github/workflows/call-composed-github2gerrit.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2024-07-19T03:43:02Z",
+      "side": 1,
+      "message": "shouldn\u0027t this be `github.event.number` so that if another change to the PR happens while the run is happening that older one gets cancelled? Nothing should really ever collide on `github.run_id`",
+      "range": {
+        "startLine": 18,
+        "startChar": 43,
+        "endLine": 18,
+        "endChar": 49
+      },
+      "revId": "bfd06786fdb18378345ffeeb0f4c2fd393d2e396",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
