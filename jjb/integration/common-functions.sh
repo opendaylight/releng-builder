@@ -13,7 +13,7 @@ export MEMCONF=/tmp/${BUNDLEFOLDER}/bin/setenv
 export CONTROLLERMEM=${CONTROLLERMAXMEM}
 
 # Cluster specific configuration settings
-export AKKACONF=/tmp/${BUNDLEFOLDER}/configuration/initial/akka.conf
+export PEKKOCONF=/tmp/${BUNDLEFOLDER}/configuration/initial/pekko.conf
 export MODULESCONF=/tmp/${BUNDLEFOLDER}/configuration/initial/modules.conf
 export MODULESHARDSCONF=/tmp/${BUNDLEFOLDER}/configuration/initial/module-shards.conf
 
@@ -27,7 +27,7 @@ CUSTOMPROP: ${CUSTOMPROP}
 LOGCONF: ${LOGCONF}
 MEMCONF: ${MEMCONF}
 CONTROLLERMEM: ${CONTROLLERMEM}
-AKKACONF: ${AKKACONF}
+PEKKOCONF: ${PEKKOCONF}
 MODULESCONF: ${MODULESCONF}
 MODULESHARDSCONF: ${MODULESHARDSCONF}
 SUITES: ${SUITES}
@@ -944,8 +944,8 @@ fi
 echo "Configuring cluster"
 /tmp/${BUNDLEFOLDER}/bin/configure_cluster.sh \$1 ${nodes_list}
 
-echo "Dump akka.conf"
-cat ${AKKACONF}
+echo "Dump pekko.conf"
+cat ${PEKKOCONF}
 
 echo "Dump modules.conf"
 cat ${MODULESCONF}
