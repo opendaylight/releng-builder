@@ -1,5 +1,23 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a861081_6d047e2f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1927
+      },
+      "writtenOn": "2024-07-30T22:58:45Z",
+      "side": 1,
+      "message": "It appears that CPU \u0026 memory are determined by `HARDWARE_ID` (`v3-standard-8`), hence `8g` in `LABELS` does not have any effect.\n\nE.g. The following javadoc-verify job was run with `ubuntu2004-docker-8c-8g`:\n\nhttps://jenkins.opendaylight.org/releng/view/bgpcep/job/bgpcep-maven-javadoc-verify-master-openjdk21/1/\n\n```\nBuilding remotely on prd-ubuntu2004-docker-8c-8g-6043 (ubuntu2004-docker-8c-8g) in workspace /w/workspace/bgpcep-maven-javadoc-verify-master-openjdk21\n```\n\nbut the host has 32GB:\n\n```\n---\u003e free -m:\n              total        used        free      shared  buff/cache   available\nMem:          32100         913       26188           1        4998       30721\nSwap:          1023           0        1023\n```\n\nSo do we need `ubuntu2004-docker-8c-8g` when we already have `ubuntu2004-docker-8c-32g` which correctly represents the hardware spec. This seems more confusing.",
+      "revId": "7d16ba9cea30f82046954a5bf68c419651041d14",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ],
   "submitRequirementResults": [
     {
       "submitRequirement": {
