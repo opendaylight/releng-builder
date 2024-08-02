@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "907c7c7a_5affdf86",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 7446
+      },
+      "writtenOn": "2024-08-02T06:59:59Z",
+      "side": 1,
+      "message": "I naively thought that it was just necessary to specify the path of the script under the builder project, but it seems that at execution it happens differently:\n\n[transportpce-tox-verify-transportpce-master] $ /bin/sh -xe /tmp/jenkins15942308955793205679.sh\n+ ../../scripts/installMavenUbuntu.sh\n/tmp/jenkins15942308955793205679.sh: 2: ../../scripts/installMavenUbuntu.sh: not found\n\nreturn to square one...",
+      "revId": "8aa7b393070e8838376f9c95b251eba59d63e59c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
