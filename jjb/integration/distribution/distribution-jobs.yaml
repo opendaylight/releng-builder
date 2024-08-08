@@ -8,17 +8,19 @@
       - gerrit-maven-verify-dependencies
       - gerrit-tox-verify
       - "{project-name}-rtd-jobs":
+          build-node: centos8-builder-2c-2g
           project-pattern: integration/distribution
           rtd-build-url: https://readthedocs.org/api/v2/webhook/opendaylight-distribution/34591/
           rtd-token: 6247e7a21158a20b207470b8bf7719c676ff8944
 
     project: integration/distribution
     project-name: distribution
+    build-node: ubuntu2004-docker-4c-4g
     mvn-settings: integration-distribution-settings
     mvn-goals: "clean install dependency:tree -DoutputFile=dependency_tree.txt"
     mvn-opts: "-Xmx1024m"
-    mvn-version: mvn38
-    jre: "openjdk17"
+    mvn-version: mvn39
+    java-version: openjdk21
     karaf-version: karaf4
     nexus-iq-namespace: odl-
     nexus-iq-stage: release
@@ -28,8 +30,12 @@
           branch: "master"
       - calcium:
           branch: "stable/calcium"
+          mvn-version: mvn38
+          java-version: openjdk17
       - potassium:
           branch: "stable/potassium"
+          mvn-version: mvn38
+          java-version: openjdk17
 
 - project:
     name: distribution-managed
@@ -38,19 +44,21 @@
       - "distribution-merge-{type}-{stream}"
       - "distribution-verify-{type}-{stream}"
       - "distribution-check-{type}-{stream}"
-      - "distribution-csit-managed-{stream}"
+      - "distribution-csit-managed-{stream}":
+          build-node: ubuntu2004-docker-4c-4g
 
     project: integration/distribution
     project-name: distribution
+    build-node: ubuntu2004-docker-8c-8g
     mvn-settings: integration-distribution-settings
     mvn-goals: "clean install dependency:tree -DoutputFile=dependency_tree.txt"
     mvn-opts: "-Xmx1024m"
-    mvn-version: mvn38
+    mvn-version: mvn39
     email-upstream: "[int/dist]"
     type: managed
     profile: "-Pmanaged"
     forbidden-files: '(docker\/.*|releases\/.*)'
-    jre: "openjdk17"
+    java-version: openjdk21
     karaf-version: karaf4
     dist-pom: "distribution/pom.xml"
     dependencies: >
@@ -66,13 +74,17 @@
           branch: "master"
       - calcium:
           branch: "stable/calcium"
+          mvn-version: mvn38
+          java-version: openjdk17
       - potassium:
           branch: "stable/potassium"
+          mvn-version: mvn38
+          java-version: openjdk17
 
 - project:
     name: distribution-sonar
     jobs:
-      - odl-sonar-jobs-jdk17
+      - odl-sonar-jobs-jdk21
 
     project: integration/distribution
     project-name: distribution
