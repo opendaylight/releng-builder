@@ -138,7 +138,7 @@
       **/pax/**"
 
     project-type: freestyle
-    node: centos8-builder-8c-8g
+    node: "{build-node}"
     concurrent: true
     disabled: "{disable-job}"
 
@@ -219,7 +219,7 @@
       **/pax/**"
 
     project-type: maven
-    node: "centos8-builder-8c-8g"
+    node: "{build-node}"
     disabled: "{disable-job}"
 
     properties:
@@ -320,7 +320,7 @@
     disabled: "{disable-job}"
 
     project-type: freestyle
-    node: "centos8-builder-8c-8g"
+    node: "{build-node}"
     concurrent: true
 
     properties:
@@ -469,7 +469,7 @@
     disable-job: false
 
     project-type: freestyle
-    node: centos8-builder-4c-4g
+    node: "{build-node}"
     concurrent: false
     disabled: "{disable-job}"
 
