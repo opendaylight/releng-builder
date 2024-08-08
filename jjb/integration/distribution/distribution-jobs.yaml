@@ -17,8 +17,8 @@
     mvn-settings: integration-distribution-settings
     mvn-goals: "clean install dependency:tree -DoutputFile=dependency_tree.txt"
     mvn-opts: "-Xmx1024m"
-    mvn-version: mvn38
-    jre: "openjdk17"
+    mvn-version: mvn39
+    jre: "openjdk21"
     karaf-version: karaf4
     nexus-iq-namespace: odl-
     nexus-iq-stage: release
@@ -28,8 +28,12 @@
           branch: "master"
       - calcium:
           branch: "stable/calcium"
+          mvn-version: mvn38
+          jre: "openjdk17"
       - potassium:
           branch: "stable/potassium"
+          mvn-version: mvn38
+          jre: "openjdk17"
 
 - project:
     name: distribution-managed
@@ -45,12 +49,12 @@
     mvn-settings: integration-distribution-settings
     mvn-goals: "clean install dependency:tree -DoutputFile=dependency_tree.txt"
     mvn-opts: "-Xmx1024m"
-    mvn-version: mvn38
+    mvn-version: mvn39
     email-upstream: "[int/dist]"
     type: managed
     profile: "-Pmanaged"
     forbidden-files: '(docker\/.*|releases\/.*)'
-    jre: "openjdk17"
+    jre: "openjdk21"
     karaf-version: karaf4
     dist-pom: "distribution/pom.xml"
     dependencies: >
@@ -66,13 +70,17 @@
           branch: "master"
       - calcium:
           branch: "stable/calcium"
+          mvn-version: mvn38
+          jre: "openjdk17"
       - potassium:
           branch: "stable/potassium"
+          mvn-version: mvn38
+          jre: "openjdk17"
 
 - project:
     name: distribution-sonar
     jobs:
-      - odl-sonar-jobs-jdk17
+      - odl-sonar-jobs-jdk21
 
     project: integration/distribution
     project-name: distribution
