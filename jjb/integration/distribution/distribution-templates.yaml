@@ -268,7 +268,7 @@
           path: "$KARAF_ARTIFACT/src/main/assembly"
 
     maven:
-      maven-name: "mvn38"
+      maven-name: "{mvn-version}"
       root-pom: "pom.xml"
       goals: >
         clean install dependency:tree -DoutputFile=dependency_tree.txt -V -B
