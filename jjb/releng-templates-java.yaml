@@ -72,6 +72,26 @@
     mvn-version: mvn39
 
 - job-group:
+    name: odl-maven-javadoc-jobs-jdk17
+
+    jobs:
+      - gerrit-maven-javadoc-publish
+      - gerrit-maven-javadoc-verify
+
+    java-version: openjdk17
+    mvn-version: mvn38
+
+- job-group:
+    name: odl-maven-javadoc-jobs-jdk21
+
+    jobs:
+      - gerrit-maven-javadoc-publish
+      - gerrit-maven-javadoc-verify
+
+    java-version: openjdk21
+    mvn-version: mvn39
+
+- job-group:
     name: odl-sonar-jobs-jdk17
 
     jobs:

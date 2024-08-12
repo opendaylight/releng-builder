@@ -2,9 +2,6 @@
 - project:
     name: openflowplugin-scandium
     jobs:
-      - "{project-name}-maven-javadoc-jobs":
-          mvn-version: mvn39
-          java-version: openjdk21
       - "{project-name}-rtd-jobs":
           build-node: centos8-builder-2c-2g
           doc-dir: .tox/docs/tmp/html
@@ -12,6 +9,7 @@
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-openflowplugin/38994/
           rtd-token: 86ce095922558b890c61b1b05d682521d1d66d5f
       - distribution-check-jobs-jdk21
+      - odl-maven-javadoc-jobs-jdk21
       - odl-maven-jobs-jdk21
       - odl-maven-verify-jobs-jdk21
 
@@ -35,9 +33,6 @@
 - project:
     name: openflowplugin-calcium
     jobs:
-      - "{project-name}-maven-javadoc-jobs":
-          mvn-version: mvn38
-          java-version: openjdk17
       - "{project-name}-rtd-jobs":
           build-node: centos8-builder-2c-2g
           doc-dir: .tox/docs/tmp/html
@@ -45,6 +40,7 @@
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-openflowplugin/38994/
           rtd-token: 86ce095922558b890c61b1b05d682521d1d66d5f
       - distribution-check-jobs-jdk17
+      - odl-maven-javadoc-jobs-jdk17
       - odl-maven-jobs-jdk17
       - odl-maven-verify-jobs-jdk17
       - odl-maven-verify-jobs-jdk21:
@@ -69,9 +65,6 @@
 - project:
     name: openflowplugin-potassium
     jobs:
-      - "{project-name}-maven-javadoc-jobs":
-          mvn-version: mvn38
-          java-version: openjdk17
       - "{project-name}-rtd-jobs":
           build-node: centos8-builder-2c-2g
           doc-dir: .tox/docs/tmp/html
@@ -79,6 +72,7 @@
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-openflowplugin/38994/
           rtd-token: 86ce095922558b890c61b1b05d682521d1d66d5f
       - distribution-check-jobs-jdk17
+      - odl-maven-javadoc-jobs-jdk17
       - odl-maven-jobs-jdk17
       - odl-maven-verify-jobs-jdk17
 

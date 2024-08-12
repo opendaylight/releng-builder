@@ -2,15 +2,13 @@
 - project:
     name: ovsdb-scandium
     jobs:
-      - "{project-name}-maven-javadoc-jobs":
-          mvn-version: mvn39
-          java-version: openjdk21
       - "{project-name}-rtd-jobs":
           build-node: centos8-builder-2c-2g
           project-pattern: ovsdb
           rtd-build-url: https://readthedocs.org/api/v2/webhook/opendaylight-ovsdb/35667/
           rtd-token: 46030df8681cf7fc857aa80c1a7695f46ed252be
       - distribution-check-jobs-jdk21
+      - odl-maven-javadoc-jobs-jdk21
       - odl-maven-jobs-jdk21
       - odl-maven-verify-jobs-jdk21
 
@@ -29,15 +27,13 @@
 - project:
     name: ovsdb-calcium
     jobs:
-      - "{project-name}-maven-javadoc-jobs":
-          mvn-version: mvn38
-          java-version: openjdk17
       - "{project-name}-rtd-jobs":
           build-node: centos8-builder-2c-2g
           project-pattern: ovsdb
           rtd-build-url: https://readthedocs.org/api/v2/webhook/opendaylight-ovsdb/35667/
           rtd-token: 46030df8681cf7fc857aa80c1a7695f46ed252be
       - distribution-check-jobs-jdk17
+      - odl-maven-javadoc-jobs-jdk17
       - odl-maven-jobs-jdk17
       - odl-maven-verify-jobs-jdk17
       - odl-maven-verify-jobs-jdk21:
@@ -57,15 +53,13 @@
 - project:
     name: ovsdb-potassium
     jobs:
-      - "{project-name}-maven-javadoc-jobs":
-          mvn-version: mvn38
-          java-version: openjdk17
       - "{project-name}-rtd-jobs":
           build-node: centos8-builder-2c-2g
           project-pattern: ovsdb
           rtd-build-url: https://readthedocs.org/api/v2/webhook/opendaylight-ovsdb/35667/
           rtd-token: 46030df8681cf7fc857aa80c1a7695f46ed252be
       - distribution-check-jobs-jdk17
+      - odl-maven-javadoc-jobs-jdk17
       - odl-maven-jobs-jdk17
       - odl-maven-verify-jobs-jdk17
 
