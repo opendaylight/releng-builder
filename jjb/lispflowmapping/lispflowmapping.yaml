@@ -2,7 +2,6 @@
 - project:
     name: lispflowmapping-scandium
     jobs:
-      - "{project-name}-distribution-check-{stream}"
       - "{project-name}-maven-javadoc-jobs":
           mvn-version: mvn39
           java-version: openjdk21
@@ -11,6 +10,7 @@
           project-pattern: lispflowmapping
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-lispflowmapping/47783/
           rtd-token: 181be9dd804e4969b9f318a6f1988e3cbee9d9a8
+      - distribution-check-jobs-jdk21
       - odl-maven-jobs-jdk21
       - odl-maven-verify-jobs-jdk21
 
@@ -34,7 +34,6 @@
 - project:
     name: lispflowmapping-calcium
     jobs:
-      - "{project-name}-distribution-check-{stream}"
       - "{project-name}-maven-javadoc-jobs":
           mvn-version: mvn38
           java-version: openjdk17
@@ -43,6 +42,7 @@
           project-pattern: lispflowmapping
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-lispflowmapping/47783/
           rtd-token: 181be9dd804e4969b9f318a6f1988e3cbee9d9a8
+      - distribution-check-jobs-jdk17
       - odl-maven-jobs-jdk17
       - odl-maven-verify-jobs-jdk17
       - odl-maven-verify-jobs-jdk21:
@@ -69,7 +69,6 @@
 - project:
     name: lispflowmapping-potassium
     jobs:
-      - "{project-name}-distribution-check-{stream}"
       - "{project-name}-maven-javadoc-jobs":
           mvn-version: mvn38
           java-version: openjdk17
@@ -78,6 +77,7 @@
           project-pattern: lispflowmapping
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-lispflowmapping/47783/
           rtd-token: 181be9dd804e4969b9f318a6f1988e3cbee9d9a8
+      - distribution-check-jobs-jdk17
       - odl-maven-jobs-jdk17
       - odl-maven-verify-jobs-jdk17
 

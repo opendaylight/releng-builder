@@ -1,4 +1,22 @@
 ---
+- job-group:
+    name: distribution-check-jobs-jdk17
+
+    jobs:
+      - "{project-name}-distribution-check-{stream}"
+
+    java-version: openjdk17
+    mvn-version: mvn38
+
+- job-group:
+    name: distribution-check-jobs-jdk21
+
+    jobs:
+      - "{project-name}-distribution-check-{stream}"
+
+    java-version: openjdk21
+    mvn-version: mvn39
+
 - job-template:
     name: "{project-name}-distribution-check-{stream}"
 
@@ -26,7 +44,7 @@
     disabled: "{disable-job}"
 
     project-type: freestyle
-    node: "centos8-builder-8c-8g"
+    node: "{build-node}"
     concurrent: true
 
     properties:
