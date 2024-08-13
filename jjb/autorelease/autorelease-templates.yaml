@@ -168,7 +168,7 @@
           global-settings: "{mvn-global-settings}"
       - shell: |
           mkdir -p archives/
-          cp *.log *.prop $_
+          cp *.log *.prop archives/
 
     publishers:
       - opendaylight-infra-notify-status
@@ -601,7 +601,7 @@
           global-settings-type: cfp
       - shell: |
           mkdir -p archives/
-          cp *.log $_
+          cp *.log archives/
 
     publishers:
       - email-notification:
