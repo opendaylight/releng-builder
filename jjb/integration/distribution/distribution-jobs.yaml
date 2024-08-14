@@ -26,8 +26,10 @@
     nexus-iq-stage: release
     email-upstream: "[int/dist]"
     stream:
-      - scandium:
+      - titanium:
           branch: "master"
+      - scandium:
+          branch: "stable/calcium"
       - calcium:
           branch: "stable/calcium"
           mvn-version: mvn38
