@@ -13,8 +13,15 @@
 
     # Project branches
     stream:
-      - scandium:
+      - titanium:
           branch: "master"
+          install-features: >
+            features-controller,
+            odl-mdsal-replicate-netty,
+            odl-netconf-clustered-topology,
+            odl-clustering-test-app
+      - scandium:
+          branch: "stable/scandium"
           install-features: >
             features-controller,
             odl-mdsal-replicate-netty,
