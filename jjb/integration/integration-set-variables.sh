@@ -20,7 +20,14 @@ else
     KARAF_PROJECT="integration"
 fi
 
-if [ "$JDKVERSION" = 'openjdk17' ]; then
+
+ls -d /usr/lib/jvm/*
+
+
+if [ "$JDKVERSION" = 'openjdk21' ]; then
+    echo "Preparing for JRE Version 21"
+    JAVA_HOME="/usr/lib/jvm/java-21-openjdk"
+elif [ "$JDKVERSION" = 'openjdk17' ]; then
     echo "Preparing for JRE Version 17"
     JAVA_HOME="/usr/lib/jvm/java-17-openjdk"
 elif [ "$JDKVERSION" = 'openjdk11' ]; then
