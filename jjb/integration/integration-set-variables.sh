@@ -19,16 +19,18 @@ else
     KARAF_ARTIFACT="karaf"
     KARAF_PROJECT="integration"
 fi
-
-if [ "$JDKVERSION" = 'openjdk17' ]; then
+if [ "$JDKVERSION" = 'openjdk21' ]; then
+    echo "Preparing for JRE Version 21"
+    JAVA_HOME="/usr/lib/jvm/java-21-openjdk-amd64"
+elif [ "$JDKVERSION" = 'openjdk17' ]; then
     echo "Preparing for JRE Version 17"
-    JAVA_HOME="/usr/lib/jvm/java-17-openjdk"
+    JAVA_HOME="/usr/lib/jvm/java-17-openjdk-amd64"
 elif [ "$JDKVERSION" = 'openjdk11' ]; then
     echo "Preparing for JRE Version 11"
-    JAVA_HOME="/usr/lib/jvm/java-11-openjdk"
+    JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64"
 elif [ "$JDKVERSION" = 'openjdk8' ]; then
     echo "Preparing for JRE Version 8"
-    JAVA_HOME="/usr/lib/jvm/java-1.8.0"
+    JAVA_HOME="/usr/lib/jvm/java-1.8.0-openjdk-amd64"
 fi
 
 echo "Karaf artifact is ${KARAF_ARTIFACT}"
