@@ -29,7 +29,8 @@
     jobs:
       - "autorelease-release-{stream}-{mvn-version}-{java-version}":
           build-node: ubuntu2004-docker-8c-8g
-      - "autorelease-version-bump-{stream}-{mvn-version}-{java-version}"
+      - "autorelease-version-bump-{stream}-{mvn-version}-{java-version}":
+          build-node: centos8-builder-2c-8g
       - "autorelease-generate-release-notes-{stream}"
 
     stream:
@@ -47,7 +48,7 @@
 
     project: releng/autorelease
     project-name: autorelease
-    build-node: ubuntu2004-docker-2c-8g
+    build-node: ubuntu2004-docker-8c-8g
     # Before adding more here, beware of https://jira.linuxfoundation.org/browse/RELENG-280
     archive-artifacts: >
       **/*.prop
