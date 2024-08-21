@@ -34,6 +34,24 @@
       "parentUuid": "fee45644_6dc2e26d",
       "revId": "9e83ec0b1236160d92c3bcacf3ff525201c154e9",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed9e85f9_6a1b7b7f",
+        "filename": "jjb/integration/integration-templates.yaml",
+        "patchSetId": 9
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1927
+      },
+      "writtenOn": "2024-08-21T20:07:27Z",
+      "side": 1,
+      "message": "I took this patch and reverted the `node` change back to `centos8-robot-2c-8g` and then configured `netconf-csit-1node-userfeatures-all-scandium` in sandbox.\n\nThe following is the test result run with [integration/test patch 113110/14](https://git.opendaylight.org/gerrit/c/integration/test/+/113110/14):\n\nhttps://jenkins.opendaylight.org/sandbox/view/All/job/netconf-csit-1node-userfeatures-all-scandium/2/\n\nIt runs fine with the cento runner - note that controller is running on a separate Ubuntu VM, not on this robot runner.",
+      "parentUuid": "ec97bf6b_d6a26bae",
+      "revId": "9e83ec0b1236160d92c3bcacf3ff525201c154e9",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
