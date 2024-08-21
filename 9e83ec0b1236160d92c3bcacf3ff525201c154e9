@@ -16,6 +16,24 @@
       "message": "This is the node where robot test is run. I don\u0027t think we need to change this.",
       "revId": "9e83ec0b1236160d92c3bcacf3ff525201c154e9",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec97bf6b_d6a26bae",
+        "filename": "jjb/integration/integration-templates.yaml",
+        "patchSetId": 9
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 9255
+      },
+      "writtenOn": "2024-08-21T19:02:00Z",
+      "side": 1,
+      "message": "If I do not change this node, karaf cannot start because this node does not have Java 21 installed. \n\nSandbox result with actual patch:\nhttps://jenkins.opendaylight.org/sandbox/me/my-views/view/all/job/netconf-csit-1node-gate-userfeatures-all-scandium/2/\n\nSandbox console output with centos8-robot-2c-8g:\nhttps://jenkins.opendaylight.org/sandbox/me/my-views/view/all/job/netconf-csit-1node-gate-userfeatures-all-scandium/3/console\n\nReverted jre version to 17:\nhttps://jenkins.opendaylight.org/sandbox/me/my-views/view/all/job/netconf-csit-1node-gate-userfeatures-all-scandium/5/console\n\nAvailable versions for centos node:\nls -d /usr/lib/jvm/*\n19:11:42 /usr/lib/jvm/java-11\n19:11:42 /usr/lib/jvm/java-11-openjdk\n19:11:42 /usr/lib/jvm/java-11-openjdk-11.0.20.1.1-2.el8.x86_64\n19:11:42 /usr/lib/jvm/java-17\n19:11:42 /usr/lib/jvm/java-17-openjdk\n19:11:42 /usr/lib/jvm/java-17-openjdk-17.0.6.0.9-0.3.ea.el8.x86_64\n19:11:42 /usr/lib/jvm/java-1.8.0\n19:11:42 /usr/lib/jvm/java-1.8.0-openjdk\n19:11:42 /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.362.b08-3.el8.x86_64\n19:11:42 /usr/lib/jvm/java-22\n19:11:42 /usr/lib/jvm/java-22-openjdk\n19:11:42 /usr/lib/jvm/java-22-openjdk-22.0.1.0.8-1.rolling.el8.x86_64\n19:11:42 /usr/lib/jvm/java-openjdk\n19:11:42 /usr/lib/jvm/jre-11\n19:11:42 /usr/lib/jvm/jre-11-openjdk\n19:11:42 /usr/lib/jvm/jre-11-openjdk-11.0.20.1.1-2.el8.x86_64\n19:11:42 /usr/lib/jvm/jre-17\n19:11:42 /usr/lib/jvm/jre-17-openjdk\n19:11:42 /usr/lib/jvm/jre-17-openjdk-17.0.6.0.9-0.3.ea.el8.x86_64\n19:11:42 /usr/lib/jvm/jre-1.8.0\n19:11:42 /usr/lib/jvm/jre-1.8.0-openjdk\n19:11:42 /usr/lib/jvm/jre-1.8.0-openjdk-1.8.0.362.b08-3.el8.x86_64\n19:11:42 /usr/lib/jvm/jre-22\n19:11:42 /usr/lib/jvm/jre-22-openjdk\n19:11:42 /usr/lib/jvm/jre-22-openjdk-22.0.1.0.8-1.rolling.el8.x86_64\n19:11:42 /usr/lib/jvm/jre-openjdk",
+      "parentUuid": "fee45644_6dc2e26d",
+      "revId": "9e83ec0b1236160d92c3bcacf3ff525201c154e9",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
