@@ -1,0 +1,38 @@
+---
+- project:
+    name: netconf-csit-userfeatures-netty
+    jobs:
+      - inttest-csit-1node
+
+    # The project name
+    project: "netconf"
+
+    # The functionality under test
+    functionality:
+      - userfeatures-netty
+      - gate-userfeatures-netty
+
+    # Project branches
+    stream:
+      - scandium:
+          branch: "master"
+          jre: "openjdk21"
+
+    karaf-version: netconf
+
+    install:
+      - all:
+          scope: "all"
+
+    tools_system_image: "ZZCI - Ubuntu 20.04 - docker - x86_64 - 20240801-160217.825"
+
+    # Features to install
+    install-features: >
+      odl-restconf,
+      odl-netconf-mdsal,
+      odl-restconf-openapi,
+      odl-clustering-test-app,
+      odl-netconf-topology
+
+    # Robot custom options
+    robot-options: "-v NETOPEER_USER:root -v USE_NETCONF_CONNECTOR:False -v RESTCONFPORT:8182"
