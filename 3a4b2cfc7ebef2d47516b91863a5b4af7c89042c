@@ -16,6 +16,40 @@
       "message": "Relates to https://git.opendaylight.org/gerrit/c/integration/test/+/113171",
       "revId": "3a4b2cfc7ebef2d47516b91863a5b4af7c89042c",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c134f7d_6c7ff170",
+        "filename": "jjb/netconf/netconf-userfeatures-netty.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1927
+      },
+      "writtenOn": "2024-08-22T16:29:24Z",
+      "side": 1,
+      "message": "I guess Netty-based RESTCONF server is for Titanium or is this going to be used for Scandium, too?\n\nIf the feature is for Titanium, then it would be better to rebase this on top of the scandium branch-cut change:\nhttps://git.opendaylight.org/gerrit/c/releng/builder/+/113112",
+      "revId": "3a4b2cfc7ebef2d47516b91863a5b4af7c89042c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "45b4e338_a4b57656",
+        "filename": "jjb/netconf/netconf-userfeatures-netty.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1927
+      },
+      "writtenOn": "2024-08-22T16:29:24Z",
+      "side": 1,
+      "message": "The only difference in terms of test configuration is this custom `RESTCONFPORT`.\nIt\u0027s not clear to me how this is supposed to work. Will there be two RESTCONF servers, one on 8181 \u0026 the other on 8182 and the former is used for `userfeatures` with Jetty-based server and the latter is used for `userfeatures-netty` with Netty-based server?\n\nCurrently this CSIT job combined with [integration test 113171/3](https://git.opendaylight.org/gerrit/c/integration/test/+/113171/3) doesn\u0027t work.",
+      "revId": "3a4b2cfc7ebef2d47516b91863a5b4af7c89042c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
