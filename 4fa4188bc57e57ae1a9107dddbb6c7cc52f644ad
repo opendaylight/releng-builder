@@ -1,4 +1,22 @@
 {
   "pushCert": "certificate version 0.1\npusher 5BF2E872CCF39394 1724442235 -0700\npushee ssh://git.opendaylight.org:29418/releng/builder\nnonce 1724442234-DD897E80DD8E941E7EDAB75B1C7BC3D5C7BACA86\n\n0000000000000000000000000000000000000000 4fa4188bc57e57ae1a9107dddbb6c7cc52f644ad refs/for/master\n-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCAAdFiEE6VGviOgBMjnZCl/bW/Locszzk5QFAmbI5nsACgkQW/Locszz\nk5RxqxAAlNZTNZZhKCaxx2nnB2xnvTpcW8enIlSi0o8dtsuEKCGsUuhqpCsQEzBa\n2HE935wWOo1SHNqoMVmjNdpFjRE0Q1Ugu4T/jXEs3qXOnJ2Gm0D1+X5Nx36fJ3/1\ndtIEBd4YW8LwGlqVK44kzKc4L8R5TR0j67FHBULGGxUjlJd380iUHZmLJuJ8WlJj\nKymK8+d928P1LS9sq094Qy1WaUtixW50OElarSut2en2ln9yfq5mB4j/7cZhAKIC\nzb6W6HWjNv1nC2XuN7WIfK0Y9WMZPd3sIRxjg76TrhMrPLD63H2GSsuZAVH9a914\neyYy06a4RMeiS0GC/yvEBBl/suMvC6TUOG4GMT1u3ib9p2j9Psm7iZoWlk79jVkg\n/yNxLbr67ha/Qe9HKnGK8+61l1AU/s6xvrxPSOdaB9DVV80tXY4B42TwFSJVB7wR\nshhqdG1lVLibLAoo6r6J//vmMaH7ewhbKMUIQSwurdIzSOFzmsFYUhK+xuV3bdc3\nTc0BGFUf1N26IFshvaUiHbuX/ifHvv2dWwk8LHU22ugakZ9pAVbljlXwdAcmERv7\nyuUE0z2Uq53vTKNMcJN4kkguOdeFe7GtjHvrTjJMJN3CBKV25AnXSgpTPnzMpXQ2\nM3QAF9XMNQg5QgvunGPT6GXb4OUYaeIRE2I70kJxGhclYsIMBsE\u003d\n\u003dwpG/\n-----END PGP SIGNATURE-----\n",
-  "comments": []
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c28f33a2_6096dbea",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1927
+      },
+      "writtenOn": "2024-08-23T19:54:59Z",
+      "side": 1,
+      "message": "Sandbox test:\n- https://jenkins.opendaylight.org/sandbox/view/All/job/netconf-mri-patch-test-core-scandium/1/\n\nCancelled the test run because deploy was not allowed and CSIT jobs cannot be run properly:\n```\n09:59:25 [ERROR] Failed to execute goal org.apache.maven.plugins:maven-deploy-plugin:3.1.1:deploy-file (default-cli) on project standalone-pom: Failed to deploy artifacts: Could not transfer artifact org.opendaylight.netconf:netconf-karaf:zip:8.0.1-20240823.165923-25 from/to opendaylight-snapshot (https://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/): status code: 401, reason phrase: Unauthorized (401) -\u003e [Help 1]\n```\n\nSo full test seems not possible in the sandbox environment but basic functionality seems to work.",
+      "revId": "4fa4188bc57e57ae1a9107dddbb6c7cc52f644ad",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
 }
