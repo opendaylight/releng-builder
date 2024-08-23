@@ -5,8 +5,7 @@
       - inttest-patch-test
 
     # The project name
-    project: "openflowplugin"
-    mvn-version: "mvn38"
+    project: openflowplugin
 
     # Project branches
     stream:
@@ -16,11 +15,16 @@
           branch: "stable/scandium"
       - calcium:
           branch: "stable/calcium"
+          java-version: openjdk17
+          mvn-version: mvn38
       - potassium:
           branch: "stable/potassium"
+          java-version: openjdk17
+          mvn-version: mvn38
 
-    os-branch: "queens"
-    jdk: "openjdk8"
+    java-version: openjdk21
+    mvn-version: mvn39
+    build-node: ubuntu2004-docker-4c-4g
 
     feature:
       - cbench:
@@ -36,7 +40,3 @@
             openflowplugin-csit-3node-gate-clustering-only-{stream},
             openflowplugin-csit-3node-gate-clustering-bulkomatic-only-{stream},
             openflowplugin-csit-3node-gate-clustering-perf-bulkomatic-only-{stream}
-
-      - genius:
-          csit-list: >
-            genius-csit-1node-gate-only-{stream}
