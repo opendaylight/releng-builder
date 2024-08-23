@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f019801c_cc75ea5d",
+        "filename": "jjb/netconf/netconf-userfeatures-netty.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2024-08-23T12:38:34Z",
+      "side": 1,
+      "message": "Originally, for Scandium, we are trying to finish it into NETCONF-8.0.1.",
+      "parentUuid": "3c134f7d_6c7ff170",
+      "revId": "3a4b2cfc7ebef2d47516b91863a5b4af7c89042c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "45b4e338_a4b57656",
         "filename": "jjb/netconf/netconf-userfeatures-netty.yaml",
         "patchSetId": 2
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "https://jenkins.opendaylight.org/sandbox/view/All/job/netconf-csit-1node-userfeatures-netty-all-scandium/2/",
       "parentUuid": "45b4e338_a4b57656",
+      "revId": "3a4b2cfc7ebef2d47516b91863a5b4af7c89042c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "afc4c8db_af10ab48",
+        "filename": "jjb/netconf/netconf-userfeatures-netty.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2024-08-23T12:38:34Z",
+      "side": 1,
+      "message": "Yes, there will be:\n\nJAXRS restconf (the current implementation) on port 8181.\nNetty (a new, alternative endpoint) on port 8182.\n\nIMO its expected that test fails, because we want to have:\n\n1. jobs ready\n2. merge netconf patch and see if it works",
+      "parentUuid": "8b9a04af_b6f44b52",
       "revId": "3a4b2cfc7ebef2d47516b91863a5b4af7c89042c",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
