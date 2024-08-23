@@ -1,0 +1,25 @@
+---
+- project:
+    name: netconf-patch-test
+    jobs:
+      - inttest-mri-patch-test
+
+    # The project name
+    project: netconf
+
+    # Project branches
+    stream:
+      - scandium:
+          branch: master
+
+    java-version: openjdk21
+    mvn-version: mvn39
+    karaf-version: netconf
+    build-node: ubuntu2004-docker-4c-4g
+
+    feature:
+      - core:
+          csit-list: >
+            netconf-csit-1node-gate-userfeatures-all-{stream},
+            netconf-csit-1node-gate-userfeatures-netty-all-{stream},
+            netconf-csit-1node-gate-callhome-only-{stream},

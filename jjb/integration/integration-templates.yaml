@@ -36,6 +36,7 @@
     # Default variables #
     #####################
 
+    build-node: centos8-robot-2c-8g
     build-days-to-keep: 30
     build-timeout: 360 # Time in minutes
     disable-job: false
@@ -45,7 +46,7 @@
     #####################
 
     project-type: freestyle
-    node: centos8-robot-2c-8g
+    node: "{build-node}"
     concurrent: true
     disabled: "{disable-job}"
 
