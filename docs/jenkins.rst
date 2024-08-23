@@ -822,7 +822,7 @@ Jenkins Sandbox documentation is available in the
 .. _releng-builder-gerrit: https://git.opendaylight.org/gerrit/admin/repos/releng%2Fbuilder
 .. _releng-builder-repo: https://git.opendaylight.org/gerrit/gitweb?p=releng%2Fbuilder.git;a=summary
 .. _releng-global-jjb: https://gerrit.linuxfoundation.org/infra/#/q/project:releng/global-jjb
-.. _releng-builder-wiki: https://wiki.opendaylight.org/pages/viewpage.action?pageId=329336
+.. _releng-builder-wiki: https://lf-opendaylight.atlassian.net/wiki/spaces/ODL/pages/12518223/RelEng+Builder
 .. _streams-design-background: https://lists.opendaylight.org/pipermail/release/2015-July/003139.html
 .. _spinup-scripts: https://git.opendaylight.org/gerrit/gitweb?p=releng/builder.git;a=tree;f=jenkins-scripts
 .. _spinup-scripts-basic_settings.sh: https://git.opendaylight.org/gerrit/gitweb?p=releng/builder.git;a=blob;f=jenkins-scripts/basic_settings.sh
