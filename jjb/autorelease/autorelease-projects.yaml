@@ -9,8 +9,10 @@
       - gerrit-tox-verify
 
     stream:
-      - scandium:
+      - titanium:
           branch: "master"
+      - scandium:
+          branch: "stable/scandium"
       - calcium:
           branch: "stable/calcium"
       - potassium:
@@ -29,13 +31,17 @@
     jobs:
       - "autorelease-release-{stream}-{mvn-version}-{java-version}":
           build-node: ubuntu2004-docker-8c-8g
-      - "autorelease-version-bump-{stream}-{mvn-version}-{java-version}":
-          build-node: centos8-builder-2c-8g
+      - "autorelease-version-bump-{stream}-{mvn-version}-{java-version}"
       - "autorelease-generate-release-notes-{stream}"
 
     stream:
-      - scandium:
+      - titanium:
           branch: "master"
+          java-version: openjdk21
+          mvn-version: mvn39
+          integration-test: titanium
+      - scandium:
+          branch: "stable/scandium"
           java-version: openjdk21
           mvn-version: mvn39
           integration-test: scandium
