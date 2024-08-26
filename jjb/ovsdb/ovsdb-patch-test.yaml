@@ -6,7 +6,6 @@
 
     # The project name
     project: "ovsdb"
-    mvn-version: "mvn38"
 
     stream:
       - titanium:
@@ -15,16 +14,18 @@
           branch: "stable/scandium"
       - calcium:
           branch: "stable/calcium"
+          java-version: openjdk17
+          mvn-version: mvn38
       - potassium:
           branch: "stable/potassium"
+          java-version: openjdk17
+          mvn-version: mvn38
 
-    os-branch: "queens"
-    jdk: "openjdk8"
+    java-version: openjdk21
+    mvn-version: mvn39
+    build-node: ubuntu2004-docker-4c-4g
 
     feature:
-      - genius:
-          csit-list: >
-            genius-csit-1node-gate-only-{stream}
       - core:
           csit-list: >
             ovsdb-csit-1node-gate-southbound-all-{stream},
