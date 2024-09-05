@@ -6,7 +6,7 @@
 
     # The project name
     project: "bgpcep"
-    jre: "openjdk17"
+    jre: "openjdk21"
 
     # The functionality under test
     functionality: "bgpclustering-ha"
@@ -19,8 +19,10 @@
           branch: "stable/scandium"
       - calcium:
           branch: "stable/calcium"
+          jre: "openjdk17"
       - potassium:
           branch: "stable/potassium"
+          jre: "openjdk17"
 
     karaf-version: bgpcep
 
