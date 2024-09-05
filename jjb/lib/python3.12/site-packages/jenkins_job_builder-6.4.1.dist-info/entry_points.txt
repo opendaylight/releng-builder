@@ -1,0 +1,76 @@
+[console_scripts]
+jenkins-jobs = jenkins_jobs.cli.entry:main
+
+[jenkins_jobs.builders]
+raw = jenkins_jobs.modules.general:raw
+
+[jenkins_jobs.modules]
+builders = jenkins_jobs.modules.builders:Builders
+general = jenkins_jobs.modules.general:General
+hipchat = jenkins_jobs.modules.hipchat_notif:HipChat
+metadata = jenkins_jobs.modules.metadata:Metadata
+notifications = jenkins_jobs.modules.notifications:Notifications
+parameters = jenkins_jobs.modules.parameters:Parameters
+pipeline-scm = jenkins_jobs.modules.scm:PipelineSCM
+properties = jenkins_jobs.modules.properties:Properties
+publishers = jenkins_jobs.modules.publishers:Publishers
+reporters = jenkins_jobs.modules.reporters:Reporters
+scm = jenkins_jobs.modules.scm:SCM
+triggers = jenkins_jobs.modules.triggers:Triggers
+wrappers = jenkins_jobs.modules.wrappers:Wrappers
+zuul = jenkins_jobs.modules.zuul:Zuul
+
+[jenkins_jobs.notifications]
+raw = jenkins_jobs.modules.general:raw
+
+[jenkins_jobs.parameters]
+raw = jenkins_jobs.modules.general:raw
+
+[jenkins_jobs.projects]
+externaljob = jenkins_jobs.modules.project_externaljob:ExternalJob
+flow = jenkins_jobs.modules.project_flow:Flow
+folder = jenkins_jobs.modules.project_folder:Folder
+freestyle = jenkins_jobs.modules.project_freestyle:Freestyle
+githuborg = jenkins_jobs.modules.project_githuborg:GithubOrganization
+matrix = jenkins_jobs.modules.project_matrix:Matrix
+maven = jenkins_jobs.modules.project_maven:Maven
+multibranch = jenkins_jobs.modules.project_multibranch:WorkflowMultiBranch
+multibranch-defaults = jenkins_jobs.modules.project_multibranch:WorkflowMultiBranchDefaults
+multijob = jenkins_jobs.modules.project_multijob:MultiJob
+pipeline = jenkins_jobs.modules.project_pipeline:Pipeline
+workflow = jenkins_jobs.modules.project_workflow:Workflow
+
+[jenkins_jobs.properties]
+raw = jenkins_jobs.modules.general:raw
+
+[jenkins_jobs.publishers]
+raw = jenkins_jobs.modules.general:raw
+
+[jenkins_jobs.reporters]
+raw = jenkins_jobs.modules.general:raw
+
+[jenkins_jobs.scm]
+raw = jenkins_jobs.modules.general:raw
+
+[jenkins_jobs.triggers]
+raw = jenkins_jobs.modules.general:raw
+
+[jenkins_jobs.views]
+all = jenkins_jobs.modules.view_all:All
+delivery_pipeline = jenkins_jobs.modules.view_delivery_pipeline:DeliveryPipeline
+list = jenkins_jobs.modules.view_list:List
+nested = jenkins_jobs.modules.view_nested:Nested
+pipeline = jenkins_jobs.modules.view_pipeline:Pipeline
+sectioned = jenkins_jobs.modules.view_sectioned:Sectioned
+
+[jenkins_jobs.wrappers]
+raw = jenkins_jobs.modules.general:raw
+
+[jjb.cli.subcommands]
+delete = jenkins_jobs.cli.subcommand.delete:DeleteSubCommand
+delete-all = jenkins_jobs.cli.subcommand.delete_all:DeleteAllSubCommand
+get-plugins-info = jenkins_jobs.cli.subcommand.get_plugins_info:GetPluginsInfoSubCommand
+list = jenkins_jobs.cli.subcommand.list:ListSubCommand
+test = jenkins_jobs.cli.subcommand.test:TestSubCommand
+update = jenkins_jobs.cli.subcommand.update:UpdateSubCommand
+
