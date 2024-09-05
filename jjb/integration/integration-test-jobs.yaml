@@ -18,6 +18,7 @@
           build-node: centos8-builder-2c-2g
 
     mvn-version: "mvn38"
+    java-version: "openjdk21"
 
     # CSIT Lists in defaults.yaml
     stream:
@@ -37,6 +38,7 @@
             integration/distribution
       - calcium:
           branch: "stable/calcium"
+          java-version: "openjdk17"
           csit-list: !include: csit-jobs-calcium.lst
           build-order: >
             odlparent infrautils yangtools mdsal controller aaa netconf bgpcep
@@ -44,6 +46,7 @@
             integration/distribution
       - potassium:
           branch: "stable/potassium"
+          java-version: "openjdk17"
           csit-list: !include: csit-jobs-potassium.lst
           build-order: >
             odlparent infrautils yangtools mdsal controller aaa netconf bgpcep
