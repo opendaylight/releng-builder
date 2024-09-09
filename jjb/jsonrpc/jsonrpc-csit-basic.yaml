@@ -6,7 +6,7 @@
 
     # The project name
     project: "jsonrpc"
-    jre: "openjdk17"
+    jre: "openjdk21"
 
     # The functionality under test
     functionality: "basic"
@@ -19,8 +19,10 @@
           branch: "stable/scandium"
       - calcium:
           branch: "stable/calcium"
+          jre: "openjdk17"
       - potassium:
           branch: "stable/potassium"
+          jre: "openjdk17"
 
     install:
       - only:

@@ -8,7 +8,7 @@
 
     # The project name
     project: "lispflowmapping"
-    jre: "openjdk17"
+    jre: "openjdk21"
 
     # The functionality under test
     functionality: "msmr"
@@ -21,8 +21,10 @@
           branch: "stable/scandium"
       - calcium:
           branch: "stable/calcium"
+          jre: "openjdk17"
       - potassium:
           branch: "stable/potassium"
+          jre: "openjdk17"
 
     install:
       - all:
