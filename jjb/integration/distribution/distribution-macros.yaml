@@ -202,13 +202,14 @@
           # No failure in this macro should affect the job result.
           set +e
           rm -f "$WORKSPACE/bug_9191.log"
-          pushd "$WORKSPACE/distribution/$KARAF_ARTIFACT/target/assembly/system/org/opendaylight"
-          for folder in `ls`; do
-          find "$folder" -name \*features.xml | xargs fgrep -n '<bundle>' > bug_9191.0.log
-          fgrep org.opendaylight bug_9191.0.log | fgrep -v "org.opendaylight.$folder" >> "$WORKSPACE/bug_9191.log"
-          rm bug_9191.0.log
-          done
-          popd
+          (
+            cd "$WORKSPACE/distribution/$KARAF_ARTIFACT/target/assembly/system/org/opendaylight" || exit 0
+            for folder in `ls`; do
+            find "$folder" -name \*features.xml | xargs fgrep -n '<bundle>' > bug_9191.0.log
+            fgrep org.opendaylight bug_9191.0.log | fgrep -v "org.opendaylight.$folder" >> "$WORKSPACE/bug_9191.log"
+            rm bug_9191.0.log
+            done
+          )
 
 - builder:
     name: distribution-check-warn-9192
@@ -221,9 +222,10 @@
       - shell: |
           # No failure in this macro should affect the job result.
           set +e
-          pushd "$WORKSPACE/distribution/$KARAF_ARTIFACT/target/assembly/system/org/opendaylight"
-          find . -name \*features.xml | xargs fgrep -n '<bundle>' > "$WORKSPACE/bug_9192.0.log"
-          popd
+          (
+            cd "$WORKSPACE/distribution/$KARAF_ARTIFACT/target/assembly/system/org/opendaylight" || exit 0
+            find . -name \*features.xml | xargs fgrep -n '<bundle>' > "$WORKSPACE/bug_9192.0.log"
+          )
           fgrep org.opendaylight bug_9192.0.log > "$WORKSPACE/bug_9192.1.log"
           sort -s -t '<' -k 2 "$WORKSPACE/bug_9192.1.log" > "$WORKSPACE/bug_9192.2.log"
           sort -u -s -t '<' -k 2 "$WORKSPACE/bug_9192.1.log" > "$WORKSPACE/bug_9192.3.log"
