@@ -29,7 +29,7 @@
       - titanium:
           branch: "master"
       - scandium:
-          branch: "stable/calcium"
+          branch: "stable/scandium"
       - calcium:
           branch: "stable/calcium"
           mvn-version: mvn38
@@ -72,8 +72,10 @@
       serviceutils-maven-merge-{stream},
 
     stream:
-      - scandium:
+      - titanium:
           branch: "master"
+      - scandium:
+          branch: "stable/scandium"
       - calcium:
           branch: "stable/calcium"
           mvn-version: mvn38
@@ -113,8 +115,10 @@
     jobs:
       - "{project-name}-gerrit-docker-jobs"
     stream:
-      - scandium:
+      - titanium:
           branch: "master"
+      - scandium:
+          branch: "stable/scandium"
       - calcium:
           branch: "stable/calcium"
       - potassium:
