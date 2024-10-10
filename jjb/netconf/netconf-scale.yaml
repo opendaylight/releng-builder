@@ -57,13 +57,18 @@
 
     # Project branches
     stream:
-      - master:
+      - titanium:
           branch: "master"
+          jre: "openjdk21"
+      - scandium:
+          branch: "master"
+          jre: "openjdk21"
+      - calcium:
+          branch: "7.0.x"
           jre: "openjdk17"
-          robot-options:
-            "-v USE_NETCONF_CONNECTOR:False -v SCHEMA_MODEL:juniper -v\
-            \ INIT_DEVICE_COUNT:1000 -v MAX_DEVICE_COUNT:3000 -v DEVICE_INCREMENT:500\
-            \ -v TESTTOOL_BOOT_TIMEOUT:600s -v MAX_HEAP:4G --flattenkeywords name:*repeat*keyword*"
+      - potassium:
+          branch: "6.0.x"
+          jre: "openjdk17"
 
     karaf-version: netconf
 
@@ -79,10 +84,15 @@
       odl-netconf-topology,
       odl-jolokia
 
+    # Robot custom options
+    robot-options: "-v USE_NETCONF_CONNECTOR:False -v SCHEMA_MODEL:juniper -v\
+      \ INIT_DEVICE_COUNT:1000 -v MAX_DEVICE_COUNT:3000 -v DEVICE_INCREMENT:500\
+      \ -v TESTTOOL_BOOT_TIMEOUT:600s -v MAX_HEAP:4G --flattenkeywords name:*repeat*keyword*"
+
     # ODL system configuration
-    odl_system_flavor: odl-standard-8
+    odl_system_flavor: v3-standard-8
     controller-max-mem: "12G"
-    tools_system_flavor: odl-standard-8
+    tools_system_flavor: v3-standard-8
 
     # Plot Info
     01-plot-title: "Max Devices"
