@@ -1,4 +1,56 @@
 {
   "pushCert": "certificate version 0.1\npusher 5BF2E872CCF39394 1728509487 -0700\npushee ssh://git.opendaylight.org:29418/releng/builder\nnonce 1728509487-DBFE7AB1FB64E57CA4A4041A7B7D25D70DDBA65A\n\n0000000000000000000000000000000000000000 60ba9aa753b76e24c43ff0b8a10862c4cfb1dfe7 refs/for/master\n-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCAAdFiEE6VGviOgBMjnZCl/bW/Locszzk5QFAmcG9i8ACgkQW/Locszz\nk5TQ3hAAgvkXuBm9S5c0jGWnwTrHfPKS9ozzL0pxfYt7xF7WcAsqHYwrJ325AVuX\nQzn0syagi2Tnv2jR5fjVRK5UEpSQAm57Bky9MuTBd76xmjZJxHAHDIzdRZyhU+e8\nhqp2LOZdH/o6LCs/jAGLHpIS8vRU6ndzUyeEtuM0DfI/F2TdBAcDcCCyU3YeGNTf\neIwkVA8ha+U+/uGX/D6Hq+ADDVEeLQUGfZZfmEKU58oGkOMWwvVRwgJ+yMpxUmpB\n4KsdzZuTAt2kiFZg3BP11AJfw9iLDlxye9NlFNcUcTY62PB9YTDEXR3KTwnFwZ4T\nBPPUv1aMoq/fuLEjzQd7YDrpHAwUjMCk3usyUv2QjqqvwAgqWDAv7BS3Kx57Pc0f\nJAnGyag6AU9uidbDkzk4RbaiDqdW/W+MFF2EUYFY/roQX/AGYQtnLNf6w2+VAG10\n0wgQvAeBA6xRINKPXVt437N51hUYaTXEkTZL2sXJe1KLqWKnlU4NkOz+CYpAslNy\nS6Q9mW5qG4XaZShUe1k4pplHJZPYVugOhIH6r2nJ+oNmd2qBNqdvonztZOCZ5zrN\n6alm/22+L7GlynvD1lhFHLMz5lzo3Ksb7qHvGhrCx0djnngInpztqK0JBi4oFWCI\nj1vo1n3mF2pf5IcEg6dZIZX4uZWw9TqpTXOHQKZCsD8USpuWMqU\u003d\n\u003dd1K6\n-----END PGP SIGNATURE-----\n",
-  "comments": []
+  "comments": [],
+  "submitRequirementResults": [
+    {
+      "submitRequirement": {
+        "name": "Code-Review",
+        "description": {
+          "value": "A maximum vote is required for the \u0027Code-Review\u0027 label \t\t\tfrom a non-uploader. A minumum vote is blocking."
+        },
+        "applicabilityExpression": {},
+        "submittabilityExpression": {
+          "expressionString": "label:Code-Review\u003dMAX,user\u003dnon_uploader AND -label:Code-Review\u003dMIN"
+        },
+        "overrideExpression": {},
+        "allowOverrideInChildProjects": false
+      },
+      "applicabilityExpressionResult": {},
+      "submittabilityExpressionResult": {
+        "value": {"expression":{"expressionString":"label:Code-Review=MAX,user=non_uploader AND -label:Code-Review=MIN"},"status":"PASS","errorMessage":{"value":null},"passingAtoms":["label:Code-Review=MAX,user=non_uploader"],"failingAtoms":["label:Code-Review=MIN"]}
+      },
+      "overrideExpressionResult": {},
+      "patchSetCommitId": "60ba9aa753b76e24c43ff0b8a10862c4cfb1dfe7",
+      "legacy": {
+        "value": false
+      },
+      "forced": {},
+      "hidden": {}
+    },
+    {
+      "submitRequirement": {
+        "name": "Verified",
+        "description": {
+          "value": "A maximum \u0027Verified\u0027 vote from \u0027ODL Required.GHA\u0027 and \t\t\tone other CI or committer that is a non-uploader is \t\t\trequired for the \u0027Verified\u0027 label. A minimum vote is \t\t\tblocking."
+        },
+        "applicabilityExpression": {},
+        "submittabilityExpression": {
+          "expressionString": "label:Verified\u003dMAX,user\u003dodl.required.gha AND label:Verified\u003dMAX,count\u003e\u003d2 AND label:Verified\u003dMAX,user\u003dnon_uploader AND -label:Verified\u003dMIN"
+        },
+        "overrideExpression": {},
+        "allowOverrideInChildProjects": false
+      },
+      "applicabilityExpressionResult": {},
+      "submittabilityExpressionResult": {
+        "value": {"expression":{"expressionString":"label:Verified=MAX,user=odl.required.gha AND label:Verified=MAX,count>=2 AND label:Verified=MAX,user=non_uploader AND -label:Verified=MIN"},"status":"PASS","errorMessage":{"value":null},"passingAtoms":["label:Verified=MAX,user=odl.required.gha","label:Verified=MAX,user=non_uploader","label:Verified=MAX,count>=2"],"failingAtoms":["label:Verified=MIN"]}
+      },
+      "overrideExpressionResult": {},
+      "patchSetCommitId": "60ba9aa753b76e24c43ff0b8a10862c4cfb1dfe7",
+      "legacy": {
+        "value": false
+      },
+      "forced": {},
+      "hidden": {}
+    }
+  ]
 }
