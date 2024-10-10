@@ -127,9 +127,9 @@
 
     # Data for csit-verify jobs
     # Branch for "last" version detection
-    verify-branch: stable/potassium
+    verify-branch: stable/calcium
     # Value for ODL_STREAM
-    verify-stream: potassium
+    verify-stream: calcium
     verify-karaf-version: karaf4
     verify-jdkversion: openjdk17
 
@@ -214,34 +214,6 @@
     10-inclusion-flag: "off"
     10-exclude-value: ""
 
-    csit-mri-list-potassium: >
-      aaa-csit-1node-authn-all-potassium,
-      controller-csit-1node-akka1-all-potassium,
-      controller-csit-1node-benchmark-all-potassium,
-      controller-csit-1node-rest-cars-perf-all-potassium,
-      controller-csit-3node-benchmark-all-potassium,
-      controller-csit-3node-clustering-ask-all-potassium,
-      controller-csit-3node-clustering-tell-all-potassium,
-      controller-csit-3node-rest-clust-cars-perf-ask-only-potassium,
-      controller-csit-3node-rest-clust-cars-perf-tell-only-potassium,
-      mdsal-csit-3node-netty-replicate-only-potassium,
-      netconf-csit-1node-callhome-only-potassium,
-      netconf-csit-1node-scale-max-devices-only-potassium,
-      netconf-csit-1node-scale-only-potassium,
-      netconf-csit-1node-userfeatures-all-potassium,
-      netconf-csit-3node-clustering-only-potassium,
-      netconf-csit-3node-clustering-scale-only-potassium,
-      yangtools-csit-1node-system-only-postassium
-    csit-weekly-list-potassium: >
-      controller-csit-1node-notifications-longevity-only-potassium,
-      controller-csit-3node-drb-partnheal-longevity-only-potassium,
-      controller-csit-3node-drb-precedence-longevity-only-potassium,
-      controller-csit-3node-ddb-expl-lead-movement-longevity-only-potassium,
-      bgpcep-csit-3node-bgpclustering-longevity-only-potassium,
-      openflowplugin-csit-1node-longevity-only-potassium
-    csit-sanity-list-potassium: >
-      openflowplugin-csit-1node-sanity-only-potassium,
-      distribution-sanity-potassium
     csit-mri-list-calcium: >
       aaa-csit-1node-authn-all-calcium,
       controller-csit-1node-akka1-all-calcium,
