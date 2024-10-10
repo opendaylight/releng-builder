@@ -12,7 +12,7 @@
 update_file_usage () {
     echo "Usage: $0 <RELEASE_NAME> <PUBLISH>"
     echo ""
-    echo "    RELEASE_NAME:  The RELEASE_NAME eg: Calcium, Potassium."
+    echo "    RELEASE_NAME:  The RELEASE_NAME eg: Calcium, Scandium."
     echo "    PUBLISH:  Set to true to PUBLISH"
     echo ""
 }
