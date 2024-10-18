@@ -5,8 +5,8 @@
   become_user: root
   become_method: sudo
   vars:
-    ovs_checksum: sha256:e40227e366db55f997344876a692918af68430bcb5fd3bd9ffe8dfd8c0bdd51f
-    ovs_version: 2.8.11
+    ovs_checksum: sha256:d6e943729710f30941d2c4e798f0f917ceed8b07e9aeacf65ff9de86dff374f0
+    ovs_version: 2.17.11
 
   pre_tasks:
     - include_role: name=lfit.system-update
@@ -17,20 +17,26 @@
         - name: Install OpenVSwitch dependencies
           apt:
             name:
+              - graphviz
               - autoconf
               - automake
               - bzip2
               - debhelper
               - dh-autoreconf
+              - dh-python
               - libssl-dev
+              - libcap2
               - openssl
               - pkg-config
               - procps
-              - python-all
-              - python-qt4
-              - python-twisted-conch
-              - python-zopeinterface
+              - python3-all
+              - python3-zope.interface
+              - python3-sphinx
+              - python3-twisted
+              - libunbound-dev
+              - libunwind-dev
             state: present
+            update_cache: yes
           become: true
         - name: "Fetch OpenVSwitch {{ovs_version}}"
           get_url:
@@ -54,11 +60,12 @@
         - name: "Install OpenVSwitch {{ovs_version}}"
           apt: "deb={{item}}"
           with_items:
-            - /tmp/ovs/libopenvswitch_2.8.11-1_amd64.deb
-            - /tmp/ovs/openvswitch-common_2.8.11-1_amd64.deb
-            - /tmp/ovs/openvswitch-switch_2.8.11-1_amd64.deb
-            - /tmp/ovs/python-openvswitch_2.8.11-1_all.deb
-            - /tmp/ovs/openvswitch-vtep_2.8.11-1_amd64.deb
+            - /tmp/ovs/libopenvswitch_2.17.11-1_amd64.deb
+            - /tmp/ovs/openvswitch-common_2.17.11-1_amd64.deb
+            - /tmp/ovs/openvswitch-switch_2.17.11-1_amd64.deb
+            - /tmp/ovs/python3-openvswitch_2.17.11-1_all.deb
+            - /tmp/ovs/openvswitch-vtep_2.17.11-1_amd64.deb
+            - /tmp/ovs/libopenvswitch_2.17.11-1_amd64.deb
           become: true
         - name: Enable openvswitch-switch service
           systemd:
@@ -96,6 +103,7 @@
               - snmp
               - snmpd
             state: present
+            update_cache: yes
           become: true
         - name: Fetch mtcbench git repo
           git:
@@ -104,6 +112,11 @@
         - name: Run mtcbench/deploy/docker/provision.sh
           command: /tmp/mtcbench/deploy/docker/provision.sh
           become: true
+        - name: Fix LDADD for Ubuntu 22.04
+          lineinfile:
+            path: /tmp/mtcbench/oflops/Makefile.am
+            regex: "^LDADD=-ldl -lpcap -lnetsnmp -loflops_test$"
+            line: "LDADD=-ldl -lpcap -lnetsnmp liboflops_test.la"
         - name: Build mtcbench
           # TODO: remove workaround for build issue with mtcbench
           # when mtcbench dependency build correctly
@@ -123,15 +136,27 @@
           become: true
 
     - name: Install exabgp
-      apt: name=exabgp state=present
+      apt:
+        name:
+          - exabgp
+        state: present
+        update_cache: yes
       become: true
 
     - name: Install python-netaddr for custom mininet topologies
-      apt: name=python-netaddr state=present
+      apt:
+        name:
+          - python3-netaddr
+        state: present
+        update_cache: yes
       become: true
 
     - name: Install vlan for vlan based tests in VTN suites
-      apt: name=vlan state=present
+      apt:
+        name:
+          - vlan
+        state: present
+        update_cache: yes
       become: true
 
     # This image is being used as a CSIT tools image and some of our
@@ -141,8 +166,9 @@
     - name: Install CSIT dependencies
       apt:
         name:
-          - python-requests
+          - python3-requests
         state: present
+        update_cache: yes
       become: true
 
   post_tasks:

@@ -157,7 +157,7 @@
     update-cloud-image: true
 
 - project:
-    name: packer-mininet-ovs-28-jobs
+    name: packer-mininet-ovs-217-jobs
     jobs:
       - gerrit-packer-merge
 
@@ -173,12 +173,10 @@
     cron: "00 H 1 * *"
 
     platforms:
-      - ubuntu-18.04
-      - ubuntu-20.04
       - ubuntu-22.04
       - ubuntu-24.04
 
-    templates: mininet-ovs-28
+    templates: mininet-ovs-217
     update-cloud-image: true
 
 - project:
