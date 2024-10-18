@@ -110,17 +110,17 @@ variable "vm_volume_size" {
   default = "20"
 }
 
-source "docker" "mininet-ovs-28" {
+source "docker" "mininet-ovs-217" {
   changes = ["ENTRYPOINT [\"\"]", "CMD [\"\"]"]
   commit  = true
   image   = "${var.docker_source_image}"
 }
 
-source "openstack" "mininet-ovs-28" {
+source "openstack" "mininet-ovs-217" {
   flavor            = "${var.flavor}"
   image_disk_format = "${var.vm_image_disk_format}"
-  image_name        = "ZZCI - ${var.distro} - mininet-ovs-28 - ${var.arch} - ${legacy_isotime("20060102-150405.000")}"
-  instance_name     = "${var.distro}-mininet-ovs-28-${uuidv4()}"
+  image_name        = "ZZCI - ${var.distro} - mininet-ovs-217 - ${var.arch} - ${legacy_isotime("20060102-150405.000")}"
+  instance_name     = "${var.distro}-mininet-ovs-217-${uuidv4()}"
   metadata = {
     ci_managed = "yes"
   }
@@ -135,7 +135,7 @@ source "openstack" "mininet-ovs-28" {
 }
 
 build {
-  sources = ["source.docker.mininet-ovs-28", "source.openstack.mininet-ovs-28"]
+  sources = ["source.docker.mininet-ovs-217", "source.openstack.mininet-ovs-217"]
 
   provisioner "shell" {
     execute_command = "chmod +x {{ .Path }}; if [ \"$UID\" == \"0\" ]; then {{ .Vars }} '{{ .Path }}'; else {{ .Vars }} sudo -E '{{ .Path }}'; fi"
@@ -157,9 +157,9 @@ build {
     ]
     command            = "./common-packer/ansible-playbook.sh"
     extra_arguments    = [
-        "--ssh-extra-args", "-o IdentitiesOnly=yes -o HostKeyAlgorithms=+ssh-rsa"
+        "--scp-extra-args", "'-O'", "--ssh-extra-args", "-o IdentitiesOnly=yes -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedAlgorithms=+ssh-rsa"
     ]
-    playbook_file      = "provision/mininet-ovs-2.8.yaml"
+    playbook_file      = "provision/mininet-ovs-217.yaml"
     skip_version_check = true
   }
 }
