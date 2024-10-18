@@ -157,7 +157,7 @@ build {
     ]
     command            = "./common-packer/ansible-playbook.sh"
     extra_arguments    = [
-        "--scp-extra-args", "'-O'", "--ssh-extra-args", "-o IdentitiesOnly=yes -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedAlgorithms=+ssh-rsa"
+        "--scp-extra-args", "-o IdentitiesOnly=yes -o HostKeyAlgorithms=+ssh-rsa"
     ]
     playbook_file      = "provision/mininet-ovs-217.yaml"
     skip_version_check = true
