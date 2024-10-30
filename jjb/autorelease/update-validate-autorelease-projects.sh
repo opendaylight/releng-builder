@@ -20,7 +20,7 @@ if [[ ! "$resp" =~ $BRANCH ]]; then
     BRANCH="master"
 fi
 
-wget -nv -O /tmp/pom.xml "https://git.opendaylight.org/gerrit/gitweb?p=releng/autorelease.git;a=blob_plain;f=pom.xml;hb=$GERRIT_BRANCH"
+wget -nv -O /tmp/pom.xml --user-agent="" "https://git.opendaylight.org/gerrit/gitweb?p=releng/autorelease.git;a=blob_plain;f=pom.xml;hb=$GERRIT_BRANCH"
 # Allow word splitting as we only expect modules to appear
 # shellcheck disable=2207
 modules=($(xmlstarlet sel -N x=http://maven.apache.org/POM/4.0.0 -t -m '//x:modules' -v '//x:module' /tmp/pom.xml))
