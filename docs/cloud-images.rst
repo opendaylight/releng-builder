@@ -172,11 +172,14 @@ Following are the list of published images available to Jenkins jobs.
 * ZZCI - Ubuntu 18.04 - mininet-ovs-28 - x86_64 - 20230601-180106.003
 * ZZCI - Ubuntu 20.04 - builder - x86_64 - 20240820-011010.709
 * ZZCI - Ubuntu 20.04 - builder - x86_64 - 20240901-160214.010
+* ZZCI - Ubuntu 20.04 - builder - x86_64 - 20241101-160217.260
 * ZZCI - Ubuntu 20.04 - docker - x86_64 - 20240326-112013.773
 * ZZCI - Ubuntu 20.04 - docker - x86_64 - 20240401-160246.269
 * ZZCI - Ubuntu 20.04 - docker - x86_64 - 20240501-160207.164
 * ZZCI - Ubuntu 20.04 - docker - x86_64 - 20240601-160305.840
 * ZZCI - Ubuntu 20.04 - docker - x86_64 - 20240701-160316.313
 * ZZCI - Ubuntu 20.04 - docker - x86_64 - 20240801-160217.825
+* ZZCI - Ubuntu 20.04 - docker - x86_64 - 20241101-160234.899
 * ZZCI - Ubuntu 22.04 - devstack - x86_64 - 20231031-095146.118
 * ZZCI - Ubuntu 22.04 - mininet-ovs-217 - x86_64 - 20241024-123714.311
+* ZZCI - Ubuntu 22.04 - mininet-ovs-217 - x86_64 - 20241101-060158.442
