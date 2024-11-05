@@ -5,24 +5,24 @@
 # Do not fail the build if there is trouble trying to collect distribution patch diffs
 set +e
 
-NEXUSURL_PREFIX=${ODLNEXUSPROXY:-https://nexus.opendaylight.org}
-ODL_NEXUS_REPO=${ODL_NEXUS_REPO:-content/repositories/opendaylight.snapshot}
-GERRIT_PATH=${GERRIT_PATH:-git.opendaylight.org/gerrit}
-DISTROBRANCH=${DISTROBRANCH:-$GERRIT_BRANCH}
+NEXUSURL_PREFIX="${ODLNEXUSPROXY:-https://nexus.opendaylight.org}"
+ODL_NEXUS_REPO="${ODL_NEXUS_REPO:-content/repositories/opendaylight.snapshot}"
+GITHUB_PATH="${GITHUB_PATH:-github.com/opendaylight}"
+DISTROBRANCH="${DISTROBRANCH:-$GERRIT_BRANCH}"
 
 # Obtain current pom.xml of integration/distribution, correct branch.
 if [[ "$KARAF_ARTIFACT" == "opendaylight" ]]; then
-    wget "http://${GERRIT_PATH}/gitweb?p=integration/distribution.git;a=blob_plain;f=opendaylight/pom.xml;hb=refs/heads/$DISTROBRANCH" -O "pom.xml"
+    wget -nv -O pom.xml "https://$GITHUB_PATH/integration-distribution/raw/refs/heads/$DISTROBRANCH/opendaylight/pom.xml"
 elif [[ "$KARAF_ARTIFACT" == "karaf" ]]; then
-    wget "http://${GERRIT_PATH}/gitweb?p=integration/distribution.git;a=blob_plain;f=pom.xml;hb=refs/heads/$DISTROBRANCH" -O "pom.xml"
+    wget -nv -O pom.xml "https://$GITHUB_PATH/integration-distribution/raw/refs/heads/$DISTROBRANCH/pom.xml"
 elif [[ "$KARAF_ARTIFACT" == "netconf-karaf" ]]; then
-    wget "http://${GERRIT_PATH}/gitweb?p=${KARAF_PROJECT}.git;a=blob_plain;f=karaf/pom.xml;hb=refs/heads/$DISTROBRANCH" -O "pom.xml"
+    wget -nv -O pom.xml "https://$GITHUB_PATH/$KARAF_PROJECT/raw/refs/heads/$DISTROBRANCH/karaf/pom.xml"
 elif [[ "$KARAF_ARTIFACT" == "controller-test-karaf" ]]; then
-    wget "http://${GERRIT_PATH}/gitweb?p=${KARAF_PROJECT}.git;a=blob_plain;f=karaf/pom.xml;hb=refs/heads/$DISTROBRANCH" -O "pom.xml"
+    wget -nv -O pom.xml "https://$GITHUB_PATH/$KARAF_PROJECT/raw/refs/heads/$DISTROBRANCH/karaf/pom.xml"
 elif [[ "$KARAF_ARTIFACT" == "bgpcep-karaf" ]]; then
-    wget "http://${GERRIT_PATH}/gitweb?p=${KARAF_PROJECT}.git;a=blob_plain;f=distribution-karaf/pom.xml;hb=refs/heads/$DISTROBRANCH" -O "pom.xml"
+    wget -nv -O pom.xml "https://$GITHUB_PATH/$KARAF_PROJECT/raw/refs/heads/$DISTROBRANCH/distribution-karaf/pom.xml"
 else
-    wget "http://${GERRIT_PATH}/gitweb?p=integration/distribution.git;a=blob_plain;f=pom.xml;hb=refs/heads/$DISTROBRANCH" -O "pom.xml"
+    wget -nv -O pom.xml "https://$GITHUB_PATH/integration-distribution/raw/refs/heads/$DISTROBRANCH/pom.xml"
 fi
 
 # Extract the BUNDLE_VERSION from the pom.xml
