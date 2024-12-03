@@ -566,7 +566,12 @@
       - integration-script-plan:
           script-plan: "{project}.txt"
       - integration-config-plan:
-          config-plan: "{project}.txt"
+          config-plan: >
+            {% if stream == 'calcium' %}
+            openflowplugin-clustering-calcium.txt
+            {% else %}
+            openflowplugin-clustering.txt
+            {% endif %}
       - integration-stream-test-plan:
           stream-test-plan: "{project}-{functionality}-{stream}.txt"
       - integration-test-plan:
