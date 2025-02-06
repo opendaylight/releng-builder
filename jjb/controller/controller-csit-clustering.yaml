@@ -5,7 +5,7 @@
       - inttest-csit-3node
 
     project: "controller"
-    jre: "openjdk17"
+    jre: "openjdk21"
     functionality:
       - "clustering-ask"
       - "clustering-tell"
@@ -19,6 +19,7 @@
           branch: "stable/scandium"
       - calcium:
           branch: "stable/calcium"
+          jre: "openjdk17"
 
     install:
       - all:

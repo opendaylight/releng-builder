@@ -6,7 +6,7 @@
 
     # The project name
     project: "controller"
-    jre: "openjdk17"
+    jre: "openjdk21"
 
     # The functionality under test
     functionality: "ddb-expl-lead-movement-longevity"
@@ -22,6 +22,7 @@
           branch: "stable/scandium"
       - calcium:
           branch: "stable/calcium"
+          jre: "openjdk17"
 
     install:
       - only:
