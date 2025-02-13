@@ -9,6 +9,11 @@ NEXUSURL_PREFIX="${ODLNEXUSPROXY:-https://nexus.opendaylight.org}"
 ODL_NEXUS_REPO="${ODL_NEXUS_REPO:-content/repositories/opendaylight.snapshot}"
 GERRIT_PATH="${GERRIT_PATH:-git.opendaylight.org/gerrit}"
 DISTROBRANCH="${DISTROBRANCH:-$GERRIT_BRANCH}"
+if [ "${PROJECT}" == "netconf" ] && [ "${DISTROSTREAM}" == "titanium" ]; then
+    KARAF_PATH="usecase/karaf"
+else
+    KARAF_PATH="karaf"
+fi
 
 # Obtain current pom.xml of integration/distribution, correct branch.
 if [[ "$KARAF_ARTIFACT" == "opendaylight" ]]; then
@@ -16,7 +21,7 @@ if [[ "$KARAF_ARTIFACT" == "opendaylight" ]]; then
 elif [[ "$KARAF_ARTIFACT" == "karaf" ]]; then
     wget -nv -O pom.xml "https://${GERRIT_PATH}/gitweb?p=integration/distribution.git;a=blob_plain;f=pom.xml;hb=$DISTROBRANCH"
 elif [[ "$KARAF_ARTIFACT" == "netconf-karaf" ]]; then
-    wget -nv -O pom.xml "https://${GERRIT_PATH}/gitweb?p=${KARAF_PROJECT}.git;a=blob_plain;f=karaf/pom.xml;hb=$DISTROBRANCH"
+    wget -nv -O pom.xml "https://${GERRIT_PATH}/gitweb?p=${KARAF_PROJECT}.git;a=blob_plain;f=${KARAF_PATH}/pom.xml;hb=$DISTROBRANCH"
 elif [[ "$KARAF_ARTIFACT" == "controller-test-karaf" ]]; then
     wget -nv -O pom.xml "https://${GERRIT_PATH}/gitweb?p=${KARAF_PROJECT}.git;a=blob_plain;f=karaf/pom.xml;hb=$DISTROBRANCH"
 elif [[ "$KARAF_ARTIFACT" == "bgpcep-karaf" ]]; then
