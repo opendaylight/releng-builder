@@ -24,7 +24,7 @@
     project-name: builder
     stream: master
     branch: master
-    build-node: centos8-builder-2c-2g
+    build-node: ubuntu2204-builder-2c-2g
     archive-artifacts: "**/*.log"
     build-timeout: 30
     jjb-version: 6.3.0
@@ -36,7 +36,7 @@
 
     project: "releng/builder"
     project-name: builder
-    build-node: centos8-builder-2c-2g
+    build-node: ubuntu2204-builder-2c-2g
 
     jenkins-urls: >
       https://jenkins.opendaylight.org/releng
@@ -45,7 +45,7 @@
 
 - job-template:
     name: builder-check-poms
-    node: centos8-builder-2c-1g
+    node: ubuntu2204-builder-2c-1g
 
     project-type: freestyle
 
@@ -79,7 +79,7 @@
 
 - job-template:
     name: builder-copy-sandbox-logs
-    node: centos8-builder-2c-1g
+    node: ubuntu2204-builder-2c-1g
 
     project-type: freestyle
 
@@ -121,7 +121,7 @@
 - job-template:
     name: "builder-update-image-list"
     project-type: freestyle
-    node: centos8-builder-2c-1g
+    node: ubuntu2204-builder-2c-1g
 
     properties:
       - opendaylight-infra-properties:

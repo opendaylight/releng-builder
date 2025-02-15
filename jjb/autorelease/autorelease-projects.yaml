@@ -18,7 +18,7 @@
 
     project: releng/autorelease
     project-name: autorelease
-    build-node: centos8-builder-2c-2g
+    build-node: ubuntu2204-builder-2c-2g
     archive-artifacts: >
       **/*.prop
       **/*.log
@@ -28,7 +28,7 @@
     name: autorelease-projects-openjdk
     jobs:
       - "autorelease-release-{stream}-{mvn-version}-{java-version}":
-          build-node: ubuntu2004-docker-8c-8g
+          build-node: ubuntu2204-docker-8c-8g
       - "autorelease-version-bump-{stream}-{mvn-version}-{java-version}"
       - "autorelease-generate-release-notes-{stream}"
 
@@ -49,7 +49,7 @@
 
     project: releng/autorelease
     project-name: autorelease
-    build-node: ubuntu2004-docker-8c-8g
+    build-node: ubuntu2204-docker-8c-8g
     # Before adding more here, beware of https://jira.linuxfoundation.org/browse/RELENG-280
     archive-artifacts: >
       **/*.prop

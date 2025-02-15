@@ -9,7 +9,7 @@
     project-name: "transportpce-models"
     stream: master
     branch: "master"
-    build-node: ubuntu2004-docker-2c-2g
+    build-node: ubuntu2204-docker-2c-2g
     mvn-settings: "transportpce-settings"
     mvn-opts: "-Xmx1024m"
     dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}"
@@ -27,7 +27,7 @@
     project-name: "transportpce-models"
     stream: scandium
     branch: "stable/scandium"
-    build-node: ubuntu2004-docker-2c-2g
+    build-node: ubuntu2204-docker-2c-2g
     mvn-settings: "transportpce-settings"
     mvn-opts: "-Xmx1024m"
     dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}"
@@ -45,7 +45,7 @@
     project-name: "transportpce-models"
     stream: calcium
     branch: "stable/calcium"
-    build-node: centos8-builder-2c-2g
+    build-node: ubuntu2204-builder-2c-2g
     mvn-settings: "transportpce-settings"
     mvn-opts: "-Xmx1024m"
     dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}"

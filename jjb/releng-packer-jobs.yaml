@@ -6,7 +6,7 @@
 
     project: releng/builder
     project-name: builder
-    build-node: ubuntu2004-docker-2c-2g
+    build-node: ubuntu2204-docker-2c-2g
     packer-cloud-settings: packer-cloud-env-hcl
 
 - project:
@@ -19,7 +19,7 @@
     branch: master
     archive-artifacts: "**/*.log"
 
-    build-node: ubuntu2004-docker-2c-2g
+    build-node: ubuntu2204-docker-2c-2g
     packer-cloud-settings: packer-cloud-env-hcl
     build-timeout: 90
     cron: "00 H 1 * *"
@@ -45,7 +45,7 @@
     branch: master
     archive-artifacts: "**/*.log"
 
-    build-node: ubuntu2004-docker-2c-2g
+    build-node: ubuntu2204-docker-2c-2g
     packer-cloud-settings: packer-cloud-env-hcl
     build-timeout: 90
     cron: "00 H 1 * *"
@@ -64,7 +64,7 @@
     branch: master
     archive-artifacts: "**/*.log"
 
-    build-node: ubuntu2004-docker-2c-2g
+    build-node: ubuntu2204-docker-2c-2g
     packer-cloud-settings: packer-cloud-env-hcl
     build-timeout: 75
     cron: "00 H 1 * *"
@@ -83,7 +83,7 @@
     branch: master
     archive-artifacts: "**/*.log"
 
-    build-node: ubuntu2004-docker-2c-2g
+    build-node: ubuntu2204-docker-2c-2g
     packer-cloud-settings: packer-cloud-env-hcl
     build-timeout: 75
     cron: "00 H 1 * *"
@@ -102,7 +102,7 @@
     branch: master
     archive-artifacts: "**/*.log"
 
-    build-node: ubuntu2004-docker-2c-2g
+    build-node: ubuntu2204-docker-2c-2g
     packer-cloud-settings: packer-cloud-env-hcl
     build-timeout: 75
     cron: "00 H 1 * *"
@@ -121,7 +121,7 @@
     branch: master
     archive-artifacts: "**/*.log"
 
-    build-node: ubuntu2004-docker-2c-2g
+    build-node: ubuntu2204-docker-2c-2g
     packer-cloud-settings: packer-cloud-env-hcl
     build-timeout: 60
     cron: "00 H 1 * *"
@@ -145,7 +145,7 @@
     branch: master
     archive-artifacts: "**/*.log"
 
-    build-node: ubuntu2004-docker-2c-2g
+    build-node: ubuntu2204-docker-2c-2g
     packer-cloud-settings: packer-cloud-env-hcl
     build-timeout: 60
     cron: "00 H 1 * *"
@@ -166,7 +166,7 @@
     branch: master
     archive-artifacts: "**/*.log"
 
-    build-node: ubuntu2004-docker-2c-2g
+    build-node: ubuntu2204-docker-2c-2g
     packer-cloud-settings: packer-cloud-env-hcl
 
     build-timeout: 90
@@ -189,7 +189,7 @@
     branch: master
     archive-artifacts: "**/*.log"
 
-    build-node: ubuntu2004-docker-2c-2g
+    build-node: ubuntu2204-docker-2c-2g
     packer-cloud-settings: packer-cloud-env-hcl
     build-timeout: 60
     cron: "00 H 1 * *"
@@ -212,7 +212,7 @@
     archive-artifacts: "**/*.log"
     jenkins-ssh-credential: "opendaylight-jenkins-ssh"
 
-    build-node: ubuntu2004-docker-2c-2g
+    build-node: ubuntu2204-docker-2c-2g
     # update-cloud-image: true
     build-timeout: 10
     submodule-disable: true

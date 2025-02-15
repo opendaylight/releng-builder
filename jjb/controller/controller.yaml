@@ -3,7 +3,7 @@
     name: controller-master
     jobs:
       - "{project-name}-rtd-jobs":
-          build-node: ubuntu2004-docker-2c-2g
+          build-node: ubuntu2204-docker-2c-2g
           project-pattern: controller
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-controller/48288/
           rtd-token: b8440116c823a80c0fb0479eb7448a9196e6932f
@@ -14,7 +14,7 @@
     project-name: controller
     stream: master
     branch: master
-    build-node: ubuntu2004-docker-4c-4g
+    build-node: ubuntu2204-docker-4c-4g
 
     mvn-settings: "controller-settings"
     mvn-goals: "clean deploy -Pdocs"
@@ -28,7 +28,7 @@
     name: controller-10.0.x
     jobs:
       - "{project-name}-rtd-jobs":
-          build-node: ubuntu2004-docker-2c-2g
+          build-node: ubuntu2204-docker-2c-2g
           project-pattern: controller
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-controller/48288/
           rtd-token: b8440116c823a80c0fb0479eb7448a9196e6932f
@@ -39,7 +39,7 @@
     project-name: controller
     stream: 10.0.x
     branch: 10.0.x
-    build-node: ubuntu2004-docker-4c-4g
+    build-node: ubuntu2204-docker-4c-4g
 
     mvn-settings: "controller-settings"
     mvn-goals: "clean deploy -Pdocs"
@@ -53,14 +53,14 @@
     name: controller-9.0.x
     jobs:
       - "{project-name}-rtd-jobs":
-          build-node: ubuntu2004-docker-2c-2g
+          build-node: ubuntu2204-docker-2c-2g
           project-pattern: controller
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-controller/48288/
           rtd-token: b8440116c823a80c0fb0479eb7448a9196e6932f
       - odl-maven-jobs-jdk17
       - odl-maven-verify-jobs-jdk17
       - odl-maven-verify-jobs-jdk21:
-          build-node: ubuntu2004-docker-4c-4g
+          build-node: ubuntu2204-docker-4c-4g
 
     project: controller
     project-name: controller
@@ -105,7 +105,7 @@
     project: controller
     project-name: controller
     branch: master
-    build-node: ubuntu2004-docker-4c-4g
+    build-node: ubuntu2204-docker-4c-4g
 
     mvn-settings: "controller-settings"
     mvn-goals: "clean deploy -Pintegrationtests,docs"

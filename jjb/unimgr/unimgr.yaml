@@ -3,7 +3,7 @@
     name: unimgr-master
     jobs:
       - "{project-name}-rtd-jobs":
-          build-node: centos8-builder-2c-2g
+          build-node: ubuntu2204-builder-2c-2g
           project-pattern: unimgr
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-unimgr/49748/
           rtd-token: e12225e9b9ac67f5439c1619dcad342393b7ea31
@@ -23,7 +23,7 @@
       controller-merge-{stream},
       mdsal-merge-{stream}
     email-upstream: "[unimgr] [odlparent] [yangtools] [controller] [mdsal]"
-    build-node: centos8-builder-4c-16g
+    build-node: ubuntu2204-builder-4c-16g
 
     # Used by the release job
     staging-profile-id: a695d0a0b8d51

@@ -8,7 +8,7 @@
           rtd-token: 6f37ba63226bdcc6c823ee455e62237cf68813fd
       - gerrit-tox-verify:
           build-timeout: 360
-          build-node: ubuntu2004-docker-4c-16g
+          build-node: ubuntu2204-docker-4c-16g
           parallel: true
       - odl-maven-jobs-jdk21
       - odl-maven-verify-jobs-jdk21
@@ -17,7 +17,7 @@
     project-name: "transportpce"
     stream: transportpce-master
     branch: "master"
-    build-node: ubuntu2004-docker-4c-4g
+    build-node: ubuntu2204-docker-4c-4g
     mvn-settings: "transportpce-settings"
     mvn-opts: "-Xmx1024m"
     dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}"
@@ -34,7 +34,7 @@
           rtd-token: 6f37ba63226bdcc6c823ee455e62237cf68813fd
       - gerrit-tox-verify:
           build-timeout: 360
-          build-node: ubuntu2004-docker-4c-16g
+          build-node: ubuntu2204-docker-4c-16g
           parallel: true
       - odl-maven-jobs-jdk21
       - odl-maven-verify-jobs-jdk21
@@ -43,7 +43,7 @@
     project-name: "transportpce"
     stream: scandium
     branch: "stable/scandium"
-    build-node: ubuntu2004-docker-4c-4g
+    build-node: ubuntu2204-docker-4c-4g
     mvn-settings: "transportpce-settings"
     mvn-opts: "-Xmx1024m"
     dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}"
@@ -61,7 +61,7 @@
           rtd-token: 6f37ba63226bdcc6c823ee455e62237cf68813fd
       - gerrit-tox-verify:
           build-timeout: 360
-          build-node: ubuntu2004-docker-4c-16g
+          build-node: ubuntu2204-docker-4c-16g
           parallel: true
       - odl-maven-jobs-jdk17
       - odl-maven-verify-jobs-jdk17
@@ -70,7 +70,7 @@
     project-name: "transportpce"
     stream: calcium
     branch: "stable/calcium"
-    build-node: ubuntu2004-docker-4c-4g
+    build-node: ubuntu2204-docker-4c-4g
     mvn-settings: "transportpce-settings"
     mvn-opts: "-Xmx1024m"
     dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}"
@@ -100,7 +100,7 @@
     branch: "master"
     build-timeout: 90
     mvn-settings: "transportpce-settings"
-    build-node: ubuntu2004-docker-4c-4g
+    build-node: ubuntu2204-docker-4c-4g
 
 - project:
     name: transportpce-info

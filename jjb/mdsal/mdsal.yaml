@@ -3,7 +3,7 @@
     name: mdsal-master
     jobs:
       - "{project-name}-rtd-jobs":
-          build-node: centos8-builder-2c-2g
+          build-node: ubuntu2204-builder-2c-2g
           project-pattern: mdsal
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-mdsal/44052/
           rtd-token: a56d6212dd3de3eef12642affe8a6100cc8bc002
@@ -14,7 +14,7 @@
     project-name: mdsal
     branch: master
     stream: master
-    build-node: ubuntu2004-docker-4c-4g
+    build-node: ubuntu2204-docker-4c-4g
 
     mvn-settings: "mdsal-settings"
     build-timeout: 60
@@ -26,14 +26,14 @@
     name: mdsal-13.0.x
     jobs:
       - "{project-name}-rtd-jobs":
-          build-node: centos8-builder-2c-2g
+          build-node: ubuntu2204-builder-2c-2g
           project-pattern: mdsal
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-mdsal/44052/
           rtd-token: a56d6212dd3de3eef12642affe8a6100cc8bc002
       - odl-maven-jobs-jdk17
       - odl-maven-verify-jobs-jdk17
       - odl-maven-verify-jobs-jdk21:
-          build-node: ubuntu2004-docker-4c-4g
+          build-node: ubuntu2204-docker-4c-4g
 
     project: mdsal
     project-name: mdsal
@@ -58,7 +58,7 @@
     name: mdsal-12.0.x
     jobs:
       - "{project-name}-rtd-jobs":
-          build-node: centos8-builder-2c-2g
+          build-node: ubuntu2204-builder-2c-2g
           project-pattern: mdsal
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-mdsal/44052/
           rtd-token: a56d6212dd3de3eef12642affe8a6100cc8bc002
@@ -112,7 +112,7 @@
     project: "mdsal"
     project-name: "mdsal"
     branch: "master"
-    build-node: ubuntu2004-docker-4c-4g
+    build-node: ubuntu2204-docker-4c-4g
 
     mvn-settings: "mdsal-settings"
     mvn-goals: "clean deploy"
