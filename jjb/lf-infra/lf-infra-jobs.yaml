@@ -20,7 +20,7 @@
 
     project-name: lf-test-release-tox-verify
     project: zzz-test-release
-    build-node: centos7-builder-2c-2g
+    build-node: ubuntu2204-builder-2c-2g
     stream: any
     branch: "*"
 
@@ -33,7 +33,7 @@
 
     project-name: lf-infra-license-checker
     project: releng/license-checker
-    build-node: centos7-builder-2c-2g
+    build-node: ubuntu2204-builder-2c-2g
     stream: any
     branch: "*"
 
@@ -44,7 +44,7 @@
     name: global-pipelines
     project-name: lf-infra-pipelines
     project: pipelines
-    build-node: centos7-builder-2c-2g
+    build-node: ubuntu2204-builder-2c-2g
     jobs:
       - lf-pipelines-verify
 
