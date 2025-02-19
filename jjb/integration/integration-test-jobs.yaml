@@ -119,7 +119,7 @@
 - job-template:
     name: "integration-merge-dashboard"
     project-type: freestyle
-    node: centos7-builder-2c-1g
+    node: ubuntu2204-builder-2c-1g
 
     properties:
       - opendaylight-infra-properties:
@@ -256,7 +256,7 @@
     # triggers the distribution test when test-integration is used in gerrit comments
 
     project-type: freestyle
-    node: centos7-builder-2c-8g
+    node: ubuntu2204-builder-2c-8g
 
     properties:
       - opendaylight-infra-properties:
@@ -371,7 +371,7 @@
 
     id: inttest-multipatch
     project-type: freestyle
-    node: centos7-builder-8c-8g
+    node: ubuntu2204-builder-8c-8g
     concurrent: true
 
     properties:
@@ -597,7 +597,7 @@
     #####################
 
     project-type: freestyle
-    node: centos7-builder-2c-2g
+    node: ubuntu2204-builder-2c-2g
 
     properties:
       - lf-infra-properties:
@@ -658,7 +658,7 @@
     project: integration
     project-name: integration
     branch: master
-    build-node: centos7-builder-2c-1g
+    build-node: ubuntu2204-builder-2c-1g
 
 - project:
     name: integration-view
