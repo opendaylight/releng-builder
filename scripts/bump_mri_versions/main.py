@@ -23,7 +23,7 @@ def get_version_for_artifact(group_id, artifact_id):
     """Retrive version number from the groupId and artifactId."""
     versions_list = []
     url = f"https://repo1.maven.org/maven2/org/opendaylight/{group_id}/{artifact_id}/"
-    response = requests.get(url).content
+    response = requests.get(url, timeout=5).content
     soup = BeautifulSoup(response, "html.parser")
     try:
         html_lines = str(soup.find_all("pre")[0]).splitlines()
