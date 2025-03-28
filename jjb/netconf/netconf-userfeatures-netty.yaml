@@ -38,4 +38,8 @@
       odl-netconf-topology
 
     # Robot custom options
-    robot-options: "-v NETOPEER_USER:root -v USE_NETCONF_CONNECTOR:False -v RESTCONFPORT:8182"
+    robot-options: >
+      -v NETOPEER_USER:root
+      -v USE_NETCONF_CONNECTOR:False
+      -v RESTCONFPORT:8182
+      -v RESTCONF_ROOT:/restconf
