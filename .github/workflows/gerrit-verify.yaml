@@ -96,7 +96,7 @@ jobs:
           gerrit-project: ${{ inputs.GERRIT_PROJECT }}
           gerrit-url: ${{ vars.GERRIT_URL }}
           delay: "0s"
-      - uses: actions/setup-python@v5.4.0
+      - uses: actions/setup-python@v5.5.0
         with:
           python-version: "3.11"
       - name: Run static analysis and format checkers
@@ -113,7 +113,7 @@ jobs:
           gerrit-url: ${{ vars.GERRIT_URL }}
           delay: "0s"
           submodules: "true"
-      - uses: actions/setup-python@v5.4.0
+      - uses: actions/setup-python@v5.5.0
         id: setup-python
         with:
           python-version: "3.11"
@@ -146,7 +146,7 @@ jobs:
           gerrit-url: ${{ vars.GERRIT_URL }}
           delay: "0s"
           submodules: "true"
-      - uses: actions/setup-python@v5.4.0
+      - uses: actions/setup-python@v5.5.0
         id: setup-python
         with:
           python-version: "3.11"
@@ -204,7 +204,7 @@ jobs:
       - name: Setup Python
         if: steps.changes.outputs.src == 'true'
         # yamllint disable-line rule:line-length
-        uses: actions/setup-python@19e4675e06535f6b54e894da5c1f044400bb4996 # v4.7.0
+        uses: actions/setup-python@8d9ed9ac5c53483de85588cdf95a591a75ab9f55 # v4.7.0
         with:
           python-version: "3.11"
       - name: Install openstack deps
