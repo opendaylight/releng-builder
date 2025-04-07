@@ -50,21 +50,33 @@ concurrency:
 permissions: read-all
 
 jobs:
-  call-gerrit-ci-management-verify:
-    # yamllint disable-line rule:line-length
-    uses: lfit/releng-reusable-workflows/.github/workflows/composed-ci-management-verify.yaml@main
-    with:
-      GERRIT_BRANCH: ${{ inputs.GERRIT_BRANCH }}
-      GERRIT_CHANGE_ID: ${{ inputs.GERRIT_CHANGE_ID }}
-      GERRIT_CHANGE_NUMBER: ${{ inputs.GERRIT_CHANGE_NUMBER }}
-      GERRIT_CHANGE_URL: ${{ inputs.GERRIT_CHANGE_URL }}
-      GERRIT_EVENT_TYPE: ${{ inputs.GERRIT_EVENT_TYPE }}
-      GERRIT_PATCHSET_NUMBER: ${{ inputs.GERRIT_PATCHSET_NUMBER }}
-      GERRIT_PATCHSET_REVISION: ${{ inputs.GERRIT_PATCHSET_REVISION }}
-      GERRIT_PROJECT: ${{ inputs.GERRIT_PROJECT }}
-      GERRIT_REFSPEC: ${{ inputs.GERRIT_REFSPEC }}
-      comment-only: "true"
-    secrets:
-      GERRIT_SSH_PRIVKEY: ${{ secrets.GERRIT_SSH_PRIVKEY }}
-      CLOUDS_ENV_2XB64: ${{ secrets.CLOUDS_ENV_2XB64 }}
-      CLOUDS_YAML_2XB64: ${{ secrets.CLOUDS_YAML_2XB64 }}
+    steps:
+      - name: "Gerrit change information"
+        id: gerrit-change-info
+        uses: lfreleng-actions/gerrit-change-info@main
+        with:
+          GERRIT_CHANGE_URL: ${{ inputs.GERRIT_CHANGE_URL }}
+          GERRIT_SSH_USER: ${{ vars.GERRIT_SSH_USER }}
+          GERRIT_PATCHSET_NUMBER: ${{ inputs.GERRIT_PATCHSET_NUMBER }}
+        secrets:
+          GERRIT_SSH_PRIVKEY: ${{ secrets.GERRIT_SSH_PRIVKEY }}
+
+      - name: Call Gerrit CI Management Verify
+        call-gerrit-ci-management-verify:
+        # yamllint disable-line rule:line-length
+        uses: lfit/releng-reusable-workflows/.github/workflows/composed-ci-management-verify.yaml@main
+        with:
+          GERRIT_BRANCH: ${{ inputs.GERRIT_BRANCH }}
+          GERRIT_CHANGE_ID: ${{ inputs.GERRIT_CHANGE_ID }}
+          GERRIT_CHANGE_NUMBER: ${{ inputs.GERRIT_CHANGE_NUMBER }}
+          GERRIT_CHANGE_URL: ${{ inputs.GERRIT_CHANGE_URL }}
+          GERRIT_EVENT_TYPE: ${{ inputs.GERRIT_EVENT_TYPE }}
+          GERRIT_PATCHSET_NUMBER: ${{ inputs.GERRIT_PATCHSET_NUMBER }}
+          GERRIT_PATCHSET_REVISION: ${{ inputs.GERRIT_PATCHSET_REVISION }}
+          GERRIT_PROJECT: ${{ inputs.GERRIT_PROJECT }}
+          GERRIT_REFSPEC: ${{ inputs.GERRIT_REFSPEC }}
+          comment-only: "true"
+        secrets:
+          GERRIT_SSH_PRIVKEY: ${{ secrets.GERRIT_SSH_PRIVKEY }}
+          CLOUDS_ENV_2XB64: ${{ secrets.CLOUDS_ENV_2XB64 }}
+          CLOUDS_YAML_2XB64: ${{ secrets.CLOUDS_YAML_2XB64 }}
