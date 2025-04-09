@@ -16,6 +16,24 @@
       "message": "You\u0027re removing input variables that are _required_ to exist along with adding one that is not defined. This change will _not_ ever fire from a Gerrit change and will cause other hooks to potentially fail as well.\n\nAdditionally you have an actionlint validation that is failing.",
       "revId": "c0ff01326e388007cfc506fe923b6649392a830e",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b95c54d8_1388fc15",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2025-04-09T12:02:19Z",
+      "side": 1,
+      "message": "Thanks for the review Andy. \n\nThis is a portotype I\u0027m working on, intending to ease out the testing process with nektos/act, and devs could test their workflows with minimal inputs (passed thru the --env-file option or directly from the Github Action UI), and open up other inputs for other options (ex. addition debug flags for some steps or mvn opts).\n\nI have fixed the actionlint errors and inputs (no extra inputs now) and updated the PR on the lfreleng-actions/gerrit-info action. Some more testing is required.",
+      "parentUuid": "99a5dc5a_2aa9d887",
+      "revId": "c0ff01326e388007cfc506fe923b6649392a830e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
