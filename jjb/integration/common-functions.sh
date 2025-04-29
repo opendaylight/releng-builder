@@ -13,7 +13,13 @@ export MEMCONF=/tmp/${BUNDLEFOLDER}/bin/setenv
 export CONTROLLERMEM=${CONTROLLERMAXMEM}
 
 # Cluster specific configuration settings
-export AKKACONF=/tmp/${BUNDLEFOLDER}/configuration/initial/akka.conf
+# Choose cluster system based on ODL_STREAM
+if [ "${DISTROSTREAM}" = "calcium" ]; then
+    CLUSTER_SYSTEM="akka"
+else
+    CLUSTER_SYSTEM="pekko"
+fi
+export AKKACONF=/tmp/${BUNDLEFOLDER}/configuration/initial/${CLUSTER_SYSTEM}.conf
 export MODULESCONF=/tmp/${BUNDLEFOLDER}/configuration/initial/modules.conf
 export MODULESHARDSCONF=/tmp/${BUNDLEFOLDER}/configuration/initial/module-shards.conf
 
@@ -944,7 +950,7 @@ fi
 echo "Configuring cluster"
 /tmp/${BUNDLEFOLDER}/bin/configure_cluster.sh \$1 ${nodes_list}
 
-echo "Dump akka.conf"
+echo "Dump ${CLUSTER_SYSTEM}.conf"
 cat ${AKKACONF}
 
 echo "Dump modules.conf"
