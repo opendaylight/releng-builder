@@ -13,6 +13,17 @@
 
 from docs_conf.conf import *  # noqa
 
+linkcheck_ignore = [
+    # Gerrit Admin URL
+    r'https://git\.opendaylight\.org/gerrit/admin/repos/.*',
+
+    # Gitweb summary and tree views
+    r'https://git\.opendaylight\.org/gerrit/gitweb\?.*',
+
+    # (Optional) Catch-all for Gerrit query-params links
+    r'https://git\.opendaylight\.org/gerrit/.*[?;].*',
+]
+
 # linkcheck configuration
 linkcheck_timeout = 60
 linkcheck_retries = 3
