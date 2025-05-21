@@ -13,6 +13,11 @@
 
 from docs_conf.conf import *  # noqa
 
+linkcheck_ignore = [
+    # Ignore link checks from Gerrit admin 403
+    r'https://git\.opendaylight\.org/gerrit/(c|admin|q)/.*',
+]
+
 # linkcheck configuration
 linkcheck_timeout = 60
 linkcheck_retries = 3
