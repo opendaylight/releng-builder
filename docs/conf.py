@@ -13,6 +13,14 @@
 
 from docs_conf.conf import *  # noqa
 
+linkcheck_request_headers = {
+    r"https://git.opendaylight.org/": {
+        "User-Agent": (
+            "Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:24.0) Gecko/20100101 Firefox/24.0"
+        ),
+    },
+}
+
 # linkcheck configuration
 linkcheck_timeout = 60
 linkcheck_retries = 3
