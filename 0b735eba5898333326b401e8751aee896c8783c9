@@ -16,6 +16,24 @@
       "message": "This workaround to use a browser user agent seems to work for `gerrit/gitweb` as well as`gerrit/admin` without ignoring links - tested with `curl`:\nhttps://github.com/sphinx-doc/sphinx/issues/10343#issuecomment-1097430133",
       "revId": "0b735eba5898333326b401e8751aee896c8783c9",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bae8e91a_e235bd4e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2025-05-22T04:00:49Z",
+      "side": 1,
+      "message": "Testing links thru sphinx linkcheck is always good! Few caveats to this: This does not fix links that are truly restricted (like Gerrit /admin/ URLs — those still require auth). Gerrit may rate-limit or block you anyway, depending on anti-bot logic. I can give this a go and see if this works, if not we can always roleback to a simple ignore.",
+      "parentUuid": "697bd4bf_eb5437ab",
+      "revId": "0b735eba5898333326b401e8751aee896c8783c9",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
