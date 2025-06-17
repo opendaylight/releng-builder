@@ -18,7 +18,16 @@ mkdir -p "$BUILD_DIR"
 cd "$BUILD_DIR"
 
 # Download distribution pom.xml
-wget -nv -O pom.xml "https://git.opendaylight.org/gerrit/gitweb?p=integration/distribution.git;a=blob_plain;f=artifacts/upstream/properties/pom.xml;hb=$DISTROBRANCH"
+POM_URL="https://raw.githubusercontent.com/opendaylight/integration-distribution/${DISTROBRANCH}/artifacts/upstream/properties/pom.xml"
+
+echo "Checking ${POM_URL} ..."
+if curl -s -f -I "${POM_URL}" > /dev/null; then
+    echo "Downloading pom.xml from GitHub..."
+    wget -nv -O pom.xml "${POM_URL}"
+else
+    echo "ERROR: File not found at ${POM_URL}"
+    exit 1
+fi
 cat pom.xml
 
 # Set up git committer name and email, needed for commit creation when cherry-picking.
