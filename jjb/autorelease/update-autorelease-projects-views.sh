@@ -11,17 +11,26 @@
 echo "---> update-autorelease-projects-views.sh"
 
 VIEWS_AR_YAML_FILE="${WORKSPACE}/jjb/autorelease/view-autorelease-${STREAM}.yaml"
-BRANCH="stable/${STREAM}"
+GERRIT_BRANCH="stable/${STREAM}"
 
 # The current development release will not have a stable branch defined so if
 # branch does not exist assume master
 url="https://git.opendaylight.org/gerrit/projects/releng%2Fautorelease/branches/"
 resp=$(curl -s -w "\\n\\n%{http_code}" --globoff -H "Content-Type:application/json" "$url")
-if [[ ! "$resp" =~ $BRANCH ]]; then
-    BRANCH="master"
+if [[ ! "$resp" =~ $GERRIT_BRANCH ]]; then
+    GERRIT_BRANCH="master"
 fi
 
-wget -nv -O /tmp/pom.xml "https://git.opendaylight.org/gerrit/gitweb?p=releng/autorelease.git;a=blob_plain;f=pom.xml;hb=$GERRIT_BRANCH"
+POM_URL="https://raw.githubusercontent.com/opendaylight/releng-autorelease/${GERRIT_BRANCH}/pom.xml"
+
+echo "Checking ${POM_URL} ..."
+if curl -s -f -I "${POM_URL}" > /dev/null; then
+    echo "Downloading pom.xml to /tmp/pom.xml"
+    wget -nv -O /tmp/pom.xml "${POM_URL}"
+else
+    echo "ERROR: pom.xml not found at ${POM_URL}"
+    exit 1
+fi
 
 # handle list of projects read from the pom.xml output as multiple lines.
 mapfile -t modules < <(xmlstarlet sel -N x=http://maven.apache.org/POM/4.0.0 -t -m '//x:modules' -v '//x:module' /tmp/pom.xml)

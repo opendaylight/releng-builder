@@ -13,17 +13,17 @@ fi
 if [ "${BUNDLE_URL}" == 'last' ]; then
     # Obtain current pom.xml of integration/distribution, correct branch.
     if [[ "$KARAF_ARTIFACT" == "opendaylight" ]]; then
-        wget -nv -O pom.xml "https://${GERRIT_PATH}/gitweb?p=integration/distribution.git;a=blob_plain;f=opendaylight/pom.xml;hb=$DISTROBRANCH"
+        wget -nv -O pom.xml "https://raw.githubusercontent.com/opendaylight/integration-distribution/${DISTROBRANCH}/opendaylight/pom.xml"
     elif [[ "$KARAF_ARTIFACT" == "karaf" ]]; then
-        wget -nv -O pom.xml "https://${GERRIT_PATH}/gitweb?p=integration/distribution.git;a=blob_plain;f=pom.xml;hb=$DISTROBRANCH"
+        wget -nv -O pom.xml "https://raw.githubusercontent.com/opendaylight/integration-distribution/${DISTROBRANCH}/pom.xml"
     elif [[ "$KARAF_ARTIFACT" == "netconf-karaf" ]]; then
-        wget -nv -O pom.xml "https://${GERRIT_PATH}/gitweb?p=${KARAF_PROJECT}.git;a=blob_plain;f=${KARAF_PATH}/pom.xml;hb=$DISTROBRANCH"
+        wget -nv -O pom.xml "https://raw.githubusercontent.com/opendaylight/netconf/${DISTROBRANCH}/${KARAF_PATH}/pom.xml"
     elif [[ "$KARAF_ARTIFACT" == "controller-test-karaf" ]]; then
-        wget -nv -O pom.xml "https://${GERRIT_PATH}/gitweb?p=${KARAF_PROJECT}.git;a=blob_plain;f=karaf/pom.xml;hb=$DISTROBRANCH"
+        wget -nv -O pom.xml "https://raw.githubusercontent.com/opendaylight/${KARAF_PROJECT}/${DISTROBRANCH}/karaf/pom.xml"
     elif [[ "$KARAF_ARTIFACT" == "bgpcep-karaf" ]]; then
-        wget -nv -O pom.xml "https://${GERRIT_PATH}/gitweb?p=${KARAF_PROJECT}.git;a=blob_plain;f=distribution-karaf/pom.xml;hb=$DISTROBRANCH"
+        wget -nv -O pom.xml "https://raw.githubusercontent.com/opendaylight/${KARAF_PROJECT}/${DISTROBRANCH}/distribution-karaf/pom.xml"
     else
-        wget -nv -O pom.xml "https://${GERRIT_PATH}/gitweb?p=integration/distribution.git;a=blob_plain;f=pom.xml;hb=$DISTROBRANCH"
+        wget -nv -O pom.xml "https://raw.githubusercontent.com/opendaylight/integration-distribution/${DISTROBRANCH}/pom.xml"
     fi
     # Extract the BUNDLE_VERSION from the pom.xml
     # TODO: remove the second xpath command once the old version in CentOS 7 is not used any more
