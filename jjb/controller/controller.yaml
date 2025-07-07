@@ -25,6 +25,31 @@
     staging-profile-id: 96c1c9177efdd
 
 - project:
+    name: controller-11.0.x
+    jobs:
+      - "{project-name}-rtd-jobs":
+          build-node: ubuntu2204-docker-2c-2g
+          project-pattern: controller
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-controller/48288/
+          rtd-token: b8440116c823a80c0fb0479eb7448a9196e6932f
+      - odl-maven-jobs-jdk21
+      - odl-maven-verify-jobs-jdk21
+
+    project: controller
+    project-name: controller
+    stream: 11.0.x
+    branch: 11.0.x
+    build-node: ubuntu2204-docker-4c-4g
+
+    mvn-settings: "controller-settings"
+    mvn-goals: "clean deploy -Pdocs"
+    dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},aaa-merge-{stream}"
+    email-upstream: "[controller] [odlparent] [yangtools] [aaa]"
+
+    # Used by the release job
+    staging-profile-id: 96c1c9177efdd
+
+- project:
     name: controller-10.0.x
     jobs:
       - "{project-name}-rtd-jobs":
