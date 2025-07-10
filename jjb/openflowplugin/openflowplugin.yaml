@@ -93,6 +93,20 @@
     staging-profile-id: a68a76dc1b44c
 
 - project:
+    name: openflowplugin-release-management
+    jobs:
+      - gerrit-release-merge
+
+    project: openflowplugin
+    project-name: openflowplugin
+
+    build-node: centos7-builder-2c-1g
+    mvn-settings: openflowplugin-settings
+    # Needs to be rather long until we sort out the performance of
+    # https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/
+    build-timeout: 90
+
+- project:
     name: openflowplugin-sonar
     jobs:
       - odl-sonar-jobs-jdk21
