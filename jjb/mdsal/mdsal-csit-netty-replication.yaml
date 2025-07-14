@@ -13,8 +13,15 @@
 
     # Project branches
     stream:
-      - titanium:
+      - vanadium:
           branch: "master"
+          install-features: >
+            features-controller,
+            odl-mdsal-replicate-netty,
+            odl-netconf-clustered-topology,
+            odl-clustering-test-app
+      - titanium:
+          branch: "stable/titanium"
           install-features: >
             features-controller,
             odl-mdsal-replicate-netty,
