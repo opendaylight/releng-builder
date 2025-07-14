@@ -12,12 +12,14 @@
     functionality: "akka1"
 
     stream:
-      - titanium:
+      - vanadium:
           branch: "master"
+      - titanium:
+          branch: "11.0.x"
       - scandium:
-          branch: "stable/scandium"
+          branch: "10.0.x"
       - calcium:
-          branch: "stable/calcium"
+          branch: "9.0.x"
           jre: "openjdk17"
 
     install:

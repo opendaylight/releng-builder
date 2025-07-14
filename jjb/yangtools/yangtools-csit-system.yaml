@@ -6,19 +6,22 @@
 
     # The project name
     project: "yangtools"
-    jre: "openjdk17"
+    jre: "openjdk21"
 
     # The functionality under test
     functionality: "system"
 
     # Project branches.
     stream:
-      - titanium:
+      - vanadium:
           branch: "master"
+      - titanium:
+          branch: "14.0.x"
       - scandium:
-          branch: "stable/scandium"
+          branch: "14.0.x"
       - calcium:
-          branch: "stable/calcium"
+          branch: "12.0.x"
+          jre: "openjdk17"
 
     install:
       - only:
