@@ -13,6 +13,13 @@
 
     # Project branches
     stream:
+      - vanadium:
+          branch: "master"
+          install-features: >
+            features-controller,
+            odl-mdsal-replicate-netty,
+            odl-netconf-clustered-topology,
+            odl-clustering-test-app
       - titanium:
           branch: "master"
           install-features: >
@@ -21,14 +28,14 @@
             odl-netconf-clustered-topology,
             odl-clustering-test-app
       - scandium:
-          branch: "stable/scandium"
+          branch: "master"
           install-features: >
             features-controller,
             odl-mdsal-replicate-netty,
             odl-netconf-clustered-topology,
             odl-clustering-test-app
       - calcium:
-          branch: "stable/calcium"
+          branch: "13.0.x"
           install-features: >
             features-controller,
             odl-mdsal-replicate-netty,
