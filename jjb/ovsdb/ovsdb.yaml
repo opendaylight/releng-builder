@@ -1,5 +1,30 @@
 ---
 - project:
+    name: ovsdb-vanadium
+    jobs:
+      - "{project-name}-rtd-jobs":
+          build-node: ubuntu2204-builder-2c-2g
+          project-pattern: ovsdb
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/opendaylight-ovsdb/35667/
+          rtd-token: 46030df8681cf7fc857aa80c1a7695f46ed252be
+      - distribution-check-jobs-jdk21
+      - odl-maven-javadoc-jobs-jdk21
+      - odl-maven-jobs-jdk21
+      - odl-maven-verify-jobs-jdk21
+
+    stream: vanadium
+    project: "ovsdb"
+    project-name: "ovsdb"
+    branch: "master"
+    build-node: ubuntu2204-docker-4c-4g
+    mvn-settings: "ovsdb-settings"
+    dependencies: "odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream}"
+    email-upstream: "[ovsdb] [odlparent] [controller] [yangtools]"
+
+    # Used by the release job
+    staging-profile-id: a68b188166958
+
+- project:
     name: ovsdb-titanium
     jobs:
       - "{project-name}-rtd-jobs":
@@ -15,7 +40,7 @@
     stream: titanium
     project: "ovsdb"
     project-name: "ovsdb"
-    branch: "master"
+    branch: "stable/titanium"
     build-node: ubuntu2204-docker-4c-4g
     mvn-settings: "ovsdb-settings"
     dependencies: "odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream}"

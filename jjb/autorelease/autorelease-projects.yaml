@@ -9,8 +9,10 @@
       - gerrit-tox-verify
 
     stream:
-      - titanium:
+      - vanadium:
           branch: "master"
+      - titanium:
+          branch: "stable/titanium"
       - scandium:
           branch: "stable/scandium"
       - calcium:
@@ -33,8 +35,13 @@
       - "autorelease-generate-release-notes-{stream}"
 
     stream:
-      - titanium:
+      - vanadium:
           branch: "master"
+          java-version: openjdk21
+          mvn-version: mvn39
+          integration-test: titanium
+      - titanium:
+          branch: "stable/titanium"
           java-version: openjdk21
           mvn-version: mvn39
           integration-test: titanium

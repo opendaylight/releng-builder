@@ -1,5 +1,35 @@
 ---
 - project:
+    name: serviceutils-vanadium
+    jobs:
+      - "{project-name}-rtd-jobs":
+          build-node: ubuntu2204-builder-2c-2g
+          project-pattern: serviceutils
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/opendaylight-serviceutils/40541/
+          rtd-token: 866f76be38ed7efc7027b9c52e7ad869e523e7c4
+      - odl-maven-javadoc-jobs-jdk21
+      - odl-maven-jobs-jdk21
+      - odl-maven-verify-jobs-jdk21
+
+    project: serviceutils
+    project-name: serviceutils
+    stream: vanadium
+    branch: master
+    build-node: ubuntu2204-docker-2c-2g
+    build-timeout: 90
+
+    mvn-settings: "serviceutils-settings"
+
+    dependencies: >
+      controller-merge-{stream},
+      yangtools-merge-{stream},
+      odlparent-merge-{stream},
+      infrautils-merge-{stream}
+    email-upstream: "[serviceutils] [controller] [yangtools] [odlparent] [infrautils]"
+    # Used by the release job
+    staging-profile-id: 12cc4ba8bf01ba
+
+- project:
     name: serviceutils-titanium
     jobs:
       - "{project-name}-rtd-jobs":
@@ -14,7 +44,7 @@
     project: serviceutils
     project-name: serviceutils
     stream: titanium
-    branch: master
+    branch: stable/titanium
     build-node: ubuntu2204-docker-2c-2g
     build-timeout: 90
 
