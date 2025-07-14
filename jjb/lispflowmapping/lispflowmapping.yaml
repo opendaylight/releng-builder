@@ -1,5 +1,35 @@
 ---
 - project:
+    name: lispflowmapping-vanadium
+    jobs:
+      - "{project-name}-rtd-jobs":
+          build-node: ubuntu2204-builder-2c-2g
+          project-pattern: lispflowmapping
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-lispflowmapping/47783/
+          rtd-token: 181be9dd804e4969b9f318a6f1988e3cbee9d9a8
+      - distribution-check-jobs-jdk21
+      - odl-maven-javadoc-jobs-jdk21
+      - odl-maven-jobs-jdk21
+      - odl-maven-verify-jobs-jdk21
+
+    stream: vanadium
+    project: "lispflowmapping"
+    project-name: "lispflowmapping"
+    branch: "master"
+    build-node: ubuntu2204-docker-8c-8g
+    mvn-settings: "lispflowmapping-settings"
+    mvn-goals: "clean deploy -DrepoBuild"
+    mvn-opts: "-Xmx2048m -Dmaven.compile.fork=true"
+    dependencies: "controller-merge-{stream},odlparent-merge-{stream},yangtools-merge-{stream},neutron-merge-{stream}"
+    email-upstream: "[lispflowmapping] [controller] [odlparent] [yangtools] [neutron]"
+    archive-artifacts: >
+      **/*.log
+      **/target/surefire-reports/*-output.txt
+
+    # Used by the release job
+    staging-profile-id: 96fff2503b766
+
+- project:
     name: lispflowmapping-titanium
     jobs:
       - "{project-name}-rtd-jobs":
@@ -15,7 +45,7 @@
     stream: titanium
     project: "lispflowmapping"
     project-name: "lispflowmapping"
-    branch: "master"
+    branch: "stable/titanium"
     build-node: ubuntu2204-docker-8c-8g
     mvn-settings: "lispflowmapping-settings"
     mvn-goals: "clean deploy -DrepoBuild"

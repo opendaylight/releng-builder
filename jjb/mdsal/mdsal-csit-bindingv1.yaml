@@ -6,19 +6,22 @@
 
     # The project name
     project: "mdsal"
-    jre: "openjdk17"
+    jre: "openjdk21"
     disable-job: true
 
     # The functionality under test
     functionality: "bindingv1"
 
     stream:
+      - vanadium:
+          branch: "master"
       - titanium:
           branch: "master"
       - scandium:
-          branch: "stable/scandium"
+          branch: "master"
       - calcium:
-          branch: "stable/calcium"
+          branch: "13.0.x"
+          jre: "openjdk17"
 
     install:
       - only:
