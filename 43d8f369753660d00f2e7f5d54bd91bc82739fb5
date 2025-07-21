@@ -1,6 +1,74 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8df3038a_86cfddf2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1927
+      },
+      "writtenOn": "2025-07-21T17:50:08Z",
+      "side": 1,
+      "message": "The following MRI projects with CSIT jobs do not follow `stable/*` branch naming convention:\n* `aaa`\n* `bgpcep`\n* `controller`\n* `mdsal`\n* `netconf`\n* `yangtools`",
+      "revId": "43d8f369753660d00f2e7f5d54bd91bc82739fb5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46978578_5afc1655",
+        "filename": "jjb/aaa/aaa-csit-authn.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1927
+      },
+      "writtenOn": "2025-07-21T17:50:08Z",
+      "side": 1,
+      "message": "Still on `master`",
+      "revId": "43d8f369753660d00f2e7f5d54bd91bc82739fb5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69dc8481_90846bb4",
+        "filename": "jjb/aaa/aaa-csit-authn.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1927
+      },
+      "writtenOn": "2025-07-21T17:50:08Z",
+      "side": 1,
+      "message": "`0.20.x`",
+      "revId": "43d8f369753660d00f2e7f5d54bd91bc82739fb5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f8c0e1f8_e0f07917",
+        "filename": "jjb/aaa/aaa-csit-authn.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1927
+      },
+      "writtenOn": "2025-07-21T17:50:08Z",
+      "side": 1,
+      "message": "`0.19.x`",
+      "revId": "43d8f369753660d00f2e7f5d54bd91bc82739fb5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c18fad5d_7e65f28b",
@@ -14,6 +82,24 @@
       "writtenOn": "2025-07-21T11:30:12Z",
       "side": 1,
       "message": "would be 0.23.x",
+      "revId": "43d8f369753660d00f2e7f5d54bd91bc82739fb5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a2e18515_2cb05291",
+        "filename": "jjb/bgpcep/bgpcep-csit-bgp-ingest.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1927
+      },
+      "writtenOn": "2025-07-21T17:50:08Z",
+      "side": 1,
+      "message": "Looks like `0.23.x` does not exist yet?",
+      "parentUuid": "c18fad5d_7e65f28b",
       "revId": "43d8f369753660d00f2e7f5d54bd91bc82739fb5",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
@@ -105,6 +191,57 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5ef422aa_af9fc087",
+        "filename": "jjb/mdsal/mdsal-csit-bindingv1.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1927
+      },
+      "writtenOn": "2025-07-21T17:50:08Z",
+      "side": 1,
+      "message": "Still on `master`",
+      "revId": "43d8f369753660d00f2e7f5d54bd91bc82739fb5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "823fc91f_9dcfcdc7",
+        "filename": "jjb/mdsal/mdsal-csit-bindingv1.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1927
+      },
+      "writtenOn": "2025-07-21T17:50:08Z",
+      "side": 1,
+      "message": "Still on `master`",
+      "revId": "43d8f369753660d00f2e7f5d54bd91bc82739fb5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4bb8e8cc_b497c564",
+        "filename": "jjb/mdsal/mdsal-csit-bindingv1.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1927
+      },
+      "writtenOn": "2025-07-21T17:50:08Z",
+      "side": 1,
+      "message": "`13.0.x`",
+      "revId": "43d8f369753660d00f2e7f5d54bd91bc82739fb5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a8498d95_0190dec0",
         "filename": "jjb/netconf/netconf-clustering.yaml",
         "patchSetId": 2
@@ -140,6 +277,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2a3f0a2b_2cbf213f",
+        "filename": "jjb/netconf/netconf-clustering.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1927
+      },
+      "writtenOn": "2025-07-21T17:50:08Z",
+      "side": 1,
+      "message": "Change to create `9.0.x`:\n\nhttps://git.opendaylight.org/gerrit/c/releng/builder/+/117003",
+      "parentUuid": "ccc4b902_75c370d1",
+      "revId": "43d8f369753660d00f2e7f5d54bd91bc82739fb5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6e27f128_b9e7b0ca",
         "filename": "jjb/yangtools/yangtools-csit-system.yaml",
         "patchSetId": 2
@@ -151,6 +306,24 @@
       "writtenOn": "2025-07-21T11:37:01Z",
       "side": 1,
       "message": "would be 14.0.x",
+      "revId": "43d8f369753660d00f2e7f5d54bd91bc82739fb5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc529b08_f9df14d9",
+        "filename": "jjb/yangtools/yangtools-csit-system.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1927
+      },
+      "writtenOn": "2025-07-21T17:50:08Z",
+      "side": 1,
+      "message": "Looks like `14.0.x` does not exist yet.",
+      "parentUuid": "6e27f128_b9e7b0ca",
       "revId": "43d8f369753660d00f2e7f5d54bd91bc82739fb5",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
@@ -174,6 +347,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "44abfb96_f950f1cf",
+        "filename": "jjb/yangtools/yangtools-csit-system.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1927
+      },
+      "writtenOn": "2025-07-21T17:50:08Z",
+      "side": 1,
+      "message": "`14.0.x`\n\nhttps://github.com/opendaylight/integration-distribution/blob/stable/scandium/artifacts/upstream/properties/pom.xml#L61",
+      "parentUuid": "673e3a3e_94d5fb54",
+      "revId": "43d8f369753660d00f2e7f5d54bd91bc82739fb5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1970136d_bb6408b5",
         "filename": "jjb/yangtools/yangtools-csit-system.yaml",
         "patchSetId": 2
@@ -185,6 +376,24 @@
       "writtenOn": "2025-07-21T11:37:01Z",
       "side": 1,
       "message": "12.0.x",
+      "revId": "43d8f369753660d00f2e7f5d54bd91bc82739fb5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ddbcca8_b6a14cfb",
+        "filename": "jjb/yangtools/yangtools-csit-system.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1927
+      },
+      "writtenOn": "2025-07-21T17:50:08Z",
+      "side": 1,
+      "message": "`13.0.x`\n\nhttps://github.com/opendaylight/integration-distribution/blob/stable/calcium/artifacts/upstream/properties/pom.xml#L61",
+      "parentUuid": "1970136d_bb6408b5",
       "revId": "43d8f369753660d00f2e7f5d54bd91bc82739fb5",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
