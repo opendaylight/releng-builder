@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2bfe306b_1a7dd872",
+        "filename": "jjb/bgpcep/bgpcep-csit-bgp-ingest-mixed.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1927
+      },
+      "writtenOn": "2025-07-23T22:56:22Z",
+      "side": 1,
+      "message": "This should be like this:\n```\nstream:\n  - vanadium:\n      branch: \"master\"\n  - titanium:\n      branch: \"master\"\n  - scandium:\n      branch: \"0.22.x\"\n  - calcium:\n      branch: \"0.21.x\"\n      jre: \"openjdk17\"\n```\n\nThis applies to all the `bgpcep-csit-*` jobs.",
+      "parentUuid": "a07d9b5e_99b845aa",
+      "revId": "5cb0eacc0d458c87fa43debc548d9d59bdeeb4d3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "95a1a35e_d6dcf606",
         "filename": "jjb/bgpcep/bgpcep-csit-bgp-ingest.yaml",
         "patchSetId": 3
