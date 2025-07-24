@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "951d906e_c7698321",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2025-07-24T09:13:20Z",
+      "side": 1,
+      "message": "MDSAL and YANGTOOSL should be now aligned. We are using Java 21 currently for all branches expect for Calcium on Java 17. In the future we will migrate to Java 25 on master (Vanadium).",
+      "revId": "5875d84dc83fd06a7aa3c4fa4b88b68ead8e1ad0",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e1f7b04a_acfb3170",
+        "filename": "jjb/controller/controller-csit-akka1.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2025-07-24T09:13:20Z",
+      "side": 1,
+      "message": "stream:\n      - vanadium:\n          branch: \"master\"\n      - titanium:\n          branch: \"11.0.x\"\n      - scandium:\n          branch: \"10.0.x\"\n      - calcium:\n          branch: \"9.0.x\"\n          jre: \"openjdk17\"",
+      "revId": "5875d84dc83fd06a7aa3c4fa4b88b68ead8e1ad0",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a23049b_0656fc93",
+        "filename": "jjb/mdsal/mdsal-csit-bindingv1.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2025-07-24T09:13:20Z",
+      "side": 1,
+      "message": "jre: \"openjdk21\"",
+      "revId": "5875d84dc83fd06a7aa3c4fa4b88b68ead8e1ad0",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f12dba2d_289134c2",
+        "filename": "jjb/mdsal/mdsal-csit-bindingv1.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2025-07-24T09:13:20Z",
+      "side": 1,
+      "message": "stream:\n      - vanadium:\n          branch: \"master\"\n      - titanium:\n          branch: \"master\"\n      - scandium:\n          branch: \"master\"\n      - calcium:\n          branch: \"13.0.x\"\n          jre: \"openjdk17\"",
+      "revId": "5875d84dc83fd06a7aa3c4fa4b88b68ead8e1ad0",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "55f0cf73_96e2aa48",
+        "filename": "jjb/yangtools/yangtools-csit-system.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2025-07-24T09:13:20Z",
+      "side": 1,
+      "message": "jre: \"openjdk21\"",
+      "revId": "5875d84dc83fd06a7aa3c4fa4b88b68ead8e1ad0",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a61ceb04_d8859481",
+        "filename": "jjb/yangtools/yangtools-csit-system.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2025-07-24T09:13:20Z",
+      "side": 1,
+      "message": "stream:\n      - vanadium:\n          branch: \"master\"\n      - titanium:\n          branch: \"master\"\n      - scandium:\n          branch: \"master\"\n      - calcium:\n          branch: \"13.0.x\"\n          jre: \"openjdk17\"",
+      "revId": "5875d84dc83fd06a7aa3c4fa4b88b68ead8e1ad0",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
