@@ -31,6 +31,37 @@
     staging-profile-id: a67b22fc3663f
 
 - project:
+    name: netconf-9.0.x
+    jobs:
+      - "{project-name}-rtd-jobs":
+          build-node: ubuntu2204-builder-2c-2g
+          project-pattern: netconf
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-netconf/48397/
+          rtd-token: aee2df909686ab7ba36f2ed08d90bdcf81f7b8dc
+      - gerrit-tox-verify:
+          build-node: ubuntu2204-builder-2c-2g
+          parallel: true
+      - odl-maven-jobs-jdk21
+      - odl-maven-verify-jobs-jdk21
+
+    project: netconf
+    project-name: netconf
+    stream: 9.0.x
+    branch: 9.0.x
+    build-node: ubuntu2204-docker-4c-4g
+    build-timeout: 90
+
+    mvn-settings: "netconf-settings"
+    mvn-goals: "clean deploy -Pintegrationtests"
+    karaf-version: "netconf"
+
+    dependencies: "aaa-merge-{stream},controller-merge-{stream},odlparent-merge-{stream},yangtools-merge-{stream}"
+    email-upstream: "[netconf] [aaa] [controller] [odlparent] [yangtools]"
+
+    # Used by the release job
+    staging-profile-id: a67b22fc3663f
+
+- project:
     name: netconf-8.0.x
     jobs:
       - "{project-name}-rtd-jobs":
