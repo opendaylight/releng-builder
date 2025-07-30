@@ -26,8 +26,10 @@
     nexus-iq-stage: release
     email-upstream: "[int/dist]"
     stream:
-      - titanium:
+      - vanadium:
           branch: "master"
+      - titanium:
+          branch: "stable/titanium"
       - scandium:
           branch: "stable/scandium"
       - calcium:
@@ -68,8 +70,10 @@
       serviceutils-maven-merge-{stream},
 
     stream:
-      - titanium:
+      - vanadium:
           branch: "master"
+      - titanium:
+          branch: "stable/titanium"
       - scandium:
           branch: "stable/scandium"
       - calcium:
@@ -107,8 +111,10 @@
     jobs:
       - "{project-name}-gerrit-docker-jobs"
     stream:
-      - titanium:
+      - vanadium:
           branch: "master"
+      - titanium:
+          branch: "stable/titanium"
       - scandium:
           branch: "stable/scandium"
       - calcium:
