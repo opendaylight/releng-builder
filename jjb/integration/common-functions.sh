@@ -14,11 +14,14 @@ export CONTROLLERMEM=${CONTROLLERMAXMEM}
 
 # Cluster specific configuration settings
 # Choose cluster system based on ODL_STREAM
-if [ "${DISTROSTREAM}" = "calcium" ]; then
-    CLUSTER_SYSTEM="akka"
-else
-    CLUSTER_SYSTEM="pekko"
-fi
+case "${DISTROSTREAM}" in
+    calcium|scandium)
+        CLUSTER_SYSTEM="akka"
+        ;;
+    *)
+        CLUSTER_SYSTEM="pekko"
+        ;;
+esac
 export AKKACONF=/tmp/${BUNDLEFOLDER}/configuration/initial/${CLUSTER_SYSTEM}.conf
 export MODULESCONF=/tmp/${BUNDLEFOLDER}/configuration/initial/modules.conf
 export MODULESHARDSCONF=/tmp/${BUNDLEFOLDER}/configuration/initial/module-shards.conf
