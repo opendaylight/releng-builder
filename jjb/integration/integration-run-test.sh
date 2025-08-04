@@ -9,7 +9,7 @@ fi
 # script.
 # shellcheck source=${ROBOT_VENV}/bin/activate disable=SC1091
 . "${ROBOT_VENV}/bin/activate"
-source /tmp/common-functions.sh "${BUNDLEFOLDER}"
+source /tmp/common-functions.sh "${BUNDLEFOLDER}" "${DISTROSTREAM}"
 echo "#################################################"
 echo "## invoke Tests for non-karaf Controllers      ##"
 echo "#################################################"

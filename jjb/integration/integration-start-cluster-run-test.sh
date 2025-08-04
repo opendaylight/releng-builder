@@ -5,7 +5,7 @@
 # script.
 # shellcheck source=${ROBOT_VENV}/bin/activate disable=SC1091
 . "${ROBOT_VENV}/bin/activate"
-source /tmp/common-functions.sh "${BUNDLEFOLDER}"
+source /tmp/common-functions.sh "${BUNDLEFOLDER}" "${DISTROSTREAM}"
 # Ensure we fail the job if any steps fail.
 set -ex -o pipefail
 

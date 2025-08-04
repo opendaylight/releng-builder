@@ -3,6 +3,7 @@
 echo "common-functions.sh is being sourced"
 
 BUNDLEFOLDER=$1
+DISTROSTREAM=$2
 
 # Basic controller configuration settings
 export MAVENCONF=/tmp/${BUNDLEFOLDER}/etc/org.ops4j.pax.url.mvn.cfg
@@ -903,7 +904,7 @@ function get_features() {
 function create_configuration_script() {
     cat > "${WORKSPACE}"/configuration-script.sh <<EOF
 set -x
-source /tmp/common-functions.sh ${BUNDLEFOLDER}
+source /tmp/common-functions.sh ${BUNDLEFOLDER} "${DISTROSTREAM}"
 
 echo "Changing to /tmp"
 cd /tmp
