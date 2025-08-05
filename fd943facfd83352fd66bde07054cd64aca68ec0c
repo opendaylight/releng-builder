@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "27fd79c2_c893b24a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8907
+      },
+      "writtenOn": "2025-08-05T17:15:15Z",
+      "side": 1,
+      "message": "Tested using both netconf and integration-distribution projects and also in 1-node and 3-node setup.\n\nnetconf 3-nodes:\n - titanium https://jenkins.opendaylight.org/sandbox/view/All/job/netconf-csit-3node-clustering-only-titanium/31/\n - scandium https://jenkins.opendaylight.org/sandbox/view/All/job/netconf-csit-3node-clustering-only-scandium/1/\n - calcium  https://jenkins.opendaylight.org/sandbox/view/All/job/netconf-csit-3node-clustering-only-calcium/4/\n \nnetconf 1-node:\n - titanium https://jenkins.opendaylight.org/sandbox/view/All/job/netconf-csit-1node-userfeatures-all-titanium/10/\n - scandium https://jenkins.opendaylight.org/sandbox/view/All/job/netconf-csit-1node-userfeatures-all-scandium/2/\n - calcium  https://jenkins.opendaylight.org/sandbox/view/All/job/netconf-csit-1node-userfeatures-all-calcium/2/\n \n integration-distribution 3-nodes:\n - titanium https://jenkins.opendaylight.org/sandbox/view/All/job/netconf-csit-3node-clustering-only-titanium/32/\n - scandium https://jenkins.opendaylight.org/sandbox/view/All/job/netconf-csit-3node-clustering-only-scandium/3/\n - calcium  https://jenkins.opendaylight.org/sandbox/view/All/job/netconf-csit-3node-clustering-only-calcium/6/\n \nintegration-distribution 1-node:\n - titanium https://jenkins.opendaylight.org/sandbox/view/All/job/netconf-csit-1node-userfeatures-all-titanium/11/\n - scandium https://jenkins.opendaylight.org/sandbox/view/All/job/netconf-csit-1node-userfeatures-all-scandium/3/\n - calcium  https://jenkins.opendaylight.org/sandbox/view/All/job/netconf-csit-1node-userfeatures-all-calcium/3/\n\nNot all tests are passing, there are still some other issues, but it is possible to see that the cluster is correctly formed from passing the first tests where it checks the visibility of netconf device on all nodes\n\n```\n11:35:35 Wait_For_Device_To_Become_Visible_For_Configurer :: Wait until the... \u003cstring\u003e:1: SyntaxWarning: \"is not\" with a literal. Did you mean \"!\u003d\"?\n11:35:35 \u003cstring\u003e:1: SyntaxWarning: \"is not\" with a literal. Did you mean \"!\u003d\"?\n11:35:35 \u003cstring\u003e:1: SyntaxWarning: \"is not\" with a literal. Did you mean \"!\u003d\"?\n11:35:37 | PASS |\n11:35:37 ------------------------------------------------------------------------------\n11:35:37 Wait_For_Device_To_Become_Visible_For_Checker :: Wait until the de... \u003cstring\u003e:1: SyntaxWarning: \"is not\" with a literal. Did you mean \"!\u003d\"?\n11:35:37 \u003cstring\u003e:1: SyntaxWarning: \"is not\" with a literal. Did you mean \"!\u003d\"?\n11:35:38 \u003cstring\u003e:1: SyntaxWarning: \"is not\" with a literal. Did you mean \"!\u003d\"?\n11:35:39 | PASS |\n11:35:39 ------------------------------------------------------------------------------\n11:35:39 Wait_For_Device_To_Become_Visible_For_Setter :: Wait until the dev... \u003cstring\u003e:1: SyntaxWarning: \"is not\" with a literal. Did you mean \"!\u003d\"?\n11:35:39 \u003cstring\u003e:1: SyntaxWarning: \"is not\" with a literal. Did you mean \"!\u003d\"?\n11:35:39 \u003cstring\u003e:1: SyntaxWarning: \"is not\" with a literal. Did you mean \"!\u003d\"?\n11:35:40 | PASS |\n11:35:40 ------------------------------------------------------------------------------\n```",
+      "revId": "fd943facfd83352fd66bde07054cd64aca68ec0c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
