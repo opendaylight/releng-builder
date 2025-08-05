@@ -948,6 +948,19 @@ if [ -f /tmp/custom_shard_config.txt ]; then
 fi
 
 echo "Configuring cluster"
+if [[ "$KARAF_PROJECT" != "integration" ]]; then
+    # The 'configure_cluster.sh' script is only packaged in the 'integration-distribution' project.
+    # For all other projects, we must fetch the correct version of this script from the 'integration-distribution'
+    # github repository
+    if [[ "${DISTROBRANCH}" == "master" ]]; then
+        GITHUB_BRANCH="master"
+    else
+        GITHUB_BRANCH="stable/${DISTROSTREAM}"
+    fi
+    CONFIGURE_CLUSTER_URL="https://raw.githubusercontent.com/opendaylight/integration-distribution/\${GITHUB_BRANCH}/karaf-scripts/src/main/assembly/bin/configure_cluster.sh"
+    wget -O /tmp/${BUNDLEFOLDER}/bin/configure_cluster.sh --progress=dot:mega "\${CONFIGURE_CLUSTER_URL}"
+    chmod +x /tmp/${BUNDLEFOLDER}/bin/configure_cluster.sh
+fi
 /tmp/${BUNDLEFOLDER}/bin/configure_cluster.sh \$1 ${nodes_list}
 
 echo "Dump ${CLUSTER_SYSTEM}.conf"
