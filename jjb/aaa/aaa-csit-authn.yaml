@@ -7,7 +7,7 @@
 
     # The project name
     project: "aaa"
-    jre: "openjdk17"
+    jre: "openjdk21"
 
     # The functionality under test
     functionality: "authn"
@@ -22,6 +22,7 @@
           branch: "0.20.x"
       - calcium:
           branch: "0.19.x"
+          jre: "openjdk17"
 
     install:
       - all:
