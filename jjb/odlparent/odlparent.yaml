@@ -34,42 +34,6 @@
     staging-profile-id: 880d5ac25eaa
 
 - project:
-    name: odlparent-13.1.x
-    jobs:
-      - "{project-name}-rtd-jobs":
-          build-node: ubuntu2204-builder-2c-2g
-          doc-dir: .tox/docs/tmp/html
-          project-pattern: odlparent
-          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-odlparent/50830/
-          rtd-token: e5afd4ac1ead64408d9e13cd1f628ade55512f8f
-      - odl-maven-jobs-jdk17
-      - odl-maven-verify-jobs-jdk17
-      - odl-maven-verify-jobs-jdk21:
-          build-node: ubuntu2204-docker-2c-2g
-      - gerrit-tox-verify
-
-    project: odlparent
-    project-name: odlparent
-    stream: 13.1.x
-    branch: 13.1.x
-    build-node: ubuntu2204-builder-2c-2g
-
-    mvn-settings: odlparent-settings
-
-    dependencies: ""
-    email-upstream: "[odlparent]"
-    archive-artifacts: >
-      **/*.prop
-      **/*.log
-      **/target/surefire-reports/*-output.txt
-      **/target/failsafe-reports/failsafe-summary.xml
-      **/hs_err_*.log
-      **/target/feature/feature.xml
-
-    # Used by the release job
-    staging-profile-id: 880d5ac25eaa
-
-- project:
     name: odlparent-release-management
     jobs:
       - gerrit-release-merge
