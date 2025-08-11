@@ -42,13 +42,6 @@
             odlparent infrautils yangtools mdsal controller aaa netconf bgpcep
             serviceutils daexim jsonrpc ovsdb openflowplugin lispflowmapping
             integration/distribution
-      - calcium:
-          branch: "stable/calcium"
-          csit-list: !include: csit-jobs-calcium.lst
-          build-order: >
-            odlparent infrautils yangtools mdsal controller aaa netconf bgpcep
-            serviceutils daexim jsonrpc ovsdb openflowplugin lispflowmapping
-            integration/distribution
 
 - project:
     name: integration-distribution
@@ -101,19 +94,6 @@
           csit-list: !include: csit-jobs-scandium.lst
           csit-mri-list: "{csit-mri-list-scandium}"
           csit-weekly-list: "{csit-weekly-list-scandium}"
-      - calcium:
-          branch: "stable/calcium"
-          csit-blocklist: >
-            aaa controller genius lispflowmapping l2switch mdsal
-            netconf netvirt odlmicro sxp yangtools
-            gate longevity sanity tdd tempest wip
-            bgpcep-csit-3node-bgpclustering-all
-            bgpcep-csit-3node-bgpclustering-ha-only
-            openflowplugin-csit-1node-bundle-based-reconciliation
-            last-line-is-ignored-so-we-need-something-dummy-here-to-make-sure-the-real-last-line-is-used
-          csit-list: !include: csit-jobs-calcium.lst
-          csit-mri-list: "{csit-mri-list-calcium}"
-          csit-weekly-list: "{csit-weekly-list-calcium}"
 
 - project:
     name: integration-sanity
@@ -135,10 +115,6 @@
           branch: "stable/scandium"
           karaf-version: karaf4
           csit-sanity-list: "{csit-sanity-list-scandium}"
-      - calcium:
-          branch: "stable/calcium"
-          karaf-version: karaf4
-          csit-sanity-list: "{csit-sanity-list-calcium}"
 
 - job-template:
     name: "integration-merge-dashboard"

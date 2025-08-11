@@ -15,8 +15,6 @@
           branch: "stable/titanium"
       - scandium:
           branch: "stable/scandium"
-      - calcium:
-          branch: "stable/calcium"
 
     project: releng/autorelease
     project-name: autorelease
@@ -50,9 +48,6 @@
           java-version: openjdk21
           mvn-version: mvn39
           integration-test: scandium
-      - calcium:
-          branch: "stable/calcium"
-          integration-test: calcium
 
     project: releng/autorelease
     project-name: autorelease

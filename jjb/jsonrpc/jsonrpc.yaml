@@ -72,31 +72,6 @@
     staging-profile-id: 96fdf4408765d
 
 - project:
-    name: jsonrpc-calcium
-    jobs:
-      - "{project-name}-rtd-jobs":
-          build-node: ubuntu2204-builder-2c-2g
-          project-pattern: jsonrpc
-          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-jsonrpc/91870/
-          rtd-token: 04d31d4414734686d63f9b160e974fe5a18d031d
-      - distribution-check-jobs-jdk17
-      - odl-maven-jobs-jdk17
-      - odl-maven-verify-jobs-jdk17
-      - odl-maven-verify-jobs-jdk21:
-          build-node: ubuntu2204-docker-4c-4g
-
-    project: "jsonrpc"
-    project-name: "jsonrpc"
-    stream: calcium
-    branch: "stable/calcium"
-    mvn-settings: "jsonrpc-settings"
-    dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream},mdsal-merge-{stream}"
-    email-upstream: "[jsonrpc] [odlparent] [yangtools] [controller] [mdsal]"
-
-    # Used by the release job
-    staging-profile-id: 96fdf4408765d
-
-- project:
     name: jsonrpc-release-management
     jobs:
       - gerrit-release-merge

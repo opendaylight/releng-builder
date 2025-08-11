@@ -66,7 +66,7 @@ case $mode in
             git commit -asm "Chore: Lock for new branch cutting: ${GERRIT_BRANCH_NEXT}"
         else
             echo "ERROR: Cannot perform branch cutting on non-master branch."
-            echo "ERROR: stable branch should be ex: stable/calcium"
+            echo "ERROR: stable branch should be ex: stable/titanium"
             exit 1
         fi
         ;;
