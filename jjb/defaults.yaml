@@ -127,15 +127,15 @@
 
     # Data for csit-verify jobs
     # Branch for "last" version detection
-    verify-branch: stable/calcium
+    verify-branch: stable/scandium
     # Value for ODL_STREAM
-    verify-stream: calcium
+    verify-stream: scandium
     verify-karaf-version: karaf4
-    verify-jdkversion: openjdk17
+    verify-jdkversion: openjdk21
 
     # Maven / Java
-    java-version: "openjdk17"
-    jre: "openjdk17"
+    java-version: "openjdk21"
+    jre: "openjdk21"
     opendaylight-infra-mvn-opts: |
       --show-version
       --batch-mode
@@ -214,34 +214,6 @@
     10-inclusion-flag: "off"
     10-exclude-value: ""
 
-    csit-mri-list-calcium: >
-      aaa-csit-1node-authn-all-calcium,
-      controller-csit-1node-akka1-all-calcium,
-      controller-csit-1node-benchmark-all-calcium,
-      controller-csit-1node-rest-cars-perf-all-calcium,
-      controller-csit-3node-benchmark-all-calcium,
-      controller-csit-3node-clustering-ask-all-calcium,
-      controller-csit-3node-clustering-tell-all-calcium,
-      controller-csit-3node-rest-clust-cars-perf-ask-only-calcium,
-      controller-csit-3node-rest-clust-cars-perf-tell-only-calcium,
-      mdsal-csit-3node-netty-replicate-only-calcium,
-      netconf-csit-1node-callhome-only-calcium,
-      netconf-csit-1node-scale-max-devices-only-calcium,
-      netconf-csit-1node-scale-only-calcium,
-      netconf-csit-1node-userfeatures-all-calcium,
-      netconf-csit-3node-clustering-only-calcium,
-      netconf-csit-3node-clustering-scale-only-calcium,
-      yangtools-csit-1node-system-only-calcium
-    csit-weekly-list-calcium: >
-      controller-csit-1node-notifications-longevity-only-calcium,
-      controller-csit-3node-drb-partnheal-longevity-only-calcium,
-      controller-csit-3node-drb-precedence-longevity-only-calcium,
-      controller-csit-3node-ddb-expl-lead-movement-longevity-only-calcium,
-      bgpcep-csit-3node-bgpclustering-longevity-only-calcium,
-      openflowplugin-csit-1node-longevity-only-calcium
-    csit-sanity-list-calcium: >
-      openflowplugin-csit-1node-sanity-only-calcium,
-      distribution-sanity-calcium
     csit-mri-list-scandium: >
       aaa-csit-1node-authn-all-scandium,
       controller-csit-1node-akka1-all-scandium,
