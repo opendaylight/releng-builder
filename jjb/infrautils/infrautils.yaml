@@ -26,34 +26,6 @@
     staging-profile-id: 96fca0367756c
 
 - project:
-    name: infrautils-6.0.x
-    jobs:
-      - "{project-name}-rtd-jobs":
-          build-node: ubuntu2204-builder-2c-2g
-          doc-dir: .tox/docs/tmp/html
-          project-pattern: infrautils
-          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-infrautils/38993/
-          rtd-token: 294c76173237e3a088365c31012cf4ddaa767dc9
-      - odl-maven-jobs-jdk17
-      - odl-maven-verify-jobs-jdk17
-      - odl-maven-verify-jobs-jdk21:
-          build-node: ubuntu2204-docker-2c-2g
-
-    project: infrautils
-    project-name: infrautils
-    stream: 6.0.x
-    branch: 6.0.x
-    build-node: ubuntu2204-builder-2c-2g
-
-    mvn-settings: "infrautils-settings"
-
-    dependencies: "odlparent-merge-{stream}"
-    email-upstream: "[infrautils] [odlparent]"
-
-    # Used by the release job
-    staging-profile-id: 96fca0367756c
-
-- project:
     name: infrautils-release-management
     jobs:
       - gerrit-release-merge
