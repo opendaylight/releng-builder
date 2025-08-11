@@ -6,7 +6,7 @@
 
     # The project name
     project: "mdsal"
-    jre: "openjdk17"
+    jre: "openjdk21"
 
     # The functionality under test
     functionality: "netty-replicate"
@@ -41,6 +41,7 @@
             odl-mdsal-replicate-netty,
             odl-netconf-clustered-topology,
             odl-clustering-test-app
+          jre: "openjdk17"
 
     install:
       - only:
