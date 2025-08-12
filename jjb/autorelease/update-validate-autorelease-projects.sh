@@ -43,7 +43,7 @@ cat > "$YAML_FILE" << EOF
     jobs:
       - "{project-name}-validate-autorelease-{stream}"
     stream: ${STREAM}
-    branch: ${BRANCH}
+    branch: ${GERRIT_BRANCH}
     project-name:
 EOF
 
