@@ -11,3 +11,6 @@ Contents:
    :maxdepth: 2
 
    jenkins
+   cloud-images
+   getting-started
+   job-templates-overview
