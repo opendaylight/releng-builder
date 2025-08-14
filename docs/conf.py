@@ -20,6 +20,8 @@ linkcheck_ignore = [
     r"https://git\.opendaylight\.org/gerrit/gitweb\?.*",
     # (Optional) Catch-all for Gerrit query-params links
     r"https://git\.opendaylight\.org/gerrit/.*[?;].*",
+    # Direct clone URL that intermittently 404s under bot/hardening
+    r"https://git\.opendaylight\.org/gerrit/releng/builder",
 ]
 
 # linkcheck configuration
