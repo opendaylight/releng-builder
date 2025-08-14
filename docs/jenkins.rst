@@ -42,53 +42,40 @@ in the jenkins-master_ silo and this can be achieved by simply creating a
 Where <new-project> should be the same name as your project's git repo in
 Gerrit. If your project is called "aaa" then create a new jjb/aaa directory.
 
-Next we will create <new-project>.yaml as follows:
+Next we will create <new-project>.yaml as follows (updated for current defaults: Java 17, Maven 3.9). Use lf-maven / lf-* grouped templates when possible; explicit list below is illustrative:
 
 .. code-block:: yaml
 
     ---
     - project:
-        name: <NEW_PROJECT>-carbon
-        jobs:
-          - '{project-name}-clm-{stream}'
-          - '{project-name}-integration-{stream}'
-          - '{project-name}-merge-{stream}'
-          - '{project-name}-verify-{stream}-{maven}-{jdks}'
-
-        project: '<NEW_PROJECT>'
-        project-name: '<NEW_PROJECT>'
-        stream: carbon
+        name: <NEW_PROJECT>-<stream>
+        project: '<NEW_PROJECT>'         # Gerrit repo short name
+        project-name: '<NEW_PROJECT>'    # Historical alias (keep identical)
+        stream: <CURRENT_RELEASE_STREAM>
         branch: 'master'
-        jdk: openjdk8
-        jdks:
-          - openjdk8
+
+        jobs:
+          - '{project-name}-verify-{stream}-{maven}-{java-version}'
+          - '{project-name}-merge-{stream}'
+          - '{project-name}-sonar'
+          - '{project-name}-distribution-check-{stream}'
+          - '{project-name}-validate-autorelease-{stream}'
+
+        java-version: openjdk17
         maven:
-          - mvn33:
-              mvn-version: 'mvn33'
+          - mvn39:
+              mvn-version: 'mvn39'
         mvn-settings: '<NEW_PROJECT>-settings'
         mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
-        mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
+        mvn-opts: '-Xmx2g'
         dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
         email-upstream: '[<NEW_PROJECT>] [odlparent] [yangtools] [controller]'
         archive-artifacts: ''
 
-    - project:
-        name: <NEW_PROJECT>-sonar
-        jobs:
-          - '{project-name}-sonar'
-
-        project: '<NEW_PROJECT>'
-        project-name: '<NEW_PROJECT>'
-        branch: 'master'
-        mvn-settings: '<NEW_PROJECT>-settings'
-        mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
-        mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-
-Replace all instances of <new-project> with the name of your project. This will
+Replace placeholders (<NEW_PROJECT>, <stream>) with the name of your project and release stream. This will
 create the jobs with the default job types we recommend for Java projects. If
-your project is participating in the simultanious-release and ultimately will
-be included in the final distribution, it is required to add the following job
-types into the job list for the release you are participating.
+your project is participating in the simultaneous release and will
+be included in the final distribution, ensure the following job types are present.
 
 
 .. code-block:: yaml
@@ -96,8 +83,7 @@ types into the job list for the release you are participating.
     - '{project-name}-distribution-check-{stream}'
     - '{project-name}-validate-autorelease-{stream}'
 
-If you'd like to explore the additional tweaking options available
-please refer to the `Jenkins Job Templates`_ section.
+If you'd like to explore additional parameters / grouped job macros see `global-jjb/jjb/lf-maven-jobs.yaml` and the `Jenkins Job Templates`_ section.
 
 Finally we need to push these files to Gerrit for review by the releng/builder
 team to push your jobs to Jenkins.
@@ -184,7 +170,7 @@ RelEng/Builder repo on it and executes two scripts. The first is
 The second is the specialized script, which handles any system updates,
 new software installs or extra environment tweaks that don't make sense in a
 snapshot. Examples could include installing new package or setting up a virtual
-environment. Its imperative to ensure modifications to these spinup scripts have
+environment. It is imperative to ensure modifications to these spinup scripts have
 considered time taken to install the packages, as this could increase the build
 time for every job which runs on the image. After all of these scripts have
 executed Jenkins will finally attach the minion as an actual minion and start
@@ -261,11 +247,10 @@ Pool: ODLVEX
       </tr>
       <tr>
         <td colspan="4">
-          CentOS 7 build minion configured with OpenJDK 1.7 (Java7) and OpenJDK
-          1.8 (Java8) along with all the other components and libraries needed
-          for building any current OpenDaylight project. This is the label that
-          is used for all basic verify, merge and daily builds for
-          projects.
+          CentOS 7 build minion (deprecated) previously configured with older
+          Java toolchains. New projects should use Ubuntu 22.04 or CentOS Stream 8
+          builder labels. Java 17 is the current default; Java 11 remains for
+          legacy builds only.
         </td>
       </tr>
 
@@ -278,9 +263,7 @@ Pool: ODLVEX
       </tr>
       <tr>
         <td colspan="4">
-          CentOS 7 minion configured with OpenJDK 1.7 (Java7), OpenJDK
-          1.8 (Java8) and all the current packages used by the integration
-          project for doing robot driven jobs. If you are executing robot
+          CentOS 7 minion (deprecated) configured for legacy robot-driven jobs. If you are executing robot
           framework jobs then your job should be using this as the minion that
           you are tied to. This image does not contain the needed libraries for
           building components of OpenDaylight, only for executing robot tests.
@@ -307,10 +290,8 @@ Pool: ODLVEX
       </tr>
       <tr>
         <td colspan="4">
-          CentOS 7 system purpose built for doing OpenStack testing using
-          DevStack. This minion is primarily targeted at the needs of the OVSDB
-          project. It has OpenJDK 1.7 (aka Java7) and OpenJDK 1.8 (Java8) and
-          other basic DevStack related bits installed.
+          CentOS 7 system (deprecated) purpose built for doing OpenStack testing using
+          DevStack. Prefer Ubuntu 22.04 devstack images for new jobs.
         </td>
       </tr>
 
@@ -322,10 +303,7 @@ Pool: ODLVEX
       </tr>
       <tr>
         <td colspan="4">
-          CentOS 7 system configured with OpenJDK 1.7 (aka Java7),
-          OpenJDK 1.8 (Java8) and Docker. This system was originally custom
-          built for the test needs of the OVSDB project but other projects have
-          expressed interest in using it.
+          CentOS 7 system (deprecated) configured with Docker. Prefer Ubuntu 20.04/22.04 docker images.
         </td>
       </tr>
 
@@ -335,7 +313,7 @@ Pool: ODLVEX - HOT (Heat Orchestration Templates)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 HOT integration enables to spin up integration labs servers for CSIT jobs
-using heat, rathar than using jclouds (deprecated). Image names are updated
+using heat, rather than using jclouds (deprecated). Image names are updated
 on the project specific job templates using the variable
 `{odl,docker,openstack,tools}_system_image` followed by image name in the
 format `<platform> - <template> - <date-stamp>`.
@@ -404,7 +382,7 @@ Create a new virtual environment for JJB.
 
 .. code-block:: bash
 
-    # Virtaulenvwrapper uses this dir for virtual environments
+  # virtualenvwrapper uses this dir for virtual environments
     $ echo $WORKON_HOME
     /home/daniel/.virtualenvs
     # Make a new virtual environment
@@ -573,7 +551,7 @@ trigger the job to run manually by simply leaving a comment in Gerrit for the
 patch you wish to trigger against.
 
 All jobs have a default build-timeout value of 360 minutes (6 hrs) but can be
-overrided via the opendaylight-infra-wrappers' build-timeout property.
+overridden via the opendaylight-infra-wrappers' build-timeout property.
 
 TODO: Group jobs into categories: every-patch, after-merge, on-demand, etc.
 TODO: Reiterate that "remerge" triggers all every-patch jobs at once,
@@ -605,7 +583,7 @@ TODO: Document test-{project}-{feature} and test-{project}-all.
           The Integration Job Template creates a job which runs when a project that your
           project depends on is successfully built. This job type is basically the same
           as a verify job except that it triggers from other Jenkins jobs instead of via
-          Gerrit review updates. The dependencies that triger integration jobs are listed
+          Gerrit review updates. The dependencies that trigger integration jobs are listed
           in your project.cfg file under the <b>DEPENDENCIES</b> variable.
 
           If no dependencies are listed then this job type is disabled by default.
