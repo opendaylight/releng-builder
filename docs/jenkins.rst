@@ -1,115 +1,41 @@
-.. _odl-jenkins:
+Pool: ODLVEX
+^^^^^^^^^^^^
 
-Jenkins
-=======
+.. note::
 
-The `Release Engineering Project <releng-wiki_>`_ consolidates the Jenkins jobs from
-project-specific VMs to a single Jenkins server. Each OpenDaylight project
-has a tab for their jobs on the `jenkins-master`_. The system utilizes
-`Jenkins Job Builder <jjb-docs_>`_ for the creation and management of the
-Jenkins jobs.
+   CentOS 7 based minions are deprecated; prefer Ubuntu 22.04 or CentOS Stream 8 where available.
 
-Sections:
+Selected minion types (deprecated examples):
 
-.. contents::
-   :depth: 3
-   :local:
+* centos7-builder-* (2c-1g, 2c-2g, 2c-8g, 4c-4g, 8c-8g, autorelease-4c-16g)
 
-New Project Quick Start
------------------------
+  - Packer: ``packer/templates/builder.json``
+  - Playbook: ``packer/common-packer/provision/baseline.yaml``
+  - Note: Deprecated CentOS 7 general build / autorelease images. Use Ubuntu 22.04 builder going forward.
 
-This section attempts to provide details on how to get going as a new project
-quickly with minimal steps. The rest of the guide should be read and understood
-by those who need to create and contribute new job types that is not already
-covered by the existing job templates provided by OpenDaylight's JJB repo.
+* centos7-robot-2c-2g
 
-As a new project you will be mainly interested in getting your jobs to appear
-in the jenkins-master_ silo and this can be achieved by simply creating a
-<project>.yaml in the releng/builder project's jjb directory.
+  - Packer: ``packer/templates/robot.json``
+  - Playbook: ``packer/provision/robot.yaml``
+  - Note: Deprecated robot test runner (CentOS 7); migrate to updated robot images when available.
 
-.. code-block:: bash
+* ubuntu1804-mininet-ovs-28-2c-2g
 
-    git clone --recursive https://git.opendaylight.org/gerrit/releng/builder
-    cd builder
-    mkdir jjb/<new-project>
+  - Packer: ``packer/templates/mininet-ovs-2.8.json``
+  - Playbook: ``packer/provision/mininet-ovs-2.8.yaml``
+  - Note: Legacy Ubuntu 18.04 + OVS 2.8 for historical CSIT; prefer Ubuntu 22.04 mininet-ovs-217.
 
-.. note:
+* centos7-devstack-2c-4g
 
-    releng/global-jjb is a submodule of releng/builder repository which
-    requires a git submodule update --init or using --recursive with git clone.
-    `releng-global-jjb`_
+  - Packer: ``packer/templates/devstack.json``
+  - Playbook: ``packer/provision/devstack.yaml``
+  - Note: Deprecated DevStack OpenStack test image (CentOS 7); prefer Ubuntu 22.04 devstack.
 
-Where <new-project> should be the same name as your project's git repo in
-Gerrit. If your project is called "aaa" then create a new jjb/aaa directory.
+* centos7-docker-2c-4g
 
-Next we will create <new-project>.yaml as follows:
-
-.. code-block:: yaml
-
-    ---
-    - project:
-        name: <NEW_PROJECT>-carbon
-        jobs:
-          - '{project-name}-clm-{stream}'
-          - '{project-name}-integration-{stream}'
-          - '{project-name}-merge-{stream}'
-          - '{project-name}-verify-{stream}-{maven}-{jdks}'
-
-        project: '<NEW_PROJECT>'
-        project-name: '<NEW_PROJECT>'
-        stream: carbon
-        branch: 'master'
-        jdk: openjdk8
-        jdks:
-          - openjdk8
-        maven:
-          - mvn33:
-              mvn-version: 'mvn33'
-        mvn-settings: '<NEW_PROJECT>-settings'
-        mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
-        mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-        dependencies: 'odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}'
-        email-upstream: '[<NEW_PROJECT>] [odlparent] [yangtools] [controller]'
-        archive-artifacts: ''
-
-    - project:
-        name: <NEW_PROJECT>-sonar
-        jobs:
-          - '{project-name}-sonar'
-
-        project: '<NEW_PROJECT>'
-        project-name: '<NEW_PROJECT>'
-        branch: 'master'
-        mvn-settings: '<NEW_PROJECT>-settings'
-        mvn-goals: 'clean install -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r'
-        mvn-opts: '-Xmx1024m -XX:MaxPermSize=256m'
-
-Replace all instances of <new-project> with the name of your project. This will
-create the jobs with the default job types we recommend for Java projects. If
-your project is participating in the simultanious-release and ultimately will
-be included in the final distribution, it is required to add the following job
-types into the job list for the release you are participating.
-
-
-.. code-block:: yaml
-
-    - '{project-name}-distribution-check-{stream}'
-    - '{project-name}-validate-autorelease-{stream}'
-
-If you'd like to explore the additional tweaking options available
-please refer to the `Jenkins Job Templates`_ section.
-
-Finally we need to push these files to Gerrit for review by the releng/builder
-team to push your jobs to Jenkins.
-
-.. code-block:: bash
-
-    git add jjb/<new-project>
-    git commit -sm "Add <new-project> jobs to Jenkins"
-    git review
-
-This will push the jobs to Gerrit and your jobs will appear in Jenkins once the
-releng/builder team has reviewed and merged your patch.
+  - Packer: ``packer/templates/docker.json``
+  - Playbook: ``packer/common-packer/provision/docker.yaml``
+  - Note: Deprecated CentOS 7 docker image; prefer Ubuntu 20.04/22.04 docker labels.
 
 Jenkins Master
 --------------
@@ -184,161 +110,91 @@ RelEng/Builder repo on it and executes two scripts. The first is
 The second is the specialized script, which handles any system updates,
 new software installs or extra environment tweaks that don't make sense in a
 snapshot. Examples could include installing new package or setting up a virtual
-environment. Its imperative to ensure modifications to these spinup scripts have
+environment. It is imperative to ensure modifications to these spinup scripts have
 considered time taken to install the packages, as this could increase the build
 time for every job which runs on the image. After all of these scripts have
 executed Jenkins will finally attach the minion as an actual minion and start
-handling jobs on it.
-
-Flavors
-^^^^^^^
-
-Performance flavors come with dedicated CPUs and are not shared with other
-accounts in the cloud so should ensure consistent performance.
-
-.. list-table:: Flavors
-   :widths: auto
-   :header-rows: 1
-
-   * - Instance Type
-     - CPUs
-     - Memory
-
-   * - v3-standard-2
-     - 2
-     - 8
-
-   * - v3-standard-4
-     - 4
-     - 16
-
-   * - v3-standard-8
-     - 8
-     - 32
-
-   * - v3-standard-16
-     - 16
-     - 64
-
-   * - odl-highcpu-2
-     - 2
-     - 2
-
-   * - odl-highcpu-4
-     - 4
-     - 4
-
-   * - odl-highcpu-8
-     - 8
-     - 8
-
 Pool: ODLVEX
 ^^^^^^^^^^^^
 
-.. raw:: html
+.. list-table:: CentOS 7 (deprecated) build templates
+   :widths: 30 30 20 20
+   :header-rows: 1
 
-    <table class="table table-bordered">
-      <tr class="warning">
-        <td><b>Jenkins Labels</b><br/>
-          centos7-builder-2c-1g,<br/>
-          centos7-builder-2c-2g,<br/>
-          centos7-builder-2c-8g,<br/>
-          centos7-builder-4c-4g,<br/>
-          centos7-builder-8c-8g,<br/>
-          centos7-autorelease-4c-16g
-        </td>
-        <td><b>Minion Template names</b><br/>
-          prd-centos7-builder-2c-1g,<br/>
-          prd-centos7-builder-2c-2g,<br/>
-          prd-centos7-builder-2c-8g,<br/>
-          prd-centos7-builder-4c-4g,<br/>
-          prd-centos7-builder-8c-8g,<br/>
-          prd-centos7-autorelease-4c-16g
-        <td><b>Packer Template</b><br/>
-        releng/builder/packer/templates/builder.json</td>
-        <td><b>Playbook</b><br/>
-        releng/builder/packer/common-packer/provision/baseline.yaml</td>
-      </tr>
-      <tr>
-        <td colspan="4">
-          CentOS 7 build minion configured with OpenJDK 1.7 (Java7) and OpenJDK
-          1.8 (Java8) along with all the other components and libraries needed
-          for building any current OpenDaylight project. This is the label that
-          is used for all basic verify, merge and daily builds for
-          projects.
-        </td>
-      </tr>
+   * - Jenkins Labels
+     - Minion Template Names
+     - Packer Template
+     - Playbook
+   * - centos7-builder-2c-1g, centos7-builder-2c-2g, centos7-builder-2c-8g,\
+       centos7-builder-4c-4g, centos7-builder-8c-8g, centos7-autorelease-4c-16g
+     - prd-centos7-builder-2c-1g, prd-centos7-builder-2c-2g, prd-centos7-builder-2c-8g,\
+       prd-centos7-builder-4c-4g, prd-centos7-builder-8c-8g, prd-centos7-autorelease-4c-16g
+     - releng/builder/packer/templates/builder.json
+     - releng/builder/packer/common-packer/provision/baseline.yaml
+   * - CentOS 7 build minions are deprecated. Use Ubuntu 22.04 (Jammy) or\
+       CentOS Stream 8 builder labels for all new jobs. Java 17 is default;\
+       Java 11 only for legacy needs.
+     - \-
+     - \-
+     - \-
 
-      <tr class="warning">
-        <td><b>Jenkins Labels</b><br/> centos7-robot-2c-2g</td>
-        <td><b>Minion Template names</b><br/> centos7-robot-2c-2g</td>
-        <td><b>Packer Template</b><br/>
-        releng/builder/packer/templates/robot.json</td>
-        <td><b>Playbook</b><br/> releng/builder/packer/provision/robot.yaml</td>
-      </tr>
-      <tr>
-        <td colspan="4">
-          CentOS 7 minion configured with OpenJDK 1.7 (Java7), OpenJDK
-          1.8 (Java8) and all the current packages used by the integration
-          project for doing robot driven jobs. If you are executing robot
-          framework jobs then your job should be using this as the minion that
-          you are tied to. This image does not contain the needed libraries for
-          building components of OpenDaylight, only for executing robot tests.
-        </td>
-      </tr>
+.. list-table:: CentOS 7 (deprecated) robot templates
+   :widths: 30 30 20 20
+   :header-rows: 1
 
-      <tr class="warning">
-        <td><b>Jenkins Labels</b><br/> ubuntu1804-mininet-ovs-28-2c-2g</td>
-        <td><b>Minion Template names</b><br/> ubuntu1804-mininet-ovs-28-2c-2g</td>
-        <td><b>Packer Template</b><br/> releng/builder/packer/templates/mininet-ovs-2.8.json</td>
-        <td><b>Playbook</b><br/> releng/builder/packer/provision//mininet-ovs-2.8.yaml</td>
-      </tr>
-      <tr>
-        <td colspan="4">
-          Ubuntu 18.04 (Bionic Beaver) system with ovs 2.8
-        </td>
-      </tr>
+   * - Jenkins Labels
+     - Minion Template Names
+     - Packer Template
+     - Playbook
+   * - centos7-robot-2c-2g
+     - centos7-robot-2c-2g
+     - releng/builder/packer/templates/robot.json
+     - releng/builder/packer/provision/robot.yaml
+   * - Robot image contains only test execution dependencies (deprecated).\
+       Prefer Ubuntu 22.04 or CentOS Stream 8 robot images when available.
+     - \-
+     - \-
+     - \-
+.. list-table:: Additional deprecated templates
+   :widths: 30 30 20 20
+   :header-rows: 1
 
-      <tr class="warning">
-        <td><b>Jenkins Labels</b><br/> centos7-devstack-2c-4g</td>
-        <td><b>Minion Template names</b><br/> centos7-devstack-2c-4g</td>
-        <td><b>Packer Template</b><br/> releng/builder/packer/templates/devstack.json</td>
-        <td><b>Playbook</b><br/> releng/builder/packer/provision/devstack.yaml</td>
-      </tr>
-      <tr>
-        <td colspan="4">
-          CentOS 7 system purpose built for doing OpenStack testing using
-          DevStack. This minion is primarily targeted at the needs of the OVSDB
-          project. It has OpenJDK 1.7 (aka Java7) and OpenJDK 1.8 (Java8) and
-          other basic DevStack related bits installed.
-        </td>
-      </tr>
-
-      <tr class="warning">
-        <td><b>Jenkins Labels</b><br/> centos7-docker-2c-4g</td>
-        <td><b>Minion Template names</b><br/> centos7-docker-2c-4g</td>
-        <td><b>Packer Template</b><br/> releng/builder/packer/templates/docker.json</td>
-        <td><b>Playbook</b><br/> releng/builder/packer/common-packer/provision/docker.yaml</td>
-      </tr>
-      <tr>
-        <td colspan="4">
-          CentOS 7 system configured with OpenJDK 1.7 (aka Java7),
-          OpenJDK 1.8 (Java8) and Docker. This system was originally custom
-          built for the test needs of the OVSDB project but other projects have
-          expressed interest in using it.
-        </td>
-      </tr>
-
-    </table>
+   * - Jenkins Labels
+     - Minion Template Names
+     - Packer Template
+     - Playbook
+   * - ubuntu1804-mininet-ovs-28-2c-2g
+     - ubuntu1804-mininet-ovs-28-2c-2g
+     - releng/builder/packer/templates/mininet-ovs-2.8.json
+     - releng/builder/packer/provision/mininet-ovs-2.8.yaml
+   * - Ubuntu 18.04 with OVS 2.8 (deprecated; migrate to Ubuntu 22.04 mininet-ovs-217)
+     - \-
+     - \-
+     - \-
+   * - centos7-devstack-2c-4g
+     - centos7-devstack-2c-4g
+     - releng/builder/packer/templates/devstack.json
+     - releng/builder/packer/provision/devstack.yaml
+   * - CentOS 7 DevStack image (deprecated). Prefer Ubuntu 22.04 devstack.
+     - \-
+     - \-
+     - \-
+   * - centos7-docker-2c-4g
+     - centos7-docker-2c-4g
+     - releng/builder/packer/templates/docker.json
+     - releng/builder/packer/common-packer/provision/docker.yaml
+   * - CentOS 7 docker image (deprecated). Prefer Ubuntu 20.04/22.04 docker.
+     - \-
+     - \-
+     - \-
 
 Pool: ODLVEX - HOT (Heat Orchestration Templates)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-HOT integration enables to spin up integration labs servers for CSIT jobs
-using heat, rathar than using jclouds (deprecated). Image names are updated
-on the project specific job templates using the variable
-`{odl,docker,openstack,tools}_system_image` followed by image name in the
-format `<platform> - <template> - <date-stamp>`.
+HOT integration spins up integration lab servers for CSIT jobs using Heat rather
+than jclouds (deprecated). Image names update on project-specific job templates
+via the ``{odl,docker,openstack,tools}_system_image`` variable using the format
+``<platform> - <template> - <date-stamp>``.
 
 .. include:: cloud-images.rst
 
@@ -404,7 +260,7 @@ Create a new virtual environment for JJB.
 
 .. code-block:: bash
 
-    # Virtaulenvwrapper uses this dir for virtual environments
+  # virtualenvwrapper uses this dir for virtual environments
     $ echo $WORKON_HOME
     /home/daniel/.virtualenvs
     # Make a new virtual environment
@@ -467,8 +323,9 @@ To validate that JJB was successfully installed you can run this command:
 
     (jjb)$ jenkins-jobs --version
 
-TODO: Explain that only the currently merged jjb/requirements.txt is supported,
-other options described below are for troubleshooting only.
+Note: Only the version of JJB pinned in the merged ``jjb/requirements.txt`` is
+supported in CI. The ad-hoc override examples below are for local
+troubleshooting and should not be committed.
 
 To change the version of JJB specified by `builder/jjb/requirements.txt
 <odl-jjb-requirements.txt_>`_
@@ -476,15 +333,15 @@ to install from the latest commit to the master branch of JJB's git repository:
 
 .. code-block:: bash
 
-    $ cat jjb/requirements.txt
-    -e git+https://git.openstack.org/openstack-infra/jenkins-job-builder#egg=jenkins-job-builder
+  $ cat jjb/requirements.txt
+  -e git+https://opendev.org/jjb/jenkins-job-builder#egg=jenkins-job-builder
 
 To install from a tag, like 1.4.0:
 
 .. code-block:: bash
 
-    $ cat jjb/requirements.txt
-    -e git+https://git.openstack.org/openstack-infra/jenkins-job-builder@1.4.0#egg=jenkins-job-builder
+  $ cat jjb/requirements.txt
+  -e git+https://opendev.org/jjb/jenkins-job-builder@1.4.0#egg=jenkins-job-builder
 
 Updating releng/builder repo or global-jjb
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -507,7 +364,8 @@ Update the repo, update the submodules and then submit a test to verify it works
     git checkout master
     git pull
     git submodule update --init --recursive
-    jenkins-jobs --conf jenkins.ini test jjb/ netvirt-csit-1node-openstack-queens-upstream-stateful-fluorine
+    jenkins-jobs --conf jenkins.ini test \
+      jjb/ netvirt-csit-1node-openstack-queens-upstream-stateful-fluorine
 
 Installing JJB Manually
 -----------------------
@@ -522,13 +380,13 @@ For example, using master:
 
 .. code-block:: bash
 
-    $ git clone https://git.openstack.org/openstack-infra/jenkins-job-builder
+  $ git clone https://opendev.org/jjb/jenkins-job-builder
 
 Using a tag, like 1.4.0:
 
 .. code-block:: bash
 
-    $ git clone https://git.openstack.org/openstack-infra/jenkins-job-builder
+  $ git clone https://opendev.org/jjb/jenkins-job-builder
     $ cd jenkins-job-builder
     $ git checkout tags/1.4.0
 
@@ -573,209 +431,90 @@ trigger the job to run manually by simply leaving a comment in Gerrit for the
 patch you wish to trigger against.
 
 All jobs have a default build-timeout value of 360 minutes (6 hrs) but can be
-overrided via the opendaylight-infra-wrappers' build-timeout property.
+overridden via the opendaylight-infra-wrappers' build-timeout property.
 
-TODO: Group jobs into categories: every-patch, after-merge, on-demand, etc.
-TODO: Reiterate that "remerge" triggers all every-patch jobs at once,
-because when only a subset of jobs is triggered, Gerrit forgets valid -1 from jobs outside the subset.
-TODO: Document that only drafts and commit-message-only edits do not trigger every-patch jobs.
-TODO: Document test-{project}-{feature} and test-{project}-all.
+Job Categories & Triggers
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. raw:: html
+Every patch uploaded (or updated) triggers the standard verify pipeline jobs.
+Draft changes and commit-message-only amendments are the only updates that do
+not trigger builds.
 
-    <table class="table table-bordered">
-      <tr class="warning">
-        <td><b>Job Template</b><br/>{project}-distribution-check-{stream}</td>
-        <td><b>Gerrit Trigger</b><br/>recheck</td>
-      </tr>
-      <tr>
-        <td colspan="2">
-          This job runs the PROJECT-distribution-check-BRANCH job which is
-          building also integration/distribution project in order to run SingleFeatureTest.
-          It also performs various other checks in order to prevent the change to break autorelease.
-        </td>
-      </tr>
+If you comment ``remerge`` on a change before it merges, Jenkins rebuilds the
+current branch HEAD and (historically) triggered all every-patch jobs. Use this
+to re-run a full set when a subset was manually triggered and you need a clean
+baseline.
 
-      <tr class="warning">
-        <td><b>Job Template</b><br/>{project}-integration-{stream}</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td colspan="2">
-          The Integration Job Template creates a job which runs when a project that your
-          project depends on is successfully built. This job type is basically the same
-          as a verify job except that it triggers from other Jenkins jobs instead of via
-          Gerrit review updates. The dependencies that triger integration jobs are listed
-          in your project.cfg file under the <b>DEPENDENCIES</b> variable.
+Feature / subset test jobs follow the pattern ``test-{project}-{feature}`` and
+``test-{project}-all`` (run broader functional suites). These are on-demand
+and do not vote on Gerrit.
 
-          If no dependencies are listed then this job type is disabled by default.
-        </td>
-      </tr>
+Job Parameter Reference
+~~~~~~~~~~~~~~~~~~~~~~~
 
-      <tr class="warning">
-        <td><b>Job Template</b><br/>{project}-merge-{stream}</td>
-        <td><b>Gerrit Trigger</b><br/>remerge</td>
-      </tr>
-      <tr>
-        <td colspan="2">
-          This job will trigger once a Gerrit patch is merged into the repo.
-          It will build HEAD of the current project branch and also run the Maven goals
-          <b>source:jar</b> and <b>javadoc:jar</b>.
-          Artifacts are uploaded to OpenDaylight's
-          <a href="https://nexus.opendaylight.org">Nexus</a> on completion.
+Common parameters (lf-* and legacy templates):
 
-          A distribution-merge-{stream} job is triggered to add the new artifacts to the
-          integration distribution.
+* java-version: openjdk17 (default) or openjdk11 (legacy) – selects JDK
+  toolchain.
+* sonarcloud-java-version / sonar-jdk: JDK for Sonar scanner (defaults to
+  java-version).
+* maven / mvn-version / maven-version: mvn39, mvn38 – selects configured
+  Maven install.
+* mvn-settings: ``<project>``-settings – custom settings.xml profile.
+* mvn-goals: e.g. clean install -DskipTests – build phases/properties.
+* mvn-opts: e.g. -Xmx2g – JVM flags via MAVEN_OPTS/JAVA_TOOL_OPTIONS.
+* build-timeout: minutes (default 360) – override via wrapper property.
+* dependencies: comma-separated upstream merge job names triggering
+  integration jobs.
+* stream: release stream identifier (e.g. master, a named release).
+* branch: Git branch to build (multi-branch definitions).
+* java-opts / jvm-opts: additional JVM flags (runtime/integration phases).
+* archive-artifacts: patterns (e.g. ``target/*.log``) to archive.
+* email-upstream: tokens for upstream dependency notifications.
+* python-version (lf-python): comma-separated Python versions (e.g.
+  3.10,3.11).
+* go-version (lf-go): Go toolchain (e.g. 1.22.x).
+* gradle-version (lf-gradle): Gradle distribution version (e.g. 8.6).
+* enable-sonar / sonar: true to include Sonar stage.
+* skip-tests / skip-integration-tests: booleans to bypass test phases.
 
-          Running the "remerge" trigger is possible before a Change is merged,
-          it would still build the actual HEAD. This job does not alter Gerrit votes.
-        </td>
-      </tr>
+**Core Job Templates (summary)**
 
-      <tr class="warning">
-        <td><b>Job Template</b><br/>{project}-sonar</td>
-        <td><b>Gerrit Trigger</b><br/>run-sonar</td>
-      </tr>
-      <tr>
-        <td colspan="2">
-          This job runs Sonar analysis and reports the results to
-          OpenDaylight's <a href="https://sonar.opendaylight.org">Sonar</a>
-          dashboard.
+* {project}-distribution-check-{stream} (recheck): Builds
+  integration/distribution, runs SingleFeatureTest, guards autorelease.
+* {project}-integration-{stream} (auto): Triggers on upstream dependency
+  merges (project.cfg DEPENDENCIES); disabled if none.
+* {project}-merge-{stream} (remerge): Builds HEAD after merge (or
+  manually) and publishes artifacts to Nexus.
+* {project}-sonar (run-sonar): Runs Sonar analysis; re-run verify
+  afterward to restore vote.
+* {project}-validate-autorelease-{stream} (recheck): Quick sanity test
+  ensuring no dependency on features absent from release.
+* {project}-verify-{stream}-{maven}-{java-version} (recheck): Per-patch
+  build + unit/integration tests.
+* {project}-verify-node-{stream} (recheck): NodeJS project build/test
+  (requires nodedir/nodever params; runs npm install & test).
+* {project}-verify-python-{stream} / {project}-verify-tox-{stream}
+  (recheck): Tox-driven test execution (set toxdir if tox.ini not at repo
+  root). Template names are aliases.
 
-          The Sonar Job Template creates a job which will run against the
-          master branch, or if BRANCHES are specified in the CFG file it will
-          create a job for the <b>First</b> branch listed.
+.. list-table:: On-demand / Advanced Job Templates
+   :widths: 30 15 55
+   :header-rows: 1
 
-          <div class="admonition note">
-            <p class="first admonition-title">Note</p>
-            <p>
-              Running the "run-sonar" trigger will cause Jenkins to remove
-              its existing vote if it's already -1'd or +1'd a comment. You
-              will need to re-run your verify job (recheck) after running
-              this to get Jenkins to re-vote.
-            </p>
-          </div>
-        </td>
-      </tr>
-
-      <tr class="warning">
-        <td><b>Job Template</b><br/>{project}-validate-autorelease-{stream}</td>
-        <td><b>Gerrit Trigger</b><br/>recheck</td>
-      </tr>
-      <tr>
-        <td colspan="2">
-          This job runs the PROJECT-validate-autorelease-BRANCH job which is
-          used as a quick sanity test to ensure that a patch does not depend on
-          features that do not exist in the current release.
-        </td>
-      </tr>
-
-      <tr class="warning">
-        <td><b>Job Template</b><br/>{project}-verify-{stream}-{maven}-{jdks}</td>
-        <td><b>Gerrit Trigger</b><br/>recheck</td>
-      </tr>
-      <tr>
-        <td colspan="2">
-          The Verify job template creates a Gerrit Trigger job that will
-          trigger when a new patch is submitted to Gerrit.
-          The job only builds the project code (including unit and integration tests).
-        </td>
-      </tr>
-
-      <tr class="warning">
-        <td><b>Job Template</b><br/>{project}-verify-node-{stream}</td>
-        <td><b>Gerrit Trigger</b><br/>recheck</td>
-      </tr>
-      <tr>
-        <td colspan="2">
-          This job template can be used by a project that is NodeJS based. It
-          simply installs a python virtualenv and uses that to install nodeenv
-          which is then used to install another virtualenv for nodejs. It then
-          calls <b>npm install</b> and <b>npm test</b> to run the unit tests.
-          When  using this template you need to provide a {nodedir} and
-          {nodever} containing the directory relative to the project root
-          containing the nodejs package.json and version of node you wish to
-          run tests with.
-        </td>
-      </tr>
-
-      <tr class="warning">
-        <td><b>Job Template</b><br/>{project}-verify-python-{stream} | {project}-verify-tox-{stream}</td>
-        <td><b>Gerrit Trigger</b><br/>recheck</td>
-      </tr>
-      <tr>
-        <td colspan="2">
-          This job template can be used by a project that uses Tox to build. It
-          simply installs a Python virtualenv and uses tox to run the tests
-          defined in the project's tox.ini file. If the tox.ini is anywhere
-          other than the project's repo root, the path to its directory
-          relative to the project's repo root should be passed as {toxdir}.
-
-          The 2 template names verify-python & verify-tox are identical and are
-          aliases to each other. This allows the project to use the naming that
-          is most reasonable for them.
-        </td>
-      </tr>
-
-      <tr class="warning">
-        <td><b>Job Template</b><br/>integration-patch-test-{stream}</td>
-        <td><b>Gerrit Trigger</b><br/>test-integration</td>
-      </tr>
-      <tr>
-        <td colspan="2">
-          This job builds a distribution against your Java patch and triggers distribution sanity CSIT jobs.
-          Leave a comment with trigger keyword above to activate it for a particular patch.
-          This job should not alter Gerrit votes for a given patch.
-
-          The list of CSIT jobs to trigger is defined in csit-list
-          <a href="https://git.opendaylight.org/gerrit/gitweb?p=releng/builder.git;a=blob;f=jjb/integration/integration-test-jobs.yaml">here</a>.
-
-          Some considerations when using this job:
-          <ul>
-            <li>
-              The patch test verification takes some time (~2 hours) + consumes a lot of
-              resources so it is not meant to be used for every patch.
-            </li>
-            <li>
-              The system tests for master patches will fail most of the times because both
-              code and test are unstable during the release cycle (should be good by the
-              end of the cycle).
-            </li>
-            <li>
-              Because of the above, patch test results typically have to be interpreted by
-              system test experts. The <a href="https://wiki.opendaylight.org/view/Integration/Test">Integration/Test</a>
-              project can help with that.
-            </li>
-        </td>
-      </tr>
-
-      <tr class="warning">
-        <td><b>Job Template</b><br/>integration-multipatch-test-{stream}</td>
-        <td><b>Gerrit Trigger</b><br/>multipatch-build</td>
-      </tr>
-      <tr>
-        <td colspan="2">
-          This job builds a list of patches provided in an specific order, and finally builds
-          a distribution from either provided patch or latest code in branch.
-          For example if someone leaves the following comment in a patch:
-          multipatch-build:controller=61/29761/5:45/29645/6,neutron=51/65551/4,netvirt:59/60259/17
-          the job will checkout controller patch 61/29761/5, cherry-pick 45/29645/6 and build controller,
-          checkout neutron patch 51/65551/4 and build neutron, checkout latest netvirt code,
-          cherry-pick 59/60259/17 and build netvirt, finally it will checkout latest distribution
-          code and build a distribution. The resulting distribution is stored in Nexus and the URL
-          is stored in a variable called BUNDLE_URL visible in the job console.
-          This job also accepts a gerrit topic, for example: multipatch-build:topic=binding-tlc-rpc,
-          in this case the job will find all patches in the topic binding-tlc-rpc for the projects
-          specified in the BUILD_ORDER parameter and will build all projects from the first a patch
-          has been found, for successive projects the branch HEAD is used if no patch is found.
-          The job uses patch numbers to sort patches in the same project.
-          Use multipatch-build-fast (vs multipatch-build) for building projects fast (-Pq).
-          This job should not alter Gerrit votes for a given patch, nor will do anything with the
-          given patch unless the patch is added to the build list.
-        </td>
-      </tr>
-
-    </table>
+   * - Job Template
+     - Gerrit Trigger
+     - Purpose / Notes
+   * - integration-patch-test-{stream}
+     - test-integration
+     - Builds a distribution including the patch, then triggers a CSIT
+       subset (see integration-test-jobs.yaml). High resource/time cost
+       (~2h); use selectively. Does not vote.
+   * - integration-multipatch-test-{stream}
+     - multipatch-build
+     - Builds multiple patches in order (or by topic) across projects, then
+       builds a distribution. Stores bundle URL (BUNDLE_URL) in console.
+       Use multipatch-build-fast for quick builds. Does not vote.
 
 Maven Properties
 ----------------
@@ -803,27 +542,37 @@ URL: https://jenkins.opendaylight.org/sandbox
 Jenkins Sandbox documentation is available in the
 :doc:`LF Jenkins Sandbox Guide <lfdocs:jenkins-sandbox>`.
 
-.. _example-jenkins.ini: https://git.opendaylight.org/gerrit/gitweb?p=releng/builder.git;a=blob;f=jenkins.ini.example
+.. _example-jenkins.ini: https://git.opendaylight.org/gerrit/gitweb?p=releng/\
+  builder.git;a=blob;f=jenkins.ini.example
 .. _integration-test-wiki: https://wiki.opendaylight.org/view/Integration/Test
 .. _jenkins-master: https://jenkins.opendaylight.org/releng
-.. _jenkins.ini: http://docs.openstack.org/infra/jenkins-job-builder/execution.html#configuration-file
-.. _jjb-autoupdate-project.py: https://git.opendaylight.org/gerrit/gitweb?p=releng/builder.git;a=blob;f=scripts/jjb-autoupdate-project.py
-.. _jjb-docs: http://ci.openstack.org/jenkins-job-builder/
-.. _jjb-init-project.py: https://git.opendaylight.org/gerrit/gitweb?p=releng/builder.git;a=blob;f=scripts/jjb-init-project.py
-.. _jjb-repo: https://github.com/openstack-infra/jenkins-job-builder
+.. _jenkins.ini: https://docs.opendev.org/opendev/jenkins-job-builder/latest/execution.html#configuration-file
+.. _jjb-autoupdate-project.py: https://git.opendaylight.org/gerrit/gitweb?p=releng/\
+  builder.git;a=blob;f=scripts/jjb-autoupdate-project.py
+.. _jjb-docs: https://docs.opendev.org/opendev/jenkins-job-builder/latest/
+.. _jjb-init-project.py: https://git.opendaylight.org/gerrit/gitweb?p=releng/\
+  builder.git;a=blob;f=scripts/jjb-init-project.py
+.. _jjb-repo: https://opendev.org/jjb/jenkins-job-builder
 .. _jjb-requirements.txt: https://opendev.org/jjb/jenkins-job-builder/raw/branch/master/requirements.txt
 .. _jjb-templates: https://git.opendaylight.org/gerrit/gitweb?p=releng/builder.git;a=tree;f=jjb
-.. _odl-jjb-requirements.txt: https://gerrit.linuxfoundation.org/infra/gitweb?p=releng/global-jjb.git;a=blob;f=requirements.txt;
+.. _odl-jjb-requirements.txt: https://gerrit.linuxfoundation.org/infra/gitweb?p=releng/global-jjb.git;a=blob;f=requirements.txt
 .. _odl-nexus: https://nexus.opendaylight.org
 .. _odl-sonar: https://sonar.opendaylight.org
 .. _python-virtualenv: https://virtualenv.readthedocs.org/en/latest/
 .. _python-virtualenvwrapper: https://virtualenvwrapper.readthedocs.org/en/latest/
 .. _releng-wiki: https://docs.releng.linuxfoundation.org/en/latest/
 .. _releng-builder-gerrit: https://git.opendaylight.org/gerrit/admin/repos/releng%2Fbuilder
-.. _releng-builder-repo: https://git.opendaylight.org/gerrit/gitweb?p=releng%2Fbuilder.git;a=summary
-.. _releng-global-jjb: https://gerrit.linuxfoundation.org/infra/#/q/project:releng/global-jjb
-.. _releng-builder-wiki: https://lf-opendaylight.atlassian.net/wiki/spaces/ODL/pages/12518223/RelEng+Builder
-.. _streams-design-background: https://lists.opendaylight.org/pipermail/release/2015-July/003139.html
-.. _spinup-scripts: https://git.opendaylight.org/gerrit/gitweb?p=releng/builder.git;a=tree;f=jenkins-scripts
-.. _spinup-scripts-basic_settings.sh: https://git.opendaylight.org/gerrit/gitweb?p=releng/builder.git;a=blob;f=jenkins-scripts/basic_settings.sh
-.. _spinup-scripts-controller.sh: https://git.opendaylight.org/gerrit/gitweb?p=releng/builder.git;a=blob;f=jenkins-scripts/controller.sh
+.. _releng-builder-repo: https://git.opendaylight.org/gerrit/gitweb?\
+  p=releng%2Fbuilder.git;a=summary
+.. _releng-global-jjb: https://gerrit.linuxfoundation.org/infra/#/q/project:releng/\
+  global-jjb
+.. _releng-builder-wiki: https://lf-opendaylight.atlassian.net/wiki/spaces/\
+  ODL/pages/12518223/RelEng+Builder
+.. _streams-design-background: https://lists.opendaylight.org/pipermail/\
+  release/2015-July/003139.html
+.. _spinup-scripts: https://git.opendaylight.org/gerrit/gitweb?p=releng/\
+  builder.git;a=tree;f=jenkins-scripts
+.. _spinup-scripts-basic_settings.sh: https://git.opendaylight.org/gerrit/gitweb?\
+  p=releng/builder.git;a=blob;f=jenkins-scripts/basic_settings.sh
+.. _spinup-scripts-controller.sh: https://git.opendaylight.org/gerrit/gitweb?\
+  p=releng/builder.git;a=blob;f=jenkins-scripts/controller.sh
