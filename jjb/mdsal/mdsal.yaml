@@ -23,6 +23,29 @@
     staging-profile-id: a674173c7b29d
 
 - project:
+    name: mdsal-14.0.x
+    jobs:
+      - "{project-name}-rtd-jobs":
+          build-node: ubuntu2204-builder-2c-2g
+          project-pattern: mdsal
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-mdsal/44052/
+          rtd-token: a56d6212dd3de3eef12642affe8a6100cc8bc002
+      - odl-maven-jobs-jdk21
+      - odl-maven-verify-jobs-jdk21
+
+    project: mdsal
+    project-name: mdsal
+    branch: 14.0.x
+    stream: 14.0.x
+    build-node: ubuntu2204-docker-4c-4g
+
+    mvn-settings: "mdsal-settings"
+    build-timeout: 60
+
+    # Used by the release job
+    staging-profile-id: a674173c7b29d
+
+- project:
     name: mdsal-release-management
     jobs:
       - gerrit-release-merge
