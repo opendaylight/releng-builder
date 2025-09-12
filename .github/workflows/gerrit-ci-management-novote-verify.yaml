@@ -64,12 +64,13 @@ jobs:
     steps:
       - name: Gerrit change information
         id: gerrit-change-info
-        uses: lfreleng-actions/gerrit-change-info@56e6c9251e94aadf2e747dc985b1a4e783de6c77
+        uses: lfreleng-actions/gerrit-change-info@56e6c9251e94aadf2e747dc985b1a4e783de6c77 # 2025-08-12
         with:
           gerrit_change_url: ${{ inputs.GERRIT_CHANGE_URL }}
           gerrit_patchset_number: ${{ inputs.GERRIT_PATCHSET_NUMBER }}
           ssh_user_name: ${{ vars.GERRIT_SSH_USER }}
           ssh_private_key: ${{ secrets.GERRIT_SSH_PRIVKEY }}
+          gerrit_known_hosts: ${{ vars.GERRIT_KNOWN_HOSTS }}
 
   call-gerrit-ci-management-verify:
     needs: call-gerrit-change-info
