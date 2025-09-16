@@ -52,6 +52,24 @@
       "parentUuid": "c2fdea2e_b2d77360",
       "revId": "c6473e7b136f5cd1bffb436ab3064cacd885abd4",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "00d47247_73b8ea44",
+        "filename": ".github/workflows/gerrit-ci-management-novote-verify.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2025-09-16T10:28:57Z",
+      "side": 0,
+      "message": "Definitely agree here, we seem to be transitioning from random tags to properly-tagged releases (which is a good thing), but then:\n\n- 88f5 is not \u0027latest\u0027 and needs to be updated to the tag\u0027s hash\n\n- the comment needs to say \u0027v0.1.0\u0027\n\n- the commit message body needs to point contain the \u0027https://github.com/lfreleng-actions/gerrit-change-info/releases/tag/v0.1.0\u0027 link (which is what we do for all external dependencies) -- it definitely should not be empty",
+      "parentUuid": "08815a9d_277c3664",
+      "revId": "c6473e7b136f5cd1bffb436ab3064cacd885abd4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
