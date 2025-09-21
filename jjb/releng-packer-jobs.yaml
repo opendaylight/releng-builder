@@ -35,81 +35,11 @@
     templates: builder
     update-cloud-image: true
 
-- project:
-    name: packer-devstack-jobs
-    jobs:
-      - gerrit-packer-merge
-
-    project: releng/builder
-    project-name: builder
-    branch: master
-    archive-artifacts: "**/*.log"
-
-    build-node: ubuntu2204-docker-2c-2g
-    packer-cloud-settings: packer-cloud-env-hcl
-    build-timeout: 90
-    cron: "00 H 1 * *"
-
-    platforms: centos-7
-    templates: devstack
-    update-cloud-image: true
-
-- project:
-    name: packer-devstack-pre-pip-queens-jobs
-    jobs:
-      - gerrit-packer-merge
-
-    project: releng/builder
-    project-name: builder
-    branch: master
-    archive-artifacts: "**/*.log"
-
-    build-node: ubuntu2204-docker-2c-2g
-    packer-cloud-settings: packer-cloud-env-hcl
-    build-timeout: 75
-    cron: "00 H 1 * *"
-
-    platforms: centos-7
-    templates: devstack-pre-pip-queens
-    update-cloud-image: true
-
-- project:
-    name: packer-devstack-pre-pip-rocky-jobs
-    jobs:
-      - gerrit-packer-merge
-
-    project: releng/builder
-    project-name: builder
-    branch: master
-    archive-artifacts: "**/*.log"
-
-    build-node: ubuntu2204-docker-2c-2g
-    packer-cloud-settings: packer-cloud-env-hcl
-    build-timeout: 75
-    cron: "00 H 1 * *"
-
-    platforms: centos-7
-    templates: devstack-pre-pip-rocky
-    update-cloud-image: true
-
-- project:
-    name: packer-devstack-pre-pip-stein-jobs
-    jobs:
-      - gerrit-packer-merge
-
-    project: releng/builder
-    project-name: builder
-    branch: master
-    archive-artifacts: "**/*.log"
-
-    build-node: ubuntu2204-docker-2c-2g
-    packer-cloud-settings: packer-cloud-env-hcl
-    build-timeout: 75
-    cron: "00 H 1 * *"
-
-    platforms: centos-7
-    templates: devstack-pre-pip-stein
-    update-cloud-image: true
+# Note: Removed devstack packer jobs (Sep 2025) as no jobs were using these images:
+# - packer-devstack-jobs
+# - packer-devstack-pre-pip-queens-jobs
+# - packer-devstack-pre-pip-rocky-jobs
+# - packer-devstack-pre-pip-stein-jobs
 
 - project:
     name: packer-docker-jobs
