@@ -64,7 +64,7 @@ jobs:
     steps:
       - name: Gerrit change information
         id: gerrit-change-info
-        uses: lfreleng-actions/gerrit-change-info@59bb54755201f2b72364fd228a692fd94cf5fbe0 # 19-08-2025
+        uses: lfreleng-actions/gerrit-change-info@3fed744288130e3032ea65e9a6da2ec37fd23db7 # 19-08-2025
         with:
           gerrit_change_url: ${{ inputs.GERRIT_CHANGE_URL }}
           gerrit_patchset_number: ${{ inputs.GERRIT_PATCHSET_NUMBER }}
