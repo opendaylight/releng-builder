@@ -64,13 +64,15 @@ jobs:
     steps:
       - name: Gerrit change information
         id: gerrit-change-info
-        uses: lfreleng-actions/gerrit-change-info@59bb54755201f2b72364fd228a692fd94cf5fbe0 # 19-08-2025
+        # yamllint disable-line rule:line-length
+        uses: lfreleng-actions/gerrit-change-info@0a8d28383f0863ab1a0e237f6445c878dbf88dd8 # v0.1.1
         with:
           gerrit_change_url: ${{ inputs.GERRIT_CHANGE_URL }}
           gerrit_patchset_number: ${{ inputs.GERRIT_PATCHSET_NUMBER }}
           ssh_user_name: ${{ vars.GERRIT_SSH_USER }}
           ssh_private_key: ${{ secrets.GERRIT_SSH_PRIVKEY }}
           gerrit_known_hosts: ${{ vars.GERRIT_KNOWN_HOSTS }}
+          path_prefix: "gerrit-change-info"
 
   call-gerrit-ci-management-verify:
     needs: call-gerrit-change-info
