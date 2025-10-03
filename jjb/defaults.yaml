@@ -103,22 +103,9 @@
     odl_system_flavor: "v3-standard-4"
     odl_system_image: "ZZCI - Ubuntu 22.04 - builder - x86_64 - 20250201-010426.857"
     controller-max-mem: "2048m"
-    # The following devstack image variables are not used by any jobs (as of Sep 2025)
-    # Keeping them as references but the related packer jobs have been removed
-    openstack_system_count: 1
-    openstack_system_flavor: "v3-standard-4"
-    openstack_system_image: "ZZCI - CentOS 7 - devstack - x86_64 - 20240601-230133.464"  # Unused
-    openstack_system2_count: 0
-    openstack_system2_flavor: "v3-standard-2"
-    openstack_system2_image: "ZZCI - CentOS 7 - devstack - x86_64 - 20240601-230133.464"  # Unused
-    openstack_system3_count: 1
-    openstack_system3_flavor: "v3-standard-8"
-    openstack_system3_image: "ZZCI - Ubuntu 22.04 - devstack - x86_64 - 20231031-095146.118"  # Unused
     tools_system_count: 1
     tools_system_flavor: "v3-standard-2"
     tools_system_image: "ZZCI - Ubuntu 22.04 - mininet-ovs-217 - x86_64 - 20250201-060151.911"
-    openstack_stein_system_image: "ZZCI - CentOS 7 - devstack-stein - x86_64 - 20221101-010107.368"  # Unused
-    openstack_rocky_system_image: "ZZCI - CentOS 7 - devstack-rocky - x86_64 - 20221101-000109.537"  # Unused
 
     # Default Robot framework options
     robot-options: ""
