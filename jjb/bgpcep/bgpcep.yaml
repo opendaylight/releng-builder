@@ -31,6 +31,37 @@
     staging-profile-id: 9427a05049030
 
 - project:
+    name: bgpcep-0.23.x
+    jobs:
+      - "{project-name}-rtd-jobs":
+          build-node: ubuntu2204-builder-2c-2g
+          project-pattern: bgpcep
+          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-bgpcep/47576/
+          rtd-token: dbe9d1aabbe8812a26b428908f6613c28e3191fc
+      - gerrit-tox-verify:
+          parallel: true
+      - odl-maven-javadoc-jobs-jdk21
+      - odl-maven-jobs-jdk21
+      - odl-maven-verify-jobs-jdk21
+
+    project: bgpcep
+    project-name: bgpcep
+    stream: 0.23.x
+    branch: 0.23.x
+    build-node: ubuntu2204-docker-8c-8g
+    build-timeout: 120
+
+    mvn-settings: "bgpcep-settings"
+    dependencies: >
+      odlparent-merge-{stream},
+      yangtools-merge-{stream},
+      controller-merge-{stream},
+      mdsal-merge-{stream}
+    email-upstream: "[bgpcep] [odlparent] [yangtools] [controller] [mdsal]"
+    # Used by the release job
+    staging-profile-id: 9427a05049030
+
+- project:
     name: bgpcep-0.22.x
     jobs:
       - "{project-name}-rtd-jobs":
