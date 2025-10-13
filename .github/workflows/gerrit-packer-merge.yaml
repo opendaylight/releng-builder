@@ -1,0 +1,453 @@
+---
+# SPDX-License-Identifier: Apache-2.0
+# Example: Gerrit-triggered Packer build workflow (for merged changes)
+# This workflow builds Packer images when:
+# 1. Changes are merged from Gerrit (workflow_dispatch)
+# 2. Monthly scheduled builds (1st of every month)
+
+name: Gerrit Packer Merge
+
+# yamllint disable-line rule:truthy
+on:
+  workflow_dispatch:
+    inputs:
+      GERRIT_BRANCH:
+        description: "Branch that change is against"
+        required: true
+        type: string
+      GERRIT_CHANGE_ID:
+        description: "The ID for the change"
+        required: true
+        type: string
+      GERRIT_CHANGE_NUMBER:
+        description: "The Gerrit number"
+        required: true
+        type: string
+      GERRIT_CHANGE_URL:
+        description: "URL to the change"
+        required: true
+        type: string
+      GERRIT_EVENT_TYPE:
+        description: "Type of Gerrit event"
+        required: true
+        type: string
+      GERRIT_PATCHSET_NUMBER:
+        description: "The patch number for the change"
+        required: true
+        type: string
+      GERRIT_PATCHSET_REVISION:
+        description: "The revision sha"
+        required: true
+        type: string
+      GERRIT_PROJECT:
+        description: "Project in Gerrit"
+        required: true
+        type: string
+      GERRIT_REFSPEC:
+        description: "Gerrit refspec of change"
+        required: true
+        type: string
+
+  schedule:
+    # Run on 1st of every month at 00:00 UTC
+    - cron: "0 0 1 * *"
+
+concurrency:
+  group: packer-build-${{ inputs.GERRIT_CHANGE_ID || github.run_id }}
+  cancel-in-progress: false
+
+jobs:
+  clear-vote:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clear votes
+        # yamllint disable-line rule:line-length
+        uses: lfreleng-actions/gerrit-review-action@537251ec667665b386f70b330b05446e3fc29087 # v0.9
+        with:
+          host: ${{ vars.LFIT_GERRIT_SERVER }}
+          username: ${{ vars.LFIT_GERRIT_SSH_USER }}
+          key: ${{ secrets.LFIT_GERRIT_SSH_PRIVKEY_NP }}
+          known_hosts: ${{ vars.LFIT_GERRIT_KNOWN_HOSTS }}
+          gerrit-change-number: ${{ inputs.GERRIT_CHANGE_NUMBER }}
+          gerrit-patchset-number: ${{ inputs.GERRIT_PATCHSET_NUMBER }}
+          vote-type: clear
+      - name: Allow replication
+        run: sleep 10s
+
+  actionlint:
+    needs: clear-vote
+    runs-on: ubuntu-latest
+    steps:
+      - uses: lfreleng-actions/checkout-gerrit-change-action@54d751e8bd167bc91f7d665dabe33fae87aaaa63 # v0.9
+        with:
+          gerrit-refspec: ${{ inputs.GERRIT_REFSPEC }}
+          gerrit-project: ${{ inputs.GERRIT_PROJECT }}
+          gerrit-url: ${{ vars.GERRIT_URL }}
+          delay: "0s"
+      - name: Download actionlint
+        id: get_actionlint
+        run: bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
+        shell: bash
+      - name: Check workflow files
+        run: ${{ steps.get_actionlint.outputs.executable }} -color
+        shell: bash
+
+  # run pre-commit tox env separately to get use of more parallel processing
+  pre-commit:
+    needs: clear-vote
+    runs-on: ubuntu-latest
+    steps:
+      - uses: lfreleng-actions/checkout-gerrit-change-action@54d751e8bd167bc91f7d665dabe33fae87aaaa63 # v0.9
+        with:
+          gerrit-refspec: ${{ inputs.GERRIT_REFSPEC }}
+          gerrit-project: ${{ inputs.GERRIT_PROJECT }}
+          gerrit-url: ${{ vars.GERRIT_URL }}
+          delay: "0s"
+      - uses: actions/setup-python@v5.4.0
+        with:
+          python-version: "3.11"
+      - name: Run static analysis and format checkers
+        run: pipx run pre-commit run --all-files --show-diff-on-failure
+
+  tox-verify:
+    needs: clear-vote
+    runs-on: ubuntu-latest
+    steps:
+      - uses: lfreleng-actions/checkout-gerrit-change-action@54d751e8bd167bc91f7d665dabe33fae87aaaa63 # v0.9
+        with:
+          gerrit-refspec: ${{ inputs.GERRIT_REFSPEC }}
+          gerrit-project: ${{ inputs.GERRIT_PROJECT }}
+          gerrit-url: ${{ vars.GERRIT_URL }}
+          delay: "0s"
+          submodules: "true"
+      - uses: actions/setup-python@v5.4.0
+        id: setup-python
+        with:
+          python-version: "3.11"
+      - name: Run tox
+        run: >-
+          pipx run tox
+
+  # Detect what needs to be built
+  detect-changes:
+    needs: clear-vote
+    runs-on: ubuntu-latest
+    outputs:
+      build_matrix: ${{ steps.generate-matrix.outputs.matrix }}
+      build_all: ${{ steps.check-trigger.outputs.build_all }}
+    steps:
+      - name: Determine trigger type
+        id: check-trigger
+        run: |
+          if [[ "${{ github.event_name }}" == "schedule" ]]; then
+            echo "build_all=true" >> "$GITHUB_OUTPUT"
+            echo "📅 Monthly scheduled build - building ALL images"
+          else
+            echo "build_all=false" >> "$GITHUB_OUTPUT"
+            echo "🔄 Gerrit merge event - detecting changes"
+          fi
+
+      - name: Checkout change
+        if: github.event_name != 'schedule'
+        # yamllint disable-line rule:line-length
+        uses: lfreleng-actions/checkout-gerrit-change-action@54d751e8bd167bc91f7d665dabe33fae87aaaa63 # v0.9
+        with:
+          gerrit-refspec: ${{ inputs.GERRIT_REFSPEC }}
+          delay: "0s"
+          submodules: "true"
+
+      - name: Checkout repository (scheduled)
+        if: github.event_name == 'schedule'
+        # yamllint disable-line rule:line-length
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          ref: main
+          submodules: true
+
+      - name: Update submodules
+        run: git submodule update --init --recursive
+
+      - name: Generate build matrix
+        id: generate-matrix
+        run: |
+          set -euo pipefail
+
+          # Define all available templates and platforms
+          TEMPLATES=(
+            "builder"
+            "devstack"
+            "devstack-pre-pip-queens"
+            "devstack-pre-pip-rocky"
+            "devstack-pre-pip-stein"
+            "devstack-pre-pip-yoga"
+            "docker"
+            "helm"
+            "mininet-ovs-217"
+            "robot"
+          )
+
+          PLATFORMS=(
+            "centos-7"
+            "centos-cs-8"
+            "centos-cs-9"
+            "ubuntu-20.04"
+            "ubuntu-22.04"
+            "ubuntu-24.04"
+          )
+
+          BUILD_ALL="${{ steps.check-trigger.outputs.build_all }}"
+          MATRIX_JSON="[]"
+
+          if [[ "$BUILD_ALL" == "true" ]]; then
+            # Monthly build: build all combinations
+            echo "🔨 Generating matrix for ALL template+platform combinations"
+            for template in "${TEMPLATES[@]}"; do
+              for platform in "${PLATFORMS[@]}"; do
+                MATRIX_JSON=$(jq -c --arg t "$template" --arg p "$platform" \
+                  '. += [{"template": $t, "platform": $p}]' <<< "$MATRIX_JSON")
+              done
+            done
+          else
+            # Gerrit merge: detect what changed
+            echo "🔍 Detecting changes from Gerrit merge"
+
+            # Detect changed files in packer directory
+            CHANGED_TEMPLATES=()
+            CHANGED_PLATFORMS=()
+            PROVISION_CHANGED=false
+
+            # Get changed files from git diff
+            if [[ "${{ github.event_name }}" != "schedule" && -n "${{ inputs.GERRIT_PATCHSET_REVISION }}" ]]; then
+              # Compare against base branch for Gerrit changes
+              BASE_REF="${{ inputs.GERRIT_BRANCH }}"
+              CHANGED_FILES=$(git diff --name-only "origin/${BASE_REF}...HEAD" || git diff --name-only HEAD~1)
+            else
+              # Fallback to last commit
+              CHANGED_FILES=$(git diff --name-only HEAD~1)
+            fi
+
+            echo "Changed files:"
+            echo "$CHANGED_FILES"
+
+            # Detect changed templates
+            while IFS= read -r file; do
+              if [[ "$file" =~ packer/templates/(.+)\.pkr\.hcl$ ]]; then
+                template="${BASH_REMATCH[1]}"
+                CHANGED_TEMPLATES+=("$template")
+                echo "  📝 Template changed: $template"
+              fi
+            done <<< "$CHANGED_FILES"
+
+            # Detect changed platform vars
+            while IFS= read -r file; do
+              if [[ "$file" =~ packer/common-packer/vars/(.+)\.pkrvars\.hcl$ ]]; then
+                platform="${BASH_REMATCH[1]}"
+                CHANGED_PLATFORMS+=("$platform")
+                echo "  📝 Platform vars changed: $platform"
+              fi
+            done <<< "$CHANGED_FILES"
+
+            # Check if provision scripts changed
+            if echo "$CHANGED_FILES" | grep -q "packer/provision/"; then
+              PROVISION_CHANGED=true
+              echo "  ⚠️ Provision scripts changed - will rebuild ALL combinations"
+            fi
+
+            # Build matrix based on what changed
+            if [[ "$PROVISION_CHANGED" == "true" ]]; then
+              # Provision changed: rebuild everything
+              for template in "${TEMPLATES[@]}"; do
+                for platform in "${PLATFORMS[@]}"; do
+                  MATRIX_JSON=$(jq -c --arg t "$template" --arg p "$platform" \
+                    '. += [{"template": $t, "platform": $p}]' <<< "$MATRIX_JSON")
+                done
+              done
+            else
+              # Build specific combinations based on changes
+              if [[ ${#CHANGED_TEMPLATES[@]} -gt 0 && ${#CHANGED_PLATFORMS[@]} -eq 0 ]]; then
+                # Only templates changed: build with all platforms
+                echo "Building changed templates with all platforms"
+                for template in "${CHANGED_TEMPLATES[@]}"; do
+                  for platform in "${PLATFORMS[@]}"; do
+                    MATRIX_JSON=$(jq -c --arg t "$template" --arg p "$platform" \
+                      '. += [{"template": $t, "platform": $p}]' <<< "$MATRIX_JSON")
+                  done
+                done
+              elif [[ ${#CHANGED_PLATFORMS[@]} -gt 0 && ${#CHANGED_TEMPLATES[@]} -eq 0 ]]; then
+                # Only platform vars changed: build all templates with changed platforms
+                echo "Building all templates with changed platforms"
+                for platform in "${CHANGED_PLATFORMS[@]}"; do
+                  for template in "${TEMPLATES[@]}"; do
+                    MATRIX_JSON=$(jq -c --arg t "$template" --arg p "$platform" \
+                      '. += [{"template": $t, "platform": $p}]' <<< "$MATRIX_JSON")
+                  done
+                done
+              elif [[ ${#CHANGED_TEMPLATES[@]} -gt 0 && ${#CHANGED_PLATFORMS[@]} -gt 0 ]]; then
+                # Both changed: build all combinations of changed items
+                echo "Building all combinations of changed templates and platforms"
+                for template in "${CHANGED_TEMPLATES[@]}"; do
+                  for platform in "${CHANGED_PLATFORMS[@]}"; do
+                    MATRIX_JSON=$(jq -c --arg t "$template" --arg p "$platform" \
+                      '. += [{"template": $t, "platform": $p}]' <<< "$MATRIX_JSON")
+                  done
+                done
+              else
+                echo "⚠️ No packer-related changes detected - skipping build"
+              fi
+            fi
+          fi
+
+          # Remove duplicates
+          MATRIX_JSON=$(jq -c 'unique_by(.template + .platform)' <<< "$MATRIX_JSON")
+
+          echo ""
+          echo "📊 Build matrix ($(jq 'length' <<< "$MATRIX_JSON") combinations):"
+          jq -r '.[] | "  - \(.template) + \(.platform)"' <<< "$MATRIX_JSON"
+
+          # Output matrix
+          echo "matrix={\"include\":$MATRIX_JSON}" >> "$GITHUB_OUTPUT"
+
+  # Build images based on detected changes
+  packer-build:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.build_matrix != '{"include":[]}'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: 5
+      matrix: ${{ fromJson(needs.detect-changes.outputs.build_matrix) }}
+    outputs:
+      image_name_${{ matrix.template }}_${{ matrix.platform }}: ${{ steps.build.outputs.image_name }}
+    steps:
+      - name: Checkout change
+        if: github.event_name != 'schedule'
+        # yamllint disable-line rule:line-length
+        uses: lfreleng-actions/checkout-gerrit-change-action@54d751e8bd167bc91f7d665dabe33fae87aaaa63 # v0.9
+        with:
+          gerrit-refspec: ${{ inputs.GERRIT_REFSPEC }}
+          delay: "0s"
+          submodules: "true"
+
+      - name: Checkout repository (scheduled)
+        if: github.event_name == 'schedule'
+        # yamllint disable-line rule:line-length
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          ref: main
+          submodules: true
+
+      - name: Update submodules
+        run: git submodule update --init --recursive
+
+      - name: Setup OpenStack Bastion
+        id: bastion-setup
+        uses: askb/openstack-bastion-action@main
+        with:
+          operation: setup
+          openstack_auth_url: ${{ secrets.VEXXHOST_AUTH_URL }}
+          openstack_project_id: ${{ secrets.VEXXHOST_PROJECT_ID }}
+          openstack_username: ${{ secrets.VEXXHOST_USERNAME }}
+          openstack_password: ${{ secrets.VEXXHOST_PASSWORD }}
+          openstack_region: ${{ secrets.VEXXHOST_REGION }}
+          openstack_network_id: ${{ secrets.VEXXHOST_NETWORK_ID }}
+          tailscale_oauth_client_id: ${{ secrets.TAILSCALE_OAUTH_CLIENT_ID }}
+          tailscale_oauth_secret: ${{ secrets.TAILSCALE_OAUTH_SECRET }}
+          bastion_flavor: "v3-standard-2"
+          bastion_image: "Ubuntu 22.04.5 LTS (x86_64) [2025-03-27]"
+          debug_mode: "false"
+
+      - name: Build Packer Image
+        id: build
+        uses: askb/packer-build-action@main
+        with:
+          mode: build
+          packer_template: "packer/templates/${{ matrix.template }}.pkr.hcl"
+          packer_vars_file: "packer/common-packer/vars/${{ matrix.platform }}.pkrvars.hcl"
+          packer_working_dir: "packer"
+          packer_version: "1.11.2"
+          bastion_ip: ${{ steps.bastion-setup.outputs.bastion_ip }}
+          bastion_ssh_user: "ubuntu"
+          openstack_auth_url: ${{ secrets.VEXXHOST_AUTH_URL }}
+          openstack_project_id: ${{ secrets.VEXXHOST_PROJECT_ID }}
+          openstack_username: ${{ secrets.VEXXHOST_USERNAME }}
+          openstack_password: ${{ secrets.VEXXHOST_PASSWORD }}
+          openstack_region: ${{ secrets.VEXXHOST_REGION }}
+          openstack_network_id: ${{ secrets.VEXXHOST_NETWORK_ID }}
+
+      - name: Teardown OpenStack Bastion
+        if: always()
+        uses: askb/openstack-bastion-action@main
+        with:
+          operation: teardown
+          openstack_auth_url: ${{ secrets.VEXXHOST_AUTH_URL }}
+          openstack_project_id: ${{ secrets.VEXXHOST_PROJECT_ID }}
+          openstack_username: ${{ secrets.VEXXHOST_USERNAME }}
+          openstack_password: ${{ secrets.VEXXHOST_PASSWORD }}
+          openstack_region: ${{ secrets.VEXXHOST_REGION }}
+
+      - name: Report build status
+        if: always()
+        run: |
+          {
+            echo "### Build Result: ${{ matrix.template }} + ${{ matrix.platform }}"
+            echo "- **Status**: ${{ job.status }}"
+            echo "- **Image Name**: ${{ steps.build.outputs.image_name || 'N/A' }}"
+            echo "- **Template**: ${{ matrix.template }}"
+            echo "- **Platform**: ${{ matrix.platform }}"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  # Summary job to collect all results
+  build-summary:
+    if: always()
+    needs: [detect-changes, packer-build]
+    runs-on: ubuntu-latest
+    outputs:
+      success: ${{ steps.summary.outputs.success }}
+      message: ${{ steps.summary.outputs.message }}
+    steps:
+      - name: Generate summary
+        id: summary
+        run: |
+          if [[ "${{ needs.packer-build.result }}" == "success" ]]; then
+            echo "success=true" >> "$GITHUB_OUTPUT"
+            echo "message=All Packer builds completed successfully" >> "$GITHUB_OUTPUT"
+          else
+            echo "success=false" >> "$GITHUB_OUTPUT"
+            echo "message=Some Packer builds failed. Check job logs." >> "$GITHUB_OUTPUT"
+          fi
+
+          # Generate detailed summary
+          cat >> "$GITHUB_STEP_SUMMARY" << EOF
+          ## Packer Build Summary
+
+          **Trigger**: ${{ github.event_name == 'schedule' && 'Monthly Scheduled Build' || 'Gerrit Merge Event' }}
+          **Branch**: ${{ inputs.GERRIT_BRANCH || 'main' }}
+          **Build Result**: ${{ needs.packer-build.result }}
+
+          ### Details
+          - Change ID: ${{ inputs.GERRIT_CHANGE_ID || 'N/A' }}
+          - Change Number: ${{ inputs.GERRIT_CHANGE_NUMBER || 'N/A' }}
+          - Patchset: ${{ inputs.GERRIT_PATCHSET_NUMBER || 'N/A' }}
+
+          Check individual job logs for image names and build details.
+          EOF
+
+  vote:
+    if: ${{ always() }}
+    needs: [clear-vote, actionlint, pre-commit, tox-verify, build-summary]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get conclusion
+        # yamllint disable-line rule:line-length
+        uses: im-open/workflow-conclusion@e4f7c4980600fbe0818173e30931d3550801b992 # v2.2.3
+      - name: Set vote
+        # yamllint disable-line rule:line-length
+        uses: lfreleng-actions/gerrit-review-action@537251ec667665b386f70b330b05446e3fc29087 # v0.9
+        with:
+          host: ${{ vars.LFIT_GERRIT_SERVER }}
+          username: ${{ vars.LFIT_GERRIT_SSH_USER }}
+          key: ${{ secrets.LFIT_GERRIT_SSH_PRIVKEY_NP }}
+          known_hosts: ${{ vars.LFIT_GERRIT_KNOWN_HOSTS }}
+          gerrit-change-number: ${{ inputs.GERRIT_CHANGE_NUMBER }}
+          gerrit-patchset-number: ${{ inputs.GERRIT_PATCHSET_NUMBER }}
+          vote-type: ${{ env.WORKFLOW_CONCLUSION }}
