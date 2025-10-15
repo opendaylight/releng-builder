@@ -17,7 +17,25 @@ set -e -o pipefail
 lf-activate-venv --python python3 python-openstackclient
 
 cat > "$WORKSPACE/docs/cloud-images.rst" << EOF
-Following are the list of published images available to Jenkins jobs.
+Cloud Images
+============
+
+Below is the historical list of published images available to Jenkins jobs.
+New projects should target the most recent Ubuntu 22.04 (Jammy) images
+(builder / docker / devstack / mininet) or CentOS Stream 8 where Ubuntu is not
+yet available. We have deprecated CentOS 7 images and plan to remove them
+after the final migration (date TBD).
+
+Recommended (current) labels (see Jenkins node labels / job parameters for
+exact names):
+
+* Ubuntu 22.04 builder (Java 17 default)
+* Ubuntu 22.04 docker
+* Ubuntu 22.04 devstack (for OpenStack CSIT)
+* Ubuntu 22.04 mininet-ovs-217
+* CentOS Stream 8 builder (legacy support / transitional)
+
+Historical inventory:
 
 EOF
 # Blank line before EOF is on purpose to ensure there is spacing.
