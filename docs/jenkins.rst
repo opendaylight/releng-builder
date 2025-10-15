@@ -1,5 +1,8 @@
+Jenkins
+=======
+
 Pool: ODLVEX
-^^^^^^^^^^^^
+------------
 
 .. note::
 
@@ -61,7 +64,7 @@ minions as they must be specifically called out by template name instead of
 label.
 
 Adding New Components to the Minions
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+------------------------------------
 
 If your project needs something added to one of the minions, you can help us
 get things added faster by doing one of the following:
@@ -115,7 +118,7 @@ considered time taken to install the packages, as this could increase the build
 time for every job which runs on the image. After all of these scripts have
 executed Jenkins will finally attach the minion as an actual minion and start
 Pool: ODLVEX
-^^^^^^^^^^^^
+------------
 
 .. list-table:: CentOS 7 (deprecated) build templates
    :widths: 30 30 20 20
@@ -189,7 +192,7 @@ Pool: ODLVEX
      - \-
 
 Pool: ODLVEX - HOT (Heat Orchestration Templates)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------------------------
 
 HOT integration spins up integration lab servers for CSIT jobs using Heat rather
 than jclouds (deprecated). Image names update on project-specific job templates
@@ -344,7 +347,7 @@ To install from a tag, like 1.4.0:
   -e git+https://opendev.org/jjb/jenkins-job-builder@1.4.0#egg=jenkins-job-builder
 
 Updating releng/builder repo or global-jjb
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+------------------------------------------
 
 Follow these steps to update the releng/builder repo. The repo uses a submodule from
 a global-jjb repo so that common source can be shared across different projects. This

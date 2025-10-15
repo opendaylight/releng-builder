@@ -1,7 +1,5 @@
-.. Cloud images catalog (auto-maintained list + guidance)
-
 Cloud Images
-------------
+============
 
 Below is the historical list of published images available to Jenkins jobs.
 New projects should target the most recent Ubuntu 22.04 (Jammy) images
