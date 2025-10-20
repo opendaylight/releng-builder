@@ -65,7 +65,7 @@ jobs:
       - name: Gerrit change information
         id: gerrit-change-info
         # yamllint disable-line rule:line-length
-        uses: lfreleng-actions/gerrit-change-info@542b2b4d78b75e430f64237b2b2b24d9f8dc0d77 # v0.1.2
+        uses: lfreleng-actions/gerrit-change-info@752b845e067218d1ccaa8c1e4676efa652ce3a1d # v0.1.2
         with:
           gerrit_change_url: ${{ inputs.GERRIT_CHANGE_URL }}
           gerrit_patchset_number: ${{ inputs.GERRIT_PATCHSET_NUMBER }}
