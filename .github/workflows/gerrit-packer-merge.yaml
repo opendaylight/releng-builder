@@ -59,6 +59,7 @@ concurrency:
 jobs:
   clear-vote:
     runs-on: ubuntu-latest
+    if: github.event_name != 'schedule' && inputs.GERRIT_CHANGE_NUMBER != ''
     steps:
       - name: Clear votes
         # yamllint disable-line rule:line-length
@@ -71,11 +72,8 @@ jobs:
           gerrit-change-number: ${{ inputs.GERRIT_CHANGE_NUMBER }}
           gerrit-patchset-number: ${{ inputs.GERRIT_PATCHSET_NUMBER }}
           vote-type: clear
-      - name: Allow replication
-        run: sleep 10s
 
   actionlint:
-    needs: clear-vote
     runs-on: ubuntu-latest
     steps:
       - uses: lfreleng-actions/checkout-gerrit-change-action@54d751e8bd167bc91f7d665dabe33fae87aaaa63 # v0.9
@@ -83,7 +81,7 @@ jobs:
           gerrit-refspec: ${{ inputs.GERRIT_REFSPEC }}
           gerrit-project: ${{ inputs.GERRIT_PROJECT }}
           gerrit-url: ${{ vars.GERRIT_URL }}
-          delay: "0s"
+          delay: "10s"
       - name: Download actionlint
         id: get_actionlint
         run: bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
@@ -94,7 +92,6 @@ jobs:
 
   # run pre-commit tox env separately to get use of more parallel processing
   pre-commit:
-    needs: clear-vote
     runs-on: ubuntu-latest
     steps:
       - uses: lfreleng-actions/checkout-gerrit-change-action@54d751e8bd167bc91f7d665dabe33fae87aaaa63 # v0.9
@@ -102,7 +99,7 @@ jobs:
           gerrit-refspec: ${{ inputs.GERRIT_REFSPEC }}
           gerrit-project: ${{ inputs.GERRIT_PROJECT }}
           gerrit-url: ${{ vars.GERRIT_URL }}
-          delay: "0s"
+          delay: "10s"
       - uses: actions/setup-python@v5.4.0
         with:
           python-version: "3.11"
@@ -110,7 +107,6 @@ jobs:
         run: pipx run pre-commit run --all-files --show-diff-on-failure
 
   tox-verify:
-    needs: clear-vote
     runs-on: ubuntu-latest
     steps:
       - uses: lfreleng-actions/checkout-gerrit-change-action@54d751e8bd167bc91f7d665dabe33fae87aaaa63 # v0.9
@@ -118,7 +114,7 @@ jobs:
           gerrit-refspec: ${{ inputs.GERRIT_REFSPEC }}
           gerrit-project: ${{ inputs.GERRIT_PROJECT }}
           gerrit-url: ${{ vars.GERRIT_URL }}
-          delay: "0s"
+          delay: "10s"
           submodules: "true"
       - uses: actions/setup-python@v5.4.0
         id: setup-python
@@ -130,7 +126,6 @@ jobs:
 
   # Detect what needs to be built
   detect-changes:
-    needs: clear-vote
     runs-on: ubuntu-latest
     outputs:
       build_matrix: ${{ steps.generate-matrix.outputs.matrix }}
@@ -153,7 +148,7 @@ jobs:
         uses: lfreleng-actions/checkout-gerrit-change-action@54d751e8bd167bc91f7d665dabe33fae87aaaa63 # v0.9
         with:
           gerrit-refspec: ${{ inputs.GERRIT_REFSPEC }}
-          delay: "0s"
+          delay: "10s"
           submodules: "true"
 
       - name: Checkout repository (scheduled)
@@ -431,7 +426,7 @@ jobs:
           EOF
 
   vote:
-    if: ${{ always() }}
+    if: ${{ always() && github.event_name != 'schedule' && inputs.GERRIT_CHANGE_NUMBER != '' }}
     needs: [clear-vote, actionlint, pre-commit, tox-verify, build-summary]
     runs-on: ubuntu-latest
     steps:
