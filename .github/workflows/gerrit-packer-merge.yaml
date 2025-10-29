@@ -64,10 +64,10 @@ jobs:
         # yamllint disable-line rule:line-length
         uses: lfreleng-actions/gerrit-review-action@537251ec667665b386f70b330b05446e3fc29087 # v0.9
         with:
-          host: ${{ vars.LFIT_GERRIT_SERVER }}
-          username: ${{ vars.LFIT_GERRIT_SSH_USER }}
-          key: ${{ secrets.LFIT_GERRIT_SSH_PRIVKEY_NP }}
-          known_hosts: ${{ vars.LFIT_GERRIT_KNOWN_HOSTS }}
+          host: ${{ vars.GERRIT_SERVER }}
+          username: ${{ vars.GERRIT_SSH_USER }}
+          key: ${{ secrets.GERRIT_SSH_PRIVKEY }}
+          known_hosts: ${{ vars.GERRIT_KNOWN_HOSTS }}
           gerrit-change-number: ${{ inputs.GERRIT_CHANGE_NUMBER }}
           gerrit-patchset-number: ${{ inputs.GERRIT_PATCHSET_NUMBER }}
           vote-type: clear
@@ -442,10 +442,10 @@ jobs:
         # yamllint disable-line rule:line-length
         uses: lfreleng-actions/gerrit-review-action@537251ec667665b386f70b330b05446e3fc29087 # v0.9
         with:
-          host: ${{ vars.LFIT_GERRIT_SERVER }}
-          username: ${{ vars.LFIT_GERRIT_SSH_USER }}
-          key: ${{ secrets.LFIT_GERRIT_SSH_PRIVKEY_NP }}
-          known_hosts: ${{ vars.LFIT_GERRIT_KNOWN_HOSTS }}
+          host: ${{ vars.GERRIT_SERVER }}
+          username: ${{ vars.GERRIT_SSH_USER }}
+          key: ${{ secrets.GERRIT_SSH_PRIVKEY }}
+          known_hosts: ${{ vars.GERRIT_KNOWN_HOSTS }}
           gerrit-change-number: ${{ inputs.GERRIT_CHANGE_NUMBER }}
           gerrit-patchset-number: ${{ inputs.GERRIT_PATCHSET_NUMBER }}
           vote-type: ${{ env.WORKFLOW_CONCLUSION }}
