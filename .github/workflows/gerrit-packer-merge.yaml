@@ -316,8 +316,6 @@ jobs:
       fail-fast: false
       max-parallel: 5
       matrix: ${{ fromJson(needs.detect-changes.outputs.build_matrix) }}
-    outputs:
-      image_name_${{ matrix.template }}_${{ matrix.platform }}: ${{ steps.build.outputs.image_name }}
     steps:
       - name: Checkout change
         if: github.event_name != 'schedule'
