@@ -77,6 +77,44 @@ variable "ssh_proxy_host" {
   default = ""
 }
 
+variable "ssh_bastion_host" {
+  type        = string
+  default     = ""
+  description = "Bastion/jump host for SSH access to OpenStack instances"
+}
+
+variable "ssh_bastion_username" {
+  type        = string
+  default     = ""
+  description = "Username for bastion host authentication"
+}
+
+variable "ssh_bastion_port" {
+  type        = number
+  default     = 22
+  description = "SSH port on bastion host"
+}
+
+variable "ssh_bastion_agent_auth" {
+  type        = bool
+  default     = true
+  description = "Use SSH agent for bastion authentication"
+}
+
+variable "ssh_bastion_private_key_file" {
+  type        = string
+  default     = ""
+  description = "Path to SSH private key file for bastion authentication"
+}
+
+variable "ssh_bastion_password" {
+  type        = string
+  default     = ""
+  sensitive   = true
+  description = "Password for bastion host authentication"
+}
+
+
 variable "source_ami_filter_name" {
   type    = string
   default = null
@@ -129,6 +167,12 @@ source "openstack" "devstack" {
   region                  = "${var.cloud_region}"
   source_image_name       = "${var.base_image}"
   ssh_proxy_host          = "${var.ssh_proxy_host}"
+  ssh_bastion_host              = var.ssh_bastion_host != "" ? var.ssh_bastion_host : null
+  ssh_bastion_username          = var.ssh_bastion_username != "" ? var.ssh_bastion_username : null
+  ssh_bastion_port              = var.ssh_bastion_port
+  ssh_bastion_agent_auth        = var.ssh_bastion_agent_auth
+  ssh_bastion_private_key_file  = var.ssh_bastion_private_key_file != "" ? var.ssh_bastion_private_key_file : null
+  ssh_bastion_password          = var.ssh_bastion_password != "" ? var.ssh_bastion_password : null
   ssh_username            = "${var.ssh_user}"
   use_blockstorage_volume = "${var.vm_use_block_storage}"
   user_data_file          = "${var.cloud_user_data}"
