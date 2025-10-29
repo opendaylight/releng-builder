@@ -59,6 +59,7 @@ concurrency:
 jobs:
   clear-vote:
     runs-on: ubuntu-latest
+    if: github.event_name != 'schedule' && inputs.GERRIT_CHANGE_NUMBER != ''
     steps:
       - name: Clear votes
         # yamllint disable-line rule:line-length
@@ -75,7 +76,8 @@ jobs:
         run: sleep 10s
 
   actionlint:
-    needs: clear-vote
+    needs: [clear-vote]
+    if: always()
     runs-on: ubuntu-latest
     steps:
       - uses: lfreleng-actions/checkout-gerrit-change-action@54d751e8bd167bc91f7d665dabe33fae87aaaa63 # v0.9
@@ -94,7 +96,8 @@ jobs:
 
   # run pre-commit tox env separately to get use of more parallel processing
   pre-commit:
-    needs: clear-vote
+    needs: [clear-vote]
+    if: always()
     runs-on: ubuntu-latest
     steps:
       - uses: lfreleng-actions/checkout-gerrit-change-action@54d751e8bd167bc91f7d665dabe33fae87aaaa63 # v0.9
@@ -110,7 +113,8 @@ jobs:
         run: pipx run pre-commit run --all-files --show-diff-on-failure
 
   tox-verify:
-    needs: clear-vote
+    needs: [clear-vote]
+    if: always()
     runs-on: ubuntu-latest
     steps:
       - uses: lfreleng-actions/checkout-gerrit-change-action@54d751e8bd167bc91f7d665dabe33fae87aaaa63 # v0.9
@@ -130,7 +134,8 @@ jobs:
 
   # Detect what needs to be built
   detect-changes:
-    needs: clear-vote
+    needs: [clear-vote]
+    if: always()
     runs-on: ubuntu-latest
     outputs:
       build_matrix: ${{ steps.generate-matrix.outputs.matrix }}
@@ -431,7 +436,7 @@ jobs:
           EOF
 
   vote:
-    if: ${{ always() }}
+    if: ${{ always() && github.event_name != 'schedule' && inputs.GERRIT_CHANGE_NUMBER != '' }}
     needs: [clear-vote, actionlint, pre-commit, tox-verify, build-summary]
     runs-on: ubuntu-latest
     steps:
