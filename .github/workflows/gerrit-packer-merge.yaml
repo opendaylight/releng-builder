@@ -47,6 +47,11 @@ on:
         description: "Gerrit refspec of change"
         required: true
         type: string
+      PACKER_BUILDS:
+        description: "Build selection: 'all', 'template1,template2' or 'template1:platform1,template2:platform2'"
+        required: false
+        type: string
+        default: ""
 
   schedule:
     # Run on 1st of every month at 00:00 UTC
@@ -134,9 +139,13 @@ jobs:
       - name: Determine trigger type
         id: check-trigger
         run: |
-          if [[ "${{ github.event_name }}" == "schedule" ]]; then
+          # Check if this is a manual build with specific templates
+          if [[ "${{ github.event_name }}" == "schedule" ]] || \
+             [[ "${{ inputs.GERRIT_CHANGE_NUMBER }}" == "0" ]] || \
+             [[ "${{ inputs.PACKER_BUILDS }}" == "all" ]] || \
+             [[ -n "${{ inputs.PACKER_BUILDS }}" ]]; then
             echo "build_all=true" >> "$GITHUB_OUTPUT"
-            echo "📅 Monthly scheduled build - building ALL images"
+            echo "📅 Building specified or ALL images"
           else
             echo "build_all=false" >> "$GITHUB_OUTPUT"
             echo "🔄 Gerrit merge event - detecting changes"
@@ -156,7 +165,7 @@ jobs:
         # yamllint disable-line rule:line-length
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
-          ref: main
+          ref: ${{ github.event.repository.default_branch }}
           submodules: true
 
       - name: Update submodules
@@ -170,11 +179,6 @@ jobs:
           # Define all available templates and platforms
           TEMPLATES=(
             "builder"
-            "devstack"
-            "devstack-pre-pip-queens"
-            "devstack-pre-pip-rocky"
-            "devstack-pre-pip-stein"
-            "devstack-pre-pip-yoga"
             "docker"
             "helm"
             "mininet-ovs-217"
@@ -190,18 +194,93 @@ jobs:
             "ubuntu-24.04"
           )
 
+          # Define exclusions: template:platform combinations that should NOT be built
+          # Based on JJB job configurations - only building required combinations
+          # Total: 30 combinations, Required: 17, Excluded: 13
+          EXCLUSIONS=(
+            # Docker: only centos-7, ubuntu-20.04, ubuntu-22.04
+            "docker:centos-cs-8"
+            "docker:centos-cs-9"
+            "docker:ubuntu-24.04"
+            # Helm: only centos-7
+            "helm:centos-cs-8"
+            "helm:centos-cs-9"
+            "helm:ubuntu-20.04"
+            "helm:ubuntu-22.04"
+            "helm:ubuntu-24.04"
+            # Mininet: only ubuntu-22.04, ubuntu-24.04
+            "mininet-ovs-217:centos-7"
+            "mininet-ovs-217:centos-cs-8"
+            "mininet-ovs-217:centos-cs-9"
+            "mininet-ovs-217:ubuntu-20.04"
+            # Robot: excluded ubuntu-20.04
+            "robot:ubuntu-20.04"
+          )
+
+          # Function to check if a combination should be excluded
+          is_excluded() {
+            local template="$1"
+            local platform="$2"
+            local combo="${template}:${platform}"
+
+            for exclusion in "${EXCLUSIONS[@]}"; do
+              if [[ "$combo" == "$exclusion" ]]; then
+                return 0  # Excluded
+              fi
+            done
+            return 1  # Not excluded
+          }
+
           BUILD_ALL="${{ steps.check-trigger.outputs.build_all }}"
           MATRIX_JSON="[]"
 
+          # Parse PACKER_BUILDS input
+          PACKER_BUILDS="${{ inputs.PACKER_BUILDS }}"
+
           if [[ "$BUILD_ALL" == "true" ]]; then
-            # Monthly build: build all combinations
-            echo "🔨 Generating matrix for ALL template+platform combinations"
-            for template in "${TEMPLATES[@]}"; do
-              for platform in "${PLATFORMS[@]}"; do
-                MATRIX_JSON=$(jq -c --arg t "$template" --arg p "$platform" \
-                  '. += [{"template": $t, "platform": $p}]' <<< "$MATRIX_JSON")
+            if [[ "$PACKER_BUILDS" == "all" ]] || [[ -z "$PACKER_BUILDS" ]]; then
+              # Build all combinations
+              echo "🔨 Building ALL templates × ALL platforms"
+              for template in "${TEMPLATES[@]}"; do
+                for platform in "${PLATFORMS[@]}"; do
+                  if ! is_excluded "$template" "$platform"; then
+                    MATRIX_JSON=$(jq -c --arg t "$template" --arg p "$platform" \
+                      '. += [{"template": $t, "platform": $p}]' <<< "$MATRIX_JSON")
+                  else
+                    echo "  ⊗ Excluding: $template + $platform"
+                  fi
+                done
               done
-            done
+            else
+              # Parse custom build specification
+              # Format: "template1:platform1,template2:platform2" or "template1,template2" (all platforms)
+              echo "🔨 Building custom selection: $PACKER_BUILDS"
+              IFS=',' read -ra BUILD_SPECS <<< "$PACKER_BUILDS"
+              for spec in "${BUILD_SPECS[@]}"; do
+                if [[ "$spec" == *":"* ]]; then
+                  # Specific template:platform pair
+                  template="${spec%:*}"
+                  platform="${spec#*:}"
+                  if ! is_excluded "$template" "$platform"; then
+                    MATRIX_JSON=$(jq -c --arg t "$template" --arg p "$platform" \
+                      '. += [{"template": $t, "platform": $p}]' <<< "$MATRIX_JSON")
+                  else
+                    echo "  ⊗ Excluding: $template + $platform"
+                  fi
+                else
+                  # Template with all platforms
+                  template="$spec"
+                  for platform in "${PLATFORMS[@]}"; do
+                    if ! is_excluded "$template" "$platform"; then
+                      MATRIX_JSON=$(jq -c --arg t "$template" --arg p "$platform" \
+                        '. += [{"template": $t, "platform": $p}]' <<< "$MATRIX_JSON")
+                    else
+                      echo "  ⊗ Excluding: $template + $platform"
+                    fi
+                  done
+                fi
+              done
+            fi
           else
             # Gerrit merge: detect what changed
             echo "🔍 Detecting changes from Gerrit merge"
@@ -253,8 +332,10 @@ jobs:
               # Provision changed: rebuild everything
               for template in "${TEMPLATES[@]}"; do
                 for platform in "${PLATFORMS[@]}"; do
-                  MATRIX_JSON=$(jq -c --arg t "$template" --arg p "$platform" \
-                    '. += [{"template": $t, "platform": $p}]' <<< "$MATRIX_JSON")
+                  if ! is_excluded "$template" "$platform"; then
+                    MATRIX_JSON=$(jq -c --arg t "$template" --arg p "$platform" \
+                      '. += [{"template": $t, "platform": $p}]' <<< "$MATRIX_JSON")
+                  fi
                 done
               done
             else
@@ -264,8 +345,10 @@ jobs:
                 echo "Building changed templates with all platforms"
                 for template in "${CHANGED_TEMPLATES[@]}"; do
                   for platform in "${PLATFORMS[@]}"; do
-                    MATRIX_JSON=$(jq -c --arg t "$template" --arg p "$platform" \
-                      '. += [{"template": $t, "platform": $p}]' <<< "$MATRIX_JSON")
+                    if ! is_excluded "$template" "$platform"; then
+                      MATRIX_JSON=$(jq -c --arg t "$template" --arg p "$platform" \
+                        '. += [{"template": $t, "platform": $p}]' <<< "$MATRIX_JSON")
+                    fi
                   done
                 done
               elif [[ ${#CHANGED_PLATFORMS[@]} -gt 0 && ${#CHANGED_TEMPLATES[@]} -eq 0 ]]; then
@@ -273,8 +356,10 @@ jobs:
                 echo "Building all templates with changed platforms"
                 for platform in "${CHANGED_PLATFORMS[@]}"; do
                   for template in "${TEMPLATES[@]}"; do
-                    MATRIX_JSON=$(jq -c --arg t "$template" --arg p "$platform" \
-                      '. += [{"template": $t, "platform": $p}]' <<< "$MATRIX_JSON")
+                    if ! is_excluded "$template" "$platform"; then
+                      MATRIX_JSON=$(jq -c --arg t "$template" --arg p "$platform" \
+                        '. += [{"template": $t, "platform": $p}]' <<< "$MATRIX_JSON")
+                    fi
                   done
                 done
               elif [[ ${#CHANGED_TEMPLATES[@]} -gt 0 && ${#CHANGED_PLATFORMS[@]} -gt 0 ]]; then
@@ -282,8 +367,10 @@ jobs:
                 echo "Building all combinations of changed templates and platforms"
                 for template in "${CHANGED_TEMPLATES[@]}"; do
                   for platform in "${CHANGED_PLATFORMS[@]}"; do
-                    MATRIX_JSON=$(jq -c --arg t "$template" --arg p "$platform" \
-                      '. += [{"template": $t, "platform": $p}]' <<< "$MATRIX_JSON")
+                    if ! is_excluded "$template" "$platform"; then
+                      MATRIX_JSON=$(jq -c --arg t "$template" --arg p "$platform" \
+                        '. += [{"template": $t, "platform": $p}]' <<< "$MATRIX_JSON")
+                    fi
                   done
                 done
               else
@@ -326,7 +413,7 @@ jobs:
         # yamllint disable-line rule:line-length
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
-          ref: main
+          ref: ${{ github.event.repository.default_branch }}
           submodules: true
 
       - name: Update submodules
@@ -414,7 +501,7 @@ jobs:
           ## Packer Build Summary
 
           **Trigger**: ${{ github.event_name == 'schedule' && 'Monthly Scheduled Build' || 'Gerrit Merge Event' }}
-          **Branch**: ${{ inputs.GERRIT_BRANCH || 'main' }}
+          **Branch**: ${{ inputs.GERRIT_BRANCH || github.event.repository.default_branch }}
           **Build Result**: ${{ needs.packer-build.result }}
 
           ### Details
