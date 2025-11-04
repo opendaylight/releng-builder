@@ -425,12 +425,12 @@ jobs:
         uses: askb/tailscale-openstack-bastion-action@main
         with:
           operation: setup
-          openstack_auth_url: ${{ secrets.VEXXHOST_AUTH_URL }}
-          openstack_project_id: ${{ secrets.VEXXHOST_PROJECT_ID }}
-          openstack_username: ${{ secrets.VEXXHOST_USERNAME }}
-          openstack_password: ${{ secrets.VEXXHOST_PASSWORD }}
-          openstack_region: ${{ secrets.VEXXHOST_REGION }}
-          openstack_network_id: ${{ secrets.VEXXHOST_NETWORK_ID }}
+          openstack_auth_url: ${{ secrets.OPENSTACK_AUTH_URL }}
+          openstack_project_id: ${{ secrets.OPENSTACK_PROJECT_ID }}
+          openstack_username: ${{ secrets.OPENSTACK_USERNAME }}
+          openstack_password: ${{ secrets.OPENSTACK_PASSWORD }}
+          openstack_region: ${{ secrets.OPENSTACK_REGION }}
+          openstack_network_id: ${{ secrets.OPENSTACK_NETWORK_ID }}
           tailscale_oauth_client_id: ${{ secrets.TAILSCALE_OAUTH_CLIENT_ID }}
           tailscale_oauth_secret: ${{ secrets.TAILSCALE_OAUTH_SECRET }}
           bastion_flavor: "v3-standard-2"
@@ -448,23 +448,23 @@ jobs:
           packer_version: "1.11.2"
           bastion_ip: ${{ steps.bastion-setup.outputs.bastion_ip }}
           bastion_ssh_user: "ubuntu"
-          openstack_auth_url: ${{ secrets.VEXXHOST_AUTH_URL }}
-          openstack_project_id: ${{ secrets.VEXXHOST_PROJECT_ID }}
-          openstack_username: ${{ secrets.VEXXHOST_USERNAME }}
-          openstack_password: ${{ secrets.VEXXHOST_PASSWORD }}
-          openstack_region: ${{ secrets.VEXXHOST_REGION }}
-          openstack_network_id: ${{ secrets.VEXXHOST_NETWORK_ID }}
+          openstack_auth_url: ${{ secrets.OPENSTACK_AUTH_URL }}
+          openstack_project_id: ${{ secrets.OPENSTACK_PROJECT_ID }}
+          openstack_username: ${{ secrets.OPENSTACK_USERNAME }}
+          openstack_password: ${{ secrets.OPENSTACK_PASSWORD }}
+          openstack_region: ${{ secrets.OPENSTACK_REGION }}
+          openstack_network_id: ${{ secrets.OPENSTACK_NETWORK_ID }}
 
       - name: Teardown OpenStack Bastion
         if: always()
         uses: askb/tailscale-openstack-bastion-action@main
         with:
           operation: teardown
-          openstack_auth_url: ${{ secrets.VEXXHOST_AUTH_URL }}
-          openstack_project_id: ${{ secrets.VEXXHOST_PROJECT_ID }}
-          openstack_username: ${{ secrets.VEXXHOST_USERNAME }}
-          openstack_password: ${{ secrets.VEXXHOST_PASSWORD }}
-          openstack_region: ${{ secrets.VEXXHOST_REGION }}
+          openstack_auth_url: ${{ secrets.OPENSTACK_AUTH_URL }}
+          openstack_project_id: ${{ secrets.OPENSTACK_PROJECT_ID }}
+          openstack_username: ${{ secrets.OPENSTACK_USERNAME }}
+          openstack_password: ${{ secrets.OPENSTACK_PASSWORD }}
+          openstack_region: ${{ secrets.OPENSTACK_REGION }}
 
       - name: Report build status
         if: always()
