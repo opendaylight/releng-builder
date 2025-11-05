@@ -428,7 +428,7 @@ jobs:
           openstack_auth_url: ${{ secrets.OPENSTACK_AUTH_URL }}
           openstack_project_id: ${{ secrets.OPENSTACK_PROJECT_ID }}
           openstack_username: ${{ secrets.OPENSTACK_USERNAME }}
-          openstack_password: ${{ secrets.OPENSTACK_PASSWORD }}
+          openstack_password: ${{ secrets.OPENSTACK_PASSWORD_B64 }}
           openstack_region: ${{ secrets.OPENSTACK_REGION }}
           openstack_network_id: ${{ secrets.OPENSTACK_NETWORK_ID }}
           tailscale_oauth_client_id: ${{ secrets.TAILSCALE_OAUTH_CLIENT_ID }}
@@ -451,7 +451,7 @@ jobs:
           openstack_auth_url: ${{ secrets.OPENSTACK_AUTH_URL }}
           openstack_project_id: ${{ secrets.OPENSTACK_PROJECT_ID }}
           openstack_username: ${{ secrets.OPENSTACK_USERNAME }}
-          openstack_password: ${{ secrets.OPENSTACK_PASSWORD }}
+          openstack_password: ${{ secrets.OPENSTACK_PASSWORD_B64 }}
           openstack_region: ${{ secrets.OPENSTACK_REGION }}
           openstack_network_id: ${{ secrets.OPENSTACK_NETWORK_ID }}
 
@@ -463,7 +463,7 @@ jobs:
           openstack_auth_url: ${{ secrets.OPENSTACK_AUTH_URL }}
           openstack_project_id: ${{ secrets.OPENSTACK_PROJECT_ID }}
           openstack_username: ${{ secrets.OPENSTACK_USERNAME }}
-          openstack_password: ${{ secrets.OPENSTACK_PASSWORD }}
+          openstack_password: ${{ secrets.OPENSTACK_PASSWORD_B64 }}
           openstack_region: ${{ secrets.OPENSTACK_REGION }}
 
       - name: Report build status
