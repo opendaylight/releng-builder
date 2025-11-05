@@ -446,6 +446,7 @@ jobs:
           packer_vars_file: "packer/common-packer/vars/${{ matrix.platform }}.pkrvars.hcl"
           packer_working_dir: "packer"
           packer_version: "1.11.2"
+          path_prefix: "${{ github.workspace }}"
           bastion_ip: ${{ steps.bastion-setup.outputs.bastion_ip }}
           bastion_ssh_user: "ubuntu"
           openstack_auth_url: ${{ secrets.OPENSTACK_AUTH_URL }}
