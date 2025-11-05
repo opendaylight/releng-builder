@@ -16,6 +16,24 @@
       "message": "This seems like a problem that I may not have caught during code review of that action? Why should the password be stored base64 encoded, it\u0027s already in a secure enclave and doing and echo like that could potentially lead to a leaked password in the GHA logs.\n\nThe upstream action should be fixed to _not_ need a base64 encoded password unless there is a clear reason why it should meaning that this change should not be needed.",
       "revId": "1e4691c6073f5cda748b030a897909f57156db75",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90b6e256_c181da45",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2025-11-05T21:20:58Z",
+      "side": 1,
+      "message": "This is same issue we have with github\u0027s issue wwith handling special chars in passwords ref: https://github.com/orgs/community/discussions/61323 \n\nThis workaround has been used in our packer jobs for a while the password does not get echoed thru the logs: https://github.com/askb/packer-build-action/actions/runs/18900446368/job/53946327405",
+      "parentUuid": "766483b5_7df2f718",
+      "revId": "1e4691c6073f5cda748b030a897909f57156db75",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
