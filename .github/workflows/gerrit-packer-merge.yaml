@@ -442,7 +442,7 @@ jobs:
         uses: askb/packer-build-action@main
         with:
           mode: build
-          packer_template: "packer/templates/${{ matrix.template }}.pkr.hcl"
+          packer_template: "packer/common-packer/templates/${{ matrix.template }}.pkr.hcl"
           packer_vars_file: "packer/common-packer/vars/${{ matrix.platform }}.pkrvars.hcl"
           packer_working_dir: "packer"
           packer_version: "1.11.2"
