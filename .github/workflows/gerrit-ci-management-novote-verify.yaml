@@ -77,7 +77,7 @@ jobs:
   call-gerrit-ci-management-verify:
     needs: call-gerrit-change-info
     # yamllint disable-line rule:line-length
-    uses: lfit/releng-reusable-workflows/.github/workflows/composed-ci-management-verify.yaml@8c3cf221da0e47955647647c9a254c1f807081ce # v0.2.18
+    uses: lfit/releng-reusable-workflows/.github/workflows/composed-ci-management-verify.yaml@f2f8dbc0a21a12ce851e807906b1ee7727ee9297 # v0.2.25
     with:
       GERRIT_BRANCH: ${{ needs.call-gerrit-change-info.outputs.GERRIT_BRANCH }}
       GERRIT_CHANGE_ID: ${{ needs.call-gerrit-change-info.outputs.GERRIT_CHANGE_ID }}
