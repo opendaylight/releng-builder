@@ -1,0 +1,120 @@
+---
+# SPDX-License-Identifier: Apache-2.0
+# SPDX-FileCopyrightText: 2025 The Linux Foundation
+
+# OpenStack Cron Cleanup - Hourly scheduled job
+# Cleans up orphaned resources on OpenStack cloud
+
+name: OpenStack Cron Cleanup
+
+on:
+  schedule:
+    # Run every hour
+    - cron: '0 * * * *'
+
+  workflow_dispatch:
+    inputs:
+      openstack_cloud:
+        description: 'OpenStack cloud name from clouds.yaml'
+        required: false
+        default: 'vex'
+        type: string
+      cleanup_k8s_clusters:
+        description: 'Enable K8s cluster cleanup'
+        required: false
+        default: true
+        type: boolean
+      cleanup_stacks:
+        description: 'Enable stack cleanup'
+        required: false
+        default: true
+        type: boolean
+      cleanup_servers:
+        description: 'Enable server cleanup'
+        required: false
+        default: true
+        type: boolean
+      cleanup_ports:
+        description: 'Enable port cleanup'
+        required: false
+        default: true
+        type: boolean
+      cleanup_volumes:
+        description: 'Enable volume cleanup'
+        required: false
+        default: true
+        type: boolean
+      protect_images:
+        description: 'Enable image protection'
+        required: false
+        default: true
+        type: boolean
+      cleanup_images:
+        description: 'Enable old image cleanup'
+        required: false
+        default: true
+        type: boolean
+
+concurrency:
+  group: openstack-cleanup-${{ github.run_id }}
+  cancel-in-progress: false
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Run OpenStack cleanup
+        id: cleanup
+        uses: askb/openstack-cron-action@main
+        with:
+          openstack_cloud: ${{ inputs.openstack_cloud || 'vex' }}
+          clouds_yaml: ${{ secrets.OPENSTACK_CLOUDS_YAML }}
+          jenkins_urls: >
+            https://jenkins.opendaylight.org/releng
+            https://jenkins.opendaylight.org/sandbox
+          cleanup_k8s_clusters: ${{ inputs.cleanup_k8s_clusters || 'true' }}
+          cleanup_stacks: ${{ inputs.cleanup_stacks || 'true' }}
+          cleanup_servers: ${{ inputs.cleanup_servers || 'true' }}
+          cleanup_ports: ${{ inputs.cleanup_ports || 'true' }}
+          cleanup_volumes: ${{ inputs.cleanup_volumes || 'true' }}
+          protect_images: ${{ inputs.protect_images || 'true' }}
+          cleanup_images: ${{ inputs.cleanup_images || 'true' }}
+          image_cleanup_age: '30'
+          python_version: '3.11'
+          failure_notification_email: 'releng+ODL@linuxfoundation.org'
+          failure_notification_prefix: '[releng]'
+
+      - name: Report cleanup summary
+        if: always()
+        run: |
+          echo "### OpenStack Cleanup Summary" >> $GITHUB_STEP_SUMMARY
+          echo "- **Cloud**: ${{ inputs.openstack_cloud || 'vex' }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Status**: ${{ job.status }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Timestamp**: $(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_STEP_SUMMARY
+
+      - name: Send failure notification
+        if: failure() && steps.cleanup.conclusion == 'failure'
+        uses: dawidd6/action-send-mail@6063705cefe50cb915fc53bb06d4049cae2953b2 # v3.12.0
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: ${{ secrets.SMTP_USERNAME }}
+          password: ${{ secrets.SMTP_PASSWORD }}
+          subject: '[releng] ${{ github.repository }} - OpenStack Cleanup - Build #${{ github.run_number }} - FAILED'
+          to: releng+ODL@linuxfoundation.org
+          from: GitHub Actions <noreply@github.com>
+          body: |
+            OpenStack Cleanup Job Failed
+
+            Repository: ${{ github.repository }}
+            Workflow: ${{ github.workflow }}
+            Run Number: ${{ github.run_number }}
+            Run ID: ${{ github.run_id }}
+            Cloud: ${{ inputs.openstack_cloud || 'vex' }}
+
+            Please refer to the logs for details:
+            ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+            Timestamp: ${{ github.event.head_commit.timestamp }}
