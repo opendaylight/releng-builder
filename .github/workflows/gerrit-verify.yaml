@@ -104,7 +104,7 @@ jobs:
 
   info-yaml-verify:
     # yamllint disable-line rule:line-length
-    uses: lfit/releng-reusable-workflows/.github/workflows/gerrit-required-info-yaml-verify.yaml@21dee35da5cf13331dad63a2c81ae5bb6d023f95 # v0.2.25
+    uses: lfit/releng-reusable-workflows/.github/workflows/gerrit-required-info-yaml-verify.yaml@f8814d81051c7a2e4d7584657b4d283b62a56b20 # v0.2.26
     with:
       GERRIT_BRANCH: ${{ inputs.GERRIT_BRANCH }}
       GERRIT_CHANGE_ID: ${{ inputs.GERRIT_CHANGE_ID }}
