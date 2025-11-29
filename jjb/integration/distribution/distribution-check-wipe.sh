@@ -22,7 +22,7 @@ echo "create n: multithreaded execution might fail at creating it."
 mkdir /tmp/n
 echo "detecting distribution allowed projects"
 # Some allowed projects cannot be detected in distribution because they do not produce features.
-ALLOW_PROJECTS=(yangtools mdsal openflowjava)
+ALLOW_PROJECTS=(ietf)
 if [[ "$KARAF_VERSION" == "odl" ]]; then
 # shellcheck disable=SC2207
 ALLOW_PROJECTS+=($(grep '<groupId>org.opendaylight.' -Rh distribution \
