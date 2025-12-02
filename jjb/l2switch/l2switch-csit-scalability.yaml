@@ -6,16 +6,18 @@
 
     # The project name
     project: "l2switch"
-    disable-job: true
 
     # The functionality under test
     functionality: "scalability"
 
     # Project branches
     stream:
-      - argon:
+      - vanadium:
           branch: "master"
-          jre: "openjdk17"
+          jre: "openjdk21"
+      - titanium:
+          branch: "2.0.x"
+          jre: "openjdk21"
 
     install:
       - all:
