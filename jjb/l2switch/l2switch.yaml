@@ -27,6 +27,60 @@
     staging-profile-id: 96fee85953ca0
 
 - project:
+    name: l2switch-2.0.x
+    jobs:
+      - odl-maven-jobs-jdk21
+      - odl-maven-verify-jobs-jdk21
+
+    project: l2switch
+    project-name: l2switch
+    branch: 2.0.x
+    stream: 2.0.x
+    build-node: ubuntu2204-docker-4c-4g
+
+    mvn-settings: "l2switch-settings"
+
+    dependencies: >
+      odlparent-merge-{stream},
+      yangtools-merge-{stream},
+      controller-merge-{stream},
+      openflowjava-merge-{stream},
+      openflowplugin-merge-{stream}
+    email-upstream:
+      "[l2switch] [odlparent] [yangtools] [controller] [openflowjava]\
+      \ [openflowplugin]"
+
+    # Used by the release job
+    staging-profile-id: 96fee85953ca0
+
+- project:
+    name: l2switch-1.0.x
+    jobs:
+      - odl-maven-jobs-jdk21
+      - odl-maven-verify-jobs-jdk21
+
+    project: l2switch
+    project-name: l2switch
+    branch: 1.0.x
+    stream: 1.0.x
+    build-node: ubuntu2204-docker-4c-4g
+
+    mvn-settings: "l2switch-settings"
+
+    dependencies: >
+      odlparent-merge-{stream},
+      yangtools-merge-{stream},
+      controller-merge-{stream},
+      openflowjava-merge-{stream},
+      openflowplugin-merge-{stream}
+    email-upstream:
+      "[l2switch] [odlparent] [yangtools] [controller] [openflowjava]\
+      \ [openflowplugin]"
+
+    # Used by the release job
+    staging-profile-id: 96fee85953ca0
+
+- project:
     name: l2switch-release-management
     jobs:
       - gerrit-release-merge
