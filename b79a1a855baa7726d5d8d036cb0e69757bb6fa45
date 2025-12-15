@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "da9473e3_16dadd48",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8907
+      },
+      "writtenOn": "2025-12-15T09:25:56Z",
+      "side": 1,
+      "message": "Previously failing on \n`00:12:00 [netconf-csit-3node-clustering-only-titanium] $ /bin/bash /tmp/jenkins17497397188330670159.sh\n00:12:00 https://raw.githubusercontent.com/opendaylight/netconf/9.0.x/karaf/pom.xml:\n00:12:00 2025-12-13 23:12:00 ERROR 404: Not Found.\n00:12:00 Bundle version is`\nhttps://jenkins.opendaylight.org/releng/job/netconf-csit-3node-clustering-only-titanium/131/console\n\nNow it is able to find the pom.xml file and determine the proper bundle version\n`09:11:20 [netconf-csit-3node-clustering-only-titanium] $ /bin/bash /tmp/jenkins5325396483047957440.sh\n09:11:20 2025-12-15 08:11:20 URL:https://raw.githubusercontent.com/opendaylight/netconf/9.0.x/usecase/karaf/pom.xml [3976/3976] -\u003e \"pom.xml\" [1]\n09:11:20 Bundle version is 9.0.2-SNAPSHOT`\nhttps://jenkins.opendaylight.org/sandbox/view/All/job/netconf-csit-3node-clustering-only-titanium/6/consoleFull",
+      "revId": "b79a1a855baa7726d5d8d036cb0e69757bb6fa45",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
