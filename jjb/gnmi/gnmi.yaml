@@ -18,6 +18,24 @@
     staging-profile-id: dd4b7084afb552
 
 - project:
+    name: gnmi-1.0.x
+    jobs:
+      - odl-maven-jobs-jdk21
+      - odl-maven-verify-jobs-jdk21
+
+    project: gnmi
+    project-name: gnmi
+    branch: 1.0.x
+    stream: 1.0.x
+    build-node: ubuntu2204-docker-4c-4g
+
+    mvn-settings: "gnmi-settings"
+    build-timeout: 60
+
+    # Used by the release job
+    staging-profile-id: dd4b7084afb552
+
+- project:
     name: gnmi-release-management
     jobs:
       - gerrit-release-merge
