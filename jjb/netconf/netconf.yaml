@@ -1,14 +1,7 @@
 ---
 - project:
     name: netconf-master
-    jobs:
-      - "{project-name}-rtd-jobs":
-          disable-job: true
-          build-node: ubuntu2204-builder-2c-2g
-          project-pattern: netconf
-          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-netconf/48397/
-          rtd-token: aee2df909686ab7ba36f2ed08d90bdcf81f7b8dc
-      - gerrit-tox-verify:
+    jobs:      - gerrit-tox-verify:
           build-node: ubuntu2204-builder-2c-2g
           parallel: true
       - odl-maven-jobs-jdk21
@@ -33,14 +26,7 @@
 
 - project:
     name: netconf-9.0.x
-    jobs:
-      - "{project-name}-rtd-jobs":
-          disable-job: true
-          build-node: ubuntu2204-builder-2c-2g
-          project-pattern: netconf
-          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-netconf/48397/
-          rtd-token: aee2df909686ab7ba36f2ed08d90bdcf81f7b8dc
-      - gerrit-tox-verify:
+    jobs:      - gerrit-tox-verify:
           build-node: ubuntu2204-builder-2c-2g
           parallel: true
       - odl-maven-jobs-jdk21
@@ -65,14 +51,7 @@
 
 - project:
     name: netconf-8.0.x
-    jobs:
-      - "{project-name}-rtd-jobs":
-          disable-job: true
-          build-node: ubuntu2204-builder-2c-2g
-          project-pattern: netconf
-          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-netconf/48397/
-          rtd-token: aee2df909686ab7ba36f2ed08d90bdcf81f7b8dc
-      - gerrit-tox-verify:
+    jobs:      - gerrit-tox-verify:
           build-node: ubuntu2204-builder-2c-2g
           parallel: true
       - odl-maven-jobs-jdk21
