@@ -3,6 +3,7 @@
     name: serviceutils-master
     jobs:
       - "{project-name}-rtd-jobs":
+          disable-job: true
           build-node: ubuntu2204-builder-2c-2g
           project-pattern: serviceutils
           rtd-build-url: https://readthedocs.org/api/v2/webhook/opendaylight-serviceutils/40541/
@@ -33,6 +34,7 @@
     name: serviceutils-scandium
     jobs:
       - "{project-name}-rtd-jobs":
+          disable-job: true
           build-node: ubuntu2204-builder-2c-2g
           project-pattern: serviceutils
           rtd-build-url: https://readthedocs.org/api/v2/webhook/opendaylight-serviceutils/40541/
