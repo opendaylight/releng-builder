@@ -3,6 +3,7 @@
     name: daexim-vanadium
     jobs:
       - "{project-name}-rtd-jobs":
+          disable-job: true
           build-node: ubuntu2204-builder-2c-2g
           project-pattern: daexim
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-daexim/47611/
@@ -27,6 +28,7 @@
     name: daexim-titanium
     jobs:
       - "{project-name}-rtd-jobs":
+          disable-job: true
           build-node: ubuntu2204-builder-2c-2g
           project-pattern: daexim
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-daexim/47611/
@@ -51,6 +53,7 @@
     name: daexim-scandium
     jobs:
       - "{project-name}-rtd-jobs":
+          disable-job: true
           build-node: ubuntu2204-builder-2c-2g
           project-pattern: daexim
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-daexim/47611/
