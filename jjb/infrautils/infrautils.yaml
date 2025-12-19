@@ -2,13 +2,6 @@
 - project:
     name: infrautils-master
     jobs:
-      - "{project-name}-rtd-jobs":
-          disable-job: true
-          build-node: ubuntu2204-docker-2c-2g
-          doc-dir: .tox/docs/tmp/html
-          project-pattern: infrautils
-          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-infrautils/38993/
-          rtd-token: 294c76173237e3a088365c31012cf4ddaa767dc9
       - odl-maven-jobs-jdk21
       - odl-maven-verify-jobs-jdk21
 

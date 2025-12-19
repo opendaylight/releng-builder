@@ -2,8 +2,6 @@
 - project:
     name: docs-rtd
     jobs:
-      - "{project-name}-rtd-jobs":
-          disable-job: true
       - gerrit-tox-verify
 
     stream:
