@@ -3,6 +3,7 @@
     name: ovsdb-vanadium
     jobs:
       - "{project-name}-rtd-jobs":
+          disable-job: true
           build-node: ubuntu2204-builder-2c-2g
           project-pattern: ovsdb
           rtd-build-url: https://readthedocs.org/api/v2/webhook/opendaylight-ovsdb/35667/
@@ -28,6 +29,7 @@
     name: ovsdb-titanium
     jobs:
       - "{project-name}-rtd-jobs":
+          disable-job: true
           build-node: ubuntu2204-builder-2c-2g
           project-pattern: ovsdb
           rtd-build-url: https://readthedocs.org/api/v2/webhook/opendaylight-ovsdb/35667/
@@ -53,6 +55,7 @@
     name: ovsdb-scandium
     jobs:
       - "{project-name}-rtd-jobs":
+          disable-job: true
           build-node: ubuntu2204-builder-2c-2g
           project-pattern: ovsdb
           rtd-build-url: https://readthedocs.org/api/v2/webhook/opendaylight-ovsdb/35667/
