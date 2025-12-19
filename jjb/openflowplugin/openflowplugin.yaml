@@ -3,6 +3,7 @@
     name: openflowplugin-vanadium
     jobs:
       - "{project-name}-rtd-jobs":
+          disable-job: true
           build-node: ubuntu2204-builder-2c-2g
           doc-dir: .tox/docs/tmp/html
           project-pattern: openflowplugin
@@ -33,6 +34,7 @@
     name: openflowplugin-titanium
     jobs:
       - "{project-name}-rtd-jobs":
+          disable-job: true
           build-node: ubuntu2204-builder-2c-2g
           doc-dir: .tox/docs/tmp/html
           project-pattern: openflowplugin
@@ -63,6 +65,7 @@
     name: openflowplugin-scandium
     jobs:
       - "{project-name}-rtd-jobs":
+          disable-job: true
           build-node: ubuntu2204-builder-2c-2g
           doc-dir: .tox/docs/tmp/html
           project-pattern: openflowplugin
