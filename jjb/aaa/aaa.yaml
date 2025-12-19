@@ -3,6 +3,7 @@
     name: aaa-master
     jobs:
       - "{project-name}-rtd-jobs":
+          disable-job: true
           build-node: ubuntu2204-builder-2c-2g
           project-pattern: aaa
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-aaa/47615/
@@ -27,6 +28,7 @@
     name: aaa-0.21.x
     jobs:
       - "{project-name}-rtd-jobs":
+          disable-job: true
           build-node: ubuntu2204-builder-2c-2g
           project-pattern: aaa
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-aaa/47615/
@@ -51,6 +53,7 @@
     name: aaa-0.20.x
     jobs:
       - "{project-name}-rtd-jobs":
+          disable-job: true
           build-node: ubuntu2204-builder-2c-2g
           project-pattern: aaa
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-aaa/47615/
