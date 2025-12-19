@@ -1,14 +1,7 @@
 ---
 - project:
     name: daexim-vanadium
-    jobs:
-      - "{project-name}-rtd-jobs":
-          disable-job: true
-          build-node: ubuntu2204-builder-2c-2g
-          project-pattern: daexim
-          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-daexim/47611/
-          rtd-token: 76284f12638574f131cdccdf257d852d07c195fc
-      - distribution-check-jobs-jdk21
+    jobs:      - distribution-check-jobs-jdk21
       - odl-maven-jobs-jdk21
       - odl-maven-verify-jobs-jdk21
 
@@ -26,14 +19,7 @@
 
 - project:
     name: daexim-titanium
-    jobs:
-      - "{project-name}-rtd-jobs":
-          disable-job: true
-          build-node: ubuntu2204-builder-2c-2g
-          project-pattern: daexim
-          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-daexim/47611/
-          rtd-token: 76284f12638574f131cdccdf257d852d07c195fc
-      - distribution-check-jobs-jdk21
+    jobs:      - distribution-check-jobs-jdk21
       - odl-maven-jobs-jdk21
       - odl-maven-verify-jobs-jdk21
 
@@ -51,14 +37,7 @@
 
 - project:
     name: daexim-scandium
-    jobs:
-      - "{project-name}-rtd-jobs":
-          disable-job: true
-          build-node: ubuntu2204-builder-2c-2g
-          project-pattern: daexim
-          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-daexim/47611/
-          rtd-token: 76284f12638574f131cdccdf257d852d07c195fc
-      - distribution-check-jobs-jdk21
+    jobs:      - distribution-check-jobs-jdk21
       - odl-maven-jobs-jdk21
       - odl-maven-verify-jobs-jdk21
 

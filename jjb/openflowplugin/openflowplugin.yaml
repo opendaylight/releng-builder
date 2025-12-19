@@ -1,15 +1,7 @@
 ---
 - project:
     name: openflowplugin-vanadium
-    jobs:
-      - "{project-name}-rtd-jobs":
-          disable-job: true
-          build-node: ubuntu2204-builder-2c-2g
-          doc-dir: .tox/docs/tmp/html
-          project-pattern: openflowplugin
-          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-openflowplugin/38994/
-          rtd-token: 86ce095922558b890c61b1b05d682521d1d66d5f
-      - odl-maven-javadoc-jobs-jdk21
+    jobs:      - odl-maven-javadoc-jobs-jdk21
       - odl-maven-jobs-jdk21
       - odl-maven-verify-jobs-jdk21
 
@@ -32,15 +24,7 @@
 
 - project:
     name: openflowplugin-titanium
-    jobs:
-      - "{project-name}-rtd-jobs":
-          disable-job: true
-          build-node: ubuntu2204-builder-2c-2g
-          doc-dir: .tox/docs/tmp/html
-          project-pattern: openflowplugin
-          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-openflowplugin/38994/
-          rtd-token: 86ce095922558b890c61b1b05d682521d1d66d5f
-      - odl-maven-javadoc-jobs-jdk21
+    jobs:      - odl-maven-javadoc-jobs-jdk21
       - odl-maven-jobs-jdk21
       - odl-maven-verify-jobs-jdk21
 
@@ -63,15 +47,7 @@
 
 - project:
     name: openflowplugin-scandium
-    jobs:
-      - "{project-name}-rtd-jobs":
-          disable-job: true
-          build-node: ubuntu2204-builder-2c-2g
-          doc-dir: .tox/docs/tmp/html
-          project-pattern: openflowplugin
-          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-openflowplugin/38994/
-          rtd-token: 86ce095922558b890c61b1b05d682521d1d66d5f
-      - distribution-check-jobs-jdk21
+    jobs:      - distribution-check-jobs-jdk21
       - odl-maven-javadoc-jobs-jdk21
       - odl-maven-jobs-jdk21
       - odl-maven-verify-jobs-jdk21

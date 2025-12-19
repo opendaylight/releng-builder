@@ -1,14 +1,7 @@
 ---
 - project:
     name: serviceutils-master
-    jobs:
-      - "{project-name}-rtd-jobs":
-          disable-job: true
-          build-node: ubuntu2204-builder-2c-2g
-          project-pattern: serviceutils
-          rtd-build-url: https://readthedocs.org/api/v2/webhook/opendaylight-serviceutils/40541/
-          rtd-token: 866f76be38ed7efc7027b9c52e7ad869e523e7c4
-      - odl-maven-javadoc-jobs-jdk21
+    jobs:      - odl-maven-javadoc-jobs-jdk21
       - odl-maven-jobs-jdk21
       - odl-maven-verify-jobs-jdk21
 
@@ -32,14 +25,7 @@
 
 - project:
     name: serviceutils-scandium
-    jobs:
-      - "{project-name}-rtd-jobs":
-          disable-job: true
-          build-node: ubuntu2204-builder-2c-2g
-          project-pattern: serviceutils
-          rtd-build-url: https://readthedocs.org/api/v2/webhook/opendaylight-serviceutils/40541/
-          rtd-token: 866f76be38ed7efc7027b9c52e7ad869e523e7c4
-      - distribution-check-jobs-jdk21
+    jobs:      - distribution-check-jobs-jdk21
       - odl-maven-javadoc-jobs-jdk21
       - odl-maven-jobs-jdk21
       - odl-maven-verify-jobs-jdk21

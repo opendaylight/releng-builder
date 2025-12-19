@@ -1,14 +1,7 @@
 ---
 - project:
     name: bgpcep-master
-    jobs:
-      - "{project-name}-rtd-jobs":
-          disable-job: true
-          build-node: ubuntu2204-builder-2c-2g
-          project-pattern: bgpcep
-          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-bgpcep/47576/
-          rtd-token: dbe9d1aabbe8812a26b428908f6613c28e3191fc
-      - gerrit-tox-verify:
+    jobs:      - gerrit-tox-verify:
           parallel: true
       - odl-maven-javadoc-jobs-jdk21
       - odl-maven-jobs-jdk21
@@ -33,14 +26,7 @@
 
 - project:
     name: bgpcep-0.23.x
-    jobs:
-      - "{project-name}-rtd-jobs":
-          disable-job: true
-          build-node: ubuntu2204-builder-2c-2g
-          project-pattern: bgpcep
-          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-bgpcep/47576/
-          rtd-token: dbe9d1aabbe8812a26b428908f6613c28e3191fc
-      - gerrit-tox-verify:
+    jobs:      - gerrit-tox-verify:
           parallel: true
       - odl-maven-javadoc-jobs-jdk21
       - odl-maven-jobs-jdk21
@@ -65,14 +51,7 @@
 
 - project:
     name: bgpcep-0.22.x
-    jobs:
-      - "{project-name}-rtd-jobs":
-          disable-job: true
-          build-node: ubuntu2204-builder-2c-2g
-          project-pattern: bgpcep
-          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-bgpcep/47576/
-          rtd-token: dbe9d1aabbe8812a26b428908f6613c28e3191fc
-      - gerrit-tox-verify:
+    jobs:      - gerrit-tox-verify:
           parallel: true
       - odl-maven-javadoc-jobs-jdk21
       - odl-maven-jobs-jdk21

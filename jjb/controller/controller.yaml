@@ -1,14 +1,7 @@
 ---
 - project:
     name: controller-master
-    jobs:
-      - "{project-name}-rtd-jobs":
-          disable-job: true
-          build-node: ubuntu2204-docker-2c-2g
-          project-pattern: controller
-          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-controller/48288/
-          rtd-token: b8440116c823a80c0fb0479eb7448a9196e6932f
-      - odl-maven-jobs-jdk21
+    jobs:      - odl-maven-jobs-jdk21
       - odl-maven-verify-jobs-jdk21
 
     project: controller
@@ -27,14 +20,7 @@
 
 - project:
     name: controller-11.0.x
-    jobs:
-      - "{project-name}-rtd-jobs":
-          disable-job: true
-          build-node: ubuntu2204-docker-2c-2g
-          project-pattern: controller
-          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-controller/48288/
-          rtd-token: b8440116c823a80c0fb0479eb7448a9196e6932f
-      - odl-maven-jobs-jdk21
+    jobs:      - odl-maven-jobs-jdk21
       - odl-maven-verify-jobs-jdk21
 
     project: controller
@@ -53,14 +39,7 @@
 
 - project:
     name: controller-10.0.x
-    jobs:
-      - "{project-name}-rtd-jobs":
-          disable-job: true
-          build-node: ubuntu2204-docker-2c-2g
-          project-pattern: controller
-          rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-controller/48288/
-          rtd-token: b8440116c823a80c0fb0479eb7448a9196e6932f
-      - odl-maven-jobs-jdk21
+    jobs:      - odl-maven-jobs-jdk21
       - odl-maven-verify-jobs-jdk21
 
     project: controller
