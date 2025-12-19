@@ -3,6 +3,7 @@
     name: mdsal-master
     jobs:
       - "{project-name}-rtd-jobs":
+          disable-job: true
           build-node: ubuntu2204-builder-2c-2g
           project-pattern: mdsal
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-mdsal/44052/
@@ -26,6 +27,7 @@
     name: mdsal-14.0.x
     jobs:
       - "{project-name}-rtd-jobs":
+          disable-job: true
           build-node: ubuntu2204-builder-2c-2g
           project-pattern: mdsal
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-mdsal/44052/
