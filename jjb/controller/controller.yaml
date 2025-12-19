@@ -3,6 +3,7 @@
     name: controller-master
     jobs:
       - "{project-name}-rtd-jobs":
+          disable-job: true
           build-node: ubuntu2204-docker-2c-2g
           project-pattern: controller
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-controller/48288/
@@ -28,6 +29,7 @@
     name: controller-11.0.x
     jobs:
       - "{project-name}-rtd-jobs":
+          disable-job: true
           build-node: ubuntu2204-docker-2c-2g
           project-pattern: controller
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-controller/48288/
@@ -53,6 +55,7 @@
     name: controller-10.0.x
     jobs:
       - "{project-name}-rtd-jobs":
+          disable-job: true
           build-node: ubuntu2204-docker-2c-2g
           project-pattern: controller
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-controller/48288/
