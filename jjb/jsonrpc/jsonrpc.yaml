@@ -3,6 +3,7 @@
     name: jsonrpc-vanadium
     jobs:
       - "{project-name}-rtd-jobs":
+          disable-job: true
           build-node: ubuntu2204-builder-2c-2g
           project-pattern: jsonrpc
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-jsonrpc/91870/
@@ -27,6 +28,7 @@
     name: jsonrpc-titanium
     jobs:
       - "{project-name}-rtd-jobs":
+          disable-job: true
           build-node: ubuntu2204-builder-2c-2g
           project-pattern: jsonrpc
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-jsonrpc/91870/
@@ -51,6 +53,7 @@
     name: jsonrpc-scandium
     jobs:
       - "{project-name}-rtd-jobs":
+          disable-job: true
           build-node: ubuntu2204-builder-2c-2g
           project-pattern: jsonrpc
           rtd-build-url: https://readthedocs.org/api/v2/webhook/odl-jsonrpc/91870/
