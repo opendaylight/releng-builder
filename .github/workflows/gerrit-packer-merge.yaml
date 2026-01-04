@@ -420,6 +420,26 @@ jobs:
       - name: Update submodules
         run: git submodule update --init --recursive
 
+      - name: Resolve template path
+        id: resolve-template
+        run: |
+          TEMPLATE="${{ matrix.template }}"
+
+          # Check ODL-specific templates first
+          if [[ -f "packer/templates/${TEMPLATE}.pkr.hcl" ]]; then
+            TEMPLATE_PATH="templates/${TEMPLATE}.pkr.hcl"
+            echo "✅ Using ODL-specific template: $TEMPLATE_PATH"
+          # Fallback to common-packer
+          elif [[ -f "packer/common-packer/templates/${TEMPLATE}.pkr.hcl" ]]; then
+            TEMPLATE_PATH="common-packer/templates/${TEMPLATE}.pkr.hcl"
+            echo "✅ Using shared template: $TEMPLATE_PATH"
+          else
+            echo "❌ Template not found: ${TEMPLATE}.pkr.hcl"
+            exit 1
+          fi
+
+          echo "template_path=${TEMPLATE_PATH}" >> "$GITHUB_OUTPUT"
+
       - name: Setup OpenStack Bastion
         id: bastion-setup
         uses: askb/tailscale-openstack-bastion-action@main
@@ -442,7 +462,7 @@ jobs:
         uses: askb/packer-build-action@main
         with:
           mode: build
-          packer_template: "common-packer/templates/${{ matrix.template }}.pkr.hcl"
+          packer_template: "${{ steps.resolve-template.outputs.template_path }}"
           packer_vars_file: "common-packer/vars/${{ matrix.platform }}.pkrvars.hcl"
           packer_working_dir: "packer"
           packer_version: "1.9.1"
