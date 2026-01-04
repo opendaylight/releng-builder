@@ -193,13 +193,14 @@ jobs:
             "ubuntu-20.04"
             "ubuntu-22.04"
             "ubuntu-24.04"
+            "ubuntu-25.04"
           )
 
           # Define exclusions: template:platform combinations that should NOT be built
           # Based on JJB job configurations - only building required combinations
-          # Total: 30 combinations, Required: 17, Excluded: 13
+          # Total: 35 combinations, Required: 19, Excluded: 16
           EXCLUSIONS=(
-            # Docker: only centos-7, ubuntu-20.04, ubuntu-22.04
+            # Docker: only centos-7, ubuntu-20.04, ubuntu-22.04, ubuntu-25.04
             "docker:centos-cs-8"
             "docker:centos-cs-9"
             "docker:ubuntu-24.04"
@@ -209,13 +210,16 @@ jobs:
             "helm:ubuntu-20.04"
             "helm:ubuntu-22.04"
             "helm:ubuntu-24.04"
+            "helm:ubuntu-25.04"
             # Mininet: only ubuntu-22.04, ubuntu-24.04
             "mininet-ovs-217:centos-7"
             "mininet-ovs-217:centos-cs-8"
             "mininet-ovs-217:centos-cs-9"
             "mininet-ovs-217:ubuntu-20.04"
-            # Robot: excluded ubuntu-20.04
+            "mininet-ovs-217:ubuntu-25.04"
+            # Robot: excluded ubuntu-20.04, ubuntu-25.04
             "robot:ubuntu-20.04"
+            "robot:ubuntu-25.04"
           )
 
           # Function to check if a combination should be excluded
