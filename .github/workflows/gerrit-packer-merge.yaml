@@ -464,6 +464,8 @@ jobs:
       - name: Build Packer Image
         id: build
         uses: askb/packer-build-action@main
+        env:
+          PACKER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           mode: build
           packer_template: "${{ steps.resolve-template.outputs.template_path }}"
