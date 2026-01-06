@@ -12,6 +12,12 @@ variable "ansible_roles_path" {
   default = ".galaxy"
 }
 
+variable "local_build" {
+  type        = bool
+  default     = false
+  description = "Set to true for local builds to enable SSH compatibility options"
+}
+
 variable "arch" {
   type    = string
   default = "x86_64"
