@@ -154,6 +154,35 @@ variable "vm_volume_size" {
   default = "20"
 }
 
+locals {
+  # SSH arguments - SCP compatibility for local builds
+  ssh_extra_args = var.local_build ? [
+    "--scp-extra-args", "'-O'",
+    "--ssh-extra-args",
+    "-o IdentitiesOnly=yes -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedAlgorithms=+ssh-rsa"
+  ] : [
+    "--ssh-extra-args", "-o IdentitiesOnly=yes -o HostKeyAlgorithms=+ssh-rsa"
+  ]
+
+  # Ansible environment variables - force SCP for local builds to work with bastion
+  ansible_env_vars = var.local_build ? [
+    "ANSIBLE_NOCOWS=1",
+    "ANSIBLE_PIPELINING=True",
+    "ANSIBLE_HOST_KEY_CHECKING=False",
+    "ANSIBLE_SCP_IF_SSH=True",
+    "ANSIBLE_ROLES_PATH=${var.ansible_roles_path}",
+    "ANSIBLE_CALLBACK_WHITELIST=profile_tasks",
+    "ANSIBLE_STDOUT_CALLBACK=debug"
+  ] : [
+    "ANSIBLE_NOCOWS=1",
+    "ANSIBLE_PIPELINING=False",
+    "ANSIBLE_HOST_KEY_CHECKING=False",
+    "ANSIBLE_ROLES_PATH=${var.ansible_roles_path}",
+    "ANSIBLE_CALLBACK_WHITELIST=profile_tasks",
+    "ANSIBLE_STDOUT_CALLBACK=debug"
+  ]
+}
+
 source "docker" "mininet-ovs-217" {
   changes = ["ENTRYPOINT [\"\"]", "CMD [\"\"]"]
   commit  = true
@@ -197,18 +226,9 @@ build {
   }
 
   provisioner "ansible" {
-    ansible_env_vars   = [
-        "ANSIBLE_NOCOWS=1",
-        "ANSIBLE_PIPELINING=False",
-        "ANSIBLE_HOST_KEY_CHECKING=False",
-        "ANSIBLE_ROLES_PATH=${var.ansible_roles_path}",
-        "ANSIBLE_CALLBACK_WHITELIST=profile_tasks",
-        "ANSIBLE_STDOUT_CALLBACK=debug"
-    ]
+    ansible_env_vars   = local.ansible_env_vars
     command            = "./common-packer/ansible-playbook.sh"
-    extra_arguments    = [
-        "--ssh-extra-args", "-o IdentitiesOnly=yes -o HostKeyAlgorithms=+ssh-rsa"
-    ]
+    extra_arguments    = local.ssh_extra_args
     playbook_file      = "provision/mininet-ovs-217.yaml"
     skip_version_check = true
   }
