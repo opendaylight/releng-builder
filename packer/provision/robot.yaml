@@ -20,6 +20,7 @@
         state: present
       become: true
       when:
+        - ansible_facts['os_family'] == 'RedHat'
         - ansible_facts['distribution_major_version'] is version('8', '<')
 
     - name: Install robot dependencies on CentOS 8
@@ -33,6 +34,7 @@
         state: present
       become: true
       when:
+        - ansible_facts['os_family'] == 'RedHat'
         - ansible_facts['distribution_major_version'] is version('8', '>=')
 
     - name: Install lispflowmapping dependencies
@@ -93,6 +95,8 @@
                 owner: root
                 remote_src: true
               become: true
+      when:
+        - ansible_facts['os_family'] == 'RedHat'
 
   post_tasks:
     - name: System Reseal
