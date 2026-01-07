@@ -200,7 +200,7 @@ source "openstack" "helm" {
   metadata = {
     ci_managed = "yes"
   }
-  networks                = ["${var.cloud_network}"]
+  networks                = var.cloud_network != null ? ["${var.cloud_network}"] : null
   password                = "${var.cloud_pass}"
   region                  = "ca-ymq-1"
   source_image_name       = "${var.base_image}"
