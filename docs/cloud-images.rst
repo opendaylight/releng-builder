@@ -224,5 +224,7 @@ Historical inventory:
 * ZZCI - Ubuntu 22.04 - mininet-ovs-217 - x86_64 - 20250201-060151.911
 * ZZCI - Ubuntu 22.04 - mininet-ovs-217 - x86_64 - 20250917-133034.654
 * ZZCI - Ubuntu 24.04 - builder - x86_64 - 20251218-021127.121
+* ZZCI - Ubuntu 24.04 - builder - x86_64 - 20260111-003617.173
+* ZZCI - Ubuntu 24.04 - robot - x86_64 - 20260107-112924.635
 * ZZCI - Ubuntu 25.04 - builder - x86_64 - 20260110-020626.069
 * ZZCI - Ubuntu 25.04 - docker - x86_64 - 20260110-073610.713
