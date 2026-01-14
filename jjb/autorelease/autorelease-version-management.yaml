@@ -11,8 +11,10 @@
     build-node: ubuntu2204-builder-2c-8g
 
     stream:
-      - vanadium:
+      - chromium:
           branch: "master"
+      - vanadium:
+          branch: "stable/vanadium"
       - titanium:
           branch: "stable/titanium"
       - scandium:
