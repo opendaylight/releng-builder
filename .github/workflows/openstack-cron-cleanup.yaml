@@ -11,47 +11,47 @@ name: OpenStack Cron Cleanup
 on:
   schedule:
     # Run every hour
-    - cron: '0 * * * *'
+    - cron: "0 * * * *"
 
   workflow_dispatch:
     inputs:
       openstack_cloud:
-        description: 'OpenStack cloud name from clouds.yaml'
+        description: "OpenStack cloud name from clouds.yaml"
         required: false
-        default: 'vex'
+        default: "vex"
         type: string
       cleanup_k8s_clusters:
-        description: 'Enable K8s cluster cleanup'
+        description: "Enable K8s cluster cleanup"
         required: false
         default: true
         type: boolean
       cleanup_stacks:
-        description: 'Enable stack cleanup'
+        description: "Enable stack cleanup"
         required: false
         default: true
         type: boolean
       cleanup_servers:
-        description: 'Enable server cleanup'
+        description: "Enable server cleanup"
         required: false
         default: true
         type: boolean
       cleanup_ports:
-        description: 'Enable port cleanup'
+        description: "Enable port cleanup"
         required: false
         default: true
         type: boolean
       cleanup_volumes:
-        description: 'Enable volume cleanup'
+        description: "Enable volume cleanup"
         required: false
         default: true
         type: boolean
       protect_images:
-        description: 'Enable image protection'
+        description: "Enable image protection"
         required: false
         default: true
         type: boolean
       cleanup_images:
-        description: 'Enable old image cleanup'
+        description: "Enable old image cleanup"
         required: false
         default: true
         type: boolean
@@ -87,8 +87,8 @@ jobs:
           cleanup_volumes: ${{ inputs.cleanup_volumes || 'true' }}
           protect_images: ${{ inputs.protect_images || 'true' }}
           cleanup_images: ${{ inputs.cleanup_images || 'true' }}
-          image_cleanup_age: '30'
-          python_version: '3.11'
+          image_cleanup_age: "30"
+          python_version: "3.11"
           failure_notification_email: >
             ${{ vars.FAILURE_NOTIFICATION_EMAIL || '' }}
           failure_notification_prefix: >
