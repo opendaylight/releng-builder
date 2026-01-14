@@ -33,8 +33,8 @@ BEGIN {
     # replace block to add new release
     new_rel_yaml_tag            = "- " new_release ":";
     br_master_yaml_tag          = "    branch: 'master'";
-    jre_yaml_tag                = "    jre: 'openjdk11'";
-    java_version_yaml_tag       = "    java-version: 'openjdk11'";
+    jre_yaml_tag                = "    jre: 'openjdk21'";
+    java_version_yaml_tag       = "    java-version: 'openjdk21'";
     curr_rel_yaml_tag           = "- " curr_release ":";
     br_stable_curr_yaml_tag     = "    branch: 'stable/" curr_release "'";
 
@@ -146,12 +146,13 @@ function process_blk(bs, be, bn,   i, l) {
         for (i = 1; i <= length(firstblk); i++) {
             l = firstblk[i]
             if (l ~ /name:|stream:/) sub(curr_release, new_release, l)
+            if (l ~ /branch:/) sub(master, "'master'", l)
             newblk[++nex1] = l
         }
         # re-create old block and change master to stable/branch
         for (i = 1; i <= length(firstblk)-1; i++) {
             l = firstblk[i]
-            if (l ~ /branch:/) sub(master, curr_branch, l)
+            if (l ~ /branch:/) sub(/"master"|'master'/, curr_branch, l)
             oldmaster[++nex2] = l
         }
     } else if (file_format == 0) {
@@ -159,35 +160,40 @@ function process_blk(bs, be, bn,   i, l) {
         for (i = 1; i <= length(firstblk)-1; i++) {
             l = firstblk[i]
             if (l ~ sstream) { stream_found = 1; }
-            if (l ~ srelease) { release_found = 1; indent = substr(l, 1, index(l, "-")-1); continue; }
-            if (l ~ sfunctionality) { func_found = 1; }
-            if (l ~ snext_release_tag) { nrt_found = 1; }
-            if (l ~ sbranch) {
-                # append lines
-                if (stream_found && release_found && !nrt_found) {
+            if (l ~ srelease) {
+                # Found current release (e.g., "- vanadium:")
+                release_found = 1;
+                indent = substr(l, 1, index(l, "-")-1);
+
+                # Insert NEW release block BEFORE current release
+                if (stream_found && !nrt_found) {
                     newblk[++nex3] = indent new_rel_yaml_tag;
-                    newblk[++nex3] = indent br_master_yaml_tag;
-                    newblk[++nex3] = indent java_version_yaml_tag;
+                    newblk[++nex3] = indent "    " "branch: 'master'";
                     newblk[++nex3] = indent curr_rel_yaml_tag;
-                    newblk[++nex3] = indent br_stable_curr_yaml_tag;
-                    stream_found = 0;
-                    release_found = 0;
-                    func_found = 0;
-                    continue;
+                    newblk[++nex3] = indent "    " "branch: 'stable/" curr_release "'";
                 }
-                if (stream_found && release_found && nrt_found) {
+                if (stream_found && nrt_found) {
                     newblk[++nex3] = indent new_rel_yaml_tag;
                     newblk[++nex3] = indent next_rel_tag_new_yaml_tag;
-                    newblk[++nex3] = indent br_master_yaml_tag;
+                    newblk[++nex3] = indent "    " "branch: 'master'";
                     newblk[++nex3] = indent intg_test_yaml_tag;
                     newblk[++nex3] = indent extra_mvn_opts_tag;
                     newblk[++nex3] = indent curr_rel_yaml_tag;
                     newblk[++nex3] = indent next_rel_tag_curr_yaml_tag;
-                    newblk[++nex3] = indent br_stable_curr_yaml_tag;
-                    stream_found = 0; release_found = 0; nrt_found=0;
-                    continue;
+                    newblk[++nex3] = indent "    " "branch: 'stable/" curr_release "'";
                 }
+
+                # Skip the next line (the old branch line for current release)
+                i++;
+
+                stream_found = 0;
+                release_found = 0;
+                nrt_found = 0;
+                continue;  # Skip the old current release line (we already added updated version)
             }
+            if (l ~ sfunctionality) { func_found = 1; }
+            if (l ~ snext_release_tag) { nrt_found = 1; }
+
             newblk[++nex3] = l
 
             if (debug) {
