@@ -6,14 +6,12 @@
 
     # The project name
     project: "netconf"
-
-    # The functionality under test
     functionality: "scale"
-
-    # Project branches
     stream:
-      - vanadium:
+      - chromium:
           branch: "master"
+      - vanadium:
+          branch: "stable/vanadium"
           jre: "openjdk21"
       - titanium:
           branch: "9.0.x"
@@ -21,26 +19,17 @@
       - scandium:
           branch: "8.0.x"
           jre: "openjdk21"
-
     karaf-version: netconf
-
     install:
       - only:
           scope: "only"
-
-    # Features to install
     install-features: >
       odl-restconf,
       odl-clustering-test-app,
       odl-netconf-mdsal,
       odl-netconf-topology
-
-    # Robot custom options
     robot-options: "-v USE_NETCONF_CONNECTOR:False"
-
-    # ODL system configuration
     odl_system_flavor: v3-standard-4
-
 - project:
     name: netconf-csit-scale-max-devices
     jobs:
@@ -48,14 +37,13 @@
 
     # The project name
     project: "netconf"
-
-    # The functionality under test
     functionality: "scale-max-devices"
-
-    # Project branches
     stream:
-      - vanadium:
+      - chromium:
           branch: "master"
+          jre: "openjdk21"
+      - vanadium:
+          branch: "stable/vanadium"
           jre: "openjdk21"
       - titanium:
           branch: "stable/titanium"
@@ -63,36 +51,25 @@
       - scandium:
           branch: "8.0.x"
           jre: "openjdk21"
-
     karaf-version: netconf
-
     install:
       - only:
           scope: "only"
-
-    # Features to install
     install-features: >
       odl-restconf,
       odl-clustering-test-app,
       odl-netconf-mdsal,
       odl-netconf-topology,
       odl-jolokia
-
-    # Robot custom options
     robot-options:
       "-v USE_NETCONF_CONNECTOR:False -v SCHEMA_MODEL:juniper -v INIT_DEVICE_COUNT:1000\
       \ -v MAX_DEVICE_COUNT:3000 -v DEVICE_INCREMENT:500 -v TESTTOOL_BOOT_TIMEOUT:600s\
       \ -v MAX_HEAP:4G --flattenkeywords name:*repeat*keyword*"
-
-    # ODL system configuration
     odl_system_flavor: v3-standard-8
     controller-max-mem: "12G"
     tools_system_flavor: v3-standard-8
-
-    # Plot Info
     01-plot-title: "Max Devices"
     01-plot-yaxis: "Devices"
     01-plot-group: "Netconf Devices"
     01-plot-data-file: "devices.csv"
-
     build-timeout: "720"

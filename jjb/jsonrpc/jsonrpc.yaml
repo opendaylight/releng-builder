@@ -1,5 +1,24 @@
 ---
 - project:
+    name: jsonrpc-chromium
+    jobs:
+      - distribution-check-jobs-jdk21
+      - odl-maven-jobs-jdk21
+      - odl-maven-verify-jobs-jdk21
+
+    project: "jsonrpc"
+    project-name: "jsonrpc"
+    stream: chromium
+    branch: "master"
+    build-node: ubuntu2204-docker-4c-4g
+    mvn-settings: "jsonrpc-settings"
+    dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream},mdsal-merge-{stream}"
+    email-upstream: "[jsonrpc] [odlparent] [yangtools] [controller] [mdsal]"
+
+    # Used by the release job
+    staging-profile-id: 96fdf4408765d
+
+- project:
     name: jsonrpc-vanadium
     jobs:
       - distribution-check-jobs-jdk21
@@ -9,7 +28,7 @@
     project: "jsonrpc"
     project-name: "jsonrpc"
     stream: vanadium
-    branch: "master"
+    branch: "stable/vanadium"
     build-node: ubuntu2204-docker-4c-4g
     mvn-settings: "jsonrpc-settings"
     dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream},mdsal-merge-{stream}"
