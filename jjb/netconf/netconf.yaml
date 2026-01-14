@@ -1,7 +1,8 @@
 ---
 - project:
     name: netconf-master
-    jobs:      - gerrit-tox-verify:
+    jobs:
+      - gerrit-tox-verify:
           build-node: ubuntu2204-builder-2c-2g
           parallel: true
       - odl-maven-jobs-jdk21
@@ -26,7 +27,8 @@
 
 - project:
     name: netconf-9.0.x
-    jobs:      - gerrit-tox-verify:
+    jobs:
+      - gerrit-tox-verify:
           build-node: ubuntu2204-builder-2c-2g
           parallel: true
       - odl-maven-jobs-jdk21
@@ -51,7 +53,8 @@
 
 - project:
     name: netconf-8.0.x
-    jobs:      - gerrit-tox-verify:
+    jobs:
+      - gerrit-tox-verify:
           build-node: ubuntu2204-builder-2c-2g
           parallel: true
       - odl-maven-jobs-jdk21

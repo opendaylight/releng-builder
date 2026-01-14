@@ -1,7 +1,8 @@
 ---
 - project:
     name: bgpcep-master
-    jobs:      - gerrit-tox-verify:
+    jobs:
+      - gerrit-tox-verify:
           parallel: true
       - odl-maven-javadoc-jobs-jdk21
       - odl-maven-jobs-jdk21
@@ -26,7 +27,8 @@
 
 - project:
     name: bgpcep-0.23.x
-    jobs:      - gerrit-tox-verify:
+    jobs:
+      - gerrit-tox-verify:
           parallel: true
       - odl-maven-javadoc-jobs-jdk21
       - odl-maven-jobs-jdk21
@@ -51,7 +53,8 @@
 
 - project:
     name: bgpcep-0.22.x
-    jobs:      - gerrit-tox-verify:
+    jobs:
+      - gerrit-tox-verify:
           parallel: true
       - odl-maven-javadoc-jobs-jdk21
       - odl-maven-jobs-jdk21
