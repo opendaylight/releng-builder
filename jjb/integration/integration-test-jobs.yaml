@@ -6,7 +6,8 @@
     jobs:
       - "integration-patch-test-{stream}"
       - "inttest-multipatch"
-      - "integration-merge-dashboard"      - gerrit-tox-verify:
+      - "integration-merge-dashboard"
+      - gerrit-tox-verify:
           branch: master
           stream: master
           build-node: ubuntu2204-builder-2c-2g
