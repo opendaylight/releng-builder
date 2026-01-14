@@ -1,5 +1,29 @@
 ---
 - project:
+    name: openflowplugin-chromium
+    jobs:
+      - odl-maven-javadoc-jobs-jdk21
+      - odl-maven-jobs-jdk21
+      - odl-maven-verify-jobs-jdk21
+
+    stream: chromium
+    project: "openflowplugin"
+    project-name: "openflowplugin"
+    branch: "master"
+    build-node: ubuntu2204-docker-4c-4g
+    build-timeout: 90
+    mvn-settings: "openflowplugin-settings"
+    mvn-goals: "clean deploy javadoc:aggregate"
+    dependencies: >
+      odlparent-merge-{stream},
+      yangtools-merge-{stream},
+      controller-merge-{stream},
+      openflowjava-merge-{stream}
+    email-upstream: "[openflowplugin] [odlparent] [yangtools] [controller] [openflowjava]"
+    # Used by the release job
+    staging-profile-id: a68a76dc1b44c
+
+- project:
     name: openflowplugin-vanadium
     jobs:
       - odl-maven-javadoc-jobs-jdk21
@@ -9,7 +33,7 @@
     stream: vanadium
     project: "openflowplugin"
     project-name: "openflowplugin"
-    branch: "master"
+    branch: "stable/vanadium"
     build-node: ubuntu2204-docker-4c-4g
     build-timeout: 90
     mvn-settings: "openflowplugin-settings"

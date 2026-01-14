@@ -9,13 +9,14 @@
       - gerrit-tox-verify
 
     stream:
-      - vanadium:
+      - chromium:
           branch: "master"
+      - vanadium:
+          branch: "stable/vanadium"
       - titanium:
           branch: "stable/titanium"
       - scandium:
           branch: "stable/scandium"
-
     project: releng/autorelease
     project-name: autorelease
     build-node: ubuntu2204-builder-2c-2g
@@ -23,7 +24,6 @@
       **/*.prop
       **/*.log
     staging-profile-id: 425e43800fea70
-
 - project:
     name: autorelease-projects-openjdk
     jobs:
@@ -33,8 +33,13 @@
       - "autorelease-generate-release-notes-{stream}"
 
     stream:
-      - vanadium:
+      - chromium:
           branch: "master"
+          java-version: openjdk21
+          mvn-version: mvn39
+          integration-test: vanadium
+      - vanadium:
+          branch: "stable/vanadium"
           java-version: openjdk21
           mvn-version: mvn39
           integration-test: vanadium
@@ -48,11 +53,9 @@
           java-version: openjdk21
           mvn-version: mvn39
           integration-test: scandium
-
     project: releng/autorelease
     project-name: autorelease
     build-node: ubuntu2204-docker-8c-8g
-    # Before adding more here, beware of https://jira.linuxfoundation.org/browse/RELENG-280
     archive-artifacts: >
       **/*.prop
       **/*.log
@@ -61,7 +64,6 @@
       **/hs_err_*.log
       **/target/feature/feature.xml
     staging-profile-id: 425e43800fea70
-    # TODO: **/*.hprof is too large, compress with xz first
     mvn-params: >
       -PrepoBuild
       -P!karaf
@@ -69,7 +71,6 @@
       -Dcheckstyle.skip=true
       -Dskip.karaf.featureTest=true
       -Dsft.heap.max=4g
-
 - project:
     name: autorelease-info
     jobs:
@@ -78,7 +79,6 @@
     project-name: autorelease
     branch: master
     build-node: ubuntu2204-builder-2c-1g
-
 - project:
     name: autorelease-view
     views:

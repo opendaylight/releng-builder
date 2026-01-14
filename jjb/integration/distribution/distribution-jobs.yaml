@@ -21,8 +21,10 @@
     nexus-iq-stage: release
     email-upstream: "[int/dist]"
     stream:
-      - vanadium:
+      - chromium:
           branch: "master"
+      - vanadium:
+          branch: "stable/vanadium"
       - titanium:
           branch: "stable/titanium"
       - scandium:

@@ -13,8 +13,10 @@
 
     # Project branches
     stream:
-      - vanadium:
+      - chromium:
           branch: "master"
+      - vanadium:
+          branch: "stable/vanadium"
           install-features: >
             features-controller,
             odl-mdsal-replicate-netty,
