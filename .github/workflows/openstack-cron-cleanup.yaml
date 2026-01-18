@@ -70,8 +70,7 @@ jobs:
         id: cleanup
         uses: askb/openstack-cron-action@main
         with:
-          openstack_cloud: >
-            ${{ inputs.openstack_cloud || vars.OPENSTACK_CLOUD || 'vex' }}
+          openstack_cloud: ${{ inputs.openstack_cloud || vars.OPENSTACK_CLOUD || 'vex' }}
           # Use individual OpenStack credentials
           openstack_auth_url: ${{ secrets.OPENSTACK_AUTH_URL }}
           openstack_username: ${{ secrets.OPENSTACK_USERNAME }}
