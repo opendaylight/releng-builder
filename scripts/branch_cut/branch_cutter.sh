@@ -11,13 +11,23 @@
 ##############################################################################
 
 # List of directories, files to exclude
+# MRI projects use version-specific branches (e.g. controller 12.0.x)
+# and require project leader approval to branch
 declare -a excludes=("defaults.yaml"
                      "releng-macros.yaml"
                      "global-jjb"
                      "lf-infra"
                      "-macros.yaml"
                      "validate-autorelease"
-                     "opflex-dependencies.yaml")
+                     "opflex-dependencies.yaml"
+                     "jjb/aaa/"
+                     "jjb/bgpcep/"
+                     "jjb/controller/"
+                     "jjb/infrautils/"
+                     "jjb/mdsal/"
+                     "jjb/netconf/"
+                     "jjb/odlparent/"
+                     "jjb/yangtools/")
 
 TEMP="/tmp/tmp.yaml"
 mod=0
