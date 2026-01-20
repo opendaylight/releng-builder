@@ -25,12 +25,12 @@ on:
       cleanup_k8s_clusters:
         description: "Enable K8s cluster cleanup"
         required: false
+        default: true
+        type: boolean
       enable_smart_cleanup:
         description: "Enable smart image cleanup (checks repo for unused images)"
         required: false
         default: false
-        type: boolean
-        default: true
         type: boolean
       cleanup_stacks:
         description: "Enable stack cleanup"
@@ -77,7 +77,9 @@ jobs:
         id: cleanup-mode
         run: |
           # Smart cleanup runs on 1st of month (cron) or when manually enabled
-          if [[ "${{ github.event.schedule }}" == "0 2 1 * *" ]] || [[ "${{ inputs.enable_smart_cleanup }}" == "true" ]]; then
+          cron_schedule="${{ github.event.schedule }}"
+          manual_enable="${{ inputs.enable_smart_cleanup }}"
+          if [[ "$cron_schedule" == "0 2 1 * *" ]] || [[ "$manual_enable" == "true" ]]; then
             echo "smart_cleanup=true" >> "$GITHUB_OUTPUT"
             echo "Smart cleanup enabled (monthly schedule or manual)"
           else
