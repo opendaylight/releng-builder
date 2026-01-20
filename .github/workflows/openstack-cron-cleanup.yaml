@@ -15,6 +15,11 @@ on:
 
   workflow_dispatch:
     inputs:
+      enable_debug:
+        description: "Enable verbose debug logging"
+        required: false
+        default: false
+        type: boolean
       openstack_cloud:
         description: "OpenStack cloud name from clouds.yaml"
         required: false
@@ -70,6 +75,7 @@ jobs:
         id: cleanup
         uses: askb/openstack-cron-action@main
         with:
+          enable_debug: ${{ inputs.enable_debug || 'false' }}
           openstack_cloud: ${{ inputs.openstack_cloud || vars.OPENSTACK_CLOUD || 'vex' }}
           # Use individual OpenStack credentials
           openstack_auth_url: ${{ secrets.OPENSTACK_AUTH_URL }}
