@@ -11,13 +11,17 @@
           branch: master
           stream: master
           build-node: ubuntu2204-builder-2c-2g
-
     mvn-version: "mvn38"
-
-    # CSIT Lists in defaults.yaml
     stream:
-      - vanadium:
+      - chromium:
           branch: "master"
+          csit-list: !include: csit-jobs-chromium.lst
+          build-order: >
+            odlparent infrautils yangtools mdsal controller aaa netconf bgpcep
+            serviceutils daexim jsonrpc ovsdb openflowplugin lispflowmapping
+            integration/distribution
+      - vanadium:
+          branch: "stable/vanadium"
           csit-list: !include: csit-jobs-vanadium.lst
           build-order: >
             odlparent infrautils yangtools mdsal controller aaa netconf bgpcep
@@ -37,7 +41,6 @@
             odlparent infrautils yangtools mdsal controller aaa netconf bgpcep
             serviceutils daexim jsonrpc ovsdb openflowplugin lispflowmapping
             integration/distribution
-
 - project:
     name: integration-distribution
     project: integration/test
@@ -50,8 +53,21 @@
 
     # CSIT Lists in defaults.yaml
     stream:
-      - vanadium:
+      - chromium:
           branch: "master"
+          csit-blocklist: >
+            aaa controller genius lispflowmapping l2switch mdsal
+            netconf netvirt odlmicro sxp yangtools
+            gate longevity sanity tdd tempest wip
+            bgpcep-csit-3node-bgpclustering-all
+            bgpcep-csit-3node-bgpclustering-ha-only
+            openflowplugin-csit-1node-bundle-based-reconciliation
+            last-line-is-ignored-so-we-need-something-dummy-here-to-make-sure-the-real-last-line-is-used
+          csit-list: !include: csit-jobs-chromium.lst
+          csit-mri-list: "{csit-mri-list-chromium}"
+          csit-weekly-list: "{csit-weekly-list-chromium}"
+      - vanadium:
+          branch: "stable/vanadium"
           csit-blocklist: >
             aaa controller genius lispflowmapping l2switch mdsal
             netconf netvirt odlmicro sxp yangtools
@@ -89,7 +105,6 @@
           csit-list: !include: csit-jobs-scandium.lst
           csit-mri-list: "{csit-mri-list-scandium}"
           csit-weekly-list: "{csit-weekly-list-scandium}"
-
 - project:
     name: integration-sanity
     project: integration/test
@@ -98,8 +113,12 @@
       - "integration-sanity-test-{stream}"
 
     stream:
-      - vanadium:
+      - chromium:
           branch: "master"
+          karaf-version: karaf4
+          csit-sanity-list: "{csit-sanity-list-chromium}"
+      - vanadium:
+          branch: "stable/vanadium"
           karaf-version: karaf4
           csit-sanity-list: "{csit-sanity-list-vanadium}"
       - titanium:
@@ -110,16 +129,13 @@
           branch: "stable/scandium"
           karaf-version: karaf4
           csit-sanity-list: "{csit-sanity-list-scandium}"
-
 - job-template:
     name: "integration-merge-dashboard"
     project-type: freestyle
     node: ubuntu2204-builder-2c-1g
-
     properties:
       - opendaylight-infra-properties:
           build-days-to-keep: "{build-days-to-keep}"
-
     parameters:
       - opendaylight-infra-parameters:
           os-cloud: "{os-cloud}"
@@ -127,17 +143,14 @@
           branch: "master"
           refspec: "refs/heads/master"
           artifacts: "{archive-artifacts}"
-
     scm:
       - integration-gerrit-scm:
           basedir: "test"
           refspec: "$GERRIT_REFSPEC"
           branch: "master"
-
     wrappers:
       - opendaylight-infra-wrappers:
           build-timeout: "{build-timeout}"
-
     triggers:
       - gerrit-trigger-patch-merged:
           gerrit-server-name: "{gerrit-server-name}"
@@ -145,7 +158,6 @@
           branch: "master"
           files: "dashboard/**"
           forbidden-files: ""
-
     builders:
       - lf-infra-pre-build
       - config-file-provider:
@@ -155,25 +167,18 @@
       - integration-install-robotframework
         # yamllint disable-line rule:line-length
       - shell: python3 $WORKSPACE/test/csit/scripts/push_dashboard.py a4ff38b99ef2c7626450543021b4c134.us-east-1.aws.found.io:9243
-
     publishers:
       - lf-infra-publish
       - email-notification:
           email-recipients: "{email-recipients}"
           email-prefix: "[{project-name}]"
-
 - job-template:
     name: "integration-distribution-test-{stream}"
-    # Goal: Verify a distribution through all system test available
-    # Operation: This template takes a distribution and passes all available system test
-
     project-type: freestyle
     node: queue-disttest-2c-1g
-
     properties:
       - opendaylight-infra-properties:
           build-days-to-keep: "{build-days-to-keep}"
-
     parameters:
       - integration-bundle-url:
           bundle-url: "{bundle-url}"
@@ -181,7 +186,6 @@
           karaf-version: "{karaf-version}"
       - integration-distribution-branch:
           branch: "{branch}"
-
     builders:
       - lf-infra-pre-build
       - trigger-builds:
@@ -191,12 +195,10 @@
               BUNDLE_URL=$BUNDLE_URL
               KARAF_VERSION=$KARAF_VERSION
               DISTROBRANCH=$DISTROBRANCH
-
     wrappers:
       - lf-infra-wrappers:
           build-timeout: 1440
           jenkins-ssh-credential: "{jenkins-ssh-credential}"
-
     publishers:
       - opendaylight-infra-generate-csit-status-report
       - email-notification:
@@ -206,17 +208,11 @@
 
 - job-template:
     name: "integration-sanity-test-{stream}"
-    # Goal: Verify a distribution through sanity test
-    # Operation: This template takes a distribution and passes sanity test
-    # This jobs works for both managed & unmanaged distro.
-
     project-type: freestyle
     node: queue-intque-2c-1g
-
     properties:
       - opendaylight-infra-properties:
           build-days-to-keep: "{build-days-to-keep}"
-
     parameters:
       - integration-bundle-url:
           bundle-url: "{bundle-url}"
@@ -224,10 +220,8 @@
           karaf-version: "{karaf-version}"
       - integration-distribution-branch:
           branch: "{branch}"
-
     triggers:
       - timed: "{schedule-daily}"
-
     builders:
       - lf-infra-pre-build
       - trigger-builds:
@@ -237,26 +231,17 @@
               BUNDLE_URL=$BUNDLE_URL
               KARAF_VERSION=$KARAF_VERSION
               DISTROBRANCH=$DISTROBRANCH
-
     publishers:
       - email-notification:
           email-recipients: "{email-recipients}"
           email-prefix: "[integration]"
-
 - job-template:
     name: "integration-patch-test-{stream}"
-    # Template: integration-patch-test-{stream}
-    # Goal: Build a patch and run all available system test on a distribution containing the change
-    # Operation: This job template builds a patch, creates a distribution containing the patch, and
-    # triggers the distribution test when test-integration is used in gerrit comments
-
     project-type: freestyle
     node: ubuntu2204-builder-2c-8g
-
     properties:
       - opendaylight-infra-properties:
           build-days-to-keep: "{build-days-to-keep}"
-
     parameters:
       - opendaylight-infra-parameters:
           os-cloud: "{os-cloud}"
@@ -272,7 +257,6 @@
           git-url: "{git-url}"
       - maven-exec:
           maven-version: "{mvn-version}"
-
     scm:
       - integration-gerrit-scm:
           basedir: "$GERRIT_PROJECT"
@@ -280,11 +264,9 @@
           branch: "{branch}"
       - integration-distribution-scm:
           branch: "{branch}"
-
     wrappers:
       - opendaylight-infra-wrappers:
           build-timeout: "720"
-
     triggers:
       - gerrit:
           server-name: "{gerrit-server-name}"
@@ -302,7 +284,6 @@
             failed: true
             unstable: true
             notbuilt: true
-
     builders:
       - lf-infra-pre-build
       - integration-rebase-gerrit-patch
@@ -350,29 +331,20 @@
               BUNDLE_URL=$BUNDLE_URL
               KARAF_VERSION=$KARAF_VERSION
               DISTROBRANCH=$DISTROBRANCH
-
     publishers:
       - lf-infra-publish
       - email-notification:
           email-recipients: "{email-recipients}"
           email-prefix: "[$GERRIT_PROJECT]"
-
 - job-template:
     name: "{prefix}integration-multipatch-test-{stream}"
-    # Goal: Build one or more patches and run all available system test on a distribution containing the change.
-    # Operation: This job template checks out and builds in order each patch provided in job parameters, finally
-    # it creates a distribution containing all patches and triggers the distribution test job which includes most
-    # (if not all) available CSIT jobs.
-
     id: inttest-multipatch
     project-type: freestyle
     node: ubuntu2204-builder-8c-8g
     concurrent: true
-
     properties:
       - opendaylight-infra-properties:
           build-days-to-keep: "{build-days-to-keep}"
-
     parameters:
       - string:
           name: PATCHES_TO_BUILD
@@ -412,12 +384,10 @@
           mvn-opts: ""
           mvn-params: ""
           mvn-version: "{mvn-version}"
-          staging-profile-id: "" # Staging repos do not make sense for this job
-
+          staging-profile-id: ""
     wrappers:
       - opendaylight-infra-wrappers:
           build-timeout: "1200"
-
     triggers:
       - gerrit:
           server-name: "{gerrit-server-name}"
@@ -430,7 +400,6 @@
               branches:
                 - branch-compare-type: ANT
                   branch-pattern: "**/{branch}"
-
     builders:
       - lf-infra-pre-build
       - wipe-org-opendaylight-repo
@@ -457,23 +426,18 @@
                     BUNDLE_URL=$BUNDLE_URL
                     KARAF_VERSION=$KARAF_VERSION
                     DISTROBRANCH=$DISTROBRANCH
-
     publishers:
       - lf-infra-publish
       - email-notification:
           email-recipients: "{email-recipients}"
           email-prefix: "[int/dist]"
-
 - job-template:
     name: "integration-distribution-mri-test-{stream}"
-
     project-type: freestyle
     node: queue-intque-2c-1g
-
     properties:
       - opendaylight-infra-properties:
           build-days-to-keep: "{build-days-to-keep}"
-
     parameters:
       - integration-bundle-url:
           bundle-url: "{bundle-url}"
@@ -481,10 +445,8 @@
           karaf-version: "{karaf-version}"
       - integration-distribution-branch:
           branch: "{branch}"
-
     triggers:
       - timed: "{schedule-weekly}"
-
     builders:
       - trigger-builds:
           - project: "{csit-mri-list}"
@@ -493,23 +455,18 @@
               BUNDLE_URL=$BUNDLE_URL
               KARAF_VERSION=$KARAF_VERSION
               DISTROBRANCH=$DISTROBRANCH
-
     publishers:
       - email-notification:
           email-recipients: "{email-recipients}"
           email-prefix: "[integration]"
-
 - job-template:
     name: "{project}-distribution-mri-test-{stream}"
     id: inttest-distribution-mri-test
-
     project-type: freestyle
     node: queue-intque-2c-1g
-
     properties:
       - opendaylight-infra-properties:
           build-days-to-keep: "{build-days-to-keep}"
-
     parameters:
       - integration-bundle-url:
           bundle-url: "{bundle-url}"
@@ -517,10 +474,8 @@
           karaf-version: "{karaf-version}"
       - integration-distribution-branch:
           branch: "{branch}"
-
     triggers:
       - timed: "{schedule-weekly}"
-
     builders:
       - trigger-builds:
           - project: "{csit-mri-list}"
@@ -529,22 +484,17 @@
               BUNDLE_URL=$BUNDLE_URL
               KARAF_VERSION=$KARAF_VERSION
               DISTROBRANCH=$DISTROBRANCH
-
     publishers:
       - email-notification:
           email-recipients: "{email-recipients}"
           email-prefix: "[integration]"
-
 - job-template:
     name: "integration-distribution-weekly-test-trigger-{stream}"
-
     project-type: freestyle
     node: queue-intque-2c-1g
-
     properties:
       - opendaylight-infra-properties:
           build-days-to-keep: "{build-days-to-keep}"
-
     parameters:
       - integration-bundle-url:
           bundle-url: "{bundle-url}"
@@ -552,10 +502,8 @@
           karaf-version: "{karaf-version}"
       - integration-distribution-branch:
           branch: "{branch}"
-
     triggers:
       - timed: "{schedule-weekly}"
-
     builders:
       - trigger-builds:
           - project: "{csit-weekly-list}"
@@ -564,51 +512,31 @@
               BUNDLE_URL=$BUNDLE_URL
               KARAF_VERSION=$KARAF_VERSION
               DISTROBRANCH=$DISTROBRANCH
-
     publishers:
       - email-notification:
           email-recipients: "{email-recipients}"
           email-prefix: "[integration]"
-
 - job-template:
     name: "integration-update-csit-tests-{stream}"
-
-    # This job's purpose is to update csit
-    # tests to run in integration-distribution-test-{stream}
-    # by updating integration files: csit-list-{stream}.inc
-    # These files can be used as !include in int-dist-test-{stream}
-
-    ######################
-    # Default parameters #
-    ######################
-
     git-url: "$GIT_URL/$PROJECT"
     submodule-disable: false
     submodule-recursive: true
     submodule-timeout: 10
-
-    #####################
-    # Job Configuration #
-    #####################
-
     project-type: freestyle
     node: ubuntu2204-builder-2c-2g
-
     properties:
       - lf-infra-properties:
           build-days-to-keep: 7
-
     parameters:
       - lf-infra-parameters:
-          project: releng/builder # Hardcode as this job needs to pull releng/builder
+          project: releng/builder
           stream: "{stream}"
-          branch: master # Hardcode as releng/builder only has master
+          branch: master
           lftools-version: "{lftools-version}"
       - string:
           name: CSIT_BLOCKLIST
           default: "{csit-blocklist}"
           description: Space separated list of jobs strings to blocklist.
-
     scm:
       - lf-infra-gerrit-scm:
           jenkins-ssh-credential: "{jenkins-ssh-credential}"
@@ -619,16 +547,13 @@
           submodule-recursive: "{submodule-recursive}"
           submodule-timeout: "{submodule-timeout}"
           choosing-strategy: default
-
     wrappers:
       - lf-infra-wrappers:
           build-timeout: 10
           jenkins-ssh-credential: "{jenkins-ssh-credential}"
-
     triggers:
       - reverse:
           jobs: builder-jjb-merge
-
     builders:
       - lf-infra-pre-build
       - shell: !include-raw-escape: update-csit-tests.sh
@@ -642,7 +567,6 @@
           gerrit-topic: "auto-update-csit-jobs-{stream}"
           gerrit-commit-message: "Auto Update CSIT Jobs to run for {stream}"
           reviewers-email: "jenkins-releng@opendaylight.org"
-
     publishers:
       - lf-infra-publish
 
@@ -654,7 +578,6 @@
     project-name: integration
     branch: master
     build-node: ubuntu2204-builder-2c-1g
-
 - project:
     name: integration-view
     views:

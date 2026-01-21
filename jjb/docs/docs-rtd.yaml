@@ -5,8 +5,10 @@
       - gerrit-tox-verify
 
     stream:
-      - vanadium:
+      - chromium:
           branch: "master"
+      - vanadium:
+          branch: "stable/vanadium"
           disable-job: true
       - titanium:
           branch: "stable/titanium"
