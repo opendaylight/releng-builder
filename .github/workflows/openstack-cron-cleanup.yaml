@@ -12,6 +12,8 @@ on:
   schedule:
     # Run every hour
     - cron: "0 * * * *"
+    # Run smart cleanup on 1st of every month at 02:00 UTC
+    - cron: "0 2 1 * *"
 
   workflow_dispatch:
     inputs:
@@ -29,6 +31,11 @@ on:
         description: "Enable K8s cluster cleanup"
         required: false
         default: true
+        type: boolean
+      enable_smart_cleanup:
+        description: "Enable smart image cleanup (checks repo for unused images)"
+        required: false
+        default: false
         type: boolean
       cleanup_stacks:
         description: "Enable stack cleanup"
@@ -71,6 +78,20 @@ jobs:
     timeout-minutes: 30
 
     steps:
+      - name: Determine cleanup mode
+        id: cleanup-mode
+        run: |
+          # Smart cleanup runs on 1st of month (cron) or when manually enabled
+          cron_schedule="${{ github.event.schedule }}"
+          manual_enable="${{ inputs.enable_smart_cleanup }}"
+          if [[ "$cron_schedule" == "0 2 1 * *" ]] || [[ "$manual_enable" == "true" ]]; then
+            echo "smart_cleanup=true" >> "$GITHUB_OUTPUT"
+            echo "Smart cleanup enabled (monthly schedule or manual)"
+          else
+            echo "smart_cleanup=false" >> "$GITHUB_OUTPUT"
+            echo "Regular cleanup (hourly schedule)"
+          fi
+
       - name: Run OpenStack cleanup
         id: cleanup
         uses: askb/openstack-cron-action@main
@@ -92,7 +113,8 @@ jobs:
           cleanup_volumes: ${{ inputs.cleanup_volumes || 'true' }}
           protect_images: ${{ inputs.protect_images || 'true' }}
           cleanup_images: ${{ inputs.cleanup_images || 'true' }}
-          image_cleanup_age: "30"
+          cleanup_images_smart: ${{ steps.cleanup-mode.outputs.smart_cleanup }}
+          image_cleanup_age: "180"
           python_version: "3.11"
           failure_notification_email: >
             ${{ vars.FAILURE_NOTIFICATION_EMAIL || '' }}
