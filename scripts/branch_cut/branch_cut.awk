@@ -14,10 +14,15 @@ BEGIN {
     new_tag                     = new_reltag       # new release tag
     curr_tag                    = curr_reltag      # current release tag
     prev_tag                    = prev_reltag      # previous release tag
+    eol_tag                     = eol_reltag       # EOL release tag
 
     new_release                 = tolower(new_tag)
     curr_release                = tolower(curr_tag)
     prev_release                = tolower(prev_tag)
+    eol_release                 = tolower(eol_tag)
+
+    # EOL-only mode: only eol_release is set
+    eol_only_mode = (length(eol_release) > 0 && length(new_release) == 0 && length(curr_release) == 0)
 
     ws = "[\\t ]*"                                 # white-spaces
     startpat = "^" ws "- project:"                 # start pattern
@@ -29,6 +34,7 @@ BEGIN {
     new_branch                  = "'stable/" new_release "'"
     curr_branch                 = "'stable/" curr_release "'"
     prev_branch                 = "'stable/" prev_release "'"
+    eol_branch                  = "'stable/" eol_release "'"
 
     # replace block to add new release
     new_rel_yaml_tag            = "- " new_release ":";
@@ -53,6 +59,7 @@ BEGIN {
     smaster = "^" ws "- master:"
     sstream = "^" ws "stream:"
     srelease = "^" ws "- " curr_release ":"
+    seol_release = "^" ws "- " eol_release ":"
     snext_release_tag = "^" ws "next-release-tag:"
     #if (l ~ next_release_tag) { next_release_tag = 1; continue; }
     sbranch = "^" ws "branch: " master
@@ -65,11 +72,18 @@ BEGIN {
     stream_found = 0
     nrt_found = 0
     func_found = 0
+    eol_found = 0
+    skip_until_next_release = 0
 }
 
 {
-    # exit if release info is not available
-    if ((length(new_release) == 0 || length(curr_release) == 0)) {
+    # exit if release info is not available (unless EOL-only mode)
+    if (!eol_only_mode && (length(new_release) == 0 || length(curr_release) == 0)) {
+        exit;
+    }
+
+    # In EOL-only mode, must have eol_release
+    if (eol_only_mode && length(eol_release) == 0) {
         exit;
     }
 
@@ -79,6 +93,16 @@ BEGIN {
 
 END {
     n = NR                                      # total number of lines
+
+    # EOL-only mode: simple line-by-line processing
+    if (eol_only_mode) {
+        process_eol_only()
+        if (debug) {
+            print "EOL-only mode: processed " n " lines" > "/dev/stderr"
+        }
+        exit
+    }
+
     find_blks()                                 # gets number of blocks between start/end pattern
     process_blk(arr_bs[1], arr_be[1], 1)        # pass start and end of each block and process first block
     update_file(arr_be[1])                      # write processed content
@@ -93,7 +117,71 @@ END {
     }
 }
 
-function find_blks(   i, l, bs, be) {
+function process_eol_only(i, l, in_eol_block, eol_indent, line_indent, stream_indent) {
+    in_eol_block = 0
+    eol_indent = 0
+    stream_indent = -1
+
+    for (i = 1; i <= n; i++) {
+        l = file[i]
+
+        # Track the indent level of "stream:" to know where releases are
+        if (l ~ /^[[:space:]]*stream:[[:space:]]*$/) {
+            match(l, /^[[:space:]]*/)
+            stream_indent = RLENGTH
+            print l
+            continue
+        }
+
+        # Detect start of EOL release block
+        if (l ~ seol_release) {
+            in_eol_block = 1
+            # Calculate indent level (number of leading spaces)
+            match(l, /^[[:space:]]*/)
+            eol_indent = RLENGTH
+            if (debug) print "Found EOL block '" eol_release "' at line " i ", indent=" eol_indent > "/dev/stderr"
+            continue  # Skip the release line itself
+        }
+
+        # If in EOL block, check if we should stop skipping
+        if (in_eol_block) {
+            # Blank lines: keep them
+            if (l ~ /^[[:space:]]*$/) {
+                print l
+                continue
+            }
+
+            # Calculate current line indent
+            match(l, /^[[:space:]]*/)
+            line_indent = RLENGTH
+
+            # If we hit a key at same/lower indent than stream section, stop skipping
+            if (stream_indent >= 0 && line_indent <= stream_indent) {
+                in_eol_block = 0
+                print l
+                if (debug) print "End of EOL block at line " i " (lower/same indent as stream)" > "/dev/stderr"
+                continue
+            }
+
+            # If we hit another release entry at same indent, stop skipping
+            if (l ~ /^[[:space:]]*- [a-z]+:[[:space:]]*$/ && line_indent == eol_indent) {
+                in_eol_block = 0
+                print l
+                if (debug) print "End of EOL block at line " i " (new release)" > "/dev/stderr"
+                continue
+            }
+
+            # Still in EOL block, skip this line
+            if (debug) print "Skipping line " i ": " substr(l, 1, 60) > "/dev/stderr"
+            continue
+        }
+
+        # Not in EOL block, keep the line
+        print l
+    }
+}
+
+function find_blks(i, l, bs, be) {
     for (i = 1; i <= n; i++) {
         l = file[i]
         if (l ~ startpat) project = 1                        # start pattern
@@ -115,9 +203,55 @@ function find_blks(   i, l, bs, be) {
     }
 }
 
-function process_blk(bs, be, bn,   i, l) {
+function process_blk(bs, be, bn, i, l, eol_indent, in_eol_block) {
     if (debug) {
-        print "process_blk: bn=" bn ", bs=" bs " ,be=" be
+        print "process_blk: bn=" bn ", bs=" bs " ,be=" be " eol_only_mode=" eol_only_mode
+    }
+
+    # EOL-only mode: just remove EOL blocks
+    if (eol_only_mode) {
+        in_eol_block = 0
+        eol_indent = 0
+
+        for (i = bs + 1; i <= be ; i++) {
+            l = file[i]
+
+            # Detect start of EOL release block
+            if (l ~ seol_release) {
+                in_eol_block = 1
+                # Calculate indent level of the EOL release line
+                eol_indent = match(l, /[^ ]/) - 1
+                if (debug) print "Found EOL block at line " i ", indent=" eol_indent
+                continue  # Skip this line
+            }
+
+            # If in EOL block, skip lines until we hit the next release or same/lower indent level
+            if (in_eol_block) {
+                # Check if this is a new release entry at same indent level
+                if (l ~ /^[[:space:]]*- [a-z]+:/ && match(l, /[^ ]/) - 1 == eol_indent) {
+                    # Found next release, stop skipping
+                    in_eol_block = 0
+                    newblk[++nex3] = l
+                    if (debug) print "End of EOL block at line " i
+                    continue
+                }
+                # Check if we hit a blank line or lower indent (end of stream section)
+                if (l ~ /^[[:space:]]*$/ || (l ~ /^[[:space:]]*[^ ]/ && match(l, /[^ ]/) - 1 < eol_indent)) {
+                    # End of EOL block
+                    in_eol_block = 0
+                    newblk[++nex3] = l
+                    if (debug) print "End of EOL block (blank/lower indent) at line " i
+                    continue
+                }
+                # Skip all lines in the EOL block
+                if (debug) print "Skipping EOL line " i ": " l
+                continue
+            }
+
+            # Not in EOL block, keep the line
+            newblk[++nex3] = l
+        }
+        return
     }
 
     # get the first block
@@ -157,9 +291,35 @@ function process_blk(bs, be, bn,   i, l) {
         }
     } else if (file_format == 0) {
         # Handle multi-stream format
+        in_eol_block = 0
+        eol_indent = 0
+
         for (i = 1; i <= length(firstblk)-1; i++) {
             l = firstblk[i]
             if (l ~ sstream) { stream_found = 1; }
+
+            # Skip EOL release block
+            if (l ~ seol_release && length(eol_release) > 0) {
+                in_eol_block = 1
+                eol_indent = match(l, /[^ ]/) - 1
+                stream_found = 0
+                continue
+            }
+
+            # If in EOL block, skip until next release
+            if (in_eol_block) {
+                if (l ~ /^[[:space:]]*- [a-z]+:/ && match(l, /[^ ]/) - 1 == eol_indent) {
+                    in_eol_block = 0
+                    # Fall through to process this line
+                } else if (l ~ /^[[:space:]]*$/ || (l ~ /^[[:space:]]*[^ ]/ && match(l, /[^ ]/) - 1 < eol_indent)) {
+                    in_eol_block = 0
+                    newblk[++nex3] = l
+                    continue
+                } else {
+                    continue
+                }
+            }
+
             if (l ~ srelease) {
                 # Found current release (e.g., "- vanadium:")
                 release_found = 1;
@@ -206,7 +366,7 @@ function process_blk(bs, be, bn,   i, l) {
     }
 }
 
-function update_file(be,   i, j, l) {
+function update_file(be, i, j, l) {
     i = 1
     # handle lines before "---"
     while (i <= n) {
