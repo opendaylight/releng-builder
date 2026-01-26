@@ -57,25 +57,6 @@
     staging-profile-id: 96e4dade34bd7
 
 - project:
-    name: daexim-scandium
-    jobs:
-      - distribution-check-jobs-jdk21
-      - odl-maven-jobs-jdk21
-      - odl-maven-verify-jobs-jdk21
-
-    project: "daexim"
-    project-name: "daexim"
-    stream: scandium
-    branch: "stable/scandium"
-    build-node: ubuntu2204-docker-4c-4g
-    mvn-settings: "daexim-settings"
-    dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}"
-    email-upstream: "[daexim] [odlparent] [yangtools] [controller]"
-
-    # Used by the release job
-    staging-profile-id: 96e4dade34bd7
-
-- project:
     name: daexim-sonar
     jobs:
       - odl-sonar-jobs-jdk21
