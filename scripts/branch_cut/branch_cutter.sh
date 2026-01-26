@@ -34,17 +34,21 @@ mod=0
 count=0
 
 function usage {
-    echo "Usage: $(basename "$0") options (-c [current release]) (-n [next release]) (-p [previous release]) -h for help";
-    echo "example:"
-    echo "branch_cutter.sh -n oxygen -c nitrogen -p carbon"
+    echo "Usage: $(basename "$0") options (-c [current release]) (-n [next release]) (-p [previous release]) (-e [EOL release]) -h for help";
+    echo ""
+    echo "For branch cutting:"
+    echo "  branch_cutter.sh -n oxygen -c nitrogen -p carbon [-e boron]"
+    echo ""
+    echo "For EOL removal only:"
+    echo "  branch_cutter.sh -e boron"
     exit 0;
 }
 
-if ( ! getopts ":n:c:p:h" opt ); then
+if ( ! getopts ":n:c:p:e:h" opt ); then
     usage;
 fi
 
-while getopts ":n:c:p:h" opt; do
+while getopts ":n:c:p:e:h" opt; do
     case $opt in
         n)
             new_reltag=$OPTARG
@@ -54,6 +58,9 @@ while getopts ":n:c:p:h" opt; do
             ;;
         p)
             prev_reltag=$OPTARG
+            ;;
+        e)
+            eol_reltag=$OPTARG
             ;;
         \?)
             echo "Invalid option: -$OPTARG" >&2
@@ -69,6 +76,20 @@ while getopts ":n:c:p:h" opt; do
     esac
 done
 
+# Check if at least one parameter is provided
+if [[ -z "$new_reltag" && -z "$curr_reltag" && -z "$prev_reltag" && -z "$eol_reltag" ]]; then
+    echo "Error: At least one parameter must be provided"
+    usage
+fi
+
+# Validate: if doing branch cut (new/curr/prev), all three must be provided
+if [[ -n "$new_reltag" || -n "$curr_reltag" || -n "$prev_reltag" ]]; then
+    if [[ -z "$new_reltag" || -z "$curr_reltag" || -z "$prev_reltag" ]]; then
+        echo "Error: For branch cutting, -n, -c, and -p are all required"
+        usage
+    fi
+fi
+
 echo "Start Branch Cutting:"
 
 while IFS="" read -r file; do
@@ -82,7 +103,7 @@ while IFS="" read -r file; do
     if [[ $found -eq 1 ]]; then
         echo "Ignore file $file found in excludes list"
     else
-        ./branch_cut.awk -v new_reltag="$new_reltag" -v curr_reltag="$curr_reltag" -v prev_reltag="$prev_reltag" "$file" > "$TEMP"
+        ./branch_cut.awk -v new_reltag="$new_reltag" -v curr_reltag="$curr_reltag" -v prev_reltag="$prev_reltag" -v eol_reltag="$eol_reltag" "$file" > "$TEMP"
         [[ ! -s "$TEMP" ]] && echo "$file: excluded"
         [[ -s "$TEMP" ]] && mv "$TEMP" "$file" && echo "$file: Done" && (( mod++ ))
         (( count++ ))
