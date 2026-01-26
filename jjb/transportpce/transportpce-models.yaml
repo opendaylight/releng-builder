@@ -52,21 +52,3 @@
     email-upstream: "[transportpce] [odlparent] [yangtools] [controller]"
     # Used by the release job
     staging-profile-id: a6927323fa3d4
-
-- project:
-    name: transportpce-models-scandium
-    jobs:
-      - odl-maven-jobs-jdk21
-      - odl-maven-verify-jobs-jdk21
-
-    project: "transportpce/models"
-    project-name: "transportpce-models"
-    stream: scandium
-    branch: "stable/scandium"
-    build-node: ubuntu2204-docker-2c-2g
-    mvn-settings: "transportpce-settings"
-    mvn-opts: "-Xmx1024m"
-    dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}"
-    email-upstream: "[transportpce] [odlparent] [yangtools] [controller]"
-    # Used by the release job
-    staging-profile-id: a6927323fa3d4

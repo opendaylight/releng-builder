@@ -15,8 +15,6 @@
           branch: "stable/vanadium"
       - titanium:
           branch: "stable/titanium"
-      - scandium:
-          branch: "stable/scandium"
     project: releng/autorelease
     project-name: autorelease
     build-node: ubuntu2204-builder-2c-2g
@@ -48,11 +46,6 @@
           java-version: openjdk21
           mvn-version: mvn39
           integration-test: titanium
-      - scandium:
-          branch: "stable/scandium"
-          java-version: openjdk21
-          mvn-version: mvn39
-          integration-test: scandium
     project: releng/autorelease
     project-name: autorelease
     build-node: ubuntu2204-docker-8c-8g
