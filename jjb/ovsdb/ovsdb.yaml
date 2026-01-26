@@ -60,26 +60,6 @@
     staging-profile-id: a68b188166958
 
 - project:
-    name: ovsdb-scandium
-    jobs:
-      - distribution-check-jobs-jdk21
-      - odl-maven-javadoc-jobs-jdk21
-      - odl-maven-jobs-jdk21
-      - odl-maven-verify-jobs-jdk21
-
-    stream: scandium
-    project: "ovsdb"
-    project-name: "ovsdb"
-    branch: "stable/scandium"
-    build-node: ubuntu2204-docker-4c-4g
-    mvn-settings: "ovsdb-settings"
-    dependencies: "odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream}"
-    email-upstream: "[ovsdb] [odlparent] [controller] [yangtools]"
-
-    # Used by the release job
-    staging-profile-id: a68b188166958
-
-- project:
     name: ovsdb-sonar
     jobs:
       - odl-sonar-jobs-jdk21

@@ -116,9 +116,9 @@
 
     # Data for csit-verify jobs
     # Branch for "last" version detection
-    verify-branch: stable/scandium
+    verify-branch: stable/titanium
     # Value for ODL_STREAM
-    verify-stream: scandium
+    verify-stream: titanium
     verify-karaf-version: karaf4
     verify-jdkversion: openjdk21
 
@@ -203,35 +203,6 @@
     10-inclusion-flag: "off"
     10-exclude-value: ""
 
-    csit-mri-list-scandium: >
-      aaa-csit-1node-authn-all-scandium,
-      controller-csit-1node-akka1-all-scandium,
-      controller-csit-1node-benchmark-all-scandium,
-      controller-csit-1node-rest-cars-perf-all-scandium,
-      controller-csit-3node-benchmark-all-scandium,
-      controller-csit-3node-clustering-ask-all-scandium,
-      controller-csit-3node-clustering-tell-all-scandium,
-      controller-csit-3node-rest-clust-cars-perf-ask-only-scandium,
-      controller-csit-3node-rest-clust-cars-perf-tell-only-scandium,
-      mdsal-csit-3node-netty-replicate-only-scandium,
-      netconf-csit-1node-callhome-only-scandium,
-      netconf-csit-1node-scale-max-devices-only-scandium,
-      netconf-csit-1node-scale-only-scandium,
-      netconf-csit-1node-userfeatures-all-scandium,
-      netconf-csit-1node-userfeatures-netty-all-scandium,
-      netconf-csit-3node-clustering-only-scandium,
-      netconf-csit-3node-clustering-scale-only-scandium,
-      yangtools-csit-1node-system-only-scandium
-    csit-weekly-list-scandium: >
-      controller-csit-1node-notifications-longevity-only-scandium,
-      controller-csit-3node-drb-partnheal-longevity-only-scandium,
-      controller-csit-3node-drb-precedence-longevity-only-scandium,
-      controller-csit-3node-ddb-expl-lead-movement-longevity-only-scandium,
-      bgpcep-csit-3node-bgpclustering-longevity-only-scandium,
-      openflowplugin-csit-1node-longevity-only-scandium
-    csit-sanity-list-scandium: >
-      openflowplugin-csit-1node-sanity-only-scandium,
-      distribution-sanity-scandium
     csit-mri-list-titanium: >
       aaa-csit-1node-authn-all-titanium,
       controller-csit-1node-akka1-all-titanium,
