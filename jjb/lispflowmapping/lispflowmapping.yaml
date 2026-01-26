@@ -75,31 +75,6 @@
     staging-profile-id: 96fff2503b766
 
 - project:
-    name: lispflowmapping-scandium
-    jobs:
-      - distribution-check-jobs-jdk21
-      - odl-maven-javadoc-jobs-jdk21
-      - odl-maven-jobs-jdk21
-      - odl-maven-verify-jobs-jdk21
-
-    stream: scandium
-    project: "lispflowmapping"
-    project-name: "lispflowmapping"
-    branch: "stable/scandium"
-    build-node: ubuntu2204-docker-8c-8g
-    mvn-settings: "lispflowmapping-settings"
-    mvn-goals: "clean deploy -DrepoBuild"
-    mvn-opts: "-Xmx2048m -Dmaven.compile.fork=true"
-    dependencies: "controller-merge-{stream},odlparent-merge-{stream},yangtools-merge-{stream},neutron-merge-{stream}"
-    email-upstream: "[lispflowmapping] [controller] [odlparent] [yangtools] [neutron]"
-    archive-artifacts: >
-      **/*.log
-      **/target/surefire-reports/*-output.txt
-
-    # Used by the release job
-    staging-profile-id: 96fff2503b766
-
-- project:
     name: lispflowmapping-sonar
     jobs:
       - odl-sonar-jobs-jdk21
