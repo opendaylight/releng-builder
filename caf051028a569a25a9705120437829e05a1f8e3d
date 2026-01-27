@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dfbec2c5_11cc482e",
+        "filename": "jjb/integration/integration-compare-distributions.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 8907
+      },
+      "writtenOn": "2026-01-27T09:22:03Z",
+      "side": 0,
+      "message": "The reason for this if else block was that for netconf project the karaf folder path was different, based on the distro stream. For releases prior to titanium (scandium, calcium, ...) it was `karaf`, for releases since titanium (titanium, vanadium, chromium) it is `usecase/karaf`\nAs we will not support streams prior to titanium it will always be `usecase/karaf`\nIt could be directly updated on line 24 instead of using `KARAF_PATH` variable",
+      "revId": "caf051028a569a25a9705120437829e05a1f8e3d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b983f09_2671bbb6",
+        "filename": "jjb/integration/integration-compare-distributions.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 8907
+      },
+      "writtenOn": "2026-01-27T09:22:03Z",
+      "side": 0,
+      "message": "In here it can be directly set to `usecase/karaf` instead of using `KARAF_PATH` variable so it would be\n`wget -nv -O pom.xml \"https://raw.githubusercontent.com/opendaylight/netconf/${DISTROBRANCH}/usecase/karaf/pom.xml\"`",
+      "revId": "caf051028a569a25a9705120437829e05a1f8e3d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "204609d2_43cb40e3",
+        "filename": "jjb/integration/integration-detect-variables.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 8907
+      },
+      "writtenOn": "2026-01-27T09:22:03Z",
+      "side": 0,
+      "message": "also in here",
+      "revId": "caf051028a569a25a9705120437829e05a1f8e3d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
