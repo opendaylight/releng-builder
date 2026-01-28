@@ -64,8 +64,13 @@ concurrency:
 jobs:
   clear-vote:
     runs-on: ubuntu-latest
+    needs: [detect-changes]
     # yamllint disable-line rule:line-length
-    if: github.event_name != 'schedule' && inputs.GERRIT_CHANGE_NUMBER != '' && inputs.GERRIT_CHANGE_NUMBER != '0'
+    if: |
+      github.event_name != 'schedule' &&
+      inputs.GERRIT_CHANGE_NUMBER != '' &&
+      inputs.GERRIT_CHANGE_NUMBER != '0' &&
+      (needs.detect-changes.outputs.has_packer_changes == 'true' || inputs.PACKER_BUILDS != '')
     steps:
       - name: Clear votes
         # yamllint disable-line rule:line-length
@@ -136,13 +141,13 @@ jobs:
     outputs:
       build_matrix: ${{ steps.generate-matrix.outputs.matrix }}
       build_all: ${{ steps.check-trigger.outputs.build_all }}
+      has_packer_changes: ${{ steps.filter-changes.outputs.packer }}
     steps:
       - name: Determine trigger type
         id: check-trigger
         run: |
-          # Check if this is a manual build with specific templates
+          # Check if this is a manual build with specific templates or scheduled build
           if [[ "${{ github.event_name }}" == "schedule" ]] || \
-             [[ "${{ inputs.GERRIT_CHANGE_NUMBER }}" == "0" ]] || \
              [[ "${{ inputs.PACKER_BUILDS }}" == "all" ]] || \
              [[ -n "${{ inputs.PACKER_BUILDS }}" ]]; then
             echo "build_all=true" >> "$GITHUB_OUTPUT"
@@ -172,10 +177,31 @@ jobs:
       - name: Update submodules
         run: git submodule update --init --recursive
 
+      - name: Check for packer file changes
+        if: github.event_name != 'schedule'
+        # yamllint disable-line rule:line-length
+        uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36 # v3.0.2
+        id: filter-changes
+        with:
+          base: ${{ inputs.GERRIT_BRANCH }}
+          ref: ${{ inputs.GERRIT_PATCHSET_REVISION }}
+          filters: |
+            packer:
+              - 'packer/**'
+
       - name: Generate build matrix
         id: generate-matrix
         run: |
           set -euo pipefail
+
+          # For manual builds or scheduled builds, proceed regardless of packer changes
+          if [[ "${{ steps.check-trigger.outputs.build_all }}" == "true" ]]; then
+            echo "✅ Manual/scheduled build - proceeding with matrix generation"
+          elif [[ "${{ steps.filter-changes.outputs.packer }}" != "true" ]]; then
+            echo "ℹ️  No packer files changed - skipping build"
+            echo "matrix={\"include\":[]}" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
 
           # Define all available templates and platforms
           TEMPLATES=(
@@ -542,8 +568,8 @@ jobs:
 
   vote:
     # yamllint disable-line rule:line-length
-    if: ${{ always() && github.event_name != 'schedule' && inputs.GERRIT_CHANGE_NUMBER != '' && inputs.GERRIT_CHANGE_NUMBER != '0' }}
-    needs: [clear-vote, actionlint, pre-commit, tox-verify, build-summary]
+    if: ${{ always() && github.event_name != 'schedule' && inputs.GERRIT_CHANGE_NUMBER != '' && inputs.GERRIT_CHANGE_NUMBER != '0' && (needs.detect-changes.outputs.has_packer_changes == 'true' || inputs.PACKER_BUILDS != '') }}
+    needs: [detect-changes, clear-vote, actionlint, pre-commit, tox-verify, build-summary]
     runs-on: ubuntu-latest
     steps:
       - name: Get conclusion
