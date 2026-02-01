@@ -125,6 +125,8 @@ jobs:
   packer-validator:
     needs: clear-vote
     runs-on: ubuntu-latest
+    outputs:
+      has_packer_changes: ${{ steps.changes.outputs.src }}
     steps:
       - name: Checkout change
         # yamllint disable-line rule:line-length
@@ -162,7 +164,8 @@ jobs:
           syntax_only: "true"
 
   vote:
-    if: ${{ always() }}
+    # yamllint disable-line rule:line-length
+    if: ${{ always() && needs.packer-validator.outputs.has_packer_changes == 'true' }}
     needs: [clear-vote, packer-validator]
     runs-on: ubuntu-latest
     steps:
