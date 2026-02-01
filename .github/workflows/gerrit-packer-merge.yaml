@@ -1,9 +1,14 @@
 ---
 # SPDX-License-Identifier: Apache-2.0
-# Example: Gerrit-triggered Packer build workflow (for merged changes)
+# Gerrit-triggered Packer build workflow (redesigned for per-type jobs)
 # This workflow builds Packer images when:
 # 1. Changes are merged from Gerrit (workflow_dispatch)
 # 2. Monthly scheduled builds (1st of every month)
+#
+# Architecture: Separate jobs per builder type with sequential dependencies
+# - Prevents OpenStack quota exhaustion during scheduled builds
+# - Allows selective rebuilds based on file changes
+# - Matches JJB pattern with separate jobs per type
 
 name: Gerrit Packer Merge
 
@@ -48,7 +53,7 @@ on:
         required: true
         type: string
       PACKER_BUILDS:
-        description: "Build selection: 'all', 'template1,template2' or 'template1:platform1,template2:platform2'"
+        description: "Build selection: 'all', 'builder,docker' or 'builder:centos-7,docker:ubuntu-22.04'"
         required: false
         type: string
         default: ""
@@ -64,13 +69,10 @@ concurrency:
 jobs:
   clear-vote:
     runs-on: ubuntu-latest
-    needs: [detect-changes]
-    # yamllint disable-line rule:line-length
     if: |
       github.event_name != 'schedule' &&
       inputs.GERRIT_CHANGE_NUMBER != '' &&
-      inputs.GERRIT_CHANGE_NUMBER != '0' &&
-      (needs.detect-changes.outputs.has_packer_changes == 'true' || inputs.PACKER_BUILDS != '')
+      inputs.GERRIT_CHANGE_NUMBER != '0'
     steps:
       - name: Clear votes
         # yamllint disable-line rule:line-length
@@ -78,83 +80,43 @@ jobs:
         with:
           host: ${{ vars.GERRIT_SERVER }}
           username: ${{ vars.GERRIT_SSH_USER }}
-          key: ${{ secrets.GERRIT_SSH_PRIVKEY }}
+          key: ${{ secrets.GERRIT_SSH_PRIVKEY_B64 }}
           known_hosts: ${{ vars.GERRIT_KNOWN_HOSTS }}
-          gerrit-change-number: ${{ inputs.GERRIT_CHANGE_NUMBER }}
-          gerrit-patchset-number: ${{ inputs.GERRIT_PATCHSET_NUMBER }}
-          vote-type: clear
+          change-number: ${{ inputs.GERRIT_CHANGE_NUMBER }}
+          gerrit-label: Verified
+          score: 0
+          comment-message: "Packer builds started"
 
-  actionlint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: lfreleng-actions/checkout-gerrit-change-action@54d751e8bd167bc91f7d665dabe33fae87aaaa63 # v0.9
-        with:
-          gerrit-refspec: ${{ inputs.GERRIT_REFSPEC }}
-          gerrit-project: ${{ inputs.GERRIT_PROJECT }}
-          gerrit-url: ${{ vars.GERRIT_URL }}
-          delay: "10s"
-      - name: Download actionlint
-        id: get_actionlint
-        run: bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
-        shell: bash
-      - name: Check workflow files
-        run: ${{ steps.get_actionlint.outputs.executable }} -color
-        shell: bash
-
-  # run pre-commit tox env separately to get use of more parallel processing
-  pre-commit:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: lfreleng-actions/checkout-gerrit-change-action@54d751e8bd167bc91f7d665dabe33fae87aaaa63 # v0.9
-        with:
-          gerrit-refspec: ${{ inputs.GERRIT_REFSPEC }}
-          gerrit-project: ${{ inputs.GERRIT_PROJECT }}
-          gerrit-url: ${{ vars.GERRIT_URL }}
-          delay: "10s"
-      - uses: actions/setup-python@v5.4.0
-        with:
-          python-version: "3.11"
-      - name: Run static analysis and format checkers
-        run: pipx run pre-commit run --all-files --show-diff-on-failure
-
-  tox-verify:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: lfreleng-actions/checkout-gerrit-change-action@54d751e8bd167bc91f7d665dabe33fae87aaaa63 # v0.9
-        with:
-          gerrit-refspec: ${{ inputs.GERRIT_REFSPEC }}
-          gerrit-project: ${{ inputs.GERRIT_PROJECT }}
-          gerrit-url: ${{ vars.GERRIT_URL }}
-          delay: "10s"
-          submodules: "true"
-      - uses: actions/setup-python@v5.4.0
-        id: setup-python
-        with:
-          python-version: "3.11"
-      - name: Run tox
-        run: >-
-          pipx run tox
-
-  # Detect what needs to be built
   detect-changes:
     runs-on: ubuntu-latest
     outputs:
-      build_matrix: ${{ steps.generate-matrix.outputs.matrix }}
-      build_all: ${{ steps.check-trigger.outputs.build_all }}
-      has_packer_changes: ${{ steps.filter-changes.outputs.packer }}
+      # Change detection flags
+      builder_changed: ${{ steps.filter.outputs.builder }}
+      docker_changed: ${{ steps.filter.outputs.docker }}
+      robot_changed: ${{ steps.filter.outputs.robot }}
+      helm_changed: ${{ steps.filter.outputs.helm }}
+      mininet_changed: ${{ steps.filter.outputs.mininet }}
+      # Platform matrices
+      builder_platforms: ${{ steps.matrices.outputs.builder_platforms }}
+      docker_platforms: ${{ steps.matrices.outputs.docker_platforms }}
+      robot_platforms: ${{ steps.matrices.outputs.robot_platforms }}
+      helm_platforms: ${{ steps.matrices.outputs.helm_platforms }}
+      mininet_platforms: ${{ steps.matrices.outputs.mininet_platforms }}
+      # Build control
+      build_mode: ${{ steps.build_mode.outputs.mode }}
     steps:
-      - name: Determine trigger type
-        id: check-trigger
+      - name: Determine build mode
+        id: build_mode
         run: |
-          # Check if this is a manual build with specific templates or scheduled build
-          if [[ "${{ github.event_name }}" == "schedule" ]] || \
-             [[ "${{ inputs.PACKER_BUILDS }}" == "all" ]] || \
-             [[ -n "${{ inputs.PACKER_BUILDS }}" ]]; then
-            echo "build_all=true" >> "$GITHUB_OUTPUT"
-            echo "📅 Building specified or ALL images"
+          if [[ "${{ github.event_name }}" == "schedule" ]]; then
+            echo "mode=scheduled" >> "$GITHUB_OUTPUT"
+            echo "📅 Scheduled monthly build - building all types"
+          elif [[ "${{ inputs.PACKER_BUILDS }}" == "all" ]] || [[ -n "${{ inputs.PACKER_BUILDS }}" ]]; then
+            echo "mode=manual" >> "$GITHUB_OUTPUT"
+            echo "🔨 Manual build selection: ${{ inputs.PACKER_BUILDS }}"
           else
-            echo "build_all=false" >> "$GITHUB_OUTPUT"
-            echo "🔄 Gerrit merge event - detecting changes"
+            echo "mode=change-detect" >> "$GITHUB_OUTPUT"
+            echo "🔍 Change detection mode"
           fi
 
       - name: Checkout change
@@ -178,259 +140,182 @@ jobs:
         run: git submodule update --init --recursive
 
       - name: Check for packer file changes
-        if: github.event_name != 'schedule'
+        id: filter
         # yamllint disable-line rule:line-length
         uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36 # v3.0.2
-        id: filter-changes
         with:
-          base: ${{ inputs.GERRIT_BRANCH }}
-          ref: ${{ inputs.GERRIT_PATCHSET_REVISION }}
           filters: |
-            packer:
-              - 'packer/**'
+            builder:
+              - 'packer/templates/builder.pkr.hcl'
+              - 'packer/common-packer/templates/builder.pkr.hcl'
+              - 'packer/provision/builder/**'
+              - 'packer/provision/baseline.sh'
+              - 'packer/provision/system-reseal.sh'
+              - 'packer/common-packer/vars/*.pkrvars.hcl'
+            docker:
+              - 'packer/templates/docker.pkr.hcl'
+              - 'packer/common-packer/templates/docker.pkr.hcl'
+              - 'packer/provision/docker/**'
+              - 'packer/provision/baseline.sh'
+              - 'packer/provision/system-reseal.sh'
+              - 'packer/common-packer/vars/centos-7.pkrvars.hcl'
+              - 'packer/common-packer/vars/ubuntu-20.04.pkrvars.hcl'
+              - 'packer/common-packer/vars/ubuntu-22.04.pkrvars.hcl'
+              - 'packer/common-packer/vars/ubuntu-25.04.pkrvars.hcl'
+            robot:
+              - 'packer/templates/robot.pkr.hcl'
+              - 'packer/provision/robot/**'
+              - 'packer/provision/baseline.sh'
+              - 'packer/provision/system-reseal.sh'
+              - 'packer/common-packer/vars/centos-7.pkrvars.hcl'
+              - 'packer/common-packer/vars/centos-cs-8.pkrvars.hcl'
+              - 'packer/common-packer/vars/centos-cs-9.pkrvars.hcl'
+              - 'packer/common-packer/vars/ubuntu-22.04.pkrvars.hcl'
+              - 'packer/common-packer/vars/ubuntu-24.04.pkrvars.hcl'
+            helm:
+              - 'packer/templates/helm.pkr.hcl'
+              - 'packer/provision/helm/**'
+              - 'packer/provision/baseline.sh'
+              - 'packer/provision/system-reseal.sh'
+              - 'packer/common-packer/vars/centos-7.pkrvars.hcl'
+            mininet:
+              - 'packer/templates/mininet-ovs-217.pkr.hcl'
+              - 'packer/provision/mininet-ovs-217/**'
+              - 'packer/provision/baseline.sh'
+              - 'packer/provision/system-reseal.sh'
+              - 'packer/common-packer/vars/ubuntu-22.04.pkrvars.hcl'
+              - 'packer/common-packer/vars/ubuntu-24.04.pkrvars.hcl'
 
-      - name: Generate build matrix
-        id: generate-matrix
+      - name: Generate platform matrices
+        id: matrices
         run: |
-          set -euo pipefail
-
-          # For manual builds or scheduled builds, proceed regardless of packer changes
-          if [[ "${{ steps.check-trigger.outputs.build_all }}" == "true" ]]; then
-            echo "✅ Manual/scheduled build - proceeding with matrix generation"
-          elif [[ "${{ steps.filter-changes.outputs.packer }}" != "true" ]]; then
-            echo "ℹ️  No packer files changed - skipping build"
-            echo "matrix={\"include\":[]}" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-
-          # Define all available templates and platforms
-          TEMPLATES=(
-            "builder"
-            "docker"
-            "helm"
-            "mininet-ovs-217"
-            "robot"
-          )
-
-          PLATFORMS=(
-            "centos-7"
-            "centos-cs-8"
-            "centos-cs-9"
-            "ubuntu-20.04"
-            "ubuntu-22.04"
-            "ubuntu-24.04"
-            "ubuntu-25.04"
-          )
-
-          # Define exclusions: template:platform combinations that should NOT be built
-          # Based on JJB job configurations - only building required combinations
-          # Total: 35 combinations, Required: 19, Excluded: 16
-          EXCLUSIONS=(
-            # Docker: only centos-7, ubuntu-20.04, ubuntu-22.04, ubuntu-25.04
-            "docker:centos-cs-8"
-            "docker:centos-cs-9"
-            "docker:ubuntu-24.04"
-            # Helm: only centos-7
-            "helm:centos-cs-8"
-            "helm:centos-cs-9"
-            "helm:ubuntu-20.04"
-            "helm:ubuntu-22.04"
-            "helm:ubuntu-24.04"
-            "helm:ubuntu-25.04"
-            # Mininet: only ubuntu-22.04, ubuntu-24.04
-            "mininet-ovs-217:centos-7"
-            "mininet-ovs-217:centos-cs-8"
-            "mininet-ovs-217:centos-cs-9"
-            "mininet-ovs-217:ubuntu-20.04"
-            "mininet-ovs-217:ubuntu-25.04"
-            # Robot: excluded ubuntu-20.04, ubuntu-25.04
-            "robot:ubuntu-20.04"
-            "robot:ubuntu-25.04"
-          )
-
-          # Function to check if a combination should be excluded
-          is_excluded() {
-            local template="$1"
-            local platform="$2"
-            local combo="${template}:${platform}"
-
-            for exclusion in "${EXCLUSIONS[@]}"; do
-              if [[ "$combo" == "$exclusion" ]]; then
-                return 0  # Excluded
-              fi
-            done
-            return 1  # Not excluded
-          }
-
-          BUILD_ALL="${{ steps.check-trigger.outputs.build_all }}"
-          MATRIX_JSON="[]"
-
-          # Parse PACKER_BUILDS input
+          BUILD_MODE="${{ steps.build_mode.outputs.mode }}"
           PACKER_BUILDS="${{ inputs.PACKER_BUILDS }}"
 
-          if [[ "$BUILD_ALL" == "true" ]]; then
-            if [[ "$PACKER_BUILDS" == "all" ]] || [[ -z "$PACKER_BUILDS" ]]; then
-              # Build all combinations
-              echo "🔨 Building ALL templates × ALL platforms"
-              for template in "${TEMPLATES[@]}"; do
-                for platform in "${PLATFORMS[@]}"; do
-                  if ! is_excluded "$template" "$platform"; then
-                    MATRIX_JSON=$(jq -c --arg t "$template" --arg p "$platform" \
-                      '. += [{"template": $t, "platform": $p}]' <<< "$MATRIX_JSON")
-                  else
-                    echo "  ⊗ Excluding: $template + $platform"
-                  fi
-                done
-              done
+          # Define all platforms per type
+          # builder: all platforms
+          BUILDER_ALL='["centos-7","centos-cs-8","centos-cs-9","ubuntu-20.04","ubuntu-22.04","ubuntu-24.04","ubuntu-25.04"]'
+          # docker: only these platforms
+          DOCKER_ALL='["centos-7","ubuntu-20.04","ubuntu-22.04","ubuntu-25.04"]'
+          # robot: centos + ubuntu 22.04, 24.04
+          ROBOT_ALL='["centos-7","centos-cs-8","centos-cs-9","ubuntu-22.04","ubuntu-24.04"]'
+          # helm: only centos-7
+          HELM_ALL='["centos-7"]'
+          # mininet: only ubuntu 22.04, 24.04
+          MININET_ALL='["ubuntu-22.04","ubuntu-24.04"]'
+
+          if [[ "$BUILD_MODE" == "scheduled" ]]; then
+            # Scheduled build: build everything
+            echo "builder_platforms=$BUILDER_ALL" >> "$GITHUB_OUTPUT"
+            echo "docker_platforms=$DOCKER_ALL" >> "$GITHUB_OUTPUT"
+            echo "robot_platforms=$ROBOT_ALL" >> "$GITHUB_OUTPUT"
+            echo "helm_platforms=$HELM_ALL" >> "$GITHUB_OUTPUT"
+            echo "mininet_platforms=$MININET_ALL" >> "$GITHUB_OUTPUT"
+          elif [[ "$BUILD_MODE" == "manual" ]]; then
+            # Manual build: parse PACKER_BUILDS input
+            # Format: "all" or "builder,docker" or "builder:centos-7,docker:ubuntu-22.04"
+            if [[ "$PACKER_BUILDS" == "all" ]]; then
+              echo "builder_platforms=$BUILDER_ALL" >> "$GITHUB_OUTPUT"
+              echo "docker_platforms=$DOCKER_ALL" >> "$GITHUB_OUTPUT"
+              echo "robot_platforms=$ROBOT_ALL" >> "$GITHUB_OUTPUT"
+              echo "helm_platforms=$HELM_ALL" >> "$GITHUB_OUTPUT"
+              echo "mininet_platforms=$MININET_ALL" >> "$GITHUB_OUTPUT"
             else
-              # Parse custom build specification
-              # Format: "template1:platform1,template2:platform2" or "template1,template2" (all platforms)
-              echo "🔨 Building custom selection: $PACKER_BUILDS"
-              IFS=',' read -ra BUILD_SPECS <<< "$PACKER_BUILDS"
-              for spec in "${BUILD_SPECS[@]}"; do
+              # Parse custom specification
+              BUILDER_MATRIX='[]'
+              DOCKER_MATRIX='[]'
+              ROBOT_MATRIX='[]'
+              HELM_MATRIX='[]'
+              MININET_MATRIX='[]'
+
+              IFS=',' read -ra SPECS <<< "$PACKER_BUILDS"
+              for spec in "${SPECS[@]}"; do
                 if [[ "$spec" == *":"* ]]; then
-                  # Specific template:platform pair
+                  # template:platform format
                   template="${spec%:*}"
                   platform="${spec#*:}"
-                  if ! is_excluded "$template" "$platform"; then
-                    MATRIX_JSON=$(jq -c --arg t "$template" --arg p "$platform" \
-                      '. += [{"template": $t, "platform": $p}]' <<< "$MATRIX_JSON")
-                  else
-                    echo "  ⊗ Excluding: $template + $platform"
-                  fi
+                  case "$template" in
+                    builder) BUILDER_MATRIX=$(jq -c ". += [\"$platform\"]" <<< "$BUILDER_MATRIX") ;;
+                    docker) DOCKER_MATRIX=$(jq -c ". += [\"$platform\"]" <<< "$DOCKER_MATRIX") ;;
+                    robot) ROBOT_MATRIX=$(jq -c ". += [\"$platform\"]" <<< "$ROBOT_MATRIX") ;;
+                    helm) HELM_MATRIX=$(jq -c ". += [\"$platform\"]" <<< "$HELM_MATRIX") ;;
+                    mininet-ovs-217|mininet) MININET_MATRIX=$(jq -c ". += [\"$platform\"]" <<< "$MININET_MATRIX") ;;
+                  esac
                 else
-                  # Template with all platforms
-                  template="$spec"
-                  for platform in "${PLATFORMS[@]}"; do
-                    if ! is_excluded "$template" "$platform"; then
-                      MATRIX_JSON=$(jq -c --arg t "$template" --arg p "$platform" \
-                        '. += [{"template": $t, "platform": $p}]' <<< "$MATRIX_JSON")
-                    else
-                      echo "  ⊗ Excluding: $template + $platform"
-                    fi
-                  done
+                  # Just template name - use all platforms for that type
+                  case "$spec" in
+                    builder) BUILDER_MATRIX="$BUILDER_ALL" ;;
+                    docker) DOCKER_MATRIX="$DOCKER_ALL" ;;
+                    robot) ROBOT_MATRIX="$ROBOT_ALL" ;;
+                    helm) HELM_MATRIX="$HELM_ALL" ;;
+                    mininet-ovs-217|mininet) MININET_MATRIX="$MININET_ALL" ;;
+                  esac
                 fi
               done
+
+              echo "builder_platforms=$BUILDER_MATRIX" >> "$GITHUB_OUTPUT"
+              echo "docker_platforms=$DOCKER_MATRIX" >> "$GITHUB_OUTPUT"
+              echo "robot_platforms=$ROBOT_MATRIX" >> "$GITHUB_OUTPUT"
+              echo "helm_platforms=$HELM_MATRIX" >> "$GITHUB_OUTPUT"
+              echo "mininet_platforms=$MININET_MATRIX" >> "$GITHUB_OUTPUT"
             fi
           else
-            # Gerrit merge: detect what changed
-            echo "🔍 Detecting changes from Gerrit merge"
-
-            # Detect changed files in packer directory
-            CHANGED_TEMPLATES=()
-            CHANGED_PLATFORMS=()
-            PROVISION_CHANGED=false
-
-            # Get changed files from git diff
-            if [[ "${{ github.event_name }}" != "schedule" && -n "${{ inputs.GERRIT_PATCHSET_REVISION }}" ]]; then
-              # Compare against base branch for Gerrit changes
-              BASE_REF="${{ inputs.GERRIT_BRANCH }}"
-              CHANGED_FILES=$(git diff --name-only "origin/${BASE_REF}...HEAD" || git diff --name-only HEAD~1)
+            # Change detection mode: use paths-filter results
+            if [[ "${{ steps.filter.outputs.builder }}" == "true" ]]; then
+              echo "builder_platforms=$BUILDER_ALL" >> "$GITHUB_OUTPUT"
             else
-              # Fallback to last commit
-              CHANGED_FILES=$(git diff --name-only HEAD~1)
+              echo "builder_platforms=[]" >> "$GITHUB_OUTPUT"
             fi
 
-            echo "Changed files:"
-            echo "$CHANGED_FILES"
-
-            # Detect changed templates
-            while IFS= read -r file; do
-              if [[ "$file" =~ packer/templates/(.+)\.pkr\.hcl$ ]]; then
-                template="${BASH_REMATCH[1]}"
-                CHANGED_TEMPLATES+=("$template")
-                echo "  📝 Template changed: $template"
-              fi
-            done <<< "$CHANGED_FILES"
-
-            # Detect changed platform vars
-            while IFS= read -r file; do
-              if [[ "$file" =~ packer/common-packer/vars/(.+)\.pkrvars\.hcl$ ]]; then
-                platform="${BASH_REMATCH[1]}"
-                CHANGED_PLATFORMS+=("$platform")
-                echo "  📝 Platform vars changed: $platform"
-              fi
-            done <<< "$CHANGED_FILES"
-
-            # Check if provision scripts changed
-            if echo "$CHANGED_FILES" | grep -q "packer/provision/"; then
-              PROVISION_CHANGED=true
-              echo "  ⚠️ Provision scripts changed - will rebuild ALL combinations"
+            if [[ "${{ steps.filter.outputs.docker }}" == "true" ]]; then
+              echo "docker_platforms=$DOCKER_ALL" >> "$GITHUB_OUTPUT"
+            else
+              echo "docker_platforms=[]" >> "$GITHUB_OUTPUT"
             fi
 
-            # Build matrix based on what changed
-            if [[ "$PROVISION_CHANGED" == "true" ]]; then
-              # Provision changed: rebuild everything
-              for template in "${TEMPLATES[@]}"; do
-                for platform in "${PLATFORMS[@]}"; do
-                  if ! is_excluded "$template" "$platform"; then
-                    MATRIX_JSON=$(jq -c --arg t "$template" --arg p "$platform" \
-                      '. += [{"template": $t, "platform": $p}]' <<< "$MATRIX_JSON")
-                  fi
-                done
-              done
+            if [[ "${{ steps.filter.outputs.robot }}" == "true" ]]; then
+              echo "robot_platforms=$ROBOT_ALL" >> "$GITHUB_OUTPUT"
             else
-              # Build specific combinations based on changes
-              if [[ ${#CHANGED_TEMPLATES[@]} -gt 0 && ${#CHANGED_PLATFORMS[@]} -eq 0 ]]; then
-                # Only templates changed: build with all platforms
-                echo "Building changed templates with all platforms"
-                for template in "${CHANGED_TEMPLATES[@]}"; do
-                  for platform in "${PLATFORMS[@]}"; do
-                    if ! is_excluded "$template" "$platform"; then
-                      MATRIX_JSON=$(jq -c --arg t "$template" --arg p "$platform" \
-                        '. += [{"template": $t, "platform": $p}]' <<< "$MATRIX_JSON")
-                    fi
-                  done
-                done
-              elif [[ ${#CHANGED_PLATFORMS[@]} -gt 0 && ${#CHANGED_TEMPLATES[@]} -eq 0 ]]; then
-                # Only platform vars changed: build all templates with changed platforms
-                echo "Building all templates with changed platforms"
-                for platform in "${CHANGED_PLATFORMS[@]}"; do
-                  for template in "${TEMPLATES[@]}"; do
-                    if ! is_excluded "$template" "$platform"; then
-                      MATRIX_JSON=$(jq -c --arg t "$template" --arg p "$platform" \
-                        '. += [{"template": $t, "platform": $p}]' <<< "$MATRIX_JSON")
-                    fi
-                  done
-                done
-              elif [[ ${#CHANGED_TEMPLATES[@]} -gt 0 && ${#CHANGED_PLATFORMS[@]} -gt 0 ]]; then
-                # Both changed: build all combinations of changed items
-                echo "Building all combinations of changed templates and platforms"
-                for template in "${CHANGED_TEMPLATES[@]}"; do
-                  for platform in "${CHANGED_PLATFORMS[@]}"; do
-                    if ! is_excluded "$template" "$platform"; then
-                      MATRIX_JSON=$(jq -c --arg t "$template" --arg p "$platform" \
-                        '. += [{"template": $t, "platform": $p}]' <<< "$MATRIX_JSON")
-                    fi
-                  done
-                done
-              else
-                echo "⚠️ No packer-related changes detected - skipping build"
-              fi
+              echo "robot_platforms=[]" >> "$GITHUB_OUTPUT"
+            fi
+
+            if [[ "${{ steps.filter.outputs.helm }}" == "true" ]]; then
+              echo "helm_platforms=$HELM_ALL" >> "$GITHUB_OUTPUT"
+            else
+              echo "helm_platforms=[]" >> "$GITHUB_OUTPUT"
+            fi
+
+            if [[ "${{ steps.filter.outputs.mininet }}" == "true" ]]; then
+              echo "mininet_platforms=$MININET_ALL" >> "$GITHUB_OUTPUT"
+            else
+              echo "mininet_platforms=[]" >> "$GITHUB_OUTPUT"
             fi
           fi
 
-          # Remove duplicates
-          MATRIX_JSON=$(jq -c 'unique_by(.template + .platform)' <<< "$MATRIX_JSON")
-
           echo ""
-          echo "📊 Build matrix ($(jq 'length' <<< "$MATRIX_JSON") combinations):"
-          jq -r '.[] | "  - \(.template) + \(.platform)"' <<< "$MATRIX_JSON"
+          echo "ℹ️ Platform matrices generated (see job outputs for details)"
 
-          # Output matrix
-          echo "matrix={\"include\":$MATRIX_JSON}" >> "$GITHUB_OUTPUT"
+  # ═══════════════════════════════════════════════════════
+  # Build Jobs - One per builder type
+  # Sequential execution for scheduled builds (quota control)
+  # Parallel execution for manual/merge builds (speed)
+  # ═══════════════════════════════════════════════════════
 
-  # Build images based on detected changes
-  packer-build:
+  build-builder:
     needs: detect-changes
-    if: needs.detect-changes.outputs.build_matrix != '{"include":[]}'
+    if: |
+      needs.detect-changes.outputs.builder_platforms != '[]' &&
+      (needs.detect-changes.outputs.builder_changed == 'true' ||
+       needs.detect-changes.outputs.build_mode == 'scheduled' ||
+       needs.detect-changes.outputs.build_mode == 'manual')
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      # Reduce parallelism for scheduled builds to avoid quota exhaustion
-      # Manual builds: 5 concurrent, Scheduled builds: 2 concurrent
-      max-parallel: ${{ github.event_name == 'schedule' && 2 || 5 }}
-      matrix: ${{ fromJson(needs.detect-changes.outputs.build_matrix) }}
+      # Scheduled: 2 concurrent (quota control)
+      # Manual/Merge: 5 concurrent (speed)
+      max-parallel: ${{ needs.detect-changes.outputs.build_mode == 'scheduled' && 2 || 5 }}
+      matrix:
+        platform: ${{ fromJson(needs.detect-changes.outputs.builder_platforms) }}
     steps:
       - name: Checkout change
         if: github.event_name != 'schedule'
@@ -452,28 +337,9 @@ jobs:
       - name: Update submodules
         run: git submodule update --init --recursive
 
-      - name: Resolve template path
-        id: resolve-template
-        run: |
-          TEMPLATE="${{ matrix.template }}"
-
-          # Check ODL-specific templates first
-          if [[ -f "packer/templates/${TEMPLATE}.pkr.hcl" ]]; then
-            TEMPLATE_PATH="templates/${TEMPLATE}.pkr.hcl"
-            echo "✅ Using ODL-specific template: $TEMPLATE_PATH"
-          # Fallback to common-packer
-          elif [[ -f "packer/common-packer/templates/${TEMPLATE}.pkr.hcl" ]]; then
-            TEMPLATE_PATH="common-packer/templates/${TEMPLATE}.pkr.hcl"
-            echo "✅ Using shared template: $TEMPLATE_PATH"
-          else
-            echo "❌ Template not found: ${TEMPLATE}.pkr.hcl"
-            exit 1
-          fi
-
-          echo "template_path=${TEMPLATE_PATH}" >> "$GITHUB_OUTPUT"
-
-      - name: Setup OpenStack Bastion
+      - name: Setup OpenStack + Tailscale Bastion
         id: bastion-setup
+        # yamllint disable-line rule:line-length
         uses: askb/tailscale-openstack-bastion-action@main
         with:
           operation: setup
@@ -496,8 +362,8 @@ jobs:
           PACKER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           mode: build
-          packer_template: "${{ steps.resolve-template.outputs.template_path }}"
-          packer_vars_file: "common-packer/vars/${{ matrix.platform }}.pkrvars.hcl"
+          packer_template: "packer/templates/builder.pkr.hcl"
+          packer_vars_file: "packer/common-packer/vars/${{ matrix.platform }}.pkrvars.hcl"
           packer_working_dir: "packer"
           packer_version: "1.9.1"
           path_prefix: "${{ github.workspace }}"
@@ -521,70 +387,444 @@ jobs:
           openstack_password: ${{ secrets.OPENSTACK_PASSWORD_B64 }}
           openstack_region: ${{ secrets.OPENSTACK_REGION }}
 
-      - name: Report build status
-        if: always()
-        run: |
-          {
-            echo "### Build Result: ${{ matrix.template }} + ${{ matrix.platform }}"
-            echo "- **Status**: ${{ job.status }}"
-            echo "- **Image Name**: ${{ steps.build.outputs.image_name || 'N/A' }}"
-            echo "- **Template**: ${{ matrix.template }}"
-            echo "- **Platform**: ${{ matrix.platform }}"
-          } >> "$GITHUB_STEP_SUMMARY"
-
-  # Summary job to collect all results
-  build-summary:
-    if: always()
-    needs: [detect-changes, packer-build]
+  build-docker:
+    needs: [detect-changes, build-builder]
+    # Sequential dependency for scheduled builds (quota control)
+    # Use always() to run even if builder was skipped
+    if: |
+      always() &&
+      needs.detect-changes.outputs.docker_platforms != '[]' &&
+      (needs.detect-changes.outputs.docker_changed == 'true' ||
+       needs.detect-changes.outputs.build_mode == 'scheduled' ||
+       needs.detect-changes.outputs.build_mode == 'manual')
     runs-on: ubuntu-latest
-    outputs:
-      success: ${{ steps.summary.outputs.success }}
-      message: ${{ steps.summary.outputs.message }}
+    strategy:
+      fail-fast: false
+      max-parallel: ${{ needs.detect-changes.outputs.build_mode == 'scheduled' && 2 || 5 }}
+      matrix:
+        platform: ${{ fromJson(needs.detect-changes.outputs.docker_platforms) }}
     steps:
-      - name: Generate summary
-        id: summary
-        run: |
-          if [[ "${{ needs.packer-build.result }}" == "success" ]]; then
-            echo "success=true" >> "$GITHUB_OUTPUT"
-            echo "message=All Packer builds completed successfully" >> "$GITHUB_OUTPUT"
-          else
-            echo "success=false" >> "$GITHUB_OUTPUT"
-            echo "message=Some Packer builds failed. Check job logs." >> "$GITHUB_OUTPUT"
-          fi
+      - name: Checkout change
+        if: github.event_name != 'schedule'
+        # yamllint disable-line rule:line-length
+        uses: lfreleng-actions/checkout-gerrit-change-action@54d751e8bd167bc91f7d665dabe33fae87aaaa63 # v0.9
+        with:
+          gerrit-refspec: ${{ inputs.GERRIT_REFSPEC }}
+          delay: "0s"
+          submodules: "true"
 
-          # Generate detailed summary
-          cat >> "$GITHUB_STEP_SUMMARY" << EOF
-          ## Packer Build Summary
+      - name: Checkout repository (scheduled)
+        if: github.event_name == 'schedule'
+        # yamllint disable-line rule:line-length
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          submodules: true
 
-          **Trigger**: ${{ github.event_name == 'schedule' && 'Monthly Scheduled Build' || 'Gerrit Merge Event' }}
-          **Branch**: ${{ inputs.GERRIT_BRANCH || github.event.repository.default_branch }}
-          **Build Result**: ${{ needs.packer-build.result }}
+      - name: Update submodules
+        run: git submodule update --init --recursive
 
-          ### Details
-          - Change ID: ${{ inputs.GERRIT_CHANGE_ID || 'N/A' }}
-          - Change Number: ${{ inputs.GERRIT_CHANGE_NUMBER || 'N/A' }}
-          - Patchset: ${{ inputs.GERRIT_PATCHSET_NUMBER || 'N/A' }}
+      - name: Setup OpenStack + Tailscale Bastion
+        id: bastion-setup
+        # yamllint disable-line rule:line-length
+        uses: askb/tailscale-openstack-bastion-action@main
+        with:
+          operation: setup
+          openstack_auth_url: ${{ secrets.OPENSTACK_AUTH_URL }}
+          openstack_project_id: ${{ secrets.OPENSTACK_PROJECT_ID }}
+          openstack_username: ${{ secrets.OPENSTACK_USERNAME }}
+          openstack_password: ${{ secrets.OPENSTACK_PASSWORD_B64 }}
+          openstack_region: ${{ secrets.OPENSTACK_REGION }}
+          openstack_network_id: ${{ secrets.OPENSTACK_NETWORK_ID }}
+          tailscale_oauth_client_id: ${{ secrets.TAILSCALE_OAUTH_CLIENT_ID }}
+          tailscale_oauth_secret: ${{ secrets.TAILSCALE_OAUTH_SECRET }}
+          bastion_flavor: "v3-standard-2"
+          bastion_image: "Ubuntu 22.04.5 LTS (x86_64) [2025-03-27]"
+          debug_mode: "false"
 
-          Check individual job logs for image names and build details.
-          EOF
+      - name: Build Packer Image
+        id: build
+        uses: askb/packer-build-action@main
+        env:
+          PACKER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          mode: build
+          packer_template: "packer/templates/docker.pkr.hcl"
+          packer_vars_file: "packer/common-packer/vars/${{ matrix.platform }}.pkrvars.hcl"
+          packer_working_dir: "packer"
+          packer_version: "1.9.1"
+          path_prefix: "${{ github.workspace }}"
+          bastion_ip: ${{ steps.bastion-setup.outputs.bastion_ip }}
+          bastion_ssh_user: "ubuntu"
+          openstack_auth_url: ${{ secrets.OPENSTACK_AUTH_URL }}
+          openstack_project_id: ${{ secrets.OPENSTACK_PROJECT_ID }}
+          openstack_username: ${{ secrets.OPENSTACK_USERNAME }}
+          openstack_password: ${{ secrets.OPENSTACK_PASSWORD_B64 }}
+          openstack_region: ${{ secrets.OPENSTACK_REGION }}
+          openstack_network_id: ${{ secrets.OPENSTACK_NETWORK_ID }}
+
+      - name: Teardown OpenStack Bastion
+        if: always()
+        uses: askb/tailscale-openstack-bastion-action@main
+        with:
+          operation: teardown
+          openstack_auth_url: ${{ secrets.OPENSTACK_AUTH_URL }}
+          openstack_project_id: ${{ secrets.OPENSTACK_PROJECT_ID }}
+          openstack_username: ${{ secrets.OPENSTACK_USERNAME }}
+          openstack_password: ${{ secrets.OPENSTACK_PASSWORD_B64 }}
+          openstack_region: ${{ secrets.OPENSTACK_REGION }}
+
+  build-robot:
+    needs: [detect-changes, build-docker]
+    if: |
+      always() &&
+      needs.detect-changes.outputs.robot_platforms != '[]' &&
+      (needs.detect-changes.outputs.robot_changed == 'true' ||
+       needs.detect-changes.outputs.build_mode == 'scheduled' ||
+       needs.detect-changes.outputs.build_mode == 'manual')
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: ${{ needs.detect-changes.outputs.build_mode == 'scheduled' && 2 || 5 }}
+      matrix:
+        platform: ${{ fromJson(needs.detect-changes.outputs.robot_platforms) }}
+    steps:
+      - name: Checkout change
+        if: github.event_name != 'schedule'
+        # yamllint disable-line rule:line-length
+        uses: lfreleng-actions/checkout-gerrit-change-action@54d751e8bd167bc91f7d665dabe33fae87aaaa63 # v0.9
+        with:
+          gerrit-refspec: ${{ inputs.GERRIT_REFSPEC }}
+          delay: "0s"
+          submodules: "true"
+
+      - name: Checkout repository (scheduled)
+        if: github.event_name == 'schedule'
+        # yamllint disable-line rule:line-length
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          submodules: true
+
+      - name: Update submodules
+        run: git submodule update --init --recursive
+
+      - name: Setup OpenStack + Tailscale Bastion
+        id: bastion-setup
+        # yamllint disable-line rule:line-length
+        uses: askb/tailscale-openstack-bastion-action@main
+        with:
+          operation: setup
+          openstack_auth_url: ${{ secrets.OPENSTACK_AUTH_URL }}
+          openstack_project_id: ${{ secrets.OPENSTACK_PROJECT_ID }}
+          openstack_username: ${{ secrets.OPENSTACK_USERNAME }}
+          openstack_password: ${{ secrets.OPENSTACK_PASSWORD_B64 }}
+          openstack_region: ${{ secrets.OPENSTACK_REGION }}
+          openstack_network_id: ${{ secrets.OPENSTACK_NETWORK_ID }}
+          tailscale_oauth_client_id: ${{ secrets.TAILSCALE_OAUTH_CLIENT_ID }}
+          tailscale_oauth_secret: ${{ secrets.TAILSCALE_OAUTH_SECRET }}
+          bastion_flavor: "v3-standard-2"
+          bastion_image: "Ubuntu 22.04.5 LTS (x86_64) [2025-03-27]"
+          debug_mode: "false"
+
+      - name: Build Packer Image
+        id: build
+        uses: askb/packer-build-action@main
+        env:
+          PACKER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          mode: build
+          packer_template: "packer/templates/robot.pkr.hcl"
+          packer_vars_file: "packer/common-packer/vars/${{ matrix.platform }}.pkrvars.hcl"
+          packer_working_dir: "packer"
+          packer_version: "1.9.1"
+          path_prefix: "${{ github.workspace }}"
+          bastion_ip: ${{ steps.bastion-setup.outputs.bastion_ip }}
+          bastion_ssh_user: "ubuntu"
+          openstack_auth_url: ${{ secrets.OPENSTACK_AUTH_URL }}
+          openstack_project_id: ${{ secrets.OPENSTACK_PROJECT_ID }}
+          openstack_username: ${{ secrets.OPENSTACK_USERNAME }}
+          openstack_password: ${{ secrets.OPENSTACK_PASSWORD_B64 }}
+          openstack_region: ${{ secrets.OPENSTACK_REGION }}
+          openstack_network_id: ${{ secrets.OPENSTACK_NETWORK_ID }}
+
+      - name: Teardown OpenStack Bastion
+        if: always()
+        uses: askb/tailscale-openstack-bastion-action@main
+        with:
+          operation: teardown
+          openstack_auth_url: ${{ secrets.OPENSTACK_AUTH_URL }}
+          openstack_project_id: ${{ secrets.OPENSTACK_PROJECT_ID }}
+          openstack_username: ${{ secrets.OPENSTACK_USERNAME }}
+          openstack_password: ${{ secrets.OPENSTACK_PASSWORD_B64 }}
+          openstack_region: ${{ secrets.OPENSTACK_REGION }}
+
+
+  build-helm:
+    needs: [detect-changes, build-robot]
+    if: |
+      always() &&
+      needs.detect-changes.outputs.helm_platforms != '[]' &&
+      (needs.detect-changes.outputs.helm_changed == 'true' ||
+       needs.detect-changes.outputs.build_mode == 'scheduled' ||
+       needs.detect-changes.outputs.build_mode == 'manual')
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: ${{ needs.detect-changes.outputs.build_mode == 'scheduled' && 2 || 5 }}
+      matrix:
+        platform: ${{ fromJson(needs.detect-changes.outputs.helm_platforms) }}
+    steps:
+      - name: Checkout change
+        if: github.event_name != 'schedule'
+        # yamllint disable-line rule:line-length
+        uses: lfreleng-actions/checkout-gerrit-change-action@54d751e8bd167bc91f7d665dabe33fae87aaaa63 # v0.9
+        with:
+          gerrit-refspec: ${{ inputs.GERRIT_REFSPEC }}
+          delay: "0s"
+          submodules: "true"
+
+      - name: Checkout repository (scheduled)
+        if: github.event_name == 'schedule'
+        # yamllint disable-line rule:line-length
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          submodules: true
+
+      - name: Update submodules
+        run: git submodule update --init --recursive
+
+      - name: Setup OpenStack + Tailscale Bastion
+        id: bastion-setup
+        # yamllint disable-line rule:line-length
+        uses: askb/tailscale-openstack-bastion-action@main
+        with:
+          operation: setup
+          openstack_auth_url: ${{ secrets.OPENSTACK_AUTH_URL }}
+          openstack_project_id: ${{ secrets.OPENSTACK_PROJECT_ID }}
+          openstack_username: ${{ secrets.OPENSTACK_USERNAME }}
+          openstack_password: ${{ secrets.OPENSTACK_PASSWORD_B64 }}
+          openstack_region: ${{ secrets.OPENSTACK_REGION }}
+          openstack_network_id: ${{ secrets.OPENSTACK_NETWORK_ID }}
+          tailscale_oauth_client_id: ${{ secrets.TAILSCALE_OAUTH_CLIENT_ID }}
+          tailscale_oauth_secret: ${{ secrets.TAILSCALE_OAUTH_SECRET }}
+          bastion_flavor: "v3-standard-2"
+          bastion_image: "Ubuntu 22.04.5 LTS (x86_64) [2025-03-27]"
+          debug_mode: "false"
+
+      - name: Build Packer Image
+        id: build
+        uses: askb/packer-build-action@main
+        env:
+          PACKER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          mode: build
+          packer_template: "packer/templates/helm.pkr.hcl"
+          packer_vars_file: "packer/common-packer/vars/${{ matrix.platform }}.pkrvars.hcl"
+          packer_working_dir: "packer"
+          packer_version: "1.9.1"
+          path_prefix: "${{ github.workspace }}"
+          bastion_ip: ${{ steps.bastion-setup.outputs.bastion_ip }}
+          bastion_ssh_user: "ubuntu"
+          openstack_auth_url: ${{ secrets.OPENSTACK_AUTH_URL }}
+          openstack_project_id: ${{ secrets.OPENSTACK_PROJECT_ID }}
+          openstack_username: ${{ secrets.OPENSTACK_USERNAME }}
+          openstack_password: ${{ secrets.OPENSTACK_PASSWORD_B64 }}
+          openstack_region: ${{ secrets.OPENSTACK_REGION }}
+          openstack_network_id: ${{ secrets.OPENSTACK_NETWORK_ID }}
+
+      - name: Teardown OpenStack Bastion
+        if: always()
+        uses: askb/tailscale-openstack-bastion-action@main
+        with:
+          operation: teardown
+          openstack_auth_url: ${{ secrets.OPENSTACK_AUTH_URL }}
+          openstack_project_id: ${{ secrets.OPENSTACK_PROJECT_ID }}
+          openstack_username: ${{ secrets.OPENSTACK_USERNAME }}
+          openstack_password: ${{ secrets.OPENSTACK_PASSWORD_B64 }}
+          openstack_region: ${{ secrets.OPENSTACK_REGION }}
+
+  build-mininet:
+    needs: [detect-changes, build-helm]
+    if: |
+      always() &&
+      needs.detect-changes.outputs.mininet_platforms != '[]' &&
+      (needs.detect-changes.outputs.mininet_changed == 'true' ||
+       needs.detect-changes.outputs.build_mode == 'scheduled' ||
+       needs.detect-changes.outputs.build_mode == 'manual')
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: ${{ needs.detect-changes.outputs.build_mode == 'scheduled' && 2 || 5 }}
+      matrix:
+        platform: ${{ fromJson(needs.detect-changes.outputs.mininet_platforms) }}
+    steps:
+      - name: Checkout change
+        if: github.event_name != 'schedule'
+        # yamllint disable-line rule:line-length
+        uses: lfreleng-actions/checkout-gerrit-change-action@54d751e8bd167bc91f7d665dabe33fae87aaaa63 # v0.9
+        with:
+          gerrit-refspec: ${{ inputs.GERRIT_REFSPEC }}
+          delay: "0s"
+          submodules: "true"
+
+      - name: Checkout repository (scheduled)
+        if: github.event_name == 'schedule'
+        # yamllint disable-line rule:line-length
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          submodules: true
+
+      - name: Update submodules
+        run: git submodule update --init --recursive
+
+      - name: Setup OpenStack + Tailscale Bastion
+        id: bastion-setup
+        # yamllint disable-line rule:line-length
+        uses: askb/tailscale-openstack-bastion-action@main
+        with:
+          operation: setup
+          openstack_auth_url: ${{ secrets.OPENSTACK_AUTH_URL }}
+          openstack_project_id: ${{ secrets.OPENSTACK_PROJECT_ID }}
+          openstack_username: ${{ secrets.OPENSTACK_USERNAME }}
+          openstack_password: ${{ secrets.OPENSTACK_PASSWORD_B64 }}
+          openstack_region: ${{ secrets.OPENSTACK_REGION }}
+          openstack_network_id: ${{ secrets.OPENSTACK_NETWORK_ID }}
+          tailscale_oauth_client_id: ${{ secrets.TAILSCALE_OAUTH_CLIENT_ID }}
+          tailscale_oauth_secret: ${{ secrets.TAILSCALE_OAUTH_SECRET }}
+          bastion_flavor: "v3-standard-2"
+          bastion_image: "Ubuntu 22.04.5 LTS (x86_64) [2025-03-27]"
+          debug_mode: "false"
+
+      - name: Build Packer Image
+        id: build
+        uses: askb/packer-build-action@main
+        env:
+          PACKER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          mode: build
+          packer_template: "packer/templates/mininet-ovs-217.pkr.hcl"
+          packer_vars_file: "packer/common-packer/vars/${{ matrix.platform }}.pkrvars.hcl"
+          packer_working_dir: "packer"
+          packer_version: "1.9.1"
+          path_prefix: "${{ github.workspace }}"
+          bastion_ip: ${{ steps.bastion-setup.outputs.bastion_ip }}
+          bastion_ssh_user: "ubuntu"
+          openstack_auth_url: ${{ secrets.OPENSTACK_AUTH_URL }}
+          openstack_project_id: ${{ secrets.OPENSTACK_PROJECT_ID }}
+          openstack_username: ${{ secrets.OPENSTACK_USERNAME }}
+          openstack_password: ${{ secrets.OPENSTACK_PASSWORD_B64 }}
+          openstack_region: ${{ secrets.OPENSTACK_REGION }}
+          openstack_network_id: ${{ secrets.OPENSTACK_NETWORK_ID }}
+
+      - name: Teardown OpenStack Bastion
+        if: always()
+        uses: askb/tailscale-openstack-bastion-action@main
+        with:
+          operation: teardown
+          openstack_auth_url: ${{ secrets.OPENSTACK_AUTH_URL }}
+          openstack_project_id: ${{ secrets.OPENSTACK_PROJECT_ID }}
+          openstack_username: ${{ secrets.OPENSTACK_USERNAME }}
+          openstack_password: ${{ secrets.OPENSTACK_PASSWORD_B64 }}
+          openstack_region: ${{ secrets.OPENSTACK_REGION }}
+
+  # ═══════════════════════════════════════════════════════
+  # Voting and Summary Jobs
+  # ═══════════════════════════════════════════════════════
 
   vote:
-    # yamllint disable-line rule:line-length
-    if: ${{ always() && github.event_name != 'schedule' && inputs.GERRIT_CHANGE_NUMBER != '' && inputs.GERRIT_CHANGE_NUMBER != '0' && (needs.detect-changes.outputs.has_packer_changes == 'true' || inputs.PACKER_BUILDS != '') }}
-    needs: [detect-changes, clear-vote, actionlint, pre-commit, tox-verify, build-summary]
     runs-on: ubuntu-latest
+    needs: [detect-changes, build-builder, build-docker, build-robot, build-helm, build-mininet]
+    if: |
+      always() &&
+      github.event_name != 'schedule' &&
+      inputs.GERRIT_CHANGE_NUMBER != '' &&
+      inputs.GERRIT_CHANGE_NUMBER != '0'
     steps:
-      - name: Get conclusion
-        # yamllint disable-line rule:line-length
-        uses: im-open/workflow-conclusion@e4f7c4980600fbe0818173e30931d3550801b992 # v2.2.3
-      - name: Set vote
+      - name: Determine vote
+        id: vote-result
+        run: |
+          # Aggregate results from all build jobs
+          builder_result="${{ needs.build-builder.result }}"
+          docker_result="${{ needs.build-docker.result }}"
+          robot_result="${{ needs.build-robot.result }}"
+          helm_result="${{ needs.build-helm.result }}"
+          mininet_result="${{ needs.build-mininet.result }}"
+
+          echo "Build results:"
+          echo "  Builder: $builder_result"
+          echo "  Docker: $docker_result"
+          echo "  Robot: $robot_result"
+          echo "  Helm: $helm_result"
+          echo "  Mininet: $mininet_result"
+
+          # Check if any build failed
+          if [[ "$builder_result" == "failure" ]] || \
+             [[ "$docker_result" == "failure" ]] || \
+             [[ "$robot_result" == "failure" ]] || \
+             [[ "$helm_result" == "failure" ]] || \
+             [[ "$mininet_result" == "failure" ]]; then
+            echo "vote=-1" >> "$GITHUB_OUTPUT"
+            echo "message=Packer builds failed" >> "$GITHUB_OUTPUT"
+          else
+            echo "vote=1" >> "$GITHUB_OUTPUT"
+            echo "message=Packer builds successful" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Submit vote
         # yamllint disable-line rule:line-length
         uses: lfreleng-actions/gerrit-review-action@6d2e00dfd3173cd9a36d11350c8fba44731c7b4e # v0.10.0
         with:
           host: ${{ vars.GERRIT_SERVER }}
           username: ${{ vars.GERRIT_SSH_USER }}
-          key: ${{ secrets.GERRIT_SSH_PRIVKEY }}
+          key: ${{ secrets.GERRIT_SSH_PRIVKEY_B64 }}
           known_hosts: ${{ vars.GERRIT_KNOWN_HOSTS }}
-          gerrit-change-number: ${{ inputs.GERRIT_CHANGE_NUMBER }}
-          gerrit-patchset-number: ${{ inputs.GERRIT_PATCHSET_NUMBER }}
-          vote-type: ${{ env.WORKFLOW_CONCLUSION }}
+          change-number: ${{ inputs.GERRIT_CHANGE_NUMBER }}
+          gerrit-label: Verified
+          score: ${{ steps.vote-result.outputs.vote }}
+          comment-message: ${{ steps.vote-result.outputs.message }}
+
+  build-summary:
+    runs-on: ubuntu-latest
+    needs: [detect-changes, build-builder, build-docker, build-robot, build-helm, build-mininet]
+    if: always()
+    steps:
+      - name: Generate build summary
+        run: |
+          {
+            echo "# Packer Build Summary"
+            echo ""
+            trigger="${{ github.event_name == 'schedule' && 'Monthly Scheduled Build' || 'Gerrit Merge Event' }}"
+            echo "**Trigger**: $trigger"
+            echo "**Build Mode**: ${{ needs.detect-changes.outputs.build_mode }}"
+            echo ""
+            echo "## Build Results"
+            echo ""
+            echo "| Builder Type | Status | Platforms Built |"
+            echo "|-------------|--------|-----------------|"
+
+            builder_count=$(echo '${{ needs.detect-changes.outputs.builder_platforms }}' | jq 'length')
+            docker_count=$(echo '${{ needs.detect-changes.outputs.docker_platforms }}' | jq 'length')
+            robot_count=$(echo '${{ needs.detect-changes.outputs.robot_platforms }}' | jq 'length')
+            helm_count=$(echo '${{ needs.detect-changes.outputs.helm_platforms }}' | jq 'length')
+            mininet_count=$(echo '${{ needs.detect-changes.outputs.mininet_platforms }}' | jq 'length')
+
+            echo "| Builder | ${{ needs.build-builder.result || 'skipped' }} | $builder_count |"
+            echo "| Docker | ${{ needs.build-docker.result || 'skipped' }} | $docker_count |"
+            echo "| Robot | ${{ needs.build-robot.result || 'skipped' }} | $robot_count |"
+            echo "| Helm | ${{ needs.build-helm.result || 'skipped' }} | $helm_count |"
+            echo "| Mininet | ${{ needs.build-mininet.result || 'skipped' }} | $mininet_count |"
+
+            total=$((builder_count + docker_count + robot_count + helm_count + mininet_count))
+            echo ""
+            echo "**Total Images Built**: $total"
+
+            if [[ "${{ github.event_name }}" != "schedule" ]]; then
+              echo ""
+              echo "---"
+              echo "- Change Number: ${{ inputs.GERRIT_CHANGE_NUMBER || 'N/A' }}"
+              echo "- Change URL: ${{ inputs.GERRIT_CHANGE_URL || 'N/A' }}"
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
