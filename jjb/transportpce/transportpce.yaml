@@ -4,7 +4,7 @@
     jobs:
       - gerrit-tox-verify:
           build-timeout: 360
-          build-node: ubuntu2204-docker-4c-16g
+          build-node: ubuntu2204-docker-4c-4g
           parallel: true
       - odl-maven-jobs-jdk21
       - odl-maven-verify-jobs-jdk21
@@ -26,7 +26,7 @@
     jobs:
       - gerrit-tox-verify:
           build-timeout: 360
-          build-node: ubuntu2204-docker-4c-16g
+          build-node: ubuntu2204-docker-4c-4g
           parallel: true
       - odl-maven-jobs-jdk21
       - odl-maven-verify-jobs-jdk21
@@ -48,7 +48,7 @@
     jobs:
       - gerrit-tox-verify:
           build-timeout: 360
-          build-node: ubuntu2204-docker-4c-16g
+          build-node: ubuntu2204-docker-4c-4g
           parallel: true
       - odl-maven-jobs-jdk21
       - odl-maven-verify-jobs-jdk21
