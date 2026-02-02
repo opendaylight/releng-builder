@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "089e1658_3b72ef31",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 7446
+      },
+      "writtenOn": "2026-02-02T15:32:29Z",
+      "side": 1,
+      "message": "Hello Anil,\nI\u0027m not keen on making this change. In TransportPCE, we use the tox-verify job to run our functional tests written in Python.\n\nWe use tox\u0027s parallelism to run all the tests in roughly 2 hours.\nEach test launches a Karaf instance and a certain number (between 2 and 7 depending on the test) of optical transmission node simulators. So, under normal operating conditions, we have 3 Karaf instances and let\u0027s say a dozen nodes to load into RAM. I\u0027m afraid a 4G docker really won\u0027t be enough.",
+      "revId": "6cba261374484e6cd99f1d10a046eb4e1030fed2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
