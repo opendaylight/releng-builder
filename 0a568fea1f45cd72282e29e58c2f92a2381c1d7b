@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7aab8d05_3d09b49c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 9113
+      },
+      "writtenOn": "2026-02-03T08:46:30Z",
+      "side": 1,
+      "message": "LGTM, but FYI, there are out-of-date action calls in this workflow.\n\nI\u0027d suggest you try this:\n\ncd releng/builder\nuv tool install gha-workflow-linter\ngha-workflow-linter lint --auto-fix --auto-update",
+      "revId": "0a568fea1f45cd72282e29e58c2f92a2381c1d7b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
