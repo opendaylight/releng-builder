@@ -20,6 +20,26 @@
     staging-profile-id: 1271cf710cc09d
 
 - project:
+    name: yangtools-14.0.x
+    jobs:
+      - odl-maven-jobs-jdk21
+      - odl-maven-verify-jobs-jdk21
+
+    project: yangtools
+    project-name: yangtools
+    stream: titanium
+    branch: 14.0.x
+    build-node: ubuntu2204-docker-4c-4g
+
+    mvn-settings: "yangtools-settings"
+
+    dependencies: ""
+    email-upstream: "[yangtools]"
+
+    # Used by the release job
+    staging-profile-id: 1271cf710cc09d
+
+- project:
     name: yangtools-release-management
     jobs:
       - gerrit-release-merge
