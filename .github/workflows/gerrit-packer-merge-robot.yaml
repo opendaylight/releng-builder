@@ -1,0 +1,335 @@
+---
+# SPDX-License-Identifier: Apache-2.0
+# Gerrit-triggered Packer build workflow for ROBOT images
+# This workflow builds robot images when:
+# 1. Changes affecting robot are merged from Gerrit (workflow_dispatch)
+# 2. Monthly scheduled builds (1st of every month)
+# 3. Manual trigger with explicit robot selection
+#
+# Platforms: centos-7, centos-cs-8, centos-cs-9, ubuntu-22.04, 24.04
+
+name: Gerrit Packer Merge - Robot
+
+# yamllint disable-line rule:truthy
+on:
+  workflow_dispatch:
+    inputs:
+      GERRIT_BRANCH:
+        description: "Branch that change is against"
+        required: true
+        type: string
+      GERRIT_CHANGE_ID:
+        description: "The ID for the change"
+        required: true
+        type: string
+      GERRIT_CHANGE_NUMBER:
+        description: "The Gerrit number"
+        required: true
+        type: string
+      GERRIT_CHANGE_URL:
+        description: "URL to the change"
+        required: true
+        type: string
+      GERRIT_EVENT_TYPE:
+        description: "Type of Gerrit event"
+        required: true
+        type: string
+      GERRIT_PATCHSET_NUMBER:
+        description: "The patch number for the change"
+        required: true
+        type: string
+      GERRIT_PATCHSET_REVISION:
+        description: "The revision sha"
+        required: true
+        type: string
+      GERRIT_PROJECT:
+        description: "Project in Gerrit"
+        required: true
+        type: string
+      GERRIT_REFSPEC:
+        description: "Gerrit refspec of change"
+        required: true
+        type: string
+      PACKER_BUILDS:
+        description: "Build selection: 'all', 'robot' or 'robot:centos-7,robot:ubuntu-22.04'"
+        required: false
+        type: string
+        default: ""
+
+  schedule:
+    # Run on 1st of every month at 00:15 UTC
+    - cron: "15 0 1 * *"
+
+concurrency:
+  group: packer-robot-${{ inputs.GERRIT_CHANGE_ID || github.run_id }}
+  cancel-in-progress: false
+
+jobs:
+  detect-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      should_build: ${{ steps.decide.outputs.should_build }}
+      platforms: ${{ steps.matrices.outputs.platforms }}
+      build_mode: ${{ steps.build_mode.outputs.mode }}
+    steps:
+      - name: Determine build mode
+        id: build_mode
+        run: |
+          if [[ "${{ github.event_name }}" == "schedule" ]]; then
+            echo "mode=scheduled" >> "$GITHUB_OUTPUT"
+            echo "📅 Scheduled monthly build"
+          elif [[ -n "${{ inputs.PACKER_BUILDS }}" ]]; then
+            echo "mode=manual" >> "$GITHUB_OUTPUT"
+            echo "🔨 Manual build: ${{ inputs.PACKER_BUILDS }}"
+          else
+            echo "mode=change-detect" >> "$GITHUB_OUTPUT"
+            echo "🔍 Change detection mode"
+          fi
+
+      - name: Checkout change
+        if: github.event_name != 'schedule'
+        # yamllint disable-line rule:line-length
+        uses: lfreleng-actions/checkout-gerrit-change-action@54d751e8bd167bc91f7d665dabe33fae87aaaa63     # v0.9
+        with:
+          gerrit-refspec: ${{ inputs.GERRIT_REFSPEC }}
+          delay: "10s"
+          submodules: "true"
+
+      - name: Checkout repository (scheduled)
+        if: github.event_name == 'schedule'
+        # yamllint disable-line rule:line-length
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8   # v5.0.0
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          submodules: true
+
+      - name: Update submodules
+        run: git submodule update --init --recursive
+
+      - name: Check for robot file changes
+        if: steps.build_mode.outputs.mode == 'change-detect'
+        id: filter
+        # yamllint disable-line rule:line-length
+        uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36   # v3.0.2
+        with:
+          filters: |
+            robot:
+              - 'packer/templates/robot.pkr.hcl'
+              - 'packer/provision/robot/**'
+              - 'packer/provision/baseline.sh'
+              - 'packer/provision/system-reseal.sh'
+              - 'packer/common-packer/vars/centos-7.pkrvars.hcl'
+              - 'packer/common-packer/vars/centos-cs-8.pkrvars.hcl'
+              - 'packer/common-packer/vars/centos-cs-9.pkrvars.hcl'
+              - 'packer/common-packer/vars/ubuntu-22.04.pkrvars.hcl'
+              - 'packer/common-packer/vars/ubuntu-24.04.pkrvars.hcl'
+
+      - name: Decide if build needed
+        id: decide
+        run: |
+          mode="${{ steps.build_mode.outputs.mode }}"
+          if [[ "$mode" == "scheduled" ]]; then
+            echo "should_build=true" >> "$GITHUB_OUTPUT"
+            echo "✅ Scheduled build - will build"
+          elif [[ "$mode" == "manual" ]]; then
+            # Check if PACKER_BUILDS includes 'robot' or 'all'
+            builds="${{ inputs.PACKER_BUILDS }}"
+            if [[ "$builds" == "all" ]] || [[ "$builds" == *"robot"* ]]; then
+              echo "should_build=true" >> "$GITHUB_OUTPUT"
+              echo "✅ Manual build includes robot"
+            else
+              echo "should_build=false" >> "$GITHUB_OUTPUT"
+              echo "⏭️  Manual build does NOT include robot - skipping"
+            fi
+          else
+            # Change detection mode
+            if [[ "${{ steps.filter.outputs.robot }}" == "true" ]]; then
+              echo "should_build=true" >> "$GITHUB_OUTPUT"
+              echo "✅ Robot files changed - will build"
+            else
+              echo "should_build=false" >> "$GITHUB_OUTPUT"
+              echo "⏭️  No robot changes detected - skipping"
+            fi
+          fi
+
+      - name: Generate platform matrix
+        id: matrices
+        run: |
+          ALL_PLATFORMS='["centos-7","centos-cs-8","centos-cs-9","ubuntu-22.04","ubuntu-24.04"]'
+
+          mode="${{ steps.build_mode.outputs.mode }}"
+          builds="${{ inputs.PACKER_BUILDS }}"
+
+          if [[ "$mode" == "scheduled" ]] || [[ "$builds" == "all" ]] || [[ "$builds" == "robot" ]]; then
+            # Build all platforms
+            echo "platforms=$ALL_PLATFORMS" >> "$GITHUB_OUTPUT"
+            echo "📦 Building all robot platforms (5 platforms)"
+          elif [[ "$mode" == "manual" ]] && [[ "$builds" == *":"* ]]; then
+            # Parse specific platforms: robot:centos-7,robot:ubuntu-22.04
+            MATRIX='[]'
+            IFS=',' read -ra SPECS <<< "$builds"
+            for spec in "${SPECS[@]}"; do
+              if [[ "$spec" == "robot:"* ]]; then
+                platform="${spec#robot:}"
+                MATRIX=$(jq -c ". += [\"$platform\"]" <<< "$MATRIX")
+              fi
+            done
+            echo "platforms=$MATRIX" >> "$GITHUB_OUTPUT"
+            echo "📦 Building selected platforms: $MATRIX"
+          else
+            # Default: all platforms
+            echo "platforms=$ALL_PLATFORMS" >> "$GITHUB_OUTPUT"
+            echo "📦 Building all robot platforms"
+          fi
+
+  build:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.should_build == 'true'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: ${{ needs.detect-changes.outputs.build_mode == 'scheduled' && 1 || 3 }}
+      matrix:
+        platform: ${{ fromJson(needs.detect-changes.outputs.platforms) }}
+    steps:
+      - name: Checkout change
+        if: github.event_name != 'schedule'
+        # yamllint disable-line rule:line-length
+        uses: lfreleng-actions/checkout-gerrit-change-action@54d751e8bd167bc91f7d665dabe33fae87aaaa63     # v0.9
+        with:
+          gerrit-refspec: ${{ inputs.GERRIT_REFSPEC }}
+          delay: "0s"
+          submodules: "true"
+
+      - name: Checkout repository (scheduled)
+        if: github.event_name == 'schedule'
+        # yamllint disable-line rule:line-length
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8   # v5.0.0
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          submodules: true
+
+      - name: Update submodules
+        run: git submodule update --init --recursive
+
+      - name: Setup OpenStack + Tailscale Bastion
+        id: bastion-setup
+        # yamllint disable-line rule:line-length
+        uses: askb/tailscale-openstack-bastion-action@main
+        with:
+          operation: setup
+          openstack_auth_url: ${{ secrets.OPENSTACK_AUTH_URL }}
+          openstack_project_id: ${{ secrets.OPENSTACK_PROJECT_ID }}
+          openstack_username: ${{ secrets.OPENSTACK_USERNAME }}
+          openstack_password: ${{ secrets.OPENSTACK_PASSWORD_B64 }}
+          openstack_region: ${{ secrets.OPENSTACK_REGION }}
+          openstack_network_id: ${{ secrets.OPENSTACK_NETWORK_ID }}
+          tailscale_oauth_client_id: ${{ secrets.TAILSCALE_OAUTH_CLIENT_ID }}
+          tailscale_oauth_secret: ${{ secrets.TAILSCALE_OAUTH_SECRET }}
+          bastion_flavor: "v3-standard-2"
+          bastion_image: "Ubuntu 22.04.5 LTS (x86_64) [2025-03-27]"
+          debug_mode: "false"
+
+      - name: Build Packer Image
+        id: build
+        uses: askb/packer-build-action@main
+        env:
+          PACKER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          mode: build
+          packer_template: "packer/templates/robot.pkr.hcl"
+          packer_vars_file: "packer/common-packer/vars/${{ matrix.platform }}.pkrvars.hcl"
+          packer_working_dir: "packer"
+          packer_version: "1.9.1"
+          path_prefix: "${{ github.workspace }}"
+          bastion_ip: ${{ steps.bastion-setup.outputs.bastion_ip }}
+          bastion_ssh_user: "ubuntu"
+          openstack_auth_url: ${{ secrets.OPENSTACK_AUTH_URL }}
+          openstack_project_id: ${{ secrets.OPENSTACK_PROJECT_ID }}
+          openstack_username: ${{ secrets.OPENSTACK_USERNAME }}
+          openstack_password: ${{ secrets.OPENSTACK_PASSWORD_B64 }}
+          openstack_region: ${{ secrets.OPENSTACK_REGION }}
+          openstack_network_id: ${{ secrets.OPENSTACK_NETWORK_ID }}
+
+      - name: Teardown OpenStack Bastion
+        if: always()
+        uses: askb/tailscale-openstack-bastion-action@main
+        with:
+          operation: teardown
+          openstack_auth_url: ${{ secrets.OPENSTACK_AUTH_URL }}
+          openstack_project_id: ${{ secrets.OPENSTACK_PROJECT_ID }}
+          openstack_username: ${{ secrets.OPENSTACK_USERNAME }}
+          openstack_password: ${{ secrets.OPENSTACK_PASSWORD_B64 }}
+          openstack_region: ${{ secrets.OPENSTACK_REGION }}
+
+  comment:
+    runs-on: ubuntu-latest
+    needs: [detect-changes, build]
+    if: |
+      always() &&
+      needs.detect-changes.outputs.should_build == 'true' &&
+      github.event_name != 'schedule' &&
+      inputs.GERRIT_CHANGE_NUMBER != '' &&
+      inputs.GERRIT_CHANGE_NUMBER != '0'
+    steps:
+      - name: Determine result
+        id: comment-result
+        run: |
+          build_result="${{ needs.build.result }}"
+          echo "Build result: $build_result"
+
+          if [[ "$build_result" == "failure" ]]; then
+            echo "message=Robot packer builds failed" >> "$GITHUB_OUTPUT"
+          else
+            echo "message=Robot packer builds successful" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Post comment
+        # yamllint disable-line rule:line-length
+        uses: lfreleng-actions/gerrit-review-action@6d2e00dfd3173cd9a36d11350c8fba44731c7b4e     # v0.10.0
+        with:
+          host: ${{ vars.GERRIT_SERVER }}
+          username: ${{ vars.GERRIT_SSH_USER }}
+          key: ${{ secrets.GERRIT_SSH_PRIVKEY_B64 }}
+          known_hosts: ${{ vars.GERRIT_KNOWN_HOSTS }}
+          change-number: ${{ inputs.GERRIT_CHANGE_NUMBER }}
+          comment-message: ${{ steps.comment-result.outputs.message }}
+
+  build-summary:
+    runs-on: ubuntu-latest
+    needs: [detect-changes, build]
+    if: always()
+    steps:
+      - name: Generate build summary
+        run: |
+          {
+            echo "# Robot Packer Build Summary"
+            echo ""
+            trigger="${{ github.event_name == 'schedule' && 'Monthly Scheduled Build' || 'Gerrit Merge Event' }}"
+            echo "**Trigger**: $trigger"
+            echo "**Build Mode**: ${{ needs.detect-changes.outputs.build_mode }}"
+            echo "**Should Build**: ${{ needs.detect-changes.outputs.should_build }}"
+            echo ""
+
+            if [[ "${{ needs.detect-changes.outputs.should_build }}" == "true" ]]; then
+              platform_count=$(echo '${{ needs.detect-changes.outputs.platforms }}' | jq 'length')
+              echo "## Build Result"
+              echo ""
+              echo "| Builder Type | Status | Platforms |"
+              echo "|-------------|--------|-----------|"
+              echo "| Robot | ${{ needs.build.result || 'skipped' }} | $platform_count |"
+              echo ""
+              echo "**Platforms**: ${{ needs.detect-changes.outputs.platforms }}"
+            else
+              echo "## No Build Required"
+              echo ""
+              echo "Workflow was triggered but no robot files changed."
+            fi
+
+            if [[ "${{ github.event_name }}" != "schedule" ]]; then
+              echo ""
+              echo "---"
+              echo "- Change Number: ${{ inputs.GERRIT_CHANGE_NUMBER || 'N/A' }}"
+              echo "- Change URL: ${{ inputs.GERRIT_CHANGE_URL || 'N/A' }}"
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
