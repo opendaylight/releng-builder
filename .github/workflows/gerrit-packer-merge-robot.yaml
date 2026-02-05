@@ -237,8 +237,8 @@ jobs:
           PACKER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           mode: build
-          packer_template: "packer/templates/robot.pkr.hcl"
-          packer_vars_file: "packer/common-packer/vars/${{ matrix.platform }}.pkrvars.hcl"
+          packer_template: "templates/robot.pkr.hcl"
+          packer_vars_file: "common-packer/vars/${{ matrix.platform }}.pkrvars.hcl"
           packer_working_dir: "packer"
           packer_version: "1.9.1"
           path_prefix: "${{ github.workspace }}"
