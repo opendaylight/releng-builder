@@ -558,7 +558,7 @@ Jenkins Sandbox documentation is available in the
 .. _jjb-repo: https://opendev.org/jjb/jenkins-job-builder
 .. _jjb-requirements.txt: https://opendev.org/jjb/jenkins-job-builder/raw/branch/master/requirements.txt
 .. _jjb-templates: https://git.opendaylight.org/gerrit/gitweb?p=releng/builder.git;a=tree;f=jjb
-.. _odl-jjb-requirements.txt: https://gerrit.linuxfoundation.org/infra/gitweb?p=releng/global-jjb.git;a=blob;f=requirements.txt
+.. _odl-jjb-requirements.txt: https://github.com/lfit/releng-global-jjb/blob/master/requirements.txt
 .. _odl-nexus: https://nexus.opendaylight.org
 .. _odl-sonar: https://sonar.opendaylight.org
 .. _python-virtualenv: https://virtualenv.readthedocs.org/en/latest/
