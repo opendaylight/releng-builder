@@ -4,7 +4,6 @@
     jobs:
       - distribution-check-jobs-jdk21
       - odl-maven-jobs-jdk21
-      - odl-maven-verify-jobs-jdk21
 
     project: "daexim"
     project-name: "daexim"
@@ -23,7 +22,6 @@
     jobs:
       - distribution-check-jobs-jdk21
       - odl-maven-jobs-jdk21
-      - odl-maven-verify-jobs-jdk21
 
     project: "daexim"
     project-name: "daexim"
@@ -42,7 +40,6 @@
     jobs:
       - distribution-check-jobs-jdk21
       - odl-maven-jobs-jdk21
-      - odl-maven-verify-jobs-jdk21
 
     project: "daexim"
     project-name: "daexim"
@@ -67,15 +64,6 @@
     build-node: ubuntu2204-docker-4c-4g
     mvn-settings: "daexim-settings"
     mvn-opts: "-Xmx1024m"
-
-- project:
-    name: daexim-info
-    jobs:
-      - gerrit-info-yaml-verify
-    project: daexim
-    project-name: daexim
-    branch: master
-    build-node: ubuntu2204-builder-2c-1g
 
 - project:
     name: daexim-view
