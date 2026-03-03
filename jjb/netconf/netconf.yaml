@@ -2,11 +2,7 @@
 - project:
     name: netconf-master
     jobs:
-      - gerrit-tox-verify:
-          build-node: ubuntu2204-builder-2c-2g
-          parallel: true
       - odl-maven-jobs-jdk21
-      - odl-maven-verify-jobs-jdk21
 
     project: netconf
     project-name: netconf
@@ -28,11 +24,7 @@
 - project:
     name: netconf-9.0.x
     jobs:
-      - gerrit-tox-verify:
-          build-node: ubuntu2204-builder-2c-2g
-          parallel: true
       - odl-maven-jobs-jdk21
-      - odl-maven-verify-jobs-jdk21
 
     project: netconf
     project-name: netconf
@@ -84,15 +76,6 @@
 
     mvn-settings: "netconf-settings"
     mvn-goals: "clean deploy -Pintegrationtests"
-
-- project:
-    name: netconf-info
-    jobs:
-      - gerrit-info-yaml-verify
-    project: netconf
-    project-name: netconf
-    branch: master
-    build-node: ubuntu2204-builder-2c-1g
 
 - project:
     name: netconf-view
