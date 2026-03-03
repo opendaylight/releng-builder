@@ -5,7 +5,6 @@
       - distribution-check-jobs-jdk21
       - odl-maven-javadoc-jobs-jdk21
       - odl-maven-jobs-jdk21
-      - odl-maven-verify-jobs-jdk21
 
     stream: chromium
     project: "lispflowmapping"
@@ -30,7 +29,6 @@
       - distribution-check-jobs-jdk21
       - odl-maven-javadoc-jobs-jdk21
       - odl-maven-jobs-jdk21
-      - odl-maven-verify-jobs-jdk21
 
     stream: vanadium
     project: "lispflowmapping"
@@ -55,7 +53,6 @@
       - distribution-check-jobs-jdk21
       - odl-maven-javadoc-jobs-jdk21
       - odl-maven-jobs-jdk21
-      - odl-maven-verify-jobs-jdk21
 
     stream: titanium
     project: "lispflowmapping"
@@ -85,15 +82,6 @@
     build-node: ubuntu2204-docker-4c-4g
     mvn-settings: "lispflowmapping-settings"
     mvn-opts: "-Xmx2048m -Dmaven.compile.fork=true"
-
-- project:
-    name: lispflowmapping-info
-    jobs:
-      - gerrit-info-yaml-verify
-    project: lispflowmapping
-    project-name: lispflowmapping
-    branch: master
-    build-node: ubuntu2204-builder-2c-1g
 
 - project:
     name: lispflowmapping-view
