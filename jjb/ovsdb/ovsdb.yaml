@@ -5,7 +5,6 @@
       - distribution-check-jobs-jdk21
       - odl-maven-javadoc-jobs-jdk21
       - odl-maven-jobs-jdk21
-      - odl-maven-verify-jobs-jdk21
 
     stream: chromium
     project: "ovsdb"
@@ -25,7 +24,6 @@
       - distribution-check-jobs-jdk21
       - odl-maven-javadoc-jobs-jdk21
       - odl-maven-jobs-jdk21
-      - odl-maven-verify-jobs-jdk21
 
     stream: vanadium
     project: "ovsdb"
@@ -45,7 +43,6 @@
       - distribution-check-jobs-jdk21
       - odl-maven-javadoc-jobs-jdk21
       - odl-maven-jobs-jdk21
-      - odl-maven-verify-jobs-jdk21
 
     stream: titanium
     project: "ovsdb"
@@ -70,15 +67,6 @@
     build-node: ubuntu2204-docker-4c-4g
     build-timeout: 90
     mvn-settings: "ovsdb-settings"
-
-- project:
-    name: ovsdb-info
-    jobs:
-      - gerrit-info-yaml-verify
-    project: ovsdb
-    project-name: ovsdb
-    branch: master
-    build-node: ubuntu2204-builder-2c-1g
 
 - project:
     name: ovsdb-view
