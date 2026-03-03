@@ -52,32 +52,6 @@
     staging-profile-id: 9427a05049030
 
 - project:
-    name: bgpcep-0.22.x
-    jobs:
-      - gerrit-tox-verify:
-          parallel: true
-      - odl-maven-javadoc-jobs-jdk21
-      - odl-maven-jobs-jdk21
-      - odl-maven-verify-jobs-jdk21
-
-    project: bgpcep
-    project-name: bgpcep
-    stream: 0.22.x
-    branch: 0.22.x
-    build-node: ubuntu2204-docker-8c-8g
-    build-timeout: 120
-
-    mvn-settings: "bgpcep-settings"
-    dependencies: >
-      odlparent-merge-{stream},
-      yangtools-merge-{stream},
-      controller-merge-{stream},
-      mdsal-merge-{stream}
-    email-upstream: "[bgpcep] [odlparent] [yangtools] [controller] [mdsal]"
-    # Used by the release job
-    staging-profile-id: 9427a05049030
-
-- project:
     name: bgpcep-release-management
     jobs:
       - gerrit-release-merge
