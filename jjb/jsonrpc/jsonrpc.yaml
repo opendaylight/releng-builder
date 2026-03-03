@@ -4,7 +4,6 @@
     jobs:
       - distribution-check-jobs-jdk21
       - odl-maven-jobs-jdk21
-      - odl-maven-verify-jobs-jdk21
 
     project: "jsonrpc"
     project-name: "jsonrpc"
@@ -23,7 +22,6 @@
     jobs:
       - distribution-check-jobs-jdk21
       - odl-maven-jobs-jdk21
-      - odl-maven-verify-jobs-jdk21
 
     project: "jsonrpc"
     project-name: "jsonrpc"
@@ -42,7 +40,6 @@
     jobs:
       - distribution-check-jobs-jdk21
       - odl-maven-jobs-jdk21
-      - odl-maven-verify-jobs-jdk21
 
     project: "jsonrpc"
     project-name: "jsonrpc"
@@ -78,15 +75,6 @@
     build-node: ubuntu2204-docker-4c-4g
     mvn-settings: "jsonrpc-settings"
     mvn-opts: "-Xmx1024m"
-
-- project:
-    name: jsonrpc-info
-    jobs:
-      - gerrit-info-yaml-verify
-    project: jsonrpc
-    project-name: jsonrpc
-    branch: master
-    build-node: ubuntu2204-builder-2c-1g
 
 - project:
     name: jsonrpc-view
