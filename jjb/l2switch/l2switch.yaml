@@ -3,7 +3,6 @@
     name: l2switch-master
     jobs:
       - odl-maven-jobs-jdk21
-      - odl-maven-verify-jobs-jdk21
 
     project: l2switch
     project-name: l2switch
@@ -30,7 +29,6 @@
     name: l2switch-2.0.x
     jobs:
       - odl-maven-jobs-jdk21
-      - odl-maven-verify-jobs-jdk21
 
     project: l2switch
     project-name: l2switch
@@ -57,7 +55,6 @@
     name: l2switch-1.0.x
     jobs:
       - odl-maven-jobs-jdk21
-      - odl-maven-verify-jobs-jdk21
 
     project: l2switch
     project-name: l2switch
@@ -108,15 +105,6 @@
     build-node: ubuntu2204-docker-4c-4g
 
     mvn-settings: "l2switch-settings"
-
-- project:
-    name: l2switch-info
-    jobs:
-      - gerrit-info-yaml-verify
-    project: l2switch
-    project-name: l2switch
-    branch: master
-    build-node: ubuntu2204-builder-2c-1g
 
 - project:
     name: l2switch-view
