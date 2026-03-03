@@ -96,7 +96,7 @@ jobs:
         id: cleanup
         uses: askb/openstack-cron-action@main
         with:
-          enable_debug: ${{ inputs.enable_debug || 'false' }}
+          enable_debug: ${{ github.event_name != 'workflow_dispatch' && 'false' || inputs.enable_debug }}
           openstack_cloud: ${{ inputs.openstack_cloud || vars.OPENSTACK_CLOUD || 'vex' }}
           # Use individual OpenStack credentials
           openstack_auth_url: ${{ secrets.OPENSTACK_AUTH_URL }}
@@ -106,13 +106,13 @@ jobs:
           openstack_domain_name: ${{ secrets.OPENSTACK_DOMAIN_NAME }}
           openstack_region: ${{ secrets.OPENSTACK_REGION }}
           jenkins_urls: ${{ vars.JENKINS_URLS || '' }}
-          cleanup_k8s_clusters: ${{ inputs.cleanup_k8s_clusters || 'true' }}
-          cleanup_stacks: ${{ inputs.cleanup_stacks || 'true' }}
-          cleanup_servers: ${{ inputs.cleanup_servers || 'true' }}
-          cleanup_ports: ${{ inputs.cleanup_ports || 'true' }}
-          cleanup_volumes: ${{ inputs.cleanup_volumes || 'true' }}
-          protect_images: ${{ inputs.protect_images || 'true' }}
-          cleanup_images: ${{ inputs.cleanup_images || 'true' }}
+          cleanup_k8s_clusters: ${{ github.event_name != 'workflow_dispatch' || inputs.cleanup_k8s_clusters }}
+          cleanup_stacks: ${{ github.event_name != 'workflow_dispatch' || inputs.cleanup_stacks }}
+          cleanup_servers: ${{ github.event_name != 'workflow_dispatch' || inputs.cleanup_servers }}
+          cleanup_ports: ${{ github.event_name != 'workflow_dispatch' || inputs.cleanup_ports }}
+          cleanup_volumes: ${{ github.event_name != 'workflow_dispatch' || inputs.cleanup_volumes }}
+          protect_images: ${{ github.event_name != 'workflow_dispatch' || inputs.protect_images }}
+          cleanup_images: ${{ github.event_name != 'workflow_dispatch' || inputs.cleanup_images }}
           cleanup_images_smart: ${{ steps.cleanup-mode.outputs.smart_cleanup }}
           image_cleanup_age: "180"
           python_version: "3.11"
