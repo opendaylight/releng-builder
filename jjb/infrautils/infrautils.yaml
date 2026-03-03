@@ -3,7 +3,6 @@
     name: infrautils-master
     jobs:
       - odl-maven-jobs-jdk21
-      - odl-maven-verify-jobs-jdk21
 
     project: infrautils
     project-name: infrautils
@@ -50,15 +49,6 @@
     build-node: ubuntu2204-docker-2c-2g
 
     mvn-settings: "infrautils-settings"
-
-- project:
-    name: infrautils-info
-    jobs:
-      - gerrit-info-yaml-verify
-    project: infrautils
-    project-name: infrautils
-    branch: master
-    build-node: ubuntu2204-builder-2c-1g
 
 - project:
     name: infrautils-view
