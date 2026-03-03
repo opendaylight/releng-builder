@@ -3,6 +3,7 @@
     name: builder-jobs
     jobs:
       - gerrit-jenkins-cfg-verify:
+          build-timeout: 30
           jenkins-silos: releng sandbox
       - gerrit-jenkins-sandbox-cleanup
       - gerrit-jjb-deploy-job
