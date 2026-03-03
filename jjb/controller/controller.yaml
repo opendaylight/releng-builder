@@ -3,7 +3,6 @@
     name: controller-master
     jobs:
       - odl-maven-jobs-jdk21
-      - odl-maven-verify-jobs-jdk21
 
     project: controller
     project-name: controller
@@ -23,7 +22,6 @@
     name: controller-11.0.x
     jobs:
       - odl-maven-jobs-jdk21
-      - odl-maven-verify-jobs-jdk21
 
     project: controller
     project-name: controller
@@ -72,15 +70,6 @@
 
     mvn-settings: "controller-settings"
     mvn-goals: "clean deploy -Pintegrationtests,docs"
-
-- project:
-    name: controller-info
-    jobs:
-      - gerrit-info-yaml-verify
-    project: controller
-    project-name: controller
-    branch: master
-    build-node: ubuntu2204-builder-2c-1g
 
 - project:
     name: controller-view
