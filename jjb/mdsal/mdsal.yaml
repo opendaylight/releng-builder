@@ -3,7 +3,6 @@
     name: mdsal-master
     jobs:
       - odl-maven-jobs-jdk21
-      - odl-maven-verify-jobs-jdk21
 
     project: mdsal
     project-name: mdsal
@@ -21,7 +20,6 @@
     name: mdsal-14.0.x
     jobs:
       - odl-maven-jobs-jdk21
-      - odl-maven-verify-jobs-jdk21
 
     project: mdsal
     project-name: mdsal
@@ -68,15 +66,6 @@
     mvn-settings: "mdsal-settings"
     mvn-goals: "clean deploy"
     mvn-opts: "-Dintegrationtests"
-
-- project:
-    name: mdsal-info
-    jobs:
-      - gerrit-info-yaml-verify
-    project: mdsal
-    project-name: mdsal
-    branch: master
-    build-node: ubuntu2204-builder-2c-1g
 
 - project:
     name: mdsal-view
