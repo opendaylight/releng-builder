@@ -4,7 +4,6 @@
     jobs:
       - odl-maven-javadoc-jobs-jdk21
       - odl-maven-jobs-jdk21
-      - odl-maven-verify-jobs-jdk21
 
     stream: chromium
     project: "openflowplugin"
@@ -28,7 +27,6 @@
     jobs:
       - odl-maven-javadoc-jobs-jdk21
       - odl-maven-jobs-jdk21
-      - odl-maven-verify-jobs-jdk21
 
     stream: vanadium
     project: "openflowplugin"
@@ -52,7 +50,6 @@
     jobs:
       - odl-maven-javadoc-jobs-jdk21
       - odl-maven-jobs-jdk21
-      - odl-maven-verify-jobs-jdk21
 
     stream: titanium
     project: "openflowplugin"
@@ -96,15 +93,6 @@
     build-node: ubuntu2204-docker-4c-4g
     build-timeout: 90
     mvn-settings: "openflowplugin-settings"
-
-- project:
-    name: openflowplugin-info
-    jobs:
-      - gerrit-info-yaml-verify
-    project: openflowplugin
-    project-name: openflowplugin
-    branch: master
-    build-node: ubuntu2204-builder-2c-1g
 
 - project:
     name: openflowplugin-view
