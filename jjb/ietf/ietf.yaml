@@ -3,7 +3,6 @@
     name: ietf-master
     jobs:
       - odl-maven-jobs-jdk21
-      - odl-maven-verify-jobs-jdk21
 
     project: ietf
     project-name: ietf
@@ -50,15 +49,6 @@
     mvn-settings: "ietf-settings"
     mvn-goals: "clean deploy"
     mvn-opts: "-Dintegrationtests"
-
-- project:
-    name: ietf-info
-    jobs:
-      - gerrit-info-yaml-verify
-    project: ietf
-    project-name: ietf
-    branch: master
-    build-node: ubuntu2204-builder-2c-1g
 
 - project:
     name: ietf-view
