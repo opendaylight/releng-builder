@@ -3,7 +3,6 @@
     name: aaa-master
     jobs:
       - odl-maven-jobs-jdk21
-      - odl-maven-verify-jobs-jdk21
 
     project: aaa
     project-name: aaa
@@ -22,7 +21,6 @@
     name: aaa-0.21.x
     jobs:
       - odl-maven-jobs-jdk21
-      - odl-maven-verify-jobs-jdk21
 
     project: aaa
     project-name: aaa
@@ -41,7 +39,6 @@
     name: aaa-0.20.x
     jobs:
       - odl-maven-jobs-jdk21
-      - odl-maven-verify-jobs-jdk21
 
     project: aaa
     project-name: aaa
@@ -86,15 +83,6 @@
     branch: master
     build-node: ubuntu2204-docker-4c-4g
     mvn-settings: "aaa-settings"
-
-- project:
-    name: aaa-info
-    jobs:
-      - gerrit-info-yaml-verify
-    project: aaa
-    project-name: aaa
-    branch: "master"
-    build-node: ubuntu2204-builder-2c-1g
 
 - project:
     name: aaa-view
