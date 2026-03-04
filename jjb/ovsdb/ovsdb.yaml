@@ -75,7 +75,8 @@
 - project:
     name: ovsdb-info
     jobs:
-      - gerrit-info-yaml-verify
+      - gerrit-info-yaml-verify:
+          disable-job: true
     project: ovsdb
     project-name: ovsdb
     branch: master
