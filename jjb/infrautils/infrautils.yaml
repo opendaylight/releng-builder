@@ -25,7 +25,8 @@
           cron: ""
           java-version: openjdk21
           mvn-version: mvn39
-      - odl-maven-verify-jobs-jdk21
+      - odl-maven-verify-jobs-jdk21:
+          disable-job: true
 
     project: infrautils
     project-name: infrautils
