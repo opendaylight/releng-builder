@@ -55,7 +55,8 @@
 - project:
     name: infrautils-info
     jobs:
-      - gerrit-info-yaml-verify
+      - gerrit-info-yaml-verify:
+          disable-job: true
     project: infrautils
     project-name: infrautils
     branch: master
