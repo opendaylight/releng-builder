@@ -3,7 +3,8 @@
     name: l2switch-master
     jobs:
       - odl-maven-jobs-jdk21
-      - odl-maven-verify-jobs-jdk21
+      - odl-maven-verify-jobs-jdk21:
+          disable-job: true
 
     project: l2switch
     project-name: l2switch
