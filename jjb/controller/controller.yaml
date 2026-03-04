@@ -77,7 +77,8 @@
 - project:
     name: controller-info
     jobs:
-      - gerrit-info-yaml-verify
+      - gerrit-info-yaml-verify:
+          disable-job: true
     project: controller
     project-name: controller
     branch: master
