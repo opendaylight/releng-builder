@@ -72,7 +72,8 @@
 - project:
     name: daexim-info
     jobs:
-      - gerrit-info-yaml-verify
+      - gerrit-info-yaml-verify:
+          disable-job: true
     project: daexim
     project-name: daexim
     branch: master
