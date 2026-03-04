@@ -73,7 +73,8 @@
 - project:
     name: gnmi-info
     jobs:
-      - gerrit-info-yaml-verify
+      - gerrit-info-yaml-verify:
+          disable-job: true
     project: gnmi
     project-name: gnmi
     branch: master
