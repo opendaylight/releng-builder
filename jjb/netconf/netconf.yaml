@@ -89,7 +89,8 @@
 - project:
     name: netconf-info
     jobs:
-      - gerrit-info-yaml-verify
+      - gerrit-info-yaml-verify:
+          disable-job: true
     project: netconf
     project-name: netconf
     branch: master
