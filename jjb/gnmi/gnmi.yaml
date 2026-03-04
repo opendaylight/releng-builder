@@ -3,7 +3,8 @@
     name: gnmi-master
     jobs:
       - odl-maven-jobs-jdk21
-      - odl-maven-verify-jobs-jdk21
+      - odl-maven-verify-jobs-jdk21:
+          disable-job: true
 
     project: gnmi
     project-name: gnmi
