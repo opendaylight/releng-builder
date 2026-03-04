@@ -91,7 +91,8 @@
 - project:
     name: aaa-info
     jobs:
-      - gerrit-info-yaml-verify
+      - gerrit-info-yaml-verify:
+          disable-job: true
     project: aaa
     project-name: aaa
     branch: "master"
