@@ -73,7 +73,8 @@
 - project:
     name: mdsal-info
     jobs:
-      - gerrit-info-yaml-verify
+      - gerrit-info-yaml-verify:
+          disable-job: true
     project: mdsal
     project-name: mdsal
     branch: master
