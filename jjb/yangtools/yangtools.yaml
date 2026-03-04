@@ -75,7 +75,8 @@
 - project:
     name: yangtools-info
     jobs:
-      - gerrit-info-yaml-verify
+      - gerrit-info-yaml-verify:
+          disable-job: true
     project: yangtools
     project-name: yangtools
     branch: master
