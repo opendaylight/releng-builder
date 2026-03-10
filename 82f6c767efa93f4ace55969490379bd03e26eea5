@@ -16,6 +16,24 @@
       "message": "This Jenkins tox-verify job runs all our functional tests on every change, tests that we manage via our tox.ini file.\nWe really need this result to merge a change and currently, I don\u0027t see any equivalent result on GHA side.\nDid I miss something?",
       "revId": "82f6c767efa93f4ace55969490379bd03e26eea5",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "712ac310_09abc6da",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2026-03-10T01:28:03Z",
+      "side": 1,
+      "message": "Yes, this https://git.opendaylight.org/gerrit/c/transportpce/+/121357 change fixes that! the new gerrit verify should run the tox tests on GHA now! \n\nWe can test that once this error is resolved by merging the above change:\n\nInvalid workflow file: .github/workflows/gerrit-verify.yaml#L113\nThe workflow is not valid. .github/workflows/gerrit-verify.yaml (Line: 113, Col: 27): Invalid input, PRE_COMMIT_VERSION is not defined in the referenced workflow.",
+      "parentUuid": "16fc8e51_5900524e",
+      "revId": "82f6c767efa93f4ace55969490379bd03e26eea5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
