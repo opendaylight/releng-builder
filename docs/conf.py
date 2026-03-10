@@ -25,6 +25,8 @@ linkcheck_ignore = [
     # Historical JJB documentation paths now 404 but kept for legacy reference
     r"https://docs\.openstack\.org/infra/jenkins-job-builder/.*",
     r"https://docs\.opendev\.org/.*/jenkins-job-builder/.*",
+    # Jenkins URLs return 403 due to Cloudflare bot protection
+    r"https://jenkins\.opendaylight\.org/.*",
 ]
 
 # linkcheck configuration
