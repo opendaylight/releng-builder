@@ -25,8 +25,10 @@
     cron: "00 H 1 * *"
 
     platforms:
-      - centos-7
-      - centos-cs-8
+      - centos-7:
+          disable-job: true
+      - centos-cs-8:
+          disable-job: true
       - centos-cs-9
       - ubuntu-20.04
       - ubuntu-22.04
@@ -57,8 +59,10 @@
     cron: "00 H 1 * *"
 
     platforms:
-      - centos-7
-      - ubuntu-18.04
+      - centos-7:
+          disable-job: true
+      - ubuntu-18.04:
+          disable-job: true
       - ubuntu-20.04
       - ubuntu-22.04
     templates: docker
@@ -81,8 +85,10 @@
     cron: "00 H 1 * *"
 
     platforms:
-      - ubuntu-18.04
-      - centos-7
+      - ubuntu-18.04:
+          disable-job: true
+      - centos-7:
+          disable-job: true
     templates: helm
     update-cloud-image: true
 
@@ -125,8 +131,10 @@
     cron: "00 H 1 * *"
 
     platforms:
-      - centos-7
-      - centos-cs-8
+      - centos-7:
+          disable-job: true
+      - centos-cs-8:
+          disable-job: true
       - centos-cs-9
       - ubuntu-22.04
       - ubuntu-24.04
