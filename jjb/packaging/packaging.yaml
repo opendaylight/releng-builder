@@ -5,7 +5,7 @@
     project-name: packaging
     mvn-settings: packaging-settings
     container-tag-method: yaml-file
-    build-node: centos7-docker-4c-4g
+    build-node: ubuntu2204-docker-4c-4g
     docker-name: "opendaylight/opendaylight"
     docker-root: "$WORKSPACE/odl-docker"
     docker-build-args: "--network=host"
@@ -26,7 +26,7 @@
     project-name: packaging
     mvn-settings: packaging-settings
     container-tag-method: yaml-file
-    build-node: centos7-docker-4c-4g
+    build-node: ubuntu2204-docker-4c-4g
     jobs:
       - "{project-name}-gerrit-release-jobs"
 
