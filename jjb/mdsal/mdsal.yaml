@@ -18,6 +18,24 @@
     staging-profile-id: a674173c7b29d
 
 - project:
+    name: mdsal-15.0.x
+    jobs:
+      - odl-maven-jobs-jdk21
+      - odl-maven-verify-jobs-jdk21
+
+    project: mdsal
+    project-name: mdsal
+    branch: 15.0.x
+    stream: vanadium
+    build-node: ubuntu2204-docker-4c-4g
+
+    mvn-settings: "mdsal-settings"
+    build-timeout: 60
+
+    # Used by the release job
+    staging-profile-id: a674173c7b29d
+
+- project:
     name: mdsal-14.0.x
     jobs:
       - odl-maven-jobs-jdk21
