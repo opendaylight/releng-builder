@@ -141,6 +141,24 @@
       "parentUuid": "01508c21_f32a2931",
       "revId": "82f6c767efa93f4ace55969490379bd03e26eea5",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8910b621_f4d8c3ed",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2026-03-13T08:13:39Z",
+      "side": 1,
+      "message": "Which additional tox environments should be added to the transportpce GHA workflow? The lightweight ones that can run without a Maven build are: `pre-commit`, `pylint`,`checkbashisms`, `docs`, `docs-linkcheck`. The heavy test envs (buildcontroller, tests121/221/71/190, etc.) need the full ODL controller build and simulators, so they should stay in JJB ? \n\nAnyways .. I\u0027ve gone ahead and enabled all the envs, hopefully we can see what happens. 😊",
+      "parentUuid": "def5d562_177d8846",
+      "revId": "82f6c767efa93f4ace55969490379bd03e26eea5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
