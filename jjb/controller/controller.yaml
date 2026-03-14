@@ -20,6 +20,26 @@
     staging-profile-id: 96c1c9177efdd
 
 - project:
+    name: controller-12.0.x
+    jobs:
+      - odl-maven-jobs-jdk21
+      - odl-maven-verify-jobs-jdk21
+
+    project: controller
+    project-name: controller
+    stream: 12.0.x
+    branch: 12.0.x
+    build-node: ubuntu2204-docker-4c-4g
+
+    mvn-settings: "controller-settings"
+    mvn-goals: "clean deploy -Pdocs"
+    dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},aaa-merge-{stream}"
+    email-upstream: "[controller] [odlparent] [yangtools] [aaa]"
+
+    # Used by the release job
+    staging-profile-id: 96c1c9177efdd
+
+- project:
     name: controller-11.0.x
     jobs:
       - odl-maven-jobs-jdk21
