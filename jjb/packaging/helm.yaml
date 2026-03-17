@@ -291,7 +291,7 @@
     mvn-settings: packaging-settings
     mvn-global-settings: global-settings
     archive-artifacts: ""
-    build-node: ubuntu1804-helm-2c-1g
+    build-node: ubuntu2204-docker-4c-4g
     pre_build_script: !include-raw-escape: helm-repo-init.sh
     helm_build_script: |
       #!/bin/bash
