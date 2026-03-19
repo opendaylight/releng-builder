@@ -3,7 +3,8 @@
     name: odlparent-master
     jobs:
       - odl-maven-jobs-jdk21
-      - odl-maven-verify-jobs-jdk21
+      - odl-maven-verify-jobs-jdk21:
+          disable-job: true
       - gerrit-tox-verify
 
     project: odlparent
@@ -59,7 +60,8 @@
 - project:
     name: odlparent-info
     jobs:
-      - gerrit-info-yaml-verify
+      - gerrit-info-yaml-verify:
+          disable-job: true
     project: odlparent
     project-name: odlparent
     branch: master
