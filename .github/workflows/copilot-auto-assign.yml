@@ -1,0 +1,26 @@
+# SPDX-License-Identifier: EPL-1.0
+# SPDX-FileCopyrightText: 2025 The Linux Foundation
+---
+name: Copilot Auto-Assign
+
+# yamllint disable-line rule:truthy
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  assign-copilot:
+    if: github.event.label.name == 'copilot'
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Assign Copilot coding agent
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE: ${{ github.event.issue.number }}
+          REPO: ${{ github.repository }}
+        run: |
+          gh issue edit "$ISSUE" \
+            --repo "$REPO" \
+            --add-assignee copilot-swe-agent
