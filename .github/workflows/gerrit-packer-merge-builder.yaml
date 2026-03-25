@@ -61,7 +61,7 @@ on:
     - cron: "5 0 1 * *"
 
 concurrency:
-  group: packer-builder-${{ inputs.GERRIT_CHANGE_ID || github.run_id }}
+  group: packer-builder-${{ inputs.GERRIT_BRANCH }}-${{ inputs.GERRIT_CHANGE_ID || github.run_id }}
   cancel-in-progress: false
 
 jobs:
