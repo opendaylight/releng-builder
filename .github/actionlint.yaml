@@ -1,0 +1,16 @@
+# SPDX-License-Identifier: EPL-1.0
+# SPDX-FileCopyrightText: 2026 The Linux Foundation
+---
+self-hosted-runner:
+  labels:
+    - ubuntu-slim
+
+paths:
+  # Ignore shellcheck errors in gh-aw auto-generated lock files.
+  # These are compiled by `gh aw compile` and should not be manually
+  # edited or linted.
+  .github/workflows/*.lock.yml:
+    ignore:
+      - 'shellcheck reported issue in this script: SC2086:.+'
+      - 'shellcheck reported issue in this script: SC2015:.+'
+      - 'shellcheck reported issue in this script: SC2129:.+'

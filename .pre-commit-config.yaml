@@ -8,6 +8,7 @@ repos:
     hooks:
       - id: check-json
       - id: trailing-whitespace
+        exclude: '\.lock\.yml$'
 
   - repo: https://github.com/jorisroovers/gitlint
     rev: v0.19.1
@@ -53,9 +54,16 @@ repos:
     rev: v1.35.1
     hooks:
       - id: yamllint
+        exclude: '\.lock\.yml$'
 
   - repo: https://github.com/btford/write-good
     rev: v1.0.8
     hooks:
       - id: write-good
-        exclude: docs/jenkins.rst
+        exclude: >-
+          (?x)^(
+            docs/jenkins.rst|
+            \.github/.*|
+            \.specify/.*|
+            AGENTS\.md
+          )$

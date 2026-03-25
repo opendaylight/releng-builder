@@ -1,0 +1,26 @@
+# SPDX-License-Identifier: EPL-1.0
+# SPDX-FileCopyrightText: 2026 The Linux Foundation
+---
+name: "📌 Audit GitHub Actions"
+
+# yamllint disable-line rule:truthy
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - master
+    paths: [".github/**"]
+
+permissions: {}
+
+concurrency:
+  group: "${{ github.workflow }}-${{ github.ref }}"
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: "Check SHA pinned actions"
+    # yamllint disable-line rule:line-length
+    uses: lfit/releng-reusable-workflows/.github/workflows/reuse-verify-github-actions.yaml@b4c8bfdea114d034bfa6ed2fe2c9775bc091d5ca  # v0.2.28
+    permissions:
+      contents: read
