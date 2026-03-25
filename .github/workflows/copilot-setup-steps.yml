@@ -1,0 +1,32 @@
+# SPDX-License-Identifier: EPL-1.0
+# SPDX-FileCopyrightText: 2026 The Linux Foundation
+---
+name: "Copilot Setup Steps"
+
+# yamllint disable-line rule:truthy
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - .github/workflows/copilot-setup-steps.yml
+
+jobs:
+  # The job MUST be called 'copilot-setup-steps'
+  copilot-setup-steps:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          submodules: true
+
+      - name: Install gh-aw extension
+        uses: github/gh-aw/actions/setup-cli@v0.63.0
+        with:
+          version: v0.62.5
+
+      - name: Install JJB and pre-commit
+        run: |
+          pip install jenkins-job-builder pre-commit

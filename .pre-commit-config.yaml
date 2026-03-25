@@ -58,4 +58,10 @@ repos:
     rev: v1.0.8
     hooks:
       - id: write-good
-        exclude: docs/jenkins.rst
+        exclude: >-
+          (?x)^(
+            docs/jenkins.rst|
+            \.github/.*|
+            \.specify/.*|
+            AGENTS\.md
+          )$
