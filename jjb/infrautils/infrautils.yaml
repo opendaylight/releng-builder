@@ -2,29 +2,7 @@
 - project:
     name: infrautils-master
     jobs:
-      - gerrit-maven-merge:
-          disable-job: true
-          java-version: openjdk21
-          mvn-version: mvn39
-          build-timeout: 180
-      - gerrit-maven-clm:
-          nexus-iq-namespace: odl-
-          nexus-iq-stage: release
-          mvn-opts: "--add-opens java.base/java.util=ALL-UNNAMED"
-          java-version: openjdk21
-          mvn-version: mvn39
-      - gerrit-maven-stage:
-          sbom-generator: true
-          sign-artifacts: true
-          cron: ""
-          java-version: openjdk21
-          mvn-version: mvn39
-      - gerrit-maven-mri-stage:
-          sbom-generator: true
-          sign-artifacts: true
-          cron: ""
-          java-version: openjdk21
-          mvn-version: mvn39
+      - odl-maven-jobs-jdk21
       - odl-maven-verify-jobs-jdk21:
           disable-job: true
 
