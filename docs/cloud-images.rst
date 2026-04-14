@@ -92,6 +92,7 @@ Historical inventory:
 * ZZCI - Ubuntu 22.04 - docker - x86_64 - 20260409-214304.246
 * ZZCI - Ubuntu 22.04 - docker - x86_64 - 20260410-113956.421
 * ZZCI - Ubuntu 22.04 - docker - x86_64 - 20260412-072841.881
+* ZZCI - Ubuntu 22.04 - docker - x86_64 - 20260413-213045.461
 * ZZCI - Ubuntu 22.04 - mininet-ovs-217 - x86_64 - 20250917-133034.654
 * ZZCI - Ubuntu 22.04 - mininet-ovs-217 - x86_64 - 20260106-220203.734
 * ZZCI - Ubuntu 22.04 - mininet-ovs-217 - x86_64 - 20260206-132534.928
@@ -113,6 +114,7 @@ Historical inventory:
 * ZZCI - Ubuntu 22.04 - mininet-ovs-217 - x86_64 - 20260408-112815.109
 * ZZCI - Ubuntu 22.04 - mininet-ovs-217 - x86_64 - 20260410-113708.815
 * ZZCI - Ubuntu 22.04 - mininet-ovs-217 - x86_64 - 20260410-113922.255
+* ZZCI - Ubuntu 22.04 - mininet-ovs-217 - x86_64 - 20260413-213055.769
 * ZZCI - Ubuntu 22.04 - robot - x86_64 - 20260107-112904.805
 * ZZCI - Ubuntu 22.04 - robot - x86_64 - 20260112-133959.552
 * ZZCI - Ubuntu 22.04 - robot - x86_64 - 20260206-132525.392
@@ -143,6 +145,7 @@ Historical inventory:
 * ZZCI - Ubuntu 24.04 - mininet-ovs-217 - x86_64 - 20260410-113707.504
 * ZZCI - Ubuntu 24.04 - mininet-ovs-217 - x86_64 - 20260410-113928.926
 * ZZCI - Ubuntu 24.04 - mininet-ovs-217 - x86_64 - 20260412-072844.925
+* ZZCI - Ubuntu 24.04 - mininet-ovs-217 - x86_64 - 20260413-213050.482
 * ZZCI - Ubuntu 24.04 - robot - x86_64 - 20260107-112924.635
 * ZZCI - Ubuntu 24.04 - robot - x86_64 - 20260111-213636.378
 * ZZCI - Ubuntu 24.04 - robot - x86_64 - 20260112-015616.267
