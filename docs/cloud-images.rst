@@ -29,6 +29,7 @@ Historical inventory:
 * ZZCI - Ubuntu 20.04 - builder - x86_64 - 20260301-160145.480
 * ZZCI - Ubuntu 20.04 - builder - x86_64 - 20260401-134916.347
 * ZZCI - Ubuntu 20.04 - builder - x86_64 - 20260401-160128.618
+* ZZCI - Ubuntu 20.04 - builder - x86_64 - 20260601-160118.057
 * ZZCI - Ubuntu 20.04 - docker - x86_64 - 20251222-042625.232
 * ZZCI - Ubuntu 20.04 - docker - x86_64 - 20260101-160222.557
 * ZZCI - Ubuntu 20.04 - docker - x86_64 - 20260201-160216.532
@@ -51,6 +52,8 @@ Historical inventory:
 * ZZCI - Ubuntu 20.04 - docker - x86_64 - 20260414-124156.236
 * ZZCI - Ubuntu 20.04 - docker - x86_64 - 20260415-122044.148
 * ZZCI - Ubuntu 20.04 - docker - x86_64 - 20260522-150844.632
+* ZZCI - Ubuntu 20.04 - docker - x86_64 - 20260601-160147.776
+* ZZCI - Ubuntu 20.04 - docker - x86_64 - 20260601-165203.785
 * ZZCI - Ubuntu 22.04 - builder - x86_64 - 20251218-031852.668
 * ZZCI - Ubuntu 22.04 - builder - x86_64 - 20251218-074549.736
 * ZZCI - Ubuntu 22.04 - builder - x86_64 - 20251219-003333.969
@@ -97,6 +100,7 @@ Historical inventory:
 * ZZCI - Ubuntu 22.04 - docker - x86_64 - 20260522-150713.490
 * ZZCI - Ubuntu 22.04 - docker - x86_64 - 20260522-150843.205
 * ZZCI - Ubuntu 22.04 - docker - x86_64 - 20260522-151013.103
+* ZZCI - Ubuntu 22.04 - docker - x86_64 - 20260601-170147.838
 * ZZCI - Ubuntu 22.04 - mininet-ovs-217 - x86_64 - 20250917-133034.654
 * ZZCI - Ubuntu 22.04 - mininet-ovs-217 - x86_64 - 20260106-220203.734
 * ZZCI - Ubuntu 22.04 - mininet-ovs-217 - x86_64 - 20260206-132534.928
@@ -122,6 +126,7 @@ Historical inventory:
 * ZZCI - Ubuntu 22.04 - mininet-ovs-217 - x86_64 - 20260414-124143.568
 * ZZCI - Ubuntu 22.04 - mininet-ovs-217 - x86_64 - 20260415-122104.144
 * ZZCI - Ubuntu 22.04 - mininet-ovs-217 - x86_64 - 20260522-151456.219
+* ZZCI - Ubuntu 22.04 - mininet-ovs-217 - x86_64 - 20260601-165202.564
 * ZZCI - Ubuntu 22.04 - robot - x86_64 - 20260107-112904.805
 * ZZCI - Ubuntu 22.04 - robot - x86_64 - 20260112-133959.552
 * ZZCI - Ubuntu 22.04 - robot - x86_64 - 20260206-132525.392
