@@ -73,16 +73,6 @@
     mvn-settings: "ovsdb-settings"
 
 - project:
-    name: ovsdb-info
-    jobs:
-      - gerrit-info-yaml-verify:
-          disable-job: true
-    project: ovsdb
-    project-name: ovsdb
-    branch: master
-    build-node: ubuntu2204-builder-2c-1g
-
-- project:
     name: ovsdb-view
     views:
       - project-view

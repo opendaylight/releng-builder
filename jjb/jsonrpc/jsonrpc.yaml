@@ -81,16 +81,6 @@
     mvn-opts: "-Xmx1024m"
 
 - project:
-    name: jsonrpc-info
-    jobs:
-      - gerrit-info-yaml-verify:
-          disable-job: true
-    project: jsonrpc
-    project-name: jsonrpc
-    branch: master
-    build-node: ubuntu2204-builder-2c-1g
-
-- project:
     name: jsonrpc-view
     views:
       - project-view

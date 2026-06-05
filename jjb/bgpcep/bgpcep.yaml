@@ -85,15 +85,6 @@
     mvn-opts: "-Xmx1024m"
 
 - project:
-    name: bgpcep-info
-    jobs:
-      - gerrit-info-yaml-verify
-    project: bgpcep
-    project-name: bgpcep
-    branch: master
-    build-node: ubuntu2204-builder-2c-1g
-
-- project:
     name: bgpcep-view
     views:
       - project-view

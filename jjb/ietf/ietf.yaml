@@ -71,16 +71,6 @@
     mvn-opts: "-Dintegrationtests"
 
 - project:
-    name: ietf-info
-    jobs:
-      - gerrit-info-yaml-verify:
-          disable-job: true
-    project: ietf
-    project-name: ietf
-    branch: master
-    build-node: ubuntu2204-builder-2c-1g
-
-- project:
     name: ietf-view
     views:
       - project-view

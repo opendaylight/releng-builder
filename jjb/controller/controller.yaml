@@ -95,16 +95,6 @@
     mvn-goals: "clean deploy -Pintegrationtests,docs"
 
 - project:
-    name: controller-info
-    jobs:
-      - gerrit-info-yaml-verify:
-          disable-job: true
-    project: controller
-    project-name: controller
-    branch: master
-    build-node: ubuntu2204-builder-2c-1g
-
-- project:
     name: controller-view
     views:
       - project-view
