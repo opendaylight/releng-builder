@@ -70,16 +70,6 @@
     mvn-opts: "-Xmx1024m"
 
 - project:
-    name: daexim-info
-    jobs:
-      - gerrit-info-yaml-verify:
-          disable-job: true
-    project: daexim
-    project-name: daexim
-    branch: master
-    build-node: ubuntu2204-builder-2c-1g
-
-- project:
     name: daexim-view
     views:
       - project-view
