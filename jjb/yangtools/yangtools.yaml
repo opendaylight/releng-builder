@@ -90,16 +90,6 @@
     mvn-settings: "yangtools-settings"
 
 - project:
-    name: yangtools-info
-    jobs:
-      - gerrit-info-yaml-verify:
-          disable-job: true
-    project: yangtools
-    project-name: yangtools
-    branch: master
-    build-node: ubuntu2204-builder-2c-1g
-
-- project:
     name: yangtools-view
     views:
       - project-view

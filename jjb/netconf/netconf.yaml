@@ -87,16 +87,6 @@
     mvn-goals: "clean deploy -Pintegrationtests"
 
 - project:
-    name: netconf-info
-    jobs:
-      - gerrit-info-yaml-verify:
-          disable-job: true
-    project: netconf
-    project-name: netconf
-    branch: master
-    build-node: ubuntu2204-builder-2c-1g
-
-- project:
     name: netconf-view
     views:
       - project-view

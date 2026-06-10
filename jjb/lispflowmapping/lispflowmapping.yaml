@@ -88,16 +88,6 @@
     mvn-opts: "-Xmx2048m -Dmaven.compile.fork=true"
 
 - project:
-    name: lispflowmapping-info
-    jobs:
-      - gerrit-info-yaml-verify:
-          disable-job: true
-    project: lispflowmapping
-    project-name: lispflowmapping
-    branch: master
-    build-node: ubuntu2204-builder-2c-1g
-
-- project:
     name: lispflowmapping-view
     views:
       - project-view

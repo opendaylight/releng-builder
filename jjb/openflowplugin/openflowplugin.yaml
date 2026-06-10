@@ -99,16 +99,6 @@
     mvn-settings: "openflowplugin-settings"
 
 - project:
-    name: openflowplugin-info
-    jobs:
-      - gerrit-info-yaml-verify:
-          disable-job: true
-    project: openflowplugin
-    project-name: openflowplugin
-    branch: master
-    build-node: ubuntu2204-builder-2c-1g
-
-- project:
     name: openflowplugin-view
     views:
       - project-view

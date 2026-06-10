@@ -58,16 +58,6 @@
     mvn-settings: "odlparent-settings"
 
 - project:
-    name: odlparent-info
-    jobs:
-      - gerrit-info-yaml-verify:
-          disable-job: true
-    project: odlparent
-    project-name: odlparent
-    branch: master
-    build-node: ubuntu2204-builder-2c-1g
-
-- project:
     name: odlparent-view
     views:
       - project-view

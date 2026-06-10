@@ -108,16 +108,6 @@
     mvn-settings: "aaa-settings"
 
 - project:
-    name: aaa-info
-    jobs:
-      - gerrit-info-yaml-verify:
-          disable-job: true
-    project: aaa
-    project-name: aaa
-    branch: "master"
-    build-node: ubuntu2204-builder-2c-1g
-
-- project:
     name: aaa-view
     views:
       - project-view

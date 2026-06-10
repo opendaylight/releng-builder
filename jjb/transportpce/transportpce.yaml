@@ -111,15 +111,6 @@
     build-node: ubuntu2204-docker-4c-4g
 
 - project:
-    name: transportpce-info
-    jobs:
-      - gerrit-info-yaml-verify
-    project: transportpce
-    project-name: transportpce
-    branch: master
-    build-node: ubuntu2204-builder-2c-1g
-
-- project:
     name: transportpce-view
     views:
       - project-view
