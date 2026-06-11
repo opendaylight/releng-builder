@@ -61,8 +61,10 @@
       serviceutils-maven-merge-{stream},
 
     stream:
-      - vanadium:
+      - chromium:
           branch: "master"
+      - vanadium:
+          branch: "stable/vanadium"
       - titanium:
           branch: "stable/titanium"
 
@@ -96,8 +98,10 @@
     jobs:
       - "{project-name}-gerrit-docker-jobs"
     stream:
-      - vanadium:
+      - chromium:
           branch: "master"
+      - vanadium:
+          branch: "stable/vanadium"
       - titanium:
           branch: "stable/titanium"
 
