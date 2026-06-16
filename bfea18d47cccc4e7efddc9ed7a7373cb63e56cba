@@ -16,6 +16,24 @@
       "message": "This change isnt required and not doing much except moving the same job under.",
       "revId": "bfea18d47cccc4e7efddc9ed7a7373cb63e56cba",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d9bd0107_e0f22e8b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2026-06-16T10:26:43Z",
+      "side": 1,
+      "message": "it actually does quite a bit: now that branch is correctly propagate to GERRIT_BRANCH, it is also propagated to GERRIT_REFSPEC and sha1 parameters -- hence releasing from other branch than master requires replacing \"master\" in three places -- and missing edit to GERRIT_REFSPEC leads to the release tag that sits outside of target branch.\n\nThis patch makes sure such human errors do not happen by having each job these correctly filled in (from project -\u003e branch) stanza",
+      "parentUuid": "dd526df8_af203858",
+      "revId": "bfea18d47cccc4e7efddc9ed7a7373cb63e56cba",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
