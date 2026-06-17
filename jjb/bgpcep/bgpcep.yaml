@@ -7,6 +7,9 @@
       - odl-maven-javadoc-jobs-jdk21
       - odl-maven-jobs-jdk21
       - odl-maven-verify-jobs-jdk21
+      - gerrit-release-merge:
+          build-node: ubuntu2204-builder-2c-1g
+          build-timeout: 120
 
     project: bgpcep
     project-name: bgpcep
@@ -33,6 +36,9 @@
       - odl-maven-javadoc-jobs-jdk21
       - odl-maven-jobs-jdk21
       - odl-maven-verify-jobs-jdk21
+      - gerrit-release-merge:
+          build-node: ubuntu2204-builder-2c-1g
+          build-timeout: 120
 
     project: bgpcep
     project-name: bgpcep
@@ -50,20 +56,6 @@
     email-upstream: "[bgpcep] [odlparent] [yangtools] [controller] [mdsal]"
     # Used by the release job
     staging-profile-id: 9427a05049030
-
-- project:
-    name: bgpcep-release-management
-    jobs:
-      - gerrit-release-merge
-
-    project: bgpcep
-    project-name: bgpcep
-
-    build-node: ubuntu2204-builder-2c-1g
-    mvn-settings: bgpcep-settings
-    # Needs to be rather long until we sort out the performance of
-    # https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/
-    build-timeout: 120
 
 - project:
     name: bgpcep-sonar
