@@ -5,6 +5,9 @@
       - odl-maven-jobs-jdk21
       - odl-maven-verify-jobs-jdk21:
           disable-job: true
+      - gerrit-release-merge:
+          build-node: ubuntu2204-builder-2c-1g
+          build-timeout: 120
 
     project: controller
     project-name: controller
@@ -25,6 +28,9 @@
     jobs:
       - odl-maven-jobs-jdk21
       - odl-maven-verify-jobs-jdk21
+      - gerrit-release-merge:
+          build-node: ubuntu2204-builder-2c-1g
+          build-timeout: 120
 
     project: controller
     project-name: controller
@@ -45,6 +51,9 @@
     jobs:
       - odl-maven-jobs-jdk21
       - odl-maven-verify-jobs-jdk21
+      - gerrit-release-merge:
+          build-node: ubuntu2204-builder-2c-1g
+          build-timeout: 120
 
     project: controller
     project-name: controller
@@ -59,21 +68,6 @@
 
     # Used by the release job
     staging-profile-id: 96c1c9177efdd
-
-- project:
-    name: controller-release-management
-    jobs:
-      - gerrit-release-merge
-
-    project: controller
-    project-name: controller
-
-    build-node: ubuntu2204-builder-2c-1g
-    mvn-settings: controller-settings
-
-    # Needs to be rather long until we sort out the performance of
-    # https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/
-    build-timeout: 120
 
 - project:
     name: controller-sonar
