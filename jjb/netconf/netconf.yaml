@@ -8,6 +8,9 @@
       - odl-maven-jobs-jdk21
       - odl-maven-verify-jobs-jdk21:
           disable-job: true
+      - gerrit-release-merge:
+          build-node: ubuntu2204-builder-2c-1g
+          build-timeout: 120
 
     project: netconf
     project-name: netconf
@@ -34,6 +37,9 @@
           parallel: true
       - odl-maven-jobs-jdk21
       - odl-maven-verify-jobs-jdk21
+      - gerrit-release-merge:
+          build-node: ubuntu2204-builder-2c-1g
+          build-timeout: 120
 
     project: netconf
     project-name: netconf
@@ -51,20 +57,6 @@
 
     # Used by the release job
     staging-profile-id: a67b22fc3663f
-
-- project:
-    name: netconf-release-management
-    jobs:
-      - gerrit-release-merge
-
-    project: netconf
-    project-name: netconf
-
-    build-node: ubuntu2204-builder-2c-1g
-    mvn-settings: netconf-settings
-    # Needs to be rather long until we sort out the performance of
-    # https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/
-    build-timeout: 120
 
 - project:
     name: netconf-sonar
