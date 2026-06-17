@@ -8,6 +8,8 @@
           parallel: true
       - odl-maven-jobs-jdk21
       - odl-maven-verify-jobs-jdk21
+      - gerrit-release-merge:
+          build-node: ubuntu2204-builder-2c-1g
 
     project: "transportpce"
     project-name: "transportpce"
@@ -30,6 +32,8 @@
           parallel: true
       - odl-maven-jobs-jdk21
       - odl-maven-verify-jobs-jdk21
+      - gerrit-release-merge:
+          build-node: ubuntu2204-builder-2c-1g
 
     project: "transportpce"
     project-name: "transportpce"
@@ -52,6 +56,8 @@
           parallel: true
       - odl-maven-jobs-jdk21
       - odl-maven-verify-jobs-jdk21
+      - gerrit-release-merge:
+          build-node: ubuntu2204-builder-2c-1g
 
     project: "transportpce"
     project-name: "transportpce"
@@ -74,6 +80,8 @@
           parallel: true
       - odl-maven-jobs-jdk21
       - odl-maven-verify-jobs-jdk21
+      - gerrit-release-merge:
+          build-node: ubuntu2204-builder-2c-1g
 
     project: "transportpce"
     project-name: "transportpce"
@@ -86,17 +94,6 @@
     email-upstream: "[transportpce] [odlparent] [yangtools] [controller]"
     # Used by the release job
     staging-profile-id: a6927323fa3d4
-
-- project:
-    name: transportpce-release-management
-    jobs:
-      - gerrit-release-merge
-
-    project: transportpce
-    project-name: transportpce
-
-    build-node: ubuntu2204-builder-2c-1g
-    mvn-settings: transportpce-settings
 
 - project:
     name: transportpce-sonar
