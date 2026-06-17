@@ -5,6 +5,9 @@
       - odl-maven-jobs-jdk21
       - odl-maven-verify-jobs-jdk21:
           disable-job: true
+      - gerrit-release-merge:
+          build-node: ubuntu2204-builder-2c-1g
+          build-timeout: 60
 
     project: infrautils
     project-name: infrautils
@@ -19,20 +22,6 @@
 
     # Used by the release job
     staging-profile-id: 96fca0367756c
-
-- project:
-    name: infrautils-release-management
-    jobs:
-      - gerrit-release-merge
-
-    project: infrautils
-    project-name: infrautils
-
-    build-node: ubuntu2204-builder-2c-1g
-    mvn-settings: infrautils-settings
-    # Needs to be rather long until we sort out the performance of
-    # https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/
-    build-timeout: 60
 
 - project:
     name: infrautils-sonar
