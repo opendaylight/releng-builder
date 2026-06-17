@@ -5,6 +5,9 @@
       - odl-maven-jobs-jdk21
       - odl-maven-verify-jobs-jdk21:
           disable-job: true
+      - gerrit-release-merge:
+          build-node: ubuntu2204-builder-2c-1g
+          build-timeout: 120
 
     project: ietf
     project-name: ietf
@@ -23,6 +26,9 @@
     jobs:
       - odl-maven-jobs-jdk21
       - odl-maven-verify-jobs-jdk21
+      - gerrit-release-merge:
+          build-node: ubuntu2204-builder-2c-1g
+          build-timeout: 120
 
     project: ietf
     project-name: ietf
@@ -35,20 +41,6 @@
 
     # Used by the release job
     staging-profile-id: ca996fb20812d1
-
-- project:
-    name: ietf-release-management
-    jobs:
-      - gerrit-release-merge
-
-    project: ietf
-    project-name: ietf
-
-    build-node: ubuntu2204-builder-2c-1g
-    mvn-settings: ietf-settings
-    # Needs to be rather long until we sort out the performance of
-    # https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/
-    build-timeout: 120
 
 - project:
     name: ietf-sonar
