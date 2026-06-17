@@ -6,6 +6,8 @@
       - odl-maven-verify-jobs-jdk21:
           disable-job: true
       - gerrit-tox-verify
+      - gerrit-release-merge:
+          build-node: ubuntu2204-builder-2c-1g
 
     project: odlparent
     project-name: odlparent
@@ -27,17 +29,6 @@
 
     # Used by the release job
     staging-profile-id: 880d5ac25eaa
-
-- project:
-    name: odlparent-release-management
-    jobs:
-      - gerrit-release-merge
-
-    project: odlparent
-    project-name: odlparent
-
-    build-node: ubuntu2204-builder-2c-1g
-    mvn-settings: odlparent-settings
 
 - project:
     name: odlparent-sonar
