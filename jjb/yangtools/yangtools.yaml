@@ -3,6 +3,9 @@
     name: yangtools-master
     jobs:
       - odl-maven-jobs-jdk21
+      - gerrit-release-merge:
+          build-node: ubuntu2204-builder-2c-1g
+          build-timeout: 90
 
     project: yangtools
     project-name: yangtools
@@ -22,6 +25,9 @@
     name: yangtools-15.1.x
     jobs:
       - odl-maven-jobs-jdk21
+      - gerrit-release-merge:
+          build-node: ubuntu2204-builder-2c-1g
+          build-timeout: 90
 
     project: yangtools
     project-name: yangtools
@@ -42,6 +48,9 @@
     jobs:
       - odl-maven-jobs-jdk21
       - odl-maven-verify-jobs-jdk21
+      - gerrit-release-merge:
+          build-node: ubuntu2204-builder-2c-1g
+          build-timeout: 90
 
     project: yangtools
     project-name: yangtools
@@ -56,20 +65,6 @@
 
     # Used by the release job
     staging-profile-id: 1271cf710cc09d
-
-- project:
-    name: yangtools-release-management
-    jobs:
-      - gerrit-release-merge
-
-    project: yangtools
-    project-name: yangtools
-
-    build-node: ubuntu2204-builder-2c-1g
-    mvn-settings: yangtools-settings
-    # Needs to be rather long until we sort out the performance of
-    # https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/
-    build-timeout: 90
 
 - project:
     name: yangtools-sonar
