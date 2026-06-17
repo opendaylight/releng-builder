@@ -6,6 +6,8 @@
       - odl-maven-jobs-jdk21
       - odl-maven-verify-jobs-jdk21:
           disable-job: true
+      - gerrit-release-merge:
+          build-node: ubuntu2204-builder-2c-1g
 
     project: "jsonrpc"
     project-name: "jsonrpc"
@@ -25,6 +27,8 @@
       - distribution-check-jobs-jdk21
       - odl-maven-jobs-jdk21
       - odl-maven-verify-jobs-jdk21
+      - gerrit-release-merge:
+          build-node: ubuntu2204-builder-2c-1g
 
     project: "jsonrpc"
     project-name: "jsonrpc"
@@ -44,6 +48,8 @@
       - distribution-check-jobs-jdk21
       - odl-maven-jobs-jdk21
       - odl-maven-verify-jobs-jdk21
+      - gerrit-release-merge:
+          build-node: ubuntu2204-builder-2c-1g
 
     project: "jsonrpc"
     project-name: "jsonrpc"
@@ -56,17 +62,6 @@
 
     # Used by the release job
     staging-profile-id: 96fdf4408765d
-
-- project:
-    name: jsonrpc-release-management
-    jobs:
-      - gerrit-release-merge
-
-    project: jsonrpc
-    project-name: jsonrpc
-
-    build-node: ubuntu2204-builder-2c-1g
-    mvn-settings: jsonrpc-settings
 
 - project:
     name: jsonrpc-sonar
