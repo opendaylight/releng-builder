@@ -97,7 +97,7 @@ jobs:
           gerrit-project: ${{ inputs.GERRIT_PROJECT }}
           gerrit-url: ${{ vars.GERRIT_URL }}
           delay: "0s"
-      - uses: actions/setup-python@v5.4.0
+      - uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0
         with:
           python-version: "3.11"
       - name: Run static analysis and format checkers
@@ -114,7 +114,7 @@ jobs:
           gerrit-url: ${{ vars.GERRIT_URL }}
           delay: "0s"
           submodules: "true"
-      - uses: actions/setup-python@v5.4.0
+      - uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0
         id: setup-python
         with:
           python-version: "3.11"
@@ -156,7 +156,7 @@ jobs:
 
       - name: Validate Packer templates
         if: steps.changes.outputs.src == 'true'
-        uses: askb/packer-build-action@main
+        uses: lfreleng-actions/packer-build-action@a0197067ae72cdb45459931bcce5d6507b789d96 # v0.1.3
         with:
           mode: validate
           packer_working_dir: "packer"
