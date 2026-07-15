@@ -116,7 +116,6 @@ jobs:
             robot:
               - 'packer/templates/robot.pkr.hcl'
               - 'packer/provision/robot/**'
-              - 'packer/provision/baseline.sh'
               - 'packer/provision/system-reseal.sh'
               - 'packer/common-packer/vars/centos-7.pkrvars.hcl'
               - 'packer/common-packer/vars/centos-cs-8.pkrvars.hcl'

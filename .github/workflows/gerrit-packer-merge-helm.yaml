@@ -116,7 +116,6 @@ jobs:
             helm:
               - 'packer/templates/helm.pkr.hcl'
               - 'packer/provision/helm/**'
-              - 'packer/provision/baseline.sh'
               - 'packer/provision/system-reseal.sh'
               - 'packer/common-packer/vars/centos-7.pkrvars.hcl'
 
