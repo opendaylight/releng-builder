@@ -97,7 +97,7 @@ jobs:
           gerrit-project: ${{ inputs.GERRIT_PROJECT }}
           gerrit-url: ${{ vars.GERRIT_URL }}
           delay: "0s"
-      - uses: actions/setup-python@v5.4.0
+      - uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0
         with:
           python-version: "3.11"
       - name: Run static analysis and format checkers
@@ -114,7 +114,7 @@ jobs:
           gerrit-url: ${{ vars.GERRIT_URL }}
           delay: "0s"
           submodules: "true"
-      - uses: actions/setup-python@v5.4.0
+      - uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0
         id: setup-python
         with:
           python-version: "3.11"
@@ -147,7 +147,7 @@ jobs:
           gerrit-url: ${{ vars.GERRIT_URL }}
           delay: "0s"
           submodules: "true"
-      - uses: actions/setup-python@v5.4.0
+      - uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0
         id: setup-python
         with:
           python-version: "3.11"
@@ -183,7 +183,7 @@ jobs:
               - 'packer/**'
       - name: Setup packer
         if: steps.changes.outputs.src == 'true'
-        uses: hashicorp/setup-packer@main
+        uses: hashicorp/setup-packer@ce93c3c08a6c2ff2275bf4b54ff0d9a75f6c9789 # v3.4.0
         id: setup
         with:
           version: ${{ env.PACKER_VERSION }}
