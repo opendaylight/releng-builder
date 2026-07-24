@@ -61,18 +61,6 @@
     staging-profile-id: a68b188166958
 
 - project:
-    name: ovsdb-sonar
-    jobs:
-      - odl-sonar-jobs-jdk21
-
-    project: "ovsdb"
-    project-name: "ovsdb"
-    branch: "master"
-    build-node: ubuntu2204-docker-4c-4g
-    build-timeout: 90
-    mvn-settings: "ovsdb-settings"
-
-- project:
     name: ovsdb-view
     views:
       - project-view
