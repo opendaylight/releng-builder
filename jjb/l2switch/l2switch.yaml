@@ -88,24 +88,6 @@
     staging-profile-id: 96fee85953ca0
 
 - project:
-    name: l2switch-sonar
-    jobs:
-      - odl-sonar-jobs-jdk21:
-          mvn-params: >
-            -Dodl.jacoco.aggregateFile=$WORKSPACE/target/jacoco.exec
-            -Dskip.karaf.featureTest=true
-          sonar-mvn-goal: >
-            jacoco:report -Djacoco.dataFile=$WORKSPACE/target/jacoco.exec
-            sonar:sonar
-
-    project: "l2switch"
-    project-name: "l2switch"
-    branch: "master"
-    build-node: ubuntu2204-docker-4c-4g
-
-    mvn-settings: "l2switch-settings"
-
-- project:
     name: l2switch-view
     views:
       - project-view
