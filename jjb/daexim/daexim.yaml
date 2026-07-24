@@ -58,18 +58,6 @@
     staging-profile-id: 96e4dade34bd7
 
 - project:
-    name: daexim-sonar
-    jobs:
-      - odl-sonar-jobs-jdk21
-
-    project: "daexim"
-    project-name: "daexim"
-    branch: "master"
-    build-node: ubuntu2204-docker-4c-4g
-    mvn-settings: "daexim-settings"
-    mvn-opts: "-Xmx1024m"
-
-- project:
     name: daexim-view
     views:
       - project-view
