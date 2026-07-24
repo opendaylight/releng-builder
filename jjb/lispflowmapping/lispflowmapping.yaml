@@ -76,18 +76,6 @@
     staging-profile-id: 96fff2503b766
 
 - project:
-    name: lispflowmapping-sonar
-    jobs:
-      - odl-sonar-jobs-jdk21
-
-    project: "lispflowmapping"
-    project-name: "lispflowmapping"
-    branch: "master"
-    build-node: ubuntu2204-docker-4c-4g
-    mvn-settings: "lispflowmapping-settings"
-    mvn-opts: "-Xmx2048m -Dmaven.compile.fork=true"
-
-- project:
     name: lispflowmapping-view
     views:
       - project-view
