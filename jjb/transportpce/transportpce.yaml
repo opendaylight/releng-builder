@@ -96,18 +96,6 @@
     staging-profile-id: a6927323fa3d4
 
 - project:
-    name: transportpce-sonar
-    jobs:
-      - odl-sonar-jobs-jdk21
-
-    project: "transportpce"
-    project-name: "transportpce"
-    branch: "master"
-    build-timeout: 90
-    mvn-settings: "transportpce-settings"
-    build-node: ubuntu2204-docker-4c-4g
-
-- project:
     name: transportpce-view
     views:
       - project-view
