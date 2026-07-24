@@ -85,26 +85,6 @@
     staging-profile-id: dd4b7084afb552
 
 - project:
-    name: gnmi-sonar
-    jobs:
-      - odl-sonar-jobs-jdk21:
-          mvn-params: >
-            -Dodl.jacoco.aggregateFile=$WORKSPACE/target/jacoco.exec
-            -Dskip.karaf.featureTest=true
-          sonar-mvn-goal: >
-            jacoco:report -Djacoco.dataFile=$WORKSPACE/target/jacoco.exec
-            sonar:sonar
-
-    project: "gnmi"
-    project-name: "gnmi"
-    branch: "master"
-    build-node: ubuntu2204-docker-4c-4g
-
-    mvn-settings: "gnmi-settings"
-    mvn-goals: "clean deploy"
-    mvn-opts: "-Dintegrationtests"
-
-- project:
     name: gnmi-view
     views:
       - project-view
