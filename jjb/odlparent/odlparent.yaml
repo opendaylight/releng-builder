@@ -31,24 +31,6 @@
     staging-profile-id: 880d5ac25eaa
 
 - project:
-    name: odlparent-sonar
-    jobs:
-      - odl-sonar-jobs-jdk21:
-          mvn-params: >
-            -Dodl.jacoco.aggregateFile=$WORKSPACE/target/jacoco.exec
-            -Dskip.karaf.featureTest=true
-          sonar-mvn-goal: >
-            jacoco:report -Djacoco.dataFile=$WORKSPACE/target/jacoco.exec
-            sonar:sonar
-
-    project: "odlparent"
-    project-name: "odlparent"
-    branch: "master"
-    build-node: ubuntu2204-docker-2c-2g
-
-    mvn-settings: "odlparent-settings"
-
-- project:
     name: odlparent-view
     views:
       - project-view
