@@ -59,26 +59,6 @@
     staging-profile-id: a67b22fc3663f
 
 - project:
-    name: netconf-sonar
-    jobs:
-      - odl-sonar-jobs-jdk21:
-          mvn-params: >
-            -Dodl.jacoco.aggregateFile=$WORKSPACE/target/jacoco.exec
-            -Dskip.karaf.featureTest=true
-          sonar-mvn-goal: >
-            jacoco:report -Djacoco.dataFile=$WORKSPACE/target/jacoco.exec
-            sonar:sonar
-
-    project: netconf
-    project-name: netconf
-    branch: master
-    build-node: ubuntu2204-docker-4c-4g
-    build-timeout: 90
-
-    mvn-settings: "netconf-settings"
-    mvn-goals: "clean deploy -Pintegrationtests"
-
-- project:
     name: netconf-view
     views:
       - project-view
