@@ -43,26 +43,6 @@
     staging-profile-id: ca996fb20812d1
 
 - project:
-    name: ietf-sonar
-    jobs:
-      - odl-sonar-jobs-jdk21:
-          mvn-params: >
-            -Dodl.jacoco.aggregateFile=$WORKSPACE/target/jacoco.exec
-            -Dskip.karaf.featureTest=true
-          sonar-mvn-goal: >
-            jacoco:report -Djacoco.dataFile=$WORKSPACE/target/jacoco.exec
-            sonar:sonar
-
-    project: "ietf"
-    project-name: "ietf"
-    branch: "master"
-    build-node: ubuntu2204-docker-4c-4g
-
-    mvn-settings: "ietf-settings"
-    mvn-goals: "clean deploy"
-    mvn-opts: "-Dintegrationtests"
-
-- project:
     name: ietf-view
     views:
       - project-view
