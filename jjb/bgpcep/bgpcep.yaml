@@ -58,25 +58,6 @@
     staging-profile-id: 9427a05049030
 
 - project:
-    name: bgpcep-sonar
-    jobs:
-      - odl-sonar-jobs-jdk21:
-          mvn-params: >
-            -Dodl.jacoco.aggregateFile=$WORKSPACE/target/jacoco.exec
-            -P!karaf
-          sonar-mvn-goal: >
-            jacoco:report -Djacoco.dataFile=$WORKSPACE/target/jacoco.exec
-            sonar:sonar
-
-    project: bgpcep
-    project-name: bgpcep
-    branch: master
-    build-node: ubuntu2204-docker-4c-4g
-    build-timeout: 120
-    mvn-settings: "bgpcep-settings"
-    mvn-opts: "-Xmx1024m"
-
-- project:
     name: bgpcep-view
     views:
       - project-view
