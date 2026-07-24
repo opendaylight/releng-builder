@@ -67,24 +67,6 @@
     staging-profile-id: 1271cf710cc09d
 
 - project:
-    name: yangtools-sonar
-    jobs:
-      - odl-sonar-jobs-jdk21:
-          mvn-params: >
-            -Dodl.jacoco.aggregateFile=$WORKSPACE/target/jacoco.exec
-            -Dskip.karaf.featureTest=true
-          sonar-mvn-goal: >
-            jacoco:report -Djacoco.dataFile=$WORKSPACE/target/jacoco.exec
-            sonar:sonar
-
-    project: "yangtools"
-    project-name: "yangtools"
-    branch: "master"
-    build-node: ubuntu2204-docker-4c-4g
-
-    mvn-settings: "yangtools-settings"
-
-- project:
     name: yangtools-view
     views:
       - project-view
