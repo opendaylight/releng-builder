@@ -64,18 +64,6 @@
     staging-profile-id: 96fdf4408765d
 
 - project:
-    name: jsonrpc-sonar
-    jobs:
-      - odl-sonar-jobs-jdk21
-
-    project: "jsonrpc"
-    project-name: "jsonrpc"
-    branch: "master"
-    build-node: ubuntu2204-docker-4c-4g
-    mvn-settings: "jsonrpc-settings"
-    mvn-opts: "-Xmx1024m"
-
-- project:
     name: jsonrpc-view
     views:
       - project-view
