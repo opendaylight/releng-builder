@@ -89,7 +89,7 @@ jobs:
       - name: Checkout change
         if: github.event_name != 'schedule'
         # yamllint disable-line rule:line-length
-        uses: lfreleng-actions/checkout-gerrit-change-action@54d751e8bd167bc91f7d665dabe33fae87aaaa63     # v0.9
+        uses: lfreleng-actions/checkout-gerrit-change-action@54d751e8bd167bc91f7d665dabe33fae87aaaa63 # v0.9
         with:
           gerrit-refspec: ${{ inputs.GERRIT_REFSPEC }}
           delay: "10s"
@@ -98,7 +98,7 @@ jobs:
       - name: Checkout repository (scheduled)
         if: github.event_name == 'schedule'
         # yamllint disable-line rule:line-length
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0   # v7.0.0
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           ref: ${{ github.event.repository.default_branch }}
           submodules: true
@@ -110,7 +110,7 @@ jobs:
         if: steps.build_mode.outputs.mode == 'change-detect'
         id: filter
         # yamllint disable-line rule:line-length
-        uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36   # v3.0.2
+        uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36 # v3.0.2
         with:
           filters: |
             robot:
@@ -194,7 +194,7 @@ jobs:
       - name: Checkout change
         if: github.event_name != 'schedule'
         # yamllint disable-line rule:line-length
-        uses: lfreleng-actions/checkout-gerrit-change-action@54d751e8bd167bc91f7d665dabe33fae87aaaa63     # v0.9
+        uses: lfreleng-actions/checkout-gerrit-change-action@54d751e8bd167bc91f7d665dabe33fae87aaaa63 # v0.9
         with:
           gerrit-refspec: ${{ inputs.GERRIT_REFSPEC }}
           delay: "0s"
@@ -203,7 +203,7 @@ jobs:
       - name: Checkout repository (scheduled)
         if: github.event_name == 'schedule'
         # yamllint disable-line rule:line-length
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0   # v7.0.0
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           ref: ${{ github.event.repository.default_branch }}
           submodules: true
@@ -285,7 +285,7 @@ jobs:
 
       - name: Post comment
         # yamllint disable-line rule:line-length
-        uses: lfreleng-actions/gerrit-review-action@6d2e00dfd3173cd9a36d11350c8fba44731c7b4e     # v0.10.0
+        uses: lfreleng-actions/gerrit-review-action@6d2e00dfd3173cd9a36d11350c8fba44731c7b4e # v0.10.0
         with:
           host: ${{ vars.GERRIT_SERVER }}
           username: ${{ vars.GERRIT_SSH_USER }}
