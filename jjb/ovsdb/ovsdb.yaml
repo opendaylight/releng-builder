@@ -62,26 +62,6 @@
     staging-profile-id: a68b188166958
 
 - project:
-    name: ovsdb-titanium
-    jobs:
-      - distribution-check-jobs-jdk21
-      - odl-maven-javadoc-jobs-jdk21
-      - odl-maven-jobs-jdk21
-      - odl-maven-verify-jobs-jdk21
-
-    stream: titanium
-    project: "ovsdb"
-    project-name: "ovsdb"
-    branch: "stable/titanium"
-    build-node: ubuntu2204-docker-4c-4g
-    mvn-settings: "ovsdb-settings"
-    dependencies: "odlparent-merge-{stream},controller-merge-{stream},yangtools-merge-{stream}"
-    email-upstream: "[ovsdb] [odlparent] [controller] [yangtools]"
-
-    # Used by the release job
-    staging-profile-id: a68b188166958
-
-- project:
     name: ovsdb-view
     views:
       - project-view

@@ -16,7 +16,7 @@ export CONTROLLERMEM=${CONTROLLERMAXMEM}
 # Cluster specific configuration settings
 # Choose cluster system based on ODL_STREAM
 case "${DISTROSTREAM}" in
-    tatanium|vanadium)
+    vanadium)
         CLUSTER_SYSTEM="akka"
         ;;
     *)

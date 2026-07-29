@@ -15,8 +15,6 @@
           branch: "stable/chromium"
       - vanadium:
           branch: "stable/vanadium"
-      - titanium:
-          branch: "stable/titanium"
     project: releng/autorelease
     project-name: autorelease
     build-node: ubuntu2204-builder-2c-2g
@@ -48,11 +46,6 @@
           java-version: openjdk21
           mvn-version: mvn39
           integration-test: vanadium
-      - titanium:
-          branch: "stable/titanium"
-          java-version: openjdk21
-          mvn-version: mvn39
-          integration-test: titanium
     project: releng/autorelease
     project-name: autorelease
     build-node: ubuntu2204-docker-8c-8g
