@@ -88,8 +88,10 @@
     jobs:
       - "{project-name}-gerrit-branch-lock-{stream}"
     stream:
-      - chromium:
+      - manganese:
           branch: "master"
+      - chromium:
+          branch: "stable/chromium"
       - vanadium:
           branch: "stable/vanadium"
       - titanium:

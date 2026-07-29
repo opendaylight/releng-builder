@@ -9,8 +9,10 @@
       - gerrit-tox-verify
 
     stream:
-      - chromium:
+      - manganese:
           branch: "master"
+      - chromium:
+          branch: "stable/chromium"
       - vanadium:
           branch: "stable/vanadium"
       - titanium:
@@ -31,8 +33,13 @@
       - "autorelease-generate-release-notes-{stream}"
 
     stream:
-      - chromium:
+      - manganese:
           branch: "master"
+          java-version: openjdk21
+          mvn-version: mvn39
+          integration-test: manganese
+      - chromium:
+          branch: "stable/chromium"
           java-version: openjdk21
           mvn-version: mvn39
           integration-test: chromium
