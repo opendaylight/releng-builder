@@ -360,10 +360,188 @@ def update_integration_csit_list(
             )
 
 
+def _indent(line):
+    """Return the number of leading spaces of line."""
+    return len(line) - len(line.lstrip())
+
+
+def _entry_end(lines, start, indent):
+    """Return the line after the block opened at start with the given indent.
+
+    A blank line closes the block as well so the separator between the last
+    stream entry and the next key is left in place.
+    """
+    end = start + 1
+    while end < len(lines):
+        if not lines[end].strip() or _indent(lines[end]) <= indent:
+            break
+        end += 1
+    return end
+
+
+def _drop_blocks(lines, pattern):
+    """Drop every block whose opening line matches pattern."""
+    out = []
+    index = 0
+    changed = False
+    while index < len(lines):
+        match = pattern.match(lines[index])
+        if match:
+            index = _entry_end(lines, index, _indent(lines[index]))
+            changed = True
+            continue
+        out.append(lines[index])
+        index += 1
+    return out, changed
+
+
+def _drop_project_blocks(lines, release):
+    """Drop whole "- project:" blocks that build only the EOL release."""
+    starts = [i for i, line in enumerate(lines) if line.startswith("- project:")]
+    if not starts:
+        return lines, False
+    stream = re.compile(r"^\s+stream: [\"']?{}[\"']?\s*$".format(release))
+    drop = set()
+    for number, start in enumerate(starts):
+        end = starts[number + 1] if number + 1 < len(starts) else len(lines)
+        if any(stream.match(line) for line in lines[start:end]):
+            drop.update(range(start, end))
+    if not drop:
+        return lines, False
+    return [line for i, line in enumerate(lines) if i not in drop], True
+
+
+def next_oldest_stream(release, job_dir):
+    """Return the stream that becomes the oldest once release is removed.
+
+    The stream lists are ordered newest first, so the entry ahead of the EOL
+    release is the one that inherits the "oldest supported" defaults.
+    """
+    path = os.path.join(job_dir, "autorelease", "autorelease-projects.yaml")
+    entry = re.compile(r"^\s*- ([a-z0-9]+):\s*$")
+    previous = None
+    for line in open(path).read().splitlines():
+        match = entry.match(line)
+        if not match:
+            continue
+        if match.group(1) == release:
+            return previous
+        previous = match.group(1)
+    return None
+
+
+def remove_eol_release(release, job_dir):
+    """Remove every job configuration belonging to an EOL release.
+
+    Drops "- {release}:" stream entries and whole "- project:" blocks built
+    from that stream, deletes the per release job list files and the csit
+    list defaults, then reports references the operator still has to review.
+
+    ponytail: this edits lines rather than round tripping the YAML, removal
+    is a line range operation and the parser would reflow untouched scalars.
+    """
+    successor = next_oldest_stream(release, job_dir)
+    defaults_yaml = os.path.join(job_dir, "defaults.yaml")
+    stream_entry = re.compile(r"^\s*- {}:\s*$".format(release))
+
+    for directory, subdirs, job_files in os.walk(job_dir):
+        # global-jjb is a symlink to a submodule, it is not ours to edit.
+        subdirs[:] = [
+            d for d in subdirs if not os.path.islink(os.path.join(directory, d))
+        ]
+        for job_file in sorted(job_files):
+            path = os.path.join(directory, job_file)
+            if not job_file.endswith(".yaml") or path == defaults_yaml:
+                continue
+
+            lines = open(path).read().splitlines()
+            lines, dropped_projects = _drop_project_blocks(lines, release)
+            lines, dropped_streams = _drop_blocks(lines, stream_entry)
+            if dropped_projects or dropped_streams:
+                write_lines(lines, path)
+
+    remove_eol_defaults(release, successor, defaults_yaml)
+
+    for path in (
+        os.path.join(job_dir, "integration", "csit-jobs-{}.lst".format(release)),
+        os.path.join(
+            job_dir, "autorelease", "validate-autorelease-{}.yaml".format(release)
+        ),
+        os.path.join(
+            job_dir, "autorelease", "view-autorelease-{}.yaml".format(release)
+        ),
+    ):
+        if os.path.exists(path):
+            os.remove(path)
+
+    report_remaining_references(release, job_dir)
+
+
+def remove_eol_defaults(release, successor, defaults_yaml):
+    """Drop the csit-*-list defaults of the EOL release and move the verify stream."""
+    lines = open(defaults_yaml).read().splitlines()
+    lines, changed = _drop_blocks(
+        lines, re.compile(r"^\s*[a-z0-9-]+-{}:".format(release))
+    )
+    if successor:
+        moved = {
+            "verify-branch: stable/{}".format(
+                release
+            ): "verify-branch: stable/{}".format(successor),
+            "verify-stream: {}".format(release): "verify-stream: {}".format(successor),
+        }
+        for index, line in enumerate(lines):
+            for old, new in moved.items():
+                if line.strip() == old:
+                    lines[index] = line.replace(old, new)
+                    changed = True
+    if changed:
+        write_lines(lines, defaults_yaml)
+
+
+def write_lines(lines, path):
+    """Write lines back to path with a trailing newline and no blank tail."""
+    while lines and not lines[-1].strip():
+        lines.pop()
+    with open(path, "w") as job_file:
+        job_file.write("\n".join(lines) + "\n")
+
+
+def report_remaining_references(release, job_dir):
+    """Print files still naming the EOL release.
+
+    What is left is help text and hand written shell conditionals, rewriting
+    those automatically is guesswork so the operator gets a list instead.
+    """
+    pattern = re.compile(release, re.I)
+    remaining = []
+    for directory, subdirs, names in os.walk(job_dir):
+        subdirs[:] = [
+            d for d in subdirs if not os.path.islink(os.path.join(directory, d))
+        ]
+        for name in names:
+            path = os.path.join(directory, name)
+            if not os.path.isfile(path):
+                continue
+            with open(path, errors="ignore") as job_file:
+                if pattern.search(job_file.read()):
+                    remaining.append(path)
+    if not remaining:
+        return
+    print(
+        "\nReview these remaining '{}' references by hand:".format(release),
+        file=sys.stderr,
+    )
+    for path in sorted(remaining):
+        print("    {}".format(path), file=sys.stderr)
+
+
 parser = argparse.ArgumentParser(
     description="""Creates & updates jobs for ODL projects when branch cutting.
 
-    Example usage: python scripts/cut-branch.sh Phosphorus Sulfur jjb/
+    Example usage: python scripts/cut-branch-jobs.py Phosphorus Sulfur jjb/
+
+    Removing an EOL release: python scripts/cut-branch-jobs.py --eol Boron jjb/
 
     ** If calling from tox the JOD_DIR is auto-detected so only pass the current
     and next release stream name. **
@@ -371,14 +549,23 @@ parser = argparse.ArgumentParser(
     formatter_class=RawTextHelpFormatter,
 )
 parser.add_argument(
+    "--eol",
+    metavar="EOL_RELEASE",
+    type=str,
+    help="""Remove the job configuration of an EOL release instead of
+        cutting a branch. Takes only JOB_DIR as its positional argument.""",
+)
+parser.add_argument(
     "release_on_stable_branch",
     metavar="RELEASE_ON_STABLE_BRANCH",
+    nargs="?",
     type=str,
     help="The ODL release codename for the stable branch that was cut.",
 )
 parser.add_argument(
     "release_on_current_branch",
     metavar="RELEASE_ON_CURRENT_BRANCH",
+    nargs="?",
     type=str,
     help="""The ODL release codename for the new {}
         (eg. Sulfur, Phosphorus).""".format(
@@ -388,10 +575,35 @@ parser.add_argument(
 parser.add_argument(
     "job_dir",
     metavar="JOB_DIR",
+    nargs="?",
     type=str,
     help="Path to the directory containing JJB config.",
 )
 args = parser.parse_args()
+
+if args.eol:
+    # ponytail: EOL mode takes a single positional, argparse fills the
+    # optional positionals from the left so pick the one that got it.
+    positional = [
+        value
+        for value in (
+            args.release_on_stable_branch,
+            args.release_on_current_branch,
+            args.job_dir,
+        )
+        if value
+    ]
+    if len(positional) != 1:
+        parser.error("--eol takes JOB_DIR as its only positional argument")
+    remove_eol_release(args.eol.lower(), positional[0])
+    sys.exit(0)
+
+if not (
+    args.release_on_stable_branch and args.release_on_current_branch and args.job_dir
+):
+    parser.error(
+        "RELEASE_ON_STABLE_BRANCH, RELEASE_ON_CURRENT_BRANCH and JOB_DIR are required"
+    )
 
 # We only handle lower release codenames
 release_on_stable_branch = args.release_on_stable_branch.lower()
