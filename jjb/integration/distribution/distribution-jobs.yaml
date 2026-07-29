@@ -21,8 +21,10 @@
     nexus-iq-stage: release
     email-upstream: "[int/dist]"
     stream:
-      - chromium:
+      - manganese:
           branch: "master"
+      - chromium:
+          branch: "stable/chromium"
       - vanadium:
           branch: "stable/vanadium"
       - titanium:
@@ -61,8 +63,10 @@
       serviceutils-maven-merge-{stream},
 
     stream:
-      - chromium:
+      - manganese:
           branch: "master"
+      - chromium:
+          branch: "stable/chromium"
       - vanadium:
           branch: "stable/vanadium"
       - titanium:
@@ -98,8 +102,10 @@
     jobs:
       - "{project-name}-gerrit-docker-jobs"
     stream:
-      - chromium:
+      - manganese:
           branch: "master"
+      - chromium:
+          branch: "stable/chromium"
       - vanadium:
           branch: "stable/vanadium"
       - titanium:
