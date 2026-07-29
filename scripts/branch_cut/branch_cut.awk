@@ -30,29 +30,29 @@ BEGIN {
     op = "^" ws "---" ws "$"                       # match files starts with "---"
 
     next_release_tag            = "^" ws "next-release-tag: '{stream}'"
-    master                      = "'master'"
-    new_branch                  = "'stable/" new_release "'"
-    curr_branch                 = "'stable/" curr_release "'"
-    prev_branch                 = "'stable/" prev_release "'"
-    eol_branch                  = "'stable/" eol_release "'"
+    master                      = "\"master\"|'master'"       # both quote styles
+    new_branch                  = "\"stable/" new_release "\""
+    curr_branch                 = "\"stable/" curr_release "\""
+    prev_branch                 = "\"stable/" prev_release "\""
+    eol_branch                  = "\"stable/" eol_release "\""
 
     # replace block to add new release
     new_rel_yaml_tag            = "- " new_release ":";
-    br_master_yaml_tag          = "    branch: 'master'";
-    jre_yaml_tag                = "    jre: 'openjdk21'";
-    java_version_yaml_tag       = "    java-version: 'openjdk21'";
+    br_master_yaml_tag          = "    branch: \"master\"";
+    jre_yaml_tag                = "    jre: \"openjdk21\"";
+    java_version_yaml_tag       = "    java-version: \"openjdk21\"";
     curr_rel_yaml_tag           = "- " curr_release ":";
-    br_stable_curr_yaml_tag     = "    branch: 'stable/" curr_release "'";
+    br_stable_curr_yaml_tag     = "    branch: \"stable/" curr_release "\"";
 
     # replace block for autorelease-projects
     #new_rel_yaml_tag           = "- " new_release ":";
-    next_rel_tag_new_yaml_tag   = "    next-release-tag: '{stream}'";
+    next_rel_tag_new_yaml_tag   = "    next-release-tag: \"{stream}\"";
     #br_master_yaml_tag         = "    branch: 'master'";
-    jdk_yaml_tag                = "    jdk: 'openjdk8'";
+    jdk_yaml_tag                = "    jdk: \"openjdk8\"";
     intg_test_yaml_tag          = "    integration-test: " new_release;
     extra_mvn_opts_tag          = "    extra-mvn-opts: -Dsft.heap.max=4g"
     #curr_rel_yaml_tag          = "- " curr_release ":";
-    next_rel_tag_curr_yaml_tag  = "    next-release-tag: '{stream}'";
+    next_rel_tag_curr_yaml_tag  = "    next-release-tag: \"{stream}\"";
     #br_stable_curr_yaml_tag    = "    branch: 'stable/" curr_release "'";
 
     # search patterns
@@ -104,8 +104,23 @@ END {
     }
 
     find_blks()                                 # gets number of blocks between start/end pattern
-    process_blk(arr_bs[1], arr_be[1], 1)        # pass start and end of each block and process first block
-    update_file(arr_be[1])                      # write processed content
+
+    for (i = 1; i <= arr_bs[1]; i++)            # lines before the first block
+        emit(file[i])
+
+    for (b = 1; b <= nb; b++) {                 # every "- project:" block
+        reset_blk()
+        process_blk(arr_bs[b], arr_be[b], b)
+        write_blk()
+        nxt = (b < nb) ? arr_bs[b+1] : n        # lines between this block and the next
+        for (i = arr_be[b]; i <= nxt; i++)
+            emit(file[i])
+    }
+
+    if (changed) {                              # unchanged files are left alone
+        for (i = 1; i <= no; i++)
+            print out[i]
+    }
 
     if (debug) {
         print "number of blocks="nb;
@@ -188,6 +203,7 @@ function find_blks(i, l, bs, be) {
         if (bs > be && l ~ endpat) arr_be[++be] = i - 1      # block end
         if (           l ~ startpat) arr_bs[++bs] = i - 1    # block start
     }
+    if (bs > be) arr_be[++be] = n               # close the last block
     nb = be
 
     # to handle files with single blocks
@@ -203,7 +219,8 @@ function find_blks(i, l, bs, be) {
     }
 }
 
-function process_blk(bs, be, bn, i, l, eol_indent, in_eol_block) {
+function process_blk(bs, be, bn, i, l, eol_indent, in_eol_block,
+                     j, k, nl, nsub, blk_indent, sub_blk, on_master) {
     if (debug) {
         print "process_blk: bn=" bn ", bs=" bs " ,be=" be " eol_only_mode=" eol_only_mode
     }
@@ -274,19 +291,28 @@ function process_blk(bs, be, bn, i, l, eol_indent, in_eol_block) {
         print "process_blk: stream='" s "' length(s)=" length(s)" file_format='" file_format "'"
     }
 
+    # Only cut a stream that still builds from master
+    if (file_format == 1) {
+        on_master = 0
+        for (i = 1; i <= length(firstblk); i++)
+            if (firstblk[i] ~ /branch:/ && firstblk[i] ~ master) on_master = 1
+        if (!on_master) file_format = 2
+    }
+
     # Handle single stream format
     if (file_format == 1) {
         # create new block to be inserted
         for (i = 1; i <= length(firstblk); i++) {
             l = firstblk[i]
             if (l ~ /name:|stream:/) sub(curr_release, new_release, l)
-            if (l ~ /branch:/) sub(master, "'master'", l)
+            if (l ~ /branch:/) sub(master, "\"master\"", l)
             newblk[++nex1] = l
         }
+        changed = 1
         # re-create old block and change master to stable/branch
         for (i = 1; i <= length(firstblk)-1; i++) {
             l = firstblk[i]
-            if (l ~ /branch:/) sub(/"master"|'master'/, curr_branch, l)
+            if (l ~ /branch:/) sub(master, curr_branch, l)
             oldmaster[++nex2] = l
         }
     } else if (file_format == 0) {
@@ -320,36 +346,53 @@ function process_blk(bs, be, bn, i, l, eol_indent, in_eol_block) {
                 }
             }
 
-            if (l ~ srelease) {
-                # Found current release (e.g., "- vanadium:")
-                release_found = 1;
+            if (l ~ srelease && stream_found) {
+                # Found the current release (e.g. "- chromium:"). Copy the
+                # whole block, keys like csit-list belong to their stream.
                 indent = substr(l, 1, index(l, "-")-1);
-
-                # Insert NEW release block BEFORE current release
-                if (stream_found && !nrt_found) {
-                    newblk[++nex3] = indent new_rel_yaml_tag;
-                    newblk[++nex3] = indent "    " "branch: 'master'";
-                    newblk[++nex3] = indent curr_rel_yaml_tag;
-                    newblk[++nex3] = indent "    " "branch: 'stable/" curr_release "'";
-                }
-                if (stream_found && nrt_found) {
-                    newblk[++nex3] = indent new_rel_yaml_tag;
-                    newblk[++nex3] = indent next_rel_tag_new_yaml_tag;
-                    newblk[++nex3] = indent "    " "branch: 'master'";
-                    newblk[++nex3] = indent intg_test_yaml_tag;
-                    newblk[++nex3] = indent extra_mvn_opts_tag;
-                    newblk[++nex3] = indent curr_rel_yaml_tag;
-                    newblk[++nex3] = indent next_rel_tag_curr_yaml_tag;
-                    newblk[++nex3] = indent "    " "branch: 'stable/" curr_release "'";
+                blk_indent = length(indent);
+                delete sub_blk;
+                nsub = 0;
+                sub_blk[++nsub] = l;
+                j = i + 1;
+                while (j <= length(firstblk)-1) {
+                    nl = firstblk[j];
+                    if (nl !~ /[^ \t]/) break;                  # blank line
+                    if (match(nl, /[^ ]/) - 1 <= blk_indent) break;
+                    sub_blk[++nsub] = nl;
+                    j++;
                 }
 
-                # Skip the next line (the old branch line for current release)
-                i++;
+                on_master = 0;
+                for (k = 1; k <= nsub; k++)
+                    if (sub_blk[k] ~ /branch:/ && sub_blk[k] ~ master) on_master = 1;
+                if (!on_master) {                       # already cut, keep as is
+                    for (k = 1; k <= nsub; k++)
+                        newblk[++nex3] = sub_blk[k];
+                    i = j - 1;
+                    stream_found = 0;
+                    continue;
+                }
 
+                # New release keeps master, the release name follows the stream.
+                for (k = 1; k <= nsub; k++) {
+                    nl = sub_blk[k];
+                    gsub(curr_release, new_release, nl);
+                    newblk[++nex3] = nl;
+                }
+                # Current release moves onto its stable branch.
+                for (k = 1; k <= nsub; k++) {
+                    nl = sub_blk[k];
+                    if (nl ~ /branch:/) sub(master, curr_branch, nl);
+                    newblk[++nex3] = nl;
+                }
+
+                changed = 1;
+                i = j - 1;
                 stream_found = 0;
                 release_found = 0;
                 nrt_found = 0;
-                continue;  # Skip the old current release line (we already added updated version)
+                continue;
             }
             if (l ~ sfunctionality) { func_found = 1; }
             if (l ~ snext_release_tag) { nrt_found = 1; }
@@ -360,48 +403,31 @@ function process_blk(bs, be, bn, i, l, eol_indent, in_eol_block) {
                 print "process_blk: append(newblk[]) : stream="stream" release_found="release_found
             }
         }
-    } else {
-        # exit on unknown file format
-        exit;
     }
 }
 
-function update_file(be, i, j, l) {
-    i = 1
-    # handle lines before "---"
-    while (i <= n) {
-        print l = file[i++]
-        if (l ~ op) break
-    }
+function emit(l) {
+    out[++no] = l
+}
 
-    if (debug) {
-        print "writing master block"
-    }
+function reset_blk() {
+    delete firstblk; delete newblk; delete oldmaster
+    nex = 0; nex1 = 0; nex2 = 0; nex3 = 0
+    file_format = 2
+    stream_found = 0; release_found = 0; nrt_found = 0; s = ""
+}
 
-    # Handle single stream format
+function write_blk(j) {
     if (file_format == 1) {
         for (j = 1; j <= nex1; j++)                   # write new branch block
-            print newblk[j]
-
-        if (debug) {
-            print "writing stable block"
-        }
-
+            emit(newblk[j])
         for (j = 1; j <= nex2; j++)                   # write updated branch block
-            print oldmaster[j]
-
-    # Handle multi-stream format
+            emit(oldmaster[j])
     } else if (file_format == 0) {
-        # print the first block
         for (j = 1; j <= nex3; j++)                   # write multi-stream block
-            print newblk[j]
-    }
-
-    if (debug) {
-        print "writing rest of the file"
-    }
-
-    while (be <= n) {                                 # write rest of the file
-        print file[be++]
+            emit(newblk[j])
+    } else {
+        for (j = 1; j <= nex - 1; j++)                # unknown format, keep as is
+            emit(firstblk[j])
     }
 }

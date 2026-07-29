@@ -111,4 +111,35 @@ while IFS="" read -r file; do
 done < <(find ../../jjb -name "*.yaml")
 
 echo "Modified $mod out of $count files"
+
+# The csit job list and the csit-*-list defaults are per release, defaults.yaml
+# is in the excludes list above so handle both here.
+if [[ -n "$new_reltag" ]]; then
+    jjb_dir="../../jjb"
+    csit_src="$jjb_dir/integration/csit-jobs-${curr_reltag}.lst"
+    csit_dst="$jjb_dir/integration/csit-jobs-${new_reltag}.lst"
+    if [[ -f "$csit_src" && ! -f "$csit_dst" ]]; then
+        sed "s/${curr_reltag}/${new_reltag}/g" "$csit_src" > "$csit_dst"
+        echo "$csit_dst: Done"
+    fi
+
+    defaults="$jjb_dir/defaults.yaml"
+    for list in csit-mri-list csit-weekly-list csit-sanity-list; do
+        grep -q "^    ${list}-${new_reltag}:" "$defaults" && continue
+        # Collect the current release list as a single line, then re-wrap it,
+        # a longer release name can push lines past the 120 column limit.
+        entries=$(awk -v key="    ${list}-${curr_reltag}:" '
+            index($0, key) == 1 { found = 1; next }
+            found && /^      [^ ]/ { sub(/^ +/, ""); printf "%s ", $0; next }
+            found { exit }
+        ' "$defaults" | sed "s/${curr_reltag}/${new_reltag}/g")
+        [[ -z "$entries" ]] && continue
+        {
+            echo "    ${list}-${new_reltag}: >"
+            echo "$entries" | tr -s ' ' | fold -s -w 100 | sed -e 's/ *$//' -e 's/^/      /'
+        } >> "$defaults"
+        echo "$defaults: ${list}-${new_reltag} added"
+    done
+fi
+
 echo "Completed"
