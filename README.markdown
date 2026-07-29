@@ -4,11 +4,11 @@ release and publish project artifacts.
 
 Quick links:
 
--   User / operator documentation: [Read the Docs site][1]
--   Jenkins (production): https://jenkins.opendaylight.org/releng
--   Jenkins (sandbox): https://jenkins.opendaylight.org/sandbox
--   Global shared JJB templates (submodule): `global-jjb/`
--   Contributing: see `CONTRIBUTING.markdown`
+- User / operator documentation: [Read the Docs site][1]
+- Jenkins (production): https://jenkins.opendaylight.org/releng
+- Jenkins (sandbox): https://jenkins.opendaylight.org/sandbox
+- Global shared JJB templates (submodule): `global-jjb/`
+- Contributing: see `CONTRIBUTING.markdown`
 
 Getting started (new project):
 

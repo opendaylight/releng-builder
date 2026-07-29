@@ -1,7 +1,7 @@
 ---
 default_language_version:
   python: python3
-  node: "14.13.0"
+  node: system
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v5.0.0
@@ -48,6 +48,11 @@ repos:
     rev: 6.3.0
     hooks:
       - id: pydocstyle
+
+  - repo: https://github.com/rbubley/mirrors-prettier
+    rev: v3.6.2
+    hooks:
+      - id: prettier
 
   - repo: https://github.com/adrienverge/yamllint
     rev: v1.35.1
