@@ -59,7 +59,10 @@ BEGIN {
     smaster = "^" ws "- master:"
     sstream = "^" ws "stream:"
     srelease = "^" ws "- " curr_release ":"
-    seol_release = "^" ws "- " eol_release ":"
+    seol_release = "^" ws "- " eol_release ":" ws "$"
+    # single stream projects and the per release keys of defaults.yaml
+    sstream_scalar = "^" ws "stream: [\"']?" eol_release "[\"']?" ws "$"
+    seol_key = "^" ws "[a-z0-9-]+-" eol_release ":"
     snext_release_tag = "^" ws "next-release-tag:"
     #if (l ~ next_release_tag) { next_release_tag = 1; continue; }
     sbranch = "^" ws "branch: " master
@@ -132,68 +135,72 @@ END {
     }
 }
 
-function process_eol_only(i, l, in_eol_block, eol_indent, line_indent, stream_indent) {
-    in_eol_block = 0
-    eol_indent = 0
-    stream_indent = -1
+function indent_of(l) {
+    match(l, /^[ \t]*/)
+    return RLENGTH
+}
 
-    for (i = 1; i <= n; i++) {
-        l = file[i]
+# EOL removal: drop whole "- project:" blocks built from the EOL stream, then
+# drop "- <eol>:" stream entries and, in defaults.yaml, the per release keys.
+# ponytail: line based on purpose, the YAML is only ever deleted from here so
+# every untouched line has to come out exactly as it went in.
+function process_eol_only(i, j, start, blockdrop, changed, ind, no2, defaults) {
+    defaults = (FILENAME ~ /defaults\.yaml$/)
 
-        # Track the indent level of "stream:" to know where releases are
-        if (l ~ /^[[:space:]]*stream:[[:space:]]*$/) {
-            match(l, /^[[:space:]]*/)
-            stream_indent = RLENGTH
-            print l
-            continue
-        }
+    for (i = 1; i <= n; i++)
+        dropline[i] = 0
 
-        # Detect start of EOL release block
-        if (l ~ seol_release) {
-            in_eol_block = 1
-            # Calculate indent level (number of leading spaces)
-            match(l, /^[[:space:]]*/)
-            eol_indent = RLENGTH
-            if (debug) print "Found EOL block '" eol_release "' at line " i ", indent=" eol_indent > "/dev/stderr"
-            continue  # Skip the release line itself
-        }
-
-        # If in EOL block, check if we should stop skipping
-        if (in_eol_block) {
-            # Blank lines: keep them
-            if (l ~ /^[[:space:]]*$/) {
-                print l
-                continue
+    start = 0
+    for (i = 1; i <= n + 1; i++) {
+        if (i > n || file[i] ~ /^- project:/) {
+            if (start > 0) {
+                blockdrop = 0
+                for (j = start; j < i; j++)
+                    if (file[j] ~ sstream_scalar)
+                        blockdrop = 1
+                if (blockdrop) {
+                    for (j = start; j < i; j++)
+                        dropline[j] = 1
+                    changed = 1
+                }
             }
-
-            # Calculate current line indent
-            match(l, /^[[:space:]]*/)
-            line_indent = RLENGTH
-
-            # If we hit a key at same/lower indent than stream section, stop skipping
-            if (stream_indent >= 0 && line_indent <= stream_indent) {
-                in_eol_block = 0
-                print l
-                if (debug) print "End of EOL block at line " i " (lower/same indent as stream)" > "/dev/stderr"
-                continue
-            }
-
-            # If we hit another release entry at same indent, stop skipping
-            if (l ~ /^[[:space:]]*- [a-z]+:[[:space:]]*$/ && line_indent == eol_indent) {
-                in_eol_block = 0
-                print l
-                if (debug) print "End of EOL block at line " i " (new release)" > "/dev/stderr"
-                continue
-            }
-
-            # Still in EOL block, skip this line
-            if (debug) print "Skipping line " i ": " substr(l, 1, 60) > "/dev/stderr"
-            continue
+            start = i
         }
-
-        # Not in EOL block, keep the line
-        print l
     }
+
+    no2 = 0
+    for (i = 1; i <= n; ) {
+        if (dropline[i]) {
+            i++
+            continue
+        }
+        if (file[i] ~ seol_release || (defaults && file[i] ~ seol_key)) {
+            ind = indent_of(file[i])
+            changed = 1
+            for (i++; i <= n && file[i] ~ /[^ \t]/ && indent_of(file[i]) > ind; i++)
+                ;
+            continue
+        }
+        if (defaults && length(successor) > 0) {
+            if (file[i] ~ ("^" ws "verify-branch: stable/" eol_release ws "$")) {
+                sub("stable/" eol_release, "stable/" successor, file[i])
+                changed = 1
+            }
+            if (file[i] ~ ("^" ws "verify-stream: " eol_release ws "$")) {
+                sub("verify-stream: " eol_release, "verify-stream: " successor, file[i])
+                changed = 1
+            }
+        }
+        out2[++no2] = file[i]
+        i++
+    }
+
+    while (no2 > 0 && out2[no2] ~ /^[ \t]*$/)          # no blank tail
+        no2--
+
+    if (changed)                                       # unchanged files are left alone
+        for (i = 1; i <= no2; i++)
+            print out2[i]
 }
 
 function find_blks(i, l, bs, be) {
