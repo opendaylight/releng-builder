@@ -217,6 +217,7 @@ jobs:
         uses: lfreleng-actions/tailscale-openstack-bastion-action@eb920e9c30bbe25e908c317af504f8321367bc39 # v0.1.1
         with:
           operation: setup
+          bastion_name: "bastion-gh-${{ github.run_id }}-${{ strategy.job-index }}"
           openstack_auth_url: ${{ secrets.OPENSTACK_AUTH_URL }}
           openstack_project_id: ${{ secrets.OPENSTACK_PROJECT_ID }}
           openstack_username: ${{ secrets.OPENSTACK_USERNAME }}
@@ -240,7 +241,6 @@ jobs:
           packer_vars_file: "common-packer/vars/${{ matrix.platform }}.pkrvars.hcl"
           packer_working_dir: "packer"
           packer_version: "1.9.1"
-          path_prefix: "${{ github.workspace }}"
           bastion_ip: ${{ steps.bastion-setup.outputs.bastion_ip }}
           bastion_ssh_user: "ubuntu"
           openstack_auth_url: ${{ secrets.OPENSTACK_AUTH_URL }}
@@ -255,6 +255,7 @@ jobs:
         uses: lfreleng-actions/tailscale-openstack-bastion-action@eb920e9c30bbe25e908c317af504f8321367bc39 # v0.1.1
         with:
           operation: teardown
+          bastion_name: "bastion-gh-${{ github.run_id }}-${{ strategy.job-index }}"
           openstack_auth_url: ${{ secrets.OPENSTACK_AUTH_URL }}
           openstack_project_id: ${{ secrets.OPENSTACK_PROJECT_ID }}
           openstack_username: ${{ secrets.OPENSTACK_USERNAME }}
@@ -289,7 +290,7 @@ jobs:
         with:
           host: ${{ vars.GERRIT_SERVER }}
           username: ${{ vars.GERRIT_SSH_USER }}
-          key: ${{ secrets.GERRIT_SSH_PRIVKEY_B64 }}
+          key: ${{ secrets.GERRIT_SSH_PRIVKEY }}
           known_hosts: ${{ vars.GERRIT_KNOWN_HOSTS }}
           change-number: ${{ inputs.GERRIT_CHANGE_NUMBER }}
           comment-message: ${{ steps.comment-result.outputs.message }}
