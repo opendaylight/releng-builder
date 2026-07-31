@@ -116,7 +116,7 @@ jobs:
             builder:
               - 'packer/templates/builder.pkr.hcl'
               - 'packer/common-packer/templates/builder.pkr.hcl'
-              - 'packer/provision/builder/**'
+              - 'packer/provision/local-builder.yaml'
               - 'packer/provision/system-reseal.sh'
               - 'packer/common-packer/vars/*.pkrvars.hcl'
 
