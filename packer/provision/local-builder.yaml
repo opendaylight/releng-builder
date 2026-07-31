@@ -12,6 +12,17 @@
   pre_tasks:
     - include_role: name=lfit.system-update
 
+  roles:
+    # Re-run java-install with the SDKMAN! toolchain enabled. The baseline
+    # playbook installs this role with the distribution JDK only, so this
+    # layers the SDKMAN!-managed JDKs, Maven and mvnd on top. Scoped to
+    # Ubuntu 22.04+ builder images, which is where the Maven jobs run.
+    - role: lfit.java-install
+      java_sdkman_install: true
+      when:
+        - ansible_distribution == 'Ubuntu'
+        - ansible_distribution_major_version | int >= 22
+
   tasks:
     - name: Install Elastic Search
       block:
