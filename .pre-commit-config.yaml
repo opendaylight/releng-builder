@@ -64,3 +64,11 @@ repos:
     hooks:
       - id: write-good
         exclude: docs/jenkins.rst
+
+  - repo: local
+    hooks:
+      - id: check-venv-activation
+        name: Check JJB shell fragments activate the lftools venv
+        entry: scripts/check-venv-activation.sh
+        language: script
+        files: ^jjb/.*\.sh$
