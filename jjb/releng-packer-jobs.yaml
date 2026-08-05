@@ -29,8 +29,10 @@
           disable-job: true
       - centos-cs-8:
           disable-job: true
-      - centos-cs-9
-      - ubuntu-20.04
+      - centos-cs-9:
+          disable-job: true
+      - ubuntu-20.04:
+          disable-job: true
       - ubuntu-22.04
       - ubuntu-24.04
 
@@ -63,7 +65,8 @@
           disable-job: true
       - ubuntu-18.04:
           disable-job: true
-      - ubuntu-20.04
+      - ubuntu-20.04:
+          disable-job: true
       - ubuntu-22.04
     templates: docker
     update-cloud-image: true
