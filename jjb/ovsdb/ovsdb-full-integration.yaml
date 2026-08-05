@@ -147,7 +147,7 @@
     builders:
       - wipe-org-opendaylight-repo
       - maven-target:
-          maven-version: "mvn33"
+          maven-version: "mvn39"
           pom: "pom.xml"
           goals: "-V -B -l build.log clean install dependency:tree -Pq -Dmaven.compile.fork=true"
           properties:
@@ -161,11 +161,11 @@
           global-settings: "global-settings"
           global-settings-type: cfp
       - run-ovsdb-it:
-          maven-version: "mvn33"
+          maven-version: "mvn39"
           stream: "{stream}"
           OVS_VERSION: "2.4.0"
       - run-ovsdb-it:
-          maven-version: "mvn33"
+          maven-version: "mvn39"
           stream: "{stream}"
           OVS_VERSION: "2.5.0"
       - lf-jacoco-nojava-workaround
