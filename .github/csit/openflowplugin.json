@@ -1,0 +1,566 @@
+[
+  {
+    "job": "openflowplugin-csit-1node-cbench-only-chromium",
+    "functionality": "cbench",
+    "stream": "chromium",
+    "branch": "stable/chromium",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-openflowplugin-flow-services-rest,odl-openflowplugin-drop-test",
+    "robot-options": "-v duration_in_secs:60 -v throughput_threshold:20000 -v latency_threshold:1000"
+  },
+  {
+    "job": "openflowplugin-csit-1node-cbench-only-manganese",
+    "functionality": "cbench",
+    "stream": "manganese",
+    "branch": "master",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-openflowplugin-flow-services-rest,odl-openflowplugin-drop-test",
+    "robot-options": "-v duration_in_secs:60 -v throughput_threshold:20000 -v latency_threshold:1000"
+  },
+  {
+    "job": "openflowplugin-csit-1node-cbench-only-vanadium",
+    "functionality": "cbench",
+    "stream": "vanadium",
+    "branch": "stable/vanadium",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-openflowplugin-flow-services-rest,odl-openflowplugin-drop-test",
+    "robot-options": "-v duration_in_secs:60 -v throughput_threshold:20000 -v latency_threshold:1000"
+  },
+  {
+    "job": "openflowplugin-csit-3node-clustering-only-chromium",
+    "functionality": "clustering",
+    "stream": "chromium",
+    "branch": "stable/chromium",
+    "odl_nodes": 3,
+    "tools_nodes": 1,
+    "install-features": "odl-jolokia,odl-openflowplugin-flow-services-rest,odl-openflowplugin-app-table-miss-enforcer",
+    "robot-options": "-v ODL_OF_PLUGIN:lithium"
+  },
+  {
+    "job": "openflowplugin-csit-3node-clustering-only-manganese",
+    "functionality": "clustering",
+    "stream": "manganese",
+    "branch": "master",
+    "odl_nodes": 3,
+    "tools_nodes": 1,
+    "install-features": "odl-jolokia,odl-openflowplugin-flow-services-rest,odl-openflowplugin-app-table-miss-enforcer",
+    "robot-options": "-v ODL_OF_PLUGIN:lithium"
+  },
+  {
+    "job": "openflowplugin-csit-3node-clustering-only-vanadium",
+    "functionality": "clustering",
+    "stream": "vanadium",
+    "branch": "stable/vanadium",
+    "odl_nodes": 3,
+    "tools_nodes": 1,
+    "install-features": "odl-jolokia,odl-openflowplugin-flow-services-rest,odl-openflowplugin-app-table-miss-enforcer",
+    "robot-options": "-v ODL_OF_PLUGIN:lithium"
+  },
+  {
+    "job": "openflowplugin-csit-3node-clustering-bulkomatic-only-chromium",
+    "functionality": "clustering-bulkomatic",
+    "stream": "chromium",
+    "branch": "stable/chromium",
+    "odl_nodes": 3,
+    "tools_nodes": 1,
+    "install-features": "odl-jolokia,odl-openflowplugin-flow-services-rest,odl-openflowplugin-app-bulk-o-matic",
+    "robot-options": "-v ODL_OF_PLUGIN:lithium"
+  },
+  {
+    "job": "openflowplugin-csit-3node-clustering-bulkomatic-only-manganese",
+    "functionality": "clustering-bulkomatic",
+    "stream": "manganese",
+    "branch": "master",
+    "odl_nodes": 3,
+    "tools_nodes": 1,
+    "install-features": "odl-jolokia,odl-openflowplugin-flow-services-rest,odl-openflowplugin-app-bulk-o-matic",
+    "robot-options": "-v ODL_OF_PLUGIN:lithium"
+  },
+  {
+    "job": "openflowplugin-csit-3node-clustering-bulkomatic-only-vanadium",
+    "functionality": "clustering-bulkomatic",
+    "stream": "vanadium",
+    "branch": "stable/vanadium",
+    "odl_nodes": 3,
+    "tools_nodes": 1,
+    "install-features": "odl-jolokia,odl-openflowplugin-flow-services-rest,odl-openflowplugin-app-bulk-o-matic",
+    "robot-options": "-v ODL_OF_PLUGIN:lithium"
+  },
+  {
+    "job": "openflowplugin-csit-3node-clustering-perf-bulkomatic-only-chromium",
+    "functionality": "clustering-perf-bulkomatic",
+    "stream": "chromium",
+    "branch": "stable/chromium",
+    "odl_nodes": 3,
+    "tools_nodes": 1,
+    "install-features": "odl-jolokia,odl-openflowplugin-flow-services-rest,odl-openflowplugin-app-bulk-o-matic,odl-jolokia",
+    "robot-options": "-v ODL_OF_PLUGIN:lithium -v switch_count:32 -v flow_count_per_switch:2250"
+  },
+  {
+    "job": "openflowplugin-csit-3node-clustering-perf-bulkomatic-only-manganese",
+    "functionality": "clustering-perf-bulkomatic",
+    "stream": "manganese",
+    "branch": "master",
+    "odl_nodes": 3,
+    "tools_nodes": 1,
+    "install-features": "odl-jolokia,odl-openflowplugin-flow-services-rest,odl-openflowplugin-app-bulk-o-matic,odl-jolokia",
+    "robot-options": "-v ODL_OF_PLUGIN:lithium -v switch_count:32 -v flow_count_per_switch:2250"
+  },
+  {
+    "job": "openflowplugin-csit-3node-clustering-perf-bulkomatic-only-vanadium",
+    "functionality": "clustering-perf-bulkomatic",
+    "stream": "vanadium",
+    "branch": "stable/vanadium",
+    "odl_nodes": 3,
+    "tools_nodes": 1,
+    "install-features": "odl-jolokia,odl-openflowplugin-flow-services-rest,odl-openflowplugin-app-bulk-o-matic,odl-jolokia",
+    "robot-options": "-v ODL_OF_PLUGIN:lithium -v switch_count:32 -v flow_count_per_switch:2250"
+  },
+  {
+    "job": "openflowplugin-csit-1node-flow-services-all-chromium",
+    "functionality": "flow-services",
+    "stream": "chromium",
+    "branch": "stable/chromium",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-openflowplugin-flow-services-rest,odl-openflowplugin-app-table-miss-enforcer,odl-openflowplugin-nxm-extensions",
+    "controller-scope": "all"
+  },
+  {
+    "job": "openflowplugin-csit-1node-flow-services-all-manganese",
+    "functionality": "flow-services",
+    "stream": "manganese",
+    "branch": "master",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-openflowplugin-flow-services-rest,odl-openflowplugin-app-table-miss-enforcer,odl-openflowplugin-nxm-extensions",
+    "controller-scope": "all"
+  },
+  {
+    "job": "openflowplugin-csit-1node-flow-services-all-vanadium",
+    "functionality": "flow-services",
+    "stream": "vanadium",
+    "branch": "stable/vanadium",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-openflowplugin-flow-services-rest,odl-openflowplugin-app-table-miss-enforcer,odl-openflowplugin-nxm-extensions",
+    "controller-scope": "all"
+  },
+  {
+    "job": "openflowplugin-csit-3node-gate-clustering-only-chromium",
+    "functionality": "gate-clustering",
+    "stream": "chromium",
+    "branch": "stable/chromium",
+    "odl_nodes": 3,
+    "tools_nodes": 1,
+    "install-features": "odl-jolokia,odl-openflowplugin-flow-services-rest,odl-openflowplugin-app-table-miss-enforcer",
+    "robot-options": "-v ODL_OF_PLUGIN:lithium"
+  },
+  {
+    "job": "openflowplugin-csit-3node-gate-clustering-only-manganese",
+    "functionality": "gate-clustering",
+    "stream": "manganese",
+    "branch": "master",
+    "odl_nodes": 3,
+    "tools_nodes": 1,
+    "install-features": "odl-jolokia,odl-openflowplugin-flow-services-rest,odl-openflowplugin-app-table-miss-enforcer",
+    "robot-options": "-v ODL_OF_PLUGIN:lithium"
+  },
+  {
+    "job": "openflowplugin-csit-3node-gate-clustering-only-vanadium",
+    "functionality": "gate-clustering",
+    "stream": "vanadium",
+    "branch": "stable/vanadium",
+    "odl_nodes": 3,
+    "tools_nodes": 1,
+    "install-features": "odl-jolokia,odl-openflowplugin-flow-services-rest,odl-openflowplugin-app-table-miss-enforcer",
+    "robot-options": "-v ODL_OF_PLUGIN:lithium"
+  },
+  {
+    "job": "openflowplugin-csit-3node-gate-clustering-bulkomatic-only-chromium",
+    "functionality": "gate-clustering-bulkomatic",
+    "stream": "chromium",
+    "branch": "stable/chromium",
+    "odl_nodes": 3,
+    "tools_nodes": 1,
+    "install-features": "odl-jolokia,odl-openflowplugin-flow-services-rest,odl-openflowplugin-app-bulk-o-matic",
+    "robot-options": "-v ODL_OF_PLUGIN:lithium"
+  },
+  {
+    "job": "openflowplugin-csit-3node-gate-clustering-bulkomatic-only-manganese",
+    "functionality": "gate-clustering-bulkomatic",
+    "stream": "manganese",
+    "branch": "master",
+    "odl_nodes": 3,
+    "tools_nodes": 1,
+    "install-features": "odl-jolokia,odl-openflowplugin-flow-services-rest,odl-openflowplugin-app-bulk-o-matic",
+    "robot-options": "-v ODL_OF_PLUGIN:lithium"
+  },
+  {
+    "job": "openflowplugin-csit-3node-gate-clustering-bulkomatic-only-vanadium",
+    "functionality": "gate-clustering-bulkomatic",
+    "stream": "vanadium",
+    "branch": "stable/vanadium",
+    "odl_nodes": 3,
+    "tools_nodes": 1,
+    "install-features": "odl-jolokia,odl-openflowplugin-flow-services-rest,odl-openflowplugin-app-bulk-o-matic",
+    "robot-options": "-v ODL_OF_PLUGIN:lithium"
+  },
+  {
+    "job": "openflowplugin-csit-3node-gate-clustering-perf-bulkomatic-only-chromium",
+    "functionality": "gate-clustering-perf-bulkomatic",
+    "stream": "chromium",
+    "branch": "stable/chromium",
+    "odl_nodes": 3,
+    "tools_nodes": 1,
+    "install-features": "odl-jolokia,odl-openflowplugin-flow-services-rest,odl-openflowplugin-app-bulk-o-matic,odl-jolokia",
+    "robot-options": "-v ODL_OF_PLUGIN:lithium -v switch_count:32 -v flow_count_per_switch:2250"
+  },
+  {
+    "job": "openflowplugin-csit-3node-gate-clustering-perf-bulkomatic-only-manganese",
+    "functionality": "gate-clustering-perf-bulkomatic",
+    "stream": "manganese",
+    "branch": "master",
+    "odl_nodes": 3,
+    "tools_nodes": 1,
+    "install-features": "odl-jolokia,odl-openflowplugin-flow-services-rest,odl-openflowplugin-app-bulk-o-matic,odl-jolokia",
+    "robot-options": "-v ODL_OF_PLUGIN:lithium -v switch_count:32 -v flow_count_per_switch:2250"
+  },
+  {
+    "job": "openflowplugin-csit-3node-gate-clustering-perf-bulkomatic-only-vanadium",
+    "functionality": "gate-clustering-perf-bulkomatic",
+    "stream": "vanadium",
+    "branch": "stable/vanadium",
+    "odl_nodes": 3,
+    "tools_nodes": 1,
+    "install-features": "odl-jolokia,odl-openflowplugin-flow-services-rest,odl-openflowplugin-app-bulk-o-matic,odl-jolokia",
+    "robot-options": "-v ODL_OF_PLUGIN:lithium -v switch_count:32 -v flow_count_per_switch:2250"
+  },
+  {
+    "job": "openflowplugin-csit-1node-gate-flow-services-all-chromium",
+    "functionality": "gate-flow-services",
+    "stream": "chromium",
+    "branch": "stable/chromium",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-openflowplugin-flow-services-rest,odl-openflowplugin-app-table-miss-enforcer,odl-openflowplugin-nxm-extensions",
+    "controller-scope": "all"
+  },
+  {
+    "job": "openflowplugin-csit-1node-gate-flow-services-all-manganese",
+    "functionality": "gate-flow-services",
+    "stream": "manganese",
+    "branch": "master",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-openflowplugin-flow-services-rest,odl-openflowplugin-app-table-miss-enforcer,odl-openflowplugin-nxm-extensions",
+    "controller-scope": "all"
+  },
+  {
+    "job": "openflowplugin-csit-1node-gate-flow-services-all-vanadium",
+    "functionality": "gate-flow-services",
+    "stream": "vanadium",
+    "branch": "stable/vanadium",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-openflowplugin-flow-services-rest,odl-openflowplugin-app-table-miss-enforcer,odl-openflowplugin-nxm-extensions",
+    "controller-scope": "all"
+  },
+  {
+    "job": "openflowplugin-csit-1node-gate-perf-bulkomatic-only-chromium",
+    "functionality": "gate-perf-bulkomatic",
+    "stream": "chromium",
+    "branch": "stable/chromium",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-openflowplugin-flow-services-rest,odl-openflowplugin-app-bulk-o-matic,odl-jolokia",
+    "robot-options": "-v ODL_OF_PLUGIN:lithium -v switch_count:32 -v flow_count_per_switch:3125"
+  },
+  {
+    "job": "openflowplugin-csit-1node-gate-perf-bulkomatic-only-manganese",
+    "functionality": "gate-perf-bulkomatic",
+    "stream": "manganese",
+    "branch": "master",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-openflowplugin-flow-services-rest,odl-openflowplugin-app-bulk-o-matic,odl-jolokia",
+    "robot-options": "-v ODL_OF_PLUGIN:lithium -v switch_count:32 -v flow_count_per_switch:3125"
+  },
+  {
+    "job": "openflowplugin-csit-1node-gate-perf-bulkomatic-only-vanadium",
+    "functionality": "gate-perf-bulkomatic",
+    "stream": "vanadium",
+    "branch": "stable/vanadium",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-openflowplugin-flow-services-rest,odl-openflowplugin-app-bulk-o-matic,odl-jolokia",
+    "robot-options": "-v ODL_OF_PLUGIN:lithium -v switch_count:32 -v flow_count_per_switch:3125"
+  },
+  {
+    "job": "openflowplugin-csit-1node-gate-perf-stats-collection-only-chromium",
+    "functionality": "gate-perf-stats-collection",
+    "stream": "chromium",
+    "branch": "stable/chromium",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-openflowplugin-flow-services-rest",
+    "robot-options": "-v flnr:100000 -v swnr:32 -v fpr:200"
+  },
+  {
+    "job": "openflowplugin-csit-1node-gate-perf-stats-collection-only-manganese",
+    "functionality": "gate-perf-stats-collection",
+    "stream": "manganese",
+    "branch": "master",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-openflowplugin-flow-services-rest",
+    "robot-options": "-v flnr:100000 -v swnr:32 -v fpr:200"
+  },
+  {
+    "job": "openflowplugin-csit-1node-gate-perf-stats-collection-only-vanadium",
+    "functionality": "gate-perf-stats-collection",
+    "stream": "vanadium",
+    "branch": "stable/vanadium",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-openflowplugin-flow-services-rest",
+    "robot-options": "-v flnr:100000 -v swnr:32 -v fpr:200"
+  },
+  {
+    "job": "openflowplugin-csit-1node-gate-scale-only-chromium",
+    "functionality": "gate-scale",
+    "stream": "chromium",
+    "branch": "stable/chromium",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-openflowplugin-flow-services-rest,odl-openflowplugin-app-table-miss-enforcer",
+    "robot-options": "-v TOPO_TREE_DEPTH:7"
+  },
+  {
+    "job": "openflowplugin-csit-1node-gate-scale-only-manganese",
+    "functionality": "gate-scale",
+    "stream": "manganese",
+    "branch": "master",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-openflowplugin-flow-services-rest,odl-openflowplugin-app-table-miss-enforcer",
+    "robot-options": "-v TOPO_TREE_DEPTH:7"
+  },
+  {
+    "job": "openflowplugin-csit-1node-gate-scale-only-vanadium",
+    "functionality": "gate-scale",
+    "stream": "vanadium",
+    "branch": "stable/vanadium",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-openflowplugin-flow-services-rest,odl-openflowplugin-app-table-miss-enforcer",
+    "robot-options": "-v TOPO_TREE_DEPTH:7"
+  },
+  {
+    "job": "openflowplugin-csit-1node-longevity-only-chromium",
+    "functionality": "longevity",
+    "stream": "chromium",
+    "branch": "stable/chromium",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-openflowplugin-flow-services-rest,odl-openflowplugin-app-table-miss-enforcer",
+    "robot-options": "-v TEST_LENGTH:23h -v NUM_SWITCHES:16"
+  },
+  {
+    "job": "openflowplugin-csit-1node-longevity-only-manganese",
+    "functionality": "longevity",
+    "stream": "manganese",
+    "branch": "master",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-openflowplugin-flow-services-rest,odl-openflowplugin-app-table-miss-enforcer",
+    "robot-options": "-v TEST_LENGTH:23h -v NUM_SWITCHES:16"
+  },
+  {
+    "job": "openflowplugin-csit-1node-longevity-only-vanadium",
+    "functionality": "longevity",
+    "stream": "vanadium",
+    "branch": "stable/vanadium",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-openflowplugin-flow-services-rest,odl-openflowplugin-app-table-miss-enforcer",
+    "robot-options": "-v TEST_LENGTH:23h -v NUM_SWITCHES:16"
+  },
+  {
+    "job": "openflowplugin-csit-1node-perf-bulkomatic-only-chromium",
+    "functionality": "perf-bulkomatic",
+    "stream": "chromium",
+    "branch": "stable/chromium",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-openflowplugin-flow-services-rest,odl-openflowplugin-app-bulk-o-matic,odl-jolokia",
+    "robot-options": "-v ODL_OF_PLUGIN:lithium -v switch_count:32 -v flow_count_per_switch:3125"
+  },
+  {
+    "job": "openflowplugin-csit-1node-perf-bulkomatic-only-manganese",
+    "functionality": "perf-bulkomatic",
+    "stream": "manganese",
+    "branch": "master",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-openflowplugin-flow-services-rest,odl-openflowplugin-app-bulk-o-matic,odl-jolokia",
+    "robot-options": "-v ODL_OF_PLUGIN:lithium -v switch_count:32 -v flow_count_per_switch:3125"
+  },
+  {
+    "job": "openflowplugin-csit-1node-perf-bulkomatic-only-vanadium",
+    "functionality": "perf-bulkomatic",
+    "stream": "vanadium",
+    "branch": "stable/vanadium",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-openflowplugin-flow-services-rest,odl-openflowplugin-app-bulk-o-matic,odl-jolokia",
+    "robot-options": "-v ODL_OF_PLUGIN:lithium -v switch_count:32 -v flow_count_per_switch:3125"
+  },
+  {
+    "job": "openflowplugin-csit-1node-perf-stats-collection-only-chromium",
+    "functionality": "perf-stats-collection",
+    "stream": "chromium",
+    "branch": "stable/chromium",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-openflowplugin-flow-services-rest",
+    "robot-options": "-v flnr:100000 -v swnr:32 -v fpr:200"
+  },
+  {
+    "job": "openflowplugin-csit-1node-perf-stats-collection-only-manganese",
+    "functionality": "perf-stats-collection",
+    "stream": "manganese",
+    "branch": "master",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-openflowplugin-flow-services-rest",
+    "robot-options": "-v flnr:100000 -v swnr:32 -v fpr:200"
+  },
+  {
+    "job": "openflowplugin-csit-1node-perf-stats-collection-only-vanadium",
+    "functionality": "perf-stats-collection",
+    "stream": "vanadium",
+    "branch": "stable/vanadium",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-openflowplugin-flow-services-rest",
+    "robot-options": "-v flnr:100000 -v swnr:32 -v fpr:200"
+  },
+  {
+    "job": "openflowplugin-csit-1node-sanity-only-chromium",
+    "functionality": "sanity",
+    "stream": "chromium",
+    "branch": "stable/chromium",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-openflowplugin-flow-services-rest,odl-openflowplugin-app-table-miss-enforcer,odl-openflowplugin-nxm-extensions",
+    "robot-options": "-v SWITCHES:3"
+  },
+  {
+    "job": "openflowplugin-csit-1node-sanity-only-manganese",
+    "functionality": "sanity",
+    "stream": "manganese",
+    "branch": "master",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-openflowplugin-flow-services-rest,odl-openflowplugin-app-table-miss-enforcer,odl-openflowplugin-nxm-extensions",
+    "robot-options": "-v SWITCHES:3"
+  },
+  {
+    "job": "openflowplugin-csit-1node-sanity-only-vanadium",
+    "functionality": "sanity",
+    "stream": "vanadium",
+    "branch": "stable/vanadium",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-openflowplugin-flow-services-rest,odl-openflowplugin-app-table-miss-enforcer,odl-openflowplugin-nxm-extensions",
+    "robot-options": "-v SWITCHES:3"
+  },
+  {
+    "job": "openflowplugin-csit-1node-scale-only-chromium",
+    "functionality": "scale",
+    "stream": "chromium",
+    "branch": "stable/chromium",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-openflowplugin-flow-services-rest,odl-openflowplugin-app-table-miss-enforcer",
+    "robot-options": "-v TOPO_TREE_DEPTH:7"
+  },
+  {
+    "job": "openflowplugin-csit-1node-scale-only-manganese",
+    "functionality": "scale",
+    "stream": "manganese",
+    "branch": "master",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-openflowplugin-flow-services-rest,odl-openflowplugin-app-table-miss-enforcer",
+    "robot-options": "-v TOPO_TREE_DEPTH:7"
+  },
+  {
+    "job": "openflowplugin-csit-1node-scale-only-vanadium",
+    "functionality": "scale",
+    "stream": "vanadium",
+    "branch": "stable/vanadium",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-openflowplugin-flow-services-rest,odl-openflowplugin-app-table-miss-enforcer",
+    "robot-options": "-v TOPO_TREE_DEPTH:7"
+  },
+  {
+    "job": "openflowplugin-csit-1node-scale-link-only-chromium",
+    "functionality": "scale-link",
+    "stream": "chromium",
+    "branch": "stable/chromium",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-openflowplugin-flow-services-rest,odl-openflowplugin-app-table-miss-enforcer"
+  },
+  {
+    "job": "openflowplugin-csit-1node-scale-link-only-manganese",
+    "functionality": "scale-link",
+    "stream": "manganese",
+    "branch": "master",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-openflowplugin-flow-services-rest,odl-openflowplugin-app-table-miss-enforcer"
+  },
+  {
+    "job": "openflowplugin-csit-1node-scale-link-only-vanadium",
+    "functionality": "scale-link",
+    "stream": "vanadium",
+    "branch": "stable/vanadium",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-openflowplugin-flow-services-rest,odl-openflowplugin-app-table-miss-enforcer"
+  },
+  {
+    "job": "openflowplugin-csit-1node-scale-switch-only-chromium",
+    "functionality": "scale-switch",
+    "stream": "chromium",
+    "branch": "stable/chromium",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-openflowplugin-flow-services-rest"
+  },
+  {
+    "job": "openflowplugin-csit-1node-scale-switch-only-manganese",
+    "functionality": "scale-switch",
+    "stream": "manganese",
+    "branch": "master",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-openflowplugin-flow-services-rest"
+  },
+  {
+    "job": "openflowplugin-csit-1node-scale-switch-only-vanadium",
+    "functionality": "scale-switch",
+    "stream": "vanadium",
+    "branch": "stable/vanadium",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-openflowplugin-flow-services-rest"
+  }
+]

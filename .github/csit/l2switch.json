@@ -1,0 +1,95 @@
+[
+  {
+    "job": "l2switch-csit-1node-host-scalability-daily-only-chromium",
+    "functionality": "host-scalability-daily",
+    "stream": "chromium",
+    "branch": "stable/chromium",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-l2switch-switch-ui"
+  },
+  {
+    "job": "l2switch-csit-1node-host-scalability-daily-only-manganese",
+    "functionality": "host-scalability-daily",
+    "stream": "manganese",
+    "branch": "master",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-l2switch-switch-ui"
+  },
+  {
+    "job": "l2switch-csit-1node-host-scalability-daily-only-vanadium",
+    "functionality": "host-scalability-daily",
+    "stream": "vanadium",
+    "branch": "stable/vanadium",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-l2switch-switch-ui"
+  },
+  {
+    "job": "l2switch-csit-1node-scalability-all-chromium",
+    "functionality": "scalability",
+    "stream": "chromium",
+    "branch": "stable/chromium",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-l2switch-switch-ui",
+    "controller-scope": "all",
+    "robot-options": "-v TOPO_TREE_DEPTH:7"
+  },
+  {
+    "job": "l2switch-csit-1node-scalability-all-manganese",
+    "functionality": "scalability",
+    "stream": "manganese",
+    "branch": "master",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-l2switch-switch-ui",
+    "controller-scope": "all",
+    "robot-options": "-v TOPO_TREE_DEPTH:7"
+  },
+  {
+    "job": "l2switch-csit-1node-scalability-all-vanadium",
+    "functionality": "scalability",
+    "stream": "vanadium",
+    "branch": "stable/vanadium",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-l2switch-switch-ui",
+    "controller-scope": "all",
+    "robot-options": "-v TOPO_TREE_DEPTH:7"
+  },
+  {
+    "job": "l2switch-csit-1node-switch-all-chromium",
+    "functionality": "switch",
+    "stream": "chromium",
+    "branch": "stable/chromium",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-l2switch-switch-ui",
+    "controller-scope": "all",
+    "robot-options": "-v TOPO_TREE_DEPTH:5"
+  },
+  {
+    "job": "l2switch-csit-1node-switch-all-manganese",
+    "functionality": "switch",
+    "stream": "manganese",
+    "branch": "master",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-l2switch-switch-ui",
+    "controller-scope": "all",
+    "robot-options": "-v TOPO_TREE_DEPTH:5"
+  },
+  {
+    "job": "l2switch-csit-1node-switch-all-vanadium",
+    "functionality": "switch",
+    "stream": "vanadium",
+    "branch": "stable/vanadium",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-l2switch-switch-ui",
+    "controller-scope": "all",
+    "robot-options": "-v TOPO_TREE_DEPTH:5"
+  }
+]

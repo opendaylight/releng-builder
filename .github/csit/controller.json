@@ -1,0 +1,270 @@
+[
+  {
+    "job": "controller-csit-1node-akka1-all-chromium",
+    "functionality": "akka1",
+    "stream": "chromium",
+    "branch": "master",
+    "odl_nodes": 1,
+    "tools_nodes": 0,
+    "install-features": "odl-restconf,odl-clustering-test-app,odl-jolokia",
+    "controller-scope": "all"
+  },
+  {
+    "job": "controller-csit-1node-akka1-all-vanadium",
+    "functionality": "akka1",
+    "stream": "vanadium",
+    "branch": "12.0.x",
+    "odl_nodes": 1,
+    "tools_nodes": 0,
+    "install-features": "odl-restconf,odl-clustering-test-app,odl-jolokia",
+    "controller-scope": "all"
+  },
+  {
+    "job": "controller-csit-1node-benchmark-all-chromium",
+    "functionality": "benchmark",
+    "stream": "chromium",
+    "branch": "master",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-restconf,odl-mdsal-benchmark,odl-jolokia",
+    "controller-scope": "all",
+    "robot-options": "--exclude clustered_setup"
+  },
+  {
+    "job": "controller-csit-3node-benchmark-all-chromium",
+    "functionality": "benchmark",
+    "stream": "chromium",
+    "branch": "master",
+    "odl_nodes": 3,
+    "tools_nodes": 1,
+    "install-features": "odl-jolokia,odl-restconf,odl-mdsal-benchmark",
+    "controller-scope": "all",
+    "robot-options": "--exclude singlenode_setup -v WARMUPS:1 -v RUNS:3"
+  },
+  {
+    "job": "controller-csit-1node-benchmark-all-vanadium",
+    "functionality": "benchmark",
+    "stream": "vanadium",
+    "branch": "12.0.x",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-restconf,odl-mdsal-benchmark,odl-jolokia",
+    "controller-scope": "all",
+    "robot-options": "--exclude clustered_setup"
+  },
+  {
+    "job": "controller-csit-3node-benchmark-all-vanadium",
+    "functionality": "benchmark",
+    "stream": "vanadium",
+    "branch": "12.0.x",
+    "odl_nodes": 3,
+    "tools_nodes": 1,
+    "install-features": "odl-jolokia,odl-restconf,odl-mdsal-benchmark",
+    "controller-scope": "all",
+    "robot-options": "--exclude singlenode_setup -v WARMUPS:1 -v RUNS:3"
+  },
+  {
+    "job": "controller-csit-3node-clustering-ask-all-chromium",
+    "functionality": "clustering-ask",
+    "stream": "chromium",
+    "branch": "master",
+    "odl_nodes": 3,
+    "tools_nodes": 0,
+    "install-features": "odl-jolokia,odl-restconf,odl-clustering-test-app",
+    "controller-scope": "all"
+  },
+  {
+    "job": "controller-csit-3node-clustering-ask-all-vanadium",
+    "functionality": "clustering-ask",
+    "stream": "vanadium",
+    "branch": "12.0.x",
+    "odl_nodes": 3,
+    "tools_nodes": 0,
+    "install-features": "odl-jolokia,odl-restconf,odl-clustering-test-app",
+    "controller-scope": "all"
+  },
+  {
+    "job": "controller-csit-3node-clustering-tell-all-chromium",
+    "functionality": "clustering-tell",
+    "stream": "chromium",
+    "branch": "master",
+    "odl_nodes": 3,
+    "tools_nodes": 0,
+    "install-features": "odl-jolokia,odl-restconf,odl-clustering-test-app",
+    "controller-scope": "all"
+  },
+  {
+    "job": "controller-csit-3node-clustering-tell-all-vanadium",
+    "functionality": "clustering-tell",
+    "stream": "vanadium",
+    "branch": "12.0.x",
+    "odl_nodes": 3,
+    "tools_nodes": 0,
+    "install-features": "odl-jolokia,odl-restconf,odl-clustering-test-app",
+    "controller-scope": "all"
+  },
+  {
+    "job": "controller-csit-3node-cs-chasing-leader-longevity-only-chromium",
+    "functionality": "cs-chasing-leader-longevity",
+    "stream": "chromium",
+    "branch": "master",
+    "odl_nodes": 3,
+    "tools_nodes": 1,
+    "install-features": "odl-jolokia,odl-restconf-noauth,odl-clustering-test-app"
+  },
+  {
+    "job": "controller-csit-3node-cs-chasing-leader-longevity-only-vanadium",
+    "functionality": "cs-chasing-leader-longevity",
+    "stream": "vanadium",
+    "branch": "12.0.x",
+    "odl_nodes": 3,
+    "tools_nodes": 1,
+    "install-features": "odl-jolokia,odl-restconf-noauth,odl-clustering-test-app"
+  },
+  {
+    "job": "controller-csit-3node-cs-partnheal-longevity-only-chromium",
+    "functionality": "cs-partnheal-longevity",
+    "stream": "chromium",
+    "branch": "master",
+    "odl_nodes": 3,
+    "tools_nodes": 1,
+    "install-features": "odl-jolokia,odl-restconf-noauth,odl-clustering-test-app"
+  },
+  {
+    "job": "controller-csit-3node-cs-partnheal-longevity-only-vanadium",
+    "functionality": "cs-partnheal-longevity",
+    "stream": "vanadium",
+    "branch": "12.0.x",
+    "odl_nodes": 3,
+    "tools_nodes": 1,
+    "install-features": "odl-jolokia,odl-restconf-noauth,odl-clustering-test-app"
+  },
+  {
+    "job": "controller-csit-3node-ddb-expl-lead-movement-longevity-only-chromium",
+    "functionality": "ddb-expl-lead-movement-longevity",
+    "stream": "chromium",
+    "branch": "master",
+    "odl_nodes": 3,
+    "tools_nodes": 1,
+    "install-features": "odl-jolokia,odl-restconf-noauth,odl-clustering-test-app"
+  },
+  {
+    "job": "controller-csit-3node-ddb-expl-lead-movement-longevity-only-vanadium",
+    "functionality": "ddb-expl-lead-movement-longevity",
+    "stream": "vanadium",
+    "branch": "12.0.x",
+    "odl_nodes": 3,
+    "tools_nodes": 1,
+    "install-features": "odl-jolokia,odl-restconf-noauth,odl-clustering-test-app"
+  },
+  {
+    "job": "controller-csit-3node-drb-partnheal-longevity-only-chromium",
+    "functionality": "drb-partnheal-longevity",
+    "stream": "chromium",
+    "branch": "master",
+    "odl_nodes": 3,
+    "tools_nodes": 1,
+    "install-features": "odl-jolokia,odl-restconf-noauth,odl-clustering-test-app"
+  },
+  {
+    "job": "controller-csit-3node-drb-partnheal-longevity-only-vanadium",
+    "functionality": "drb-partnheal-longevity",
+    "stream": "vanadium",
+    "branch": "12.0.x",
+    "odl_nodes": 3,
+    "tools_nodes": 1,
+    "install-features": "odl-jolokia,odl-restconf-noauth,odl-clustering-test-app"
+  },
+  {
+    "job": "controller-csit-3node-drb-precedence-longevity-only-chromium",
+    "functionality": "drb-precedence-longevity",
+    "stream": "chromium",
+    "branch": "master",
+    "odl_nodes": 3,
+    "tools_nodes": 1,
+    "install-features": "odl-jolokia,odl-restconf-noauth,odl-clustering-test-app"
+  },
+  {
+    "job": "controller-csit-3node-drb-precedence-longevity-only-vanadium",
+    "functionality": "drb-precedence-longevity",
+    "stream": "vanadium",
+    "branch": "12.0.x",
+    "odl_nodes": 3,
+    "tools_nodes": 1,
+    "install-features": "odl-jolokia,odl-restconf-noauth,odl-clustering-test-app"
+  },
+  {
+    "job": "controller-csit-1node-notifications-longevity-only-chromium",
+    "functionality": "notifications-longevity",
+    "stream": "chromium",
+    "branch": "master",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-restconf,odl-clustering-test-app"
+  },
+  {
+    "job": "controller-csit-1node-notifications-longevity-only-vanadium",
+    "functionality": "notifications-longevity",
+    "stream": "vanadium",
+    "branch": "12.0.x",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-restconf,odl-clustering-test-app"
+  },
+  {
+    "job": "controller-csit-1node-rest-cars-perf-all-chromium",
+    "functionality": "rest-cars-perf",
+    "stream": "chromium",
+    "branch": "master",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-restconf,odl-clustering-test-app",
+    "controller-scope": "all"
+  },
+  {
+    "job": "controller-csit-1node-rest-cars-perf-all-vanadium",
+    "functionality": "rest-cars-perf",
+    "stream": "vanadium",
+    "branch": "12.0.x",
+    "odl_nodes": 1,
+    "tools_nodes": 1,
+    "install-features": "odl-restconf,odl-clustering-test-app",
+    "controller-scope": "all"
+  },
+  {
+    "job": "controller-csit-3node-rest-clust-cars-perf-ask-only-chromium",
+    "functionality": "rest-clust-cars-perf-ask",
+    "stream": "chromium",
+    "branch": "master",
+    "odl_nodes": 3,
+    "tools_nodes": 1,
+    "install-features": "odl-jolokia,odl-restconf,odl-clustering-test-app"
+  },
+  {
+    "job": "controller-csit-3node-rest-clust-cars-perf-ask-only-vanadium",
+    "functionality": "rest-clust-cars-perf-ask",
+    "stream": "vanadium",
+    "branch": "12.0.x",
+    "odl_nodes": 3,
+    "tools_nodes": 1,
+    "install-features": "odl-jolokia,odl-restconf,odl-clustering-test-app"
+  },
+  {
+    "job": "controller-csit-3node-rest-clust-cars-perf-tell-only-chromium",
+    "functionality": "rest-clust-cars-perf-tell",
+    "stream": "chromium",
+    "branch": "master",
+    "odl_nodes": 3,
+    "tools_nodes": 1,
+    "install-features": "odl-jolokia,odl-restconf,odl-clustering-test-app"
+  },
+  {
+    "job": "controller-csit-3node-rest-clust-cars-perf-tell-only-vanadium",
+    "functionality": "rest-clust-cars-perf-tell",
+    "stream": "vanadium",
+    "branch": "12.0.x",
+    "odl_nodes": 3,
+    "tools_nodes": 1,
+    "install-features": "odl-jolokia,odl-restconf,odl-clustering-test-app"
+  }
+]

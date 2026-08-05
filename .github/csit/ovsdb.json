@@ -1,0 +1,116 @@
+[
+  {
+    "job": "ovsdb-csit-3node-gate-clustering-only-chromium",
+    "functionality": "gate-clustering",
+    "stream": "chromium",
+    "branch": "stable/chromium",
+    "odl_nodes": 3,
+    "tools_nodes": 1,
+    "install-features": "odl-jolokia,odl-ovsdb-southbound-impl-rest"
+  },
+  {
+    "job": "ovsdb-csit-3node-gate-clustering-only-manganese",
+    "functionality": "gate-clustering",
+    "stream": "manganese",
+    "branch": "master",
+    "odl_nodes": 3,
+    "tools_nodes": 1,
+    "install-features": "odl-jolokia,odl-ovsdb-southbound-impl-rest"
+  },
+  {
+    "job": "ovsdb-csit-3node-gate-clustering-only-vanadium",
+    "functionality": "gate-clustering",
+    "stream": "vanadium",
+    "branch": "stable/vanadium",
+    "odl_nodes": 3,
+    "tools_nodes": 1,
+    "install-features": "odl-jolokia,odl-ovsdb-southbound-impl-rest"
+  },
+  {
+    "job": "ovsdb-csit-1node-gate-southbound-all-chromium",
+    "functionality": "gate-southbound",
+    "stream": "chromium",
+    "branch": "stable/chromium",
+    "odl_nodes": 1,
+    "tools_nodes": 2,
+    "install-features": "odl-ovsdb-southbound-impl-rest",
+    "controller-scope": "all"
+  },
+  {
+    "job": "ovsdb-csit-1node-gate-southbound-all-manganese",
+    "functionality": "gate-southbound",
+    "stream": "manganese",
+    "branch": "master",
+    "odl_nodes": 1,
+    "tools_nodes": 2,
+    "install-features": "odl-ovsdb-southbound-impl-rest",
+    "controller-scope": "all"
+  },
+  {
+    "job": "ovsdb-csit-1node-gate-southbound-all-vanadium",
+    "functionality": "gate-southbound",
+    "stream": "vanadium",
+    "branch": "stable/vanadium",
+    "odl_nodes": 1,
+    "tools_nodes": 2,
+    "install-features": "odl-ovsdb-southbound-impl-rest",
+    "controller-scope": "all"
+  },
+  {
+    "job": "ovsdb-csit-3node-upstream-clustering-only-chromium",
+    "functionality": "upstream-clustering",
+    "stream": "chromium",
+    "branch": "stable/chromium",
+    "odl_nodes": 3,
+    "tools_nodes": 1,
+    "install-features": "odl-jolokia,odl-ovsdb-southbound-impl-rest"
+  },
+  {
+    "job": "ovsdb-csit-3node-upstream-clustering-only-manganese",
+    "functionality": "upstream-clustering",
+    "stream": "manganese",
+    "branch": "master",
+    "odl_nodes": 3,
+    "tools_nodes": 1,
+    "install-features": "odl-jolokia,odl-ovsdb-southbound-impl-rest"
+  },
+  {
+    "job": "ovsdb-csit-3node-upstream-clustering-only-vanadium",
+    "functionality": "upstream-clustering",
+    "stream": "vanadium",
+    "branch": "stable/vanadium",
+    "odl_nodes": 3,
+    "tools_nodes": 1,
+    "install-features": "odl-jolokia,odl-ovsdb-southbound-impl-rest"
+  },
+  {
+    "job": "ovsdb-csit-1node-upstream-southbound-all-chromium",
+    "functionality": "upstream-southbound",
+    "stream": "chromium",
+    "branch": "stable/chromium",
+    "odl_nodes": 1,
+    "tools_nodes": 2,
+    "install-features": "odl-ovsdb-southbound-impl-rest",
+    "controller-scope": "all"
+  },
+  {
+    "job": "ovsdb-csit-1node-upstream-southbound-all-manganese",
+    "functionality": "upstream-southbound",
+    "stream": "manganese",
+    "branch": "master",
+    "odl_nodes": 1,
+    "tools_nodes": 2,
+    "install-features": "odl-ovsdb-southbound-impl-rest",
+    "controller-scope": "all"
+  },
+  {
+    "job": "ovsdb-csit-1node-upstream-southbound-all-vanadium",
+    "functionality": "upstream-southbound",
+    "stream": "vanadium",
+    "branch": "stable/vanadium",
+    "odl_nodes": 1,
+    "tools_nodes": 2,
+    "install-features": "odl-ovsdb-southbound-impl-rest",
+    "controller-scope": "all"
+  }
+]
