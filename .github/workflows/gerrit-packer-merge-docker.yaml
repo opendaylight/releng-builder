@@ -154,7 +154,7 @@ jobs:
       - name: Generate platform matrix
         id: matrices
         run: |
-          ALL_PLATFORMS='["centos-7","ubuntu-20.04","ubuntu-22.04","ubuntu-25.04"]'
+          ALL_PLATFORMS='["ubuntu-22.04","ubuntu-25.04"]'
 
           mode="${{ steps.build_mode.outputs.mode }}"
           builds="${{ inputs.PACKER_BUILDS }}"
