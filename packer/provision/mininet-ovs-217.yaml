@@ -40,9 +40,13 @@
           become: true
         - name: "Fetch OpenVSwitch {{ovs_version}}"
           get_url:
-            url: "http://openvswitch.org/releases/openvswitch-{{ovs_version}}.tar.gz"
+            url: "https://www.openvswitch.org/releases/openvswitch-{{ovs_version}}.tar.gz"
             dest: "/tmp/openvswitch-{{ovs_version}}.tar.gz"
             checksum: "{{ovs_checksum}}"
+          register: ovs_fetch
+          retries: 3
+          delay: 10
+          until: ovs_fetch is succeeded
         - name: Create /tmp/ovs directory
           file:
             path: /tmp/ovs
@@ -60,12 +64,12 @@
         - name: "Install OpenVSwitch {{ovs_version}}"
           apt: "deb={{item}}"
           with_items:
-            - /tmp/ovs/libopenvswitch_2.17.11-1_amd64.deb
-            - /tmp/ovs/openvswitch-common_2.17.11-1_amd64.deb
-            - /tmp/ovs/openvswitch-switch_2.17.11-1_amd64.deb
-            - /tmp/ovs/python3-openvswitch_2.17.11-1_all.deb
-            - /tmp/ovs/openvswitch-vtep_2.17.11-1_amd64.deb
-            - /tmp/ovs/libopenvswitch_2.17.11-1_amd64.deb
+            - /tmp/ovs/libopenvswitch_{{ovs_version}}-1_amd64.deb
+            - /tmp/ovs/openvswitch-common_{{ovs_version}}-1_amd64.deb
+            - /tmp/ovs/openvswitch-switch_{{ovs_version}}-1_amd64.deb
+            - /tmp/ovs/python3-openvswitch_{{ovs_version}}-1_all.deb
+            - /tmp/ovs/openvswitch-vtep_{{ovs_version}}-1_amd64.deb
+            - /tmp/ovs/libopenvswitch_{{ovs_version}}-1_amd64.deb
           become: true
         - name: Enable openvswitch-switch service
           systemd:
