@@ -72,30 +72,6 @@
     update-cloud-image: true
 
 - project:
-    name: packer-helm-jobs
-    jobs:
-      - gerrit-packer-merge
-      - gerrit-packer-verify-build
-
-    project: releng/builder
-    project-name: builder
-    branch: master
-    archive-artifacts: "**/*.log"
-
-    build-node: ubuntu2204-docker-2c-2g
-    packer-cloud-settings: packer-cloud-env-hcl
-    build-timeout: 60
-    cron: "00 H 1 * *"
-
-    platforms:
-      - ubuntu-18.04:
-          disable-job: true
-      - centos-7:
-          disable-job: true
-    templates: helm
-    update-cloud-image: true
-
-- project:
     name: packer-mininet-ovs-217-jobs
     jobs:
       - gerrit-packer-merge
