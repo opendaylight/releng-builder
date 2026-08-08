@@ -137,6 +137,14 @@ def main() -> int:
             and spec["deploy"]["needs"] == "report",
             "Pages deployment is a separate job from the report that builds it",
         )
+        # Without always() GitHub skips deploy whenever anything upstream of
+        # report failed, so the release report would publish only on green
+        # runs -- hiding exactly the runs a reader needs to see.
+        check(
+            "always()" in spec["deploy"]["if"]
+            and "needs.report.result == 'success'" in spec["deploy"]["if"],
+            "a failed CSIT job still publishes the release report",
+        )
         check(
             "toJSON(needs)" in orch and "expected-jobs:" in orch,
             "the release report is driven by what was dispatched, not by artifacts",

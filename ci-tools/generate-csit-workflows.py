@@ -777,6 +777,11 @@ RELEASE_REPORT = r"""
   deploy:
     name: Publish report to Pages
     needs: report
+    # always(): a failed CSIT job must not suppress the release report. That
+    # report exists to show failures, so publishing it only on a green run
+    # would hide exactly the runs a reader needs. Without always() GitHub
+    # skips this job whenever anything upstream of `report` failed.
+    if: always() && needs.report.result == 'success'
     runs-on: ubuntu-24.04
     permissions:
       pages: write
