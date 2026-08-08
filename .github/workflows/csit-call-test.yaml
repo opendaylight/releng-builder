@@ -21,12 +21,16 @@ on:
   workflow_dispatch:
     inputs:
       pipeline:
-        description: "Jenkins fan-out list to reproduce"
+        description: >-
+          Jenkins fan-out list to reproduce. Defaults to none so the contract
+          can be re-proven for the price of one job: a pipeline selection is
+          authoritative in select-csit-jobs.py (exactly as on Jenkins, where
+          the list IS the selection), so setting it ignores `project`.
         required: false
-        default: "distribution"
+        default: "none"
         type: string
       project:
-        description: "Narrow the call, so the contract can be proven cheaply"
+        description: "Narrow the call, so the contract is cheap to prove"
         required: false
         default: "daexim"
         type: string
