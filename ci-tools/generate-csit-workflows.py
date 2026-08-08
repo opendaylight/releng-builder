@@ -49,7 +49,7 @@ CRONS = {
     # timer afterwards against bundle-url: last -- the same artifact
     # autorelease would have handed it.
     "distribution": "0 5 * * *",
-    "sanity": "2 15 * * *",
+    "sanity": "0 6 * * *",
     "weekly": "0 23 * * 6",
     "mri": "30 23 * * 6",
 }
@@ -337,7 +337,13 @@ def timers(pipelines: list[str]) -> tuple[str, str]:
         "".join(
             f"               || (github.event.schedule == '{c}' && '{k}')\n"
             for c, k in timed
-        ),
+        )
+        # 'none' means "no pipeline filter", which for a dispatch with no
+        # project is all 148 jobs. Reaching it from a cron would mean a
+        # schedule was added without a mapping arm, and the nightly run would
+        # quietly launch the entire fleet -- including the 19 that can only
+        # time out. Fail the selection instead.
+        + "               || (github.event_name == 'schedule' && 'unmapped')\n",
     )
 
 

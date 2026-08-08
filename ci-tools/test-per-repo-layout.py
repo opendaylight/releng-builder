@@ -239,6 +239,30 @@ def main() -> int:
                 "every caller tells the engine where the CSIT scripts live",
             )
         dispatch_deploy = yaml.safe_load(dispatch)["jobs"]["deploy"]
+        # A cron cannot pass an input, so the schedule is mapped onto a
+        # pipeline name by an expression. That mapping cannot be proven live on
+        # a fork -- GitHub disables scheduled workflows there -- so it is
+        # pinned here instead: every emitted cron must resolve to a pipeline
+        # that actually has jobs, or the nightly run would select nothing and
+        # report a green release pipeline that never ran.
+        on_ = yaml.safe_load(dispatch)[True]
+        pipelines = set(json.loads(
+            (REPO / ".github/csit/pipelines.json").read_text(encoding="utf-8")
+        ))
+        for entry in on_["schedule"]:
+            cron = entry["cron"]
+            m = re.search(
+                rf"github\.event\.schedule == '{re.escape(cron)}' && '(\w+)'",
+                dispatch,
+            )
+            check(
+                m is not None and m.group(1) in pipelines,
+                f"cron {cron} maps to a pipeline that has jobs",
+            )
+        check(
+            "github.event_name == 'schedule' && 'unmapped'" in dispatch,
+            "an unmapped cron fails the selection instead of running all 148",
+        )
         check(
             dispatch_deploy["permissions"]["id-token"] == "write"
             and "deploy-pages" in dispatch
