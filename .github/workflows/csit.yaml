@@ -95,7 +95,7 @@ on:
     # autorelease-release-* -> integration-distribution-test-*
     - cron: "0 5 * * *"
     # integration-sanity-test-*                       timed daily
-    - cron: "0 6 * * *"
+    - cron: "2 15 * * *"
     # integration-distribution-mri-test-*             timed H 23 * * 6
     - cron: "30 23 * * 6"
 
@@ -120,7 +120,7 @@ jobs:
           PIPELINE: >-
             ${{ inputs.pipeline
                || (github.event.schedule == '0 5 * * *' && 'distribution')
-               || (github.event.schedule == '0 6 * * *' && 'sanity')
+               || (github.event.schedule == '2 15 * * *' && 'sanity')
                || (github.event.schedule == '30 23 * * 6' && 'mri')
                || 'none' }}
           PROJECT: ${{ inputs.project || 'all' }}

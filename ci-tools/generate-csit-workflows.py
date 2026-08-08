@@ -49,7 +49,7 @@ CRONS = {
     # timer afterwards against bundle-url: last -- the same artifact
     # autorelease would have handed it.
     "distribution": "0 5 * * *",
-    "sanity": "0 6 * * *",
+    "sanity": "2 15 * * *",
     "weekly": "0 23 * * 6",
     "mri": "30 23 * * 6",
 }
