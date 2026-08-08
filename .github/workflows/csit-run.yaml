@@ -2,12 +2,20 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: 2026 The Linux Foundation
 #
-# Reusable CSIT engine. One call == one JJB CSIT job.
+# The one reusable CSIT engine. One matrix entry == one JJB CSIT job.
 #
-# Replaces the inttest-csit-1node / inttest-csit-3node JJB job templates.
-# The CSIT logic itself is NOT reimplemented here: jjb/integration/*.sh and
+# Replaces the inttest-csit-1node / inttest-csit-3node JJB job templates, and
+# the Jenkins fan-out itself: Jenkins used `trigger-builds ... block: true` to
+# start N CSIT jobs and wait, which here is just a matrix in a called workflow
+# (blocking and failure propagation come for free).
+#
+# The CSIT logic is NOT reimplemented here. jjb/integration/*.sh and
 # common-functions.sh remain the single source of truth and are executed
-# unmodified by lfreleng-actions/csit-build-action.
+# unmodified by csit-build-action.
+#
+# Job entries come from .github/csit/csit-jobs.json via
+# ci-tools/select-csit-jobs.py. Defaults below mirror jjb/defaults.yaml, so an
+# entry only carries the fields where it differs.
 
 name: CSIT Run
 
@@ -15,21 +23,16 @@ name: CSIT Run
 on:
   workflow_call:
     inputs:
-      project:
-        description: "ODL project under test, e.g. daexim"
+      jobs:
+        description: >-
+          JSON array of CSIT job objects, as produced by
+          ci-tools/select-csit-jobs.py.
         required: true
         type: string
-      functionality:
-        description: "Functionality under test, e.g. basic"
-        required: true
-        type: string
-      stream:
-        description: "Stream name (DISTROSTREAM), e.g. chromium"
-        required: true
-        type: string
-      branch:
-        description: "Distribution/project branch the bundle is built from (DISTROBRANCH)"
-        required: true
+      bundle-url:
+        description: "Distribution zip URL, or 'last' to resolve from Nexus"
+        required: false
+        default: "last"
         type: string
       test-ref:
         description: >-
@@ -38,90 +41,45 @@ on:
         required: false
         default: "master"
         type: string
-      odl-nodes:
-        description: "Controller node count"
-        required: false
-        default: 1
-        type: number
-      tools-nodes:
-        description: "Tools/mininet node count"
-        required: false
-        default: 0
-        type: number
-      install-features:
-        description: "Comma separated karaf features"
-        required: false
-        default: ""
-        type: string
-      controller-scope:
-        description: "'only' or 'all'"
-        required: false
-        default: "only"
-        type: string
-      controller-max-mem:
-        description: "Karaf max heap"
-        required: false
-        default: "2048m"
-        type: string
-      karaf-version:
-        description: "karaf4 | netconf | bgpcep"
-        required: false
-        default: "karaf4"
-        type: string
-      jdk-version:
-        description: "JDK used to run karaf"
-        required: false
-        default: "openjdk21"
-        type: string
-      robot-options:
-        description: "Extra robot options"
-        required: false
-        default: ""
-        type: string
-      debug-map:
-        description: "Karaf debug map"
-        required: false
-        default: ""
-        type: string
-      use-features-boot:
-        description: "Append features to featuresBoot"
-        required: false
-        default: "True"
-        type: string
-      elasticsearch-attribute:
-        description: "JVM metric harvesting, or 'disabled'"
-        required: false
-        default: "disabled"
-        type: string
-      bundle-url:
-        description: "Distribution zip URL, or 'last'"
-        required: false
-        default: "last"
-        type: string
-      suites:
-        description: "Space separated suites overriding the test plan"
-        required: false
-        default: ""
-        type: string
       runs-on:
         description: "Runner label"
         required: false
         default: "ubuntu-24.04"
         type: string
       timeout-minutes:
-        description: "Job timeout"
+        description: "Fallback per-job timeout, when the job carries none"
         required: false
         default: 360
         type: number
+      artifact-pattern:
+        description: >-
+          Which result artifacts the report job downloads. A project caller
+          narrows this to its own jobs so it does not pull every other
+          project's logs out of the same run.
+        required: false
+        default: "*"
+        type: string
 
 permissions:
   contents: read
 
 jobs:
   csit:
-    name: ${{ inputs.project }}-csit-${{ inputs.odl-nodes }}node-${{ inputs.functionality }}-${{ inputs.stream }}
+    name: ${{ matrix.job.job }}
     runs-on: ${{ inputs.runs-on }}
-    timeout-minutes: ${{ inputs.timeout-minutes }}
+    # Jenkins sets build-timeout per job: 360 for most, but 480/720/1440/1500
+    # for benchmark, scale and longevity jobs. GitHub-hosted runners stop any
+    # job at 6h, so the 19 jobs above that ceiling cannot complete on them --
+    # they fail on time and the robot gate reports "no results" rather than a
+    # truncated pass. Tracked as a known exclusion, not silently clamped.
+    timeout-minutes: ${{ matrix.job['timeout-minutes'] || inputs.timeout-minutes }}
+    strategy:
+      fail-fast: false
+      # Jenkins ran these on a large static agent pool. Cap the burst so one
+      # stream does not starve every other workflow in the org.
+      max-parallel: 20
+      matrix:
+        job: ${{ fromJSON(inputs.jobs) }}
     steps:
       - name: Checkout releng/builder
         # yamllint disable-line rule:line-length
@@ -144,37 +102,38 @@ jobs:
         with:
           mode: run
           backend: docker
-          odl-nodes: ${{ inputs.odl-nodes }}
-          tools-nodes: ${{ inputs.tools-nodes }}
+          job-name: ${{ matrix.job.job }}
+          odl-nodes: ${{ matrix.job.odl_nodes }}
+          tools-nodes: ${{ matrix.job.tools_nodes }}
           csit-scripts-dir: jjb/integration
           lf-env: global-jjb/jenkins-init-scripts/lf-env.sh
           test-dir: test
-          bundle-url: ${{ inputs.bundle-url }}
-          karaf-version: ${{ inputs.karaf-version }}
-          jdk-version: ${{ inputs.jdk-version }}
-          distribution-branch: ${{ inputs.branch }}
-          distribution-stream: ${{ inputs.stream }}
-          install-features: ${{ inputs.install-features }}
-          controller-scope: ${{ inputs.controller-scope }}
-          controller-max-mem: ${{ inputs.controller-max-mem }}
-          debug-map: ${{ inputs.debug-map }}
-          use-features-boot: ${{ inputs.use-features-boot }}
-          elasticsearch-attribute: ${{ inputs.elasticsearch-attribute }}
-          script-plan: ${{ inputs.project }}.txt
-          config-plan: ${{ inputs.project }}.txt
+          bundle-url: ${{ matrix.job['bundle-url'] || inputs.bundle-url }}
+          karaf-version: ${{ matrix.job['karaf-version'] || 'karaf4' }}
+          jdk-version: ${{ matrix.job['jdk-version'] || 'openjdk21' }}
+          distribution-branch: ${{ matrix.job.branch }}
+          distribution-stream: ${{ matrix.job.stream }}
+          install-features: ${{ matrix.job['install-features'] }}
+          controller-scope: ${{ matrix.job['controller-scope'] || 'only' }}
+          controller-max-mem: ${{ matrix.job['controller-max-mem'] || '2048m' }}
+          debug-map: ${{ matrix.job['debug-map'] }}
+          use-features-boot: ${{ matrix.job['use-features-boot'] || 'True' }}
+          # yamllint disable-line rule:line-length
+          elasticsearch-attribute: ${{ matrix.job['elasticsearch-attribute'] || 'disabled' }}
+          script-plan: ${{ matrix.job.project }}.txt
+          config-plan: ${{ matrix.job.project }}.txt
           stream-test-plan: >-
-            ${{ inputs.project }}-${{ inputs.functionality }}-${{ inputs.stream }}.txt
-          test-plan: ${{ inputs.project }}-${{ inputs.functionality }}.txt
-          suites: ${{ inputs.suites }}
-          robot-options: ${{ inputs.robot-options }}
+            ${{ matrix.job.project }}-${{ matrix.job.functionality }}-${{ matrix.job.stream }}.txt
+          test-plan: ${{ matrix.job.project }}-${{ matrix.job.functionality }}.txt
+          suites: ${{ matrix.job['suites'] }}
+          robot-options: ${{ matrix.job['robot-options'] }}
 
       - name: Publish robot report
         if: always()
         # yamllint disable-line rule:line-length
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
-          # yamllint disable-line rule:line-length
-          name: csit-${{ inputs.project }}-${{ inputs.functionality }}-${{ inputs.stream }}
+          name: ${{ matrix.job.job }}
           path: |
             output.xml
             log.html
@@ -184,3 +143,28 @@ jobs:
             gclogs-*/
           if-no-files-found: warn
           retention-days: 30
+
+  # Jenkins showed a verdict per job via the Robot plugin and mailed the
+  # project. Whether an ODL release ships is a community decision, so the
+  # fan-out needs one readable page, and it must list a job that produced
+  # nothing rather than quietly leaving it out.
+  report:
+    name: Report
+    needs: csit
+    if: always()
+    runs-on: ${{ inputs.runs-on }}
+    steps:
+      - name: Download job results
+        # yamllint disable-line rule:line-length
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          path: results
+          pattern: ${{ inputs.artifact-pattern }}
+
+      - name: Render summary
+        # yamllint disable-line rule:line-length
+        uses: askb/csit-build-action@main # ponytail: becomes lfreleng-actions/csit-build-action once proven
+        with:
+          mode: report
+          results-dir: results
+          expected-jobs: ${{ inputs.jobs }}

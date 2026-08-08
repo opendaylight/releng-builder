@@ -1,0 +1,173 @@
+#!/usr/bin/env python3
+# SPDX-License-Identifier: Apache-2.0
+# SPDX-FileCopyrightText: 2026 The Linux Foundation
+"""Self-check for the per-repo CSIT layout.
+
+The filter that picks a project's jobs is a jq expression embedded in a
+generated workflow, so it is never exercised by importing Python. This runs
+the *shipped* expression -- pulled back out of the generated YAML -- against
+generated job data. An earlier version read
+
+    select($p == "none" or (.pipelines // []) | index($p))
+
+which jq parses as ``select((A or B) | index($p))`` because ``|`` binds looser
+than ``or``; every run died with "Cannot index boolean". Nothing in Python
+would have caught that.
+"""
+
+from __future__ import annotations
+
+import importlib.util
+import json
+import re
+import subprocess
+import tempfile
+from pathlib import Path
+
+import yaml
+
+spec = importlib.util.spec_from_file_location(
+    "gen", Path(__file__).with_name("generate-csit-workflows.py")
+)
+gen = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(gen)
+
+ENTRIES = [
+    {"job": "aaa-a-vanadium", "project": "aaa", "functionality": "authn",
+     "stream": "vanadium", "pipelines": ["distribution", "mri"]},
+    {"job": "aaa-b-chromium", "project": "aaa", "functionality": "authn",
+     "stream": "chromium", "pipelines": ["mri"]},
+    {"job": "aaa-c-vanadium", "project": "aaa", "functionality": "idle",
+     "stream": "vanadium", "pipelines": []},
+    {"job": "netconf-a-vanadium", "project": "netconf", "functionality": "scale",
+     "stream": "vanadium", "pipelines": ["distribution"]},
+]
+
+
+def check(cond: bool, label: str) -> None:
+    """Assert and report, so a failure names the property that broke."""
+    assert cond, f"FAIL: {label}"
+    print(f"ok: {label}")
+
+
+def jq_filter(workflow: str) -> str:
+    """Recover the jq program from the generated workflow."""
+    m = re.search(r"'(\[\.\[\].*?)'", workflow, re.S)
+    assert m, "could not find the jq program in the generated workflow"
+    return m.group(1)
+
+
+def run(prog: str, data: Path, pipeline: str, stream: str, func: str) -> list[str]:
+    """Run the shipped jq program exactly as the workflow does."""
+    out = subprocess.run(
+        ["jq", "-r", "--arg", "p", pipeline, "--arg", "s", stream,
+         "--arg", "f", func, f"{prog} | .[].job", str(data)],
+        capture_output=True, text=True, check=True,
+    )
+    return sorted(x for x in out.stdout.split())
+
+
+def main() -> int:
+    """Run the checks."""
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        gen.emit_per_repo(
+            root, ENTRIES, ["aaa", "netconf"], ["distribution", "mri", "sanity"], []
+        )
+
+        aaa = root / "aaa" / ".github"
+        data = aaa / "csit-jobs.json"
+        prog = jq_filter((aaa / "workflows" / "csit.yaml").read_text())
+
+        check(len(json.loads(data.read_text())) == 3, "aaa keeps only its own 3 jobs")
+        check(
+            run(prog, data, "distribution", "all", "all") == ["aaa-a-vanadium"],
+            "pipeline filter selects by membership",
+        )
+        check(
+            run(prog, data, "mri", "all", "all")
+            == ["aaa-a-vanadium", "aaa-b-chromium"],
+            "a job in two pipelines matches both",
+        )
+        check(
+            run(prog, data, "none", "vanadium", "all")
+            == ["aaa-a-vanadium", "aaa-c-vanadium"],
+            "pipeline 'none' means no pipeline filter",
+        )
+        check(
+            run(prog, data, "none", "all", "idle") == ["aaa-c-vanadium"],
+            "functionality filter works",
+        )
+        check(
+            run(prog, data, "distribution", "chromium", "all") == [],
+            "filters combine (empty result is legal)",
+        )
+        check(
+            run(prog, data, "sanity", "all", "all") == [],
+            "a job with no pipelines is never picked by a pipeline run",
+        )
+
+        orch = (
+            root / "integration-distribution" / ".github" / "workflows"
+            / "csit-pipeline.yaml"
+        ).read_text()
+        calls = [
+            ln for ln in orch.splitlines()
+            if ln.strip().startswith("uses: ") and "/.github/workflows/csit.yaml@" in ln
+        ]
+        check(len(calls) == 2, "orchestrator has one static call per project")
+
+        # Reporting has two halves and both must exist: each job reports itself
+        # (robot-gate, in csit-run.yaml), and the orchestrator renders one table
+        # across every project -- that second one is the release go/no-go.
+        check("mode: report" in orch, "orchestrator renders a release report")
+        spec = yaml.safe_load(orch)["jobs"]
+        report = spec["report"]
+        check(
+            # plan is there so the report can name the pipeline it ran.
+            report["needs"] == ["plan", "aaa", "netconf"]
+            and report["if"] == "always()",
+            "the release report waits on every project, pass or fail",
+        )
+        # The report downloads artifacts built from job output, so it must not
+        # be the job holding id-token: write.
+        check(
+            "id-token" not in report.get("permissions", {})
+            and spec["deploy"]["permissions"]["id-token"] == "write"
+            and spec["deploy"]["needs"] == "report",
+            "Pages deployment is a separate job from the report that builds it",
+        )
+        check(
+            "toJSON(needs)" in orch and "expected-jobs:" in orch,
+            "the release report is driven by what was dispatched, not by artifacts",
+        )
+        check(
+            "${{ matrix." not in orch.split("jobs:")[-1].split("with:")[0],
+            "orchestrator never puts an expression in uses:",
+        )
+
+        # An empty pipeline must not be scheduled: every over-cap job stays on
+        # Jenkins, so a cron for it would burn 6h of runner time and post a
+        # permanently red row into the release report.
+        only_dist = gen.render_orchestrator(["aaa"], "opendaylight", ["distribution"])
+        check(
+            "cron:" not in only_dist,
+            "a pipeline with no scheduled kinds emits no cron",
+        )
+        check(
+            "options: [distribution]" in only_dist,
+            "workflow_dispatch offers only pipelines that have jobs",
+        )
+        both = gen.render_orchestrator(["aaa"], "opendaylight", ["mri", "sanity"])
+        crons = {ln.split('"')[1] for ln in both.splitlines() if "- cron:" in ln}
+        check(
+            crons == {gen.CRONS["mri"], gen.CRONS["sanity"]},
+            "each surviving pipeline gets exactly its own cron",
+        )
+
+    print("\nPASS: per-repo layout filters exactly like the central selector")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

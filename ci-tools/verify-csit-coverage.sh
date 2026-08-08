@@ -66,8 +66,8 @@ for f in sorted(Path(sys.argv[1]).iterdir()):
 PY
 
 # What GHA actually covers.
-cat "${REPO_ROOT}"/.github/csit/*.json \
-    | jq -r -s 'add | .[].job' | sort > "$ACTUAL"
+jq -r '.[].job' "${REPO_ROOT}/.github/csit/csit-jobs.json" \
+    | sort > "$ACTUAL"
 
 sort -o "$EXPECTED" "$EXPECTED"
 
