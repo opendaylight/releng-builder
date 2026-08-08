@@ -1,0 +1,67 @@
+---
+# SPDX-License-Identifier: Apache-2.0
+# SPDX-FileCopyrightText: 2026 The Linux Foundation
+#
+# Stands in for the distribution build while the migration is being proven.
+#
+# On Jenkins, autorelease-release-{stream} hands a BUNDLE_URL to
+# integration-distribution-test-{stream}, which runs `trigger-builds ...
+# block: true` over csit-jobs-{stream}.lst and fails if any downstream job
+# fails. Here that is a plain `uses:` -- blocking and failure propagation come
+# for free.
+#
+# This file exists only to exercise csit.yaml's workflow_call entry point from
+# a repository we own. The real caller is the distribution build; when it
+# migrates it makes exactly this call and this file goes away.
+
+name: CSIT call test
+
+# yamllint disable-line rule:truthy
+on:
+  workflow_dispatch:
+    inputs:
+      pipeline:
+        description: "Jenkins fan-out list to reproduce"
+        required: false
+        default: "distribution"
+        type: string
+      project:
+        description: "Narrow the call, so the contract can be proven cheaply"
+        required: false
+        default: "daexim"
+        type: string
+      stream:
+        required: false
+        default: "vanadium"
+        type: string
+      bundle-url:
+        description: "Distribution zip the caller just built, or 'last'"
+        required: false
+        default: "last"
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  csit:
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    uses: ./.github/workflows/csit.yaml
+    with:
+      pipeline: ${{ inputs.pipeline }}
+      project: ${{ inputs.project }}
+      stream: ${{ inputs.stream }}
+      bundle-url: ${{ inputs.bundle-url }}
+
+  # Proves the half that matters to a release: the caller finds out. Jenkins
+  # got this from `block: true`; here a failed CSIT job fails the called
+  # workflow, which fails this job, which fails the caller's run.
+  gate:
+    needs: csit
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Report the gate
+        run: echo "CSIT passed, the distribution build may proceed."
