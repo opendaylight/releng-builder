@@ -127,7 +127,14 @@ jobs:
   csit:
     needs: select
     if: needs.select.outputs.count != '0'
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     uses: ./.github/workflows/csit-run.yaml
     with:
       jobs: ${{ needs.select.outputs.jobs }}
       bundle-url: ${{ inputs.bundle-url || 'last' }}
+      # This dispatcher owns the whole fan-out, so it is the one caller
+      # allowed to replace the published report.
+      publish-pages: true
