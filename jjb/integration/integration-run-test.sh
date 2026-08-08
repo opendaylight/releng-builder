@@ -43,6 +43,7 @@ robot -N "${TESTPLAN}" \
       -v BUNDLE_URL:"${ACTUAL_BUNDLE_URL}" \
       -v CONTROLLER:"${ODL_SYSTEM_IP}" \
       -v CONTROLLER_USER:"${USER}" \
+      -v DEFAULT_USER:"${USER}" \
       -v GERRIT_BRANCH:"${GERRIT_BRANCH}" \
       -v GERRIT_PROJECT:"${GERRIT_PROJECT}" \
       -v GERRIT_REFSPEC:"${GERRIT_REFSPEC}" \

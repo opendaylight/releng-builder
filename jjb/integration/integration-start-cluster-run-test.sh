@@ -51,6 +51,7 @@ robot -N "${TESTPLAN}" \
       -v CONTROLLER1:"${ODL_SYSTEM_2_IP}" \
       -v CONTROLLER2:"${ODL_SYSTEM_3_IP}" \
       -v CONTROLLER_USER:"${USER}" \
+      -v DEFAULT_USER:"${USER}" \
       -v JAVA_HOME:"${JAVA_HOME}" \
       -v JDKVERSION:"${JDKVERSION}" \
       -v JENKINS_WORKSPACE:"${WORKSPACE}" \
