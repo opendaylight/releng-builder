@@ -34,6 +34,22 @@ on:
         required: false
         default: "last"
         type: string
+      builder-repo:
+        description: >-
+          Where the CSIT scripts come from. actions/checkout defaults to the
+          CALLER's repository, so this cannot be left implicit: every caller
+          outside releng/builder would check itself out and find no
+          jjb/integration and no global-jjb submodule.
+        required: false
+        default: "opendaylight/releng-builder"
+        type: string
+      builder-ref:
+        description: >-
+          Ref of builder-repo. Should match the ref this workflow was called
+          at, so the scripts and the workflow running them agree.
+        required: false
+        default: "master"
+        type: string
       test-repo:
         description: >-
           Where the robot suites come from. A verify run tests the patch
@@ -104,10 +120,16 @@ jobs:
       matrix:
         job: ${{ fromJSON(inputs.jobs) }}
     steps:
+      # Always into builder/, even when the caller IS releng/builder. Nothing
+      # here reads the caller's own repository, so one uniform layout beats a
+      # path that changes depending on who called.
       - name: Checkout releng/builder
         # yamllint disable-line rule:line-length
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
+          repository: ${{ inputs.builder-repo }}
+          ref: ${{ inputs.builder-ref }}
+          path: builder
           submodules: true
 
       - name: Checkout integration/test
@@ -128,8 +150,8 @@ jobs:
           job-name: ${{ matrix.job.job }}
           odl-nodes: ${{ matrix.job.odl_nodes }}
           tools-nodes: ${{ matrix.job.tools_nodes }}
-          csit-scripts-dir: jjb/integration
-          lf-env: global-jjb/jenkins-init-scripts/lf-env.sh
+          csit-scripts-dir: builder/jjb/integration
+          lf-env: builder/global-jjb/jenkins-init-scripts/lf-env.sh
           test-dir: test
           bundle-url: ${{ matrix.job['bundle-url'] || inputs.bundle-url }}
           karaf-version: ${{ matrix.job['karaf-version'] || 'karaf4' }}

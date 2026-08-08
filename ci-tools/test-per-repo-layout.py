@@ -194,9 +194,50 @@ def main() -> int:
             "uses: actions/deploy-pages@" not in engine,
             "the engine uploads the site; only the fan-out owner deploys it",
         )
+
+        # actions/checkout defaults to the CALLER's repository. The engine
+        # needs releng/builder's jjb/integration and its global-jjb submodule,
+        # so an implicit checkout made every cross-repo caller check itself
+        # out instead -- proven by a verify run dying on "cannot stat
+        # global-jjb/jenkins-init-scripts/lf-env.sh".
+        for step in engine_jobs["csit"]["steps"]:
+            if "actions/checkout@" in str(step.get("uses", "")):
+                check(
+                    "repository" in step.get("with", {}),
+                    f"engine checkout is explicit: {step.get('name')}",
+                )
         dispatch = (REPO / ".github/workflows/csit.yaml").read_text(
             encoding="utf-8"
         )
+        callers = [
+            gen.render_project_workflow("aaa", ["vanadium"], gen.CSIT_ENGINE),
+            gen.render_verify(
+                {
+                    "job": "aaa-csit-verify-1node-authn",
+                    "project": "aaa",
+                    "functionality": "authn",
+                    "stream": "vanadium",
+                    "paths": ["csit/suites/aaa/**"],
+                    "branch": "stable/vanadium",
+                    "odl_nodes": 1,
+                    "tools_nodes": 0,
+                    "timeout": gen.DEFAULT_TIMEOUT,
+                    "params": {
+                        "TESTPLAN": "aaa-authn.txt",
+                        "DISTROSTREAM": "vanadium",
+                        "DISTROBRANCH": "stable/vanadium",
+                        "VM_0_COUNT": "1",
+                    },
+                },
+                gen.CSIT_ENGINE,
+            ),
+            dispatch,
+        ]
+        for caller in callers:
+            check(
+                "builder-repo:" in caller and "builder-ref:" in caller,
+                "every caller tells the engine where the CSIT scripts live",
+            )
         dispatch_deploy = yaml.safe_load(dispatch)["jobs"]["deploy"]
         check(
             dispatch_deploy["permissions"]["id-token"] == "write"

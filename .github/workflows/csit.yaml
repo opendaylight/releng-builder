@@ -131,6 +131,10 @@ jobs:
     with:
       jobs: ${{ needs.select.outputs.jobs }}
       bundle-url: ${{ inputs.bundle-url || 'last' }}
+      # A local `uses:` still runs in this repository's context, so the CSIT
+      # scripts must come from this commit and not from ODL master.
+      builder-repo: ${{ github.repository }}
+      builder-ref: ${{ github.sha }}
       # This dispatcher owns the whole fan-out, so it is the one caller
       # allowed to replace the published report.
       publish-pages: true

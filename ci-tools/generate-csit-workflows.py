@@ -63,6 +63,19 @@ DEPLOY_PAGES_VER = "v5.0.0"
 # carry a copy of the CSIT logic; they are public and in one org, so a
 # cross-repo workflow_call needs no PAT.
 CSIT_ENGINE = "opendaylight/releng-builder/.github/workflows/csit-run.yaml@master"
+
+
+def engine_source(engine: str) -> tuple[str, str]:
+    """Split an engine reference into the repo and ref to check out.
+
+    actions/checkout defaults to the caller's repository, so csit-run.yaml
+    has to be told where the CSIT scripts live. Deriving it from the same
+    string that `uses:` points at means the scripts and the workflow running
+    them can never come from different commits.
+    """
+    path, _, ref = engine.partition("@")
+    owner, repo, *_ = path.split("/")
+    return f"{owner}/{repo}", ref
 # ponytail: becomes lfreleng-actions/csit-build-action once proven.
 CSIT_ACTION = "askb/csit-build-action@main"
 ORG = "opendaylight"
@@ -443,6 +456,10 @@ jobs:
     with:
       jobs: ${{{{ needs.select.outputs.jobs }}}}
       bundle-url: ${{{{ inputs.bundle-url || 'last' }}}}
+      # A local `uses:` still runs in this repository's context, so the CSIT
+      # scripts must come from this commit and not from ODL master.
+      builder-repo: ${{{{ github.repository }}}}
+      builder-ref: ${{{{ github.sha }}}}
       # This dispatcher owns the whole fan-out, so it is the one caller
       # allowed to replace the published report.
       publish-pages: true
@@ -604,6 +621,8 @@ jobs:
       jobs: ${{{{ needs.select.outputs.jobs }}}}
       bundle-url: ${{{{ inputs.bundle-url }}}}
       artifact-pattern: "{project}-csit-*"
+      builder-repo: {builder_repo}
+      builder-ref: {builder_ref}
 """
 
 
@@ -616,9 +635,12 @@ ORCHESTRATOR_JOB = """  {project}:
 def render_project_workflow(project: str, streams: list[str], engine: str) -> str:
     """One thin caller per project repo, owning that project's job data."""
     default = "vanadium" if "vanadium" in streams else sorted(streams)[0]
+    builder_repo, builder_ref = engine_source(engine)
     return PROJECT_WORKFLOW.format(
         project=project,
         engine=engine,
+        builder_repo=builder_repo,
+        builder_ref=builder_ref,
         default_stream=default,
         all_streams=options(["all"] + sorted(streams)),
         checkout_sha=CHECKOUT_SHA,
@@ -872,6 +894,8 @@ jobs:
     with:
       # yamllint disable-line rule:line-length
       jobs: '{jobs}'
+      builder-repo: {builder_repo}
+      builder-ref: {builder_ref}
       # The patch under test lives in the repository this workflow runs in,
       # which is a fork whenever CI is proven outside the ODL org.
       test-repo: ${{{{ github.repository }}}}
@@ -886,10 +910,13 @@ def render_verify(job: dict[str, Any], engine: str) -> str:
     # One line: a multi-line value would end the single-quoted YAML scalar.
     body = json.dumps([entry])
     assert "'" not in body, f"{job['job']}: quoting would break the YAML scalar"
+    builder_repo, builder_ref = engine_source(engine)
     return VERIFY_WORKFLOW.format(
         project=job["project"],
         job=job["job"],
         engine=engine,
+        builder_repo=builder_repo,
+        builder_ref=builder_ref,
         jobs=body,
         paths=seq("paths", [f'"{g}"' for g in job["paths"]], indent=4),
     )
