@@ -34,6 +34,14 @@ on:
         required: false
         default: "last"
         type: string
+      test-repo:
+        description: >-
+          Where the robot suites come from. A verify run tests the patch
+          itself, so it must read the repository the pull request is on --
+          which is a fork whenever CI is proven outside the ODL org.
+        required: false
+        default: "opendaylight/integration-test"
+        type: string
       test-ref:
         description: >-
           integration/test ref. The JJB templates always check out master
@@ -106,7 +114,7 @@ jobs:
         # yamllint disable-line rule:line-length
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
-          repository: opendaylight/integration-test
+          repository: ${{ inputs.test-repo }}
           ref: ${{ inputs.test-ref }}
           path: test
 

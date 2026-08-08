@@ -848,6 +848,9 @@ jobs:
     with:
       # yamllint disable-line rule:line-length
       jobs: '{jobs}'
+      # The patch under test lives in the repository this workflow runs in,
+      # which is a fork whenever CI is proven outside the ODL org.
+      test-repo: ${{{{ github.repository }}}}
       test-ref: refs/pull/${{{{ github.event.pull_request.number }}}}/merge
       artifact-pattern: "{project}-csit-verify-*"
 """
