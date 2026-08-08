@@ -57,6 +57,8 @@ GH_HOSTED_MAX_MINUTES = 360
 # Pinned to a SHA, per the org policy on external actions.
 CHECKOUT_SHA = "08c6903cd8c0fde910a37f88322edcfb5dd907a8"
 CHECKOUT_VER = "v5.0.0"
+DEPLOY_PAGES_SHA = "cd2ce8fcbc39b97be8ca5fce6e763baed58fa128"
+DEPLOY_PAGES_VER = "v5.0.0"
 # The shared engine. Kept in releng/builder so 13 project repos do not each
 # carry a copy of the CSIT logic; they are public and in one org, so a
 # cross-repo workflow_call needs no PAT.
@@ -437,10 +439,6 @@ jobs:
   csit:
     needs: select
     if: needs.select.outputs.count != '0'
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
     uses: ./.github/workflows/csit-run.yaml
     with:
       jobs: ${{{{ needs.select.outputs.jobs }}}}
@@ -450,6 +448,32 @@ jobs:
       publish-pages: true
       report-title: >-
         ${{{{ inputs.pipeline || 'all' }}}} / ${{{{ inputs.stream || 'all' }}}}
+
+  # Deploying lives here, not in csit-run.yaml: deploy-pages needs
+  # pages: write and id-token: write, and a called workflow may not request a
+  # permission its caller lacks. Keeping it in the engine would force every
+  # caller -- including a Gerrit patch verify job -- to hand out an OIDC
+  # token. The report job uploads the site; this job publishes it.
+  #
+  # always(): a failed CSIT job must not suppress the release report. The
+  # report exists to show failures, so publishing only on a green run would
+  # hide exactly the runs a reader needs.
+  deploy:
+    name: Publish report
+    needs: [select, csit]
+    if: always() && needs.select.outputs.count != '0'
+    runs-on: ubuntu-24.04
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{{{ steps.deploy.outputs.page_url }}}}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deploy
+        # yamllint disable-line rule:line-length
+        uses: actions/deploy-pages@{DEPLOY_PAGES_SHA} # {DEPLOY_PAGES_VER}
 """
 
 

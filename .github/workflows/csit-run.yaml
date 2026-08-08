@@ -176,9 +176,6 @@ jobs:
     needs: csit
     if: always()
     runs-on: ${{ inputs.runs-on }}
-    permissions:
-      contents: read
-      pages: write
     steps:
       - name: Download job results
         # yamllint disable-line rule:line-length
@@ -197,37 +194,15 @@ jobs:
           html-dir: ${{ inputs.publish-pages && 'site' || '' }}
           title: ${{ inputs.report-title || github.workflow }}
 
-      - name: Configure Pages
-        if: inputs.publish-pages
-        # yamllint disable-line rule:line-length
-        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
-
+      # Uploads an artifact named github-pages. Deliberately NOT paired with
+      # configure-pages or deploy-pages: both need pages: write, and a called
+      # workflow may not request a permission its caller lacks, so putting
+      # them here would force every caller -- including a Gerrit verify job --
+      # to grant id-token: write. The dispatcher that owns the fan-out
+      # deploys this artifact instead.
       - name: Upload Pages artifact
         if: inputs.publish-pages
         # yamllint disable-line rule:line-length
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           path: site
-
-  # Separate job on purpose: id-token: write mints an OIDC token, and that
-  # must not sit on the job that downloads and unpacks 148 jobs' output.
-  deploy:
-    name: Publish report
-    needs: report
-    # always(): a failed CSIT job must not suppress the release report. That
-    # report exists to show failures, so publishing it only on a green run
-    # would hide exactly the runs a reader needs. Without always() GitHub
-    # skips this job whenever anything upstream of `report` failed.
-    if: always() && inputs.publish-pages && needs.report.result == 'success'
-    runs-on: ${{ inputs.runs-on }}
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deploy.outputs.page_url }}
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deploy
-        # yamllint disable-line rule:line-length
-        uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5.0.0

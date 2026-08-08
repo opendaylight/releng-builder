@@ -26,6 +26,8 @@ from pathlib import Path
 
 import yaml
 
+REPO = Path(__file__).resolve().parent.parent
+
 spec = importlib.util.spec_from_file_location(
     "gen", Path(__file__).with_name("generate-csit-workflows.py")
 )
@@ -165,6 +167,42 @@ def main() -> int:
         check(
             "options: [distribution]" in only_dist,
             "workflow_dispatch offers only pipelines that have jobs",
+        )
+
+        # A called workflow may not request a permission its caller lacks: the
+        # whole run fails to start. The shared engine is called by the 13
+        # project workflows AND by the 4 Gerrit patch verify workflows, so any
+        # elevated permission it declares would have to be handed out by all
+        # of them -- an OIDC token to a patch verify job, to publish a page it
+        # has nothing to do with. Proven the hard way: a verify caller
+        # granting only contents: read failed with startup_failure.
+        engine = (REPO / ".github/workflows/csit-run.yaml").read_text(
+            encoding="utf-8"
+        )
+        engine_jobs = yaml.safe_load(engine)["jobs"]
+        elevated = {
+            job: perms
+            for job, spec_ in engine_jobs.items()
+            if isinstance(perms := spec_.get("permissions"), dict)
+            and set(perms) - {"contents"}
+        }
+        check(
+            not elevated,
+            f"the shared engine asks for no elevated permission: {elevated}",
+        )
+        check(
+            "uses: actions/deploy-pages@" not in engine,
+            "the engine uploads the site; only the fan-out owner deploys it",
+        )
+        dispatch = (REPO / ".github/workflows/csit.yaml").read_text(
+            encoding="utf-8"
+        )
+        dispatch_deploy = yaml.safe_load(dispatch)["jobs"]["deploy"]
+        check(
+            dispatch_deploy["permissions"]["id-token"] == "write"
+            and "deploy-pages" in dispatch
+            and "always()" in dispatch_deploy["if"],
+            "the dispatcher deploys the report, pass or fail",
         )
         both = gen.render_orchestrator(["aaa"], "opendaylight", ["mri", "sanity"])
         crons = {ln.split('"')[1] for ln in both.splitlines() if "- cron:" in ln}
