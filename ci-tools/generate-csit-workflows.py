@@ -42,11 +42,19 @@ DEFAULT_TIMEOUT = 360
 # GHA identifies a schedule by its cron string, so mri is offset 30m off the
 # weekly slot they share on Jenkins.
 CRONS = {
+    # D9: no Jenkins->GHA bridge exists (gerrit-to-platform handles Gerrit
+    # events, and a Jenkins build is not one), so distribution cannot be
+    # pushed by autorelease the way it is today. autorelease-release-* is
+    # itself a timer at H 0 * * * and takes hours, so CSIT runs on its own
+    # timer afterwards against bundle-url: last -- the same artifact
+    # autorelease would have handed it.
+    "distribution": "0 5 * * *",
     "sanity": "0 6 * * *",
     "weekly": "0 23 * * 6",
     "mri": "30 23 * * 6",
 }
 JJB_TIMERS = {
+    "distribution": "autorelease-release-* -> integration-distribution-test-*",
     "sanity": "integration-sanity-test-*                       timed daily",
     "weekly": "integration-distribution-weekly-test-trigger-*  timed H 23 * * 6",
     "mri": "integration-distribution-mri-test-*             timed H 23 * * 6",
@@ -418,10 +426,11 @@ on:
         default: "last"
         type: string
   schedule:
-    # Mirrors the Jenkins timers. The 'distribution' list is deliberately NOT
-    # scheduled: integration-distribution-test-* has no trigger of its own and
-    # is started by the distribution build, which here means calling this
-    # workflow with pipeline=distribution and the bundle-url it just built.
+    # Mirrors the Jenkins timers, plus one that Jenkins does not need:
+    # 'distribution' is pushed there by the distribution build, and D9 found no
+    # way to push it from Jenkins to GHA. It still accepts a bundle-url from a
+    # caller; the timer is the fallback so the release pipeline cannot silently
+    # stop running.
 {schedule}
 permissions:
   contents: read
@@ -674,9 +683,11 @@ name: CSIT Pipeline
 # yamllint disable-line rule:truthy
 on:
   schedule:
-    # Mirrors the Jenkins timers. 'distribution' is deliberately NOT scheduled:
-    # integration-distribution-test-* has no trigger of its own, it is started
-    # by the distribution build calling this workflow with the bundle it built.
+    # Mirrors the Jenkins timers, plus one that Jenkins does not need:
+    # 'distribution' is pushed there by the distribution build, and D9 found no
+    # way to push it from Jenkins to GHA. It still accepts a bundle-url from a
+    # caller; the timer is the fallback so the release pipeline cannot silently
+    # stop running.
 {schedule}
   workflow_call:
     inputs:

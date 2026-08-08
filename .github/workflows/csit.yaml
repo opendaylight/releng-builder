@@ -87,10 +87,13 @@ on:
         default: "last"
         type: string
   schedule:
-    # Mirrors the Jenkins timers. The 'distribution' list is deliberately NOT
-    # scheduled: integration-distribution-test-* has no trigger of its own and
-    # is started by the distribution build, which here means calling this
-    # workflow with pipeline=distribution and the bundle-url it just built.
+    # Mirrors the Jenkins timers, plus one that Jenkins does not need:
+    # 'distribution' is pushed there by the distribution build, and D9 found no
+    # way to push it from Jenkins to GHA. It still accepts a bundle-url from a
+    # caller; the timer is the fallback so the release pipeline cannot silently
+    # stop running.
+    # autorelease-release-* -> integration-distribution-test-*
+    - cron: "0 5 * * *"
     # integration-sanity-test-*                       timed daily
     - cron: "0 6 * * *"
     # integration-distribution-mri-test-*             timed H 23 * * 6
@@ -116,6 +119,7 @@ jobs:
           # Cron cannot pass inputs, so map each schedule onto its Jenkins list.
           PIPELINE: >-
             ${{ inputs.pipeline
+               || (github.event.schedule == '0 5 * * *' && 'distribution')
                || (github.event.schedule == '0 6 * * *' && 'sanity')
                || (github.event.schedule == '30 23 * * 6' && 'mri')
                || 'none' }}

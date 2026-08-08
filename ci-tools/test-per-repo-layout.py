@@ -161,8 +161,8 @@ def main() -> int:
         # permanently red row into the release report.
         only_dist = gen.render_orchestrator(["aaa"], "opendaylight", ["distribution"])
         check(
-            "cron:" not in only_dist,
-            "a pipeline with no scheduled kinds emits no cron",
+            gen.CRONS["weekly"] not in only_dist,
+            "a pipeline with no runnable jobs emits no cron",
         )
         check(
             "options: [distribution]" in only_dist,
