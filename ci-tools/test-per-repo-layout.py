@@ -239,6 +239,34 @@ def main() -> int:
                 "every caller tells the engine where the CSIT scripts live",
             )
         dispatch_deploy = yaml.safe_load(dispatch)["jobs"]["deploy"]
+        # DISTROBRANCH and KARAF_VERSION are properties of the distribution
+        # under test, not of the job: every integration-distribution-test-*
+        # orchestrator overrides them on the way down. 54 of the 148 disagree
+        # with their orchestrator, and the dangerous half are the ones on
+        # `master` -- they resolve *successfully* to the development
+        # distribution, so a job labelled vanadium quietly tests manganese.
+        jobs_json = json.loads(
+            (REPO / ".github/csit/csit-jobs.json").read_text(encoding="utf-8")
+        )
+        expected = {
+            "vanadium": "stable/vanadium",
+            "chromium": "stable/chromium",
+            "manganese": "master",
+        }
+        wrong = [
+            j["job"]
+            for j in jobs_json
+            if j["stream"] in expected and j["branch"] != expected[j["stream"]]
+        ]
+        check(
+            not wrong,
+            f"every job tests its stream's distribution: {wrong[:3]}",
+        )
+        check(
+            not [j for j in jobs_json if j.get("karaf-version")],
+            "no job overrides the karaf artifact the orchestrator forces",
+        )
+
         # A cron cannot pass an input, so the schedule is mapped onto a
         # pipeline name by an expression. That mapping cannot be proven live on
         # a fork -- GitHub disables scheduled workflows there -- so it is

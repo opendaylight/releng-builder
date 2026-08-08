@@ -183,6 +183,38 @@ def testplan(p: dict[str, str]) -> tuple[str, str] | None:
     return (project, func) if sep and func else None
 
 
+def orchestrator_overrides(xml_dir: Path) -> dict[str, dict[str, str]]:
+    """What integration-distribution-test-{stream} forces on its downstreams.
+
+    Every orchestrator passes BUNDLE_URL, KARAF_VERSION and DISTROBRANCH down
+    to each CSIT job it triggers, so a job's *own* values for those only apply
+    when someone runs it by hand. They are properties of the distribution
+    under test -- there is one per stream -- not of the job.
+
+    Taking the job's own value instead is not a cosmetic difference: 54 of the
+    148 disagree. Self-managed MRI projects carry their own version branch
+    (yangtools 14.0.x), which does not exist in integration-distribution and
+    404s; worse, those on `master` resolve *successfully* to the development
+    distribution, so a job labelled vanadium would quietly test manganese.
+    """
+    over: dict[str, dict[str, str]] = {}
+    for f in sorted(xml_dir.glob("integration-distribution-test-*")):
+        if not f.is_file():
+            continue
+        try:
+            p = params(ET.fromstring(f.read_text(errors="replace")))
+        except ET.ParseError:
+            continue
+        stream = f.name.rsplit("-", 1)[-1]
+        if "DISTROBRANCH" in p:
+            over[stream] = {
+                "branch": p["DISTROBRANCH"],
+                "karaf-version": p.get("KARAF_VERSION", "karaf4"),
+            }
+    assert over, "no integration-distribution-test-* orchestrator found"
+    return over
+
+
 def scan(
     xml_dir: Path,
 ) -> tuple[dict[str, list[dict[str, Any]]], list[str], list[str]]:
@@ -300,20 +332,28 @@ def pipeline_lists(jjb_dir: Path) -> dict[str, dict[str, list[str]]]:
     return dict(out)
 
 
-def job_entry(j: dict[str, Any]) -> dict[str, Any]:
+def job_entry(
+    j: dict[str, Any], over: dict[str, dict[str, str]] | None = None
+) -> dict[str, Any]:
     """One matrix entry per Jenkins job keeps the mapping 1:1 and auditable."""
     p = j["params"]
+    # The orchestrator's values win, exactly as they do on Jenkins. Applied
+    # here rather than at dispatch time so the matrix entry shows what will
+    # actually be tested.
+    forced = (over or {}).get(j["stream"], {})
     entry: dict[str, Any] = {
         "job": j["job"],
         "project": j["project"],
         "functionality": j["functionality"],
         "stream": j["stream"],
-        "branch": j["branch"],
+        "branch": forced.get("branch", j["branch"]),
         "odl_nodes": j["odl_nodes"],
         "tools_nodes": j["tools_nodes"],
     }
     if j["timeout"] != DEFAULT_TIMEOUT:
         entry["timeout-minutes"] = j["timeout"]
+    if "karaf-version" in forced:
+        p = dict(p, KARAF_VERSION=forced["karaf-version"])
     for param, inp in PARAM_TO_INPUT.items():
         # JJB folded scalars leave ", " separators; the CSIT scripts expect
         # a bare comma-separated list.
@@ -1035,13 +1075,14 @@ def main() -> int:
     data_dir = out_dir.parent / "csit"
 
     by_project, verify, unknown = scan(xml_dir)
+    over = orchestrator_overrides(xml_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
     data_dir.mkdir(parents=True, exist_ok=True)
 
     entries: list[dict[str, Any]] = []
     for project, jobs in sorted(by_project.items()):
         entries += [
-            job_entry(j)
+            job_entry(j, over)
             for j in sorted(jobs, key=lambda x: (x["functionality"], x["stream"]))
         ]
         shapes = sorted({(j["odl_nodes"], j["tools_nodes"]) for j in jobs})
