@@ -138,3 +138,5 @@ jobs:
       # This dispatcher owns the whole fan-out, so it is the one caller
       # allowed to replace the published report.
       publish-pages: true
+      report-title: >-
+        ${{ inputs.pipeline || 'all' }} / ${{ inputs.stream || 'all' }}
