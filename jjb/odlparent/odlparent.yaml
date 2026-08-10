@@ -31,6 +31,37 @@
     staging-profile-id: 880d5ac25eaa
 
 - project:
+    name: odlparent-14.3.x
+    jobs:
+      - odl-maven-jobs-jdk21
+      - odl-maven-verify-jobs-jdk21:
+          disable-job: true
+      - gerrit-tox-verify
+      - gerrit-release-merge:
+          build-node: ubuntu2204-builder-2c-1g
+
+    project: odlparent
+    project-name: odlparent
+    stream: 14.3.x
+    branch: 14.3.x
+    build-node: ubuntu2204-docker-2c-2g
+
+    mvn-settings: odlparent-settings
+
+    dependencies: ""
+    email-upstream: "[odlparent]"
+    archive-artifacts: >
+      **/*.prop
+      **/*.log
+      **/target/surefire-reports/*-output.txt
+      **/target/failsafe-reports/failsafe-summary.xml
+      **/hs_err_*.log
+      **/target/feature/feature.xml
+
+    # Used by the release job
+    staging-profile-id: 880d5ac25eaa
+
+- project:
     name: odlparent-view
     views:
       - project-view
