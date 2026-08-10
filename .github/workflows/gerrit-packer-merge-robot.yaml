@@ -115,11 +115,8 @@ jobs:
           filters: |
             robot:
               - 'packer/templates/robot.pkr.hcl'
-              - 'packer/provision/robot/**'
-              - 'packer/provision/system-reseal.sh'
-              - 'packer/common-packer/vars/centos-7.pkrvars.hcl'
-              - 'packer/common-packer/vars/centos-cs-8.pkrvars.hcl'
-              - 'packer/common-packer/vars/centos-cs-9.pkrvars.hcl'
+              - 'packer/provision/robot.yaml'
+              - 'packer/common-packer/provision/system-reseal.sh'
               - 'packer/common-packer/vars/ubuntu-22.04.pkrvars.hcl'
               - 'packer/common-packer/vars/ubuntu-24.04.pkrvars.hcl'
 

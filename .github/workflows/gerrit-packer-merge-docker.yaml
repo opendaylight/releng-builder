@@ -116,10 +116,8 @@ jobs:
             docker:
               - 'packer/templates/docker.pkr.hcl'
               - 'packer/common-packer/templates/docker.pkr.hcl'
-              - 'packer/provision/docker/**'
-              - 'packer/provision/system-reseal.sh'
-              - 'packer/common-packer/vars/centos-7.pkrvars.hcl'
-              - 'packer/common-packer/vars/ubuntu-20.04.pkrvars.hcl'
+              - 'packer/provision/local-docker.yaml'
+              - 'packer/common-packer/provision/system-reseal.sh'
               - 'packer/common-packer/vars/ubuntu-22.04.pkrvars.hcl'
               - 'packer/common-packer/vars/ubuntu-25.04.pkrvars.hcl'
 

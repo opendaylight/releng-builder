@@ -115,8 +115,8 @@ jobs:
           filters: |
             mininet:
               - 'packer/templates/mininet-ovs-217.pkr.hcl'
-              - 'packer/provision/mininet-ovs-217/**'
-              - 'packer/provision/system-reseal.sh'
+              - 'packer/provision/mininet-ovs-217.yaml'
+              - 'packer/common-packer/provision/system-reseal.sh'
               - 'packer/common-packer/vars/ubuntu-22.04.pkrvars.hcl'
               - 'packer/common-packer/vars/ubuntu-24.04.pkrvars.hcl'
 
