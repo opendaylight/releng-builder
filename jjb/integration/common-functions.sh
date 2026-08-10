@@ -639,8 +639,8 @@ echo -e "/usr/sbin/lsmod | /usr/bin/grep openvswitch\\n"
 /usr/sbin/lsmod | /usr/bin/grep openvswitch
 echo -e "\\nsudo grep ct_ /var/log/openvswitch/ovs-vswitchd.log\\n"
 sudo grep "Datapath supports" /var/log/openvswitch/ovs-vswitchd.log
-echo -e "\\nsudo netstat -punta\\n"
-sudo netstat -punta
+echo -e "\\nsudo ss -punta\\n"
+sudo ss -punta
 echo -e "\\nsudo getenforce\\n"
 sudo getenforce
 echo -e "\\nsudo systemctl status httpd\\n"
@@ -942,7 +942,7 @@ configure_karaf_log "${KARAF_VERSION}" "${CONTROLLERDEBUGMAP}"
 set_java_vars "${JAVA_HOME}" "${CONTROLLERMEM}" "${MEMCONF}"
 
 echo "Listing all open ports on controller system..."
-netstat -pnatu
+ss -pnatu
 
 # Copy shard file if exists
 if [ -f /tmp/custom_shard_config.txt ]; then
@@ -982,9 +982,11 @@ EOF
 function create_post_startup_script() {
     cat > "${WORKSPACE}"/post-startup-script.sh <<EOF
 # wait up to 60s for karaf port 8101 to be opened, polling every 5s
+# ponytail: ss (iproute2) not netstat (net-tools); net-tools is not installed
+# by the image provisioning and only happened to exist on older images.
 loop_count=0;
 until [[ \$loop_count -ge 12 ]]; do
-    netstat -na | grep ":::8101" && break;
+    ss -ltn | grep ":8101" && break;
     loop_count=\$[\$loop_count+1];
     sleep 5;
 done
@@ -1038,12 +1040,12 @@ if [ \$? -ne 0 ]; then
     echo "Dumping last 500K bytes of karaf log..."
     tail --bytes=500K "/tmp/${BUNDLEFOLDER}/data/log/karaf.log"
     echo "Listing all open ports on controller system"
-    netstat -pnatu
+    ss -pnatu
     exit 1
 fi
 
 echo "Listing all open ports on controller system..."
-netstat -pnatu
+ss -pnatu
 
 function exit_on_log_file_message {
     echo "looking for \"\$1\" in log file"
