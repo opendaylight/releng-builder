@@ -28,6 +28,16 @@ variable "base_image" {
   default = null
 }
 
+variable "build_url" {
+  type = string
+  # Populated from the CI job environment so a published image records the
+  # build that produced it. Empty for local builds.
+  # ponytail: Jenkins sets BUILD_URL natively. The GitHub Actions path runs
+  # packer on a bastion and cannot supply it until packer-build-action
+  # forwards environment variables, so those images stamp empty for now.
+  default = env("BUILD_URL")
+}
+
 variable "cloud_network" {
   type = string
   default = null
@@ -198,6 +208,7 @@ source "openstack" "robot" {
   instance_name     = "${var.distro}-robot-${uuidv4()}"
   metadata = {
     ci_managed = "yes"
+    build_url  = "${var.build_url}"
   }
   networks                      = var.cloud_network != null ? ["${var.cloud_network}"] : null
   region                        = "${var.cloud_region}"
