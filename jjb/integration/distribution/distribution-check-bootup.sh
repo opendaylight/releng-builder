@@ -67,7 +67,7 @@ sed -ie "s/2048m/${CONTROLLERMEM}/g" "${MEMCONF}"
 cat "${MEMCONF}"
 
 echo "Listing all open ports on controller system"
-netstat -pnatu
+ss -pnatu
 
 echo "Sourcing Java environment variable .."
 # shellcheck disable=SC1091
@@ -113,7 +113,7 @@ done
 # sshpass -p karaf ${WORKSPACE}/${BUNDLEFOLDER}/bin/client -u karaf 'bundle:list'
 
 echo "Listing all open ports on controller system"
-netstat -pnatu
+ss -pnatu
 
 exit_on_log_file_message() {
     echo "looking for \"$1\" in karaf.log file"
