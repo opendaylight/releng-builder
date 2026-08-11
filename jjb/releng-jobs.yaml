@@ -28,7 +28,11 @@
 - project:
     name: builder-openstack
     jobs:
-      - gerrit-openstack-cron
+      # Disabled: superseded by the OpenStack Cron Cleanup GitHub Actions
+      # workflow (.github/workflows/openstack-cron-cleanup.yaml), which runs
+      # the same lftools cleanup hourly against the same vex cloud.
+      - gerrit-openstack-cron:
+          disable-job: true
 
     project: "releng/builder"
     project-name: builder
