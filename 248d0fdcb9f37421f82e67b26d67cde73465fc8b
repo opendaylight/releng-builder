@@ -34,6 +34,24 @@
       "parentUuid": "ac0c5b56_48fe9dc4",
       "revId": "248d0fdcb9f37421f82e67b26d67cde73465fc8b",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a1a8cf4_d2feb748",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2026-08-14T12:14:12Z",
+      "side": 1,
+      "message": "Confirmed - these are needed. GHA covers verify only on 10.0.x/11.0. No Netconf branch (incl. master) has a GHA merge/stage/release workflow, so merge+release must stay in JJB or those branches can\u0027t deploy or be released. Generated output is identical to the 9.0.x jobs. Correctly omits odl-maven-verify-jobs-jdk21 since GHA does maven-verify. The gerrit-tox-verify / maven-clm overlap with GHA exists on master and 9.0.x too — separate cleanup. +2 from me.",
+      "parentUuid": "da7bb857_093f5b5a",
+      "revId": "248d0fdcb9f37421f82e67b26d67cde73465fc8b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
