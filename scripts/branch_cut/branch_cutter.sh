@@ -92,6 +92,21 @@ fi
 
 echo "Start Branch Cutting:"
 
+# EOL removal touches every project, MRI included, and defaults.yaml holds the
+# per release csit lists, so the branch cut excludes do not apply.
+if [[ -n "$eol_reltag" && -z "$new_reltag" ]]; then
+    excludes=("global-jjb")
+    # Stream lists are ordered newest first, the entry ahead of the EOL
+    # release inherits the "oldest supported" defaults.
+    successor=$(awk -v eol="$eol_reltag" '
+        match($0, /^[ \t]*- [a-z0-9]+:[ \t]*$/) {
+            release = $2
+            sub(":", "", release)
+            if (release == tolower(eol)) { print previous; exit }
+            previous = release
+        }' ../../jjb/autorelease/autorelease-projects.yaml)
+fi
+
 while IFS="" read -r file; do
     found=0
     for exclude in "${excludes[@]}"; do
@@ -103,7 +118,7 @@ while IFS="" read -r file; do
     if [[ $found -eq 1 ]]; then
         echo "Ignore file $file found in excludes list"
     else
-        ./branch_cut.awk -v new_reltag="$new_reltag" -v curr_reltag="$curr_reltag" -v prev_reltag="$prev_reltag" -v eol_reltag="$eol_reltag" "$file" > "$TEMP"
+        ./branch_cut.awk -v new_reltag="$new_reltag" -v curr_reltag="$curr_reltag" -v prev_reltag="$prev_reltag" -v eol_reltag="$eol_reltag" -v successor="$successor" "$file" > "$TEMP"
         [[ ! -s "$TEMP" ]] && echo "$file: excluded"
         [[ -s "$TEMP" ]] && mv "$TEMP" "$file" && echo "$file: Done" && (( mod++ ))
         (( count++ ))
@@ -111,6 +126,25 @@ while IFS="" read -r file; do
 done < <(find ../../jjb -name "*.yaml")
 
 echo "Modified $mod out of $count files"
+
+# The per release job list and view files go away with the release itself.
+if [[ -n "$eol_reltag" && -z "$new_reltag" ]]; then
+    jjb_dir="../../jjb"
+    rm -f "$jjb_dir/integration/csit-jobs-${eol_reltag}.lst" \
+          "$jjb_dir/autorelease/validate-autorelease-${eol_reltag}.yaml" \
+          "$jjb_dir/autorelease/view-autorelease-${eol_reltag}.yaml"
+
+    # What is left is help text and hand written shell conditionals, rewriting
+    # those automatically is guesswork so the operator gets a list instead.
+    remaining=$(grep -rli "$eol_reltag" "$jjb_dir" 2>/dev/null | sort)
+    if [[ -n "$remaining" ]]; then
+        echo ""
+        echo "Review these remaining '${eol_reltag}' references by hand:"
+        while IFS= read -r reference; do
+            echo "    $reference"
+        done <<< "$remaining"
+    fi
+fi
 
 # The csit job list and the csit-*-list defaults are per release, defaults.yaml
 # is in the excludes list above so handle both here.
