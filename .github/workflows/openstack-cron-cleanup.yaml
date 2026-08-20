@@ -136,7 +136,7 @@ jobs:
           failure() &&
           steps.cleanup.conclusion == 'failure' &&
           vars.FAILURE_NOTIFICATION_EMAIL != ''
-        uses: dawidd6/action-send-mail@2cea9617b09d79a095af21254fbcb7ae95903dde # v3.12.0
+        uses: dawidd6/action-send-mail@94de994a9f6fffee200243214e17002e2920bb59 # v18
         with:
           server_address: smtp.gmail.com
           server_port: 587
