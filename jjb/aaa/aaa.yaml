@@ -39,6 +39,13 @@
     stream: master
     build-node: ubuntu2204-docker-4c-4g
 
+    # The odl-maven-jobs-jdk21 job-group set these; expanding it inline
+    # above dropped them, which silently fell back to the global
+    # defaults (openjdk11 / mvn35). They must stay while the group is
+    # expanded.
+    java-version: openjdk21
+    mvn-version: mvn39
+
     mvn-settings: "aaa-settings"
     dependencies: "odlparent-merge-{stream},yangtools-merge-{stream},controller-merge-{stream}"
     email-upstream: "[aaa] [odlparent] [yangtools] [controller]"
