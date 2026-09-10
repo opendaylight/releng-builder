@@ -244,7 +244,7 @@ jobs:
 
       - name: Build Packer Image
         id: build
-        uses: lfreleng-actions/packer-build-action@bf4477d299a886e539dff60df446c00950947341 # v0.1.5
+        uses: lfreleng-actions/packer-build-action@064f9e506a21defad5e93f323cf9836bb3dfd4d6 # v0.1.7
         env:
           PACKER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
