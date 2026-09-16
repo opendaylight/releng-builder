@@ -56,7 +56,7 @@
 - project:
     name: controller-12.0.x
     jobs:
-      - odl-maven-jobs-jdk21
+      - odl-maven-jobs-jdk21-gha-merge
       - odl-maven-verify-jobs-jdk21
       - gerrit-release-merge:
           build-node: ubuntu2204-docker-2c-2g
@@ -79,7 +79,7 @@
 - project:
     name: controller-11.0.x
     jobs:
-      - odl-maven-jobs-jdk21
+      - odl-maven-jobs-jdk21-gha-merge
       - odl-maven-verify-jobs-jdk21
       - gerrit-release-merge:
           build-node: ubuntu2204-docker-2c-2g
