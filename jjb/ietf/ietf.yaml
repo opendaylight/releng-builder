@@ -52,27 +52,6 @@
     staging-profile-id: ca996fb20812d1
 
 - project:
-    name: ietf-1.0.x
-    jobs:
-      - odl-maven-jobs-jdk21
-      - odl-maven-verify-jobs-jdk21
-      - gerrit-release-merge:
-          build-node: ubuntu2204-docker-2c-2g
-          build-timeout: 120
-
-    project: ietf
-    project-name: ietf
-    branch: 1.0.x
-    stream: vanadium
-    build-node: ubuntu2204-docker-4c-4g
-
-    mvn-settings: "ietf-settings"
-    build-timeout: 60
-
-    # Used by the release job
-    staging-profile-id: ca996fb20812d1
-
-- project:
     name: ietf-view
     views:
       - project-view
