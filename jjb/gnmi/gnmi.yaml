@@ -55,7 +55,7 @@
 - project:
     name: gnmi-1.0.x
     jobs:
-      - odl-maven-jobs-jdk21
+      - odl-maven-jobs-jdk21-gha-merge
       - odl-maven-verify-jobs-jdk21
       - gerrit-release-merge:
           build-node: ubuntu2204-docker-2c-2g
@@ -76,7 +76,7 @@
 - project:
     name: gnmi-2.0.x
     jobs:
-      - odl-maven-jobs-jdk21
+      - odl-maven-jobs-jdk21-gha-merge
       - odl-maven-verify-jobs-jdk21
       - gerrit-release-merge:
           build-node: ubuntu2204-docker-2c-2g
@@ -97,7 +97,7 @@
 - project:
     name: gnmi-3.0.x
     jobs:
-      - odl-maven-jobs-jdk21
+      - odl-maven-jobs-jdk21-gha-merge
       - odl-maven-verify-jobs-jdk21
       - gerrit-release-merge:
           build-node: ubuntu2204-docker-2c-2g
