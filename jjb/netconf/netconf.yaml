@@ -65,7 +65,7 @@
       - gerrit-tox-verify:
           build-node: ubuntu2204-builder-2c-2g
           parallel: true
-      - odl-maven-jobs-jdk21
+      - odl-maven-jobs-jdk21-gha-merge
       - gerrit-release-merge:
           build-node: ubuntu2204-docker-2c-2g
           build-timeout: 120
@@ -92,7 +92,7 @@
       - gerrit-tox-verify:
           build-node: ubuntu2204-builder-2c-2g
           parallel: true
-      - odl-maven-jobs-jdk21
+      - odl-maven-jobs-jdk21-gha-merge
       - gerrit-release-merge:
           build-node: ubuntu2204-docker-2c-2g
           build-timeout: 120
@@ -119,7 +119,7 @@
       - gerrit-tox-verify:
           build-node: ubuntu2204-builder-2c-2g
           parallel: true
-      - odl-maven-jobs-jdk21
+      - odl-maven-jobs-jdk21-gha-merge
       - odl-maven-verify-jobs-jdk21
       - gerrit-release-merge:
           build-node: ubuntu2204-docker-2c-2g
