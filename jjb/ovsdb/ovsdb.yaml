@@ -57,7 +57,7 @@
     jobs:
       - distribution-check-jobs-jdk21
       - odl-maven-javadoc-jobs-jdk21
-      - odl-maven-jobs-jdk21
+      - odl-maven-jobs-jdk21-gha-merge
       - odl-maven-verify-jobs-jdk21:
           disable-job: true
 
@@ -78,7 +78,7 @@
     jobs:
       - distribution-check-jobs-jdk21
       - odl-maven-javadoc-jobs-jdk21
-      - odl-maven-jobs-jdk21
+      - odl-maven-jobs-jdk21-gha-merge
       - odl-maven-verify-jobs-jdk21
 
     stream: vanadium
@@ -98,7 +98,7 @@
     jobs:
       - distribution-check-jobs-jdk21
       - odl-maven-javadoc-jobs-jdk21
-      - odl-maven-jobs-jdk21
+      - odl-maven-jobs-jdk21-gha-merge
       - odl-maven-verify-jobs-jdk21
 
     stream: titanium
