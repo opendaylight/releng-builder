@@ -236,6 +236,10 @@
       **/yang-gen**,\
       **/pax/**"
 
+    # Hour 2 UTC sits after the last upstream merge cron, openflowplugin
+    # at 22:49 UTC, plus its build time. See the triggers section below.
+    schedule-merge: "H 2 * * *"
+
     project-type: maven
     node: "{build-node}"
     disabled: "{disable-job}"
@@ -264,6 +268,15 @@
           build-timeout: "{build-timeout}"
 
     triggers:
+      # Every job in {dependencies} is disabled: those merges now run in
+      # GitHub Actions, which cannot fire a Jenkins reverse trigger. The
+      # reverse trigger below is therefore dead, and this distribution
+      # only converged when some other scheduled build happened to pull
+      # fresh upstream SNAPSHOTs. Rebuild on a timer instead, matching
+      # what the upstream merge jobs themselves do. The reverse trigger
+      # stays so the dependency set remains declared, and so it resumes
+      # working if any of those jobs is ever re-enabled.
+      - timed: "{schedule-merge}"
       - gerrit-trigger-patch-merged:
           gerrit-server-name: "{gerrit-server-name}"
           name: "{project}"
