@@ -8,10 +8,14 @@
       # running both CIs double-publishes, advancing the SNAPSHOT
       # buildNumber in maven-metadata.xml from two places. Re-collapse to
       # the job-group if the GHA merge job is ever retired.
+
+      # Disabled: superseded by the GitHub Actions CLM scan
+      # (.github/workflows/clm-scan.yaml)
       - gerrit-maven-clm:
           nexus-iq-namespace: odl-
           nexus-iq-stage: release
           mvn-opts: "--add-opens java.base/java.util=ALL-UNNAMED"
+          disable-job: true
 
       - gerrit-maven-merge:
           build-timeout: 180

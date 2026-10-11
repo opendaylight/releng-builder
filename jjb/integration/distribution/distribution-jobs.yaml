@@ -4,7 +4,10 @@
     jobs:
       # gerrit- is generic template, distribution- is project specific.
       - "distribution-sanity-{stream}"
-      - gerrit-maven-clm
+      # Disabled: the Jenkins Nexus IQ plugin fails on the Java 21 agent
+      # JVM. No .github/workflows/clm-scan.yaml here yet
+      - gerrit-maven-clm:
+          disable-job: true
       - gerrit-maven-verify-dependencies
       - gerrit-tox-verify
 

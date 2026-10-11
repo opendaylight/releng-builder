@@ -9,10 +9,14 @@
       # double-publishes, advancing the SNAPSHOT buildNumber in
       # maven-metadata.xml from two places. Re-collapse to the job-group
       # if the GHA merge job is ever retired.
+
+      # Disabled: the Jenkins Nexus IQ plugin fails on the Java 21 agent
+      # JVM. No .github/workflows/clm-scan.yaml here yet
       - gerrit-maven-clm:
           nexus-iq-namespace: odl-
           nexus-iq-stage: release
           mvn-opts: "--add-opens java.base/java.util=ALL-UNNAMED"
+          disable-job: true
 
       - gerrit-maven-merge:
           build-timeout: 180

@@ -3,10 +3,13 @@
     name: odl-maven-jobs-jdk17
 
     jobs:
+      # Disabled: superseded by the GitHub Actions CLM scan
+      # (.github/workflows/clm-scan.yaml)
       - gerrit-maven-clm:
           nexus-iq-namespace: odl-
           nexus-iq-stage: release
           mvn-opts: "--add-opens java.base/java.util=ALL-UNNAMED"
+          disable-job: true
 
       - gerrit-maven-merge:
           build-timeout: 180
@@ -28,10 +31,13 @@
     name: odl-maven-jobs-jdk21
 
     jobs:
+      # Disabled: superseded by the GitHub Actions CLM scan
+      # (.github/workflows/clm-scan.yaml)
       - gerrit-maven-clm:
           nexus-iq-namespace: odl-
           nexus-iq-stage: release
           mvn-opts: "--add-opens java.base/java.util=ALL-UNNAMED"
+          disable-job: true
 
       - gerrit-maven-merge:
           build-timeout: 180
@@ -59,10 +65,13 @@
     name: odl-maven-jobs-jdk21-gha-merge
 
     jobs:
+      # Disabled: superseded by the GitHub Actions CLM scan
+      # (.github/workflows/clm-scan.yaml)
       - gerrit-maven-clm:
           nexus-iq-namespace: odl-
           nexus-iq-stage: release
           mvn-opts: "--add-opens java.base/java.util=ALL-UNNAMED"
+          disable-job: true
 
       - gerrit-maven-merge:
           build-timeout: 180
