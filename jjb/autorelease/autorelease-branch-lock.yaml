@@ -38,7 +38,7 @@
           default: ""
           description: |
             Gerrit parameter to identify a new Gerrit branch for branch cutting.
-            ex: stable/titanium, stable/vanadium
+            ex: stable/titanium, stable/chromium
       - bool:
           name: DRY_RUN
           default: true
@@ -92,7 +92,5 @@
           branch: "master"
       - chromium:
           branch: "stable/chromium"
-      - vanadium:
-          branch: "stable/vanadium"
       - titanium:
           branch: "stable/titanium"
