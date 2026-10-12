@@ -174,7 +174,7 @@ jobs:
              [[ "$builds" == "mininet" ]] || [[ "$builds" == "mininet-ovs-217" ]]; then
             # Build all platforms
             echo "platforms=$ALL_PLATFORMS" >> "$GITHUB_OUTPUT"
-            echo "📦 Building all mininet platforms (2 platforms)"
+            echo "📦 Building all mininet platforms ($(jq -r 'length' <<< "$ALL_PLATFORMS") platforms)"
           elif [[ "$mode" == "manual" ]] && [[ "$builds" == *":"* ]]; then
             # Parse specific platforms: mininet:ubuntu-22.04,mininet:ubuntu-24.04
             MATRIX='[]'
@@ -197,6 +197,9 @@ jobs:
     needs: detect-changes
     if: needs.detect-changes.outputs.should_build == 'true'
     runs-on: ubuntu-latest
+    # A hung build previously ran for 24h, and the resulting run cancellation
+    # killed healthy sibling platforms. Successful builds finish in ~40min.
+    timeout-minutes: 120
     strategy:
       fail-fast: false
       max-parallel: ${{ needs.detect-changes.outputs.build_mode == 'scheduled' && 1 || 2 }}

@@ -166,10 +166,12 @@ variable "vm_volume_size" {
 
 locals {
   # SSH arguments - SCP compatibility for local builds
+  # ServerAlive* keeps the bastion-tunnelled channel alive across long-running
+  # tasks; without it Ansible dies with an empty "rc: 58" MODULE FAILURE.
   ssh_extra_args = var.local_build ? [
     "--scp-extra-args", "'-O'",
     "--ssh-extra-args",
-    "-o IdentitiesOnly=yes -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedAlgorithms=+ssh-rsa"
+    "-o IdentitiesOnly=yes -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedAlgorithms=+ssh-rsa -o ServerAliveInterval=30 -o ServerAliveCountMax=120 -o TCPKeepAlive=yes"
   ] : [
     "--ssh-extra-args", "-o IdentitiesOnly=yes -o HostKeyAlgorithms=+ssh-rsa"
   ]
