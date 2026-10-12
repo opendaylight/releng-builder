@@ -171,7 +171,7 @@ locals {
   ssh_extra_args = var.local_build ? [
     "--scp-extra-args", "'-O'",
     "--ssh-extra-args",
-    "-o IdentitiesOnly=yes -o HostKeyAlgorithms=ssh-ed25519,ecdsa-sha2-nistp256,rsa-sha2-512,rsa-sha2-256,ssh-rsa -o PubkeyAcceptedAlgorithms=ssh-ed25519,ecdsa-sha2-nistp256,rsa-sha2-512,rsa-sha2-256,ssh-rsa"
+    "-o IdentitiesOnly=yes -o HostKeyAlgorithms=ssh-ed25519,ecdsa-sha2-nistp256,rsa-sha2-512,rsa-sha2-256,ssh-rsa -o PubkeyAcceptedAlgorithms=ssh-ed25519,ecdsa-sha2-nistp256,rsa-sha2-512,rsa-sha2-256,ssh-rsa -o ServerAliveInterval=30 -o ServerAliveCountMax=120 -o TCPKeepAlive=yes"
   ] : [
     "--ssh-extra-args", "-o IdentitiesOnly=yes -o HostKeyAlgorithms=ssh-ed25519,ecdsa-sha2-nistp256,rsa-sha2-512,rsa-sha2-256,ssh-rsa"
   ]
