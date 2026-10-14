@@ -61,6 +61,12 @@
           shell: DEB_BUILD_OPTIONS='parallel=8 nocheck' fakeroot debian/rules binary
           args:
             chdir: "/tmp/ovs/openvswitch-{{ovs_version}}"
+          # Run detached and poll. This build takes ~20 minutes, and holding a
+          # single SSH channel open that long over the bastion hop used by the
+          # GitHub Actions builds makes it fail with an empty "rc: 58" MODULE
+          # FAILURE. Polling keeps each connection short-lived.
+          async: 5400
+          poll: 30
         - name: "Install OpenVSwitch {{ovs_version}}"
           apt: "deb={{item}}"
           with_items:
