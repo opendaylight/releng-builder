@@ -116,6 +116,7 @@ Historical inventory:
 * ZZCI - Ubuntu 22.04 - robot - x86_64 - 20260901-011201.483
 * ZZCI - Ubuntu 22.04 - robot - x86_64 - 20260916-074306.977
 * ZZCI - Ubuntu 22.04 - robot - x86_64 - 20261001-011600.557
+* ZZCI - Ubuntu 22.04 - robot - x86_64 - 20261014-144857.859
 * ZZCI - Ubuntu 24.04 - builder - x86_64 - 20260501-000117.569
 * ZZCI - Ubuntu 24.04 - builder - x86_64 - 20260601-000113.797
 * ZZCI - Ubuntu 24.04 - builder - x86_64 - 20260701-000123.299
@@ -143,6 +144,7 @@ Historical inventory:
 * ZZCI - Ubuntu 24.04 - robot - x86_64 - 20260901-014142.333
 * ZZCI - Ubuntu 24.04 - robot - x86_64 - 20260916-074204.776
 * ZZCI - Ubuntu 24.04 - robot - x86_64 - 20261001-014553.551
+* ZZCI - Ubuntu 24.04 - robot - x86_64 - 20261014-144900.885
 * ZZCI - Ubuntu 25.04 - builder - x86_64 - 20260730-081457.245
 * ZZCI - Ubuntu 25.04 - builder - x86_64 - 20260801-031106.933
 * ZZCI - Ubuntu 25.04 - builder - x86_64 - 20261012-231647.342
