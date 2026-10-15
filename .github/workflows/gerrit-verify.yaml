@@ -219,6 +219,12 @@ jobs:
       - name: Verify packer files
         if: steps.changes.outputs.src == 'true'
         shell: bash
+        env:
+          # packer init resolves plugins through the GitHub API. Without a
+          # token it is anonymous and shares the runner's IP quota of 60
+          # requests/hour, which this job exhausts and then fails with
+          # "Plugin host rate limited the plugin getter".
+          PACKER_GITHUB_API_TOKEN: ${{ github.token }}
         run: |
           set -x
           cd packer
@@ -228,6 +234,21 @@ jobs:
 
           mkdir -p "${GITHUB_WORKSPACE}/logs"
           PACKER_LOGS_DIR="${GITHUB_WORKSPACE}/logs"
+
+          # Initialise each template once. Doing this inside the varfile
+          # loop below repeated the work for every (varfile, template)
+          # pair - 16 x 9 = 144 packer init calls fetching 3 plugins each.
+          for template in "${templates[@]}"; do
+              if [[ "$template" == *"variables.pkr.hcl"* ]] || \
+                 [[ "$template" == *"variables.auto.pkr.hcl"* ]]; then
+                  continue
+              fi
+
+              if [[ "${template#*.}" == "pkr.hcl" ]]; then
+                  echo "packer init $template ..."
+                  packer init "$template"
+              fi
+          done
 
           for varfile in "${varfiles[@]}"; do
               if [[ "$varfile" == *"cloud-env.json"* ]] || \
@@ -244,11 +265,6 @@ jobs:
                   if [[ "$template" == *"variables.pkr.hcl"* ]] || \
                      [[ "$template" == *"variables.auto.pkr.hcl"* ]]; then
                       continue
-                  fi
-
-                  if [[ "${template#*.}" == "pkr.hcl" ]]; then
-                      echo "packer init $template ..."
-                      packer init "$template"
                   fi
 
                   LOG_FILE="packer-validate-${varfile##*/}-${template##*/}.log"
