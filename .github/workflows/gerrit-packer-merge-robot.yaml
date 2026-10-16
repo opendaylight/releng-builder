@@ -228,7 +228,7 @@ jobs:
       - name: Setup OpenStack + Tailscale Bastion
         id: bastion-setup
         # yamllint disable-line rule:line-length
-        uses: lfreleng-actions/tailscale-openstack-bastion-action@657e5ba80b2fe6706c7353a6a703a42c8fd23412 # v0.1.3
+        uses: lfreleng-actions/tailscale-openstack-bastion-action@d8fd809044de3723ad051b42ac8db490d71d6e25 # v0.1.4
         with:
           operation: setup
           bastion_name: "bastion-gh-${{ github.run_id }}-${{ strategy.job-index }}"
@@ -246,7 +246,7 @@ jobs:
 
       - name: Build Packer Image
         id: build
-        uses: lfreleng-actions/packer-build-action@064f9e506a21defad5e93f323cf9836bb3dfd4d6 # v0.1.7
+        uses: lfreleng-actions/packer-build-action@d74abde3c18868e6e06bbc7905e603b1218a1118 # v0.1.9
         env:
           PACKER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -266,7 +266,7 @@ jobs:
 
       - name: Teardown OpenStack Bastion
         if: always()
-        uses: lfreleng-actions/tailscale-openstack-bastion-action@657e5ba80b2fe6706c7353a6a703a42c8fd23412 # v0.1.3
+        uses: lfreleng-actions/tailscale-openstack-bastion-action@d8fd809044de3723ad051b42ac8db490d71d6e25 # v0.1.4
         with:
           operation: teardown
           bastion_name: "bastion-gh-${{ github.run_id }}-${{ strategy.job-index }}"
