@@ -36,16 +36,32 @@
           java-version: openjdk21
           mvn-version: mvn39
           integration-test: manganese
+          # Staggered 2h apart so the CSIT fan-out this job triggers does
+          # not overlap its siblings. See titanium below for rationale.
+          cron: "25 22 * * *"
       - chromium:
           branch: "stable/chromium"
           java-version: openjdk21
           mvn-version: mvn39
           integration-test: chromium
+          cron: "25 0 * * *"
       - titanium:
           branch: "stable/titanium"
           java-version: openjdk21
           mvn-version: mvn39
           integration-test: titanium
+          # All three streams previously used the template default of
+          # "H 0 * * *". The hash spread them only 8 minutes apart inside
+          # hour 0 (21, 29, 37), so the three CSIT runs they trigger ran
+          # concurrently and together demanded ~1664 GB against a 977 GB
+          # RAM quota. Failures tracked arrival order: titanium started
+          # first and lost 0 of 20 children, manganese 11, chromium 8.
+          #
+          # Each job takes ~35 min, so CSIT starts ~35 min after these.
+          # That puts the fan-outs at roughly 21:00, 23:00 and 01:00 UTC,
+          # 2h apart against a median CSIT run of 93 min. The window is
+          # otherwise empty apart from a Saturday-only weekly trigger.
+          cron: "25 20 * * *"
     project: releng/autorelease
     project-name: autorelease
     build-node: ubuntu2204-docker-8c-8g
