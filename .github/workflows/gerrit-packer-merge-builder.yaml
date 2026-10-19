@@ -57,8 +57,15 @@ on:
         default: ""
 
   schedule:
-    # Run on 1st of every month at 00:05 UTC
-    - cron: "5 0 1 * *"
+    # Run on 1st of every month at 04:05 UTC.
+    # Deliberately placed after the nightly CSIT window (00:49-02:30 UTC),
+    # where manganese, chromium and titanium each fan out 20 jobs and
+    # together saturate the odlci RAM quota. Each packer build holds a
+    # bastion plus a builder VM (2 x v3-standard-2 = 16 GB) outside any
+    # Jenkins INSTANCE_CAP, so overlapping CSIT measurably starved it:
+    # chromium #102 (Oct 1, packer running) lost 17 of 20 children to
+    # "Quota exceeded for ram" versus 8 of 20 on adjacent days.
+    - cron: "5 4 1 * *"
 
 concurrency:
   group: packer-builder-${{ inputs.GERRIT_BRANCH }}-${{ inputs.GERRIT_CHANGE_ID || github.run_id }}

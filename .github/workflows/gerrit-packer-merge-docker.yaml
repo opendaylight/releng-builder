@@ -57,8 +57,11 @@ on:
         default: ""
 
   schedule:
-    # Run on 1st of every month at 00:10 UTC
-    - cron: "10 0 1 * *"
+    # Run on 1st of every month at 04:10 UTC.
+    # Staggered after gerrit-packer-merge-builder and kept clear of the
+    # nightly CSIT window (00:49-02:30 UTC) to avoid competing for the
+    # odlci RAM quota. See gerrit-packer-merge-builder.yaml for detail.
+    - cron: "10 4 1 * *"
 
 concurrency:
   group: packer-docker-${{ inputs.GERRIT_BRANCH }}-${{ inputs.GERRIT_CHANGE_ID || github.run_id }}
