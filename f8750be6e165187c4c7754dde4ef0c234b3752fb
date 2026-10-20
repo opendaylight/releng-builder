@@ -86,6 +86,24 @@
       "parentUuid": "203ae601_f348e9fe",
       "revId": "f8750be6e165187c4c7754dde4ef0c234b3752fb",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a31d0ff_a3a70c86",
+        "filename": "jjb/netconf/netconf-userfeatures-netty.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 8907
+      },
+      "writtenOn": "2026-10-20T13:45:15Z",
+      "side": 1,
+      "message": "Becasue `odl-restconf-all` should be present on all streams which we are currently testing, so it would be possible to use it in all cases without specifying `odl-restconf`/`odl-restconf-nb`/`od-restconf-jaxrs`/`odl-restconf-openapi`/`od-restconf-openapi-jaxrs` additionally. With this we would have reference what was originally installed (if netty or jaxrs, if only restconf or also openapi) and would be easier to adapt to netty and jaxrs seperation, but this would be also stored in git history.",
+      "parentUuid": "8e65ef49_ec123e51",
+      "revId": "f8750be6e165187c4c7754dde4ef0c234b3752fb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
