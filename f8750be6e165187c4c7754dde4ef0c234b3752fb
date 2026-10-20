@@ -16,6 +16,40 @@
       "message": "An example run in sandbox (list of features edited manually via build parameter): https://jenkins.opendaylight.org/sandbox/view/All/job/bgpcep-csit-1node-userfeatures-all-manganese/5/",
       "revId": "f8750be6e165187c4c7754dde4ef0c234b3752fb",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e2f17b1_676155e2",
+        "filename": "jjb/netconf/netconf-csit-callhome.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 8907
+      },
+      "writtenOn": "2026-10-20T13:17:18Z",
+      "side": 1,
+      "message": "Why do we add `odl-netconf-all`?",
+      "revId": "f8750be6e165187c4c7754dde4ef0c234b3752fb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "203ae601_f348e9fe",
+        "filename": "jjb/netconf/netconf-userfeatures-netty.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 8907
+      },
+      "writtenOn": "2026-10-20T13:17:18Z",
+      "side": 1,
+      "message": "If we would be using `odl-restconf-all` then we do not have to list also features which are already contained within it like `odl-restconf` or `odl-restconf-openapi` \n\nBut if it is like a first step and the to keep it for the second step to remove old-rstcon-all and only install based on which endpoint it relying, netty or jaxrs, then we would have a reference what was originally there.",
+      "revId": "f8750be6e165187c4c7754dde4ef0c234b3752fb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
