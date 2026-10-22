@@ -31,7 +31,9 @@
     tools_system_image: "ZZCI - Ubuntu 22.04 - docker - x86_64 - 20261001-170112.024"
 
     # Features to install
-    install-features: "odl-netconf-callhome-ssh,odl-restconf"
+    install-features: >
+      odl-restconf-all,
+      odl-netconf-callhome-ssh
 
     # Robot custom options
     robot-options: ""
