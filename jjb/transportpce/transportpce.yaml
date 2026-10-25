@@ -66,7 +66,7 @@
           build-timeout: 360
           build-node: ubuntu2204-docker-4c-16g
           parallel: true
-      - odl-maven-jobs-jdk21
+      - odl-maven-jobs-jdk21-gha-merge
       - odl-maven-verify-jobs-jdk21
       - gerrit-release-merge:
           build-node: ubuntu2204-docker-2c-2g
@@ -90,7 +90,7 @@
           build-timeout: 360
           build-node: ubuntu2204-docker-4c-16g
           parallel: true
-      - odl-maven-jobs-jdk21
+      - odl-maven-jobs-jdk21-gha-merge
       - odl-maven-verify-jobs-jdk21
       - gerrit-release-merge:
           build-node: ubuntu2204-docker-2c-2g
