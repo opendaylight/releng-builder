@@ -33,6 +33,23 @@
       "message": "jjb-deploy bgpcep-csit-1node-userfeatures-all-chromium",
       "revId": "9ce915ab650748bfaf7ae274efee26a11a8cbab3",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "73f23244_e6a70a7d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2026-10-27T13:06:03Z",
+      "side": 1,
+      "message": "I found one issue, sandbox job not populating the same build parameter as production jobs use. Not sure why, I will examine. Osing build parameters copied from production, I got this [4] passing test on chromium, but in any case I would need to confirm karaf distribution versions and restconf feature versions before I am confident this edit works well enough for older streams.\n\n[4] https://s3-logs.opendaylight.org/logs/sandbox/vex-yul-odl-jenkins-2/bgpcep-csit-1node-userfeatures-all-chromium/2/robot-plugin/log.html.gz#s1-s11",
+      "revId": "9ce915ab650748bfaf7ae274efee26a11a8cbab3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
