@@ -15,13 +15,7 @@ echo "*** starting releace process for $BUILD_TYPE"
 ls -l
 pwd
 cd "$WORKSPACE/helm/opendaylight" || exit
-helm_charts=()
-while IFS= read -rd $'\n' line; do
-    helm_charts+=("$line")
-done < <(find "$WORKSPACE/helm/opendaylight")
-
-for chart in "${helm_charts[@]}"; do
-  chart=$(echo "$chart" | xargs)
+for chart in *.tgz; do
   echo " ** processing chart $chart"
   case "$BUILD_TYPE" in
     'snapshot')
