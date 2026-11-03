@@ -16,7 +16,7 @@ ls -l
 pwd
 cd "$WORKSPACE/helm/opendaylight" || exit
 helm_charts=()
-while IFS= read -rd $'\n'; do
+while IFS= read -rd $'\n' line; do
     helm_charts+=("$line")
 done < <(find "$WORKSPACE/helm/opendaylight")
 
