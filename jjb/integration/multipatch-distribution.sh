@@ -150,7 +150,7 @@ do
     CHECKOUT="$(echo "${patch}" | cut -d'=' -s -f 2 | cut -d':' -f 1)"
     # If there is a base patch for this project, checkout patch, otherwise use
     # distribution pom.xml file to figure out right branch or tag to checkout.
-    if [ "x${CHECKOUT}" != "x" ]; then
+    if [ "${CHECKOUT}" != "" ]; then
         echo "2. checking out patch ${CHECKOUT}"
         # TODO: Make this script accept "29645/6" as a shorthand for "45/29645/6".
         git fetch "https://git.opendaylight.org/gerrit/${PROJECT}" "refs/changes/$CHECKOUT"
