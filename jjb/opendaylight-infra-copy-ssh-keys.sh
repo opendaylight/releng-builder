@@ -14,8 +14,7 @@ echo "----------> Copy ssh public keys to csit lab"
 function copy-ssh-keys-to-slave() {
     RETRIES=60
     for j in $(seq 1 $RETRIES); do
-        # shellcheck disable=SC2006,SC2092
-        if `ssh-copy-id -i /home/jenkins/.ssh/id_rsa.pub "jenkins@${i}" > /dev/null 2>&1`; then
+        if ssh-copy-id -i /home/jenkins/.ssh/id_rsa.pub "jenkins@${i}" &> /dev/null; then
             ssh "jenkins@${i}" 'echo "$(facter ipaddress_eth0) $(/bin/hostname)" | sudo tee -a /etc/hosts'
             echo "Successfully copied public keys to slave ${i}"
             break
