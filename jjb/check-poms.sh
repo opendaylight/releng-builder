@@ -54,7 +54,7 @@ FILE=repos.txt
 find . -name pom.xml -print0 | xargs -0 grep -i '<repositories>\|<pluginRepositories>' > "$FILE"
 [[ $(tr -d "\\r\\n" < $FILE|wc -c) -eq 0 ]] && rm $FILE
 
-if [ -a $FILE ]
+if [ -e $FILE ]
 then
     cat $FILE
     echo "[ERROR] Repos with <repositories> and/or <pluginRepositories> sections found!"
