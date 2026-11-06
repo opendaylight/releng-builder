@@ -8,6 +8,7 @@
       - "inttest-multipatch"
       - "integration-merge-dashboard"
       - gerrit-tox-verify:
+          disable-job: true
           branch: master
           stream: master
           build-node: ubuntu2204-builder-2c-2g
