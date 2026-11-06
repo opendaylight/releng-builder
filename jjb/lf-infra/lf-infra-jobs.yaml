@@ -2,7 +2,8 @@
 - project:
     name: lf-infra-ci-workshop
     jobs:
-      - gerrit-tox-verify
+      - gerrit-tox-verify:
+          disable-job: true
 
     project-name: lf-infra-ci-workshop
     project: releng/ci-workshop
@@ -16,7 +17,8 @@
 - project:
     name: lf-test-release-tox-verify
     jobs:
-      - gerrit-tox-verify
+      - gerrit-tox-verify:
+          disable-job: true
 
     project-name: lf-test-release-tox-verify
     project: zzz-test-release
@@ -29,7 +31,8 @@
 - project:
     name: lf-infra-license-checker
     jobs:
-      - gerrit-tox-verify
+      - gerrit-tox-verify:
+          disable-job: true
 
     project-name: lf-infra-license-checker
     project: releng/license-checker

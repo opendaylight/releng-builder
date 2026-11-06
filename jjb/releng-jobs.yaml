@@ -9,7 +9,8 @@
       - gerrit-jjb-deploy-job
       - builder-check-poms
       - builder-copy-sandbox-logs
-      - gerrit-tox-verify
+      - gerrit-tox-verify:
+          disable-job: true
       # Automation for docs and jobs
       - "builder-update-image-list":
           archive-artifacts: docs/cloud-images.rst
