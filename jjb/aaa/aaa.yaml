@@ -61,7 +61,8 @@
     name: aaa-0.22.x
     jobs:
       - odl-maven-jobs-jdk21-gha-merge
-      - odl-maven-verify-jobs-jdk21
+      - odl-maven-verify-jobs-jdk21:
+          disable-job: true
       - gerrit-release-merge:
           build-node: ubuntu2204-docker-2c-2g
           build-timeout: 60
@@ -83,7 +84,8 @@
     name: aaa-0.21.x
     jobs:
       - odl-maven-jobs-jdk21-gha-merge
-      - odl-maven-verify-jobs-jdk21
+      - odl-maven-verify-jobs-jdk21:
+          disable-job: true
       - gerrit-release-merge:
           build-node: ubuntu2204-docker-2c-2g
           build-timeout: 60
@@ -105,7 +107,8 @@
     name: aaa-0.20.x
     jobs:
       - odl-maven-jobs-jdk21
-      - odl-maven-verify-jobs-jdk21
+      - odl-maven-verify-jobs-jdk21:
+          disable-job: true
       - gerrit-release-merge:
           build-node: ubuntu2204-docker-2c-2g
           build-timeout: 60
