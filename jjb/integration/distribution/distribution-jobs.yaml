@@ -9,7 +9,10 @@
       - gerrit-maven-clm:
           disable-job: true
       - gerrit-maven-verify-dependencies
-      - gerrit-tox-verify
+      # Disabled where GHA gerrit-verify tox-verify covers the envlist.
+      # stable/titanium has no GHA gerrit-verify yet.
+      - gerrit-tox-verify:
+          disable-job: "{disable-tox}"
 
     project: integration/distribution
     project-name: distribution
@@ -26,10 +29,13 @@
     stream:
       - manganese:
           branch: "master"
+          disable-tox: true
       - chromium:
           branch: "stable/chromium"
+          disable-tox: true
       - titanium:
           branch: "stable/titanium"
+          disable-tox: false
 
 - project:
     name: distribution-managed
