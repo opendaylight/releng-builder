@@ -61,7 +61,7 @@
     name: controller-12.0.x
     jobs:
       - odl-maven-jobs-jdk21-gha-merge
-      - odl-maven-verify-jobs-jdk21
+      - odl-maven-verify-jobs-jdk21-gha-verify
       - gerrit-release-merge:
           build-node: ubuntu2204-docker-2c-2g
           build-timeout: 120
@@ -84,7 +84,7 @@
     name: controller-11.0.x
     jobs:
       - odl-maven-jobs-jdk21-gha-merge
-      - odl-maven-verify-jobs-jdk21
+      - odl-maven-verify-jobs-jdk21-gha-verify
       - gerrit-release-merge:
           build-node: ubuntu2204-docker-2c-2g
           build-timeout: 120

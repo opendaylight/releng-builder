@@ -113,6 +113,23 @@
     mvn-version: mvn39
 
 - job-group:
+    # Mirrors odl-maven-verify-jobs-jdk21 but with gerrit-maven-verify
+    # disabled, for stable branches verified by GitHub Actions
+    # (.github/workflows/gerrit-verify.yaml). The dependencies job has no
+    # GHA equivalent yet, so it stays enabled. Point a stream back at
+    # odl-maven-verify-jobs-jdk21 if its GHA verify job is ever retired.
+    name: odl-maven-verify-jobs-jdk21-gha-verify
+
+    jobs:
+      - gerrit-maven-verify:
+          disable-job: true
+      - gerrit-maven-verify-dependencies:
+          build-timeout: 180
+
+    java-version: openjdk21
+    mvn-version: mvn39
+
+- job-group:
     name: odl-maven-javadoc-jobs-jdk17
 
     jobs:
