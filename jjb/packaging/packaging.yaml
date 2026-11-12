@@ -3,6 +3,8 @@
     name: packaging-docker
     project: integration/packaging
     project-name: packaging
+    # Disabled: integration/packaging is no longer maintained
+    disable-job: true
     mvn-settings: packaging-settings
     container-tag-method: yaml-file
     build-node: ubuntu2204-docker-4c-4g
@@ -24,6 +26,8 @@
     name: packaging-release
     project: integration/packaging
     project-name: packaging
+    # Disabled: integration/packaging is no longer maintained
+    disable-job: true
     mvn-settings: packaging-settings
     container-tag-method: yaml-file
     build-node: ubuntu2204-docker-4c-4g

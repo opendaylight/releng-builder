@@ -94,6 +94,7 @@
     submodule-disable: false
     submodule-timeout: 10
     build-timeout: 240
+    disable-job: false
 
     #####################
     # Job Configuration #
@@ -101,6 +102,7 @@
 
     project-type: freestyle
     node: "{build-node}"
+    disabled: "{disable-job}"
 
     properties:
       - lf-infra-properties:
@@ -288,6 +290,8 @@
     name: packaging
     project-name: packaging
     project: integration/packaging
+    # Disabled: integration/packaging is no longer maintained
+    disable-job: true
     mvn-settings: packaging-settings
     mvn-global-settings: global-settings
     archive-artifacts: ""
