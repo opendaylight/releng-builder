@@ -13,7 +13,10 @@
       # Automation for docs and jobs
       - "builder-update-image-list":
           archive-artifacts: docs/cloud-images.rst
-      - gerrit-info-yaml-verify
+      # Disabled: superseded by the org-wide GHA Required Verify
+      # (opendaylight/.github gerrit-required-verify.yaml)
+      - gerrit-info-yaml-verify:
+          disable-job: true
 
     # The following values are only specified here
     # so that code blocks look similar to other projects.

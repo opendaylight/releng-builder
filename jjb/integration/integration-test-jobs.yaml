@@ -549,7 +549,10 @@
 - project:
     name: integration-info
     jobs:
-      - gerrit-info-yaml-verify
+      # Disabled: superseded by the org-wide GHA Required Verify
+      # (opendaylight/.github gerrit-required-verify.yaml)
+      - gerrit-info-yaml-verify:
+          disable-job: true
     project: integration
     project-name: integration
     branch: master
