@@ -12,7 +12,9 @@
 
     project-type: freestyle
     node: ubuntu2204-docker-4c-4g
-    disable-job: false
+    # Disabled: no new ODL docker images are produced, so this daily
+    # Nexus3 -> Docker Hub copy has nothing to do
+    disable-job: true
     disabled: "{disable-job}"
 
     # Runs once a day
