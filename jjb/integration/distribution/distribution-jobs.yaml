@@ -86,6 +86,8 @@
     name: distribution-docker
     project: integration/distribution
     project-name: distribution
+    # Disabled: no longer maintained; never built successfully
+    disable-job: true
     mvn-settings: integration-distribution-settings
     container-tag-method: yaml-file
     build-node: ubuntu2204-docker-4c-4g
@@ -111,6 +113,8 @@
     name: distribution-docker-release
     project: integration/distribution
     project-name: distribution-docker
+    # Disabled: no longer maintained; never built successfully
+    disable-job: true
     use-release-file: true
     mvn-settings: integration-distribution-settings
     container-tag-method: yaml-file
