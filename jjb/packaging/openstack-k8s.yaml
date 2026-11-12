@@ -3,6 +3,8 @@
     name: packaging-k8s
     project: integration/packaging
     project-name: packaging
+    # Disabled: integration/packaging is no longer maintained
+    disable-job: true
     container-infra-prefix: "registry.public.yul1.vexxhost.net/magnum/"
     cloud-provider-tag: "v1.18.0"
     etcd-volume-size: "20"
