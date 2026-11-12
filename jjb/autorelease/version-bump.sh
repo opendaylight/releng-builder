@@ -29,6 +29,21 @@ set -eu -o pipefail
 # shellcheck disable=SC1090
 . ~/lf-env.sh
 
+# An agent's ~/lf-env.sh is copied when it boots, so may predate lftools-uv.
+# Re-source before activating a venv, so a refresh cannot disturb it.
+if ! declare -F lftools-uv > /dev/null; then
+    lf_env="$(mktemp)"
+    lf_env_url="https://raw.githubusercontent.com/lfit/releng-global-jjb"
+    wget -nv -O "$lf_env" "$lf_env_url/${GLOBAL_JJB_VERSION:-master}/jenkins-init-scripts/lf-env.sh" || true
+    # shellcheck disable=SC1090
+    . "$lf_env"
+    rm -f "$lf_env"
+    if ! declare -F lftools-uv > /dev/null; then
+        echo "ERROR: lf-env.sh has no lftools-uv function" >&2
+        exit 1
+    fi
+fi
+
 lf-activate-venv --python python3 "git-review==2.3.1"
 
 # Fail if branch cutting is not on master
@@ -61,14 +76,14 @@ git submodule foreach "git review -s"
 git status
 
 if [ "$BRANCH_CUT" = "false" ]; then
-    lftools version release "$RELEASE_TAG"
+    lftools-uv version release "$RELEASE_TAG"
     commit_msg="Bump versions by x.y.(z+1)"
 else
     commit_msg="Bump versions by x.(y+1).z"
     # If we are branch cutting we also need to bump the docs/conf.yaml version
     find . -type f -name conf.yaml -exec sed -i "s/version:.*/version: ${STREAM^}/" {} \;
 fi
-lftools version bump "$RELEASE_TAG"
+lftools-uv version bump "$RELEASE_TAG"
 
 # Ignore changes to Final distribution since that will be released separately
 pushd integration/distribution || true

@@ -68,7 +68,7 @@ repos:
   - repo: local
     hooks:
       - id: check-venv-activation
-        name: Check JJB shell fragments activate the lftools venv
+        name: Check JJB shell fragments can run lftools-uv
         entry: scripts/check-venv-activation.sh
         language: script
         files: ^jjb/.*\.sh$

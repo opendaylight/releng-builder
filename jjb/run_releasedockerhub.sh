@@ -18,7 +18,19 @@ set -euf -o pipefail
 # shellcheck disable=SC1090
 source ~/lf-env.sh
 
-lf-activate-venv zipp==1.1.0 lftools
+# An agent's ~/lf-env.sh is copied when it boots, so may predate lftools-uv.
+if ! declare -F lftools-uv > /dev/null; then
+    lf_env="$(mktemp)"
+    lf_env_url="https://raw.githubusercontent.com/lfit/releng-global-jjb"
+    wget -nv -O "$lf_env" "$lf_env_url/${GLOBAL_JJB_VERSION:-master}/jenkins-init-scripts/lf-env.sh" || true
+    # shellcheck disable=SC1090
+    source "$lf_env"
+    rm -f "$lf_env"
+    if ! declare -F lftools-uv > /dev/null; then
+        echo "ERROR: lf-env.sh has no lftools-uv function" >&2
+        exit 1
+    fi
+fi
 
 if [ ! -v RELEASEDOCKERHUB_ORG ]
 then
@@ -52,6 +64,7 @@ fi
 
 echo "cmd_str = >>$cmd_str<<"
 
-# Run the releasedockerhub command in lftools
+# Run the releasedockerhub command in lftools-uv. The command is only in
+# its Click front end, which LEGACY_CLI selects.
 # shellcheck disable=SC2086
-lftools nexus docker releasedockerhub  $cmd_str
+LEGACY_CLI=1 lftools-uv nexus docker releasedockerhub  $cmd_str
