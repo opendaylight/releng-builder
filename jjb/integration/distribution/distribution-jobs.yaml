@@ -9,7 +9,9 @@
       - gerrit-maven-clm:
           disable-job: true
       - gerrit-maven-verify-dependencies
-      - gerrit-tox-verify
+      # Disabled: GHA gerrit-verify tox-verify covers the tox envlist
+      - gerrit-tox-verify:
+          disable-job: true
 
     project: integration/distribution
     project-name: distribution
