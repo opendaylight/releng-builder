@@ -144,7 +144,9 @@
 
     jobs:
       - gerrit-maven-javadoc-publish
-      - gerrit-maven-javadoc-verify
+      # Migrated to GHA gerrit-verify javadoc-verify job (topic gha-javadoc)
+      - gerrit-maven-javadoc-verify:
+          disable-job: true
 
     java-version: openjdk21
     mvn-version: mvn39
