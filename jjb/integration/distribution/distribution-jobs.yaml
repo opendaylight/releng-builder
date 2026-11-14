@@ -8,7 +8,10 @@
       # JVM. No .github/workflows/clm-scan.yaml here yet
       - gerrit-maven-clm:
           disable-job: true
-      - gerrit-maven-verify-dependencies
+      # Disabled: unused 'recheck: <change#>' trigger, see
+      # odl-maven-verify-jobs-jdk21 in releng-templates-java.yaml
+      - gerrit-maven-verify-dependencies:
+          disable-job: true
       # Disabled: GHA gerrit-verify tox-verify covers the tox envlist
       - gerrit-tox-verify:
           disable-job: true
