@@ -143,7 +143,9 @@
     name: odl-maven-javadoc-jobs-jdk21
 
     jobs:
-      - gerrit-maven-javadoc-publish
+      # Migrated to GHA gerrit-javadoc-merge.yaml (topic gha-javadoc)
+      - gerrit-maven-javadoc-publish:
+          disable-job: true
       # Migrated to GHA gerrit-verify javadoc-verify job (topic gha-javadoc)
       - gerrit-maven-javadoc-verify:
           disable-job: true
