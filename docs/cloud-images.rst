@@ -81,6 +81,7 @@ Historical inventory:
 * ZZCI - Ubuntu 22.04 - builder - x86_64 - 20261101-010115.110
 * ZZCI - Ubuntu 22.04 - builder - x86_64 - 20261101-041913.512
 * ZZCI - Ubuntu 22.04 - builder - x86_64 - 20261102-000837.918
+* ZZCI - Ubuntu 22.04 - builder - x86_64 - 20261115-110641.408
 * ZZCI - Ubuntu 22.04 - docker - x86_64 - 20260408-112811.737
 * ZZCI - Ubuntu 22.04 - docker - x86_64 - 20260409-214304.246
 * ZZCI - Ubuntu 22.04 - docker - x86_64 - 20260410-113956.421
