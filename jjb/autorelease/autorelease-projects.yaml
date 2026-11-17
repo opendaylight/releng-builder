@@ -5,7 +5,9 @@
       - autorelease-branch-cut
       - "autorelease-update-submodules-{stream}"
       - "autorelease-update-validate-jobs-{stream}"
-      - "{project-name}-validate-autorelease-{stream}"
+      # Disabled: autorelease validating itself is unused
+      - "{project-name}-validate-autorelease-{stream}":
+          disable-job: true
       - gerrit-tox-verify
 
     stream:

@@ -41,14 +41,6 @@
     gerrit-server-name: lf-releng
 
 - project:
-    name: global-pipelines
-    project-name: lf-infra-pipelines
-    project: pipelines
-    build-node: ubuntu2204-builder-2c-2g
-    jobs:
-      - lf-pipelines-verify
-
-- project:
     name: lf-infra-view
     views:
       - project-view

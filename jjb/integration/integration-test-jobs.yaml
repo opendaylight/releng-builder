@@ -4,9 +4,13 @@
     project: integration/test
     project-name: integration-test
     jobs:
-      - "integration-patch-test-{stream}"
-      - "inttest-multipatch"
-      - "integration-merge-dashboard"
+      # Disabled: unused, not migrated to GHA
+      - "integration-patch-test-{stream}":
+          disable-job: true
+      - "inttest-multipatch":
+          disable-job: true
+      - "integration-merge-dashboard":
+          disable-job: true
       - gerrit-tox-verify:
           branch: master
           stream: master
@@ -107,7 +111,9 @@
           csit-sanity-list: "{csit-sanity-list-titanium}"
 - job-template:
     name: "integration-merge-dashboard"
+    disable-job: false
     project-type: freestyle
+    disabled: "{disable-job}"
     node: ubuntu2204-builder-2c-1g
     properties:
       - opendaylight-infra-properties:
@@ -213,7 +219,9 @@
           email-prefix: "[integration]"
 - job-template:
     name: "integration-patch-test-{stream}"
+    disable-job: false
     project-type: freestyle
+    disabled: "{disable-job}"
     node: ubuntu2204-builder-2c-8g
     properties:
       - opendaylight-infra-properties:
@@ -315,7 +323,9 @@
 - job-template:
     name: "{prefix}integration-multipatch-test-{stream}"
     id: inttest-multipatch
+    disable-job: false
     project-type: freestyle
+    disabled: "{disable-job}"
     node: ubuntu2204-builder-8c-8g
     concurrent: true
     properties:
