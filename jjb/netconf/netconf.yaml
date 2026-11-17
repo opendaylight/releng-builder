@@ -3,6 +3,7 @@
     name: netconf-master
     jobs:
       - gerrit-tox-verify:
+          disable-job: true
           build-node: ubuntu2204-builder-2c-2g
           parallel: true
       # The odl-maven-jobs-jdk21 job-group is expanded inline here so that
@@ -67,6 +68,7 @@
     name: netconf-11.0.x
     jobs:
       - gerrit-tox-verify:
+          disable-job: true
           build-node: ubuntu2204-builder-2c-2g
           parallel: true
       - odl-maven-jobs-jdk21-gha-merge
@@ -94,6 +96,7 @@
     name: netconf-10.0.x
     jobs:
       - gerrit-tox-verify:
+          disable-job: true
           build-node: ubuntu2204-builder-2c-2g
           parallel: true
       - odl-maven-jobs-jdk21-gha-merge

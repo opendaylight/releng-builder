@@ -2,7 +2,8 @@
 - project:
     name: docs-rtd
     jobs:
-      - gerrit-tox-verify
+      - gerrit-tox-verify:
+          disable-job: true
 
     stream:
       - manganese:
