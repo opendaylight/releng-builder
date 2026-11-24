@@ -94,7 +94,7 @@ jobs:
 
       - name: Run OpenStack cleanup
         id: cleanup
-        uses: lfreleng-actions/openstack-cron-action@e830886170d7e5fbe2c8f6b3ed8bff759013f0b1 # v0.2.2
+        uses: lfreleng-actions/openstack-cron-action@6d5a02aa4877fd11ee0089c3d71519fc565d1d9d # v0.3.0
         with:
           enable_debug: ${{ github.event_name != 'workflow_dispatch' && 'false' || inputs.enable_debug }}
           openstack_cloud: ${{ inputs.openstack_cloud || vars.OPENSTACK_CLOUD || 'vex' }}
